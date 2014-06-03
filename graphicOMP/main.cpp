@@ -6,10 +6,12 @@
 #include "FL/Fl_PNG_Image.H"
 #include "FL/Fl_Box.H"
 
+#include "Canvas.cpp"
+
 const int WINDOW_W = 800;
 const int WINDOW_H = 600;
 
-int main2() {
+int main3() {
 	fl_register_images();
 	Fl_Window *window = new Fl_Window(WINDOW_W, WINDOW_H, "This is the greatest window");
 	Fl_Text_Buffer *sometext = new Fl_Text_Buffer();
@@ -23,4 +25,9 @@ int main2() {
 
 	window->show();
 	return (Fl::run());
+}
+
+int main() {
+	Canvas *can = new Canvas();
+	return (can->start());
 }
