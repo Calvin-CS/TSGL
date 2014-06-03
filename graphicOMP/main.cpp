@@ -9,7 +9,7 @@
 const int WINDOW_W = 800;
 const int WINDOW_H = 600;
 
-int main() {
+int main2() {
 	fl_register_images();
 	Fl_Window *window = new Fl_Window(WINDOW_W, WINDOW_H, "This is the greatest window");
 	Fl_Text_Buffer *sometext = new Fl_Text_Buffer();
