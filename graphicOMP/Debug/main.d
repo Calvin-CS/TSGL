@@ -25,7 +25,10 @@ main.d: ../main.cpp \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Scrollbar.H \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Slider.H \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Valuator.H \
- /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Text_Buffer.H
+ /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Text_Buffer.H \
+ /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Shared_Image.H \
+ /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_PNG_Image.H \
+ /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Box.H
 
 /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl.H:
 
@@ -80,3 +83,9 @@ main.d: ../main.cpp \
 /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Valuator.H:
 
 /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Text_Buffer.H:
+
+/home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Shared_Image.H:
+
+/home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_PNG_Image.H:
+
+/home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Box.H:

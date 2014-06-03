@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lfltk -lfltk_forms -lfltk_images -lfltk_jpeg -lfltk_png -lX11
+LIBS := -lfltk_images -lfltk -lfltk_jpeg -lfltk_png -lfltk_forms -lX11 -lz
 

@@ -40,14 +40,21 @@
 								<option id="gnu.cpp.link.option.paths.908198855" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/home/mbv26/summer2014/graphicOMP.git/libraries/lib"/>
 									<listOptionValue builtIn="false" value="/usr/X11R6/lib"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/compiler/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/ipp/../compiler/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/ipp/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/mkl/lib/intel64"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/tbb/lib/intel64/gcc4.4"/>
+									<listOptionValue builtIn="false" value="/usr/include"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.685050295" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="fltk"/>
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="fltk_forms"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="fltk_images"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="fltk"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="fltk_jpeg"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="fltk_png"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="fltk_forms"/>
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="X11"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="z"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1303657029" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
