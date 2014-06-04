@@ -30,6 +30,7 @@
 									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/mkl/include"/>
 									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/tbb/include"/>
 									<listOptionValue builtIn="false" value="/usr/include"/>
+									<listOptionValue builtIn="false" value="/usr/include/c++/4.6"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.779526770" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -49,6 +50,7 @@
 									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/mkl/lib/intel64"/>
 									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2013_sp1.0.080/tbb/lib/intel64/gcc4.4"/>
 									<listOptionValue builtIn="false" value="/usr/include"/>
+									<listOptionValue builtIn="false" value="/usr/include/c++/4.6"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.685050295" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="fltk_images"/>

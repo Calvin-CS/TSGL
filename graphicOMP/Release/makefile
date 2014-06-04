@@ -43,7 +43,7 @@ all: graphicOMP
 graphicOMP: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/home/mbv26/summer2014/graphicOMP.git/libraries/lib -L/usr/X11R6/lib -L/opt/intel/composer_xe_2013_sp1.0.080/compiler/lib/intel64 -L/opt/intel/composer_xe_2013_sp1.0.080/ipp/../compiler/lib/intel64 -L/opt/intel/composer_xe_2013_sp1.0.080/ipp/lib/intel64 -L/opt/intel/composer_xe_2013_sp1.0.080/mkl/lib/intel64 -L/opt/intel/composer_xe_2013_sp1.0.080/tbb/lib/intel64/gcc4.4 -L/usr/include -L/usr/include/c++/4.6 -o "graphicOMP" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++  -o "graphicOMP" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

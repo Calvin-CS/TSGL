@@ -6,13 +6,23 @@
 #include "FL/Fl_PNG_Image.H"
 #include "FL/Fl_Box.H"
 
-#include "Canvas.cpp"
+#include "Canvas.h"
+#include <iostream>
 
 const int WINDOW_W = 800;
 const int WINDOW_H = 600;
 
 int main() {
 	Canvas *can = new Canvas();
+	for (int i = 100; i < 700; i++) {
+		for (int j = 100; j < 500; j++) {
+			can->setColor(80,10,160);
+			if (i % 2 == 0)
+				can->drawPoint(i,j);
+			else
+				can->drawPointColor(i,j,i,j,i*j % 256);
+		}
+	}
 	return (can->start());
 }
 

@@ -29,9 +29,10 @@ main.d: ../main.cpp \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Shared_Image.H \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_PNG_Image.H \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Box.H \
- ../Canvas.cpp \
+ ../Canvas.h \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Double_Window.H \
- /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/fl_draw.H
+ /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/fl_draw.H \
+ ../Point.h ../Shape.h
 
 /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl.H:
 
@@ -93,8 +94,12 @@ main.d: ../main.cpp \
 
 /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Box.H:
 
-../Canvas.cpp:
+../Canvas.h:
 
 /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Double_Window.H:
 
 /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/fl_draw.H:
+
+../Point.h:
+
+../Shape.h:
