@@ -18,7 +18,7 @@
 class MyTimer : public Fl_Box {
     void draw() {
     	static int counter = 0;
-    	counter = (counter < 600) ? ++counter : counter;
+    	(counter < 600) ? ++counter : counter;
     	int color;
     	for (int i = 0; i < counter; i++) {
     		for (int j = 0; j <= 600; j++) {

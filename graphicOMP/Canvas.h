@@ -1,4 +1,3 @@
-//
 // Basic Point class extending from the Shape class
 //
 // Last Modified: Patrick Crain, 6/4/2014
@@ -6,19 +5,13 @@
 #ifndef CANVAS_H_
 #define CANVAS_H_
 
-#include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Box.H>
 #include <FL/fl_draw.H>
-#include <math.h>
-#include <stdio.h>
-#include <time.h>
-#include <unistd.h>
 #include "Point.h"
-#include <queue>
-#include <iostream>
 #include <omp.h>
 #include "CQueue.h"
+#include "List.h"
 
 class Canvas : public Fl_Box {
 private:
@@ -48,7 +41,8 @@ public:
 
 void Canvas::init(int xx, int yy, int width, int height) {
 	started = false;  //We haven't started the window yet
-	counter = queueSize = 0;
+	counter = 0;
+	queueSize = 0;
 	x = xx; y = yy; w = width; h = height;  //Initialize translation
 	box(FL_FLAT_BOX);  //Create a box for drawing
 	color(45);  //Initialize the background color
@@ -60,7 +54,7 @@ void Canvas::draw() {
 	counter++;
 	int ql = queueSize, oldR = colorR, oldG = colorG, oldB = colorB;
 	Shape *s;
-	while (ql-- > 0) {
+	while (ql--  > 0) {
 		s = myShapes.pop();
 		if (s->getUsesDefaultColor()) {
 			s->draw();

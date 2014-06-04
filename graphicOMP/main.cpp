@@ -21,7 +21,7 @@ const int WINDOW_H = 600;
 int main() {
 	Canvas *can = new Canvas();
 	int tid, nthreads, i, j, color;
-	#pragma omp parallel num_threads(8) private(tid,nthreads,i,j,color)
+	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
 	{
 		nthreads = omp_get_num_threads();
 		tid = omp_get_thread_num();
