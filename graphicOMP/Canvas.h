@@ -1,9 +1,7 @@
 //
-// Basic Canvas class build on top of FLTK library.
-// UNFINISHED
+// Basic Point class extending from the Shape class
 //
-// Last Modified: Patrick Crain, 6/3/2014
-//
+// Last Modified: Patrick Crain, 6/4/2014
 
 #ifndef CANVAS_H_
 #define CANVAS_H_
@@ -19,11 +17,14 @@
 #include "Point.h"
 #include <queue>
 #include <iostream>
+#include <omp.h>
+#include "CQueue.h"
 
 class Canvas : public Fl_Box {
 private:
-	std::queue<Shape*> myShapes;
+	Queue<Shape*> myShapes;
 	int counter;
+	int queueSize;
 	int x,y,w,h;  //Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; //Global color data
 	Fl_Double_Window *window;
@@ -47,7 +48,7 @@ public:
 
 void Canvas::init(int xx, int yy, int width, int height) {
 	started = false;  //We haven't started the window yet
-	counter = 0;
+	counter = queueSize = 0;
 	x = xx; y = yy; w = width; h = height;  //Initialize translation
 	box(FL_FLAT_BOX);  //Create a box for drawing
 	color(45);  //Initialize the background color
@@ -56,32 +57,19 @@ void Canvas::init(int xx, int yy, int width, int height) {
 }
 
 void Canvas::draw() {
-//	static int counter = 0;
-//	counter < 800 ? ++counter : counter;
-//	int color;
-//	//for (int i = 0; i < counter; i++) {
-//		for (int j = 0; j <= 600; j++) {
-//			color = counter*128/800 + j*128/600;
-//			fl_color(color,color,color);
-//			fl_point(counter,j);
-//		}
-//	//}
 	counter++;
-	int ql = myShapes.size();
+	int ql = queueSize, oldR = colorR, oldG = colorG, oldB = colorB;
 	Shape *s;
-	fl_color(colorR,colorG,colorB);
 	while (ql-- > 0) {
-		s = myShapes.front();
+		s = myShapes.pop();
 		if (s->getUsesDefaultColor()) {
 			s->draw();
 		}
 		else {
-			//std::cout << "custom" << std::endl;
 			setColor(s->getColorR(),s->getColorG(),s->getColorB());
 			s->draw();
-			setColor(colorR, colorG, colorB);
+			setColor(oldR, oldG, oldB);
 		}
-		myShapes.pop();
 		myShapes.push(s);
 	}
 }
@@ -137,6 +125,8 @@ int Canvas::getColorB() { return colorB; }
 Point Canvas::drawPoint(int x, int y) {
 	Point *p = new Point(x,y);
 	myShapes.push(p);
+	#pragma omp atomic
+	queueSize++;
 	//std::cout << myShapes.size() << std::endl;
 	return *p;
 }
@@ -144,6 +134,8 @@ Point Canvas::drawPoint(int x, int y) {
 Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
 	Point *p = new Point(x,y,r,g,b);
 	myShapes.push(p);
+	#pragma omp atomic
+	queueSize++;
 	//std::cout << myShapes.size() << std::endl;
 	return *p;
 }

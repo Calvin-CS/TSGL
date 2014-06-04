@@ -1,9 +1,7 @@
-/*
- * Shape.h
- *
- *  Created on: Jun 4, 2014
- *      Author: pac3
- */
+//
+// Basic Shape class build on top of FLTK library.
+//
+// Last Modified: Patrick Crain, 6/4/2014
 
 #ifndef SHAPE_H_
 #define SHAPE_H_
@@ -26,7 +24,7 @@ public:
 
 Shape::Shape() {
 	useDefaultColor = true;
-	setColor(-1,-1,-1);
+	setColor(0,0,0);
 }
 Shape::Shape(int r, int g, int b) {
 	useDefaultColor = false;

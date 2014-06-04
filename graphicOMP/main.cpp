@@ -1,3 +1,8 @@
+//
+// Test driver for the graphicOMP library
+//
+// Last Modified: Patrick Crain, 6/4/2014
+
 #include "FL/Fl.H"
 #include "FL/Fl_Window.H"
 #include "FL/Fl_Text_Buffer.H"
@@ -8,36 +13,35 @@
 
 #include "Canvas.h"
 #include <iostream>
+#include <omp.h>
 
 const int WINDOW_W = 800;
 const int WINDOW_H = 600;
 
 int main() {
 	Canvas *can = new Canvas();
-	for (int i = 100; i < 700; i++) {
-		for (int j = 100; j < 500; j++) {
-			can->setColor(80,10,160);
-			if (i % 2 == 0)
-				can->drawPoint(i,j);
-			else
-				can->drawPointColor(i,j,i,j,i*j % 256);
+	int tid, nthreads, i, j, color;
+	#pragma omp parallel num_threads(8) private(tid,nthreads,i,j,color)
+	{
+		nthreads = omp_get_num_threads();
+		tid = omp_get_thread_num();
+//		for (i = tid; i < WINDOW_W; i+= nthreads) {
+//			for (int j = 0; j <= WINDOW_H; j++) {
+//				color = i*128/WINDOW_W + j*128/WINDOW_H;
+//				//Fl::lock();
+//				can->drawPointColor(i,j,color,color,color);
+//				//Fl::unlock();
+//			}
+//		}
+		for (i = 100+tid; i < WINDOW_W-100; i+= nthreads) {
+			for (j = 100; j < WINDOW_H-100; j++) {
+				can->setColor(80,10,160);
+				if (i % 2 == 0)
+					can->drawPoint(i,j);
+				else
+					can->drawPointColor(i,j,i,j,i*j % 256);
+			}
 		}
 	}
 	return (can->start());
 }
-
-//int main2() {
-//	fl_register_images();
-//	Fl_Window *window = new Fl_Window(WINDOW_W, WINDOW_H, "This is the greatest window");
-//	Fl_Text_Buffer *sometext = new Fl_Text_Buffer();
-//	Fl_Text_Display *textdisplay = new Fl_Text_Display(200,200,300,300,"Display");
-//	Fl_Box *box = new Fl_Box(250,100,WINDOW_W-100,WINDOW_H-100);
-//	Fl_PNG_Image myjpeg("data/bestpicture.png");
-//
-//	textdisplay->buffer(sometext);
-//	box->image(myjpeg);
-//	sometext->text("This is the greatest text");
-//
-//	window->show();
-//	return (Fl::run());
-//}

@@ -32,7 +32,7 @@ main.d: ../main.cpp \
  ../Canvas.h \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Double_Window.H \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/fl_draw.H \
- ../Point.h ../Shape.h
+ ../Point.h ../Shape.h ../CQueue.h
 
 /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl.H:
 
@@ -103,3 +103,5 @@ main.d: ../main.cpp \
 ../Point.h:
 
 ../Shape.h:
+
+../CQueue.h:
