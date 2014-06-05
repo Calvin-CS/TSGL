@@ -69,10 +69,14 @@ public:
 			std::unique_lock<std::mutex> mlock(mutex_);
 			last_ = last_->previous_;
 			delete last_->next_;
-			if (last_ == NULL) { first_ == NULL; }
+			if (last_ == NULL) { first_ = NULL; }
 
 			mlock.unlock();
 		}
+	}
+
+	void clear() {
+		delete first_;
 	}
 
 	void push(const Item item) {
@@ -99,14 +103,23 @@ public:
 
 		void removeCurrent() {
 			std::unique_lock<std::mutex> mlock(list_->mutex_);
-			Node * oldNode = node_;
-			node_ = oldNode->previous_;
-			node_->next_ = oldNode->next_;
-			if (oldNode->next_ != NULL) {
+			if (node_ == list_->first_) {
+				delete node_->item_;
+				node_ = node_->next_;
+				node_->previous_->next_ = NULL;
+				list_->first_ = node_;
+			} else if (node_ == list_->last_) {
+				list_->last_ = list_->last_->previous_;
+				delete node_;
+				if (list_->last_ == NULL) { list_->first_ = NULL; }
+			} else {
+				Node * oldNode = node_;
+				node_ = oldNode->previous_;
+				node_->next_ = oldNode->next_;
 				oldNode->next_->previous_ = node_;
 				oldNode->next_ = NULL;
+				delete oldNode;
 			}
-			delete oldNode;
 			list_->mutex_.unlock();
 		}
 
@@ -117,18 +130,13 @@ public:
 			return item;
 		}
 
-		Item operator++(int i) {
-			Item item;
+		void operator++(int i) {
 			std::unique_lock<std::mutex> mlock(list_->mutex_);
-			if (node_ != NULL) {
-				item = node_->item_;
-			} else {
-				list_->mutex_.unlock();
-				throw std::out_of_range("Op++(): Queue is empty");
-			}
 			node_ = node_->next_;
+			if (node_->previous_->item_ == NULL) {
+				delete node_->previous_;
+			}
 			list_->mutex_.unlock();
-			return item;
 		}
 
 		bool operator!= (const Iterator& other) {
