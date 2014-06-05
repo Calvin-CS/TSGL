@@ -8,92 +8,123 @@
 #ifndef LIST_H_
 #define LIST_H_
 
-#include <thread>
 #include <mutex>
+#include <stdexcept>
 #include <stdlib.h>
 
 template <typename Item>
 class List {
 friend class Iterator;
+private:
+	struct Node {
+//	public:
+		Node(Item item, Node * previous) {
+			item_ = item;
+			previous_ = previous;
+			next_ = NULL;
+		}
+		~Node() {
+			delete next_;
+		}
+
+		Node * previous_, next_;
+		Item item_;
+	};
+
+	Node * first_, last_;
+
+	std::mutex mutex_;
 public:
 	List() {
-		_first = _last = NULL;
+		first_ = last_ = NULL;
 	}
 
 	virtual ~List() {
-		delete _first;
+		delete first_;
 	}
 
 	Item pop() {
 		std::unique_lock<std::mutex> mlock(mutex_);
 
-		Item item = _last->_item;
-		_last = _last->_previous;
-		delete _last->_next;
-		if (_last == NULL) { _first == NULL; }
+		if (first_ == NULL) {
+			mlock.unlock();
+			throw std::out_of_range("Queue is empty");
+		} else {
+			Item item = last_->_item;
+			last_ = last_->_previous;
+			delete last_->_next;
+			if (last_ == NULL) {
+				first_ == NULL;
+			}
 
-		mlock.unlock();
-
-		return item;
+			mlock.unlock();
+			return item;
+		}
 	}
 
 	void remove() {
 		std::unique_lock<std::mutex> mlock(mutex_);
 
-		_last = _last->_previous;
-		delete _last->_next;
-		if (_last == NULL) { _first == NULL; }
+		if (first_ == NULL) {
+			mlock.unlock();
+			throw std::out_of_range("Queue is empty");
+		} else {
+			last_ = last_->previous_;
+			delete last_->next_;
+			if (last_ == NULL) { first_ == NULL; }
 
-		mlock.unlock();
+			mlock.unlock();
+		}
 	}
 
 	void push(const Item item) {
 		std::unique_lock<std::mutex> mlock(mutex_);
 
-		if (_first == NULL) {
-			_first = _last = new Node(item, _last);
+		if (first_ == NULL) {
+			first_ = last_ = new Node(item, last_);
 		} else {
-			_last = _last->_next = new Node(item, _last);
+			last_ = last_->_next = new Node(item, last_);
 		}
 
 		mlock.unlock();
 	}
 
-	bool isEmpty() { return _first == NULL; }
+	bool isEmpty() { return first_ == NULL; }
 
-private:
-	struct Node {
-//	friend class Iterator;
-		Node(Item item, Node * previous) {
-			_item = item;
-			_previous = previous;
-			_next = NULL;
-		}
-		~Node() {
-			delete _next;
+	class Iterator {
+	public:
+		Iterator(Node * start) {
+			node_ = start;
 		}
 
-		Node * _previous, _next;
-		Item _item;
+		Item operator*() {
+			return node_->item_;
+		}
+
+		Item operator++() {
+			node_ = node_->next_;
+			if (node_ != NULL) {
+				return node_->item_;
+			} else {
+				throw std::out_of_range("Queue is empty");
+			}
+		}
+
+		bool operator!= (const Iterator& other) {
+			return node_ != other->node_;
+		}
+
+	private:
+		Node * node_;
 	};
 
-	Node * _first, _last;
+	Iterator& begin() {
+		return Iterator(first_);
+	}
 
-	std::mutex mutex_;
+	Iterator& end() {
+		return Iterator(NULL);
+	}
 };
-
-//class Iterator {
-////friend class Node;
-//public:
-//	Iterator(List * list) {
-//		_list = list;
-//		current = _list._first;
-//	}
-//
-//
-//private:
-//	List * _list;
-//	Node * current;
-//};
 
 #endif /* LIST_H_ */
