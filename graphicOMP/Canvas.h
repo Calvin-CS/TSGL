@@ -1,27 +1,25 @@
 // Canvas provides a window / canvas for all of the drawing operations in the graphicOMP library
 //
-// Last Modified: Patrick Crain, 6/5/2014
+// Authors: Patrick Crain, Mark Vander Stel, 6/5/2014
 
 #ifndef CANVAS_H_
 #define CANVAS_H_
 
+#include "FL/Fl.H"					//For using basic FLTK library functions
 #include <FL/Fl_Double_Window.H>	//For Fl_Double_Window, which draws our window
 #include <FL/Fl_Box.H>				//For Fl_Box, from which our Canvas inherits
 #include <FL/fl_draw.H>				//For FLTK's drawing function, which we implement to make our own thread-safe version.
 #include "Point.h"					//Our own class for drawing single points.
 #include <omp.h>					//For OpenMP support
-//#include "CQueue.h"					//Our own concurrent queue for buffering drawing operations
-#include "List.h"					//UNFINISHED * Our own doubly-linked list, providing the same support as the above queue, with iteration
+#include "List.h"					//Our own doubly-linked list for buffering drawing operations in a thread-safe manner.
 
 const double FRAME = 1.0f/60.0f;	//Represents a single frame (@ 60Hz)
 
 class Canvas : public Fl_Box {
-	typedef void (*fcall)(void);	//Define a type for our callback function pointer
+	typedef void (*fcall)(Canvas* const);	//Define a type for our callback function pointer
 private:
-//	Queue<Shape*> myShapes;			//Our queue of shapes to draw
-	List<Shape*> myShapes;
+	List<Shape*> myShapes;			//Our buffer of shapes to draw
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
-	int queueSize;					//The length of our current (concurrent) queue
 	int x,y,w,h;  					//Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
 	Fl_Double_Window *window;		//The FLTK window to which we draw
@@ -47,6 +45,7 @@ public:
 /*
  * init initialized the Canvas with the values specified in the constructor
  * Parameters:
+ * 		c, a callback to the user's own draw function
  * 		xx, the x position of the Canvas window
  * 		yy, the y position of the Canvas window
  * 		width, the x dimension of the Canvas window
@@ -55,12 +54,11 @@ public:
 void Canvas::init(fcall c, int xx, int yy, int ww, int hh) {
 	started = false;  	//We haven't started the window yet
 	counter = 0;		//We haven't drawn any frames yet
-	queueSize = 0;		//Our drawing queue is empty
 	x = xx; y = yy; w = ww; h = hh;  				//Initialize translation
 	box(FL_FLAT_BOX);  										//Sets the box we will draw to (the only one)
 	setColor(0,0,0);										//Our default global drawing color is black
-	updateFunc = c;
-	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	//Adds a callback after 1/60 second to our callback function
+	updateFunc = c;											//Adds a callback to the user's own draw function
+	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	//Adds a callback after 1/60 second to the Canvas' callback function
 }
 
 /*
@@ -69,29 +67,33 @@ void Canvas::init(fcall c, int xx, int yy, int ww, int hh) {
  */
 void Canvas::draw() {
 	counter++;				//Increment the frame counter
-
-	updateFunc();			//Call our callback
-
-//	int ql = queueSize;		//Temporary variable for our initial queue size
-	//Temporary variables for the initial global drawing color
-	int oldR = colorR;
-	int oldG = colorG;
-	int oldB = colorB;
-	Shape *s;				//Pointer to the next Shape in the queue
-//	while (ql--  > 0) {		//Iterate through our queue until we've made a full cycle
-	for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end(); iterator++) {
-//		s = myShapes.pop();	//Pop each item
-		s = *iterator;
-		if (s->getUsesDefaultColor()) {
-			s->draw();		//If our shape uses the default color, just draw it
-		}
-		else {				//Otherwise, the color must be set before and after drawing
-			setColor(s->getColorR(),s->getColorG(),s->getColorB());
-			s->draw();
-			setColor(oldR, oldG, oldB);
-		}
-//		myShapes.push(s);	//Add the Shape back to the end of the queue
-	}
+//	#pragma omp parallel sections
+//	{
+//		#pragma omp section
+//		{
+			updateFunc(this);			//Call the user's callback to do work on the Canvas
+//		}
+//		#pragma omp section
+//		{
+			//Temporary variables for the initial global drawing color
+			int oldR = colorR;
+			int oldG = colorG;
+			int oldB = colorB;
+			Shape *s;				//Pointer to the next Shape in the queue
+			//Iterate through our queue until we've made it to the end
+			for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end(); iterator++) {
+				s = *iterator;		//Get the next item
+				if (s->getUsesDefaultColor()) {
+					s->draw();		//If our shape uses the default color, just draw it
+				}
+				else {				//Otherwise, the color must be set before and after drawing
+					setColor(s->getColorR(),s->getColorG(),s->getColorB());
+					s->draw();
+					setColor(oldR, oldG, oldB);
+				}
+			}
+//		}
+//	}
 }
 
 /*
@@ -107,6 +109,8 @@ void Canvas::Canvas_Callback(void *userdata) {
 
 /*
  * Default constructor for the canvas class
+ * Parameter:
+ * 		c, a callback to the user's own draw function
  * Returns: a new 800x600 Canvas on the topleft of the screen with no title
  */
 Canvas::Canvas(fcall c) : Fl_Box (0,0,800,600) {
@@ -116,6 +120,7 @@ Canvas::Canvas(fcall c) : Fl_Box (0,0,800,600) {
 /*
  * Explicit constructor for the canvas class
  * Parameters:
+ * 		c, a callback to the user's own draw function
  * 		xx, the x position of the Canvas window
  * 		yy, the y position of the Canvas window
  * 		w, the x dimension of the Canvas window
@@ -164,7 +169,8 @@ void Canvas::setColor(int r, int g, int b) {
 	colorR = r;
 	colorG = g;
 	colorB = b;
-	fl_color(r,g,b);	//Updates the underlying FLTK color
+	#pragma omp critical
+	fl_color(r,g,b);	//Updates the underlying FLTK color (critical to avoid syncing problems)
 }
 
 /*
@@ -177,8 +183,6 @@ void Canvas::setColor(int r, int g, int b) {
 Point Canvas::drawPoint(int x, int y) {
 	Point *p = new Point(x,y);	//Creates the Point with the specified coordinates
 	myShapes.push(p);			//Push it onto our drawing queue
-	#pragma omp atomic
-	queueSize++;				//Atomically increment the size of our queue
 	return *p;					//Return a pointer to our new Point
 }
 
@@ -195,8 +199,6 @@ Point Canvas::drawPoint(int x, int y) {
 Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
 	Point *p = new Point(x,y,r,g,b);	//Creates the Point with the specified coordinates and color
 	myShapes.push(p);					//Push it onto our drawing queue
-	#pragma omp atomic
-	queueSize++;						//Atomically increment the size of our queue
 	return *p;							//Return a pointer to our new Point
 }
 

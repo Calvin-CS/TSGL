@@ -27,7 +27,7 @@ public:
  * Returns: a new Shape using the global drawing color
  */
 Shape::Shape() {
-	myR = -1;	//Set all colors to -1 so our accessors don't return
+	myR = -1;	//Set all colors to -1 so our accessors don't return a color
 	myG = -1;
 	myB = -1;
 	useDefaultColor = true;
