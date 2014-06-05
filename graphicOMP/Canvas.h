@@ -82,9 +82,13 @@ void Canvas::draw() {
 			int oldR = colorR;
 			int oldG = colorG;
 			int oldB = colorB;
+			bool started = false;
 			Shape *s;				//Pointer to the next Shape in the queue
 			//Iterate through our queue until we've made it to the end
 			for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end();iterator++) {
+				if (autoRefresh && started)
+					iterator.removePrevious();
+				started = true;
 				s = *iterator;		//Get the next item
 				if (s->getUsesDefaultColor()) {
 					s->draw();		//If our shape uses the default color, just draw it
@@ -94,15 +98,16 @@ void Canvas::draw() {
 					s->draw();
 					setColor(oldR, oldG, oldB);
 				}
-//				if (autoRefresh)
-//					iterator.removeCurrent();
 			}
+//			if (autoRefresh)
+//				myShapes.remove();
+//			myShapes.clear();
 //		}
 //	}
 }
 
 /*
- * Canvas_CaOn uniprocessor systems,llback is a callback function called (by default) every 1/60 of a second (update cycle) to redraw the canvas
+ * Canvas_Callback is a callback function called (by default) every 1/60 of a second (update cycle) to redraw the canvas
  * Parameters:
  * 		userdata, a pointer to the Canvas class that we're calling back
  */
