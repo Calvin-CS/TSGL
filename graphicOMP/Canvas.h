@@ -97,7 +97,7 @@ void Canvas::draw() {
 }
 
 /*
- * Canvas_Callback is a callback function called (by default) every 1/60 of a second (update cycle) to redraw the canvas
+ * Canvas_CaOn uniprocessor systems,llback is a callback function called (by default) every 1/60 of a second (update cycle) to redraw the canvas
  * Parameters:
  * 		userdata, a pointer to the Canvas class that we're calling back
  */

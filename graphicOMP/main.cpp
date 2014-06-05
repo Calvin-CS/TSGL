@@ -41,6 +41,7 @@ void updateFunction2(Canvas* can) {
 }
 
 int main() {
+	//XInitThreads();
 //	#pragma omp parallel sections
 //	{
 //		XInitThreads();
