@@ -1,7 +1,6 @@
+// main.cpp provides example usage for the graphicOMP library
 //
-// Test driver for the graphicOMP library
-//
-// Last Modified: Patrick Crain, 6/4/2014
+// Last Modified: Patrick Crain, 6/5/2014
 
 #include "FL/Fl.H"
 #include "FL/Fl_Window.H"
