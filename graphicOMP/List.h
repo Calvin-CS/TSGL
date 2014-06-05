@@ -17,7 +17,6 @@ class List {
 friend class Iterator;
 private:
 	struct Node {
-//	public:
 		Node(Item item, Node * previous) {
 			item_ = item;
 			previous_ = previous;
@@ -27,16 +26,19 @@ private:
 			delete next_;
 		}
 
-		Node * previous_, next_;
+		Node * previous_;
+		Node * next_;
 		Item item_;
 	};
 
-	Node * first_, last_;
+	Node * first_;
+	Node * last_;
 
 	std::mutex mutex_;
 public:
 	List() {
-		first_ = last_ = NULL;
+		first_ = NULL;
+		last_ = NULL;
 	}
 
 	virtual ~List() {
@@ -48,7 +50,7 @@ public:
 
 		if (first_ == NULL) {
 			mlock.unlock();
-			throw std::out_of_range("Queue is empty");
+			throw std::out_of_range("Pop(): Queue is empty");
 		} else {
 			Item item = last_->_item;
 			last_ = last_->_previous;
@@ -67,7 +69,7 @@ public:
 
 		if (first_ == NULL) {
 			mlock.unlock();
-			throw std::out_of_range("Queue is empty");
+			throw std::out_of_range("Remove(): Queue is empty");
 		} else {
 			last_ = last_->previous_;
 			delete last_->next_;
@@ -81,9 +83,11 @@ public:
 		std::unique_lock<std::mutex> mlock(mutex_);
 
 		if (first_ == NULL) {
-			first_ = last_ = new Node(item, last_);
+			first_ = new Node(item, last_);
+			last_ = first_;
 		} else {
-			last_ = last_->_next = new Node(item, last_);
+			last_->next_ = new Node(item, last_);
+			last_ = last_->next_;
 		}
 
 		mlock.unlock();
@@ -101,28 +105,30 @@ public:
 			return node_->item_;
 		}
 
-		Item operator++() {
-			node_ = node_->next_;
+		Item operator++(int i) {
+			Item item;
 			if (node_ != NULL) {
-				return node_->item_;
+				item = node_->item_;
 			} else {
-				throw std::out_of_range("Queue is empty");
+				throw std::out_of_range("Op++(): Queue is empty");
 			}
+			node_ = node_->next_;
+			return item;
 		}
 
 		bool operator!= (const Iterator& other) {
-			return node_ != other->node_;
+			return node_ != other.node_;
 		}
 
 	private:
 		Node * node_;
 	};
 
-	Iterator& begin() {
+	Iterator begin() {
 		return Iterator(first_);
 	}
 
-	Iterator& end() {
+	Iterator end() {
 		return Iterator(NULL);
 	}
 };

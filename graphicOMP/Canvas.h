@@ -10,15 +10,16 @@
 #include <FL/fl_draw.H>				//For FLTK's drawing function, which we implement to make our own thread-safe version.
 #include "Point.h"					//Our own class for drawing single points.
 #include <omp.h>					//For OpenMP support
-#include "CQueue.h"					//Our own concurrent queue for buffering drawing operations
-//#include "List.h"					//UNFINISHED * Our own doubly-linked list, providing the same support as the above queue, with iteration
+//#include "CQueue.h"					//Our own concurrent queue for buffering drawing operations
+#include "List.h"					//UNFINISHED * Our own doubly-linked list, providing the same support as the above queue, with iteration
 
 const double FRAME = 1.0f/60.0f;	//Represents a single frame (@ 60Hz)
 
 class Canvas : public Fl_Box {
 	typedef void (*fcall)(void);	//Define a type for our callback function pointer
 private:
-	Queue<Shape*> myShapes;			//Our queue of shapes to draw
+//	Queue<Shape*> myShapes;			//Our queue of shapes to draw
+	List<Shape*> myShapes;
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
 	int queueSize;					//The length of our current (concurrent) queue
 	int x,y,w,h;  					//Positioning and sizing data for the Canvas
@@ -71,14 +72,16 @@ void Canvas::draw() {
 
 	updateFunc();			//Call our callback
 
-	int ql = queueSize;		//Temporary variable for our initial queue size
+//	int ql = queueSize;		//Temporary variable for our initial queue size
 	//Temporary variables for the initial global drawing color
 	int oldR = colorR;
 	int oldG = colorG;
 	int oldB = colorB;
 	Shape *s;				//Pointer to the next Shape in the queue
-	while (ql--  > 0) {		//Iterate through our queue until we've made a full cycle
-		s = myShapes.pop();	//Pop each item
+//	while (ql--  > 0) {		//Iterate through our queue until we've made a full cycle
+	for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end(); iterator++) {
+//		s = myShapes.pop();	//Pop each item
+		s = *iterator;
 		if (s->getUsesDefaultColor()) {
 			s->draw();		//If our shape uses the default color, just draw it
 		}
@@ -87,7 +90,7 @@ void Canvas::draw() {
 			s->draw();
 			setColor(oldR, oldG, oldB);
 		}
-		myShapes.push(s);	//Add the Shape back to the end of the queue
+//		myShapes.push(s);	//Add the Shape back to the end of the queue
 	}
 }
 
