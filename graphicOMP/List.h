@@ -97,6 +97,19 @@ public:
 			node_ = start;
 		}
 
+		void removeCurrent() {
+			std::unique_lock<std::mutex> mlock(list_->mutex_);
+			Node * oldNode = node_;
+			node_ = oldNode->previous_;
+			node_->next_ = oldNode->next_;
+			if (oldNode->next_ != NULL) {
+				oldNode->next_->previous_ = node_;
+				oldNode->next_ = NULL;
+			}
+			delete oldNode;
+			list_->mutex_.unlock();
+		}
+
 		Item operator*() {
 			std::unique_lock<std::mutex> mlock(list_->mutex_);
 			Item item = node_->item_;

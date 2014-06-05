@@ -39,21 +39,25 @@ void updateFunction2(Canvas* can) {
 		}
 	}
 }
+void updateNullFunction(Canvas* can) {}
 
 int main() {
-	//XInitThreads();
-//	#pragma omp parallel sections
-//	{
-//		XInitThreads();
-//		#pragma omp section
-//		{
-			can = new Canvas(updateFunction);
-			can->start();
-//		}
-//		#pragma omp section
-//		{
-			can2 = new Canvas(updateFunction2);
-			can2->start();
-//		}
-//	}
+	can = new Canvas(updateNullFunction);
+
+	int tid, nthreads, i, j, color;
+	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
+	{
+		nthreads = omp_get_num_threads();
+		tid = omp_get_thread_num();
+		for (i = tid; i < WINDOW_W; i+= nthreads) {
+			for (int j = 0; j <= WINDOW_H; j++) {
+				color = i*128/WINDOW_W + j*128/WINDOW_H;
+				can->drawPointColor(i,j,color,color,color);
+			}
+		}
+	}
+
+	can->start();
+//	can2 = new Canvas(updateFunction2);
+//	can2->start();
 }

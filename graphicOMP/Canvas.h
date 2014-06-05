@@ -24,6 +24,7 @@ private:
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
 	Fl_Double_Window *window;		//The FLTK window to which we draw
 	bool started;					//Whether our canvas is running and the counter is counting
+	bool autoRefresh;
 	fcall updateFunc;				//User-defined callback function for drawing
 	inline void init(fcall c, int xx, int yy, int ww, int hh);	//Method for initializing the canvas
 	inline void draw();											//Method for drawing the canvas and the shapes within
@@ -34,6 +35,7 @@ public:
 	inline int start();													//Function to start rendering our Canvas
 	inline int end();													//Function to end rendering our Canvas
 	inline void setColor(int r, int g, int b);							//Sets the global drawing color
+	inline void setAutoRefresh(bool b);
 	inline Point drawPoint(int x, int y);								//Draws a point at the given coordinates
 	inline Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
 	inline int getColorR();												//Gets the red component of the global drawing color
@@ -54,6 +56,7 @@ public:
 void Canvas::init(fcall c, int xx, int yy, int ww, int hh) {
 	started = false;  	//We haven't started the window yet
 	counter = 0;		//We haven't drawn any frames yet
+	autoRefresh = true;	//Default to clearing the queue every frame
 	x = xx; y = yy; w = ww; h = hh;  				//Initialize translation
 	box(FL_FLAT_BOX);  										//Sets the box we will draw to (the only one)
 	setColor(0,0,0);										//Our default global drawing color is black
@@ -81,7 +84,7 @@ void Canvas::draw() {
 			int oldB = colorB;
 			Shape *s;				//Pointer to the next Shape in the queue
 			//Iterate through our queue until we've made it to the end
-			for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end(); iterator++) {
+			for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end();iterator++) {
 				s = *iterator;		//Get the next item
 				if (s->getUsesDefaultColor()) {
 					s->draw();		//If our shape uses the default color, just draw it
@@ -91,6 +94,8 @@ void Canvas::draw() {
 					s->draw();
 					setColor(oldR, oldG, oldB);
 				}
+//				if (autoRefresh)
+//					iterator.removeCurrent();
 			}
 //		}
 //	}
@@ -171,6 +176,15 @@ void Canvas::setColor(int r, int g, int b) {
 	colorB = b;
 	#pragma omp critical
 	fl_color(r,g,b);	//Updates the underlying FLTK color (critical to avoid syncing problems)
+}
+
+/*
+ * setAutoRefresh sets the automatic flushing of the queue on or off
+ * Parameter:
+ * 		b, whether or not to automatically refresh (flush the queue)
+ */
+void Canvas::setAutoRefresh(bool b) {
+	autoRefresh = b;
 }
 
 /*
