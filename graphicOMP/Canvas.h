@@ -16,6 +16,7 @@
 const double FRAME = 1.0f/60.0f;	//Represents a single frame (@ 60Hz)
 
 class Canvas : public Fl_Box {
+	typedef void (*fcall)(void);	//Define a type for our callback function pointer
 private:
 	Queue<Shape*> myShapes;			//Our queue of shapes to draw
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
@@ -24,12 +25,13 @@ private:
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
 	Fl_Double_Window *window;		//The FLTK window to which we draw
 	bool started;					//Whether our canvas is running and the counter is counting
-	inline void init(int xx, int yy, int width, int height);	//Method for initializing the canvas
+	fcall updateFunc;				//User-defined callback function for drawing
+	inline void init(fcall c, int xx, int yy, int ww, int hh);	//Method for initializing the canvas
 	inline void draw();											//Method for drawing the canvas and the shapes within
 	inline static void Canvas_Callback(void *userdata);			//Callback so that the canvas redraws periodically
 public:
-	inline Canvas();													//Default constructor for our Canvas
-	inline Canvas(int xx, int yy, int width, int height, char* title);	//Explicit constructor for our Canvas
+	inline Canvas(fcall c);											//Default constructor for our Canvas
+	inline Canvas(fcall c, int xx, int yy, int w, int h, char* t);	//Explicit constructor for our Canvas
 	inline int start();													//Function to start rendering our Canvas
 	inline int end();													//Function to end rendering our Canvas
 	inline void setColor(int r, int g, int b);							//Sets the global drawing color
@@ -49,13 +51,14 @@ public:
  * 		width, the x dimension of the Canvas window
  * 		width, the y dimension of the Canvas window
  */
-void Canvas::init(int xx, int yy, int width, int height) {
+void Canvas::init(fcall c, int xx, int yy, int ww, int hh) {
 	started = false;  	//We haven't started the window yet
 	counter = 0;		//We haven't drawn any frames yet
 	queueSize = 0;		//Our drawing queue is empty
-	x = xx; y = yy; w = width; h = height;  				//Initialize translation
+	x = xx; y = yy; w = ww; h = hh;  				//Initialize translation
 	box(FL_FLAT_BOX);  										//Sets the box we will draw to (the only one)
 	setColor(0,0,0);										//Our default global drawing color is black
+	updateFunc = c;
 	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	//Adds a callback after 1/60 second to our callback function
 }
 
@@ -65,6 +68,9 @@ void Canvas::init(int xx, int yy, int width, int height) {
  */
 void Canvas::draw() {
 	counter++;				//Increment the frame counter
+
+	updateFunc();			//Call our callback
+
 	int ql = queueSize;		//Temporary variable for our initial queue size
 	//Temporary variables for the initial global drawing color
 	int oldR = colorR;
@@ -93,15 +99,15 @@ void Canvas::draw() {
 void Canvas::Canvas_Callback(void *userdata) {
 	Canvas *o = (Canvas*)userdata;  						//Casts the userdata pointer as a Canvas pointer
     o->redraw();  											//Redraw the canvas
-    Fl::repeat_timeout(FRAME, Canvas_Callback, userdata);  	//Restart the callback
+    Fl::repeat_timeout(FRAME, Canvas_Callback, userdata);  	//Restart the fcall
 }
 
 /*
  * Default constructor for the canvas class
  * Returns: a new 800x600 Canvas on the topleft of the screen with no title
  */
-Canvas::Canvas() : Fl_Box (0,0,800,600) {
-	init(0,0,800,600);
+Canvas::Canvas(fcall c) : Fl_Box (0,0,800,600) {
+	init(c,0,0,800,600);
 }
 
 /*
@@ -109,13 +115,13 @@ Canvas::Canvas() : Fl_Box (0,0,800,600) {
  * Parameters:
  * 		xx, the x position of the Canvas window
  * 		yy, the y position of the Canvas window
- * 		width, the x dimension of the Canvas window
- * 		width, the y dimension of the Canvas window
- * 		title, the title of the window
+ * 		w, the x dimension of the Canvas window
+ * 		h, the y dimension of the Canvas window
+ * 		t, the title of the window
  * Returns: a new Canvas with the specified positional data and title
  */
-Canvas::Canvas(int xx, int yy, int width, int height, char* title = 0) : Fl_Box(xx,yy,width,height,title) {
-	init(xx,yy,width,height);
+Canvas::Canvas(fcall c, int xx, int yy, int w, int h, char* t = 0) : Fl_Box(xx,yy,w,h,t) {
+	init(c,xx,yy,w,h);
 }
 
 /*

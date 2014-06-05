@@ -16,22 +16,22 @@
 
 const int WINDOW_W = 800;
 const int WINDOW_H = 600;
+Canvas* can;
 
-int main() {
-	Canvas *can = new Canvas();
+void updateFunction() {
 	int tid, nthreads, i, j, color;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
 	{
 		nthreads = omp_get_num_threads();
 		tid = omp_get_thread_num();
-//		for (i = tid; i < WINDOW_W; i+= nthreads) {
-//			for (int j = 0; j <= WINDOW_H; j++) {
-//				color = i*128/WINDOW_W + j*128/WINDOW_H;
-//				//Fl::lock();
-//				can->drawPointColor(i,j,color,color,color);
-//				//Fl::unlock();
-//			}
-//		}
+	//		for (i = tid; i < WINDOW_W; i+= nthreads) {
+	//			for (int j = 0; j <= WINDOW_H; j++) {
+	//				color = i*128/WINDOW_W + j*128/WINDOW_H;
+	//				//Fl::lock();
+	//				can->drawPointColor(i,j,color,color,color);
+	//				//Fl::unlock();
+	//			}
+	//		}
 		for (i = 100+tid; i < WINDOW_W-100; i+= nthreads) {
 			for (j = 100; j < WINDOW_H-100; j++) {
 				can->setColor(80,10,160);
@@ -42,5 +42,9 @@ int main() {
 			}
 		}
 	}
+}
+
+int main() {
+	can = new Canvas(updateFunction);
 	return (can->start());
 }
