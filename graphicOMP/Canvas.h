@@ -13,7 +13,6 @@
 #include "Line.h"					//Our own class for drawing straight lines.
 #include <omp.h>					//For OpenMP support
 #include "List.h"					//Our own doubly-linked list for buffering drawing operations in a thread-safe manner.
-#include <iostream>
 
 const double FRAME = 1.0f/60.0f;	//Represents a single frame (@ 60Hz)
 
@@ -86,10 +85,10 @@ void Canvas::draw() {
 	Shape *s;				//Pointer to the next Shape in the queue
 	//Iterate through our queue until we've made it to the end
 	for (List<Shape*>::Iterator iterator = myShapes->begin(); iterator != myShapes->end();iterator++) {
-//		if (autoRefresh && iterator != myShapes.begin())
-//			iterator.removePrevious();
-		std::cout << myShapes->size() << std::endl;
 		s = *iterator;		//Get the next item
+//		if (s->forDeletion) {
+//			iterator.removePrevious();
+//		}
 		if (s->getUsesDefaultColor()) {
 			s->draw();		//If our shape uses the default color, just draw it
 		}
