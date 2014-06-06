@@ -1,14 +1,12 @@
 // main.cpp provides example usage for the graphicOMP library
 //
-// Last Modified: Patrick Crain, 6/5/2014
+// Last Modified: Mark Vander Stel, 6/6/2014
 
 #include "Canvas.h"
 #include <omp.h>
 #include <stdlib.h>
 #include <math.h>
 #include <iostream>
-
-#define PI 3.14159265
 
 const int WINDOW_W = 800, WINDOW_H = 600, WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
 Canvas *can, *can2;
@@ -77,15 +75,15 @@ void updateFunction5(Canvas* can) {
 	{
 		tid = omp_get_thread_num();
 		if (reverse) {
-			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber()-1)*PI/180);
-			b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber()-1)*PI/180);
-			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+can->getFrameNumber()*PI/180);
-			d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+can->getFrameNumber()*PI/180);
+			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber()-1)*M_PI/180);
+			b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber()-1)*M_PI/180);
+			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+can->getFrameNumber()*M_PI/180);
+			d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+can->getFrameNumber()*M_PI/180);
 		} else {
-			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(can->getFrameNumber()-1)*PI/180);
-			b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(can->getFrameNumber()-1)*PI/180);
-			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber())*PI/180);
-			d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber())*PI/180);
+			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(can->getFrameNumber()-1)*M_PI/180);
+			b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(can->getFrameNumber()-1)*M_PI/180);
+			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber())*M_PI/180);
+			d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber())*M_PI/180);
 		}
 		e = (a + can->getFrameNumber()) % 256;
 		f = (b + can->getFrameNumber()) % 256;
@@ -158,9 +156,9 @@ void mandelbrotFunction(Canvas* can) {
 }
 
 int main() {
-	can = new Canvas(NULL,-1);
+	can = new Canvas(updateFunction5, 1000);
 
-	mandelbrotFunction(can);  //UNFINISHED
+//	mandelbrotFunction(can);  //UNFINISHED
 
 	//updateFunction(can);
 
