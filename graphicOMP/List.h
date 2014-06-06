@@ -33,12 +33,23 @@ private:
 	Node * first_;
 	Node * last_;
 
+	unsigned int maxSize_, currentSize_;
+
 	std::mutex mutex_;			// Mutex for locking the list so that only one
 								// thread can read/write at a time
 public:
 	List() {
 		first_ = NULL;
 		last_ = NULL;
+		maxSize_ = -1;
+		currentSize_ = 0;
+	}
+
+	List(unsigned int size) {
+		first_ = NULL;
+		last_ = NULL;
+		maxSize_ = size;
+		currentSize_ = 0;
 	}
 
 	virtual ~List() {
@@ -64,6 +75,7 @@ public:
 				delete last_->next_;		// Delete the old last
 				last_->next_ = NULL;		// Clean up
 			}
+			currentSize_--;
 			mlock.unlock();
 			return item;
 		}
@@ -84,6 +96,7 @@ public:
 				delete last_->next_;		// Delete the old last
 				last_->next_ = NULL;		// Clean up
 			}
+			currentSize_--;
 			mlock.unlock();
 		}
 	}
@@ -95,6 +108,7 @@ public:
 		delete first_;
 		first_ = NULL;
 		last_ = NULL;
+		currentSize_ = 0;
 	}
 
 	/* push takes an item and stores it on the end of the list
@@ -110,6 +124,12 @@ public:
 		} else {
 			last_->next_ = new Node(item, last_);	// Make a new one after the last
 			last_ = last_->next_;					// And make it the new last
+		}
+		currentSize_++;
+		if (currentSize_ > maxSize_) {
+			first_ = first_->next_;
+			delete first_->previous_;
+			first_->previous_ = NULL;
 		}
 		mlock.unlock();
 	}
@@ -146,6 +166,7 @@ public:
 			}
 			node_->previous_ = oldNode->previous_;	// Link current to the previous' previous
 			delete oldNode;							// Delete
+			currentSize_--;
 			list_->mutex_.unlock();
 		}
 
@@ -168,6 +189,7 @@ public:
 				oldNode->next_->previous_ = node_;
 			}
 			delete oldNode;						// Then delete the node
+			currentSize_--;
 			list_->mutex_.unlock();
 		}
 
