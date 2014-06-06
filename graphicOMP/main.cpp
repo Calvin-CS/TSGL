@@ -6,6 +6,7 @@
 #include <omp.h>
 #include <stdlib.h>
 #include <math.h>
+#include <iostream>
 
 #define PI 3.14159265
 
@@ -89,28 +90,84 @@ void updateFunction5(Canvas* can) {
 		e = (a + can->getFrameNumber()) % 256;
 		f = (b + can->getFrameNumber()) % 256;
 		g = (a*b + can->getFrameNumber()) % 256;
-		can->setAutoRefresh(true);
 		can->drawLineColor(a,b,c,d,e,f,g);
 	}
 }
-void updateNullFunction(Canvas* can) {}
+void updateFunction6(Canvas* can) {
+	int tid, nthreads, i, j;
+	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
+	{
+		nthreads = omp_get_num_threads();
+		tid = omp_get_thread_num();
+		for (i = tid; i < 256; i+= nthreads) {
+			for (j = 0; j <= 256; j++) {
+				can->drawPointColor(i,j,i,j,can->getFrameNumber() % 256);
+			}
+		}
+	}
+}
+void mandelbrotFunction(Canvas* can) {
+	double x,y;
+	double xstep,ystep;
+	double z,zi,newz,newzi;
+	double colour;
+	int iter = 10;
+	long col;
+	int temp;
+	char pic[WINDOW_H][WINDOW_W];
+	int i,j,k;
+	bool inset;
+	int fd;
+
+	/* these are used for calculating the points corresponding to the pixels */
+	xstep = 1;
+	ystep = 1;
+
+	/*the main loop */
+	x = 0;
+	y = 0;
+	for (i = 0; i < WINDOW_H; i++) {
+		for (j = 0; j < WINDOW_W; j++) {
+			z = 0;
+			zi = 0;
+			inset = true;
+			for (k=0; k<iter; k++) {
+				newz = (z*z)-(zi*zi) + x;
+				newzi = 2*z*zi + y;
+				z = newz;
+				zi = newzi;
+				if(((z*z)+(zi*zi)) > 4) {
+					inset = false;
+					colour = k;
+					k = iter;
+				}
+			}
+			temp = inset ? 0 : (colour / iter * 255.0f);
+			pic[i][j] = temp;
+			std::cout << temp << std::endl;
+			x += xstep;
+		}
+		y += ystep;
+		x = 0;
+	}
+	for (i = 0; i < WINDOW_H; i++) {
+		for (j = 0; j <= WINDOW_W; j++) {
+			can->drawPointColor(i,j,pic[i][j],pic[i][j]/2,pic[i][j]/2);
+		}
+	}
+}
 
 int main() {
-	can = new Canvas(updateFunction5);
+	can = new Canvas(NULL,-1);
 
-//	int tid, nthreads, i, j, color;
-//	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
-//	{
-//		nthreads = omp_get_num_threads();
-//		tid = omp_get_thread_num();
-//		for (i = tid; i < WINDOW_W; i+= nthreads) {
-//			for (int j = 0; j <= WINDOW_H; j++) {
-//				color = i*128/WINDOW_W + j*128/WINDOW_H;
-//				can->drawPointColor(i,j,color,color,color);
-//			}
-//		}
-//	}
+	mandelbrotFunction(can);  //UNFINISHED
+
+	//updateFunction(can);
+
+	//can->setAutoRefresh(false);
+
 	can->start();
+//	can->setAutoRefresh(false);
 //	can2 = new Canvas(updateFunction2);
 //	can2->start();
 }

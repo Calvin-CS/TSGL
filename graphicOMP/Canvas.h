@@ -1,6 +1,6 @@
 // Canvas provides a window / canvas for all of the drawing operations in the graphicOMP library
 //
-// Authors: Patrick Crain, Mark Vander Stel, 6/5/2014
+// Authors: Patrick Crain, Mark Vander Stel, 6/6/2014
 
 #ifndef CANVAS_H_
 #define CANVAS_H_
@@ -19,7 +19,7 @@ const double FRAME = 1.0f/60.0f;	//Represents a single frame (@ 60Hz)
 class Canvas : public Fl_Box {
 	typedef void (*fcall)(Canvas* const);	//Define a type for our callback function pointer
 private:
-	List<Shape*> * myShapes;			//Our buffer of shapes to draw
+	List<Shape*> * myShapes;		//Our buffer of shapes to draw
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
 	int x,y,w,h;  					//Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
@@ -64,10 +64,13 @@ void Canvas::init(fcall c, int xx, int yy, int ww, int hh, int b) {
 	counter = 0;		//We haven't drawn any frames yet
 	autoRefresh = true;	//Default to clearing the queue every frame
 	x = xx; y = yy; w = ww; h = hh;  						//Initialize translation
-	myShapes = new List<Shape*>(b);								//Initialize myShapes
+	myShapes = new List<Shape*>(b);							//Initialize myShapes
 	box(FL_FLAT_BOX);  										//Sets the box we will draw to (the only one)
 	setColor(0,0,0);										//Our default global drawing color is black
-	updateFunc = c;											//Adds a callback to the user's own draw function
+	if (c == NULL) {
+		updateFunc = [](Canvas *c){};						//Empty lambda function that does nothing
+	} else
+		updateFunc = c;										//Adds a callback to the user's own draw function
 	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	//Adds a callback after 1/60 second to the Canvas' callback function
 }
 
