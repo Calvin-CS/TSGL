@@ -4,9 +4,15 @@
 
 #include "Canvas.h"
 #include <omp.h>
+#include <stdlib.h>
+#include <math.h>
 
-const int WINDOW_W = 800, WINDOW_H = 600;
+#define PI 3.14159265
+
+const int WINDOW_W = 800, WINDOW_H = 600, WINDOW_CW = WINDOW_W/2, WINDOW_HW = WINDOW_H/2;
 Canvas *can, *can2;
+int a,b,c = WINDOW_CW,d = WINDOW_HW,e,f,g;
+bool reverse = false;
 
 void updateFunction(Canvas* can) {
 	int tid, nthreads, i, j, color;
@@ -15,7 +21,7 @@ void updateFunction(Canvas* can) {
 		nthreads = omp_get_num_threads();
 		tid = omp_get_thread_num();
 		for (i = tid; i < WINDOW_W; i+= nthreads) {
-			for (int j = 0; j <= WINDOW_H; j++) {
+			for (j = 0; j <= WINDOW_H; j++) {
 				color = i*128/WINDOW_W + j*128/WINDOW_H;
 				can->drawPointColor(i,j,color,color,color);
 			}
@@ -23,8 +29,8 @@ void updateFunction(Canvas* can) {
 	}
 }
 void updateFunction2(Canvas* can) {
-	int tid, nthreads, i, j, color;
-	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
+	int tid, nthreads, i, j;
+	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
 	{
 		nthreads = omp_get_num_threads();
 		tid = omp_get_thread_num();
@@ -52,10 +58,46 @@ void updateFunction3(Canvas* can) {
 		}
 	}
 }
+void updateFunction4(Canvas* can) {
+	a = c;
+	b = d;
+	c = rand() % WINDOW_W;
+	d = rand() % WINDOW_H;
+	e = rand() % 256;
+	f = rand() % 256;
+	g = rand() % 256;
+	can->setAutoRefresh(false);
+	can->drawLineColor(a,b,c,d,e,f,g);
+}
+void updateFunction5(Canvas* can) {
+	int tid, nthreads, color;
+	reverse = !reverse;
+	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,a,b,c,d,e,f,g)
+	{
+		tid = omp_get_thread_num();
+		nthreads = omp_get_num_threads();
+		if (reverse) {
+			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber()-1)*PI/180);
+			b = WINDOW_HW + WINDOW_HW*cos(7.11*tid+(180+can->getFrameNumber()-1)*PI/180);
+			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+can->getFrameNumber()*PI/180);
+			d = WINDOW_HW + WINDOW_HW*cos(7.11*tid+can->getFrameNumber()*PI/180);
+		} else {
+			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(can->getFrameNumber()-1)*PI/180);
+			b = WINDOW_HW + WINDOW_HW*cos(7.11*tid+(can->getFrameNumber()-1)*PI/180);
+			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber())*PI/180);
+			d = WINDOW_HW + WINDOW_HW*cos(7.11*tid+(180+can->getFrameNumber())*PI/180);
+		}
+		e = rand() % 256;
+		f = rand() % 256;
+		g = rand() % 256;
+		can->setAutoRefresh(true);
+		can->drawLineColor(a,b,c,d,e,f,g);
+	}
+}
 void updateNullFunction(Canvas* can) {}
 
 int main() {
-	can = new Canvas(updateFunction3);
+	can = new Canvas(updateFunction5);
 
 //	int tid, nthreads, i, j, color;
 //	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)

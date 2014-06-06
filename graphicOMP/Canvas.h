@@ -10,6 +10,7 @@
 #include <FL/Fl_Box.H>				//For Fl_Box, from which our Canvas inherits
 #include <FL/fl_draw.H>				//For FLTK's drawing function, which we implement to make our own thread-safe version.
 #include "Point.h"					//Our own class for drawing single points.
+#include "Line.h"					//Our own class for drawing straight lines.
 #include <omp.h>					//For OpenMP support
 #include "List.h"					//Our own doubly-linked list for buffering drawing operations in a thread-safe manner.
 
@@ -38,6 +39,8 @@ public:
 	inline void setAutoRefresh(bool b);
 	inline Point drawPoint(int x, int y);								//Draws a point at the given coordinates
 	inline Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
+	inline Line drawLine(int x1, int y1, int x2, int y2);				//Draws a line at the given coordinates
+	inline Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);	//Draws a line at the given coordinates with the given color
 	inline int getColorR();												//Gets the red component of the global drawing color
 	inline int getColorG();												//Gets the green component of the global drawing color
 	inline int getColorB();												//Gets the blue component of the global drawing color
@@ -82,13 +85,11 @@ void Canvas::draw() {
 			int oldR = colorR;
 			int oldG = colorG;
 			int oldB = colorB;
-			bool started = false;
 			Shape *s;				//Pointer to the next Shape in the queue
 			//Iterate through our queue until we've made it to the end
 			for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end();iterator++) {
-				if (autoRefresh && started)
+				if (autoRefresh && iterator != myShapes.begin())
 					iterator.removePrevious();
-				started = true;
 				s = *iterator;		//Get the next item
 				if (s->getUsesDefaultColor()) {
 					s->draw();		//If our shape uses the default color, just draw it
@@ -213,12 +214,45 @@ Point Canvas::drawPoint(int x, int y) {
  * 		r, the red component
  * 		g, the red component
  * 		b, the red component
- * 	Returns: a new point at the given position with the specificed color
+ * 	Returns: a new point at the given position with the specified color
  */
 Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
 	Point *p = new Point(x,y,r,g,b);	//Creates the Point with the specified coordinates and color
 	myShapes.push(p);					//Push it onto our drawing queue
 	return *p;							//Return a pointer to our new Point
+}
+
+/*
+ * drawLine draws a line at the given coordinates
+ * Parameters:
+ * 		x1, the x position of the start of the line
+ * 		y1, the y position of the start of the line
+ *		x2, the x position of the end of the line
+ * 		y2, the y position of the end of the line
+ * 	Returns: a new line with the given coordinates
+ */
+Line Canvas::drawLine(int x1, int y1, int x2, int y2) {
+	Line *l = new Line(x1,y1,x2,y2);//Creates the Point with the specified coordinates
+	myShapes.push(l);				//Push it onto our drawing queue
+	return *l;						//Return a pointer to our new Point
+}
+
+/*
+ * drawLineColor draws a line at the given coordinates with the given color
+ * Parameters:
+ * 		x1, the x position of the start of the line
+ * 		y1, the y position of the start of the line
+ *		x2, the x position of the end of the line
+ * 		y2, the y position of the end of the line
+ * 		r, the red component
+ * 		g, the red component
+ * 		b, the red component
+ * 	Returns: a new line with the given coordinates and the specified color
+ */
+Line Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) {
+	Line *l = new Line(x1,y1,x2,y2,r,g,b);	//Creates the Point with the specified coordinates and color
+	myShapes.push(l);						//Push it onto our drawing queue
+	return *l;								//Return a pointer to our new Point
 }
 
 // Accessor functions for the individual components of the global drawing color
