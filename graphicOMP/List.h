@@ -23,7 +23,6 @@ private:
 		}
 		~Node() {
 			delete item_;
-			delete next_;
 		}
 
 		Node * previous_;
@@ -43,7 +42,10 @@ public:
 	}
 
 	virtual ~List() {
-		delete first_;
+		while (first_ != NULL) {
+			first_ = first_->next_;
+			delete first_->previous_;
+		}
 	}
 
 	/* pop() removes the last item and returns it
@@ -143,7 +145,6 @@ public:
 				list_->first_ = node_;				// Otherwise, current is the new first
 			}
 			node_->previous_ = oldNode->previous_;	// Link current to the previous' previous
-			oldNode->next_ = NULL;					// Ready...
 			delete oldNode;							// Delete
 			list_->mutex_.unlock();
 		}
@@ -165,7 +166,6 @@ public:
 			node_->next_ = oldNode->next_;
 			if (oldNode->next_ != NULL) {		// But only if there are two nodes
 				oldNode->next_->previous_ = node_;
-				oldNode->next_ = NULL;
 			}
 			delete oldNode;						// Then delete the node
 			list_->mutex_.unlock();
@@ -232,7 +232,7 @@ public:
 	 * Returns: an iterator on the last item
 	 */
 	Iterator end() {
-		return Iterator(this, last_);
+		return Iterator(this, NULL);
 	}
 };
 
