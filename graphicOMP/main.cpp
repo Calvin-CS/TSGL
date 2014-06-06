@@ -55,7 +55,7 @@ void updateFunction3(Canvas* can) {
 void updateNullFunction(Canvas* can) {}
 
 int main() {
-	can = new Canvas(updateFunction);
+	can = new Canvas(updateFunction3);
 
 //	int tid, nthreads, i, j, color;
 //	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
