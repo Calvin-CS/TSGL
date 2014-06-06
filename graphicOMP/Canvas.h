@@ -13,13 +13,14 @@
 #include "Line.h"					//Our own class for drawing straight lines.
 #include <omp.h>					//For OpenMP support
 #include "List.h"					//Our own doubly-linked list for buffering drawing operations in a thread-safe manner.
+#include <iostream>
 
 const double FRAME = 1.0f/60.0f;	//Represents a single frame (@ 60Hz)
 
 class Canvas : public Fl_Box {
 	typedef void (*fcall)(Canvas* const);	//Define a type for our callback function pointer
 private:
-	List<Shape*> myShapes;			//Our buffer of shapes to draw
+	List<Shape*> * myShapes;			//Our buffer of shapes to draw
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
 	int x,y,w,h;  					//Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
@@ -64,7 +65,7 @@ void Canvas::init(fcall c, int xx, int yy, int ww, int hh, int b) {
 	counter = 0;		//We haven't drawn any frames yet
 	autoRefresh = true;	//Default to clearing the queue every frame
 	x = xx; y = yy; w = ww; h = hh;  						//Initialize translation
-	//List<Shape*> myShapes(b);								//Initialize myShapes
+	myShapes = new List<Shape*>(b);								//Initialize myShapes
 	box(FL_FLAT_BOX);  										//Sets the box we will draw to (the only one)
 	setColor(0,0,0);										//Our default global drawing color is black
 	updateFunc = c;											//Adds a callback to the user's own draw function
@@ -84,9 +85,10 @@ void Canvas::draw() {
 	int oldB = colorB;
 	Shape *s;				//Pointer to the next Shape in the queue
 	//Iterate through our queue until we've made it to the end
-	for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end();iterator++) {
+	for (List<Shape*>::Iterator iterator = myShapes->begin(); iterator != myShapes->end();iterator++) {
 //		if (autoRefresh && iterator != myShapes.begin())
 //			iterator.removePrevious();
+		std::cout << myShapes->size() << std::endl;
 		s = *iterator;		//Get the next item
 		if (s->getUsesDefaultColor()) {
 			s->draw();		//If our shape uses the default color, just draw it
@@ -97,7 +99,9 @@ void Canvas::draw() {
 			setColor(oldR, oldG, oldB);
 		}
 	}
-	myShapes.clear();
+	if (autoRefresh) {
+		myShapes->clear();
+	}
 }
 
 /*
@@ -197,7 +201,7 @@ void Canvas::setAutoRefresh(bool b) {
  */
 Point Canvas::drawPoint(int x, int y) {
 	Point *p = new Point(x,y);	//Creates the Point with the specified coordinates
-	myShapes.push(p);			//Push it onto our drawing queue
+	myShapes->push(p);			//Push it onto our drawing queue
 	return *p;					//Return a pointer to our new Point
 }
 
@@ -213,7 +217,7 @@ Point Canvas::drawPoint(int x, int y) {
  */
 Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
 	Point *p = new Point(x,y,r,g,b);	//Creates the Point with the specified coordinates and color
-	myShapes.push(p);					//Push it onto our drawing queue
+	myShapes->push(p);					//Push it onto our drawing queue
 	return *p;							//Return a pointer to our new Point
 }
 
@@ -228,7 +232,7 @@ Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
  */
 Line Canvas::drawLine(int x1, int y1, int x2, int y2) {
 	Line *l = new Line(x1,y1,x2,y2);//Creates the Point with the specified coordinates
-	myShapes.push(l);				//Push it onto our drawing queue
+	myShapes->push(l);				//Push it onto our drawing queue
 	return *l;						//Return a pointer to our new Point
 }
 
@@ -246,7 +250,7 @@ Line Canvas::drawLine(int x1, int y1, int x2, int y2) {
  */
 Line Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) {
 	Line *l = new Line(x1,y1,x2,y2,r,g,b);	//Creates the Point with the specified coordinates and color
-	myShapes.push(l);						//Push it onto our drawing queue
+	myShapes->push(l);						//Push it onto our drawing queue
 	return *l;								//Return a pointer to our new Point
 }
 

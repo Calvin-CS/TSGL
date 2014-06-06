@@ -33,11 +33,14 @@ private:
 	Node * first_;
 	Node * last_;
 
-	unsigned int maxSize_, currentSize_;
+	int maxSize_;
+	unsigned int currentSize_;
 
 	std::mutex mutex_;			// Mutex for locking the list so that only one
 								// thread can read/write at a time
 public:
+	/* Default constructor. Sets no size limits
+	 */
 	List() {
 		first_ = NULL;
 		last_ = NULL;
@@ -45,7 +48,12 @@ public:
 		currentSize_ = 0;
 	}
 
-	List(unsigned int size) {
+	/* Explicit constructor.
+	 * Parameters:
+	 * 		size: the max size of the list. Pushing beyond this size will cause
+	 * 				the first (oldest) items to be deleted
+	 */
+	List(int size) {
 		first_ = NULL;
 		last_ = NULL;
 		maxSize_ = size;
@@ -57,6 +65,10 @@ public:
 			first_ = first_->next_;
 			delete first_->previous_;
 		}
+	}
+
+	unsigned size() {
+		return currentSize_;
 	}
 
 	/* pop() removes the last item and returns it
@@ -126,10 +138,11 @@ public:
 			last_ = last_->next_;					// And make it the new last
 		}
 		currentSize_++;
-		if (currentSize_ > maxSize_) {
-			first_ = first_->next_;
-			delete first_->previous_;
+		if (currentSize_ > maxSize_) {				// If size is greater than the max...
+			first_ = first_->next_;					// Move the first node
+			delete first_->previous_;				// Delete the old first node
 			first_->previous_ = NULL;
+			currentSize_--;
 		}
 		mlock.unlock();
 	}
