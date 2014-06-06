@@ -23,6 +23,7 @@ private:
 			next_ = NULL;
 		}
 		~Node() {
+			delete item_;
 			delete next_;
 		}
 
@@ -47,16 +48,17 @@ public:
 
 	Item pop() {
 		if (first_ == NULL) {
-			throw std::out_of_range("Pop(): Queue is empty");
+			throw std::out_of_range("List::pop(): Queue is empty");
 		} else {
 			std::unique_lock<std::mutex> mlock(mutex_);
-			Item * item = last_->_item;
-			last_ = last_->_previous;
-			delete last_->_next;
-			if (last_ == NULL) {
-				first_ == NULL;
+			Item * item = last_->item_;
+			if (last_ == first_) {
+				clear();
+			} else {
+				last_ = last_->previous_;
+				delete last_->next_;
+				last_->next_ = NULL;
 			}
-
 			mlock.unlock();
 			return item;
 		}
@@ -64,26 +66,30 @@ public:
 
 	void remove() {
 		if (first_ == NULL) {
-			throw std::out_of_range("Remove(): Queue is empty");
+			throw std::out_of_range("List::remove(): Queue is empty");
 		} else {
 			std::unique_lock<std::mutex> mlock(mutex_);
-			last_ = last_->previous_;
-			delete last_->next_;
-			if (last_ == NULL) { first_ == NULL; }
-
+			if (last_ == first_) {
+				clear();
+			} else {
+				last_ = last_->previous_;
+				delete last_->next_;
+				last_->next_ = NULL;
+			}
 			mlock.unlock();
 		}
 	}
 
 	void clear() {
 		delete first_;
+		first_ = NULL;
 		last_ = NULL;
 	}
 
 	void push(const Item item) {
 		std::unique_lock<std::mutex> mlock(mutex_);
 
-		if (last_ == NULL) {
+		if (first_ == NULL) {
 			first_ = new Node(item, last_);
 			last_ = first_;
 		} else {
@@ -104,15 +110,16 @@ public:
 
 		void removePrevious() {
 			std::unique_lock<std::mutex> mlock(list_->mutex_);
-			Node * oldNode = node_->previous_;
-			if (oldNode == NULL) {
+			if (node_ == list_->first_) {
 				list_->mutex_.unlock();
-				return;
+				throw std::out_of_range("List::Iterator::removePrevious(): There is no previous node");
 			}
-			if (oldNode->previous_ != NULL)
+			Node * oldNode = node_->previous_;
+			if (oldNode->previous_ != NULL) {
 				oldNode->previous_->next_ = node_;
-			else
+			} else {
 				list_->first_ = node_;
+			}
 			node_->previous_ = oldNode->previous_;
 			oldNode->next_ = NULL;
 			delete oldNode;
