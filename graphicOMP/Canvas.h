@@ -23,20 +23,21 @@ private:
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
 	int x,y,w,h;  					//Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
+	int drawBufferSize;				//Maximum allowed Shapes in our drawing List
 	Fl_Double_Window *window;		//The FLTK window to which we draw
 	bool started;					//Whether our canvas is running and the counter is counting
-	bool autoRefresh;
+	bool autoRefresh;				//Whether or not we automatically refresh the Canvas each frame
 	fcall updateFunc;				//User-defined callback function for drawing
-	inline void init(fcall c, int xx, int yy, int ww, int hh);	//Method for initializing the canvas
+	inline void init(fcall c, int xx, int yy, int ww, int hh, int b);	//Method for initializing the canvas
 	inline void draw();											//Method for drawing the canvas and the shapes within
 	inline static void Canvas_Callback(void *userdata);			//Callback so that the canvas redraws periodically
 public:
-	inline Canvas(fcall c);											//Default constructor for our Canvas
-	inline Canvas(fcall c, int xx, int yy, int w, int h, char* t);	//Explicit constructor for our Canvas
+	inline Canvas(fcall c, int b);										//Default constructor for our Canvas
+	inline Canvas(fcall c, int xx, int yy, int w, int h, int b, char* t);	//Explicit constructor for our Canvas
 	inline int start();													//Function to start rendering our Canvas
 	inline int end();													//Function to end rendering our Canvas
 	inline void setColor(int r, int g, int b);							//Sets the global drawing color
-	inline void setAutoRefresh(bool b);
+	inline void setAutoRefresh(bool b);									//Sets whether we automatically refresh the Canvas
 	inline Point drawPoint(int x, int y);								//Draws a point at the given coordinates
 	inline Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
 	inline Line drawLine(int x1, int y1, int x2, int y2);				//Draws a line at the given coordinates
@@ -45,6 +46,7 @@ public:
 	inline int getColorG();												//Gets the green component of the global drawing color
 	inline int getColorB();												//Gets the blue component of the global drawing color
 	inline int getFrameNumber();										//Accessor for the number of frames rendered so far
+	inline int getBufferSize();											//Accessor for the Shape list's buffer size
 };
 
 /*
@@ -54,13 +56,15 @@ public:
  * 		xx, the x position of the Canvas window
  * 		yy, the y position of the Canvas window
  * 		width, the x dimension of the Canvas window
- * 		width, the y dimension of the Canvas window
+ * 		height, the y dimension of the Canvas window
+ * 		b, the buffer size for the Shapes (-1 = no limit)
  */
-void Canvas::init(fcall c, int xx, int yy, int ww, int hh) {
+void Canvas::init(fcall c, int xx, int yy, int ww, int hh, int b) {
 	started = false;  	//We haven't started the window yet
 	counter = 0;		//We haven't drawn any frames yet
 	autoRefresh = true;	//Default to clearing the queue every frame
-	x = xx; y = yy; w = ww; h = hh;  				//Initialize translation
+	x = xx; y = yy; w = ww; h = hh;  						//Initialize translation
+	//List<Shape*> myShapes(b);								//Initialize myShapes
 	box(FL_FLAT_BOX);  										//Sets the box we will draw to (the only one)
 	setColor(0,0,0);										//Our default global drawing color is black
 	updateFunc = c;											//Adds a callback to the user's own draw function
@@ -73,38 +77,27 @@ void Canvas::init(fcall c, int xx, int yy, int ww, int hh) {
  */
 void Canvas::draw() {
 	counter++;				//Increment the frame counter
-//	#pragma omp parallel sections
-//	{
-//		#pragma omp section
-//		{
-			updateFunc(this);			//Call the user's callback to do work on the Canvas
-//		}
-//		#pragma omp section
-//		{
-			//Temporary variables for the initial global drawing color
-			int oldR = colorR;
-			int oldG = colorG;
-			int oldB = colorB;
-			Shape *s;				//Pointer to the next Shape in the queue
-			//Iterate through our queue until we've made it to the end
-			for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end();iterator++) {
-				if (autoRefresh && iterator != myShapes.begin())
-					iterator.removePrevious();
-				s = *iterator;		//Get the next item
-				if (s->getUsesDefaultColor()) {
-					s->draw();		//If our shape uses the default color, just draw it
-				}
-				else {				//Otherwise, the color must be set before and after drawing
-					setColor(s->getColorR(),s->getColorG(),s->getColorB());
-					s->draw();
-					setColor(oldR, oldG, oldB);
-				}
-			}
-//			if (autoRefresh)
-//				myShapes.remove();
-//			myShapes.clear();
-//		}
-//	}
+	updateFunc(this);		//Call the user's callback to do work on the Canvas
+	//Temporary variables for the initial global drawing color
+	int oldR = colorR;
+	int oldG = colorG;
+	int oldB = colorB;
+	Shape *s;				//Pointer to the next Shape in the queue
+	//Iterate through our queue until we've made it to the end
+	for (List<Shape*>::Iterator iterator = myShapes.begin(); iterator != myShapes.end();iterator++) {
+//		if (autoRefresh && iterator != myShapes.begin())
+//			iterator.removePrevious();
+		s = *iterator;		//Get the next item
+		if (s->getUsesDefaultColor()) {
+			s->draw();		//If our shape uses the default color, just draw it
+		}
+		else {				//Otherwise, the color must be set before and after drawing
+			setColor(s->getColorR(),s->getColorG(),s->getColorB());
+			s->draw();
+			setColor(oldR, oldG, oldB);
+		}
+	}
+	myShapes.clear();
 }
 
 /*
@@ -122,10 +115,11 @@ void Canvas::Canvas_Callback(void *userdata) {
  * Default constructor for the canvas class
  * Parameter:
  * 		c, a callback to the user's own draw function
+ * 		b, the buffer size for the Shapes (-1 = no limit)
  * Returns: a new 800x600 Canvas on the topleft of the screen with no title
  */
-Canvas::Canvas(fcall c) : Fl_Box (0,0,800,600) {
-	init(c,0,0,800,600);
+Canvas::Canvas(fcall c, int b = -1) : Fl_Box (0,0,800,600) {
+	init(c,0,0,800,600,b);
 }
 
 /*
@@ -136,11 +130,12 @@ Canvas::Canvas(fcall c) : Fl_Box (0,0,800,600) {
  * 		yy, the y position of the Canvas window
  * 		w, the x dimension of the Canvas window
  * 		h, the y dimension of the Canvas window
+ * 		b, the buffer size for the Shapes (-1 = no limit)
  * 		t, the title of the window
  * Returns: a new Canvas with the specified positional data and title
  */
-Canvas::Canvas(fcall c, int xx, int yy, int w, int h, char* t = 0) : Fl_Box(xx,yy,w,h,t) {
-	init(c,xx,yy,w,h);
+Canvas::Canvas(fcall c, int xx, int yy, int w, int h, int b = -1, char* t = 0) : Fl_Box(xx,yy,w,h,t) {
+	init(c,xx,yy,w,h,b);
 }
 
 /*

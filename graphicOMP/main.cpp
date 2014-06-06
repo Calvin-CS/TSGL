@@ -9,9 +9,9 @@
 
 #define PI 3.14159265
 
-const int WINDOW_W = 800, WINDOW_H = 600, WINDOW_CW = WINDOW_W/2, WINDOW_HW = WINDOW_H/2;
+const int WINDOW_W = 800, WINDOW_H = 600, WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
 Canvas *can, *can2;
-int a,b,c = WINDOW_CW,d = WINDOW_HW,e,f,g;
+int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 bool reverse = false;
 
 void updateFunction(Canvas* can) {
@@ -70,26 +70,25 @@ void updateFunction4(Canvas* can) {
 	can->drawLineColor(a,b,c,d,e,f,g);
 }
 void updateFunction5(Canvas* can) {
-	int tid, nthreads, color;
+	int tid;
 	reverse = !reverse;
-	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,a,b,c,d,e,f,g)
+	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,a,b,c,d,e,f,g)
 	{
 		tid = omp_get_thread_num();
-		nthreads = omp_get_num_threads();
 		if (reverse) {
 			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber()-1)*PI/180);
-			b = WINDOW_HW + WINDOW_HW*cos(7.11*tid+(180+can->getFrameNumber()-1)*PI/180);
+			b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber()-1)*PI/180);
 			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+can->getFrameNumber()*PI/180);
-			d = WINDOW_HW + WINDOW_HW*cos(7.11*tid+can->getFrameNumber()*PI/180);
+			d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+can->getFrameNumber()*PI/180);
 		} else {
 			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(can->getFrameNumber()-1)*PI/180);
-			b = WINDOW_HW + WINDOW_HW*cos(7.11*tid+(can->getFrameNumber()-1)*PI/180);
+			b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(can->getFrameNumber()-1)*PI/180);
 			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber())*PI/180);
-			d = WINDOW_HW + WINDOW_HW*cos(7.11*tid+(180+can->getFrameNumber())*PI/180);
+			d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber())*PI/180);
 		}
-		e = rand() % 256;
-		f = rand() % 256;
-		g = rand() % 256;
+		e = (a + can->getFrameNumber()) % 256;
+		f = (b + can->getFrameNumber()) % 256;
+		g = (a*b + can->getFrameNumber()) % 256;
 		can->setAutoRefresh(true);
 		can->drawLineColor(a,b,c,d,e,f,g);
 	}
