@@ -15,6 +15,7 @@ private:
 	double cartWidth, cartHeight;
 	double pixelWidth, pixelHeight;
 	cfcall cartesianUpdateFunc;
+	double xError, yError;
 public:
 	inline CartesianCanvas(cfcall c, int b);										//Default constructor for our Canvas
 	inline CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
@@ -54,8 +55,10 @@ CartesianCanvas::CartesianCanvas(cfcall c, int b = -1) : Canvas(NULL, b) {
 	maxY = 300;
 	cartWidth = maxX-minX;
 	cartHeight = maxY-minY;
-	pixelWidth = cartWidth / monitorWidth;
-	pixelHeight = cartHeight / monitorHeight;
+	xError = 1.0f/monitorWidth;
+	yError = 1.0f/monitorHeight;
+	pixelWidth = (cartWidth-xError) / monitorWidth;
+	pixelHeight = (cartHeight-yError) / monitorHeight;
 }
 
 /*
@@ -87,8 +90,10 @@ CartesianCanvas::CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
 	maxY = yMax;
 	cartWidth = maxX-minX;
 	cartHeight = maxY-minY;
-	pixelWidth = cartWidth / monitorWidth;
-	pixelHeight = cartHeight / monitorHeight;
+	xError = 1.0f/monitorWidth;
+	yError = 1.0f/monitorHeight;
+	pixelWidth = (cartWidth-xError) / monitorWidth;
+	pixelHeight = (cartHeight-yError) / monitorHeight;
 }
 
 /*
