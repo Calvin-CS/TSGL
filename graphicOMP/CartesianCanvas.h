@@ -28,8 +28,9 @@ public:
 	inline double getMaxX() { return maxX; }							//Accessor for maxX
 	inline double getMinY() { return minY; }							//Accessor for minY
 	inline double getMaxY() { return maxY; }							//Accessor for maxY
-	inline Point drawPoint(int x, int y);								//Draws a point at the given coordinates
-	inline Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
+	inline Point drawPoint(double x, double y);							//Draws a point at the given coordinates
+	inline Point drawPointColor(double x, double y,
+			int r, int g, int b);										//Draws a point at the given coordinates with the given color
 	inline Line drawLine(double x1, double y1, double x2, double y2);	//Draws a line at the given coordinates
 	inline Line drawLineColor(double x1, double y1, double x2,
 			double y2, int r, int g, int b);							//Draws a line at the given coordinates with the given color
@@ -130,7 +131,7 @@ void CartesianCanvas::getCartesianCoordinates(double screenX, double screenY, do
  * 		y, the y position of the point
  * 	Returns: a new point at the Cartesian-adjusted position
  */
-Point CartesianCanvas::drawPoint(int x, int y) {
+Point CartesianCanvas::drawPoint(double x, double y) {
 	double actualX, actualY;
 	getScreenCoordinates(x,y,actualX,actualY);
 	Point* p = new Point(actualX,actualY);	//Creates the Point with the specified coordinates
@@ -148,7 +149,7 @@ Point CartesianCanvas::drawPoint(int x, int y) {
  * 		b, the red component
  * 	Returns: a new point at the Cartesian-adjusted position with the specified color
  */
-Point CartesianCanvas::drawPointColor(int x, int y, int r, int g, int b) {
+Point CartesianCanvas::drawPointColor(double x, double y, int r, int g, int b) {
 	double actualX, actualY;
 	getScreenCoordinates(x,y,actualX,actualY);
 	Point* p = new Point(actualX,actualY,r,g,b);	//Creates the Point with the specified coordinates and color
