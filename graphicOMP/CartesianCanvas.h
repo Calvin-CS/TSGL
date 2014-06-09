@@ -8,14 +8,6 @@
 #ifndef CARTESIANCANVAS_H_
 #define CARTESIANCANVAS_H_
 
-#include "FL/Fl.H"					//For using basic FLTK library functions
-#include <FL/Fl_Double_Window.H>	//For Fl_Double_Window, which draws our window
-#include <FL/Fl_Box.H>				//For Fl_Box, from which our Canvas inherits
-#include <FL/fl_draw.H>				//For FLTK's drawing function, which we implement to make our own thread-safe version.
-#include "Point.h"					//Our own class for drawing single points.
-#include "Line.h"					//Our own class for drawing straight lines.
-#include "List.h"					//Our own doubly-linked list for buffering drawing operations in a thread-safe manner.
-
 class CartesianCanvas : public Canvas {
 	typedef void (*fcall)(Canvas* const);	//Define a type for our callback function pointer
 private:
@@ -28,7 +20,8 @@ public:
 			double xMin, double yMin, double xMax, double yMax, int b, char *t);
 	inline void getScreenCoordinates(double cartX, double cartY, double &screenX, double &screenY);
 	inline void getCartesianCoordinates(double screenX, double screenY, double &cartX, double &cartY);
-
+	inline double getPixelWidth() { return pixelWidth; }
+	inline double getpixelHeight() { return pixelHeight; }
 	inline Point drawPoint(int x, int y);								//Draws a point at the given coordinates
 	inline Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
 	inline Line drawLine(int x1, int y1, int x2, int y2);				//Draws a line at the given coordinates
@@ -148,4 +141,4 @@ Line CartesianCanvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g
 	return *l;								//Return a pointer to our new Point
 }
 
-#endif /* CANVAS_H_ */
+#endif /* CARTESIANCANVAS_H_- */
