@@ -4,15 +4,12 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../line.cpp \
 ../main.cpp 
 
 OBJS += \
-./line.o \
 ./main.o 
 
 CPP_DEPS += \
-./line.d \
 ./main.d 
 
 

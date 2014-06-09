@@ -22,10 +22,10 @@ const double FRAME = 1.0f/FPS;		//Represents a single frame
 
 class Canvas : public Fl_Box {
 	typedef void (*fcall)(Canvas* const);	//Define a type for our callback function pointer
-private:
+protected:
 	List<Shape*> * myShapes;		//Our buffer of shapes to draw
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
-	int x,y,w,h;  					//Positioning and sizing data for the Canvas
+	int monitorX,monitorY,monitorWidth,monitorHeight;  					//Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
 	int drawBufferSize;				//Maximum allowed Shapes in our drawing List
 	Fl_Double_Window* window;		//The FLTK window to which we draw
@@ -42,10 +42,10 @@ public:
 	inline int end();													//Function to end rendering our Canvas
 	inline void setColor(int r, int g, int b);							//Sets the global drawing color
 	inline void setAutoRefresh(bool b);									//Sets whether we automatically refresh the Canvas
-	inline Point drawPoint(int x, int y);								//Draws a point at the given coordinates
-	inline Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
-	inline Line drawLine(int x1, int y1, int x2, int y2);				//Draws a line at the given coordinates
-	inline Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);	//Draws a line at the given coordinates with the given color
+	inline virtual Point drawPoint(int x, int y);								//Draws a point at the given coordinates
+	inline virtual Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
+	inline virtual Line drawLine(int x1, int y1, int x2, int y2);				//Draws a line at the given coordinates
+	inline virtual Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);	//Draws a line at the given coordinates with the given color
 	inline int getColorR();												//Gets the red component of the global drawing color
 	inline int getColorG();												//Gets the green component of the global drawing color
 	inline int getColorB();												//Gets the blue component of the global drawing color
@@ -67,7 +67,7 @@ void Canvas::init(fcall c, int xx, int yy, int ww, int hh, int b) {
 	started = false;  	//We haven't started the window yet
 	counter = 0;		//We haven't drawn any frames yet
 	autoRefresh = true;	//Default to clearing the queue every frame
-	x = xx; y = yy; w = ww; h = hh;  						//Initialize translation
+	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;  						//Initialize translation
 	myShapes = new List<Shape*>(b);							//Initialize myShapes
 	box(FL_FLAT_BOX);  										//Sets the box we will draw to (the only one)
 	setColor(0,0,0);										//Our default global drawing color is black
@@ -153,12 +153,12 @@ Canvas::Canvas(fcall c, int xx, int yy, int w, int h, int b = -1, char* t = 0) :
  * Returns: the exit code of the FLTK render method
  */
 int Canvas::start() {
-	if (started)						//If we're already started, return error code -1
+	if (started)												//If we're already started, return error code -1
 		return -1;
-	started = true;						//We've now started
-    window = new Fl_Double_Window(w,h);	//Instantiate our drawing window
-    window->add(this);					//Add ourself (Canvas) to the drawing window
-    window->show();						//Show the window
+	started = true;												//We've now started
+    window = new Fl_Double_Window(monitorWidth,monitorHeight);	//Instantiate our drawing window
+    window->add(this);											//Add ourself (Canvas) to the drawing window
+window->show();													//Show the window
     return(Fl::run());
 }
 

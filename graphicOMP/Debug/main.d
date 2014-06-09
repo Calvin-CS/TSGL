@@ -22,7 +22,7 @@ main.d: ../main.cpp ../Canvas.h \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Image.H \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_Pixmap.H \
  /home/mbv26/summer2014/graphicOMP.git/libraries/include/FL/Fl_RGB_Image.H \
- ../Point.h ../Shape.h ../Line.h ../List.h
+ ../Point.h ../Shape.h ../Line.h ../List.h ../CartesianCanvas.h
 
 ../Canvas.h:
 
@@ -79,3 +79,5 @@ main.d: ../main.cpp ../Canvas.h \
 ../Line.h:
 
 ../List.h:
+
+../CartesianCanvas.h:

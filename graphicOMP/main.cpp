@@ -6,6 +6,7 @@
  */
 
 #include "Canvas.h"
+#include "CartesianCanvas.h"
 #include <omp.h>
 #include <stdlib.h>
 #include <math.h>
@@ -158,7 +159,8 @@ void mandelbrotFunction(Canvas* can) {
 }
 
 int main() {
-	Canvas* can = new Canvas(updateFunction5, 1000);
+//	Canvas* can = new Canvas(updateFunction5, -1);
+	CartesianCanvas* can = new CartesianCanvas(updateFunction5, -1);
 
 //	mandelbrotFunction(can);  //UNFINISHED
 
