@@ -13,9 +13,12 @@
 #include <iostream>
 #include <complex>
 
-const int WINDOW_W = 800, WINDOW_H = 600, WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
+const int WINDOW_X = 200, WINDOW_Y = 200, WINDOW_W = 800, WINDOW_H = 600;
+const int WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
 int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 bool reverse = false;
+
+enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
 
 void updateFunction1(Canvas* can) {
 	int tid, nthreads, i, j, color;
@@ -108,62 +111,47 @@ void updateFunction6(Canvas* can) {
 		}
 	}
 }
-/*void mandelbrotFunction(Canvas* can) {
-	double x,y;
-	double xstep,ystep;
-	double z,zi,newz,newzi;
-	double colour;
-	int iter = 10;
-	long col;
-	int temp;
-	char pic[WINDOW_H][WINDOW_W];
-	int i,j,k;
-	bool inset;
-	int fd;
 
-	 these are used for calculating the points corresponding to the pixels
-	xstep = 1;
-	ystep = 1;
+void mandelbrotFunction(CartesianCanvas* can) {
+	long double j;
+	static int numProcs = 8;
+	unsigned int iterations, tid;
+	int share = can->getWindowHeight() / numProcs;
+	if (can->getFrameNumber() <= share) {	// As long as we aren't trying to render off of the screen...
+		double i;
+		unsigned int depth = 255;
 
-	the main loop
-	x = 0;
-	y = 0;
-	for (i = 0; i < WINDOW_H; i++) {
-		for (j = 0; j < WINDOW_W; j++) {
-			z = 0;
-			zi = 0;
-			inset = true;
-			for (k=0; k<iter; k++) {
-				newz = (z*z)-(zi*zi) + x;
-				newzi = 2*z*zi + y;
-				z = newz;
-				zi = newzi;
-				if(((z*z)+(zi*zi)) > 4) {
-					inset = false;
-					colour = k;
-					k = iter;
+		#pragma omp parallel num_threads(numProcs) private(i, j, iterations, tid)
+		{
+			tid = omp_get_thread_num();
+			j = -1.125 + ((can->getFrameNumber()-1)*numProcs+tid)*can->getPixelHeight();
+			for (i = -2; i <= 1; i += can->getPixelWidth()) {
+				std::complex<double> originalComplex(i, j);
+				std::complex<double> complex(i, j);
+				iterations = 0;
+				while (std::abs(complex) < 2 && iterations != depth) {
+					iterations++;
+					complex = originalComplex + std::pow(complex, 2);
 				}
+				long double ci,cj;
+				can->getScreenCoordinates(i,j,ci,cj);
+				if (iterations == depth)					// If the point never escaped...
+					can->drawPointColor(i, j, 0,0,0);
+					//can->drawPointColor(i, j, (int)(ci*cj) % 255, (int)(ci*cj) % 255, (int)(ci*cj) % 255);		// Draw it black
+				else
+					can->drawPointColor(i, j, iterations, iterations, iterations);	// Draw it grayscale
 			}
-			temp = inset ? 0 : (colour / iter * 255.0f);
-			pic[i][j] = temp;
-			std::cout << temp << std::endl;
-			x += xstep;
-		}
-		y += ystep;
-		x = 0;
-	}
-	for (i = 0; i < WINDOW_H; i++) {
-		for (j = 0; j <= WINDOW_W; j++) {
-			can->drawPointColor(i,j,pic[i][j],pic[i][j]/2,pic[i][j]/2);
 		}
 	}
-}*/
-void mandelbrotFunction2(CartesianCanvas* can) {
-	if (can->getFrameNumber() <= can->getWindowHeight()) {	// As long as we aren't trying to render off of the screen...
-		double i, j;
-		unsigned int depth = 150;
+}
 
-		j = -1.5 + (can->getFrameNumber() - 1) * can->getPixelHeight();	// Get height based on frame number
+void mandelbrotFunction2(CartesianCanvas* can) {
+	long double j;
+	if (can->getFrameNumber() <= can->getWindowHeight()) {	// As long as we aren't trying to render off of the screen...
+		long double i;
+		unsigned int depth = 500;
+
+		j = -1.125 + can->getFrameNumber()*can->getPixelHeight();
 
 //		#pragma omp parallel num_threads(omp_get_num_procs()) private(i)
 //		{
@@ -194,8 +182,86 @@ void mandelbrotFunction2(CartesianCanvas* can) {
 						}
 						iterations -= 150;
 					}*/
-				}
-//			}
+//				}
+			}
+		}
+	}
+}
+
+static bool filled[800][600] = { false };
+static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
+void langtonFunction(CartesianCanvas* can) {
+	static int xx = 400, yy = 300;
+	static int direction = UP;
+	for (int i = 0; i < 500; i ++) {
+		if (filled[xx][yy]) {
+			direction = (direction + 1) % 4;
+			can->drawPointColor(xx,yy,255,0,0);
+		}
+		else {
+			direction = (direction + 3) % 4;
+			can->drawPointColor(xx,yy,0,0,0);
+		}
+		filled[xx][yy] = !filled[xx][yy];
+		if (direction == UP)
+			yy = yy > 0 ? yy-1 : 599;
+		else if (direction == RIGHT)
+			xx = xx < 799 ? xx+1 : 0;
+		else if (direction == DOWN)
+			yy = yy < 599 ? yy+1 : 0;
+		else if (direction == LEFT)
+			xx = xx > 0 ? xx-1 : 799;
+		else
+			std::cout << "BAD: dir == " << direction << std::endl;
+	}
+}
+
+void langtonInit() {
+	xx[0] = 300; yy[0] = 300; red[0] = 255; green[0] = 0;   blue[0] = 0;
+	xx[1] = 400; yy[1] = 200; red[1] = 0;   green[1] = 0;   blue[1] = 255;
+	xx[2] = 500; yy[2] = 300; red[2] = 0;   green[2] = 255; blue[2] = 0;
+	xx[3] = 400; yy[3] = 400; red[3] = 255; green[3] = 0;   blue[3] = 255;
+	for (int i = 0; i < 4; i++) { dir[i] = i; }
+}
+
+void langtonFunction2(CartesianCanvas* can) {
+	for (int i = 0; i < 5000; i++) {
+		for (int j = 0; j < 4; j++) {
+			if (filled[xx[j]][yy[j]]) {
+				dir[j] = (dir[j] + 1) % 4;
+				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+			}
+			else {
+				dir[j] = (dir[j] + 3) % 4;
+				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+			}
+			if (dir[j] == UP) {
+				if (yy[j] > 0)
+					yy[j] = yy[j] - 1;
+				else
+					yy[j] = 599;
+			}
+			else if (dir[j] == RIGHT) {
+				if (xx[j] < 799)
+					xx[j] = xx[j] + 1;
+				else
+					xx[j] = 0;
+			}
+			else if (dir[j] == DOWN) {
+				if (yy[j] < 599)
+					yy[j] = yy[j] + 1;
+				else
+					yy[j] = 0;
+			}
+			else if (dir[j] == LEFT) {
+				if (xx[j] > 0)
+					xx[j] = xx[j] - 1;
+				else
+					xx[j] = 799;
+			}
+		}
+		for (int j = 0; j < 4; j++) {
+			filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
 		}
 	}
 }
@@ -211,10 +277,16 @@ int main() {
 //	CartesianCanvas* can = new CartesianCanvas(updateFunction5, -1);
 //	can->start();
 
-	CartesianCanvas* can = new CartesianCanvas(mandelbrotFunction2, 0, 0, 800, 600,
-												-2, -1.5, 1, 1.5, -1);
+//	CartesianCanvas* can = new CartesianCanvas(mandelbrotFunction,
+//			0, 0, WINDOW_W, WINDOW_H, -1.1, -1.125, 1, 1.125, -1);
+
+	langtonInit();
+	CartesianCanvas* can = new CartesianCanvas(langtonFunction2,
+			0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
+
 //	can->setAutoRefresh(false);
 //	mandelbrotFunction2(can);
+//	can->start();
 	can->start();
 
 }
