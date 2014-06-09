@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <iostream>
+#include <complex>
 
 const int WINDOW_W = 800, WINDOW_H = 600, WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
 int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
@@ -71,7 +72,7 @@ void updateFunction4(Canvas* can) {
 	can->setAutoRefresh(false);
 	can->drawLineColor(a,b,c,d,e,f,g);
 }
-void updateFunction5(Canvas* can) {
+void updateFunction5(CartesianCanvas* can) {
 	int tid;
 	reverse = !reverse;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,a,b,c,d,e,f,g)
@@ -107,7 +108,7 @@ void updateFunction6(Canvas* can) {
 		}
 	}
 }
-void mandelbrotFunction(Canvas* can) {
+/*void mandelbrotFunction(Canvas* can) {
 	double x,y;
 	double xstep,ystep;
 	double z,zi,newz,newzi;
@@ -120,11 +121,11 @@ void mandelbrotFunction(Canvas* can) {
 	bool inset;
 	int fd;
 
-	/* these are used for calculating the points corresponding to the pixels */
+	 these are used for calculating the points corresponding to the pixels
 	xstep = 1;
 	ystep = 1;
 
-	/*the main loop */
+	the main loop
 	x = 0;
 	y = 0;
 	for (i = 0; i < WINDOW_H; i++) {
@@ -156,21 +157,64 @@ void mandelbrotFunction(Canvas* can) {
 			can->drawPointColor(i,j,pic[i][j],pic[i][j]/2,pic[i][j]/2);
 		}
 	}
+}*/
+void mandelbrotFunction2(CartesianCanvas* can) {
+	if (can->getFrameNumber() <= can->getWindowHeight()) {	// As long as we aren't trying to render off of the screen...
+		double i, j;
+		unsigned int depth = 150;
+
+		j = -1.5 + (can->getFrameNumber() - 1) * can->getPixelHeight();	// Get height based on frame number
+
+//		#pragma omp parallel num_threads(omp_get_num_procs()) private(i)
+//		{
+			for (i = -2; i <= 1; i += can->getPixelWidth()) {
+				std::complex<double> originalComplex(i, j);
+				std::complex<double> complex(i, j);
+				unsigned int iterations = 0;
+
+				while (std::abs(complex) < 2 && iterations != depth) {
+					iterations++;
+					complex = originalComplex + std::pow(complex, 2);
+				}
+
+				// do color stuff here based on count
+				if (iterations == depth) {					// If the point never escaped...
+					can->drawPointColor(i, j, 0, 0, 0);		// Draw it black
+				} else {
+					can->drawPointColor(i, j, 255, 255, 255);	// Draw it white
+					/*while (true) {
+						if (iterations < 50) {
+							return color(myColor1 + difference1to2 * iterations / 50, 255, 255);
+						}
+						else if (iterations < 100) {
+							return color(myColor2 + difference2to3 * (iterations - 50) / 50, 255, 255);
+						}
+						else if (iterations < 150) {
+							return color(myColor3 + difference3to1 * (iterations - 100) / 50, 255, 255);
+						}
+						iterations -= 150;
+					}*/
+				}
+//			}
+		}
+	}
 }
 
 int main() {
-//	Canvas* can = new Canvas(updateFunction5, -1);
-	CartesianCanvas* can = new CartesianCanvas(updateFunction5, -1);
+//	Canvas* can = new Canvas(updateFunction2, -1);
+////	can->setAutoRefresh(false);
+//	can->start();
 
-//	mandelbrotFunction(can);  //UNFINISHED
-
-	//updateFunction(can);
-
-	//can->setAutoRefresh(false);
-
-	can->start();
-
-//	can->setAutoRefresh(false);
 //	Canvas* can2 = new Canvas(updateFunction2);
 //	can2->start();
+
+//	CartesianCanvas* can = new CartesianCanvas(updateFunction5, -1);
+//	can->start();
+
+	CartesianCanvas* can = new CartesianCanvas(mandelbrotFunction2, 0, 0, 800, 600,
+												-2, -1.5, 1, 1.5, -1);
+//	can->setAutoRefresh(false);
+//	mandelbrotFunction2(can);
+	can->start();
+
 }
