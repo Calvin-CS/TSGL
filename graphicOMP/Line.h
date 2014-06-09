@@ -17,7 +17,6 @@ private:
 public:
     inline Line(int x1, int y1, int x2, int y2);						//Default constructor
     inline Line(int x1, int y1, int x2, int y2, int r, int g, int b);	//Explicit constructor
-    inline virtual ~Line();												//Default destructor
     inline void draw();													//Overridden draw method
 };
 
@@ -38,7 +37,7 @@ Line::Line(int x1, int y1, int x2, int y2) : Shape() {
 }
 
 /*
- * Explicit constructor for the Line class (calls the base constructor)
+ * Explicit constructor for the Line class
  * Parameters:
  * 		x1, the first x coordinate
  *		y1, the first y coordinate
@@ -56,12 +55,9 @@ Line::Line(int x1, int y1, int x2, int y2, int r, int g, int b) : Shape(r, g, b)
 	myY2 = y2;
 }
 
-// Destructor for the Line class
-Line::~Line() {}
-
-// draw actually draws the Line to the canvas
+// draw() actually draws the Line to the canvas
 void Line::draw() {
-	fl_line(myX1,myY1,myX2,myY2);	//Call to the FLTK fl_point drawing method
+	fl_line(myX1,myY1,myX2,myY2);	//Call to the FLTK fl_line drawing method
 }
 
 #endif /* LINE_H_ */

@@ -17,7 +17,6 @@ private:
 public:
     inline Point(int x, int y);							//Default constructor
     inline Point(int x, int y, int r, int g, int b);	//Explicit constructor
-    inline virtual ~Point();							//Default destructor
     inline void draw();									//Overridden draw method
 };
 
@@ -47,9 +46,6 @@ Point::Point(int x, int y, int r, int g, int b) : Shape(r, g, b) {
 	myX = x;
 	myY = y;
 }
-
-// Destructor for the Point class
-Point::~Point() {}
 
 // draw actually draws the Point to the canvas
 void Point::draw() {
