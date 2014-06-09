@@ -88,12 +88,12 @@ CartesianCanvas::CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
 	minY = yMin;
 	maxX = xMax;
 	maxY = yMax;
-	cartWidth = maxX-minX;
-	cartHeight = maxY-minY;
 	xError = 1.0f/monitorWidth;
 	yError = 1.0f/monitorHeight;
-	pixelWidth = (cartWidth-xError) / monitorWidth;
-	pixelHeight = (cartHeight-yError) / monitorHeight;
+	cartWidth = (maxX-minX)-xError;
+	cartHeight = (maxY-minY)-yError;
+	pixelWidth = (cartWidth) / (monitorWidth+xError);
+	pixelHeight = (cartHeight) / (monitorHeight+yError);
 }
 
 /*
