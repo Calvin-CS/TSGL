@@ -9,32 +9,33 @@
 #define CARTESIANCANVAS_H_
 
 class CartesianCanvas : public Canvas {
+	typedef long double Type;
 	typedef void (*cfcall)(CartesianCanvas* const);	//Define a type for our callback function pointer
 private:
-	double minX, maxX, minY, maxY;
-	double cartWidth, cartHeight;
-	double pixelWidth, pixelHeight;
+	Type minX, maxX, minY, maxY;
+	Type cartWidth, cartHeight;
+	Type pixelWidth, pixelHeight;
 	cfcall cartesianUpdateFunc;
-	double xError, yError;
+	Type xError, yError;
 public:
 	inline CartesianCanvas(cfcall c, int b);										//Default constructor for our Canvas
 	inline CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
-			double xMin, double yMin, double xMax, double yMax, int b, char *t);
+			Type xMin, Type yMin, Type xMax, Type yMax, int b, char *t);
 	inline void callUpdate();											//Actually calls updateFunc (needed to avoid typing errors)
-	inline void getScreenCoordinates(double cartX, double cartY, double &screenX, double &screenY);
-	inline void getCartesianCoordinates(double screenX, double screenY, double &cartX, double &cartY);
-	inline double getPixelWidth() { return pixelWidth; }				//Accessor for pixelWidth
-	inline double getPixelHeight() { return pixelHeight; }				//Accessor for pixelHeight
-	inline double getMinX() { return minX; }							//Accessor for minX
-	inline double getMaxX() { return maxX; }							//Accessor for maxX
-	inline double getMinY() { return minY; }							//Accessor for minY
-	inline double getMaxY() { return maxY; }							//Accessor for maxY
-	inline Point drawPoint(double x, double y);							//Draws a point at the given coordinates
-	inline Point drawPointColor(double x, double y,
+	inline void getScreenCoordinates(Type cartX, Type cartY, Type &screenX, Type &screenY);
+	inline void getCartesianCoordinates(Type screenX, Type screenY, Type &cartX, Type &cartY);
+	inline Type getPixelWidth() { return pixelWidth; }				//Accessor for pixelWidth
+	inline Type getPixelHeight() { return pixelHeight; }				//Accessor for pixelHeight
+	inline Type getMinX() { return minX; }							//Accessor for minX
+	inline Type getMaxX() { return maxX; }							//Accessor for maxX
+	inline Type getMinY() { return minY; }							//Accessor for minY
+	inline Type getMaxY() { return maxY; }							//Accessor for maxY
+	inline Point drawPoint(Type x, Type y);							//Draws a point at the given coordinates
+	inline Point drawPointColor(Type x, Type y,
 			int r, int g, int b);										//Draws a point at the given coordinates with the given color
-	inline Line drawLine(double x1, double y1, double x2, double y2);	//Draws a line at the given coordinates
-	inline Line drawLineColor(double x1, double y1, double x2,
-			double y2, int r, int g, int b);							//Draws a line at the given coordinates with the given color
+	inline Line drawLine(Type x1, Type y1, Type x2, Type y2);	//Draws a line at the given coordinates
+	inline Line drawLineColor(Type x1, Type y1, Type x2,
+			Type y2, int r, int g, int b);							//Draws a line at the given coordinates with the given color
 };
 
 /*
@@ -78,7 +79,7 @@ CartesianCanvas::CartesianCanvas(cfcall c, int b = -1) : Canvas(NULL, b) {
  * Returns: a new CartesianCanvas with the specified positional/scaling data and title
  */
 CartesianCanvas::CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
-			double xMin, double yMin, double xMax, double yMax, int b = -1, char* t = 0) :
+			Type xMin, Type yMin, Type xMax, Type yMax, int b = -1, char* t = 0) :
 			Canvas(NULL, xx, yy, w, h, b, t) {
 	if (c == NULL) {
 		cartesianUpdateFunc = [](CartesianCanvas* c){};					//Empty lambda function that does nothing
@@ -111,7 +112,7 @@ void CartesianCanvas::callUpdate() {
  * 		screenX, a reference variable to be filled with cartX's window position
  * 		screenY, a reference variable to be filled with cartY's window position
  */
-void CartesianCanvas::getScreenCoordinates(double cartX, double cartY, double &screenX, double &screenY) {
+void CartesianCanvas::getScreenCoordinates(Type cartX, Type cartY, Type &screenX, Type &screenY) {
 	screenX = (cartX-minX)/cartWidth*monitorWidth;
 	screenY = (cartY-minY)/cartHeight*monitorHeight;
 }
@@ -124,7 +125,7 @@ void CartesianCanvas::getScreenCoordinates(double cartX, double cartY, double &s
  * 		cartX, a reference variable to be filled with screenX's Cartesian position
  * 		cartY, a reference variable to be filled with screenY's Cartesian position
  */
-void CartesianCanvas::getCartesianCoordinates(double screenX, double screenY, double &cartX, double &cartY) {
+void CartesianCanvas::getCartesianCoordinates(Type screenX, Type screenY, Type &cartX, Type &cartY) {
 	cartX = (screenX*cartWidth)/monitorWidth + minX;
 	cartY = (screenY*cartHeight)/monitorHeight + minY;
 }
@@ -136,8 +137,8 @@ void CartesianCanvas::getCartesianCoordinates(double screenX, double screenY, do
  * 		y, the y position of the point
  * 	Returns: a new point at the Cartesian-adjusted position
  */
-Point CartesianCanvas::drawPoint(double x, double y) {
-	double actualX, actualY;
+Point CartesianCanvas::drawPoint(Type x, Type y) {
+	Type actualX, actualY;
 	getScreenCoordinates(x,y,actualX,actualY);
 	Point* p = new Point(actualX,actualY);	//Creates the Point with the specified coordinates
 	myShapes->push(p);			//Push it onto our drawing queue
@@ -154,8 +155,8 @@ Point CartesianCanvas::drawPoint(double x, double y) {
  * 		b, the red component
  * 	Returns: a new point at the Cartesian-adjusted position with the specified color
  */
-Point CartesianCanvas::drawPointColor(double x, double y, int r, int g, int b) {
-	double actualX, actualY;
+Point CartesianCanvas::drawPointColor(Type x, Type y, int r, int g, int b) {
+	Type actualX, actualY;
 	getScreenCoordinates(x,y,actualX,actualY);
 	Point* p = new Point(actualX,actualY,r,g,b);	//Creates the Point with the specified coordinates and color
 	myShapes->push(p);					//Push it onto our drawing queue
@@ -171,8 +172,8 @@ Point CartesianCanvas::drawPointColor(double x, double y, int r, int g, int b) {
  * 		y2, the y position of the end of the line
  * 	Returns: a new line with Cartesian-adjusted coordinates
  */
-Line CartesianCanvas::drawLine(double x1, double y1, double x2, double y2) {
-	double actualX1, actualY1,actualX2, actualY2;
+Line CartesianCanvas::drawLine(Type x1, Type y1, Type x2, Type y2) {
+	Type actualX1, actualY1,actualX2, actualY2;
 	getScreenCoordinates(x1,y1,actualX1,actualY1);
 	getScreenCoordinates(x2,y2,actualX2,actualY2);
 	Line* l = new Line(actualX1,actualY1,actualX2,actualY2);//Creates the Point with the specified coordinates
@@ -192,8 +193,8 @@ Line CartesianCanvas::drawLine(double x1, double y1, double x2, double y2) {
  * 		b, the red component
  * 	Returns: a new line with Cartesian-adjusted coordinates and the specified color
  */
-Line CartesianCanvas::drawLineColor(double x1, double y1, double x2, double y2, int r, int g, int b) {
-	double actualX1, actualY1,actualX2, actualY2;
+Line CartesianCanvas::drawLineColor(Type x1, Type y1, Type x2, Type y2, int r, int g, int b) {
+	Type actualX1, actualY1,actualX2, actualY2;
 	getScreenCoordinates(x1,y1,actualX1,actualY1);
 	getScreenCoordinates(x2,y2,actualX2,actualY2);
 	Line* l = new Line(actualX1,actualY1,actualX2,actualY2,r,g,b);	//Creates the Point with the specified coordinates and color
