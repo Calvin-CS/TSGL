@@ -1,9 +1,9 @@
 /*
- * List.h
- * Provides a double linked list with a built in iterator for storing shapes
+ * List.h provides a double linked list with a built in iterator for storing shapes
  *
- *  Created on: Jun 4, 2014
- *      Author: Mark Vander Stel - mbv26
+ * Created on: Jun 4, 2014
+ * Authors: Patrick Crain, Mark Vander Stel
+ * Last Modified: Mark Vander Stel, 6/9/2014
  */
 
 #ifndef LIST_H_
@@ -25,13 +25,13 @@ private:
 			delete item_;
 		}
 
-		Node * previous_;
-		Node * next_;
+		Node* previous_;
+		Node* next_;
 		Item item_;
 	};
 
-	Node * first_;
-	Node * last_;
+	Node* first_;
+	Node* last_;
 
 	int maxSize_;
 	unsigned int currentSize_;
@@ -62,11 +62,15 @@ public:
 
 	virtual ~List() {
 		while (first_ != NULL) {
-			first_ = first_->next_;
 			delete first_->previous_;
+			first_ = first_->next_;
 		}
+		delete last_;
 	}
 
+	/* size() returns the current size of the list
+	 * Returns: the size
+	 */
 	unsigned size() {
 		return currentSize_;
 	}
@@ -75,11 +79,12 @@ public:
 	 * Returns: the item
 	 */
 	Item pop() {
+		std::unique_lock<std::mutex> mlock(mutex_);
 		if (first_ == NULL) {
+			mlock.unlock();
 			throw std::out_of_range("List::pop(): Queue is empty");
 		} else {
-			std::unique_lock<std::mutex> mlock(mutex_);
-			Item * item = last_->item_;		// Store the last item
+			Item* item = last_->item_;		// Store the last item
 			if (last_ == first_) {			// If only one item in the list...
 				clear();					// Simply clear it
 			} else {
@@ -97,10 +102,11 @@ public:
 	 *
 	 */
 	void remove() {
+		std::unique_lock<std::mutex> mlock(mutex_);
 		if (first_ == NULL) {
+			mlock.unlock();
 			throw std::out_of_range("List::remove(): Queue is empty");
 		} else {
-			std::unique_lock<std::mutex> mlock(mutex_);
 			if (last_ == first_) {			// If only one item in the list...
 				clear();					// Simply clear it
 			} else {
@@ -117,8 +123,11 @@ public:
 	 *
 	 */
 	void clear() {
-		delete first_;
-		first_ = NULL;
+		while (first_ != NULL) {
+			delete first_->previous_;
+			first_ = first_->next_;
+		}
+		delete last_;
 		last_ = NULL;
 		currentSize_ = 0;
 	}
@@ -171,7 +180,7 @@ public:
 				list_->mutex_.unlock();
 				throw std::out_of_range("List::Iterator::removePrevious(): There is no previous node");
 			}
-			Node * oldNode = node_->previous_;
+			Node* oldNode = node_->previous_;
 			if (oldNode->previous_ != NULL) {		// If there is a node in front of previous
 				oldNode->previous_->next_ = node_;	// point it at the current
 			} else {
@@ -195,7 +204,7 @@ public:
 				list_->mutex_.unlock();
 				throw std::out_of_range("List::Iterator::removeCurrent(): Cannot remove the first node");
 			}
-			Node * oldNode = node_;
+			Node* oldNode = node_;
 			node_ = oldNode->previous_;			// Link the two surrounding nodes together
 			node_->next_ = oldNode->next_;
 			if (oldNode->next_ != NULL) {		// But only if there are two nodes
@@ -247,13 +256,13 @@ public:
 	private:
 		// In private because only the list should make iterators, as only the
 		// list knows what nodes are
-		Iterator(List * list, Node * start) {
+		Iterator(List* list, Node* start) {
 			list_ = list;
 			node_ = start;
 		}
 
-		List * list_;
-		Node * node_;
+		List* list_;
+		Node* node_;
 	};
 
 	/* begin() returns an iterator starting at the beginning of the list

@@ -1,6 +1,10 @@
-// Points extends Shape and provides a class for drawing a single point to a Canvas
-//
-// Last Modified: Patrick Crain, 6/5/2014
+/*
+ * Point.h extends Shape and provides a class for drawing a single point to a Canvas
+ *
+ * Authors: Patrick Crain, Mark Vander Stel
+ * Last Modified: Patrick Crain, 6/6/2014
+ */
+
 #ifndef POINT_H_
 #define POINT_H_
 

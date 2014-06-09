@@ -1,6 +1,9 @@
-// Shape provides a base class from which to extend other drawable shapes
-//
-// Last Modified: Patrick Crain, 6/5/2014
+/*
+ * Shape.h provides a base class from which to extend other drawable shapes
+ *
+ * Authors: Patrick Crain, Mark Vander Stel
+ * Last Modified: Patrick Crain, 6/6/2014
+ */
 
 #ifndef SHAPE_H_
 #define SHAPE_H_

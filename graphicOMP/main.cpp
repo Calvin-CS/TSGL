@@ -1,6 +1,9 @@
-// main.cpp provides example usage for the graphicOMP library
-//
-// Last Modified: Mark Vander Stel, 6/6/2014
+/*
+ * main.cpp provides example usage for the graphicOMP library
+ *
+ * Authors: Patrick Crain, Mark Vander Stel
+ * Last Modified: Mark Vander Stel, 6/9/2014
+ */
 
 #include "Canvas.h"
 #include <omp.h>
@@ -9,11 +12,10 @@
 #include <iostream>
 
 const int WINDOW_W = 800, WINDOW_H = 600, WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
-Canvas *can, *can2;
 int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 bool reverse = false;
 
-void updateFunction(Canvas* can) {
+void updateFunction1(Canvas* can) {
 	int tid, nthreads, i, j, color;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
 	{
@@ -156,7 +158,7 @@ void mandelbrotFunction(Canvas* can) {
 }
 
 int main() {
-	can = new Canvas(updateFunction5, 1000);
+	Canvas* can = new Canvas(updateFunction5, 1000);
 
 //	mandelbrotFunction(can);  //UNFINISHED
 
@@ -165,7 +167,8 @@ int main() {
 	//can->setAutoRefresh(false);
 
 	can->start();
+
 //	can->setAutoRefresh(false);
-//	can2 = new Canvas(updateFunction2);
+//	Canvas* can2 = new Canvas(updateFunction2);
 //	can2->start();
 }
