@@ -30,8 +30,9 @@ public:
 	inline double getMaxY() { return maxY; }							//Accessor for maxY
 	inline Point drawPoint(int x, int y);								//Draws a point at the given coordinates
 	inline Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
-	inline Line drawLine(int x1, int y1, int x2, int y2);				//Draws a line at the given coordinates
-	inline Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);	//Draws a line at the given coordinates with the given color
+	inline Line drawLine(double x1, double y1, double x2, double y2);	//Draws a line at the given coordinates
+	inline Line drawLineColor(double x1, double y1, double x2,
+			double y2, int r, int g, int b);							//Draws a line at the given coordinates with the given color
 };
 
 /*
@@ -164,7 +165,7 @@ Point CartesianCanvas::drawPointColor(int x, int y, int r, int g, int b) {
  * 		y2, the y position of the end of the line
  * 	Returns: a new line with Cartesian-adjusted coordinates
  */
-Line CartesianCanvas::drawLine(int x1, int y1, int x2, int y2) {
+Line CartesianCanvas::drawLine(double x1, double y1, double x2, double y2) {
 	double actualX1, actualY1,actualX2, actualY2;
 	getScreenCoordinates(x1,y1,actualX1,actualY1);
 	getScreenCoordinates(x2,y2,actualX2,actualY2);
@@ -185,7 +186,7 @@ Line CartesianCanvas::drawLine(int x1, int y1, int x2, int y2) {
  * 		b, the red component
  * 	Returns: a new line with Cartesian-adjusted coordinates and the specified color
  */
-Line CartesianCanvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) {
+Line CartesianCanvas::drawLineColor(double x1, double y1, double x2, double y2, int r, int g, int b) {
 	double actualX1, actualY1,actualX2, actualY2;
 	getScreenCoordinates(x1,y1,actualX1,actualY1);
 	getScreenCoordinates(x2,y2,actualX2,actualY2);
