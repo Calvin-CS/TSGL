@@ -9,7 +9,7 @@
 #define CANVAS_H_
 
 #include "FL/Fl.H"					//For using basic FLTK library functions
-#include <FL/Fl_Double_Window.H>	//For Fl_Double_Window, which draws our window
+#include <FL/Fl_Window.H>	//For Fl_Double_Window, which draws our window
 #include <FL/Fl_Box.H>				//For Fl_Box, from which our Canvas inherits
 #include <FL/fl_draw.H>				//For FLTK's drawing function, which we implement to make our own thread-safe version.
 #include "Point.h"					//Our own class for drawing single points.
@@ -30,7 +30,7 @@ protected:
 	int monitorX,monitorY,monitorWidth,monitorHeight;  	//Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
 	int drawBufferSize;				//Maximum allowed Shapes in our drawing List
-	Fl_Double_Window* window;		//The FLTK window to which we draw
+	Fl_Window* window;		//The FLTK window to which we draw
 	bool started;					//Whether our canvas is running and the counter is counting
 	bool autoRefresh;				//Whether or not we automatically refresh the Canvas each frame
 	void init(int xx, int yy, int ww, int hh, int b);				//Method for initializing the canvas
@@ -48,6 +48,8 @@ public:
 	virtual Point drawPointColor(int x, int y, int r, int g, int b);//Draws a point at the given coordinates with the given color
 	virtual Line drawLine(int x1, int y1, int x2, int y2);			//Draws a line at the given coordinates
 	virtual Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);	//Draws a line at the given coordinates with the given color
+	virtual void drawText(const char * s, int x, int y);
+	virtual void drawTextColor(const char * s, int x, int y, int r, int g, int b);
 	int getWindowX() { return monitorX; }						//Accessor for the window width
 	int getWindowY() { return monitorY; }						//Accessor for the window height
 	int getWindowWidth() { return monitorWidth; }				//Accessor for the window width
@@ -173,7 +175,7 @@ int Canvas::start() {
 	if (started)												//If we're already started, return error code -1
 		return -1;
 	started = true;												//We've now started
-    window = new Fl_Double_Window(monitorWidth,monitorHeight);	//Instantiate our drawing window
+    window = new Fl_Window(monitorWidth,monitorHeight);	//Instantiate our drawing window
     window->add(this);											//Add ourself (Canvas) to the drawing window
 window->show();													//Show the window
     return(Fl::run());
@@ -275,6 +277,13 @@ Line Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) 
 	Line* l = new Line(x1,y1,x2,y2,r,g,b);	//Creates the Point with the specified coordinates and color
 	myShapes->push(l);						//Push it onto our drawing queue
 	return *l;								//Return a pointer to our new Point
+}
+
+void Canvas::drawText(const char * s, int x, int y) {
+	fl_draw(s,x,y);
+}
+void Canvas::drawTextColor(const char * s, int x, int y, int r, int g, int b) {
+	fl_draw(s,x,y);
 }
 
 #endif /* CANVAS_H_ */
