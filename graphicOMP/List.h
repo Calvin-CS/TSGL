@@ -147,7 +147,7 @@ public:
 			last_ = last_->next_;					// And make it the new last
 		}
 		currentSize_++;
-		if ((int)currentSize_ > maxSize_ && maxSize_ >= 0) {// If size is greater than the max...
+		if (currentSize_ > (unsigned int)maxSize_ && maxSize_ >= 0) {// If size is greater than the max...
 			first_ = first_->next_;					// Move the first node
 			delete first_->previous_;				// Delete the old first node
 			first_->previous_ = NULL;
