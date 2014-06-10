@@ -350,6 +350,68 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 	}
 }
 
+void dumbSortFunction(CartesianCanvas* can) {
+	const int SIZE = 350, SORTSPEED = 10;
+	static int numbers[SIZE];
+	static int pos = 0, temp, min = 1, max = SIZE-1, lastSwap = 0;
+	static bool sortInit = false, goingUp = true;;
+	if (!sortInit) {
+		sortInit = true;
+		for (int i = 0; i < SIZE; i++) {
+			numbers[i] = rand() % SIZE;
+		}
+	}
+	can->drawRectangleColor(0,0,800,600,128,128,128);
+	for (int i = 0; i < SORTSPEED; i++) {
+		if (min != max) {
+			if (goingUp) {
+				if (numbers[pos] > numbers[pos+1]) {
+					temp = numbers[pos];
+					numbers[pos] = numbers[pos+1];
+					numbers[pos+1] = temp;
+					lastSwap = pos;
+				}
+				if (pos >= max) {
+					pos = max;
+					if (lastSwap < max)
+						max = lastSwap;
+					else
+						max--;
+					goingUp = !goingUp;
+				} else
+					pos++;
+			}
+			else {
+				if (numbers[pos] < numbers[pos-1]) {
+					temp = numbers[pos];
+					numbers[pos] = numbers[pos-1];
+					numbers[pos-1] = temp;
+					lastSwap = pos;
+				}
+				if (pos <= min) {
+					pos = min;
+					if (lastSwap > min)
+						min = lastSwap;
+					else
+						min++;
+					goingUp = !goingUp;
+				} else
+					pos--;
+			}
+		}
+	}
+
+	int start = 50, width = 1, height;
+	for (int i = 0; i < SIZE; i++) {
+		height = (numbers[i]);
+		if (i == pos)
+			can->drawRectangleColor(start,580-height,width,height,255,255,0);
+		else
+			can->drawRectangleColor(start,580-height,width,height,255,0,0);
+		start += width+1;
+	}
+}
+
 int main() {
 //	Canvas* can = new Canvas(updateFunction1);
 //	can->start();
@@ -384,9 +446,12 @@ int main() {
 //									0, 0, 600, 600, 0,0,600,600, -1);
 //	can9->start();
 //
-	langtonFourWayInit();
-	CartesianCanvas* can10 = new CartesianCanvas(langtonFunction3,
-									0, 0, 600, 600, 0,0,600,600, -1);
-	can10->start();
+//	langtonFourWayInit();
+//	CartesianCanvas* can10 = new CartesianCanvas(langtonFunction3,
+//									0, 0, 600, 600, 0,0,600,600, -1);
+//	can10->start();
 
+	CartesianCanvas* can11 = new CartesianCanvas(dumbSortFunction,
+									0, 0, 800, 600, 0,0,800,600, -1);
+	can11->start();
 }
