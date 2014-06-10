@@ -3,7 +3,7 @@
  *
  * Created on: Jun 4, 2014
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/9/2014
+ * Last Modified: Mark Vander Stel, 6/10/2014
  */
 
 #ifndef LIST_H_
@@ -147,7 +147,7 @@ public:
 			last_ = last_->next_;					// And make it the new last
 		}
 		currentSize_++;
-		if (currentSize_ > maxSize_) {				// If size is greater than the max...
+		if ((int)currentSize_ > maxSize_ && maxSize_ >= 0) {// If size is greater than the max...
 			first_ = first_->next_;					// Move the first node
 			delete first_->previous_;				// Delete the old first node
 			first_->previous_ = NULL;

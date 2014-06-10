@@ -146,7 +146,7 @@ void mandelbrotFunction(CartesianCanvas* can) {
 }
 
 enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
-static bool filled[800][600] = {false};
+static bool filled[800][600] = {};
 static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 void langtonFunction(CartesianCanvas* can) {
 	static int IPF = 500;		// Iterations per frame
@@ -183,7 +183,7 @@ void langtonFourWayInit() {
 }
 void langtonFunction2(CartesianCanvas* can) {
 	static int IPF = 1000;		// Iterations per frame
-	const unsigned int threads = 4;
+//	const unsigned int threads = 4;
 
 	for (int i = 0; i < IPF; i++) {
 		for (int j = 0; j < 4; j++) {
@@ -227,7 +227,7 @@ void langtonFunction2(CartesianCanvas* can) {
 }
 void langtonFunction3(CartesianCanvas* can) {
 	static int IPF = 1000;		// Iterations per frame
-	const unsigned int threads = 4;
+//	const unsigned int threads = 4;
 
 	for (int i = 0; i < IPF; i++) {
 		//#pragma omp parallel for
