@@ -182,7 +182,7 @@ void langtonFourWayInit() {
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 }
 void langtonFunction2(CartesianCanvas* can) {
-	static int IPF = 10000;		// Iterations per frame
+	static int IPF = 1000;		// Iterations per frame
 	const unsigned int threads = 4;
 
 	for (int i = 0; i < IPF; i++) {
@@ -225,9 +225,11 @@ void langtonFunction2(CartesianCanvas* can) {
 		}
 	}
 }
-
 void langtonFunction3(CartesianCanvas* can) {
-	for (int i = 0; i < 500; i++) {
+	static int IPF = 1000;		// Iterations per frame
+	const unsigned int threads = 4;
+
+	for (int i = 0; i < IPF; i++) {
 		//#pragma omp parallel for
 		for (int j = 0; j < 4; j++) {
 			if (filled[xx[j]][yy[j]]) {
@@ -288,9 +290,9 @@ int main() {
 //									0, 0, 600, 600, 0,0,600,600, -1);
 //	can9->start();
 
-//	langtonFourWayInit();
-//	CartesianCanvas* can10 = new CartesianCanvas(langtonFunction3,
-//									0, 0, 600, 600, 0,0,600,600, -1);
-//	can10->start();
+	langtonFourWayInit();
+	CartesianCanvas* can10 = new CartesianCanvas(langtonFunction3,
+									0, 0, 600, 600, 0,0,600,600, -1);
+	can10->start();
 
 }
