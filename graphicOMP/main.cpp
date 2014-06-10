@@ -18,8 +18,6 @@ const int WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
 int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 bool reverse = false;
 
-enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
-
 void updateFunction1(Canvas* can) {
 	int tid, nthreads, i, j, color;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
@@ -75,7 +73,7 @@ void updateFunction4(Canvas* can) {
 	can->setAutoRefresh(false);
 	can->drawLineColor(a,b,c,d,e,f,g);
 }
-void updateFunction5(CartesianCanvas* can) {
+void updateFunction5(Canvas* can) {
 	int tid;
 	reverse = !reverse;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,a,b,c,d,e,f,g)
@@ -147,12 +145,14 @@ void mandelbrotFunction(CartesianCanvas* can) {
 	}
 }
 
-static bool filled[800][600] = { false };
+enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
+static bool filled[800][600] = {false};
 static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 void langtonFunction(CartesianCanvas* can) {
+	static int IPF = 500;		// Iterations per frame
 	static int xx = 400, yy = 300;
 	static int direction = UP;
-	for (int i = 0; i < 500; i ++) {
+	for (int i = 0; i < IPF; i ++) {
 		if (filled[xx][yy]) {
 			direction = (direction + 1) % 4;
 			can->drawPointColor(xx,yy,255,0,0);
@@ -174,17 +174,18 @@ void langtonFunction(CartesianCanvas* can) {
 			std::cout << "BAD: dir == " << direction << std::endl;
 	}
 }
-
-void langtonInit() {
-	xx[0] = 300; yy[0] = 300; red[0] = 255; green[0] = 0;   blue[0] = 0;
-	xx[1] = 400; yy[1] = 200; red[1] = 0;   green[1] = 0;   blue[1] = 255;
-	xx[2] = 500; yy[2] = 300; red[2] = 0;   green[2] = 255; blue[2] = 0;
-	xx[3] = 400; yy[3] = 400; red[3] = 255; green[3] = 0;   blue[3] = 255;
+void langtonFourWayInit() {
+	xx[0] = 200; yy[0] = 300; red[0] = 255; green[0] = 0;   blue[0] = 0;
+	xx[1] = 300; yy[1] = 200; red[1] = 0;   green[1] = 0;   blue[1] = 255;
+	xx[2] = 400; yy[2] = 300; red[2] = 0;   green[2] = 255; blue[2] = 0;
+	xx[3] = 300; yy[3] = 400; red[3] = 255; green[3] = 0;   blue[3] = 255;
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 }
-
 void langtonFunction2(CartesianCanvas* can) {
-	for (int i = 0; i < 500; i++) {
+	static int IPF = 10000;		// Iterations per frame
+	const unsigned int threads = 4;
+
+	for (int i = 0; i < IPF; i++) {
 		for (int j = 0; j < 4; j++) {
 			if (filled[xx[j]][yy[j]]) {
 				dir[j] = (dir[j] + 1) % 4;
@@ -201,7 +202,7 @@ void langtonFunction2(CartesianCanvas* can) {
 					yy[j] = 599;
 			}
 			else if (dir[j] == RIGHT) {
-				if (xx[j] < 799)
+				if (xx[j] < 599)
 					xx[j] = xx[j] + 1;
 				else
 					xx[j] = 0;
@@ -216,7 +217,7 @@ void langtonFunction2(CartesianCanvas* can) {
 				if (xx[j] > 0)
 					xx[j] = xx[j] - 1;
 				else
-					xx[j] = 799;
+					xx[j] = 599;
 			}
 		}
 		for (int j = 0; j < 4; j++) {
@@ -226,25 +227,42 @@ void langtonFunction2(CartesianCanvas* can) {
 }
 
 int main() {
-//	Canvas* can = new Canvas(updateFunction2, -1);
-////	can->setAutoRefresh(false);
+//	Canvas* can = new Canvas(updateFunction1);
 //	can->start();
 
 //	Canvas* can2 = new Canvas(updateFunction2);
 //	can2->start();
 
-//	CartesianCanvas* can = new CartesianCanvas(updateFunction5, -1);
-//	can->start();
+//	Canvas* can3 = new Canvas(updateFunction3);
+//	can3->start();
 
-//	CartesianCanvas* can = new CartesianCanvas(mandelbrotFunction,
-//			0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, -1);
+//	Canvas* can4 = new Canvas(updateFunction4, 500);
+//	can4->setAutoRefresh(false);
+//	can4->start();
 
-	langtonInit();
-	CartesianCanvas* can = new CartesianCanvas(langtonFunction2,
-			0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
+//	Canvas* can5 = new Canvas(updateFunction5, 1000);
+//	can5->setAutoRefresh(false);
+//	can5->start();
 
-//	can->setAutoRefresh(false);
-//	can->start();
-	can->start();
+//	Canvas* can6 = new Canvas(updateFunction6);
+//	can6->start();
+
+//	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
+//									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, -1);
+//	can7->start();
+
+//	CartesianCanvas* can8 = new CartesianCanvas(langtonFunction,
+//									0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
+//	can8->start();
+
+//	langtonFourWayInit();
+//	CartesianCanvas* can9 = new CartesianCanvas(langtonFunction2,
+//									0, 0, 600, 600, 0,0,600,600, -1);
+//	can9->start();
+
+//	langtonFourWayInit();
+//	CartesianCanvas* can10 = new CartesianCanvas(langtonFunction3,
+//									0, 0, 600, 600, 0,0,600,600, -1);
+//	can10->start();
 
 }
