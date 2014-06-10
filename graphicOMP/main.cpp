@@ -226,6 +226,34 @@ void langtonFunction2(CartesianCanvas* can) {
 	}
 }
 
+void langtonFunction3(CartesianCanvas* can) {
+	for (int i = 0; i < 500; i++) {
+		//#pragma omp parallel for
+		for (int j = 0; j < 4; j++) {
+			if (filled[xx[j]][yy[j]]) {
+				dir[j] = (dir[j] + 1) % 4;
+				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+			}
+			else {
+				dir[j] = (dir[j] + 3) % 4;
+				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+			}
+		}
+		for (int j = 0; j < 4; j++)
+			filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
+		for (int j = 0; j < 4; j++) {
+			if (dir[j] == UP)
+				yy[j] = (yy[j] > 0) ? yy[j] - 1 : 599;
+			else if (dir[j] == RIGHT)
+				xx[j] = (xx[j] < 599) ? xx[j] + 1 : 0;
+			else if (dir[j] == DOWN)
+				yy[j] = (yy[j] < 599) ? yy[j] + 1 : 0;
+			else if (dir[j] == LEFT)
+				xx[j] = (xx[j] > 0) ? xx[j] - 1 : 599;
+		}
+	}
+}
+
 int main() {
 //	Canvas* can = new Canvas(updateFunction1);
 //	can->start();
