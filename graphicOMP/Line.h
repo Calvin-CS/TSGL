@@ -2,7 +2,7 @@
  * Line.h extends Shape and provides a class for drawing a single line to a Canvas
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Patrick Crain, 6/6/2014
+ * Last Modified: Mark Vander Stel, 6/10/2014
  */
 
 #ifndef LINE_H_
@@ -13,11 +13,11 @@
 
 class Line : public Shape {
 private:
-	int myX1, myY1, myX2, myY2;											//Positioning data for our Line
+	int myX1, myY1, myX2, myY2;									//Positioning data for our Line
 public:
-    inline Line(int x1, int y1, int x2, int y2);						//Default constructor
-    inline Line(int x1, int y1, int x2, int y2, int r, int g, int b);	//Explicit constructor
-    inline void draw();													//Overridden draw method
+    Line(int x1, int y1, int x2, int y2);						//Default constructor
+    Line(int x1, int y1, int x2, int y2, int r, int g, int b);	//Explicit constructor
+    void draw();												//Overridden draw method
 };
 
 /*

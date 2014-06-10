@@ -2,7 +2,7 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Patrick Crain, 6/9/2014
+ * Last Modified: Patrick Crain, 6/10/2014
  */
 
 #ifndef CANVAS_H_
@@ -18,7 +18,7 @@
 #include "List.h"					//Our own doubly-linked list for buffering drawing operations in a thread-safe manner.
 
 #define FPS 60
-const double FRAME = 1.0f/FPS;		//Represents a single frame
+#define FRAME 1.0f/FPS		//Represents a single frame
 
 class Canvas : public Fl_Box {
 	typedef void (*fcall)(Canvas* const);	//Define a type for our callback function pointer
@@ -27,36 +27,36 @@ private:
 protected:
 	List<Shape*> * myShapes;		//Our buffer of shapes to draw
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
-	int monitorX,monitorY,monitorWidth,monitorHeight;  					//Positioning and sizing data for the Canvas
+	int monitorX,monitorY,monitorWidth,monitorHeight;  	//Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
 	int drawBufferSize;				//Maximum allowed Shapes in our drawing List
 	Fl_Double_Window* window;		//The FLTK window to which we draw
 	bool started;					//Whether our canvas is running and the counter is counting
 	bool autoRefresh;				//Whether or not we automatically refresh the Canvas each frame
-	inline void init(int xx, int yy, int ww, int hh, int b);	//Method for initializing the canvas
-	inline void draw();											//Method for drawing the canvas and the shapes within
-	inline virtual void callUpdate();							//Actually calls updateFunc (needed to avoid typing errors)
-	inline static void Canvas_Callback(void* userdata);			//Callback so that the canvas redraws periodically
+	void init(int xx, int yy, int ww, int hh, int b);				//Method for initializing the canvas
+	void draw();													//Method for drawing the canvas and the shapes within
+	virtual void callUpdate();										//Actually calls updateFunc (needed to avoid typing errors)
+	inline static void Canvas_Callback(void* userdata);				//Callback so that the canvas redraws periodically
 public:
-	inline Canvas(fcall c, int b);										//Default constructor for our Canvas
-	inline Canvas(fcall c, int xx, int yy, int w, int h, int b, char* t);	//Explicit constructor for our Canvas
-	inline int start();													//Function to start rendering our Canvas
-	inline int end();													//Function to end rendering our Canvas
-	inline void setColor(int r, int g, int b);							//Sets the global drawing color
-	inline void setAutoRefresh(bool b);									//Sets whether we automatically refresh the Canvas
-	inline virtual Point drawPoint(int x, int y);								//Draws a point at the given coordinates
-	inline virtual Point drawPointColor(int x, int y, int r, int g, int b);		//Draws a point at the given coordinates with the given color
-	inline virtual Line drawLine(int x1, int y1, int x2, int y2);				//Draws a line at the given coordinates
-	inline virtual Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);	//Draws a line at the given coordinates with the given color
-	inline int getWindowX() { return monitorX; }						//Accessor for the window width
-	inline int getWindowY() { return monitorY; }						//Accessor for the window height
-	inline int getWindowWidth() { return monitorWidth; }				//Accessor for the window width
-	inline int getWindowHeight() { return monitorHeight; }				//Accessor for the window height
-	inline int getColorR() { return colorR; }							//Accessor for  the red component of the global drawing color
-	inline int getColorG() { return colorG; }							//Accessor for  the green component of the global drawing color
-	inline int getColorB() { return colorB; }							//Accessor for  the number component of the global drawing color
-	inline int getFrameNumber() { return counter; }						//Accessor for the number of frames rendered so far
-	inline int getBufferSize() {return drawBufferSize; }				//Accessor for the Shape list's buffer size
+	Canvas(fcall c, int b);											//Default constructor for our Canvas
+	Canvas(fcall c, int xx, int yy, int w, int h, int b, char* t);	//Explicit constructor for our Canvas
+	int start();													//Function to start rendering our Canvas
+	int end();														//Function to end rendering our Canvas
+	void setColor(int r, int g, int b);								//Sets the global drawing color
+	void setAutoRefresh(bool b);									//Sets whether we automatically refresh the Canvas
+	virtual Point drawPoint(int x, int y);							//Draws a point at the given coordinates
+	virtual Point drawPointColor(int x, int y, int r, int g, int b);//Draws a point at the given coordinates with the given color
+	virtual Line drawLine(int x1, int y1, int x2, int y2);			//Draws a line at the given coordinates
+	virtual Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);	//Draws a line at the given coordinates with the given color
+	int getWindowX() { return monitorX; }						//Accessor for the window width
+	int getWindowY() { return monitorY; }						//Accessor for the window height
+	int getWindowWidth() { return monitorWidth; }				//Accessor for the window width
+	int getWindowHeight() { return monitorHeight; }				//Accessor for the window height
+	int getColorR() { return colorR; }							//Accessor for  the red component of the global drawing color
+	int getColorG() { return colorG; }							//Accessor for  the green component of the global drawing color
+	int getColorB() { return colorB; }							//Accessor for  the number component of the global drawing color
+	int getFrameNumber() { return counter; }					//Accessor for the number of frames rendered so far
+	int getBufferSize() {return drawBufferSize; }				//Accessor for the Shape list's buffer size
 };
 
 /*
@@ -139,9 +139,9 @@ void Canvas::Canvas_Callback(void* userdata) {
  */
 Canvas::Canvas(fcall c, int b = -1) : Fl_Box (0,0,800,600) {
 	if (c == NULL) {
-		updateFunc = [](Canvas* c){};						//Empty lambda function that does nothing
+		updateFunc = [](Canvas* c){};			//Empty lambda function that does nothing
 	} else
-		updateFunc = c;										//Adds a callback to the user's own draw function
+		updateFunc = c;							//Adds a callback to the user's own draw function
 	init(0,0,800,600,b);
 }
 
@@ -159,9 +159,9 @@ Canvas::Canvas(fcall c, int b = -1) : Fl_Box (0,0,800,600) {
  */
 Canvas::Canvas(fcall c, int xx, int yy, int w, int h, int b = -1, char* t = 0) : Fl_Box(xx,yy,w,h,t) {
 	if (c == NULL) {
-		updateFunc = [](Canvas* c){};						//Empty lambda function that does nothing
+		updateFunc = [](Canvas* c){};			//Empty lambda function that does nothing
 	} else
-		updateFunc = c;										//Adds a callback to the user's own draw function
+		updateFunc = c;							//Adds a callback to the user's own draw function
 	init(xx,yy,w,h,b);
 }
 
@@ -184,10 +184,10 @@ window->show();													//Show the window
  * Returns: 0 if exit is successful, -1 otherwise
  */
 int Canvas::end() {
-	if (!started)	//If we haven't even started yet, return error code -1
+	if (!started)						//If we haven't even started yet, return error code -1
 		return -1;
-	window->hide();	//Hide our window
-	delete window;	//Delete our window from the heap
+	window->hide();						//Hide our window
+	delete window;						//Delete our window from the heap
 	return 0;
 }
 
@@ -223,9 +223,9 @@ void Canvas::setAutoRefresh(bool b) {
  * 	Returns: a new point at the given position
  */
 Point Canvas::drawPoint(int x, int y) {
-	Point* p = new Point(x,y);	//Creates the Point with the specified coordinates
-	myShapes->push(p);			//Push it onto our drawing queue
-	return *p;					//Return a pointer to our new Point
+	Point* p = new Point(x,y);				//Creates the Point with the specified coordinates
+	myShapes->push(p);						//Push it onto our drawing queue
+	return *p;								//Return a pointer to our new Point
 }
 
 /*
@@ -239,9 +239,9 @@ Point Canvas::drawPoint(int x, int y) {
  * 	Returns: a new point at the given position with the specified color
  */
 Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
-	Point* p = new Point(x,y,r,g,b);	//Creates the Point with the specified coordinates and color
-	myShapes->push(p);					//Push it onto our drawing queue
-	return *p;							//Return a pointer to our new Point
+	Point* p = new Point(x,y,r,g,b);		//Creates the Point with the specified coordinates and color
+	myShapes->push(p);						//Push it onto our drawing queue
+	return *p;								//Return a pointer to our new Point
 }
 
 /*
@@ -254,9 +254,9 @@ Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
  * 	Returns: a new line with the given coordinates
  */
 Line Canvas::drawLine(int x1, int y1, int x2, int y2) {
-	Line* l = new Line(x1,y1,x2,y2);//Creates the Point with the specified coordinates
-	myShapes->push(l);				//Push it onto our drawing queue
-	return *l;						//Return a pointer to our new Point
+	Line* l = new Line(x1,y1,x2,y2);		//Creates the Point with the specified coordinates
+	myShapes->push(l);						//Push it onto our drawing queue
+	return *l;								//Return a pointer to our new Point
 }
 
 /*

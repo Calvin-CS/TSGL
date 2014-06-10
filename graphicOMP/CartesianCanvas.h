@@ -1,16 +1,16 @@
 /*
  * CartesianCanvas.h provides a Canvas with a Cartesian coordinate system for ease of plotting
  *
- * Authors: Patrick Crain
- * Last Modified: Patrick Crain, 6/9/2014
+ * Authors: Patrick Crain, Mark Vander Stel
+ * Last Modified: Mark Vander Stel, 6/10/2014
  */
 
 #ifndef CARTESIANCANVAS_H_
 #define CARTESIANCANVAS_H_
 
 class CartesianCanvas : public Canvas {
-	typedef long double Type;
-	typedef void (*cfcall)(CartesianCanvas* const);	//Define a type for our callback function pointer
+	typedef long double Type;						// Define the variable type to use for coordinates
+	typedef void (*cfcall)(CartesianCanvas* const);	// Define a type for our callback function pointer
 private:
 	Type minX, maxX, minY, maxY;
 	Type cartWidth, cartHeight;
@@ -18,24 +18,23 @@ private:
 	cfcall cartesianUpdateFunc;
 	Type xError, yError;
 public:
-	inline CartesianCanvas(cfcall c, int b);										//Default constructor for our Canvas
-	inline CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
-			Type xMin, Type yMin, Type xMax, Type yMax, int b, char *t);
-	inline void callUpdate();											//Actually calls updateFunc (needed to avoid typing errors)
-	inline void getScreenCoordinates(Type cartX, Type cartY, Type &screenX, Type &screenY);
-	inline void getCartesianCoordinates(Type screenX, Type screenY, Type &cartX, Type &cartY);
-	inline Type getPixelWidth() { return pixelWidth; }				//Accessor for pixelWidth
-	inline Type getPixelHeight() { return pixelHeight; }				//Accessor for pixelHeight
-	inline Type getMinX() { return minX; }							//Accessor for minX
-	inline Type getMaxX() { return maxX; }							//Accessor for maxX
-	inline Type getMinY() { return minY; }							//Accessor for minY
-	inline Type getMaxY() { return maxY; }							//Accessor for maxY
-	inline Point drawPoint(Type x, Type y);							//Draws a point at the given coordinates
-	inline Point drawPointColor(Type x, Type y,
-			int r, int g, int b);										//Draws a point at the given coordinates with the given color
-	inline Line drawLine(Type x1, Type y1, Type x2, Type y2);	//Draws a line at the given coordinates
-	inline Line drawLineColor(Type x1, Type y1, Type x2,
-			Type y2, int r, int g, int b);							//Draws a line at the given coordinates with the given color
+	CartesianCanvas(cfcall c, int b);										//Default constructor for our Canvas
+	CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
+				Type xMin, Type yMin, Type xMax, Type yMax, int b, char *t);
+	inline void callUpdate();									//Actually calls updateFunc (needed to avoid typing errors)
+	void getScreenCoordinates(Type cartX, Type cartY, Type &screenX, Type &screenY);
+	void getCartesianCoordinates(Type screenX, Type screenY, Type &cartX, Type &cartY);
+	Type getPixelWidth() { return pixelWidth; }					//Accessor for pixelWidth
+	Type getPixelHeight() { return pixelHeight; }				//Accessor for pixelHeight
+	Type getMinX() { return minX; }								//Accessor for minX
+	Type getMaxX() { return maxX; }								//Accessor for maxX
+	Type getMinY() { return minY; }								//Accessor for minY
+	Type getMaxY() { return maxY; }								//Accessor for maxY
+	Point drawPoint(Type x, Type y);							//Draws a point at the given coordinates
+	Point drawPointColor(Type x, Type y, int r, int g, int b);	//Draws a point at the given coordinates with the given color
+	Line drawLine(Type x1, Type y1, Type x2, Type y2);			//Draws a line at the given coordinates
+	Line drawLineColor(Type x1, Type y1, Type x2,
+						Type y2, int r, int g, int b);			//Draws a line at the given coordinates with the given color
 };
 
 /*

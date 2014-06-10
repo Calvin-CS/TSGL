@@ -2,7 +2,7 @@
  * Shape.h provides a base class from which to extend other drawable shapes
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Patrick Crain, 6/6/2014
+ * Last Modified: Mark Vander Stel, 6/10/2014
  */
 
 #ifndef SHAPE_H_
@@ -10,18 +10,18 @@
 
 class Shape {
 protected:
-	int myR, myG, myB; 							//Color data for the shape
-	bool useDefaultColor;						//Whether or not the shape uses the global drawing color
+	int myR, myG, myB; 					//Color data for the shape
+	bool useDefaultColor;				//Whether or not the shape uses the global drawing color
 public:
-	inline Shape();								//Default constructor for the Shape
-	inline Shape(int r, int g, int b);			//Explicit constructor for the Shape
-	inline virtual ~Shape();					//Default destructor for the Shape
-	inline void setColor(int r, int g, int b);	//Mutator for the Shape's color
-	inline int getColorR();						//Accessor for the red component of the Shape's color
-	inline int getColorG();						//Accessor for the green component of the Shape's color
-	inline int getColorB();						//Accessor for the blue component of the Shape's color
-	inline bool getUsesDefaultColor();			//Accessor for useDefaultColor
-	inline virtual void draw() = 0;				//Abstract method for actually drawing the shape
+	Shape();							//Default constructor for the Shape
+	Shape(int r, int g, int b);			//Explicit constructor for the Shape
+	virtual ~Shape() {}					//Default destructor for the Shape
+	void setColor(int r, int g, int b);	//Mutator for the Shape's color
+	int getColorR();					//Accessor for the red component of the Shape's color
+	int getColorG();					//Accessor for the green component of the Shape's color
+	int getColorB();					//Accessor for the blue component of the Shape's color
+	bool getUsesDefaultColor();			//Accessor for useDefaultColor
+	virtual void draw() = 0;			//Abstract method for actually drawing the shape
 };
 
 
@@ -50,9 +50,6 @@ Shape::Shape(int r, int g, int b) {
 	myB = b;
 	useDefaultColor = false;	//We no longer use the global drawing color (if we did before)
 }
-
-//Destructor stub for the Shape class
-Shape::~Shape() {}
 
 /*
  * setColor sets the color for the Shape class
