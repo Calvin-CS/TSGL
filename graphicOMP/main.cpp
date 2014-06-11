@@ -18,63 +18,6 @@ const int WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
 int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 bool reverse = false;
 
-typedef struct {float R, G, B;} RGBType;
-
-typedef struct {float H, S, V;} HSVType;
-
-RGBType HSVtoRGB(HSVType HSV) {
- 	// H is given on [0, 6] or UNDEFINED. S and V are given on [0, 1].
-	// RGB are each returned on [0, 1].
-	float h = HSV.H, s = HSV.S, v = HSV.V, m, n, f;
-	int i;
-	RGBType RGB;
-
-	if (h == -1) {
-		RGB.R = v;
-		RGB.G = v;
-		RGB.B = v;
-		return RGB;
-	}
-	i = floor(h);
-	f = h - i;
-	if ( !(i&1) ) f = 1 - f; // if i is even
-	m = v * (1 - s);
-	n = v * (1 - s * f);
-	switch (i) {
-		case 6:
-		case 0:
-			RGB.R = v;
-			RGB.G = n;
-			RGB.B = m;
-			return RGB;
-		case 1:
-			RGB.R = n;
-			RGB.G = v;
-			RGB.B = m;
-			return RGB;
-		case 2:
-			RGB.R = m;
-			RGB.G = v;
-			RGB.B = n;
-			return RGB;
-		case 3:
-			RGB.R = m;
-			RGB.G = n;
-			RGB.B = v;
-			return RGB;
-		case 4:
-			RGB.R = n;
-			RGB.G = m;
-			RGB.B = v;
-			return RGB;
-		case 5:
-			RGB.R = v;
-			RGB.G = m;
-			RGB.B = n;
-			return RGB;
-	}
-}
-
 void points1(Canvas* can) {
 	int tid, nthreads, i, j, color;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
@@ -326,14 +269,14 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 			if (filled[xx[j]][yy[j]]) {
 				dir[j] = (dir[j] + 1) % 4;
 				other = {((can->getFrameNumber() + 3*j)%12) / 2.0f,1.0f,1.0f};
-				color = HSVtoRGB(other);
+				color = Canvas::HSVtoRGB(other);
 				can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255);
 //				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
 			}
 			else {
 				dir[j] = (dir[j] + 3) % 4;
 				other = {((can->getFrameNumber() + 3*j)%12) / 2.0f,1.0f,0.5f};
-				color = HSVtoRGB(other);
+				color = Canvas::HSVtoRGB(other);
 				can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255);
 //				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
 			}

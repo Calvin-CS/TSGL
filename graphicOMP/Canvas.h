@@ -17,6 +17,7 @@
 #include "Rectangle.h"				//Our own class for drawing rectangles.
 #include <omp.h>					//For OpenMP support
 #include "List.h"					//Our own doubly-linked list for buffering drawing operations in a thread-safe manner.
+#include <math.h>					//For converting HSV to RGB
 
 #include <sys/time.h>
 #include <iostream>
@@ -24,6 +25,9 @@
 
 #define FPS 60
 #define FRAME 1.0f/FPS		//Represents a single frame
+
+typedef struct {float R, G, B;} RGBType;
+typedef struct {float H, S, V;} HSVType;
 
 class Canvas : public Fl_Box {
 	typedef std::chrono::high_resolution_clock highResClock;
@@ -69,6 +73,8 @@ public:
 	int getFrameNumber() { return counter; }					//Accessor for the number of frames rendered so far
 	int getBufferSize() {return drawBufferSize; }				//Accessor for the Shape list's buffer size
 	float getFPS() { return realFPS; }							//Accessor for true FPS
+
+	static RGBType HSVtoRGB(HSVType HSV);
 };
 
 /*
@@ -340,6 +346,61 @@ Rectangle Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, i
  */
 void Canvas::drawText(const char * s, int x, int y) {
 	fl_draw(s,x,y);
+}
+
+RGBType Canvas::HSVtoRGB(HSVType HSV) {
+ 	// H is given on [0, 6] or UNDEFINED. S and V are given on [0, 1].
+	// RGB are each returned on [0, 1].
+	float h = HSV.H, s = HSV.S, v = HSV.V, m, n, f;
+	int i;
+	RGBType RGB;
+
+	if (h == -1) {
+		RGB.R = v;
+		RGB.G = v;
+		RGB.B = v;
+		return RGB;
+	}
+	i = floor(h);
+	f = h - i;
+	if ( !(i&1) ) f = 1 - f; // if i is even
+	m = v * (1 - s);
+	n = v * (1 - s * f);
+	switch (i) {
+		case 6:
+		case 0:
+			RGB.R = v;
+			RGB.G = n;
+			RGB.B = m;
+			return RGB;
+		case 1:
+			RGB.R = n;
+			RGB.G = v;
+			RGB.B = m;
+			return RGB;
+		case 2:
+			RGB.R = m;
+			RGB.G = v;
+			RGB.B = n;
+			return RGB;
+		case 3:
+			RGB.R = m;
+			RGB.G = n;
+			RGB.B = v;
+			return RGB;
+		case 4:
+			RGB.R = n;
+			RGB.G = m;
+			RGB.B = v;
+			return RGB;
+		case 5:
+			RGB.R = v;
+			RGB.G = m;
+			RGB.B = n;
+			return RGB;
+		default:
+			throw std::out_of_range("Bad H value");
+	}
 }
 
 #endif /* CANVAS_H_ */
