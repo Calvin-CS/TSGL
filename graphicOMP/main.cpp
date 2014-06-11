@@ -2,15 +2,15 @@
  * main.cpp provides example usage for the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/9/2014
+ * Last Modified: Mark Vander Stel, 6/11/2014
  */
 
 #include "Canvas.h"
 #include "CartesianCanvas.h"
 #include <omp.h>
 #include <stdlib.h>
-#include <math.h>
 #include <iostream>
+#include <math.h>
 #include <complex>
 
 const int WINDOW_X = 200, WINDOW_Y = 200, WINDOW_W = 800, WINDOW_H = 600;
@@ -75,7 +75,7 @@ RGBType HSVtoRGB(HSVType HSV) {
 	}
 }
 
-void updateFunction1(Canvas* can) {
+void points1(Canvas* can) {
 	int tid, nthreads, i, j, color;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j,color)
 	{
@@ -89,7 +89,7 @@ void updateFunction1(Canvas* can) {
 		}
 	}
 }
-void updateFunction2(Canvas* can) {
+void points2(Canvas* can) {
 	int tid, nthreads, i, j;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
 	{
@@ -106,7 +106,7 @@ void updateFunction2(Canvas* can) {
 		}
 	}
 }
-void updateFunction3(Canvas* can) {
+void points3(Canvas* can) {
 	int tid, nthreads, i, j, color;
 	j = can->getFrameNumber();
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,color)
@@ -119,7 +119,8 @@ void updateFunction3(Canvas* can) {
 		}
 	}
 }
-void updateFunction4(Canvas* can) {
+
+void lines1(Canvas* can) {
 	a = c;
 	b = d;
 	c = rand() % WINDOW_W;
@@ -130,7 +131,7 @@ void updateFunction4(Canvas* can) {
 	can->setAutoRefresh(false);
 	can->drawLineColor(a,b,c,d,e,f,g);
 }
-void updateFunction5(Canvas* can) {
+void lines2(Canvas* can) {
 	int tid;
 	reverse = !reverse;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,a,b,c,d,e,f,g)
@@ -153,7 +154,7 @@ void updateFunction5(Canvas* can) {
 		can->drawLineColor(a,b,c,d,e,f,g);
 	}
 }
-void updateFunction6(Canvas* can) {
+void shadingPoints(Canvas* can) {
 	int tid, nthreads, i, j;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
 	{
@@ -168,43 +169,51 @@ void updateFunction6(Canvas* can) {
 }
 
 void mandelbrotFunction(CartesianCanvas* can) {
+//	const unsigned int threads = 7;
 	const unsigned int threads = omp_get_num_procs();
 
-	if (can->getFrameNumber() <= (can->getWindowHeight() / threads)) {	// As long as we aren't trying to render off of the screen...
-		long double i, j;
+	if (can->getFrameNumber() - 1 <= (can->getWindowHeight() / threads)) {	// As long as we aren't trying to render off of the screen...
+		long double i;
 		unsigned int iterations;
 		const unsigned int depth = 255;
 
-		j = -1.125 + (can->getFrameNumber() - 1) * can->getPixelHeight() * threads;
-
 		#pragma omp parallel num_threads(threads) private(i, iterations)
 		{
-			long double j_ = j + can->getPixelHeight() * omp_get_thread_num();
+			long double j = ((can->getMaxY() - can->getMinY()) / threads) * omp_get_thread_num()
+								+ can->getMinY() + can->getPixelHeight() * can->getFrameNumber();
 
 			for (i = -2; i <= 1; i += can->getPixelWidth()) {
-				std::complex<long double> originalComplex(i, j_);
-				std::complex<long double> complex(i, j_);
+				std::complex<long double> originalComplex(i, j);
+				std::complex<long double> complex(i, j);
 				iterations = 0;
 
 				while (std::abs(complex) < 2.0 && iterations != depth) {
-//					complex = std::abs(complex);
 					iterations++;
 					complex = originalComplex + std::pow(complex, 2);
 				}
 
 				if (iterations == depth) {					// If the point never escaped...
-					can->drawPointColor(i, j_, 0, 0, 0);	// Draw it black
+					can->drawPointColor(i, j, 0, 0, 0);	// Draw it black
 				} else {
-					can->drawPointColor(i, j_, iterations % 151, (iterations % 131) + 50, iterations);	// Draw with color
+					can->drawPointColor(i, j, iterations % 151, (iterations % 131) + 50, iterations);	// Draw with color
 				}
 			}
 		}
 	}
 }
 
+// Shared values between langton functions
 enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
 static bool filled[800][600] = {};
 static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
+void langtonFourWayInit() {  // Not a function for calling by a Canvas, but used for setting up the other langton ones
+	xx[0] = 200; yy[0] = 300; red[0] = 255; green[0] = 0;   blue[0] = 0;
+	xx[1] = 300; yy[1] = 200; red[1] = 0;   green[1] = 0;   blue[1] = 255;
+	xx[2] = 400; yy[2] = 300; red[2] = 0;   green[2] = 255; blue[2] = 0;
+	xx[3] = 300; yy[3] = 400; red[3] = 255; green[3] = 0;   blue[3] = 255;
+	for (int i = 0; i < 4; i++) { dir[i] = i; }
+}
+
 void langtonFunction(CartesianCanvas* can) {
 	static int IPF = 500;		// Iterations per frame
 	static int xx = 400, yy = 300;
@@ -230,13 +239,6 @@ void langtonFunction(CartesianCanvas* can) {
 		else
 			std::cout << "BAD: dir == " << direction << std::endl;
 	}
-}
-void langtonFourWayInit() {
-	xx[0] = 200; yy[0] = 300; red[0] = 255; green[0] = 0;   blue[0] = 0;
-	xx[1] = 300; yy[1] = 200; red[1] = 0;   green[1] = 0;   blue[1] = 255;
-	xx[2] = 400; yy[2] = 300; red[2] = 0;   green[2] = 255; blue[2] = 0;
-	xx[3] = 300; yy[3] = 400; red[3] = 255; green[3] = 0;   blue[3] = 255;
-	for (int i = 0; i < 4; i++) { dir[i] = i; }
 }
 void langtonFunction2(CartesianCanvas* can) {
 	static int IPF = 1000;		// Iterations per frame
@@ -284,18 +286,19 @@ void langtonFunction2(CartesianCanvas* can) {
 }
 void langtonFunction3(CartesianCanvas* can) {
 	static int IPF = 1000;		// Iterations per frame
-	static int frame = 0;
 //	const unsigned int threads = 4;
+
 	for (int i = 0; i < IPF; i++) {
 		//#pragma omp parallel for
 		for (int j = 0; j < 4; j++) {
 			if (filled[xx[j]][yy[j]]) {
 				dir[j] = (dir[j] + 1) % 4;
-				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+//				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+				can->drawPointColor(xx[j],yy[j],128,128,128);
 			}
 			else {
 				dir[j] = (dir[j] + 3) % 4;
-				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
 			}
 		}
 		for (int j = 0; j < 4; j++)
@@ -313,7 +316,7 @@ void langtonFunction3(CartesianCanvas* can) {
 	}
 }
 void langtonFunctionShiny(CartesianCanvas* can) {
-	static int IPF = 5000;		// Iterations per frame
+	static int IPF = 1000;		// Iterations per frame
 //	const unsigned int threads = 4;
 	RGBType color;
 	HSVType other;
@@ -413,45 +416,51 @@ void dumbSortFunction(CartesianCanvas* can) {
 }
 
 int main() {
-//	Canvas* can = new Canvas(updateFunction1);
+//	Canvas* can = new Canvas(points1);
 //	can->start();
-//
-//	Canvas* can2 = new Canvas(updateFunction2);
+
+//	Canvas* can2 = new Canvas(points2);
 //	can2->start();
-//
-//	Canvas* can3 = new Canvas(updateFunction3);
+
+//	Canvas* can3 = new Canvas(points3);
 //	can3->start();
-//
-//	Canvas* can4 = new Canvas(updateFunction4, 500);
+
+//	Canvas* can4 = new Canvas(lines1, 500);
 //	can4->setAutoRefresh(false);
 //	can4->start();
-//
-//	Canvas* can5 = new Canvas(updateFunction5, 1000);
+
+//	Canvas* can5 = new Canvas(lines2, 1000);
 //	can5->setAutoRefresh(false);
 //	can5->start();
-//
-//	Canvas* can6 = new Canvas(updateFunction6);
+
+//	Canvas* can6 = new Canvas(shadingPoints);
 //	can6->start();
-//
+
 //	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
 //									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, -1);
 //	can7->start();
-//
+
 //	CartesianCanvas* can8 = new CartesianCanvas(langtonFunction,
 //									0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
 //	can8->start();
-//
+
 //	langtonFourWayInit();
 //	CartesianCanvas* can9 = new CartesianCanvas(langtonFunction2,
 //									0, 0, 600, 600, 0,0,600,600, -1);
 //	can9->start();
-//
+
 //	langtonFourWayInit();
 //	CartesianCanvas* can10 = new CartesianCanvas(langtonFunction3,
 //									0, 0, 600, 600, 0,0,600,600, -1);
 //	can10->start();
 
-	CartesianCanvas* can11 = new CartesianCanvas(dumbSortFunction,
+//	langtonFourWayInit();
+//	CartesianCanvas* can11 = new CartesianCanvas(langtonFunctionShiny,
+//									0, 0, 600, 600, 0,0,600,600, -1);
+//	can11->start();
+
+	CartesianCanvas* can12 = new CartesianCanvas(dumbSortFunction,
 									0, 0, 800, 600, 0,0,800,600, -1);
-	can11->start();
+	can12->start();
+
 }

@@ -2,7 +2,7 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Patrick Crain, 6/10/2014
+ * Last Modified: Patrick Crain, 6/11/2014
  */
 
 #ifndef CANVAS_H_
@@ -26,10 +26,10 @@
 #define FRAME 1.0f/FPS		//Represents a single frame
 
 class Canvas : public Fl_Box {
+	typedef std::chrono::high_resolution_clock highResClock;
 	typedef void (*fcall)(Canvas* const);	//Define a type for our callback function pointer
 private:
 	fcall updateFunc;						//User-defined callback function for drawing
-	struct timeval startTime, endTime;		//Nano timer for timing things
 protected:
 	List<Shape*> * myShapes;		//Our buffer of shapes to draw
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
@@ -43,6 +43,8 @@ protected:
 	void draw();													//Method for drawing the canvas and the shapes within
 	virtual void callUpdate();										//Actually calls updateFunc (needed to avoid typing errors)
 	inline static void Canvas_Callback(void* userdata);				//Callback so that the canvas redraws periodically
+	float realFPS;													//Actual FPS of drawing
+	highResClock::time_point time;
 public:
 	Canvas(fcall c, int b);											//Default constructor for our Canvas
 	Canvas(fcall c, int xx, int yy, int w, int h, int b, char* t);	//Explicit constructor for our Canvas
@@ -66,6 +68,7 @@ public:
 	int getColorB() { return colorB; }							//Accessor for  the number component of the global drawing color
 	int getFrameNumber() { return counter; }					//Accessor for the number of frames rendered so far
 	int getBufferSize() {return drawBufferSize; }				//Accessor for the Shape list's buffer size
+	float getFPS() { return realFPS; }							//Accessor for true FPS
 };
 
 /*
@@ -94,7 +97,14 @@ void Canvas::init(int xx, int yy, int ww, int hh, int b) {
  * Note: this function is called automatically by the callback and the FLTK redraw function, which is why it's private
  */
 void Canvas::draw() {
-	gettimeofday(&startTime,NULL);
+	// Calculate time since draw() was last called
+	highResClock::time_point end = highResClock::now();
+	realFPS = 1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - time).count() * 1000000000.0;
+	realFPS = realFPS-(int)realFPS > .5 ? (int)realFPS + 1 : (int)realFPS;
+	time = end;
+
+	std::cout << realFPS << '/' << FPS << std::endl;
+
 	counter++;				//Increment the frame counter
 	callUpdate();			//Call the user's callback to do work on the Canvas
 	//Temporary variables for the initial global drawing color
@@ -120,9 +130,6 @@ void Canvas::draw() {
 	if (autoRefresh) {
 		myShapes->clear();
 	}
-	gettimeofday(&endTime,NULL);
-	double timeDelta = (endTime.tv_usec-startTime.tv_usec)/1000.0f + 1000.0f*(endTime.tv_sec-startTime.tv_sec);
-//	std::cout << "Update ran in : " << timeDelta << " milliseconds" << std::endl;
 }
 
 /*
@@ -324,6 +331,13 @@ Rectangle Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, i
 	return *rec;										//Return a pointer to our new Point
 }
 
+/*
+ * drawText() prints text at the given coordinates
+ * Parameters:
+ * 		s, the char* to print
+ * 		x, the x coordinate of the text's left edge
+ * 		y, the y coordinate of the text's top edge
+ */
 void Canvas::drawText(const char * s, int x, int y) {
 	fl_draw(s,x,y);
 }
