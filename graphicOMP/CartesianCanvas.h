@@ -35,6 +35,9 @@ public:
 	Line drawLine(Type x1, Type y1, Type x2, Type y2);			//Draws a line at the given coordinates
 	Line drawLineColor(Type x1, Type y1, Type x2,
 						Type y2, int r, int g, int b);			//Draws a line at the given coordinates with the given color
+	Rectangle drawRectangle(Type x, Type y, Type w, Type h);	//Draws a rectangle at the given coordinates with the given dimensions
+	Rectangle drawRectangleColor(Type x, Type y, Type w,
+			Type h, int r, int g, int b);						//Draws a rectangle at the given coordinates with the given dimensions and color
 };
 
 /*
@@ -175,9 +178,9 @@ Line CartesianCanvas::drawLine(Type x1, Type y1, Type x2, Type y2) {
 	Type actualX1, actualY1,actualX2, actualY2;
 	getScreenCoordinates(x1,y1,actualX1,actualY1);
 	getScreenCoordinates(x2,y2,actualX2,actualY2);
-	Line* l = new Line(actualX1,actualY1,actualX2,actualY2);//Creates the Point with the specified coordinates
+	Line* l = new Line(actualX1,actualY1,actualX2,actualY2); //Creates the Line with the specified coordinates
 	myShapes->push(l);				//Push it onto our drawing queue
-	return *l;						//Return a pointer to our new Point
+	return *l;						//Return a pointer to our new Line
 }
 
 /*
@@ -196,9 +199,48 @@ Line CartesianCanvas::drawLineColor(Type x1, Type y1, Type x2, Type y2, int r, i
 	Type actualX1, actualY1,actualX2, actualY2;
 	getScreenCoordinates(x1,y1,actualX1,actualY1);
 	getScreenCoordinates(x2,y2,actualX2,actualY2);
-	Line* l = new Line(actualX1,actualY1,actualX2,actualY2,r,g,b);	//Creates the Point with the specified coordinates and color
+	Line* l = new Line(actualX1,actualY1,actualX2,actualY2,r,g,b);	//Creates the Line with the specified coordinates and color
 	myShapes->push(l);						//Push it onto our drawing queue
-	return *l;								//Return a pointer to our new Point
+	return *l;								//Return a pointer to our new Line
+}
+
+/*
+ * drawRectangle draws a rectangle with the given coordinates and dimensions
+ * Parameters:
+ * 		x, the x coordinate of the Rectangle's left edge
+ *		y, the y coordinate of the Rectangle's top edge
+ * 		w, the width of the Rectangle
+ *		h, the height of the Rectangle
+ * 	Returns: a new rectangle with the given Cartesian-adjusted coordinates and dimensions
+ */
+Rectangle CartesianCanvas::drawRectangle(Type x, Type y, Type w, Type h) {
+	Type actualX, actualY, actualW, actualH;
+	getScreenCoordinates(x,y,actualX,actualY);
+	getScreenCoordinates(w,h,actualW,actualH);
+	Rectangle* rec = new Rectangle(x,y,w,h);	//Creates the Rectangle with the specified coordinates
+	myShapes->push(rec);						//Push it onto our drawing queue
+	return *rec;								//Return a pointer to our new Rectangle
+}
+
+/*
+ * drawRectangleColor draws a rectangle with the given coordinates, dimensions, and color
+ * Parameters:
+ * 		x, the x coordinate of the Rectangle's left edge
+ *		y, the y coordinate of the Rectangle's top edge
+ * 		w, the width of the Rectangle
+ *		h, the height of the Rectangle
+ * 		r, the red component
+ * 		g, the green component
+ * 		b, the blue component
+ * 	Returns: a new rectangle with the given Cartesian-adjusted coordinates, dimensions, and color
+ */
+Rectangle CartesianCanvas::drawRectangleColor(Type x, Type y, Type w, Type h, int r, int g, int b) {
+	Type actualX, actualY, actualW, actualH;
+	getScreenCoordinates(x,y,actualX,actualY);
+	getScreenCoordinates(w,h,actualW,actualH);
+	Rectangle* rec = new Rectangle(x,y,w,h,r,g,b);		//Creates the Rectangle with the specified coordinates and color
+	myShapes->push(rec);								//Push it onto our drawing queue
+	return *rec;										//Return a pointer to our new Rectangle
 }
 
 #endif /* CARTESIANCANVAS_H_- */

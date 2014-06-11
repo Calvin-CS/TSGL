@@ -9,13 +9,18 @@
 #define CANVAS_H_
 
 #include "FL/Fl.H"					//For using basic FLTK library functions
-#include <FL/Fl_Window.H>	//For Fl_Double_Window, which draws our window
+#include <FL/Fl_Double_Window.H>			//For Fl_Double_Window, which draws our window
 #include <FL/Fl_Box.H>				//For Fl_Box, from which our Canvas inherits
 #include <FL/fl_draw.H>				//For FLTK's drawing function, which we implement to make our own thread-safe version.
 #include "Point.h"					//Our own class for drawing single points.
 #include "Line.h"					//Our own class for drawing straight lines.
+#include "Rectangle.h"				//Our own class for drawing rectangles.
 #include <omp.h>					//For OpenMP support
 #include "List.h"					//Our own doubly-linked list for buffering drawing operations in a thread-safe manner.
+
+#include <sys/time.h>
+#include <iostream>
+
 
 #define FPS 60
 #define FRAME 1.0f/FPS		//Represents a single frame
@@ -23,16 +28,17 @@
 class Canvas : public Fl_Box {
 	typedef void (*fcall)(Canvas* const);	//Define a type for our callback function pointer
 private:
-	fcall updateFunc;				//User-defined callback function for drawing
+	fcall updateFunc;						//User-defined callback function for drawing
+	struct timeval startTime, endTime;		//Nano timer for timing things
 protected:
 	List<Shape*> * myShapes;		//Our buffer of shapes to draw
 	int counter;					//Counter for the number of frames that have elapsed in the current session (for animations)
 	int monitorX,monitorY,monitorWidth,monitorHeight;  	//Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	//Our current global RGB drawing color
 	int drawBufferSize;				//Maximum allowed Shapes in our drawing List
-	Fl_Window* window;		//The FLTK window to which we draw
+	Fl_Double_Window* window;		//The FLTK window to which we draw
 	bool started;					//Whether our canvas is running and the counter is counting
-	bool autoRefresh;				//Whether or not we automatically refresh the Canvas each frame
+	bool autoRefresh;				//Whether or not we automatically refr/ (double)(CLOCKS_PER_SEC / 100)esh the Canvas each frame
 	void init(int xx, int yy, int ww, int hh, int b);				//Method for initializing the canvas
 	void draw();													//Method for drawing the canvas and the shapes within
 	virtual void callUpdate();										//Actually calls updateFunc (needed to avoid typing errors)
@@ -47,9 +53,10 @@ public:
 	virtual Point drawPoint(int x, int y);							//Draws a point at the given coordinates
 	virtual Point drawPointColor(int x, int y, int r, int g, int b);//Draws a point at the given coordinates with the given color
 	virtual Line drawLine(int x1, int y1, int x2, int y2);			//Draws a line at the given coordinates
-	virtual Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);	//Draws a line at the given coordinates with the given color
-	virtual void drawText(const char * s, int x, int y);
-	virtual void drawTextColor(const char * s, int x, int y, int r, int g, int b);
+	virtual Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);		//Draws a line at the given coordinates with the given color
+	virtual Rectangle drawRectangle(int x, int y, int w, int h);							//Draws a rectangle at the given coordinates with the given dimensions
+	virtual Rectangle drawRectangleColor(int x, int y, int w, int h, int r, int g, int b);	//Draws a rectangle at the given coordinates with the given dimensions and color
+	virtual void drawText(const char * s, int x, int y);									//Draws a string of text at the given position
 	int getWindowX() { return monitorX; }						//Accessor for the window width
 	int getWindowY() { return monitorY; }						//Accessor for the window height
 	int getWindowWidth() { return monitorWidth; }				//Accessor for the window width
@@ -87,6 +94,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, int b) {
  * Note: this function is called automatically by the callback and the FLTK redraw function, which is why it's private
  */
 void Canvas::draw() {
+	gettimeofday(&startTime,NULL);
 	counter++;				//Increment the frame counter
 	callUpdate();			//Call the user's callback to do work on the Canvas
 	//Temporary variables for the initial global drawing color
@@ -112,6 +120,9 @@ void Canvas::draw() {
 	if (autoRefresh) {
 		myShapes->clear();
 	}
+	gettimeofday(&endTime,NULL);
+	double timeDelta = (endTime.tv_usec-startTime.tv_usec)/1000.0f + 1000.0f*(endTime.tv_sec-startTime.tv_sec);
+//	std::cout << "Update ran in : " << timeDelta << " milliseconds" << std::endl;
 }
 
 /*
@@ -174,10 +185,11 @@ Canvas::Canvas(fcall c, int xx, int yy, int w, int h, int b = -1, char* t = 0) :
 int Canvas::start() {
 	if (started)												//If we're already started, return error code -1
 		return -1;
+	//Fl::gl_visual(FL_ALPHA);
 	started = true;												//We've now started
-    window = new Fl_Window(monitorWidth,monitorHeight);	//Instantiate our drawing window
+    window = new Fl_Double_Window(monitorWidth,monitorHeight);	//Instantiate our drawing window
     window->add(this);											//Add ourself (Canvas) to the drawing window
-window->show();													//Show the window
+    window->show();													//Show the window
     return(Fl::run());
 }
 
@@ -279,10 +291,40 @@ Line Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) 
 	return *l;								//Return a pointer to our new Point
 }
 
-void Canvas::drawText(const char * s, int x, int y) {
-	fl_draw(s,x,y);
+/*
+ * drawRectangle draws a rectangle with the given coordinates and dimensions
+ * Parameters:
+ * 		x, the x coordinate of the Rectangle's left edge
+ *		y, the y coordinate of the Rectangle's top edge
+ * 		w, the width of the Rectangle
+ *		h, the height of the Rectangle
+ * 	Returns: a new rectangle with the given coordinates and dimensions
+ */
+Rectangle Canvas::drawRectangle(int x, int y, int w, int h) {
+	Rectangle* rec = new Rectangle(x,y,w,h);	//Creates the Point with the specified coordinates
+	myShapes->push(rec);						//Push it onto our drawing queue
+	return *rec;								//Return a pointer to our new Point
 }
-void Canvas::drawTextColor(const char * s, int x, int y, int r, int g, int b) {
+
+/*
+ * drawRectangleColor draws a rectangle with the given coordinates, dimensions, and color
+ * Parameters:
+ * 		x, the x coordinate of the Rectangle's left edge
+ *		y, the y coordinate of the Rectangle's top edge
+ * 		w, the width of the Rectangle
+ *		h, the height of the Rectangle
+ * 		r, the red component
+ * 		g, the green component
+ * 		b, the blue component
+ * 	Returns: a new rectangle with the given coordinates, dimensions, and color
+ */
+Rectangle Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, int b) {
+	Rectangle* rec = new Rectangle(x,y,w,h,r,g,b);		//Creates the Point with the specified coordinates and color
+	myShapes->push(rec);								//Push it onto our drawing queue
+	return *rec;										//Return a pointer to our new Point
+}
+
+void Canvas::drawText(const char * s, int x, int y) {
 	fl_draw(s,x,y);
 }
 
