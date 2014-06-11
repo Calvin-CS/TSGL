@@ -7,10 +7,13 @@
 
 #include "Canvas.h"
 #include "CartesianCanvas.h"
+#include "Function.h"
+#include "Array.h"
+
 #include <omp.h>
 #include <stdlib.h>
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <complex>
 
 const int WINDOW_X = 200, WINDOW_Y = 200, WINDOW_W = 800, WINDOW_H = 600;
@@ -112,7 +115,7 @@ void shadingPoints(Canvas* can) {
 }
 
 void mandelbrotFunction(CartesianCanvas* can) {
-//	const unsigned int threads = 7;
+//	const unsigned int threads = 32;
 	const unsigned int threads = omp_get_num_procs();
 
 	if (can->getFrameNumber() - 1 <= (can->getWindowHeight() / threads)) {	// As long as we aren't trying to render off of the screen...
@@ -120,12 +123,13 @@ void mandelbrotFunction(CartesianCanvas* can) {
 		unsigned int iterations;
 		const unsigned int depth = 255;
 
+		//
 		#pragma omp parallel num_threads(threads) private(i, iterations)
 		{
 			long double j = ((can->getMaxY() - can->getMinY()) / threads) * omp_get_thread_num()
 								+ can->getMinY() + can->getPixelHeight() * can->getFrameNumber();
 
-			for (i = -2; i <= 1; i += can->getPixelWidth()) {
+			for (i = can->getMinX(); i <= can->getMaxX(); i += can->getPixelWidth()) {
 				std::complex<long double> originalComplex(i, j);
 				std::complex<long double> complex(i, j);
 				iterations = 0;
@@ -141,6 +145,12 @@ void mandelbrotFunction(CartesianCanvas* can) {
 					can->drawPointColor(i, j, iterations % 151, (iterations % 131) + 50, iterations);	// Draw with color
 				}
 			}
+		}
+	} else {
+		static bool shownTime = false;
+		if (!shownTime) {
+			std::cout << can->getTime() << std::endl;
+			shownTime = true;
 		}
 	}
 }
@@ -359,16 +369,16 @@ void dumbSortFunction(CartesianCanvas* can) {
 }
 
 int main() {
-//	Canvas* can = new Canvas(points1);
+//	Canvas* can = new Canvas(points1, 480800);
 //	can->start();
 
-//	Canvas* can2 = new Canvas(points2);
+//	Canvas* can2 = new Canvas(points2, 480000);
 //	can2->start();
 
-//	Canvas* can3 = new Canvas(points3);
+//	Canvas* can3 = new Canvas(points3, 800);
 //	can3->start();
 
-//	Canvas* can4 = new Canvas(lines1, 500);
+//	Canvas* can4 = new Canvas(lines1, 1000);
 //	can4->setAutoRefresh(false);
 //	can4->start();
 
@@ -376,12 +386,12 @@ int main() {
 //	can5->setAutoRefresh(false);
 //	can5->start();
 
-//	Canvas* can6 = new Canvas(shadingPoints);
+//	Canvas* can6 = new Canvas(shadingPoints, 257*257);
 //	can6->start();
 
-//	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
-//									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, -1);
-//	can7->start();
+	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
+									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+	can7->start();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(langtonFunction,
 //									0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
@@ -402,8 +412,10 @@ int main() {
 //									0, 0, 600, 600, 0,0,600,600, -1);
 //	can11->start();
 
-	CartesianCanvas* can12 = new CartesianCanvas(dumbSortFunction,
-									0, 0, 800, 600, 0,0,800,600, -1);
-	can12->start();
+//	CartesianCanvas* can12 = new CartesianCanvas(dumbSortFunction,
+//									0, 0, 800, 600, 0,0,800,600, -1);
+//	can12->start();
+
+//	Function* function = new SineFunction();
 
 }

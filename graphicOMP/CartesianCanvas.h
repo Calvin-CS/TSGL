@@ -85,8 +85,9 @@ CartesianCanvas::CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
 			Canvas(NULL, xx, yy, w, h, b, t) {
 	if (c == NULL) {
 		cartesianUpdateFunc = [](CartesianCanvas* c){};					//Empty lambda function that does nothing
-	} else
+	} else {
 		cartesianUpdateFunc = c;										//Adds a callback to the user's own draw function
+	}
 	minX = xMin;
 	minY = yMin;
 	maxX = xMax;
