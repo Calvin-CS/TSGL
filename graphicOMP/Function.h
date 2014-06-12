@@ -13,8 +13,8 @@
 
 class Function {
 public:
-	Function();
-	virtual ~Function();
+	Function() {}
+	virtual ~Function() {}
 	virtual long double valueAt(long double x) const = 0;
 };
 

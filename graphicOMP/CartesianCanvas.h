@@ -46,7 +46,7 @@ public:
 			int x3, int y3);									//Draws a triangle with the given vertices
 	Triangle drawTriangleColor(int x1, int y1, int x2, int y2,
 			int x3, int y3,	int r, int g, int b);				//Draws a triangle with the given vertices and color
-	const Function& drawFunction(const Function& f);
+	const Function* drawFunction(const Function* f);
 };
 
 /*
@@ -126,7 +126,7 @@ void CartesianCanvas::callUpdate() {
  */
 void CartesianCanvas::getScreenCoordinates(Type cartX, Type cartY, int &screenX, int &screenY) {
 	screenX = (cartX-minX)/cartWidth*monitorWidth;
-	screenY = (cartY-minY)/cartHeight*monitorHeight;
+	screenY = window->h() - (cartY-minY)/cartHeight*monitorHeight;
 }
 
 /*
@@ -139,7 +139,7 @@ void CartesianCanvas::getScreenCoordinates(Type cartX, Type cartY, int &screenX,
  */
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Type &cartX, Type &cartY) {
 	cartX = (screenX*cartWidth)/monitorWidth + minX;
-	cartY = (screenY*cartHeight)/monitorHeight + minY;
+	cartY = window->h() + (screenY*cartHeight)/monitorHeight + minY;
 }
 
 /*
@@ -301,13 +301,13 @@ Triangle CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int 
 	return *t;							// Return a pointer to our new Triangle
 }
 
-const Function& CartesianCanvas::drawFunction(const Function& f) {
+const Function* CartesianCanvas::drawFunction(const Function* f) {
 	fl_color(0,0,0);
 
 	int screenX, screenY;
 
-	for (Type x = minX; minX <= maxX; x += pixelWidth) {
-		getScreenCoordinates(x, f.valueAt(x), screenX, screenY);
+	for (Type x = minX; x <= maxX; x += pixelWidth) {
+		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
 		fl_point(screenX,screenY);
 	}
 

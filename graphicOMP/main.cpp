@@ -403,6 +403,12 @@ void colorWheelFunction(CartesianCanvas* can) {
 }
 
 void functionFunction(CartesianCanvas* can) {
+	Function* function1 = new CosineFunction;
+	Function* function2 = new PowerFunction(2);
+
+	can->drawFunction(function1);
+	can->drawFunction(function2);
+
 
 }
 
@@ -458,10 +464,8 @@ int main() {
 									0, 0, 800, 600, 0,0,800,600, 256);
 	can13->start();
 
-	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
-										0, 0, 800, 600, 0,0,800,600, 0);
-	can14->start();
-
-//	Function* function = new SineFunction();
+//	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
+//										0, 0, 800, 600, -2,-2,2,2, 0);
+//	can14->start();
 
 }
