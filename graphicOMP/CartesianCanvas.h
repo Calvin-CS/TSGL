@@ -19,6 +19,7 @@ private:
 	Type pixelWidth, pixelHeight;					//cartWidth/window.w(), cartHeight/window.h()
 	cfcall cartesianUpdateFunc;						//Function pointer to the user's update function
 	Type xError, yError;							//Variables to hold rounding errors for rendering
+	bool drawNext;									//Flag for whether or not we need to plot the next point on a graph
 public:
 	CartesianCanvas(cfcall c, unsigned int b);							//Default constructor for our CartesianCanvas
 	CartesianCanvas(cfcall c, int xx, int yy, int w, int h, Type xMin,
@@ -71,6 +72,7 @@ CartesianCanvas::CartesianCanvas(cfcall c, unsigned int b) : Canvas(NULL, b) {
 	cartHeight = maxY-minY;
 	pixelWidth = (cartWidth-xError) / monitorWidth;
 	pixelHeight = (cartHeight-yError) / monitorHeight;
+	drawNext = false;
 }
 
 /*
@@ -107,6 +109,7 @@ CartesianCanvas::CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
 	cartHeight = (maxY-minY)-yError;
 	pixelWidth = (cartWidth) / (monitorWidth+xError);
 	pixelHeight = (cartHeight) / (monitorHeight+yError);
+	drawNext = false;
 }
 
 /*
@@ -304,12 +307,26 @@ Triangle CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int 
 const Function* CartesianCanvas::drawFunction(const Function* f) {
 	fl_color(0,0,0);
 
-	int screenX, screenY;
+	int lastX = 0, lastY = 0, screenX = 0, screenY = 0;
 
+	fl_begin_line();
+	//fl_line_style(0,2,0);
 	for (Type x = minX; x <= maxX; x += pixelWidth) {
+		lastX = screenX, lastY = screenY;
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
-		fl_point(screenX,screenY);
+		if (screenX < 0 || screenY < 0 || screenX > window->w() || screenY > window->h()) {
+			if (drawNext)
+				fl_vertex(screenX,screenY);
+			drawNext = false;
+		}
+		else {
+			if (!drawNext && lastX != screenX)
+				fl_vertex(lastX,lastY);
+			fl_vertex(screenX,screenY);
+			drawNext =true;
+		}
 	}
+	fl_end_line();
 
 	fl_color(colorR, colorG, colorB);
 	return f;

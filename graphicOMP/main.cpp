@@ -372,43 +372,42 @@ void dumbSortFunction(CartesianCanvas* can) {
 
 void colorWheelFunction(CartesianCanvas* can) {
 	static float f = 0;
-	static bool undraw = false;
-	if (++f > 255) {
+	int i = f;
+	int j = (f >= 128) ? f - 128 : f + 128;
+	if (++f > 255)
 		f -= 255;
-		undraw = !undraw;
-	}
-	RGBType color;
-	HSVType other;
+	RGBType color1, color2;
+	HSVType other1, other2;
 	const float RADIUS = 280;
 	float x2, x3, y2, y3;
-	if (undraw) {
-		for (int i = 0; i < f; i++) {
-			x2 = 400+RADIUS*sin(2*PI*i/255.0);
-			y2 = 300+RADIUS*cos(2*PI*i/255.0);
-			x3 = 400+RADIUS*sin(2*PI*(i+1)/255.0);
-			y3 = 300+RADIUS*cos(2*PI*(i+1)/255.0);
-			can->drawTriangleColor(400,300,x2,y2,x3,y3,192,192,192);
-		}
-	} else {
-		for (int i = 0; i < f; i++) {
-			other = {i/255.0f*6.0f,1.0f,1.0f};
-			color = Canvas::HSVtoRGB(other);
-			x2 = 400+RADIUS*sin(2*PI*i/255.0);
-			y2 = 300+RADIUS*cos(2*PI*i/255.0);
-			x3 = 400+RADIUS*sin(2*PI*(i+1)/255.0);
-			y3 = 300+RADIUS*cos(2*PI*(i+1)/255.0);
-			can->drawTriangleColor(400,300,x2,y2,x3,y3,255*color.R,255*color.G,255*color.B);
-		}
-	}
+	other1 = {i/255.0f*6.0f,1.0f,1.0f};
+	color1 = Canvas::HSVtoRGB(other1);
+	other2 = {j/255.0f*6.0f,1.0f,1.0f};
+	color2 = Canvas::HSVtoRGB(other2);
+	x2 = RADIUS*sin(2*PI*i/255.0);
+	y2 = RADIUS*cos(2*PI*i/255.0);
+	x3 = RADIUS*sin(2*PI*(i+1)/255.0);
+	y3 = RADIUS*cos(2*PI*(i+1)/255.0);
+	can->drawTriangleColor(400,300,400+x2,300+y2,400+x3,300+y3,255*color1.R,255*color1.G,255*color1.B);
+	can->drawTriangleColor(400,300,400-x2,300-y2,400-x3,300-y3,192*color2.R,192*color2.G,192*color2.B);
 }
 
 void functionFunction(CartesianCanvas* can) {
 	Function* function1 = new CosineFunction;
 	Function* function2 = new PowerFunction(2);
 
+	class myFunction : public Function {
+	public:
+		virtual long double valueAt(long double x) const {
+			return 5*pow(x,4) + 2*pow(x,3) + x + 15;
+		}
+	};
+
+	Function* function3 = new myFunction;
+
 	can->drawFunction(function1);
 	can->drawFunction(function2);
-
+	can->drawFunction(function3);
 
 }
 
@@ -460,12 +459,12 @@ int main() {
 //									0, 0, 800, 600, 0,0,800,600, -1);
 //	can12->start();
 
-	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
-									0, 0, 800, 600, 0,0,800,600, 256);
-	can13->start();
+//	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
+//									0, 0, 800, 600, 0,0,800,600, 256);
+//	can13->start();
 
-//	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
-//										0, 0, 800, 600, -2,-2,2,2, 0);
-//	can14->start();
+	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
+										0, 0, 800, 600, -10,-20,10,200, 0);
+	can14->start();
 
 }
