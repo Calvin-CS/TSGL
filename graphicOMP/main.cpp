@@ -371,25 +371,33 @@ void dumbSortFunction(CartesianCanvas* can) {
 }
 
 void colorWheelFunction(CartesianCanvas* can) {
-	static float f = 0;
-	int i = f;
-	int j = (f >= 128) ? f - 128 : f + 128;
+	const int threads = 256;
+	static int f = 0;
+	int start[threads] = { 0 };
+	start[0] = f;
+	for (int i = 1; i < threads; i++) {
+		start[i] = (start[i-1] + (256/threads)) % 255;
+	}
 	if (++f > 255)
 		f -= 255;
-	RGBType color1, color2;
-	HSVType other1, other2;
+	RGBType color;
+	HSVType other;
 	const float RADIUS = 280;
 	float x2, x3, y2, y3;
-	other1 = {i/255.0f*6.0f,1.0f,1.0f};
-	color1 = Canvas::HSVtoRGB(other1);
-	other2 = {j/255.0f*6.0f,1.0f,1.0f};
-	color2 = Canvas::HSVtoRGB(other2);
-	x2 = RADIUS*sin(2*PI*i/255.0);
-	y2 = RADIUS*cos(2*PI*i/255.0);
-	x3 = RADIUS*sin(2*PI*(i+1)/255.0);
-	y3 = RADIUS*cos(2*PI*(i+1)/255.0);
-	can->drawTriangleColor(400,300,400+x2,300+y2,400+x3,300+y3,255*color1.R,255*color1.G,255*color1.B);
-	can->drawTriangleColor(400,300,400-x2,300-y2,400-x3,300-y3,192*color2.R,192*color2.G,192*color2.B);
+	int shading, tid;
+	#pragma omp parallel num_threads(threads) private(other,color,x2,x3,y2,y3,shading,tid)
+	{
+		tid = omp_get_thread_num();
+		shading = 255-tid*256/threads;
+		other = {start[tid]/255.0f*6.0f,1.0f,1.0f};
+		color = Canvas::HSVtoRGB(other);
+		x2 = RADIUS*sin(2*PI*start[tid]/255.0);
+		y2 = RADIUS*cos(2*PI*start[tid]/255.0);
+		x3 = RADIUS*sin(2*PI*(start[tid]+1)/255.0);
+		y3 = RADIUS*cos(2*PI*(start[tid]+1)/255.0);
+		can->drawTriangleColor(400,300,400+x2,300+y2,400+x3,300+y3,
+				shading*color.R,shading*color.G,shading*color.B);
+	}
 }
 
 void functionFunction(CartesianCanvas* can) {
@@ -459,12 +467,13 @@ int main() {
 //									0, 0, 800, 600, 0,0,800,600, -1);
 //	can12->start();
 
-//	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
-//									0, 0, 800, 600, 0,0,800,600, 256);
-//	can13->start();
+	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
+									0, 0, 800, 600, 0,0,800,600, 256);
+	can13->setAutoRefresh(false);
+	can13->start();
 
-	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
-										0, 0, 800, 600, -10,-20,10,200, 0);
-	can14->start();
+//	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
+//										0, 0, 800, 600, -10,-20,10,200, 0);
+//	can14->start();
 
 }
