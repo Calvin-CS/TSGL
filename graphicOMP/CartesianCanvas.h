@@ -2,28 +2,30 @@
  * CartesianCanvas.h provides a Canvas with a Cartesian coordinate system for ease of plotting
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/10/2014
+ * Last Modified: Patrick Crain, 6/12/2014
  */
 
 #ifndef CARTESIANCANVAS_H_
 #define CARTESIANCANVAS_H_
 
 class CartesianCanvas : public Canvas {
-	typedef long double Type;						// Define the variable type to use for coordinates
-	typedef void (*cfcall)(CartesianCanvas* const);	// Define a type for our callback function pointer
+	typedef long double Type;						//Define the variable type to use for coordinates
+	typedef void (*cfcall)(CartesianCanvas* const);	//Define a type for our callback function pointer
 private:
-	Type minX, maxX, minY, maxY;
-	Type cartWidth, cartHeight;
-	Type pixelWidth, pixelHeight;
-	cfcall cartesianUpdateFunc;
-	Type xError, yError;
+	Type minX, maxX, minY, maxY;					//Bounding Cartesian coordinates for the window
+	Type cartWidth, cartHeight;						//maxX-minX, maxY-minY
+	Type pixelWidth, pixelHeight;					//cartWidth/window.w(), cartHeight/window.h()
+	cfcall cartesianUpdateFunc;						//Function pointer to the user's update function
+	Type xError, yError;							//Variables to hold rounding errors for rendering
 public:
-	CartesianCanvas(cfcall c, int b);										//Default constructor for our Canvas
-	CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
-				Type xMin, Type yMin, Type xMax, Type yMax, int b, char *t);
+	CartesianCanvas(cfcall c, int b);							//Default constructor for our CartesianCanvas
+	CartesianCanvas(cfcall c, int xx, int yy, int w, int h, Type xMin,
+			Type yMin, Type xMax, Type yMax, int b, char *t);	//Explicit constructor for our CartesianCanvas
 	inline void callUpdate();									//Actually calls updateFunc (needed to avoid typing errors)
-	void getScreenCoordinates(Type cartX, Type cartY, Type &screenX, Type &screenY);
-	void getCartesianCoordinates(Type screenX, Type screenY, Type &cartX, Type &cartY);
+	void getScreenCoordinates(Type cartX, Type cartY,
+			Type &screenX, Type &screenY);						//Returns the equivalent screen coordinates for the specified Cartesian ones
+	void getCartesianCoordinates(Type screenX, Type screenY,
+			Type &cartX, Type &cartY);							//Returns the equivalent Cartesian coordinates for the specified screen ones
 	Type getPixelWidth() { return pixelWidth; }					//Accessor for pixelWidth
 	Type getPixelHeight() { return pixelHeight; }				//Accessor for pixelHeight
 	Type getMinX() { return minX; }								//Accessor for minX
@@ -38,6 +40,10 @@ public:
 	Rectangle drawRectangle(Type x, Type y, Type w, Type h);	//Draws a rectangle at the given coordinates with the given dimensions
 	Rectangle drawRectangleColor(Type x, Type y, Type w,
 			Type h, int r, int g, int b);						//Draws a rectangle at the given coordinates with the given dimensions and color
+	Triangle drawTriangle(int x1, int y1, int x2, int y2,
+			int x3, int y3);									//Draws a triangle with the given vertices
+	Triangle drawTriangleColor(int x1, int y1, int x2, int y2,
+			int x3, int y3,	int r, int g, int b);				//Draws a triangle with the given vertices and color
 };
 
 /*
@@ -242,6 +248,54 @@ Rectangle CartesianCanvas::drawRectangleColor(Type x, Type y, Type w, Type h, in
 	Rectangle* rec = new Rectangle(x,y,w,h,r,g,b);		//Creates the Rectangle with the specified coordinates and color
 	myShapes->push(rec);								//Push it onto our drawing queue
 	return *rec;										//Return a pointer to our new Rectangle
+}
+
+/*
+ * drawTriangle draws a Triangle with the given vertices
+ * Parameters:
+ * 		x1, the x position of the first vertex of the triangle
+ * 		y1, the y position of the first vertex of the triangle
+ *		x2, the x position of the second vertex of the triangle
+ * 		y2, the y position of the second vertex of the triangle
+ * 		x3, the x position of the third vertex of the triangle
+ * 		y3, the y position of the third vertex of the triangle
+ * 	Returns: a new triangle with the given Cartesian-adjusted vertices
+ */
+Triangle CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
+	Type actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
+	getScreenCoordinates(x1,y1,actualX1,actualY1);
+	getScreenCoordinates(x2,y2,actualX2,actualY2);
+	getScreenCoordinates(x3,y3,actualX3,actualY3);
+	Triangle* t = new Triangle(actualX1,actualY1,actualX2,
+			actualY2,actualX3,actualY3);	// Creates the Triangle with the specified vertices
+	myShapes->push(t);						// Push it onto our drawing queue
+	return *t;								// Return a pointer to our new Triangle
+}
+
+/*
+ * drawTriangle draws a Triangle with the given vertices
+ * Parameters:
+ * 		x1, the x position of the first vertex of the triangle
+ * 		y1, the y position of the first vertex of the triangle
+ *		x2, the x position of the second vertex of the triangle
+ * 		y2, the y position of the second vertex of the triangle
+ * 		x3, the x position of the third vertex of the triangle
+ * 		y3, the y position of the third vertex of the triangle
+ * 		r, the red component
+ * 		g, the green component
+ * 		b, the blue component
+ * 	Returns: a new triangle with the given Cartesian-adjusted vertices and color
+ */
+Triangle CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
+		int r, int g, int b) {
+	Type actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
+	getScreenCoordinates(x1,y1,actualX1,actualY1);
+	getScreenCoordinates(x2,y2,actualX2,actualY2);
+	getScreenCoordinates(x3,y3,actualX3,actualY3);
+	Triangle* t = new Triangle(actualX1,actualY1,actualX2,actualY2,
+			actualX3,actualY3,r,g,b);	// Creates the Triangle with the specified vertices and color
+	myShapes->push(t);					// Push it onto our drawing queue
+	return *t;							// Return a pointer to our new Triangle
 }
 
 #endif /* CARTESIANCANVAS_H_- */

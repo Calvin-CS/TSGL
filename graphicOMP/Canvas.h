@@ -2,7 +2,7 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/11/2014
+ * Last Modified: Mark Vander Stel, 6/12/2014
  */
 
 #ifndef CANVAS_H_
@@ -15,6 +15,7 @@
 #include "Point.h"					// Our own class for drawing single points.
 #include "Line.h"					// Our own class for drawing straight lines.
 #include "Rectangle.h"				// Our own class for drawing rectangles.
+#include "Triangle.h"				// Our own class for drawing triangles.
 #include <omp.h>					// For OpenMP support
 #include "Array.h"					// Our own thread-safe array for buffering drawing operations.
 #include <cmath>					// For converting HSV to RGB
@@ -61,6 +62,9 @@ public:
 	virtual Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);		// Draws a line at the given coordinates with the given color
 	virtual Rectangle drawRectangle(int x, int y, int w, int h);							// Draws a rectangle at the given coordinates with the given dimensions
 	virtual Rectangle drawRectangleColor(int x, int y, int w, int h, int r, int g, int b);	// Draws a rectangle at the given coordinates with the given dimensions and color
+	virtual Triangle drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);			// Draws a triangle with the given vertices
+	virtual Triangle drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
+			int r, int g, int b);															// Draws a triangle with the given vertices and color
 	virtual void drawText(const char * s, int x, int y);									// Draws a string of text at the given position
 	int getWindowX() { return monitorX; }						// Accessor for the window width
 	int getWindowY() { return monitorY; }						// Accessor for the window height
@@ -339,7 +343,45 @@ Rectangle Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, i
 }
 
 /*
- * drawText() prints text at the given coordinates
+ * drawTriangle draws a Triangle with the given vertices
+ * Parameters:
+ * 		x1, the x position of the first vertex of the triangle
+ * 		y1, the y position of the first vertex of the triangle
+ *		x2, the x position of the second vertex of the triangle
+ * 		y2, the y position of the second vertex of the triangle
+ * 		x3, the x position of the third vertex of the triangle
+ * 		y3, the y position of the third vertex of the triangle
+ * 	Returns: a new triangle with the given vertices
+ */
+Triangle Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
+	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3);	// Creates the Triangle with the specified vertices
+	myShapes->push(t);						// Push it onto our drawing queue
+	return *t;								// Return a pointer to our new Triangle
+}
+
+/*
+ * drawTriangle draws a Triangle with the given vertices
+ * Parameters:
+ * 		x1, the x position of the first vertex of the triangle
+ * 		y1, the y position of the first vertex of the triangle
+ *		x2, the x position of the second vertex of the triangle
+ * 		y2, the y position of the second vertex of the triangle
+ * 		x3, the x position of the third vertex of the triangle
+ * 		y3, the y position of the third vertex of the triangle
+ * 		r, the red component
+ * 		g, the green component
+ * 		b, the blue component
+ * 	Returns: a new triangle with the given vertices and color
+ */
+Triangle Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
+		int r, int g, int b) {
+	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,r,g,b);	// Creates the Triangle with the specified vertices and color
+	myShapes->push(t);										// Push it onto our drawing queue
+	return *t;												// Return a pointer to our new Triangle
+}
+
+/*
+ * drawText prints text at the given coordinates
  * Parameters:
  * 		s, the char* to print
  * 		x, the x coordinate of the text's left edge
@@ -349,10 +391,19 @@ void Canvas::drawText(const char * s, int x, int y) {
 	fl_draw(s,x,y);
 }
 
+/*
+ * getTime returns the time elapsed since the Canvas has started drawing (in nanoseconds)
+ */
 double Canvas::getTime() {
 	return std::chrono::duration_cast<std::chrono::microseconds>(highResClock::now() - startTime).count() / 1000000.0;
 }
 
+/*
+ * HSVtoRGB converts a triplet of HSV colors to a triplet of RGB colors
+ * Parameter:
+ * 		HSV, a struct of 3 floats representing HSV color data
+ * Returns: a struct of 3 floats representing the RGB equivalent of the HSV color
+ */
 RGBType Canvas::HSVtoRGB(HSVType HSV) {
  	// H is given on [0, 6] or UNDEFINED. S and V are given on [0, 1].
 	// RGB are each returned on [0, 1].

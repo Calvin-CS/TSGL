@@ -2,12 +2,12 @@
  * main.cpp provides example usage for the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/11/2014
+ * Last Modified: Patrick Crain, 6/12/2014
  */
 
 #include "Canvas.h"
 #include "CartesianCanvas.h"
-#include "Function.h"
+//#include "Function.h"
 #include "Array.h"
 
 #include <omp.h>
@@ -18,8 +18,14 @@
 
 const int WINDOW_X = 200, WINDOW_Y = 200, WINDOW_W = 800, WINDOW_H = 600;
 const int WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
+const double PI = 3.1415926536;
 int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 bool reverse = false;
+
+// Shared values between langton functions
+enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
+static bool filled[800][600] = {};
+static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 
 void points1(Canvas* can) {
 	int tid, nthreads, i, j, color;
@@ -155,10 +161,6 @@ void mandelbrotFunction(CartesianCanvas* can) {
 	}
 }
 
-// Shared values between langton functions
-enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
-static bool filled[800][600] = {};
-static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 void langtonFourWayInit() {  // Not a function for calling by a Canvas, but used for setting up the other langton ones
 	xx[0] = 200; yy[0] = 300; red[0] = 255; green[0] = 0;   blue[0] = 0;
 	xx[1] = 300; yy[1] = 200; red[1] = 0;   green[1] = 0;   blue[1] = 255;
@@ -368,6 +370,38 @@ void dumbSortFunction(CartesianCanvas* can) {
 	}
 }
 
+void colorWheelFunction(CartesianCanvas* can) {
+	static float f = 0;
+	static bool undraw = false;
+	if (++f > 255) {
+		f -= 255;
+		undraw = !undraw;
+	}
+	RGBType color;
+	HSVType other;
+	const float RADIUS = 280;
+	float x2, x3, y2, y3;
+	if (undraw) {
+		for (int i = 0; i < f; i++) {
+			x2 = 400+RADIUS*sin(2*PI*i/255.0);
+			y2 = 300+RADIUS*cos(2*PI*i/255.0);
+			x3 = 400+RADIUS*sin(2*PI*(i+1)/255.0);
+			y3 = 300+RADIUS*cos(2*PI*(i+1)/255.0);
+			can->drawTriangleColor(400,300,x2,y2,x3,y3,192,192,192);
+		}
+	} else {
+		for (int i = 0; i < f; i++) {
+			other = {i/255.0f*6.0f,1.0f,1.0f};
+			color = Canvas::HSVtoRGB(other);
+			x2 = 400+RADIUS*sin(2*PI*i/255.0);
+			y2 = 300+RADIUS*cos(2*PI*i/255.0);
+			x3 = 400+RADIUS*sin(2*PI*(i+1)/255.0);
+			y3 = 300+RADIUS*cos(2*PI*(i+1)/255.0);
+			can->drawTriangleColor(400,300,x2,y2,x3,y3,255*color.R,255*color.G,255*color.B);
+		}
+	}
+}
+
 int main() {
 //	Canvas* can = new Canvas(points1, 480800);
 //	can->start();
@@ -389,9 +423,9 @@ int main() {
 //	Canvas* can6 = new Canvas(shadingPoints, 257*257);
 //	can6->start();
 
-	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
-									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-	can7->start();
+//	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
+//									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//	can7->start();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(langtonFunction,
 //									0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
@@ -415,6 +449,10 @@ int main() {
 //	CartesianCanvas* can12 = new CartesianCanvas(dumbSortFunction,
 //									0, 0, 800, 600, 0,0,800,600, -1);
 //	can12->start();
+
+	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
+									0, 0, 800, 600, 0,0,800,600, -1);
+	can13->start();
 
 //	Function* function = new SineFunction();
 
