@@ -402,6 +402,10 @@ void colorWheelFunction(CartesianCanvas* can) {
 	}
 }
 
+void functionFunction(CartesianCanvas* can) {
+
+}
+
 int main() {
 //	Canvas* can = new Canvas(points1, 480800);
 //	can->start();
@@ -451,8 +455,12 @@ int main() {
 //	can12->start();
 
 	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
-									0, 0, 800, 600, 0,0,800,600, -1);
+									0, 0, 800, 600, 0,0,800,600, 256);
 	can13->start();
+
+	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
+										0, 0, 800, 600, 0,0,800,600, 0);
+	can14->start();
 
 //	Function* function = new SineFunction();
 
