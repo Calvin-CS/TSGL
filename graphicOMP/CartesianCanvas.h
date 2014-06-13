@@ -12,18 +12,15 @@
 
 class CartesianCanvas : public Canvas {
 	typedef long double Type;						//Define the variable type to use for coordinates
-	typedef void (*cfcall)(CartesianCanvas* const);	//Define a type for our callback function pointer
 private:
 	Type minX, maxX, minY, maxY;					//Bounding Cartesian coordinates for the window
 	Type cartWidth, cartHeight;						//maxX-minX, maxY-minY
 	Type pixelWidth, pixelHeight;					//cartWidth/window.w(), cartHeight/window.h()
-	cfcall cartesianUpdateFunc;						//Function pointer to the user's update function
 	Type xError, yError;							//Variables to hold rounding errors for rendering
 public:
-	CartesianCanvas(cfcall c, unsigned int b);							//Default constructor for our CartesianCanvas
-	CartesianCanvas(cfcall c, int xx, int yy, int w, int h, Type xMin,
+	CartesianCanvas(unsigned int b);							//Default constructor for our CartesianCanvas
+	CartesianCanvas(int xx, int yy, int w, int h, Type xMin,
 			Type yMin, Type xMax, Type yMax, unsigned int b, char *t);	//Explicit constructor for our CartesianCanvas
-	inline void callUpdate();									//Actually calls updateFunc (needed to avoid typing errors)
 	void getScreenCoordinates(Type cartX, Type cartY,
 			int &screenX, int &screenY);						//Returns the equivalent screen coordinates for the specified Cartesian ones
 	void getCartesianCoordinates(int screenX, int screenY,
@@ -56,11 +53,7 @@ public:
  * 		b, the buffer size for the Shapes (-1 = no limit)
  * Returns: a new 800x600 CartesianCanvas with 1-1 pixel correspondence and central origin
  */
-CartesianCanvas::CartesianCanvas(cfcall c, unsigned int b) : Canvas(NULL, b) {
-	if (c == NULL) {
-		cartesianUpdateFunc = [](CartesianCanvas* c){};					//Empty lambda function that does nothing
-	} else
-		cartesianUpdateFunc = c;										//Adds a callback to the user's own draw function
+CartesianCanvas::CartesianCanvas(unsigned int b) : Canvas(b) {
 	minX = -400;
 	maxX = 400;
 	minY = -300;
@@ -89,14 +82,9 @@ CartesianCanvas::CartesianCanvas(cfcall c, unsigned int b) : Canvas(NULL, b) {
  * 		t, the title of the window
  * Returns: a new CartesianCanvas with the specified positional/scaling data and title
  */
-CartesianCanvas::CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
+CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h,
 			Type xMin, Type yMin, Type xMax, Type yMax, unsigned int b, char* t = 0) :
-			Canvas(NULL, xx, yy, w, h, b, t) {
-	if (c == NULL) {
-		cartesianUpdateFunc = [](CartesianCanvas* c){};					//Empty lambda function that does nothing
-	} else {
-		cartesianUpdateFunc = c;										//Adds a callback to the user's own draw function
-	}
+			Canvas(xx, yy, w, h, b, t) {
 	minX = xMin;
 	minY = yMin;
 	maxX = xMax;
@@ -107,13 +95,6 @@ CartesianCanvas::CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
 	cartHeight = (maxY-minY)-yError;
 	pixelWidth = (cartWidth) / (monitorWidth+xError);
 	pixelHeight = (cartHeight) / (monitorHeight+yError);
-}
-
-/*
- * callUpdate simply calls the update function for the CartesianCanvas class
- */
-void CartesianCanvas::callUpdate() {
-	cartesianUpdateFunc(this);		//Call the user's callback to do work on the Canvas
 }
 
 /*

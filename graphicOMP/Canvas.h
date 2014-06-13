@@ -30,15 +30,11 @@ typedef struct {float R, G, B;} RGBType;
 typedef struct {float H, S, V;} HSVType;
 typedef std::chrono::high_resolution_clock highResClock;
 
-class Canvas : public Fl_Box {
-	typedef void (*fcall)(Canvas* const);	// Define a type for our callback function pointer
-private:
-	fcall updateFunc;						// User-defined callback function for drawing
+class Canvas : public Fl_Box {					// User-defined callback function for drawing
 protected:
-//	List<Shape*> * myShapes;		// Our buffer of shapes to draw
-	Array<Shape*> * myShapes;
+	Array<Shape*> * myShapes;		// Our buffer of shapes to draw
 	int counter;					// Counter for the number of frames that have elapsed in the current session (for animations)
-	int monitorX,monitorY,monitorWidth,monitorHeight;  	//Positioning and sizing data for the Canvas
+	int monitorX,monitorY,monitorWidth,monitorHeight;  	// Positioning and sizing data for the Canvas
 	int colorR, colorG, colorB; 	// Our current global RGB drawing color
 	int drawBufferSize;				// Maximum allowed Shapes in our drawing List
 	Fl_Double_Window* window;		// The FLTK window to which we draw
@@ -47,15 +43,13 @@ protected:
 	std::thread renderThread;		// Thread dedicated to rendering the Canvas
 	void init(int xx, int yy, int ww, int hh, unsigned int b);		// Method for initializing the canvas
 	void draw();													// Method for drawing the canvas and the shapes within
-	virtual void callUpdate();										// Actually calls updateFunc (needed to avoid typing errors)
 	inline static void Canvas_Callback(void* userdata);				// Callback so that the canvas redraws periodically
 	float realFPS;													// Actual FPS of drawing
 	bool showFPS_;													// Flag to show debugging FPS
 	highResClock::time_point cycleTime, startTime;
-//	void close_cb(Fl_Widget*, void*);
 public:
-	Canvas(fcall c, unsigned int b);											// Default constructor for our Canvas
-	Canvas(fcall c, int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
+	Canvas(unsigned int b);								// Default constructor for our Canvas
+	Canvas(int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
 	int start();													// Function to start rendering our Canvas
 	int end();														// Function to end rendering our Canvas
 	void setColor(int r, int g, int b);								// Sets the global drawing color
@@ -70,21 +64,19 @@ public:
 	virtual Triangle drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
 			int r, int g, int b);															// Draws a triangle with the given vertices and color
 	virtual void drawText(const char * s, int x, int y);									// Draws a string of text at the given position
-	int getWindowX() { return monitorX; }						// Accessor for the window width
-	int getWindowY() { return monitorY; }						// Accessor for the window height
-	int getWindowWidth() { return monitorWidth; }				// Accessor for the window width
-	int getWindowHeight() { return monitorHeight; }				// Accessor for the window height
-	int getColorR() { return colorR; }							// Accessor for  the red component of the global drawing color
-	int getColorG() { return colorG; }							// Accessor for  the green component of the global drawing color
-	int getColorB() { return colorB; }							// Accessor for  the number component of the global drawing color
-	int getFrameNumber() { return counter; }					// Accessor for the number of frames rendered so far
-	int getBufferSize() {return drawBufferSize; }				// Accessor for the Shape list's buffer size
-	float getFPS() { return realFPS; }							// Accessor for true FPS
+	int getWindowX() 		{ return monitorX; }				// Accessor for the window width
+	int getWindowY() 		{ return monitorY; }				// Accessor for the window height
+	int getWindowWidth() 	{ return monitorWidth; }			// Accessor for the window width
+	int getWindowHeight() 	{ return monitorHeight; }			// Accessor for the window height
+	int getColorR() 		{ return colorR; }					// Accessor for  the red component of the global drawing color
+	int getColorG() 		{ return colorG; }					// Accessor for  the green component of the global drawing color
+	int getColorB() 		{ return colorB; }					// Accessor for  the number component of the global drawing color
+	int getFrameNumber() 	{ return counter; }					// Accessor for the number of frames rendered so far
+	int getBufferSize() 	{ return drawBufferSize; }			// Accessor for the Shape list's buffer size
+	float getFPS() 			{ return realFPS; }					// Accessor for true FPS
 	void showFPS(bool toShow) { showFPS_ = toShow; }			// Mutator to show debugging FPS
 	double getTime();											// Returns the time since initialization
-	bool getClosed() { return !window->visible(); }
-	bool isVisible() { return window->visible(); }
-	void joinThread() {}
+	bool isOpen() 			{ return window->visible(); }		// Returns if the window is visible, which would mean it's closed
 	static RGBType HSVtoRGB(HSVType HSV);
 };
 
@@ -92,7 +84,7 @@ public:
 void close_cb(Fl_Widget* w, void* v) {
 	std::cout << "Trying to close..." << std::endl;
 	Fl_Double_Window* d = (Fl_Double_Window*) v;
-	d->hide();
+	d->hide();										// Hide our window
 	std::cout << "closed..." << std::endl;
 }
 
@@ -135,7 +127,6 @@ void Canvas::draw() {
 	}
 
 	counter++;				// Increment the frame counter
-	callUpdate();			// Call the user's callback to do work on the Canvas
 	int oldR = colorR;		// Temporary variables for the initial global drawing color
 	int oldG = colorG;
 	int oldB = colorB;
@@ -161,13 +152,6 @@ void Canvas::draw() {
 }
 
 /*
- * callUpdate simply calls the update function for the Canvas class
- */
-void Canvas::callUpdate() {
-	updateFunc(this);		// Call the user's callback to do work on the Canvas
-}
-
-/*
  * Canvas_Callback is a callback function called (by default) every 1/60 of a second (update cycle) to redraw the canvas
  * Parameters:
  * 		userdata, a pointer to the Canvas class that we're calling back
@@ -185,11 +169,7 @@ void Canvas::Canvas_Callback(void* userdata) {
  * 		b, the buffer size for the Shapes (-1 = no limit)
  * Returns: a new 800x600 Canvas on the topleft of the screen with no title
  */
-Canvas::Canvas(fcall c, unsigned int b) : Fl_Box (0,0,800,600) {
-	if (c == NULL) {
-		updateFunc = [](Canvas* c){};			// Empty lambda function that does nothing
-	} else
-		updateFunc = c;							// Adds a callback to the user's own draw function
+Canvas::Canvas(unsigned int b) : Fl_Box (0,0,800,600) {
 	init(0,0,800,600,b);
 }
 
@@ -205,11 +185,7 @@ Canvas::Canvas(fcall c, unsigned int b) : Fl_Box (0,0,800,600) {
  * 		t, the title of the window
  * Returns: a new Canvas with the specified positional data and title
  */
-Canvas::Canvas(fcall c, int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_Box(xx,yy,w,h,t) {
-	if (c == NULL) {
-		updateFunc = [](Canvas* c){};			// Empty lambda function that does nothing
-	} else
-		updateFunc = c;							// Adds a callback to the user's own draw function
+Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_Box(xx,yy,w,h,t) {
 	init(xx,yy,w,h,b);
 }
 
@@ -220,14 +196,12 @@ Canvas::Canvas(fcall c, int xx, int yy, int w, int h, unsigned int b, char* t = 
 int Canvas::start() {
 	if (started)												// If we're already started, return error code -1
 		return -1;
-	//Fl::gl_visual(FL_ALPHA);
 	started = true;												// We've now started
     window = new Fl_Double_Window(monitorWidth,monitorHeight);	// Instantiate our drawing window
     window->add(this);											// Add ourself (Canvas) to the drawing window
-	window->callback(close_cb,window);
+	window->callback(close_cb,window);							// Add the function to call when the window is closed
     window->show();												// Show the window
-    renderThread = std::thread(Fl::run);
-    //return(Fl::run());
+    renderThread = std::thread(Fl::run);						// Spawn the rendering thread
     return 0;
 }
 
@@ -238,9 +212,8 @@ int Canvas::start() {
 int Canvas::end() {
 	if (!started)						// If we haven't even started yet, return error code -1
 		return -1;
-	renderThread.join();				//Blocks until ready to join
+	renderThread.join();				//Blocks until ready to join, which will be when the window is closed
 	std::cout << "Joining threads..." << std::endl;
-	window->hide();						// Hide our window
 	delete window;						// Delete our window from the heap
 	return 0;
 }
