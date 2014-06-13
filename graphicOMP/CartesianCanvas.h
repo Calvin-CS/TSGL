@@ -19,7 +19,6 @@ private:
 	Type pixelWidth, pixelHeight;					//cartWidth/window.w(), cartHeight/window.h()
 	cfcall cartesianUpdateFunc;						//Function pointer to the user's update function
 	Type xError, yError;							//Variables to hold rounding errors for rendering
-	bool drawNext;									//Flag for whether or not we need to plot the next point on a graph
 public:
 	CartesianCanvas(cfcall c, unsigned int b);							//Default constructor for our CartesianCanvas
 	CartesianCanvas(cfcall c, int xx, int yy, int w, int h, Type xMin,
@@ -72,7 +71,6 @@ CartesianCanvas::CartesianCanvas(cfcall c, unsigned int b) : Canvas(NULL, b) {
 	cartHeight = maxY-minY;
 	pixelWidth = (cartWidth-xError) / monitorWidth;
 	pixelHeight = (cartHeight-yError) / monitorHeight;
-	drawNext = false;
 }
 
 /*
@@ -109,7 +107,6 @@ CartesianCanvas::CartesianCanvas(cfcall c, int xx, int yy, int w, int h,
 	cartHeight = (maxY-minY)-yError;
 	pixelWidth = (cartWidth) / (monitorWidth+xError);
 	pixelHeight = (cartHeight) / (monitorHeight+yError);
-	drawNext = false;
 }
 
 /*
@@ -310,7 +307,8 @@ const Function* CartesianCanvas::drawFunction(const Function* f) {
 	int lastX = 0, lastY = 0, screenX = 0, screenY = 0;
 
 	fl_begin_line();
-	//fl_line_style(0,2,0);
+	fl_line_style(0,2,0);
+	bool drawNext = false;
 	for (Type x = minX; x <= maxX; x += pixelWidth) {
 		lastX = screenX, lastY = screenY;
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);

@@ -3,7 +3,7 @@
  *
  * Created on: Jun 11, 2014
  * Author: Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/11/2014
+ * Last Modified: Mark Vander Stel, 6/12/2014
  */
 
 #ifndef ARRAY_H_
@@ -65,9 +65,14 @@ public:
 	 */
 	const Item operator[] (unsigned int index) {
 		std::unique_lock<std::mutex> mlock(mutex_);
-		Item item = myArray[(first_ + index) % capacity_];	// Wrap around for the underlying array
-		mlock.unlock();
-		return item;
+		if (size_ == 0) {
+			mlock.unlock();
+			throw std::out_of_range("Array::operator[](): Array is empty");
+		} else {
+			Item item = myArray[(first_ + index) % capacity_];	// Wrap around for the underlying array
+			mlock.unlock();
+			return item;
+		}
 	}
 
 	/*

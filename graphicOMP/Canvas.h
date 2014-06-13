@@ -43,11 +43,12 @@ protected:
 	Fl_Double_Window* window;		// The FLTK window to which we draw
 	bool started;					// Whether our canvas is running and the counter is counting
 	bool autoRefresh;				// Whether or not we automatically refr/ (double)(CLOCKS_PER_SEC / 100)esh the Canvas each frame
-	void init(int xx, int yy, int ww, int hh, unsigned int b);				// Method for initializing the canvas
+void init(int xx, int yy, int ww, int hh, unsigned int b);			// Method for initializing the canvas
 	void draw();													// Method for drawing the canvas and the shapes within
 	virtual void callUpdate();										// Actually calls updateFunc (needed to avoid typing errors)
 	inline static void Canvas_Callback(void* userdata);				// Callback so that the canvas redraws periodically
 	float realFPS;													// Actual FPS of drawing
+	bool showFPS_;													// Flag to show debugging FPS
 	highResClock::time_point cycleTime, startTime;
 public:
 	Canvas(fcall c, unsigned int b);											// Default constructor for our Canvas
@@ -76,6 +77,7 @@ public:
 	int getFrameNumber() { return counter; }					// Accessor for the number of frames rendered so far
 	int getBufferSize() {return drawBufferSize; }				// Accessor for the Shape list's buffer size
 	float getFPS() { return realFPS; }							// Accessor for true FPS
+	void showFPS(bool toShow) { showFPS_ = toShow; }			// Mutator to show debugging FPS
 	double getTime();											// Returns the time since initialization
 
 	static RGBType HSVtoRGB(HSVType HSV);
@@ -97,11 +99,11 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	autoRefresh = true;					// Default to clearing the queue every frame
 	startTime = highResClock::now();	// Record the init time
 	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;  // Initialize translation
-//	myShapes = new List<Shape*>(b);							// Initialize myShapes
-	myShapes = new Array<Shape*>(b);
+	myShapes = new Array<Shape*>(b);						// Initialize myShapes
 	box(FL_FLAT_BOX);  										// Sets the box we will draw to (the only one)
 	setColor(0,0,0);										// Our default global drawing color is black
 	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	// Adds a callback after 1/60 second to the Canvas' callback function
+	showFPS_ = false;										// Set debugging FPS to false
 }
 
 /*
@@ -115,7 +117,9 @@ void Canvas::draw() {
 	realFPS = realFPS-(int)realFPS > .5 ? (int)realFPS + 1 : (int)realFPS;
 	cycleTime = end;
 
-	std::cout << realFPS << '/' << FPS << std::endl;
+	if (showFPS_) {
+		std::cout << realFPS << '/' << FPS << std::endl;
+	}
 
 	counter++;				// Increment the frame counter
 	callUpdate();			// Call the user's callback to do work on the Canvas

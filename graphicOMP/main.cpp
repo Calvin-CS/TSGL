@@ -7,7 +7,7 @@
 
 #include "Canvas.h"
 #include "CartesianCanvas.h"
-//#include "Function.h"
+#include "Integral.h"
 #include "Array.h"
 
 #include <omp.h>
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <cmath>
 #include <complex>
+#include <thread>
 
 const int WINDOW_X = 200, WINDOW_Y = 200, WINDOW_W = 800, WINDOW_H = 600;
 const int WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
@@ -121,7 +122,7 @@ void shadingPoints(Canvas* can) {
 }
 
 void mandelbrotFunction(CartesianCanvas* can) {
-//	const unsigned int threads = 32;
+//	const unsigned int threads = 1;
 	const unsigned int threads = omp_get_num_procs();
 
 	if (can->getFrameNumber() - 1 <= (can->getWindowHeight() / threads)) {	// As long as we aren't trying to render off of the screen...
@@ -129,7 +130,6 @@ void mandelbrotFunction(CartesianCanvas* can) {
 		unsigned int iterations;
 		const unsigned int depth = 255;
 
-		//
 		#pragma omp parallel num_threads(threads) private(i, iterations)
 		{
 			long double j = ((can->getMaxY() - can->getMinY()) / threads) * omp_get_thread_num()
@@ -240,7 +240,7 @@ void langtonFunction2(CartesianCanvas* can) {
 	}
 }
 void langtonFunction3(CartesianCanvas* can) {
-	static int IPF = 1000;		// Iterations per frame
+	static int IPF = 10000;		// Iterations per frame
 //	const unsigned int threads = 4;
 
 	for (int i = 0; i < IPF; i++) {
@@ -411,6 +411,29 @@ void functionFunction(CartesianCanvas* can) {
 
 }
 
+Function* function1 = new CosineFunction;
+void integral1(CartesianCanvas* can) {
+	const unsigned int threads = 1;
+
+	if (can->getFrameNumber() - 1 <= (can->getWindowWidth() / threads)) {	// As long as we aren't trying to render off of the screen...
+		can->drawFunction(function1);
+		#pragma omp parallel num_threads(threads)
+		{
+			long double x = (can->getMaxX() - can->getMinX()) / threads * omp_get_thread_num()
+								+ can->getMinX() + can->getPixelWidth() * can->getFrameNumber();
+
+			can->drawLineColor(x, 0, x, function1->valueAt(x), 0,0,0);
+		}
+	} else {
+		static bool shownTime = false;
+		if (!shownTime) {
+			std::cout << can->getTime() << std::endl;
+			can->showFPS(false);
+			shownTime = true;
+		}
+	}
+}
+
 int main() {
 //	Canvas* can = new Canvas(points1, 480800);
 //	can->start();
@@ -432,9 +455,10 @@ int main() {
 //	Canvas* can6 = new Canvas(shadingPoints, 257*257);
 //	can6->start();
 
-//	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
-//									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-//	can7->start();
+	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
+									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+	can7->showFPS(true);
+	can7->start();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(langtonFunction,
 //									0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
@@ -463,8 +487,13 @@ int main() {
 //									0, 0, 800, 600, 0,0,800,600, 256);
 //	can13->start();
 
-	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
-										0, 0, 800, 600, -10,-20,10,200, 0);
-	can14->start();
+//	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
+//										0, 0, 800, 600, -5,-5,5,50, 0);
+//	can14->start();
+
+//	CartesianCanvas* can15 = new CartesianCanvas(integral1,
+//										0, 0, 800, 600, -5,-1.5,5,1.5, 64);
+//	can15->showFPS(true);
+//	can15->start();
 
 }
