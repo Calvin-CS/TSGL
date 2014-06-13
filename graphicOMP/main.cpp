@@ -26,8 +26,11 @@ enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
 static bool filled[800][600] = {};
 static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 
-static void dmesg(const char* cs) {
+static void print(const char* cs) {
 	std::cout << cs << std::endl << std::flush;
+}
+static void print(const double d) {
+	std::cout << d << std::endl << std::flush;
 }
 
 void points1(Canvas* can) {
@@ -45,7 +48,7 @@ void points1(Canvas* can) {
 	}
 }
 void points2(Canvas* can) {
-	dmesg("Computation started");
+	print("Computation started");
 	int tid, nthreads, i, j;
 	can->setColor(80,10,160);
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
@@ -63,10 +66,10 @@ void points2(Canvas* can) {
 			}
 		}
 	}
-	dmesg("Computation finished");
+	print("Computation finished");
 }
 void points3(Canvas* can) {
-	dmesg("Computation started");
+	print("Computation started");
 	int tid, nthreads, i, color;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,color)
 	{
@@ -79,11 +82,11 @@ void points3(Canvas* can) {
 			}
 		}
 	}
-	dmesg("Computation finished");
+	print("Computation finished");
 }
 
 void lines1(Canvas* can) {
-	dmesg("Computation started");
+	print("Computation started");
 	int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 	int lastFrame = 0;
 	while(can->isOpen()) {
@@ -100,10 +103,10 @@ void lines1(Canvas* can) {
 			can->drawLineColor(a,b,c,d,e,f,g);
 		}
 	}
-	dmesg("Computation finished");
+	print("Computation finished");
 }
 void lines2(Canvas* can) {
-	dmesg("Computation started");
+	print("Computation started");
 	int tid;
 	int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 	reverse = !reverse;
@@ -132,7 +135,7 @@ void lines2(Canvas* can) {
 			}
 		}
 	}
-	dmesg("Computation finished");
+	print("Computation finished");
 }
 void shadingPoints(Canvas* can) {
 	int tid, nthreads, i, j;
@@ -155,17 +158,16 @@ void shadingPoints(Canvas* can) {
 }
 
 void mandelbrotFunction(CartesianCanvas* can) {
-//	const unsigned int threads = 1;
-	const unsigned int threads = omp_get_num_procs();
-	long double i;
+	const unsigned int threads = 32;
+//	const unsigned int threads = omp_get_num_procs();
+	const unsigned int depth = 255;
 	unsigned int iterations;
-	#pragma omp parallel num_threads(threads) private(i, iterations)
+	#pragma omp parallel num_threads(threads) private(iterations)
 	{
 		for (int k = 0; k <= (can->getWindowHeight() / threads); k++) { // As long as we aren't trying to render off of the screen...
-			const unsigned int depth = 255;
 			long double j = ((can->getMaxY() - can->getMinY()) / threads) * omp_get_thread_num()
 								+ can->getMinY() + can->getPixelHeight() * k;
-			for (i = can->getMinX(); i <= can->getMaxX(); i += can->getPixelWidth()) {
+			for (long double i = can->getMinX(); i <= can->getMaxX(); i += can->getPixelWidth()) {
 				std::complex<long double> originalComplex(i, j);
 				std::complex<long double> complex(i, j);
 				iterations = 0;
@@ -176,17 +178,12 @@ void mandelbrotFunction(CartesianCanvas* can) {
 				}
 
 				if (iterations == depth) {					// If the point never escaped...
-					can->drawPointColor(i, j, 0, 0, 0);	// Draw it black
+					can->drawPointColor(i, j, 0, 0, 0);		// Draw it black
 				} else {
 					can->drawPointColor(i, j, iterations % 151, (iterations % 131) + 50, iterations);	// Draw with color
 				}
 			}
 		}
-	}
-	static bool shownTime = false;
-	if (!shownTime) {
-		std::cout << can->getTime() << std::endl;
-		shownTime = true;
 	}
 }
 
@@ -364,7 +361,7 @@ void dumbSortFunction(CartesianCanvas* can) {
 	const int SIZE = 350;
 	int numbers[SIZE];
 	int pos = 0, temp, min = 1, max = SIZE-1, lastSwap = 0;
-	bool goingUp = true, finished = false;
+	bool goingUp = true;
 	for (int i = 0; i < SIZE; i++) {
 		numbers[i] = rand() % SIZE;
 	}
@@ -458,20 +455,20 @@ void colorWheelFunction(CartesianCanvas* can) {
 
 void functionFunction(CartesianCanvas* can) {
 	Function* function1 = new CosineFunction;
-	Function* function2 = new PowerFunction(2);
-
-	class myFunction : public Function {
-	public:
-		virtual long double valueAt(long double x) const {
-			return 5*pow(x,4) + 2*pow(x,3) + x + 15;
-		}
-	};
-
-	Function* function3 = new myFunction;
+//	Function* function2 = new PowerFunction(2);
+//
+//	class myFunction : public Function {
+//	public:
+//		virtual long double valueAt(long double x) const {
+//			return 5*pow(x,4) + 2*pow(x,3) + x + 15;
+//		}
+//	};
+//
+//	Function* function3 = new myFunction;
 
 	can->drawFunction(function1);
-	can->drawFunction(function2);
-	can->drawFunction(function3);
+//	can->drawFunction(function2);
+//	can->drawFunction(function3);
 
 }
 
@@ -534,7 +531,10 @@ int main() {
 
 //	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
 //	can7->start();
+//	can7->showFPS(true);
 //	mandelbrotFunction(can7);
+//	can7->showFPS(false);
+//	print(can7->getTime());
 //	can7->end();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, 100000);
@@ -571,10 +571,13 @@ int main() {
 //	colorWheelFunction(can13);
 //	can13->end();
 
-//	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 0);
-//	can14->start();
-//	functionFunction(can14);
-//	can14->end();
+	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 0);
+	can14->start();
+	can14->showFPS(true);
+	functionFunction(can14);
+	can14->showFPS(false);
+	print(can14->getTime());
+	can14->end();
 
 //	CartesianCanvas* can15 = new CartesianCanvas(integral1,
 //										0, 0, 800, 600, -5,-1.5,5,1.5, 64);

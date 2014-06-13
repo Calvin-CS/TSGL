@@ -84,10 +84,8 @@ public:
 
 // Clean up if someone closes the window
 void close_cb(Fl_Widget* w, void* v) {
-	std::cout << "Trying to close..." << std::endl;
 	Fl_Double_Window* d = (Fl_Double_Window*) v;
 	d->hide();										// Hide our window
-	std::cout << "closed..." << std::endl;
 }
 
 /*
@@ -208,7 +206,6 @@ int Canvas::start() {
 int Canvas::end() {
 	if (!started) return -1;						// If we haven't even started yet, return error code -1
 	renderThread.join();							// Blocks until ready to join, which will be when the window is closed
-	std::cout << "Joining threads..." << std::endl;
 	delete window;									// Delete our window from the heap
 	return 0;
 }

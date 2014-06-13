@@ -303,7 +303,9 @@ const Function* CartesianCanvas::drawFunction(const Function* f) {
 	bool drawNext = false;
 	for (Type x = minX; x <= maxX; x += pixelWidth) {
 		lastX = screenX, lastY = screenY;
+		mlock.unlock();
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
+		std::unique_lock<std::mutex> mlock(mutex);
 		if (screenX < 0 || screenY < 0 || screenX > window->w() || screenY > window->h()) {
 			if (drawNext)
 				fl_vertex(screenX, screenY);
