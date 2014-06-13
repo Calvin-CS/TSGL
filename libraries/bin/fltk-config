@@ -28,7 +28,7 @@ APIVERSION="$MAJOR_VERSION.$MINOR_VERSION"
 ### BEGIN fltk-config
 selfdir=`dirname "$0"`
 
-prefix=/home/pac3/summer-2014/graphicOMP.git/libraries
+prefix=/home/pac3/Desktop
 exec_prefix=${prefix}
 exec_prefix_set=no
 bindir=${exec_prefix}/bin
@@ -45,7 +45,7 @@ ARCHFLAGS=""
 CFLAGS="  -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_THREAD_SAFE -D_REENTRANT"
 CXXFLAGS="  -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_THREAD_SAFE -D_REENTRANT"
 LDFLAGS=" "
-LDLIBS="-lpthread -ldl -lm  -lX11 "
+LDLIBS="-lXext -lpthread -ldl -lm  -lX11 "
 OPTIM=" -Os -Wall -Wunused -Wno-format-y2k  -fno-exceptions -fno-strict-aliasing"
 CAIROFLAGS=""
 
@@ -238,8 +238,8 @@ if test x$use_forms = xyes; then
     LDSTATIC="$libdir/libfltk_forms.a $LDSTATIC"
 fi
 if test x$use_gl = xyes; then
-    LDLIBS="-lfltk_gl$SHAREDSUFFIX  $LDLIBS"
-    LDSTATIC="$libdir/libfltk_gl.a  $LDSTATIC"
+    LDLIBS="-lfltk_gl$SHAREDSUFFIX -lGLU -lGL $LDLIBS"
+    LDSTATIC="$libdir/libfltk_gl.a -lGLU -lGL $LDSTATIC"
 fi
 if test x$use_images = xyes; then
     LDLIBS="-lfltk_images$SHAREDSUFFIX $IMAGELIBS $LDLIBS"
