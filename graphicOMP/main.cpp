@@ -7,7 +7,6 @@
 
 #include "Canvas.h"
 #include "CartesianCanvas.h"
-#include "Integral.h"
 #include "Array.h"
 
 #include <omp.h>
@@ -27,6 +26,10 @@ bool reverse = false;
 enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
 static bool filled[800][600] = {};
 static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
+
+static void dmesg(const char* cs) {
+	std::cout << cs << std::endl << std::flush;
+}
 
 void points1(Canvas* can) {
 	int tid, nthreads, i, j, color;
@@ -463,10 +466,14 @@ int main() {
 //	Canvas* can6 = new Canvas(shadingPoints, 257*257);
 //	can6->start();
 
-	CartesianCanvas* can7 = new CartesianCanvas(mandelbrotFunction,
+	CartesianCanvas* can7 = new CartesianCanvas(NULL,
 									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
 	can7->showFPS(true);
 	can7->start();
+	dmesg("Computation started");
+	mandelbrotFunction(can7);
+	dmesg("Computation finished");
+	can7->end();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(langtonFunction,
 //									0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
@@ -491,10 +498,11 @@ int main() {
 //									0, 0, 800, 600, 0,0,800,600, -1);
 //	can12->start();
 
-	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
-									0, 0, 800, 600, 0,0,800,600, 256);
-	can13->setAutoRefresh(false);
-	can13->start();
+//	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
+//									0, 0, 800, 600, 0,0,800,600, 256);
+//	can13->setAutoRefresh(false);
+//	can13->start();
+//	can13->end();
 
 //	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
 //										0, 0, 800, 600, -5,-5,5,50, 0);

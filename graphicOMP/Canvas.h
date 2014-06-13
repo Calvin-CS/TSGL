@@ -21,6 +21,7 @@
 #include <cmath>					// For converting HSV to RGB
 #include <chrono>					// For timing drawing and FPS
 #include <iostream>
+#include <thread>
 
 #define FPS 60
 #define FRAME 1.0f/FPS		// Represents a single frame
@@ -43,13 +44,15 @@ protected:
 	Fl_Double_Window* window;		// The FLTK window to which we draw
 	bool started;					// Whether our canvas is running and the counter is counting
 	bool autoRefresh;				// Whether or not we automatically refr/ (double)(CLOCKS_PER_SEC / 100)esh the Canvas each frame
-void init(int xx, int yy, int ww, int hh, unsigned int b);			// Method for initializing the canvas
+	std::thread renderThread;		// Thread dedicated to rendering the Canvas
+	void init(int xx, int yy, int ww, int hh, unsigned int b);		// Method for initializing the canvas
 	void draw();													// Method for drawing the canvas and the shapes within
 	virtual void callUpdate();										// Actually calls updateFunc (needed to avoid typing errors)
 	inline static void Canvas_Callback(void* userdata);				// Callback so that the canvas redraws periodically
 	float realFPS;													// Actual FPS of drawing
 	bool showFPS_;													// Flag to show debugging FPS
 	highResClock::time_point cycleTime, startTime;
+//	void close_cb(Fl_Widget*, void*);
 public:
 	Canvas(fcall c, unsigned int b);											// Default constructor for our Canvas
 	Canvas(fcall c, int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
@@ -79,9 +82,19 @@ public:
 	float getFPS() { return realFPS; }							// Accessor for true FPS
 	void showFPS(bool toShow) { showFPS_ = toShow; }			// Mutator to show debugging FPS
 	double getTime();											// Returns the time since initialization
-
+	bool getClosed() { return !window->visible(); }
+	bool isVisible() { return window->visible(); }
+	void joinThread() {}
 	static RGBType HSVtoRGB(HSVType HSV);
 };
+
+// Clean up if someone closes the window
+void close_cb(Fl_Widget* w, void* v) {
+	std::cout << "Trying to close..." << std::endl;
+	Fl_Double_Window* d = (Fl_Double_Window*) v;
+	d->hide();
+	std::cout << "closed..." << std::endl;
+}
 
 /*
  * init initialized the Canvas with the values specified in the constructor
@@ -211,8 +224,11 @@ int Canvas::start() {
 	started = true;												// We've now started
     window = new Fl_Double_Window(monitorWidth,monitorHeight);	// Instantiate our drawing window
     window->add(this);											// Add ourself (Canvas) to the drawing window
+	window->callback(close_cb,window);
     window->show();												// Show the window
-    return(Fl::run());
+    renderThread = std::thread(Fl::run);
+    //return(Fl::run());
+    return 0;
 }
 
 /*
@@ -222,6 +238,8 @@ int Canvas::start() {
 int Canvas::end() {
 	if (!started)						// If we haven't even started yet, return error code -1
 		return -1;
+	renderThread.join();				//Blocks until ready to join
+	std::cout << "Joining threads..." << std::endl;
 	window->hide();						// Hide our window
 	delete window;						// Delete our window from the heap
 	return 0;
