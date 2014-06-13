@@ -8,7 +8,7 @@
 #ifndef CANVAS_H_
 #define CANVAS_H_
 
-#include "FL/Fl.H"					// For using basic FLTK library functions
+#include <FL/Fl.H>						// For using basic FLTK library functions
 #include <FL/Fl_Double_Window.H>	// For Fl_Double_Window, which draws our window
 #include <FL/Fl_Box.H>				// For Fl_Box, from which our Canvas inherits
 #include <FL/fl_draw.H>				// For FLTK's drawing function, which we implement to make our own thread-safe version.
@@ -99,6 +99,7 @@ void close_cb(Fl_Widget* w, void* v) {
  * 		b, the buffer size for the Shapes (-1 = no limit)
  */
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
+	Fl::gl_visual(FL_ALPHA);								// Turns alpha-rendering on
 	started = false;  										// We haven't started the window yet
 	counter = 0;											// We haven't drawn any frames yet
 	autoRefresh = true;										// Default to clearing the queue every frame
