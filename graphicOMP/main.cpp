@@ -127,17 +127,14 @@ void shadingPoints(Canvas* can) {
 void mandelbrotFunction(CartesianCanvas* can) {
 //	const unsigned int threads = 1;
 	const unsigned int threads = omp_get_num_procs();
-
-	if (can->getFrameNumber() - 1 <= (can->getWindowHeight() / threads)) {	// As long as we aren't trying to render off of the screen...
-		long double i;
-		unsigned int iterations;
-		const unsigned int depth = 255;
-
-		#pragma omp parallel num_threads(threads) private(i, iterations)
-		{
+	long double i;
+	unsigned int iterations;
+	#pragma omp parallel num_threads(threads) private(i, iterations)
+	{
+		for (int k = 0; k <= (can->getWindowHeight() / threads); k++) { // As long as we aren't trying to render off of the screen...
+			const unsigned int depth = 255;
 			long double j = ((can->getMaxY() - can->getMinY()) / threads) * omp_get_thread_num()
-								+ can->getMinY() + can->getPixelHeight() * can->getFrameNumber();
-
+								+ can->getMinY() + can->getPixelHeight() * k;
 			for (i = can->getMinX(); i <= can->getMaxX(); i += can->getPixelWidth()) {
 				std::complex<long double> originalComplex(i, j);
 				std::complex<long double> complex(i, j);
@@ -155,12 +152,11 @@ void mandelbrotFunction(CartesianCanvas* can) {
 				}
 			}
 		}
-	} else {
-		static bool shownTime = false;
-		if (!shownTime) {
-			std::cout << can->getTime() << std::endl;
-			shownTime = true;
-		}
+	}
+	static bool shownTime = false;
+	if (!shownTime) {
+		std::cout << can->getTime() << std::endl;
+		shownTime = true;
 	}
 }
 
@@ -466,9 +462,8 @@ int main() {
 //	Canvas* can6 = new Canvas(shadingPoints, 257*257);
 //	can6->start();
 
-	CartesianCanvas* can7 = new CartesianCanvas(NULL,
-									0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-	can7->showFPS(true);
+	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//	can7->showFPS(true);
 	can7->start();
 	dmesg("Computation started");
 	mandelbrotFunction(can7);
