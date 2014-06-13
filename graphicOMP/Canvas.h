@@ -16,67 +16,69 @@
 #include "Line.h"					// Our own class for drawing straight lines.
 #include "Rectangle.h"				// Our own class for drawing rectangles.
 #include "Triangle.h"				// Our own class for drawing triangles.
-#include <omp.h>					// For OpenMP support
 #include "Array.h"					// Our own thread-safe array for buffering drawing operations.
+#include <omp.h>					// For OpenMP support
 #include <cmath>					// For converting HSV to RGB
 #include <chrono>					// For timing drawing and FPS
-#include <iostream>
-#include <thread>
+#include <thread>					// For spawning rendering in a different thread
+#include <mutex>					// Needed for locking the Canvas for thread-safety
+#include <iostream> //DEBUGGING
 
 #define FPS 60
-#define FRAME 1.0f/FPS		// Represents a single frame
+#define FRAME 1.0f/FPS				// Represents a single frame
 
 typedef struct {float R, G, B;} RGBType;
 typedef struct {float H, S, V;} HSVType;
 typedef std::chrono::high_resolution_clock highResClock;
 
-class Canvas : public Fl_Box {					// User-defined callback function for drawing
+class Canvas : public Fl_Box {
 protected:
-	Array<Shape*> * myShapes;		// Our buffer of shapes to draw
-	int counter;					// Counter for the number of frames that have elapsed in the current session (for animations)
-	int monitorX,monitorY,monitorWidth,monitorHeight;  	// Positioning and sizing data for the Canvas
-	int colorR, colorG, colorB; 	// Our current global RGB drawing color
-	int drawBufferSize;				// Maximum allowed Shapes in our drawing List
-	Fl_Double_Window* window;		// The FLTK window to which we draw
-	bool started;					// Whether our canvas is running and the counter is counting
-	bool autoRefresh;				// Whether or not we automatically refr/ (double)(CLOCKS_PER_SEC / 100)esh the Canvas each frame
-	std::thread renderThread;		// Thread dedicated to rendering the Canvas
+	Array<Shape*> * myShapes;										// Our buffer of shapes to draw
+	int counter;													// Counter for the number of frames that have elapsed in the current session (for animations)
+	int monitorX,monitorY,monitorWidth,monitorHeight;  				// Positioning and sizing data for the Canvas
+	int defaultRed, defaultGreen, defualtBlue; 						// Our current global RGB drawing color
+	int drawBufferSize;												// Maximum allowed Shapes in our drawing List
+	Fl_Double_Window* window;										// The FLTK window to which we draw
+	bool started;													// Whether our canvas is running and the frame counter is counting
+	bool autoRefresh;												// Whether or not we automatically refresh the Canvas each frame
+	std::thread renderThread;										// Thread dedicated to rendering the Canvas
+	std::mutex mutex;												// Mutex for locking the Canvas so that only one thread can read/write at a time
 	void init(int xx, int yy, int ww, int hh, unsigned int b);		// Method for initializing the canvas
 	void draw();													// Method for drawing the canvas and the shapes within
 	inline static void Canvas_Callback(void* userdata);				// Callback so that the canvas redraws periodically
 	float realFPS;													// Actual FPS of drawing
-	bool showFPS_;													// Flag to show debugging FPS
-	highResClock::time_point cycleTime, startTime;
+	bool showFPS_;													// Flag to show DEBUGGING FPS
+	highResClock::time_point cycleTime, startTime;					// Times to show FPS and render time
 public:
-	Canvas(unsigned int b);								// Default constructor for our Canvas
+	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
 	int start();													// Function to start rendering our Canvas
 	int end();														// Function to end rendering our Canvas
 	void setColor(int r, int g, int b);								// Sets the global drawing color
 	void setAutoRefresh(bool b);									// Sets whether we automatically refresh the Canvas
-	virtual Point drawPoint(int x, int y);							// Draws a point at the given coordinates
-	virtual Point drawPointColor(int x, int y, int r, int g, int b);// Draws a point at the given coordinates with the given color
-	virtual Line drawLine(int x1, int y1, int x2, int y2);			// Draws a line at the given coordinates
-	virtual Line drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);		// Draws a line at the given coordinates with the given color
-	virtual Rectangle drawRectangle(int x, int y, int w, int h);							// Draws a rectangle at the given coordinates with the given dimensions
-	virtual Rectangle drawRectangleColor(int x, int y, int w, int h, int r, int g, int b);	// Draws a rectangle at the given coordinates with the given dimensions and color
-	virtual Triangle drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);			// Draws a triangle with the given vertices
-	virtual Triangle drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
+	virtual void drawPoint(int x, int y);							// Draws a point at the given coordinates
+	virtual void drawPointColor(int x, int y, int r, int g, int b);// Draws a point at the given coordinates with the given color
+	virtual void drawLine(int x1, int y1, int x2, int y2);			// Draws a line at the given coordinates
+	virtual void drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);		// Draws a line at the given coordinates with the given color
+	virtual void drawRectangle(int x, int y, int w, int h);							// Draws a rectangle at the given coordinates with the given dimensions
+	virtual void drawRectangleColor(int x, int y, int w, int h, int r, int g, int b);	// Draws a rectangle at the given coordinates with the given dimensions and color
+	virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);			// Draws a triangle with the given vertices
+	virtual void drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
 			int r, int g, int b);															// Draws a triangle with the given vertices and color
 	virtual void drawText(const char * s, int x, int y);									// Draws a string of text at the given position
-	int getWindowX() 		{ return monitorX; }				// Accessor for the window width
-	int getWindowY() 		{ return monitorY; }				// Accessor for the window height
-	int getWindowWidth() 	{ return monitorWidth; }			// Accessor for the window width
-	int getWindowHeight() 	{ return monitorHeight; }			// Accessor for the window height
-	int getColorR() 		{ return colorR; }					// Accessor for  the red component of the global drawing color
-	int getColorG() 		{ return colorG; }					// Accessor for  the green component of the global drawing color
-	int getColorB() 		{ return colorB; }					// Accessor for  the number component of the global drawing color
-	int getFrameNumber() 	{ return counter; }					// Accessor for the number of frames rendered so far
-	int getBufferSize() 	{ return drawBufferSize; }			// Accessor for the Shape list's buffer size
-	float getFPS() 			{ return realFPS; }					// Accessor for true FPS
-	void showFPS(bool toShow) { showFPS_ = toShow; }			// Mutator to show debugging FPS
-	double getTime();											// Returns the time since initialization
-	bool isOpen() 			{ return window->visible(); }		// Returns if the window is visible, which would mean it's closed
+	int getWindowX() 		{ return monitorX; }					// Accessor for the window width
+	int getWindowY() 		{ return monitorY; }					// Accessor for the window height
+	int getWindowWidth() 	{ return monitorWidth; }				// Accessor for the window width
+	int getWindowHeight() 	{ return monitorHeight; }				// Accessor for the window height
+	int getColorR() 		{ return defaultRed; }					// Accessor for the red component of the global drawing color
+	int getColorG() 		{ return defaultGreen; }				// Accessor for the green component of the global drawing color
+	int getColorB() 		{ return defualtBlue; }					// Accessor for the number component of the global drawing color
+	int getFrameNumber() 	{ return counter; }						// Accessor for the number of frames rendered so far
+	int getBufferSize() 	{ return drawBufferSize; }				// Accessor for the Shape list's buffer size
+	float getFPS() 			{ return realFPS; }						// Accessor for true FPS
+	bool isOpen() 			{ return window->visible(); }			// Returns if the window is visible, which would mean it's closed
+	void showFPS(bool b) 	{ showFPS_ = b; }						// Mutator to show debugging FPS
+	double getTime();												// Returns the time since initialization
 	static RGBType HSVtoRGB(HSVType HSV);
 };
 
@@ -99,10 +101,10 @@ void close_cb(Fl_Widget* w, void* v) {
  * 		b, the buffer size for the Shapes (-1 = no limit)
  */
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
-	started = false;  					// We haven't started the window yet
-	counter = 0;						// We haven't drawn any frames yet
-	autoRefresh = true;					// Default to clearing the queue every frame
-	startTime = highResClock::now();	// Record the init time
+	started = false;  										// We haven't started the window yet
+	counter = 0;											// We haven't drawn any frames yet
+	autoRefresh = true;										// Default to clearing the queue every frame
+	startTime = highResClock::now();						// Record the init time
 	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;  // Initialize translation
 	myShapes = new Array<Shape*>(b);						// Initialize myShapes
 	box(FL_FLAT_BOX);  										// Sets the box we will draw to (the only one)
@@ -122,33 +124,28 @@ void Canvas::draw() {
 	realFPS = realFPS-(int)realFPS > .5 ? (int)realFPS + 1 : (int)realFPS;
 	cycleTime = end;
 
-	if (showFPS_) {
-		std::cout << realFPS << '/' << FPS << std::endl;
-	}
+	if (showFPS_) std::cout << realFPS << '/' << FPS << std::endl;
 
 	counter++;				// Increment the frame counter
-	int oldR = colorR;		// Temporary variables for the initial global drawing color
-	int oldG = colorG;
-	int oldB = colorB;
 	Shape* s;				// Pointer to the next Shape in the queue
 
+	std::unique_lock<std::mutex> mlock(mutex);
 	// Iterate through our queue until we've made it to the end
-//	for (List<Shape*>::Iterator iterator = myShapes->begin(); iterator != myShapes->end();iterator++) {
 	for (unsigned int i = 0; i < myShapes->size(); i++) {
-//		s = *iterator;		// Get the next item
 		s = myShapes->operator[](i);
 		if (s->getUsesDefaultColor()) {
 			s->draw();		// If our shape uses the default color, just draw it
 		}
 		else {				// Otherwise, the color must be set before and after drawing
-			setColor(s->getColorR(),s->getColorG(),s->getColorB());
+			fl_color(s->getColorR(), s->getColorG(), s->getColorB());
 			s->draw();
-			setColor(oldR, oldG, oldB);
+			fl_color(defaultRed, defaultGreen, defualtBlue);
 		}
 	}
 	if (autoRefresh) {
 		myShapes->clear();
 	}
+	mlock.unlock();
 }
 
 /*
@@ -194,8 +191,7 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_B
  * Returns: the exit code of the FLTK render method
  */
 int Canvas::start() {
-	if (started)												// If we're already started, return error code -1
-		return -1;
+	if (started) return -1;										// If we're already started, return error code -1
 	started = true;												// We've now started
     window = new Fl_Double_Window(monitorWidth,monitorHeight);	// Instantiate our drawing window
     window->add(this);											// Add ourself (Canvas) to the drawing window
@@ -210,11 +206,10 @@ int Canvas::start() {
  * Returns: 0 if exit is successful, -1 otherwise
  */
 int Canvas::end() {
-	if (!started)						// If we haven't even started yet, return error code -1
-		return -1;
-	renderThread.join();				//Blocks until ready to join, which will be when the window is closed
+	if (!started) return -1;						// If we haven't even started yet, return error code -1
+	renderThread.join();							// Blocks until ready to join, which will be when the window is closed
 	std::cout << "Joining threads..." << std::endl;
-	delete window;						// Delete our window from the heap
+	delete window;									// Delete our window from the heap
 	return 0;
 }
 
@@ -226,11 +221,12 @@ int Canvas::end() {
  * 		b, the red component
  */
 void Canvas::setColor(int r, int g, int b) {
-	colorR = r;
-	colorG = g;
-	colorB = b;
-	#pragma omp critical
+	std::unique_lock<std::mutex> mlock(mutex);
+	defaultRed = r;
+	defaultGreen = g;
+	defualtBlue = b;
 	fl_color(r,g,b);	// Updates the underlying FLTK color (critical to avoid syncing problems)
+	mlock.unlock();
 }
 
 /*
@@ -249,10 +245,11 @@ void Canvas::setAutoRefresh(bool b) {
  * 		y, the y position of the point
  * 	Returns: a new point at the given position
  */
-Point Canvas::drawPoint(int x, int y) {
+void Canvas::drawPoint(int x, int y) {
 	Point* p = new Point(x,y);				// Creates the Point with the specified coordinates
+	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);						// Push it onto our drawing queue
-	return *p;								// Return a pointer to our new Point
+	mlock.unlock();
 }
 
 /*
@@ -265,10 +262,11 @@ Point Canvas::drawPoint(int x, int y) {
  * 		b, the red component
  * 	Returns: a new point at the given position with the specified color
  */
-Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
+void Canvas::drawPointColor(int x, int y, int r, int g, int b) {
 	Point* p = new Point(x,y,r,g,b);		// Creates the Point with the specified coordinates and color
+	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);						// Push it onto our drawing queue
-	return *p;								// Return a pointer to our new Point
+	mlock.unlock();
 }
 
 /*
@@ -280,10 +278,11 @@ Point Canvas::drawPointColor(int x, int y, int r, int g, int b) {
  * 		y2, the y position of the end of the line
  * 	Returns: a new line with the given coordinates
  */
-Line Canvas::drawLine(int x1, int y1, int x2, int y2) {
+void Canvas::drawLine(int x1, int y1, int x2, int y2) {
 	Line* l = new Line(x1,y1,x2,y2);		// Creates the Line with the specified coordinates
+	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(l);						// Push it onto our drawing queue
-	return *l;								// Return a pointer to our new Line
+	mlock.unlock();
 }
 
 /*
@@ -298,10 +297,11 @@ Line Canvas::drawLine(int x1, int y1, int x2, int y2) {
  * 		b, the red component
  * 	Returns: a new line with the given coordinates and the specified color
  */
-Line Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) {
+void Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) {
 	Line* l = new Line(x1,y1,x2,y2,r,g,b);	// Creates the Line with the specified coordinates and color
+	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(l);						// Push it onto our drawing queue
-	return *l;								// Return a pointer to our new Line
+	mlock.unlock();
 }
 
 /*
@@ -313,10 +313,11 @@ Line Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) 
  *		h, the height of the Rectangle
  * 	Returns: a new rectangle with the given coordinates and dimensions
  */
-Rectangle Canvas::drawRectangle(int x, int y, int w, int h) {
+void Canvas::drawRectangle(int x, int y, int w, int h) {
 	Rectangle* rec = new Rectangle(x,y,w,h);	// Creates the Rectangle with the specified coordinates
+	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(rec);						// Push it onto our drawing queue
-	return *rec;								// Return a pointer to our new Rectangle
+	mlock.unlock();
 }
 
 /*
@@ -331,10 +332,11 @@ Rectangle Canvas::drawRectangle(int x, int y, int w, int h) {
  * 		b, the blue component
  * 	Returns: a new rectangle with the given coordinates, dimensions, and color
  */
-Rectangle Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, int b) {
+void Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, int b) {
 	Rectangle* rec = new Rectangle(x,y,w,h,r,g,b);	// Creates the Rectangle with the specified coordinates and color
+	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(rec);							// Push it onto our drawing queue
-	return *rec;									// Return a pointer to our new Rectangle
+	mlock.unlock();
 }
 
 /*
@@ -348,10 +350,11 @@ Rectangle Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, i
  * 		y3, the y position of the third vertex of the triangle
  * 	Returns: a new triangle with the given vertices
  */
-Triangle Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3);	// Creates the Triangle with the specified vertices
+	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(t);						// Push it onto our drawing queue
-	return *t;								// Return a pointer to our new Triangle
+	mlock.unlock();
 }
 
 /*
@@ -368,11 +371,11 @@ Triangle Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
  * 		b, the blue component
  * 	Returns: a new triangle with the given vertices and color
  */
-Triangle Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
-		int r, int g, int b) {
+void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,r,g,b);	// Creates the Triangle with the specified vertices and color
+	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(t);										// Push it onto our drawing queue
-	return *t;												// Return a pointer to our new Triangle
+	mlock.unlock();
 }
 
 /*
@@ -390,7 +393,10 @@ void Canvas::drawText(const char * s, int x, int y) {
  * getTime returns the time elapsed since the Canvas has started drawing (in nanoseconds)
  */
 double Canvas::getTime() {
-	return std::chrono::duration_cast<std::chrono::microseconds>(highResClock::now() - startTime).count() / 1000000.0;
+	std::unique_lock<std::mutex> mlock(mutex);
+	double time = std::chrono::duration_cast<std::chrono::microseconds>(highResClock::now() - startTime).count() / 1000000.0;
+	mlock.unlock();
+	return time;
 }
 
 /*

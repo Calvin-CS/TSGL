@@ -18,7 +18,7 @@ private:
 	unsigned int first_, last_, capacity_, size_;
 	Item* myArray;				// Our array that doesn't look like one...
 
-	std::mutex mutex_;			// Mutex for locking the list so that only one
+//	std::mutex mutex_;			// Mutex for locking the list so that only one
 								// thread can read/write at a time
 public:
 //	Array() {
@@ -40,7 +40,7 @@ public:
 	 * clear() empties the array and resets it
 	 */
 	void clear() {
-		std::unique_lock<std::mutex> mlock(mutex_);
+//		std::unique_lock<std::mutex> mlock(mutex_);
 		if (first_ > last_) {						// If the array wraps around...
 			for (; first_ < capacity_; first_++) {	// Delete from first to the end
 				delete myArray[first_];
@@ -54,7 +54,7 @@ public:
 		}
 
 		first_ = last_ = size_ = 0;					// Reset all vars
-		mlock.unlock();
+//		mlock.unlock();
 	}
 
 	/*
@@ -64,13 +64,13 @@ public:
 	 * Returns: the item at that index
 	 */
 	const Item operator[] (unsigned int index) {
-		std::unique_lock<std::mutex> mlock(mutex_);
+//		std::unique_lock<std::mutex> mlock(mutex_);
 		if (size_ == 0) {
-			mlock.unlock();
+//			mlock.unlock();
 			throw std::out_of_range("Array::operator[](): Array is empty");
 		} else {
 			Item item = myArray[(first_ + index) % capacity_];	// Wrap around for the underlying array
-			mlock.unlock();
+//			mlock.unlock();
 			return item;
 		}
 	}
@@ -93,9 +93,9 @@ public:
 	 * isEmpty() returns true if the array has no items, false otherwise
 	 */
 	bool isEmpty() {
-		std::unique_lock<std::mutex> mlock(mutex_);
+//		std::unique_lock<std::mutex> mlock(mutex_);
 		bool empty = myArray[first_] == NULL;				// If there is no item...
-		mlock.unlock();
+//		mlock.unlock();
 		return empty;
 	}
 
@@ -107,7 +107,7 @@ public:
 	 * Returns: the same item
 	 */
 	Item push(Item item) {
-		std::unique_lock<std::mutex> mlock(mutex_);
+//		std::unique_lock<std::mutex> mlock(mutex_);
 		if (myArray[first_] != NULL) {							// If the array has no items...
 			(last_ + 1) == capacity_ ? last_ = 0 : last_++;		// Increment last
 		}
@@ -121,7 +121,7 @@ public:
 
 		myArray[last_] = item;									// Actually add the item
 
-		mlock.unlock();
+//		mlock.unlock();
 		return item;
 	}
 };
