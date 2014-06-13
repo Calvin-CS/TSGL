@@ -19,7 +19,6 @@
 const int WINDOW_X = 200, WINDOW_Y = 200, WINDOW_W = 800, WINDOW_H = 600;
 const int WINDOW_CW = WINDOW_W/2, WINDOW_CH = WINDOW_H/2;
 const double PI = 3.1415926536;
-int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 bool reverse = false;
 
 // Shared values between langton functions
@@ -46,79 +45,110 @@ void points1(Canvas* can) {
 	}
 }
 void points2(Canvas* can) {
+	dmesg("Computation started");
 	int tid, nthreads, i, j;
+	can->setColor(80,10,160);
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
 	{
 		nthreads = omp_get_num_threads();
 		tid = omp_get_thread_num();
-		j = can->getFrameNumber();
-		for (i = 100+tid; i < WINDOW_W-100; i+= nthreads) {
-			//for (j = 100; j < WINDOW_H-100; j++) {
-			can->setColor(80,10,160);
-			if (i % 2 == 0)
-				can->drawPointColor(i,j,j,i,i*j % 113);
-			else
-				can->drawPointColor(i,j,i,j,i*j % 256);
+		int myShare = can->getWindowHeight() / nthreads;
+		int myStart = myShare * tid;
+		for (j = myStart; j < myStart + myShare; j++) {
+			for (i = 100; i < WINDOW_W-100; i++) {
+				if (i % 2 == 0)
+					can->drawPointColor(i,j,j,i,i*j % 113);
+				else
+					can->drawPointColor(i,j,i,j,i*j % 256);
+			}
 		}
 	}
+	dmesg("Computation finished");
 }
 void points3(Canvas* can) {
-	int tid, nthreads, i, j, color;
-	j = can->getFrameNumber();
+	dmesg("Computation started");
+	int tid, nthreads, i, color;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,color)
 	{
 		nthreads = omp_get_num_threads();
 		tid = omp_get_thread_num();
-		for (i = tid; i < WINDOW_W; i+= nthreads) {
-			color = i*128/WINDOW_W + j*128/WINDOW_H;
-			can->drawPointColor(i,j,color,color,color);
+		for (int j = tid; j < WINDOW_H; j+= nthreads) {
+			for (i = 0; i < WINDOW_W; i++) {
+				color = i*128/WINDOW_W + j*128/WINDOW_H;
+				can->drawPointColor(i,j,color,color,color);
+			}
 		}
 	}
+	dmesg("Computation finished");
 }
 
 void lines1(Canvas* can) {
-	a = c;
-	b = d;
-	c = rand() % WINDOW_W;
-	d = rand() % WINDOW_H;
-	e = rand() % 256;
-	f = rand() % 256;
-	g = rand() % 256;
-	can->setAutoRefresh(false);
-	can->drawLineColor(a,b,c,d,e,f,g);
+	dmesg("Computation started");
+	int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
+	int lastFrame = 0;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			a = c;
+			b = d;
+			c = rand() % WINDOW_W;
+			d = rand() % WINDOW_H;
+			e = rand() % 256;
+			f = rand() % 256;
+			g = rand() % 256;
+			can->setAutoRefresh(false);
+			can->drawLineColor(a,b,c,d,e,f,g);
+		}
+	}
+	dmesg("Computation finished");
 }
 void lines2(Canvas* can) {
+	dmesg("Computation started");
 	int tid;
+	int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 	reverse = !reverse;
+	int lastFrame = 0;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,a,b,c,d,e,f,g)
 	{
 		tid = omp_get_thread_num();
-		if (reverse) {
-			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber()-1)*M_PI/180);
-			b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber()-1)*M_PI/180);
-			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+can->getFrameNumber()*M_PI/180);
-			d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+can->getFrameNumber()*M_PI/180);
-		} else {
-			a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(can->getFrameNumber()-1)*M_PI/180);
-			b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(can->getFrameNumber()-1)*M_PI/180);
-			c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber())*M_PI/180);
-			d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber())*M_PI/180);
+		while(can->isOpen()) {
+			if (can->getFrameNumber() > lastFrame) {
+				lastFrame = can->getFrameNumber();
+				if (reverse) {
+					a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber()-1)*M_PI/180);
+					b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber()-1)*M_PI/180);
+					c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+can->getFrameNumber()*M_PI/180);
+					d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+can->getFrameNumber()*M_PI/180);
+				} else {
+					a = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(can->getFrameNumber()-1)*M_PI/180);
+					b = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(can->getFrameNumber()-1)*M_PI/180);
+					c = WINDOW_CW + WINDOW_CW*sin(7.11*tid+(180+can->getFrameNumber())*M_PI/180);
+					d = WINDOW_CH + WINDOW_CH*cos(7.11*tid+(180+can->getFrameNumber())*M_PI/180);
+				}
+				e = (a + can->getFrameNumber()) % 256;
+				f = (b + can->getFrameNumber()) % 256;
+				g = (a*b + can->getFrameNumber()) % 256;
+				can->drawLineColor(a,b,c,d,e,f,g);
+			}
 		}
-		e = (a + can->getFrameNumber()) % 256;
-		f = (b + can->getFrameNumber()) % 256;
-		g = (a*b + can->getFrameNumber()) % 256;
-		can->drawLineColor(a,b,c,d,e,f,g);
 	}
+	dmesg("Computation finished");
 }
 void shadingPoints(Canvas* can) {
 	int tid, nthreads, i, j;
+	int lastFrame = 0;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
 	{
-		nthreads = omp_get_num_threads();
-		tid = omp_get_thread_num();
-		for (i = tid; i < 256; i+= nthreads) {
-			for (j = 0; j <= 256; j++) {
-				can->drawPointColor(i,j,i,j,can->getFrameNumber() % 256);
+		while(can->isOpen()) {
+			if (can->getFrameNumber() > lastFrame) {
+				lastFrame = can->getFrameNumber();
+				nthreads = omp_get_num_threads();
+				tid = omp_get_thread_num();
+				for (i = tid; i < 256; i+= nthreads) {
+					for (j = 0; j <= 256; j++) {
+						can->drawPointColor(i,j,i,j,can->getFrameNumber() % 256);
+					}
+				}
 			}
 		}
 	}
@@ -172,100 +202,117 @@ void langtonFunction(CartesianCanvas* can) {
 	static int IPF = 500;		// Iterations per frame
 	static int xx = 400, yy = 300;
 	static int direction = UP;
-	for (int i = 0; i < IPF; i ++) {
-		if (filled[xx][yy]) {
-			direction = (direction + 1) % 4;
-			can->drawPointColor(xx,yy,255,0,0);
+	int lastFrame = 0;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			for (int i = 0; i < IPF; i ++) {
+				if (filled[xx][yy]) {
+					direction = (direction + 1) % 4;
+					can->drawPointColor(xx,yy,255,0,0);
+				}
+				else {
+					direction = (direction + 3) % 4;
+					can->drawPointColor(xx,yy,0,0,0);
+				}
+				filled[xx][yy] = !filled[xx][yy];
+				if (direction == UP)
+					yy = yy > 0 ? yy-1 : 599;
+				else if (direction == RIGHT)
+					xx = xx < 799 ? xx+1 : 0;
+				else if (direction == DOWN)
+					yy = yy < 599 ? yy+1 : 0;
+				else if (direction == LEFT)
+					xx = xx > 0 ? xx-1 : 799;
+				else
+					std::cout << "BAD: dir == " << direction << std::endl;
+			}
 		}
-		else {
-			direction = (direction + 3) % 4;
-			can->drawPointColor(xx,yy,0,0,0);
-		}
-		filled[xx][yy] = !filled[xx][yy];
-		if (direction == UP)
-			yy = yy > 0 ? yy-1 : 599;
-		else if (direction == RIGHT)
-			xx = xx < 799 ? xx+1 : 0;
-		else if (direction == DOWN)
-			yy = yy < 599 ? yy+1 : 0;
-		else if (direction == LEFT)
-			xx = xx > 0 ? xx-1 : 799;
-		else
-			std::cout << "BAD: dir == " << direction << std::endl;
 	}
 }
+
 void langtonFunction2(CartesianCanvas* can) {
 	static int IPF = 1000;		// Iterations per frame
 //	const unsigned int threads = 4;
-
-	for (int i = 0; i < IPF; i++) {
-		for (int j = 0; j < 4; j++) {
-			if (filled[xx[j]][yy[j]]) {
-				dir[j] = (dir[j] + 1) % 4;
-				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+	int lastFrame = 0;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			for (int i = 0; i < IPF; i++) {
+				for (int j = 0; j < 4; j++) {
+					if (filled[xx[j]][yy[j]]) {
+						dir[j] = (dir[j] + 1) % 4;
+						can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+					}
+					else {
+						dir[j] = (dir[j] + 3) % 4;
+						can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+					}
+					if (dir[j] == UP) {
+						if (yy[j] > 0)
+							yy[j] = yy[j] - 1;
+						else
+							yy[j] = 599;
+					}
+					else if (dir[j] == RIGHT) {
+						if (xx[j] < 599)
+							xx[j] = xx[j] + 1;
+						else
+							xx[j] = 0;
+					}
+					else if (dir[j] == DOWN) {
+						if (yy[j] < 599)
+							yy[j] = yy[j] + 1;
+						else
+							yy[j] = 0;
+					}
+					else if (dir[j] == LEFT) {
+						if (xx[j] > 0)
+							xx[j] = xx[j] - 1;
+						else
+							xx[j] = 599;
+					}
+				}
+				for (int j = 0; j < 4; j++) {
+					filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
+				}
 			}
-			else {
-				dir[j] = (dir[j] + 3) % 4;
-				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
-			}
-			if (dir[j] == UP) {
-				if (yy[j] > 0)
-					yy[j] = yy[j] - 1;
-				else
-					yy[j] = 599;
-			}
-			else if (dir[j] == RIGHT) {
-				if (xx[j] < 599)
-					xx[j] = xx[j] + 1;
-				else
-					xx[j] = 0;
-			}
-			else if (dir[j] == DOWN) {
-				if (yy[j] < 599)
-					yy[j] = yy[j] + 1;
-				else
-					yy[j] = 0;
-			}
-			else if (dir[j] == LEFT) {
-				if (xx[j] > 0)
-					xx[j] = xx[j] - 1;
-				else
-					xx[j] = 599;
-			}
-		}
-		for (int j = 0; j < 4; j++) {
-			filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
 		}
 	}
 }
 void langtonFunction3(CartesianCanvas* can) {
-	static int IPF = 10000;		// Iterations per frame
+	static int IPF = 1000;		// Iterations per frame
 //	const unsigned int threads = 4;
-
-	for (int i = 0; i < IPF; i++) {
-		//#pragma omp parallel for
-		for (int j = 0; j < 4; j++) {
-			if (filled[xx[j]][yy[j]]) {
-				dir[j] = (dir[j] + 1) % 4;
-//				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
-				can->drawPointColor(xx[j],yy[j],128,128,128);
+	int lastFrame = 0;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			for (int i = 0; i < IPF; i++) {
+				//#pragma omp parallel for
+				for (int j = 0; j < 4; j++) {
+					if (filled[xx[j]][yy[j]]) {
+						dir[j] = (dir[j] + 1) % 4;
+		//				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+						can->drawPointColor(xx[j],yy[j],128,128,128);
+					}
+					else {
+						dir[j] = (dir[j] + 3) % 4;
+						can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+					}
+				}
+				for (int j = 0; j < 4; j++)
+					filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
+				for (int j = 0; j < 4; j++) {
+					if (dir[j] == UP)
+						yy[j] = (yy[j] > 0) ? yy[j] - 1 : 599;
+					else if (dir[j] == RIGHT)
+						xx[j] = (xx[j] < 599) ? xx[j] + 1 : 0;
+					else if (dir[j] == DOWN)
+						yy[j] = (yy[j] < 599) ? yy[j] + 1 : 0;
+					else if (dir[j] == LEFT)
+						xx[j] = (xx[j] > 0) ? xx[j] - 1 : 599;
+				}
 			}
-			else {
-				dir[j] = (dir[j] + 3) % 4;
-				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
-			}
-		}
-		for (int j = 0; j < 4; j++)
-			filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
-		for (int j = 0; j < 4; j++) {
-			if (dir[j] == UP)
-				yy[j] = (yy[j] > 0) ? yy[j] - 1 : 599;
-			else if (dir[j] == RIGHT)
-				xx[j] = (xx[j] < 599) ? xx[j] + 1 : 0;
-			else if (dir[j] == DOWN)
-				yy[j] = (yy[j] < 599) ? yy[j] + 1 : 0;
-			else if (dir[j] == LEFT)
-				xx[j] = (xx[j] > 0) ? xx[j] - 1 : 599;
 		}
 	}
 }
@@ -274,52 +321,55 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 //	const unsigned int threads = 4;
 	RGBType color;
 	HSVType other;
-	for (int i = 0; i < IPF; i++) {
-		//#pragma omp parallel for
-		for (int j = 0; j < 4; j++) {
-			if (filled[xx[j]][yy[j]]) {
-				dir[j] = (dir[j] + 1) % 4;
-				other = {((can->getFrameNumber() + 3*j)%12) / 2.0f,1.0f,1.0f};
-				color = Canvas::HSVtoRGB(other);
-				can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255);
-//				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+	int lastFrame = 0;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			for (int i = 0; i < IPF; i++) {
+				//#pragma omp parallel for
+				for (int j = 0; j < 4; j++) {
+					if (filled[xx[j]][yy[j]]) {
+						dir[j] = (dir[j] + 1) % 4;
+						other = {((can->getFrameNumber() + 3*j)%12) / 2.0f,1.0f,1.0f};
+						color = Canvas::HSVtoRGB(other);
+						can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255);
+		//				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+					}
+					else {
+						dir[j] = (dir[j] + 3) % 4;
+						other = {((can->getFrameNumber() + 3*j)%12) / 2.0f,1.0f,0.5f};
+						color = Canvas::HSVtoRGB(other);
+						can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255);
+		//				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+					}
+				}
+				for (int j = 0; j < 4; j++)
+					filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
+				for (int j = 0; j < 4; j++) {
+					if (dir[j] == UP)
+						yy[j] = (yy[j] > 0) ? yy[j] - 1 : 599;
+					else if (dir[j] == RIGHT)
+						xx[j] = (xx[j] < 599) ? xx[j] + 1 : 0;
+					else if (dir[j] == DOWN)
+						yy[j] = (yy[j] < 599) ? yy[j] + 1 : 0;
+					else if (dir[j] == LEFT)
+						xx[j] = (xx[j] > 0) ? xx[j] - 1 : 599;
+				}
 			}
-			else {
-				dir[j] = (dir[j] + 3) % 4;
-				other = {((can->getFrameNumber() + 3*j)%12) / 2.0f,1.0f,0.5f};
-				color = Canvas::HSVtoRGB(other);
-				can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255);
-//				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
-			}
-		}
-		for (int j = 0; j < 4; j++)
-			filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
-		for (int j = 0; j < 4; j++) {
-			if (dir[j] == UP)
-				yy[j] = (yy[j] > 0) ? yy[j] - 1 : 599;
-			else if (dir[j] == RIGHT)
-				xx[j] = (xx[j] < 599) ? xx[j] + 1 : 0;
-			else if (dir[j] == DOWN)
-				yy[j] = (yy[j] < 599) ? yy[j] + 1 : 0;
-			else if (dir[j] == LEFT)
-				xx[j] = (xx[j] > 0) ? xx[j] - 1 : 599;
 		}
 	}
 }
 
 void dumbSortFunction(CartesianCanvas* can) {
-	const int SIZE = 350, SORTSPEED = 10;
-	static int numbers[SIZE];
-	static int pos = 0, temp, min = 1, max = SIZE-1, lastSwap = 0;
-	static bool sortInit = false, goingUp = true;;
-	if (!sortInit) {
-		sortInit = true;
-		for (int i = 0; i < SIZE; i++) {
-			numbers[i] = rand() % SIZE;
-		}
+	const int SIZE = 350;
+	int numbers[SIZE];
+	int pos = 0, temp, min = 1, max = SIZE-1, lastSwap = 0;
+	bool goingUp = true, finished = false;
+	for (int i = 0; i < SIZE; i++) {
+		numbers[i] = rand() % SIZE;
 	}
-	can->drawRectangleColor(0,0,800,600,128,128,128);
-	for (int i = 0; i < SORTSPEED; i++) {
+	int lastFrame = 0;
+	while(can->isOpen()) {
 		if (min != max) {
 			if (goingUp) {
 				if (numbers[pos] > numbers[pos+1]) {
@@ -356,46 +406,53 @@ void dumbSortFunction(CartesianCanvas* can) {
 					pos--;
 			}
 		}
-	}
-
-	int start = 50, width = 1, height;
-	for (int i = 0; i < SIZE; i++) {
-		height = (numbers[i]);
-		if (i == pos)
-			can->drawRectangleColor(start,580-height,width,height,255,255,0);
-		else
-			can->drawRectangleColor(start,580-height,width,height,255,0,0);
-		start += width+1;
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			can->drawRectangleColor(0,0,800,600,128,128,128);
+			int start = 50, width = 1, height;
+			for (int i = 0; i < SIZE; i++) {
+				height = (numbers[i]);
+				if (i == pos)
+					can->drawRectangleColor(start,580-height,width,height,255,255,0);
+				else
+					can->drawRectangleColor(start,580-height,width,height,255,0,0);
+				start += width+1;
+			}
+		}
 	}
 }
 
 void colorWheelFunction(CartesianCanvas* can) {
-	const int threads = 256;
-	static int f = 0;
-	int start[threads] = { 0 };
-	start[0] = f;
-	for (int i = 1; i < threads; i++) {
-		start[i] = (start[i-1] + (256/threads)) % 255;
-	}
-	if (++f > 255)
-		f -= 255;
-	RGBType color;
-	HSVType other;
-	const float RADIUS = 280;
-	float x2, x3, y2, y3;
-	int shading, tid;
-	#pragma omp parallel num_threads(threads) private(other,color,x2,x3,y2,y3,shading,tid)
-	{
-		tid = omp_get_thread_num();
-		shading = 255-tid*256/threads;
-		other = {start[tid]/255.0f*6.0f,1.0f,1.0f};
-		color = Canvas::HSVtoRGB(other);
-		x2 = RADIUS*sin(2*PI*start[tid]/255.0);
-		y2 = RADIUS*cos(2*PI*start[tid]/255.0);
-		x3 = RADIUS*sin(2*PI*(start[tid]+1)/255.0);
-		y3 = RADIUS*cos(2*PI*(start[tid]+1)/255.0);
-		can->drawTriangleColor(400,300,400+x2,300+y2,400+x3,300+y3,
-				shading*color.R,shading*color.G,shading*color.B);
+	const int threads = 256, delta = 256/threads;
+	int lastFrame = 0;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			int f = lastFrame % 256;
+			int start[threads] = { 0 };
+			start[0] = f;
+			for (int i = 1; i < threads; i++) {
+				start[i] = (start[i-1] + delta) % 255;
+			}
+			RGBType color;
+			HSVType other;
+			const float RADIUS = 280;
+			float x2, x3, y2, y3;
+			int shading, tid;
+			#pragma omp parallel num_threads(threads) private(other,color,x2,x3,y2,y3,shading,tid)
+			{
+				tid = omp_get_thread_num();
+				shading = 255-tid*256/threads;
+				other = {start[tid]/255.0f*6.0f,1.0f,1.0f};
+				color = Canvas::HSVtoRGB(other);
+				x2 = RADIUS*sin(2*PI*start[tid]/255.0);
+				y2 = RADIUS*cos(2*PI*start[tid]/255.0);
+				x3 = RADIUS*sin(2*PI*(start[tid]+1)/255.0);
+				y3 = RADIUS*cos(2*PI*(start[tid]+1)/255.0);
+				can->drawTriangleColor(400,300,400+x2,300+y2,400+x3,300+y3,
+						shading*color.R,shading*color.G,shading*color.B);
+			}
+		}
 	}
 }
 
@@ -442,66 +499,82 @@ void integral1(CartesianCanvas* can) {
 }
 
 int main() {
-//	Canvas* can1 = new Canvas(points1, 480800);
+//	Canvas* can1 = new Canvas(480800);
 //	can1->start();
+//	points1(can1);
+//	can1->end();
 
-//	Canvas* can2 = new Canvas(points2, 480000);
+//	Canvas* can2 = new Canvas(480000);
 //	can2->start();
+//	points2(can2);
+//	can2->end();
 
-//	Canvas* can3 = new Canvas(points3, 800);
+//	Canvas* can3 = new Canvas(480000);
 //	can3->start();
+//	points3(can3);
+//	can3->end();
 
-//	Canvas* can4 = new Canvas(lines1, 1000);
+//	Canvas* can4 = new Canvas(100000);
 //	can4->setAutoRefresh(false);
 //	can4->start();
+//	lines1(can4);
+//	can4->end();
 
-//	Canvas* can5 = new Canvas(lines2, 1000);
-//	can5->setAutoRefresh(false);
+//	Canvas* can5 = new Canvas(1000);
+//	can5->setAutoRefresh(false);  //THIS CRASHES: WAIT UNTIL ARRAY IS FIXED
 //	can5->start();
+//	lines2(can5);
+//	can5->end();
 
-//	Canvas* can6 = new Canvas(shadingPoints, 257*257);
+//	Canvas* can6 = new Canvas(250000);
+//	can6->showFPS(true);
 //	can6->start();
+//	shadingPoints(can6);
+//	can6->end();
 
-	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-//	can7->showFPS(true);
-	can7->start();
-	dmesg("Computation started");
-	mandelbrotFunction(can7);
-	dmesg("Computation finished");
-	can7->end();
+//	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//	can7->start();
+//	mandelbrotFunction(can7);
+//	can7->end();
 
-//	CartesianCanvas* can8 = new CartesianCanvas(langtonFunction,
-//									0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, -1);
+//	CartesianCanvas* can8 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, 100000);
 //	can8->start();
+//	langtonFunction(can8);
+//	can8->end();
 
 //	langtonFourWayInit();
-//	CartesianCanvas* can9 = new CartesianCanvas(langtonFunction2,
-//									0, 0, 600, 600, 0,0,600,600, -1);
+//	CartesianCanvas* can9 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
 //	can9->start();
+//	langtonFunction2(can9);
+//	can9->end();
 
 //	langtonFourWayInit();
-//	CartesianCanvas* can10 = new CartesianCanvas(langtonFunction3,
-//									0, 0, 600, 600, 0,0,600,600, -1);
+//	CartesianCanvas* can10 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
 //	can10->start();
+//	langtonFunction3(can10);
+//	can10->end();
 
 //	langtonFourWayInit();
-//	CartesianCanvas* can11 = new CartesianCanvas(langtonFunctionShiny,
-//									0, 0, 600, 600, 0,0,600,600, -1);
+//	CartesianCanvas* can11 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
 //	can11->start();
+//	langtonFunctionShiny(can11);
+//	can11->end();
 
-//	CartesianCanvas* can12 = new CartesianCanvas(dumbSortFunction,
-//									0, 0, 800, 600, 0,0,800,600, -1);
+//	CartesianCanvas* can12 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, -1);
 //	can12->start();
+//	dumbSortFunction(can12);
+//	can12->end();
 
-//	CartesianCanvas* can13 = new CartesianCanvas(colorWheelFunction,
-//									0, 0, 800, 600, 0,0,800,600, 256);
-//	can13->setAutoRefresh(false);
+//	CartesianCanvas* can13 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
+//	//can13->setAutoRefresh(false);
 //	can13->start();
+//	colorWheelFunction(can13);
 //	can13->end();
 
-//	CartesianCanvas* can14 = new CartesianCanvas(functionFunction,
-//										0, 0, 800, 600, -5,-5,5,50, 0);
+//	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 0);
 //	can14->start();
+//	functionFunction(can14);
+//	can14->end();
 
 //	CartesianCanvas* can15 = new CartesianCanvas(integral1,
 //										0, 0, 800, 600, -5,-1.5,5,1.5, 64);
