@@ -466,13 +466,12 @@ void integral1(CartesianCanvas* can) {
 	const unsigned int threads = 1;
 	Function* function1 = new CosineFunction;
 	can->drawFunction(function1);
-	float i;
 	float offset = (can->getMaxX() - can->getMinX()) / threads;
-	#pragma omp parallel num_threads(threads) private(i)
+	#pragma omp parallel num_threads(threads)
 	{
 		float start = can->getMinX() + omp_get_thread_num() * offset;
 		float stop = start + offset;
-		for (i = start; i < stop; i += can->getPixelWidth()) {
+		for (float i = start; i < stop; i += can->getPixelWidth()) {
 			std::cout << "Drawing at x = " << i << std::endl;
 			can->drawLineColor(i, 0, i, function1->valueAt(i), 255,255,0,255);
 		}
@@ -480,7 +479,9 @@ void integral1(CartesianCanvas* can) {
 }
 
 void gradientWheelFunction(CartesianCanvas* can) {
-	const int threads = 16, delta = 256/threads;
+	const int threads = 256, delta = 256/threads;
+	const float RADIUS = 280;
+	const int centerX = can->getWindowWidth()/2, centerY = can->getWindowHeight()/2;
 	int lastFrame = 0;
 	while(can->isOpen()) {
 		if (can->getFrameNumber() > lastFrame) {
@@ -488,41 +489,30 @@ void gradientWheelFunction(CartesianCanvas* can) {
 			int f = lastFrame % 256;
 			int start[threads] = { 0 };
 			start[0] = f;
-			for (int i = 1; i < threads; i++) {
-				start[i] = (start[i-1] + delta) % 255;
+			for (int i = 1; i < threads; i++) {						// Calculate the location and color of the
+				start[i] = (start[i-1] + delta) % 255;				// 	shapes by the location and frame
 			}
-			RGBType color[3];
-			HSVType other;
-			const float RADIUS = 280;
-			float shading;
-			int tid;
-			#pragma omp parallel num_threads(threads) private(other,color,shading,tid)
+			#pragma omp parallel num_threads(threads)
 			{
-				int xx[3],yy[3],red[3],green[3],blue[3],alpha[3];
-				xx[0] = 400; yy[0] = 300;
-				tid = omp_get_thread_num();
-				shading = 1.0f*tid/threads;
-				other = {start[tid]/255.0f*6.0f,1.0f,1.0f};
-				color[1] = Canvas::HSVtoRGB(other);
-				other = {(start[tid]+1)/255.0f*6.0f,1.0f,1.0f};
-				color[2] = Canvas::HSVtoRGB(other);
-				float f = (start[tid]+1)/255.0f*6.0f;
-				if (f > 3.0f)
-					other = {f,0.0f,1.0f};
-				else
-					other = {f,0.0f,1.0f};
-				color[0] = Canvas::HSVtoRGB(other);
+				RGBType color[3];									// The arrays of colors for the vertices
+				int xx[3],yy[3],red[3],green[3],blue[3],alpha[3];	// Setup the arrays of values for vertices
+				xx[0] = centerX; yy[0] = centerY;					// Set first vertex to center of screen
+				int tid = omp_get_thread_num();
+				float shading = 1.0f*tid/threads;					// Shade based on what thread this is
+				color[0] = Canvas::HSVtoRGB({(start[tid]+1) /255.0f * 6.0f, 0.0f, 1.0f});
+				color[1] = Canvas::HSVtoRGB({ start[tid]    /255.0f * 6.0f, 1.0f, 1.0f});
+				color[2] = Canvas::HSVtoRGB({(start[tid]+1) /255.0f * 6.0f, 1.0f, 1.0f});
 				for (int i = 0; i < 3; i++) {
-					red[i] = color[i].R*255*shading;
-					green[i] = color[i].G*255*shading;
-					blue[i] = color[i].B*255*shading;
+					red[i]   = color[i].R * 255 * shading;
+					green[i] = color[i].G * 255 * shading;
+					blue[i]  = color[i].B * 255 * shading;
 					alpha[i] = 255;
 				}
-				xx[1]= 400+RADIUS*sin(2*PI*start[tid]/255.0);
-				yy[1] = 300+RADIUS*cos(2*PI*start[tid]/255.0);
-				xx[2] = 400+RADIUS*sin(2*PI*(start[tid]+1)/255.0);
-				yy[2] = 300+RADIUS*cos(2*PI*(start[tid]+1)/255.0);
-				can->drawShinyPolygon(3, xx,yy,red,green,blue,alpha);
+				xx[1] = 400+RADIUS * sin(2*PI* start[tid]    / 255.0);	// Add the next two vertices to
+				yy[1] = 300+RADIUS * cos(2*PI* start[tid]    / 255.0);	// 	to around the circle
+				xx[2] = 400+RADIUS * sin(2*PI*(start[tid]+1) / 255.0);
+				yy[2] = 300+RADIUS * cos(2*PI*(start[tid]+1) / 255.0);
+				can->drawShinyPolygon(3,xx,yy,red,green,blue,alpha);
 			}
 		}
 	}
@@ -632,13 +622,13 @@ int main() {
 //	print(can14->getTime());
 //	can14->end();
 
-//	CartesianCanvas* can15 = new CartesianCanvas(0, 0, 800, 600, -5,-1.5,5,1.5, 16000);
-//	can15->start();
-//	can15->showFPS(true);
-//	integral1(can15);
-//	can15->showFPS(false);
-//	print(can15->getTime());
-//	can15->end();
+	CartesianCanvas* can15 = new CartesianCanvas(0, 0, 800, 600, -5,-1.5,5,1.5, 16000);
+	can15->start();
+	can15->showFPS(true);
+	integral1(can15);
+	can15->showFPS(false);
+	print(can15->getTime());
+	can15->end();
 
 //	CartesianCanvas* can16 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
 //	can16->start();
