@@ -317,7 +317,6 @@ const Function* CartesianCanvas::drawFunction(const Function* f) {
 	int lastX = 0, lastY = 0, screenX = 0, screenY = 0;
 	int sizeOfArray = 1+(maxX-minX)/pixelWidth;
 	Polyline *p = new Polyline(sizeOfArray);
-//	fl_line_style(0,2,0);
 	bool drawNext = false;
 	for (Type x = minX; x <= maxX; x += pixelWidth) {
 		lastX = screenX, lastY = screenY;
