@@ -472,8 +472,7 @@ void integral1(CartesianCanvas* can) {
 		float start = can->getMinX() + omp_get_thread_num() * offset;
 		float stop = start + offset;
 		for (float i = start; i < stop; i += can->getPixelWidth()) {
-			std::cout << "Drawing at x = " << i << std::endl;
-			can->drawLineColor(i, 0, i, function1->valueAt(i), 255,255,0,255);
+			can->drawLineColor(i, 0, i, function1->valueAt(i), 255,255,255,255);
 		}
 	}
 }
