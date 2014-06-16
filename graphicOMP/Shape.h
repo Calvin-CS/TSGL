@@ -42,7 +42,7 @@ Shape::Shape() {
 	myR = -1;	//Set all colors to -1 so our accessors don't return a color
 	myG = -1;
 	myB = -1;
-	myB = 255;
+	myA = 255;
 	myFR = myFG = myFB = 0.0f;
 	myFA = 1.0f;
 	useDefaultColor = true;

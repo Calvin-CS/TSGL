@@ -317,14 +317,14 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 						dir[j] = (dir[j] + 1) % 4;
 						other = {((can->getFrameNumber() + 3*j)%12) / 2.0f,1.0f,1.0f};
 						color = Canvas::HSVtoRGB(other);
-						can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255);
+						can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255,64);
 		//				can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
 					}
 					else {
 						dir[j] = (dir[j] + 3) % 4;
 						other = {((can->getFrameNumber() + 3*j)%12) / 2.0f,1.0f,0.5f};
 						color = Canvas::HSVtoRGB(other);
-						can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255);
+						can->drawPointColor(xx[j],yy[j],color.R*255,color.G*255,color.B*255,64);
 		//				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
 					}
 				}
@@ -518,6 +518,57 @@ void gradientWheelFunction(CartesianCanvas* can) {
 	}
 }
 
+void alphaRectangleFunction(CartesianCanvas* can) {
+	int lastFrame = 0;
+	int a, b;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			a = rand() % WINDOW_W;
+			b = rand() % WINDOW_H;
+			can->drawRectangleColor(a,b,rand() % (WINDOW_W-a), rand() % (WINDOW_H-b),rand() % 255,
+					rand() % 255,rand() % 255,16);
+		}
+	}
+}
+
+void alphaLangtonFunction(CartesianCanvas* can) {
+	static int IPF = 1000;		// Iterations per frame
+//	const unsigned int threads = 4;
+	int lastFrame = 0;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			for (int i = 0; i < IPF; i++) {
+				//#pragma omp parallel for
+				for (int j = 0; j < 4; j++) {
+					if (filled[xx[j]][yy[j]]) {
+						dir[j] = (dir[j] + 1) % 4;
+		//				can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+						can->drawPointColor(xx[j],yy[j],128,128,128,16);
+					}
+					else {
+						dir[j] = (dir[j] + 3) % 4;
+						can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j],16);
+					}
+				}
+				for (int j = 0; j < 4; j++)
+					filled[xx[j]][yy[j]] = !filled[xx[j]][yy[j]];
+				for (int j = 0; j < 4; j++) {
+					if (dir[j] == UP)
+						yy[j] = (yy[j] > 0) ? yy[j] - 1 : 599;
+					else if (dir[j] == RIGHT)
+						xx[j] = (xx[j] < 599) ? xx[j] + 1 : 0;
+					else if (dir[j] == DOWN)
+						yy[j] = (yy[j] < 599) ? yy[j] + 1 : 0;
+					else if (dir[j] == LEFT)
+						xx[j] = (xx[j] > 0) ? xx[j] - 1 : 599;
+				}
+			}
+		}
+	}
+}
+
 int main() {
 //	Canvas* can1 = new Canvas(480800);
 //	can1->start();
@@ -622,18 +673,31 @@ int main() {
 //	print(can14->getTime());
 //	can14->end();
 
-	CartesianCanvas* can15 = new CartesianCanvas(0, 0, 800, 600, -5,-1.5,5,1.5, 16000);
-	can15->start();
-	can15->showFPS(true);
-	integral1(can15);
-	can15->showFPS(false);
-	print(can15->getTime());
-	can15->end();
+//	CartesianCanvas* can15 = new CartesianCanvas(0, 0, 800, 600, -5,-1.5,5,1.5, 16000);
+//	can15->start();
+//	can15->showFPS(true);
+//	integral1(can15);
+//	can15->showFPS(false);
+//	print(can15->getTime());
+//	can15->end();
 
 //	CartesianCanvas* can16 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
 //	can16->start();
 //	can16->showFPS(true);
 //	gradientWheelFunction(can16);
 //	can16->end();
+
+//	CartesianCanvas* can17 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
+//	can17->start();
+//	can17->showFPS(true);
+//	alphaRectangleFunction(can17);
+//	can17->end();
+
+//	langtonFourWayInit();
+//	CartesianCanvas* can18 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
+//	can18->start();
+//	can18->showFPS(true);
+//	alphaLangtonFunction(can18);
+//	can18->end();
 
 }

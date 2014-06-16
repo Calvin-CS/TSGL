@@ -109,6 +109,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 //	glutInitDisplayMode (GLUT_DOUBLE);
 	glDisable(GL_DEPTH_TEST);								// Turn off 3D depth-testing
 	glDisable(GL_POINT_SMOOTH);
+	glClearColor(0.4f,0.4f,0.4f,0.0);
 	started = false;  										// We haven't started the window yet
 	counter = 0;											// We haven't drawn any frames yet
 	startTime = highResClock::now();						// Record the init time
@@ -119,7 +120,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	// Adds a callback after 1/60 second to the Canvas' callback function
 	showFPS_ = false;										// Set debugging FPS to false
 
-
 }
 
 /*
@@ -129,11 +129,14 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 void Canvas::draw() {
 	gl_start();
 
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable (GL_BLEND);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0, window->w() - (1.0f/window->w()), window->h(), 0, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	glClearColor(0.75f,0.75f,0.75f,0.0);
 
 	// Calculate CycleTime since draw() was last called
 	highResClock::time_point end = highResClock::now();
