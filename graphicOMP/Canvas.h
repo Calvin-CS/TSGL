@@ -43,6 +43,8 @@ protected:
 	int monitorX,monitorY,monitorWidth,monitorHeight;  				// Positioning and sizing data for the Canvas
 	int defaultRed, defaultGreen, defaultBlue, defaultAlpha; 		// Our current global RGB drawing color
 	float defaultFRed, defaultFGreen, defaultFBlue, defaultFAlpha; 	// Our current global RGB float drawing color
+	RGBType backgroundColor;										// The background color
+	bool toClear;													// Flag for clearing the canvas
 	int drawBufferSize;												// Maximum allowed Shapes in our drawing List
 	OmpWindow* window;												// The FLTK window to which we draw
 	bool started;													// Whether our canvas is running and the frame counter is counting
@@ -71,6 +73,8 @@ public:
 		int r, int g, int b, int a);															// Draws a triangle with the given vertices and color
 	virtual void drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]);
 	virtual void drawText(const char * s, int x, int y);								// Draws a string of text at the given position
+	void setBackgroundColor(int r, int g, int b);					// Changes the background color
+	void clear();													// Clears the canvas
 	int getWindowX() 		{ return monitorX; }					// Accessor for the window width
 	int getWindowY() 		{ return monitorY; }					// Accessor for the window height
 	int getWindowWidth() 	{ return monitorWidth; }				// Accessor for the window width
@@ -109,7 +113,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 //	glutInitDisplayMode (GLUT_DOUBLE);
 	glDisable(GL_DEPTH_TEST);								// Turn off 3D depth-testing
 	glDisable(GL_POINT_SMOOTH);
-	glClearColor(0.4f,0.4f,0.4f,0.0);
+	backgroundColor = {0.75f, 0.75f, 0.75f};				// Set the default background color
+	toClear = false;										// Don't need to clear at the start
 	started = false;  										// We haven't started the window yet
 	counter = 0;											// We haven't drawn any frames yet
 	startTime = highResClock::now();						// Record the init time
@@ -136,7 +141,12 @@ void Canvas::draw() {
 	glOrtho(0, window->w() - (1.0f/window->w()), window->h(), 0, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	glClearColor(0.75f,0.75f,0.75f,0.0);
+
+	glClearColor(backgroundColor.R, backgroundColor.G, backgroundColor.B, 0.0);		// Set the background
+	if (toClear) {
+		glClear(GL_COLOR_BUFFER_BIT);
+		toClear = false;
+	}
 
 	// Calculate CycleTime since draw() was last called
 	highResClock::time_point end = highResClock::now();
@@ -266,6 +276,25 @@ void Canvas::setColor(int r, int g, int b) {
 	defaultFGreen = g / 255.0f;
 	defaultFBlue = b / 255.0f;
 	mlock.unlock();
+}
+
+/*
+ * setBackgroundColor sets the background color
+ * Parameters:
+ * 		r, the red component
+ * 		g, the red component
+ * 		b, the red component
+ */
+void Canvas::setBackgroundColor(int r, int g, int b) {
+	std::unique_lock<std::mutex> mlock(mutex);
+	backgroundColor.R = r / 255.0;
+	backgroundColor.G = g / 255.0;
+	backgroundColor.B = b / 255.0;
+	mlock.unlock();
+}
+
+void Canvas::clear() {
+	toClear = true;
 }
 
 /*

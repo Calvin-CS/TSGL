@@ -565,6 +565,8 @@ void alphaLangtonFunction(CartesianCanvas* can) {
 				}
 			}
 		}
+		if (can->getFrameNumber() % 28 == 0)
+			can->clear();
 	}
 }
 
@@ -594,6 +596,7 @@ int main() {
 //	can3->end();
 
 //	Canvas* can4 = new Canvas(100000);
+//	can4->setBackgroundColor(0, 0, 0);
 //	can4->start();
 //	can4->showFPS(true);
 //	lines1(can4);
@@ -602,6 +605,7 @@ int main() {
 //	can4->end();
 
 //	Canvas* can5 = new Canvas(500);
+//	can5->setBackgroundColor(0, 0, 0);
 //	can5->start();
 //	can5->showFPS(true);
 //	lines2(can5);
@@ -610,6 +614,7 @@ int main() {
 //	can5->end();
 
 //	Canvas* can6 = new Canvas(250000);
+//	can6->setBackgroundColor(0, 0, 0);
 //	can6->start();
 //	can6->showFPS(true);
 //	shadingPoints(can6);
@@ -681,6 +686,7 @@ int main() {
 //	can15->end();
 
 //	CartesianCanvas* can16 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
+//	can16->setBackgroundColor(0, 0, 0);
 //	can16->start();
 //	can16->showFPS(true);
 //	gradientWheelFunction(can16);
@@ -692,11 +698,12 @@ int main() {
 //	alphaRectangleFunction(can17);
 //	can17->end();
 
-//	langtonFourWayInit();
-//	CartesianCanvas* can18 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
-//	can18->start();
-//	can18->showFPS(true);
-//	alphaLangtonFunction(can18);
-//	can18->end();
+	langtonFourWayInit();
+	CartesianCanvas* can18 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
+	can18->setBackgroundColor(0, 0, 0);
+	can18->start();
+	can18->showFPS(true);
+	alphaLangtonFunction(can18);
+	can18->end();
 
 }
