@@ -30,6 +30,7 @@ public:
 Point::Point(int x, int y) : Shape() {
 	myX = x;
 	myY = y;
+	isPoint = true;
 }
 
 /*
@@ -45,11 +46,14 @@ Point::Point(int x, int y) : Shape() {
 Point::Point(int x, int y, int r, int g, int b) : Shape(r, g, b) {
 	myX = x;
 	myY = y;
+	isPoint = true;
 }
 
 // draw actually draws the Point to the canvas
 void Point::draw() {
-	fl_point(myX,myY);	//Call to the FLTK fl_point drawing method
+//	glColor4f(myFR,myFG,myFB,1.0f);
+	glVertex2f(myX, myY);
+//	fl_point(myX,myY);	//Call to the FLTK fl_point drawing method
 }
 
 #endif /* POINT_H_ */

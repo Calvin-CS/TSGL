@@ -50,7 +50,7 @@ void points1(Canvas* can) {
 void points2(Canvas* can) {
 	print("Computation started");
 	int tid, nthreads, i, j;
-	can->setColor(80,10,160);
+	//can->setColor(80,10,160);
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
 	{
 		nthreads = omp_get_num_threads();
@@ -60,9 +60,9 @@ void points2(Canvas* can) {
 		for (j = myStart; j < myStart + myShare; j++) {
 			for (i = 100; i < WINDOW_W-100; i++) {
 				if (i % 2 == 0)
-					can->drawPointColor(i,j,j,i,i*j % 113);
+					can->drawPointColor(i,j,j % 255,i % 255,i*j % 113);
 				else
-					can->drawPointColor(i,j,i,j,i*j % 256);
+					can->drawPointColor(i,j,i % 255,j % 255,i*j % 256);
 			}
 		}
 	}
@@ -180,7 +180,7 @@ void mandelbrotFunction(CartesianCanvas* can) {
 				if (iterations == depth) {					// If the point never escaped...
 					can->drawPointColor(i, j, 0, 0, 0);		// Draw it black
 				} else {
-					can->drawPointColor(i, j, iterations % 151, (iterations % 131) + 50, iterations);	// Draw with color
+					can->drawPointColor(i, j, iterations % 151, (iterations % 131) + 50, iterations % 255);	// Draw with color
 				}
 			}
 		}
@@ -498,16 +498,19 @@ void integral1(CartesianCanvas* can) {
 int main() {
 //	Canvas* can1 = new Canvas(480800);
 //	can1->start();
+//	can1->setAutoRefresh(false);
 //	points1(can1);
 //	can1->end();
 
 //	Canvas* can2 = new Canvas(480000);
 //	can2->start();
+//	can2->setAutoRefresh(false);
 //	points2(can2);
 //	can2->end();
 
 //	Canvas* can3 = new Canvas(480000);
 //	can3->start();
+//	can3->setAutoRefresh(false);
 //	points3(can3);
 //	can3->end();
 
@@ -525,12 +528,14 @@ int main() {
 
 //	Canvas* can6 = new Canvas(250000);
 //	can6->showFPS(true);
+//	can6->setAutoRefresh(false);
 //	can6->start();
 //	shadingPoints(can6);
 //	can6->end();
 
 //	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
 //	can7->start();
+//	can7->setAutoRefresh(false);
 //	can7->showFPS(true);
 //	mandelbrotFunction(can7);
 //	can7->showFPS(false);
@@ -538,6 +543,7 @@ int main() {
 //	can7->end();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, 100000);
+//	can8->setAutoRefresh(false);
 //	can8->start();
 //	langtonFunction(can8);
 //	can8->end();
@@ -562,26 +568,27 @@ int main() {
 
 //	CartesianCanvas* can12 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, -1);
 //	can12->start();
+//	can12->setAutoRefresh(false);
 //	dumbSortFunction(can12);
 //	can12->end();
 
 //	CartesianCanvas* can13 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
-//	//can13->setAutoRefresh(false);
+//	can13->setAutoRefresh(false);
 //	can13->start();
 //	colorWheelFunction(can13);
 //	can13->end();
 
-	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 0);
-	can14->start();
-	can14->showFPS(true);
-	functionFunction(can14);
-	can14->showFPS(false);
-	print(can14->getTime());
-	can14->end();
+//	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 0);
+//	can14->setAutoRefresh(false);
+//	can14->start();
+//	can14->showFPS(true);
+//	functionFunction(can14);
+//	can14->showFPS(false);
+//	print(can14->getTime());
+//	can14->end();
 
 //	CartesianCanvas* can15 = new CartesianCanvas(integral1,
 //										0, 0, 800, 600, -5,-1.5,5,1.5, 64);
 //	can15->showFPS(true);
 //	can15->start();
-
 }

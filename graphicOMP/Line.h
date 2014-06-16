@@ -57,7 +57,11 @@ Line::Line(int x1, int y1, int x2, int y2, int r, int g, int b) : Shape(r, g, b)
 
 // draw() actually draws the Line to the canvas
 void Line::draw() {
-	fl_line(myX1,myY1,myX2,myY2);	//Call to the FLTK fl_line drawing method
+	glBegin(GL_LINES);
+	glVertex2f(myX1,myY1);
+	glVertex2f(myX2,myY2);
+	glEnd();
+//	fl_line(myX1,myY1,myX2,myY2);	//Call to the FLTK fl_line drawing method
 }
 
 #endif /* LINE_H_ */

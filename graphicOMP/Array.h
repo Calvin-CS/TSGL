@@ -28,6 +28,7 @@ public:
 	Array(unsigned int size) {
 		capacity_ = size;
 		myArray = new Item[size];
+		myArray[0] = NULL;
 		first_ = last_ = size_ = 0;
 	}
 

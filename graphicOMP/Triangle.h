@@ -38,6 +38,7 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3) : Shape() {
 	myY2 = y2;
 	myX3 = x3;
 	myY3 = y3;
+	isPoint = false;
 }
 
 /*
@@ -61,11 +62,17 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g,
 	myY2 = y2;
 	myX3 = x3;
 	myY3 = y3;
+	isPoint = false;
 }
 
 // draw() actually draws the Line to the canvas
 void Triangle::draw() {
-	fl_polygon(myX1,myY1,myX2,myY2,myX3,myY3);	//Call to the FLTK fl_polygon drawing method
+	glBegin(GL_TRIANGLE_STRIP);
+	glVertex2f(myX1, myY1);
+	glVertex2f(myX2, myY2);
+	glVertex2f(myX3, myY3);
+	glEnd();
+//	fl_polygon(myX1,myY1,myX2,myY2,myX3,myY3);	//Call to the FLTK fl_polygon drawing method
 }
 
 #endif /* TRIANGLE_H_ */

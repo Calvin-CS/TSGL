@@ -9,9 +9,11 @@
 #define CANVAS_H_
 
 #include <FL/Fl.H>						// For using basic FLTK library functions
-#include <FL/Fl_Double_Window.H>	// For Fl_Double_Window, which draws our window
+#include <FL/Fl_Window.H>	// For Fl_Double_Window, which draws our window
 #include <FL/Fl_Box.H>				// For Fl_Box, from which our Canvas inherits
 #include <FL/fl_draw.H>				// For FLTK's drawing function, which we implement to make our own thread-safe version.
+#include <FL/gl.h>					// For FLTK's built-in OpenGL functions
+#include <GL/glut.h>
 #include "Point.h"					// Our own class for drawing single points.
 #include "Line.h"					// Our own class for drawing straight lines.
 #include "Rectangle.h"				// Our own class for drawing rectangles.
@@ -30,6 +32,7 @@
 typedef struct {float R, G, B;} RGBType;
 typedef struct {float H, S, V;} HSVType;
 typedef std::chrono::high_resolution_clock highResClock;
+typedef Fl_Window OmpWindow;
 
 class Canvas : public Fl_Box {
 protected:
@@ -37,8 +40,9 @@ protected:
 	int counter;													// Counter for the number of frames that have elapsed in the current session (for animations)
 	int monitorX,monitorY,monitorWidth,monitorHeight;  				// Positioning and sizing data for the Canvas
 	int defaultRed, defaultGreen, defualtBlue; 						// Our current global RGB drawing color
+	float defaultFRed, defaultFGreen, defualtFBlue; 				// Our current global RGB float drawing color
 	int drawBufferSize;												// Maximum allowed Shapes in our drawing List
-	Fl_Double_Window* window;										// The FLTK window to which we draw
+	OmpWindow* window;												// The FLTK window to which we draw
 	bool started;													// Whether our canvas is running and the frame counter is counting
 	bool autoRefresh;												// Whether or not we automatically refresh the Canvas each frame
 	std::thread renderThread;										// Thread dedicated to rendering the Canvas
@@ -84,7 +88,7 @@ public:
 
 // Clean up if someone closes the window
 void close_cb(Fl_Widget* w, void* v) {
-	Fl_Double_Window* d = (Fl_Double_Window*) v;
+	OmpWindow* d = (OmpWindow*) v;
 	d->hide();										// Hide our window
 }
 
@@ -100,6 +104,9 @@ void close_cb(Fl_Widget* w, void* v) {
  */
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	Fl::gl_visual(FL_ALPHA);								// Turns alpha-rendering on
+//	glutInitDisplayMode (GLUT_DOUBLE);
+	glDisable(GL_DEPTH_TEST);								// Turn off 3D depth-testing
+	glDisable(GL_POINT_SMOOTH);
 	started = false;  										// We haven't started the window yet
 	counter = 0;											// We haven't drawn any frames yet
 	autoRefresh = true;										// Default to clearing the queue every frame
@@ -117,6 +124,15 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
  * Note: this function is called automatically by the callback and the FLTK redraw function, which is why it's private
  */
 void Canvas::draw() {
+	gl_start();
+
+	glMatrixMode (GL_PROJECTION);
+	glLoadIdentity ();
+	glOrtho (0, window->w()-(1.0f/window->w()), window->h(), 0, 0, 1);
+	glMatrixMode (GL_MODELVIEW);
+	glLoadIdentity ();
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	// Calculate CycleTime since draw() was last called
 	highResClock::time_point end = highResClock::now();
 	realFPS = 1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - cycleTime).count() * 1000000000.0;
@@ -129,22 +145,43 @@ void Canvas::draw() {
 	Shape* s;				// Pointer to the next Shape in the queue
 
 	std::unique_lock<std::mutex> mlock(mutex);
+
+	bool pointList = false;
 	// Iterate through our queue until we've made it to the end
 	for (unsigned int i = 0; i < myShapes->size(); i++) {
 		s = myShapes->operator[](i);
+		if (!pointList && s->getIsPoint()) {
+			pointList = true;
+			glBegin(GL_POINTS);
+		}
+		else if (pointList && !s->getIsPoint()) {
+			pointList = false;
+			glEnd();
+		}
 		if (s->getUsesDefaultColor()) {
+			glColor4f(defaultFRed, defaultFGreen, defualtFBlue,1.0f);
 			s->draw();		// If our shape uses the default color, just draw it
 		}
 		else {				// Otherwise, the color must be set before and after drawing
-			fl_color(s->getColorR(), s->getColorG(), s->getColorB());
+			//fl_color(s->getColorR(), s->getColorG(), s->getColorB());
+			glColor4f(s->getColorFR(),s->getColorFG(),s->getColorFB(),1.0f);
 			s->draw();
-			fl_color(defaultRed, defaultGreen, defualtBlue);
 		}
 	}
-	if (autoRefresh) {
+	if (pointList)
+		glEnd();
+	if (autoRefresh)
 		myShapes->clear();
-	}
 	mlock.unlock();
+
+//	glBegin(GL_POINTS);
+//	glColor4f(1.0f,0.5f,0.5f,1.0f);
+//	for (int i = 0; i < window->w(); i++)
+//		for (int j = 0; j < window->h(); j++)
+//			glVertex2f(i, j);
+//	glEnd();
+
+	gl_finish();
 }
 
 /*
@@ -192,7 +229,7 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_B
 int Canvas::start() {
 	if (started) return -1;										// If we're already started, return error code -1
 	started = true;												// We've now started
-    window = new Fl_Double_Window(monitorWidth,monitorHeight);	// Instantiate our drawing window
+    window = new OmpWindow(monitorWidth,monitorHeight);	// Instantiate our drawing window
     window->add(this);											// Add ourself (Canvas) to the drawing window
 	window->callback(close_cb,window);							// Add the function to call when the window is closed
     window->show();												// Show the window
@@ -223,7 +260,10 @@ void Canvas::setColor(int r, int g, int b) {
 	defaultRed = r;
 	defaultGreen = g;
 	defualtBlue = b;
-	fl_color(r,g,b);	// Updates the underlying FLTK color (critical to avoid syncing problems)
+	defaultFRed = r / 255.0f;
+	defaultFGreen = g / 255.0f;
+	defualtFBlue = b / 255.0f;
+//	fl_color(r,g,b);	// Updates the underlying FLTK color (critical to avoid syncing problems)
 	mlock.unlock();
 }
 

@@ -34,6 +34,7 @@ Rectangle::Rectangle(int x, int y, int w, int h) : Shape() {
 	myY = y;
 	myW = w;
 	myH = h;
+	isPoint = false;
 }
 
 /*
@@ -53,11 +54,18 @@ Rectangle::Rectangle(int x, int y, int w, int h, int r, int g, int b) : Shape(r,
 	myY = y;
 	myW = w;
 	myH = h;
+	isPoint = false;
 }
 
 // draw() actually draws the Rectangle to the canvas
 void Rectangle::draw() {
-	fl_rectf(myX,myY,myW,myH);	//Call to the FLTK fl_rectf drawing method
+	glBegin(GL_TRIANGLE_STRIP);
+	glVertex2f(myX, myY);
+	glVertex2f(myX, myY+myH);
+	glVertex2f(myX+myW, myY);
+	glVertex2f(myX+myW, myY+myH);
+	glEnd();
+//	fl_rectf(myX,myY,myW,myH);	//Call to the FLTK fl_rectf drawing method
 }
 
 #endif /* RECTANGLE_H_ */
