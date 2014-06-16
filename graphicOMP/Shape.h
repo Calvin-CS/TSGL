@@ -8,6 +8,8 @@
 #ifndef SHAPE_H_
 #define SHAPE_H_
 
+#include <iostream>
+
 class Shape {
 protected:
 	int myR, myG, myB, myA; 			// Color data for the shape

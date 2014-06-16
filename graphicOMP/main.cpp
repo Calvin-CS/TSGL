@@ -9,8 +9,8 @@
 #include "CartesianCanvas.h"
 #include "Array.h"
 
-#include <omp.h>
 #include <stdlib.h>
+#include <omp.h>
 #include <iostream>
 #include <cmath>
 #include <complex>
@@ -446,48 +446,41 @@ void colorWheelFunction(CartesianCanvas* can) {
 
 void functionFunction(CartesianCanvas* can) {
 	Function* function1 = new CosineFunction;
-//	Function* function2 = new PowerFunction(2);
-//
-//	class myFunction : public Function {
-//	public:
-//		virtual long double valueAt(long double x) const {
-//			return 5*pow(x,4) + 2*pow(x,3) + x + 15;
-//		}
-//	};
-//
-//	Function* function3 = new myFunction;
-
 	can->drawFunction(function1);
-//	can->drawFunction(function2);
-//	can->drawFunction(function3);
 
+	//	Function* function2 = new PowerFunction(2);
+	//
+	//	class myFunction : public Function {
+	//	public:
+	//		virtual long double valueAt(long double x) const {
+	//			return 5*pow(x,4) + 2*pow(x,3) + x + 15;
+	//		}
+	//	};
+	//
+	//	Function* function3 = new myFunction;
+	//	can->drawFunction(function2);
+	//	can->drawFunction(function3);
 }
 
-Function* function1 = new CosineFunction;
 void integral1(CartesianCanvas* can) {
 	const unsigned int threads = 1;
-
-	if (can->getFrameNumber() - 1 <= (can->getWindowWidth() / threads)) {	// As long as we aren't trying to render off of the screen...
-		can->drawFunction(function1);
-		#pragma omp parallel num_threads(threads)
-		{
-			long double x = (can->getMaxX() - can->getMinX()) / threads * omp_get_thread_num()
-								+ can->getMinX() + can->getPixelWidth() * can->getFrameNumber();
-
-			can->drawLineColor(x, 0, x, function1->valueAt(x), 0,0,0);
-		}
-	} else {
-		static bool shownTime = false;
-		if (!shownTime) {
-			std::cout << can->getTime() << std::endl;
-			can->showFPS(false);
-			shownTime = true;
+	Function* function1 = new CosineFunction;
+	can->drawFunction(function1);
+	float i;
+	float offset = (can->getMaxX() - can->getMinX()) / threads;
+	#pragma omp parallel num_threads(threads) private(i)
+	{
+		float start = can->getMinX() + omp_get_thread_num() * offset;
+		float stop = start + offset;
+		for (i = start; i < stop; i += can->getPixelWidth()) {
+			std::cout << "Drawing at x = " << i << std::endl;
+			can->drawLineColor(i, 0, i, function1->valueAt(i), 255,255,0,255);
 		}
 	}
 }
 
 void gradientWheelFunction(CartesianCanvas* can) {
-	const int threads = 256, delta = 256/threads;
+	const int threads = 16, delta = 256/threads;
 	int lastFrame = 0;
 	while(can->isOpen()) {
 		if (can->getFrameNumber() > lastFrame) {
@@ -631,7 +624,7 @@ int main() {
 //	colorWheelFunction(can13);
 //	can13->end();
 
-//	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 0);
+//	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 10);
 //	can14->start();
 //	can14->showFPS(true);
 //	functionFunction(can14);
@@ -639,7 +632,7 @@ int main() {
 //	print(can14->getTime());
 //	can14->end();
 
-//	CartesianCanvas* can15 = new CartesianCanvas(0, 0, 800, 600, -5,-1.5,5,1.5, 64);
+//	CartesianCanvas* can15 = new CartesianCanvas(0, 0, 800, 600, -5,-1.5,5,1.5, 16000);
 //	can15->start();
 //	can15->showFPS(true);
 //	integral1(can15);
@@ -647,10 +640,10 @@ int main() {
 //	print(can15->getTime());
 //	can15->end();
 
-	CartesianCanvas* can16 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
-	can16->start();
-	can16->showFPS(true);
-	gradientWheelFunction(can16);
-	can16->end();
+//	CartesianCanvas* can16 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
+//	can16->start();
+//	can16->showFPS(true);
+//	gradientWheelFunction(can16);
+//	can16->end();
 
 }

@@ -9,40 +9,33 @@
 #ifndef SHINYPOLYGON_H_
 #define SHINYPOLYGON_H_
 
-#include <FL/fl_draw.H>		// For the actual fl_polygon drawing function
 #include "Shape.h"			// For extending our Shape object
-#include <iostream>
 
 class ShinyPolygon : public Shape {
 private:
-	struct VertexData {
-		int x;
-		int y;
-		float r;
-		float g;
-		float b;
-		float a;
+	struct VertexData {		// Data for each of the polygon's vertices
+		int x;				// Vertex x position
+		int y;				// Vertex y position
+		float r;			// Vertex red component
+		float g;			// Vertex green component
+		float b;			// Vertex blue component
+		float a;			// Vertex alpha component
 	};
-	bool init;
-	int size, current;
-	VertexData* myVertex;
+	bool init;				// Whether the vertex has been initialized completely
+	int size, current;		// Ultimate and current number of vertices
+	VertexData* myVertex;	// Buffer for vertex data
 public:
-	ShinyPolygon(int vertices);				// Default constructor
-	void addVertex(int x, int y, int r, int g, int b, int a);
-    void draw();							// Overridden draw method
-    bool getIsPoint() { return false; }
+	ShinyPolygon(int vertices);									// Default constructor
+	void addVertex(int x, int y, int r, int g, int b, int a);  	// Method for adding vertices to buffer
+    void draw();												// Overridden draw method
+    bool getIsPoint() { return false; }							// We are not a single point
 };
 
 /*
- * Explicit constructor for the Triangle class (calls the base constructor)
+ * Explicit constructor for the ShinyPolygon class (calls the base constructor)
  * Parameters:
- * 		x1, the first x coordinate
- *		y1, the first y coordinate
- * 		x2, the second x coordinate
- *		y2, the second y coordinate
- *		x3, the third x coordinate
- *		y3, the third y coordinate
- * Returns: a new Triangle with the specified vertices
+ * 		vertices, the number of vertices the complete polygon will have
+ * Returns: a new ShinyPolygon with the specified numbered vertices
  */
 ShinyPolygon::ShinyPolygon(int vertices = 3) : Shape() {
 	size = (vertices > 3) ? vertices : 3;
@@ -51,6 +44,17 @@ ShinyPolygon::ShinyPolygon(int vertices = 3) : Shape() {
 	init = false;
 }
 
+/*
+ * addVertex allows you to add a vertex to the ShinyPolygon
+ *  The function does nothing if the vertex buffer is already full
+ * Parameters:
+ * 		x, the x position of the vertex
+ * 		y, the y position of the vertex
+ * 		r, the red component of the vertex
+ * 		g, the green component of the vertex
+ * 		b, the blue component of the vertex
+ * 		a, the alpha component of the vertex
+ */
 void ShinyPolygon::addVertex(int x, int y, int r, int g, int b, int a) {
 	if (init)
 		return;
@@ -65,7 +69,7 @@ void ShinyPolygon::addVertex(int x, int y, int r, int g, int b, int a) {
 		init = true;
 }
 
-// draw() actually draws the Line to the canvas
+// draw() actually draws the Polygon to the canvas
 void ShinyPolygon::draw() {
 	if (!init)
 		return;
@@ -77,7 +81,6 @@ void ShinyPolygon::draw() {
 		glVertex2f(v.x,v.y);
 	}
 	glEnd();
-//	fl_polygon(myX1,myY1,myX2,myY2,myX3,myY3);	//Call to the FLTK fl_polygon drawing method
 }
 
 #endif /* SHINYPOLYGON_H_ */

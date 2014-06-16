@@ -19,6 +19,7 @@
 #include "Rectangle.h"				// Our own class for drawing rectangles.
 #include "Triangle.h"				// Our own class for drawing triangles.
 #include "ShinyPolygon.h"			// Our own class for drawing polygons with colored vertices.
+#include "Polyline.h"				// Our own class for drawing polylines.
 #include "Array.h"					// Our own thread-safe array for buffering drawing operations.
 #include <omp.h>					// For OpenMP support
 #include <cmath>					// For converting HSV to RGB
@@ -165,10 +166,10 @@ void Canvas::draw() {
 			}
 
 			if (s->getUsesDefaultColor()) {
-				glColor4f(defaultFRed, defaultFGreen, defaultFBlue,1.0f);
+				glColor4f(defaultFRed, defaultFGreen, defaultFBlue,defaultFAlpha);
 				s->draw();									// If our shape uses the default color, just draw it
 			} else {										// Otherwise, the color must be got from the shape
-				glColor4f(s->getColorFR(),s->getColorFG(),s->getColorFB(),1.0f);
+				glColor4f(s->getColorFR(),s->getColorFG(),s->getColorFB(),s->getColorFA());
 				s->draw();
 			}
 		}
@@ -408,6 +409,17 @@ void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, i
 	mlock.unlock();
 }
 
+/*
+ * drawShinyPolygon draws a ShinyPolygon with the given vertex data
+ * Parameters:
+ * 		size, the number of vertices in the polygon
+ * 		x, an array of x positions of the vertices
+ * 		y, an array of y positions of the vertices
+ * 		r, an array of red components for the vertices
+ * 		g, an array of green components for the vertices
+ * 		b, an array of blue components for the vertices
+ * 		a, an array of alpha components for the vertices
+ */
 void Canvas::drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]) {
 	ShinyPolygon* p = new ShinyPolygon(size);
 	for (int i = 0; i < size; i++) {
