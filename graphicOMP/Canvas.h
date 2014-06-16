@@ -18,6 +18,7 @@
 #include "Line.h"					// Our own class for drawing straight lines.
 #include "Rectangle.h"				// Our own class for drawing rectangles.
 #include "Triangle.h"				// Our own class for drawing triangles.
+#include "ShinyPolygon.h"			// Our own class for drawing polygons with colored vertices.
 #include "Array.h"					// Our own thread-safe array for buffering drawing operations.
 #include <omp.h>					// For OpenMP support
 #include <cmath>					// For converting HSV to RGB
@@ -39,8 +40,8 @@ protected:
 	Array<Shape*> * myShapes;										// Our buffer of shapes to draw
 	int counter;													// Counter for the number of frames that have elapsed in the current session (for animations)
 	int monitorX,monitorY,monitorWidth,monitorHeight;  				// Positioning and sizing data for the Canvas
-	int defaultRed, defaultGreen, defualtBlue; 						// Our current global RGB drawing color
-	float defaultFRed, defaultFGreen, defualtFBlue; 				// Our current global RGB float drawing color
+	int defaultRed, defaultGreen, defaultBlue, defaultAlpha; 		// Our current global RGB drawing color
+	float defaultFRed, defaultFGreen, defaultFBlue, defaultFAlpha; 	// Our current global RGB float drawing color
 	int drawBufferSize;												// Maximum allowed Shapes in our drawing List
 	OmpWindow* window;												// The FLTK window to which we draw
 	bool started;													// Whether our canvas is running and the frame counter is counting
@@ -59,22 +60,24 @@ public:
 	int end();														// Function to end rendering our Canvas
 	void setColor(int r, int g, int b);								// Sets the global drawing color
 	virtual void drawPoint(int x, int y);							// Draws a point at the given coordinates
-	virtual void drawPointColor(int x, int y, int r, int g, int b);// Draws a point at the given coordinates with the given color
-	virtual void drawLine(int x1, int y1, int x2, int y2);			// Draws a line at the given coordinates
-	virtual void drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b);		// Draws a line at the given coordinates with the given color
-	virtual void drawRectangle(int x, int y, int w, int h);							// Draws a rectangle at the given coordinates with the given dimensions
-	virtual void drawRectangleColor(int x, int y, int w, int h, int r, int g, int b);	// Draws a rectangle at the given coordinates with the given dimensions and color
+	virtual void drawPointColor(int x, int y, int r, int g, int b, int a);	// Draws a point at the given coordinates with the given color
+	virtual void drawLine(int x1, int y1, int x2, int y2);					// Draws a line at the given coordinates
+	virtual void drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b, int a);		// Draws a line at the given coordinates with the given color
+	virtual void drawRectangle(int x, int y, int w, int h);										// Draws a rectangle at the given coordinates with the given dimensions
+	virtual void drawRectangleColor(int x, int y, int w, int h, int r, int g, int b, int a);	// Draws a rectangle at the given coordinates with the given dimensions and color
 	virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);			// Draws a triangle with the given vertices
 	virtual void drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
-			int r, int g, int b);															// Draws a triangle with the given vertices and color
-	virtual void drawText(const char * s, int x, int y);									// Draws a string of text at the given position
+		int r, int g, int b, int a);															// Draws a triangle with the given vertices and color
+	virtual void drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]);
+	virtual void drawText(const char * s, int x, int y);								// Draws a string of text at the given position
 	int getWindowX() 		{ return monitorX; }					// Accessor for the window width
 	int getWindowY() 		{ return monitorY; }					// Accessor for the window height
 	int getWindowWidth() 	{ return monitorWidth; }				// Accessor for the window width
 	int getWindowHeight() 	{ return monitorHeight; }				// Accessor for the window height
 	int getColorR() 		{ return defaultRed; }					// Accessor for the red component of the global drawing color
 	int getColorG() 		{ return defaultGreen; }				// Accessor for the green component of the global drawing color
-	int getColorB() 		{ return defualtBlue; }					// Accessor for the number component of the global drawing color
+	int getColorB() 		{ return defaultBlue; }					// Accessor for the blue component of the global drawing color
+	int getColorA() 		{ return defaultAlpha; }				// Accessor for the alpha component of the global drawing color
 	int getFrameNumber() 	{ return counter; }						// Accessor for the number of frames rendered so far
 	int getBufferSize() 	{ return drawBufferSize; }				// Accessor for the Shape list's buffer size
 	float getFPS() 			{ return realFPS; }						// Accessor for true FPS
@@ -162,7 +165,7 @@ void Canvas::draw() {
 			}
 
 			if (s->getUsesDefaultColor()) {
-				glColor4f(defaultFRed, defaultFGreen, defualtFBlue,1.0f);
+				glColor4f(defaultFRed, defaultFGreen, defaultFBlue,1.0f);
 				s->draw();									// If our shape uses the default color, just draw it
 			} else {										// Otherwise, the color must be got from the shape
 				glColor4f(s->getColorFR(),s->getColorFG(),s->getColorFB(),1.0f);
@@ -248,15 +251,16 @@ int Canvas::end() {
  * 		r, the red component
  * 		g, the red component
  * 		b, the red component
+ * 		a, the alpha component
  */
 void Canvas::setColor(int r, int g, int b) {
 	std::unique_lock<std::mutex> mlock(mutex);
 	defaultRed = r;
 	defaultGreen = g;
-	defualtBlue = b;
+	defaultBlue = b;
 	defaultFRed = r / 255.0f;
 	defaultFGreen = g / 255.0f;
-	defualtFBlue = b / 255.0f;
+	defaultFBlue = b / 255.0f;
 	mlock.unlock();
 }
 
@@ -282,10 +286,11 @@ void Canvas::drawPoint(int x, int y) {
  * 		r, the red component
  * 		g, the red component
  * 		b, the red component
+ * 		a, the alpha component
  * 	Returns: a new point at the given position with the specified color
  */
-void Canvas::drawPointColor(int x, int y, int r, int g, int b) {
-	Point* p = new Point(x,y,r,g,b);				// Creates the Point with the specified coordinates and color
+void Canvas::drawPointColor(int x, int y, int r, int g, int b, int a = 255) {
+	Point* p = new Point(x,y,r,g,b,a);				// Creates the Point with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);								// Push it onto our drawing queue
 	mlock.unlock();
@@ -317,10 +322,11 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2) {
  * 		r, the red component
  * 		g, the red component
  * 		b, the red component
+ * 		a, the alpha component
  * 	Returns: a new line with the given coordinates and the specified color
  */
-void Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) {
-	Line* l = new Line(x1,y1,x2,y2,r,g,b);			// Creates the Line with the specified coordinates and color
+void Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b, int a = 255) {
+	Line* l = new Line(x1,y1,x2,y2,r,g,b,a);			// Creates the Line with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(l);								// Push it onto our drawing queue
 	mlock.unlock();
@@ -352,10 +358,11 @@ void Canvas::drawRectangle(int x, int y, int w, int h) {
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
+ * 		a, the alpha component
  * 	Returns: a new rectangle with the given coordinates, dimensions, and color
  */
-void Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, int b) {
-	Rectangle* rec = new Rectangle(x,y,w,h,r,g,b);	// Creates the Rectangle with the specified coordinates and color
+void Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, int b, int a = 255) {
+	Rectangle* rec = new Rectangle(x,y,w,h,r,g,b,a);	// Creates the Rectangle with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(rec);							// Push it onto our drawing queue
 	mlock.unlock();
@@ -391,12 +398,23 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
+ * 		a, the alpha component
  * 	Returns: a new triangle with the given vertices and color
  */
-void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b) {
-	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,r,g,b);	// Creates the Triangle with the specified vertices and color
+void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b, int a = 255) {
+	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,r,g,b,a);	// Creates the Triangle with the specified vertices and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(t);										// Push it onto our drawing queue
+	mlock.unlock();
+}
+
+void Canvas::drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]) {
+	ShinyPolygon* p = new ShinyPolygon(size);
+	for (int i = 0; i < size; i++) {
+		p->addVertex(x[i],y[i],r[i],g[i],b[i],a[i]);
+	}
+	std::unique_lock<std::mutex> mlock(mutex);
+	myShapes->push(p);										// Push it onto our drawing queue
 	mlock.unlock();
 }
 

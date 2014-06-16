@@ -32,17 +32,18 @@ public:
 	Type getMinY() 			{ return minY; }					// Accessor for minY
 	Type getMaxY() 			{ return maxY; }					// Accessor for maxY
 	void drawPoint(Type x, Type y);							// Draws a point at the given coordinates
-	void drawPointColor(Type x, Type y, int r, int g, int b);	// Draws a point at the given coordinates with the given color
+	void drawPointColor(Type x, Type y, int r, int g, int b, int a);	// Draws a point at the given coordinates with the given color
 	void drawLine(Type x1, Type y1, Type x2, Type y2);			// Draws a line at the given coordinates
 	void drawLineColor(Type x1, Type y1, Type x2,
-						Type y2, int r, int g, int b);			// Draws a line at the given coordinates with the given color
+						Type y2, int r, int g, int b, int a);			// Draws a line at the given coordinates with the given color
 	void drawRectangle(Type x, Type y, Type w, Type h);	// Draws a rectangle at the given coordinates with the given dimensions
 	void drawRectangleColor(Type x, Type y, Type w,
-			Type h, int r, int g, int b);						// Draws a rectangle at the given coordinates with the given dimensions and color
+			Type h, int r, int g, int b, int a);						// Draws a rectangle at the given coordinates with the given dimensions and color
 	void drawTriangle(int x1, int y1, int x2, int y2,
 			int x3, int y3);									// Draws a triangle with the given vertices
 	void drawTriangleColor(int x1, int y1, int x2, int y2,
-			int x3, int y3,	int r, int g, int b);				// Draws a triangle with the given vertices and color
+			int x3, int y3,	int r, int g, int b, int a);				// Draws a triangle with the given vertices and color
+	void drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]);
 	const Function* drawFunction(const Function* f);			// Draws the Function on the screen
 };
 
@@ -149,12 +150,13 @@ void CartesianCanvas::drawPoint(Type x, Type y) {
  * 		r, the red component
  * 		g, the red component
  * 		b, the red component
+ * 		a, the alpha component
  * 	Returns: a new point at the Cartesian-adjusted position with the specified color
  */
-void CartesianCanvas::drawPointColor(Type x, Type y, int r, int g, int b) {
+void CartesianCanvas::drawPointColor(Type x, Type y, int r, int g, int b, int a = 255) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
-	Point* p = new Point(actualX, actualY, r, g, b);	// Creates the Point with the specified coordinates and color
+	Point* p = new Point(actualX, actualY, r, g, b, a);	// Creates the Point with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);									// Push it onto our drawing queue
 	mlock.unlock();
@@ -189,13 +191,14 @@ void CartesianCanvas::drawLine(Type x1, Type y1, Type x2, Type y2) {
  * 		r, the red component
  * 		g, the red component
  * 		b, the red component
+ * 		a, the alpha component
  * 	Returns: a new line with Cartesian-adjusted coordinates and the specified color
  */
-void CartesianCanvas::drawLineColor(Type x1, Type y1, Type x2, Type y2, int r, int g, int b) {
+void CartesianCanvas::drawLineColor(Type x1, Type y1, Type x2, Type y2, int r, int g, int b, int a = 255) {
 	int actualX1, actualY1, actualX2, actualY2;
 	getScreenCoordinates(x1, y1,actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
-	Line* l = new Line(actualX1, actualY1, actualX2, actualY2, r, g, b);	// Creates the Line with the specified coordinates and color
+	Line* l = new Line(actualX1, actualY1, actualX2, actualY2, r, g, b, a);	// Creates the Line with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(l);														// Push it onto our drawing queue
 	mlock.unlock();
@@ -230,13 +233,14 @@ void CartesianCanvas::drawRectangle(Type x, Type y, Type w, Type h) {
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
+ * 		a, the alpha component
  * 	Returns: a new rectangle with the given Cartesian-adjusted coordinates, dimensions, and color
  */
-void CartesianCanvas::drawRectangleColor(Type x, Type y, Type w, Type h, int r, int g, int b) {
+void CartesianCanvas::drawRectangleColor(Type x, Type y, Type w, Type h, int r, int g, int b, int a = 255) {
 	int actualX, actualY, actualW, actualH;
 	getScreenCoordinates(x, y, actualX, actualY);
 	getScreenCoordinates(w, h, actualW, actualH);
-	Rectangle* rec = new Rectangle(x, y, w, h, r, g, b);	// Creates the Rectangle with the specified coordinates and color
+	Rectangle* rec = new Rectangle(x, y, w, h, r, g, b, a);	// Creates the Rectangle with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(rec);									// Push it onto our drawing queue
 	mlock.unlock();
@@ -277,18 +281,31 @@ void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
+ * 		a, the alpha component
  * 	Returns: a new triangle with the given Cartesian-adjusted vertices and color
  */
 void CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
-		int r, int g, int b) {
+		int r, int g, int b, int a = 255) {
 	int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
 	getScreenCoordinates(x1, y1, actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
 	getScreenCoordinates(x3, y3, actualX3, actualY3);
 	Triangle* t = new Triangle(actualX1, actualY1, actualX2, actualY2,
-			actualX3, actualY3, r, g, b);	// Creates the Triangle with the specified vertices and color
+			actualX3, actualY3, r, g, b, a);	// Creates the Triangle with the specified vertices and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(t);						// Push it onto our drawing queue
+	mlock.unlock();
+}
+
+void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]) {
+	int actualX, actualY;
+	ShinyPolygon* p = new ShinyPolygon(size);
+	for (int i = 0; i < size; i++) {
+		getScreenCoordinates(x[i], y[i], actualX, actualY);
+		p->addVertex(actualX,actualY,r[i],g[i],b[i],a[i]);
+	}
+	std::unique_lock<std::mutex> mlock(mutex);
+	myShapes->push(p);										// Push it onto our drawing queue
 	mlock.unlock();
 }
 
@@ -320,7 +337,7 @@ const Function* CartesianCanvas::drawFunction(const Function* f) {
 	}
 	fl_end_line();
 
-	fl_color(defaultRed, defaultGreen, defualtBlue);
+	fl_color(defaultRed, defaultGreen, defaultBlue);
 	mlock.unlock();
 	return f;
 }

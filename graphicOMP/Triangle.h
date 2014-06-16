@@ -16,7 +16,7 @@ private:
 	int myX1, myY1, myX2, myY2, myX3, myY3;						// Positioning data for our Triangle
 public:
 	Triangle(int x1, int y1, int x2, int y2, int x3, int y3);						// Default constructor
-	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b);	// Explicit constructor
+	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b, int a);	// Explicit constructor
     void draw();																	// Overridden draw method
     bool getIsPoint() { return false; }
 };
@@ -53,9 +53,10 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3) : Shape() {
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
+ * 		a, the alpha component
  * Returns: a new Triangle with the specified vertices and color
  */
-Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b) : Shape(r, g, b) {
+Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b, int a) : Shape(r, g, b, a) {
 	myX1 = x1;
 	myY1 = y1;
 	myX2 = x2;

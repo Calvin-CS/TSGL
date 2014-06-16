@@ -486,6 +486,55 @@ void integral1(CartesianCanvas* can) {
 	}
 }
 
+void gradientWheelFunction(CartesianCanvas* can) {
+	const int threads = 256, delta = 256/threads;
+	int lastFrame = 0;
+	while(can->isOpen()) {
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+			int f = lastFrame % 256;
+			int start[threads] = { 0 };
+			start[0] = f;
+			for (int i = 1; i < threads; i++) {
+				start[i] = (start[i-1] + delta) % 255;
+			}
+			RGBType color[3];
+			HSVType other;
+			const float RADIUS = 280;
+			float shading;
+			int tid;
+			#pragma omp parallel num_threads(threads) private(other,color,shading,tid)
+			{
+				int xx[3],yy[3],red[3],green[3],blue[3],alpha[3];
+				xx[0] = 400; yy[0] = 300;
+				tid = omp_get_thread_num();
+				shading = 1.0f*tid/threads;
+				other = {start[tid]/255.0f*6.0f,1.0f,1.0f};
+				color[1] = Canvas::HSVtoRGB(other);
+				other = {(start[tid]+1)/255.0f*6.0f,1.0f,1.0f};
+				color[2] = Canvas::HSVtoRGB(other);
+				float f = (start[tid]+1)/255.0f*6.0f;
+				if (f > 3.0f)
+					other = {f,0.0f,1.0f};
+				else
+					other = {f,0.0f,1.0f};
+				color[0] = Canvas::HSVtoRGB(other);
+				for (int i = 0; i < 3; i++) {
+					red[i] = color[i].R*255*shading;
+					green[i] = color[i].G*255*shading;
+					blue[i] = color[i].B*255*shading;
+					alpha[i] = 255;
+				}
+				xx[1]= 400+RADIUS*sin(2*PI*start[tid]/255.0);
+				yy[1] = 300+RADIUS*cos(2*PI*start[tid]/255.0);
+				xx[2] = 400+RADIUS*sin(2*PI*(start[tid]+1)/255.0);
+				yy[2] = 300+RADIUS*cos(2*PI*(start[tid]+1)/255.0);
+				can->drawShinyPolygon(3, xx,yy,red,green,blue,alpha);
+			}
+		}
+	}
+}
+
 int main() {
 //	Canvas* can1 = new Canvas(480800);
 //	can1->start();
@@ -533,13 +582,13 @@ int main() {
 //	shadingPoints(can6);
 //	can6->end();
 
-	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-	can7->start();
-	can7->showFPS(true);
-	mandelbrotFunction(can7);
-	can7->showFPS(false);
-	print(can7->getTime());
-	can7->end();
+//	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//	can7->start();
+//	can7->showFPS(true);
+//	mandelbrotFunction(can7);
+//	can7->showFPS(false);
+//	print(can7->getTime());
+//	can7->end();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, 100000);
 //	can8->start();
@@ -597,5 +646,11 @@ int main() {
 //	can15->showFPS(false);
 //	print(can15->getTime());
 //	can15->end();
+
+	CartesianCanvas* can16 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
+	can16->start();
+	can16->showFPS(true);
+	gradientWheelFunction(can16);
+	can16->end();
 
 }

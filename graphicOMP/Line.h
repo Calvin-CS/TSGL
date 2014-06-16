@@ -16,7 +16,7 @@ private:
 	int myX1, myY1, myX2, myY2;									// Positioning data for our Line
 public:
     Line(int x1, int y1, int x2, int y2);						// Default constructor
-    Line(int x1, int y1, int x2, int y2, int r, int g, int b);	// Explicit constructor
+    Line(int x1, int y1, int x2, int y2, int r, int g, int b, int a);	// Explicit constructor
     void draw();												// Overridden draw method
     bool getIsPoint() { return false; }
 };
@@ -47,9 +47,10 @@ Line::Line(int x1, int y1, int x2, int y2) : Shape() {
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
+ * 		a, the alpha component
  * Returns: a new Line at the specified positions with the specified color
  */
-Line::Line(int x1, int y1, int x2, int y2, int r, int g, int b) : Shape(r, g, b) {
+Line::Line(int x1, int y1, int x2, int y2, int r, int g, int b, int a) : Shape(r, g, b, a) {
 	myX1 = x1;
 	myY1 = y1;
 	myX2 = x2;

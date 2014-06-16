@@ -16,7 +16,7 @@ private:
 	int myX, myY, myW, myH;										// Positioning data for our Rectangle
 public:
 	Rectangle(int x, int y, int w, int h);						// Default constructor
-	Rectangle(int x, int y, int w, int h, int r, int g, int b);	// Explicit constructor
+	Rectangle(int x, int y, int w, int h, int r, int g, int b, int a);	// Explicit constructor
     void draw();												// Overridden draw method
     bool getIsPoint() { return false; }
 };
@@ -47,9 +47,10 @@ Rectangle::Rectangle(int x, int y, int w, int h) : Shape() {
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
+ * 		a, the alpha component
  * Returns: a new Rectangle with the specified topleft corner, dimensions, and color
  */
-Rectangle::Rectangle(int x, int y, int w, int h, int r, int g, int b) : Shape(r, g, b) {
+Rectangle::Rectangle(int x, int y, int w, int h, int r, int g, int b, int a) : Shape(r, g, b, a) {
 	myX = x;
 	myY = y;
 	myW = w;

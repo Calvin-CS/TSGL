@@ -13,11 +13,11 @@
 
 class Point : public Shape {
 private:
-	int myX, myY;								// Positioning data for our Point
+	int myX, myY;									// Positioning data for our Point
 public:
-    Point(int x, int y);						// Default constructor
-    Point(int x, int y, int r, int g, int b);	// Explicit constructor
-    void draw();								// Overridden draw method
+    Point(int x, int y);							// Default constructor
+    Point(int x, int y, int r, int g, int b, int a);// Explicit constructor
+    void draw();									// Overridden draw method
     bool getIsPoint() { return true; }
 };
 
@@ -41,9 +41,10 @@ Point::Point(int x, int y) : Shape() {
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
+ * 		a, the alpha component
  * Returns: a new Point at the specified position with the specified color
  */
-Point::Point(int x, int y, int r, int g, int b) : Shape(r, g, b) {
+Point::Point(int x, int y, int r, int g, int b, int a) : Shape(r, g, b, a) {
 	myX = x;
 	myY = y;
 }
