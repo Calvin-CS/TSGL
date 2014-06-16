@@ -26,9 +26,6 @@ enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
 static bool filled[800][600] = {};
 static int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 
-static void print(const char* cs) {
-	std::cout << cs << std::endl << std::flush;
-}
 static void print(const double d) {
 	std::cout << d << std::endl << std::flush;
 }
@@ -48,7 +45,6 @@ void points1(Canvas* can) {
 	}
 }
 void points2(Canvas* can) {
-	print("Computation started");
 	int tid, nthreads, i, j;
 	//can->setColor(80,10,160);
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,j)
@@ -66,10 +62,8 @@ void points2(Canvas* can) {
 			}
 		}
 	}
-	print("Computation finished");
 }
 void points3(Canvas* can) {
-	print("Computation started");
 	int tid, nthreads, i, color;
 	#pragma omp parallel num_threads(omp_get_num_procs()) private(tid,nthreads,i,color)
 	{
@@ -82,11 +76,9 @@ void points3(Canvas* can) {
 			}
 		}
 	}
-	print("Computation finished");
 }
 
 void lines1(Canvas* can) {
-	print("Computation started");
 	int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 	int lastFrame = 0;
 	while(can->isOpen()) {
@@ -103,10 +95,8 @@ void lines1(Canvas* can) {
 			can->drawLineColor(a,b,c,d,e,f,g);
 		}
 	}
-	print("Computation finished");
 }
 void lines2(Canvas* can) {
-	print("Computation started");
 	int tid;
 	int a,b,c = WINDOW_CW,d = WINDOW_CH,e,f,g;
 	reverse = !reverse;
@@ -135,7 +125,6 @@ void lines2(Canvas* can) {
 			}
 		}
 	}
-	print("Computation finished");
 }
 void shadingPoints(Canvas* can) {
 	int tid, nthreads, i, j;
@@ -367,54 +356,57 @@ void dumbSortFunction(CartesianCanvas* can) {
 	}
 	int lastFrame = 0;
 	while(can->isOpen()) {
-		if (min != max) {
-			if (goingUp) {
-				if (numbers[pos] > numbers[pos+1]) {
-					temp = numbers[pos];
-					numbers[pos] = numbers[pos+1];
-					numbers[pos+1] = temp;
-					lastSwap = pos;
+		if (lastFrame != can->getFrameNumber()) {
+			for (unsigned int i = 0; i < 10; i++) {
+				if (min != max) {
+					if (goingUp) {
+						if (numbers[pos] > numbers[pos+1]) {
+							temp = numbers[pos];
+							numbers[pos] = numbers[pos+1];
+							numbers[pos+1] = temp;
+							lastSwap = pos;
+						}
+						if (pos >= max) {
+							pos = max;
+							if (lastSwap < max)
+								max = lastSwap;
+							else
+								max--;
+							goingUp = !goingUp;
+						} else
+							pos++;
+					}
+					else {
+						if (numbers[pos] < numbers[pos-1]) {
+							temp = numbers[pos];
+							numbers[pos] = numbers[pos-1];
+							numbers[pos-1] = temp;
+							lastSwap = pos;
+						}
+						if (pos <= min) {
+							pos = min;
+							if (lastSwap > min)
+								min = lastSwap;
+							else
+								min++;
+							goingUp = !goingUp;
+						} else
+							pos--;
+					}
 				}
-				if (pos >= max) {
-					pos = max;
-					if (lastSwap < max)
-						max = lastSwap;
+				lastFrame = can->getFrameNumber();
+				can->drawRectangleColor(0,0,800,600,128,128,128);
+				int start = 50, width = 1, height;
+				for (int i = 0; i < SIZE; i++) {
+					height = (numbers[i]);
+					if (i == pos)
+						can->drawRectangleColor(start,580-height,width,height,255,255,0);
 					else
-						max--;
-					goingUp = !goingUp;
-				} else
-					pos++;
-			}
-			else {
-				if (numbers[pos] < numbers[pos-1]) {
-					temp = numbers[pos];
-					numbers[pos] = numbers[pos-1];
-					numbers[pos-1] = temp;
-					lastSwap = pos;
+						can->drawRectangleColor(start,580-height,width,height,255,0,0);
+					start += width+1;
 				}
-				if (pos <= min) {
-					pos = min;
-					if (lastSwap > min)
-						min = lastSwap;
-					else
-						min++;
-					goingUp = !goingUp;
-				} else
-					pos--;
 			}
-		}
-		if (can->getFrameNumber() > lastFrame) {
 			lastFrame = can->getFrameNumber();
-			can->drawRectangleColor(0,0,800,600,128,128,128);
-			int start = 50, width = 1, height;
-			for (int i = 0; i < SIZE; i++) {
-				height = (numbers[i]);
-				if (i == pos)
-					can->drawRectangleColor(start,580-height,width,height,255,255,0);
-				else
-					can->drawRectangleColor(start,580-height,width,height,255,0,0);
-				start += width+1;
-			}
 		}
 	}
 }
@@ -439,7 +431,7 @@ void colorWheelFunction(CartesianCanvas* can) {
 			#pragma omp parallel num_threads(threads) private(other,color,x2,x3,y2,y3,shading,tid)
 			{
 				tid = omp_get_thread_num();
-				shading = 255-tid*256/threads;
+				shading = tid*256/threads;
 				other = {start[tid]/255.0f*6.0f,1.0f,1.0f};
 				color = Canvas::HSVtoRGB(other);
 				x2 = RADIUS*sin(2*PI*start[tid]/255.0);
@@ -498,44 +490,52 @@ void integral1(CartesianCanvas* can) {
 int main() {
 //	Canvas* can1 = new Canvas(480800);
 //	can1->start();
-//	can1->setAutoRefresh(false);
+//	can1->showFPS(true);
 //	points1(can1);
+//	can1->showFPS(false);
+//	print(can1->getTime());
 //	can1->end();
 
 //	Canvas* can2 = new Canvas(480000);
 //	can2->start();
-//	can2->setAutoRefresh(false);
+//	can2->showFPS(true);
 //	points2(can2);
+//	can2->showFPS(false);
+//	print(can2->getTime());
 //	can2->end();
 
 //	Canvas* can3 = new Canvas(480000);
 //	can3->start();
-//	can3->setAutoRefresh(false);
+//	can3->showFPS(true);
 //	points3(can3);
+//	can3->showFPS(false);
+//	print(can3->getTime());
 //	can3->end();
 
 //	Canvas* can4 = new Canvas(100000);
-//	can4->setAutoRefresh(false);
 //	can4->start();
+//	can4->showFPS(true);
 //	lines1(can4);
+//	can4->showFPS(false);
+//	print(can4->getTime());
 //	can4->end();
 
-//	Canvas* can5 = new Canvas(1000);
-//	can5->setAutoRefresh(false);  //THIS CRASHES: WAIT UNTIL ARRAY IS FIXED
+//	Canvas* can5 = new Canvas(500);
 //	can5->start();
+//	can5->showFPS(true);
 //	lines2(can5);
+//	can5->showFPS(false);
+//	print(can5->getTime());
 //	can5->end();
 
 //	Canvas* can6 = new Canvas(250000);
-//	can6->showFPS(true);
-//	can6->setAutoRefresh(false);
 //	can6->start();
+//	can6->showFPS(true);
 //	shadingPoints(can6);
 //	can6->end();
 
 //	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
 //	can7->start();
-//	can7->setAutoRefresh(false);
 //	can7->showFPS(true);
 //	mandelbrotFunction(can7);
 //	can7->showFPS(false);
@@ -543,43 +543,47 @@ int main() {
 //	can7->end();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, 100000);
-//	can8->setAutoRefresh(false);
 //	can8->start();
+//	can8->showFPS(true);
 //	langtonFunction(can8);
 //	can8->end();
 
 //	langtonFourWayInit();
 //	CartesianCanvas* can9 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
 //	can9->start();
+//	can9->showFPS(true);
 //	langtonFunction2(can9);
 //	can9->end();
 
 //	langtonFourWayInit();
 //	CartesianCanvas* can10 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
 //	can10->start();
+//	can10->showFPS(true);
 //	langtonFunction3(can10);
 //	can10->end();
 
 //	langtonFourWayInit();
 //	CartesianCanvas* can11 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
 //	can11->start();
+//	can11->showFPS(true);
 //	langtonFunctionShiny(can11);
 //	can11->end();
 
 //	CartesianCanvas* can12 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, -1);
 //	can12->start();
-//	can12->setAutoRefresh(false);
+//	can12->showFPS(true);
 //	dumbSortFunction(can12);
+//	can12->showFPS(false);
+//	print(can12->getTime());
 //	can12->end();
 
-//	CartesianCanvas* can13 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
-//	can13->setAutoRefresh(false);
-//	can13->start();
-//	colorWheelFunction(can13);
-//	can13->end();
+	CartesianCanvas* can13 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
+	can13->start();
+	can13->showFPS(true);
+	colorWheelFunction(can13);
+	can13->end();
 
 //	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 0);
-//	can14->setAutoRefresh(false);
 //	can14->start();
 //	can14->showFPS(true);
 //	functionFunction(can14);
@@ -587,8 +591,12 @@ int main() {
 //	print(can14->getTime());
 //	can14->end();
 
-//	CartesianCanvas* can15 = new CartesianCanvas(integral1,
-//										0, 0, 800, 600, -5,-1.5,5,1.5, 64);
-//	can15->showFPS(true);
+//	CartesianCanvas* can15 = new CartesianCanvas(0, 0, 800, 600, -5,-1.5,5,1.5, 64);
 //	can15->start();
+//	can15->showFPS(true);
+//	integral1(can15);
+//	can15->showFPS(false);
+//	print(can15->getTime());
+//	can15->end();
+
 }
