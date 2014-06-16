@@ -8,16 +8,17 @@
 #ifndef POINT_H_
 #define POINT_H_
 
-#include <FL/fl_draw.H>		//For the actual fl_point drawing function
-#include "Shape.h"			//For extending our Shape object
+#include <FL/fl_draw.H>		// For the actual fl_point drawing function
+#include "Shape.h"			// For extending our Shape object
 
 class Point : public Shape {
 private:
-	int myX, myY;								//Positioning data for our Point
+	int myX, myY;								// Positioning data for our Point
 public:
-    Point(int x, int y);						//Default constructor
-    Point(int x, int y, int r, int g, int b);	//Explicit constructor
-    void draw();								//Overridden draw method
+    Point(int x, int y);						// Default constructor
+    Point(int x, int y, int r, int g, int b);	// Explicit constructor
+    void draw();								// Overridden draw method
+    bool getIsPoint() { return true; }
 };
 
 /*
@@ -30,7 +31,6 @@ public:
 Point::Point(int x, int y) : Shape() {
 	myX = x;
 	myY = y;
-	isPoint = true;
 }
 
 /*
@@ -46,14 +46,11 @@ Point::Point(int x, int y) : Shape() {
 Point::Point(int x, int y, int r, int g, int b) : Shape(r, g, b) {
 	myX = x;
 	myY = y;
-	isPoint = true;
 }
 
 // draw actually draws the Point to the canvas
 void Point::draw() {
-//	glColor4f(myFR,myFG,myFB,1.0f);
 	glVertex2f(myX, myY);
-//	fl_point(myX,myY);	//Call to the FLTK fl_point drawing method
 }
 
 #endif /* POINT_H_ */

@@ -8,16 +8,17 @@
 #ifndef LINE_H_
 #define LINE_H_
 
-#include <FL/fl_draw.H>		//For the actual fl_line drawing function
-#include "Shape.h"			//For extending our Shape object
+#include <FL/fl_draw.H>		// For the actual fl_line drawing function
+#include "Shape.h"			// For extending our Shape object
 
 class Line : public Shape {
 private:
-	int myX1, myY1, myX2, myY2;									//Positioning data for our Line
+	int myX1, myY1, myX2, myY2;									// Positioning data for our Line
 public:
-    Line(int x1, int y1, int x2, int y2);						//Default constructor
-    Line(int x1, int y1, int x2, int y2, int r, int g, int b);	//Explicit constructor
-    void draw();												//Overridden draw method
+    Line(int x1, int y1, int x2, int y2);						// Default constructor
+    Line(int x1, int y1, int x2, int y2, int r, int g, int b);	// Explicit constructor
+    void draw();												// Overridden draw method
+    bool getIsPoint() { return false; }
 };
 
 /*
@@ -61,7 +62,6 @@ void Line::draw() {
 	glVertex2f(myX1,myY1);
 	glVertex2f(myX2,myY2);
 	glEnd();
-//	fl_line(myX1,myY1,myX2,myY2);	//Call to the FLTK fl_line drawing method
 }
 
 #endif /* LINE_H_ */

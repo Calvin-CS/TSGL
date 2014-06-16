@@ -8,16 +8,17 @@
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
 
-#include <FL/fl_draw.H>		//For the actual fl_polygon drawing function
-#include "Shape.h"			//For extending our Shape object
+#include <FL/fl_draw.H>		// For the actual fl_polygon drawing function
+#include "Shape.h"			// For extending our Shape object
 
 class Triangle : public Shape {
 private:
-	int myX1, myY1, myX2, myY2, myX3, myY3;						//Positioning data for our Triangle
+	int myX1, myY1, myX2, myY2, myX3, myY3;						// Positioning data for our Triangle
 public:
-	Triangle(int x1, int y1, int x2, int y2, int x3, int y3);						//Default constructor
-	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b);	//Explicit constructor
-    void draw();												//Overridden draw method
+	Triangle(int x1, int y1, int x2, int y2, int x3, int y3);						// Default constructor
+	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b);	// Explicit constructor
+    void draw();																	// Overridden draw method
+    bool getIsPoint() { return false; }
 };
 
 /*
@@ -38,7 +39,6 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3) : Shape() {
 	myY2 = y2;
 	myX3 = x3;
 	myY3 = y3;
-	isPoint = false;
 }
 
 /*
@@ -62,7 +62,6 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g,
 	myY2 = y2;
 	myX3 = x3;
 	myY3 = y3;
-	isPoint = false;
 }
 
 // draw() actually draws the Line to the canvas

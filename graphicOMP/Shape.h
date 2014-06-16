@@ -10,24 +10,23 @@
 
 class Shape {
 protected:
-	int myR, myG, myB; 					//Color data for the shape
+	int myR, myG, myB; 					// Color data for the shape
 	float myFR, myFG, myFB;
-	bool useDefaultColor;				//Whether or not the shape uses the global drawing color
-	bool isPoint;						//Whether we're a single point (for drawing speed optimization)
+	bool useDefaultColor;				// Whether or not the shape uses the global drawing color
 public:
-	Shape();							//Default constructor for the Shape
-	Shape(int r, int g, int b);			//Explicit constructor for the Shape
-	virtual ~Shape() {}					//Default destructor for the Shape
-	void setColor(int r, int g, int b);	//Mutator for the Shape's color
-	int getColorR();					//Accessor for the red component of the Shape's color
-	int getColorG();					//Accessor for the green component of the Shape's color
-	int getColorB();					//Accessor for the blue component of the Shape's color
-	float getColorFR();					//Accessor for the red component of the Shape's float color
-	float getColorFG();					//Accessor for the green component of the Shape's float color
-	float getColorFB();					//Accessor for the blue compmyGonent of the Shape's float color
-	bool getIsPoint() { return isPoint; }
-	bool getUsesDefaultColor();			//Accessor for useDefaultColor
-	virtual void draw() = 0;			//Abstract method for actually drawing the shape
+	Shape();							// Default constructor for the Shape
+	Shape(int r, int g, int b);			// Explicit constructor for the Shape
+	virtual ~Shape() {}					// Default destructor for the Shape
+	void setColor(int r, int g, int b);	// Mutator for the Shape's color
+	int getColorR();					// Accessor for the red component of the Shape's color
+	int getColorG();					// Accessor for the green component of the Shape's color
+	int getColorB();					// Accessor for the blue component of the Shape's color
+	float getColorFR();					// Accessor for the red component of the Shape's float color
+	float getColorFG();					// Accessor for the green component of the Shape's float color
+	float getColorFB();					// Accessor for the blue compmyGonent of the Shape's float color
+	virtual bool getIsPoint() = 0;		// Abstract method for the shape to return its pointness
+	bool getUsesDefaultColor();			// Accessor for useDefaultColor
+	virtual void draw() = 0;			// Abstract method for actually drawing the shape
 };
 
 

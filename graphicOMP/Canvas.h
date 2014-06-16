@@ -44,7 +44,6 @@ protected:
 	int drawBufferSize;												// Maximum allowed Shapes in our drawing List
 	OmpWindow* window;												// The FLTK window to which we draw
 	bool started;													// Whether our canvas is running and the frame counter is counting
-	bool autoRefresh;												// Whether or not we automatically refresh the Canvas each frame
 	std::thread renderThread;										// Thread dedicated to rendering the Canvas
 	std::mutex mutex;												// Mutex for locking the Canvas so that only one thread can read/write at a time
 	void init(int xx, int yy, int ww, int hh, unsigned int b);		// Method for initializing the canvas
@@ -59,7 +58,6 @@ public:
 	int start();													// Function to start rendering our Canvas
 	int end();														// Function to end rendering our Canvas
 	void setColor(int r, int g, int b);								// Sets the global drawing color
-	void setAutoRefresh(bool b);									// Sets whether we automatically refresh the Canvas
 	virtual void drawPoint(int x, int y);							// Draws a point at the given coordinates
 	virtual void drawPointColor(int x, int y, int r, int g, int b);// Draws a point at the given coordinates with the given color
 	virtual void drawLine(int x1, int y1, int x2, int y2);			// Draws a line at the given coordinates
@@ -109,7 +107,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	glDisable(GL_POINT_SMOOTH);
 	started = false;  										// We haven't started the window yet
 	counter = 0;											// We haven't drawn any frames yet
-	autoRefresh = true;										// Default to clearing the queue every frame
 	startTime = highResClock::now();						// Record the init time
 	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;  // Initialize translation
 	myShapes = new Array<Shape*>(b);						// Initialize myShapes
@@ -117,6 +114,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	setColor(0,0,0);										// Our default global drawing color is black
 	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	// Adds a callback after 1/60 second to the Canvas' callback function
 	showFPS_ = false;										// Set debugging FPS to false
+
+
 }
 
 /*
@@ -126,17 +125,15 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 void Canvas::draw() {
 	gl_start();
 
-	glMatrixMode (GL_PROJECTION);
-	glLoadIdentity ();
-	glOrtho (0, window->w()-(1.0f/window->w()), window->h(), 0, 0, 1);
-	glMatrixMode (GL_MODELVIEW);
-	glLoadIdentity ();
-	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, window->w() - (1.0f/window->w()), window->h(), 0, 0, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 
 	// Calculate CycleTime since draw() was last called
 	highResClock::time_point end = highResClock::now();
-	realFPS = 1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - cycleTime).count() * 1000000000.0;
-	realFPS = realFPS-(int)realFPS > .5 ? (int)realFPS + 1 : (int)realFPS;
+	realFPS = round(1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - cycleTime).count() * 1000000000.0);
 	cycleTime = end;
 
 	if (showFPS_) std::cout << realFPS << '/' << FPS << std::endl;
@@ -146,40 +143,37 @@ void Canvas::draw() {
 
 	std::unique_lock<std::mutex> mlock(mutex);
 
-	bool pointList = false;
-	// Iterate through our queue until we've made it to the end
-	for (unsigned int i = 0; i < myShapes->size(); i++) {
-		s = myShapes->operator[](i);
-		if (!pointList && s->getIsPoint()) {
-			pointList = true;
-			glBegin(GL_POINTS);
-		}
-		else if (pointList && !s->getIsPoint()) {
-			pointList = false;
-			glEnd();
-		}
-		if (s->getUsesDefaultColor()) {
-			glColor4f(defaultFRed, defaultFGreen, defualtFBlue,1.0f);
-			s->draw();		// If our shape uses the default color, just draw it
-		}
-		else {				// Otherwise, the color must be set before and after drawing
-			//fl_color(s->getColorR(), s->getColorG(), s->getColorB());
-			glColor4f(s->getColorFR(),s->getColorFG(),s->getColorFB(),1.0f);
-			s->draw();
-		}
-	}
-	if (pointList)
+	if (myShapes->size() == 0) {						// If there is nothing to render...
+		glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
+		glVertex2f(-1, -1);								// 	to render stuff
 		glEnd();
-	if (autoRefresh)
-		myShapes->clear();
-	mlock.unlock();
+	} else {
+		bool pointList = false;
+		// Iterate through our queue until we've made it to the end
+		for (unsigned int i = 0; i < myShapes->size(); i++) {
+			s = myShapes->operator[](i);
+			if (!pointList && s->getIsPoint()) {			// Check if we are going to render a point
+				pointList = true;
+				glBegin(GL_POINTS);							// Start drawing in point mode
+			}
+			else if (pointList && !s->getIsPoint()) {		// If we have been drawing points and now won't be...
+				pointList = false;
+				glEnd();									// Stop drawing in point mode
+			}
 
-//	glBegin(GL_POINTS);
-//	glColor4f(1.0f,0.5f,0.5f,1.0f);
-//	for (int i = 0; i < window->w(); i++)
-//		for (int j = 0; j < window->h(); j++)
-//			glVertex2f(i, j);
-//	glEnd();
+			if (s->getUsesDefaultColor()) {
+				glColor4f(defaultFRed, defaultFGreen, defualtFBlue,1.0f);
+				s->draw();									// If our shape uses the default color, just draw it
+			} else {										// Otherwise, the color must be got from the shape
+				glColor4f(s->getColorFR(),s->getColorFG(),s->getColorFB(),1.0f);
+				s->draw();
+			}
+		}
+		if (pointList)										// If we didn't finish drawing points...
+			glEnd();										// Stop drawing in point mode
+		myShapes->clear();									// Clear the buffer of shapes to be drawn
+	}
+	mlock.unlock();
 
 	gl_finish();
 }
@@ -229,7 +223,7 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_B
 int Canvas::start() {
 	if (started) return -1;										// If we're already started, return error code -1
 	started = true;												// We've now started
-    window = new OmpWindow(monitorWidth,monitorHeight);	// Instantiate our drawing window
+    window = new OmpWindow(monitorWidth,monitorHeight);			// Instantiate our drawing window
     window->add(this);											// Add ourself (Canvas) to the drawing window
 	window->callback(close_cb,window);							// Add the function to call when the window is closed
     window->show();												// Show the window
@@ -263,17 +257,7 @@ void Canvas::setColor(int r, int g, int b) {
 	defaultFRed = r / 255.0f;
 	defaultFGreen = g / 255.0f;
 	defualtFBlue = b / 255.0f;
-//	fl_color(r,g,b);	// Updates the underlying FLTK color (critical to avoid syncing problems)
 	mlock.unlock();
-}
-
-/*
- * setAutoRefresh sets the automatic flushing of the queue on or off
- * Parameter:
- * 		b, whether or not to automatically refresh (flush the queue)
- */
-void Canvas::setAutoRefresh(bool b) {
-	autoRefresh = b;
 }
 
 /*
@@ -284,9 +268,9 @@ void Canvas::setAutoRefresh(bool b) {
  * 	Returns: a new point at the given position
  */
 void Canvas::drawPoint(int x, int y) {
-	Point* p = new Point(x,y);				// Creates the Point with the specified coordinates
+	Point* p = new Point(x,y);						// Creates the Point with the specified coordinates
 	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);						// Push it onto our drawing queue
+	myShapes->push(p);								// Push it onto our drawing queue
 	mlock.unlock();
 }
 
@@ -301,9 +285,9 @@ void Canvas::drawPoint(int x, int y) {
  * 	Returns: a new point at the given position with the specified color
  */
 void Canvas::drawPointColor(int x, int y, int r, int g, int b) {
-	Point* p = new Point(x,y,r,g,b);		// Creates the Point with the specified coordinates and color
+	Point* p = new Point(x,y,r,g,b);				// Creates the Point with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);						// Push it onto our drawing queue
+	myShapes->push(p);								// Push it onto our drawing queue
 	mlock.unlock();
 }
 
@@ -317,9 +301,9 @@ void Canvas::drawPointColor(int x, int y, int r, int g, int b) {
  * 	Returns: a new line with the given coordinates
  */
 void Canvas::drawLine(int x1, int y1, int x2, int y2) {
-	Line* l = new Line(x1,y1,x2,y2);		// Creates the Line with the specified coordinates
+	Line* l = new Line(x1,y1,x2,y2);				// Creates the Line with the specified coordinates
 	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(l);						// Push it onto our drawing queue
+	myShapes->push(l);								// Push it onto our drawing queue
 	mlock.unlock();
 }
 
@@ -336,9 +320,9 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2) {
  * 	Returns: a new line with the given coordinates and the specified color
  */
 void Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) {
-	Line* l = new Line(x1,y1,x2,y2,r,g,b);	// Creates the Line with the specified coordinates and color
+	Line* l = new Line(x1,y1,x2,y2,r,g,b);			// Creates the Line with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(l);						// Push it onto our drawing queue
+	myShapes->push(l);								// Push it onto our drawing queue
 	mlock.unlock();
 }
 
@@ -352,9 +336,9 @@ void Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b) 
  * 	Returns: a new rectangle with the given coordinates and dimensions
  */
 void Canvas::drawRectangle(int x, int y, int w, int h) {
-	Rectangle* rec = new Rectangle(x,y,w,h);	// Creates the Rectangle with the specified coordinates
+	Rectangle* rec = new Rectangle(x,y,w,h);		// Creates the Rectangle with the specified coordinates
 	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(rec);						// Push it onto our drawing queue
+	myShapes->push(rec);							// Push it onto our drawing queue
 	mlock.unlock();
 }
 
@@ -391,7 +375,7 @@ void Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, int b)
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3);	// Creates the Triangle with the specified vertices
 	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(t);						// Push it onto our drawing queue
+	myShapes->push(t);								// Push it onto our drawing queue
 	mlock.unlock();
 }
 

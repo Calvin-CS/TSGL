@@ -91,7 +91,6 @@ void lines1(Canvas* can) {
 			e = rand() % 256;
 			f = rand() % 256;
 			g = rand() % 256;
-			can->setAutoRefresh(false);
 			can->drawLineColor(a,b,c,d,e,f,g);
 		}
 	}
@@ -534,13 +533,13 @@ int main() {
 //	shadingPoints(can6);
 //	can6->end();
 
-//	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-//	can7->start();
-//	can7->showFPS(true);
-//	mandelbrotFunction(can7);
-//	can7->showFPS(false);
-//	print(can7->getTime());
-//	can7->end();
+	CartesianCanvas* can7 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+	can7->start();
+	can7->showFPS(true);
+	mandelbrotFunction(can7);
+	can7->showFPS(false);
+	print(can7->getTime());
+	can7->end();
 
 //	CartesianCanvas* can8 = new CartesianCanvas(0, 0, WINDOW_W, WINDOW_H, 0,0,800,600, 100000);
 //	can8->start();
@@ -577,11 +576,11 @@ int main() {
 //	print(can12->getTime());
 //	can12->end();
 
-	CartesianCanvas* can13 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
-	can13->start();
-	can13->showFPS(true);
-	colorWheelFunction(can13);
-	can13->end();
+//	CartesianCanvas* can13 = new CartesianCanvas(0, 0, 800, 600, 0,0,800,600, 512);
+//	can13->start();
+//	can13->showFPS(true);
+//	colorWheelFunction(can13);
+//	can13->end();
 
 //	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 0);
 //	can14->start();

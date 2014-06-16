@@ -8,16 +8,17 @@
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 
-#include <FL/fl_draw.H>		//For the actual fl_line drawing function
-#include "Shape.h"			//For extending our Shape object
+#include <FL/fl_draw.H>		// For the actual fl_line drawing function
+#include "Shape.h"			// For extending our Shape object
 
 class Rectangle : public Shape {
 private:
-	int myX, myY, myW, myH;									//Positioning data for our Rectangle
+	int myX, myY, myW, myH;										// Positioning data for our Rectangle
 public:
-	Rectangle(int x, int y, int w, int h);						//Default constructor
-	Rectangle(int x, int y, int w, int h, int r, int g, int b);	//Explicit constructor
-    void draw();													//Overridden draw method
+	Rectangle(int x, int y, int w, int h);						// Default constructor
+	Rectangle(int x, int y, int w, int h, int r, int g, int b);	// Explicit constructor
+    void draw();												// Overridden draw method
+    bool getIsPoint() { return false; }
 };
 
 /*
@@ -34,7 +35,6 @@ Rectangle::Rectangle(int x, int y, int w, int h) : Shape() {
 	myY = y;
 	myW = w;
 	myH = h;
-	isPoint = false;
 }
 
 /*
@@ -54,7 +54,6 @@ Rectangle::Rectangle(int x, int y, int w, int h, int r, int g, int b) : Shape(r,
 	myY = y;
 	myW = w;
 	myH = h;
-	isPoint = false;
 }
 
 // draw() actually draws the Rectangle to the canvas
@@ -65,7 +64,6 @@ void Rectangle::draw() {
 	glVertex2f(myX+myW, myY);
 	glVertex2f(myX+myW, myY+myH);
 	glEnd();
-//	fl_rectf(myX,myY,myW,myH);	//Call to the FLTK fl_rectf drawing method
 }
 
 #endif /* RECTANGLE_H_ */
