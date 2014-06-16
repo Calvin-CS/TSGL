@@ -9,6 +9,7 @@
 #define POLYLINE_H_
 
 #include "Shape.h"			// For extending our Shape object
+#include <stdexcept>		// Needed for exceptions
 
 class Polyline : public Shape {
 private:
@@ -33,7 +34,11 @@ public:
  * Returns: a new Polyline with the specified numbered vertices
  */
 Polyline::Polyline(int vertices = 2) : Shape() {
-	size = (vertices > 2) ? vertices : 2;
+	if (vertices < 2) {
+		std::cerr << "Cannot have a line with less than 2 vertices." << std::endl;
+		throw std::out_of_range("Cannot have a line with less than 2 vertices.");
+	}
+	size = vertices;
 	current = 0;
 	myVertex = new VertexData[size];
 	init = false;
@@ -47,8 +52,10 @@ Polyline::Polyline(int vertices = 2) : Shape() {
  * 		y, the y position of the vertex
  */
 void Polyline::addVertex(int x, int y) {
-	if (init)
-		return;
+	if (init) {
+		std::cerr << "Polyline has all vertices already initialized." << std::endl;
+		throw std::out_of_range("Polyline has all vertices already initialized.");
+	}
 	myVertex[current].x = x;
 	myVertex[current].y = y;
 	current++;
@@ -60,13 +67,13 @@ void Polyline::addVertex(int x, int y) {
 void Polyline::draw() {
 	if (!init) {
 		std::cerr << "Polyline not initialized." << std::endl;
-		return;
+		throw std::out_of_range("Polyline not initialized.");
 	}
-	std::cout << "Polyline initialized." << std::endl;
 	glBegin(GL_LINE_STRIP);
 	glColor4f(1.0f,1.0f,1.0f,1.0f);
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++) {
 		glVertex2f(myVertex[i].x,myVertex[i].y);
+	}
 	glEnd();
 }
 
