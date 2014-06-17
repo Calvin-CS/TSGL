@@ -356,7 +356,7 @@ void dumbSortFunction(CartesianCanvas* can) {
 	int lastFrame = 0;
 	while(can->isOpen()) {
 		if (lastFrame != can->getFrameNumber()) {
-			for (unsigned int i = 0; i < 10; i++) {
+			for (unsigned int i = 0; i < 100; i++) {
 				if (min != max) {
 					if (goingUp) {
 						if (numbers[pos] > numbers[pos+1]) {
@@ -392,6 +392,8 @@ void dumbSortFunction(CartesianCanvas* can) {
 						} else
 							pos--;
 					}
+				} else {
+					return;					// We are done sorting
 				}
 				lastFrame = can->getFrameNumber();
 				can->drawRectangleColor(0,0,800,600,128,128,128);
@@ -448,18 +450,18 @@ void functionFunction(CartesianCanvas* can) {
 	Function* function1 = new CosineFunction;
 	can->drawFunction(function1);
 
-	//	Function* function2 = new PowerFunction(2);
-	//
-	//	class myFunction : public Function {
-	//	public:
-	//		virtual long double valueAt(long double x) const {
-	//			return 5*pow(x,4) + 2*pow(x,3) + x + 15;
-	//		}
-	//	};
-	//
-	//	Function* function3 = new myFunction;
-	//	can->drawFunction(function2);
-	//	can->drawFunction(function3);
+	Function* function2 = new PowerFunction(2);
+	can->drawFunction(function2);
+
+	class myFunction : public Function {
+	public:
+		virtual long double valueAt(long double x) const {
+			return 5*pow(x,4) + 2*pow(x,3) + x + 15;
+		}
+	};
+
+	Function* function3 = new myFunction;
+	can->drawFunction(function3);
 }
 
 void integral1(CartesianCanvas* can) {
@@ -472,7 +474,7 @@ void integral1(CartesianCanvas* can) {
 		float start = can->getMinX() + omp_get_thread_num() * offset;
 		float stop = start + offset;
 		for (float i = start; i < stop; i += can->getPixelWidth()) {
-			can->drawLineColor(i, 0, i, function1->valueAt(i), 255,255,255,255);
+			can->drawLineColor(i, 0, i, function1->valueAt(i), 0,0,0,255);
 		}
 	}
 }
@@ -669,15 +671,16 @@ int main() {
 //	colorWheelFunction(can13);
 //	can13->end();
 
-//	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 10);
-//	can14->start();
-//	can14->showFPS(true);
-//	functionFunction(can14);
-//	can14->showFPS(false);
-//	print(can14->getTime());
-//	can14->end();
+	CartesianCanvas* can14 = new CartesianCanvas(0, 0, 800, 600, -5,-5,5,50, 10);
+	can14->start();
+	can14->showFPS(true);
+	functionFunction(can14);
+	can14->showFPS(false);
+	print(can14->getTime());
+	can14->end();
 
 //	CartesianCanvas* can15 = new CartesianCanvas(0, 0, 800, 600, -5,-1.5,5,1.5, 16000);
+//	can15->setBackgroundColor(255, 255, 255);
 //	can15->start();
 //	can15->showFPS(true);
 //	integral1(can15);
@@ -698,12 +701,12 @@ int main() {
 //	alphaRectangleFunction(can17);
 //	can17->end();
 
-	langtonFourWayInit();
-	CartesianCanvas* can18 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
-	can18->setBackgroundColor(0, 0, 0);
-	can18->start();
-	can18->showFPS(true);
-	alphaLangtonFunction(can18);
-	can18->end();
+//	langtonFourWayInit();
+//	CartesianCanvas* can18 = new CartesianCanvas(0, 0, 600, 600, 0,0,600,600, -1);
+//	can18->setBackgroundColor(0, 0, 0);
+//	can18->start();
+//	can18->showFPS(true);
+//	alphaLangtonFunction(can18);
+//	can18->end();
 
 }
