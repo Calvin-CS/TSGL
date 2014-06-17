@@ -316,15 +316,12 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], int r[], int 
 const Function* CartesianCanvas::drawFunction(const Function* f) {
 	int screenX = 0, screenY = 0;
 	Polyline *p = new Polyline(1 + (maxX-minX) / pixelWidth);
-	bool drawNext = false;
-
 	for (Type x = minX; x <= maxX; x += pixelWidth) {
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
 		std::unique_lock<std::mutex> mlock(mutex);
 		p->addVertex(screenX, screenY);
 		mlock.unlock();
 	}
-
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);										// Push it onto our drawing queue
 	mlock.unlock();
