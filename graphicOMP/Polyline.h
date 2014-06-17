@@ -70,7 +70,6 @@ void Polyline::draw() {
 		throw std::out_of_range("Polyline not initialized.");
 	}
 	glBegin(GL_LINE_STRIP);
-	glColor4f(1.0f,1.0f,1.0f,1.0f);
 	for (int i = 0; i < size; i++) {
 		glVertex2f(myVertex[i].x,myVertex[i].y);
 	}

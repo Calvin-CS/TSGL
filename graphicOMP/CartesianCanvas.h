@@ -314,25 +314,14 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], int r[], int 
 }
 
 const Function* CartesianCanvas::drawFunction(const Function* f) {
-	int lastX = 0, lastY = 0, screenX = 0, screenY = 0;
-	int sizeOfArray = 1+(maxX-minX)/pixelWidth;
-	Polyline *p = new Polyline(sizeOfArray);
+	int screenX = 0, screenY = 0;
+	Polyline *p = new Polyline(1 + (maxX-minX) / pixelWidth);
 	bool drawNext = false;
+
 	for (Type x = minX; x <= maxX; x += pixelWidth) {
-		lastX = screenX, lastY = screenY;
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
 		std::unique_lock<std::mutex> mlock(mutex);
-		if (screenX < 0 || screenY < 0 || screenX > window->w() || screenY > window->h()) {
-			if (drawNext)
-				p->addVertex(screenX, screenY);
-			drawNext = false;
-		}
-		else {
-			if (!drawNext && lastX != screenX)
-				p->addVertex(lastX, lastY);
-			p->addVertex(screenX, screenY);
-			drawNext = true;
-		}
+		p->addVertex(screenX, screenY);
 		mlock.unlock();
 	}
 
