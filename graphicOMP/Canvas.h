@@ -61,7 +61,7 @@ public:
 	Canvas(int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
 	int start();													// Function to start rendering our Canvas
 	int end();														// Function to end rendering our Canvas
-	void setColor(int r, int g, int b);								// Sets the global drawing color
+	void setColor(int r, int g, int b, int a);						// Sets the global drawing color
 	virtual void drawPoint(int x, int y);							// Draws a point at the given coordinates
 	virtual void drawPointColor(int x, int y, int r, int g, int b, int a);	// Draws a point at the given coordinates with the given color
 	virtual void drawLine(int x1, int y1, int x2, int y2);					// Draws a line at the given coordinates
@@ -121,7 +121,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;  // Initialize translation
 	myShapes = new Array<Shape*>(b);						// Initialize myShapes
 	box(FL_FLAT_BOX);  										// Sets the box we will draw to (the only one)
-	setColor(0,0,0);										// Our default global drawing color is black
+	setColor(0, 0, 0, 255);										// Our default global drawing color is black
 	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	// Adds a callback after 1/60 second to the Canvas' callback function
 	showFPS_ = false;										// Set debugging FPS to false
 
@@ -267,14 +267,16 @@ int Canvas::end() {
  * 		b, the red component
  * 		a, the alpha component
  */
-void Canvas::setColor(int r, int g, int b) {
+void Canvas::setColor(int r, int g, int b, int a) {
 	std::unique_lock<std::mutex> mlock(mutex);
 	defaultRed = r;
 	defaultGreen = g;
 	defaultBlue = b;
+	defaultAlpha = a;
 	defaultFRed = r / 255.0f;
 	defaultFGreen = g / 255.0f;
 	defaultFBlue = b / 255.0f;
+	defaultFAlpha = a / 255.0f;
 	mlock.unlock();
 }
 
