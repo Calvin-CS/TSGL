@@ -132,7 +132,7 @@ void mandelbrotFunction(CartesianCanvas* can) {
 				iterations = 0;
 				while (std::abs(c) < 2.0 && iterations != DEPTH) {		// Computer until it escapes or we give up
 					iterations++;
-					c = originalComplex + std::pow(c, 2);
+					c = c * c + originalComplex;
 				}
 				if (iterations == DEPTH) 	// If the point never escaped, draw it black
 					can->drawPointColor(col, row, 0, 0, 0);
@@ -505,22 +505,17 @@ void alphaLangtonFunction(CartesianCanvas* can) {
 void mandelbrot2Function(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 32;
-	const double BLOCKSTART = (can->getMaxY() - can->getMinY()) / THREADS;
-	const long double 	P = 3.0l,
-						R = 1.0l;
+	const double BLOCKSTART = can->getCartHeight() / THREADS;
 	#pragma omp parallel num_threads(THREADS)
 	{
 		unsigned int iterations;
-		long double g;
 		double smooth;
-		for (int k = 0; k <= (can->getWindowHeight() / THREADS); k++) { // As long as we aren't trying to render off of the screen...
+		for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
 			long double row = BLOCKSTART * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
 			for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
 				complex c(col, row);
 				complex z(col, row);
 				smooth = exp(-std::abs(z));
-				complex n, d, c1;
-				complex r(1,0);
 				iterations = 0;
 				while (std::abs(z) < 2.0l && iterations != DEPTH) {
 					iterations++;
@@ -532,15 +527,9 @@ void mandelbrot2Function(CartesianCanvas* can) {
 					z = z * z + c;
 					smooth += exp(-std::abs(z));
 				}
-				if (iterations == DEPTH)	// If the point never escaped, draw it black
-					can->drawPointColor(col, row, 0, 0, 0);
-				else {						// Otherwise, draw it with color
-					smooth /= DEPTH;
-					std::cout << smooth << std::endl;
-					float hue = smooth*6.0f;
-					RGBType color = Canvas::HSVtoRGB({hue,1.0,1.0});
-					can->drawPointColor(col, row, color.R*255,color.G*255,color.B*255);
-				}
+				smooth /= DEPTH;
+				RGBType color = Canvas::HSVtoRGB({(float)smooth*6.0f, 1.0, 1.0});
+				can->drawPointColor(col, row, color.R*255,color.G*255,color.B*255);
 			}
 		}
 	}
@@ -549,13 +538,12 @@ void novaFunction(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 200;
 	const double BLOCKSTART = (can->getMaxY() - can->getMinY()) / THREADS;
-	const long double 	P = 3.0l,
-						R = 1.0l;
+	const long double 	R = 1.0l;
 	#pragma omp parallel num_threads(THREADS)
 	{
 		unsigned int iterations;
 		double smooth;
-		for (int k = 0; k <= (can->getWindowHeight() / THREADS); k++) { // As long as we aren't trying to render off of the screen...
+		for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
 			long double row = BLOCKSTART * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
 			for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
 				complex c(col, row);
@@ -566,31 +554,25 @@ void novaFunction(CartesianCanvas* can) {
 				iterations = 0;
 				while (std::abs(z) < 2.0l && iterations != DEPTH) {
 					iterations++;
-					n = std::pow(z, P) - 1.0l;
-					d = std::pow(z, P-1) * 3.0l;
+					n = z*z*z - 1.0l;
+					d = z*z * 3.0l;
 					z = z + c -(R*n/d);
 					smooth += exp(-std::abs(z));
 				}
 				for(int i = 0; i < 20; i++) {
 					iterations++;
-					n = std::pow(z, P) - 1.0l;
-					d = std::pow(z, P-1) * 3.0l;
+					n = z*z*z - 1.0l;
+					d = z*z * 3.0l;
 					z = z + c -(R*n/d);
 					smooth += exp(-std::abs(z));
 				}
-				if (iterations == DEPTH)	// If the point never escaped, draw it black
-					can->drawPointColor(col, row, 0, 0, 0);
-				else {						// Otherwise, draw it with color
-					smooth /= DEPTH;
-					if (smooth < 0 || smooth != smooth)
-						smooth = 0;
-					while (smooth > 1)
-						smooth = 1;
-//						std::cout << smooth << std::endl;
-					float hue = smooth*6.0f;
-					RGBType color = Canvas::HSVtoRGB({hue,1.0,hue/6});
-					can->drawPointColor(col, row, color.R*255,color.G*255,color.B*255);
-				}
+				smooth /= DEPTH;
+				if (smooth != smooth || smooth < 0)			// Check to see if smooth is NAN
+					smooth = 0;
+				while (smooth > 1)
+					smooth -= 1;
+				RGBType color = Canvas::HSVtoRGB({(float)smooth*6.0f,1.0,(float)smooth});
+				can->drawPointColor(col, row, color.R*255,color.G*255,color.B*255);
 			}
 		}
 	}
@@ -656,6 +638,6 @@ int main() {
 //	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,false,BG_BLACK);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.5, 2, 1.5, 500000),mandelbrot2Function,false);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,false);
+	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
 }
