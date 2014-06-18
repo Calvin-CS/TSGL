@@ -31,6 +31,8 @@ public:
 	Type getMaxX() 			{ return maxX; }							// Accessor for maxX
 	Type getMinY() 			{ return minY; }							// Accessor for minY
 	Type getMaxY() 			{ return maxY; }							// Accessor for maxY
+	Type getCartWidth()		{ return cartWidth; }						// Accessor for cartWidth
+	Type getCartHeight()	{ return cartHeight; }						// Accessor for cartHeight
 	void drawPoint(Type x, Type y);										// Draws a point at the given coordinates
 	void drawPointColor(Type x, Type y, int r, int g, int b, int a);	// Draws a point at the given coordinates with the given color
 	void drawLine(Type x1, Type y1, Type x2, Type y2);					// Draws a line at the given coordinates
