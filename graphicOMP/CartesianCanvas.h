@@ -11,36 +11,37 @@
 #include "Function.h"								// For drawing math functions on the screen
 
 class CartesianCanvas : public Canvas {
-	typedef long double Type;						// Define the variable type to use for coordinates
+	typedef long double Decimal;						// Define the variable type to use for coordinates
 private:
-	Type minX, maxX, minY, maxY;					// Bounding Cartesian coordinates for the window
-	Type cartWidth, cartHeight;						// maxX-minX, maxY-minY
-	Type pixelWidth, pixelHeight;					// cartWidth/window.w(), cartHeight/window.h()
-	Type xError, yError;							// Variables to hold rounding errors for rendering
+	Decimal minX, maxX, minY, maxY;					// Bounding Cartesian coordinates for the window
+	Decimal cartWidth, cartHeight;						// maxX-minX, maxY-minY
+	Decimal pixelWidth, pixelHeight;					// cartWidth/window.w(), cartHeight/window.h()
 public:
 	CartesianCanvas(unsigned int b);				// Default constructor for our CartesianCanvas
-	CartesianCanvas(int xx, int yy, int w, int h, Type xMin,
-			Type yMin, Type xMax, Type yMax, unsigned int b, char *t);	// Explicit constructor for our CartesianCanvas
-	void getScreenCoordinates(Type cartX, Type cartY,
+	CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin,
+			Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char *t);	// Explicit constructor for our CartesianCanvas
+	void getScreenCoordinates(Decimal cartX, Decimal cartY,
 			int &screenX, int &screenY);								// Returns the equivalent screen coordinates for the specified Cartesian ones
 	void getCartesianCoordinates(int screenX, int screenY,
-			Type &cartX, Type &cartY);									// Returns the equivalent Cartesian coordinates for the specified screen ones
-	Type getPixelWidth() 	{ return pixelWidth; }						// Accessor for pixelWidth
-	Type getPixelHeight() 	{ return pixelHeight; }						// Accessor for pixelHeight
-	Type getMinX() 			{ return minX; }							// Accessor for minX
-	Type getMaxX() 			{ return maxX; }							// Accessor for maxX
-	Type getMinY() 			{ return minY; }							// Accessor for minY
-	Type getMaxY() 			{ return maxY; }							// Accessor for maxY
-	Type getCartWidth()		{ return cartWidth; }						// Accessor for cartWidth
-	Type getCartHeight()	{ return cartHeight; }						// Accessor for cartHeight
-	void drawPoint(Type x, Type y);										// Draws a point at the given coordinates
-	void drawPointColor(Type x, Type y, int r, int g, int b, int a);	// Draws a point at the given coordinates with the given color
-	void drawLine(Type x1, Type y1, Type x2, Type y2);					// Draws a line at the given coordinates
-	void drawLineColor(Type x1, Type y1, Type x2,
-						Type y2, int r, int g, int b, int a);			// Draws a line at the given coordinates with the given color
-	void drawRectangle(Type x, Type y, Type w, Type h);					// Draws a rectangle at the given coordinates with the given dimensions
-	void drawRectangleColor(Type x, Type y, Type w,
-			Type h, int r, int g, int b, int a);						// Draws a rectangle at the given coordinates with the given dimensions and color
+			Decimal &cartX, Decimal &cartY);									// Returns the equivalent Cartesian coordinates for the specified screen ones
+	Decimal getPixelWidth() 	{ return pixelWidth; }						// Accessor for pixelWidth
+	Decimal getPixelHeight() 	{ return pixelHeight; }						// Accessor for pixelHeight
+	Decimal getMinX() 			{ return minX; }							// Accessor for minX
+	Decimal getMaxX() 			{ return maxX; }							// Accessor for maxX
+	Decimal getMinY() 			{ return minY; }							// Accessor for minY
+	Decimal getMaxY() 			{ return maxY; }							// Accessor for maxY
+	Decimal getCartWidth()		{ return cartWidth; }						// Accessor for cartWidth
+	Decimal getCartHeight()		{return cartHeight; }						// Accessor for cartHeight
+//	int getCartWidth()		{ return round(cartWidth); }				// Accessor for integer cartWidth
+//	int getCartHeight()		{ return round(cartHeight); }				// Accessor for integer cartHeight
+	void drawPoint(Decimal x, Decimal y);										// Draws a point at the given coordinates
+	void drawPointColor(Decimal x, Decimal y, int r, int g, int b, int a);	// Draws a point at the given coordinates with the given color
+	void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2);					// Draws a line at the given coordinates
+	void drawLineColor(Decimal x1, Decimal y1, Decimal x2,
+						Decimal y2, int r, int g, int b, int a);			// Draws a line at the given coordinates with the given color
+	void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h);					// Draws a rectangle at the given coordinates with the given dimensions
+	void drawRectangleColor(Decimal x, Decimal y, Decimal w,
+			Decimal h, int r, int g, int b, int a);						// Draws a rectangle at the given coordinates with the given dimensions and color
 	void drawTriangle(int x1, int y1, int x2, int y2,
 			int x3, int y3);											// Draws a triangle with the given vertices
 	void drawTriangleColor(int x1, int y1, int x2, int y2,
@@ -61,12 +62,10 @@ CartesianCanvas::CartesianCanvas(unsigned int b) : Canvas(b) {
 	maxX = 400;
 	minY = -300;
 	maxY = 300;
-	xError = 1.0f / monitorWidth;
-	yError = 1.0f / monitorHeight;
 	cartWidth = maxX - minX;
 	cartHeight = maxY - minY;
-	pixelWidth = (cartWidth - xError) / monitorWidth;
-	pixelHeight = (cartHeight - yError) / monitorHeight;
+	pixelWidth = cartWidth / monitorWidth;
+	pixelHeight = cartHeight / monitorHeight;
 }
 
 /*
@@ -85,18 +84,18 @@ CartesianCanvas::CartesianCanvas(unsigned int b) : Canvas(b) {
  * Returns: a new CartesianCanvas with the specified positional/scaling data and title
  */
 CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h,
-			Type xMin, Type yMin, Type xMax, Type yMax, unsigned int b, char* t = 0) :
+			Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char* t = 0) :
 			Canvas(xx, yy, w, h, b, t) {
 	minX = xMin;
 	minY = yMin;
 	maxX = xMax;
 	maxY = yMax;
-	xError = 1.0f / monitorWidth;
-	yError = 1.0f / monitorHeight;
-	cartWidth = (maxX - minX) - xError;
-	cartHeight = (maxY - minY) - yError;
-	pixelWidth = (cartWidth) / (monitorWidth + xError);
-	pixelHeight = (cartHeight) / (monitorHeight + yError);
+	Decimal xError = 1.0f / monitorWidth;
+	Decimal yError = 1.0f / monitorHeight;
+	cartWidth = maxX - minX;
+	cartHeight = maxY - minY;
+	pixelWidth = (cartWidth - xError) / (monitorWidth + xError);
+	pixelHeight = (cartHeight  - yError) / (monitorHeight + yError);
 }
 
 /*
@@ -107,10 +106,10 @@ CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h,
  * 		screenX, a reference variable to be filled with cartX's window position
  * 		screenY, a reference variable to be filled with cartY's window position
  */
-void CartesianCanvas::getScreenCoordinates(Type cartX, Type cartY, int &screenX, int &screenY) {
+void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
 	std::unique_lock<std::mutex> mlock(mutex);
-	screenX = (cartX - minX) / cartWidth * monitorWidth;
-	screenY = window->h() - (cartY - minY) / cartHeight * monitorHeight;
+	screenX = ceil((cartX - minX) / cartWidth * monitorWidth);
+	screenY = ceil(window->h() - (cartY - minY) / cartHeight * monitorHeight);
 	mlock.unlock();
 }
 
@@ -122,7 +121,7 @@ void CartesianCanvas::getScreenCoordinates(Type cartX, Type cartY, int &screenX,
  * 		cartX, a reference variable to be filled with screenX's Cartesian position
  * 		cartY, a reference variable to be filled with screenY's Cartesian position
  */
-void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Type &cartX, Type &cartY) {
+void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
 	std::unique_lock<std::mutex> mlock(mutex);
 	cartX = (screenX * cartWidth) / monitorWidth + minX;
 	cartY = window->h() + (screenY * cartHeight) / monitorHeight + minY;
@@ -135,7 +134,7 @@ void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Type &ca
  * 		x, the x position of the point
  * 		y, the y position of the point
  */
-void CartesianCanvas::drawPoint(Type x, Type y) {
+void CartesianCanvas::drawPoint(Decimal x, Decimal y) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
 	Point* p = new Point(actualX, actualY);		// Creates the Point with the specified coordinates
@@ -154,7 +153,7 @@ void CartesianCanvas::drawPoint(Type x, Type y) {
  * 		b, the red component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawPointColor(Type x, Type y, int r, int g, int b, int a = 255) {
+void CartesianCanvas::drawPointColor(Decimal x, Decimal y, int r, int g, int b, int a = 255) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
 	Point* p = new Point(actualX, actualY, r, g, b, a);	// Creates the Point with the specified coordinates and color
@@ -171,7 +170,7 @@ void CartesianCanvas::drawPointColor(Type x, Type y, int r, int g, int b, int a 
  *		x2, the x position of the end of the line
  * 		y2, the y position of the end of the line
  */
-void CartesianCanvas::drawLine(Type x1, Type y1, Type x2, Type y2) {
+void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
 	int actualX1, actualY1, actualX2, actualY2;
 	getScreenCoordinates(x1, y1, actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
@@ -193,7 +192,7 @@ void CartesianCanvas::drawLine(Type x1, Type y1, Type x2, Type y2) {
  * 		b, the red component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawLineColor(Type x1, Type y1, Type x2, Type y2, int r, int g, int b, int a = 255) {
+void CartesianCanvas::drawLineColor(Decimal x1, Decimal y1, Decimal x2, Decimal y2, int r, int g, int b, int a = 255) {
 	int actualX1, actualY1, actualX2, actualY2;
 	getScreenCoordinates(x1, y1,actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
@@ -211,7 +210,7 @@ void CartesianCanvas::drawLineColor(Type x1, Type y1, Type x2, Type y2, int r, i
  * 		w, the width of the Rectangle
  *		h, the height of the Rectangle
  */
-void CartesianCanvas::drawRectangle(Type x, Type y, Type w, Type h) {
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h) {
 	int actualX, actualY, actualW, actualH;
 	getScreenCoordinates(x, y, actualX, actualY);
 	getScreenCoordinates(w, h, actualW, actualH);
@@ -233,7 +232,7 @@ void CartesianCanvas::drawRectangle(Type x, Type y, Type w, Type h) {
  * 		b, the blue component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawRectangleColor(Type x, Type y, Type w, Type h, int r, int g, int b, int a = 255) {
+void CartesianCanvas::drawRectangleColor(Decimal x, Decimal y, Decimal w, Decimal h, int r, int g, int b, int a = 255) {
 	int actualX, actualY, actualW, actualH;
 	getScreenCoordinates(x, y, actualX, actualY);
 	getScreenCoordinates(w, h, actualW, actualH);
@@ -318,7 +317,7 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], int r[], int 
 const Function* CartesianCanvas::drawFunction(const Function* f) {
 	int screenX = 0, screenY = 0;
 	Polyline *p = new Polyline(1 + (maxX-minX) / pixelWidth);
-	for (Type x = minX; x <= maxX; x += pixelWidth) {
+	for (Decimal x = minX; x <= maxX; x += pixelWidth) {
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
 		std::unique_lock<std::mutex> mlock(mutex);
 		p->addVertex(screenX, screenY);
