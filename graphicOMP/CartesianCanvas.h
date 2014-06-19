@@ -16,10 +16,46 @@ private:
 	Decimal minX, maxX, minY, maxY;						// Bounding Cartesian coordinates for the window
 	Decimal cartWidth, cartHeight;						// maxX-minX, maxY-minY
 	Decimal pixelWidth, pixelHeight;					// cartWidth/window.w(), cartHeight/window.h()
+	bool zoomed, canZoom;								// Whether we've zoomed since last draw or we can zoom at all
+protected:
+	int handle(int e) {									//Handler for mouse events
+		if (!canZoom)						//If we can't zoom, don't bother handling anything
+			return 1;
+        static Decimal oldX = 0, oldY = 0;
+        int ret = Fl_Window::handle(e);
+		Decimal newX, newY, temp;
+        switch ( e ) {
+            case FL_PUSH:					// On mouse push, store the mouse position into oldX, oldY
+            	getCartesianCoordinates(Fl::event_x(),Fl::event_y(),oldX, oldY);
+                return(1);
+            case FL_RELEASE:				// On mouse release, store the mouse position into newX, newY
+            	getCartesianCoordinates(Fl::event_x(),Fl::event_y(),newX, newY);
+            	if (Fl::event_button() == FL_LEFT_MOUSE) {	// On left click, zoom in
+            		if (std::abs(newX-oldX) < cartWidth/32 && std::abs(newY-oldY) < cartHeight/32)
+            			return(1);
+            		if (oldX > newX) {	// Makes sure oldX, oldY is the topleft
+            			temp = oldX;
+            			oldX = newX;
+            			newX = temp;
+            		}
+            		if (oldY > newY) {
+            			temp = oldY;
+            			oldY = newY;
+            			newY = temp;
+            		}
+            		recomputeDimensions(oldX,oldY,newX,newY);
+            	} else if (Fl::event_button() == FL_RIGHT_MOUSE) {	// On right click, zoom out
+            		recomputeDimensions(oldX-cartWidth,oldY-cartHeight,newX+cartWidth,newY+cartHeight);
+            	}
+                return(1);
+        }
+        return(ret);
+	}
 public:
 	CartesianCanvas(unsigned int b);				// Default constructor for our CartesianCanvas
 	CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin,
 			Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char *t);	// Explicit constructor for our CartesianCanvas
+	void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);	// Recomputes CartesianCanvas' size variables
 	void getScreenCoordinates(Decimal cartX, Decimal cartY,
 			int &screenX, int &screenY);									// Returns the equivalent screen coordinates for the specified Cartesian ones
 	void getCartesianCoordinates(int screenX, int screenY,
@@ -32,6 +68,10 @@ public:
 	Decimal getMaxY() 			{ return maxY; }							// Accessor for maxY
 	Decimal getCartWidth()		{ return cartWidth; }						// Accessor for cartWidth
 	Decimal getCartHeight()		{return cartHeight; }						// Accessor for cartHeight
+	bool getZoomed()			{ return zoomed; }							// Accessor for zoomed
+	void setZoomed(bool z)		{ zoomed = z; }								// Mutator for zoomed
+	bool getCanZoom()			{ return canZoom; }							// Accessor for canZoom
+	void setCanZoom(bool z)		{ canZoom = z; }							// Mutator for canZoom
 	void drawPoint(Decimal x, Decimal y);									// Draws a point at the given coordinates
 	void drawPointColor(Decimal x, Decimal y, RGBfloatType color);			// Draws a point at the given coordinates with the given color
 	void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2);			// Draws a line at the given coordinates
@@ -54,14 +94,7 @@ public:
  * Returns: a new 800x600 CartesianCanvas with 1-1 pixel correspondence and central origin
  */
 CartesianCanvas::CartesianCanvas(unsigned int b) : Canvas(b) {
-	minX = -400;
-	maxX = 400;
-	minY = -300;
-	maxY = 300;
-	cartWidth = maxX - minX;
-	cartHeight = maxY - minY;
-	pixelWidth = cartWidth / monitorWidth;
-	pixelHeight = cartHeight / monitorHeight;
+	recomputeDimensions(-400,-300,400,300);
 }
 
 /*
@@ -82,16 +115,29 @@ CartesianCanvas::CartesianCanvas(unsigned int b) : Canvas(b) {
 CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h,
 			Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char* t = 0) :
 			Canvas(xx, yy, w, h, b, t) {
+	recomputeDimensions(xMin, yMin, xMax, yMax);
+}
+
+/*
+ * recomputeDimensions recomputes the size variables of CartesianCanvas according to new bounds
+ * Parameters:
+ * 		xMin, a real number corresponding to the new left edge of the CartesianCanvas
+ * 		YMin, a real number corresponding to the new top edge of the CartesianCanvas
+ * 		xMax, a real number corresponding to the new right edge of the CartesianCanvas
+ * 		xMax, a real number corresponding to the new bottom edge of the CartesianCanvas
+ */
+void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax) {
 	minX = xMin;
 	minY = yMin;
 	maxX = xMax;
 	maxY = yMax;
-	Decimal xError = 1.0f / monitorWidth;
-	Decimal yError = 1.0f / monitorHeight;
 	cartWidth = maxX - minX;
 	cartHeight = maxY - minY;
+	Decimal xError = cartWidth / monitorWidth;
+	Decimal yError = cartHeight / monitorHeight;
 	pixelWidth = (cartWidth - xError) / (monitorWidth + xError);
 	pixelHeight = (cartHeight  - yError) / (monitorHeight + yError);
+	zoomed = true;
 }
 
 /*
@@ -120,7 +166,7 @@ void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &sc
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
 	std::unique_lock<std::mutex> mlock(mutex);
 	cartX = (screenX * cartWidth) / monitorWidth + minX;
-	cartY = h() + (screenY * cartHeight) / monitorHeight + minY;
+	cartY = minY-(screenY - h())*cartHeight/monitorHeight;
 	mlock.unlock();
 }
 

@@ -120,25 +120,36 @@ void shadingPoints(Canvas* can) {
 void mandelbrotFunction(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;  //omp_get_num_procs();
 	const unsigned int DEPTH = MAX_COLOR;
-	const double BLOCKSTART = can->getCartHeight() / THREADS;
-	#pragma omp parallel num_threads(THREADS)
-	{
-		unsigned int iterations;
-		for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
-			long double row = BLOCKSTART * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
-			for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
-				complex originalComplex(col, row);
-				complex c(col, row);
-				iterations = 0;
-				while (std::abs(c) < 2.0 && iterations != DEPTH) {		// Computer until it escapes or we give up
-					iterations++;
-					c = c * c + originalComplex;
+	can->setCanZoom(true);
+	while(can->getZoomed()) {
+		can->setZoomed(false);
+		double blockstart = can->getCartHeight() / THREADS;
+		#pragma omp parallel num_threads(THREADS)
+		{
+			unsigned int iterations;
+			for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
+				long double row = blockstart * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
+				for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
+					complex originalComplex(col, row);
+					complex c(col, row);
+					iterations = 0;
+					while (std::abs(c) < 2.0 && iterations != DEPTH) {		// Computer until it escapes or we give up
+						iterations++;
+						c = c * c + originalComplex;
+					}
+					if (iterations == DEPTH) 	// If the point never escaped, draw it black
+						can->drawPointColor(col, row, {0, 0, 0, 1.0});
+					else						// Otherwise, draw it with color based on how long it took
+						can->drawPointColor(col, row, RGBintToRGBfloat(iterations % 151, (iterations % 131) + 50, iterations % 255));
+					if (can->getZoomed())
+						break;
 				}
-				if (iterations == DEPTH) 	// If the point never escaped, draw it black
-					can->drawPointColor(col, row, {0, 0, 0, 1.0});
-				else						// Otherwise, draw it with color based on how long it took
-					can->drawPointColor(col, row, RGBintToRGBfloat(iterations % 151, (iterations % 131) + 50, iterations % 255));
+				if (can->getZoomed())
+					break;
 			}
+		}
+		while(can->isOpen() && !can->getZoomed()) {
+			//busy wait
 		}
 	}
 }
@@ -507,36 +518,48 @@ void alphaLangtonFunction(CartesianCanvas* can) {
 void mandelbrot2Function(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 32;
-	const double BLOCKSTART = can->getCartHeight() / THREADS;
-	#pragma omp parallel num_threads(THREADS)
-	{
-		unsigned int iterations;
-		double smooth;
-		for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
-			long double row = BLOCKSTART * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
-			for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
-				complex c(col, row);
-				complex z(col, row);
-				smooth = exp(-std::abs(z));
-				iterations = 0;
-				while (std::abs(z) < 2.0l && iterations != DEPTH) {
-					iterations++;
-					z = z * z + c;
-					smooth += exp(-std::abs(z));
+	can->setCanZoom(true);
+	while(can->getZoomed()) {
+		can->setZoomed(false);
+		double blockstart = can->getCartHeight() / THREADS;
+		#pragma omp parallel num_threads(THREADS)
+		{
+			unsigned int iterations;
+			double smooth;
+			for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
+				long double row = blockstart * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
+				for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
+					complex c(col, row);
+					complex z(col, row);
+					smooth = exp(-std::abs(z));
+					iterations = 0;
+					while (std::abs(z) < 2.0l && iterations != DEPTH) {
+						iterations++;
+						z = z * z + c;
+						smooth += exp(-std::abs(z));
+					}
+					int i;
+					for(i = 0; i < 2; i++) {
+						iterations++;
+						z = z * z + c;
+						smooth += exp(-std::abs(z));
+					}
+					smooth /= (DEPTH + i+1);
+					RGBfloatType color = HSVToRGBfloat((float)smooth*6.0f, 1.0, 1.0, 1.0);
+					can->drawPointColor(col, row, color);
+					if (can->getZoomed())
+						break;
 				}
-				int i;
-				for(i = 0; i < 2; i++) {
-					iterations++;
-					z = z * z + c;
-					smooth += exp(-std::abs(z));
-				}
-				smooth /= (DEPTH + i+1);
-				RGBfloatType color = HSVToRGBfloat((float)smooth*6.0f, 1.0, 1.0, 1.0);
-				can->drawPointColor(col, row, color);
+				if (can->getZoomed())
+					break;
 			}
+		}
+		while(can->isOpen() && !can->getZoomed()) {
+			//busy wait
 		}
 	}
 }
+
 void novaFunction(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 200;
@@ -630,7 +653,7 @@ int main() {
 //	test(new Canvas(100000),lines1,true,BG_BLACK);
 //	test(new Canvas(500),lines2,false,BG_BLACK);
 //	test(new Canvas(250000),shadingPoints,false);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,true);
+	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunction2,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunctionShiny,true,BG_BLACK);
@@ -640,7 +663,7 @@ int main() {
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,BG_WHITE);
 //	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
-	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,true,BG_BLACK);
+//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,true,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
 }
