@@ -101,13 +101,19 @@ inline RGBfloatType HSVToRGBfloat(const HSVType& color) {
 }
 
 inline RGBfloatType devideIntoSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0) {
-	return HSVToRGBfloat(6.0/sections * section, 1.0, value, alpha);
+	if (value > 1 || value < 0 || alpha > 1 || alpha < 0) {
+		throw std::out_of_range("Values must be between 0 and 1 inclusive");
+	}
+	return HSVToRGBfloat(6.0f/sections * section, 1.0f, value, alpha);
 }
 inline RGBfloatType devideIntoSections(unsigned int sections, unsigned int section) {
-	return HSVToRGBfloat(6.0/sections * section, 1.0, 1.0, 1.0);
+	return HSVToRGBfloat(6.0f/sections * section, 1.0f, 1.0f, 1.0f);
 }
 
 inline RGBfloatType randomColor(unsigned int seed, float alpha = 1.0) {
+	if (alpha > 1 || alpha < 0) {
+		throw std::out_of_range("Alpha must be between 0 and 1 inclusive");
+	}
 	srand(seed);
 	return {rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha};
 }
