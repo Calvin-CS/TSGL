@@ -17,22 +17,22 @@ typedef struct {float R, G, B, A;} RGBfloatType;
 typedef struct {float H, S, V, A;} HSVType;
 
 
-RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a) {
+RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a = 255) {
 	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || a > 255 || a < 0) {
 		throw std::out_of_range("Values must be between 0 and 255 inclusive");
 	}
 	RGBfloatType color;
-	color.R = r / 255;
-	color.G = g / 255;
-	color.B = b / 255;
-	color.A = a / 255;
+	color.R = r / 255.0f;
+	color.G = g / 255.0f;
+	color.B = b / 255.0f;
+	color.A = a / 255.0f;
 	return color;
 }
 inline RGBfloatType RGBintToRGBfloat(const RGBintType& color) {
 	return RGBintToRGBfloat(color.R, color.G, color.B, color.A);
 }
 
-RGBintType RGBfloatToRGBint(float r, float g, float b, float a) {
+RGBintType RGBfloatToRGBint(float r, float g, float b, float a = 1.0) {
 	if (r > 1 || r < 0 || g > 1 || g < 0 || b > 1 || b < 0 || a > 1 || a < 0) {
 		throw std::out_of_range("Values must be between 0 and 1 inclusive");
 	}
@@ -47,13 +47,14 @@ inline RGBintType RGBfloatToRGBint(const RGBfloatType& color) {
 	return RGBfloatToRGBint(color.R, color.G, color.B, color.A);
 }
 
-RGBfloatType HSVToRGBfloat(float h, float s, float v, float a) {
+RGBfloatType HSVToRGBfloat(float h, float s, float v, float a = 1.0) {
 	if (h > 6 || h < 0 || s > 1 || s < 0 || v > 1 || v < 0 || a > 1 || a < 0) {
-		std::cout << h << ' ' << s << ' ' << v << ' ' << a << std::endl;
+		std::cout << h << ' ' << s << ' ' << v << ' ' << a << std::endl << std::flush;
 		throw std::out_of_range("H must be between 0 and 6 inclusive, S, V, and A must be between 0 and 1 inclusive");
 	}
 	float m, n, f;
 	RGBfloatType color;
+	color.A = a;
 
 	int i = floor(h);
 	f = h - i;						// Decimal part of h
