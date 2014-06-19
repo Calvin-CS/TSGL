@@ -23,7 +23,7 @@ protected:
 			return 1;
         static Decimal oldX = 0, oldY = 0;
         int ret = Fl_Window::handle(e);
-		Decimal newX, newY, temp;
+		Decimal newX, newY, temp, aspect, mean, delta;
         switch ( e ) {
             case FL_PUSH:					// On mouse push, store the mouse position into oldX, oldY
             	getCartesianCoordinates(Fl::event_x(),Fl::event_y(),oldX, oldY);
@@ -43,6 +43,11 @@ protected:
             			oldY = newY;
             			newY = temp;
             		}
+            		aspect = ((newX-oldX)/(newY-oldY))/(cartWidth/cartHeight);	// Compute the different in aspect ratios
+            		mean = (newY+oldY) / 2;				// Compute the middle of the current y dimension
+            		delta = aspect * (newY-oldY) / 2;	// Compute the new y radius with the given aspect ratio
+            		oldY = mean - delta;				// Adjust the Y dimensions to maintain the aspect ratio
+            		newY = mean + delta;
             		recomputeDimensions(oldX,oldY,newX,newY);
             	} else if (Fl::event_button() == FL_RIGHT_MOUSE) {	// On right click, zoom out
             		recomputeDimensions(oldX-cartWidth,oldY-cartHeight,newX+cartWidth,newY+cartHeight);
