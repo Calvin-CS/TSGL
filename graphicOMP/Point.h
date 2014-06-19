@@ -2,7 +2,7 @@
  * Point.h extends Shape and provides a class for drawing a single point to a Canvas
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/10/2014
+ * Last Modified: Mark Vander Stel, 6/19/2014
  */
 
 #ifndef POINT_H_
@@ -16,7 +16,7 @@ private:
 	int myX, myY;									// Positioning data for our Point
 public:
     Point(int x, int y);							// Default constructor
-    Point(int x, int y, int r, int g, int b, int a);// Explicit constructor
+    Point(int x, int y, RGBfloatType color);		// Explicit constructor
     void draw();									// Overridden draw method
     bool getIsPoint() { return true; }
 };
@@ -44,7 +44,7 @@ Point::Point(int x, int y) : Shape() {
  * 		a, the alpha component
  * Returns: a new Point at the specified position with the specified color
  */
-Point::Point(int x, int y, int r, int g, int b, int a) : Shape(r, g, b, a) {
+Point::Point(int x, int y, RGBfloatType color) : Shape(color) {
 	myX = x;
 	myY = y;
 }

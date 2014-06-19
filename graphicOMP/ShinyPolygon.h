@@ -26,7 +26,7 @@ private:
 	VertexData* myVertex;	// Buffer for vertex data
 public:
 	ShinyPolygon(int vertices);									// Default constructor
-	void addVertex(int x, int y, int r, int g, int b, int a);  	// Method for adding vertices to buffer
+	void addVertex(int x, int y, RGBfloatType color);  			// Method for adding vertices to buffer
     void draw();												// Overridden draw method
     bool getIsPoint() { return false; }							// We are not a single point
 };
@@ -55,15 +55,15 @@ ShinyPolygon::ShinyPolygon(int vertices = 3) : Shape() {
  * 		b, the blue component of the vertex
  * 		a, the alpha component of the vertex
  */
-void ShinyPolygon::addVertex(int x, int y, int r, int g, int b, int a) {
+void ShinyPolygon::addVertex(int x, int y, RGBfloatType color) {
 	if (init)
 		return;
 	myVertex[current].x = x;
 	myVertex[current].y = y;
-	myVertex[current].r = r/255.0f;
-	myVertex[current].g = g/255.0f;
-	myVertex[current].b = b/255.0f;
-	myVertex[current].a = a/255.0f;
+	myVertex[current].r = color.R;
+	myVertex[current].g = color.G;
+	myVertex[current].b = color.B;
+	myVertex[current].a = color.A;
 	current++;
 	if (current == size)
 		init = true;

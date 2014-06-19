@@ -1,8 +1,8 @@
 /*
  * Polyline.h extends Shape and provides a class for drawing a polyline
  *
- * Authors: Patrick Crain
- * Last Modified: Patrick Crain, 6/16/2014
+ * Authors: Patrick Crain, Mark Vander Stel
+ * Last Modified: Mark Vander Stel, 6/19/2014
  */
 
 #ifndef POLYLINE_H_
@@ -35,7 +35,6 @@ public:
  */
 Polyline::Polyline(int vertices = 2) : Shape() {
 	if (vertices < 2) {
-		std::cerr << "Cannot have a line with less than 2 vertices." << std::endl;
 		throw std::out_of_range("Cannot have a line with less than 2 vertices.");
 	}
 	size = vertices;
@@ -53,7 +52,6 @@ Polyline::Polyline(int vertices = 2) : Shape() {
  */
 void Polyline::addVertex(int x, int y) {
 	if (init) {
-		std::cerr << "Polyline has all vertices already initialized." << std::endl;
 		throw std::out_of_range("Polyline has all vertices already initialized.");
 	}
 	myVertex[current].x = x;
@@ -66,7 +64,6 @@ void Polyline::addVertex(int x, int y) {
 // draw() actually draws the Polyline to the canvas
 void Polyline::draw() {
 	if (!init) {
-		std::cerr << "Polyline not initialized." << std::endl;
 		throw std::out_of_range("Polyline not initialized.");
 	}
 	glBegin(GL_LINE_STRIP);

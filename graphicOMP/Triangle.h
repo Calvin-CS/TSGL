@@ -1,8 +1,8 @@
 /*
  * Triangle.h extends Shape and provides a class for drawing a three-sided polygon to a Canvas
  *
- * Authors: Patrick Crain
- * Last Modified: Patrick Crain, 6/12/2014
+ * Authors: Patrick Crain, Mark Vander Stel
+ * Last Modified: Mark Vander Stel, 6/19/2014
  */
 
 #ifndef TRIANGLE_H_
@@ -13,10 +13,10 @@
 
 class Triangle : public Shape {
 private:
-	int myX1, myY1, myX2, myY2, myX3, myY3;						// Positioning data for our Triangle
+	int myX1, myY1, myX2, myY2, myX3, myY3;											// Positioning data for our Triangle
 public:
 	Triangle(int x1, int y1, int x2, int y2, int x3, int y3);						// Default constructor
-	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b, int a);	// Explicit constructor
+	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color);	// Explicit constructor
     void draw();																	// Overridden draw method
     bool getIsPoint() { return false; }
 };
@@ -56,7 +56,7 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3) : Shape() {
  * 		a, the alpha component
  * Returns: a new Triangle with the specified vertices and color
  */
-Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b, int a) : Shape(r, g, b, a) {
+Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) : Shape(color) {
 	myX1 = x1;
 	myY1 = y1;
 	myX2 = x2;
@@ -72,7 +72,6 @@ void Triangle::draw() {
 	glVertex2f(myX2, myY2);
 	glVertex2f(myX3, myY3);
 	glEnd();
-//	fl_polygon(myX1,myY1,myX2,myY2,myX3,myY3);	//Call to the FLTK fl_polygon drawing method
 }
 
 #endif /* TRIANGLE_H_ */

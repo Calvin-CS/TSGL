@@ -239,7 +239,7 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 	xx[3] = WINDOW_W/2; 		yy[3] = WINDOW_H/2+RADIUS;
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 
-	RGBType color;
+	RGBfloatType color;
 	int lastFrame = 0;
 	while(can->isOpen()) {
 		if (can->getFrameNumber() > lastFrame) {
@@ -248,12 +248,12 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 				for (int j = 0; j < 4; j++) {
 					if (filled[xx[j] + WINDOW_W * yy[j]]) {
 						dir[j] = (dir[j] + 1) % 4;
-						color = Canvas::HSVtoRGB({(can->getFrameNumber() + 3*j)%12 / 2.0f,1.0f,1.0f});
+						color = HSVToRGBfloat({(can->getFrameNumber() + 3*j)%12 / 2.0f,1.0f,1.0f});
 						can->drawPointColor(xx[j],yy[j],color.R*MAX_COLOR,color.G*MAX_COLOR,color.B*MAX_COLOR,64);
 					}
 					else {
 						dir[j] = (dir[j] + 3) % 4;
-						color = Canvas::HSVtoRGB({(can->getFrameNumber() + 3*j)%12 / 2.0f,1.0f,0.5f});
+						color = HSVToRGBfloat({(can->getFrameNumber() + 3*j)%12 / 2.0f,1.0f,0.5f});
 						can->drawPointColor(xx[j],yy[j],color.R*MAX_COLOR,color.G*MAX_COLOR,color.B*MAX_COLOR,64);
 					}
 					switch(dir[j]) {
@@ -338,7 +338,7 @@ void colorWheelFunction(CartesianCanvas* can) {
 				WINDOW_CH = can->getCartHeight() / 2;
 	const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,		// Radius of wheel
 				GRADIENT = 2*M_PI/NUM_COLORS;
-	RGBType col;
+	RGBfloatType col;
 	float x2, x3, y2, y3, shading;
 	int tid, f, lastFrame = 0;
 	int start[THREADS];
@@ -353,7 +353,7 @@ void colorWheelFunction(CartesianCanvas* can) {
 			{
 				tid = omp_get_thread_num();
 				shading = tid*NUM_COLORS/THREADS;
-				col = Canvas::HSVtoRGB({start[tid]*6.0f/NUM_COLORS,1.0,shading});
+				col = HSVToRGBfloat({start[tid]*6.0f/NUM_COLORS,1.0,shading});
 				x2 = WINDOW_CW + RADIUS*sin(GRADIENT*start[tid]);
 				y2 = WINDOW_CH + RADIUS*cos(GRADIENT*start[tid]);
 				x3 = WINDOW_CW + RADIUS*sin(GRADIENT*(start[tid]+1));
@@ -409,20 +409,20 @@ void gradientWheelFunction(CartesianCanvas* can) {
 	while(can->isOpen()) {										// Check to see if the window has been closed
 		if (can->getFrameNumber() > lastFrame) {
 			lastFrame = can->getFrameNumber();
-			f = lastFrame % NUM_COLORS;
+			f = lastFrame % MAX_COLOR;
 			start[0] = f;
 			for (int i = 1; i < THREADS; i++)					// Calculate the location and color of the
 				start[i] = (start[i-1] + DELTA) % NUM_COLORS;	// shapes by the location and frame
 			#pragma omp parallel num_threads(THREADS)
 			{
-				RGBType col[3];									// The arrays of colors for the vertices
+				RGBfloatType col[3];									// The arrays of colors for the vertices
 				int xx[3],yy[3],r[3],g[3],b[3],a[3];			// Setup the arrays of values for vertices
 				xx[0] = WINDOW_CW; yy[0] = WINDOW_CH;			// Set first vertex to center of screen
 				int tid = omp_get_thread_num();
 				float shading = 1.0f*tid/THREADS;				// Shade based on what thread this is
-				col[0] = Canvas::HSVtoRGB({(start[tid]+1) / (float)MAX_COLOR * 6.0f, 0.0f, 1.0f});
-				col[1] = Canvas::HSVtoRGB({ start[tid]    / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f});
-				col[2] = Canvas::HSVtoRGB({(start[tid]+1) / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f});
+				col[0] = HSVToRGBfloat((start[tid+1]) / (float)MAX_COLOR * 6.0f, 0.0f, 1.0f, 1.0f);
+				col[1] = HSVToRGBfloat( start[tid]    / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f, 1.0f);
+				col[2] = HSVToRGBfloat((start[tid+1]) / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f, 1.0f);
 				for (int i = 0; i < 3; i++) {
 					r[i] = col[i].R * MAX_COLOR * shading;
 					g[i] = col[i].G * MAX_COLOR * shading;
@@ -528,7 +528,7 @@ void mandelbrot2Function(CartesianCanvas* can) {
 					smooth += exp(-std::abs(z));
 				}
 				smooth /= DEPTH;
-				RGBType color = Canvas::HSVtoRGB({(float)smooth*6.0f, 1.0, 1.0});
+				RGBfloatType color = HSVToRGBfloat({(float)smooth*6.0f, 1.0, 1.0});
 				can->drawPointColor(col, row, color.R*255,color.G*255,color.B*255);
 			}
 		}
@@ -571,7 +571,7 @@ void novaFunction(CartesianCanvas* can) {
 					smooth = 0;
 				while (smooth > 1)
 					smooth -= 1;
-				RGBType color = Canvas::HSVtoRGB({(float)smooth*6.0f,1.0,(float)smooth});
+				RGBfloatType color = HSVToRGBfloat({(float)smooth*6.0f,1.0,(float)smooth});
 				can->drawPointColor(col, row, color.R*255,color.G*255,color.B*255);
 			}
 		}
@@ -635,9 +635,9 @@ int main() {
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),colorWheelFunction);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,BG_WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,BG_WHITE);
-//	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
+	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
-//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,false,BG_BLACK);
-	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
+//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,true,BG_BLACK);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
 }
