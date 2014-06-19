@@ -16,7 +16,6 @@ typedef struct {int R, G, B, A;} RGBintType;
 typedef struct {float R, G, B, A;} RGBfloatType;
 typedef struct {float H, S, V, A;} HSVType;
 
-
 RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a = 255) {
 	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || a > 255 || a < 0) {
 		throw std::out_of_range("Values must be between 0 and 255 inclusive");
@@ -99,6 +98,18 @@ RGBfloatType HSVToRGBfloat(float h, float s, float v, float a = 1.0) {
 }
 inline RGBfloatType HSVToRGBfloat(const HSVType& color) {
 	return HSVToRGBfloat(color.H, color.S, color.V, color.A);
+}
+
+inline RGBfloatType devideIntoSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0) {
+	return HSVToRGBfloat(6.0/sections * section, 1.0, value, alpha);
+}
+inline RGBfloatType devideIntoSections(unsigned int sections, unsigned int section) {
+	return HSVToRGBfloat(6.0/sections * section, 1.0, 1.0, 1.0);
+}
+
+inline RGBfloatType randomColor(unsigned int seed, float alpha = 1.0) {
+	srand(seed);
+	return {rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha};
 }
 
 #endif /* COLOR_H_ */
