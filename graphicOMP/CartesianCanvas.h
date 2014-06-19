@@ -2,18 +2,18 @@
  * CartesianCanvas.h provides a Canvas with a Cartesian coordinate system for ease of plotting
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Patrick Crain, 6/12/2014
+ * Last Modified: Mark Vander Stel, 6/19/2014
  */
 
 #ifndef CARTESIANCANVAS_H_
 #define CARTESIANCANVAS_H_
 
-#include "Function.h"								// For drawing math functions on the screen
+#include "Function.h"									// For drawing math functions on the screen
 
 class CartesianCanvas : public Canvas {
 	typedef long double Decimal;						// Define the variable type to use for coordinates
 private:
-	Decimal minX, maxX, minY, maxY;					// Bounding Cartesian coordinates for the window
+	Decimal minX, maxX, minY, maxY;						// Bounding Cartesian coordinates for the window
 	Decimal cartWidth, cartHeight;						// maxX-minX, maxY-minY
 	Decimal pixelWidth, pixelHeight;					// cartWidth/window.w(), cartHeight/window.h()
 public:
@@ -21,9 +21,9 @@ public:
 	CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin,
 			Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char *t);	// Explicit constructor for our CartesianCanvas
 	void getScreenCoordinates(Decimal cartX, Decimal cartY,
-			int &screenX, int &screenY);								// Returns the equivalent screen coordinates for the specified Cartesian ones
+			int &screenX, int &screenY);									// Returns the equivalent screen coordinates for the specified Cartesian ones
 	void getCartesianCoordinates(int screenX, int screenY,
-			Decimal &cartX, Decimal &cartY);									// Returns the equivalent Cartesian coordinates for the specified screen ones
+			Decimal &cartX, Decimal &cartY);								// Returns the equivalent Cartesian coordinates for the specified screen ones
 	Decimal getPixelWidth() 	{ return pixelWidth; }						// Accessor for pixelWidth
 	Decimal getPixelHeight() 	{ return pixelHeight; }						// Accessor for pixelHeight
 	Decimal getMinX() 			{ return minX; }							// Accessor for minX
@@ -32,23 +32,19 @@ public:
 	Decimal getMaxY() 			{ return maxY; }							// Accessor for maxY
 	Decimal getCartWidth()		{ return cartWidth; }						// Accessor for cartWidth
 	Decimal getCartHeight()		{return cartHeight; }						// Accessor for cartHeight
-//	int getCartWidth()		{ return round(cartWidth); }				// Accessor for integer cartWidth
-//	int getCartHeight()		{ return round(cartHeight); }				// Accessor for integer cartHeight
-	void drawPoint(Decimal x, Decimal y);										// Draws a point at the given coordinates
-	void drawPointColor(Decimal x, Decimal y, int r, int g, int b, int a);	// Draws a point at the given coordinates with the given color
-	void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2);					// Draws a line at the given coordinates
+	void drawPoint(Decimal x, Decimal y);									// Draws a point at the given coordinates
+	void drawPointColor(Decimal x, Decimal y, RGBfloatType color);			// Draws a point at the given coordinates with the given color
+	void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2);			// Draws a line at the given coordinates
 	void drawLineColor(Decimal x1, Decimal y1, Decimal x2,
-						Decimal y2, int r, int g, int b, int a);			// Draws a line at the given coordinates with the given color
-	void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h);					// Draws a rectangle at the given coordinates with the given dimensions
+						Decimal y2, RGBfloatType color);					// Draws a line at the given coordinates with the given color
+	void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h);			// Draws a rectangle at the given coordinates with the given dimensions
 	void drawRectangleColor(Decimal x, Decimal y, Decimal w,
-			Decimal h, int r, int g, int b, int a);						// Draws a rectangle at the given coordinates with the given dimensions and color
-	void drawTriangle(int x1, int y1, int x2, int y2,
-			int x3, int y3);											// Draws a triangle with the given vertices
+								Decimal h, RGBfloatType color);				// Draws a rectangle at the given coordinates with the given dimensions and color
+	void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);		// Draws a triangle with the given vertices
 	void drawTriangleColor(int x1, int y1, int x2, int y2,
-			int x3, int y3,	int r, int g, int b, int a);				// Draws a triangle with the given vertices and color
-	void drawShinyPolygon(int size, int x[], int y[],
-			int r[], int g[], int b[], int a[]);						// Draws an arbitrary polygon with colored vertices
-	const Function* drawFunction(const Function* f);					// Draws the Function on the screen
+							int x3, int y3,	RGBfloatType color);			// Draws a triangle with the given vertices and color
+	void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);// Draws an arbitrary polygon with colored vertices
+	const Function* drawFunction(const Function* f);						// Draws the Function on the screen
 };
 
 /*
@@ -109,7 +105,7 @@ CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h,
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
 	std::unique_lock<std::mutex> mlock(mutex);
 	screenX = ceil((cartX - minX) / cartWidth * monitorWidth);
-	screenY = ceil(window->h() - (cartY - minY) / cartHeight * monitorHeight);
+	screenY = ceil(h() - (cartY - minY) / cartHeight * monitorHeight);
 	mlock.unlock();
 }
 
@@ -124,7 +120,7 @@ void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &sc
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
 	std::unique_lock<std::mutex> mlock(mutex);
 	cartX = (screenX * cartWidth) / monitorWidth + minX;
-	cartY = window->h() + (screenY * cartHeight) / monitorHeight + minY;
+	cartY = h() + (screenY * cartHeight) / monitorHeight + minY;
 	mlock.unlock();
 }
 
@@ -153,10 +149,10 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y) {
  * 		b, the red component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawPointColor(Decimal x, Decimal y, int r, int g, int b, int a = 255) {
+void CartesianCanvas::drawPointColor(Decimal x, Decimal y, RGBfloatType color) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
-	Point* p = new Point(actualX, actualY, r, g, b, a);	// Creates the Point with the specified coordinates and color
+	Point* p = new Point(actualX, actualY, color);	// Creates the Point with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);									// Push it onto our drawing queue
 	mlock.unlock();
@@ -192,11 +188,11 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
  * 		b, the red component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawLineColor(Decimal x1, Decimal y1, Decimal x2, Decimal y2, int r, int g, int b, int a = 255) {
+void CartesianCanvas::drawLineColor(Decimal x1, Decimal y1, Decimal x2, Decimal y2, RGBfloatType color) {
 	int actualX1, actualY1, actualX2, actualY2;
 	getScreenCoordinates(x1, y1,actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
-	Line* l = new Line(actualX1, actualY1, actualX2, actualY2, r, g, b, a);	// Creates the Line with the specified coordinates and color
+	Line* l = new Line(actualX1, actualY1, actualX2, actualY2, color);	// Creates the Line with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(l);														// Push it onto our drawing queue
 	mlock.unlock();
@@ -232,11 +228,11 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h) 
  * 		b, the blue component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawRectangleColor(Decimal x, Decimal y, Decimal w, Decimal h, int r, int g, int b, int a = 255) {
+void CartesianCanvas::drawRectangleColor(Decimal x, Decimal y, Decimal w, Decimal h, RGBfloatType color) {
 	int actualX, actualY, actualW, actualH;
 	getScreenCoordinates(x, y, actualX, actualY);
 	getScreenCoordinates(w, h, actualW, actualH);
-	Rectangle* rec = new Rectangle(x, y, w, h, r, g, b, a);	// Creates the Rectangle with the specified coordinates and color
+	Rectangle* rec = new Rectangle(x, y, w, h, color);	// Creates the Rectangle with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(rec);									// Push it onto our drawing queue
 	mlock.unlock();
@@ -278,16 +274,15 @@ void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y
  * 		b, the blue component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
-		int r, int g, int b, int a = 255) {
+void CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
 	int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
 	getScreenCoordinates(x1, y1, actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
 	getScreenCoordinates(x3, y3, actualX3, actualY3);
 	Triangle* t = new Triangle(actualX1, actualY1, actualX2, actualY2,
-			actualX3, actualY3, r, g, b, a);	// Creates the Triangle with the specified vertices and color
+								actualX3, actualY3, color);			// Creates the Triangle with the specified vertices and color
 	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(t);						// Push it onto our drawing queue
+	myShapes->push(t);												// Push it onto our drawing queue
 	mlock.unlock();
 }
 
@@ -302,12 +297,12 @@ void CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, 
  * 		b, an array of blue components for the vertices
  * 		a, an array of alpha components for the vertices
  */
-void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]) {
+void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) {
 	int actualX, actualY;
 	ShinyPolygon* p = new ShinyPolygon(size);
 	for (int i = 0; i < size; i++) {
 		getScreenCoordinates(x[i], y[i], actualX, actualY);
-		p->addVertex(actualX,actualY,r[i],g[i],b[i],a[i]);
+		p->addVertex(actualX, actualY, color[i]);
 	}
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);										// Push it onto our drawing queue

@@ -2,16 +2,14 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/12/2014
+ * Last Modified: Mark Vander Stel, 6/19/2014
  */
 
 #ifndef CANVAS_H_
 #define CANVAS_H_
 
-#include <FL/Fl.H>						// For using basic FLTK library functions
-#include <FL/Fl_Window.H>	// For Fl_Double_Window, which draws our window
-#include <FL/Fl_Box.H>				// For Fl_Box, from which our Canvas inherits
-#include <FL/fl_draw.H>				// For FLTK's drawing function, which we implement to make our own thread-safe version.
+#include <FL/Fl.H>					// For using basic FLTK library functions
+#include <FL/Fl_Window.H>			// For inheriting Fl_Window, which draws our window
 #include <FL/gl.h>					// For FLTK's built-in OpenGL functions
 #include <GL/glut.h>
 #include "Point.h"					// Our own class for drawing single points.
@@ -21,6 +19,7 @@
 #include "ShinyPolygon.h"			// Our own class for drawing polygons with colored vertices.
 #include "Polyline.h"				// Our own class for drawing polylines.
 #include "Array.h"					// Our own thread-safe array for buffering drawing operations.
+#include "color.h"					// Our own interface for converting color types
 #include <omp.h>					// For OpenMP support
 #include <cmath>					// For converting HSV to RGB
 #include <chrono>					// For timing drawing and FPS
@@ -31,22 +30,17 @@
 #define FPS 60
 #define FRAME 1.0f/FPS				// Represents a single frame
 
-typedef struct {float R, G, B;} RGBType;
-typedef struct {float H, S, V;} HSVType;
 typedef std::chrono::high_resolution_clock highResClock;
-typedef Fl_Window OmpWindow;
 
-class Canvas : public Fl_Box {
+class Canvas : public Fl_Window {
 protected:
 	Array<Shape*> * myShapes;										// Our buffer of shapes to draw
 	int counter;													// Counter for the number of frames that have elapsed in the current session (for animations)
 	int monitorX,monitorY,monitorWidth,monitorHeight;  				// Positioning and sizing data for the Canvas
-	int defaultRed, defaultGreen, defaultBlue, defaultAlpha; 		// Our current global RGB drawing color
-	float defaultFRed, defaultFGreen, defaultFBlue, defaultFAlpha; 	// Our current global RGB float drawing color
-	RGBType backgroundColor;										// The background color
+	RGBfloatType defaultColor; 										// Our current global RGB drawing color
+	RGBfloatType backgroundColor;									// The background color
 	bool toClear;													// Flag for clearing the canvas
 	int drawBufferSize;												// Maximum allowed Shapes in our drawing List
-	OmpWindow* window;												// The FLTK window to which we draw
 	bool started;													// Whether our canvas is running and the frame counter is counting
 	std::thread renderThread;										// Thread dedicated to rendering the Canvas
 	std::mutex mutex;												// Mutex for locking the Canvas so that only one thread can read/write at a time
@@ -61,42 +55,42 @@ public:
 	Canvas(int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
 	int start();													// Function to start rendering our Canvas
 	int end();														// Function to end rendering our Canvas
-	void setColor(int r, int g, int b, int a);						// Sets the global drawing color
+	void setColor(float r, float g, float b, float a);				// Sets the global drawing color
 	virtual void drawPoint(int x, int y);							// Draws a point at the given coordinates
-	virtual void drawPointColor(int x, int y, int r, int g, int b, int a);	// Draws a point at the given coordinates with the given color
+	virtual void drawPointColor(int x, int y, RGBfloatType color);	// Draws a point at the given coordinates with the given color
 	virtual void drawLine(int x1, int y1, int x2, int y2);					// Draws a line at the given coordinates
-	virtual void drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b, int a);		// Draws a line at the given coordinates with the given color
-	virtual void drawRectangle(int x, int y, int w, int h);										// Draws a rectangle at the given coordinates with the given dimensions
-	virtual void drawRectangleColor(int x, int y, int w, int h, int r, int g, int b, int a);	// Draws a rectangle at the given coordinates with the given dimensions and color
+	virtual void drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color);		// Draws a line at the given coordinates with the given color
+	virtual void drawRectangle(int x, int y, int w, int h);								// Draws a rectangle at the given coordinates with the given dimensions
+	virtual void drawRectangleColor(int x, int y, int w, int h, RGBfloatType color);	// Draws a rectangle at the given coordinates with the given dimensions and color
 	virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);			// Draws a triangle with the given vertices
 	virtual void drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
-		int r, int g, int b, int a);															// Draws a triangle with the given vertices and color
-	virtual void drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]);
+										RGBfloatType color);							// Draws a triangle with the given vertices and color
+	virtual void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);
 	virtual void drawText(const char * s, int x, int y);								// Draws a string of text at the given position
-	void setBackgroundColor(int r, int g, int b);					// Changes the background color
+	void setBackgroundColor(RGBfloatType color);					// Changes the background color
 	void clear();													// Clears the canvas
 	int getWindowX() 		{ return monitorX; }					// Accessor for the window width
 	int getWindowY() 		{ return monitorY; }					// Accessor for the window height
 	int getWindowWidth() 	{ return monitorWidth; }				// Accessor for the window width
 	int getWindowHeight() 	{ return monitorHeight; }				// Accessor for the window height
-	int getColorR() 		{ return defaultRed; }					// Accessor for the red component of the global drawing color
-	int getColorG() 		{ return defaultGreen; }				// Accessor for the green component of the global drawing color
-	int getColorB() 		{ return defaultBlue; }					// Accessor for the blue component of the global drawing color
-	int getColorA() 		{ return defaultAlpha; }				// Accessor for the alpha component of the global drawing color
+	RGBfloatType getColor()	{ return defaultColor; }				// Accessor for the global drawing color
+	float getColorR() 		{ return defaultColor.R; }				// Accessor for the red component of the global drawing color
+	float getColorG() 		{ return defaultColor.G; }				// Accessor for the green component of the global drawing color
+	float getColorB() 		{ return defaultColor.B; }				// Accessor for the blue component of the global drawing color
+	float getColorA() 		{ return defaultColor.A; }				// Accessor for the alpha component of the global drawing color
 	int getFrameNumber() 	{ return counter; }						// Accessor for the number of frames rendered so far
 	int getBufferSize() 	{ return drawBufferSize; }				// Accessor for the Shape list's buffer size
 	float getFPS() 			{ return realFPS; }						// Accessor for true FPS
-	bool isOpen() 			{ return window->visible(); }			// Returns if the window is visible, which would mean it's closed
+	bool isOpen() 			{ return visible(); }					// Returns if the window is visible, which would mean it's not closed
 	void showFPS(bool b) 	{ showFPS_ = b; }						// Mutator to show debugging FPS
 	double getTime();												// Returns the time since initialization
-	static RGBType HSVtoRGB(HSVType HSV);
 };
 
-// Clean up if someone closes the window
-void close_cb(Fl_Widget* w, void* v) {
-	OmpWindow* d = (OmpWindow*) v;
-	d->hide();										// Hide our window
-}
+//// Clean up if someone closes the window
+//void close_cb(Fl_Widget* w, void* v) {
+//	OmpWindow* d = (OmpWindow*) v;
+//	d->hide();										// Hide our window
+//}
 
 /*
  * init initialized the Canvas with the values specified in the constructor
@@ -138,7 +132,7 @@ void Canvas::draw() {
 	glEnable (GL_BLEND);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0, window->w() - (1.0f/window->w()), window->h(), 0, 0, 1);
+	glOrtho(0, w() - (1.0f/w()), h(), 0, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -179,10 +173,10 @@ void Canvas::draw() {
 			}
 
 			if (s->getUsesDefaultColor()) {
-				glColor4f(defaultFRed, defaultFGreen, defaultFBlue,defaultFAlpha);
+				glColor4f(defaultColor.R, defaultColor.G, defaultColor.B, defaultColor.A);
 				s->draw();									// If our shape uses the default color, just draw it
 			} else {										// Otherwise, the color must be got from the shape
-				glColor4f(s->getColorFR(),s->getColorFG(),s->getColorFB(),s->getColorFA());
+				glColor4f(s->getColorR(),s->getColorG(),s->getColorB(),s->getColorA());
 				s->draw();
 			}
 		}
@@ -213,7 +207,7 @@ void Canvas::Canvas_Callback(void* userdata) {
  * 		b, the buffer size for the Shapes (-1 = no limit)
  * Returns: a new 800x600 Canvas on the topleft of the screen with no title
  */
-Canvas::Canvas(unsigned int b) : Fl_Box (0,0,800,600) {
+Canvas::Canvas(unsigned int b) : Fl_Window (0,0,800,600) {
 	init(0,0,800,600,b);
 }
 
@@ -229,7 +223,7 @@ Canvas::Canvas(unsigned int b) : Fl_Box (0,0,800,600) {
  * 		t, the title of the window
  * Returns: a new Canvas with the specified positional data and title
  */
-Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_Box(xx,yy,w,h,t) {
+Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_Window(xx,yy,w,h,t) {
 	init(xx,yy,w,h,b);
 }
 
@@ -240,10 +234,8 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_B
 int Canvas::start() {
 	if (started) return -1;										// If we're already started, return error code -1
 	started = true;												// We've now started
-    window = new OmpWindow(monitorWidth,monitorHeight);			// Instantiate our drawing window
-    window->add(this);											// Add ourself (Canvas) to the drawing window
-	window->callback(close_cb,window);							// Add the function to call when the window is closed
-    window->show();												// Show the window
+//	callback(close_cb,window);							// Add the function to call when the window is closed
+    show();												// Show the window
     renderThread = std::thread(Fl::run);						// Spawn the rendering thread
     return 0;
 }
@@ -255,7 +247,6 @@ int Canvas::start() {
 int Canvas::end() {
 	if (!started) return -1;						// If we haven't even started yet, return error code -1
 	renderThread.join();							// Blocks until ready to join, which will be when the window is closed
-	delete window;									// Delete our window from the heap
 	return 0;
 }
 
@@ -267,31 +258,25 @@ int Canvas::end() {
  * 		b, the red component
  * 		a, the alpha component
  */
-void Canvas::setColor(int r, int g, int b, int a) {
+void Canvas::setColor(float r, float g, float b, float a) {
 	std::unique_lock<std::mutex> mlock(mutex);
-	defaultRed = r;
-	defaultGreen = g;
-	defaultBlue = b;
-	defaultAlpha = a;
-	defaultFRed = r / 255.0f;
-	defaultFGreen = g / 255.0f;
-	defaultFBlue = b / 255.0f;
-	defaultFAlpha = a / 255.0f;
+	defaultColor.R = r;
+	defaultColor.G = g;
+	defaultColor.B = b;
+	defaultColor.A = a;
 	mlock.unlock();
 }
 
 /*
  * setBackgroundColor sets the background color
  * Parameters:
- * 		r, the red component
- * 		g, the red component
- * 		b, the red component
+ * 		color, the RGBfloatType with the color. The alpha channel is ignored
  */
-void Canvas::setBackgroundColor(int r, int g, int b) {
+void Canvas::setBackgroundColor(RGBfloatType color) {
 	std::unique_lock<std::mutex> mlock(mutex);
-	backgroundColor.R = r / 255.0;
-	backgroundColor.G = g / 255.0;
-	backgroundColor.B = b / 255.0;
+	backgroundColor.R = color.R;
+	backgroundColor.G = color.R;
+	backgroundColor.B = color.R;
 	mlock.unlock();
 }
 
@@ -324,8 +309,8 @@ void Canvas::drawPoint(int x, int y) {
  * 		a, the alpha component
  * 	Returns: a new point at the given position with the specified color
  */
-void Canvas::drawPointColor(int x, int y, int r, int g, int b, int a = 255) {
-	Point* p = new Point(x,y,r,g,b,a);				// Creates the Point with the specified coordinates and color
+void Canvas::drawPointColor(int x, int y, RGBfloatType color) {
+	Point* p = new Point(x,y,color);				// Creates the Point with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);								// Push it onto our drawing queue
 	mlock.unlock();
@@ -360,8 +345,8 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2) {
  * 		a, the alpha component
  * 	Returns: a new line with the given coordinates and the specified color
  */
-void Canvas::drawLineColor(int x1, int y1, int x2, int y2, int r, int g, int b, int a = 255) {
-	Line* l = new Line(x1,y1,x2,y2,r,g,b,a);			// Creates the Line with the specified coordinates and color
+void Canvas::drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color) {
+	Line* l = new Line(x1,y1,x2,y2,color);			// Creates the Line with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(l);								// Push it onto our drawing queue
 	mlock.unlock();
@@ -396,8 +381,8 @@ void Canvas::drawRectangle(int x, int y, int w, int h) {
  * 		a, the alpha component
  * 	Returns: a new rectangle with the given coordinates, dimensions, and color
  */
-void Canvas::drawRectangleColor(int x, int y, int w, int h, int r, int g, int b, int a = 255) {
-	Rectangle* rec = new Rectangle(x,y,w,h,r,g,b,a);	// Creates the Rectangle with the specified coordinates and color
+void Canvas::drawRectangleColor(int x, int y, int w, int h, RGBfloatType color) {
+	Rectangle* rec = new Rectangle(x,y,w,h,color);	// Creates the Rectangle with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(rec);							// Push it onto our drawing queue
 	mlock.unlock();
@@ -436,8 +421,8 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
  * 		a, the alpha component
  * 	Returns: a new triangle with the given vertices and color
  */
-void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, int r, int g, int b, int a = 255) {
-	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,r,g,b,a);	// Creates the Triangle with the specified vertices and color
+void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
+	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,color);	// Creates the Triangle with the specified vertices and color
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(t);										// Push it onto our drawing queue
 	mlock.unlock();
@@ -454,10 +439,10 @@ void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, i
  * 		b, an array of blue components for the vertices
  * 		a, an array of alpha components for the vertices
  */
-void Canvas::drawShinyPolygon(int size, int x[], int y[], int r[], int g[], int b[], int a[]) {
+void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) {
 	ShinyPolygon* p = new ShinyPolygon(size);
 	for (int i = 0; i < size; i++) {
-		p->addVertex(x[i],y[i],r[i],g[i],b[i],a[i]);
+		p->addVertex(x[i],y[i],color[i]);
 	}
 	std::unique_lock<std::mutex> mlock(mutex);
 	myShapes->push(p);										// Push it onto our drawing queue
@@ -483,67 +468,6 @@ double Canvas::getTime() {
 	double time = std::chrono::duration_cast<std::chrono::microseconds>(highResClock::now() - startTime).count() / 1000000.0;
 	mlock.unlock();
 	return time;
-}
-
-/*
- * HSVtoRGB converts a triplet of HSV colors to a triplet of RGB colors
- * Parameter:
- * 		HSV, a struct of 3 floats representing HSV color data
- * Returns: a struct of 3 floats representing the RGB equivalent of the HSV color
- */
-RGBType Canvas::HSVtoRGB(HSVType HSV) {
- 	// H is given on [0, 6] or UNDEFINED. S and V are given on [0, 1].
-	// RGB are each returned on [0, 1].
-	float h = HSV.H, s = HSV.S, v = HSV.V, m, n, f;
-	int i;
-	RGBType RGB;
-
-	if (h == -1) {
-		RGB.R = v;
-		RGB.G = v;
-		RGB.B = v;
-		return RGB;
-	}
-	i = floor(h);
-	f = h - i;
-	if ( !(i&1) ) f = 1 - f; 		// if i is even
-	m = v * (1 - s);
-	n = v * (1 - s * f);
-	switch (i) {
-		case 6:
-		case 0:
-			RGB.R = v;
-			RGB.G = n;
-			RGB.B = m;
-			return RGB;
-		case 1:
-			RGB.R = n;
-			RGB.G = v;
-			RGB.B = m;
-			return RGB;
-		case 2:
-			RGB.R = m;
-			RGB.G = v;
-			RGB.B = n;
-			return RGB;
-		case 3:
-			RGB.R = m;
-			RGB.G = n;
-			RGB.B = v;
-			return RGB;
-		case 4:
-			RGB.R = n;
-			RGB.G = m;
-			RGB.B = v;
-			return RGB;
-		case 5:
-			RGB.R = v;
-			RGB.G = m;
-			RGB.B = n;
-			return RGB;
-		default:
-			throw std::out_of_range("Bad H value");
-	}
 }
 
 #endif /* CANVAS_H_ */
