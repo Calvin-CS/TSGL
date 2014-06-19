@@ -604,6 +604,48 @@ void novaFunction(CartesianCanvas* can) {
 	}
 }
 
+void voronoiFunction(CartesianCanvas* can) {
+	const int	WINDOW_W = can->getCartWidth(),		// Set the screen sizes
+				WINDOW_H = can->getCartHeight(),
+				POINTS = 50;						// Set the number of control points
+	srand (time(NULL));								// Seed the random number generator
+	int* x = new int[POINTS]();						// Initialize an array for POINTS x coords
+	int* y = new int[POINTS]();						// Do the same for y coords
+	RGBfloatType color[POINTS];						// And for an array of collors
+	RGBfloatType tc, rc, lc, bc, xc, yc;			// Color for the top, right, left, bottom, x-average, and y-average
+	int bestdist, bestk, dist, xd, yd;				// Keep track of the closes matches and current distances
+	for (int i = 0; i < POINTS; i++) {				// Randomize the control points
+		x[i] = rand() % WINDOW_W;
+		y[i] = rand() % WINDOW_H;
+	}
+	tc = randomColor(rand());						// Randomize the axis colors
+	rc = randomColor(rand());
+	lc = randomColor(rand());
+	bc = randomColor(rand());
+	for (int i = 0; i < POINTS; i++) {				// For each control point...
+		float xd = (float)x[i] / WINDOW_W;			// Calculate an value from 0:1 based on x coord
+		float yd = (float)y[i] / WINDOW_H;			// Do the same for y
+		xc = blendedColor(lc,rc,xd);				// Interpolate between the left and right colors
+		yc = blendedColor(tc,bc,yd);				// Do the same for top and bottom
+		color[i] = blendedColor(xc,yc,0.5f);		// Complete the 4-way interpolation
+	}
+	for (int i = 0; i < WINDOW_W; i++) {			// For each individual point...
+		for(int j = 0; j < WINDOW_H; j++) {
+			bestdist = 9999;						// Reset the best distance
+			for(int k = 0; k < POINTS; k++) {		// Find the closest control point
+				xd = i-x[k];						// Calculate the distance from each control point
+				yd = j-y[k];
+				dist = sqrt(xd*xd+yd*yd);
+				if (dist < bestdist) {				// If it's the closest one
+					bestdist = dist;				// Update the best distance and control point
+					bestk = k;
+				}
+			}
+			can->drawPointColor(i,j,color[bestk]);	// Draw the point with the closest control's color
+		}
+	}
+}
+
 void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, bgcolor bg = BG_NONE) {
 	switch (bg) {
 		case BG_BLACK:
@@ -653,7 +695,7 @@ int main() {
 //	test(new Canvas(100000),lines1,true,BG_BLACK);
 //	test(new Canvas(500),lines2,false,BG_BLACK);
 //	test(new Canvas(250000),shadingPoints,false);
-	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,true);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunction2,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunctionShiny,true,BG_BLACK);
@@ -666,4 +708,5 @@ int main() {
 //	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,true,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
+	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),voronoiFunction,true,BG_BLACK);
 }

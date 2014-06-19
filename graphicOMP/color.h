@@ -118,4 +118,8 @@ inline RGBfloatType randomColor(unsigned int seed, float alpha = 1.0) {
 	return {rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha};
 }
 
+inline RGBfloatType blendedColor(RGBfloatType c1,RGBfloatType c2,float bias) {
+	return {c1.R*bias+c2.R*(1-bias),c1.G*bias+c2.G*(1-bias),c1.B*bias+c2.B*(1-bias),c1.A*bias+c2.A*(1-bias)};
+}
+
 #endif /* COLOR_H_ */
