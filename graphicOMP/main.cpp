@@ -35,7 +35,7 @@ void points1(Canvas* can) {
 		for (int i = omp_get_thread_num(); i < can->getWindowWidth(); i+= nthreads) {
 			for (int j = 0; j <= can->getWindowHeight(); j++) {
 				color = i*MAX_COLOR/2/can->getWindowWidth() + j*MAX_COLOR/2/can->getWindowHeight();
-				can->drawPointColor(i,j,color,color,color);
+				can->drawPointColor(i,j,RGBintToRGBfloat(color,color,color));
 			}
 		}
 	}
@@ -48,9 +48,9 @@ void points2(Canvas* can) {
 		for (int j = myStart; j < myStart + myPart; j++) {
 			for (int i = 100; i < can->getWindowWidth()-100; i++) {
 				if (i % 2 == 0)
-					can->drawPointColor(i,j,j % NUM_COLORS,i % NUM_COLORS,i*j % 113);
+					can->drawPointColor(i,j,RGBintToRGBfloat(j % NUM_COLORS,i % NUM_COLORS,i*j % 113));
 				else
-					can->drawPointColor(i,j,i % NUM_COLORS,j % NUM_COLORS,i*j % NUM_COLORS);
+					can->drawPointColor(i,j,RGBintToRGBfloat(i % NUM_COLORS,j % NUM_COLORS,i*j % NUM_COLORS));
 			}
 		}
 	}
@@ -69,7 +69,7 @@ void lines1(Canvas* can) {
 			red   = rand() % NUM_COLORS;
 			green = rand() % NUM_COLORS;
 			blue  = rand() % NUM_COLORS;
-			can->drawLineColor(xOld,yOld,xNew,yNew,red,green,blue);
+			can->drawLineColor(xOld,yOld,xNew,yNew,RGBintToRGBfloat(red,green,blue));
 		}
 	}
 }
@@ -79,7 +79,7 @@ void lines2(Canvas* can) {
 	int lastFrame = 0;
 	#pragma omp parallel num_threads(omp_get_num_procs())
 	{
-		int a,b,c,d,e,f,g;
+		int a,b,c,d,red,green,blue;
 		double angle, offset = omp_get_thread_num() * ARC;
 		bool reverse = false;
 		while(can->isOpen()) {				// Checks to see if the window has been closed
@@ -90,13 +90,13 @@ void lines2(Canvas* can) {
 				b = can->getWindowHeight()/2 * (1 + cos(angle));
 				c = can->getWindowWidth()/2 * (1 - sin(angle));
 				d = can->getWindowHeight()/2 * (1 - cos(angle));
-				e = (a + lastFrame) % NUM_COLORS;
-				f = (b + lastFrame) % NUM_COLORS;
-				g = (a*b + lastFrame) % NUM_COLORS;
+				red = (a + lastFrame) % NUM_COLORS;
+				green = (b + lastFrame) % NUM_COLORS;
+				blue = (a*b + lastFrame) % NUM_COLORS;
 				if (!reverse)
-					can->drawLineColor(a,b,c,d,e,f,g);
+					can->drawLineColor(a,b,c,d,RGBintToRGBfloat(red,green,blue));
 				else
-					can->drawLineColor(c,d,a,b,e,f,g);
+					can->drawLineColor(c,d,a,b,RGBintToRGBfloat(red,green,blue));
 				reverse = !reverse;
 			}
 		}
@@ -110,8 +110,8 @@ void shadingPoints(Canvas* can) {
 			if (can->getFrameNumber() > lastFrame) {
 				lastFrame = can->getFrameNumber();
 				for (int i = omp_get_thread_num(); i < NUM_COLORS; i+= nthreads)
-					for (int j = 0; j <= NUM_COLORS; j++)
-						can->drawPointColor(i,j,i,j,lastFrame % NUM_COLORS);
+					for (int j = 0; j < NUM_COLORS; j++)
+						can->drawPointColor(i,j,RGBintToRGBfloat(i,j,lastFrame % NUM_COLORS));
 			}
 		}
 	}
@@ -135,9 +135,9 @@ void mandelbrotFunction(CartesianCanvas* can) {
 					c = c * c + originalComplex;
 				}
 				if (iterations == DEPTH) 	// If the point never escaped, draw it black
-					can->drawPointColor(col, row, 0, 0, 0);
+					can->drawPointColor(col, row, {0, 0, 0, 1.0});
 				else						// Otherwise, draw it with color based on how long it took
-					can->drawPointColor(col, row, iterations % 151, (iterations % 131) + 50, iterations % 255);
+					can->drawPointColor(col, row, RGBintToRGBfloat(iterations % 151, (iterations % 131) + 50, iterations % 255));
 			}
 		}
 	}
@@ -156,15 +156,15 @@ void langtonFunction(CartesianCanvas* can) {
 			lastFrame = can->getFrameNumber();
 			for (int i = 0; i < IPF; i ++) {
 				if (filled[xx + WINDOW_W * yy]) {
-					direction = (direction + 1) % 4;			// Turn right
-					can->drawPointColor(xx,yy,MAX_COLOR,0,0);	// Color it
+					direction = (direction + 1) % 4;							// Turn right
+					can->drawPointColor(xx,yy,RGBintToRGBfloat(MAX_COLOR,0,0));	// Color it
 				}
 				else {
-					direction = (direction + 3) % 4;			// Turn left
-					can->drawPointColor(xx,yy,0,0,0);			// Don't color it
+					direction = (direction + 3) % 4;							// Turn left
+					can->drawPointColor(xx,yy,{0,0,0,1});						// Don't color it
 				}
-				filled[xx + WINDOW_W * yy] ^= true;				// Invert the square
-				switch(direction) {								// Check for wrap-around and move
+				filled[xx + WINDOW_W * yy] ^= true;								// Invert the square
+				switch(direction) {												// Check for wrap-around and move
 					case UP:
 						yy = yy > 0 ? yy-1 : WINDOW_H-1; break;
 					case RIGHT:
@@ -201,11 +201,11 @@ void langtonFunction2(CartesianCanvas* can) {
 				for (int j = 0; j < 4; j++) {
 					if (filled[xx[j] + WINDOW_W * yy[j]]) {
 						dir[j] = (dir[j] + 1) % 4;
-						can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j]);
+						can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(red[j],green[j],blue[j]));
 					}
 					else {
 						dir[j] = (dir[j] + 3) % 4;
-						can->drawPointColor(xx[j],yy[j],red[j]/2,green[j]/2,blue[j]/2);
+						can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(red[j]/2,green[j]/2,blue[j]/2));
 					}
 					switch(dir[j]) {
 						case UP:
@@ -248,13 +248,13 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 				for (int j = 0; j < 4; j++) {
 					if (filled[xx[j] + WINDOW_W * yy[j]]) {
 						dir[j] = (dir[j] + 1) % 4;
-						color = HSVToRGBfloat({(can->getFrameNumber() + 3*j)%12 / 2.0f,1.0f,1.0f});
-						can->drawPointColor(xx[j],yy[j],color.R*MAX_COLOR,color.G*MAX_COLOR,color.B*MAX_COLOR,64);
+						color = HSVToRGBfloat((can->getFrameNumber() + 3*j)%12 / 2.0f, 1.0f, 1.0f, .25f);
+						can->drawPointColor(xx[j],yy[j],color);
 					}
 					else {
 						dir[j] = (dir[j] + 3) % 4;
-						color = HSVToRGBfloat({(can->getFrameNumber() + 3*j)%12 / 2.0f,1.0f,0.5f});
-						can->drawPointColor(xx[j],yy[j],color.R*MAX_COLOR,color.G*MAX_COLOR,color.B*MAX_COLOR,64);
+						color = HSVToRGBfloat((can->getFrameNumber() + 3*j)%12 / 2.0f, 1.0f, 0.5f, .25f);
+						can->drawPointColor(xx[j],yy[j],color);
 					}
 					switch(dir[j]) {
 						case UP:
@@ -315,14 +315,16 @@ void dumbSortFunction(Canvas* can) {
 					} else pos--;
 				}
 				can->drawRectangleColor(0,0,can->getWindowWidth(),can->getWindowHeight(),
-											NUM_COLORS/2,NUM_COLORS/2,NUM_COLORS/2);
+										RGBintToRGBfloat(MAX_COLOR/2,MAX_COLOR/2,MAX_COLOR/2));
 				int start = 50, width = 1, height;
 				for (int i = 0; i < SIZE; i++) {
 					height = numbers[i];
 					if (i == pos)
-						can->drawRectangleColor(start,580-height,width,height,NUM_COLORS,NUM_COLORS,0);
+						can->drawRectangleColor(start,580-height,width,height,
+												RGBintToRGBfloat(MAX_COLOR,MAX_COLOR,0));
 					else
-						can->drawRectangleColor(start,580-height,width,height,NUM_COLORS,0,0);
+						can->drawRectangleColor(start,580-height,width,height,
+												RGBintToRGBfloat(MAX_COLOR,0,0));
 					start += width+1;
 				}
 			}
@@ -338,7 +340,7 @@ void colorWheelFunction(CartesianCanvas* can) {
 				WINDOW_CH = can->getCartHeight() / 2;
 	const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,		// Radius of wheel
 				GRADIENT = 2*M_PI/NUM_COLORS;
-	RGBfloatType col;
+	RGBfloatType color;
 	float x2, x3, y2, y3, shading;
 	int tid, f, lastFrame = 0;
 	int start[THREADS];
@@ -349,16 +351,16 @@ void colorWheelFunction(CartesianCanvas* can) {
 			start[0] = f;
 			for (int i = 1; i < THREADS; i++)			// Spread out the threads starting position
 				start[i] = (start[i-1] + DELTA) % NUM_COLORS;
-			#pragma omp parallel num_threads(THREADS) private(col,x2,x3,y2,y3,shading,tid)
+			#pragma omp parallel num_threads(THREADS) private(color,x2,x3,y2,y3,shading,tid)
 			{
 				tid = omp_get_thread_num();
-				shading = tid*NUM_COLORS/THREADS;
-				col = HSVToRGBfloat({start[tid]*6.0f/NUM_COLORS,1.0,shading});
+				shading = (float)tid/THREADS;
+				color = HSVToRGBfloat(start[tid]*6.0f/NUM_COLORS,1.0,shading);
 				x2 = WINDOW_CW + RADIUS*sin(GRADIENT*start[tid]);
 				y2 = WINDOW_CH + RADIUS*cos(GRADIENT*start[tid]);
 				x3 = WINDOW_CW + RADIUS*sin(GRADIENT*(start[tid]+1));
 				y3 = WINDOW_CH + RADIUS*cos(GRADIENT*(start[tid]+1));
-				can->drawTriangleColor(WINDOW_CW,WINDOW_CH,x2,y2,x3,y3,col.R,col.G,col.B);
+				can->drawTriangleColor(WINDOW_CW,WINDOW_CH,x2,y2,x3,y3,color);
 			}
 		}
 	}
@@ -392,7 +394,7 @@ void integral1(CartesianCanvas* can) {
 		long double start = can->getMinX() + omp_get_thread_num() * offset;
 		long double stop = start + offset;
 		for (long double i = start; i < stop; i += pw) {
-			can->drawLineColor(i, 0, i, function1->valueAt(i), omp_get_thread_num()*32,0,0,MAX_COLOR);
+			can->drawLineColor(i, 0, i, function1->valueAt(i), {(float)omp_get_thread_num()/THREADS,0,0,1.0});
 		}
 	}
 }
@@ -415,25 +417,25 @@ void gradientWheelFunction(CartesianCanvas* can) {
 				start[i] = (start[i-1] + DELTA) % NUM_COLORS;	// shapes by the location and frame
 			#pragma omp parallel num_threads(THREADS)
 			{
-				RGBfloatType col[3];									// The arrays of colors for the vertices
-				int xx[3],yy[3],r[3],g[3],b[3],a[3];			// Setup the arrays of values for vertices
+				RGBfloatType color[3];							// The arrays of colors for the vertices
+				int xx[3],yy[3];								// Setup the arrays of values for vertices
 				xx[0] = WINDOW_CW; yy[0] = WINDOW_CH;			// Set first vertex to center of screen
 				int tid = omp_get_thread_num();
-				float shading = 1.0f*tid/THREADS;				// Shade based on what thread this is
-				col[0] = HSVToRGBfloat((start[tid+1]) / (float)MAX_COLOR * 6.0f, 0.0f, 1.0f, 1.0f);
-				col[1] = HSVToRGBfloat( start[tid]    / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f, 1.0f);
-				col[2] = HSVToRGBfloat((start[tid+1]) / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f, 1.0f);
+				float shading = (float)tid/THREADS;				// Shade based on what thread this is
+				color[0] = HSVToRGBfloat((start[(tid+1)%THREADS]) / (float)MAX_COLOR * 6.0f, 0.0f, 1.0f, 1.0f);
+				color[1] = HSVToRGBfloat( start[ tid           ]  / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f, 1.0f);
+				color[2] = HSVToRGBfloat((start[(tid+1)%THREADS]) / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f, 1.0f);
 				for (int i = 0; i < 3; i++) {
-					r[i] = col[i].R * MAX_COLOR * shading;
-					g[i] = col[i].G * MAX_COLOR * shading;
-					b[i] = col[i].B * MAX_COLOR * shading;
-					a[i] = MAX_COLOR;
+					color[i].R *= shading;
+					color[i].G *= shading;
+					color[i].B *= shading;
+					color[i].A = 1.0;
 				}
 				xx[1] = WINDOW_CW+RADIUS * sin(GRADIENT*start[tid]);	// Add the next two vertices to
 				yy[1] = WINDOW_CH+RADIUS * cos(GRADIENT*start[tid]);	//	to around the circle
 				xx[2] = WINDOW_CW+RADIUS * sin(GRADIENT*(start[tid]+1));
 				yy[2] = WINDOW_CH+RADIUS * cos(GRADIENT*(start[tid]+1));
-				can->drawShinyPolygon(3,xx,yy,r,g,b,a);
+				can->drawShinyPolygon(3,xx,yy,color);
 			}
 		}
 	}
@@ -449,7 +451,7 @@ void alphaRectangleFunction(CartesianCanvas* can) {
 			a = rand() % WINDOW_W;
 			b = rand() % WINDOW_H;
 			can->drawRectangleColor(a, b, rand() % (WINDOW_W-a), rand() % (WINDOW_H-b),
-				rand() % MAX_COLOR, rand() % MAX_COLOR,rand() % MAX_COLOR,16);
+						RGBintToRGBfloat(rand() % MAX_COLOR, rand() % MAX_COLOR,rand() % MAX_COLOR,16));
 		}
 	}
 }
@@ -473,12 +475,12 @@ void alphaLangtonFunction(CartesianCanvas* can) {
 				for (int j = 0; j < 4; j++) {
 					if (filled[xx[j] + WINDOW_W * yy[j]]) {
 						dir[j] = (dir[j] + 1) % 4;
-//						can->drawPointColor(xx[j],yy[j], 0,0,0,255);
-						can->drawPointColor(xx[j],yy[j],MAX_COLOR/2,MAX_COLOR/2,MAX_COLOR/2,16);
+//						can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(0,0,0,255));
+						can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(MAX_COLOR/2,MAX_COLOR/2,MAX_COLOR/2,16));
 					}
 					else {
 						dir[j] = (dir[j] + 3) % 4;
-						can->drawPointColor(xx[j],yy[j],red[j],green[j],blue[j],16);
+						can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(red[j],green[j],blue[j],16));
 					}
 				}
 				for (int j = 0; j < 4; j++) {
@@ -522,14 +524,15 @@ void mandelbrot2Function(CartesianCanvas* can) {
 					z = z * z + c;
 					smooth += exp(-std::abs(z));
 				}
-				for(int i = 0; i < 2; i++) {
+				int i;
+				for(i = 0; i < 2; i++) {
 					iterations++;
 					z = z * z + c;
 					smooth += exp(-std::abs(z));
 				}
-				smooth /= DEPTH;
-				RGBfloatType color = HSVToRGBfloat({(float)smooth*6.0f, 1.0, 1.0});
-				can->drawPointColor(col, row, color.R*255,color.G*255,color.B*255);
+				smooth /= (DEPTH + i+1);
+				RGBfloatType color = HSVToRGBfloat((float)smooth*6.0f, 1.0, 1.0, 1.0);
+				can->drawPointColor(col, row, color);
 			}
 		}
 	}
@@ -571,8 +574,8 @@ void novaFunction(CartesianCanvas* can) {
 					smooth = 0;
 				while (smooth > 1)
 					smooth -= 1;
-				RGBfloatType color = HSVToRGBfloat({(float)smooth*6.0f,1.0,(float)smooth});
-				can->drawPointColor(col, row, color.R*255,color.G*255,color.B*255);
+				RGBfloatType color = HSVToRGBfloat((float)smooth*6.0f,1.0,(float)smooth, 1.0);
+				can->drawPointColor(col, row, color);
 			}
 		}
 	}
@@ -581,9 +584,9 @@ void novaFunction(CartesianCanvas* can) {
 void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, bgcolor bg = BG_NONE) {
 	switch (bg) {
 		case BG_BLACK:
-			c->setBackgroundColor(0, 0, 0); break;
+			c->setBackgroundColor({0, 0, 0, 1.0}); break;
 		case BG_WHITE:
-			c->setBackgroundColor(255,255,255); break;
+			c->setBackgroundColor({1.0,1.0,1.0,1.0}); break;
 		default:
 			break;
 	}
@@ -600,9 +603,9 @@ void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, bgcolor bg = BG_N
 void test(Cart* c, void(*f)(Cart*), bool printFPS = false, bgcolor bg = BG_NONE) {
 	switch (bg) {
 		case BG_BLACK:
-			c->setBackgroundColor(0, 0, 0); break;
+			c->setBackgroundColor({0, 0, 0, 1.0}); break;
 		case BG_WHITE:
-			c->setBackgroundColor(255,255,255); break;
+			c->setBackgroundColor({1.0,1.0,1.0,1.0}); break;
 		default:
 			break;
 	}
@@ -624,20 +627,20 @@ const int 	WINDOW_X = 200,
 int main() {
 //	test(new Canvas(480800),points1,true);
 //	test(new Canvas(480000),points2,true);
-//	test(new Canvas(100000),lines1,false,BG_BLACK);
+//	test(new Canvas(100000),lines1,true,BG_BLACK);
 //	test(new Canvas(500),lines2,false,BG_BLACK);
 //	test(new Canvas(250000),shadingPoints,false);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunction2,false);
-//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunctionShiny,false,BG_BLACK);
+//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunctionShiny,true,BG_BLACK);
 //	test(new Canvas(0, 0, WINDOW_W, WINDOW_H, -1),dumbSortFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),colorWheelFunction);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,BG_WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,BG_WHITE);
-	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
+//	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
-//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,true,BG_BLACK);
+	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,true,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
 }
