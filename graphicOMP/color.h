@@ -1,5 +1,5 @@
 /*
- * color.h
+ * color.h provides color types and methods of converting between them and generating them
  *
  * Authors: Patrick Crain, Mark Vander Stel
  * Last Modified: Mark Vander Stel, 6/19/2014
@@ -119,6 +119,9 @@ inline RGBfloatType randomColor(unsigned int seed, float alpha = 1.0) {
 }
 
 inline RGBfloatType blendedColor(RGBfloatType c1,RGBfloatType c2,float bias) {
+	if (bias > 1 || bias < 0) {
+		throw std::out_of_range("Bias must be between 0 and 1 inclusive");
+	}
 	return {c1.R*bias+c2.R*(1-bias),c1.G*bias+c2.G*(1-bias),c1.B*bias+c2.B*(1-bias),c1.A*bias+c2.A*(1-bias)};
 }
 
