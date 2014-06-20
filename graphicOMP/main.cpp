@@ -13,9 +13,13 @@
 #include <complex>
 #include <queue>
 
+// Some constants that get used a lot
 const int 	NUM_COLORS = 256,
-			MAX_COLOR = 255;
-
+			MAX_COLOR = 255,
+			WINDOW_X = 200,
+			WINDOW_Y = 200,
+			WINDOW_W = 800,
+			WINDOW_H = 600;
 // Shared values between langton functions
 enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
 // Background colors for the testing functions
@@ -477,7 +481,7 @@ void alphaRectangleFunction(CartesianCanvas* can) {
 	}
 }
 void alphaLangtonFunction(CartesianCanvas* can) {
-	const int 	IPF = 5000,								// Iterations per frame
+	const int 	IPF = 20000,							// Iterations per frame
 				WINDOW_W = can->getCartWidth(),			// Set the window sizes
 				WINDOW_H = can->getCartHeight(),
 				RADIUS = WINDOW_H/6;					// How far apart to space the ants
@@ -733,9 +737,9 @@ void trippyVoronoiFunction(CartesianCanvas* can) {
 			float xd1 = i-x[k];
 			float yd1 = j-y[k];
 			float d1 = sqrt(xd1*xd1+yd1*yd1);		// Find the distance to it closest
-			float xd2 = i-x[nk];
-			float yd2 = j-y[nk];
-			float d2 = sqrt(xd2*xd2+yd2*yd2);		// Then again to its second closest
+//			float xd2 = i-x[nk];
+//			float yd2 = j-y[nk];
+//			float d2 = sqrt(xd2*xd2+yd2*yd2);		// Then again to its second closest
 			float xkd = x[k]-x[nk];
 			float ykd = y[k]-y[nk];
 			float kd = sqrt(xkd*xkd+ykd*ykd);		// Find the distance between the CPs themselves
@@ -833,6 +837,15 @@ void fireFunction(CartesianCanvas* can) {
 	}
 }
 
+void textFunction(Canvas* can) {
+	const RGBfloatType BLACK = {0,0,0,1};
+	can->drawTextColor("A long time ago, in a galaxy far, far away",100,100,BLACK);
+	can->drawTextColor("Something extraordinary happened -- far more extraordinary than anything mankind has ever seen.",100,200,BLACK);
+	can->drawTextColor("Unfortunately, as nobody was around to witness the event, we are largely ignorant",100,300,BLACK);
+	can->drawTextColor("Of *what* exactly that extraordinary event was.",100,400,BLACK);
+	can->drawTextColor("And to that I say...oh well.",100,500,BLACK);
+}
+
 void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, bgcolor bg = BG_NONE) {
 	switch (bg) {
 		case BG_BLACK:
@@ -872,10 +885,7 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, bgcolor bg = BG_NONE)
 	c->end();
 }
 
-const int 	WINDOW_X = 200,
-			WINDOW_Y = 200,
-			WINDOW_W = 800,
-			WINDOW_H = 600;
+
 int main() {
 //	test(new Canvas(480800),points1,true);
 //	test(new Canvas(480000),points2,true);
@@ -892,10 +902,11 @@ int main() {
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,BG_WHITE);
 //	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
-//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,true,BG_BLACK);
+	test(new Cart(0, 0, 2560, 960, 0, 0, 2560, 960, -1),alphaLangtonFunction,true,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
 //	test(new Cart(0, 0, 1280, 1080, 0, 0, 1280, 1080, -1),voronoiFunction,true,BG_WHITE);
 //	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),trippyVoronoiFunction,false,BG_WHITE);
-	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
+//	test(new Canvas(100),textFunction,true);
 }

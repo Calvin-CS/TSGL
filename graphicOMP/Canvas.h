@@ -17,6 +17,7 @@
 #include "Triangle.h"				// Our own class for drawing triangles.
 #include "ShinyPolygon.h"			// Our own class for drawing polygons with colored vertices.
 #include "Polyline.h"				// Our own class for drawing polylines.
+#include "Text.h"					// Our own class for drawing text.
 #include "Array.h"					// Our own array for buffering drawing operations.
 #include "color.h"					// Our own interface for converting color types
 #include <omp.h>					// For OpenMP support
@@ -24,7 +25,7 @@
 #include <chrono>					// For timing drawing and FPS
 #include <thread>					// For spawning rendering in a different thread
 #include <mutex>					// Needed for locking the Canvas for thread-safety
-#include <iostream> //DEBUGGING
+#include <iostream> 				// DEBUGGING
 
 #define FPS 60
 #define FRAME 1.0f/FPS				// Represents a single frame
@@ -67,6 +68,7 @@ public:
 										RGBfloatType color);							// Draws a triangle with the given vertices and color
 	virtual void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);	// Draws a polygon of with given number of vertices with shading across it
 	virtual void drawText(const char * s, int x, int y);								// Draws a string of text at the given position
+	virtual void drawTextColor(const char * s, int x, int y, RGBfloatType color);		// Draws a string of text at the given position, with the given color
 	void setBackgroundColor(RGBfloatType color);					// Changes the background color
 	void clear();													// Clears the canvas
 	int getWindowX() 		{ return monitorX; }					// Accessor for the window width
@@ -92,7 +94,7 @@ public:
 //}
 
 /*
- * init initialized the Canvas with the values specified in the constructor
+ * init initializes the Canvas with the values specified in the constructor
  * Parameters:
  * 		c, a callback to the user's own draw function
  * 		xx, the x position of the Canvas window
@@ -106,6 +108,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 //	glutInitDisplayMode (GLUT_DOUBLE);
 	glDisable(GL_DEPTH_TEST);								// Turn off 3D depth-testing
 	glDisable(GL_POINT_SMOOTH);
+	gl_font(FL_HELVETICA, 12);
 	backgroundColor = {0.75f, 0.75f, 0.75f};				// Set the default background color
 	toClear = false;										// Don't need to clear at the start
 	started = false;  										// We haven't started the window yet
@@ -160,10 +163,12 @@ void Canvas::draw() {
 	}
 	mBufferLock.unlock();
 
+	gl_draw(" ",-100,100);								// OpenGl likes drawing the first string with a ? prepended, so get that out of the way
+
 	if (myShapes->size() == 0) {						// If there is nothing to render...
 		glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
 		glVertex2f(-1, -1);								// 	to render stuff
-		glEnd();
+		glEnd();1064
 	} else {
 		bool pointList = false;
 		// Iterate through our queue until we've made it to the end
@@ -293,7 +298,6 @@ void Canvas::clear() {
  * Parameters:
  * 		x, the x position of the point
  * 		y, the y position of the point
- * 	Returns: a new point at the given position
  */
 void Canvas::drawPoint(int x, int y) {
 	Point* p = new Point(x,y);						// Creates the Point with the specified coordinates
@@ -307,11 +311,7 @@ void Canvas::drawPoint(int x, int y) {
  * Parameters:
  * 		x, the x position of the point
  * 		y, the y position of the point
- * 		r, the red component
- * 		g, the red component
- * 		b, the red component
- * 		a, the alpha component
- * 	Returns: a new point at the given position with the specified color
+ * 		color, the color with which to draw the text
  */
 void Canvas::drawPointColor(int x, int y, RGBfloatType color) {
 	Point* p = new Point(x,y,color);				// Creates the Point with the specified coordinates and color
@@ -327,7 +327,6 @@ void Canvas::drawPointColor(int x, int y, RGBfloatType color) {
  * 		y1, the y position of the start of the line
  *		x2, the x position of the end of the line
  * 		y2, the y position of the end of the line
- * 	Returns: a new line with the given coordinates
  */
 void Canvas::drawLine(int x1, int y1, int x2, int y2) {
 	Line* l = new Line(x1,y1,x2,y2);				// Creates the Line with the specified coordinates
@@ -343,11 +342,7 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2) {
  * 		y1, the y position of the start of the line
  *		x2, the x position of the end of the line
  * 		y2, the y position of the end of the line
- * 		r, the red component
- * 		g, the red component
- * 		b, the red component
- * 		a, the alpha component
- * 	Returns: a new line with the given coordinates and the specified color
+ * 		color, the color with which to draw the text
  */
 void Canvas::drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color) {
 	Line* l = new Line(x1,y1,x2,y2,color);			// Creates the Line with the specified coordinates and color
@@ -363,7 +358,6 @@ void Canvas::drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color) {
  *		y, the y coordinate of the Rectangle's top edge
  * 		w, the width of the Rectangle
  *		h, the height of the Rectangle
- * 	Returns: a new rectangle with the given coordinates and dimensions
  */
 void Canvas::drawRectangle(int x, int y, int w, int h) {
 	Rectangle* rec = new Rectangle(x,y,w,h);		// Creates the Rectangle with the specified coordinates
@@ -379,11 +373,7 @@ void Canvas::drawRectangle(int x, int y, int w, int h) {
  *		y, the y coordinate of the Rectangle's top edge
  * 		w, the width of the Rectangle
  *		h, the height of the Rectangle
- * 		r, the red component
- * 		g, the green component
- * 		b, the blue component
- * 		a, the alpha component
- * 	Returns: a new rectangle with the given coordinates, dimensions, and color
+ * 		color, the color with which to draw the text
  */
 void Canvas::drawRectangleColor(int x, int y, int w, int h, RGBfloatType color) {
 	Rectangle* rec = new Rectangle(x,y,w,h,color);	// Creates the Rectangle with the specified coordinates and color
@@ -401,7 +391,6 @@ void Canvas::drawRectangleColor(int x, int y, int w, int h, RGBfloatType color) 
  * 		y2, the y position of the second vertex of the triangle
  * 		x3, the x position of the third vertex of the triangle
  * 		y3, the y position of the third vertex of the triangle
- * 	Returns: a new triangle with the given vertices
  */
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3);	// Creates the Triangle with the specified vertices
@@ -419,11 +408,7 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
  * 		y2, the y position of the second vertex of the triangle
  * 		x3, the x position of the third vertex of the triangle
  * 		y3, the y position of the third vertex of the triangle
- * 		r, the red component
- * 		g, the green component
- * 		b, the blue component
- * 		a, the alpha component
- * 	Returns: a new triangle with the given vertices and color
+ * 		color, the color with which to draw the triangle
  */
 void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,color);	// Creates the Triangle with the specified vertices and color
@@ -438,10 +423,7 @@ void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, R
  * 		size, the number of vertices in the polygon
  * 		x, an array of x positions of the vertices
  * 		y, an array of y positions of the vertices
- * 		r, an array of red components for the vertices
- * 		g, an array of green components for the vertices
- * 		b, an array of blue components for the vertices
- * 		a, an array of alpha components for the vertices
+ * 		color, an array of colors for the vertices
  */
 void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) {
 	ShinyPolygon* p = new ShinyPolygon(size);
@@ -456,12 +438,30 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
 /*
  * drawText prints text at the given coordinates
  * Parameters:
- * 		s, the char* to print
+ * 		s, the string to print
  * 		x, the x coordinate of the text's left edge
  * 		y, the y coordinate of the text's top edge
  */
 void Canvas::drawText(const char * s, int x, int y) {
-	fl_draw(s,x,y);
+	Text* t = new Text(s,x,y);						// Creates the Text with the specified string and coordinates
+	mutexLock mlock(buffer);
+	myBuffer->push(t);								// Push it onto our drawing buffer
+	mlock.unlock();
+}
+
+/*
+ * drawTextColor prints text at the given coordinates with the given color
+ * Parameters:
+ * 		s, the string to print
+ * 		x, the x coordinate of the text's left edge
+ * 		y, the y coordinate of the text's top edge
+ * 		color, the color with which to draw the text
+ */
+void Canvas::drawTextColor(const char * s, int x, int y, RGBfloatType color) {
+	Text* t = new Text(s,x,y,color);					// Creates the Text with the specified string and coordinates
+	mutexLock mlock(buffer);
+	myBuffer->push(t);								// Push it onto our drawing buffer
+	mlock.unlock();
 }
 
 /*

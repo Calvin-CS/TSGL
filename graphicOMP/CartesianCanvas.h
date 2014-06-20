@@ -52,6 +52,8 @@ public:
 	void drawTriangleColor(int x1, int y1, int x2, int y2,
 							int x3, int y3,	RGBfloatType color);			// Draws a triangle with the given vertices and color
 	void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);// Draws an arbitrary polygon with colored vertices
+	void drawText(const char * s, int x, int y);							// Draws a string of text at the given position
+	void drawTextColor(const char * s, int x, int y, RGBfloatType color);	// Draws a string of text at the given position, with the given color
 	const Function* drawFunction(const Function* f);						// Draws the Function on the screen
 	void drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);			// Draws axes crossing at the input coordinates
 };
@@ -317,6 +319,39 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType 
 	}
 	std::unique_lock<std::mutex> mlock(buffer);
 	myBuffer->push(p);										// Push it onto our drawing buffer
+	mlock.unlock();
+}
+
+/*
+ * drawText prints text at the given coordinates
+ * Parameters:
+ * 		s, the string to print
+ * 		x, the x coordinate of the text's left edge
+ * 		y, the y coordinate of the text's top edge
+ */
+void CartesianCanvas::drawText(const char * s, int x, int y) {
+	int actualX, actualY;
+	getScreenCoordinates(x, y, actualX, actualY);
+	Text* t = new Text(s,actualX,actualY);			// Creates the Text with the specified string and coordinates
+	mutexLock mlock(buffer);
+	myBuffer->push(t);								// Push it onto our drawing buffer
+	mlock.unlock();
+}
+
+/*
+ * drawTextColor prints text at the given coordinates with the given color
+ * Parameters:
+ * 		s, the string to print
+ * 		x, the x coordinate of the text's left edge
+ * 		y, the y coordinate of the text's top edge
+ * 		color, the color with which to draw the text
+ */
+void CartesianCanvas::drawTextColor(const char * s, int x, int y, RGBfloatType color) {
+	int actualX, actualY;
+	getScreenCoordinates(x, y, actualX, actualY);
+	Text* t = new Text(s,actualX,actualY,color);	// Creates the Text with the specified string and coordinates
+	mutexLock mlock(buffer);
+	myBuffer->push(t);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
