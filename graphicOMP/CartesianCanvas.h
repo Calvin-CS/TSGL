@@ -18,46 +18,9 @@ private:
 	Decimal pixelWidth, pixelHeight;					// cartWidth/window.w(), cartHeight/window.h()
 	bool zoomed, canZoom;								// Whether we've zoomed since last draw or we can zoom at all
 protected:
-	int handle(int e) {									//Handler for mouse events
-		if (!canZoom)						//If we can't zoom, don't bother handling anything
-			return 1;
-        static Decimal oldX = 0, oldY = 0;
-        int ret = Fl_Window::handle(e);
-		Decimal newX, newY, temp, aspect, mean, delta;
-        switch ( e ) {
-            case FL_PUSH:					// On mouse push, store the mouse position into oldX, oldY
-            	getCartesianCoordinates(Fl::event_x(),Fl::event_y(),oldX, oldY);
-                return(1);
-            case FL_RELEASE:				// On mouse release, store the mouse position into newX, newY
-            	getCartesianCoordinates(Fl::event_x(),Fl::event_y(),newX, newY);
-            	if (Fl::event_button() == FL_LEFT_MOUSE) {	// On left click, zoom in
-            		if (std::abs(newX-oldX) < cartWidth/32 && std::abs(newY-oldY) < cartHeight/32)
-            			return(1);
-            		if (oldX > newX) {	// Makes sure oldX, oldY is the topleft
-            			temp = oldX;
-            			oldX = newX;
-            			newX = temp;
-            		}
-            		if (oldY > newY) {
-            			temp = oldY;
-            			oldY = newY;
-            			newY = temp;
-            		}
-            		aspect = ((newX-oldX)/(newY-oldY))/(cartWidth/cartHeight);	// Compute the different in aspect ratios
-            		mean = (newY+oldY) / 2;				// Compute the middle of the current y dimension
-            		delta = aspect * (newY-oldY) / 2;	// Compute the new y radius with the given aspect ratio
-            		oldY = mean - delta;				// Adjust the Y dimensions to maintain the aspect ratio
-            		newY = mean + delta;
-            		recomputeDimensions(oldX,oldY,newX,newY);
-            	} else if (Fl::event_button() == FL_RIGHT_MOUSE) {	// On right click, zoom out
-            		recomputeDimensions(oldX-cartWidth,oldY-cartHeight,newX+cartWidth,newY+cartHeight);
-            	}
-                return(1);
-        }
-        return(ret);
-	}
+	int handle(int e);									// Handler for mouse events
 public:
-	CartesianCanvas(unsigned int b);				// Default constructor for our CartesianCanvas
+	CartesianCanvas(unsigned int b);					// Default constructor for our CartesianCanvas
 	CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin,
 			Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char *t);	// Explicit constructor for our CartesianCanvas
 	void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);	// Recomputes CartesianCanvas' size variables
@@ -154,10 +117,8 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
  * 		screenY, a reference variable to be filled with cartY's window position
  */
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
-	std::unique_lock<std::mutex> mlock(mutex);
 	screenX = ceil((cartX - minX) / cartWidth * monitorWidth);
 	screenY = ceil(h() - (cartY - minY) / cartHeight * monitorHeight);
-	mlock.unlock();
 }
 
 /*
@@ -169,10 +130,8 @@ void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &sc
  * 		cartY, a reference variable to be filled with screenY's Cartesian position
  */
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
-	std::unique_lock<std::mutex> mlock(mutex);
 	cartX = (screenX * cartWidth) / monitorWidth + minX;
 	cartY = minY-(screenY - h())*cartHeight/monitorHeight;
-	mlock.unlock();
 }
 
 /*
@@ -185,8 +144,8 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
 	Point* p = new Point(actualX, actualY);		// Creates the Point with the specified coordinates
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);							// Push it onto our drawing queue
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(p);							// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -204,8 +163,8 @@ void CartesianCanvas::drawPointColor(Decimal x, Decimal y, RGBfloatType color) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
 	Point* p = new Point(actualX, actualY, color);	// Creates the Point with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);									// Push it onto our drawing queue
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(p);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -222,8 +181,8 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
 	getScreenCoordinates(x1, y1, actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
 	Line* l = new Line(actualX1, actualY1, actualX2, actualY2); // Creates the Line with the specified coordinates
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(l);											// Push it onto our drawing queue
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(l);											// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -244,8 +203,8 @@ void CartesianCanvas::drawLineColor(Decimal x1, Decimal y1, Decimal x2, Decimal 
 	getScreenCoordinates(x1, y1,actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
 	Line* l = new Line(actualX1, actualY1, actualX2, actualY2, color);	// Creates the Line with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(l);														// Push it onto our drawing queue
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(l);													// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -261,9 +220,9 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h) 
 	int actualX, actualY, actualW, actualH;
 	getScreenCoordinates(x, y, actualX, actualY);
 	getScreenCoordinates(w, h, actualW, actualH);
-	Rectangle* rec = new Rectangle(x, y, w, h);	// Creates the Rectangle with the specified coordinates
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(rec);						// Push it onto our drawing queue
+	Rectangle* rec = new Rectangle(x, y, w, h);				// Creates the Rectangle with the specified coordinates
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(rec);									// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -284,8 +243,8 @@ void CartesianCanvas::drawRectangleColor(Decimal x, Decimal y, Decimal w, Decima
 	getScreenCoordinates(x, y, actualX, actualY);
 	getScreenCoordinates(w, h, actualW, actualH);
 	Rectangle* rec = new Rectangle(x, y, w, h, color);	// Creates the Rectangle with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(rec);									// Push it onto our drawing queue
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(rec);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -305,9 +264,9 @@ void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
 	getScreenCoordinates(x3, y3, actualX3, actualY3);
 	Triangle* t = new Triangle(actualX1, actualY1, actualX2,
-			actualY2, actualX3, actualY3);	// Creates the Triangle with the specified vertices
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(t);						// Push it onto our drawing queue
+			actualY2, actualX3, actualY3);				// Creates the Triangle with the specified vertices
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(t);									// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -332,8 +291,8 @@ void CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, 
 	getScreenCoordinates(x3, y3, actualX3, actualY3);
 	Triangle* t = new Triangle(actualX1, actualY1, actualX2, actualY2,
 								actualX3, actualY3, color);			// Creates the Triangle with the specified vertices and color
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(t);												// Push it onto our drawing queue
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(t);												// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -355,8 +314,8 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType 
 		getScreenCoordinates(x[i], y[i], actualX, actualY);
 		p->addVertex(actualX, actualY, color[i]);
 	}
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);										// Push it onto our drawing queue
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(p);										// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -365,15 +324,52 @@ const Function* CartesianCanvas::drawFunction(const Function* f) {
 	Polyline *p = new Polyline(1 + (maxX-minX) / pixelWidth);
 	for (Decimal x = minX; x <= maxX; x += pixelWidth) {
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
-		std::unique_lock<std::mutex> mlock(mutex);
 		p->addVertex(screenX, screenY);
-		mlock.unlock();
 	}
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);										// Push it onto our drawing queue
+	std::unique_lock<std::mutex> mlock(buffer);
+	myBuffer->push(p);										// Push it onto our drawing buffer
 	mlock.unlock();
 
 	return f;
+}
+
+int CartesianCanvas::handle(int e) {
+	if (!canZoom)											// If we can't zoom, don't bother handling anything
+		return 1;
+	static Decimal oldX = 0, oldY = 0;
+	int ret = Fl_Window::handle(e);
+	Decimal newX, newY, temp, aspect, mean, delta;
+	switch ( e ) {
+		case FL_PUSH:										// On mouse push, store the mouse position into oldX, oldY
+			getCartesianCoordinates(Fl::event_x(),Fl::event_y(),oldX, oldY);
+			return(1);
+		case FL_RELEASE:									// On mouse release, store the mouse position into newX, newY
+			getCartesianCoordinates(Fl::event_x(),Fl::event_y(),newX, newY);
+			if (Fl::event_button() == FL_LEFT_MOUSE) {		// On left click, zoom in
+				if (std::abs(newX-oldX) < cartWidth/32 && std::abs(newY-oldY) < cartHeight/32)
+					return(1);
+				if (oldX > newX) {							// Makes sure oldX, oldY is the topleft
+					temp = oldX;
+					oldX = newX;
+					newX = temp;
+				}
+				if (oldY > newY) {
+					temp = oldY;
+					oldY = newY;
+					newY = temp;
+				}
+				aspect = ((newX-oldX)/(newY-oldY))/(cartWidth/cartHeight);	// Compute the different in aspect ratios
+				mean = (newY+oldY) / 2;						// Compute the middle of the current y dimension
+				delta = aspect * (newY-oldY) / 2;			// Compute the new y radius with the given aspect ratio
+				oldY = mean - delta;						// Adjust the Y dimensions to maintain the aspect ratio
+				newY = mean + delta;
+				recomputeDimensions(oldX,oldY,newX,newY);
+			} else if (Fl::event_button() == FL_RIGHT_MOUSE) {	// On right click, zoom out
+				recomputeDimensions(oldX-cartWidth,oldY-cartHeight,newX+cartWidth,newY+cartHeight);
+			}
+			return(1);
+	}
+	return(ret);
 }
 
 #endif /* CARTESIANCANVAS_H_- */

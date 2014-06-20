@@ -3,7 +3,7 @@
  *
  * Created on: Jun 11, 2014
  * Author: Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/12/2014
+ * Last Modified: Mark Vander Stel, 6/20/2014
  */
 
 #ifndef ARRAY_H_
@@ -17,14 +17,7 @@ class Array {
 private:
 	unsigned int first_, last_, capacity_, size_;
 	Item* myArray;				// Our array that doesn't look like one...
-
-//	std::mutex mutex_;			// Mutex for locking the list so that only one
-								// thread can read/write at a time
 public:
-//	Array() {
-//		// EHLOO
-//	}
-
 	Array(unsigned int size) {
 		capacity_ = size;
 		myArray = new Item[size];
@@ -41,10 +34,10 @@ public:
 	 * clear() empties the array and resets it
 	 */
 	void clear() {
-//		std::unique_lock<std::mutex> mlock(mutex_);
 		if (first_ > last_) {						// If the array wraps around...
 			for (; first_ < capacity_; first_++) {	// Delete from first to the end
 				delete myArray[first_];
+				myArray[first_] = NULL;
 			}
 			first_ = 0;								// Move first to the beginning
 		}
@@ -55,8 +48,26 @@ public:
 		}
 
 		first_ = last_ = size_ = 0;					// Reset all vars
-//		mlock.unlock();
 	}
+
+	/*
+	 * shallowClear empties the array but does not delete the objects
+	 * 	WILL RESULT IN MEMORY LEAK IF THE OBJECTS ARE NOT POINTED TO ANYWHERE ELSE!
+	 */
+	void shallowClear() {
+			if (first_ > last_) {						// If the array wraps around...
+				for (; first_ < capacity_; first_++) {	// Delete from first to the end
+					myArray[first_] = NULL;
+				}
+				first_ = 0;								// Move first to the beginning
+			}
+
+			for (; first_ <= last_; first_++) {			// Delete from first to last
+				myArray[first_] = NULL;
+			}
+
+			first_ = last_ = size_ = 0;					// Reset all vars
+		}
 
 	/*
 	 * operator[] returns the item at the index
@@ -65,13 +76,12 @@ public:
 	 * Returns: the item at that index
 	 */
 	const Item operator[] (unsigned int index) {
-//		std::unique_lock<std::mutex> mlock(mutex_);
 		if (size_ == 0) {
-//			mlock.unlock();
-			throw std::out_of_range("Array::operator[](): Array is empty");
+			throw std::out_of_range("Array::operator[](): array is empty");
+		} else if (index >= size_) {
+			throw std::out_of_range("Array::operator[](): index is larger than number of items in array");
 		} else {
 			Item item = myArray[(first_ + index) % capacity_];	// Wrap around for the underlying array
-//			mlock.unlock();
 			return item;
 		}
 	}
@@ -94,10 +104,7 @@ public:
 	 * isEmpty() returns true if the array has no items, false otherwise
 	 */
 	bool isEmpty() {
-//		std::unique_lock<std::mutex> mlock(mutex_);
-		bool empty = myArray[first_] == NULL;				// If there is no item...
-//		mlock.unlock();
-		return empty;
+		return myArray[first_] == NULL;				// If there is no item...
 	}
 
 	/*
@@ -108,8 +115,7 @@ public:
 	 * Returns: the same item
 	 */
 	Item push(Item item) {
-//		std::unique_lock<std::mutex> mlock(mutex_);
-		if (myArray[first_] != NULL) {							// If the array has no items...
+		if (myArray[first_] != NULL) {							// If the array has items...
 			(last_ + 1) == capacity_ ? last_ = 0 : last_++;		// Increment last
 		}
 
@@ -120,10 +126,7 @@ public:
 			size_++;											// Otherwise, we added an item
 		}
 
-		myArray[last_] = item;									// Actually add the item
-
-//		mlock.unlock();
-		return item;
+		return myArray[last_] = item;							// Actually add the item
 	}
 };
 

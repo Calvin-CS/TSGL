@@ -2,7 +2,7 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/19/2014
+ * Last Modified: Mark Vander Stel, 6/20/2014
  */
 
 #ifndef CANVAS_H_
@@ -31,19 +31,20 @@
 #define FRAME 1.0f/FPS				// Represents a single frame
 
 typedef std::chrono::high_resolution_clock highResClock;
+typedef std::unique_lock<std::mutex> mutexLock;
 
 class Canvas : public Fl_Window {
 protected:
 	Array<Shape*> * myShapes;										// Our buffer of shapes to draw
+	Array<Shape*> * myBuffer;										// Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
 	int counter;													// Counter for the number of frames that have elapsed in the current session (for animations)
 	int monitorX,monitorY,monitorWidth,monitorHeight;  				// Positioning and sizing data for the Canvas
 	RGBfloatType defaultColor; 										// Our current global RGB drawing color
 	RGBfloatType backgroundColor;									// The background color
 	bool toClear;													// Flag for clearing the canvas
-	int drawBufferSize;												// Maximum allowed Shapes in our drawing List
 	bool started;													// Whether our canvas is running and the frame counter is counting
 	std::thread renderThread;										// Thread dedicated to rendering the Canvas
-	std::mutex mutex;												// Mutex for locking the Canvas so that only one thread can read/write at a time
+	std::mutex shapes, buffer;										// Mutexes for locking the Canvas so that only one thread can read/write at a time
 	void init(int xx, int yy, int ww, int hh, unsigned int b);		// Method for initializing the canvas
 	void draw();													// Method for drawing the canvas and the shapes within
 	inline static void Canvas_Callback(void* userdata);				// Callback so that the canvas redraws periodically
@@ -79,7 +80,6 @@ public:
 	float getColorB() 		{ return defaultColor.B; }				// Accessor for the blue component of the global drawing color
 	float getColorA() 		{ return defaultColor.A; }				// Accessor for the alpha component of the global drawing color
 	int getFrameNumber() 	{ return counter; }						// Accessor for the number of frames rendered so far
-	int getBufferSize() 	{ return drawBufferSize; }				// Accessor for the Shape list's buffer size
 	float getFPS() 			{ return realFPS; }						// Accessor for true FPS
 	bool isOpen() 			{ return visible(); }					// Returns if the window is visible, which would mean it's not closed
 	void showFPS(bool b) 	{ showFPS_ = b; }						// Mutator to show debugging FPS
@@ -114,11 +114,11 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	startTime = highResClock::now();						// Record the init time
 	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;  // Initialize translation
 	myShapes = new Array<Shape*>(b);						// Initialize myShapes
+	myBuffer = new Array<Shape*>(b);
 	box(FL_FLAT_BOX);  										// Sets the box we will draw to (the only one)
 	setColor(0, 0, 0, 255);										// Our default global drawing color is black
 	Fl::add_timeout(FRAME, Canvas_Callback, (void*)this);  	// Adds a callback after 1/60 second to the Canvas' callback function
 	showFPS_ = false;										// Set debugging FPS to false
-
 }
 
 /*
@@ -152,7 +152,14 @@ void Canvas::draw() {
 	counter++;				// Increment the frame counter
 	Shape* s;				// Pointer to the next Shape in the queue
 
-	std::unique_lock<std::mutex> mlock(mutex);
+	mutexLock mBufferLock(buffer);						// Time to flush our buffer
+	if (myBuffer->size() > 0) {							// But only if there is anything to flush
+		for (unsigned int i = 0; i < myBuffer->size(); i++) {
+			myShapes->push(myBuffer->operator[](i));
+		}
+		myBuffer->shallowClear();						// We want to clear the buffer but not delete those objects as we still need to draw them
+	}
+	mBufferLock.unlock();
 
 	if (myShapes->size() == 0) {						// If there is nothing to render...
 		glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
@@ -184,7 +191,6 @@ void Canvas::draw() {
 			glEnd();										// Stop drawing in point mode
 		myShapes->clear();									// Clear the buffer of shapes to be drawn
 	}
-	mlock.unlock();
 
 	gl_finish();
 }
@@ -234,8 +240,8 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) : Fl_W
 int Canvas::start() {
 	if (started) return -1;										// If we're already started, return error code -1
 	started = true;												// We've now started
-//	callback(close_cb,window);							// Add the function to call when the window is closed
-    show();												// Show the window
+//	callback(close_cb,window);									// Add the function to call when the window is closed
+    show();														// Show the window
     renderThread = std::thread(Fl::run);						// Spawn the rendering thread
     return 0;
 }
@@ -259,12 +265,10 @@ int Canvas::end() {
  * 		a, the alpha component
  */
 void Canvas::setColor(float r, float g, float b, float a) {
-	std::unique_lock<std::mutex> mlock(mutex);
 	defaultColor.R = r;
 	defaultColor.G = g;
 	defaultColor.B = b;
 	defaultColor.A = a;
-	mlock.unlock();
 }
 
 /*
@@ -273,11 +277,9 @@ void Canvas::setColor(float r, float g, float b, float a) {
  * 		color, the RGBfloatType with the color. The alpha channel is ignored
  */
 void Canvas::setBackgroundColor(RGBfloatType color) {
-	std::unique_lock<std::mutex> mlock(mutex);
 	backgroundColor.R = color.R;
 	backgroundColor.G = color.R;
 	backgroundColor.B = color.R;
-	mlock.unlock();
 }
 
 void Canvas::clear() {
@@ -293,8 +295,8 @@ void Canvas::clear() {
  */
 void Canvas::drawPoint(int x, int y) {
 	Point* p = new Point(x,y);						// Creates the Point with the specified coordinates
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);								// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(p);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -311,8 +313,8 @@ void Canvas::drawPoint(int x, int y) {
  */
 void Canvas::drawPointColor(int x, int y, RGBfloatType color) {
 	Point* p = new Point(x,y,color);				// Creates the Point with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);								// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(p);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -327,8 +329,8 @@ void Canvas::drawPointColor(int x, int y, RGBfloatType color) {
  */
 void Canvas::drawLine(int x1, int y1, int x2, int y2) {
 	Line* l = new Line(x1,y1,x2,y2);				// Creates the Line with the specified coordinates
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(l);								// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(l);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -347,8 +349,8 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2) {
  */
 void Canvas::drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color) {
 	Line* l = new Line(x1,y1,x2,y2,color);			// Creates the Line with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(l);								// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(l);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -363,8 +365,8 @@ void Canvas::drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color) {
  */
 void Canvas::drawRectangle(int x, int y, int w, int h) {
 	Rectangle* rec = new Rectangle(x,y,w,h);		// Creates the Rectangle with the specified coordinates
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(rec);							// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(rec);							// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -383,8 +385,8 @@ void Canvas::drawRectangle(int x, int y, int w, int h) {
  */
 void Canvas::drawRectangleColor(int x, int y, int w, int h, RGBfloatType color) {
 	Rectangle* rec = new Rectangle(x,y,w,h,color);	// Creates the Rectangle with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(rec);							// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(rec);							// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -401,8 +403,8 @@ void Canvas::drawRectangleColor(int x, int y, int w, int h, RGBfloatType color) 
  */
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3);	// Creates the Triangle with the specified vertices
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(t);								// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(t);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -423,8 +425,8 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
  */
 void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,color);	// Creates the Triangle with the specified vertices and color
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(t);										// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(t);										// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -444,8 +446,8 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
 	for (int i = 0; i < size; i++) {
 		p->addVertex(x[i],y[i],color[i]);
 	}
-	std::unique_lock<std::mutex> mlock(mutex);
-	myShapes->push(p);										// Push it onto our drawing queue
+	mutexLock mlock(buffer);
+	myBuffer->push(p);										// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -461,13 +463,10 @@ void Canvas::drawText(const char * s, int x, int y) {
 }
 
 /*
- * getTime returns the time elapsed since the Canvas has started drawing (in nanoseconds)
+ * getTime returns the time elapsed since the Canvas has started drawing (in microseconds)
  */
 double Canvas::getTime() {
-	std::unique_lock<std::mutex> mlock(mutex);
-	double time = std::chrono::duration_cast<std::chrono::microseconds>(highResClock::now() - startTime).count() / 1000000.0;
-	mlock.unlock();
-	return time;
+	return std::chrono::duration_cast<std::chrono::microseconds>(highResClock::now() - startTime).count() / 1000000.0;
 }
 
 #endif /* CANVAS_H_ */
