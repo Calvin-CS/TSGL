@@ -2,7 +2,7 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/20/2014
+ * Last Modified: Patrick Crain, 6/20/2014
  */
 
 #ifndef CANVAS_H_
@@ -168,7 +168,7 @@ void Canvas::draw() {
 	if (myShapes->size() == 0) {						// If there is nothing to render...
 		glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
 		glVertex2f(-1, -1);								// 	to render stuff
-		glEnd();1064
+		glEnd();
 	} else {
 		bool pointList = false;
 		// Iterate through our queue until we've made it to the end

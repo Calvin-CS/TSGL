@@ -2,7 +2,7 @@
  * CartesianCanvas.h provides a Canvas with a Cartesian coordinate system for ease of plotting
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/19/2014
+ * Last Modified: Patrick Crain, 6/20/2014
  */
 
 #ifndef CARTESIANCANVAS_H_
