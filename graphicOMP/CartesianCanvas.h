@@ -22,7 +22,7 @@ protected:
 public:
 	CartesianCanvas(unsigned int b);					// Default constructor for our CartesianCanvas
 	CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin,
-			Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char *t);	// Explicit constructor for our CartesianCanvas
+			Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char *t);			// Explicit constructor for our CartesianCanvas
 	void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);	// Recomputes CartesianCanvas' size variables
 	void getScreenCoordinates(Decimal cartX, Decimal cartY,
 			int &screenX, int &screenY);									// Returns the equivalent screen coordinates for the specified Cartesian ones
@@ -53,6 +53,7 @@ public:
 							int x3, int y3,	RGBfloatType color);			// Draws a triangle with the given vertices and color
 	void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);// Draws an arbitrary polygon with colored vertices
 	const Function* drawFunction(const Function* f);						// Draws the Function on the screen
+	void drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);			// Draws axes crossing at the input coordinates
 };
 
 /*
@@ -319,6 +320,11 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType 
 	mlock.unlock();
 }
 
+/*
+ * drawFunction draws the Function on the screen
+ * Parameters:
+ * 		f, a Function type extending Function
+ */
 const Function* CartesianCanvas::drawFunction(const Function* f) {
 	int screenX = 0, screenY = 0;
 	Polyline *p = new Polyline(1 + (maxX-minX) / pixelWidth);
@@ -331,6 +337,33 @@ const Function* CartesianCanvas::drawFunction(const Function* f) {
 	mlock.unlock();
 
 	return f;
+}
+
+/*
+ * drawAxes draws axes on the screen
+ * Parameters:
+ * 		x, the x location for the y-axis
+ * 		y, the y location for the x-axis
+ * 		dx, the distance between marks on the x-axis
+ * 		dy, the distance between marks on the y-axis
+ */
+void CartesianCanvas::drawAxes(Decimal x, Decimal y, Decimal dx = 0, Decimal dy = 0) {
+	drawLine(maxX, y, minX, y);					// Make the two axes
+	drawLine(x, maxY, x, minY);
+	if (dx != 0 && dy != 0) {
+		for (int x = dx; x < maxX; x += dx) {
+			drawLine(x, y + 4*pixelHeight, x, y - 4*pixelHeight);
+		}
+		for (int x = -dx; x > minX; x -= dx) {
+			drawLine(x, y + 4*pixelHeight, x, y - 4*pixelHeight);
+		}
+		for (int y = dy; y < maxY; y += dy) {
+			drawLine(x + 4*pixelWidth, y, x - 4*pixelWidth, y);
+		}
+		for (int y = -dy; y > minY; y -= dy) {
+			drawLine(x + 4*pixelWidth, y, x - 4*pixelWidth, y);
+		}
+	}
 }
 
 int CartesianCanvas::handle(int e) {
