@@ -11,17 +11,16 @@
 #include <FL/Fl.H>					// For using basic FLTK library functions
 #include <FL/Fl_Window.H>			// For inheriting Fl_Window, which draws our window
 #include <FL/gl.h>					// For FLTK's built-in OpenGL functions
-#include <GL/glut.h>
 #include "Point.h"					// Our own class for drawing single points.
 #include "Line.h"					// Our own class for drawing straight lines.
 #include "Rectangle.h"				// Our own class for drawing rectangles.
 #include "Triangle.h"				// Our own class for drawing triangles.
 #include "ShinyPolygon.h"			// Our own class for drawing polygons with colored vertices.
 #include "Polyline.h"				// Our own class for drawing polylines.
-#include "Array.h"					// Our own thread-safe array for buffering drawing operations.
+#include "Array.h"					// Our own array for buffering drawing operations.
 #include "color.h"					// Our own interface for converting color types
 #include <omp.h>					// For OpenMP support
-#include <cmath>					// For converting HSV to RGB
+#include <cmath>					// For converting HSV to RGB and other math stuff
 #include <chrono>					// For timing drawing and FPS
 #include <thread>					// For spawning rendering in a different thread
 #include <mutex>					// Needed for locking the Canvas for thread-safety
@@ -59,14 +58,14 @@ public:
 	void setColor(float r, float g, float b, float a);				// Sets the global drawing color
 	virtual void drawPoint(int x, int y);							// Draws a point at the given coordinates
 	virtual void drawPointColor(int x, int y, RGBfloatType color);	// Draws a point at the given coordinates with the given color
-	virtual void drawLine(int x1, int y1, int x2, int y2);					// Draws a line at the given coordinates
+	virtual void drawLine(int x1, int y1, int x2, int y2);								// Draws a line at the given coordinates
 	virtual void drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color);		// Draws a line at the given coordinates with the given color
 	virtual void drawRectangle(int x, int y, int w, int h);								// Draws a rectangle at the given coordinates with the given dimensions
 	virtual void drawRectangleColor(int x, int y, int w, int h, RGBfloatType color);	// Draws a rectangle at the given coordinates with the given dimensions and color
 	virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);			// Draws a triangle with the given vertices
 	virtual void drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
 										RGBfloatType color);							// Draws a triangle with the given vertices and color
-	virtual void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);
+	virtual void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);	// Draws a polygon of with given number of vertices with shading across it
 	virtual void drawText(const char * s, int x, int y);								// Draws a string of text at the given position
 	void setBackgroundColor(RGBfloatType color);					// Changes the background color
 	void clear();													// Clears the canvas
@@ -282,6 +281,9 @@ void Canvas::setBackgroundColor(RGBfloatType color) {
 	backgroundColor.B = color.R;
 }
 
+/*
+ * clear removes all shapes and sets the background to the set color
+ */
 void Canvas::clear() {
 	toClear = true;
 }
