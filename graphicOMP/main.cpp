@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cmath>
 #include <complex>
+#include <queue>
 
 const int 	NUM_COLORS = 256,
 			MAX_COLOR = 255;
@@ -27,18 +28,26 @@ static void print(const double d) {
 	std::cout << d << std::endl << std::flush;
 }
 
+static float randfloat(int divisor = 10000) {
+	return (rand() % divisor) / (float)divisor;
+}
+
 void points1(Canvas* can) {
+	static int counter;
+	counter = 0;
 	int nthreads = omp_get_num_threads();
-	#pragma omp parallel num_threads(omp_get_num_procs())
-	{
+//	#pragma omp parallel num_threads(omp_get_num_procs())
+//	{
 		int color;
 		for (int i = omp_get_thread_num(); i < can->getWindowWidth(); i+= nthreads) {
-			for (int j = 0; j <= can->getWindowHeight(); j++) {
+			for (int j = 0; j < can->getWindowHeight(); j++) {
+				counter++;
 				color = i*MAX_COLOR/2/can->getWindowWidth() + j*MAX_COLOR/2/can->getWindowHeight();
 				can->drawPointColor(i,j,RGBintToRGBfloat(color,color,color));
 			}
 		}
-	}
+		std::cout << counter << std::endl;
+//	}
 }
 void points2(Canvas* can) {
 	int myPart = can->getWindowHeight() / omp_get_num_threads();
@@ -148,6 +157,7 @@ void mandelbrotFunction(CartesianCanvas* can) {
 					break;
 			}
 		}
+		print(can->getTime());
 		while(can->isOpen() && !can->getZoomed()) {
 			//busy wait
 		}
@@ -559,7 +569,6 @@ void mandelbrot2Function(CartesianCanvas* can) {
 		}
 	}
 }
-
 void novaFunction(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 200;
@@ -607,13 +616,16 @@ void novaFunction(CartesianCanvas* can) {
 void voronoiFunction(CartesianCanvas* can) {
 	const int	WINDOW_W = can->getCartWidth(),		// Set the screen sizes
 				WINDOW_H = can->getCartHeight(),
-				POINTS = 50;						// Set the number of control points
+				POINTS = 100;						// Set the number of control points
 	srand (time(NULL));								// Seed the random number generator
 	int* x = new int[POINTS]();						// Initialize an array for POINTS x coords
 	int* y = new int[POINTS]();						// Do the same for y coords
-	RGBfloatType color[POINTS];						// And for an array of collors
+	int* kvalue = new int[WINDOW_W * WINDOW_H]();	// Create a mapping of control point values
+	RGBfloatType color[POINTS];						// And for an array of colors
 	RGBfloatType tc, rc, lc, bc, xc, yc;			// Color for the top, right, left, bottom, x-average, and y-average
-	int bestdist, bestk, dist, xd, yd;				// Keep track of the closes matches and current distances
+	float bdist, dist, xd, yd;						// Keep track of the closes matches and current distances
+	float wdist[POINTS] { 0 };						// Keep track of the worst distances for shading
+	int bestk;										// Keep track of the current best k-value
 	for (int i = 0; i < POINTS; i++) {				// Randomize the control points
 		x[i] = rand() % WINDOW_W;
 		y[i] = rand() % WINDOW_H;
@@ -623,25 +635,200 @@ void voronoiFunction(CartesianCanvas* can) {
 	lc = randomColor(rand());
 	bc = randomColor(rand());
 	for (int i = 0; i < POINTS; i++) {				// For each control point...
-		float xd = (float)x[i] / WINDOW_W;			// Calculate an value from 0:1 based on x coord
-		float yd = (float)y[i] / WINDOW_H;			// Do the same for y
-		xc = blendedColor(lc,rc,xd);				// Interpolate between the left and right colors
-		yc = blendedColor(tc,bc,yd);				// Do the same for top and bottom
+		float xx = (float)x[i] / WINDOW_W;			// Calculate an value from 0:1 based on x coord
+		float yy = (float)y[i] / WINDOW_H;			// Do the same for y
+		xc = blendedColor(lc,rc,xx);				// Interpolate between the left and right colors
+		yc = blendedColor(tc,bc,yy);				// Do the same for top and bottom
 		color[i] = blendedColor(xc,yc,0.5f);		// Complete the 4-way interpolation
 	}
+	#pragma omp parallel for private(bdist, xd, yd, dist, bestk)
 	for (int i = 0; i < WINDOW_W; i++) {			// For each individual point...
 		for(int j = 0; j < WINDOW_H; j++) {
-			bestdist = 9999;						// Reset the best distance
+			bdist = 9999;							// Reset the best distance
 			for(int k = 0; k < POINTS; k++) {		// Find the closest control point
 				xd = i-x[k];						// Calculate the distance from each control point
 				yd = j-y[k];
 				dist = sqrt(xd*xd+yd*yd);
-				if (dist < bestdist) {				// If it's the closest one
-					bestdist = dist;				// Update the best distance and control point
+				if (dist < bdist) {					// If it's the closest one
+					bdist = dist;					// Update the best distance and control point
 					bestk = k;
 				}
 			}
+			kvalue[i * WINDOW_H + j] = bestk;
 			can->drawPointColor(i,j,color[bestk]);	// Draw the point with the closest control's color
+			if (bdist > wdist[bestk])
+				wdist[bestk] = bdist;
+		}
+	}
+//	for (int i = 0; i < WINDOW_W; i++) {			// For each individual point...
+//		for(int j = 0; j < WINDOW_H; j++) {
+//			int k = kvalue[i * WINDOW_H + j];
+//			xd = i-x[k];
+//			yd = j-y[k];
+//			float shading = sqrt(xd*xd+yd*yd)/wdist[k];
+//			if (shading > 1) shading = 1;
+//			else if (shading < 0) shading = 0;
+//			can->drawPointColor(i,j,{0,0,0,shading});	// Draw the point with the closest control's color
+//		}
+//	}
+}
+void trippyVoronoiFunction(CartesianCanvas* can) {
+	const int	WINDOW_W = can->getCartWidth(),		// Set the screen sizes
+				WINDOW_H = can->getCartHeight(),
+				POINTS = 100;						// Set the number of control points
+	srand (time(NULL));								// Seed the random number generator
+	int* x = new int[POINTS]();						// Initialize an array for POINTS x coords
+	int* y = new int[POINTS]();						// Do the same for y coords
+	int* kvalue = new int[WINDOW_W * WINDOW_H]();	// Create a mapping of control point values
+	int* kvalue2 = new int[WINDOW_W * WINDOW_H]();	// Create a mapping of more control point values
+	RGBfloatType color[POINTS];						// And for an array of colors
+	RGBfloatType tc, rc, lc, bc, xc, yc;			// Color for the top, right, left, bottom, x-average, and y-average
+	float bdist, nbdist, dist, xd, yd;				// Keep track of the closes matches and current distances
+	float wdist[POINTS] { 0 };						// Keep track of the worst distances for shading
+	int bestk = -1, nextbestk = -1;					// Keep track of the current best k-value
+	for (int i = 0; i < POINTS; i++) {				// Randomize the control points
+		x[i] = rand() % WINDOW_W;
+		y[i] = rand() % WINDOW_H;
+	}
+	tc = randomColor(rand());						// Randomize the axis colors
+	rc = randomColor(rand());
+	lc = randomColor(rand());
+	bc = randomColor(rand());
+	for (int i = 0; i < POINTS; i++) {				// For each control point...
+		float xx = (float)x[i] / WINDOW_W;			// Calculate an value from 0:1 based on x coord
+		float yy = (float)y[i] / WINDOW_H;			// Do the same for y
+		xc = blendedColor(lc,rc,xx);				// Interpolate between the left and right colors
+		yc = blendedColor(tc,bc,yy);				// Do the same for top and bottom
+		color[i] = blendedColor(xc,yc,0.5f);		// Complete the 4-way interpolation
+//		color[i] = randomColor(rand());				// Or random colors, if you prefer
+	}
+	for (int i = 0; i < WINDOW_W; i++) {			// For each individual point...
+		for(int j = 0; j < WINDOW_H; j++) {
+			bdist = nbdist = 9999;					// Reset the best distance
+			for(int k = 0; k < POINTS; k++) {		// Find the closest control point
+				xd = i-x[k];						// Calculate the distance from each control point
+				yd = j-y[k];
+				dist = sqrt(xd*xd+yd*yd);
+				if (dist < bdist) {					// If it's the closest one
+					nbdist = bdist;					// Update the next best distance and control point
+					nextbestk = bestk;
+					bdist = dist;					// Update the best distance and control point
+					bestk = k;
+				} else if (dist < nbdist) {			// If it's the second closest one
+					nbdist = dist;					// Just update the next best distance / CP
+					nextbestk = k;
+				}
+			}
+			kvalue[i * WINDOW_H + j] = bestk;
+			kvalue2[i * WINDOW_H + j] = nextbestk;
+			can->drawPointColor(i,j,color[bestk]);	// Draw the point with the closest control's color
+			if (bdist > wdist[bestk])
+				wdist[bestk] = bdist;
+		}
+	}
+	for (int i = 0; i < WINDOW_W; i++) {			// For each individual point...
+		for(int j = 0; j < WINDOW_H; j++) {
+			int k = kvalue[i * WINDOW_H + j];		// Find its closest control point
+			int nk = kvalue2[i * WINDOW_H + j];		// Then find its second closest
+			float xd1 = i-x[k];
+			float yd1 = j-y[k];
+			float d1 = sqrt(xd1*xd1+yd1*yd1);		// Find the distance to it closest
+			float xd2 = i-x[nk];
+			float yd2 = j-y[nk];
+			float d2 = sqrt(xd2*xd2+yd2*yd2);		// Then again to its second closest
+			float xkd = x[k]-x[nk];
+			float ykd = y[k]-y[nk];
+			float kd = sqrt(xkd*xkd+ykd*ykd);		// Find the distance between the CPs themselves
+			float shading = d1/kd;
+			if (shading > 1) shading = 1;
+			else if (shading < 0) shading = 0;
+			can->drawPointColor(i,j,{0,0,0,shading});	// Draw the point with the closest control's color
+		}
+	}
+}
+
+void fireFunction(CartesianCanvas* can) {
+	const int	WINDOW_W = can->getCartWidth(),			// Set the screen sizes
+				WINDOW_H = can->getCartHeight();
+	const float LIFE = 10,
+				STRENGTH = 0.03,
+				MAXDIST = sqrt(WINDOW_W*WINDOW_W+WINDOW_H*WINDOW_H)/2;
+	srand (time(NULL));								// Seed the random number generator
+	bool* onFire = new bool[WINDOW_W * WINDOW_H]();
+	float* flammability = new float[WINDOW_W * WINDOW_H]();
+	for (int i = 0; i < WINDOW_W; i++) {			// For each individual point...
+		for(int j = 0; j < WINDOW_H; j++) {
+			float xi = std::abs(WINDOW_W/2-i);
+			float yi = std::abs(WINDOW_H/2-j);
+			float tdist = (MAXDIST-sqrt(xi*xi+yi*yi))/MAXDIST;
+			float f = 0.01+(i*j%100)/100.0*randfloat(100)/2*tdist;
+			flammability[i * WINDOW_H + j] = f;
+			can->drawPointColor(i,j,{0.0,f,0.0,1.0});
+		}
+	}
+	for (int reps = 0; reps < 32; reps++) {
+		int x = rand() % WINDOW_W;
+		int y = rand() % WINDOW_H;
+		int w = rand() % (WINDOW_W-x);
+		int h = rand() % (WINDOW_H-y);
+		if (w > 32)
+			w = 32;
+		if (h > 32)
+			h = 32;
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+				flammability[(x+i) * WINDOW_H + (y+j)] = 0.01;
+				can->drawPointColor(x+i,y+j,{0.0,0,1.0,0.25});
+			}
+		}
+	}
+	struct firePoint {
+		int x;
+		int y;
+		float life;
+		float strength;
+	};
+	std::queue<firePoint> fires;
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++) {
+			fires.push({WINDOW_W/2-1+i,WINDOW_H/2-1+j,LIFE,STRENGTH});
+			can->drawPointColor(WINDOW_W/2-1+i,WINDOW_H/2-1+j,{1.0,0,0,STRENGTH});
+		}
+	}
+	int lastFrame = 0;
+	while(can->isOpen()) {								// Check to see if the window has been closed
+		if (can->getFrameNumber() > lastFrame) {
+			lastFrame = can->getFrameNumber();
+//			can->clear();
+			int l = fires.size();
+//			std::c./out << l << std::endl;
+			for (int i = 0; i < l; i++) {
+				firePoint f = fires.front();
+				fires.pop();
+				if (--f.life > 0)
+					fires.push(f);
+				int myCell = f.x * WINDOW_H + f.y;
+				if (f.x > 0 && !onFire[myCell-WINDOW_H] && randfloat() < flammability[myCell-WINDOW_H]) {
+					fires.push({f.x-1,f.y,LIFE,f.strength});
+					onFire[myCell-WINDOW_H] = true;
+					can->drawPointColor(f.x-1,f.y,{f.life/LIFE,0,0,f.life/LIFE});
+				}
+				if (f.x < WINDOW_W-1 && !onFire[myCell+WINDOW_H] && randfloat() < flammability[myCell+WINDOW_H]) {
+					fires.push({f.x+1,f.y,LIFE,f.strength});
+					onFire[myCell+WINDOW_H] = true;
+					can->drawPointColor(f.x+1,f.y,{f.life/LIFE,0,0,f.life/LIFE});
+				}
+				if (f.y > 0 && !onFire[myCell-1] && randfloat() < flammability[myCell-1]) {
+					fires.push({f.x,f.y-1,LIFE,f.strength});
+					onFire[myCell-1] = true;
+					can->drawPointColor(f.x,f.y-1,{f.life/LIFE,0,0,f.life/LIFE});
+				}
+				if (f.y < WINDOW_H && !onFire[myCell+1] && randfloat() < flammability[myCell+1]) {
+					fires.push({f.x,f.y+1,LIFE,f.strength});
+					onFire[myCell+1] = true;
+					can->drawPointColor(f.x,f.y+1,{f.life/LIFE,0,0,f.life/LIFE});
+				}
+			}
 		}
 	}
 }
@@ -695,7 +882,7 @@ int main() {
 //	test(new Canvas(100000),lines1,true,BG_BLACK);
 //	test(new Canvas(500),lines2,false,BG_BLACK);
 //	test(new Canvas(250000),shadingPoints,false);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,true);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunction2,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunctionShiny,true,BG_BLACK);
@@ -708,5 +895,7 @@ int main() {
 //	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),alphaLangtonFunction,true,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
-	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),voronoiFunction,true,BG_BLACK);
+//	test(new Cart(0, 0, 1280, 1080, 0, 0, 1280, 1080, -1),voronoiFunction,true,BG_WHITE);
+//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),trippyVoronoiFunction,false,BG_WHITE);
+	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
 }
