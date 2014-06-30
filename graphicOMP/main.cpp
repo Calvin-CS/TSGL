@@ -902,7 +902,7 @@ int main() {
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,BG_WHITE);
 //	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
-	test(new Cart(0, 0, 2560, 960, 0, 0, 2560, 960, -1),alphaLangtonFunction,true,BG_BLACK);
+	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 100000),alphaLangtonFunction,true,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
 //	test(new Cart(0, 0, 1280, 1080, 0, 0, 1280, 1080, -1),voronoiFunction,true,BG_WHITE);
