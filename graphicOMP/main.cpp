@@ -12,6 +12,7 @@
 #include <cmath>
 #include <complex>
 #include <queue>
+#include <unistd.h>
 
 // Some constants that get used a lot
 const int 	NUM_COLORS = 256,
@@ -744,9 +745,10 @@ void trippyVoronoiFunction(CartesianCanvas* can) {
 			float ykd = y[k]-y[nk];
 			float kd = sqrt(xkd*xkd+ykd*ykd);		// Find the distance between the CPs themselves
 			float shading = d1/kd;
-			if (shading > 1) shading = 1;
-			else if (shading < 0) shading = 0;
+			if (shading > 1)		shading = 1;
+			else if (shading < 0) 	shading = 0;
 			can->drawPointColor(i,j,{0,0,0,shading});	// Draw the point with the closest control's color
+//			usleep(0.1);
 		}
 	}
 }
@@ -894,19 +896,19 @@ int main() {
 //	test(new Canvas(250000),shadingPoints,false);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
-//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunction2,false);
-//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, -1),langtonFunctionShiny,true,BG_BLACK);
-//	test(new Canvas(0, 0, WINDOW_W, WINDOW_H, -1),dumbSortFunction,true);
+//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
+//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BG_BLACK);
+//	test(new Canvas(0, 0, WINDOW_W, WINDOW_H, 100000),dumbSortFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),colorWheelFunction);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,BG_WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,BG_WHITE);
 //	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
-	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 100000),alphaLangtonFunction,true,BG_BLACK);
+//	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 100000),alphaLangtonFunction,true,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
-//	test(new Cart(0, 0, 1280, 1080, 0, 0, 1280, 1080, -1),voronoiFunction,true,BG_WHITE);
-//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, -1),trippyVoronoiFunction,false,BG_WHITE);
+//	test(new Cart(0, 0, 1280, 960, 0, 0, 1280, 960, 100000),voronoiFunction,true,BG_WHITE);
+//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 1000000),trippyVoronoiFunction,false,BG_WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
-//	test(new Canvas(100),textFunction,true);
+	test(new Canvas(1000),textFunction,true);
 }
