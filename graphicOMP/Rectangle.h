@@ -8,34 +8,16 @@
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 
-#include <FL/fl_draw.H>		// For the actual fl_line drawing function
 #include "Shape.h"			// For extending our Shape object
 
 class Rectangle : public Shape {
 private:
-	int myX, myY, myW, myH;										// Positioning data for our Rectangle
+	float vertices[24];
 public:
-	Rectangle(int x, int y, int w, int h);						// Default constructor
-	Rectangle(int x, int y, int w, int h, RGBfloatType color);	// Explicit constructor
+	Rectangle(int x, int y, int w, int h, RGBfloatType color = {0.0f,0.0f,0.0f,0.0f});	// Explicit constructor
     void draw();												// Overridden draw method
     bool getIsPoint() { return false; }
 };
-
-/*
- * Explicit constructor for the Rectangle class (calls the base constructor)
- * Parameters:
- * 		x, the x coordinate of the Rectangle's left edge
- *		y, the y coordinate of the Rectangle's top edge
- * 		w, the width of the Rectangle
- *		h, the height of the Rectangle
- * Returns: a new Rectangle with the specified topleft corner and dimensions
- */
-Rectangle::Rectangle(int x, int y, int w, int h) : Shape() {
-	myX = x;
-	myY = y;
-	myW = w;
-	myH = h;
-}
 
 /*
  * Explicit constructor for the Rectangle class
@@ -51,20 +33,24 @@ Rectangle::Rectangle(int x, int y, int w, int h) : Shape() {
  * Returns: a new Rectangle with the specified topleft corner, dimensions, and color
  */
 Rectangle::Rectangle(int x, int y, int w, int h, RGBfloatType color) : Shape(color) {
-	myX = x;
-	myY = y;
-	myW = w;
-	myH = h;
+	vertices[0] = x;
+	vertices[1] = y;
+	vertices[6] = x+w;
+	vertices[7] = y;
+	vertices[12] = x;
+	vertices[13] = y+h;
+	vertices[18] = x+w;
+	vertices[19] = y+h;
+	vertices[2] = vertices[8] = vertices[14] =vertices[20] =color.R;
+	vertices[3] = vertices[9] = vertices[15] =vertices[21] =color.G;
+	vertices[4] = vertices[10] = vertices[16] =vertices[22] =color.B;
+	vertices[5] = vertices[11] = vertices[17] =vertices[23] =color.A;
 }
 
 // draw() actually draws the Rectangle to the canvas
 void Rectangle::draw() {
-	glBegin(GL_TRIANGLE_STRIP);
-	glVertex2f(myX, myY);
-	glVertex2f(myX, myY+myH);
-	glVertex2f(myX+myW, myY);
-	glVertex2f(myX+myW, myY+myH);
-	glEnd();
+	glBufferData(GL_ARRAY_BUFFER, 4*sizeof(ColoredVertex), vertices, GL_DYNAMIC_DRAW);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 #endif /* RECTANGLE_H_ */

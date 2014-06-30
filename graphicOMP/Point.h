@@ -8,30 +8,15 @@
 #ifndef POINT_H_
 #define POINT_H_
 
-#include <FL/fl_draw.H>		// For the actual fl_point drawing function
 #include "Shape.h"			// For extending our Shape object
 
 class Point : public Shape {
-private:
-	int myX, myY;									// Positioning data for our Point
 public:
-    Point(int x, int y);							// Default constructor
-    Point(int x, int y, RGBfloatType color);		// Explicit constructor
+	float vertices[6];
+    Point(int x, int y, RGBfloatType color = {0.0f,0.0f,0.0f,0.0f});		// Explicit constructor
     void draw();									// Overridden draw method
     bool getIsPoint() { return true; }
 };
-
-/*
- * Explicit constructor for the Point class (calls the base constructor)
- * Parameters:
- * 		x, the x coordinate
- *		y, the y coordinate
- * Returns: a new Point at the specified position
- */
-Point::Point(int x, int y) : Shape() {
-	myX = x;
-	myY = y;
-}
 
 /*
  * Explicit constructor for the Point class (calls the base constructor)
@@ -45,13 +30,18 @@ Point::Point(int x, int y) : Shape() {
  * Returns: a new Point at the specified position with the specified color
  */
 Point::Point(int x, int y, RGBfloatType color) : Shape(color) {
-	myX = x;
-	myY = y;
+	vertices[0] = x;
+	vertices[1] = y;
+	vertices[2] = color.R;
+	vertices[3] = color.G;
+	vertices[4] = color.B;
+	vertices[5] = color.A;
 }
 
 // draw actually draws the Point to the canvas
 void Point::draw() {
-	glVertex2f(myX, myY);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ColoredVertex), vertices, GL_DYNAMIC_DRAW);
+	glDrawArrays(GL_POINTS, 0, 1);
 }
 
 #endif /* POINT_H_ */

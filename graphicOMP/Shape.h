@@ -10,6 +10,14 @@
 
 #include <stdexcept>									// Needed for exceptions
 #include "color.h"										// Needed for color type
+#include "Renderer.h"
+#include "ColoredVertex.h"
+
+// GL libraries
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <GL/gl.h>
+#include <GL/glx.h>
 
 class Shape {
 protected:

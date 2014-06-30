@@ -15,6 +15,8 @@
 #include <queue>
 #include <unistd.h>
 
+//#include "Renderer.h"
+
 // Some constants that get used a lot
 const int 	NUM_COLORS = 256,
 			MAX_COLOR = 255,
@@ -130,6 +132,7 @@ void mandelbrotFunction(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;  //omp_get_num_procs();
 	const unsigned int DEPTH = MAX_COLOR;
 	can->setCanZoom(true);
+	can->onlyPoints(true);
 	while(can->getZoomed()) {
 		can->setZoomed(false);
 		double blockstart = can->getCartHeight() / THREADS;
@@ -868,7 +871,7 @@ int main() {
 //	test(new Canvas(100000),lines1,true,BG_BLACK);
 //	test(new Canvas(500),lines2,false,BG_BLACK);
 //	test(new Canvas(250000),shadingPoints,false);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
+	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BG_BLACK);
@@ -884,5 +887,5 @@ int main() {
 //	test(new Cart(0, 0, 1280, 960, 0, 0, 1280, 960, 800000),voronoiFunction,true,BG_WHITE);
 //	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 1000000),trippyVoronoiFunction,false,BG_WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
-	test(new Canvas(1000),textFunction,true);
+//	test(new Canvas(1000),textFunction,true);
 }
