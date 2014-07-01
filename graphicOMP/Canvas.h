@@ -236,27 +236,28 @@ void Canvas::HandleIO() {
 }
 
 void Canvas::SetupCamera() {
-	//	// Set up camera positioning
-	//	glm::mat4 view = glm::lookAt(
-	//		glm::vec3(cameraPanX, cameraPanY, cameraDistance),// Camera position
-	//		glm::vec3(cameraPanX, cameraPanY, 0.0f),// On-screen center
-	//		glm::vec3(0.0f, 0.01f, 1.0f)			// "Up" axis (y = 0.01 because undefined when same as camera position)
-	//	);
-	//	glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
-	//	// Set up camera zooming
-	//	glm::mat4 proj = glm::perspective(90.0f, 800.0f / 600.0f, 0.01f, 10000.0f);
-	//	glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
-	//	// Set up camera transformation
-	//	glm::mat4 model;				//Create a new (identity matrix)
-	//	model = glm::rotate(
-	//		model,						//Rotate the model (identity) matrix...
-	//		0.0f,						//...actually, don't rotate it at all
-	//		glm::vec3(0.0f, 0.0f, 1.0f)	//...along the Z-axis.
-	//	);
-	//	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
+//	static float time = 0;
+//	// Set up camera positioning
+//	glm::mat4 view = glm::lookAt(
+//		glm::vec3(cameraPanX, cameraPanY, -cameraDistance),// Camera position
+//		glm::vec3(cameraPanX, cameraPanY, 0.0f),// On-screen center
+//		glm::vec3(-0.0f, -1.0f, 0.0f)			// "Up" axis (y = 0.01 because undefined when same as camera position)
+//	);
+//	glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
+//	// Set up camera zooming
+//	glm::mat4 proj = glm::perspective(90.0f, 800.0f / 600.0f, 0.01f, 10000.0f);
+//	glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
+//	// Set up camera transformation
+//	glm::mat4 model;				//Create a new (identity matrix)
+//	model = glm::rotate(
+//		model,						//Rotate the model (identity) matrix...
+//		0.0f,						//...actually, don't rotate it at all
+//		glm::vec3(0.0f, 0.0f, 1.0f)	//...along the Z-axis.
+//	);
+//	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
 	// Set up camera positioning
-	const static float viewF[] = { 	1,0,0,0,0,1,0,0,0,0,1,0,-400,-300,-300,1 };
+	const static float viewF[] = { 	1,0,0,0,0,-1,0,0,0,0,-1,0,-400,300,-300,1 };
 	glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 
 	// Set up camera zooming
