@@ -12,9 +12,12 @@
 #include <stdexcept>			// Needed for exceptions
 #include <iostream>
 
-typedef struct {int R, G, B, A;} RGBintType;
-typedef struct {float R, G, B, A;} RGBfloatType;
-typedef struct {float H, S, V, A;} HSVType;
+struct RGBintType {int R, G, B, A;};
+struct RGBfloatType {float R, G, B, A;};
+struct HSVType {float H, S, V, A;};
+
+static const RGBfloatType BLACK = {0.0f, 0.0f, 0.0f, 1.0f};
+static const RGBfloatType WHITE = {1.0f, 1.0f, 1.0f, 1.0f};
 
 RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a = 255) {
 	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || a > 255 || a < 0) {
