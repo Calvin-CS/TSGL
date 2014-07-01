@@ -9,7 +9,7 @@
 #define CANVAS_H_
 
 // Link statically with GLEW
-#define GLEW_STATIC
+//#define GLEW_STATIC
 
 #include "Point.h"					// Our own class for drawing single points.
 #include "Line.h"					// Our own class for drawing straight lines.
@@ -20,6 +20,7 @@
 #include "Text.h"					// Our own class for drawing text.
 #include "Array.h"					// Our own array for buffering drawing operations.
 #include "color.h"					// Our own interface for converting color types
+#include "Timer.h"
 #include <omp.h>					// For OpenMP support
 #include <cmath>					// For converting HSV to RGB and other math stuff
 #include <chrono>					// For timing drawing and FPS
@@ -103,10 +104,11 @@ protected:
 	void TearDown();
 	virtual void HandleIO();
 	void SetupCamera();
+	Timer* t;
 public:
 	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
-	~Canvas() { TearDown(); }
+	virtual ~Canvas() { TearDown(); }
 	int start();													// Function to start rendering our Canvas
 	int end();														// Function to end rendering our Canvas
 	void setColor(float r, float g, float b, float a);				// Sets the global drawing color
@@ -146,12 +148,6 @@ public:
 	void ResetCamera() { cameraDistance = halfRoomSize; cameraPanX = cameraPanY = 0.0; }
 };
 
-//// Clean up if someone closes the window
-//void close_cb(Fl_Widget* w, void* v) {
-//	OmpWindow* d = (OmpWindow*) v;
-//	d->hide();										// Hide our window
-//}
-
 /*
  * init initializes the Canvas with the values specified in the constructor
  * Parameters:
@@ -167,26 +163,31 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	aspect = (float)winWidth / winHeight;
 	keyDown = false;
 	framecounter = 0;
+	//TODO: Remove this zoom stuffs
 	cameraPanX = ww/2, cameraPanY = hh/2;
 	cameraDistance = halfRoomSize = ((hh < ww) ? hh : ww)/2;
 
-
-
+	//TODO: Might have to use these later
 //	glutInitDisplayMode (GLUT_DOUBLE);
-//	glDisable(GL_DEPTH_TEST);								// Turn off 3D depth-testing
+//	glDisable(GL_DEPTH_TEST);												// Turn off 3D depth-testing
 //	glDisable(GL_POINT_SMOOTH);
 //	gl_font(FL_HELVETICA, 12);
-	backgroundColor = {0.75f, 0.75f, 0.75f};				// Set the default background color
-	toClear = true;										// Don't need to clear at the start
-	started = false;  										// We haven't started the window yet
-	counter = 0;											// We haven't drawn any frames yet
-	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;  // Initialize translation
-	myShapes = new Array<Shape*>(b);						// Initialize myShapes
+	backgroundColor = {0.75f, 0.75f, 0.75f};								// Set the default background color
+	//TODO: Remove or update toClear
+	toClear = true;															// Don't need to clear at the start
+	started = false;  														// We haven't started the window yet
+	//TODO: Maybe remove this as we already have frame counter
+	counter = 0;															// We haven't drawn any frames yet
+	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;	// Initialize translation
+	myShapes = new Array<Shape*>(b);										// Initialize myShapes
 	myBuffer = new Array<Shape*>(b);
-	vertexData = new float[6*b];
-	setColor(0, 0, 0, 255);										// Our default global drawing color is black
-	showFPS_ = false;										// Set debugging FPS to false
-	isFinished = false;										// We're not done rendering
+	vertexData = new float[6*b];											// Buffer for vertexes for points
+	setColor(0, 0, 0, 255);													// Our default global drawing color is black
+	showFPS_ = false;														// Set debugging FPS to false
+	//TODO: Redundant as we have a "started"?
+	isFinished = false;														// We're not done rendering
+
+	t = new Timer(FRAME);
 }
 
 void Canvas::HandleIO() {
@@ -257,7 +258,7 @@ void Canvas::SetupCamera() {
 //	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
 	// Set up camera positioning
-	const static float viewF[] = { 	1,0,0,0,0,-1,0,0,0,0,-1,0,-400,300,-300,1 };
+	const static float viewF[] = { 1,0,0,0,0,-1,0,0,0,0,-1,0,-400,300,-300,1 };
 	glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 
 	// Set up camera zooming
@@ -265,7 +266,7 @@ void Canvas::SetupCamera() {
 	glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
 
 	// Set up camera transformation
-	const static float modelF[] = { 	1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
+	const static float modelF[] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
 	glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
 }
 
@@ -286,10 +287,11 @@ void Canvas::TearDown() {
 }
 
 void Canvas::glInit() {
-	// Initialize GLFW
+		// Initialize GLFW
 		glfwInit();
-	//
+
 		// Create a Window and the Context
+		//TODO: Add comments here because this is very confusing
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -299,14 +301,16 @@ void Canvas::glInit() {
 		glfwMakeContextCurrent(window);
 
 		// Set the background to black
+		//TODO: Should set this to the default color, not magic numbers here
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Enable and disable necessary stuff
+		//TODO: Again, more comments
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glDisable(GL_DITHER);
 //		glDisable(GL_POINT_SMOOTH);
-	//	glEnableClientState(GL_COLOR_ARRAY);
+//		glEnableClientState(GL_COLOR_ARRAY);
 
 		// Enable Experimental GLEW to Render Properly
 		glewExperimental = GL_TRUE;
@@ -377,15 +381,18 @@ void Canvas::drawFunction(Canvas *c) {
 void Canvas::draw() {
 	//Reset the window
 	glfwSetWindowShouldClose(window, GL_FALSE);
+
 	//Start the drawing loop
 	for(framecounter = 0; !glfwWindowShouldClose(window); framecounter++)
 	{
+		t->sleep();
+
 		glClearColor(backgroundColor.R, backgroundColor.G, backgroundColor.B, 0.0);		// Set the background
 		if (toClear) {
 			glClear(GL_COLOR_BUFFER_BIT);
 			toClear = false;
 		}
-		SetupCamera();					// Update the camera
+		SetupCamera();					// Update the camera with magic numbers
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //		glEnable (GL_BLEND);
@@ -416,7 +423,11 @@ void Canvas::draw() {
 
 	//	gl_draw(" ",-100,100);								// OpenGl likes drawing the first string with a ? prepended, so get that out of the way
 
-		if (allPoints) {
+		if (myShapes->size() == 0) {						// If there is nothing to render...
+			glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
+			glVertex2f(-1, -1);								// 	to render stuff
+			glEnd();
+		} else if (allPoints) {
 			Point* p;
 			unsigned size = myShapes->size();
 			unsigned max = size*6;
@@ -425,7 +436,7 @@ void Canvas::draw() {
 				for (unsigned j = 0; j < 6; j++)
 					vertexData[i+j] = p->vertices[j];
 			}
-			glBufferData(GL_ARRAY_BUFFER, size*sizeof(ColoredVertex), vertexData, GL_STREAM_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, size*sizeof(ColoredVertex), vertexData, GL_DYNAMIC_DRAW);
 			glDrawArrays(GL_POINTS, 0, size);
 		} else { // Iterate through our queue until we've made it to the end
 			for (unsigned int i = 0; i < myShapes->size(); i++) {
@@ -473,7 +484,7 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) {
  * Returns: the exit code of the FLTK render method
  */
 int Canvas::start() {
-	if (started) return -1;									// If we're already started, return error code -1
+	if (started) return -1;										// If we're already started, return error code -1
 	started = true;												// We've now started
     renderThread = std::thread(Canvas::drawFunction,this);		// Spawn the rendering thread
     startTime = highResClock::now();							// Record the init time
