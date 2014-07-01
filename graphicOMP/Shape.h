@@ -10,7 +10,6 @@
 
 #include <stdexcept>									// Needed for exceptions
 #include "color.h"										// Needed for color type
-#include "Renderer.h"
 #include "ColoredVertex.h"
 
 // GL libraries
@@ -22,9 +21,7 @@
 class Shape {
 protected:
 	float myR, myG, myB, myA; 							// Color data for the shape
-	bool useDefaultColor;								// Whether or not the shape uses the global drawing color
 public:
-	Shape();											// Default constructor for the Shape
 	Shape(RGBfloatType);								// Explicit constructor for the Shape
 	virtual ~Shape() {}									// Default destructor for the Shape
 	void setColor(RGBfloatType);						// Mutator for the Shape's color
@@ -37,16 +34,6 @@ public:
 	bool getUsesDefaultColor();							// Accessor for useDefaultColor
 	virtual void draw() = 0;							// Abstract method for actually drawing the shape
 };
-
-/*
- * Default constructor for the Shape class
- * Returns: a new Shape using the global drawing color
- */
-Shape::Shape() {
-	myR = myG = myB = 0.0f;
-	myA = 1.0f;
-	useDefaultColor = true;
-}
 
 /*
  * Explicit constructor for the Shape class
@@ -77,7 +64,6 @@ void Shape::setColor(RGBfloatType color) {
 	myG = color.G;
 	myB = color.B;
 	myA = color.A;
-	useDefaultColor = false;	// We no longer use the global drawing color (if we did before)
 }
 
 // Accessor for the shape's color
@@ -87,8 +73,5 @@ float Shape::getColorR() { return myR; }
 float Shape::getColorG() { return myG; }
 float Shape::getColorB() { return myB; }
 float Shape::getColorA() { return myA; }
-
-// Accessor function for useDefaultColor
-bool Shape::getUsesDefaultColor() { return useDefaultColor; }
 
 #endif /* SHAPER_H_ */

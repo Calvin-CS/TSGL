@@ -8,38 +8,16 @@
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
 
-#include <FL/fl_draw.H>		// For the actual fl_polygon drawing function
-#include "Shape.h"			// For extending our Shape object
+#include "Shape.h"																	// For extending our Shape object
 
 class Triangle : public Shape {
 private:
 	int myX1, myY1, myX2, myY2, myX3, myY3;											// Positioning data for our Triangle
 public:
-	Triangle(int x1, int y1, int x2, int y2, int x3, int y3);						// Default constructor
-	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color);	// Explicit constructor
+	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color);	// Default constructor
     void draw();																	// Overridden draw method
     bool getIsPoint() { return false; }
 };
-
-/*
- * Explicit constructor for the Triangle class (calls the base constructor)
- * Parameters:
- * 		x1, the first x coordinate
- *		y1, the first y coordinate
- * 		x2, the second x coordinate
- *		y2, the second y coordinate
- *		x3, the third x coordinate
- *		y3, the third y coordinate
- * Returns: a new Triangle with the specified vertices
- */
-Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3) : Shape() {
-	myX1 = x1;
-	myY1 = y1;
-	myX2 = x2;
-	myY2 = y2;
-	myX3 = x3;
-	myY3 = y3;
-}
 
 /*
  * Explicit constructor for the Triangle class
@@ -56,7 +34,7 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3) : Shape() {
  * 		a, the alpha component
  * Returns: a new Triangle with the specified vertices and color
  */
-Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) : Shape(color) {
+Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color = BLACK) : Shape(color) {
 	myX1 = x1;
 	myY1 = y1;
 	myX2 = x2;

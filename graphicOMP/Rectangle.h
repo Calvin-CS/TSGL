@@ -8,14 +8,14 @@
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 
-#include "Shape.h"			// For extending our Shape object
+#include "Shape.h"													// For extending our Shape object
 
 class Rectangle : public Shape {
 private:
 	float vertices[24];
 public:
-	Rectangle(int x, int y, int w, int h, RGBfloatType color = {0.0f,0.0f,0.0f,0.0f});	// Explicit constructor
-    void draw();												// Overridden draw method
+	Rectangle(int x, int y, int w, int h, RGBfloatType color);		// Explicit constructor
+    void draw();													// Overridden draw method
     bool getIsPoint() { return false; }
 };
 
@@ -32,7 +32,7 @@ public:
  * 		a, the alpha component
  * Returns: a new Rectangle with the specified topleft corner, dimensions, and color
  */
-Rectangle::Rectangle(int x, int y, int w, int h, RGBfloatType color) : Shape(color) {
+Rectangle::Rectangle(int x, int y, int w, int h, RGBfloatType color = BLACK) : Shape(color) {
 	vertices[0] = x;
 	vertices[1] = y;
 	vertices[6] = x+w;

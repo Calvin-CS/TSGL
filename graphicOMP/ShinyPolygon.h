@@ -37,7 +37,7 @@ public:
  * 		vertices, the number of vertices the complete polygon will have
  * Returns: a new ShinyPolygon with the specified numbered vertices
  */
-ShinyPolygon::ShinyPolygon(int vertices = 3) : Shape() {
+ShinyPolygon::ShinyPolygon(int vertices = 3) : Shape(BLACK) {
 	size = (vertices > 3) ? vertices : 3;
 	current = 0;
 	myVertex = new VertexData[size];
@@ -55,7 +55,7 @@ ShinyPolygon::ShinyPolygon(int vertices = 3) : Shape() {
  * 		b, the blue component of the vertex
  * 		a, the alpha component of the vertex
  */
-void ShinyPolygon::addVertex(int x, int y, RGBfloatType color) {
+void ShinyPolygon::addVertex(int x, int y, RGBfloatType color = BLACK) {
 	if (init)
 		return;
 	myVertex[current].x = x;

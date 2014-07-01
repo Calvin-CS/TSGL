@@ -33,7 +33,7 @@ public:
  * 		vertices, the number of vertices the complete polyline will have
  * Returns: a new Polyline with the specified numbered vertices
  */
-Polyline::Polyline(int vertices = 2) : Shape() {
+Polyline::Polyline(int vertices = 2) : Shape(BLACK) {
 	if (vertices < 2) {
 		throw std::out_of_range("Cannot have a line with less than 2 vertices.");
 	}

@@ -8,35 +8,18 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
-#include <FL/fl_draw.H>		// For the actual fl_draw drawing function
-#include "Shape.h"			// For extending our Shape object
-#include <iostream>
+#include "Shape.h"												// For extending our Shape object
 #include <string>
 
 class Text : public Shape {
 private:
-	int myX, myY;									// Positioning data for our Text object
-	const char * myString;								// String data for our Text object
+	int myX, myY;												// Positioning data for our Text object
+	const char * myString;										// String data for our Text object
 public:
-	Text(const char * s, int x, int y);								// Default constructor
-	Text(const char * s, int x, int y, RGBfloatType color);			// Explicit constructor
-    void draw();									// Overridden draw method
+	Text(const char * s, int x, int y, RGBfloatType color);		// Default constructor
+    void draw();												// Overridden draw method
     bool getIsPoint() { return false; }
 };
-
-/*
- * Explicit constructor for the Text class (calls the base constructor)
- * Parameters:
- *		s, the string to display
- * 		x, the x coordinate
- *		y, the y coordinate
- * Returns: a new Text object at the specified position displaying the specified string
- */
-Text::Text(const char * s, int x, int y) : Shape() {
-	myX = x;
-	myY = y;
-	myString = s;
-}
 
 /*
  * Explicit constructor for the Point class (calls the base constructor)
@@ -45,9 +28,9 @@ Text::Text(const char * s, int x, int y) : Shape() {
  * 		x, the x coordinate
  *		y, the y coordinate
  * 		color, the color in which to draw the string
- * Returns: a new Point at the specified position with the specified color
+ * Returns: a new Text object at the specified position displaying the specified string
  */
-Text::Text(const char * s, int x, int y, RGBfloatType color) : Shape(color) {
+Text::Text(const char * s, int x, int y, RGBfloatType color = BLACK) : Shape(color) {
 	myX = x;
 	myY = y;
 	myString = s;
@@ -55,7 +38,7 @@ Text::Text(const char * s, int x, int y, RGBfloatType color) : Shape(color) {
 
 // draw actually draws the Text to the canvas
 void Text::draw() {
-	gl_draw(myString, myX, myY);
+//	gl_draw(myString, myX, myY);
 }
 
 #endif /* TEXT_H_ */

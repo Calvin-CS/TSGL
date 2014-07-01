@@ -8,13 +8,13 @@
 #ifndef POINT_H_
 #define POINT_H_
 
-#include "Shape.h"			// For extending our Shape object
+#include "Shape.h"											// For extending our Shape object
 
 class Point : public Shape {
 public:
 	float vertices[6];
-    Point(int x, int y, RGBfloatType color = {0.0f,0.0f,0.0f,0.0f});		// Explicit constructor
-    void draw();									// Overridden draw method
+	Point(int x, int y, RGBfloatType color);				// Explicit constructor
+	void draw();											// Overridden draw method
     bool getIsPoint() { return true; }
 };
 
@@ -29,7 +29,7 @@ public:
  * 		a, the alpha component
  * Returns: a new Point at the specified position with the specified color
  */
-Point::Point(int x, int y, RGBfloatType color) : Shape(color) {
+Point::Point(int x, int y, RGBfloatType color = BLACK) : Shape(color) {
 	vertices[0] = x;
 	vertices[1] = y;
 	vertices[2] = color.R;

@@ -8,14 +8,14 @@
 #ifndef LINE_H_
 #define LINE_H_
 
-#include "Shape.h"			// For extending our Shape object
+#include "Shape.h"													// For extending our Shape object
 
 class Line : public Shape {
 private:
 	float vertices[12];
 public:
-    Line(int x1, int y1, int x2, int y2, RGBfloatType color = {0.0f,0.0f,0.0f,0.0f});	// Explicit constructor
-    void draw();												// Overridden draw method
+    Line(int x1, int y1, int x2, int y2, RGBfloatType color);		// Explicit constructor
+    void draw();													// Overridden draw method
     bool getIsPoint() { return false; }
 };
 
@@ -32,7 +32,7 @@ public:
  * 		a, the alpha component
  * Returns: a new Line at the specified positions with the specified color
  */
-Line::Line(int x1, int y1, int x2, int y2, RGBfloatType color) : Shape(color) {
+Line::Line(int x1, int y1, int x2, int y2, RGBfloatType color = BLACK) : Shape(color) {
 	vertices[0] = x1;
 	vertices[1] = y1;
 	vertices[6] = x2;
