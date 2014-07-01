@@ -258,15 +258,15 @@ void Canvas::SetupCamera() {
 //	glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
 	// Set up camera positioning
-	const static float viewF[] = { 1,0,0,0,0,-1,0,0,0,0,-1,0,-400,300,-300,1 };
+	float viewF[] = { 1,0,0,0,0,-1,0,0,0,0,-1,0,-winWidth/2.0f,winHeight/2.0f,-winHeight/2.0f,1 };
 	glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 
 	// Set up camera zooming
-	const static float projF[] = { 0.75f,0,0,0,0,1,0,0,0,0,-1.00000191f,-1,0,0,-0.02000002f,0 };
+	float projF[] = { 1.0f/aspect,0,0,0,0,1,0,0,0,0,-1.00000191f,-1,0,0,-0.02000002f,0 };
 	glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
 
 	// Set up camera transformation
-	const static float modelF[] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
+	float modelF[] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1 };
 	glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
 }
 
@@ -426,11 +426,7 @@ void Canvas::draw() {
 	//	gl_draw(" ",-100,100);								// OpenGl likes drawing the first string with a ? prepended, so get that out of the way
 
 		glDrawBuffer(GL_LEFT);								// See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
-		if (myShapes->size() == 0) {						// If there is nothing to render...
-			glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
-			glVertex2f(-1, -1);								// 	to render stuff
-			glEnd();
-		} else if (allPoints) {
+		if (allPoints) {
 			Point* p;
 			unsigned size = myShapes->size();
 			unsigned max = size*6;
