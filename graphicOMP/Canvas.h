@@ -425,7 +425,7 @@ void Canvas::draw() {
 
 	//	gl_draw(" ",-100,100);								// OpenGl likes drawing the first string with a ? prepended, so get that out of the way
 
-		glDrawBuffer(GL_LEFT);								// We handle double-buffering ourselves
+		glDrawBuffer(GL_LEFT);								// See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
 		if (myShapes->size() == 0) {						// If there is nothing to render...
 			glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
 			glVertex2f(-1, -1);								// 	to render stuff
