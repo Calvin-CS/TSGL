@@ -300,6 +300,8 @@ void Canvas::glInit() {
 		window = glfwCreateWindow(winWidth, winHeight, "OpenGL", nullptr, nullptr); // Windowed
 		glfwMakeContextCurrent(window);
 
+//		glfwSwapInterval(30);
+
 		// Set the background to black
 		//TODO: Should set this to the default color, not magic numbers here
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -423,6 +425,7 @@ void Canvas::draw() {
 
 	//	gl_draw(" ",-100,100);								// OpenGl likes drawing the first string with a ? prepended, so get that out of the way
 
+		glDrawBuffer(GL_LEFT);								// We handle double-buffering ourselves
 		if (myShapes->size() == 0) {						// If there is nothing to render...
 			glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
 			glVertex2f(-1, -1);								// 	to render stuff
