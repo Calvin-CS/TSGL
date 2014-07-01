@@ -42,9 +42,9 @@ static float randfloat(int divisor = 10000) {
 void points1(Canvas* can) {
 	static int counter;
 	counter = 0;
-	int nthreads = omp_get_num_threads();
-//	#pragma omp parallel num_threads(omp_get_num_procs())
-//	{
+	#pragma omp parallel num_threads(omp_get_num_procs())
+	{
+		int nthreads = omp_get_num_threads();
 		int color;
 		for (int i = omp_get_thread_num(); i < can->getWindowWidth(); i+= nthreads) {
 			for (int j = 0; j < can->getWindowHeight(); j++) {
@@ -54,10 +54,11 @@ void points1(Canvas* can) {
 			}
 		}
 		std::cout << counter << std::endl;
-//	}
+	}
 }
 void points2(Canvas* can) {
 	int myPart = can->getWindowHeight() / omp_get_num_threads();
+	can->onlyPoints(true);
 	#pragma omp parallel num_threads(omp_get_num_procs())
 	{
 		int myStart = myPart * omp_get_thread_num();
@@ -867,8 +868,7 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, bgcolor bg = BG_NONE)
 
 int main() {
 //	test(new Canvas(480800),points1,true);
-	//TODO: points2 Broken
-//	test(new Canvas(480800),points2,true);
+//	test(new Canvas(200000),points2,true);
 //	test(new Canvas(100000),lines1,true,BG_BLACK);
 //	test(new Canvas(500),lines2,false,BG_BLACK);
 //	test(new Canvas(65536),shadingPoints,false);
@@ -876,19 +876,17 @@ int main() {
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BG_BLACK);
-//	test(new Canvas(0, 0, WINDOW_W, WINDOW_H, 100000),dumbSortFunction,true);
+//	test(new Canvas(0, 0, WINDOW_W, WINDOW_H, 1000),dumbSortFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),colorWheelFunction);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,BG_WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,BG_WHITE);
 //	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
-//	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 100000),alphaLangtonFunction,true,BG_BLACK);
+//	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 20000),alphaLangtonFunction,true,BG_BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
-	//TODO: voronoiFunction Broken
-//	test(new Cart(0, 0, 1280, 960, 0, 0, 1280, 960, 800000),voronoiFunction,true,BG_WHITE);
-	//TODO: voronoiFunction2 Broken
-//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 1000000),trippyVoronoiFunction,false,BG_WHITE);
+//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 810000),voronoiFunction,true,BG_WHITE);
+//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 2000000),trippyVoronoiFunction,false,BG_WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
 //	test(new Canvas(1000),textFunction,true);
 }

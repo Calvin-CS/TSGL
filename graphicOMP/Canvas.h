@@ -426,9 +426,11 @@ void Canvas::draw() {
 	//	gl_draw(" ",-100,100);								// OpenGl likes drawing the first string with a ? prepended, so get that out of the way
 
 		glDrawBuffer(GL_LEFT);								// See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
+		unsigned size = myShapes->size();
+		if (size == myShapes->capacity())
+			std::cerr << "BUFFER OVERFLOW" << std::endl;
 		if (allPoints) {
 			Point* p;
-			unsigned size = myShapes->size();
 			unsigned max = size*6;
 			for (unsigned int i = 0, x = 0; i < max; i+= 6, x++) {
 				p = (Point*)myShapes->operator[](x);
@@ -438,14 +440,14 @@ void Canvas::draw() {
 			glBufferData(GL_ARRAY_BUFFER, size*sizeof(ColoredVertex), vertexData, GL_DYNAMIC_DRAW);
 			glDrawArrays(GL_POINTS, 0, size);
 		} else { // Iterate through our queue until we've made it to the end
-			for (unsigned int i = 0; i < myShapes->size(); i++) {
+			for (unsigned int i = 0; i < size; i++) {
 				s = myShapes->operator[](i);
 				s->draw();
 			}
-			myShapes->clear();									// Clear the buffer of shapes to be drawn
 		}
-		glFlush();
-		glfwSwapBuffers(window);		// Swap out the back buffer and actually draw to the window
+		myShapes->clear();				// Clear our buffer of shapes to be drawn
+		glFlush();						// Flush GL's buffer
+		glfwSwapBuffers(window);		// Swap out GL's back buffer and actually draw to the window
 		HandleIO();						// Handle any I/O
 	}
 
