@@ -867,11 +867,11 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, bgcolor bg = BG_NONE)
 
 int main() {
 //	test(new Canvas(480800),points1,true);
-//	test(new Canvas(480000),points2,true);
-//	test(new Canvas(100000),lines1,true,BG_BLACK);
+//	test(new Canvas(480800),points2,true);
+	test(new Canvas(100000),lines1,true,BG_BLACK);
 //	test(new Canvas(500),lines2,false,BG_BLACK);
-//	test(new Canvas(250000),shadingPoints,false);
-	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
+//	test(new Canvas(65536),shadingPoints,false);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BG_BLACK);

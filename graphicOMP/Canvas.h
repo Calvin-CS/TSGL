@@ -416,11 +416,7 @@ void Canvas::draw() {
 
 	//	gl_draw(" ",-100,100);								// OpenGl likes drawing the first string with a ? prepended, so get that out of the way
 
-		if (myShapes->size() == 0) {						// If there is nothing to render...
-			glBegin(GL_POINTS);								// OpenGL won't keep our drawings unless we pretend
-			glVertex2f(-1, -1);								// 	to render stuff
-			glEnd();
-		} else if (allPoints) {
+		if (allPoints) {
 			Point* p;
 			unsigned size = myShapes->size();
 			unsigned max = size*6;
@@ -429,7 +425,7 @@ void Canvas::draw() {
 				for (unsigned j = 0; j < 6; j++)
 					vertexData[i+j] = p->vertices[j];
 			}
-			glBufferData(GL_ARRAY_BUFFER, size*sizeof(ColoredVertex), vertexData, GL_DYNAMIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, size*sizeof(ColoredVertex), vertexData, GL_STREAM_DRAW);
 			glDrawArrays(GL_POINTS, 0, size);
 		} else { // Iterate through our queue until we've made it to the end
 			for (unsigned int i = 0; i < myShapes->size(); i++) {
