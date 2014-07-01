@@ -413,12 +413,12 @@ void CartesianCanvas::HandleIO() {
 	glfwGetCursorPos(window,&mx,&my);
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_PRESS && !leftPressed && !rightPressed) {
 		leftPressed = true;
-		getCartesianCoordinates(mx,(monitorHeight-my),oldX, oldY);
+		getCartesianCoordinates(mx,(my),oldX, oldY);
 		return;
 	}
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_RELEASE && leftPressed) {
 		leftPressed = false;
-		getCartesianCoordinates(mx,(monitorHeight-my),newX, newY);
+		getCartesianCoordinates(mx,(my),newX, newY);
 		if (std::abs(newX-oldX) < cartWidth/32 && std::abs(newY-oldY) < cartHeight/32)
 			return;
 		if (oldX > newX) {							// Makes sure oldX, oldY is the topleft
@@ -441,12 +441,12 @@ void CartesianCanvas::HandleIO() {
 	}
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_PRESS && !leftPressed && !rightPressed) {
 		rightPressed = true;
-		getCartesianCoordinates(mx,(monitorHeight-my),oldX, oldY);
+		getCartesianCoordinates(mx,(my),oldX, oldY);
 		return;
 	}
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_RELEASE && rightPressed) {	// On right click, zoom out
 		rightPressed = false;
-		getCartesianCoordinates(mx,(monitorHeight-my),newX, newY);
+		getCartesianCoordinates(mx,(my),newX, newY);
 		recomputeDimensions(oldX-cartWidth,oldY-cartHeight,newX+cartWidth,newY+cartHeight);
 		return;
 	}
