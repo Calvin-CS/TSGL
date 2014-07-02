@@ -143,7 +143,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
 	keyDown = false;
 	framecounter = 0;
 
-	backgroundColor = {0.75f, 0.75f, 0.75f};								// Set the default background color
+	backgroundColor = GREY;													// Set the default background color
 	//TODO: Remove or update toClear
 	toClear = true;															// Don't need to clear at the start
 	started = false;  														// We haven't started the window yet
@@ -155,6 +155,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
 	showFPS_ = false;														// Set debugging FPS to false
 	//TODO: Redundant as we have a "started"?
 	isFinished = false;														// We're not done rendering
+	allPoints = false;
 
 	t = new Timer(FRAME);
 }
@@ -225,17 +226,7 @@ Canvas::~Canvas() {
 }
 
 void Canvas::glStaticInit() {
-	// Initialize GLFW
-	glfwInit();
-
-	// Enable and disable necessary stuff
-	//TODO: Again, more comments
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_DITHER);
-	glDisable(GL_CULL_FACE);
-//	glEnableClientState(GL_COLOR_ARRAY);
+	glfwInit();	// Initialize GLFW
 }
 
 void Canvas::glInit() {
@@ -251,6 +242,14 @@ void Canvas::glInit() {
 	window = glfwCreateWindow(winWidth, winHeight, title_, nullptr, nullptr); // Windowed
 	glfwMakeContextCurrent(window);
 	glfwShowWindow(window);
+
+	// Enable and disable necessary stuff
+	//TODO: Again, more comments
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_DITHER);
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Enable Experimental GLEW to Render Properly
 	glewExperimental = GL_TRUE;
@@ -335,7 +334,8 @@ void Canvas::draw() {
 	{
 		t->sleep();
 
-		glClearColor(backgroundColor.R, backgroundColor.G, backgroundColor.B, 1.0);		// Set the background
+//		glClearColor(backgroundColor.R, backgroundColor.G, backgroundColor.B, 1.0);		// Set the background
+		glClearColor(0.75f,0.75f,0.75f,1.0f);
 		if (toClear) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 			toClear = false;
@@ -382,6 +382,7 @@ void Canvas::draw() {
 		}
 
 		myShapes->clear();				// Clear our buffer of shapes to be drawn
+		glFlush();
 		glDrawBuffer(GL_BACK_LEFT);
 		glfwSwapBuffers(window);		// Swap out GL's back buffer and actually draw to the window
 		HandleIO();						// Handle any I/O
@@ -412,7 +413,7 @@ Canvas::Canvas(unsigned int b) {
  * 		t, the title of the window
  * Returns: a new Canvas with the specified positional data and title
  */
-Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* title = "Canvas") {
+Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* title = (char*)"") {
 	init(xx,yy,w,h,b,title);
 }
 

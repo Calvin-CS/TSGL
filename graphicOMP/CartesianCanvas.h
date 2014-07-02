@@ -79,7 +79,7 @@ CartesianCanvas::CartesianCanvas(unsigned int b) : Canvas(b) {
  * Returns: a new CartesianCanvas with the specified positional/scaling data and title
  */
 CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h,
-			Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char* t = 0) :
+			Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, char* t = (char*)"") :
 			Canvas(xx, yy, w, h, b, t) {
 	recomputeDimensions(xMin, yMin, xMax, yMax);
 }
