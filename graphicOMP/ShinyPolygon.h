@@ -13,22 +13,14 @@
 
 class ShinyPolygon : public Shape {
 private:
-	struct VertexData {		// Data for each of the polygon's vertices
-		int x;				// Vertex x position
-		int y;				// Vertex y position
-		float r;			// Vertex red component
-		float g;			// Vertex green component
-		float b;			// Vertex blue component
-		float a;			// Vertex alpha component
-	};
-	bool init;				// Whether the vertex has been initialized completely
-	int size, current;		// Ultimate and current number of vertices
-	VertexData* myVertex;	// Buffer for vertex data
+	bool init;					// Whether the vertex has been initialized completely
+	int size, current, length;	// Max / current numbe of floats; number of vertices
+	float* vertices;			// Buffer for vertex data
 public:
-	ShinyPolygon(int vertices);									// Default constructor
+	ShinyPolygon(int v);									// Default constructor
+	~ShinyPolygon();
 	void addVertex(int x, int y, RGBfloatType color);  			// Method for adding vertices to buffer
     void draw();												// Overridden draw method
-    bool getIsPoint() { return false; }							// We are not a single point
 };
 
 /*
@@ -37,11 +29,18 @@ public:
  * 		vertices, the number of vertices the complete polygon will have
  * Returns: a new ShinyPolygon with the specified numbered vertices
  */
-ShinyPolygon::ShinyPolygon(int vertices = 3) : Shape(BLACK) {
-	size = (vertices > 3) ? vertices : 3;
+ShinyPolygon::ShinyPolygon(int v = 3) : Shape(BLACK) {
+	if (v < 3)
+		throw std::out_of_range("Cannot have a polygon with fewer than 3 vertices.");
+	length = v;
+	size = length * 6;
 	current = 0;
-	myVertex = new VertexData[size];
+	vertices = new float[size];
 	init = false;
+}
+
+ShinyPolygon::~ShinyPolygon() {
+	delete vertices;
 }
 
 /*
@@ -58,13 +57,13 @@ ShinyPolygon::ShinyPolygon(int vertices = 3) : Shape(BLACK) {
 void ShinyPolygon::addVertex(int x, int y, RGBfloatType color = BLACK) {
 	if (init)
 		return;
-	myVertex[current].x = x;
-	myVertex[current].y = y;
-	myVertex[current].r = color.R;
-	myVertex[current].g = color.G;
-	myVertex[current].b = color.B;
-	myVertex[current].a = color.A;
-	current++;
+	vertices[current] = x;
+	vertices[current+1] = y;
+	vertices[current+2] = color.R;
+	vertices[current+3] = color.G;
+	vertices[current+4] = color.B;
+	vertices[current+5] = color.A;
+	current+=6;
 	if (current == size)
 		init = true;
 }
@@ -73,14 +72,8 @@ void ShinyPolygon::addVertex(int x, int y, RGBfloatType color = BLACK) {
 void ShinyPolygon::draw() {
 	if (!init)
 		return;
-	VertexData v;
-	glBegin(GL_TRIANGLE_STRIP);
-	for (int i = 0; i < size; i++) {
-		v = myVertex[i];
-		glColor4f(v.r,v.g,v.b,v.a);
-		glVertex2f(v.x,v.y);
-	}
-	glEnd();
+	glBufferData(GL_ARRAY_BUFFER, size*sizeof(float), vertices, GL_DYNAMIC_DRAW);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 }
 
 #endif /* SHINYPOLYGON_H_ */

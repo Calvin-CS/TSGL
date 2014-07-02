@@ -1,30 +1,26 @@
 /*
  * Polyline.h extends Shape and provides a class for drawing a polyline
+ * 	with colored vertices to a Canvas
  *
- * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/19/2014
+ * Authors: Patrick Crain
+ * Last Modified: Patrick Crain, 7/2/2014
  */
 
 #ifndef POLYLINE_H_
 #define POLYLINE_H_
 
 #include "Shape.h"			// For extending our Shape object
-#include <stdexcept>		// Needed for exceptions
 
 class Polyline : public Shape {
 private:
-	struct VertexData {		// Data for each of the polygon's vertices
-		int x;				// Vertex x position
-		int y;				// Vertex y position
-	};
-	bool init;				// Whether the vertex has been initialized completely
-	int size, current;		// Ultimate and current number of vertices
-	VertexData* myVertex;	// Buffer for vertex data
+	bool init;					// Whether the vertex has been initialized completely
+	int size, current, length;	// Max / current numbe of floats; number of vertices
+	float* vertices;			// Buffer for vertex data
 public:
-	Polyline(int vertices);					// Default constructor
-	void addVertex(int x, int y);  			// Method for adding vertices to buffer
-    void draw();							// Overridden draw method
-    bool getIsPoint() { return false; }		// We are not a single point
+	Polyline(int v);									// Default constructor
+	~Polyline();
+	void addVertex(int x, int y, RGBfloatType color);  			// Method for adding vertices to buffer
+    void draw();												// Overridden draw method
 };
 
 /*
@@ -33,14 +29,18 @@ public:
  * 		vertices, the number of vertices the complete polyline will have
  * Returns: a new Polyline with the specified numbered vertices
  */
-Polyline::Polyline(int vertices = 2) : Shape(BLACK) {
-	if (vertices < 2) {
-		throw std::out_of_range("Cannot have a line with less than 2 vertices.");
-	}
-	size = vertices;
+Polyline::Polyline(int v = 3) : Shape(BLACK) {
+	if (v < 2)
+		throw std::out_of_range("Cannot have a line with fewer than 2 vertices.");
+	length = v;
+	size = length * 6;
 	current = 0;
-	myVertex = new VertexData[size];
+	vertices = new float[size];
 	init = false;
+}
+
+Polyline::~Polyline() {
+	delete vertices;
 }
 
 /*
@@ -49,28 +49,31 @@ Polyline::Polyline(int vertices = 2) : Shape(BLACK) {
  * Parameters:
  * 		x, the x position of the vertex
  * 		y, the y position of the vertex
+ * 		r, the red component of the vertex
+ * 		g, the green component of the vertex
+ * 		b, the blue component of the vertex
+ * 		a, the alpha component of the vertex
  */
-void Polyline::addVertex(int x, int y) {
-	if (init) {
-		throw std::out_of_range("Polyline has all vertices already initialized.");
-	}
-	myVertex[current].x = x;
-	myVertex[current].y = y;
-	current++;
+void Polyline::addVertex(int x, int y, RGBfloatType color = BLACK) {
+	if (init)
+		return;
+	vertices[current] = x;
+	vertices[current+1] = y;
+	vertices[current+2] = color.R;
+	vertices[current+3] = color.G;
+	vertices[current+4] = color.B;
+	vertices[current+5] = color.A;
+	current+=6;
 	if (current == size)
 		init = true;
 }
 
 // draw() actually draws the Polyline to the canvas
 void Polyline::draw() {
-	if (!init) {
-		throw std::out_of_range("Polyline not initialized.");
-	}
-	glBegin(GL_LINE_STRIP);
-	for (int i = 0; i < size; i++) {
-		glVertex2f(myVertex[i].x,myVertex[i].y);
-	}
-	glEnd();
+	if (!init)
+		return;
+	glBufferData(GL_ARRAY_BUFFER, size*sizeof(float), vertices, GL_DYNAMIC_DRAW);
+	glDrawArrays(GL_LINE_STRIP, 0, length);
 }
 
-#endif /* SHINYPOLYGON_H_ */
+#endif /* POLYLINE_H_ */

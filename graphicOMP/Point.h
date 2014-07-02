@@ -15,7 +15,6 @@ public:
 	float vertices[6];
 	Point(int x, int y, RGBfloatType color);				// Explicit constructor
 	void draw();											// Overridden draw method
-    bool getIsPoint() { return true; }
 };
 
 /*

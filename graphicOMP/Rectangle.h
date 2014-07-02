@@ -16,7 +16,6 @@ private:
 public:
 	Rectangle(int x, int y, int w, int h, RGBfloatType color);		// Explicit constructor
     void draw();													// Overridden draw method
-    bool getIsPoint() { return false; }
 };
 
 /*

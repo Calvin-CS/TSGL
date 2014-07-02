@@ -2,7 +2,7 @@
  * Shape.h provides a base class from which to extend other drawable shapes
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/19/2014
+ * Last Modified: Patrick Crain, 7/2/2014
  */
 
 #ifndef SHAPE_H_
@@ -10,68 +10,24 @@
 
 #include <stdexcept>									// Needed for exceptions
 #include "color.h"										// Needed for color type
-#include "ColoredVertex.h"
-
+#include "ColoredVertex.h"								// Needed for vertex data
 // GL libraries
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <GL/gl.h>
-#include <GL/glx.h>
+#include <GL/glew.h>									// Needed for GL functino calls
 
 class Shape {
-protected:
-	float myR, myG, myB, myA; 							// Color data for the shape
 public:
 	Shape(RGBfloatType);								// Explicit constructor for the Shape
-	virtual ~Shape() {}									// Default destructor for the Shape
-	void setColor(RGBfloatType);						// Mutator for the Shape's color
-	RGBfloatType getColor();							// Accessor for the Shape's color
-	float getColorR();									// Accessor for the red component of the Shape's color
-	float getColorG();									// Accessor for the green component of the Shape's color
-	float getColorB();									// Accessor for the blue component of the Shape's color
-	float getColorA();									// Accessor for the alpha component of the Shape's color
-	virtual bool getIsPoint() = 0;						// Abstract method for the shape to return its pointness
-	bool getUsesDefaultColor();							// Accessor for useDefaultColor
+	virtual ~Shape() {}								// Default destructor for the Shape
 	virtual void draw() = 0;							// Abstract method for actually drawing the shape
 };
 
 /*
  * Explicit constructor for the Shape class
  * Parameters:		between 0 and 1
- * 		r, the red component
- * 		g, the green component
- * 		b, the blue component
- * 		a, the alpha component
+ * 		color, the color for the shape
  * Returns: a new Shape with the specified color
  */
-Shape::Shape(RGBfloatType color) {
-	setColor(color);
-}
+Shape::Shape(RGBfloatType color) {}
 
-/*
- * setColor sets the color for the Shape class
- * Parameters:
- * 		r, the red component
- * 		g, the red component
- * 		b, the red component
- * 		a, the alpha component
- */
-void Shape::setColor(RGBfloatType color) {
-	if (color.R > 1 || color.R < 0 || color.G > 1 || color.G < 0 || color.B > 1 || color.B < 0 || color.A > 1 || color.A < 0) {
-		throw std::out_of_range("Values must be between 0 and 1 inclusive");
-	}
-	myR = color.R;
-	myG = color.G;
-	myB = color.B;
-	myA = color.A;
-}
-
-// Accessor for the shape's color
-RGBfloatType Shape::getColor() { return {myR, myG, myB, myA}; }
-// Accessor functions for the individual components of the shape's color
-float Shape::getColorR() { return myR; }
-float Shape::getColorG() { return myG; }
-float Shape::getColorB() { return myB; }
-float Shape::getColorA() { return myA; }
 
 #endif /* SHAPER_H_ */
