@@ -18,6 +18,7 @@ struct HSVType {float H, S, V, A;};
 
 static const RGBfloatType BLACK = {0.0f, 0.0f, 0.0f, 1.0f};
 static const RGBfloatType WHITE = {1.0f, 1.0f, 1.0f, 1.0f};
+static const RGBfloatType GREY  = {0.75f, 0.75f, 0.75f, 1.0f};
 
 RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a = 255) {
 	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || a > 255 || a < 0) {

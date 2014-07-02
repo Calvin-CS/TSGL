@@ -826,15 +826,8 @@ void textFunction(Canvas* can) {
 	can->drawTextColor("And to that I say...oh well.",100,500,BLACK);
 }
 
-void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, bgcolor bg = BG_NONE) {
-	switch (bg) {
-		case BG_BLACK:
-			c->setBackgroundColor({0, 0, 0, 1.0}); break;
-		case BG_WHITE:
-			c->setBackgroundColor({1.0,1.0,1.0,1.0}); break;
-		default:  //TODO: Need to change background color maybe?
-			c->setBackgroundColor({0, 0, 0, 1.0}); break;
-	}
+void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, RGBfloatType bg = GREY) {
+	c->setBackgroundColor(bg);
 	c->start();
 	if (printFPS)
 		c->showFPS(true);
@@ -845,15 +838,8 @@ void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, bgcolor bg = BG_N
 	}
 	c->end();
 }
-void test(Cart* c, void(*f)(Cart*), bool printFPS = false, bgcolor bg = BG_NONE) {
-	switch (bg) {
-		case BG_BLACK:
-			c->setBackgroundColor({0, 0, 0, 1.0}); break;
-		case BG_WHITE:
-			c->setBackgroundColor({1.0,1.0,1.0,1.0}); break;
-		default:
-			c->setBackgroundColor({0, 0, 0, 1.0}); break;
-	}
+void test(Cart* c, void(*f)(Cart*), bool printFPS = false, RGBfloatType bg = GREY) {
+	c->setBackgroundColor(bg);
 	c->start();
 	if (printFPS)
 		c->showFPS(true);
@@ -869,24 +855,24 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, bgcolor bg = BG_NONE)
 int main() {
 //	test(new Canvas(480800),points1,true);
 //	test(new Canvas(200000),points2,true);
-//	test(new Canvas(100000),lines1,true,BG_BLACK);
-//	test(new Canvas(500),lines2,false,BG_BLACK);
+	test(new Canvas(100000),lines1,true,BLACK);
+//	test(new Canvas(500),lines2,false,BLACK);
 //	test(new Canvas(65536),shadingPoints,false);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
 //	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
-//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BG_BLACK);
+//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BLACK);
 //	test(new Canvas(0, 0, WINDOW_W, WINDOW_H, 1000),dumbSortFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),colorWheelFunction);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,BG_WHITE);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,BG_WHITE);
-//	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BG_BLACK);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BG_BLACK);
-//	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 20000),alphaLangtonFunction,true,BG_BLACK);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,WHITE);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,WHITE);
+//	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BLACK);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BLACK);
+//	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 20000),alphaLangtonFunction,true,BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
-//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 810000),voronoiFunction,true,BG_WHITE);
-//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 2000000),trippyVoronoiFunction,false,BG_WHITE);
+//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 810000),voronoiFunction,true,WHITE);
+//	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 2000000),trippyVoronoiFunction,false,WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
 //	test(new Canvas(1000),textFunction,true);
 }
