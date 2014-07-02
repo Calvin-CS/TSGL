@@ -70,82 +70,60 @@ typedef std::unique_lock<std::mutex> mutexLock;
 
 class Canvas {
 protected:
+	char* title_;													// Title of the window
 	Array<Shape*> * myShapes;										// Our buffer of shapes to draw
 	Array<Shape*> * myBuffer;										// Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
-	int counter;													// Counter for the number of frames that have elapsed in the current session (for animations)
+	Timer* t;														// Timer for steady FPS
+	int framecounter;												// Counter for the number of frames that have elapsed in the current session (for animations)
 	int monitorX,monitorY,monitorWidth,monitorHeight;  				// Positioning and sizing data for the Canvas
-	RGBfloatType defaultColor; 										// Our current global RGB drawing color
 	RGBfloatType backgroundColor;									// The background color
 	bool toClear;													// Flag for clearing the canvas
 	bool started;													// Whether our canvas is running and the frame counter is counting
 	std::thread renderThread;										// Thread dedicated to rendering the Canvas
 	std::mutex shapes, buffer;										// Mutexes for locking the Canvas so that only one thread can read/write at a time
-	void init(int xx, int yy, int ww, int hh, unsigned int b);		// Method for initializing the canvas
-	void glInit();
-	static void drawFunction(Canvas *c);
-	void draw();													// Method for drawing the canvas and the shapes within
-	inline static void Canvas_Callback(void* userdata);				// Callback so that the canvas redraws periodically
 	float realFPS;													// Actual FPS of drawing
 	bool showFPS_;													// Flag to show DEBUGGING FPS
 	highResClock::time_point cycleTime, startTime;					// Times to show FPS and render time
-	float *vertexData;
-
-	int winWidth, winHeight;
-	float aspect;
-	GLFWwindow* window;
+	float *vertexData;												// Buffer for vertexes to render with GL
+	int winWidth, winHeight;										// Window sizes used for setting up the window
+	float aspect;													// Aspect ratio used for setting up the window
+	GLFWwindow* window;												// GLFW window that we will draw to
 	GLuint shaderProgram, vertexShader, fragmentShader, vao, vbo, ebo;
 	GLint uniModel, uniView, uniProj;
 	bool keyDown, isFinished, allPoints;
-	int framecounter;
-	float cameraPanX, cameraPanY, cameraDistance;
-	float halfRoomSize;
-	double mx, my;
-	void Init();
-	void TearDown();
+	double mouseX, mouseY;											// Location of the mouse once HandleIO() has been called
+
+	void init(int xx,int yy,int ww,int hh,unsigned int b,char* title);	// Method for initializing the canvas
+	void glInit();													// Initializes the GL and GLFW things that are specific for this canvas
+	static void drawFunction(Canvas *c);							// Static method that is called by the render thread
+	void draw();													// Method for drawing the canvas and the shapes within
 	virtual void HandleIO();
 	void SetupCamera();
-	Timer* t;
 public:
 	Canvas(unsigned int b);											// Default constructor for our Canvas
-	Canvas(int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
-	virtual ~Canvas() { TearDown(); }
-	static void glBigInit();
+	Canvas(int xx, int yy, int w, int h, unsigned int b, char* title);	// Explicit constructor for our Canvas
+	virtual ~Canvas();
+	static void glStaticInit();
 	int start();													// Function to start rendering our Canvas
 	int end();														// Function to end rendering our Canvas
-	virtual void drawPoint(int x, int y);							// Draws a point at the given coordinates
-	virtual void drawPointColor(int x, int y, RGBfloatType color);	// Draws a point at the given coordinates with the given color
-	virtual void drawLine(int x1, int y1, int x2, int y2);								// Draws a line at the given coordinates
-	virtual void drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color);		// Draws a line at the given coordinates with the given color
-	virtual void drawRectangle(int x, int y, int w, int h);								// Draws a rectangle at the given coordinates with the given dimensions
-	virtual void drawRectangleColor(int x, int y, int w, int h, RGBfloatType color);	// Draws a rectangle at the given coordinates with the given dimensions and color
-	virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);			// Draws a triangle with the given vertices
-	virtual void drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3,
-										RGBfloatType color);							// Draws a triangle with the given vertices and color
+	virtual void drawPoint(int x, int y, RGBfloatType color = BLACK);					// Draws a point at the given coordinates with the given color
+	virtual void drawLine(int x1, int y1, int x2, int y2, RGBfloatType color = BLACK);	// Draws a line at the given coordinates with the given color
+	virtual void drawRectangle(int x, int y, int w, int h, RGBfloatType color = BLACK);	// Draws a rectangle at the given coordinates with the given dimensions and color
+	virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color = BLACK);	// Draws a triangle with the given vertices and color
 	virtual void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);	// Draws a polygon of with given number of vertices with shading across it
-	virtual void drawText(const char * s, int x, int y);								// Draws a string of text at the given position
-	virtual void drawTextColor(const char * s, int x, int y, RGBfloatType color);		// Draws a string of text at the given position, with the given color
+	virtual void drawText(const char * s, int x, int y, RGBfloatType color = BLACK);	// Draws a string of text at the given position, with the given color
 	void setBackgroundColor(RGBfloatType color);					// Changes the background color
 	void clear();													// Clears the canvas
 	int getWindowX() 		{ return monitorX; }					// Accessor for the window width
 	int getWindowY() 		{ return monitorY; }					// Accessor for the window height
 	int getWindowWidth() 	{ return monitorWidth; }				// Accessor for the window width
 	int getWindowHeight() 	{ return monitorHeight; }				// Accessor for the window height
-	RGBfloatType getColor()	{ return defaultColor; }				// Accessor for the global drawing color
-	float getColorR() 		{ return defaultColor.R; }				// Accessor for the red component of the global drawing color
-	float getColorG() 		{ return defaultColor.G; }				// Accessor for the green component of the global drawing color
-	float getColorB() 		{ return defaultColor.B; }				// Accessor for the blue component of the global drawing color
-	float getColorA() 		{ return defaultColor.A; }				// Accessor for the alpha component of the global drawing color
-	int getFrameNumber() 	{ return counter; }						// Accessor for the number of frames rendered so far
+	int getFrameNumber() 	{ return framecounter; }				// Accessor for the number of frames rendered so far
 	float getFPS() 			{ return realFPS; }						// Accessor for true FPS
-	bool isOpen() 			{ return !isFinished; }					// Returns if the window is visible, which would mean it's not closed
+	bool isOpen() 			{ return !isFinished; }					// Returns if the window is closed
 	void showFPS(bool b) 	{ showFPS_ = b; }						// Mutator to show debugging FPS
-	void onlyPoints(bool b) { allPoints = b; }					// Whether we're only drawing points
+	void onlyPoints(bool b) { allPoints = b; }						// Whether we're only drawing points
 	double getTime();												// Returns the time since initialization
-
-	void Setup();
-	void Run();
-	void SetRoomSize(float w) { halfRoomSize = w/2; ResetCamera(); }
-	void ResetCamera() { cameraDistance = halfRoomSize; cameraPanX = cameraPanY = 0.0; }
 };
 
 /*
@@ -158,26 +136,18 @@ public:
  * 		height, the y dimension of the Canvas window
  * 		b, the buffer size for the Shapes (-1 = no limit)
  */
-void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
+void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
+	title_ = title;
 	winWidth = ww, winHeight = hh;
 	aspect = (float)winWidth / winHeight;
 	keyDown = false;
 	framecounter = 0;
-	//TODO: Remove this zoom stuffs
-	cameraPanX = ww/2, cameraPanY = hh/2;
-	cameraDistance = halfRoomSize = ((hh < ww) ? hh : ww)/2;
 
-	//TODO: Might have to use these later
-//	glutInitDisplayMode (GLUT_DOUBLE);
-//	glDisable(GL_DEPTH_TEST);												// Turn off 3D depth-testing
-//	glDisable(GL_POINT_SMOOTH);
-//	gl_font(FL_HELVETICA, 12);
 	backgroundColor = {0.75f, 0.75f, 0.75f};								// Set the default background color
 	//TODO: Remove or update toClear
 	toClear = true;															// Don't need to clear at the start
 	started = false;  														// We haven't started the window yet
 	//TODO: Maybe remove this as we already have frame counter
-	counter = 0;															// We haven't drawn any frames yet
 	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;	// Initialize translation
 	myShapes = new Array<Shape*>(b);										// Initialize myShapes
 	myBuffer = new Array<Shape*>(b);
@@ -193,7 +163,7 @@ void Canvas::HandleIO() {
 	// Check for keyboard / mouse interaction
 	glfwPollEvents();
 
-	glfwGetCursorPos(window,&mx,&my);
+	glfwGetCursorPos(window,&mouseX,&mouseY);
 
 	// ESCAPE (Exit)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
@@ -202,37 +172,6 @@ void Canvas::HandleIO() {
 		keyDown = true;
 	}
 	else keyDown = false;
-
-//	// Keys that don't care if they're held down
-//
-//	// W (Pan Up)
-//	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-//		cameraPanY += cameraDistance/32;
-//	}
-//	// S (Pan Down)
-//	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-//		cameraPanY -= cameraDistance/32;
-//	}
-//	// A (Pan Left)
-//	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-//		cameraPanX -= cameraDistance/32;
-//	}
-//	// D (Pan Right)
-//	else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-//		cameraPanX += cameraDistance/32;
-//	}
-//	// E (Zoom In)
-//	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-//		cameraDistance /= 1.02;
-//	}
-//	// Q (Zoom Out)
-//	else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-//		cameraDistance *= 1.02;
-//	}
-//	// R (Reset)
-//	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-//		ResetCamera();
-//	}
 }
 
 void Canvas::SetupCamera() {
@@ -269,7 +208,7 @@ void Canvas::SetupCamera() {
 	glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
 }
 
-void Canvas::TearDown() {
+Canvas::~Canvas() {
 	std::cout << "Tearing Down" << std::endl;
 
 	// Free up our resources
@@ -285,7 +224,7 @@ void Canvas::TearDown() {
 	std::cout << "Torn Down" << std::endl;
 }
 
-void Canvas::glBigInit() {
+void Canvas::glStaticInit() {
 	// Initialize GLFW
 	glfwInit();
 
@@ -293,8 +232,9 @@ void Canvas::glBigInit() {
 	//TODO: Again, more comments
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_DITHER);
-//	glDisable(GL_POINT_SMOOTH);
+	glDisable(GL_CULL_FACE);
 //	glEnableClientState(GL_COLOR_ARRAY);
 }
 
@@ -308,7 +248,7 @@ void Canvas::glInit() {
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 	glfwWindowHint(GLFW_STEREO, GL_FALSE);
 	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);
-	window = glfwCreateWindow(winWidth, winHeight, "OpenGL", nullptr, nullptr); // Windowed
+	window = glfwCreateWindow(winWidth, winHeight, title_, nullptr, nullptr); // Windowed
 	glfwMakeContextCurrent(window);
 	glfwShowWindow(window);
 
@@ -371,6 +311,8 @@ void Canvas::glInit() {
 	uniModel = glGetUniformLocation(shaderProgram, "model");
 	uniView = glGetUniformLocation(shaderProgram, "view");
 	uniProj = glGetUniformLocation(shaderProgram, "proj");
+
+	SetupCamera();					// Update the camera with magic numbers
 }
 
 void Canvas::drawFunction(Canvas *c) {
@@ -398,24 +340,15 @@ void Canvas::draw() {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 			toClear = false;
 		}
-		SetupCamera();					// Update the camera with magic numbers
-
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//		glEnable (GL_BLEND);
-//		glMatrixMode(GL_PROJECTION);
-//		glLoadIdentity();
-//		glOrtho(0, w() - (1.0f/w()), h(), 0, 0, 1);
-//		glMatrixMode(GL_MODELVIEW);
-//		glLoadIdentity();
 
 		// Calculate CycleTime since draw() was last called
 		highResClock::time_point end = highResClock::now();
 		realFPS = round(1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - cycleTime).count() * 1000000000.0);
 		cycleTime = end;
 
+		#pragma omp critical (fps)
 		if (showFPS_) std::cout << realFPS << '/' << FPS << std::endl;
 
-		counter++;				// Increment the frame counter
 		Shape* s;				// Pointer to the next Shape in the queue
 
 		mutexLock mBufferLock(buffer);						// Time to flush our buffer
@@ -426,8 +359,6 @@ void Canvas::draw() {
 			myBuffer->shallowClear();						// We want to clear the buffer but not delete those objects as we still need to draw them
 		}
 		mBufferLock.unlock();
-
-	//	gl_draw(" ",-100,100);								// OpenGl likes drawing the first string with a ? prepended, so get that out of the way
 
 		glDrawBuffer(GL_LEFT);								// See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
 		unsigned size = myShapes->size();
@@ -449,8 +380,9 @@ void Canvas::draw() {
 				s->draw();
 			}
 		}
+
 		myShapes->clear();				// Clear our buffer of shapes to be drawn
-		glFlush();						// Flush GL's buffer
+		glDrawBuffer(GL_BACK_LEFT);
 		glfwSwapBuffers(window);		// Swap out GL's back buffer and actually draw to the window
 		HandleIO();						// Handle any I/O
 	}
@@ -465,7 +397,7 @@ void Canvas::draw() {
  * Returns: a new 800x600 Canvas on the topleft of the screen with no title
  */
 Canvas::Canvas(unsigned int b) {
-	init(0,0,800,600,b);
+	init(0,0,800,600,b,(char*)"Canvas");
 }
 
 /*
@@ -480,8 +412,8 @@ Canvas::Canvas(unsigned int b) {
  * 		t, the title of the window
  * Returns: a new Canvas with the specified positional data and title
  */
-Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* t = 0) {
-	init(xx,yy,w,h,b);
+Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* title = "Canvas") {
+	init(xx,yy,w,h,b,title);
 }
 
 /*
@@ -525,44 +457,16 @@ void Canvas::clear() {
 }
 
 /*
- * drawPoint draws a point at the given coordinates
- * Parameters:
- * 		x, the x position of the point
- * 		y, the y position of the point
- */
-void Canvas::drawPoint(int x, int y) {
-	Point* p = new Point(x,y);						// Creates the Point with the specified coordinates
-	mutexLock mlock(buffer);
-	myBuffer->push(p);								// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
  * drawPointColor draws a point at the given coordinates with the given color
  * Parameters:
  * 		x, the x position of the point
  * 		y, the y position of the point
  * 		color, the color with which to draw the text
  */
-void Canvas::drawPointColor(int x, int y, RGBfloatType color) {
+void Canvas::drawPoint(int x, int y, RGBfloatType color) {
 	Point* p = new Point(x,y,color);				// Creates the Point with the specified coordinates and color
 	mutexLock mlock(buffer);
 	myBuffer->push(p);								// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
- * drawLine draws a line at the given coordinates
- * Parameters:
- * 		x1, the x position of the start of the line
- * 		y1, the y position of the start of the line
- *		x2, the x position of the end of the line
- * 		y2, the y position of the end of the line
- */
-void Canvas::drawLine(int x1, int y1, int x2, int y2) {
-	Line* l = new Line(x1,y1,x2,y2);				// Creates the Line with the specified coordinates
-	mutexLock mlock(buffer);
-	myBuffer->push(l);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -575,25 +479,10 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2) {
  * 		y2, the y position of the end of the line
  * 		color, the color with which to draw the text
  */
-void Canvas::drawLineColor(int x1, int y1, int x2, int y2, RGBfloatType color) {
+void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
 	Line* l = new Line(x1,y1,x2,y2,color);			// Creates the Line with the specified coordinates and color
 	mutexLock mlock(buffer);
 	myBuffer->push(l);								// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
- * drawRectangle draws a rectangle with the given coordinates and dimensions
- * Parameters:
- * 		x, the x coordinate of the Rectangle's left edge
- *		y, the y coordinate of the Rectangle's top edge
- * 		w, the width of the Rectangle
- *		h, the height of the Rectangle
- */
-void Canvas::drawRectangle(int x, int y, int w, int h) {
-	Rectangle* rec = new Rectangle(x,y,w,h);		// Creates the Rectangle with the specified coordinates
-	mutexLock mlock(buffer);
-	myBuffer->push(rec);							// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -606,7 +495,7 @@ void Canvas::drawRectangle(int x, int y, int w, int h) {
  *		h, the height of the Rectangle
  * 		color, the color with which to draw the text
  */
-void Canvas::drawRectangleColor(int x, int y, int w, int h, RGBfloatType color) {
+void Canvas::drawRectangle(int x, int y, int w, int h, RGBfloatType color) {
 	Rectangle* rec = new Rectangle(x,y,w,h,color);	// Creates the Rectangle with the specified coordinates and color
 	mutexLock mlock(buffer);
 	myBuffer->push(rec);							// Push it onto our drawing buffer
@@ -622,26 +511,9 @@ void Canvas::drawRectangleColor(int x, int y, int w, int h, RGBfloatType color) 
  * 		y2, the y position of the second vertex of the triangle
  * 		x3, the x position of the third vertex of the triangle
  * 		y3, the y position of the third vertex of the triangle
- */
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
-	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3);	// Creates the Triangle with the specified vertices
-	mutexLock mlock(buffer);
-	myBuffer->push(t);								// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
- * drawTriangle draws a Triangle with the given vertices
- * Parameters:
- * 		x1, the x position of the first vertex of the triangle
- * 		y1, the y position of the first vertex of the triangle
- *		x2, the x position of the second vertex of the triangle
- * 		y2, the y position of the second vertex of the triangle
- * 		x3, the x position of the third vertex of the triangle
- * 		y3, the y position of the third vertex of the triangle
  * 		color, the color with which to draw the triangle
  */
-void Canvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,color);	// Creates the Triangle with the specified vertices and color
 	mutexLock mlock(buffer);
 	myBuffer->push(t);										// Push it onto our drawing buffer
@@ -667,20 +539,6 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
 }
 
 /*
- * drawText prints text at the given coordinates
- * Parameters:
- * 		s, the string to print
- * 		x, the x coordinate of the text's left edge
- * 		y, the y coordinate of the text's top edge
- */
-void Canvas::drawText(const char * s, int x, int y) {
-	Text* t = new Text(s,x,y);						// Creates the Text with the specified string and coordinates
-	mutexLock mlock(buffer);
-	myBuffer->push(t);								// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
  * drawTextColor prints text at the given coordinates with the given color
  * Parameters:
  * 		s, the string to print
@@ -688,7 +546,7 @@ void Canvas::drawText(const char * s, int x, int y) {
  * 		y, the y coordinate of the text's top edge
  * 		color, the color with which to draw the text
  */
-void Canvas::drawTextColor(const char * s, int x, int y, RGBfloatType color) {
+void Canvas::drawText(const char * s, int x, int y, RGBfloatType color) {
 	Text* t = new Text(s,x,y,color);					// Creates the Text with the specified string and coordinates
 	mutexLock mlock(buffer);
 	myBuffer->push(t);								// Push it onto our drawing buffer

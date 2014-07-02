@@ -35,25 +35,20 @@ public:
 	Decimal getMinY() 			{ return minY; }							// Accessor for minY
 	Decimal getMaxY() 			{ return maxY; }							// Accessor for maxY
 	Decimal getCartWidth()		{ return cartWidth; }						// Accessor for cartWidth
-	Decimal getCartHeight()		{return cartHeight; }						// Accessor for cartHeight
+	Decimal getCartHeight()		{ return cartHeight; }						// Accessor for cartHeight
 	bool getZoomed()			{ return zoomed; }							// Accessor for zoomed
 	void setZoomed(bool z)		{ zoomed = z; }								// Mutator for zoomed
 	bool getCanZoom()			{ return canZoom; }							// Accessor for canZoom
 	void setCanZoom(bool z)		{ canZoom = z; }							// Mutator for canZoom
-	void drawPoint(Decimal x, Decimal y);									// Draws a point at the given coordinates
-	void drawPointColor(Decimal x, Decimal y, RGBfloatType color);			// Draws a point at the given coordinates with the given color
-	void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2);			// Draws a line at the given coordinates
-	void drawLineColor(Decimal x1, Decimal y1, Decimal x2,
-						Decimal y2, RGBfloatType color);					// Draws a line at the given coordinates with the given color
-	void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h);			// Draws a rectangle at the given coordinates with the given dimensions
-	void drawRectangleColor(Decimal x, Decimal y, Decimal w,
-								Decimal h, RGBfloatType color);				// Draws a rectangle at the given coordinates with the given dimensions and color
-	void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);		// Draws a triangle with the given vertices
-	void drawTriangleColor(int x1, int y1, int x2, int y2,
-							int x3, int y3,	RGBfloatType color);			// Draws a triangle with the given vertices and color
+	void drawPoint(Decimal x, Decimal y, RGBfloatType color = BLACK);		// Draws a point at the given coordinates with the given color
+	void drawLine(Decimal x1, Decimal y1, Decimal x2,
+					Decimal y2, RGBfloatType color = BLACK);				// Draws a line at the given coordinates with the given color
+	void drawRectangle(Decimal x, Decimal y, Decimal w,
+						Decimal h, RGBfloatType color = BLACK);				// Draws a rectangle at the given coordinates with the given dimensions and color
+	void drawTriangle(int x1, int y1, int x2, int y2,
+						int x3, int y3,	RGBfloatType color = BLACK);		// Draws a triangle with the given vertices and color
 	void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]);// Draws an arbitrary polygon with colored vertices
-	void drawText(const char * s, int x, int y);							// Draws a string of text at the given position
-	void drawTextColor(const char * s, int x, int y, RGBfloatType color);	// Draws a string of text at the given position, with the given color
+	void drawText(const char * s, int x, int y, RGBfloatType color = BLACK);// Draws a string of text at the given position, with the given color
 	const Function* drawFunction(const Function* f);						// Draws the Function on the screen
 	void drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);			// Draws axes crossing at the input coordinates
 };
@@ -138,21 +133,6 @@ void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal 
 }
 
 /*
- * drawPoint draws a point at the given coordinates
- * Parameters:
- * 		x, the x position of the point
- * 		y, the y position of the point
- */
-void CartesianCanvas::drawPoint(Decimal x, Decimal y) {
-	int actualX, actualY;
-	getScreenCoordinates(x, y, actualX, actualY);
-	Point* p = new Point(actualX, actualY);		// Creates the Point with the specified coordinates
-	std::unique_lock<std::mutex> mlock(buffer);
-	myBuffer->push(p);							// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
  * drawPointColor draws a point at the given coordinates with the given color
  * Parameters:
  * 		x, the x position of the point
@@ -162,30 +142,12 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y) {
  * 		b, the red component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawPointColor(Decimal x, Decimal y, RGBfloatType color) {
+void CartesianCanvas::drawPoint(Decimal x, Decimal y, RGBfloatType color) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
 	Point* p = new Point(actualX, actualY, color);	// Creates the Point with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(buffer);
 	myBuffer->push(p);								// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
- * drawLine draws a line at the given coordinates
- * Parameters:
- * 		x1, the x position of the start of the line
- * 		y1, the y position of the start of the line
- *		x2, the x position of the end of the line
- * 		y2, the y position of the end of the line
- */
-void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
-	int actualX1, actualY1, actualX2, actualY2;
-	getScreenCoordinates(x1, y1, actualX1, actualY1);
-	getScreenCoordinates(x2, y2, actualX2, actualY2);
-	Line* l = new Line(actualX1, actualY1, actualX2, actualY2); // Creates the Line with the specified coordinates
-	std::unique_lock<std::mutex> mlock(buffer);
-	myBuffer->push(l);											// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -201,31 +163,13 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
  * 		b, the red component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawLineColor(Decimal x1, Decimal y1, Decimal x2, Decimal y2, RGBfloatType color) {
+void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, RGBfloatType color) {
 	int actualX1, actualY1, actualX2, actualY2;
 	getScreenCoordinates(x1, y1,actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
 	Line* l = new Line(actualX1, actualY1, actualX2, actualY2, color);	// Creates the Line with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(buffer);
 	myBuffer->push(l);													// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
- * drawRectangle draws a rectangle with the given coordinates and dimensions
- * Parameters:
- * 		x, the x coordinate of the Rectangle's left edge
- *		y, the y coordinate of the Rectangle's top edge
- * 		w, the width of the Rectangle
- *		h, the height of the Rectangle
- */
-void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h) {
-	int actualX, actualY, actualW, actualH;
-	getScreenCoordinates(x, y, actualX, actualY);
-	getScreenCoordinates(w, h, actualW, actualH);
-	Rectangle* rec = new Rectangle(x, y, w, h);				// Creates the Rectangle with the specified coordinates
-	std::unique_lock<std::mutex> mlock(buffer);
-	myBuffer->push(rec);									// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -241,7 +185,7 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h) 
  * 		b, the blue component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawRectangleColor(Decimal x, Decimal y, Decimal w, Decimal h, RGBfloatType color) {
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, RGBfloatType color) {
 	int actualX, actualY, actualW, actualH;
 	getScreenCoordinates(x, y, actualX, actualY);
 	getScreenCoordinates(w, h, actualW, actualH);
@@ -260,34 +204,12 @@ void CartesianCanvas::drawRectangleColor(Decimal x, Decimal y, Decimal w, Decima
  * 		y2, the y position of the second vertex of the triangle
  * 		x3, the x position of the third vertex of the triangle
  * 		y3, the y position of the third vertex of the triangle
- */
-void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3) {
-	int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
-	getScreenCoordinates(x1, y1, actualX1, actualY1);
-	getScreenCoordinates(x2, y2, actualX2, actualY2);
-	getScreenCoordinates(x3, y3, actualX3, actualY3);
-	Triangle* t = new Triangle(actualX1, actualY1, actualX2,
-			actualY2, actualX3, actualY3);				// Creates the Triangle with the specified vertices
-	std::unique_lock<std::mutex> mlock(buffer);
-	myBuffer->push(t);									// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
- * drawTriangle draws a Triangle with the given vertices
- * Parameters:
- * 		x1, the x position of the first vertex of the triangle
- * 		y1, the y position of the first vertex of the triangle
- *		x2, the x position of the second vertex of the triangle
- * 		y2, the y position of the second vertex of the triangle
- * 		x3, the x position of the third vertex of the triangle
- * 		y3, the y position of the third vertex of the triangle
  * 		r, the red component
  * 		g, the green component
  * 		b, the blue component
  * 		a, the alpha component
  */
-void CartesianCanvas::drawTriangleColor(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
+void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
 	int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
 	getScreenCoordinates(x1, y1, actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
@@ -323,22 +245,6 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType 
 }
 
 /*
- * drawText prints text at the given coordinates
- * Parameters:
- * 		s, the string to print
- * 		x, the x coordinate of the text's left edge
- * 		y, the y coordinate of the text's top edge
- */
-void CartesianCanvas::drawText(const char * s, int x, int y) {
-	int actualX, actualY;
-	getScreenCoordinates(x, y, actualX, actualY);
-	Text* t = new Text(s,actualX,actualY);			// Creates the Text with the specified string and coordinates
-	mutexLock mlock(buffer);
-	myBuffer->push(t);								// Push it onto our drawing buffer
-	mlock.unlock();
-}
-
-/*
  * drawTextColor prints text at the given coordinates with the given color
  * Parameters:
  * 		s, the string to print
@@ -346,7 +252,7 @@ void CartesianCanvas::drawText(const char * s, int x, int y) {
  * 		y, the y coordinate of the text's top edge
  * 		color, the color with which to draw the text
  */
-void CartesianCanvas::drawTextColor(const char * s, int x, int y, RGBfloatType color) {
+void CartesianCanvas::drawText(const char * s, int x, int y, RGBfloatType color) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
 	Text* t = new Text(s,actualX,actualY,color);	// Creates the Text with the specified string and coordinates
