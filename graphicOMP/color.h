@@ -12,15 +12,17 @@
 #include <stdexcept>			// Needed for exceptions
 #include <iostream>
 
-struct RGBintType {int R, G, B, A;};
-struct RGBfloatType {float R, G, B, A;};
-struct HSVType {float H, S, V, A;};
+struct RGBintType	{ int R, G, B, A; };
+struct RGBfloatType	{ float R, G, B, A; };
+struct HSVType		{ float H, S, V, A; };
+
+struct ColoredVertex { float x, y; RGBfloatType c; };
 
 static const RGBfloatType BLACK = {0.0f, 0.0f, 0.0f, 1.0f};
 static const RGBfloatType WHITE = {1.0f, 1.0f, 1.0f, 1.0f};
 static const RGBfloatType GREY  = {0.75f, 0.75f, 0.75f, 1.0f};
 
-RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a = 255) {
+static RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a = 255) {
 	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || a > 255 || a < 0) {
 		throw std::out_of_range("Values must be between 0 and 255 inclusive");
 	}
@@ -35,7 +37,7 @@ inline RGBfloatType RGBintToRGBfloat(const RGBintType& color) {
 	return RGBintToRGBfloat(color.R, color.G, color.B, color.A);
 }
 
-RGBintType RGBfloatToRGBint(float r, float g, float b, float a = 1.0) {
+static RGBintType RGBfloatToRGBint(float r, float g, float b, float a = 1.0) {
 	if (r > 1 || r < 0 || g > 1 || g < 0 || b > 1 || b < 0 || a > 1 || a < 0) {
 		throw std::out_of_range("Values must be between 0 and 1 inclusive");
 	}
@@ -50,7 +52,7 @@ inline RGBintType RGBfloatToRGBint(const RGBfloatType& color) {
 	return RGBfloatToRGBint(color.R, color.G, color.B, color.A);
 }
 
-RGBfloatType HSVToRGBfloat(float h, float s, float v, float a = 1.0) {
+static RGBfloatType HSVToRGBfloat(float h, float s, float v, float a = 1.0) {
 	if (h > 6 || h < 0 || s > 1 || s < 0 || v > 1 || v < 0 || a > 1 || a < 0) {
 		std::cout << h << ' ' << s << ' ' << v << ' ' << a << std::endl << std::flush;
 		throw std::out_of_range("H must be between 0 and 6 inclusive, S, V, and A must be between 0 and 1 inclusive");
@@ -104,7 +106,7 @@ inline RGBfloatType HSVToRGBfloat(const HSVType& color) {
 	return HSVToRGBfloat(color.H, color.S, color.V, color.A);
 }
 
-inline RGBfloatType devideIntoSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0) {
+static RGBfloatType devideIntoSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0) {
 	if (value > 1 || value < 0 || alpha > 1 || alpha < 0) {
 		throw std::out_of_range("Values must be between 0 and 1 inclusive");
 	}
@@ -114,7 +116,7 @@ inline RGBfloatType devideIntoSections(unsigned int sections, unsigned int secti
 	return HSVToRGBfloat(6.0f/sections * section, 1.0f, 1.0f, 1.0f);
 }
 
-inline RGBfloatType randomColor(unsigned int seed, float alpha = 1.0) {
+static RGBfloatType randomColor(unsigned int seed, float alpha = 1.0) {
 	if (alpha > 1 || alpha < 0) {
 		throw std::out_of_range("Alpha must be between 0 and 1 inclusive");
 	}
@@ -122,7 +124,7 @@ inline RGBfloatType randomColor(unsigned int seed, float alpha = 1.0) {
 	return {rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha};
 }
 
-inline RGBfloatType blendedColor(RGBfloatType c1,RGBfloatType c2,float bias) {
+static RGBfloatType blendedColor(RGBfloatType c1,RGBfloatType c2,float bias) {
 	if (bias > 1 || bias < 0) {
 		throw std::out_of_range("Bias must be between 0 and 1 inclusive");
 	}

@@ -829,14 +829,14 @@ void fireFunction(CartesianCanvas* can) {
 	}
 }
 
-void textFunction(Canvas* can) {
-	const RGBfloatType BLACK = {0,0,0,1};
-	can->drawText("A long time ago, in a galaxy far, far away",100,100,BLACK);
-	can->drawText("Something extraordinary happened -- far more extraordinary than anything mankind has ever seen.",100,200,BLACK);
-	can->drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",100,300,BLACK);
-	can->drawText("Of *what* exactly that extraordinary event was.",100,400,BLACK);
-	can->drawText("And to that I say...oh well.",100,500,BLACK);
-}
+//void textFunction(Canvas* can) {
+//	const RGBfloatType BLACK = {0,0,0,1};
+//	can->drawText("A long time ago, in a galaxy far, far away",100,100,BLACK);
+//	can->drawText("Something extraordinary happened -- far more extraordinary than anything mankind has ever seen.",100,200,BLACK);
+//	can->drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",100,300,BLACK);
+//	can->drawText("Of *what* exactly that extraordinary event was.",100,400,BLACK);
+//	can->drawText("And to that I say...oh well.",100,500,BLACK);
+//}
 
 void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, RGBfloatType bg = GREY) {
 	c->setBackgroundColor(bg);
