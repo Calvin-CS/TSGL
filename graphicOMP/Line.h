@@ -32,7 +32,7 @@ public:
  * 		a, the alpha component
  * Returns: a new Line at the specified positions with the specified color
  */
-Line::Line(int x1, int y1, int x2, int y2, RGBfloatType color = BLACK) : Shape(color) {
+Line::Line(int x1, int y1, int x2, int y2, RGBfloatType color) : Shape(color) {
 	vertices[0] = x1;
 	vertices[1] = y1;
 	vertices[6] = x2;

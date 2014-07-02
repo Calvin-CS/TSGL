@@ -29,7 +29,7 @@ public:
  * 		a, the alpha component
  * Returns: a new Point at the specified position with the specified color
  */
-Point::Point(int x, int y, RGBfloatType color = BLACK) : Shape(color) {
+Point::Point(int x, int y, RGBfloatType color) : Shape(color) {
 	vertices[0] = x;
 	vertices[1] = y;
 	vertices[2] = color.R;

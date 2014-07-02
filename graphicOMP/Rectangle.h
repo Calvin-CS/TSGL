@@ -32,7 +32,7 @@ public:
  * 		a, the alpha component
  * Returns: a new Rectangle with the specified topleft corner, dimensions, and color
  */
-Rectangle::Rectangle(int x, int y, int w, int h, RGBfloatType color = BLACK) : Shape(color) {
+Rectangle::Rectangle(int x, int y, int w, int h, RGBfloatType color) : Shape(color) {
 	vertices[0] = x;
 	vertices[1] = y;
 	vertices[6] = x+w;

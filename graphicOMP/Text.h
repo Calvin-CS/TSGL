@@ -30,7 +30,7 @@ public:
  * 		color, the color in which to draw the string
  * Returns: a new Text object at the specified position displaying the specified string
  */
-Text::Text(const char * s, int x, int y, RGBfloatType color = BLACK) : Shape(color) {
+Text::Text(const char * s, int x, int y, RGBfloatType color) : Shape(color) {
 	myX = x;
 	myY = y;
 	myString = s;

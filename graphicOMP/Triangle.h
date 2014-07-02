@@ -34,7 +34,7 @@ public:
  * 		a, the alpha component
  * Returns: a new Triangle with the specified vertices and color
  */
-Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color = BLACK) : Shape(color) {
+Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) : Shape(color) {
 	myX1 = x1;
 	myY1 = y1;
 	myX2 = x2;
