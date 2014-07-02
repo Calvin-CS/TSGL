@@ -150,23 +150,6 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType 
 }
 
 /*
- * drawText prints text at the given coordinates with the given color
- * Parameters:
- * 		s, the string to print
- * 		x, the x coordinate of the text's left edge
- * 		y, the y coordinate of the text's top edge
- * 		color, the RGB color (optional)
- */
-//void CartesianCanvas::drawText(const char * s, int x, int y, RGBfloatType color) {
-//	int actualX, actualY;
-//	getScreenCoordinates(x, y, actualX, actualY);
-//	Text* t = new Text(s,actualX,actualY,color);	// Creates the Text with the specified string and coordinates
-//	mutexLock mlock(buffer);
-//	myBuffer->push(t);								// Push it onto our drawing buffer
-//	mlock.unlock();
-//}
-
-/*
  * drawTriangle draws a Triangle with the given vertices
  * Parameters:
  * 		x1, the x position of the first vertex of the triangle

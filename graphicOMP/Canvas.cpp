@@ -52,6 +52,7 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* title) {
 Canvas::~Canvas() {
 	std::cout << "Tearing Down" << std::endl;
 
+	// Free our clear rectangle's memory
 	delete clearRectangle;
 
 	// Free up our resources
