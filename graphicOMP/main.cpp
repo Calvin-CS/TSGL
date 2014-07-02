@@ -403,6 +403,7 @@ void cosineIntegralFunction(CartesianCanvas* can) {
 		for (long double i = start; i < stop; i += pw) {
 			t.sleep();
 			can->drawLine(i, 0, i, function1->valueAt(i), {(float)omp_get_thread_num()/THREADS,0,0,1.0});
+			if (!can->getIsOpen()) break;
 		}
 	}
 }
