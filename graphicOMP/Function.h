@@ -69,7 +69,7 @@ public:
 class AbsoluteFunction : public Function {
 public:
 	virtual long double valueAt(long double x) const {
-		return abs(x);
+		return std::abs(x);
 	}
 };
 
