@@ -36,7 +36,7 @@ static float randfloat(int divisor = 10000) {
 }
 
 void graydientFunction(Canvas* can) {
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	#pragma omp parallel num_threads(omp_get_num_procs())
 	{
 		int color, nthreads = omp_get_num_threads();
@@ -49,7 +49,7 @@ void graydientFunction(Canvas* can) {
 }
 void colorPointsFunction(Canvas* can) {
 	int myPart = can->getWindowHeight() / omp_get_num_threads();
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	#pragma omp parallel num_threads(omp_get_num_procs())
 	{
 		int myStart = myPart * omp_get_thread_num();
@@ -60,7 +60,7 @@ void colorPointsFunction(Canvas* can) {
 				else
 					can->drawPoint(i,j,RGBintToRGBfloat(i % NUM_COLORS,j % NUM_COLORS,i*j % NUM_COLORS));
 			}
-			if (!can->isOpen()) break;
+			if (!can->getIsOpen()) break;
 		}
 	}
 }
@@ -68,7 +68,7 @@ void colorPointsFunction(Canvas* can) {
 void lineChainFunction(Canvas* can) {
 	int xOld,yOld,xNew = can->getWindowWidth()/2,yNew = can->getWindowHeight()/2,red,green,blue;
 	Timer t(FRAME);
-	while(can->isOpen()) {									// Checks to see if the window has been closed
+	while(can->getIsOpen()) {									// Checks to see if the window has been closed
 		t.sleep();
 		xOld  = xNew;
 		yOld  = yNew;
@@ -89,7 +89,7 @@ void lineFanFunction(Canvas* can) {
 		int a,b,c,d,red,green,blue;
 		double angle, offset = omp_get_thread_num() * ARC;
 		bool reverse = false;
-		while(can->isOpen()) {				// Checks to see if the window has been closed
+		while(can->getIsOpen()) {				// Checks to see if the window has been closed
 			t.sleep();
 			angle = offset+t.getReps()*RAD;
 			a = can->getWindowWidth()/2 * (1 + sin(angle));
@@ -110,10 +110,10 @@ void lineFanFunction(Canvas* can) {
 void spectrumFunction(Canvas* can) {
 	int nthreads = omp_get_num_procs();
 	Timer t(FRAME);
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	#pragma omp parallel num_threads(nthreads)
 	{
-		while(can->isOpen()) {							// Check to see if the window has been closed
+		while(can->getIsOpen()) {							// Check to see if the window has been closed
 			t.sleep();
 			for (int i = omp_get_thread_num(); i < NUM_COLORS; i+= nthreads)
 				for (int j = 0; j < NUM_COLORS; j++)
@@ -126,14 +126,14 @@ void mandelbrotFunction(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;  //omp_get_num_procs();
 	const unsigned int DEPTH = MAX_COLOR;
 	can->setCanZoom(true);
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	while(can->getZoomed()) {
 		can->setZoomed(false);
 		double blockstart = can->getCartHeight() / THREADS;
 		#pragma omp parallel num_threads(THREADS)
 		{
 			unsigned int iterations;
-			for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
+			for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->getIsOpen(); k++) { // As long as we aren't trying to render off of the screen...
 				long double row = blockstart * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
 				for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
 					complex originalComplex(col, row);
@@ -155,7 +155,7 @@ void mandelbrotFunction(CartesianCanvas* can) {
 			}
 		}
 		print(can->getTime());
-		while(can->isOpen() && !can->getZoomed()); //Busy wait
+		while(can->getIsOpen() && !can->getZoomed()); //Busy wait
 	}
 }
 
@@ -167,9 +167,9 @@ void langtonFunction(CartesianCanvas* can) {
 	int xx = WINDOW_W / 2,								// Start at the center
 		yy = WINDOW_H / 2;
 	int direction = UP;
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	Timer t(1.0/(60.0*IPF));
-	while(can->isOpen()) {								// Check to see if the window has been closed
+	while(can->getIsOpen()) {								// Check to see if the window has been closed
 		t.sleep();
 		if (filled[xx + WINDOW_W * yy]) {
 			direction = (direction + 1) % 4;							// Turn right
@@ -206,11 +206,11 @@ void langtonColonyFunction(CartesianCanvas* can) {
 	xx[1] = WINDOW_W/2; yy[1] = WINDOW_H/2-RADIUS; red[1] = 0;   		green[1] = 0;   		blue[1] = MAX_COLOR;
 	xx[2] = WINDOW_W/2+RADIUS; yy[2] = WINDOW_H/2; red[2] = 0;   		green[2] = MAX_COLOR; 	blue[2] = 0;
 	xx[3] = WINDOW_W/2; yy[3] = WINDOW_H/2+RADIUS; red[3] = MAX_COLOR; 	green[3] = 0;   		blue[3] = MAX_COLOR;
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 
 	Timer t(1.0/(60.0*IPF));
-	while(can->isOpen()) {								// Check to see if the window has been closed
+	while(can->getIsOpen()) {								// Check to see if the window has been closed
 		t.sleep();
 		for (int j = 0; j < 4; j++) {
 			if (filled[xx[j] + WINDOW_W * yy[j]]) {
@@ -249,12 +249,12 @@ void langtonRainbowFunction(CartesianCanvas* can) {
 	xx[1] = WINDOW_W/2; 		yy[1] = WINDOW_H/2-RADIUS;
 	xx[2] = WINDOW_W/2+RADIUS; 	yy[2] = WINDOW_H/2;
 	xx[3] = WINDOW_W/2; 		yy[3] = WINDOW_H/2+RADIUS;
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 
 	RGBfloatType color;
 	Timer t(FRAME/IPF);
-	while(can->isOpen()) {
+	while(can->getIsOpen()) {
 		t.sleep();
 		for (int j = 0; j < 4; j++) {
 			if (filled[xx[j] + WINDOW_W * yy[j]]) {
@@ -294,7 +294,7 @@ void dumbSortFunction(Canvas* can) {
 	for (int i = 0; i < SIZE; i++)
 		numbers[i] = rand() % SIZE;
 	Timer t(FRAME/IPF);
-	while(can->isOpen()) {				// Check to see if the window has been closed
+	while(can->getIsOpen()) {				// Check to see if the window has been closed
 		t.sleep();
 		if (min == max) // We are done sorting
 			return;
@@ -351,7 +351,7 @@ void colorWheelFunction(CartesianCanvas* can) {
 	int tid, f;
 	int start[THREADS];
 	Timer t(1.0/(60.0));
-	while(can->isOpen()) {								// Check to see if the window has been closed
+	while(can->getIsOpen()) {								// Check to see if the window has been closed
 		t.sleep();
 		f = t.getReps() % NUM_COLORS;
 		start[0] = f;
@@ -417,7 +417,7 @@ void gradientWheelFunction(CartesianCanvas* can) {
 	int f;
 	int start[THREADS];
 	Timer t(FRAME);
-	while(can->isOpen()) {										// Check to see if the window has been closed
+	while(can->getIsOpen()) {										// Check to see if the window has been closed
 		t.sleep();
 		f = t.getReps() % MAX_COLOR;
 		start[0] = f;
@@ -452,7 +452,7 @@ void alphaRectangleFunction(CartesianCanvas* can) {
 				WINDOW_H = can->getCartHeight();
 	int a, b;
 	Timer t(FRAME/100);
-	while(can->isOpen()) {								// Check to see if the window has been closed
+	while(can->getIsOpen()) {								// Check to see if the window has been closed
 		t.sleep();
 		a = rand() % WINDOW_W;
 		b = rand() % WINDOW_H;
@@ -465,7 +465,7 @@ void alphaLangtonFunction(CartesianCanvas* can) {
 				WINDOW_W = can->getCartWidth(),			// Set the window sizes
 				WINDOW_H = can->getCartHeight(),
 				RADIUS = WINDOW_H/6;					// How far apart to space the ants
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	bool* filled = new bool[WINDOW_W * WINDOW_H]();		// Create an empty bitmap for the window
 	int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 	xx[0] = WINDOW_W/2-RADIUS; yy[0] = WINDOW_H/2;	red[0] = MAX_COLOR; 	green[0] = 0;   		blue[0] = 0;
@@ -474,7 +474,7 @@ void alphaLangtonFunction(CartesianCanvas* can) {
 	xx[3] = WINDOW_W/2; yy[3] = WINDOW_H/2+RADIUS;	red[3] = MAX_COLOR; 	green[3] = 0;   		blue[3] = MAX_COLOR;
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 	Timer t(FRAME);
-	while(can->isOpen()) {								// Check to see if the window has been closed
+	while(can->getIsOpen()) {								// Check to see if the window has been closed
 		t.sleep();
 		for (int i = 0; i < IPF; i++) {
 			for (int j = 0; j < 4; j++) {
@@ -511,7 +511,7 @@ void gradientMandelbrotFunction(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 32;
 	can->setCanZoom(true);
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	while(can->getZoomed()) {
 		can->setZoomed(false);
 		double blockstart = can->getCartHeight() / THREADS;
@@ -519,7 +519,7 @@ void gradientMandelbrotFunction(CartesianCanvas* can) {
 		{
 			unsigned int iterations;
 			double smooth;
-			for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
+			for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->getIsOpen(); k++) { // As long as we aren't trying to render off of the screen...
 				long double row = blockstart * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
 				for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
 					complex c(col, row);
@@ -547,7 +547,7 @@ void gradientMandelbrotFunction(CartesianCanvas* can) {
 					break;
 			}
 		}
-		while(can->isOpen() && !can->getZoomed());
+		while(can->getIsOpen() && !can->getZoomed());
 	}
 }
 void novaFunction(CartesianCanvas* can) {
@@ -555,12 +555,12 @@ void novaFunction(CartesianCanvas* can) {
 	const unsigned int 	DEPTH = 200;
 	const double 			BLOCKSTART = (can->getMaxY() - can->getMinY()) / THREADS;
 	const long double 		R = 1.0l;
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	#pragma omp parallel num_threads(THREADS)
 	{
 		unsigned int iterations;
 		double smooth;
-		for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->isOpen(); k++) { // As long as we aren't trying to render off of the screen...
+		for (int k = 0; k <= (can->getWindowHeight() / THREADS) && can->getIsOpen(); k++) { // As long as we aren't trying to render off of the screen...
 			long double row = BLOCKSTART * omp_get_thread_num() + can->getMinY() + can->getPixelHeight() * k;
 			for (long double col = can->getMinX(); col <= can->getMaxX(); col += can->getPixelWidth()) {
 				complex c(col, row);
@@ -599,7 +599,7 @@ void voronoiFunction(CartesianCanvas* can) {
 	const int	WINDOW_W = can->getCartWidth(),		// Set the screen sizes
 				WINDOW_H = can->getCartHeight(),
 				POINTS = 100;						// Set the number of control points
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	srand (time(NULL));								// Seed the random number generator
 	int* x = new int[POINTS]();						// Initialize an array for POINTS x coords
 	int* y = new int[POINTS]();						// Do the same for y coords
@@ -649,7 +649,7 @@ void shadedVoronoiFunction(CartesianCanvas* can) {
 	const int	WINDOW_W = can->getCartWidth(),		// Set the screen sizes
 				WINDOW_H = can->getCartHeight(),
 				POINTS = 100;						// Set the number of control points
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	srand (time(NULL));								// Seed the random number generator
 	int* x = new int[POINTS]();						// Initialize an array for POINTS x coords
 	int* y = new int[POINTS]();						// Do the same for y coords
@@ -727,7 +727,7 @@ void forestFireFunction(CartesianCanvas* can) {
 	const float LIFE = 10,
 				STRENGTH = 0.03,
 				MAXDIST = sqrt(WINDOW_W*WINDOW_W+WINDOW_H*WINDOW_H)/2;
-	can->onlyPoints(true);
+	can->setOnlyPoints(true);
 	srand (time(NULL));								// Seed the random number generator
 	bool* onFire = new bool[WINDOW_W * WINDOW_H]();
 	float* flammability = new float[WINDOW_W * WINDOW_H]();
@@ -771,7 +771,7 @@ void forestFireFunction(CartesianCanvas* can) {
 		}
 	}
 	Timer t(FRAME);
-	while(can->isOpen()) {								// Check to see if the window has been closed
+	while(can->getIsOpen()) {								// Check to see if the window has been closed
 		t.sleep();
 		int l = fires.size();
 		for (int i = 0; i < l; i++) {
@@ -817,10 +817,10 @@ void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, RGBfloatType bg =
 	c->setBackgroundColor(bg);
 	c->start();
 	if (printFPS)
-		c->showFPS(true);
+		c->setShowFPS(true);
 	(*f)(c);
 	if (printFPS) {
-		c->showFPS(false);
+		c->setShowFPS(false);
 		print(c->getTime());
 	}
 	c->end();
@@ -829,10 +829,10 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, RGBfloatType bg = GRE
 	c->setBackgroundColor(bg);
 	c->start();
 	if (printFPS)
-		c->showFPS(true);
+		c->setShowFPS(true);
 	(*f)(c);
 	if (printFPS) {
-		c->showFPS(false);
+		c->setShowFPS(false);
 		print(c->getTime());
 	}
 	c->end();
@@ -840,7 +840,6 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, RGBfloatType bg = GRE
 
 
 int main() {
-	Canvas::glStaticInit();
 //	#pragma omp sections
 //	{
 //		#pragma omp section
