@@ -76,7 +76,6 @@ protected:
 	Timer* t;														// Timer for steady FPS
 	int framecounter;												// Counter for the number of frames that have elapsed in the current session (for animations)
 	int monitorX,monitorY,monitorWidth,monitorHeight;  				// Positioning and sizing data for the Canvas
-	RGBfloatType backgroundColor;									// The background color
 	bool toClear;													// Flag for clearing the canvas
 	bool started;													// Whether our canvas is running and the frame counter is counting
 	std::thread renderThread;										// Thread dedicated to rendering the Canvas
@@ -92,6 +91,7 @@ protected:
 	GLint uniModel, uniView, uniProj;
 	bool keyDown, isFinished, allPoints;
 	double mouseX, mouseY;											// Location of the mouse once HandleIO() has been called
+	Rectangle* clearRectangle;										// Rectangle for clearing to the background color
 
 	void init(int xx,int yy,int ww,int hh,unsigned int b,char* title);	// Method for initializing the canvas
 	void glInit();													// Initializes the GL and GLFW things that are specific for this canvas
@@ -143,11 +143,9 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
 	keyDown = false;
 	framecounter = 0;
 
-	backgroundColor = GREY;													// Set the default background color
 	//TODO: Remove or update toClear
 	toClear = true;															// Don't need to clear at the start
 	started = false;  														// We haven't started the window yet
-	//TODO: Maybe remove this as we already have frame counter
 	monitorX = xx; monitorY = yy; monitorWidth = ww; monitorHeight = hh;	// Initialize translation
 	myShapes = new Array<Shape*>(b);										// Initialize myShapes
 	myBuffer = new Array<Shape*>(b);
@@ -156,6 +154,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
 	//TODO: Redundant as we have a "started"?
 	isFinished = false;														// We're not done rendering
 	allPoints = false;
+
+	clearRectangle = new Rectangle(0,0,winWidth,winHeight,GREY);
 
 	t = new Timer(FRAME);
 }
@@ -211,6 +211,8 @@ void Canvas::SetupCamera() {
 
 Canvas::~Canvas() {
 	std::cout << "Tearing Down" << std::endl;
+
+	delete clearRectangle;
 
 	// Free up our resources
 	glDeleteProgram(shaderProgram);
@@ -334,10 +336,9 @@ void Canvas::draw() {
 	{
 		t->sleep();
 
-//		glClearColor(backgroundColor.R, backgroundColor.G, backgroundColor.B, 1.0);		// Set the background
-		glClearColor(0.75f,0.75f,0.75f,1.0f);
 		if (toClear) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+			clearRectangle->draw();
 			toClear = false;
 		}
 
@@ -445,9 +446,8 @@ int Canvas::end() {
  * 		color, the RGBfloatType with the color. The alpha channel is ignored
  */
 void Canvas::setBackgroundColor(RGBfloatType color) {
-	backgroundColor.R = color.R;
-	backgroundColor.G = color.G;
-	backgroundColor.B = color.B;
+	delete clearRectangle;
+	clearRectangle = new Rectangle(0,0,winWidth,winHeight,color);
 }
 
 /*

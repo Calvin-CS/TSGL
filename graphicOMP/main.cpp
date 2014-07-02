@@ -870,30 +870,30 @@ int main() {
 //	{
 //		#pragma omp section
 //		{
-//			test(new Canvas(480800),points1,true);
-//			test(new Canvas(480800),points2,true);
-//			test(new Canvas(100000),lines1,true,BLACK);
+			test(new Canvas(480800),points1,true);
+			test(new Canvas(480800),points2,true);
+			test(new Canvas(100000),lines1,true,BLACK);
 			test(new Canvas(500),lines2,false);
-//			test(new Canvas(65536),shadingPoints,false);
-//			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
-//			test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
-//			test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
-//			test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BLACK);
-//			test(new Canvas(0, 0, WINDOW_W, WINDOW_H, 1000),dumbSortFunction,true);
+			test(new Canvas(65536),shadingPoints,false);
+			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
+			test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
+			test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
+			test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BLACK);
+			test(new Canvas(0, 0, WINDOW_W, WINDOW_H, 1000),dumbSortFunction,true);
 //			test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),colorWheelFunction);
 //		}
 //		#pragma omp section
 //		{
 //			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,WHITE);
-//			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,WHITE);
+			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,WHITE);
 //			test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BLACK);
-//			test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BLACK);
-//			test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 30000),alphaLangtonFunction,true,BLACK);
-//			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
-//			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
-//			test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 810000),voronoiFunction,true,WHITE);
-//			test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 2000000),trippyVoronoiFunction,false,WHITE);
-//			test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
+			test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BLACK);
+			test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 30000),alphaLangtonFunction,true,BLACK);
+			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
+			test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
+			test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 810000),voronoiFunction,true,WHITE);
+			test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 2000000),trippyVoronoiFunction,false,WHITE);
+			test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
 //			test(new Canvas(1000),textFunction,true);
 //		}
 //	}
