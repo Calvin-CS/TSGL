@@ -51,7 +51,7 @@ void points1(Canvas* can) {
 			for (int j = 0; j < can->getWindowHeight(); j++) {
 				counter++;
 				color = i*MAX_COLOR/2/can->getWindowWidth() + j*MAX_COLOR/2/can->getWindowHeight();
-				can->drawPointColor(i,j,RGBintToRGBfloat(color,color,color));
+				can->drawPoint(i,j,RGBintToRGBfloat(color,color,color));
 			}
 		}
 		std::cout << counter << std::endl;
@@ -66,9 +66,9 @@ void points2(Canvas* can) {
 		for (int j = myStart; j < myStart + myPart; j++) {
 			for (int i = 100; i < can->getWindowWidth()-100; i++) {
 				if (i % 2 == 0)
-					can->drawPointColor(i,j,RGBintToRGBfloat(j % NUM_COLORS,i % NUM_COLORS,i*j % 113));
+					can->drawPoint(i,j,RGBintToRGBfloat(j % NUM_COLORS,i % NUM_COLORS,i*j % 113));
 				else
-					can->drawPointColor(i,j,RGBintToRGBfloat(i % NUM_COLORS,j % NUM_COLORS,i*j % NUM_COLORS));
+					can->drawPoint(i,j,RGBintToRGBfloat(i % NUM_COLORS,j % NUM_COLORS,i*j % NUM_COLORS));
 			}
 		}
 	}
@@ -86,7 +86,7 @@ void lines1(Canvas* can) {
 		red   = rand() % NUM_COLORS;
 		green = rand() % NUM_COLORS;
 		blue  = rand() % NUM_COLORS;
-		can->drawLineColor(xOld,yOld,xNew,yNew,RGBintToRGBfloat(red,green,blue));
+		can->drawLine(xOld,yOld,xNew,yNew,RGBintToRGBfloat(red,green,blue));
 	}
 }
 void lines2(Canvas* can) {
@@ -109,9 +109,9 @@ void lines2(Canvas* can) {
 			green = (b + t.getReps()) % NUM_COLORS;
 			blue = (a*b + t.getReps()) % NUM_COLORS;
 			if (!reverse)
-				can->drawLineColor(a,b,c,d,RGBintToRGBfloat(red,green,blue));
+				can->drawLine(a,b,c,d,RGBintToRGBfloat(red,green,blue));
 			else
-				can->drawLineColor(c,d,a,b,RGBintToRGBfloat(red,green,blue));
+				can->drawLine(c,d,a,b,RGBintToRGBfloat(red,green,blue));
 			reverse = !reverse;
 		}
 	}
@@ -126,7 +126,7 @@ void shadingPoints(Canvas* can) {
 			t.sleep();
 			for (int i = omp_get_thread_num(); i < NUM_COLORS; i+= nthreads)
 				for (int j = 0; j < NUM_COLORS; j++)
-					can->drawPointColor(i,j,RGBintToRGBfloat(i,j,t.getReps() % NUM_COLORS));
+					can->drawPoint(i,j,RGBintToRGBfloat(i,j,t.getReps() % NUM_COLORS));
 		}
 	}
 }
@@ -153,9 +153,9 @@ void mandelbrotFunction(CartesianCanvas* can) {
 						c = c * c + originalComplex;
 					}
 					if (iterations == DEPTH) 	// If the point never escaped, draw it black
-						can->drawPointColor(col, row, {0, 0, 0, 1.0});
+						can->drawPoint(col, row, {0, 0, 0, 1.0});
 					else						// Otherwise, draw it with color based on how long it took
-						can->drawPointColor(col, row, RGBintToRGBfloat(iterations % 151, (iterations % 131) + 50, iterations % 255));
+						can->drawPoint(col, row, RGBintToRGBfloat(iterations % 151, (iterations % 131) + 50, iterations % 255));
 					if (can->getZoomed())
 						break;
 				}
@@ -184,11 +184,11 @@ void langtonFunction(CartesianCanvas* can) {
 		t.sleep();
 		if (filled[xx + WINDOW_W * yy]) {
 			direction = (direction + 1) % 4;							// Turn right
-			can->drawPointColor(xx,yy,RGBintToRGBfloat(MAX_COLOR,0,0));	// Color it
+			can->drawPoint(xx,yy,RGBintToRGBfloat(MAX_COLOR,0,0));	// Color it
 		}
 		else {
 			direction = (direction + 3) % 4;							// Turn left
-			can->drawPointColor(xx,yy,{0,0,0,1});						// Don't color it
+			can->drawPoint(xx,yy,{0,0,0,1});						// Don't color it
 		}
 		filled[xx + WINDOW_W * yy] ^= true;								// Invert the square
 		switch(direction) {												// Check for wrap-around and move
@@ -226,11 +226,11 @@ void langtonFunction2(CartesianCanvas* can) {
 		for (int j = 0; j < 4; j++) {
 			if (filled[xx[j] + WINDOW_W * yy[j]]) {
 				dir[j] = (dir[j] + 1) % 4;
-				can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(red[j],green[j],blue[j]));
+				can->drawPoint(xx[j],yy[j],RGBintToRGBfloat(red[j],green[j],blue[j]));
 			}
 			else {
 				dir[j] = (dir[j] + 3) % 4;
-				can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(red[j]/2,green[j]/2,blue[j]/2));
+				can->drawPoint(xx[j],yy[j],RGBintToRGBfloat(red[j]/2,green[j]/2,blue[j]/2));
 			}
 			switch(dir[j]) {
 				case UP:
@@ -271,12 +271,12 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 			if (filled[xx[j] + WINDOW_W * yy[j]]) {
 				dir[j] = (dir[j] + 1) % 4;
 				color = HSVToRGBfloat((can->getFrameNumber() + 3*j)%12 / 2.0f, 1.0f, 1.0f, .25f);
-				can->drawPointColor(xx[j],yy[j],color);
+				can->drawPoint(xx[j],yy[j],color);
 			}
 			else {
 				dir[j] = (dir[j] + 3) % 4;
 				color = HSVToRGBfloat((can->getFrameNumber() + 3*j)%12 / 2.0f, 1.0f, 0.5f, .25f);
-				can->drawPointColor(xx[j],yy[j],color);
+				can->drawPoint(xx[j],yy[j],color);
 			}
 			switch(dir[j]) {
 				case UP:
@@ -334,16 +334,16 @@ void dumbSortFunction(Canvas* can) {
 				goingUp = !goingUp;
 			} else pos--;
 		}
-		can->drawRectangleColor(0,0,can->getWindowWidth(),can->getWindowHeight(),
+		can->drawRectangle(0,0,can->getWindowWidth(),can->getWindowHeight(),
 								RGBintToRGBfloat(MAX_COLOR/2,MAX_COLOR/2,MAX_COLOR/2));
 		int start = 50, width = 1, height;
 		for (int i = 0; i < SIZE; i++) {
 			height = numbers[i];
 			if (i == pos)
-				can->drawRectangleColor(start,580-height,width,height,
+				can->drawRectangle(start,580-height,width,height,
 										RGBintToRGBfloat(MAX_COLOR,MAX_COLOR,0));
 			else
-				can->drawRectangleColor(start,580-height,width,height,
+				can->drawRectangle(start,580-height,width,height,
 										RGBintToRGBfloat(MAX_COLOR,0,0));
 			start += width+1;
 		}
@@ -377,7 +377,7 @@ void colorWheelFunction(CartesianCanvas* can) {
 			y2 = WINDOW_CH + RADIUS*cos(GRADIENT*start[tid]);
 			x3 = WINDOW_CW + RADIUS*sin(GRADIENT*(start[tid]+1));
 			y3 = WINDOW_CH + RADIUS*cos(GRADIENT*(start[tid]+1));
-			can->drawTriangleColor(WINDOW_CW,WINDOW_CH,x2,y2,x3,y3,color);
+			can->drawTriangle(WINDOW_CW,WINDOW_CH,x2,y2,x3,y3,color);
 		}
 	}
 }
@@ -412,7 +412,7 @@ void integral1(CartesianCanvas* can) {
 		long double stop = start + offset;
 		for (long double i = start; i < stop; i += pw) {
 			t.sleep();
-			can->drawLineColor(i, 0, i, function1->valueAt(i), {(float)omp_get_thread_num()/THREADS,0,0,1.0});
+			can->drawLine(i, 0, i, function1->valueAt(i), {(float)omp_get_thread_num()/THREADS,0,0,1.0});
 		}
 	}
 }
@@ -466,7 +466,7 @@ void alphaRectangleFunction(CartesianCanvas* can) {
 		t.sleep();
 		a = rand() % WINDOW_W;
 		b = rand() % WINDOW_H;
-		can->drawRectangleColor(a, b, rand() % (WINDOW_W-a), rand() % (WINDOW_H-b),
+		can->drawRectangle(a, b, rand() % (WINDOW_W-a), rand() % (WINDOW_H-b),
 					RGBintToRGBfloat(rand() % MAX_COLOR, rand() % MAX_COLOR,rand() % MAX_COLOR,16));
 	}
 }
@@ -491,11 +491,11 @@ void alphaLangtonFunction(CartesianCanvas* can) {
 				if (filled[xx[j] + WINDOW_W * yy[j]]) {
 					dir[j] = (dir[j] + 1) % 4;
 //					can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(0,0,0,255));
-					can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(MAX_COLOR/2,MAX_COLOR/2,MAX_COLOR/2,16));
+					can->drawPoint(xx[j],yy[j],RGBintToRGBfloat(MAX_COLOR/2,MAX_COLOR/2,MAX_COLOR/2,16));
 				}
 				else {
 					dir[j] = (dir[j] + 3) % 4;
-					can->drawPointColor(xx[j],yy[j],RGBintToRGBfloat(red[j],green[j],blue[j],16));
+					can->drawPoint(xx[j],yy[j],RGBintToRGBfloat(red[j],green[j],blue[j],16));
 				}
 			}
 			for (int j = 0; j < 4; j++) {
@@ -550,7 +550,7 @@ void mandelbrot2Function(CartesianCanvas* can) {
 					}
 					smooth /= (DEPTH + i+1);
 					RGBfloatType color = HSVToRGBfloat((float)smooth*6.0f, 1.0, 1.0, 1.0);
-					can->drawPointColor(col, row, color);
+					can->drawPoint(col, row, color);
 					if (can->getZoomed())
 						break;
 				}
@@ -602,7 +602,7 @@ void novaFunction(CartesianCanvas* can) {
 				while (smooth > 1)
 					smooth -= 1;
 				RGBfloatType color = HSVToRGBfloat((float)smooth*6.0f,1.0,(float)smooth, 1.0);
-				can->drawPointColor(col, row, color);
+				can->drawPoint(col, row, color);
 			}
 		}
 	}
@@ -651,7 +651,7 @@ void voronoiFunction(CartesianCanvas* can) {
 				}
 			}
 			kvalue[i * WINDOW_H + j] = bestk;
-			can->drawPointColor(i,j,color[bestk]);	// Draw the point with the closest control's color
+			can->drawPoint(i,j,color[bestk]);	// Draw the point with the closest control's color
 			if (bdist > wdist[bestk])
 				wdist[bestk] = bdist;
 		}
@@ -718,7 +718,7 @@ void trippyVoronoiFunction(CartesianCanvas* can) {
 			}
 			kvalue[i * WINDOW_H + j] = bestk;
 			kvalue2[i * WINDOW_H + j] = nextbestk;
-			can->drawPointColor(i,j,color[bestk]);	// Draw the point with the closest control's color
+			can->drawPoint(i,j,color[bestk]);	// Draw the point with the closest control's color
 			if (bdist > wdist[bestk])
 				wdist[bestk] = bdist;
 		}
@@ -739,7 +739,7 @@ void trippyVoronoiFunction(CartesianCanvas* can) {
 			float shading = d1/kd;
 			if (shading > 1)		shading = 1;
 			else if (shading < 0) 	shading = 0;
-			can->drawPointColor(i,j,{0,0,0,shading});	// Draw the point with the closest control's color
+			can->drawPoint(i,j,{0,0,0,shading});	// Draw the point with the closest control's color
 //			usleep(0.1);
 		}
 	}
@@ -761,7 +761,7 @@ void fireFunction(CartesianCanvas* can) {
 			float tdist = (MAXDIST-sqrt(xi*xi+yi*yi))/MAXDIST;
 			float f = 0.01+(i*j%100)/100.0*randfloat(100)/2*tdist;
 			flammability[i * WINDOW_H + j] = f;
-			can->drawPointColor(i,j,{0.0,f,0.0,1.0});
+			can->drawPoint(i,j,{0.0,f,0.0,1.0});
 		}
 	}
 	for (int reps = 0; reps < 32; reps++) {
@@ -776,7 +776,7 @@ void fireFunction(CartesianCanvas* can) {
 		for (int i = 0; i < w; i++) {
 			for (int j = 0; j < h; j++) {
 				flammability[(x+i) * WINDOW_H + (y+j)] = 0.01;
-				can->drawPointColor(x+i,y+j,{0.0,0,1.0,0.25});
+				can->drawPoint(x+i,y+j,{0.0,0,1.0,0.25});
 			}
 		}
 	}
@@ -790,7 +790,7 @@ void fireFunction(CartesianCanvas* can) {
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
 			fires.push({WINDOW_W/2-1+i,WINDOW_H/2-1+j,LIFE,STRENGTH});
-			can->drawPointColor(WINDOW_W/2-1+i,WINDOW_H/2-1+j,{1.0,0,0,STRENGTH});
+			can->drawPoint(WINDOW_W/2-1+i,WINDOW_H/2-1+j,{1.0,0,0,STRENGTH});
 		}
 	}
 	Timer t(1.0/60);
@@ -806,22 +806,22 @@ void fireFunction(CartesianCanvas* can) {
 			if (f.x > 0 && !onFire[myCell-WINDOW_H] && randfloat() < flammability[myCell-WINDOW_H]) {
 				fires.push({f.x-1,f.y,LIFE,f.strength});
 				onFire[myCell-WINDOW_H] = true;
-				can->drawPointColor(f.x-1,f.y,{f.life/LIFE,0,0,f.life/LIFE});
+				can->drawPoint(f.x-1,f.y,{f.life/LIFE,0,0,f.life/LIFE});
 			}
 			if (f.x < WINDOW_W-1 && !onFire[myCell+WINDOW_H] && randfloat() < flammability[myCell+WINDOW_H]) {
 				fires.push({f.x+1,f.y,LIFE,f.strength});
 				onFire[myCell+WINDOW_H] = true;
-				can->drawPointColor(f.x+1,f.y,{f.life/LIFE,0,0,f.life/LIFE});
+				can->drawPoint(f.x+1,f.y,{f.life/LIFE,0,0,f.life/LIFE});
 			}
 			if (f.y > 0 && !onFire[myCell-1] && randfloat() < flammability[myCell-1]) {
 				fires.push({f.x,f.y-1,LIFE,f.strength});
 				onFire[myCell-1] = true;
-				can->drawPointColor(f.x,f.y-1,{f.life/LIFE,0,0,f.life/LIFE});
+				can->drawPoint(f.x,f.y-1,{f.life/LIFE,0,0,f.life/LIFE});
 			}
 			if (f.y < WINDOW_H && !onFire[myCell+1] && randfloat() < flammability[myCell+1]) {
 				fires.push({f.x,f.y+1,LIFE,f.strength});
 				onFire[myCell+1] = true;
-				can->drawPointColor(f.x,f.y+1,{f.life/LIFE,0,0,f.life/LIFE});
+				can->drawPoint(f.x,f.y+1,{f.life/LIFE,0,0,f.life/LIFE});
 			}
 		}
 	}
@@ -829,11 +829,11 @@ void fireFunction(CartesianCanvas* can) {
 
 void textFunction(Canvas* can) {
 	const RGBfloatType BLACK = {0,0,0,1};
-	can->drawTextColor("A long time ago, in a galaxy far, far away",100,100,BLACK);
-	can->drawTextColor("Something extraordinary happened -- far more extraordinary than anything mankind has ever seen.",100,200,BLACK);
-	can->drawTextColor("Unfortunately, as nobody was around to witness the event, we are largely ignorant",100,300,BLACK);
-	can->drawTextColor("Of *what* exactly that extraordinary event was.",100,400,BLACK);
-	can->drawTextColor("And to that I say...oh well.",100,500,BLACK);
+	can->drawText("A long time ago, in a galaxy far, far away",100,100,BLACK);
+	can->drawText("Something extraordinary happened -- far more extraordinary than anything mankind has ever seen.",100,200,BLACK);
+	can->drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",100,300,BLACK);
+	can->drawText("Of *what* exactly that extraordinary event was.",100,400,BLACK);
+	can->drawText("And to that I say...oh well.",100,500,BLACK);
 }
 
 void test(Canvas* c, void(*f)(Canvas*), bool printFPS = false, RGBfloatType bg = GREY) {
@@ -863,18 +863,25 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, RGBfloatType bg = GRE
 
 
 int main() {
-	Canvas::glBigInit();
+	Canvas::glStaticInit();
+//#pragma omp sections
+//{
+//#pragma omp section
+//{
 	test(new Canvas(480800),points1,true);
 	test(new Canvas(480800),points2,true);
 	test(new Canvas(100000),lines1,true,BLACK);
 	test(new Canvas(500),lines2,false,BLACK);
 	test(new Canvas(65536),shadingPoints,false);
-	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
-	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
-	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
-	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BLACK);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
+//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
+//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
+//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BLACK);
 //	test(new Canvas(0, 0, WINDOW_W, WINDOW_H, 1000),dumbSortFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),colorWheelFunction);
+//}
+//#pragma omp section
+//{
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,WHITE);
 //	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BLACK);
@@ -886,4 +893,5 @@ int main() {
 //	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 2000000),trippyVoronoiFunction,false,WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000),fireFunction,false);
 //	test(new Canvas(1000),textFunction,true);
+//}}
 }
