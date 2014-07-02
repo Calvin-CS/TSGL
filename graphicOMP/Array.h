@@ -21,7 +21,7 @@ public:
 	Array(unsigned int size) {
 		capacity_ = size;
 		myArray = new Item[size];
-		myArray[0] = NULL;
+		myArray[0] = nullptr;
 		first_ = last_ = size_ = 0;
 	}
 
@@ -37,14 +37,14 @@ public:
 		if (first_ > last_) {						// If the array wraps around...
 			for (; first_ < capacity_; first_++) {	// Delete from first to the end
 				delete myArray[first_];
-				myArray[first_] = NULL;
+				myArray[first_] = nullptr;
 			}
 			first_ = 0;								// Move first to the beginning
 		}
 
 		for (; first_ <= last_; first_++) {			// Delete from first to last
 			delete myArray[first_];
-			myArray[first_] = NULL;
+			myArray[first_] = nullptr;
 		}
 
 		first_ = last_ = size_ = 0;					// Reset all vars
@@ -57,13 +57,13 @@ public:
 	void shallowClear() {
 			if (first_ > last_) {						// If the array wraps around...
 				for (; first_ < capacity_; first_++) {	// Delete from first to the end
-					myArray[first_] = NULL;
+					myArray[first_] = nullptr;
 				}
 				first_ = 0;								// Move first to the beginning
 			}
 
 			for (; first_ <= last_; first_++) {			// Delete from first to last
-				myArray[first_] = NULL;
+				myArray[first_] = nullptr;
 			}
 
 			first_ = last_ = size_ = 0;					// Reset all vars
@@ -75,7 +75,7 @@ public:
 	 * 		index, the index of where the item is
 	 * Returns: the item at that index
 	 */
-	const Item operator[] (unsigned int index) {
+	const Item operator[] (unsigned int index) const {
 		if (size_ == 0) {
 			throw std::out_of_range("Array::operator[](): array is empty");
 		} else if (index >= size_) {
@@ -89,7 +89,7 @@ public:
 	/*
 	 * size() returns the number of items in the array
 	 */
-	unsigned int size() {
+	unsigned int size() const {
 		return size_;
 	}
 
@@ -103,8 +103,8 @@ public:
 	/*
 	 * isEmpty() returns true if the array has no items, false otherwise
 	 */
-	bool isEmpty() {
-		return myArray[first_] == NULL;				// If there is no item...
+	bool isEmpty() const {
+		return size_ == 0;				// If there is no item...
 	}
 
 	/*
@@ -115,11 +115,11 @@ public:
 	 * Returns: the same item
 	 */
 	Item push(Item item) {
-		if (myArray[first_] != NULL) {							// If the array has items...
+		if (myArray[first_] != nullptr) {						// If the array has items...
 			(last_ + 1) == capacity_ ? last_ = 0 : last_++;		// Increment last
 		}
 
-		if (last_ == first_ && myArray[first_] != NULL) {		// If the array is out of room...
+		if (last_ == first_ && myArray[first_] != nullptr) {	// If the array is out of room...
 			delete myArray[first_];
 			(first_ + 1) == capacity_ ? first_ = 0 : first_++;	// Increment first
 		} else {
