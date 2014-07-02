@@ -198,8 +198,8 @@ void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y
  * 		cartY, a reference variable to be filled with screenY's Cartesian position
  */
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
-	cartX = (screenX * cartWidth) / monitorWidth + minX;
-	cartY = minY-(screenY - monitorHeight)*cartHeight/monitorHeight;
+	cartX = (screenX * cartWidth) / winWidth + minX;
+	cartY = minY-(screenY - winHeight)*cartHeight/winHeight;
 }
 
 /*
@@ -211,8 +211,8 @@ void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal 
  * 		screenY, a reference variable to be filled with cartY's window position
  */
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
-	screenX = ceil((cartX - minX) / cartWidth * monitorWidth);
-	screenY = ceil(monitorHeight - (cartY - minY) / cartHeight * monitorHeight);
+	screenX = ceil((cartX - minX) / cartWidth * winWidth);
+	screenY = ceil(winHeight - (cartY - minY) / cartHeight * winHeight);
 }
 
 /*
@@ -285,9 +285,9 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
 	maxY = yMax;
 	cartWidth = maxX - minX;
 	cartHeight = maxY - minY;
-	Decimal xError = cartWidth / monitorWidth;
-	Decimal yError = cartHeight / monitorHeight;
-	pixelWidth = (cartWidth - xError) / (monitorWidth + xError);
-	pixelHeight = (cartHeight  - yError) / (monitorHeight + yError);
+	Decimal xError = cartWidth / winWidth;
+	Decimal yError = cartHeight / winHeight;
+	pixelWidth = (cartWidth - xError) / (winWidth + xError);
+	pixelHeight = (cartHeight  - yError) / (winHeight + yError);
 	zoomed = true;
 }

@@ -14,11 +14,12 @@
 class CartesianCanvas : public Canvas {
 	typedef long double Decimal;						// Define the variable type to use for coordinates
 private:
+	bool	canZoom;									// If we can zoom at all
 	Decimal cartWidth,									// maxX-minX, maxY-minY
 			cartHeight;
 	Decimal minX, maxX, minY, maxY;						// Bounding Cartesian coordinates for the window
 	Decimal pixelWidth, pixelHeight;					// cartWidth/window.w(), cartHeight/window.h()
-	bool	zoomed, canZoom;							// Whether we've zoomed since last draw or we can zoom at all
+	bool	zoomed;										// Whether we've zoomed since last draw
 protected:
 	void HandleIO();									// Handler for mouse events
 public:
