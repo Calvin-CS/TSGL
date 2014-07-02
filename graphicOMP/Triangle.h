@@ -23,10 +23,7 @@ public:
 	 *		y2, the second y coordinate
 	 *		x3, the third x coordinate
 	 *		y3, the third y coordinate
-	 * 		r, the red component
-	 * 		g, the green component
-	 * 		b, the blue component
-	 * 		a, the alpha component
+	 * 		color, the color
 	 * Returns: a new Triangle with the specified vertices and color
 	 */
 	Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {

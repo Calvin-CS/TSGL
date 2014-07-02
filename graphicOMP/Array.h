@@ -25,10 +25,7 @@ public:
 		first_ = last_ = size_ = 0;
 	}
 
-	virtual ~Array() {
-		clear();
-		delete [] myArray;
-	}
+	virtual ~Array() { clear(); delete [] myArray; }
 
 	/*
 	 * clear() empties the array and resets it
@@ -41,12 +38,10 @@ public:
 			}
 			first_ = 0;								// Move first to the beginning
 		}
-
 		for (; first_ <= last_; first_++) {			// Delete from first to last
 			delete myArray[first_];
 			myArray[first_] = nullptr;
 		}
-
 		first_ = last_ = size_ = 0;					// Reset all vars
 	}
 
@@ -56,16 +51,12 @@ public:
 	 */
 	void shallowClear() {
 			if (first_ > last_) {						// If the array wraps around...
-				for (; first_ < capacity_; first_++) {	// Delete from first to the end
+				for (; first_ < capacity_; first_++)	// Delete from first to the end
 					myArray[first_] = nullptr;
-				}
 				first_ = 0;								// Move first to the beginning
 			}
-
-			for (; first_ <= last_; first_++) {			// Delete from first to last
+			for (; first_ <= last_; first_++)			// Delete from first to last
 				myArray[first_] = nullptr;
-			}
-
 			first_ = last_ = size_ = 0;					// Reset all vars
 		}
 
@@ -76,36 +67,22 @@ public:
 	 * Returns: the item at that index
 	 */
 	const Item operator[] (unsigned int index) const {
-		if (size_ == 0) {
+		if (size_ == 0)
 			throw std::out_of_range("Array::operator[](): array is empty");
-		} else if (index >= size_) {
+		else if (index >= size_)
 			throw std::out_of_range("Array::operator[](): index is larger than number of items in array");
-		} else {
-			Item item = myArray[(first_ + index) % capacity_];	// Wrap around for the underlying array
-			return item;
-		}
+		else
+			return myArray[(first_ + index) % capacity_];	// Wrap around for the underlying array
 	}
 
-	/*
-	 * size() returns the number of items in the array
-	 */
-	unsigned int size() const {
-		return size_;
-	}
+	/* size() returns the number of items in the array */
+	unsigned int size() const { return size_; }
 
-	/*
-	 * capacity() returns the maximum ammount of items the array can store
-	 */
-	unsigned int capacity() const {
-		return capacity_;
-	}
+	/* capacity() returns the maximum ammount of items the array can store */
+	unsigned int capacity() const { return capacity_; }
 
-	/*
-	 * isEmpty() returns true if the array has no items, false otherwise
-	 */
-	bool isEmpty() const {
-		return size_ == 0;				// If there is no item...
-	}
+	/* isEmpty() returns true if the array has no items, false otherwise */
+	bool isEmpty() const { return (size_ == 0); }
 
 	/*
 	 * push() adds the item to the end of the array. It will also remove the
@@ -115,16 +92,13 @@ public:
 	 * Returns: the same item
 	 */
 	Item push(Item item) {
-		if (myArray[first_] != nullptr) {						// If the array has items...
+		if (myArray[first_] != nullptr)						// If the array has items...
 			(last_ + 1) == capacity_ ? last_ = 0 : last_++;		// Increment last
-		}
 
 		if (last_ == first_ && myArray[first_] != nullptr) {	// If the array is out of room...
-			delete myArray[first_];
+			delete myArray[first_];								// Delete the first element
 			(first_ + 1) == capacity_ ? first_ = 0 : first_++;	// Increment first
-		} else {
-			size_++;											// Otherwise, we added an item
-		}
+		} else size_++;											// Otherwise, we added an item
 
 		return myArray[last_] = item;							// Actually add the item
 	}

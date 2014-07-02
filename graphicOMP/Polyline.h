@@ -9,15 +9,15 @@
 #ifndef POLYLINE_H_
 #define POLYLINE_H_
 
-#include "Shape.h"			// For extending our Shape object
+#include "Shape.h"				// For extending our Shape object
 
 class Polyline : public Shape {
 private:
-	bool init;					// Whether the vertex has been initialized completely
-	int size,					// Max / current number of floats; number of vertices
-		current,
-		length;
+	bool init;					// Whether the Polyline has been initialized completely
 	float* vertices;			// Buffer for vertex data
+	int size,					// Number of floating point numbers in vertices
+		current,				// Current number of floating point numbers in vertices
+		length;					// Number of vertices in vertices (size / 6)
 public:
 	/*
 	 * Explicit constructor for the Polyline class (calls the base constructor)
@@ -43,10 +43,7 @@ public:
 	 * Parameters:
 	 * 		x, the x position of the vertex
 	 * 		y, the y position of the vertex
-	 * 		r, the red component of the vertex
-	 * 		g, the green component of the vertex
-	 * 		b, the blue component of the vertex
-	 * 		a, the alpha component of the vertex
+	 * 		color, the color of the vertex
 	 */
 	void addVertex(int x, int y, RGBfloatType color = BLACK) {
 		if (init)
@@ -64,8 +61,7 @@ public:
 
 	// draw() actually draws the Polyline to the canvas
 	void draw() {
-		if (!init)
-			return;
+		if (!init)	return;
 		glBufferData(GL_ARRAY_BUFFER, size*sizeof(float), vertices, GL_DYNAMIC_DRAW);
 		glDrawArrays(GL_LINE_STRIP, 0, length);
 	}

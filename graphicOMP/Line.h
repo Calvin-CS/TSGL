@@ -21,10 +21,7 @@ public:
 	 *		y1, the first y coordinate
 	 * 		x2, the second x coordinate
 	 *		y2, the second y coordinate
-	 * 		r, the red component
-	 * 		g, the green component
-	 * 		b, the blue component
-	 * 		a, the alpha component
+	 * 		color, a color
 	 * Returns: a new Line at the specified positions with the specified color
 	 */
 	Line(int x1, int y1, int x2, int y2, RGBfloatType color) {

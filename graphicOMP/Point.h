@@ -19,10 +19,7 @@ public:
 	 * Parameters:
 	 * 		x, the x coordinate
 	 *		y, the y coordinate
-	 * 		r, the red component
-	 * 		g, the green component
-	 * 		b, the blue component
-	 * 		a, the alpha component
+	 * 		color, a color
 	 * Returns: a new Point at the specified position with the specified color
 	 */
 	Point(int x, int y, RGBfloatType color) {

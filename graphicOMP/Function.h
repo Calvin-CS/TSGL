@@ -3,7 +3,7 @@
  *
  * Created on: Jun 11, 2014
  * Author: Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/12/2014
+ * Last Modified: Mark Vander Stel, 7/2/2014
  */
 
 #ifndef FUNCTION_H_
@@ -20,99 +20,70 @@ public:
 
 class PowerFunction : public Function {
 public:
-	PowerFunction(long double a) {
-		a_ = a;
-	}
-
-	virtual long double valueAt(long double x) const {
-		return pow(x, a_);
-	}
+	PowerFunction(long double a) { a_ = a; }
+	virtual long double valueAt(long double x) const { return pow(x, a_);}
 private:
 	long double a_;
 };
 
 class SquareRootFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return sqrt(x);
-	}
+	virtual long double valueAt(long double x) const { return sqrt(x); }
 };
 
 class CubedRootFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return cbrt(x);
-	}
+	virtual long double valueAt(long double x) const { return cbrt(x);}
 };
 
 class SineFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return sin(x);
-	}
+	virtual long double valueAt(long double x) const { return sin(x); }
 };
 
 class CosineFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return cos(x);
-	}
+	virtual long double valueAt(long double x) const { return cos(x); }
 };
 
 class TangentFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return tan(x);
-	}
+	virtual long double valueAt(long double x) const { return tan(x); }
 };
 
 class AbsoluteFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return std::abs(x);
-	}
+	virtual long double valueAt(long double x) const { return std::abs(x); }
 };
 
 class ExponentialFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return exp(x);
-	}
+	virtual long double valueAt(long double x) const { return exp(x); }
 };
 
 class NaturalLogFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return log(x);
-	}
+	virtual long double valueAt(long double x) const { return log(x); }
 };
 
 class CommonLogFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return log10(x);
-	}
+	virtual long double valueAt(long double x) const { return log10(x); }
 };
 
 class CeilingFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return ceil(x);
-	}
+	virtual long double valueAt(long double x) const { return ceil(x); }
 };
 
 class FloorFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return floor(x);
-	}
+	virtual long double valueAt(long double x) const { return floor(x); }
 };
 
 class RoundFunction : public Function {
 public:
-	virtual long double valueAt(long double x) const {
-		return round(x);
-	}
+	virtual long double valueAt(long double x) const { return round(x); }
 };
 
 #endif /* FUNCTION_H_ */

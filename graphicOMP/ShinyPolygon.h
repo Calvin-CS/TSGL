@@ -9,20 +9,20 @@
 #ifndef SHINYPOLYGON_H_
 #define SHINYPOLYGON_H_
 
-#include "Shape.h"			// For extending our Shape object
+#include "Shape.h"				// For extending our Shape object
 
 class ShinyPolygon : public Shape {
 private:
 	bool init;					// Whether the vertex has been initialized completely
-	int size,					// Max / current numbe of floats; number of vertices
-		current,
-		length;
 	float* vertices;			// Buffer for vertex data
+	int size,					// Number of floating point numbers in vertices
+		current,				// Current number of floating point numbers in vertices
+		length;					// Number of vertices in vertices (size / 6)
 public:
 	/*
 	 * Explicit constructor for the ShinyPolygon class (calls the base constructor)
 	 * Parameters:
-	 * 		vertices, the number of vertices the complete polygon will have
+	 * 		v, the number of vertices the complete polygon will have
 	 * Returns: a new ShinyPolygon with the specified numbered vertices
 	 */
 	ShinyPolygon(int v = 3) {
@@ -43,10 +43,7 @@ public:
 	 * Parameters:
 	 * 		x, the x position of the vertex
 	 * 		y, the y position of the vertex
-	 * 		r, the red component of the vertex
-	 * 		g, the green component of the vertex
-	 * 		b, the blue component of the vertex
-	 * 		a, the alpha component of the vertex
+	 * 		color, the color of the vertex
 	 */
 	void addVertex(int x, int y, RGBfloatType color = BLACK) {
 		if (init)
@@ -64,8 +61,7 @@ public:
 
 	// draw() actually draws the Polygon to the canvas
 	void draw() {
-		if (!init)
-			return;
+		if (!init)	return;
 		glBufferData(GL_ARRAY_BUFFER, size*sizeof(float), vertices, GL_DYNAMIC_DRAW);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 	}

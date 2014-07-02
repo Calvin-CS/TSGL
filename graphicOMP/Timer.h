@@ -8,8 +8,8 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
-#include <chrono>					// For timing
-#include <thread>					// For sleeping
+#include <chrono>		// For timing
+#include <thread>		// For sleeping
 
 typedef std::chrono::high_resolution_clock highResClock;
 
@@ -26,18 +26,14 @@ public:
 	virtual ~Timer() {}
 
 	void sleep() {
-//		while (lastTime + period_ < highResClock::now()) {}
 		std::this_thread::sleep_until(lastTime + period_);
 		lastTime = highResClock::now();
 	}
 
-	double getTime() {
-		return std::chrono::duration_cast<std::chrono::nanoseconds>(highResClock::now() - startTime).count() / 1000000000.0;
-	}
+	double getTime() { return	 std::chrono::duration_cast<std::chrono::nanoseconds>(
+								 highResClock::now() - startTime).count() / 1000000000.0; }
 
-	int getReps() {
-		return (highResClock::now() - startTime) / period_;
-	}
+	int getReps() { return (highResClock::now() - startTime) / period_; }
 };
 
 #endif /* TIMER_H_ */

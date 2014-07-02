@@ -2,7 +2,7 @@
  * color.h provides color types and methods of converting between them and generating them
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/19/2014
+ * Last Modified: Patrick Crain, 7/22014
  */
 
 #ifndef COLOR_H_
@@ -10,17 +10,16 @@
 
 #include <cmath>				// Needed for conversions
 #include <stdexcept>			// Needed for exceptions
-#include <iostream>
+#include <iostream>			// Needed for output
 
-struct RGBintType	{ int R, G, B, A; };
-struct RGBfloatType	{ float R, G, B, A; };
-struct HSVType		{ float H, S, V, A; };
+struct RGBfloatType		{ float	 R, G, B, A; };
+struct RGBintType		{ int	 R, G, B, A; };
+struct HSVType			{ float	 H, S, V, A; };
+struct ColoredVertex 	{ float	 x, y; RGBfloatType c; };
 
-struct ColoredVertex { float x, y; RGBfloatType c; };
-
-static const RGBfloatType BLACK = {0.0f, 0.0f, 0.0f, 1.0f};
-static const RGBfloatType WHITE = {1.0f, 1.0f, 1.0f, 1.0f};
+static const RGBfloatType BLACK = {0.0f,  0.0f,  0.0f,  1.0f};
 static const RGBfloatType GREY  = {0.75f, 0.75f, 0.75f, 1.0f};
+static const RGBfloatType WHITE = {1.0f,  1.0f,  1.0f,  1.0f};
 
 static RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a = 255) {
 	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || a > 255 || a < 0) {
@@ -102,17 +101,18 @@ static RGBfloatType HSVToRGBfloat(float h, float s, float v, float a = 1.0) {
 			throw std::out_of_range("Bad H value");
 	}
 }
+
 inline RGBfloatType HSVToRGBfloat(const HSVType& color) {
 	return HSVToRGBfloat(color.H, color.S, color.V, color.A);
 }
 
-static RGBfloatType devideIntoSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0) {
-	if (value > 1 || value < 0 || alpha > 1 || alpha < 0) {
+static RGBfloatType divideIntoSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0) {
+	if (value > 1 || value < 0 || alpha > 1 || alpha < 0)
 		throw std::out_of_range("Values must be between 0 and 1 inclusive");
-	}
 	return HSVToRGBfloat(6.0f/sections * section, 1.0f, value, alpha);
 }
-inline RGBfloatType devideIntoSections(unsigned int sections, unsigned int section) {
+
+inline RGBfloatType divideIntoSections(unsigned int sections, unsigned int section) {
 	return HSVToRGBfloat(6.0f/sections * section, 1.0f, 1.0f, 1.0f);
 }
 
