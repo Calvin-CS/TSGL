@@ -841,7 +841,7 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, RGBfloatType bg = GRE
 
 
 int main() {
-//	#pragma omp sections
+//	#pragma omp parallel sections
 //	{
 //		#pragma omp section
 //		{
