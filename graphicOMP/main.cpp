@@ -42,6 +42,7 @@ static float randfloat(int divisor = 10000) {
 void points1(Canvas* can) {
 	static int counter;
 	counter = 0;
+	can->onlyPoints(true);
 	#pragma omp parallel num_threads(omp_get_num_procs())
 	{
 		int nthreads = omp_get_num_threads();
@@ -118,6 +119,7 @@ void lines2(Canvas* can) {
 void shadingPoints(Canvas* can) {
 	int nthreads = omp_get_num_procs();
 	Timer t(1.0/60);
+	can->onlyPoints(true);
 	#pragma omp parallel num_threads(nthreads)
 	{
 		while(can->isOpen()) {							// Check to see if the window has been closed
@@ -176,6 +178,7 @@ void langtonFunction(CartesianCanvas* can) {
 	int xx = WINDOW_W / 2,								// Start at the center
 		yy = WINDOW_H / 2;
 	int direction = UP;
+	can->onlyPoints(true);
 	Timer t(1.0/(60.0*IPF));
 	while(can->isOpen()) {								// Check to see if the window has been closed
 		t.sleep();
@@ -214,6 +217,7 @@ void langtonFunction2(CartesianCanvas* can) {
 	xx[1] = WINDOW_W/2; yy[1] = WINDOW_H/2-RADIUS; red[1] = 0;   		green[1] = 0;   		blue[1] = MAX_COLOR;
 	xx[2] = WINDOW_W/2+RADIUS; yy[2] = WINDOW_H/2; red[2] = 0;   		green[2] = MAX_COLOR; 	blue[2] = 0;
 	xx[3] = WINDOW_W/2; yy[3] = WINDOW_H/2+RADIUS; red[3] = MAX_COLOR; 	green[3] = 0;   		blue[3] = MAX_COLOR;
+	can->onlyPoints(true);
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 
 	Timer t(1.0/(60.0*IPF));
@@ -256,6 +260,7 @@ void langtonFunctionShiny(CartesianCanvas* can) {
 	xx[1] = WINDOW_W/2; 		yy[1] = WINDOW_H/2-RADIUS;
 	xx[2] = WINDOW_W/2+RADIUS; 	yy[2] = WINDOW_H/2;
 	xx[3] = WINDOW_W/2; 		yy[3] = WINDOW_H/2+RADIUS;
+	can->onlyPoints(true);
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 
 	RGBfloatType color;
@@ -470,6 +475,7 @@ void alphaLangtonFunction(CartesianCanvas* can) {
 				WINDOW_W = can->getCartWidth(),			// Set the window sizes
 				WINDOW_H = can->getCartHeight(),
 				RADIUS = WINDOW_H/6;					// How far apart to space the ants
+	can->onlyPoints(true);
 	bool* filled = new bool[WINDOW_W * WINDOW_H]();		// Create an empty bitmap for the window
 	int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 	xx[0] = WINDOW_W/2-RADIUS; yy[0] = WINDOW_H/2;	red[0] = MAX_COLOR; 	green[0] = 0;   		blue[0] = 0;
@@ -516,6 +522,7 @@ void mandelbrot2Function(CartesianCanvas* can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 32;
 	can->setCanZoom(true);
+	can->onlyPoints(true);
 	while(can->getZoomed()) {
 		can->setZoomed(false);
 		double blockstart = can->getCartHeight() / THREADS;
@@ -561,6 +568,7 @@ void novaFunction(CartesianCanvas* can) {
 	const unsigned int DEPTH = 200;
 	const double BLOCKSTART = (can->getMaxY() - can->getMinY()) / THREADS;
 	const long double 	R = 1.0l;
+	can->onlyPoints(true);
 	#pragma omp parallel num_threads(THREADS)
 	{
 		unsigned int iterations;
@@ -604,6 +612,7 @@ void voronoiFunction(CartesianCanvas* can) {
 	const int	WINDOW_W = can->getCartWidth(),		// Set the screen sizes
 				WINDOW_H = can->getCartHeight(),
 				POINTS = 100;						// Set the number of control points
+	can->onlyPoints(true);
 	srand (time(NULL));								// Seed the random number generator
 	int* x = new int[POINTS]();						// Initialize an array for POINTS x coords
 	int* y = new int[POINTS]();						// Do the same for y coords
@@ -663,6 +672,7 @@ void trippyVoronoiFunction(CartesianCanvas* can) {
 	const int	WINDOW_W = can->getCartWidth(),		// Set the screen sizes
 				WINDOW_H = can->getCartHeight(),
 				POINTS = 100;						// Set the number of control points
+	can->onlyPoints(true);
 	srand (time(NULL));								// Seed the random number generator
 	int* x = new int[POINTS]();						// Initialize an array for POINTS x coords
 	int* y = new int[POINTS]();						// Do the same for y coords
@@ -853,22 +863,23 @@ void test(Cart* c, void(*f)(Cart*), bool printFPS = false, RGBfloatType bg = GRE
 
 
 int main() {
-//	test(new Canvas(480800),points1,true);
-//	test(new Canvas(200000),points2,true);
+	Canvas::glBigInit();
+	test(new Canvas(480800),points1,true);
+	test(new Canvas(480800),points2,true);
 	test(new Canvas(100000),lines1,true,BLACK);
-//	test(new Canvas(500),lines2,false,BLACK);
-//	test(new Canvas(65536),shadingPoints,false);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
-//	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
-//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
-//	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BLACK);
+	test(new Canvas(500),lines2,false,BLACK);
+	test(new Canvas(65536),shadingPoints,false);
+	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrotFunction,false);
+	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000),langtonFunction,false);
+	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunction2,false);
+	test(new Cart(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000),langtonFunctionShiny,true,BLACK);
 //	test(new Canvas(0, 0, WINDOW_W, WINDOW_H, 1000),dumbSortFunction,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),colorWheelFunction);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10),functionFunction,true,WHITE);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000),integral1,true,WHITE);
 //	test(new Cart(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512),gradientWheelFunction,false,BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512),alphaRectangleFunction,false,BLACK);
-//	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 20000),alphaLangtonFunction,true,BLACK);
+//	test(new Cart(0, 0, 960, 960, 0, 0, 960, 960, 30000),alphaLangtonFunction,true,BLACK);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000),mandelbrot2Function,true);
 //	test(new Cart(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000),novaFunction,true);
 //	test(new Cart(0, 0, 900, 900, 0, 0, 900, 900, 810000),voronoiFunction,true,WHITE);

@@ -109,9 +109,9 @@ public:
 	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h, unsigned int b, char* t);	// Explicit constructor for our Canvas
 	virtual ~Canvas() { TearDown(); }
+	static void glBigInit();
 	int start();													// Function to start rendering our Canvas
 	int end();														// Function to end rendering our Canvas
-	void setColor(float r, float g, float b, float a);				// Sets the global drawing color
 	virtual void drawPoint(int x, int y);							// Draws a point at the given coordinates
 	virtual void drawPointColor(int x, int y, RGBfloatType color);	// Draws a point at the given coordinates with the given color
 	virtual void drawLine(int x1, int y1, int x2, int y2);								// Draws a line at the given coordinates
@@ -182,7 +182,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b) {
 	myShapes = new Array<Shape*>(b);										// Initialize myShapes
 	myBuffer = new Array<Shape*>(b);
 	vertexData = new float[6*b];											// Buffer for vertexes for points
-	setColor(0, 0, 0, 255);													// Our default global drawing color is black
 	showFPS_ = false;														// Set debugging FPS to false
 	//TODO: Redundant as we have a "started"?
 	isFinished = false;														// We're not done rendering
@@ -286,94 +285,99 @@ void Canvas::TearDown() {
 	std::cout << "Torn Down" << std::endl;
 }
 
+void Canvas::glBigInit() {
+	// Initialize GLFW
+	glfwInit();
+
+	// Enable and disable necessary stuff
+	//TODO: Again, more comments
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_DITHER);
+//	glDisable(GL_POINT_SMOOTH);
+//	glEnableClientState(GL_COLOR_ARRAY);
+}
+
 void Canvas::glInit() {
-		// Initialize GLFW
-		glfwInit();
+	// Create a Window and the Context
+	//TODO: Add comments here because this is very confusing
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_STEREO, GL_FALSE);
+	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);
+	window = glfwCreateWindow(winWidth, winHeight, "OpenGL", nullptr, nullptr); // Windowed
+	glfwMakeContextCurrent(window);
+	glfwShowWindow(window);
 
-		// Create a Window and the Context
-		//TODO: Add comments here because this is very confusing
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-		window = glfwCreateWindow(winWidth, winHeight, "OpenGL", nullptr, nullptr); // Windowed
-		glfwMakeContextCurrent(window);
+	// Enable Experimental GLEW to Render Properly
+	glewExperimental = GL_TRUE;
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+	  /* Problem: glewInit failed, something is seriously wrong. */
+	  fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+	}
 
-//		glfwSwapInterval(30);
+	// Create / compile vertex shader
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexSource, NULL);
+	glCompileShader(vertexShader);
+	GLint status;
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
 
-		// Set the background to black
-		//TODO: Should set this to the default color, not magic numbers here
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	// Create / compile fragment shader
+	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
+	glCompileShader(fragmentShader);
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
 
-		// Enable and disable necessary stuff
-		//TODO: Again, more comments
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glDisable(GL_DITHER);
-//		glDisable(GL_POINT_SMOOTH);
-//		glEnableClientState(GL_COLOR_ARRAY);
+	// Attach both shaders to a shader program, link the program, and use it
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glBindFragDataLocation(shaderProgram, 0, "outColor");
+	glLinkProgram(shaderProgram);
+	glUseProgram(shaderProgram);
 
-		// Enable Experimental GLEW to Render Properly
-		glewExperimental = GL_TRUE;
-		glewInit();
+	// Create and bind our Vertex Array Object
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 
-		// Create / compile vertex shader
-		vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vertexShader, 1, &vertexSource, NULL);
-		glCompileShader(vertexShader);
-		GLint status;
-		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
+	// Create and bind our Vertex Buffer Object
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-		// Create / compile fragment shader
-		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
-		glCompileShader(fragmentShader);
-		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
+	// Create and bind our Element Buffer Object
+	GLuint elements[] = {
+		0, 1, 2,
+		2, 3, 1
+	};
+	glGenBuffers(1, &ebo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
-		// Attach both shaders to a shader program, link the program, and use it
-		shaderProgram = glCreateProgram();
-		glAttachShader(shaderProgram, vertexShader);
-		glAttachShader(shaderProgram, fragmentShader);
-		glBindFragDataLocation(shaderProgram, 0, "outColor");
-		glLinkProgram(shaderProgram);
-		glUseProgram(shaderProgram);
+	// Specify the layout of the vertex data
+	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+	glEnableVertexAttribArray(posAttrib);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 6*sizeof(float), 0);
+	GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
+	glEnableVertexAttribArray(colAttrib);
+	glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(2*sizeof(float)));
 
-		// Create and bind our Vertex Array Object
-		glGenVertexArrays(1, &vao);
-		glBindVertexArray(vao);
-
-		// Create and bind our Vertex Buffer Object
-		glGenBuffers(1, &vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-		// Create and bind our Element Buffer Object
-		GLuint elements[] = {
-			0, 1, 2,
-			2, 3, 1
-		};
-		glGenBuffers(1, &ebo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-
-		// Specify the layout of the vertex data
-		GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-		glEnableVertexAttribArray(posAttrib);
-		glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 6*sizeof(float), 0);
-		GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-		glEnableVertexAttribArray(colAttrib);
-		glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(2*sizeof(float)));
-
-		// Get uniform location for camera matrices
-		uniModel = glGetUniformLocation(shaderProgram, "model");
-		uniView = glGetUniformLocation(shaderProgram, "view");
-		uniProj = glGetUniformLocation(shaderProgram, "proj");
+	// Get uniform location for camera matrices
+	uniModel = glGetUniformLocation(shaderProgram, "model");
+	uniView = glGetUniformLocation(shaderProgram, "view");
+	uniProj = glGetUniformLocation(shaderProgram, "proj");
 }
 
 void Canvas::drawFunction(Canvas *c) {
 	c->glInit();
 	c->draw();
 	c->isFinished = true;
+	glfwDestroyWindow(c->window);
 }
 
 /*
@@ -389,9 +393,9 @@ void Canvas::draw() {
 	{
 		t->sleep();
 
-		glClearColor(backgroundColor.R, backgroundColor.G, backgroundColor.B, 0.0);		// Set the background
+		glClearColor(backgroundColor.R, backgroundColor.G, backgroundColor.B, 1.0);		// Set the background
 		if (toClear) {
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 			toClear = false;
 		}
 		SetupCamera();					// Update the camera with magic numbers
@@ -503,29 +507,14 @@ int Canvas::end() {
 }
 
 /*
- * setColor sets the global drawing color
- * Parameters:
- * 		r, the red component
- * 		g, the red component
- * 		b, the red component
- * 		a, the alpha component
- */
-void Canvas::setColor(float r, float g, float b, float a) {
-	defaultColor.R = r;
-	defaultColor.G = g;
-	defaultColor.B = b;
-	defaultColor.A = a;
-}
-
-/*
  * setBackgroundColor sets the background color
  * Parameters:
  * 		color, the RGBfloatType with the color. The alpha channel is ignored
  */
 void Canvas::setBackgroundColor(RGBfloatType color) {
 	backgroundColor.R = color.R;
-	backgroundColor.G = color.R;
-	backgroundColor.B = color.R;
+	backgroundColor.G = color.G;
+	backgroundColor.B = color.B;
 }
 
 /*
