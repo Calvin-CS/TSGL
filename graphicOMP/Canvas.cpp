@@ -50,8 +50,11 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* title) {
 Canvas::~Canvas() {
 	std::cout << "Tearing Down" << std::endl;
 
-	// Free our clear rectangle's memory
+	// Free our pointer memory
 	delete clearRectangle;
+	delete myShapes;
+	delete myBuffer;
+	delete vertexData;
 
 	// Free up our resources
 	glDeleteProgram(shaderProgram);
