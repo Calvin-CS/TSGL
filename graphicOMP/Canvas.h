@@ -86,11 +86,11 @@ protected:
 	GLFWwindow*		window;											// GLFW window that we will draw to
 	int 			winWidth, winHeight;							// Window sizes used for setting up the window
 
-	virtual void	HandleIO();										// Handle the keyboard and mouse input
+	virtual void	HandleIO();									// Handle the keyboard and mouse input
 	void			SetupCamera();									// Setup the 2D camera for smooth rendering
-	static void		startDrawing(Canvas *c);						// Static method that is called by the render thread
+	static void	startDrawing(Canvas *c);						// Static method that is called by the render thread
 public:
-	Canvas(unsigned int b);											// Default constructor for our Canvas
+	Canvas(unsigned int b);										// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h,
 			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
 	virtual ~Canvas();
@@ -118,8 +118,8 @@ public:
 	int		getWindowY() 		{ return monitorY; }				// Accessor for the window height
 
 	void	setOnlyPoints(bool b) { allPoints = b; }				// Whether we're only drawing points
-	void	setShowFPS(bool b) 	{ showFPS = b; }					// Mutator to show debugging FPS
-	void	setBackgroundColor(RGBfloatType color);					// Changes the background color
+	void	setShowFPS(bool b) 	{ showFPS = b; }				// Mutator to show debugging FPS
+	void	setBackgroundColor(RGBfloatType color);				// Changes the background color
 
 	int		start();												// Function to start rendering our Canvas
 };

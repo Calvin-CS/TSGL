@@ -54,17 +54,18 @@ Canvas::~Canvas() {
 	delete clearRectangle;
 	delete myShapes;
 	delete myBuffer;
-	delete vertexData;
+	delete[] vertexData;
+	delete timer;
 
 	// Free up our resources
-	glDeleteProgram(shaderProgram);
+	glDetachShader(shaderProgram,shaderFragment);
+	glDetachShader(shaderProgram,shaderVertex);
 	glDeleteShader(shaderFragment);
 	glDeleteShader(shaderVertex);
+	glDeleteProgram(shaderProgram);
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteVertexArrays(1, &vertexArray);
 
-	// Release GLFW
-	glfwTerminate();
 	std::cout << "Torn Down" << std::endl;
 }
 
@@ -256,8 +257,6 @@ double Canvas::getTime() {
 }
 
 void Canvas::glInit() {
-	glfwInit();														// Initialize GLFW
-
 	// Create a Window and the Context
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);					// Set target GL major version to 3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);					// Set target GL minor version to 3.2
@@ -268,14 +267,14 @@ void Canvas::glInit() {
 	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);							// Don't show the window at first
 	window = glfwCreateWindow(winWidth, winHeight,
 							title_.c_str(), nullptr, nullptr);		// Windowed
-	glfwMakeContextCurrent(window);									// We're drawing to window as soon as it's created
-	glfwShowWindow(window);											// Show the window
+	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
+	glfwShowWindow(window);										// Show the window
 
 	// Enable and disable necessary stuff
 	glDisable(GL_DEPTH_TEST);										// Disable depth testing because we're not drawing in 3d
 	glDisable(GL_DITHER);											// Disable dithering because pixels do not (generally) overlap
 	glDisable(GL_CULL_FACE);										// Disable culling because the camera is stationary
-	glEnable(GL_BLEND);												// Enable blending
+	glEnable(GL_BLEND);											// Enable blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);				// Set blending mode to standard alpha blending
 
 	// Enable Experimental GLEW to Render Properly

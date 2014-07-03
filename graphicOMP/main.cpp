@@ -37,9 +37,10 @@ static float randfloat(int divisor = 10000) {
 
 void graydientFunction(Canvas& can) {
 	can.setOnlyPoints(true);
-	#pragma omp parallel num_threads(omp_get_num_procs())
+	int nthreads = omp_get_num_procs();
+	#pragma omp parallel num_threads(nthreads)
 	{
-		int color, nthreads = omp_get_num_threads();
+		int color;
 		for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i+= nthreads)
 			for (int j = 0; j < can.getWindowHeight(); j++) {
 				color = i*MAX_COLOR/2/can.getWindowWidth() + j*MAX_COLOR/2/can.getWindowHeight();
@@ -857,6 +858,7 @@ void test(Cart& c, void(*f)(Cart&), bool printFPS = false, RGBfloatType bg = GRE
 
 
 int main() {
+	glfwInit();	// Initialize GLFW
 //	#pragma omp sections
 //	{
 //		#pragma omp section
@@ -869,44 +871,45 @@ int main() {
 			test(c3,lineChainFunction,true,BLACK);
 			Canvas c4(500);
 			test(c4,lineFanFunction,false);
-			Canvas c5(65536);
-			test(c5,spectrumFunction,false);
-			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-			test(c6,mandelbrotFunction,false);
-			Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
-			test(c7,langtonFunction,false);
-			Cart c8(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
-			test(c8,langtonColonyFunction,false);
-			Cart c9(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
-			test(c9,langtonRainbowFunction,true,BLACK);
-			Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
-			test(c10,dumbSortFunction,true);
-			Cart c11(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
-			test(c11,colorWheelFunction);
+//			Canvas c5(65536);
+//			test(c5,spectrumFunction,false);
+//			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//			test(c6,mandelbrotFunction,false);
+//			Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
+//			test(c7,langtonFunction,false);
+//			Cart c8(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
+//			test(c8,langtonColonyFunction,false);
+//			Cart c9(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
+//			test(c9,langtonRainbowFunction,true,BLACK);
+//			Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
+//			test(c10,dumbSortFunction,true);
+//			Cart c11(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
+//			test(c11,colorWheelFunction);
 //		}
 //		#pragma omp section
 //		{
-			Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10);
-			test(c12,functionFunction,true,WHITE);
-			Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
-			test(c13,cosineIntegralFunction,true,WHITE);
-			Cart c14(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512);
-			test(c14,gradientWheelFunction,false,BLACK);
-			Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
-			test(c15,alphaRectangleFunction,false,BLACK);
-			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
-			test(c16,alphaLangtonFunction,true,BLACK);
-			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-			test(c17,gradientMandelbrotFunction,true);
-			Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000);
-			test(c18,novaFunction,true);
-			Cart c19(0, 0, 900, 900, 0, 0, 900, 900, 810000);
-			test(c19,voronoiFunction,true,WHITE);
-			Cart c20(0, 0, 900, 900, 0, 0, 900, 900, 2000000);
-			test(c20,shadedVoronoiFunction,false,WHITE);
-			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
-			test(c21,forestFireFunction,false);
+//			Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 10);
+//			test(c12,functionFunction,true,WHITE);
+//			Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
+//			test(c13,cosineIntegralFunction,true,WHITE);
+//			Cart c14(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512);
+//			test(c14,gradientWheelFunction,false,BLACK);
+//			Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
+//			test(c15,alphaRectangleFunction,false,BLACK);
+//			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
+//			test(c16,alphaLangtonFunction,true,BLACK);
+//			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//			test(c17,gradientMandelbrotFunction,true);
+//			Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000);
+//			test(c18,novaFunction,true);
+//			Cart c19(0, 0, 900, 900, 0, 0, 900, 900, 810000);
+//			test(c19,voronoiFunction,true,WHITE);
+//			Cart c20(0, 0, 900, 900, 0, 0, 900, 900, 2000000);
+//			test(c20,shadedVoronoiFunction,false,WHITE);
+//			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
+//			test(c21,forestFireFunction,false);
 //			test(new Canvas(1000),textFunction,true);
 //		}
 //	}
+	glfwTerminate();	// Release GLFW
 }
