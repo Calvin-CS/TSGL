@@ -26,7 +26,7 @@ public:
 	CartesianCanvas(unsigned int b);								// Default constructor for our CartesianCanvas
 	CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin,
 					Decimal yMin, Decimal xMax, Decimal yMax,
-					unsigned int b, char *t = (char*)"");			// Explicit constructor for our CartesianCanvas
+					unsigned int b, std::string = "");				// Explicit constructor for our CartesianCanvas
 
 	void drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);	// Draws axes crossing at the input coordinates
 	void drawFunction(const Function* f);							// Draws the Function on the screen

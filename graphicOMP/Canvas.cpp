@@ -29,7 +29,7 @@ static const GLchar* fragmentSource =
  * Returns: a new 800x600 Canvas on the top left of the screen with no title
  */
 Canvas::Canvas(unsigned int b) {
-	init(0,0,800,600,b,(char*)"Canvas");
+	init(0,0,800,600,b,"");
 }
 
 /*
@@ -43,7 +43,7 @@ Canvas::Canvas(unsigned int b) {
  * 		title, the title of the window
  * Returns: a new Canvas with the specified positional data and title
  */
-Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* title) {
+Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title) {
 	init(xx,yy,w,h,b,title);
 }
 
@@ -266,7 +266,8 @@ void Canvas::glInit() {
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);						// Do not let the user resize the window
 	glfwWindowHint(GLFW_STEREO, GL_FALSE);							// Disable the right buffer
 	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);							// Don't show the window at first
-	window = glfwCreateWindow(winWidth, winHeight, title_, nullptr, nullptr); // Windowed
+	window = glfwCreateWindow(winWidth, winHeight,
+							title_.c_str(), nullptr, nullptr);		// Windowed
 	glfwMakeContextCurrent(window);									// We're drawing to window as soon as it's created
 	glfwShowWindow(window);											// Show the window
 
@@ -356,7 +357,7 @@ void Canvas::HandleIO() {
  * 		b, the buffer size for the Shapes
  * 		title, the title of the window to put on the top window bar
  */
-void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
+void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title) {
 	title_ = title;
 	winWidth = ww, winHeight = hh;
 	aspect = (float)winWidth / winHeight;
