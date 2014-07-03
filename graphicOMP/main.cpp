@@ -68,7 +68,7 @@ void colorPointsFunction(Canvas& can) {
 void lineChainFunction(Canvas& can) {
 	int xOld,yOld,xNew = can.getWindowWidth()/2,yNew = can.getWindowHeight()/2,red,green,blue;
 	Timer t(FRAME);
-	while(can.getIsOpen()) {									// Checks to see if the window has been closed
+	while(can.getIsOpen()) {						// Checks to see if the window has been closed
 		t.sleep();
 		xOld  = xNew;
 		yOld  = yNew;
@@ -81,15 +81,15 @@ void lineChainFunction(Canvas& can) {
 	}
 }
 void lineFanFunction(Canvas& can) {
-	const double 	RAD = M_PI/180,			// One radian in degrees
-					ARC = 7.11;				// Arc length
+	const double 	RAD = M_PI/180,					// One radian in degrees
+					ARC = 7.11;						// Arc length
 	Timer t(FRAME);
 	#pragma omp parallel num_threads(omp_get_num_procs())
 	{
 		int a,b,c,d,red,green,blue;
 		double angle, offset = omp_get_thread_num() * ARC;
 		bool reverse = false;
-		while(can.getIsOpen()) {				// Checks to see if the window has been closed
+		while(can.getIsOpen()) {					// Checks to see if the window has been closed
 			t.sleep();
 			angle = offset+t.getReps()*RAD;
 			a = can.getWindowWidth()/2 * (1 + sin(angle));
@@ -113,7 +113,7 @@ void spectrumFunction(Canvas& can) {
 	can.setOnlyPoints(true);
 	#pragma omp parallel num_threads(nthreads)
 	{
-		while(can.getIsOpen()) {							// Check to see if the window has been closed
+		while(can.getIsOpen()) {					// Check to see if the window has been closed
 			t.sleep();
 			for (int i = omp_get_thread_num(); i < NUM_COLORS; i+= nthreads)
 				for (int j = 0; j < NUM_COLORS; j++)
@@ -143,9 +143,9 @@ void mandelbrotFunction(CartesianCanvas& can) {
 						iterations++;
 						c = c * c + originalComplex;
 					}
-					if (iterations == DEPTH) 	// If the point never escaped, draw it black
+					if (iterations == DEPTH) 			// If the point never escaped, draw it black
 						can.drawPoint(col, row, BLACK);
-					else						// Otherwise, draw it with color based on how long it took
+					else								// Otherwise, draw it with color based on how long it took
 						can.drawPoint(col, row, RGBintToRGBfloat(iterations % 151, (iterations % 131) + 50, iterations % 255));
 					if (can.getZoomed())
 						break;
@@ -155,7 +155,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
 			}
 		}
 		print(can.getTime());
-		while(can.getIsOpen() && !can.getZoomed()); //Busy wait
+		while(can.getIsOpen() && !can.getZoomed()); 	//Busy wait
 	}
 }
 
@@ -169,18 +169,18 @@ void langtonFunction(CartesianCanvas& can) {
 	int direction = UP;
 	can.setOnlyPoints(true);
 	Timer t(1.0/(60.0*IPF));
-	while(can.getIsOpen()) {								// Check to see if the window has been closed
+	while(can.getIsOpen()) {							// Check to see if the window has been closed
 		t.sleep();
 		if (filled[xx + WINDOW_W * yy]) {
-			direction = (direction + 1) % 4;							// Turn right
+			direction = (direction + 1) % 4;						// Turn right
 			can.drawPoint(xx,yy,RGBintToRGBfloat(MAX_COLOR,0,0));	// Color it
 		}
 		else {
-			direction = (direction + 3) % 4;							// Turn left
-			can.drawPoint(xx,yy,{0,0,0,1});						// Don't color it
+			direction = (direction + 3) % 4;						// Turn left
+			can.drawPoint(xx,yy,{0,0,0,1});							// Don't color it
 		}
-		filled[xx + WINDOW_W * yy] ^= true;								// Invert the square
-		switch(direction) {												// Check for wrap-around and move
+		filled[xx + WINDOW_W * yy] ^= true;							// Invert the square
+		switch(direction) {											// Check for wrap-around and move
 			case UP:
 				yy = yy > 0 ? yy-1 : WINDOW_H-1; break;
 			case RIGHT:
@@ -196,11 +196,11 @@ void langtonFunction(CartesianCanvas& can) {
 }
 
 void langtonColonyFunction(CartesianCanvas& can) {
-	const int 	IPF = 1000,								// Iterations per frame
-				WINDOW_W = can.getCartWidth(),			// Set the window sizes
+	const int 	IPF = 1000,									// Iterations per frame
+				WINDOW_W = can.getCartWidth(),				// Set the window sizes
 				WINDOW_H = can.getCartHeight(),
-				RADIUS = WINDOW_H/6;					// How far apart to space the ants
-	bool* filled = new bool[WINDOW_W * WINDOW_H]();	// Create an empty bitmap for the window
+				RADIUS = WINDOW_H/6;						// How far apart to space the ants
+	bool* filled = new bool[WINDOW_W * WINDOW_H]();			// Create an empty bitmap for the window
 	int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 	xx[0] = WINDOW_W/2-RADIUS; yy[0] = WINDOW_H/2; red[0] = MAX_COLOR; 	green[0] = 0;   		blue[0] = 0;
 	xx[1] = WINDOW_W/2; yy[1] = WINDOW_H/2-RADIUS; red[1] = 0;   		green[1] = 0;   		blue[1] = MAX_COLOR;
@@ -239,11 +239,11 @@ void langtonColonyFunction(CartesianCanvas& can) {
 	}
 }
 void langtonRainbowFunction(CartesianCanvas& can) {
-	const int 	IPF = 1000,								// Iterations per frame
-				WINDOW_W = can.getCartWidth(),			// Set the window sizes
+	const int 	IPF = 1000,									// Iterations per frame
+				WINDOW_W = can.getCartWidth(),				// Set the window sizes
 				WINDOW_H = can.getCartHeight(),
-				RADIUS = WINDOW_H/6;					// How far apart to space the ants
-	bool* filled = new bool[WINDOW_W * WINDOW_H]();		// Create an empty bitmap for the window
+				RADIUS = WINDOW_H/6;						// How far apart to space the ants
+	bool* filled = new bool[WINDOW_W * WINDOW_H]();			// Create an empty bitmap for the window
 	int xx[4], yy[4], dir[4];
 	xx[0] = WINDOW_W/2-RADIUS; 	yy[0] = WINDOW_H/2;
 	xx[1] = WINDOW_W/2; 		yy[1] = WINDOW_H/2-RADIUS;
@@ -286,15 +286,15 @@ void langtonRainbowFunction(CartesianCanvas& can) {
 }
 
 void dumbSortFunction(Canvas& can) {
-	const int 	SIZE = 350,				// Size of the data pool
-				IPF = 50;				// Iterations per frame
-	int numbers[SIZE];					// Array to store the data
+	const int 	SIZE = 350,									// Size of the data pool
+				IPF = 50;									// Iterations per frame
+	int numbers[SIZE];										// Array to store the data
 	int pos = 0, temp, min = 1, max = SIZE-1, lastSwap = 0;
 	bool goingUp = true;
 	for (int i = 0; i < SIZE; i++)
 		numbers[i] = rand() % SIZE;
 	Timer t(FRAME/IPF);
-	while(can.getIsOpen()) {				// Check to see if the window has been closed
+	while(can.getIsOpen()) {								// Check to see if the window has been closed
 		t.sleep();
 		if (min == max) // We are done sorting
 			return;
@@ -340,12 +340,12 @@ void dumbSortFunction(Canvas& can) {
 }
 
 void colorWheelFunction(CartesianCanvas& can) {
-	const int 	THREADS = NUM_COLORS,					// Number of threads to compute with
-				DELTA = NUM_COLORS/THREADS,				// Distance between threads to compute
-				WINDOW_CW = can.getCartWidth() / 2,	// Set the center of the window
+	const int 	THREADS = NUM_COLORS,						// Number of threads to compute with
+				DELTA = NUM_COLORS/THREADS,					// Distance between threads to compute
+				WINDOW_CW = can.getCartWidth() / 2,			// Set the center of the window
 				WINDOW_CH = can.getCartHeight() / 2;
 	const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,	// Radius of wheel
-				 GRADIENT = 2*M_PI/NUM_COLORS;										// Gap between wedges
+				 GRADIENT = 2*M_PI/NUM_COLORS;									// Gap between wedges
 	RGBfloatType color;
 	float x2, x3, y2, y3, shading;
 	int tid, f;
@@ -355,7 +355,7 @@ void colorWheelFunction(CartesianCanvas& can) {
 		t.sleep();
 		f = t.getReps() % NUM_COLORS;
 		start[0] = f;
-		for (int i = 1; i < THREADS; i++)				// Spread out the threads starting position
+		for (int i = 1; i < THREADS; i++)					// Spread out the threads starting position
 			start[i] = (start[i-1] + DELTA) % NUM_COLORS;
 		#pragma omp parallel num_threads(THREADS) private(color,x2,x3,y2,y3,shading,tid)
 		{
@@ -410,26 +410,26 @@ void cosineIntegralFunction(CartesianCanvas& can) {
 void gradientWheelFunction(CartesianCanvas& can) {
 	const int 	THREADS = NUM_COLORS,							// Number of threads to compute with
 				DELTA = NUM_COLORS/THREADS,						// Distance between threads to compute
-				WINDOW_CW = can.getCartWidth() / 2,			// Center of the screen
+				WINDOW_CW = can.getCartWidth() / 2,				// Center of the screen
 				WINDOW_CH = can.getCartHeight() / 2;
 	const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,	// Radius of wheel
-				 GRADIENT = 2*M_PI/NUM_COLORS;										// Gap between wedges
+				 GRADIENT = 2*M_PI/NUM_COLORS;									// Gap between wedges
 	int f;
 	int start[THREADS];
 	Timer t(FRAME);
-	while(can.getIsOpen()) {										// Check to see if the window has been closed
+	while(can.getIsOpen()) {									// Check to see if the window has been closed
 		t.sleep();
 		f = t.getReps() % MAX_COLOR;
 		start[0] = f;
-		for (int i = 1; i < THREADS; i++)					// Calculate the location and color of the
-			start[i] = (start[i-1] + DELTA) % NUM_COLORS;	// shapes by the location and frame
+		for (int i = 1; i < THREADS; i++)						// Calculate the location and color of the
+			start[i] = (start[i-1] + DELTA) % NUM_COLORS;		// shapes by the location and frame
 		#pragma omp parallel num_threads(THREADS)
 		{
-			RGBfloatType color[3];							// The arrays of colors for the vertices
-			int xx[3],yy[3];								// Setup the arrays of values for vertices
-			xx[0] = WINDOW_CW; yy[0] = WINDOW_CH;			// Set first vertex to center of screen
+			RGBfloatType color[3];								// The arrays of colors for the vertices
+			int xx[3],yy[3];									// Setup the arrays of values for vertices
+			xx[0] = WINDOW_CW; yy[0] = WINDOW_CH;				// Set first vertex to center of screen
 			int tid = omp_get_thread_num();
-			float shading = (float)tid/THREADS;				// Shade based on what thread this is
+			float shading = (float)tid/THREADS;					// Shade based on what thread this is
 			color[0] = HSVToRGBfloat((start[(tid+1)%THREADS]) / (float)MAX_COLOR * 6.0f, 0.0f, 1.0f, 1.0f);
 			color[1] = HSVToRGBfloat( start[ tid           ]  / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f, 1.0f);
 			color[2] = HSVToRGBfloat((start[(tid+1)%THREADS]) / (float)MAX_COLOR * 6.0f, 1.0f, 1.0f, 1.0f);
@@ -448,11 +448,11 @@ void gradientWheelFunction(CartesianCanvas& can) {
 	}
 }
 void alphaRectangleFunction(CartesianCanvas& can) {
-	const int 	WINDOW_W = can.getCartWidth(),			// Set the center of the window
+	const int 	WINDOW_W = can.getCartWidth(),					// Set the center of the window
 				WINDOW_H = can.getCartHeight();
 	int a, b;
 	Timer t(FRAME/100);
-	while(can.getIsOpen()) {								// Check to see if the window has been closed
+	while(can.getIsOpen()) {									// Check to see if the window has been closed
 		t.sleep();
 		a = rand() % WINDOW_W;
 		b = rand() % WINDOW_H;
@@ -461,12 +461,12 @@ void alphaRectangleFunction(CartesianCanvas& can) {
 	}
 }
 void alphaLangtonFunction(CartesianCanvas& can) {
-	const int 	IPF = 5000,								// Iterations per frame
-				WINDOW_W = can.getCartWidth(),			// Set the window sizes
+	const int 	IPF = 5000,									// Iterations per frame
+				WINDOW_W = can.getCartWidth(),				// Set the window sizes
 				WINDOW_H = can.getCartHeight(),
-				RADIUS = WINDOW_H/6;					// How far apart to space the ants
+				RADIUS = WINDOW_H/6;						// How far apart to space the ants
 	can.setOnlyPoints(true);
-	bool* filled = new bool[WINDOW_W * WINDOW_H]();		// Create an empty bitmap for the window
+	bool* filled = new bool[WINDOW_W * WINDOW_H]();			// Create an empty bitmap for the window
 	int xx[4],yy[4], dir[4], red[4], green[4], blue[4];
 	xx[0] = WINDOW_W/2-RADIUS; yy[0] = WINDOW_H/2;	red[0] = MAX_COLOR; 	green[0] = 0;   		blue[0] = 0;
 	xx[1] = WINDOW_W/2; yy[1] = WINDOW_H/2-RADIUS; 	red[1] = 0;   			green[1] = 0;   		blue[1] = MAX_COLOR;
@@ -503,7 +503,7 @@ void alphaLangtonFunction(CartesianCanvas& can) {
 				}
 			}
 		}
-		if (t.getReps() % 28 < 1)			// Clear the screen every period
+		if (t.getReps() % 28 < 1)								// Clear the screen every period
 			can.clear();
 	}
 }
@@ -638,7 +638,7 @@ void voronoiFunction(CartesianCanvas& can) {
 				}
 			}
 			kvalue[i * WINDOW_H + j] = bestk;
-			can.drawPoint(i,j,color[bestk]);	// Draw the point with the closest control's color
+			can.drawPoint(i,j,color[bestk]);		// Draw the point with the closest control's color
 			if (bdist > wdist[bestk])
 				wdist[bestk] = bdist;
 		}
@@ -695,7 +695,7 @@ void shadedVoronoiFunction(CartesianCanvas& can) {
 			}
 			kvalue[i * WINDOW_H + j] = bestk;
 			kvalue2[i * WINDOW_H + j] = nextbestk;
-			can.drawPoint(i,j,color[bestk]);	// Draw the point with the closest control's color
+			can.drawPoint(i,j,color[bestk]);		// Draw the point with the closest control's color
 			if (bdist > wdist[bestk])
 				wdist[bestk] = bdist;
 		}
@@ -716,13 +716,13 @@ void shadedVoronoiFunction(CartesianCanvas& can) {
 			float shading = d1/kd;
 			if (shading > 1)		shading = 1;
 			else if (shading < 0) 	shading = 0;
-			can.drawPoint(i,j,{0,0,0,shading});	// Draw the point with the closest control's color
+			can.drawPoint(i,j,{0,0,0,shading});		// Draw the point with the closest control's color
 		}
 	}
 }
 
 void forestFireFunction(CartesianCanvas& can) {
-	const int	WINDOW_W = can.getCartWidth(),			// Set the screen sizes
+	const int	WINDOW_W = can.getCartWidth(),		// Set the screen sizes
 				WINDOW_H = can.getCartHeight();
 	const float LIFE = 10,
 				STRENGTH = 0.03,
@@ -771,7 +771,7 @@ void forestFireFunction(CartesianCanvas& can) {
 		}
 	}
 	Timer t(FRAME);
-	while(can.getIsOpen()) {								// Check to see if the window has been closed
+	while(can.getIsOpen()) {							// Check to see if the window has been closed
 		t.sleep();
 		int l = fires.size();
 		for (int i = 0; i < l; i++) {

@@ -15,7 +15,7 @@
 class Shape {
 public:
 	Shape() {}											// Default constructor for the Shape
-	virtual ~Shape() {}								// Default destructor for the Shape
+	virtual ~Shape() {}									// Default destructor for the Shape
 	virtual void draw() = 0;							// Abstract method for actually drawing the shape
 };
 

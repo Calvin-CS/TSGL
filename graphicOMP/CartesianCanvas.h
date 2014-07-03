@@ -8,7 +8,7 @@
 #ifndef CARTESIANCANVAS_H_
 #define CARTESIANCANVAS_H_
 
-#include "Canvas.h"												// We extend Canvas
+#include "Canvas.h"													// We extend Canvas
 #include "Function.h"												// For drawing math functions on the screen
 
 class CartesianCanvas : public Canvas {
@@ -44,9 +44,9 @@ public:
 	bool	getCanZoom()		{ return canZoom; }					// Accessor for canZoom
 	void	getCartesianCoordinates(int screenX, int screenY,
 									Decimal &cartX, Decimal &cartY);// Returns the equivalent Cartesian coordinates for the specified screen ones
-	Decimal getCartHeight()	{ return cartHeight; }				// Accessor for cartHeight
+	Decimal getCartHeight()		{ return cartHeight; }				// Accessor for cartHeight
 	Decimal getCartWidth()		{ return cartWidth; }				// Accessor for cartWidth
-	Decimal getPixelWidth()	{ return pixelWidth; }				// Accessor for pixelWidth
+	Decimal getPixelWidth()		{ return pixelWidth; }				// Accessor for pixelWidth
 	Decimal getPixelHeight()	{ return pixelHeight; }				// Accessor for pixelHeight
 	Decimal getMaxY() 			{ return maxY; }					// Accessor for maxY
 	Decimal getMaxX() 			{ return maxX; }					// Accessor for maxX
@@ -54,7 +54,7 @@ public:
 	Decimal getMinY() 			{ return minY; }					// Accessor for minY
 	void	getScreenCoordinates(Decimal cartX, Decimal cartY,
 					int &screenX, int &screenY);					// Returns the equivalent screen coordinates for the specified Cartesian ones
-	bool	getZoomed()		{ return zoomed; }					// Accessor for zoomed
+	bool	getZoomed()			{ return zoomed; }					// Accessor for zoomed
 	void 	recomputeDimensions(Decimal xMin, Decimal yMin,
 					Decimal xMax, Decimal yMax);					// Recomputes CartesianCanvas' size variables
 	void 	setZoomed(bool z)	{ zoomed = z; }						// Mutator for zoomed

@@ -25,9 +25,8 @@ static const GLchar* fragmentSource =
 /*
  * Default constructor for the canvas class
  * Parameter:
- * 		c, a callback to the user's own draw function
- * 		b, the buffer size for the Shapes (-1 = no limit)
- * Returns: a new 800x600 Canvas on the topleft of the screen with no title
+ * 		b, the buffer size for the Shapes
+ * Returns: a new 800x600 Canvas on the top left of the screen with no title
  */
 Canvas::Canvas(unsigned int b) {
 	init(0,0,800,600,b,(char*)"Canvas");
@@ -36,13 +35,12 @@ Canvas::Canvas(unsigned int b) {
 /*
  * Explicit constructor for the canvas class
  * Parameters:
- * 		c, a callback to the user's own draw function
  * 		xx, the x position of the Canvas window
  * 		yy, the y position of the Canvas window
  * 		w, the x dimension of the Canvas window
  * 		h, the y dimension of the Canvas window
- * 		b, the buffer size for the Shapes (-1 = no limit)
- * 		t, the title of the window
+ * 		b, the buffer size for the Shapes
+ * 		title, the title of the window
  * Returns: a new Canvas with the specified positional data and title
  */
 Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, char* title) {
@@ -153,7 +151,7 @@ void Canvas::draw() {
  * 		y1, the y position of the start of the line
  *		x2, the x position of the end of the line
  * 		y2, the y position of the end of the line
- * 		color, the color with which to draw the text
+ * 		color, the RGB color (optional)
  */
 void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
 	Line* l = new Line(x1,y1,x2,y2,color);			// Creates the Line with the specified coordinates and color
@@ -167,7 +165,7 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
  * Parameters:
  * 		x, the x position of the point
  * 		y, the y position of the point
- * 		color, the color with which to draw the text
+ * 		color, the RGB color (optional)
  */
 void Canvas::drawPoint(int x, int y, RGBfloatType color) {
 	Point* p = new Point(x,y,color);				// Creates the Point with the specified coordinates and color
@@ -183,7 +181,7 @@ void Canvas::drawPoint(int x, int y, RGBfloatType color) {
  *		y, the y coordinate of the Rectangle's top edge
  * 		w, the width of the Rectangle
  *		h, the height of the Rectangle
- * 		color, the color with which to draw the text
+ * 		color, the RGB color (optional)
  */
 void Canvas::drawRectangle(int x, int y, int w, int h, RGBfloatType color) {
 	Rectangle* rec = new Rectangle(x,y,w,h,color);	// Creates the Rectangle with the specified coordinates and color
@@ -206,7 +204,7 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
 		p->addVertex(x[i],y[i],color[i]);
 	}
 	mutexLock mlock(buffer);
-	myBuffer->push(p);										// Push it onto our drawing buffer
+	myBuffer->push(p);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -216,10 +214,10 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
  * 		s, the string to print
  * 		x, the x coordinate of the text's left edge
  * 		y, the y coordinate of the text's top edge
- * 		color, the color with which to draw the text
+ * 		color, the RGB color (optional)
  */
 //void Canvas::drawText(const char * s, int x, int y, RGBfloatType color) {
-//	Text* t = new Text(s,x,y,color);					// Creates the Text with the specified string and coordinates
+//	Text* t = new Text(s,x,y,color);				// Creates the Text with the specified string and coordinates
 //	mutexLock mlock(buffer);
 //	myBuffer->push(t);								// Push it onto our drawing buffer
 //	mlock.unlock();
@@ -234,7 +232,7 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
  * 		y2, the y position of the second vertex of the triangle
  * 		x3, the x position of the third vertex of the triangle
  * 		y3, the y position of the third vertex of the triangle
- * 		color, the color with which to draw the triangle
+ * 		color, the RGB color (optional)
  */
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,color);	// Creates the Triangle with the specified vertices and color
@@ -261,7 +259,7 @@ double Canvas::getTime() {
 }
 
 void Canvas::glInit() {
-	glfwInit();												// Initialize GLFW
+	glfwInit();										// Initialize GLFW
 
 	// Create a Window and the Context
 	//TODO: Add comments here because this is very confusing
@@ -335,7 +333,7 @@ void Canvas::glInit() {
 	uniView = glGetUniformLocation(shaderProgram, "view");
 	uniProj = glGetUniformLocation(shaderProgram, "proj");
 
-	SetupCamera();					// Update the camera with magic numbers
+	SetupCamera();									// Update the camera with magic numbers
 }
 
 void Canvas::HandleIO() {
@@ -356,12 +354,12 @@ void Canvas::HandleIO() {
 /*
  * init initializes the Canvas with the values specified in the constructor
  * Parameters:
- * 		c, a callback to the user's own draw function
  * 		xx, the x position of the Canvas window
  * 		yy, the y position of the Canvas window
  * 		width, the x dimension of the Canvas window
  * 		height, the y dimension of the Canvas window
- * 		b, the buffer size for the Shapes (-1 = no limit)
+ * 		b, the buffer size for the Shapes
+ * 		title, the title of the window to put on the top window bar
  */
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
 	title_ = title;
@@ -373,7 +371,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
 	//TODO: Remove or update toClear
 	toClear = true;															// Don't need to clear at the start
 	started = false;  														// We haven't started the window yet
-	monitorX = xx; monitorY = yy; winWidth = ww; winHeight = hh;	// Initialize translation
+	monitorX = xx; monitorY = yy; winWidth = ww; winHeight = hh;			// Initialize translation
 	myShapes = new Array<Shape*>(b);										// Initialize myShapes
 	myBuffer = new Array<Shape*>(b);
 	vertexData = new float[6*b];											// Buffer for vertexes for points

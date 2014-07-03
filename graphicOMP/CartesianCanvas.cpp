@@ -3,7 +3,7 @@
 /*
  * Default constructor for the CartesianCanvas class
  * Parameter:
- * 		b, the buffer size for the Shapes (-1 = no limit)
+ * 		b, the buffer size for the Shapes
  * Returns: a new 800x600 CartesianCanvas with 1-1 pixel correspondence and central origin
  */
 CartesianCanvas::CartesianCanvas(unsigned int b) : Canvas(b) {
@@ -21,7 +21,7 @@ CartesianCanvas::CartesianCanvas(unsigned int b) : Canvas(b) {
  * 		YMin, the real number corresponding to the top edge of the CartesianCanvas
  * 		xMax, the real number corresponding to the right edge of the CartesianCanvas
  * 		xMax, the real number corresponding to the bottom edge of the CartesianCanvas
- * 		b, the buffer size for the Shapes (-1 = no limit)
+ * 		b, the buffer size for the Shapes
  * 		t, the title of the window (optional)
  * Returns: a new CartesianCanvas with the specified positional/scaling data and title
  */
@@ -40,7 +40,7 @@ CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h,
  * 		dy, the distance between marks on the y-axis
  */
 void CartesianCanvas::drawAxes(Decimal x, Decimal y, Decimal dx = 0, Decimal dy = 0) {
-	drawLine(maxX, y, minX, y);					// Make the two axes
+	drawLine(maxX, y, minX, y);								// Make the two axes
 	drawLine(x, maxY, x, minY);
 	if (dx != 0 && dy != 0) {
 		for (int x = dx; x < maxX; x += dx) {
@@ -104,9 +104,9 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, R
 void CartesianCanvas::drawPoint(Decimal x, Decimal y, RGBfloatType color) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
-	Point* p = new Point(actualX, actualY, color);	// Creates the Point with the specified coordinates and color
+	Point* p = new Point(actualX, actualY, color);		// Creates the Point with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(buffer);
-	myBuffer->push(p);								// Push it onto our drawing buffer
+	myBuffer->push(p);									// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -145,7 +145,7 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType 
 		p->addVertex(actualX, actualY, color[i]);
 	}
 	std::unique_lock<std::mutex> mlock(buffer);
-	myBuffer->push(p);										// Push it onto our drawing buffer
+	myBuffer->push(p);									// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -203,7 +203,7 @@ void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &sc
  */
 void CartesianCanvas::HandleIO() {
 	Canvas::HandleIO();
-	if (!canZoom)											// If we can't zoom, don't bother handling anything
+	if (!canZoom)									// If we can't zoom, don't bother handling anything
 		return;
 	static Decimal oldX = 0, oldY = 0;
 	static bool leftPressed = false;
