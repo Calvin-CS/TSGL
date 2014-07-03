@@ -237,7 +237,7 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBflo
 
 /*
  * end closes the Canvas
- * Returns: 0 if exit is successful, -1 otherwise
+ * Returns: 0 if exit is successful, -1 if the canvas has not started yet
  */
 int Canvas::end() {
 	if (!started) return -1;						// If we haven't even started yet, return error code -1
@@ -253,7 +253,7 @@ double Canvas::getTime() {
 }
 
 void Canvas::glInit() {
-	glfwInit();										// Initialize GLFW
+	glfwInit();														// Initialize GLFW
 
 	// Create a Window and the Context
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);					// Set target GL major version to 3
@@ -264,15 +264,15 @@ void Canvas::glInit() {
 	glfwWindowHint(GLFW_STEREO, GL_FALSE);							// Disable the right buffer
 	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);							// Don't show the window at first
 	window = glfwCreateWindow(winWidth, winHeight, title_, nullptr, nullptr); // Windowed
-	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
-	glfwShowWindow(window);										// Show the window
+	glfwMakeContextCurrent(window);									// We're drawing to window as soon as it's created
+	glfwShowWindow(window);											// Show the window
 
 	// Enable and disable necessary stuff
-	glDisable(GL_DEPTH_TEST);							// Disable depth testing because we're not drawing in 3d
-	glDisable(GL_DITHER);								// Disable dithering because pixels do not (generally) overlap
-	glDisable(GL_CULL_FACE);							// Disable culling because the camera is stationary
-	glEnable(GL_BLEND);								// Enable blending
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	// Set blending mode to standard alpha blending
+	glDisable(GL_DEPTH_TEST);										// Disable depth testing because we're not drawing in 3d
+	glDisable(GL_DITHER);											// Disable dithering because pixels do not (generally) overlap
+	glDisable(GL_CULL_FACE);										// Disable culling because the camera is stationary
+	glEnable(GL_BLEND);												// Enable blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);				// Set blending mode to standard alpha blending
 
 	// Enable Experimental GLEW to Render Properly
 	glewExperimental = GL_TRUE;
@@ -325,7 +325,7 @@ void Canvas::glInit() {
 	uniView = glGetUniformLocation(shaderProgram, "view");
 	uniProj = glGetUniformLocation(shaderProgram, "proj");
 
-	SetupCamera();									// Update the camera with magic numbers
+	SetupCamera();												// Update the camera with magic numbers
 }
 
 void Canvas::HandleIO() {
@@ -336,8 +336,8 @@ void Canvas::HandleIO() {
 
 	// ESCAPE (Exit)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		if (!keyDown)									// GL will close multiple windows in a row if we don't check this
-			glfwSetWindowShouldClose(window, GL_TRUE);	// Exit the program
+		if (!keyDown)											// GL will close multiple windows in a row if we don't check this
+			glfwSetWindowShouldClose(window, GL_TRUE);			// Exit the program
 		keyDown = true;
 	}
 	else keyDown = false;
@@ -421,13 +421,13 @@ void Canvas::SetupCamera() {
 
 /*
  * start starts rendering the Canvas
- * Returns: the exit code of the FLTK render method
+ * Returns: 0 if start is successful, -1 if the canvas has already started
  */
 int Canvas::start() {
 	if (started) return -1;										// If we're already started, return error code -1
 	started = true;												// We've now started
     renderThread = std::thread(Canvas::startDrawing,this);		// Spawn the rendering thread
-    startTime = highResClock::now();							// Record the init time
+    startTime = highResClock::now();							// Record the start time
     return 0;
 }
 
