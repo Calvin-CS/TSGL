@@ -98,8 +98,6 @@ void Canvas::draw() {
 		#pragma omp critical (fps)
 		if (showFPS) std::cout << realFPS << '/' << FPS << std::endl;
 
-		Shape* s;				// Pointer to the next Shape in the queue
-
 		mutexLock mBufferLock(buffer);						// Time to flush our buffer
 		if (myBuffer->size() > 0) {							// But only if there is anything to flush
 			for (unsigned int i = 0; i < myBuffer->size(); i++) {
@@ -129,12 +127,8 @@ void Canvas::draw() {
 			}
 			glBufferData(GL_ARRAY_BUFFER, size*sizeof(ColoredVertex), vertexData, GL_DYNAMIC_DRAW);
 			glDrawArrays(GL_POINTS, 0, size);
-		} else { // Iterate through our queue until we've made it to the end
-			for (unsigned int i = 0; i < size; i++) {
-				s = myShapes->operator[](i);
-				s->draw();
-			}
-		}
+		} else for (unsigned int i = 0; i < size; i++)
+			myShapes->operator[](i)->draw(); // Iterate through our queue until we've made it to the end
 
 		myShapes->clear();				// Clear our buffer of shapes to be drawn
 		glFlush();
@@ -262,25 +256,23 @@ void Canvas::glInit() {
 	glfwInit();										// Initialize GLFW
 
 	// Create a Window and the Context
-	//TODO: Add comments here because this is very confusing
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	glfwWindowHint(GLFW_STEREO, GL_FALSE);
-	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);					// Set target GL major version to 3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);					// Set target GL minor version to 3.2
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);	// We're using the standard GL Profile
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);			// Don't use methods that are deprecated in the target version
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);						// Do not let the user resize the window
+	glfwWindowHint(GLFW_STEREO, GL_FALSE);							// Disable the right buffer
+	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);							// Don't show the window at first
 	window = glfwCreateWindow(winWidth, winHeight, title_, nullptr, nullptr); // Windowed
-	glfwMakeContextCurrent(window);
-	glfwShowWindow(window);
+	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
+	glfwShowWindow(window);										// Show the window
 
 	// Enable and disable necessary stuff
-	//TODO: Again, more comments
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_DITHER);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glDisable(GL_DEPTH_TEST);							// Disable depth testing because we're not drawing in 3d
+	glDisable(GL_DITHER);								// Disable dithering because pixels do not (generally) overlap
+	glDisable(GL_CULL_FACE);							// Disable culling because the camera is stationary
+	glEnable(GL_BLEND);								// Enable blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	// Set blending mode to standard alpha blending
 
 	// Enable Experimental GLEW to Render Properly
 	glewExperimental = GL_TRUE;
@@ -368,7 +360,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
 	keyDown = false;
 	framecounter = 0;
 
-	//TODO: Remove or update toClear
 	toClear = true;															// Don't need to clear at the start
 	started = false;  														// We haven't started the window yet
 	monitorX = xx; monitorY = yy; winWidth = ww; winHeight = hh;			// Initialize translation
@@ -376,7 +367,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, char* title) {
 	myBuffer = new Array<Shape*>(b);
 	vertexData = new float[6*b];											// Buffer for vertexes for points
 	showFPS = false;														// Set debugging FPS to false
-	//TODO: Redundant as we have a "started"?
 	isFinished = false;														// We're not done rendering
 	allPoints = false;
 
