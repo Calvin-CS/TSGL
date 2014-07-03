@@ -28,6 +28,7 @@
 #include <mutex>			// Needed for locking the Canvas for thread-safety
 #include <omp.h>			// For OpenMP support
 #include <stdio.h>			// Standard libraries
+#include <string>
 #include <thread>			// For spawning rendering in a different thread
 
 //// Disables some deprecation warnings, but messes zooming up
@@ -49,7 +50,7 @@ class Canvas {
 private:
 	void			draw();											// Method for drawing the canvas and the shapes within
 	void			init(int xx,int yy,int ww,int hh,
-						  unsigned int b,char* title);				// Method for initializing the canvas
+						  unsigned int b,std::string title);		// Method for initializing the canvas
 	void			glInit();										// Initializes the GL and GLFW things that are specific for this canvas
 protected:
 	bool			allPoints;										// If the canvas will be rending all points, which will optimize it
@@ -74,7 +75,7 @@ protected:
 	bool			started;										// Whether our canvas is running and the frame counter is counting
 	timePoint		startTime;										// Start time, to show how much time has elapsed
 	Timer*			timer;											// Timer for steady FPS
-	char*			title_;											// Title of the window
+	std::string		title_;											// Title of the window
 	bool			toClear;										// Flag for clearing the canvas
 	GLint			uniModel,										// Model perspective of the camera
 					uniView,										// View perspective of the camera
@@ -87,11 +88,11 @@ protected:
 
 	virtual void	HandleIO();										// Handle the keyboard and mouse input
 	void			SetupCamera();									// Setup the 2D camera for smooth rendering
-	static void	startDrawing(Canvas *c);							// Static method that is called by the render thread
+	static void		startDrawing(Canvas *c);						// Static method that is called by the render thread
 public:
 	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h,
-			unsigned int b, char* title = (char*)"");				// Explicit constructor for our Canvas
+			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
 	virtual ~Canvas();
 	void clear();													// Clears the canvas
 	virtual void drawLine(int x1, int y1, int x2, int y2,
