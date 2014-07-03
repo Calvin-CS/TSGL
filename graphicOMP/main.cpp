@@ -126,6 +126,7 @@ void spectrumFunction(Canvas& can) {
 void mandelbrotFunction(CartesianCanvas& can) {
 	const unsigned int THREADS = 32;  //omp_get_num_procs();
 	const unsigned int DEPTH = MAX_COLOR;
+//	can.bindToButton(PG_F,[can](){can.clear();});
 	can.setCanZoom(true);
 	can.setOnlyPoints(true);
 	while(can.getZoomed()) {

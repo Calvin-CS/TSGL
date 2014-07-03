@@ -13,6 +13,7 @@
 
 #include "Array.h"			// Our own array for buffering drawing operations.
 #include "color.h"			// Our own interface for converting color types
+#include "keynums.h"
 #include "Timer.h"			// Our own timer for steady FPS
 
 #include "Line.h"			// Our own class for drawing straight lines.
@@ -30,6 +31,7 @@
 #include <stdio.h>			// Standard libraries
 #include <string>
 #include <thread>			// For spawning rendering in a different thread
+#include <unordered_map>
 
 //// Disables some deprecation warnings, but messes zooming up
 //#define GLM_FORCE_RADIANS
@@ -42,16 +44,19 @@
 #define FPS 60				// Frames per second
 #define FRAME 1.0f/FPS		// Number of seconds between frames
 
-typedef std::chrono::high_resolution_clock	highResClock;
-typedef highResClock::time_point			timePoint;
-typedef std::unique_lock<std::mutex>		mutexLock;
+typedef std::chrono::high_resolution_clock		highResClock;
+typedef highResClock::time_point				timePoint;
+typedef std::unique_lock<std::mutex>			mutexLock;
 
 class Canvas {
 private:
+	void(*			boundKeys	[GLFW_KEY_LAST])();					// Array of function pointers for key binding
+
 	void			draw();											// Method for drawing the canvas and the shapes within
 	void			init(int xx,int yy,int ww,int hh,
 						  unsigned int b,std::string title);		// Method for initializing the canvas
 	void			glInit();										// Initializes the GL and GLFW things that are specific for this canvas
+	static void		keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 protected:
 	bool			allPoints;										// If the canvas will be rending all points, which will optimize it
 	float			aspect;											// Aspect ratio used for setting up the window
@@ -86,15 +91,19 @@ protected:
 	GLFWwindow*		window;											// GLFW window that we will draw to
 	int 			winWidth, winHeight;							// Window sizes used for setting up the window
 
-	virtual void	HandleIO();									// Handle the keyboard and mouse input
+	virtual void	HandleIO();										// Handle the keyboard and mouse input
 	void			SetupCamera();									// Setup the 2D camera for smooth rendering
-	static void	startDrawing(Canvas *c);						// Static method that is called by the render thread
+	static void		startDrawing(Canvas *c);						// Static method that is called by the render thread
 public:
-	Canvas(unsigned int b);										// Default constructor for our Canvas
+	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h,
 			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
 	virtual ~Canvas();
+
+	void bindToButton(KEY button, void(*f)());					// Bind a method to a mouse button or key
+	static void buttonCallback(GLFWwindow* window, int key, int action, int mods);
 	void clear();													// Clears the canvas
+
 	virtual void drawLine(int x1, int y1, int x2, int y2,
 			RGBfloatType color = BLACK);							// Draws a line at the given coordinates with the given color
 	virtual void drawPoint(int x, int y,
@@ -118,8 +127,8 @@ public:
 	int		getWindowY() 		{ return monitorY; }				// Accessor for the window height
 
 	void	setOnlyPoints(bool b) { allPoints = b; }				// Whether we're only drawing points
-	void	setShowFPS(bool b) 	{ showFPS = b; }				// Mutator to show debugging FPS
-	void	setBackgroundColor(RGBfloatType color);				// Changes the background color
+	void	setShowFPS(bool b) 	{ showFPS = b; }					// Mutator to show debugging FPS
+	void	setBackgroundColor(RGBfloatType color);					// Changes the background color
 
 	int		start();												// Function to start rendering our Canvas
 };

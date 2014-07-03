@@ -48,14 +48,12 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title) 
 }
 
 Canvas::~Canvas() {
-	std::cout << "Tearing Down" << std::endl;
-
 	// Free our pointer memory
 	delete clearRectangle;
 	delete myShapes;
 	delete myBuffer;
-	delete[] vertexData;
 	delete timer;
+	delete[] vertexData;
 
 	// Free up our resources
 	glDetachShader(shaderProgram,shaderFragment);
@@ -65,8 +63,13 @@ Canvas::~Canvas() {
 	glDeleteProgram(shaderProgram);
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteVertexArrays(1, &vertexArray);
+}
 
-	std::cout << "Torn Down" << std::endl;
+/*
+ * bindToButton binds a button or a key to a function pointer, an on that push, Canvas will call that method
+ */
+void Canvas::bindToButton(KEY button, void(*f)()) {
+	boundKeys[button] = f;
 }
 
 /*
@@ -118,12 +121,12 @@ void Canvas::draw() {
 			toClear = false;
 		}
 
-		unsigned size = myShapes->size();
+		unsigned int size = myShapes->size();
 		if (size == myShapes->capacity())
 			std::cerr << "BUFFER OVERFLOW" << std::endl;
 		if (allPoints) {
 			Point* p;
-			unsigned max = size*6;
+			unsigned int max = size*6;
 			for (unsigned int i = 0, x = 0; i < max; i+= 6, x++) {
 				p = (Point*)myShapes->operator[](x);
 				for (unsigned j = 0; j < 6; j++)
@@ -134,11 +137,11 @@ void Canvas::draw() {
 		} else for (unsigned int i = 0; i < size; i++)
 			myShapes->operator[](i)->draw(); // Iterate through our queue until we've made it to the end
 
-		myShapes->clear();				// Clear our buffer of shapes to be drawn
+		myShapes->clear();					// Clear our buffer of shapes to be drawn
 		glFlush();
 		glDrawBuffer(GL_BACK_LEFT);
-		glfwSwapBuffers(window);		// Swap out GL's back buffer and actually draw to the window
-		HandleIO();						// Handle any I/O
+		glfwSwapBuffers(window);			// Swap out GL's back buffer and actually draw to the window
+		HandleIO();							// Handle any I/O
 	}
 }
 
@@ -269,6 +272,7 @@ void Canvas::glInit() {
 							title_.c_str(), nullptr, nullptr);		// Windowed
 	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
 	glfwShowWindow(window);										// Show the window
+	glfwSetWindowUserPointer(window, this);
 
 	// Enable and disable necessary stuff
 	glDisable(GL_DEPTH_TEST);										// Disable depth testing because we're not drawing in 3d
@@ -329,6 +333,19 @@ void Canvas::glInit() {
 	uniProj = glGetUniformLocation(shaderProgram, "proj");
 
 	SetupCamera();												// Update the camera with magic numbers
+
+	glfwSetMouseButtonCallback(window, buttonCallback);
+	glfwSetKeyCallback(window, keyCallback);
+}
+
+void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
+	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
+	can->boundKeys[button]();
+}
+
+void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
+	can->boundKeys[key]();
 }
 
 void Canvas::HandleIO() {
@@ -436,6 +453,7 @@ int Canvas::start() {
 
 void Canvas::startDrawing(Canvas *c) {
 	c->glInit();
+//	c->bindToButton(GLFW_KEY_ESCAPE, [](){});
 	c->draw();
 	c->isFinished = true;
 	glfwDestroyWindow(c->window);
