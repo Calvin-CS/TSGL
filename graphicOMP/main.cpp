@@ -193,6 +193,7 @@ void langtonFunction(CartesianCanvas& can) {
 				std::cout << "BAD: dir == " << direction << std::endl; break;
 		}
 	}
+	delete filled;
 }
 
 void langtonColonyFunction(CartesianCanvas& can) {
@@ -237,6 +238,7 @@ void langtonColonyFunction(CartesianCanvas& can) {
 		for (int j = 0; j < 4; j++)
 			filled[xx[j] + WINDOW_W * yy[j]] ^= true;		//Invert the squares the ants are on
 	}
+	delete filled;
 }
 void langtonRainbowFunction(CartesianCanvas& can) {
 	const int 	IPF = 1000,									// Iterations per frame
@@ -283,6 +285,7 @@ void langtonRainbowFunction(CartesianCanvas& can) {
 		for (int j = 0; j < 4; j++)
 			filled[xx[j] + WINDOW_W * yy[j]] ^= true;		//Invert the squares the ants are on
 	}
+	delete filled;
 }
 
 void dumbSortFunction(Canvas& can) {
@@ -387,6 +390,9 @@ void functionFunction(CartesianCanvas& can) {
 
 	Function* function3 = new myFunction;
 	can.drawFunction(function3);
+	delete function1;
+	delete function2;
+	delete function3;
 }
 
 void cosineIntegralFunction(CartesianCanvas& can) {
@@ -405,6 +411,7 @@ void cosineIntegralFunction(CartesianCanvas& can) {
 			can.drawLine(i, 0, i, function1->valueAt(i), {(float)omp_get_thread_num()/THREADS,0,0,1.0});
 		}
 	}
+	delete function1;
 }
 
 void gradientWheelFunction(CartesianCanvas& can) {
@@ -506,6 +513,7 @@ void alphaLangtonFunction(CartesianCanvas& can) {
 		if (t.getReps() % 28 < 1)								// Clear the screen every period
 			can.clear();
 	}
+	delete filled;
 }
 void gradientMandelbrotFunction(CartesianCanvas& can) {
 	const unsigned int THREADS = 32;
@@ -643,6 +651,9 @@ void voronoiFunction(CartesianCanvas& can) {
 				wdist[bestk] = bdist;
 		}
 	}
+	delete x;
+	delete y;
+	delete kvalue;
 }
 
 void shadedVoronoiFunction(CartesianCanvas& can) {
@@ -719,6 +730,10 @@ void shadedVoronoiFunction(CartesianCanvas& can) {
 			can.drawPoint(i,j,{0,0,0,shading});		// Draw the point with the closest control's color
 		}
 	}
+	delete x;
+	delete y;
+	delete kvalue;
+	delete kvalue2;
 }
 
 void forestFireFunction(CartesianCanvas& can) {
@@ -802,6 +817,8 @@ void forestFireFunction(CartesianCanvas& can) {
 			}
 		}
 	}
+	delete onFire;
+	delete flammability;
 }
 
 //void textFunction(Canvas& can) {
