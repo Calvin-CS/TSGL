@@ -2,7 +2,7 @@
  * Rectangle.h extends Shape and provides a class for drawing a rectangle to a Canvas
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 7/2/2014
+ * Last Modified: Mark Vander Stel, 7/3/2014
  */
 
 #ifndef RECTANGLE_H_
@@ -21,25 +21,22 @@ public:
 	 *		y, the y coordinate of the Rectangle's top edge
 	 * 		w, the width of the Rectangle
 	 *		h, the height of the Rectangle
-	 * 		r, the red component
-	 * 		g, the green component
-	 * 		b, the blue component
-	 * 		a, the alpha component
-	 * Returns: a new Rectangle with the specified topleft corner, dimensions, and color
+	 * 		color, the color
+	 * Returns: a new Rectangle with the specified top left corner, dimensions, and color
 	 */
 	Rectangle(int x, int y, int w, int h, RGBfloatType color) {
-		vertices[0] = x;
-		vertices[1] = y;
-		vertices[6] = x+w;
-		vertices[7] = y;
+		vertices[0]  = x;
+		vertices[1]  = y;
+		vertices[6]  = x+w;
+		vertices[7]  = y;
 		vertices[12] = x;
 		vertices[13] = y+h;
 		vertices[18] = x+w;
 		vertices[19] = y+h;
-		vertices[2] = vertices[8] = vertices[14] =vertices[20] =color.R;
-		vertices[3] = vertices[9] = vertices[15] =vertices[21] =color.G;
-		vertices[4] = vertices[10] = vertices[16] =vertices[22] =color.B;
-		vertices[5] = vertices[11] = vertices[17] =vertices[23] =color.A;
+		vertices[2]  = vertices[8]  = vertices[14] = vertices[20] = color.R;
+		vertices[3]  = vertices[9]  = vertices[15] = vertices[21] = color.G;
+		vertices[4]  = vertices[10] = vertices[16] = vertices[22] = color.B;
+		vertices[5]  = vertices[11] = vertices[17] = vertices[23] = color.A;
 	}
 
 	// draw() actually draws the Rectangle to the canvas

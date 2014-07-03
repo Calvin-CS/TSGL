@@ -2,22 +2,22 @@
  * Polyline.h extends Shape and provides a class for drawing a polyline
  * 	with colored vertices to a Canvas
  *
- * Authors: Patrick Crain
- * Last Modified: Patrick Crain, 7/2/2014
+ * Authors: Patrick Crain, Mark Vander Stel
+ * Last Modified: Mark Vander Stel, 7/3/2014
  */
 
 #ifndef POLYLINE_H_
 #define POLYLINE_H_
 
-#include "Shape.h"				// For extending our Shape object
+#include "Shape.h"					// For extending our Shape object
 
 class Polyline : public Shape {
 private:
-	bool init;					// Whether the Polyline has been initialized completely
-	float* vertices;			// Buffer for vertex data
-	int size,					// Number of floating point numbers in vertices
-		current,				// Current number of floating point numbers in vertices
-		length;					// Number of vertices in vertices (size / 6)
+	bool	init;					// Whether the Polyline has been initialized completely
+	float*	vertices;				// Buffer for vertex data
+	int		size,					// Number of floating point numbers in vertices
+			current,				// Current number of floating point numbers in vertices
+			length;					// Number of vertices in vertices (size / 6)
 public:
 	/*
 	 * Explicit constructor for the Polyline class (calls the base constructor)
@@ -25,7 +25,7 @@ public:
 	 * 		vertices, the number of vertices the complete polyline will have
 	 * Returns: a new Polyline with the specified numbered vertices
 	 */
-	Polyline(int v = 3) {
+	Polyline(int v) {
 		if (v < 2)
 			throw std::out_of_range("Cannot have a line with fewer than 2 vertices.");
 		length = v;
@@ -48,7 +48,7 @@ public:
 	void addVertex(int x, int y, RGBfloatType color = BLACK) {
 		if (init)
 			return;
-		vertices[current] = x;
+		vertices[current]   = x;
 		vertices[current+1] = y;
 		vertices[current+2] = color.R;
 		vertices[current+3] = color.G;
