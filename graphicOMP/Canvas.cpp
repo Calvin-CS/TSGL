@@ -340,12 +340,14 @@ void Canvas::glInit() {
 
 void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
 	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
-	can->boundKeys[button]();
+	if (can->boundKeys[button] != nullptr)
+		can->boundKeys[button]();
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
-	can->boundKeys[key]();
+	if (can->boundKeys[key] != nullptr)
+		can->boundKeys[key]();
 }
 
 void Canvas::HandleIO() {

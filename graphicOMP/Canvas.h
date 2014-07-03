@@ -50,7 +50,7 @@ typedef std::unique_lock<std::mutex>			mutexLock;
 
 class Canvas {
 private:
-	void(*			boundKeys	[GLFW_KEY_LAST])();					// Array of function pointers for key binding
+	void(*			boundKeys	[GLFW_KEY_LAST+1])();				// Array of function pointers for key binding
 
 	void			draw();											// Method for drawing the canvas and the shapes within
 	void			init(int xx,int yy,int ww,int hh,
