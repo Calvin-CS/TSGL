@@ -3,13 +3,12 @@
  *
  * Created on: Jun 11, 2014
  * Author: Mark Vander Stel
- * Last Modified: Mark Vander Stel, 6/20/2014
+ * Last Modified: Mark Vander Stel, 7/3/2014
  */
 
 #ifndef ARRAY_H_
 #define ARRAY_H_
 
-#include <mutex>				// Needed for locking the list for thread-safety
 #include <stdexcept>			// Needed for exceptions
 
 template <typename Item>
@@ -25,7 +24,10 @@ public:
 		first_ = last_ = size_ = 0;
 	}
 
-	virtual ~Array() { clear(); delete [] myArray; }
+	virtual ~Array() {
+		clear();
+		delete [] myArray;
+	}
 
 	/*
 	 * clear() empties the array and resets it
