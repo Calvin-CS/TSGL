@@ -29,13 +29,18 @@ typedef CartesianCanvas Cart;
 typedef std::complex<long double> complex;
 
 static void print(const double d) {
-	std::cout << d << std::endl << std::flush;
+	std::cout << d << std::endl;
 }
 static float randfloat(int divisor = 10000) {
 	return (rand() % divisor) / (float)divisor;
 }
 
 void graydientFunction(Canvas& can) {
+	int x = 0;
+	can.bindToButton(PG_SPACE, PG_PRESS, [&can, &x]() {
+		std::cout << x++ << std::endl;
+	});
+
 	can.setOnlyPoints(true);
 	int nthreads = omp_get_num_procs();
 	#pragma omp parallel num_threads(nthreads)
@@ -874,8 +879,8 @@ int main() {
 			test(c4,lineFanFunction,false);
 //			Canvas c5(65536);
 //			test(c5,spectrumFunction,false);
-//			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-//			test(c6,mandelbrotFunction,false);
+			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+			test(c6,mandelbrotFunction,false);
 //			Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
 //			test(c7,langtonFunction,false);
 //			Cart c8(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);

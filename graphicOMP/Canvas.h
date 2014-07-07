@@ -25,13 +25,13 @@
 
 #include <chrono>			// For timing drawing and FPS
 #include <cmath>			// For converting HSV to RGB and other math stuff
+#include <functional>
 #include <iostream> 		// DEBUGGING
 #include <mutex>			// Needed for locking the Canvas for thread-safety
 #include <omp.h>			// For OpenMP support
 #include <stdio.h>			// Standard libraries
 #include <string>
 #include <thread>			// For spawning rendering in a different thread
-#include <unordered_map>
 
 //// Disables some deprecation warnings, but messes zooming up
 //#define GLM_FORCE_RADIANS
@@ -47,10 +47,11 @@
 typedef std::chrono::high_resolution_clock		highResClock;
 typedef highResClock::time_point				timePoint;
 typedef std::unique_lock<std::mutex>			mutexLock;
+typedef std::function<void()>					function;
 
 class Canvas {
 private:
-	void(*			boundKeys	[GLFW_KEY_LAST+1])();				// Array of function pointers for key binding
+	function		boundKeys	[(GLFW_KEY_LAST+1)*2];				// Array of function pointers for key binding
 
 	void			draw();											// Method for drawing the canvas and the shapes within
 	void			init(int xx,int yy,int ww,int hh,
@@ -100,7 +101,7 @@ public:
 			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
 	virtual ~Canvas();
 
-	void bindToButton(KEY button, void(*f)());					// Bind a method to a mouse button or key
+	void bindToButton(key button, action a, function f);			// Bind a method to a mouse button or key
 	static void buttonCallback(GLFWwindow* window, int key, int action, int mods);
 	void clear();													// Clears the canvas
 

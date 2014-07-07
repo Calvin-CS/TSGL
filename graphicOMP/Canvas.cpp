@@ -68,8 +68,8 @@ Canvas::~Canvas() {
 /*
  * bindToButton binds a button or a key to a function pointer, an on that push, Canvas will call that method
  */
-void Canvas::bindToButton(KEY button, void(*f)()) {
-	boundKeys[button] = f;
+void Canvas::bindToButton(key button, action a, function f) {
+	boundKeys[button+a*(GLFW_KEY_LAST+1)] = f;
 }
 
 /*
@@ -336,6 +336,10 @@ void Canvas::glInit() {
 
 	glfwSetMouseButtonCallback(window, buttonCallback);
 	glfwSetKeyCallback(window, keyCallback);
+
+	bindToButton(PG_KEY_ESCAPE, PG_PRESS, [this]() {
+		glfwSetWindowShouldClose(window, GL_TRUE);
+	});
 }
 
 void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -346,8 +350,10 @@ void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
-	if (can->boundKeys[key] != nullptr)
-		can->boundKeys[key]();
+	int index = key+action*(GLFW_KEY_LAST+1);
+	if (&(can->boundKeys[index]) != nullptr)
+		if (can->boundKeys[index])
+			can->boundKeys[index]();
 }
 
 void Canvas::HandleIO() {
@@ -355,14 +361,6 @@ void Canvas::HandleIO() {
 	glfwPollEvents();
 
 	glfwGetCursorPos(window,&mouseX,&mouseY);
-
-	// ESCAPE (Exit)
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		if (!keyDown)											// GL will close multiple windows in a row if we don't check this
-			glfwSetWindowShouldClose(window, GL_TRUE);			// Exit the program
-		keyDown = true;
-	}
-	else keyDown = false;
 }
 
 /*
@@ -395,6 +393,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 	clearRectangle = new Rectangle(0,0,winWidth,winHeight,GREY);
 
 	timer = new Timer(FRAME);
+	for (int i = 0; i <= GLFW_KEY_LAST*2+1; boundKeys[i++] = nullptr);
 }
 
 /*
@@ -455,7 +454,6 @@ int Canvas::start() {
 
 void Canvas::startDrawing(Canvas *c) {
 	c->glInit();
-//	c->bindToButton(GLFW_KEY_ESCAPE, [](){});
 	c->draw();
 	c->isFinished = true;
 	glfwDestroyWindow(c->window);
