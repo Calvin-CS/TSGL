@@ -11,7 +11,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-enum KEY {
+enum key {
 /* Printable keys */
 PG_SPACE           = GLFW_KEY_SPACE,
 PG_APOSTROPHE      = GLFW_KEY_APOSTROPHE,		/* ' */
@@ -65,6 +65,8 @@ PG_WORLD_1         = GLFW_KEY_WORLD_1,			/* non-US #1 */
 PG_WORLD_2         = GLFW_KEY_WORLD_2,			/* non-US #2 */
 
 /* Function keys */
+// Autobound to close window
+PG_KEY_ESCAPE	   = GLFW_KEY_ESCAPE,
 PG_ENTER           = GLFW_KEY_ENTER,
 PG_TAB             = GLFW_KEY_TAB,
 PG_BACKSPACE       = GLFW_KEY_BACKSPACE,
@@ -139,6 +141,11 @@ PG_MENU            = GLFW_KEY_MENU,
 PG_MOUSE_LEFT      = GLFW_MOUSE_BUTTON_LEFT,
 PG_MOUSE_RIGHT     = GLFW_MOUSE_BUTTON_RIGHT,
 PG_MOUSE_MIDDLE    = GLFW_MOUSE_BUTTON_MIDDLE
+};
+
+enum action {
+PG_PRESS		   = GLFW_PRESS,
+PG_RELEASE		   = GLFW_RELEASE
 };
 
 #endif /* KEYNUMS_H_ */
