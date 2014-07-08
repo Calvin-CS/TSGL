@@ -10,18 +10,12 @@
 #include "Timer.h"
 #include <omp.h>
 #include <iostream>
-#include <cmath>
 #include <complex>
 #include <queue>
-#include <unistd.h>
 
 // Some constants that get used a lot
 const int 	NUM_COLORS = 256,
-			MAX_COLOR = 255,
-			WINDOW_X = 200,
-			WINDOW_Y = 200,
-			WINDOW_W = 800,
-			WINDOW_H = 600;
+			MAX_COLOR = 255;
 // Shared values between langton functions
 enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
 
@@ -517,6 +511,17 @@ void alphaLangtonFunction(CartesianCanvas& can) {
 	xx[3] = WINDOW_W/2; yy[3] = WINDOW_H/2+RADIUS;	red[3] = MAX_COLOR; 	green[3] = 0;   		blue[3] = MAX_COLOR;
 	for (int i = 0; i < 4; i++) { dir[i] = i; }
 	Timer t(FRAME);
+	Timer pulse(28.72/60);
+	double time = pulse.getTime();
+
+	can.bindToButton(PG_MOUSE_LEFT, PG_PRESS, [&pulse, &time]() {
+		pulse.reset(pulse.getTime() - time);
+		time = pulse.getTime();
+	});
+	can.bindToButton(PG_SPACE, PG_PRESS, [&can]() {
+		can.clear();
+	});
+
 	while(can.getIsOpen()) {								// Check to see if the window has been closed
 		t.sleep();
 		for (int i = 0; i < IPF; i++) {
@@ -545,9 +550,10 @@ void alphaLangtonFunction(CartesianCanvas& can) {
 						break;
 				}
 			}
+			if (pulse.pastPeriod()) {
+				can.clear();
+			}
 		}
-		if (t.getReps() % 28 < 1)								// Clear the screen every period
-			can.clear();
 	}
 	delete filled;
 }
@@ -891,6 +897,10 @@ void test(Cart& c, void(*f)(Cart&), bool printFPS = false, RGBfloatType bg = GRE
 	c.end();
 }
 
+const int 	WINDOW_X = 200,
+			WINDOW_Y = 200,
+			WINDOW_W = 800,
+			WINDOW_H = 600;
 
 int main() {
 	glfwInit();	// Initialize GLFW
@@ -898,18 +908,18 @@ int main() {
 //	{
 //		#pragma omp section
 //		{
-			Canvas c1(480800);
-			test(c1,graydientFunction,true);
-			Canvas c2(480800);
-			test(c2,colorPointsFunction,true);
-			Canvas c3(100000);
-			test(c3,lineChainFunction,true,BLACK);
-			Canvas c4(500);
-			test(c4,lineFanFunction,false);
+//			Canvas c1(480800);
+//			test(c1,graydientFunction,true);
+//			Canvas c2(480800);
+//			test(c2,colorPointsFunction,true);
+//			Canvas c3(100000);
+//			test(c3,lineChainFunction,true,BLACK);
+//			Canvas c4(500);
+//			test(c4,lineFanFunction,false);
 //			Canvas c5(65536);
 //			test(c5,spectrumFunction,false);
-			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-			test(c6,mandelbrotFunction,false);
+//			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//			test(c6,mandelbrotFunction,false);
 //			Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
 //			test(c7,langtonFunction,false);
 //			Cart c8(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
@@ -929,10 +939,10 @@ int main() {
 //			test(c13,cosineIntegralFunction,true,WHITE);
 //			Cart c14(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512);
 //			test(c14,gradientWheelFunction,false,BLACK);
-			Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
-			test(c15,alphaRectangleFunction,false,BLACK);
-//			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
-//			test(c16,alphaLangtonFunction,true,BLACK);
+//			Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
+//			test(c15,alphaRectangleFunction,false,BLACK);
+			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
+			test(c16,alphaLangtonFunction,false,BLACK);
 //			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
 //			test(c17,gradientMandelbrotFunction,true);
 //			Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000);
