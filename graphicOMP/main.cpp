@@ -131,11 +131,40 @@ void spectrumFunction(Canvas& can) {
 void mandelbrotFunction(CartesianCanvas& can) {
 	const unsigned int THREADS = 32;  //omp_get_num_procs();
 	const unsigned int DEPTH = MAX_COLOR;
-//	can.bindToButton(PG_F,[can](){can.clear();});
-	can.setCanZoom(true);
+	Timer t(FRAME / 2);
+	Decimal firstX, firstY, secondX, secondY;
+	bool toRender = true;
+	can.bindToButton(PG_SPACE, PG_PRESS, [&can, &toRender](){
+		can.clear();
+		toRender = true;
+	});
+	can.bindToButton(PG_MOUSE_LEFT, PG_PRESS, [&can, &firstX, &firstY]() {
+		can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), firstX, firstY);
+	});
+	can.bindToButton(PG_MOUSE_LEFT, PG_RELEASE, [&can, &firstX, &firstY, &secondX, &secondY, &toRender]() {
+		can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), secondX, secondY);
+		can.zoom(firstX, firstY, secondX, secondY);
+		toRender = true;
+	});
+	can.bindToButton(PG_MOUSE_RIGHT, PG_PRESS, [&can, &toRender]() {
+		Decimal x, y;
+		can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
+		can.zoom(x, y, 1.5);
+		toRender = true;
+	});
+	can.bindToScroll([&can, &toRender](double dx, double dy) {
+		Decimal x, y;
+		can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
+		Decimal scale;
+		if (dy == 1) scale = .5;
+		else scale = 1.5;
+		can.zoom(x, y, scale);
+		toRender = true;
+	});
 	can.setOnlyPoints(true);
-	while(can.getZoomed()) {
-		can.setZoomed(false);
+
+	while(toRender) {
+		toRender = false;
 		double blockstart = can.getCartHeight() / THREADS;
 		#pragma omp parallel num_threads(THREADS)
 		{
@@ -154,15 +183,15 @@ void mandelbrotFunction(CartesianCanvas& can) {
 						can.drawPoint(col, row, BLACK);
 					else								// Otherwise, draw it with color based on how long it took
 						can.drawPoint(col, row, RGBintToRGBfloat(iterations % 151, (iterations % 131) + 50, iterations % 255));
-					if (can.getZoomed())
+					if (toRender)
 						break;
 				}
-				if (can.getZoomed())
+				if (toRender)
 					break;
 			}
 		}
 		print(can.getTime());
-		while(can.getIsOpen() && !can.getZoomed()); 	//Busy wait
+		while(can.getIsOpen() && !toRender) t.sleep();
 	}
 }
 
@@ -525,10 +554,10 @@ void alphaLangtonFunction(CartesianCanvas& can) {
 void gradientMandelbrotFunction(CartesianCanvas& can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 32;
-	can.setCanZoom(true);
 	can.setOnlyPoints(true);
-	while(can.getZoomed()) {
-		can.setZoomed(false);
+	bool zoomed;
+	while(zoomed) {
+		zoomed = false;
 		double blockstart = can.getCartHeight() / THREADS;
 		#pragma omp parallel num_threads(THREADS)
 		{
@@ -555,14 +584,14 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
 					smooth /= (DEPTH + i+1);
 					RGBfloatType color = HSVToRGBfloat((float)smooth*6.0f, 1.0, 1.0, 1.0);
 					can.drawPoint(col, row, color);
-					if (can.getZoomed())
+					if (zoomed)
 						break;
 				}
-				if (can.getZoomed())
+				if (zoomed)
 					break;
 			}
 		}
-		while(can.getIsOpen() && !can.getZoomed());
+		while(can.getIsOpen() && !zoomed);
 	}
 }
 void novaFunction(CartesianCanvas& can) {

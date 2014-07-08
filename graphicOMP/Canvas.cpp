@@ -99,8 +99,21 @@ void Canvas::cleanup() {
 /*
  * bindToButton binds a button or a key to a function pointer, an on that push, Canvas will call that method
  */
-void Canvas::bindToButton(key button, action a, function f) {
+void Canvas::bindToButton(key button, action a, voidFunction f) {
 	boundKeys[button+a*(GLFW_KEY_LAST+1)] = f;
+}
+
+void Canvas::bindToScroll(std::function<void(double, double)> f) {
+	scrollFunction = f;
+}
+
+void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
+	if (action == GLFW_REPEAT) return;
+	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
+	int index = button+action*(GLFW_KEY_LAST+1);
+	if (&(can->boundKeys[index]) != nullptr)
+		if (can->boundKeys[index])
+			can->boundKeys[index]();
 }
 
 /*
@@ -399,24 +412,15 @@ void Canvas::glInit() {
 
 	glfwSetMouseButtonCallback(window, buttonCallback);
 	glfwSetKeyCallback(window, keyCallback);
+	glfwSetScrollCallback(window, scrollCallback);
 
 	bindToButton(PG_KEY_ESCAPE, PG_PRESS, [this]() {
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	});
 }
 
-void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
-	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
-	if (can->boundKeys[button] != nullptr)
-		can->boundKeys[button]();
-}
-
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
-	int index = key+action*(GLFW_KEY_LAST+1);
-	if (&(can->boundKeys[index]) != nullptr)
-		if (can->boundKeys[index])
-			can->boundKeys[index]();
+	buttonCallback(window, key, action, mods);
 }
 
 void Canvas::HandleIO() {
@@ -457,6 +461,12 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 
 	timer = new Timer(FRAME);
 	for (int i = 0; i <= GLFW_KEY_LAST*2+1; boundKeys[i++] = nullptr);
+}
+
+void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
+	Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
+	if (can->scrollFunction)
+		can->scrollFunction(xpos, ypos);
 }
 
 /*

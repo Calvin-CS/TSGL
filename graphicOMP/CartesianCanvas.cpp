@@ -120,10 +120,10 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, RGBfloatType color) {
  * 		color, the RGB color (optional)
  */
 void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, RGBfloatType color) {
-	int actualX, actualY, actualW, actualH;
-	getScreenCoordinates(x, y, actualX, actualY);
-	getScreenCoordinates(w, h, actualW, actualH);
-	Rectangle* rec = new Rectangle(x, y, w, h, color);	// Creates the Rectangle with the specified coordinates and color
+	int actualX1, actualY1, actualX2, actualY2;
+	getScreenCoordinates(x, y, actualX1, actualY1);
+	getScreenCoordinates(x+w, y+h, actualX2, actualY2);
+	Rectangle* rec = new Rectangle(actualX1, actualY1, actualX2-actualX1, actualY2-actualY1, color);	// Creates the Rectangle with the specified coordinates and color
 	std::unique_lock<std::mutex> mlock(buffer);
 	myBuffer->push(rec);								// Push it onto our drawing buffer
 	mlock.unlock();
@@ -203,54 +203,53 @@ void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &sc
  */
 void CartesianCanvas::HandleIO() {
 	Canvas::HandleIO();
-	if (!canZoom)									// If we can't zoom, don't bother handling anything
-		return;
-	static Decimal oldX = 0, oldY = 0;
-	static bool leftPressed = false;
-	static bool rightPressed = false;
-	Decimal newX, newY, temp, aspect, mean, delta;
-	double mx, my;
-	glfwGetCursorPos(window,&mx,&my);
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_PRESS && !leftPressed && !rightPressed) {
-		leftPressed = true;
-		getCartesianCoordinates(mx,(my),oldX, oldY);
-		return;
-	}
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_RELEASE && leftPressed) {
-		leftPressed = false;
-		getCartesianCoordinates(mx,(my),newX, newY);
-		if (std::abs(newX-oldX) < cartWidth/32 && std::abs(newY-oldY) < cartHeight/32)
-			return;
-		if (oldX > newX) {							// Makes sure oldX, oldY is the topleft
-			temp = oldX;
-			oldX = newX;
-			newX = temp;
-		}
-		if (oldY > newY) {
-			temp = oldY;
-			oldY = newY;
-			newY = temp;
-		}
-		aspect = ((newX-oldX)/(newY-oldY))/(cartWidth/cartHeight);	// Compute the different in aspect ratios
-		mean = (newY+oldY) / 2;						// Compute the middle of the current y dimension
-		delta = aspect * (newY-oldY) / 2;			// Compute the new y radius with the given aspect ratio
-		oldY = mean - delta;						// Adjust the Y dimensions to maintain the aspect ratio
-		newY = mean + delta;
-		recomputeDimensions(oldX,oldY,newX,newY);
-		return;
-	}
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_PRESS && !leftPressed && !rightPressed) {
-		rightPressed = true;
-		getCartesianCoordinates(mx,(my),oldX, oldY);
-		return;
-	}
-	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_RELEASE && rightPressed) {	// On right click, zoom out
-		rightPressed = false;
-		getCartesianCoordinates(mx,(my),newX, newY);
-		recomputeDimensions(oldX-cartWidth,oldY-cartHeight,newX+cartWidth,newY+cartHeight);
-		return;
-	}
-	return;
+//	if (!canZoom)									// If we can't zoom, don't bother handling anything
+//		return;
+//	static Decimal oldX = 0, oldY = 0;
+//	static bool leftPressed = false;
+//	static bool rightPressed = false;
+//	Decimal newX, newY, temp, aspect, mean, delta;
+//	double mx, my;
+//	glfwGetCursorPos(window,&mx,&my);
+//	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_PRESS && !leftPressed && !rightPressed) {
+//		leftPressed = true;
+//		getCartesianCoordinates(mx,(my),oldX, oldY);
+//		return;
+//	}
+//	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_RELEASE && leftPressed) {
+//		leftPressed = false;
+//		getCartesianCoordinates(mx,(my),newX, newY);
+//		if (std::abs(newX-oldX) < cartWidth/32 && std::abs(newY-oldY) < cartHeight/32)
+//			return;
+//		if (oldX > newX) {							// Makes sure oldX, oldY is the topleft
+//			temp = oldX;
+//			oldX = newX;
+//			newX = temp;
+//		}
+//		if (oldY > newY) {
+//			temp = oldY;
+//			oldY = newY;
+//			newY = temp;
+//		}
+//		aspect = ((newX-oldX)/(newY-oldY))/(cartWidth/cartHeight);	// Compute the different in aspect ratios
+//		mean = (newY+oldY) / 2;						// Compute the middle of the current y dimension
+//		delta = aspect * (newY-oldY) / 2;			// Compute the new y radius with the given aspect ratio
+//		oldY = mean - delta;						// Adjust the Y dimensions to maintain the aspect ratio
+//		newY = mean + delta;
+//		recomputeDimensions(oldX,oldY,newX,newY);
+//		return;
+//	}
+//	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_PRESS && !leftPressed && !rightPressed) {
+//		rightPressed = true;
+//		getCartesianCoordinates(mx,(my),oldX, oldY);
+//		return;
+//	}
+//	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_RELEASE && rightPressed) {	// On right click, zoom out
+//		rightPressed = false;
+//		getCartesianCoordinates(mx,(my),newX, newY);
+//		recomputeDimensions(oldX-cartWidth,oldY-cartHeight,newX+cartWidth,newY+cartHeight);
+//		return;
+//	}
 }
 
 /*
@@ -272,5 +271,15 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
 	Decimal yError = cartHeight / winHeight;
 	pixelWidth = (cartWidth - xError) / (winWidth + xError);
 	pixelHeight = (cartHeight  - yError) / (winHeight + yError);
-	zoomed = true;
+}
+
+void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
+	Decimal newWidth = cartWidth * scale;
+	Decimal newHeight = cartHeight * scale;
+	recomputeDimensions(x - .5 * newWidth, y - .5 * newHeight, x + .5 * newWidth, y + .5 * newHeight);
+}
+
+void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
+	Decimal scale = (std::abs(x2 - x1) / cartWidth + std::abs(y2 - y1) / cartHeight) / 2.0;
+	zoom((x2 + x1)/2, (y2 + y1)/2, scale);
 }
