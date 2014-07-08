@@ -17,18 +17,16 @@ class Timer {
 private:
 	highResClock::time_point startTime, lastTime;
 	std::chrono::duration<double> period_;
-	int lastRep;
+	unsigned int lastRep;
 public:
 	Timer(double period) {
-		startTime = lastTime = highResClock::now();
-		period_ = std::chrono::duration<double>(period);
-		lastRep = 0;
+		reset(period);
 	}
 
 	virtual ~Timer() {}
 
 	// Get the number of reps since start
-	int getReps() {
+	unsigned int getReps() {
 		return (highResClock::now() - startTime) / period_;
 	}
 
@@ -38,11 +36,19 @@ public:
 				highResClock::now() - startTime).count() / 1000000000.0;
 	}
 
+	// Check if the timer has elapsed past the point when it last past the period
 	bool pastPeriod() {
 		if (lastRep < getReps()) {
 			lastRep = getReps();
 			return true;
 		} else return false;
+	}
+
+	// Changes the period to the given interval
+	void reset(double period) {
+		startTime = lastTime = highResClock::now();
+		period_ = std::chrono::duration<double>(period);
+		lastRep = 0;
 	}
 
 	// Sleep the thread until the period has passed
