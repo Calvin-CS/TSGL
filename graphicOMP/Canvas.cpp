@@ -70,7 +70,7 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title) 
 	init(xx,yy,w,h,b,title);
 }
 
-void Canvas::cleanup() {
+Canvas::~Canvas() {
 	std::cout << "tearing down..." << std::endl;
 	// Free our pointer memory
 	delete clearRectangle;
@@ -131,16 +131,25 @@ void Canvas::draw() {
 	//Reset the window
 	glfwSetWindowShouldClose(window, GL_FALSE);
 
+
+
 	//Start the drawing loop
 	for(framecounter = 0; !glfwWindowShouldClose(window); framecounter++)
 	{
 		timer->sleep();
-
+		glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
 		if (toClear) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-			toggleTextures(true);
+//			toggleTextures(true);
 			clearRectangle->draw();
-		}
+
+			glDrawBuffer(GL_LEFT);								// See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
+
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+			clearRectangle->draw();
+//			toggleTextures(false);
+			toClear = false;
+		} else glDrawBuffer(GL_LEFT);
 
 		// Calculate CycleTime since draw() was last called
 		highResClock::time_point end = highResClock::now();
@@ -158,14 +167,6 @@ void Canvas::draw() {
 			myBuffer->shallowClear();						// We want to clear the buffer but not delete those objects as we still need to draw them
 		}
 		mBufferLock.unlock();
-
-		glDrawBuffer(GL_LEFT);								// See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
-		if (toClear) {
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-			clearRectangle->draw();
-			toggleTextures(false);
-			toClear = false;
-		}
 
 		unsigned int size = myShapes->size();
 		if (size == myShapes->capacity())
@@ -185,7 +186,6 @@ void Canvas::draw() {
 				myShapes->operator[](i)->draw(); // Iterate through our queue until we've made it to the end
 			else {
 				toggleTextures(true);
-//				std::cout << "fancy" << std::endl;
 				myShapes->operator[](i)->draw();
 				toggleTextures(false);
 			}
@@ -198,7 +198,31 @@ void Canvas::draw() {
 
 		glfwPollEvents();					// Handle any I/O
 		glfwGetCursorPos(window,&mouseX,&mouseY);
+		glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
 	}
+}
+
+void Canvas::loadImage(std::string fname, int &w, int &h, GLuint &tex) {
+	glfwMakeContextCurrent(window);
+	ImageLoader::loadTexture(fname,w,h,tex);
+	glfwMakeContextCurrent(NULL);
+}
+
+/*
+ * drawImage draws an image with the given coordinates and dimensions
+ * Parameters:
+ * 		x, the x coordinate of the Image's left edge
+ *		y, the y coordinate of the Image's top edge
+ * 		w, the width of the Image
+ *		h, the height of the Image
+ */
+void Canvas::drawImage(std::string fname, int x, int y, int w, int h) {
+	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
+	Image* im = new Image(fname,x,y,w,h);		// Creates the Image with the specified coordinates
+	mutexLock mlock(buffer);
+	myBuffer->push(im);							// Push it onto our drawing buffer
+	mlock.unlock();
+	glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
 }
 
 /*
@@ -305,7 +329,6 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBflo
 int Canvas::end() {
 	if (!started) return -1;						// If we haven't even started yet, return error code -1
 	renderThread.join();							// Blocks until ready to join, which will be when the window is closed
-	cleanup();
 	return 0;
 }
 
@@ -338,6 +361,10 @@ void Canvas::glInit() {
 	glEnable(GL_BLEND);											// Enable blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);				// Set blending mode to standard alpha blending
 
+	//Needed?
+    glEnable(GL_TEXTURE_2D);
+    glShadeModel(GL_FLAT);
+
 	// Enable Experimental GLEW to Render Properly
 	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
@@ -362,14 +389,23 @@ void Canvas::glInit() {
 	glBindTexture(GL_TEXTURE_2D, tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	// Solid White Texture
 	float pixels[] = {
-		1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f, 1.0f, 1.0f
+		1.0f, 0.0f, 0.0f, 1.0f,   0.0f, 1.0f, 0.0f, 1.0f,
+		0.0f, 0.0f, 1.0f, 1.0f,   1.0f, 1.0f, 1.0f, 1.0f
 	};
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_FLOAT, pixels);
+	// Generate and bind the auxillary texture
+	glGenTextures(1, &tex2);
+	glBindTexture(GL_TEXTURE_2D, tex2);
+	// Reset the initial background
+	glBindTexture(GL_TEXTURE_2D, tex);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	// Create / compile vertex shader
 	shaderVertex = glCreateShader(GL_VERTEX_SHADER);
@@ -422,6 +458,8 @@ void Canvas::glInit() {
 	bindToButton(PG_KEY_ESCAPE, PG_PRESS, [this]() {
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	});
+
+	glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

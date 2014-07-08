@@ -76,6 +76,24 @@ void CartesianCanvas::drawFunction(const Function* f) {
 }
 
 /*
+ * drawImage draws an image with the given coordinates  dimensions
+ * Parameters:
+ * 		x, the x coordinate of the Image's left edge
+ *		y, the y coordinate of the Image's top edge
+ * 		w, the width of the Image
+ *		h, the height of the Image
+ */
+void CartesianCanvas::drawImage(GLuint &texture, Decimal x, Decimal y, Decimal w, Decimal h) {
+//	int actualX1, actualY1, actualX2, actualY2;
+//	getScreenCoordinates(x, y, actualX1, actualY1);
+//	getScreenCoordinates(x+w, y+h, actualX2, actualY2);
+//	Image* im = new Image(texture, actualX1, actualY1, actualX2-actualX1, actualY2-actualY1);	// Creates the Rectangle with the specified coordinates and color
+//	std::unique_lock<std::mutex> mlock(buffer);
+//	myBuffer->push(im);								// Push it onto our drawing buffer
+//	mlock.unlock();
+}
+
+/*
  * drawLine draws a line at the given coordinates with the given color
  * Parameters:
  * 		x1, the x position of the start of the line

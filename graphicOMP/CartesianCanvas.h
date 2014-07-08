@@ -28,6 +28,7 @@ public:
 
 	void drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);	// Draws axes crossing at the input coordinates
 	void drawFunction(const Function* f);							// Draws the Function on the screen
+	void drawImage(GLuint &texture, Decimal x, Decimal y, Decimal w, Decimal h);	// Draws an image at the given coordinates with the given dimensions
 	void drawLine(Decimal x1, Decimal y1, Decimal x2,
 					Decimal y2, RGBfloatType color = BLACK);		// Draws a line at the given coordinates with the given color
 	void drawPoint(Decimal x, Decimal y,

@@ -22,21 +22,21 @@
 #include "Rectangle.h"		// Our own class for drawing rectangles.
 #include "ShinyPolygon.h"	// Our own class for drawing polygons with colored vertices.
 #include "Triangle.h"		// Our own class for drawing triangles.
+#include "Image.h"			// Our own class for drawing images / textured quads
+#include "ImageLoader.h"	// Loader for PNG images
 
 #include <chrono>			// For timing drawing and FPS
-#include <cmath>			// For converting HSV to RGB and other math stuff
 #include <functional>		// For callback upon key presses
 #include <iostream> 		// DEBUGGING
 #include <mutex>			// Needed for locking the Canvas for thread-safety
 #include <omp.h>			// For OpenMP support
-#include <stdio.h>			// Standard libraries
 #include <string>			// For window titles
 #include <thread>			// For spawning rendering in a different thread
 
 // GL libraries
 #include <GL/gl.h>			// For GL functions
-#include <GL/glew.h>		// For GL drawing calls
-#include <GLFW/glfw3.h>		// For window creation and management
+#include <GL/glew.h>		// For GL drawing calls (used only by shape)
+#include <GLFW/glfw3.h>	// For window creation and management
 
 #define FPS 60				// Frames per second
 #define FRAME 1.0f/FPS		// Number of seconds between frames
@@ -83,6 +83,7 @@ protected:
 	bool			started;										// Whether our canvas is running and the frame counter is counting
 	timePoint		startTime;										// Start time, to show how much time has elapsed
 	GLuint			tex,											// Texture
+					tex2,											// Texture 2
 					textureShaderFragment,							// Address of the textured fragment shader
 					textureShaderProgram,							// Addres of the textured shader program to send to the GPU
 					textureShaderVertex;							// Address of the textured vertex shader
@@ -104,13 +105,13 @@ public:
 	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h,
 			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
-	virtual ~Canvas() {};
+	virtual ~Canvas();
 
-	void cleanup();													// Called when the Canvas is done being used
 	void bindToButton(key button, action a, voidFunction f);		// Bind a method to a mouse button or key
 	void bindToScroll(std::function<void(double, double)> f);		// Bind a method to scrolling
 	void clear();													// Clears the canvas
 
+	virtual void drawImage(std::string fname, int x, int y, int w, int h);// Draws an image at the given coordinates with the given dimensions
 	virtual void drawLine(int x1, int y1, int x2, int y2,
 			RGBfloatType color = BLACK);							// Draws a line at the given coordinates with the given color
 	virtual void drawPoint(int x, int y,
@@ -134,6 +135,8 @@ public:
 	int		getWindowHeight() 	{ return winHeight; }				// Accessor for the window height
 	int		getWindowX() 		{ return monitorX; }				// Accessor for the window width
 	int		getWindowY() 		{ return monitorY; }				// Accessor for the window height
+
+	void	loadImage(std::string fname, int &w, int &h, GLuint &t);
 
 	void	setOnlyPoints(bool b) { allPoints = b; }				// Whether we're only drawing points
 	void	setShowFPS(bool b) 	{ showFPS = b; }					// Mutator to show debugging FPS
