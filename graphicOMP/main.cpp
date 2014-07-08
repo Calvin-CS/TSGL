@@ -12,6 +12,7 @@
 #include <iostream>
 #include <complex>
 #include <queue>
+#include <string.h>
 
 // Some constants that get used a lot
 const int 	NUM_COLORS = 256,
@@ -872,6 +873,22 @@ void forestFireFunction(CartesianCanvas& can) {
 //	can.drawText("And to that I say...oh well.",100,500,BLACK);
 //}
 
+void imageFunction(Canvas& can) {
+	int w = 800,h = 600;
+//	GLuint tex;
+//	can.loadImage("data/test.png",w,h,tex);
+	can.drawImage("data/test.png",0,0,w,h);
+}
+
+//void textFunction(Canvas& can) {
+//	const RGBfloatType BLACK = {0,0,0,1};
+//	can.drawText("A long time ago, in a galaxy far, far away",100,100,BLACK);
+//	can.drawText("Something extraordinary happened -- far more extraordinary than anything mankind has ever seen.",100,200,BLACK);
+//	can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",100,300,BLACK);
+//	can.drawText("Of *what* exactly that extraordinary event was.",100,400,BLACK);
+//	can.drawText("And to that I say...oh well.",100,500,BLACK);
+//}
+
 void test(Canvas& c, void(*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
 	c.setBackgroundColor(bg);
 	c.start();
@@ -897,10 +914,7 @@ void test(Cart& c, void(*f)(Cart&), bool printFPS = false, RGBfloatType bg = GRE
 	c.end();
 }
 
-const int 	WINDOW_X = 200,
-			WINDOW_Y = 200,
-			WINDOW_W = 800,
-			WINDOW_H = 600;
+const int WINDOW_W = 800, WINDOW_H = 600;
 
 int main() {
 	glfwInit();	// Initialize GLFW
@@ -941,8 +955,8 @@ int main() {
 //			test(c14,gradientWheelFunction,false,BLACK);
 //			Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
 //			test(c15,alphaRectangleFunction,false,BLACK);
-			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
-			test(c16,alphaLangtonFunction,false,BLACK);
+//			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
+//			test(c16,alphaLangtonFunction,true,BLACK);
 //			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
 //			test(c17,gradientMandelbrotFunction,true);
 //			Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000);
@@ -953,6 +967,8 @@ int main() {
 //			test(c20,shadedVoronoiFunction,false,WHITE);
 //			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
 //			test(c21,forestFireFunction,false);
+			Canvas c22(100);
+			test(c22,imageFunction,false);
 //			test(new Canvas(1000),textFunction,true);
 //		}
 //	}
