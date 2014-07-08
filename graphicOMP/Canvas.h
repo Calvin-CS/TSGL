@@ -13,7 +13,7 @@
 
 #include "Array.h"			// Our own array for buffering drawing operations.
 #include "color.h"			// Our own interface for converting color types
-#include "keynums.h"
+#include "keynums.h"		// Our enums for key presses
 #include "Timer.h"			// Our own timer for steady FPS
 
 #include "Line.h"			// Our own class for drawing straight lines.
@@ -25,16 +25,13 @@
 
 #include <chrono>			// For timing drawing and FPS
 #include <cmath>			// For converting HSV to RGB and other math stuff
-#include <functional>
+#include <functional>		// For callback upon key presses
 #include <iostream> 		// DEBUGGING
 #include <mutex>			// Needed for locking the Canvas for thread-safety
 #include <omp.h>			// For OpenMP support
 #include <stdio.h>			// Standard libraries
-#include <string>
+#include <string>			// For window titles
 #include <thread>			// For spawning rendering in a different thread
-
-//// Disables some deprecation warnings, but messes zooming up
-//#define GLM_FORCE_RADIANS
 
 // GL libraries
 #include <GL/gl.h>			// For GL functions
@@ -44,20 +41,24 @@
 #define FPS 60				// Frames per second
 #define FRAME 1.0f/FPS		// Number of seconds between frames
 
-typedef std::chrono::high_resolution_clock		highResClock;
-typedef highResClock::time_point				timePoint;
-typedef std::unique_lock<std::mutex>			mutexLock;
-typedef std::function<void()>					function;
-
 class Canvas {
 private:
-	function		boundKeys	[(GLFW_KEY_LAST+1)*2];				// Array of function pointers for key binding
+	typedef std::chrono::high_resolution_clock		highResClock;
+	typedef highResClock::time_point				timePoint;
+	typedef std::unique_lock<std::mutex>			mutexLock;
+	typedef std::function<void()>					voidFunction;
+	typedef std::function<void(double, double)> 	doubleFunction;
 
+	voidFunction	boundKeys	[(GLFW_KEY_LAST+1)*2];				// Array of function objects for key binding
+	doubleFunction 	scrollFunction;									// Single function object for scrolling
+
+	static void 	buttonCallback(GLFWwindow* window, int key, int action, int mods);
 	void			draw();											// Method for drawing the canvas and the shapes within
 	void			init(int xx,int yy,int ww,int hh,
 						  unsigned int b,std::string title);		// Method for initializing the canvas
 	void			glInit();										// Initializes the GL and GLFW things that are specific for this canvas
 	static void		keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void		scrollCallback(GLFWwindow* window, double xpos, double ypos);
 protected:
 	bool			allPoints;										// If the canvas will be rending all points, which will optimize it
 	float			aspect;											// Aspect ratio used for setting up the window
@@ -101,8 +102,8 @@ public:
 			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
 	virtual ~Canvas();
 
-	void bindToButton(key button, action a, function f);			// Bind a method to a mouse button or key
-	static void buttonCallback(GLFWwindow* window, int key, int action, int mods);
+	void bindToButton(key button, action a, voidFunction f);			// Bind a method to a mouse button or key
+	void bindToScroll(std::function<void(double, double)> f);		// Bind a method to scrolling
 	void clear();													// Clears the canvas
 
 	virtual void drawLine(int x1, int y1, int x2, int y2,
@@ -121,6 +122,8 @@ public:
 	int		getFrameNumber() 	{ return framecounter; }			// Accessor for the number of frames rendered so far
 	float	getFPS() 			{ return realFPS; }					// Accessor for actual FPS
 	bool	getIsOpen() 		{ return !isFinished; }				// Returns if the window is closed
+	int 	getMouseX() 		{ return mouseX; }					// Returns the screen X coordinate of the mouse
+	int 	getMouseY() 		{ return mouseY; }					// Returns the screen Y coordinate of the mouse
 	double	getTime();												// Returns the time since initialization
 	int		getWindowWidth() 	{ return winWidth; }				// Accessor for the window width
 	int		getWindowHeight() 	{ return winHeight; }				// Accessor for the window height
