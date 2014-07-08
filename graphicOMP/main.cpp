@@ -900,8 +900,8 @@ int main() {
 //			test(c13,cosineIntegralFunction,true,WHITE);
 //			Cart c14(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512);
 //			test(c14,gradientWheelFunction,false,BLACK);
-//			Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
-//			test(c15,alphaRectangleFunction,false,BLACK);
+			Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
+			test(c15,alphaRectangleFunction,false,BLACK);
 //			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
 //			test(c16,alphaLangtonFunction,true,BLACK);
 //			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);

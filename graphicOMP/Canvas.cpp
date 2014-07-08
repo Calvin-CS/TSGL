@@ -20,7 +20,30 @@ static const GLchar* fragmentSource =
 	"void main() {"
 	"	outColor = vec4(Color);"
 	"}";
-
+static const GLchar* textureVertexSource =
+	"#version 150 core\n"
+	"in vec2 position;"
+	"in vec4 color;"
+	"in vec2 texcoord;"
+	"out vec4 Color;"
+	"out vec2 Texcoord;"
+	"uniform mat4 model;"
+	"uniform mat4 view;"
+	"uniform mat4 proj;"
+	"void main() {"
+	"	Texcoord = texcoord;"
+	"   Color = color;"
+	"   gl_Position = proj * view * model * vec4(position, 0.0, 1.0);"
+	"}";
+static const GLchar* textureFragmentSource =
+	"#version 150\n"
+	"in vec4 Color;"
+	"in vec2 Texcoord;"
+	"out vec4 outColor;"
+	"uniform sampler2D tex;"
+	"void main() {"
+	"	outColor = texture(tex, Texcoord) * vec4(Color);"
+	"}";
 
 /*
  * Default constructor for the canvas class
@@ -47,7 +70,8 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title) 
 	init(xx,yy,w,h,b,title);
 }
 
-Canvas::~Canvas() {
+void Canvas::cleanup() {
+	std::cout << "tearing down..." << std::endl;
 	// Free our pointer memory
 	delete clearRectangle;
 	delete myShapes;
@@ -61,8 +85,15 @@ Canvas::~Canvas() {
 	glDeleteShader(shaderFragment);
 	glDeleteShader(shaderVertex);
 	glDeleteProgram(shaderProgram);
+	glDetachShader(textureShaderProgram,textureShaderFragment);
+	glDetachShader(textureShaderProgram,textureShaderVertex);
+	glDeleteShader(textureShaderFragment);
+	glDeleteShader(textureShaderVertex);
+	glDeleteProgram(textureShaderProgram);
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteVertexArrays(1, &vertexArray);
+	glDeleteTextures(1,&tex);
+	std::cout << "torn down..." << std::endl;
 }
 
 /*
@@ -132,10 +163,18 @@ void Canvas::draw() {
 				for (unsigned j = 0; j < 6; j++)
 					vertexData[i+j] = p->vertices[j];
 			}
-			glBufferData(GL_ARRAY_BUFFER, size*sizeof(ColoredVertex), vertexData, GL_DYNAMIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, size*6*sizeof(float), vertexData, GL_DYNAMIC_DRAW);
 			glDrawArrays(GL_POINTS, 0, size);
-		} else for (unsigned int i = 0; i < size; i++)
-			myShapes->operator[](i)->draw(); // Iterate through our queue until we've made it to the end
+		} else for (unsigned int i = 0; i < size; i++){
+			if (!myShapes->operator[](i)->getIsTextured())
+				myShapes->operator[](i)->draw(); // Iterate through our queue until we've made it to the end
+			else {
+				toggleTextures(true);
+//				std::cout << "fancy" << std::endl;
+				myShapes->operator[](i)->draw();
+				toggleTextures(false);
+			}
+		}
 
 		myShapes->clear();					// Clear our buffer of shapes to be drawn
 		glFlush();
@@ -290,26 +329,7 @@ void Canvas::glInit() {
 	  fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 	}
 
-	// Create / compile vertex shader
-	shaderVertex = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(shaderVertex, 1, &vertexSource, NULL);
-	glCompileShader(shaderVertex);
 	GLint status;
-	glGetShaderiv(shaderVertex, GL_COMPILE_STATUS, &status);
-
-	// Create / compile fragment shader
-	shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(shaderFragment, 1, &fragmentSource, NULL);
-	glCompileShader(shaderFragment);
-	glGetShaderiv(shaderFragment, GL_COMPILE_STATUS, &status);
-
-	// Attach both shaders to a shader program, link the program, and use it
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, shaderVertex);
-	glAttachShader(shaderProgram, shaderFragment);
-	glBindFragDataLocation(shaderProgram, 0, "outColor");
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
 
 	// Create and bind our Vertex Array Object
 	glGenVertexArrays(1, &vertexArray);
@@ -319,20 +339,63 @@ void Canvas::glInit() {
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 
-	// Specify the layout of the vertex data
-	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 6*sizeof(float), 0);
-	GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(2*sizeof(float)));
+	// Create and generate a test texture
+	glGenTextures(1, &tex);
+	glBindTexture(GL_TEXTURE_2D, tex);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	// Solid White Texture
+	float pixels[] = {
+		1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f, 1.0f, 1.0f
+	};
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_FLOAT, pixels);
 
-	// Get uniform location for camera matrices
-	uniModel = glGetUniformLocation(shaderProgram, "model");
-	uniView = glGetUniformLocation(shaderProgram, "view");
-	uniProj = glGetUniformLocation(shaderProgram, "proj");
+	// Create / compile vertex shader
+	shaderVertex = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(shaderVertex, 1, &vertexSource, NULL);
+	glCompileShader(shaderVertex);
+	glGetShaderiv(shaderVertex, GL_COMPILE_STATUS, &status);
 
-	SetupCamera();												// Update the camera with magic numbers
+	// Create / compile fragment shader
+	shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(shaderFragment, 1, &fragmentSource, NULL);
+	glCompileShader(shaderFragment);
+	glGetShaderiv(shaderFragment, GL_COMPILE_STATUS, &status);
+
+	// Attach both shaders to a shader program, link the program
+	shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, shaderVertex);
+	glAttachShader(shaderProgram, shaderFragment);
+	glBindFragDataLocation(shaderProgram, 0, "outColor");
+
+	// Specify the layout of the vertex data in our standard shader
+	glLinkProgram(shaderProgram);
+
+	// Create / compile textured vertex shader
+	textureShaderVertex = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(textureShaderVertex, 1, &textureVertexSource, NULL);
+	glCompileShader(textureShaderVertex);
+	glGetShaderiv(textureShaderVertex, GL_COMPILE_STATUS, &status);
+
+	// Create / compile textured fragment shader
+	textureShaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(textureShaderFragment, 1, &textureFragmentSource, NULL);
+	glCompileShader(textureShaderFragment);
+	glGetShaderiv(textureShaderFragment, GL_COMPILE_STATUS, &status);
+
+	// Attach both shaders to another shader program, link the program
+	textureShaderProgram = glCreateProgram();
+	glAttachShader(textureShaderProgram, textureShaderVertex);
+	glAttachShader(textureShaderProgram, textureShaderFragment);
+	glBindFragDataLocation(textureShaderProgram, 0, "outColor");
+
+	// Specify the layout of the vertex data in our textured shader
+	glLinkProgram(textureShaderProgram);
+
+	toggleTextures(false);
 
 	glfwSetMouseButtonCallback(window, buttonCallback);
 	glfwSetKeyCallback(window, keyCallback);
@@ -457,4 +520,49 @@ void Canvas::startDrawing(Canvas *c) {
 	c->draw();
 	c->isFinished = true;
 	glfwDestroyWindow(c->window);
+}
+
+void Canvas::toggleTextures(bool on) {
+	if (!on) {
+		// Relocate the shader attributes
+		GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+		glEnableVertexAttribArray(posAttrib);
+		glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 6*sizeof(float), 0);
+		GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
+		glEnableVertexAttribArray(colAttrib);
+		glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(2*sizeof(float)));
+
+		// Reallocate the shader program for use
+		glUseProgram(shaderProgram);
+
+		// Recompute the camera matrices
+		uniModel = glGetUniformLocation(shaderProgram, "model");
+		uniView  = glGetUniformLocation(shaderProgram, "view");
+		uniProj  = glGetUniformLocation(shaderProgram, "proj");
+
+		// Update the camera
+		SetupCamera();
+	} else {
+		// Relocate the shader attributes
+		GLint texturePosAttrib = glGetAttribLocation(textureShaderProgram, "position");
+		glEnableVertexAttribArray(texturePosAttrib);
+		glVertexAttribPointer(texturePosAttrib, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), 0);
+		GLint textureColAttrib = glGetAttribLocation(textureShaderProgram, "color");
+		glEnableVertexAttribArray(textureColAttrib);
+		glVertexAttribPointer(textureColAttrib, 4, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(2*sizeof(float)));
+		GLint textureTexAttrib = glGetAttribLocation(textureShaderProgram, "texcoord");
+		glEnableVertexAttribArray(textureTexAttrib);
+		glVertexAttribPointer(textureTexAttrib, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
+
+		// Reallocate the shader program for use
+		glUseProgram(textureShaderProgram);
+
+		// Recompute the camera matrices
+		uniModel = glGetUniformLocation(textureShaderProgram, "model");
+		uniView  = glGetUniformLocation(textureShaderProgram, "view");
+		uniProj  = glGetUniformLocation(textureShaderProgram, "proj");
+
+		// Update the camera
+		SetupCamera();
+	}
 }

@@ -75,11 +75,15 @@ protected:
 	std::thread		renderThread;									// Thread dedicated to rendering the Canvas
 	GLuint			shaderFragment,									// Address of the fragment shader
 					shaderProgram,									// Addres of the shader program to send to the GPU
-					shaderVertex;									// Address of the vertex shader
+					shaderVertex,									// Address of the vertex shader
+					textureShaderFragment,							// Address of the textured fragment shader
+					textureShaderProgram,							// Addres of the textured shader program to send to the GPU
+					textureShaderVertex;							// Address of the textured vertex shader
 	std::mutex		shapes;											// Mutex for locking the render array so that only one thread can read/write at a time
 	bool			showFPS;										// Flag to show DEBUGGING FPS
 	bool			started;										// Whether our canvas is running and the frame counter is counting
 	timePoint		startTime;										// Start time, to show how much time has elapsed
+	GLuint			tex;											// Texture
 	Timer*			timer;											// Timer for steady FPS
 	std::string		title_;											// Title of the window
 	bool			toClear;										// Flag for clearing the canvas
@@ -99,10 +103,11 @@ public:
 	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h,
 			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
-	virtual ~Canvas();
+	virtual ~Canvas() {};
 
 	void bindToButton(key button, action a, function f);			// Bind a method to a mouse button or key
 	static void buttonCallback(GLFWwindow* window, int key, int action, int mods);
+	void cleanup();												// Called when the Canvas is done being used
 	void clear();													// Clears the canvas
 
 	virtual void drawLine(int x1, int y1, int x2, int y2,
@@ -132,6 +137,8 @@ public:
 	void	setBackgroundColor(RGBfloatType color);					// Changes the background color
 
 	int		start();												// Function to start rendering our Canvas
+
+	void	toggleTextures(bool state);							// Turn textures on or off
 };
 
 #endif /* CANVAS_H_ */

@@ -13,10 +13,13 @@
 #include "color.h"										// Needed for color type
 
 class Shape {
+protected:
+	bool	isTextured;
 public:
-	Shape() {}											// Default constructor for the Shape
-	virtual ~Shape() {}									// Default destructor for the Shape
+	Shape() { isTextured = false; }					// Default constructor for the Shape
+	virtual ~Shape() {}								// Default destructor for the Shape
 	virtual void draw() = 0;							// Abstract method for actually drawing the shape
+	bool getIsTextured() { return isTextured; }
 };
 
 #endif /* SHAPER_H_ */
