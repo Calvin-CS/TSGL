@@ -199,60 +199,6 @@ void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &sc
 }
 
 /*
- * HandleIO allows for zooming with mouse events
- */
-void CartesianCanvas::HandleIO() {
-	Canvas::HandleIO();
-//	if (!canZoom)									// If we can't zoom, don't bother handling anything
-//		return;
-//	static Decimal oldX = 0, oldY = 0;
-//	static bool leftPressed = false;
-//	static bool rightPressed = false;
-//	Decimal newX, newY, temp, aspect, mean, delta;
-//	double mx, my;
-//	glfwGetCursorPos(window,&mx,&my);
-//	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_PRESS && !leftPressed && !rightPressed) {
-//		leftPressed = true;
-//		getCartesianCoordinates(mx,(my),oldX, oldY);
-//		return;
-//	}
-//	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT ) == GLFW_RELEASE && leftPressed) {
-//		leftPressed = false;
-//		getCartesianCoordinates(mx,(my),newX, newY);
-//		if (std::abs(newX-oldX) < cartWidth/32 && std::abs(newY-oldY) < cartHeight/32)
-//			return;
-//		if (oldX > newX) {							// Makes sure oldX, oldY is the topleft
-//			temp = oldX;
-//			oldX = newX;
-//			newX = temp;
-//		}
-//		if (oldY > newY) {
-//			temp = oldY;
-//			oldY = newY;
-//			newY = temp;
-//		}
-//		aspect = ((newX-oldX)/(newY-oldY))/(cartWidth/cartHeight);	// Compute the different in aspect ratios
-//		mean = (newY+oldY) / 2;						// Compute the middle of the current y dimension
-//		delta = aspect * (newY-oldY) / 2;			// Compute the new y radius with the given aspect ratio
-//		oldY = mean - delta;						// Adjust the Y dimensions to maintain the aspect ratio
-//		newY = mean + delta;
-//		recomputeDimensions(oldX,oldY,newX,newY);
-//		return;
-//	}
-//	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_PRESS && !leftPressed && !rightPressed) {
-//		rightPressed = true;
-//		getCartesianCoordinates(mx,(my),oldX, oldY);
-//		return;
-//	}
-//	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT ) == GLFW_RELEASE && rightPressed) {	// On right click, zoom out
-//		rightPressed = false;
-//		getCartesianCoordinates(mx,(my),newX, newY);
-//		recomputeDimensions(oldX-cartWidth,oldY-cartHeight,newX+cartWidth,newY+cartHeight);
-//		return;
-//	}
-}
-
-/*
  * recomputeDimensions recomputes the size variables of CartesianCanvas according to new bounds
  * Parameters:
  * 		xMin, a real number corresponding to the new left edge of the CartesianCanvas

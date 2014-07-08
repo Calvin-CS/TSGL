@@ -20,7 +20,6 @@ private:
 	Decimal minX, maxX, minY, maxY;									// Bounding Cartesian coordinates for the window
 	Decimal pixelWidth, pixelHeight;								// cartWidth/window.w(), cartHeight/window.h()
 protected:
-	void HandleIO();												// Handler for mouse events
 public:
 	CartesianCanvas(unsigned int b);								// Default constructor for our CartesianCanvas
 	CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin,

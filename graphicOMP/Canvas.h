@@ -59,6 +59,7 @@ private:
 	void			glInit();										// Initializes the GL and GLFW things that are specific for this canvas
 	static void		keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void		scrollCallback(GLFWwindow* window, double xpos, double ypos);
+	void 			toggleTextures(bool state);						// Turn textures on or off
 protected:
 	bool			allPoints;										// If the canvas will be rending all points, which will optimize it
 	float			aspect;											// Aspect ratio used for setting up the window
@@ -76,15 +77,15 @@ protected:
 	std::thread		renderThread;									// Thread dedicated to rendering the Canvas
 	GLuint			shaderFragment,									// Address of the fragment shader
 					shaderProgram,									// Addres of the shader program to send to the GPU
-					shaderVertex,									// Address of the vertex shader
-					textureShaderFragment,							// Address of the textured fragment shader
-					textureShaderProgram,							// Addres of the textured shader program to send to the GPU
-					textureShaderVertex;							// Address of the textured vertex shader
+					shaderVertex;									// Address of the vertex shader
 	std::mutex		shapes;											// Mutex for locking the render array so that only one thread can read/write at a time
 	bool			showFPS;										// Flag to show DEBUGGING FPS
 	bool			started;										// Whether our canvas is running and the frame counter is counting
 	timePoint		startTime;										// Start time, to show how much time has elapsed
-	GLuint			tex;											// Texture
+	GLuint			tex,											// Texture
+					textureShaderFragment,							// Address of the textured fragment shader
+					textureShaderProgram,							// Addres of the textured shader program to send to the GPU
+					textureShaderVertex;							// Address of the textured vertex shader
 	Timer*			timer;											// Timer for steady FPS
 	std::string		title_;											// Title of the window
 	bool			toClear;										// Flag for clearing the canvas
@@ -97,7 +98,6 @@ protected:
 	GLFWwindow*		window;											// GLFW window that we will draw to
 	int 			winWidth, winHeight;							// Window sizes used for setting up the window
 
-	virtual void	HandleIO();										// Handle the keyboard and mouse input
 	void			SetupCamera();									// Setup the 2D camera for smooth rendering
 	static void		startDrawing(Canvas *c);						// Static method that is called by the render thread
 public:
@@ -106,8 +106,8 @@ public:
 			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
 	virtual ~Canvas() {};
 
-	void cleanup();												// Called when the Canvas is done being used
-	void bindToButton(key button, action a, voidFunction f);			// Bind a method to a mouse button or key
+	void cleanup();													// Called when the Canvas is done being used
+	void bindToButton(key button, action a, voidFunction f);		// Bind a method to a mouse button or key
 	void bindToScroll(std::function<void(double, double)> f);		// Bind a method to scrolling
 	void clear();													// Clears the canvas
 
@@ -140,8 +140,6 @@ public:
 	void	setBackgroundColor(RGBfloatType color);					// Changes the background color
 
 	int		start();												// Function to start rendering our Canvas
-
-	void	toggleTextures(bool state);							// Turn textures on or off
 };
 
 #endif /* CANVAS_H_ */

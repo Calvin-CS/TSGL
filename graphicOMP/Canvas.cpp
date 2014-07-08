@@ -138,6 +138,7 @@ void Canvas::draw() {
 
 		if (toClear) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+			toggleTextures(true);
 			clearRectangle->draw();
 		}
 
@@ -162,6 +163,7 @@ void Canvas::draw() {
 		if (toClear) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 			clearRectangle->draw();
+			toggleTextures(false);
 			toClear = false;
 		}
 
@@ -193,7 +195,9 @@ void Canvas::draw() {
 		glFlush();
 		glDrawBuffer(GL_BACK_LEFT);
 		glfwSwapBuffers(window);			// Swap out GL's back buffer and actually draw to the window
-		HandleIO();							// Handle any I/O
+
+		glfwPollEvents();					// Handle any I/O
+		glfwGetCursorPos(window,&mouseX,&mouseY);
 	}
 }
 
@@ -301,6 +305,7 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBflo
 int Canvas::end() {
 	if (!started) return -1;						// If we haven't even started yet, return error code -1
 	renderThread.join();							// Blocks until ready to join, which will be when the window is closed
+	cleanup();
 	return 0;
 }
 
@@ -423,13 +428,6 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 	buttonCallback(window, key, action, mods);
 }
 
-void Canvas::HandleIO() {
-	// Check for keyboard / mouse interaction
-	glfwPollEvents();
-
-	glfwGetCursorPos(window,&mouseX,&mouseY);
-}
-
 /*
  * init initializes the Canvas with the values specified in the constructor
  * Parameters:
@@ -533,7 +531,10 @@ void Canvas::startDrawing(Canvas *c) {
 }
 
 void Canvas::toggleTextures(bool on) {
+	GLint program;
 	if (!on) {
+		program = shaderProgram;
+
 		// Relocate the shader attributes
 		GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
 		glEnableVertexAttribArray(posAttrib);
@@ -542,17 +543,9 @@ void Canvas::toggleTextures(bool on) {
 		glEnableVertexAttribArray(colAttrib);
 		glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6*sizeof(float), (void*)(2*sizeof(float)));
 
-		// Reallocate the shader program for use
-		glUseProgram(shaderProgram);
-
-		// Recompute the camera matrices
-		uniModel = glGetUniformLocation(shaderProgram, "model");
-		uniView  = glGetUniformLocation(shaderProgram, "view");
-		uniProj  = glGetUniformLocation(shaderProgram, "proj");
-
-		// Update the camera
-		SetupCamera();
 	} else {
+		program = textureShaderProgram;
+
 		// Relocate the shader attributes
 		GLint texturePosAttrib = glGetAttribLocation(textureShaderProgram, "position");
 		glEnableVertexAttribArray(texturePosAttrib);
@@ -563,16 +556,16 @@ void Canvas::toggleTextures(bool on) {
 		GLint textureTexAttrib = glGetAttribLocation(textureShaderProgram, "texcoord");
 		glEnableVertexAttribArray(textureTexAttrib);
 		glVertexAttribPointer(textureTexAttrib, 2, GL_FLOAT, GL_FALSE, 8*sizeof(float), (void*)(6*sizeof(float)));
-
-		// Reallocate the shader program for use
-		glUseProgram(textureShaderProgram);
-
-		// Recompute the camera matrices
-		uniModel = glGetUniformLocation(textureShaderProgram, "model");
-		uniView  = glGetUniformLocation(textureShaderProgram, "view");
-		uniProj  = glGetUniformLocation(textureShaderProgram, "proj");
-
-		// Update the camera
-		SetupCamera();
 	}
+
+	// Reallocate the shader program for use
+	glUseProgram(program);
+
+	// Recompute the camera matrices
+	uniModel = glGetUniformLocation(program, "model");
+	uniView  = glGetUniformLocation(program, "view");
+	uniProj  = glGetUniformLocation(program, "proj");
+
+	// Update the camera
+	SetupCamera();
 }
