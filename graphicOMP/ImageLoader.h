@@ -27,7 +27,7 @@ private:
 //	GLubyte *textureImage;
 
 public:
-	static GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture);
+	static GLuint loadTexture(const char* filename, int &width, int &height, GLuint &texture);
 };
 
 #endif /* IMAGELOADER_H_ */

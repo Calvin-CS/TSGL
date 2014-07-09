@@ -202,12 +202,6 @@ void Canvas::draw() {
 	}
 }
 
-void Canvas::loadImage(std::string fname, int &w, int &h, GLuint &tex) {
-	glfwMakeContextCurrent(window);
-	ImageLoader::loadTexture(fname,w,h,tex);
-	glfwMakeContextCurrent(NULL);
-}
-
 /*
  * drawImage draws an image with the given coordinates and dimensions
  * Parameters:

@@ -54,13 +54,10 @@ public:
 	// draw() actually draws the Image to the canvas
 	void draw() {
 		int w, h;
-		std::unordered_map<std::string,GLuint>::const_iterator got = Image::loadedTextures.find (myFile);
-		if ( got == loadedTextures.end() ) {	// Load the image if we haven't already
-			GLuint newTex;
-			ImageLoader::loadTexture(myFile,w,h,newTex);
-			loadedTextures[myFile] = newTex;
-		}
-		myTexture = loadedTextures[myFile];
+		if (Image::loadedTextures.find (myFile) == loadedTextures.end() )	// Load the image if we haven't already
+			loadedTextures[myFile] = ImageLoader::loadTexture(myFile.c_str(),w,h,myTexture);
+		else
+			myTexture = loadedTextures[myFile];
 		glBindTexture(GL_TEXTURE_2D, myTexture);
 		std::cout << myTexture << std::endl << std::flush;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
