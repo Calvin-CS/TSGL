@@ -7,6 +7,30 @@
 
 #include "ImageLoader.h"
 
+typedef struct tagBITMAPFILEHEADER
+{
+unsigned short bfType;  //specifies the file type
+unsigned long bfSize;  //specifies the size in bytes of the bitmap file
+unsigned short bfReserved1;  //reserved; must be 0
+unsigned short bfReserved2;  //reserved; must be 0
+unsigned long bOffBits;  //species the offset in bytes from the bitmapfileheader to the bitmap bits
+}BITMAPFILEHEADER;
+
+typedef struct tagBITMAPINFOHEADER
+{
+unsigned long biSize;  //specifies the number of bytes required by the struct
+long biWidth;  //specifies width in pixels
+long biHeight;  //species height in pixels
+unsigned short biPlanes; //specifies the number of color planes, must be 1
+unsigned short biBitCount; //specifies the number of bit per pixel
+unsigned long biCompression;//spcifies the type of compression
+unsigned long biSizeImage;  //size of image in bytes
+long biXPelsPerMeter;  //number of pixels per meter in x axis
+long biYPelsPerMeter;  //number of pixels per meter in y axis
+unsigned long biClrUsed;  //number of colors used by th ebitmap
+unsigned long biClrImportant;  //number of colors that are important
+}BITMAPINFOHEADER;
+
 /*
 GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, GLuint &texture) {
 	//header for testing if it is a png
@@ -132,7 +156,7 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
 	return texture;
 }
 */
-GLuint ImageLoader::loadTexture(const char* file_name, int &width, int &height, GLuint &texture) {
+GLuint ImageLoader::loadTextureFromPNG(const char* file_name, int &width, int &height, GLuint &texture) {
     png_byte header[8];
 
     FILE *fp = fopen(file_name, "rb");
@@ -269,3 +293,187 @@ GLuint ImageLoader::loadTexture(const char* file_name, int &width, int &height, 
     fclose(fp);
     return texture;
 }
+
+//GLuint ImageLoader::loadTextureFromBMP(const char* filename, int &width, int &height, GLuint &texture) {
+//	FILE *filePtr; //our file pointer
+//	BITMAPFILEHEADER bitmapFileHeader; //our bitmap file header
+//	BITMAPINFOHEADER bitmapInfoHeader; //our bitmap info header
+//	unsigned char *bitmapImage;  //store image data
+//	int imageIdx=0;  //image index counter
+//	unsigned char tempRGB;  //our swap variable
+//
+//	//open filename in read binary mode
+//	filePtr = fopen(filename,"rb");
+//	if (filePtr == NULL)
+//	return 0;
+//
+//	//read the bitmap file header
+//	fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER),1,filePtr);
+//
+//	//verify that this is a bmp file by check bitmap id
+//	if (bitmapFileHeader.bfType !=0x4D42)
+//	{
+//	fclose(filePtr);
+//	return 0;
+//	}
+//
+//	//read the bitmap info header
+//	fread(&bitmapInfoHeader, sizeof(BITMAPINFOHEADER),1,filePtr);
+//
+//	//move file point to the begging of bitmap data
+//	fseek(filePtr, bitmapFileHeader.bOffBits, SEEK_SET);
+//
+//	//allocate enough memory for the bitmap image data
+//	bitmapImage = (unsigned char*)malloc(bitmapInfoHeader.biSizeImage);
+//
+//	//verify memory allocation
+//	if (!bitmapImage)
+//	{
+//	free(bitmapImage);
+//	fclose(filePtr);
+//	return 0;
+//	}
+//
+//	//read in the bitmap image data
+//	fread(bitmapImage,bitmapInfoHeader.biSizeImage,1,filePtr);
+//
+//	//make sure bitmap image data was read
+//	if (bitmapImage == NULL)
+//	{
+//	fclose(filePtr);
+//	return 0;
+//	}
+//
+//	//swap the r and b values to get RGB (bitmap is BGR)
+//	for (imageIdx = 0; imageIdx < bitmapInfoHeader.biSizeImage;imageIdx+=3)
+//	{
+//		tempRGB = bitmapImage[imageIdx];
+//		bitmapImage[imageIdx] = bitmapImage[imageIdx + 2];
+//		bitmapImage[imageIdx + 2] = tempRGB;
+//	}
+//
+////	width = bitmapInfoHeader.biWidth / 1920 / 1080;
+////	height = bitmapInfoHeader.biHeight;
+//
+//	width = 1920;
+//	height = 1080;
+//
+//	std::cout << width << "," << height << std::endl;
+//
+//	//close file and return bitmap image data
+//	fclose(filePtr);
+//	// Create one OpenGL texture
+//	glGenTextures(1, &texture);
+//
+//	// "Bind" the newly created texture : all future texture functions will modify this texture
+//	glBindTexture(GL_TEXTURE_2D, texture);
+//
+//	// Give the image to OpenGL
+//	glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapImage);
+//
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//
+//	return texture;
+//}
+
+GLuint ImageLoader::loadTextureFromBMP(const char* file_name, int &width, int &height, GLuint &texture) {
+	// From http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/#Loading__BMP_images_yourself
+
+	// Data read from the header of the BMP file
+	unsigned char header[54]; // Each BMP file begins by a 54-bytes header
+	unsigned int dataPos;     // Position in the file where the actual data begins
+	unsigned int imageSize;   // = width*height*3
+	// Actual RGB data
+	unsigned char * data;
+
+	// Open the file
+	FILE * file = fopen(file_name,"rb");
+	if (!file)	{printf("Image could not be opened\n"); return 0;}
+
+	if ( fread(header, 1, 54, file)!=54 ){ // If not 54 bytes read : problem
+		printf("Not a correct BMP file\n");
+		return false;
+	}
+
+	if ( header[0]!='B' || header[1]!='M' ){
+	    printf("Not a correct BMP file\n");
+	    return 0;
+	}
+
+	// Read ints from the byte array
+	dataPos    = *(int*)&(header[0x0A]);
+	imageSize  = *(int*)&(header[0x22]);
+	width      = *(int*)&(header[0x12]);
+	height     = *(int*)&(header[0x16]);
+
+//	std::cout << "Image size: " << imageSize << std::endl;
+//	std::cout << "width: " << width << std::endl;
+//	std::cout << "height: " << height << std::endl;
+
+	int components = imageSize/width/height;
+
+//	std::cout << "components: " << components << std::endl;
+
+	// Some BMP files are misformatted, guess missing information
+	if (imageSize==0)    imageSize=width*height*4; // 4 : one byte for each Red, Green, Blue, and Alpha component
+	if (dataPos==0)      dataPos=54; // The BMP header is done that way
+
+	// Create a buffer
+	data = new unsigned char [imageSize];
+
+	// Read the actual data from the file into the buffer
+	fread(data,1,imageSize,file);
+
+	char tmp;
+
+	//Reverse the order of the colors
+	if (components == 4)
+		for (int i = 0; i < imageSize; i += 4) {
+			tmp = data[i];
+			data[i] = data[i+3];
+			data[i+3] = tmp;
+			tmp = data[i+1];
+			data[i+1] = data[i+2];
+			data[i+2] = tmp;
+		}
+	else if (components== 3)
+		for (int i = 0; i < imageSize; i += 3) {
+			tmp = data[i];
+			data[i] = data[i+1];
+			data[i+1] = tmp;
+		}
+
+	// Flip the image vertically
+	for (int j = 0; j < height-(height/2); j++) {
+		for (int i = 0; i < components*width; i++) {
+			int s1 = components*width*j+i;
+			int s2 = components*width*(height-j)+i;
+			tmp = data[s1];
+			data[s1] = data[s2];
+			data[s2] = tmp;
+		}
+	}
+
+	//Everything is in memory now, the file can be closed
+	fclose(file);
+
+	// Create one OpenGL texture
+	glGenTextures(1, &texture);
+
+	// "Bind" the newly created texture : all future texture functions will modify this texture
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// Give the image to OpenGL
+	if (components == 4)
+		glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	else if (components == 3)
+		glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    return texture;
+}
+
+

@@ -54,8 +54,13 @@ public:
 	// draw() actually draws the Image to the canvas
 	void draw() {
 		int w, h;
-		if (Image::loadedTextures.find (myFile) == loadedTextures.end() )	// Load the image if we haven't already
-			loadedTextures[myFile] = ImageLoader::loadTexture(myFile.c_str(),w,h,myTexture);
+		if (Image::loadedTextures.find (myFile) == loadedTextures.end() ) {	// Load the image if we haven't already
+			std::string extension = myFile.substr(myFile.find_last_of('.'),4);
+			if (extension == ".png")
+				loadedTextures[myFile] = ImageLoader::loadTextureFromPNG(myFile.c_str(),w,h,myTexture);
+			if (extension == ".bmp")
+				loadedTextures[myFile] = ImageLoader::loadTextureFromBMP(myFile.c_str(),w,h,myTexture);
+		}
 		else
 			myTexture = loadedTextures[myFile];
 		glBindTexture(GL_TEXTURE_2D, myTexture);

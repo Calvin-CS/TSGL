@@ -17,7 +17,10 @@
 #include <stdio.h>
 #include <png.h>
 #include <iostream>
+#include <fstream>
 #include <string.h>
+#include <stdexcept>
+#include <vector>
 
 #include <GL/glew.h>		// For GL drawing calls
 #include <GL/gl.h>			// For GL functions
@@ -27,7 +30,8 @@ private:
 //	GLubyte *textureImage;
 
 public:
-	static GLuint loadTexture(const char* filename, int &width, int &height, GLuint &texture);
+	static GLuint loadTextureFromBMP(const char* filename, int &width, int &height, GLuint &texture);
+	static GLuint loadTextureFromPNG(const char* filename, int &width, int &height, GLuint &texture);
 };
 
 #endif /* IMAGELOADER_H_ */
