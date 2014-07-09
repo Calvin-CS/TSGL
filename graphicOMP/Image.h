@@ -2,7 +2,7 @@
  * Image.h extends Shape and provides a class for drawing an image to a Canvas
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Patrick Crain, 7/8/2014
+ * Last Modified: Patrick Crain, 7/9/2014
  */
 
 #ifndef IMAGE_H_
@@ -24,6 +24,7 @@ public:
 	/*
 	 * Explicit constructor for the Image class
 	 * Parameters:
+	 * 		f, the filename of the image to load from
 	 * 		x, the x coordinate of the Image's left edge
 	 *		y, the y coordinate of the Image's top edge
 	 * 		w, the width of the Image
