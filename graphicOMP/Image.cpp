@@ -46,9 +46,11 @@ void Image::draw() {
 	if ( Image::loadedTextures.find (myFile) == loadedTextures.end() ) {	// Load the image if we haven't already
 		std::string extension = myFile.substr(myFile.find_last_of('.'), 4);
 		if (extension == ".png")
-			loadedTextures[myFile] = ImageLoader::loadTexture(myFile,w,h,myTexture);
+			loadedTextures[myFile] = ImageLoader::loadTextureFromPNG(myFile,w,h,myTexture);
 		else if (extension == ".jpg")
 			loadedTextures[myFile] = ImageLoader::loadTextureFromJPG(myFile,w,h,myTexture);
+		else if (extension == ".bmp")
+			loadedTextures[myFile] = ImageLoader::loadTextureFromBMP(myFile,w,h,myTexture);
 	} else {
 		myTexture = loadedTextures[myFile];
 	}

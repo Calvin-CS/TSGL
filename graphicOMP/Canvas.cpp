@@ -202,6 +202,7 @@ void Canvas::draw() {
 /*
  * drawImage draws an image with the given coordinates and dimensions
  * Parameters:
+ * 		fname, the name of the file to load the image from
  * 		x, the x coordinate of the Image's left edge
  *		y, the y coordinate of the Image's top edge
  * 		w, the width of the Image

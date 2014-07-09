@@ -1,8 +1,8 @@
 /*
- * ImageLoader.h
+ * ImageLoader.h provides an interface for loading a variety of image formats into GL textures
  *
- *  Created on: Jul 8, 2014
- *      Author: pretzel
+ * Author: Patrick Crain
+ * Last Modified: Patrick Crain, 7/9/2014
  */
 
 #ifndef IMAGELOADER_H_
@@ -17,16 +17,20 @@
 #include <stdlib.h>
 
 #include <jpeglib.h>
-#include <png.h>
-#include <string>
+#include <png.h>			// For loading PNG files
+
 #include <iostream>			// DEBUGGING
+#include <fstream>
+#include <string>
+#include <stdexcept>
 
 #include <GL/glew.h>		// For GL drawing calls
 #include <GL/gl.h>			// For GL functions
 
 namespace ImageLoader {
-	GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture);
+	GLuint loadTextureFromBMP(std::string filename, int &width, int &height, GLuint &texture);
 	GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint &texture);
+	GLuint loadTextureFromPNG(std::string filename, int &width, int &height, GLuint &texture);
 }
 
 #endif /* IMAGELOADER_H_ */
