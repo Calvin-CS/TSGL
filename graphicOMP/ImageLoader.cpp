@@ -179,7 +179,7 @@ GLuint loadTextureFromBMP(std::string file_name, int &width, int &height, GLuint
 
 	if ( header[0]!='B' || header[1]!='M' ){
 	    printf("Not a correct BMP file\n");
-	    return 0;
+	    return false;
 	}
 
 	// Read ints from the byte array
@@ -204,8 +204,8 @@ GLuint loadTextureFromBMP(std::string file_name, int &width, int &height, GLuint
 	fclose(file);
 
 	char tmp;
-	//Reverse the order of the colors
-	if (components == 4)
+	//Reverse the endian-ness of the colors
+	if (components == 4) {
 		for (unsigned int i = 0; i < imageSize; i += 4) {
 			tmp = data[i];
 			data[i] = data[i+3];
@@ -214,23 +214,27 @@ GLuint loadTextureFromBMP(std::string file_name, int &width, int &height, GLuint
 			data[i+1] = data[i+2];
 			data[i+2] = tmp;
 		}
-	else if (components== 3)
+	}
+	else if (components == 3) {
 		for (unsigned int i = 0; i < imageSize; i += 3) {
 			tmp = data[i];
 			data[i] = data[i+1];
 			data[i+1] = tmp;
 		}
+	}
 
-	// Flip the image vertically
+	// Flip the image vertically, since BMPs are loaded bottom to top
 	for (int j = 0; j < height-(height/2); j++) {
 		for (int i = 0; i < components*width; i++) {
 			int s1 = components*width*j+i;
-			int s2 = components*width*(height-j)+i;
+			int s2 = components*width*(height-1-j)+i;	// This needs to be height *MINUS ONE* minus j
 			tmp = data[s1];
 			data[s1] = data[s2];
 			data[s2] = tmp;
 		}
 	}
+
+	std::cout << "BMP: " << height << std::endl;
 
 	// Create one OpenGL texture
 	glGenTextures(1, &texture);
@@ -256,7 +260,9 @@ struct my_error_mgr {
 
 	jmp_buf setjmp_buffer;	/* for return to caller */
 };
+
 typedef struct my_error_mgr * my_error_ptr;
+
 METHODDEF(void)
 my_error_exit (j_common_ptr cinfo)
 {
@@ -347,13 +353,13 @@ GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint 
 	 * In this example, we need to make an output work buffer of the right size.
 	 */
 	/* JSAMPLEs per row in output buffer */
-	row_stride = cinfo.output_width * cinfo.output_components;
+
+	int extraBytes = cinfo.image_width % 4;  //JPEGS are *APPARENTLY* padded to multiples of 4 bytes...
+	row_stride = cinfo.output_width * cinfo.output_components + extraBytes;
 	/* Make a one-row-high sample array that will go away when done with image */
-	buffer = (*cinfo.mem->alloc_sarray)
-				((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
+	buffer = (*cinfo.mem->alloc_sarray) ((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
 
 
-	std::cout << "cinfo" << cinfo.output_components << std::endl;
 	/* Step 6: while (scan lines remain to be read) */
 	/*           jpeg_read_scanlines(...); */
 
@@ -362,7 +368,7 @@ GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint 
 	 */
 	unsigned int x = 0;
 	unsigned char *raw_image = NULL;
-	raw_image = (unsigned char*)malloc( cinfo.output_width*cinfo.output_height/**cinfo.num_components */);
+	raw_image = (unsigned char*)malloc( row_stride*cinfo.output_height );
 	while (cinfo.output_scanline < cinfo.output_height) {
 		/* jpeg_read_scanlines expects an array of pointers to scanlines.
 		 * Here the array is only one element long, but you could ask for
@@ -370,7 +376,7 @@ GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint 
 		 */
 		(void) jpeg_read_scanlines(&cinfo, buffer, 1);
 		/* Assume put_scanline_someplace wants a pointer and sample count. */
-		for (unsigned int i = 0; i < cinfo.output_width; i++, x++) {
+		for (unsigned int i = 0; i < row_stride; i++, x++) {
 			raw_image[x] = buffer[0][i];
 		}
 	}
@@ -385,7 +391,10 @@ GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint 
 	//Now generate the OpenGL texture object
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D,0, GL_RGB, cinfo.output_width/cinfo.num_components, cinfo.output_height, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) raw_image);
+	if (cinfo.num_components == 3)
+		glTexImage2D(GL_TEXTURE_2D,0, GL_RGB, cinfo.output_width, cinfo.output_height, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) raw_image);
+	else if (cinfo.num_components == 4)
+		glTexImage2D(GL_TEXTURE_2D,0, GL_RGBA, cinfo.output_width, cinfo.output_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid*) raw_image);
 	glBindTexture(GL_TEXTURE_2D,0);
 
 	/* Step 8: Release JPEG decompression object */

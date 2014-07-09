@@ -23,7 +23,7 @@ private:
 	std::string myFile;
 	static textureMap loadedTextures;
 public:
-	Image(std::string f, int x, int y, int w, int h);
+	Image(std::string f, int x, int y, int w, int h, float a);
 
 	// draw() actually draws the Image to the canvas
 	void draw();

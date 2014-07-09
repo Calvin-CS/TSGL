@@ -208,9 +208,9 @@ void Canvas::draw() {
  * 		w, the width of the Image
  *		h, the height of the Image
  */
-void Canvas::drawImage(std::string fname, int x, int y, int w, int h) {
+void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
-	Image* im = new Image(fname,x,y,w,h);						// Creates the Image with the specified coordinates
+	Image* im = new Image(fname,x,y,w,h,a);						// Creates the Image with the specified coordinates
 	mutexLock mlock(buffer);
 	myBuffer->push(im);											// Push it onto our drawing buffer
 	mlock.unlock();

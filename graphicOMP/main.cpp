@@ -875,13 +875,12 @@ void forestFireFunction(CartesianCanvas& can) {
 void imageFunction(Canvas& can) {
 	can.drawImage("data/test.png",0,0,400,300);
 	can.drawImage("data/ship.bmp",400,0,400,300);
-	can.drawImage("data/mini.jpg",400,300,400,300);
+	can.drawImage("data/mini.jpg",800,300,400,300);
 	can.drawImage("data/sky_main.jpg",0,300,400,300);
+	can.drawImage("data/shiprgb.bmp",800,000,400,300);
+	can.drawImage("data/Captain-falcon.png",400,300,400,300);
 
-//	can.drawImage("data/bestpicture.png",400,0,400,300);
-//	can.drawImage("data/ship.bmp",0,300,400,300);
-//	can.drawImage("data/shiprgb.bmp",400,300,400,300);
-//	can.drawImage("data/Captain-falcon.png",0,0,800,600);
+	can.drawImage("data/bestpicture.png",200,0,800,600,0.25f);	//ALPHA
 }
 
 void highData(Canvas& can) {
@@ -979,7 +978,7 @@ int main() {
 //			test(c20,shadedVoronoiFunction,false,WHITE);
 //			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
 //			test(c21,forestFireFunction,false);
-			Canvas c22(100);
+			Canvas c22(0,0,1200,600,100);
 			test(c22,imageFunction,false);
 //			Canvas c23(500000);
 //			test(c23,highData,true);
