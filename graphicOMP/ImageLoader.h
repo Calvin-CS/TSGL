@@ -12,6 +12,11 @@
 #include <GL/glut.h>
 #endif
 
+#include <stdio.h>
+#include <stddef.h>
+#include <stdlib.h>
+
+#include <jpeglib.h>
 #include <png.h>
 #include <string>
 #include <iostream>			// DEBUGGING
@@ -21,6 +26,7 @@
 
 namespace ImageLoader {
 	GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture);
+	GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint &texture);
 }
 
 #endif /* IMAGELOADER_H_ */

@@ -876,7 +876,7 @@ void imageFunction(Canvas& can) {
 	can.drawImage("data/test.png",0,0,400,300);
 	can.drawImage("data/test.png",800,300,-400,-300);
 	can.drawImage("data/test.png",400,300,400,300);
-	can.drawImage("data/test.png",400,600,-400,-300);
+	can.drawImage("data/sky_main.png",400,600,-400,-300);
 }
 
 void highData(Canvas& can) {
@@ -976,8 +976,8 @@ int main() {
 //			test(c21,forestFireFunction,false);
 			Canvas c22(100);
 			test(c22,imageFunction,false);
-			Canvas c23(500000);
-			test(c23,highData,true);
+//			Canvas c23(500000);
+//			test(c23,highData,true);
 //		}
 //	}
 	glfwTerminate();	// Release GLFW

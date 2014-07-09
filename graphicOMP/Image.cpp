@@ -43,10 +43,15 @@ Image::Image(std::string f, int x, int y, int w, int h) {
 void Image::draw() {
 	int w, h;
 	GLuint myTexture;
-	if ( Image::loadedTextures.find (myFile) == loadedTextures.end() )	// Load the image if we haven't already
-		loadedTextures[myFile] = ImageLoader::loadTexture(myFile,w,h,myTexture);
-	else
+	if ( Image::loadedTextures.find (myFile) == loadedTextures.end() ) {	// Load the image if we haven't already
+		std::string extension = myFile.substr(myFile.find_last_of('.'), 4);
+		if (extension == ".png")
+			loadedTextures[myFile] = ImageLoader::loadTexture(myFile,w,h,myTexture);
+		else if (extension == ".jpg")
+			loadedTextures[myFile] = ImageLoader::loadTextureFromJPG(myFile,w,h,myTexture);
+	} else {
 		myTexture = loadedTextures[myFile];
+	}
 
 	glBindTexture(GL_TEXTURE_2D, myTexture);
 	std::cout << myTexture << std::endl << std::flush;

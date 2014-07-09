@@ -131,4 +131,53 @@ GLuint loadTexture(std::string filename, int &width, int &height, GLuint &textur
 
 	return texture;
 }
+
+GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint &texture) {
+	struct jpeg_decompress_struct cinfo;
+	struct jpeg_error_mgr jerr;
+	unsigned char *raw_image = NULL;
+
+	JSAMPROW row_pointer[1];
+
+	FILE *infile = fopen(filename.c_str(), "rb" );
+	if ( !infile ) return false;
+
+	unsigned long location = 0;
+
+	cinfo.err = jpeg_std_error( &jerr );
+
+	jpeg_create_decompress( &cinfo );
+
+	jpeg_stdio_src( &cinfo, infile );
+
+	jpeg_read_header( &cinfo, TRUE );
+
+
+	jpeg_start_decompress( &cinfo );
+	printf("components = %d\n", cinfo.num_components);
+
+	raw_image = (unsigned char*)malloc( cinfo.output_width*cinfo.output_height*cinfo.num_components );
+
+	row_pointer[0] = (unsigned char *)malloc( cinfo.output_width*cinfo.num_components );
+
+	while( cinfo.output_scanline < cinfo.image_height ) {
+		jpeg_read_scanlines( &cinfo, row_pointer, 1 );
+
+		for(unsigned int i=0; i<cinfo.image_width*cinfo.num_components; i++)
+			raw_image[location++] = row_pointer[0][i];
+	}
+
+	jpeg_finish_decompress( &cinfo );
+	jpeg_destroy_decompress( &cinfo );
+	free( row_pointer[0] );
+	fclose( infile );
+
+	//Now generate the OpenGL texture object
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D,0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) raw_image);
+	glBindTexture(GL_TEXTURE_2D,0);
+
+return 1;
+}
 }

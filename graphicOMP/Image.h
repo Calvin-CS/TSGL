@@ -10,6 +10,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "Shape.h"							// For extending our Shape object
 #include "ImageLoader.h"					// For loading images
