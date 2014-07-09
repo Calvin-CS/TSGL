@@ -12,7 +12,6 @@
 #include <iostream>
 #include <complex>
 #include <queue>
-#include <string.h>
 
 // Some constants that get used a lot
 const int 	NUM_COLORS = 256,
@@ -880,14 +879,21 @@ void imageFunction(Canvas& can) {
 	can.drawImage("data/test.png",400,600,-400,-300);
 }
 
-//void textFunction(Canvas& can) {
-//	const RGBfloatType BLACK = {0,0,0,1};
-//	can.drawText("A long time ago, in a galaxy far, far away",100,100,BLACK);
-//	can.drawText("Something extraordinary happened -- far more extraordinary than anything mankind has ever seen.",100,200,BLACK);
-//	can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",100,300,BLACK);
-//	can.drawText("Of *what* exactly that extraordinary event was.",100,400,BLACK);
-//	can.drawText("And to that I say...oh well.",100,500,BLACK);
-//}
+void highData(Canvas& can) {
+	Timer t(FRAME);
+	can.setOnlyPoints(true);
+	unsigned int reps;
+	while(can.getIsOpen()) {
+		reps = t.getReps();
+		for (int i = 0; i < can.getWindowWidth(); i++) {
+			for (int j = 0; j < can.getWindowHeight(); j++) {
+				can.drawPoint(i, j, {1, 1, (reps % 255) / 255.0f, 1});
+			}
+		}
+//		std::cout << t.getTime() << std::endl;
+		t.sleep();
+	}
+}
 
 void test(Canvas& c, void(*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
 	c.setBackgroundColor(bg);
@@ -914,7 +920,8 @@ void test(Cart& c, void(*f)(Cart&), bool printFPS = false, RGBfloatType bg = GRE
 	c.end();
 }
 
-const int WINDOW_W = 800, WINDOW_H = 600;
+const int WINDOW_W = 800,
+		  WINDOW_H = 600;
 
 int main() {
 	glfwInit();	// Initialize GLFW
@@ -969,7 +976,8 @@ int main() {
 //			test(c21,forestFireFunction,false);
 			Canvas c22(100);
 			test(c22,imageFunction,false);
-//			test(new Canvas(1000),textFunction,true);
+			Canvas c23(500000);
+			test(c23,highData,true);
 //		}
 //	}
 	glfwTerminate();	// Release GLFW

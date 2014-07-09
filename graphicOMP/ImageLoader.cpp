@@ -7,14 +7,15 @@
 
 #include "ImageLoader.h"
 
-GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, GLuint &texture) {
+namespace ImageLoader {
+GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture) {
 	//header for testing if it is a png
 	png_byte header[8];
 
 	//open file as binary
 	FILE *fp = fopen(filename.c_str(), "rb");
 	if (!fp) {
-	 return false;
+		return false;
 	}
 
 	//read the header
@@ -23,39 +24,39 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
 	//test if png
 	int is_png = !png_sig_cmp(header, 0, 8);
 	if (!is_png) {
-	 fclose(fp);
-	 return false;
+		fclose(fp);
+		return false;
 	}
 
 	//create png struct
 	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,
-	   NULL, NULL);
+			NULL, NULL);
 	if (!png_ptr) {
-	 fclose(fp);
-	 return (false);
+		fclose(fp);
+		return (false);
 	}
 
 	//create png info struct
 	png_infop info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
-	 png_destroy_read_struct(&png_ptr, (png_infopp) NULL, (png_infopp) NULL);
-	 fclose(fp);
-	 return (false);
+		png_destroy_read_struct(&png_ptr, (png_infopp) NULL, (png_infopp) NULL);
+		fclose(fp);
+		return (false);
 	}
 
 	//create png info struct
 	png_infop end_info = png_create_info_struct(png_ptr);
 	if (!end_info) {
-	 png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp) NULL);
-	 fclose(fp);
-	 return (false);
+		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp) NULL);
+		fclose(fp);
+		return (false);
 	}
 
 	//png error stuff, not sure libpng man suggests this.
 	if (setjmp(png_jmpbuf(png_ptr))) {
-	 png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-	 fclose(fp);
-	 return (false);
+		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+		fclose(fp);
+		return (false);
 	}
 
 	//init png reading
@@ -73,7 +74,7 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
 
 	// get info about png
 	png_get_IHDR(png_ptr, info_ptr, &twidth, &theight, &bit_depth, &color_type,
-	   NULL, NULL, NULL);
+			NULL, NULL, NULL);
 
 	//update width and height based on png info
 	width = twidth;
@@ -88,25 +89,25 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
 	// Allocate the image_data as a big block, to be given to opengl
 	png_byte* image_data = new png_byte[rowbytes * height];
 	if (!image_data) {
-	 //clean up memory and close stuff
-	 png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-	 fclose(fp);
-	 return false;
+		//clean up memory and close stuff
+		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+		fclose(fp);
+		return false;
 	}
 
 	//row_pointers is for pointing to image_data for reading the png with libpng
 	png_bytep *row_pointers = new png_bytep[height];
 	if (!row_pointers) {
-	 //clean up memory and close stuff
-	 png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-	 delete[] image_data;
-	 fclose(fp);
-	 return false;
+		//clean up memory and close stuff
+		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+		delete[] image_data;
+		fclose(fp);
+		return false;
 	}
 
 	// set the individual row_pointers to point at the correct offsets of image_data
 	for (int i = 0; i < height; ++i)
-	 row_pointers[height - 1 - i] = image_data + i * rowbytes;
+		row_pointers[height - 1 - i] = image_data + i * rowbytes;
 
 	//read the png into image_data through row_pointers
 	png_read_image(png_ptr, row_pointers);
@@ -129,4 +130,5 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
 		std::cerr << "loading texture failed" << std::endl << std::flush;
 
 	return texture;
+}
 }

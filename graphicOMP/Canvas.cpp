@@ -131,23 +131,20 @@ void Canvas::draw() {
 	//Reset the window
 	glfwSetWindowShouldClose(window, GL_FALSE);
 
-
-
 	//Start the drawing loop
 	for(framecounter = 0; !glfwWindowShouldClose(window); framecounter++)
 	{
 		timer->sleep();
-		glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
+		glfwMakeContextCurrent(window);							// We're drawing to window as soon as it's created
 		if (toClear) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-//			toggleTextures(true);
 			clearRectangle->draw();
 
 			glDrawBuffer(GL_LEFT);								// See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 			clearRectangle->draw();
-//			toggleTextures(false);
+
 			toClear = false;
 		} else glDrawBuffer(GL_LEFT);
 
@@ -183,7 +180,7 @@ void Canvas::draw() {
 			glDrawArrays(GL_POINTS, 0, size);
 		} else for (unsigned int i = 0; i < size; i++){
 			if (!myShapes->operator[](i)->getIsTextured())
-				myShapes->operator[](i)->draw(); // Iterate through our queue until we've made it to the end
+				myShapes->operator[](i)->draw(); 		// Iterate through our queue until we've made it to the end
 			else {
 				toggleTextures(true);
 				myShapes->operator[](i)->draw();
@@ -191,21 +188,15 @@ void Canvas::draw() {
 			}
 		}
 
-		myShapes->clear();					// Clear our buffer of shapes to be drawn
+		myShapes->clear();								// Clear our buffer of shapes to be drawn
 		glFlush();
 		glDrawBuffer(GL_BACK_LEFT);
-		glfwSwapBuffers(window);			// Swap out GL's back buffer and actually draw to the window
+		glfwSwapBuffers(window);						// Swap out GL's back buffer and actually draw to the window
 
-		glfwPollEvents();					// Handle any I/O
+		glfwPollEvents();								// Handle any I/O
 		glfwGetCursorPos(window,&mouseX,&mouseY);
-		glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
+		glfwMakeContextCurrent(NULL);					// We're drawing to window as soon as it's created
 	}
-}
-
-void Canvas::loadImage(std::string fname, int &w, int &h, GLuint &tex) {
-	glfwMakeContextCurrent(window);
-	ImageLoader::loadTexture(fname,w,h,tex);
-	glfwMakeContextCurrent(NULL);
 }
 
 /*
@@ -218,9 +209,9 @@ void Canvas::loadImage(std::string fname, int &w, int &h, GLuint &tex) {
  */
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h) {
 //	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
-	Image* im = new Image(fname,x,y,w,h);		// Creates the Image with the specified coordinates
+	Image* im = new Image(fname,x,y,w,h);						// Creates the Image with the specified coordinates
 	mutexLock mlock(buffer);
-	myBuffer->push(im);							// Push it onto our drawing buffer
+	myBuffer->push(im);											// Push it onto our drawing buffer
 	mlock.unlock();
 //	glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
 }
@@ -366,8 +357,8 @@ void Canvas::glInit() {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);				// Set blending mode to standard alpha blending
 
 	//Needed?
-    glEnable(GL_TEXTURE_2D);
-    glShadeModel(GL_FLAT);
+//    glEnable(GL_TEXTURE_2D);
+//    glShadeModel(GL_FLAT);
 
 	// Enable Experimental GLEW to Render Properly
 	glewExperimental = GL_TRUE;

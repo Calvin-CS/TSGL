@@ -23,7 +23,6 @@
 #include "ShinyPolygon.h"	// Our own class for drawing polygons with colored vertices.
 #include "Triangle.h"		// Our own class for drawing triangles.
 #include "Image.h"			// Our own class for drawing images / textured quads
-#include "ImageLoader.h"	// Loader for PNG images
 
 #include <chrono>			// For timing drawing and FPS
 #include <functional>		// For callback upon key presses
@@ -36,7 +35,7 @@
 // GL libraries
 #include <GL/gl.h>			// For GL functions
 #include <GL/glew.h>		// For GL drawing calls (used only by shape)
-#include <GLFW/glfw3.h>	// For window creation and management
+#include <GLFW/glfw3.h> 	// For window creation and management
 
 #define FPS 60				// Frames per second
 #define FRAME 1.0f/FPS		// Number of seconds between frames
@@ -135,8 +134,6 @@ public:
 	int		getWindowHeight() 	{ return winHeight; }				// Accessor for the window height
 	int		getWindowX() 		{ return monitorX; }				// Accessor for the window width
 	int		getWindowY() 		{ return monitorY; }				// Accessor for the window height
-
-	void	loadImage(std::string fname, int &w, int &h, GLuint &t);
 
 	void	setOnlyPoints(bool b) { allPoints = b; }				// Whether we're only drawing points
 	void	setShowFPS(bool b) 	{ showFPS = b; }					// Mutator to show debugging FPS
