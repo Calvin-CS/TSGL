@@ -875,8 +875,8 @@ void forestFireFunction(CartesianCanvas& can) {
 void imageFunction(Canvas& can) {
 	can.drawImage("data/test.png",0,0,400,300);
 	can.drawImage("data/test.png",800,300,-400,-300);
-	can.drawImage("data/test.png",400,300,400,300);
-	can.drawImage("data/sky_main.png",400,600,-400,-300);
+	can.drawImage("data/mini.jpg",400,300,400,300);
+	can.drawImage("data/sky_main.jpg",0,300,400,300);
 }
 
 void highData(Canvas& can) {
