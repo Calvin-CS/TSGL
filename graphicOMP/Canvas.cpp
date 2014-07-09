@@ -217,12 +217,12 @@ void Canvas::loadImage(std::string fname, int &w, int &h, GLuint &tex) {
  *		h, the height of the Image
  */
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h) {
-	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
+//	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
 	Image* im = new Image(fname,x,y,w,h);		// Creates the Image with the specified coordinates
 	mutexLock mlock(buffer);
 	myBuffer->push(im);							// Push it onto our drawing buffer
 	mlock.unlock();
-	glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
+//	glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
 }
 
 /*
@@ -350,6 +350,10 @@ void Canvas::glInit() {
 	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);							// Don't show the window at first
 	window = glfwCreateWindow(winWidth, winHeight,
 							title_.c_str(), nullptr, nullptr);		// Windowed
+
+	const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
+	glfwSetWindowPos(window,(monInfo->width-winWidth)/2,(monInfo->height-winHeight)/2);
+
 	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
 	glfwShowWindow(window);										// Show the window
 	glfwSetWindowUserPointer(window, this);

@@ -115,6 +115,7 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexImage2D(GL_TEXTURE_2D,0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) image_data);
+	glBindTexture(GL_TEXTURE_2D,0);
 
 	//clean up memory and close stuff
 	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);

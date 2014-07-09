@@ -874,10 +874,10 @@ void forestFireFunction(CartesianCanvas& can) {
 //}
 
 void imageFunction(Canvas& can) {
-	int w = 800,h = 600;
-//	GLuint tex;
-//	can.loadImage("data/test.png",w,h,tex);
-	can.drawImage("data/test.png",0,0,w,h);
+	can.drawImage("data/test.png",0,0,400,300);
+	can.drawImage("data/test.png",800,300,-400,-300);
+	can.drawImage("data/test.png",400,300,400,300);
+	can.drawImage("data/test.png",400,600,-400,-300);
 }
 
 //void textFunction(Canvas& can) {
