@@ -28,6 +28,9 @@ static void print(const double d) {
 static float randfloat(int divisor = 10000) {
 	return (rand() % divisor) / (float)divisor;
 }
+static float randint(int max = 10000) {
+	return rand() % max;
+}
 
 void graydientFunction(Canvas& can) {
 	int x = 0;
@@ -899,6 +902,80 @@ void textFunction(Canvas& can) {
 	can.drawText("And to that I say...oh well.",16,550,BLACK);
 }
 
+void pongFunction(Canvas& can) {
+	const int	WINDOW_W = can.getWindowWidth(),WINDOW_H = can.getWindowHeight();
+	float leftY, rightY, ballX ,ballY;
+	float xx, yy, speed, dir;
+	int leftdir = 0, rightdir = 0, leftPoints = 0, rightPoints = 0;
+	srand (time(NULL));
+	// Set initial positions
+	leftY = rightY = WINDOW_H/2-32;
+	speed = 8;
+	ballX = WINDOW_W/2-8;
+	ballY = WINDOW_H/2-8;
+	// Start the ball off in a random direction
+	do {
+		dir = randfloat(1000)*2*3.14159f;
+		xx = speed*cos(dir);
+		yy = speed*sin(dir);
+	} while (xx > -4 && xx < 4);
+	Timer t(FRAME);
+	// Set up button bindings
+	can.bindToButton(PG_UP, PG_PRESS, 		[&rightdir]()	{ 						rightdir = -1; });
+	can.bindToButton(PG_DOWN, PG_PRESS, 	[&rightdir]()	{ 						rightdir = 1;  });
+	can.bindToButton(PG_UP, PG_RELEASE, 	[&rightdir]()	{ if (rightdir == -1) 	rightdir = 0;  });
+	can.bindToButton(PG_DOWN, PG_RELEASE, 	[&rightdir]()	{ if (rightdir == 1) 	rightdir = 0;  });
+	can.bindToButton(PG_W, PG_PRESS, 		[&leftdir] ()	{ 						leftdir = -1;  });
+	can.bindToButton(PG_S, PG_PRESS, 		[&leftdir] ()	{ 						leftdir = 1;   });
+	can.bindToButton(PG_W, PG_RELEASE, 		[&leftdir] ()	{ if (leftdir == -1) 	leftdir = 0;   });
+	can.bindToButton(PG_S, PG_RELEASE, 		[&leftdir] ()	{ if (leftdir == 1) 	leftdir = 0;   });
+	// Check to see if the window has been closed
+	while(can.getIsOpen()) {
+		t.sleep();
+		// Move the ball
+		ballX += xx;
+		ballY += yy;
+		// Handle ball boundary collisions
+		if (ballX > WINDOW_W+8)  {
+			leftPoints++;
+			ballX = WINDOW_W/2-8;
+			ballY = WINDOW_H/2-8;
+			do {
+				dir = randfloat(1000)*2*3.14159f;
+				xx = speed*cos(dir);
+				yy = speed*sin(dir);
+			} while (xx > -4 && xx < 4);
+		} else if (ballX < -8)  {
+			rightPoints++;
+			ballX = WINDOW_W/2-8;
+			ballY = WINDOW_H/2-8;
+			do {
+				dir = randfloat(1000)*2*3.14159f;
+				xx = speed*cos(dir);
+				yy = speed*sin(dir);
+			} while (xx > -4 && xx < 4);
+		} else if (ballY > WINDOW_H-8 || ballY < 8)
+			yy = -yy;
+		// Handle ball paddle collisions
+		if (ballX < 32 && ballX > 0 && ballY > leftY-8 && ballY < leftY+72) {
+			xx = -xx; yy += randfloat(1000)*2-1;
+		} else if (ballX > WINDOW_W-32 && ballX < WINDOW_W && ballY > rightY-8 && ballY < rightY+72) {
+			xx = -xx; yy += randfloat(1000)*2-1;
+		}
+		// Move the paddles if necessary
+		rightY += 4*rightdir;
+		leftY += 4*leftdir;
+		can.clear();
+		// Draw paddles and balls
+		can.drawRectangle(8,leftY,24,64,{0,0,1.0f,1.0f});
+		can.drawRectangle(WINDOW_W-24-8,rightY,24,64,{1.0f,0,0,1.0f});
+		can.drawRectangle(ballX-8,ballY-8,16,16,WHITE);
+		// Draw Scores
+		for (int i = 0; i < leftPoints;  can.drawRectangle(WINDOW_W/2-64-4*i++,16,2,8,{0,0,1.0f,1.0f}));
+		for (int i = 0; i < rightPoints; can.drawRectangle(WINDOW_W/2+64+4*i++,16,2,8,{1.0f,0,0,1.0f}));
+	}
+}
+
 void test(Canvas& c, void(*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
 	c.setBackgroundColor(bg);
 	c.start();
@@ -976,14 +1053,16 @@ int main() {
 //			test(c19,voronoiFunction,true,WHITE);
 //			Cart c20(0, 0, 900, 900, 0, 0, 900, 900, 2000000);
 //			test(c20,shadedVoronoiFunction,false,WHITE);
-			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
-			test(c21,forestFireFunction,false);
-			Canvas c22(0,0,1200,600,100);
-			test(c22,imageFunction,false);
-			Canvas c23(500000);
-			test(c23,highData,true);
-			Canvas c24(10);
-			test(c24,textFunction,true);
+//			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
+//			test(c21,forestFireFunction,false);
+//			Canvas c22(0,0,1200,600,100);
+//			test(c22,imageFunction,false);
+//			Canvas c23(500000);
+//			test(c23,highData,true);
+//			Canvas c24(10);
+//			test(c24,textFunction,true);
+			Canvas c25(0,0,1600,600,1000);
+			test(c25,pongFunction,false, BLACK);
 //		}
 //	}
 	glfwTerminate();	// Release GLFW
