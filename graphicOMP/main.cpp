@@ -863,15 +863,6 @@ void forestFireFunction(CartesianCanvas& can) {
 	delete flammability;
 }
 
-//void textFunction(Canvas& can) {
-//	const RGBfloatType BLACK = {0,0,0,1};
-//	can.drawText("A long time ago, in a galaxy far, far away",100,100,BLACK);
-//	can.drawText("Something extraordinary happened -- far more extraordinary than anything mankind has ever seen.",100,200,BLACK);
-//	can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",100,300,BLACK);
-//	can.drawText("Of *what* exactly that extraordinary event was.",100,400,BLACK);
-//	can.drawText("And to that I say...oh well.",100,500,BLACK);
-//}
-
 void imageFunction(Canvas& can) {
 	can.drawImage("data/test.png",0,0,400,300);
 	can.drawImage("data/ship.bmp",400,0,400,300);
@@ -897,6 +888,15 @@ void highData(Canvas& can) {
 //		std::cout << t.getTime() << std::endl;
 		t.sleep();
 	}
+}
+
+void textFunction(Canvas& can) {
+	can.drawText("A long time ago, in a galaxy far, far away.",16,50,BLACK);
+	can.drawText("Something extraordinary happened.",16,150,BLACK);
+	can.drawText("Something far more extraordinary than anything mankind has ever seen.",16,250,BLACK);
+	can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",16,350,BLACK);
+	can.drawText("Of *what* exactly that extraordinary event was.",16,450,BLACK);
+	can.drawText("And to that I say...oh well.",16,550,BLACK);
 }
 
 void test(Canvas& c, void(*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
@@ -976,12 +976,14 @@ int main() {
 //			test(c19,voronoiFunction,true,WHITE);
 //			Cart c20(0, 0, 900, 900, 0, 0, 900, 900, 2000000);
 //			test(c20,shadedVoronoiFunction,false,WHITE);
-//			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
-//			test(c21,forestFireFunction,false);
+			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
+			test(c21,forestFireFunction,false);
 			Canvas c22(0,0,1200,600,100);
 			test(c22,imageFunction,false);
-//			Canvas c23(500000);
-//			test(c23,highData,true);
+			Canvas c23(500000);
+			test(c23,highData,true);
+			Canvas c24(10);
+			test(c24,textFunction,true);
 //		}
 //	}
 	glfwTerminate();	// Release GLFW

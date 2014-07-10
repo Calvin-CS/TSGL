@@ -281,20 +281,12 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
 	mlock.unlock();
 }
 
-/*
- * drawTextColor prints text at the given coordinates with the given color
- * Parameters:
- * 		s, the string to print
- * 		x, the x coordinate of the text's left edge
- * 		y, the y coordinate of the text's top edge
- * 		color, the RGB color (optional)
- */
-//void Canvas::drawText(const char * s, int x, int y, RGBfloatType color) {
-//	Text* t = new Text(s,x,y,color);				// Creates the Text with the specified string and coordinates
-//	mutexLock mlock(buffer);
-//	myBuffer->push(t);								// Push it onto our drawing buffer
-//	mlock.unlock();
-//}
+void Canvas::drawText(std::string s, int x, int y, RGBfloatType color) {
+	Text* t = new Text(s,x,y,color);			// Creates the Point with the specified coordinates and color
+	mutexLock mlock(buffer);
+	myBuffer->push(t);								// Push it onto our drawing buffer
+	mlock.unlock();
+}
 
 /*
  * drawTriangle draws a Triangle with the given vertices
@@ -455,7 +447,7 @@ void Canvas::glInit() {
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	});
 
-	glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
+	glfwMakeContextCurrent(NULL);								// Reset the context
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

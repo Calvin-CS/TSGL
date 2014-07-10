@@ -23,6 +23,7 @@
 #include "ShinyPolygon.h"	// Our own class for drawing polygons with colored vertices.
 #include "Triangle.h"		// Our own class for drawing triangles.
 #include "Image.h"			// Our own class for drawing images / textured quads
+#include "Text.h"			// Our own class for drawing text
 
 #include <chrono>			// For timing drawing and FPS
 #include <functional>		// For callback upon key presses
@@ -111,11 +112,13 @@ public:
 	void clear();													// Clears the canvas
 
 	virtual void drawImage(std::string fname, int x, int y,
-			int w, int h, float a = 1.0f);								// Draws an image at the given coordinates with the given dimensions
+			int w, int h, float a = 1.0f);							// Draws an image at the given coordinates with the given dimensions
 	virtual void drawLine(int x1, int y1, int x2, int y2,
 			RGBfloatType color = BLACK);							// Draws a line at the given coordinates with the given color
 	virtual void drawPoint(int x, int y,
 			RGBfloatType color = BLACK);							// Draws a point at the given coordinates with the given color
+	virtual void drawText(std::string s, int x, int y,
+				RGBfloatType color = BLACK);						// Draws a string of text at the given coordinates with the given color
 	virtual void drawRectangle(int x, int y, int w, int h,
 			RGBfloatType color = BLACK);							// Draws a rectangle at the given coordinates with the given dimensions and color
 	virtual void drawShinyPolygon(int size, int x[], int y[],
