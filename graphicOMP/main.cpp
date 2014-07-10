@@ -563,10 +563,40 @@ void alphaLangtonFunction(CartesianCanvas& can) {
 void gradientMandelbrotFunction(CartesianCanvas& can) {
 	const unsigned int THREADS = 32;
 	const unsigned int DEPTH = 32;
+	Timer t(FRAME / 2);
+	Decimal firstX, firstY, secondX, secondY;
+	bool toRender = true;
+	can.bindToButton(PG_SPACE, PG_PRESS, [&can, &toRender](){
+		can.clear();
+		toRender = true;
+	});
+	can.bindToButton(PG_MOUSE_LEFT, PG_PRESS, [&can, &firstX, &firstY]() {
+		can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), firstX, firstY);
+	});
+	can.bindToButton(PG_MOUSE_LEFT, PG_RELEASE, [&can, &firstX, &firstY, &secondX, &secondY, &toRender]() {
+		can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), secondX, secondY);
+		can.zoom(firstX, firstY, secondX, secondY);
+		toRender = true;
+	});
+	can.bindToButton(PG_MOUSE_RIGHT, PG_PRESS, [&can, &toRender]() {
+		Decimal x, y;
+		can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
+		can.zoom(x, y, 1.5);
+		toRender = true;
+	});
+	can.bindToScroll([&can, &toRender](double dx, double dy) {
+		Decimal x, y;
+		can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
+		Decimal scale;
+		if (dy == 1) scale = .5;
+		else scale = 1.5;
+		can.zoom(x, y, scale);
+		toRender = true;
+	});
 	can.setOnlyPoints(true);
-	bool zoomed;
-	while(zoomed) {
-		zoomed = false;
+
+	while(toRender) {
+		toRender = false;
 		double blockstart = can.getCartHeight() / THREADS;
 		#pragma omp parallel num_threads(THREADS)
 		{
@@ -593,14 +623,14 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
 					smooth /= (DEPTH + i+1);
 					RGBfloatType color = HSVToRGBfloat((float)smooth*6.0f, 1.0, 1.0, 1.0);
 					can.drawPoint(col, row, color);
-					if (zoomed)
+					if (toRender)
 						break;
 				}
-				if (zoomed)
+				if (toRender)
 					break;
 			}
 		}
-		while(can.getIsOpen() && !zoomed);
+		while(can.getIsOpen() && !toRender) t.sleep();
 	}
 }
 void novaFunction(CartesianCanvas& can) {
@@ -1045,8 +1075,8 @@ int main() {
 //			test(c15,alphaRectangleFunction,false,BLACK);
 //			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
 //			test(c16,alphaLangtonFunction,true,BLACK);
-//			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-//			test(c17,gradientMandelbrotFunction,true);
+			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+			test(c17,gradientMandelbrotFunction,true);
 //			Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000);
 //			test(c18,novaFunction,true);
 //			Cart c19(0, 0, 900, 900, 0, 0, 900, 900, 810000);
@@ -1061,8 +1091,8 @@ int main() {
 //			test(c23,highData,true);
 //			Canvas c24(10);
 //			test(c24,textFunction,true);
-			Canvas c25(0,0,1600,600,1000);
-			test(c25,pongFunction,false, BLACK);
+//			Canvas c25(0,0,1600,600,1000);
+//			test(c25,pongFunction,false, BLACK);
 //		}
 //	}
 	glfwTerminate();	// Release GLFW

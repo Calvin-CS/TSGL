@@ -65,7 +65,7 @@ public:
 		vertices[25] = vertices[1]+fontSize;
 
 		char c;
-		for (int i = 0; i < myString.length(); i++) {
+		for (unsigned int i = 0; i < myString.length(); i++) {
 			c = myString[i];														// Get the next character
 			texX = (c % charSize) / (float)charSize + gap;							// Computer its x coordinates in the texture
 			texY = (c-(c % charSize)) / (float)charSize / (float)charSize + gap;	// Computer its y coordinates in the texture

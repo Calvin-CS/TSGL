@@ -290,7 +290,7 @@ GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint 
 	/* More stuff */
 	FILE * infile;		/* source file */
 	JSAMPARRAY buffer;		/* Output row buffer */
-	int row_stride;		/* physical row width in output buffer */
+	unsigned int row_stride;		/* physical row width in output buffer */
 
 	/* In this example we want to open the input file before doing anything else,
 	 * so that the setjmp() error recovery below can assume the file is open.
