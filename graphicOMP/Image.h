@@ -9,21 +9,17 @@
 #define IMAGE_H_
 
 #include <string>
-#include <unordered_map>
-#include <vector>
 
 #include "Shape.h"							// For extending our Shape object
 #include "ImageLoader.h"					// For loading images
-
-typedef std::unordered_map<std::string,GLuint>	textureMap;
 
 class Image : public Shape {
 private:
 	float vertices[32];
 	std::string myFile;
-	static textureMap loadedTextures;
+	ImageLoader myLoader;
 public:
-	Image(std::string f, int x, int y, int w, int h, float a);
+	Image(std::string f, ImageLoader& loader, int x, int y, int w, int h, float a);
 
 	// draw() actually draws the Image to the canvas
 	void draw();

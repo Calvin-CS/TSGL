@@ -210,7 +210,7 @@ void Canvas::draw() {
  */
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
-	Image* im = new Image(fname,x,y,w,h,a);						// Creates the Image with the specified coordinates
+	Image* im = new Image(fname,loader,x,y,w,h,a);						// Creates the Image with the specified coordinates
 	mutexLock mlock(buffer);
 	myBuffer->push(im);											// Push it onto our drawing buffer
 	mlock.unlock();
@@ -282,7 +282,7 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
 }
 
 void Canvas::drawText(std::string s, int x, int y, RGBfloatType color) {
-	Text* t = new Text(s,x,y,color);			// Creates the Point with the specified coordinates and color
+	Text* t = new Text(s,loader,x,y,color);			// Creates the Point with the specified coordinates and color
 	mutexLock mlock(buffer);
 	myBuffer->push(t);								// Push it onto our drawing buffer
 	mlock.unlock();

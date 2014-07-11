@@ -10,7 +10,7 @@
 
 #include <cmath>				// Needed for conversions
 #include <stdexcept>			// Needed for exceptions
-#include <iostream>			// Needed for output
+#include <iostream>				// Needed for output
 
 struct RGBfloatType		{ float	 R, G, B, A; };
 struct RGBintType		{ int	 R, G, B, A; };
@@ -31,9 +31,8 @@ inline RGBfloatType RGBintToRGBfloat(const RGBintType& color) {
 	return RGBintToRGBfloat(color.R, color.G, color.B, color.A);
 }
 
-static RGBfloatType HSVToRGBfloat(float h, float s, float v, float a = 1.0) {
+static RGBfloatType HSVToRGBfloat(float h, float s, float v, float a = 1.0f) {
 	if (h > 6 || h < 0 || s > 1 || s < 0 || v > 1 || v < 0 || a > 1 || a < 0) {
-		std::cout << h << ' ' << s << ' ' << v << ' ' << a << std::endl << std::flush;
 		throw std::out_of_range("H must be between 0 and 6 inclusive, S, V, and A must be between 0 and 1 inclusive");
 	}
 	float m, n, f;
@@ -85,7 +84,7 @@ inline RGBfloatType HSVToRGBfloat(const HSVType& color) {
 	return HSVToRGBfloat(color.H, color.S, color.V, color.A);
 }
 
-static RGBfloatType divideIntoSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0) {
+static RGBfloatType divideIntoSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0f) {
 	if (value > 1 || value < 0 || alpha > 1 || alpha < 0)
 		throw std::out_of_range("Values must be between 0 and 1 inclusive");
 	return HSVToRGBfloat(6.0f/sections * section, 1.0f, value, alpha);
@@ -94,7 +93,7 @@ inline RGBfloatType divideIntoSections(unsigned int sections, unsigned int secti
 	return HSVToRGBfloat(6.0f/sections * section, 1.0f, 1.0f, 1.0f);
 }
 
-static RGBfloatType randomColor(unsigned int seed, float alpha = 1.0) {
+static RGBfloatType randomColor(unsigned int seed, float alpha = 1.0f) {
 	if (alpha > 1 || alpha < 0) {
 		throw std::out_of_range("Alpha must be between 0 and 1 inclusive");
 	}
@@ -106,7 +105,15 @@ static RGBfloatType blendedColor(RGBfloatType c1,RGBfloatType c2,float bias) {
 	if (bias > 1 || bias < 0) {
 		throw std::out_of_range("Bias must be between 0 and 1 inclusive");
 	}
-	return {c1.R*bias+c2.R*(1-bias),c1.G*bias+c2.G*(1-bias),c1.B*bias+c2.B*(1-bias),c1.A*bias+c2.A*(1-bias)};
+	else if (bias == 1) {
+		return c1;
+	}
+	else if (bias == 0) {
+		return c2;
+	}
+	else {
+		return {c1.R*bias+c2.R*(1-bias),c1.G*bias+c2.G*(1-bias),c1.B*bias+c2.B*(1-bias),c1.A*bias+c2.A*(1-bias)};
+	}
 }
 
 #endif /* COLOR_H_ */

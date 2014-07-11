@@ -70,7 +70,7 @@ void CartesianCanvas::drawFunction(const Function* f) {
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
 		p->addVertex(screenX, screenY);
 	}
-	std::unique_lock<std::mutex> mlock(buffer);
+	mutexLock mlock(buffer);
 	myBuffer->push(p);										// Push it onto our drawing buffer
 	mlock.unlock();
 }
@@ -83,14 +83,14 @@ void CartesianCanvas::drawFunction(const Function* f) {
  * 		w, the width of the Image
  *		h, the height of the Image
  */
-void CartesianCanvas::drawImage(GLuint &texture, Decimal x, Decimal y, Decimal w, Decimal h) {
-//	int actualX1, actualY1, actualX2, actualY2;
-//	getScreenCoordinates(x, y, actualX1, actualY1);
-//	getScreenCoordinates(x+w, y+h, actualX2, actualY2);
-//	Image* im = new Image(texture, actualX1, actualY1, actualX2-actualX1, actualY2-actualY1);	// Creates the Rectangle with the specified coordinates and color
-//	std::unique_lock<std::mutex> mlock(buffer);
-//	myBuffer->push(im);								// Push it onto our drawing buffer
-//	mlock.unlock();
+void CartesianCanvas::drawImage(std::string fname, Decimal x, Decimal y, Decimal w, Decimal h, float a) {
+	int actualX1, actualY1, actualX2, actualY2;
+	getScreenCoordinates(x, y, actualX1, actualY1);
+	getScreenCoordinates(x+w, y-h, actualX2, actualY2);
+	Image* im = new Image(fname,loader,actualX1,actualY1,actualX2-actualX1,actualY2-actualY1,a);	// Creates the Image with the specified coordinates
+	mutexLock mlock(buffer);
+	myBuffer->push(im);													// Push it onto our drawing buffer
+	mlock.unlock();
 }
 
 /*
@@ -107,7 +107,7 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, R
 	getScreenCoordinates(x1, y1,actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
 	Line* l = new Line(actualX1, actualY1, actualX2, actualY2, color);	// Creates the Line with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(buffer);
+	mutexLock mlock(buffer);
 	myBuffer->push(l);													// Push it onto our drawing buffer
 	mlock.unlock();
 }
@@ -123,7 +123,7 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, RGBfloatType color) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
 	Point* p = new Point(actualX, actualY, color);		// Creates the Point with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(buffer);
+	mutexLock mlock(buffer);
 	myBuffer->push(p);									// Push it onto our drawing buffer
 	mlock.unlock();
 }
@@ -142,7 +142,7 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, 
 	getScreenCoordinates(x, y, actualX1, actualY1);
 	getScreenCoordinates(x+w, y+h, actualX2, actualY2);
 	Rectangle* rec = new Rectangle(actualX1, actualY1, actualX2-actualX1, actualY2-actualY1, color);	// Creates the Rectangle with the specified coordinates and color
-	std::unique_lock<std::mutex> mlock(buffer);
+	mutexLock mlock(buffer);
 	myBuffer->push(rec);								// Push it onto our drawing buffer
 	mlock.unlock();
 }
@@ -162,8 +162,17 @@ void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType 
 		getScreenCoordinates(x[i], y[i], actualX, actualY);
 		p->addVertex(actualX, actualY, color[i]);
 	}
-	std::unique_lock<std::mutex> mlock(buffer);
+	mutexLock mlock(buffer);
 	myBuffer->push(p);									// Push it onto our drawing buffer
+	mlock.unlock();
+}
+
+void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, RGBfloatType color) {
+	int actualX, actualY;
+	getScreenCoordinates(x, y, actualX, actualY);
+	Text* t = new Text(s,loader,actualX,actualY,color);			// Creates the Point with the specified coordinates and color
+	mutexLock mlock(buffer);
+	myBuffer->push(t);										// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -185,7 +194,7 @@ void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y
 	getScreenCoordinates(x3, y3, actualX3, actualY3);
 	Triangle* t = new Triangle(actualX1, actualY1, actualX2, actualY2,
 								actualX3, actualY3, color);			// Creates the Triangle with the specified vertices and color
-	std::unique_lock<std::mutex> mlock(buffer);
+	mutexLock mlock(buffer);
 	myBuffer->push(t);												// Push it onto our drawing buffer
 	mlock.unlock();
 }
@@ -199,8 +208,8 @@ void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y
  * 		cartY, a reference variable to be filled with screenY's Cartesian position
  */
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
-	cartX = (screenX * cartWidth) / winWidth + minX;
-	cartY = minY-(screenY - winHeight)*cartHeight/winHeight;
+	cartX = (screenX * cartWidth) / getWindowWidth() + minX;
+	cartY = minY-(screenY - getWindowHeight())*cartHeight/getWindowHeight();
 }
 
 /*
@@ -212,8 +221,8 @@ void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal 
  * 		screenY, a reference variable to be filled with cartY's window position
  */
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
-	screenX = ceil((cartX - minX) / cartWidth * winWidth);
-	screenY = ceil(winHeight - (cartY - minY) / cartHeight * winHeight);
+	screenX = ceil((cartX - minX) / cartWidth * getWindowWidth());
+	screenY = ceil(getWindowHeight() - (cartY - minY) / cartHeight * getWindowHeight());
 }
 
 /*
@@ -223,6 +232,8 @@ void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &sc
  * 		YMin, a real number corresponding to the new top edge of the CartesianCanvas
  * 		xMax, a real number corresponding to the new right edge of the CartesianCanvas
  * 		xMax, a real number corresponding to the new bottom edge of the CartesianCanvas
+ *
+ * NOTE: Does not maintain previous aspect ratio
  */
 void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax) {
 	minX = xMin;
@@ -231,18 +242,36 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
 	maxY = yMax;
 	cartWidth = maxX - minX;
 	cartHeight = maxY - minY;
-	Decimal xError = cartWidth / winWidth;
-	Decimal yError = cartHeight / winHeight;
-	pixelWidth = (cartWidth - xError) / (winWidth + xError);
-	pixelHeight = (cartHeight  - yError) / (winHeight + yError);
+	Decimal xError = cartWidth / getWindowWidth();
+	Decimal yError = cartHeight / getWindowHeight();
+	pixelWidth = (cartWidth - xError) / (getWindowWidth() + xError);
+	pixelHeight = (cartHeight  - yError) / (getWindowHeight() + yError);
 }
 
+/*
+ * zoom will zoom the Canvas at the given center point and to the relative scale
+ * Parameters:
+ * 		x, the coordinate to center the screen on
+ * 		y, the coordinate to center the screen on
+ * 		scale, the part to zoom in by. Less than 1 zooms in, greater than 1 zooms out
+ */
 void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
 	Decimal newWidth = cartWidth * scale;
 	Decimal newHeight = cartHeight * scale;
 	recomputeDimensions(x - .5 * newWidth, y - .5 * newHeight, x + .5 * newWidth, y + .5 * newHeight);
 }
 
+/*
+ * zoom will zoom the Canvas with the given outer coordinates
+ * Parameters:
+ * 		x1, a x coordinate to bound a side
+ * 		y1, a y coordinate to bound a side
+ * 		x2, a x coordinate to bound a side
+ * 		y2, a y coordinate to bound a side
+ *
+ * NOTE: zoom will preserve the previous aspect ratio, and does not care what order
+ * 	the coordinates are given
+ */
 void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
 	Decimal scale = (std::abs(x2 - x1) / cartWidth + std::abs(y2 - y1) / cartHeight) / 2.0;
 	zoom((x2 + x1)/2, (y2 + y1)/2, scale);

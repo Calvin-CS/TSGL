@@ -7,8 +7,6 @@
 
 #include "Image.h"
 
-textureMap Image::loadedTextures;
-
 /*
  * Explicit constructor for the Image class
  * Parameters:
@@ -18,9 +16,10 @@ textureMap Image::loadedTextures;
  *		h, the height of the Image
  * Returns: a new Image with the specified top left corner and dimensions
  */
-Image::Image(std::string f, int x, int y, int w, int h, float a) {
+Image::Image(std::string f, ImageLoader& loader, int x, int y, int w, int h, float a) {
 	isTextured = true;	// Let the Canvas know we're a textured object
 	myFile = f;
+	myLoader = loader;
 	vertices[0]  = x;
 	vertices[1]  = y;
 	vertices[8]  = x+w;
@@ -42,18 +41,8 @@ Image::Image(std::string f, int x, int y, int w, int h, float a) {
 // draw() actually draws the Image to the canvas
 void Image::draw() {
 	int w, h;
-	GLuint myTexture = 2350;
-	if ( Image::loadedTextures.find (myFile) == loadedTextures.end() ) {	// Load the image if we haven't already
-		std::string extension = myFile.substr(myFile.find_last_of('.'), 4);
-		if (extension == ".png")
-			loadedTextures[myFile] = ImageLoader::loadTextureFromPNG(myFile,w,h,myTexture);
-		else if (extension == ".jpg")
-			loadedTextures[myFile] = ImageLoader::loadTextureFromJPG(myFile,w,h,myTexture);
-		else if (extension == ".bmp")
-			loadedTextures[myFile] = ImageLoader::loadTextureFromBMP(myFile,w,h,myTexture);
-	} else {
-		myTexture = loadedTextures[myFile];
-	}
+	GLuint myTexture;
+	myLoader.loadTexture(myFile, w, h, myTexture);
 
 	glBindTexture(GL_TEXTURE_2D, myTexture);
 //	std::cout << myTexture << std::endl << std::flush;

@@ -12,25 +12,34 @@
 #include <GL/glut.h>
 #endif
 
+#include <iostream>			// DEBUGGING
+#include <fstream>
 #include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
+#include <string>
+#include <stdexcept>
+#include <unordered_map>
 
 #include <jpeglib.h>
 #include <png.h>			// For loading PNG files
 
-#include <iostream>			// DEBUGGING
-#include <fstream>
-#include <string>
-#include <stdexcept>
-
 #include <GL/glew.h>		// For GL drawing calls
 #include <GL/gl.h>			// For GL functions
 
-namespace ImageLoader {
-	GLuint loadTextureFromBMP(std::string filename, int &width, int &height, GLuint &texture);
-	GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint &texture);
-	GLuint loadTextureFromPNG(std::string filename, int &width, int &height, GLuint &texture);
-}
+class ImageLoader {
+private:
+	typedef std::unordered_map<std::string,GLuint>	textureMap;
+
+	textureMap loadedTextures;
+
+	GLuint loadTextureFromBMP(std::string filename, int &width, int &height, GLuint &texture) const;
+	GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint &texture) const;
+	GLuint loadTextureFromPNG(std::string filename, int &width, int &height, GLuint &texture) const;
+	static void my_error_exit (j_common_ptr cinfo);
+public:
+	ImageLoader() {}
+	~ImageLoader();
+
+	GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture);
+};
 
 #endif /* IMAGELOADER_H_ */

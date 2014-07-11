@@ -22,13 +22,13 @@ enum direction { UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3 };
 typedef CartesianCanvas Cart;
 typedef std::complex<long double> complex;
 
-static void print(const double d) {
+void print(const double d) {
 	std::cout << d << std::endl;
 }
-static float randfloat(int divisor = 10000) {
+float randfloat(int divisor = 10000) {
 	return (rand() % divisor) / (float)divisor;
 }
-static float randint(int max = 10000) {
+float randint(int max = 10000) {
 	return rand() % max;
 }
 
@@ -906,6 +906,16 @@ void imageFunction(Canvas& can) {
 
 	can.drawImage("data/bestpicture.png",200,0,800,600,0.25f);	//ALPHA
 }
+void imageCartFunction(Cart& can) {
+	can.drawImage("data/test.png",0,3,2,1.5);
+	can.drawImage("data/ship.bmp",2,3,2,1.5);
+	can.drawImage("data/mini.jpg",4,1.5,2,1.5);
+	can.drawImage("data/sky_main.jpg",0,1.5,2,1.5);
+	can.drawImage("data/shiprgb.bmp",4,3,2,1.5);
+	can.drawImage("data/Captain-falcon.png",2,1.5,2,1.5);
+
+	can.drawImage("data/bestpicture.png",1,3,4,3,0.25f);	//ALPHA
+}
 
 void highData(Canvas& can) {
 	Timer t(FRAME);
@@ -930,6 +940,14 @@ void textFunction(Canvas& can) {
 	can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",16,350,BLACK);
 	can.drawText("Of *what* exactly that extraordinary event was.",16,450,BLACK);
 	can.drawText("And to that I say...oh well.",16,550,BLACK);
+}
+void textCartFunction(Cart& can) {
+	can.drawText("A long time ago, in a galaxy far, far away.",.05,.8,BLACK);
+	can.drawText("Something extraordinary happened.",.05,.6,BLACK);
+	can.drawText("Something far more extraordinary than anything mankind has ever seen.",.05,.4,BLACK);
+	can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant",.05,.3,BLACK);
+	can.drawText("Of *what* exactly that extraordinary event was.",.05,.2,BLACK);
+	can.drawText("And to that I say...oh well.",.05,.1,BLACK);
 }
 
 void pongFunction(Canvas& can) {
@@ -1075,8 +1093,8 @@ int main() {
 //			test(c15,alphaRectangleFunction,false,BLACK);
 //			Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
 //			test(c16,alphaLangtonFunction,true,BLACK);
-			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-			test(c17,gradientMandelbrotFunction,true);
+//			Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//			test(c17,gradientMandelbrotFunction,true);
 //			Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000);
 //			test(c18,novaFunction,true);
 //			Cart c19(0, 0, 900, 900, 0, 0, 900, 900, 810000);
@@ -1085,14 +1103,18 @@ int main() {
 //			test(c20,shadedVoronoiFunction,false,WHITE);
 //			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
 //			test(c21,forestFireFunction,false);
-//			Canvas c22(0,0,1200,600,100);
-//			test(c22,imageFunction,false);
+			Canvas c22(0,0,1200,600,100);
+			test(c22,imageFunction,false);
 //			Canvas c23(500000);
 //			test(c23,highData,true);
-//			Canvas c24(10);
-//			test(c24,textFunction,true);
+			Canvas c24(10);
+			test(c24,textFunction,true);
 //			Canvas c25(0,0,1600,600,1000);
 //			test(c25,pongFunction,false, BLACK);
+			Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
+			test(c26,imageCartFunction,false);
+			Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
+			test(c27,textCartFunction,true);
 //		}
 //	}
 	glfwTerminate();	// Release GLFW

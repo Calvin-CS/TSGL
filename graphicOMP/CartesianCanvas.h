@@ -19,7 +19,6 @@ private:
 			cartHeight;												// maxY-minY
 	Decimal minX, maxX, minY, maxY;									// Bounding Cartesian coordinates for the window
 	Decimal pixelWidth, pixelHeight;								// cartWidth/window.w(), cartHeight/window.h()
-protected:
 public:
 	CartesianCanvas(unsigned int b);								// Default constructor for our CartesianCanvas
 	CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin,
@@ -28,7 +27,8 @@ public:
 
 	void drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);	// Draws axes crossing at the input coordinates
 	void drawFunction(const Function* f);							// Draws the Function on the screen
-	void drawImage(GLuint &texture, Decimal x, Decimal y, Decimal w, Decimal h);	// Draws an image at the given coordinates with the given dimensions
+	void drawImage(std::string fname, Decimal x, Decimal y,
+					Decimal w, Decimal h, float a = 1.0f); 			// Draws an image at the given coordinates with the given dimensions
 	void drawLine(Decimal x1, Decimal y1, Decimal x2,
 					Decimal y2, RGBfloatType color = BLACK);		// Draws a line at the given coordinates with the given color
 	void drawPoint(Decimal x, Decimal y,
@@ -37,6 +37,8 @@ public:
 						Decimal h, RGBfloatType color = BLACK);		// Draws a rectangle at the given coordinates with the given dimensions and color
 	void drawShinyPolygon(int size, int x[], int y[],
 						RGBfloatType color[]);						// Draws an arbitrary polygon with colored vertices
+	void drawText(std::string s, Decimal x, Decimal y,
+					RGBfloatType color = BLACK);					// Draws a string of text at the given coordinates with the given color
 	void drawTriangle(int x1, int y1, int x2, int y2,
 						int x3, int y3,	RGBfloatType color = BLACK);// Draws a triangle with the given vertices and color
 
@@ -52,9 +54,9 @@ public:
 	Decimal getMinY() 			{ return minY; }					// Accessor for minY
 	void 	getScreenCoordinates(Decimal cartX, Decimal cartY,
 					int &screenX, int &screenY);					// Returns the equivalent screen coordinates for the specified Cartesian ones
+
 	void 	recomputeDimensions(Decimal xMin, Decimal yMin,
 					Decimal xMax, Decimal yMax);					// Recomputes CartesianCanvas' size variables
-
 	void 	zoom(Decimal x, Decimal y, Decimal scale);
 	void 	zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
 };

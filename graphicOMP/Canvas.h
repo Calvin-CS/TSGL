@@ -16,14 +16,14 @@
 #include "keynums.h"		// Our enums for key presses
 #include "Timer.h"			// Our own timer for steady FPS
 
+#include "Image.h"			// Our own class for drawing images / textured quads
 #include "Line.h"			// Our own class for drawing straight lines.
 #include "Point.h"			// Our own class for drawing single points.
 #include "Polyline.h"		// Our own class for drawing polylines.
 #include "Rectangle.h"		// Our own class for drawing rectangles.
 #include "ShinyPolygon.h"	// Our own class for drawing polygons with colored vertices.
-#include "Triangle.h"		// Our own class for drawing triangles.
-#include "Image.h"			// Our own class for drawing images / textured quads
 #include "Text.h"			// Our own class for drawing text
+#include "Triangle.h"		// Our own class for drawing triangles.
 
 #include <chrono>			// For timing drawing and FPS
 #include <functional>		// For callback upon key presses
@@ -45,25 +45,12 @@ class Canvas {
 private:
 	typedef std::chrono::high_resolution_clock		highResClock;
 	typedef highResClock::time_point				timePoint;
-	typedef std::unique_lock<std::mutex>			mutexLock;
 	typedef std::function<void()>					voidFunction;
 	typedef std::function<void(double, double)> 	doubleFunction;
 
-	voidFunction	boundKeys	[(GLFW_KEY_LAST+1)*2];				// Array of function objects for key binding
-	doubleFunction 	scrollFunction;									// Single function object for scrolling
-
-	static void 	buttonCallback(GLFWwindow* window, int key, int action, int mods);
-	void			draw();											// Method for drawing the canvas and the shapes within
-	void			init(int xx,int yy,int ww,int hh,
-						  unsigned int b,std::string title);		// Method for initializing the canvas
-	void			glInit();										// Initializes the GL and GLFW things that are specific for this canvas
-	static void		keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
-	static void		scrollCallback(GLFWwindow* window, double xpos, double ypos);
-	void 			toggleTextures(bool state);						// Turn textures on or off
-protected:
 	bool			allPoints;										// If the canvas will be rending all points, which will optimize it
 	float			aspect;											// Aspect ratio used for setting up the window
-	std::mutex		buffer;											// Mutex for locking the render buffer so that only one thread can read/write at a time
+	voidFunction	boundKeys	[(GLFW_KEY_LAST+1)*2];				// Array of function objects for key binding
 	Rectangle*		clearRectangle;									// Rectangle for clearing to the background color
 	timePoint		cycleTime;										// Time when the last frame started
 	int				framecounter;									// Counter for the number of frames that have elapsed in the current session (for animations)
@@ -71,10 +58,10 @@ protected:
 	bool			keyDown;										// If a key is being pressed. Prevents an action from happening twice
 	int				monitorX, monitorY;								// Monitor position for upper left corner
 	double			mouseX, mouseY;									// Location of the mouse once HandleIO() has been called
-	Array<Shape*> *	myBuffer;										// Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
 	Array<Shape*> *	myShapes;										// Our buffer of shapes to draw
 	float			realFPS;										// Actual FPS of drawing
 	std::thread		renderThread;									// Thread dedicated to rendering the Canvas
+	doubleFunction 	scrollFunction;									// Single function object for scrolling
 	GLuint			shaderFragment,									// Address of the fragment shader
 					shaderProgram,									// Addres of the shader program to send to the GPU
 					shaderVertex;									// Address of the vertex shader
@@ -99,8 +86,22 @@ protected:
 	GLFWwindow*		window;											// GLFW window that we will draw to
 	int 			winWidth, winHeight;							// Window sizes used for setting up the window
 
+	static void 	buttonCallback(GLFWwindow* window, int key, int action, int mods);
+	void			draw();											// Method for drawing the canvas and the shapes within
+	void			init(int xx,int yy,int ww,int hh,
+						  unsigned int b,std::string title);		// Method for initializing the canvas
+	void			glInit();										// Initializes the GL and GLFW things that are specific for this canvas
+	static void		keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void		scrollCallback(GLFWwindow* window, double xpos, double ypos);
 	void			SetupCamera();									// Setup the 2D camera for smooth rendering
 	static void		startDrawing(Canvas *c);						// Static method that is called by the render thread
+	void 			toggleTextures(bool state);						// Turn textures on or off
+protected:
+	typedef std::unique_lock<std::mutex>			mutexLock;
+
+	std::mutex		buffer;											// Mutex for locking the render buffer so that only one thread can read/write at a time
+	ImageLoader 	loader;
+	Array<Shape*> *	myBuffer;										// Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
 public:
 	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h,
@@ -117,12 +118,12 @@ public:
 			RGBfloatType color = BLACK);							// Draws a line at the given coordinates with the given color
 	virtual void drawPoint(int x, int y,
 			RGBfloatType color = BLACK);							// Draws a point at the given coordinates with the given color
-	virtual void drawText(std::string s, int x, int y,
-				RGBfloatType color = BLACK);						// Draws a string of text at the given coordinates with the given color
 	virtual void drawRectangle(int x, int y, int w, int h,
 			RGBfloatType color = BLACK);							// Draws a rectangle at the given coordinates with the given dimensions and color
 	virtual void drawShinyPolygon(int size, int x[], int y[],
 			RGBfloatType color[]);									// Draws a polygon of with given number of vertices with shading across it
+	virtual void drawText(std::string s, int x, int y,
+				RGBfloatType color = BLACK);						// Draws a string of text at the given coordinates with the given color
 	virtual void drawTriangle(int x1, int y1, int x2, int y2,
 			int x3, int y3, RGBfloatType color = BLACK);			// Draws a triangle with the given vertices and color
 
@@ -136,8 +137,8 @@ public:
 	double	getTime();												// Returns the time since initialization
 	int		getWindowWidth() 	{ return winWidth; }				// Accessor for the window width
 	int		getWindowHeight() 	{ return winHeight; }				// Accessor for the window height
-	int		getWindowX() 		{ return monitorX; }				// Accessor for the window width
-	int		getWindowY() 		{ return monitorY; }				// Accessor for the window height
+	int		getWindowX() 		{ return monitorX; }				// Accessor for the monitor x coord
+	int		getWindowY() 		{ return monitorY; }				// Accessor for the monitor y coord
 
 	void	setOnlyPoints(bool b) { allPoints = b; }				// Whether we're only drawing points
 	void	setShowFPS(bool b) 	{ showFPS = b; }					// Mutator to show debugging FPS
