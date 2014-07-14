@@ -120,12 +120,30 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, R
  * 		color, the RGB color (optional)
  */
 void CartesianCanvas::drawPoint(Decimal x, Decimal y, RGBfloatType color) {
-	int actualX, actualY;
-	getScreenCoordinates(x, y, actualX, actualY);
-	Point* p = new Point(actualX, actualY, color);		// Creates the Point with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(p);									// Push it onto our drawing buffer
-	mlock.unlock();
+	if (allPoints) {
+		int actualX, actualY;
+		getScreenCoordinates(x, y, actualX, actualY);
+		Point* p = new Point(actualX, actualY, color);		// Creates the Point with the specified coordinates and color
+		mutexLock mlock(buffer);
+			if (pointBufferPosition >= myShapes->capacity()) {
+				loopAround = true;
+				pointBufferPosition = 0;
+			}
+			int tempPos = pointBufferPosition*6;
+			pointBufferPosition += 1;
+			for (unsigned j = 0; j < 6; j++)
+				vertexData[tempPos+j] = p->vertices[j];
+		mlock.unlock();
+		delete p;
+	}
+	else {
+		int actualX, actualY;
+		getScreenCoordinates(x, y, actualX, actualY);
+		Point* p = new Point(actualX, actualY, color);		// Creates the Point with the specified coordinates and color
+		mutexLock mlock(buffer);
+		myBuffer->push(p);								// Push it onto our drawing buffer
+		mlock.unlock();
+	}
 }
 
 /*

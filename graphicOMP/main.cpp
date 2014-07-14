@@ -1068,8 +1068,8 @@ int main() {
 //			test(c4,lineFanFunction,false);
 //			Canvas c5(65536);
 //			test(c5,spectrumFunction,false);
-//			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-//			test(c6,mandelbrotFunction,false);
+			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+			test(c6,mandelbrotFunction,false);
 //			Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
 //			test(c7,langtonFunction,false);
 //			Cart c8(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
@@ -1079,7 +1079,7 @@ int main() {
 //			Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
 //			test(c10,dumbSortFunction,true);
 //			Cart c11(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
-//			test(c11,colorWheelFunction);
+//			test(c11,colorWheelFuncstion);
 //		}
 //		#pragma omp section
 //		{
@@ -1103,18 +1103,18 @@ int main() {
 //			test(c20,shadedVoronoiFunction,false,WHITE);
 //			Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 500000);
 //			test(c21,forestFireFunction,false);
-			Canvas c22(0,0,1200,600,100);
-			test(c22,imageFunction,false);
-//			Canvas c23(500000);
-//			test(c23,highData,true);
-			Canvas c24(10);
-			test(c24,textFunction,true);
+//			Canvas c22(0,0,1200,600,100);
+//			test(c22,imageFunction,false);
+			Canvas c23(1000000);
+			test(c23,highData,true);
+//			Canvas c24(10);
+//			test(c24,textFunction,true);
 //			Canvas c25(0,0,1600,600,1000);
 //			test(c25,pongFunction,false, BLACK);
-			Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
-			test(c26,imageCartFunction,false);
-			Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
-			test(c27,textCartFunction,true);
+//			Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
+//			test(c26,imageCartFunction,false);
+//			Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
+//			test(c27,textCartFunction,true);
 //		}
 //	}
 	glfwTerminate();	// Release GLFW

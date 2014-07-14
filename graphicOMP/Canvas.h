@@ -48,7 +48,6 @@ private:
 	typedef std::function<void()>					voidFunction;
 	typedef std::function<void(double, double)> 	doubleFunction;
 
-	bool			allPoints;										// If the canvas will be rending all points, which will optimize it
 	float			aspect;											// Aspect ratio used for setting up the window
 	voidFunction	boundKeys	[(GLFW_KEY_LAST+1)*2];				// Array of function objects for key binding
 	Rectangle*		clearRectangle;									// Rectangle for clearing to the background color
@@ -58,7 +57,6 @@ private:
 	bool			keyDown;										// If a key is being pressed. Prevents an action from happening twice
 	int				monitorX, monitorY;								// Monitor position for upper left corner
 	double			mouseX, mouseY;									// Location of the mouse once HandleIO() has been called
-	Array<Shape*> *	myShapes;										// Our buffer of shapes to draw
 	float			realFPS;										// Actual FPS of drawing
 	std::thread		renderThread;									// Thread dedicated to rendering the Canvas
 	doubleFunction 	scrollFunction;									// Single function object for scrolling
@@ -82,7 +80,6 @@ private:
 					uniProj;										// Projection of the camera
 	GLuint			vertexArray,									// Address of GL's array buffer object
 					vertexBuffer;									// Address of GL's vertex buffer object
-	float*			vertexData;										// Buffer for vertexes to render with GL
 	GLFWwindow*		window;											// GLFW window that we will draw to
 	int 			winWidth, winHeight;							// Window sizes used for setting up the window
 
@@ -99,11 +96,16 @@ private:
 protected:
 	typedef std::unique_lock<std::mutex>			mutexLock;
 
+	bool			allPoints;										// If the canvas will be rending all points, which will optimize it
 	std::mutex		buffer;											// Mutex for locking the render buffer so that only one thread can read/write at a time
-	ImageLoader 	loader;
+	ImageLoader 	loader;											// Our image loader for handling images from files
+	bool			loopAround;										// Whether our point buffer has looped back to the beginning this draw cycle
 	Array<Shape*> *	myBuffer;										// Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
+	Array<Shape*> *	myShapes;										// Our buffer of shapes to draw
+	int				pointBufferPosition, pointLastPosition;			// Current & last positions of the draw buffer
+	float*			vertexData;										// Buffer for vertexes to render with GL
 public:
-	Canvas(unsigned int b);											// Default constructor for our Canvas
+	Canvas(unsigned int b);										// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h,
 			unsigned int b, std::string title = "");				// Explicit constructor for our Canvas
 	virtual ~Canvas();

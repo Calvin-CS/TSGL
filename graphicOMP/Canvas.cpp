@@ -169,15 +169,21 @@ void Canvas::draw() {
 		if (size == myShapes->capacity())
 			std::cerr << "BUFFER OVERFLOW" << std::endl;
 		if (allPoints) {
-			Point* p;
-			unsigned int max = size*6;
-			for (unsigned int i = 0, x = 0; i < max; i+= 6, x++) {
-				p = (Point*)myShapes->operator[](x);
-				for (unsigned j = 0; j < 6; j++)
-					vertexData[i+j] = p->vertices[j];
+			mBufferLock.lock();
+			int posLast = pointLastPosition, pos = pointBufferPosition;
+			mBufferLock.unlock();
+			pointLastPosition = pos;
+			if (loopAround) {
+				glBufferData(GL_ARRAY_BUFFER, (myShapes->capacity()-posLast)*6*sizeof(float), &vertexData[posLast*6], GL_DYNAMIC_DRAW);
+				glDrawArrays(GL_POINTS, 0, myShapes->capacity()-posLast);
+				glBufferData(GL_ARRAY_BUFFER, pos*6*sizeof(float), vertexData, GL_DYNAMIC_DRAW);
+				glDrawArrays(GL_POINTS, 0, pos);
+				loopAround = false;
 			}
-			glBufferData(GL_ARRAY_BUFFER, size*6*sizeof(float), vertexData, GL_DYNAMIC_DRAW);
-			glDrawArrays(GL_POINTS, 0, size);
+			else {
+				glBufferData(GL_ARRAY_BUFFER, (pos-posLast)*6*sizeof(float), &vertexData[posLast*6], GL_DYNAMIC_DRAW);
+				glDrawArrays(GL_POINTS, 0, pos-posLast);
+			}
 		} else for (unsigned int i = 0; i < size; i++){
 			if (!myShapes->operator[](i)->getIsTextured())
 				myShapes->operator[](i)->draw(); 		// Iterate through our queue until we've made it to the end
@@ -242,9 +248,25 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
  */
 void Canvas::drawPoint(int x, int y, RGBfloatType color) {
 	Point* p = new Point(x,y,color);				// Creates the Point with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(p);								// Push it onto our drawing buffer
-	mlock.unlock();
+	if (allPoints) {
+		mutexLock mlock(buffer);
+		if (pointBufferPosition >= myShapes->capacity()) {
+			loopAround = true;
+			pointBufferPosition = 0;
+		}
+		int tempPos = pointBufferPosition*6;
+		pointBufferPosition ++;
+		for (unsigned j = 0; j < 6; j++)
+			vertexData[tempPos+j] = p->vertices[j];
+		mlock.unlock();
+		delete p;
+	}
+	else {
+		mutexLock mlock(buffer);
+		myBuffer->push(p);								// Push it onto our drawing buffer
+		mlock.unlock();
+	}
+
 }
 
 /*
@@ -477,9 +499,13 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 	myShapes = new Array<Shape*>(b);										// Initialize myShapes
 	myBuffer = new Array<Shape*>(b);
 	vertexData = new float[6*b];											// Buffer for vertexes for points
+	for (int i = 0; i < 6*b; i++)
+		vertexData[i] = -1;
 	showFPS = false;														// Set debugging FPS to false
 	isFinished = false;														// We're not done rendering
 	allPoints = false;
+	pointBufferPosition = pointLastPosition = 0;
+	loopAround = false;
 
 	clearRectangle = new Rectangle(0,0,winWidth,winHeight,GREY);
 
