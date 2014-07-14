@@ -51,6 +51,7 @@ private:
 
 	unsigned int index;
 
+	bool			allPoints;
 	float			aspect;											// Aspect ratio used for setting up the window
 	voidFunction	boundKeys	[(GLFW_KEY_LAST+1)*2];				// Array of function objects for key binding
 	std::mutex		buffer;											// Mutex for locking the render buffer so that only one thread can read/write at a time
@@ -89,6 +90,7 @@ private:
 					uniProj;										// Projection of the camera
 	GLuint			vertexArray,									// Address of GL's array buffer object
 					vertexBuffer;									// Address of GL's vertex buffer object
+	float*			vertexData;
 	GLFWwindow*		window;											// GLFW window that we will draw to
 	int 			winWidth, winHeight;							// Window sizes used for setting up the window
 
