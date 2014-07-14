@@ -61,10 +61,12 @@ private:
 	bool			isFinished;										// If the rendering is done, which will signal the window to close
 	bool			keyDown;										// If a key is being pressed. Prevents an action from happening twice
 	ImageLoader 	loader;
+	bool			loopAround;										// Whether our point buffer has looped back to the beginning this
 	int				monitorX, monitorY;								// Monitor position for upper left corner
 	double			mouseX, mouseY;									// Location of the mouse once HandleIO() has been called
 	Array<Shape*> *	myBuffer;										// Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
 	Array<Shape*> *	myShapes;										// Our buffer of shapes to draw
+	unsigned int 	pointBufferPosition, pointLastPosition;
 	float			realFPS;										// Actual FPS of drawing
 	std::thread		renderThread;									// Thread dedicated to rendering the Canvas
 	doubleFunction 	scrollFunction;									// Single function object for scrolling

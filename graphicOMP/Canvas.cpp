@@ -169,20 +169,21 @@ void Canvas::draw() {
 		if (size == myShapes->capacity())
 			std::cerr << "BUFFER OVERFLOW" << std::endl;
 		if (allPoints) {
-//			Point* p;
-//			unsigned int max = size*6;
-//			for (unsigned int i = 0, x = 0; i < max; i+= 6, x++) {
-//				p = (Point*)myShapes->operator[](x);
-//				for (unsigned j = 0; j < 6; j++)
-//					vertexData[i+j] = p->vertices[j];
-//			}
+			mBufferLock.lock();
+			int pos = pointBufferPosition;
+			mBufferLock.unlock();
+			int posLast = pointLastPosition;
+			pointLastPosition = pos;
 
-			mutexLock mlock(buffer);
+			if (loopAround) {
+				glBufferData(GL_ARRAY_BUFFER, (myShapes->capacity()-posLast)*6*sizeof(float), &vertexData[posLast*6], GL_DYNAMIC_DRAW);
+				glDrawArrays(GL_POINTS, 0, myShapes->capacity()-posLast);
+				posLast = 0;
+				loopAround = false;
+			}
+			glBufferData(GL_ARRAY_BUFFER, (pos-posLast)*6*sizeof(float), &vertexData[posLast*6], GL_DYNAMIC_DRAW);
+			glDrawArrays(GL_POINTS, 0, pos-posLast);
 
-			glBufferData(GL_ARRAY_BUFFER, index*6*sizeof(float), vertexData, GL_DYNAMIC_DRAW);
-			glDrawArrays(GL_POINTS, 0, index);
-			index = 0;
-			mlock.unlock();
 		} else for (unsigned int i = 0; i < size; i++){
 			if (!myShapes->operator[](i)->getIsTextured())
 				myShapes->operator[](i)->draw(); 		// Iterate through our queue until we've made it to the end
@@ -245,10 +246,14 @@ void Canvas::drawPoint(int x, int y, RGBfloatType color) {
 	Point* p = new Point(x,y,color);				// Creates the Point with the specified coordinates and color
 	if (allPoints) {
 		mutexLock mlock(buffer);
-		for (unsigned j = 0; j < 6; j++) {
-			vertexData[index*6+j] = p->vertices[j];
+		if (pointBufferPosition >= myShapes->capacity()) {
+			loopAround = true;
+			pointBufferPosition = 0;
 		}
-		index++;
+		int tempPos = pointBufferPosition*6;
+		pointBufferPosition ++;
+		for (unsigned j = 0; j < 6; j++)
+			vertexData[tempPos+j] = p->vertices[j];
 		mlock.unlock();
 		delete p;
 	} else {
