@@ -47,17 +47,23 @@ private:
 	typedef highResClock::time_point				timePoint;
 	typedef std::function<void()>					voidFunction;
 	typedef std::function<void(double, double)> 	doubleFunction;
+	typedef std::unique_lock<std::mutex>			mutexLock;
+
+	unsigned int index;
 
 	bool			allPoints;										// If the canvas will be rending all points, which will optimize it
 	float			aspect;											// Aspect ratio used for setting up the window
 	voidFunction	boundKeys	[(GLFW_KEY_LAST+1)*2];				// Array of function objects for key binding
+	std::mutex		buffer;											// Mutex for locking the render buffer so that only one thread can read/write at a time
 	Rectangle*		clearRectangle;									// Rectangle for clearing to the background color
 	timePoint		cycleTime;										// Time when the last frame started
 	int				framecounter;									// Counter for the number of frames that have elapsed in the current session (for animations)
 	bool			isFinished;										// If the rendering is done, which will signal the window to close
 	bool			keyDown;										// If a key is being pressed. Prevents an action from happening twice
+	ImageLoader 	loader;
 	int				monitorX, monitorY;								// Monitor position for upper left corner
 	double			mouseX, mouseY;									// Location of the mouse once HandleIO() has been called
+	Array<Shape*> *	myBuffer;										// Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
 	Array<Shape*> *	myShapes;										// Our buffer of shapes to draw
 	float			realFPS;										// Actual FPS of drawing
 	std::thread		renderThread;									// Thread dedicated to rendering the Canvas
@@ -95,13 +101,9 @@ private:
 	static void		scrollCallback(GLFWwindow* window, double xpos, double ypos);
 	void			SetupCamera();									// Setup the 2D camera for smooth rendering
 	static void		startDrawing(Canvas *c);						// Static method that is called by the render thread
-	void 			toggleTextures(bool state);						// Turn textures on or off
+	void 			textureShaders(bool state);						// Turn textures on or off
 protected:
-	typedef std::unique_lock<std::mutex>			mutexLock;
-
-	std::mutex		buffer;											// Mutex for locking the render buffer so that only one thread can read/write at a time
-	ImageLoader 	loader;
-	Array<Shape*> *	myBuffer;										// Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
+	void 	drawShape(Shape* s);
 public:
 	Canvas(unsigned int b);											// Default constructor for our Canvas
 	Canvas(int xx, int yy, int w, int h,
@@ -140,7 +142,7 @@ public:
 	int		getWindowX() 		{ return monitorX; }				// Accessor for the monitor x coord
 	int		getWindowY() 		{ return monitorY; }				// Accessor for the monitor y coord
 
-	void	setOnlyPoints(bool b) { allPoints = b; }				// Whether we're only drawing points
+	void	setOnlyPoints(bool b) { allPoints = b; while (!started);}				// Whether we're only drawing points
 	void	setShowFPS(bool b) 	{ showFPS = b; }					// Mutator to show debugging FPS
 	void	setBackgroundColor(RGBfloatType color);					// Changes the background color
 

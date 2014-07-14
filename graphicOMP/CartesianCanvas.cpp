@@ -70,9 +70,8 @@ void CartesianCanvas::drawFunction(const Function* f) {
 		getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
 		p->addVertex(screenX, screenY);
 	}
-	mutexLock mlock(buffer);
-	myBuffer->push(p);										// Push it onto our drawing buffer
-	mlock.unlock();
+
+	drawShape(p);
 }
 
 /*
@@ -87,10 +86,8 @@ void CartesianCanvas::drawImage(std::string fname, Decimal x, Decimal y, Decimal
 	int actualX1, actualY1, actualX2, actualY2;
 	getScreenCoordinates(x, y, actualX1, actualY1);
 	getScreenCoordinates(x+w, y-h, actualX2, actualY2);
-	Image* im = new Image(fname,loader,actualX1,actualY1,actualX2-actualX1,actualY2-actualY1,a);	// Creates the Image with the specified coordinates
-	mutexLock mlock(buffer);
-	myBuffer->push(im);													// Push it onto our drawing buffer
-	mlock.unlock();
+
+	Canvas::drawImage(fname, actualX1, actualY1, actualX2-actualX1, actualY2-actualY1, a);
 }
 
 /*
@@ -106,10 +103,8 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, R
 	int actualX1, actualY1, actualX2, actualY2;
 	getScreenCoordinates(x1, y1,actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
-	Line* l = new Line(actualX1, actualY1, actualX2, actualY2, color);	// Creates the Line with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(l);													// Push it onto our drawing buffer
-	mlock.unlock();
+
+	Canvas::drawLine(actualX1, actualY1, actualX2, actualY2, color);
 }
 
 /*
@@ -122,10 +117,8 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, R
 void CartesianCanvas::drawPoint(Decimal x, Decimal y, RGBfloatType color) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
-	Point* p = new Point(actualX, actualY, color);		// Creates the Point with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(p);									// Push it onto our drawing buffer
-	mlock.unlock();
+
+	Canvas::drawPoint(actualX, actualY, color);
 }
 
 /*
@@ -141,10 +134,8 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, 
 	int actualX1, actualY1, actualX2, actualY2;
 	getScreenCoordinates(x, y, actualX1, actualY1);
 	getScreenCoordinates(x+w, y+h, actualX2, actualY2);
-	Rectangle* rec = new Rectangle(actualX1, actualY1, actualX2-actualX1, actualY2-actualY1, color);	// Creates the Rectangle with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(rec);								// Push it onto our drawing buffer
-	mlock.unlock();
+
+	Canvas::drawRectangle(actualX1, actualY1, actualX2-actualX1, actualY2-actualY1, color);
 }
 
 /*
@@ -156,24 +147,18 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, 
  * 		color, the RGB color array (optional)
  */
 void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) {
-	int actualX, actualY;
-	ShinyPolygon* p = new ShinyPolygon(size);
 	for (int i = 0; i < size; i++) {
-		getScreenCoordinates(x[i], y[i], actualX, actualY);
-		p->addVertex(actualX, actualY, color[i]);
+		getScreenCoordinates(x[i], y[i], x[i], y[i]);
 	}
-	mutexLock mlock(buffer);
-	myBuffer->push(p);									// Push it onto our drawing buffer
-	mlock.unlock();
+
+	Canvas::drawShinyPolygon(size, x, y, color);
 }
 
 void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, RGBfloatType color) {
 	int actualX, actualY;
 	getScreenCoordinates(x, y, actualX, actualY);
-	Text* t = new Text(s,loader,actualX,actualY,color);			// Creates the Point with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(t);										// Push it onto our drawing buffer
-	mlock.unlock();
+
+	Canvas::drawText(s, actualX, actualY, color);
 }
 
 /*
@@ -192,11 +177,9 @@ void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y
 	getScreenCoordinates(x1, y1, actualX1, actualY1);
 	getScreenCoordinates(x2, y2, actualX2, actualY2);
 	getScreenCoordinates(x3, y3, actualX3, actualY3);
-	Triangle* t = new Triangle(actualX1, actualY1, actualX2, actualY2,
-								actualX3, actualY3, color);			// Creates the Triangle with the specified vertices and color
-	mutexLock mlock(buffer);
-	myBuffer->push(t);												// Push it onto our drawing buffer
-	mlock.unlock();
+
+	Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2,
+								actualX3, actualY3, color);
 }
 
 /*

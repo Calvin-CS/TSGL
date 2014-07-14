@@ -169,22 +169,27 @@ void Canvas::draw() {
 		if (size == myShapes->capacity())
 			std::cerr << "BUFFER OVERFLOW" << std::endl;
 		if (allPoints) {
-			Point* p;
-			unsigned int max = size*6;
-			for (unsigned int i = 0, x = 0; i < max; i+= 6, x++) {
-				p = (Point*)myShapes->operator[](x);
-				for (unsigned j = 0; j < 6; j++)
-					vertexData[i+j] = p->vertices[j];
-			}
-			glBufferData(GL_ARRAY_BUFFER, size*6*sizeof(float), vertexData, GL_DYNAMIC_DRAW);
-			glDrawArrays(GL_POINTS, 0, size);
+//			Point* p;
+//			unsigned int max = size*6;
+//			for (unsigned int i = 0, x = 0; i < max; i+= 6, x++) {
+//				p = (Point*)myShapes->operator[](x);
+//				for (unsigned j = 0; j < 6; j++)
+//					vertexData[i+j] = p->vertices[j];
+//			}
+
+			mutexLock mlock(buffer);
+
+			glBufferData(GL_ARRAY_BUFFER, index*6*sizeof(float), vertexData, GL_DYNAMIC_DRAW);
+			glDrawArrays(GL_POINTS, 0, index);
+			index = 0;
+			mlock.unlock();
 		} else for (unsigned int i = 0; i < size; i++){
 			if (!myShapes->operator[](i)->getIsTextured())
 				myShapes->operator[](i)->draw(); 		// Iterate through our queue until we've made it to the end
 			else {
-				toggleTextures(true);
+				textureShaders(true);
 				myShapes->operator[](i)->draw();
-				toggleTextures(false);
+				textureShaders(false);
 			}
 		}
 
@@ -210,10 +215,8 @@ void Canvas::draw() {
  */
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //	glfwMakeContextCurrent(window);								// We're drawing to window as soon as it's created
-	Image* im = new Image(fname,loader,x,y,w,h,a);						// Creates the Image with the specified coordinates
-	mutexLock mlock(buffer);
-	myBuffer->push(im);											// Push it onto our drawing buffer
-	mlock.unlock();
+	Image* im = new Image(fname,loader,x,y,w,h,a);				// Creates the Image with the specified coordinates
+	drawShape(im);												// Push it onto our drawing buffer
 //	glfwMakeContextCurrent(NULL);								// We're drawing to window as soon as it's created
 }
 
@@ -228,9 +231,7 @@ void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
  */
 void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
 	Line* l = new Line(x1,y1,x2,y2,color);			// Creates the Line with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(l);								// Push it onto our drawing buffer
-	mlock.unlock();
+	drawShape(l);									// Push it onto our drawing buffer
 }
 
 /*
@@ -242,9 +243,17 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
  */
 void Canvas::drawPoint(int x, int y, RGBfloatType color) {
 	Point* p = new Point(x,y,color);				// Creates the Point with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(p);								// Push it onto our drawing buffer
-	mlock.unlock();
+	if (allPoints) {
+		mutexLock mlock(buffer);
+		for (unsigned j = 0; j < 6; j++) {
+			vertexData[index*6+j] = p->vertices[j];
+		}
+		index++;
+		mlock.unlock();
+		delete p;
+	} else {
+		drawShape(p);									// Push it onto our drawing buffer
+	}
 }
 
 /*
@@ -258,8 +267,12 @@ void Canvas::drawPoint(int x, int y, RGBfloatType color) {
  */
 void Canvas::drawRectangle(int x, int y, int w, int h, RGBfloatType color) {
 	Rectangle* rec = new Rectangle(x,y,w,h,color);	// Creates the Rectangle with the specified coordinates and color
+	drawShape(rec);									// Push it onto our drawing buffer
+}
+
+inline void Canvas::drawShape(Shape* s) {
 	mutexLock mlock(buffer);
-	myBuffer->push(rec);							// Push it onto our drawing buffer
+	myBuffer->push(s);										// Push it onto our drawing buffer
 	mlock.unlock();
 }
 
@@ -276,16 +289,12 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) 
 	for (int i = 0; i < size; i++) {
 		p->addVertex(x[i],y[i],color[i]);
 	}
-	mutexLock mlock(buffer);
-	myBuffer->push(p);								// Push it onto our drawing buffer
-	mlock.unlock();
+	drawShape(p);									// Push it onto our drawing buffer
 }
 
 void Canvas::drawText(std::string s, int x, int y, RGBfloatType color) {
 	Text* t = new Text(s,loader,x,y,color);			// Creates the Point with the specified coordinates and color
-	mutexLock mlock(buffer);
-	myBuffer->push(t);								// Push it onto our drawing buffer
-	mlock.unlock();
+	drawShape(t);									// Push it onto our drawing buffer
 }
 
 /*
@@ -301,9 +310,7 @@ void Canvas::drawText(std::string s, int x, int y, RGBfloatType color) {
  */
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
 	Triangle* t = new Triangle(x1,y1,x2,y2,x3,y3,color);	// Creates the Triangle with the specified vertices and color
-	mutexLock mlock(buffer);
-	myBuffer->push(t);										// Push it onto our drawing buffer
-	mlock.unlock();
+	drawShape(t);											// Push it onto our drawing buffer
 }
 
 /*
@@ -437,7 +444,7 @@ void Canvas::glInit() {
 	// Specify the layout of the vertex data in our textured shader
 	glLinkProgram(textureShaderProgram);
 
-	toggleTextures(false);
+	textureShaders(false);
 
 	glfwSetMouseButtonCallback(window, buttonCallback);
 	glfwSetKeyCallback(window, keyCallback);
@@ -465,6 +472,9 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
  * 		title, the title of the window to put on the top window bar
  */
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title) {
+	mutexLock mlock(buffer);
+	index = 0;
+
 	title_ = title;
 	winWidth = ww, winHeight = hh;
 	aspect = (float)winWidth / winHeight;
@@ -485,6 +495,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 
 	timer = new Timer(FRAME);
 	for (int i = 0; i <= GLFW_KEY_LAST*2+1; boundKeys[i++] = nullptr);
+	mlock.unlock();
 }
 
 void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
@@ -556,7 +567,7 @@ void Canvas::startDrawing(Canvas *c) {
 	glfwDestroyWindow(c->window);
 }
 
-void Canvas::toggleTextures(bool on) {
+void Canvas::textureShaders(bool on) {
 	GLint program;
 	if (!on) {
 		program = shaderProgram;
