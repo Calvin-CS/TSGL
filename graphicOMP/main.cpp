@@ -1067,8 +1067,8 @@ int main() {
 //	{
 //		#pragma omp section
 //		{
-			Canvas c1(0,0,1200,1000,8000*800);
-			test(c1,graydientFunction,true);
+//			Canvas c1(0,0,1200,1000,8000*800);
+//			test(c1,graydientFunction,true);
 //			Canvas c2(480800);
 //			test(c2,colorPointsFunction,true);
 //			Canvas c3(100000);
@@ -1077,7 +1077,7 @@ int main() {
 //			test(c4,lineFanFunction,false);
 //			Canvas c5(65536);
 //			test(c5,spectrumFunction,false);
-//			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//			Cart c6(0, 0, 1200, 800, -2, -1.125, 1, 1.125, 5000000);
 //			test(c6,mandelbrotFunction,true);
 //			Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
 //			test(c7,langtonFunction,false);
@@ -1114,7 +1114,7 @@ int main() {
 //			test(c21,forestFireFunction,false);
 //			Canvas c22(0,0,1200,600,100);
 //			test(c22,imageFunction,false);
-			Canvas c23(0,0,1200,1000,8000*800);
+			Canvas c23(0,0,1200,900,1200*900);
 			test(c23,highData,true);
 //			Canvas c24(10);
 //			test(c24,textFunction,true);

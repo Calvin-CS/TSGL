@@ -346,11 +346,13 @@ GLfloat* Canvas::getScreen() {
 }
 
 void Canvas::glInit() {
+
+
 	// Create a Window and the Context
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);					// Set target GL major version to 3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);					// Set target GL minor version to 3.2
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);	// We're using the standard GL Profile
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);			// Don't use methods that are deprecated in the target version
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);			// Don't use methods that are deprecated in the target version
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);						// Do not let the user resize the window
 	glfwWindowHint(GLFW_STEREO, GL_FALSE);							// Disable the right buffer
 	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);							// Don't show the window at first
@@ -370,6 +372,12 @@ void Canvas::glInit() {
 	glfwShowWindow(window);										// Show the window
 	glfwSetWindowUserPointer(window, this);
 
+	glPointSize(1.49);
+	float* things = new float[2];
+	glGetFloatv(GL_POINT_SIZE_GRANULARITY, things);
+	std::cout << things[0] << " " << things[1] << std::endl;
+	delete things;
+
 	// Enable and disable necessary stuff
 	glDisable(GL_DEPTH_TEST);										// Disable depth testing because we're not drawing in 3d
 	glDisable(GL_DITHER);											// Disable dithering because pixels do not (generally) overlap
@@ -377,6 +385,8 @@ void Canvas::glInit() {
 	glEnable(GL_BLEND);												// Enable blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);				// Set blending mode to standard alpha blending
 
+
+	std::cout << glGetString(GL_VERSION) << std::endl;
 	//Needed?
 //    glEnable(GL_TEXTURE_2D);
 //    glShadeModel(GL_FLAT);
