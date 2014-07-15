@@ -11,81 +11,109 @@
 
 #include <cmath>
 
-typedef long double Decimal;							// Define the variable type to use
+typedef long double Decimal;  // Define the variable type to use
 
 class Function {
-public:
-	Function() {}
-	virtual ~Function() {}
-	virtual Decimal valueAt(Decimal x) const = 0;
+ public:
+    Function() {}
+    virtual ~Function() {}
+    virtual Decimal valueAt(Decimal x) const = 0;
 };
 
 class PowerFunction : public Function {
-public:
-	PowerFunction(Decimal a) { a_ = a; }
-	virtual Decimal valueAt(Decimal x) const { return pow(x, a_);}
-private:
-	Decimal a_;
+ public:
+    PowerFunction(Decimal a) {
+        a_ = a;
+    }
+    virtual Decimal valueAt(Decimal x) const {
+        return pow(x, a_);
+    }
+ private:
+    Decimal a_;
 };
 
 class SquareRootFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return sqrt(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return sqrt(x);
+    }
 };
 
 class CubedRootFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return cbrt(x);}
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return cbrt(x);
+    }
 };
 
 class SineFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return sin(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return sin(x);
+    }
 };
 
 class CosineFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return cos(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return cos(x);
+    }
 };
 
 class TangentFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return tan(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return tan(x);
+    }
 };
 
 class AbsoluteFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return std::abs(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return std::abs(x);
+    }
 };
 
 class ExponentialFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return exp(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return exp(x);
+    }
 };
 
 class NaturalLogFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return log(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return log(x);
+    }
 };
 
 class CommonLogFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return log10(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return log10(x);
+    }
 };
 
 class CeilingFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return ceil(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return ceil(x);
+    }
 };
 
 class FloorFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return floor(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return floor(x);
+    }
 };
 
 class RoundFunction : public Function {
-public:
-	virtual Decimal valueAt(Decimal x) const { return round(x); }
+ public:
+    virtual Decimal valueAt(Decimal x) const {
+        return round(x);
+    }
 };
 
 #endif /* FUNCTION_H_ */

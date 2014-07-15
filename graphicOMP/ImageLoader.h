@@ -12,7 +12,7 @@
 #include <GL/glut.h>
 #endif
 
-#include <iostream>			// DEBUGGING
+#include <iostream>        // DEBUGGING
 #include <fstream>
 #include <stdio.h>
 #include <string>
@@ -20,26 +20,26 @@
 #include <unordered_map>
 
 #include <jpeglib.h>
-#include <png.h>			// For loading PNG files
+#include <png.h>
 
-#include <GL/glew.h>		// For GL drawing calls
-#include <GL/gl.h>			// For GL functions
+#include <GL/glew.h>    // For GL drawing calls
+#include <GL/gl.h>      // For GL functions
 
 class ImageLoader {
 private:
-	typedef std::unordered_map<std::string,GLuint>	textureMap;
+    typedef std::unordered_map<std::string,GLuint> TextureMap;
 
-	textureMap loadedTextures;
+    TextureMap loadedTextures;
 
-	GLuint loadTextureFromBMP(std::string filename, int &width, int &height, GLuint &texture) const;
-	GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint &texture) const;
-	GLuint loadTextureFromPNG(std::string filename, int &width, int &height, GLuint &texture) const;
-	static void my_error_exit (j_common_ptr cinfo);
+    GLuint loadTextureFromBMP(std::string filename, int &width, int &height, GLuint &texture) const;
+    GLuint loadTextureFromJPG(std::string filename, int &width, int &height, GLuint &texture) const;
+    GLuint loadTextureFromPNG(std::string filename, int &width, int &height, GLuint &texture) const;
+    static void my_error_exit (j_common_ptr cinfo);
 public:
-	ImageLoader() {}
-	~ImageLoader();
+    ImageLoader() {}
+    ~ImageLoader();
 
-	GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture);
+    GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture);
 };
 
 #endif /* IMAGELOADER_H_ */

@@ -8,28 +8,28 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
-#include "Shape.h"											// For extending our Shape object
+#include "Shape.h"          // For extending our Shape object
 #include "ImageLoader.h"
 
 class Text : public Shape {
-private:
-	ImageLoader 	myLoader;
-	std::string 	myString;
-	int 			myX, myY;
-public:
-	/*
-	 * Explicit constructor for the Text class (calls the base constructor)
-	 * Parameters:
-	 * 		s, the string to draw
-	 * 		x, the x coordinate
-	 *		y, the y coordinate
-	 * 		color, a color
-	 * Returns: a new Text object at the specified position with the specified string and color
-	 */
-	Text(std::string s, ImageLoader& loader, int x, int y, RGBfloatType color);
+ private:
+    ImageLoader myLoader;
+    std::string myString;
+    int myX, myY;
+ public:
+    /*
+     * Explicit constructor for the Text class (calls the base constructor)
+     * Parameters:
+     *      s, the string to draw
+     *      x, the x coordinate
+     *      y, the y coordinate
+     *      color, a color
+     * Returns: a new Text object at the specified position with the specified string and color
+     */
+    Text(std::string s, ImageLoader& loader, int x, int y, RGBfloatType color);
 
-	// draw actually draws the Text to the canvas
-	void draw();
+    // draw actually draws the Text to the canvas
+    void draw();
 };
 
 #endif /* TEXT_H_ */

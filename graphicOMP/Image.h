@@ -10,19 +10,18 @@
 
 #include <string>
 
-#include "Shape.h"							// For extending our Shape object
-#include "ImageLoader.h"					// For loading images
-
+#include "Shape.h"		    // For extending our Shape object
+#include "ImageLoader.h"    // For loading images
 class Image : public Shape {
-private:
-	float vertices[32];
-	std::string myFile;
-	ImageLoader myLoader;
-public:
-	Image(std::string f, ImageLoader& loader, int x, int y, int w, int h, float a);
+ private:
+    float vertices[32];
+    std::string myFile;
+    ImageLoader myLoader;
+ public:
+    Image(std::string f, ImageLoader& loader, int x, int y, int w, int h, float a);
 
-	// draw() actually draws the Image to the canvas
-	void draw();
+    // draw() actually draws the Image to the canvas
+    void draw();
 };
 
 #endif /* IMAGE_H_ */
