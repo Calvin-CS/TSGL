@@ -920,15 +920,16 @@ void imageCartFunction(Cart& can) {
 void highData(Canvas& can) {
 	Timer t(FRAME);
 	can.setOnlyPoints(true);
-	unsigned int reps;
+	unsigned int reps,
+				 width  = can.getWindowWidth(),
+				 height = can.getWindowHeight();
 	while(can.getIsOpen()) {
 		reps = t.getReps();
-		for (int i = 0; i < can.getWindowWidth(); i++) {
-			for (int j = 0; j < can.getWindowHeight(); j++) {
+		for (unsigned int i = 0; i < width; i++) {
+			for (unsigned int j = 0; j < height; j++) {
 				can.drawPoint(i, j, {1, 1, (reps % 255) / 255.0f, 1});
 			}
 		}
-//		std::cout << t.getTime() << std::endl;
 		t.sleep();
 	}
 }
@@ -1024,6 +1025,14 @@ void pongFunction(Canvas& can) {
 	}
 }
 
+void getPixelsFunction(Canvas& can) {
+	can.drawImage("data/test.png",0,0,800,600);
+	Timer::threadSleepFor(1.0);
+	GLfloat* buffer = can.getScreen();
+	std::cout << buffer << std::endl;
+	delete buffer;
+}
+
 void test(Canvas& c, void(*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
 	c.setBackgroundColor(bg);
 	c.start();
@@ -1058,18 +1067,18 @@ int main() {
 //	{
 //		#pragma omp section
 //		{
-			Canvas c1(480800);
+			Canvas c1(0,0,1200,1000,8000*800);
 			test(c1,graydientFunction,true);
-			Canvas c2(480800);
-			test(c2,colorPointsFunction,true);
+//			Canvas c2(480800);
+//			test(c2,colorPointsFunction,true);
 //			Canvas c3(100000);
 //			test(c3,lineChainFunction,true,BLACK);
 //			Canvas c4(500);
 //			test(c4,lineFanFunction,false);
-			Canvas c5(65536);
-			test(c5,spectrumFunction,false);
-			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
-			test(c6,mandelbrotFunction,true);
+//			Canvas c5(65536);
+//			test(c5,spectrumFunction,false);
+//			Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//			test(c6,mandelbrotFunction,true);
 //			Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
 //			test(c7,langtonFunction,false);
 //			Cart c8(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
@@ -1105,7 +1114,7 @@ int main() {
 //			test(c21,forestFireFunction,false);
 //			Canvas c22(0,0,1200,600,100);
 //			test(c22,imageFunction,false);
-			Canvas c23(500000);
+			Canvas c23(0,0,1200,1000,8000*800);
 			test(c23,highData,true);
 //			Canvas c24(10);
 //			test(c24,textFunction,true);
@@ -1115,6 +1124,8 @@ int main() {
 //			test(c26,imageCartFunction,false);
 //			Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
 //			test(c27,textCartFunction,true);
+//			Canvas c28(500000);
+//			test(c28,getPixelsFunction,true);
 //		}
 //	}
 	glfwTerminate();	// Release GLFW

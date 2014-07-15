@@ -133,6 +133,8 @@ public:
 
 	int		end();													// Function to end rendering our Canvas
 
+	GLfloat*	getScreen();
+
 	int		getFrameNumber() 	{ return framecounter; }			// Accessor for the number of frames rendered so far
 	float	getFPS() 			{ return realFPS; }					// Accessor for actual FPS
 	bool	getIsOpen() 		{ return !isFinished; }				// Returns if the window is closed

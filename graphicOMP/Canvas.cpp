@@ -71,7 +71,6 @@ Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title) 
 }
 
 Canvas::~Canvas() {
-	std::cout << "tearing down..." << std::endl;
 	// Free our pointer memory
 	delete clearRectangle;
 	delete myShapes;
@@ -93,11 +92,10 @@ Canvas::~Canvas() {
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteVertexArrays(1, &vertexArray);
 	glDeleteTextures(1,&tex);
-	std::cout << "torn down..." << std::endl;
 }
 
 /*
- * bindToButton binds a button or a key to a function pointer, an on that push, Canvas will call that method
+ * bindToButton binds a button or a key to a function pointer, and on that push, Canvas will call that method
  */
 void Canvas::bindToButton(key button, action a, voidFunction f) {
 	boundKeys[button+a*(GLFW_KEY_LAST+1)] = f;
@@ -335,6 +333,18 @@ double Canvas::getTime() {
 	return std::chrono::duration_cast<std::chrono::microseconds>(highResClock::now() - startTime).count() / 1000000.0;
 }
 
+GLfloat* Canvas::getScreen() {
+	glReadBuffer(GL_BACK_LEFT);
+//	float* buffer = new float[winWidth * winHeight * 3];
+	GLfloat* buffer = new GLfloat[3];
+//	glBufferData(GL_PIXEL_UNPACK_BUFFER, winWidth * winHeight * 6, NULL, GL_DYNAMIC_COPY);
+	glReadPixels(0, 0, 1, 1, GL_RGB, GL_FLOAT, buffer);
+	if ( glGetError() )
+		printf( "GL ERROR\n" );
+
+	return buffer;
+}
+
 void Canvas::glInit() {
 	// Create a Window and the Context
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);					// Set target GL major version to 3
@@ -344,6 +354,12 @@ void Canvas::glInit() {
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);						// Do not let the user resize the window
 	glfwWindowHint(GLFW_STEREO, GL_FALSE);							// Disable the right buffer
 	glfwWindowHint(GLFW_VISIBLE,GL_FALSE);							// Don't show the window at first
+
+//	glViewport(0,0,winWidth, winHeight);
+//	glMatrixMode(GL_PROJECTION);
+//	glLoadIdentity();
+//	glOrtho(0.0f, winWidth, winHeight, 0.0f, 0.0f, 1.0f);
+
 	window = glfwCreateWindow(winWidth, winHeight,
 							title_.c_str(), nullptr, nullptr);		// Windowed
 
@@ -358,7 +374,7 @@ void Canvas::glInit() {
 	glDisable(GL_DEPTH_TEST);										// Disable depth testing because we're not drawing in 3d
 	glDisable(GL_DITHER);											// Disable dithering because pixels do not (generally) overlap
 	glDisable(GL_CULL_FACE);										// Disable culling because the camera is stationary
-	glEnable(GL_BLEND);											// Enable blending
+	glEnable(GL_BLEND);												// Enable blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);				// Set blending mode to standard alpha blending
 
 	//Needed?
@@ -477,7 +493,6 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
  * 		title, the title of the window to put on the top window bar
  */
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title) {
-	mutexLock mlock(buffer);
 	index = 0;
 
 	title_ = title;
@@ -492,8 +507,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 	myShapes = new Array<Shape*>(b);										// Initialize myShapes
 	myBuffer = new Array<Shape*>(b);
 	vertexData = new float[6*b];											// Buffer for vertexes for points
-	for (int i = 0; i < 6*b; i++)
-		vertexData[i] = -1;
 	showFPS = false;														// Set debugging FPS to false
 	isFinished = false;														// We're not done rendering
 	allPoints = false;
@@ -504,7 +517,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 
 	timer = new Timer(FRAME);
 	for (int i = 0; i <= GLFW_KEY_LAST*2+1; boundKeys[i++] = nullptr);
-	mlock.unlock();
 }
 
 void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {

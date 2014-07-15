@@ -53,8 +53,13 @@ public:
 
 	// Sleep the thread until the period has passed
 	void sleep() {
+//		if (lastTime + period_ < highResClock::now()) std::cout << "no sleep" << std::endl;
 		std::this_thread::sleep_until(lastTime + period_);
 		lastTime = highResClock::now();
+	}
+
+	static void threadSleepFor(double duration) {
+		std::this_thread::sleep_for(std::chrono::duration<double>(duration));
 	}
 };
 
