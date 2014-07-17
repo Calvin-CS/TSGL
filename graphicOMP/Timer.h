@@ -12,12 +12,14 @@
 #include <thread>        // For sleeping
 
 typedef std::chrono::high_resolution_clock highResClock;
+typedef std::chrono::duration<double> duration_d;
+typedef std::chrono::time_point<highResClock, duration_d> timepoint_d;
 
 class Timer {
  private:
     unsigned int lastRep;
     std::chrono::duration<double> period_;
-    highResClock::time_point startTime, lastTime;
+    timepoint_d startTime, lastTime;
  public:
     Timer(double period) {
         reset(period);
@@ -48,19 +50,20 @@ class Timer {
     // Changes the period to the given interval
     void reset(double period) {
         startTime = lastTime = highResClock::now();
-        period_ = std::chrono::duration<double>(period);
+        period_ = duration_d(period);
         lastRep = 0;
     }
 
     // Sleep the thread until the period has passed
     void sleep() {
-//        if (lastTime + period_ < highResClock::now()) std::cout << "no sleep" << std::endl;
-        std::this_thread::sleep_until(lastTime + period_);
-        lastTime = highResClock::now();
+        lastTime = lastTime + period_;
+//        if (lastTime <= highResClock::now()) std::cout << "no sleep" << std::endl;
+        std::this_thread::sleep_until(lastTime);
     }
 
+    // Sleep the thread for a specified duration
     static void threadSleepFor(double duration) {
-        std::this_thread::sleep_for(std::chrono::duration<double>(duration));
+        std::this_thread::sleep_for(duration_d(duration));
     }
 };
 
