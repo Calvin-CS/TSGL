@@ -10,11 +10,11 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
     if (loadedTextures.find(filename) == loadedTextures.end()) {  // Load the image if we haven't already
         std::string extension = filename.substr(filename.find_last_of('.'), 5);
         if (extension == ".png")
-            loadedTextures[filename] = loadTextureFromPNG(filename, width, height, texture);
+            loadedTextures[filename] = loadTextureFromPNG(filename.c_str(), width, height, texture);
         else if (extension == ".jpg" || extension == ".jpeg")
-            loadedTextures[filename] = loadTextureFromJPG(filename, width, height, texture);
-        else if (extension == ".bmp") loadedTextures[filename] = loadTextureFromBMP(filename, width, height,
-                                                                                    texture);
+            loadedTextures[filename] = loadTextureFromJPG(filename.c_str(), width, height, texture);
+        else if (extension == ".bmp")
+            loadedTextures[filename] = loadTextureFromBMP(filename.c_str(), width, height, texture);
     } else {
         texture = loadedTextures[filename];
     }
@@ -22,12 +22,24 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
     return texture;
 }
 
-GLuint ImageLoader::loadTextureFromPNG(std::string file_name, int &width, int &height, GLuint &texture) const {
+bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) {
+    std::string extension = filename.substr(filename.find_last_of('.'), 5);
+    bool success = false;
+    if (extension == ".png")
+        success = saveToPNG(filename.c_str(), pixels, w, h);
+    else if (extension == ".jpg" || extension == ".jpeg")
+        std::cout << "JPG saving not done yet" << std::endl;
+    else if (extension == ".bmp")
+        std::cout << "BMP saving not done yet" << std::endl;
+    return success;
+}
+
+GLuint ImageLoader::loadTextureFromPNG(const char*file_name, int &width, int &height, GLuint &texture) const {
     png_byte header[8];
 
-    FILE* fp = fopen(file_name.c_str(), "rb");
+    FILE* fp = fopen(file_name, "rb");
     if (fp == 0) {
-        perror(file_name.c_str());
+        perror(file_name);
         return 0;
     }
 
@@ -35,7 +47,7 @@ GLuint ImageLoader::loadTextureFromPNG(std::string file_name, int &width, int &h
     fread(header, 1, 8, fp);
 
     if (png_sig_cmp(header, 0, 8)) {
-        fprintf(stderr, "error: %s is not a PNG.\n", file_name.c_str());
+        fprintf(stderr, "error: %s is not a PNG.\n", file_name);
         fclose(fp);
         return 0;
     }
@@ -149,7 +161,7 @@ GLuint ImageLoader::loadTextureFromPNG(std::string file_name, int &width, int &h
     return texture;
 }
 
-GLuint ImageLoader::loadTextureFromBMP(std::string file_name, int &width, int &height, GLuint &texture) const {
+GLuint ImageLoader::loadTextureFromBMP(const char* file_name, int &width, int &height, GLuint &texture) const {
     // Adapted from http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/#Loading__BMP_images_yourself
 
     // Data read from the header of the BMP file
@@ -160,7 +172,7 @@ GLuint ImageLoader::loadTextureFromBMP(std::string file_name, int &width, int &h
     unsigned char * data;
 
     // Open the file
-    FILE * file = fopen(file_name.c_str(), "rb");
+    FILE * file = fopen(file_name, "rb");
     if (!file) {
         printf("Image could not be opened\n");
         return 0;
@@ -264,7 +276,7 @@ void ImageLoader::my_error_exit(j_common_ptr cinfo) {
     longjmp(myerr->setjmp_buffer, 1);
 }
 
-GLuint ImageLoader::loadTextureFromJPG(std::string filename, int &width, int &height, GLuint &texture) const {
+GLuint ImageLoader::loadTextureFromJPG(const char* filename, int &width, int &height, GLuint &texture) const {
     /* This struct contains the JPEG decompression parameters and pointers to
      * working space (which is allocated as needed by the JPEG library).
      */
@@ -279,9 +291,9 @@ GLuint ImageLoader::loadTextureFromJPG(std::string filename, int &width, int &he
      * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
      * requires it in order to read binary files.
      */
-    FILE* infile = fopen(filename.c_str(), "rb");
+    FILE* infile = fopen(filename, "rb");
     if (infile == NULL) {
-        fprintf(stderr, "Can't open %s\n", filename.c_str());
+        fprintf(stderr, "Can't open %s\n", filename);
         return false;
     }
 
@@ -363,4 +375,47 @@ GLuint ImageLoader::loadTextureFromJPG(std::string filename, int &width, int &he
     if (jerr.pub.num_warnings != 0) return false;
 
     return texture;
+}
+
+bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h) {
+    png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
+    if (!png) return false;
+
+    png_infop info = png_create_info_struct(png);
+    if (!info) {
+        png_destroy_write_struct(&png, &info);
+        return false;
+    }
+
+    FILE *fp = fopen(filename, "wb");
+    if (!fp) {
+        png_destroy_write_struct(&png, &info);
+        return false;
+    }
+
+    png_init_io(png, fp);
+    png_set_IHDR(png, info, w, h, 8 /* depth */, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
+                 PNG_FILTER_TYPE_BASE);
+    png_colorp palette = (png_colorp) png_malloc(png, PNG_MAX_PALETTE_LENGTH * sizeof(png_color));
+    if (!palette) {
+        fclose(fp);
+        png_destroy_write_struct(&png, &info);
+        return false;
+    }
+    png_set_PLTE(png, info, palette, PNG_MAX_PALETTE_LENGTH);
+    png_write_info(png, info);
+    png_set_packing(png);
+
+    png_bytepp rows = (png_bytepp) png_malloc(png, h * sizeof(png_bytep));
+    for (int i = 0; i < h; ++i)
+        rows[i] = (png_bytep) (pixels + (h - i) * w * 3);
+
+    png_write_image(png, rows);
+    png_write_end(png, info);
+    png_free(png, palette);
+    png_destroy_write_struct(&png, &info);
+
+    fclose(fp);
+    delete[] rows;
+    return true;
 }
