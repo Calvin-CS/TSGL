@@ -35,7 +35,6 @@
 
 // GL libraries
 #include <GL/gl.h>          // For GL functions
-#include <GL/glew.h>        // For GL drawing calls (used only by shape)
 #include <GLFW/glfw3.h>     // For window creation and management
 
 #define FPS 60              // Frames per second
@@ -58,15 +57,17 @@ private:
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
-    ImageLoader     loader;
+    ImageLoader     loader;                                             // The ImageLoader that holds all our already loaded textures
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
     Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
-    unsigned int    pointBufferPosition, pointLastPosition;
+    std::mutex      pointArray;                                         // Mutex for the allPoints array
+    unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
     float           realFPS;                                            // Actual FPS of drawing
     std::thread     renderThread;                                       // Thread dedicated to rendering the Canvas
+    uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
     GLuint          shaderFragment,                                     // Address of the fragment shader
                     shaderProgram,                                      // Addres of the shader program to send to the GPU
@@ -88,29 +89,29 @@ private:
                     uniProj;                                            // Projection of the camera
     GLuint          vertexArray,                                        // Address of GL's array buffer object
                     vertexBuffer;                                       // Address of GL's vertex buffer object
-    float*          vertexData;
+    float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
 
     static void buttonCallback(GLFWwindow* window, int key,
-                               int action, int mods);
+                               int action, int mods);                   // GLFW callback for mouse buttons
     void        draw();                                                 // Method for drawing the canvas and the shapes within
     void        init(int xx,int yy,int ww,int hh,
                      unsigned int b,std::string title);                 // Method for initializing the canvas
     void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
     static void keyCallback(GLFWwindow* window, int key,
-                            int scancode, int action, int mods);
+                            int scancode, int action, int mods);        // GLFW callback for keys
     static void scrollCallback(GLFWwindow* window, double xpos,
-                               double ypos);
+                               double ypos);                            // GLFW callback for scrolling
     void        SetupCamera();                                          // Setup the 2D camera for smooth rendering
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
     void        textureShaders(bool state);                             // Turn textures on or off
 protected:
-    void     drawShape(Shape* s);
+    void     drawShape(Shape* s);                                       // Draw a shape type
 public:
     Canvas(unsigned int b);                                             // Default constructor for our Canvas
     Canvas(int xx, int yy, int w, int h,
-            unsigned int b, std::string title = "");                    // Explicit constructor for our Canvas
+           unsigned int b, std::string title = "");                     // Explicit constructor for our Canvas
     virtual ~Canvas();
 
     void     bindToButton(Key button, Action a, voidFunction f);        // Bind a method to a mouse button or key
@@ -128,26 +129,25 @@ public:
     virtual void drawShinyPolygon(int size, int x[], int y[],
             RGBfloatType color[]);                                      // Draws a polygon of with given number of vertices with shading across it
     virtual void drawText(std::string s, int x, int y,
-                RGBfloatType color = BLACK);                            // Draws a string of text at the given coordinates with the given color
+            RGBfloatType color = BLACK);                                // Draws a string of text at the given coordinates with the given color
     virtual void drawTriangle(int x1, int y1, int x2, int y2,
             int x3, int y3, RGBfloatType color = BLACK);                // Draws a triangle with the given vertices and color
 
     int      end();                                                     // Function to end rendering our Canvas
-
-    GLfloat* getScreen();
 
     int      getFrameNumber()      { return framecounter; }             // Accessor for the number of frames rendered so far
     float    getFPS()              { return realFPS; }                  // Accessor for actual FPS
     bool     getIsOpen()           { return !isFinished; }              // Returns if the window is closed
     int      getMouseX()           { return mouseX; }                   // Returns the screen X coordinate of the mouse
     int      getMouseY()           { return mouseY; }                   // Returns the screen Y coordinate of the mouse
+    uint8_t* getScreenBuffer()     { return screenBuffer; }             // Returns a pointer to a copy of the screen
     double   getTime();                                                 // Returns the time since initialization
     int      getWindowWidth()      { return winWidth; }                 // Accessor for the window width
     int      getWindowHeight()     { return winHeight; }                // Accessor for the window height
     int      getWindowX()          { return monitorX; }                 // Accessor for the monitor x coord
     int      getWindowY()          { return monitorY; }                 // Accessor for the monitor y coord
 
-    void     setOnlyPoints(bool b) { allPoints = b; while (!started);}  // Whether we're only drawing points
+    void     setOnlyPoints(bool b) { allPoints = b; }                   // Whether we're only drawing points
     void     setShowFPS(bool b)    { showFPS = b; }                     // Mutator to show debugging FPS
     void     setBackgroundColor(RGBfloatType color);                    // Changes the background color
 

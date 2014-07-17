@@ -48,7 +48,7 @@ static const GLchar* textureFragmentSource = "#version 150\n"
  * Returns: a new 800x600 Canvas on the top left of the screen with no title
  */
 Canvas::Canvas(unsigned int b) {
-    init(0, 0, 800, 600, b, "");
+    init(0, 0, 400*3, 300*3, b, "");
 }
 
 /*
@@ -161,9 +161,9 @@ void Canvas::draw() {
         unsigned int size = myShapes->size();
         if (size == myShapes->capacity()) std::cerr << "BUFFER OVERFLOW" << std::endl;
         if (allPoints) {
-            mBufferLock.lock();
+            mutexLock mLock(pointArray);
             int pos = pointBufferPosition;
-            mBufferLock.unlock();
+            mLock.unlock();
             int posLast = pointLastPosition;
             pointLastPosition = pos;
 
@@ -189,6 +189,9 @@ void Canvas::draw() {
                 }
             }
 
+        // Update our screenBuffer copy with the screen
+        glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
         glFlush();
         glDrawBuffer(GL_BACK_LEFT);
@@ -197,6 +200,8 @@ void Canvas::draw() {
         glfwPollEvents();                            // Handle any I/O
         glfwGetCursorPos(window, &mouseX, &mouseY);
         glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
+
+
     }
 }
 
@@ -240,13 +245,12 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
 void Canvas::drawPoint(int x, int y, RGBfloatType color) {
     Point* p = new Point(x, y, color);  // Creates the Point with the specified coordinates and color
     if (allPoints) {
-        mutexLock mlock(buffer);
+        mutexLock mlock(pointArray);
         if (pointBufferPosition >= myShapes->capacity()) {
             loopAround = true;
             pointBufferPosition = 0;
         }
-        int tempPos = pointBufferPosition * 6;
-        pointBufferPosition++;
+        int tempPos = pointBufferPosition++ * 6;
         for (unsigned j = 0; j < 6; j++)
             vertexData[tempPos + j] = p->vertices[j];
         mlock.unlock();
@@ -331,19 +335,7 @@ double Canvas::getTime() {
         / 1000000.0;
 }
 
-GLfloat* Canvas::getScreen() {
-    glReadBuffer(GL_BACK_LEFT);
-//    float* buffer = new float[winWidth * winHeight * 3];
-    GLfloat* buffer = new GLfloat[3];
-//    glBufferData(GL_PIXEL_UNPACK_BUFFER, winWidth * winHeight * 6, NULL, GL_DYNAMIC_COPY);
-    glReadPixels(0, 0, 1, 1, GL_RGB, GL_FLOAT, buffer);
-    if (glGetError()) printf("GL ERROR\n");
-
-    return buffer;
-}
-
 void Canvas::glInit() {
-
     // Create a Window and the Context
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
@@ -353,11 +345,6 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
-//    glViewport(0,0,winWidth, winHeight);
-//    glMatrixMode(GL_PROJECTION);
-//    glLoadIdentity();
-//    glOrtho(0.0f, winWidth, winHeight, 0.0f, 0.0f, 1.0f);
-
     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), nullptr, nullptr);  // Windowed
 
     const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
@@ -366,12 +353,6 @@ void Canvas::glInit() {
     glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
     glfwShowWindow(window);                 // Show the window
     glfwSetWindowUserPointer(window, this);
-
-    glPointSize(1.49);
-    float* things = new float[2];
-    glGetFloatv(GL_POINT_SIZE_GRANULARITY, things);
-    std::cout << things[0] << " " << things[1] << std::endl;
-    delete things;
 
     // Enable and disable necessary stuff
     glDisable(GL_DEPTH_TEST);                           // Disable depth testing because we're not drawing in 3d
@@ -499,6 +480,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     aspect = (float) winWidth / winHeight;
     keyDown = false;
     framecounter = 0;
+    screenBuffer = new uint8_t[3 * winWidth * winHeight];
+
 
     toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet

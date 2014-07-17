@@ -131,7 +131,7 @@ void spectrumFunction(Canvas& can) {
 
 void mandelbrotFunction(CartesianCanvas& can) {
     const unsigned int THREADS = 32;  //omp_get_num_procs();
-    const unsigned int DEPTH = MAX_COLOR;
+    const unsigned int DEPTH = MAX_COLOR*2;
     Timer t(FRAME / 2);
     Decimal firstX, firstY, secondX, secondY;
     bool toRender = true;
@@ -186,7 +186,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
                     } else {
                         // Otherwise, draw it with color based on how long it took
                         can.drawPoint(col, row,
-                            RGBintToRGBfloat(iterations % 151, (iterations % 131) + 50, iterations % 255));
+                            RGBintToRGBfloat(iterations % 151, ((iterations % 131) + omp_get_thread_num() * 128 / THREADS) % 255, iterations % 255));
                     }
                     if (toRender) break;
                 }
@@ -364,55 +364,59 @@ void langtonRainbowFunction(CartesianCanvas& can) {
 }
 
 void dumbSortFunction(Canvas& can) {
-    const int SIZE = 350,   // Size of the data pool
+    const int SIZE = 550,   // Size of the data pool
         IPF = 50;           // Iterations per frame
     int numbers[SIZE];      // Array to store the data
     int pos = 0, temp, min = 1, max = SIZE - 1, lastSwap = 0;
     bool goingUp = true;
     for (int i = 0; i < SIZE; i++)
-        numbers[i] = rand() % SIZE;
-    Timer t(FRAME / IPF);
+        numbers[i] = rand() % (can.getWindowHeight() - 40);
+    Timer t(FRAME);
     while (can.getIsOpen()) {
         t.sleep();
-        if (min == max)  // We are done sorting
-        return;
-        if (goingUp) {
-            if (numbers[pos] > numbers[pos + 1]) {
-                temp = numbers[pos];
-                numbers[pos] = numbers[pos + 1];
-                numbers[pos + 1] = temp;
-                lastSwap = pos;
+        if (min >= max) return;  // We are done sorting
+
+        for (int i = 0; i < IPF; i++) {
+            if (goingUp) {
+                if (numbers[pos] > numbers[pos + 1]) {
+                    temp = numbers[pos];
+                    numbers[pos] = numbers[pos + 1];
+                    numbers[pos + 1] = temp;
+                    lastSwap = pos;
+                }
+                if (pos >= max) {
+                    pos = max;
+                    max = (lastSwap < max) ? lastSwap : max - 1;
+                    goingUp = !goingUp;
+                } else
+                    pos++;
+            } else {
+                if (numbers[pos] < numbers[pos - 1]) {
+                    temp = numbers[pos];
+                    numbers[pos] = numbers[pos - 1];
+                    numbers[pos - 1] = temp;
+                    lastSwap = pos;
+                }
+                if (pos <= min) {
+                    pos = min;
+                    min = (lastSwap > min) ? lastSwap : min + 1;
+                    goingUp = !goingUp;
+                } else
+                    pos--;
             }
-            if (pos >= max) {
-                pos = max;
-                max = (lastSwap < max) ? lastSwap : max - 1;
-                goingUp = !goingUp;
-            } else
-                pos++;
-        } else {
-            if (numbers[pos] < numbers[pos - 1]) {
-                temp = numbers[pos];
-                numbers[pos] = numbers[pos - 1];
-                numbers[pos - 1] = temp;
-                lastSwap = pos;
-            }
-            if (pos <= min) {
-                pos = min;
-                min = (lastSwap > min) ? lastSwap : min + 1;
-                goingUp = !goingUp;
-            } else
-                pos--;
         }
+
         can.drawRectangle(0, 0, can.getWindowWidth(), can.getWindowHeight(),
-                          RGBintToRGBfloat(MAX_COLOR / 2, MAX_COLOR / 2, MAX_COLOR / 2));
+                                          RGBintToRGBfloat(MAX_COLOR / 2, MAX_COLOR / 2, MAX_COLOR / 2));
         int start = 50, width = 1, height;
-        for (int i = 0; i < SIZE; i++) {
+        RGBfloatType color;
+        for (int i = 0; i < SIZE; i++, start += width * 2) {
             height = numbers[i];
             if (i == pos)
-                can.drawRectangle(start, 580 - height, width, height, RGBintToRGBfloat(MAX_COLOR, MAX_COLOR, 0));
+                color = RGBintToRGBfloat(MAX_COLOR, MAX_COLOR, 0);
             else
-                can.drawRectangle(start, 580 - height, width, height, RGBintToRGBfloat(MAX_COLOR, 0, 0));
-            start += width + 1;
+                color = RGBintToRGBfloat(MAX_COLOR, 0, 0);
+            can.drawRectangle(start, can.getWindowHeight() - 20 - height, width, height, color);
         }
     }
 }
@@ -579,10 +583,14 @@ void alphaLangtonFunction(CartesianCanvas& can) {
     Timer pulse(28.72 / 60);
     double time = pulse.getTime();
 
-    can.bindToButton(PG_MOUSE_LEFT, PG_PRESS, [&pulse, &time]() {
+    auto tempo = [&can, &pulse, &time]() {
+        std::cout << (pulse.getTime() - time) << std::endl;
         pulse.reset(pulse.getTime() - time);
         time = pulse.getTime();
-    });
+        can.clear();
+    };
+    can.bindToButton(PG_MOUSE_LEFT, PG_PRESS, tempo);
+    can.bindToButton(PG_ENTER, PG_PRESS, tempo);
     can.bindToButton(PG_SPACE, PG_PRESS, [&can]() {
         can.clear();
     });
@@ -742,10 +750,10 @@ void novaFunction(CartesianCanvas& can) {
     }
 }
 
-void voronoiFunction(CartesianCanvas& can) {
-    const int WINDOW_W = can.getCartWidth(),        // Set the screen sizes
-              WINDOW_H = can.getCartHeight(),
-              POINTS = 100;                         // Set the number of control points
+void voronoiFunction(Canvas& can) {
+    const int WINDOW_W = can.getWindowWidth(),        // Set the screen sizes
+              WINDOW_H = can.getWindowHeight(),
+              POINTS = 100*4;                         // Set the number of control points
     can.setOnlyPoints(true);
     srand(time(NULL));                              // Seed the random number generator
     int* x = new int[POINTS]();                     // Initialize an array for POINTS x coords
@@ -771,7 +779,7 @@ void voronoiFunction(CartesianCanvas& can) {
         yc = blendedColor(tc, bc, yy);              // Do the same for top and bottom
         color[i] = blendedColor(xc, yc, 0.5f);      // Complete the 4-way interpolation
     }
-#pragma omp parallel for private(bdist, xd, yd, dist, bestk)
+    #pragma omp parallel for private(bdist, xd, yd, dist, bestk)
     for (int i = 0; i < WINDOW_W; i++) {            // For each individual point...
         for (int j = 0; j < WINDOW_H; j++) {
             bdist = 9999;                           // Reset the best distance
@@ -787,6 +795,8 @@ void voronoiFunction(CartesianCanvas& can) {
             kvalue[i * WINDOW_H + j] = bestk;
             can.drawPoint(i, j, color[bestk]);      // Draw the point with the closest control's color
             if (bdist > wdist[bestk]) wdist[bestk] = bdist;
+
+            if (!can.getIsOpen()) break;
         }
     }
     delete x;
@@ -794,9 +804,9 @@ void voronoiFunction(CartesianCanvas& can) {
     delete kvalue;
 }
 
-void shadedVoronoiFunction(CartesianCanvas& can) {
-    const int WINDOW_W = can.getCartWidth(),        // Set the screen sizes
-              WINDOW_H = can.getCartHeight(),
+void shadedVoronoiFunction(Canvas& can) {
+    const int WINDOW_W = can.getWindowWidth(),        // Set the screen sizes
+              WINDOW_H = can.getWindowHeight(),
               POINTS = 100;                         // Set the number of control points
     can.setOnlyPoints(true);
     srand(time(NULL));                              // Seed the random number generator
@@ -846,6 +856,8 @@ void shadedVoronoiFunction(CartesianCanvas& can) {
             kvalue2[i * WINDOW_H + j] = nextbestk;
             can.drawPoint(i, j, color[bestk]);      // Draw the point with the closest control's color
             if (bdist > wdist[bestk]) wdist[bestk] = bdist;
+
+            if (!can.getIsOpen()) break;
         }
     }
     for (int i = 0; i < WINDOW_W; i++) {            // For each individual point...
@@ -866,6 +878,8 @@ void shadedVoronoiFunction(CartesianCanvas& can) {
                 shading = 1;
             else if (shading < 0) shading = 0;
             can.drawPoint(i, j, { 0, 0, 0, shading });  // Draw the point with the closest control's color
+
+            if (!can.getIsOpen()) break;
         }
     }
     delete x;
@@ -981,7 +995,9 @@ void imageCartFunction(Cart& can) {
 void highData(Canvas& can) {
     Timer t(FRAME);
     can.setOnlyPoints(true);
-    unsigned int reps, width = can.getWindowWidth(), height = can.getWindowHeight();
+    unsigned int reps,
+                 width = can.getWindowWidth(),
+                 height = can.getWindowHeight();
     while (can.getIsOpen()) {
         reps = t.getReps();
         for (unsigned int i = 0; i < width; i++) {
@@ -1090,11 +1106,33 @@ void pongFunction(Canvas& can) {
 }
 
 void getPixelsFunction(Canvas& can) {
+    const int THREADS = 8;
+    Timer t(FRAME);
     can.drawImage("data/test.png", 0, 0, 800, 600);
+    unsigned int width = can.getWindowWidth(),
+                 height = can.getWindowHeight();
     Timer::threadSleepFor(1.0);
-    GLfloat* buffer = can.getScreen();
-    std::cout << buffer << std::endl;
-    delete buffer;
+    can.setOnlyPoints(true);
+    uint8_t* buffer = can.getScreenBuffer();
+    unsigned int blocksize = (double)height / THREADS;
+
+    while (can.getIsOpen()) {
+        #pragma omp parallel num_threads(THREADS)
+        {
+            unsigned int row = blocksize * omp_get_thread_num();
+            for (unsigned int y = row; y < row + blocksize; y++) {
+                int index = y*width*3;
+                for (unsigned int x = 0; x < width; x++) {
+                    can.drawPoint(x, height-y, RGBintToRGBfloat((1+buffer[index]) % 256, (1+buffer[index+1]) % 256,
+                                                                (1+buffer[index+2]) % 256));
+                    index += 3;
+                }
+            }
+        }
+        t.sleep();
+    }
+    ImageLoader::saveImageToFile("test.png", buffer, width, height);
+
 }
 
 void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
@@ -1117,10 +1155,11 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, RGBfloatType bg = GR
         c.setShowFPS(false);
         print(c.getTime());
     }
+    print(c.getTime());
     c.end();
 }
 
-const int WINDOW_W = 800, WINDOW_H = 600;
+const int WINDOW_W = 400*3, WINDOW_H = 300*3;
 
 int main() {
     glfwInit();  // Initialize GLFW
@@ -1139,7 +1178,7 @@ int main() {
 //            Canvas c5(65536);
 //            test(c5,spectrumFunction,false);
 //            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 5000000);
-//            test(c6,mandelbrotFunction,true);
+//            test(c6,mandelbrotFunction,false);
 //            Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
 //            test(c7,langtonFunction,false);
 //            Cart c8(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
@@ -1162,20 +1201,20 @@ int main() {
 //            Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
 //            test(c15,alphaRectangleFunction,false,BLACK);
 //            Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
-//            test(c16,alphaLangtonFunction,true,BLACK);
+//            test(c16,alphaLangtonFunction,false,BLACK);
 //            Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
 //            test(c17,gradientMandelbrotFunction,true);
 //            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000);
 //            test(c18,novaFunction,true);
-//            Cart c19(0, 0, 900, 900, 0, 0, 900, 900, 810000);
+//            Canvas c19(0, 0, 1600, 1200, 810000);
 //            test(c19,voronoiFunction,true,WHITE);
-//            Cart c20(0, 0, 900, 900, 0, 0, 900, 900, 2000000);
+//            Canvas c20(0, 0, 1600, 1200, 2000000);
 //            test(c20,shadedVoronoiFunction,false,WHITE);
 //            Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 600000);
 //            test(c21,forestFireFunction,false);
-            Canvas c22(0,0,1200,600,100);
-            test(c22,imageFunction,false);
-//            Canvas c23(0, 0, 1200, 900, 1200 * 900);
+//            Canvas c22(0,0,1200,600,100);
+//            test(c22,imageFunction,false);
+//            Canvas c23(0, 0, 1200, 780, 1201 * 900);
 //            test(c23, highData, true);
 //            Canvas c24(10);
 //            test(c24,textFunction,true);
@@ -1185,8 +1224,8 @@ int main() {
 //            test(c26,imageCartFunction,false);
 //            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
 //            test(c27,textCartFunction,true);
-//            Canvas c28(500000);
-//            test(c28,getPixelsFunction,true);
+            Canvas c28(0, 0, 800, 600, 500000);
+            test(c28,getPixelsFunction,false);
 //        }
 //    }
     glfwTerminate();    // Release GLFW
