@@ -190,6 +190,8 @@ void Canvas::draw() {
             }
 
         // Update our screenBuffer copy with the screen
+//        glPixelStorei(GL_PACK_ALIGNMENT, 3);
+        // TODO: Be able to turn this on and off
         glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
 
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
@@ -243,7 +245,6 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
  *      color, the RGB color (optional)
  */
 void Canvas::drawPoint(int x, int y, RGBfloatType color) {
-    Point* p = new Point(x, y, color);  // Creates the Point with the specified coordinates and color
     if (allPoints) {
         mutexLock mlock(pointArray);
         if (pointBufferPosition >= myShapes->capacity()) {
@@ -251,12 +252,17 @@ void Canvas::drawPoint(int x, int y, RGBfloatType color) {
             pointBufferPosition = 0;
         }
         int tempPos = pointBufferPosition++ * 6;
-        for (unsigned j = 0; j < 6; j++)
-            vertexData[tempPos + j] = p->vertices[j];
+
+        vertexData[tempPos] = x;
+        vertexData[tempPos + 1] = y;
+        vertexData[tempPos + 2] = color.R;
+        vertexData[tempPos + 3] = color.G;
+        vertexData[tempPos + 4] = color.B;
+        vertexData[tempPos + 5] = color.A;
         mlock.unlock();
-        delete p;
     } else {
-        drawShape(p);  // Push it onto our drawing buffer
+        Point* p = new Point(x, y, color);  // Creates the Point with the specified coordinates and color
+        drawShape(p);                       // Push it onto our drawing buffer
     }
 }
 

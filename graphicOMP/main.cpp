@@ -199,9 +199,9 @@ void mandelbrotFunction(CartesianCanvas& can) {
     }
 }
 
-void langtonFunction(CartesianCanvas& can) {
-    const int WINDOW_W = can.getCartWidth(),  // Set the screen sizes
-              WINDOW_H = can.getCartHeight();
+void langtonFunction(Canvas& can) {
+    const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
+              WINDOW_H = can.getWindowHeight();
     bool* filled = new bool[WINDOW_W * WINDOW_H]();  // Create an empty bitmap for the window
     const int IPF = 1000;  // Iterations per frame
     int xx = WINDOW_W / 2,  // Start at the center
@@ -240,10 +240,10 @@ void langtonFunction(CartesianCanvas& can) {
     delete filled;
 }
 
-void langtonColonyFunction(CartesianCanvas& can) {
+void langtonColonyFunction(Canvas& can) {
     const int IPF = 1000,                       // Iterations per frame
-              WINDOW_W = can.getCartWidth(),    // Set the window sizes
-              WINDOW_H = can.getCartHeight(),
+              WINDOW_W = can.getWindowWidth(),  // Set the window sizes
+              WINDOW_H = can.getWindowHeight(),
               RADIUS = WINDOW_H / 6;            // How far apart to space the ants
     bool* filled = new bool[WINDOW_W * WINDOW_H]();  // Create an empty bitmap for the window
     int xx[4], yy[4], dir[4], red[4], green[4], blue[4];
@@ -306,10 +306,11 @@ void langtonColonyFunction(CartesianCanvas& can) {
     }
     delete filled;
 }
-void langtonRainbowFunction(CartesianCanvas& can) {
+void langtonRainbowFunction(Canvas& can) {
     const int IPF = 1000,                                               // Iterations per frame
-              WINDOW_W = can.getCartWidth(),                            // Set the window sizes
-              WINDOW_H = can.getCartHeight(), RADIUS = WINDOW_H / 6;    // How far apart to space the ants
+              WINDOW_W = can.getWindowWidth(),                          // Set the window sizes
+              WINDOW_H = can.getWindowHeight(),
+              RADIUS = WINDOW_H / 6;                                    // How far apart to space the ants
     bool* filled = new bool[WINDOW_W * WINDOW_H]();                     // Create an empty bitmap for the window
     int xx[4], yy[4], dir[4];
     xx[0] = WINDOW_W / 2 - RADIUS;
@@ -421,11 +422,11 @@ void dumbSortFunction(Canvas& can) {
     }
 }
 
-void colorWheelFunction(CartesianCanvas& can) {
+void colorWheelFunction(Canvas& can) {
     const int THREADS = NUM_COLORS,                 // Number of threads to compute with
               DELTA = NUM_COLORS / THREADS,         // Distance between threads to compute
-              WINDOW_CW = can.getCartWidth() / 2,   // Set the center of the window
-              WINDOW_CH = can.getCartHeight() / 2;
+              WINDOW_CW = can.getWindowWidth() / 2,   // Set the center of the window
+              WINDOW_CH = can.getWindowHeight() / 2;
     const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,  // Radius of wheel
     GRADIENT = 2 * M_PI / NUM_COLORS;               // Gap between wedges
     RGBfloatType color;
@@ -475,7 +476,7 @@ void functionFunction(CartesianCanvas& can) {
 }
 
 void cosineIntegralFunction(CartesianCanvas& can) {
-    Timer t(FRAME);
+    Timer t(FRAME/2);
     const unsigned int THREADS = 8;
     long double pw = can.getPixelWidth();
     Function* function1 = new CosineFunction;
@@ -494,11 +495,11 @@ void cosineIntegralFunction(CartesianCanvas& can) {
     delete function1;
 }
 
-void gradientWheelFunction(CartesianCanvas& can) {
+void gradientWheelFunction(Canvas& can) {
     const int THREADS = NUM_COLORS,                 // Number of threads to compute with
               DELTA = NUM_COLORS / THREADS,         // Distance between threads to compute
-              WINDOW_CW = can.getCartWidth() / 2,   // Center of the screen
-              WINDOW_CH = can.getCartHeight() / 2;
+              WINDOW_CW = can.getWindowWidth() / 2,   // Center of the screen
+              WINDOW_CH = can.getWindowHeight() / 2;
     const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,  // Radius of wheel
     GRADIENT = 2 * M_PI / NUM_COLORS;               // Gap between wedges
     int f;
@@ -510,7 +511,7 @@ void gradientWheelFunction(CartesianCanvas& can) {
         start[0] = f;
         for (int i = 1; i < THREADS; i++)           // Calculate the location and color of the
             start[i] = (start[i - 1] + DELTA) % NUM_COLORS;  // shapes by the location and frame
-#pragma omp parallel num_threads(THREADS)
+        #pragma omp parallel num_threads(THREADS)
         {
             RGBfloatType color[3];      // The arrays of colors for the vertices
             int xx[3], yy[3];           // Setup the arrays of values for vertices
@@ -528,15 +529,16 @@ void gradientWheelFunction(CartesianCanvas& can) {
                 color[i].A = 1.0;
             }
             xx[1] = WINDOW_CW + RADIUS * sin(GRADIENT * start[tid]);  // Add the next two vertices to around the circle
+            yy[1] = WINDOW_CH + RADIUS * cos(GRADIENT * start[tid]);
             xx[2] = WINDOW_CW + RADIUS * sin(GRADIENT * (start[tid] + 1));
             yy[2] = WINDOW_CH + RADIUS * cos(GRADIENT * (start[tid] + 1));
             can.drawShinyPolygon(3, xx, yy, color);
         }
     }
 }
-void alphaRectangleFunction(CartesianCanvas& can) {
-    const int WINDOW_W = can.getCartWidth(),  // Set the center of the window
-              WINDOW_H = can.getCartHeight();
+void alphaRectangleFunction(Canvas& can) {
+    const int WINDOW_W = can.getWindowWidth(),  // Set the center of the window
+              WINDOW_H = can.getWindowHeight();
     int a, b;
     Timer t(FRAME / 100);
     while (can.getIsOpen()) {
@@ -547,10 +549,10 @@ void alphaRectangleFunction(CartesianCanvas& can) {
                           RGBintToRGBfloat(rand() % MAX_COLOR, rand() % MAX_COLOR, rand() % MAX_COLOR, 16));
     }
 }
-void alphaLangtonFunction(CartesianCanvas& can) {
+void alphaLangtonFunction(Canvas& can) {
     const int IPF = 5000,                       // Iterations per frame
-              WINDOW_W = can.getCartWidth(),    // Set the window sizes
-              WINDOW_H = can.getCartHeight(),
+              WINDOW_W = can.getWindowWidth(),    // Set the window sizes
+              WINDOW_H = can.getWindowHeight(),
               RADIUS = WINDOW_H / 6;            // How far apart to space the ants
     bool* filled = new bool[WINDOW_W * WINDOW_H]();  // Create an empty bitmap for the window
     int xx[4], yy[4], dir[4], red[4], green[4], blue[4];
@@ -888,9 +890,9 @@ void shadedVoronoiFunction(Canvas& can) {
     delete kvalue2;
 }
 
-void forestFireFunction(CartesianCanvas& can) {
-    const int WINDOW_W = can.getCartWidth(),  // Set the screen sizes
-              WINDOW_H = can.getCartHeight();
+void forestFireFunction(Canvas& can) {
+    const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
+              WINDOW_H = can.getWindowHeight();
     const float LIFE = 10,
                 STRENGTH = 0.03,
                 MAXDIST = sqrt(WINDOW_W * WINDOW_W + WINDOW_H * WINDOW_H) / 2;
@@ -1106,7 +1108,7 @@ void pongFunction(Canvas& can) {
 }
 
 void getPixelsFunction(Canvas& can) {
-    const int THREADS = 8;
+    const int THREADS = 1;
     Timer t(FRAME);
     can.drawImage("data/test.png", 0, 0, 800, 600);
     unsigned int width = can.getWindowWidth(),
@@ -1159,7 +1161,7 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, RGBfloatType bg = GR
     c.end();
 }
 
-const int WINDOW_W = 400*3, WINDOW_H = 300*3;
+const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H;
 
 int main() {
     glfwInit();  // Initialize GLFW
@@ -1167,27 +1169,27 @@ int main() {
 //    {
 //        #pragma omp section
 //        {
-//            Canvas c1(480800);
+//            Canvas c1(BUFFER);
 //            test(c1,graydientFunction,true);
-//            Canvas c2(480800);
+//            Canvas c2(BUFFER);
 //            test(c2,colorPointsFunction,true);
-//            Canvas c3(100000);
+//            Canvas c3(BUFFER);
 //            test(c3,lineChainFunction,true,BLACK);
 //            Canvas c4(500);
 //            test(c4,lineFanFunction,false);
 //            Canvas c5(65536);
 //            test(c5,spectrumFunction,false);
-//            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 5000000);
+//            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
 //            test(c6,mandelbrotFunction,false);
-//            Cart c7(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 100000);
+//            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
 //            test(c7,langtonFunction,false);
-//            Cart c8(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
+//            Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
 //            test(c8,langtonColonyFunction,false);
-//            Cart c9(0, 0, WINDOW_H, WINDOW_H, 0, 0, WINDOW_H, WINDOW_H, 100000);
+//            Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
 //            test(c9,langtonRainbowFunction,true,BLACK);
 //            Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
 //            test(c10,dumbSortFunction,true);
-//            Cart c11(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
+//            Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
 //            test(c11,colorWheelFunction);
 //        }
 //        #pragma omp section
@@ -1196,25 +1198,25 @@ int main() {
 //            test(c12,functionFunction,true,WHITE);
 //            Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
 //            test(c13,cosineIntegralFunction,true,WHITE);
-//            Cart c14(0, 0, 1000, 1000, 0, 0, 1000, 1000, 512);
+//            Canvas c14(0, 0, 1000, 1000, 1024);
 //            test(c14,gradientWheelFunction,false,BLACK);
-//            Cart c15(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 512);
+//            Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
 //            test(c15,alphaRectangleFunction,false,BLACK);
-//            Cart c16(0, 0, 960, 960, 0, 0, 960, 960, 30000);
+//            Canvas c16(0, 0, 960, 960, 30000);
 //            test(c16,alphaLangtonFunction,false,BLACK);
-//            Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, 500000);
+//            Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
 //            test(c17,gradientMandelbrotFunction,true);
-//            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, 500000);
+//            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
 //            test(c18,novaFunction,true);
-//            Canvas c19(0, 0, 1600, 1200, 810000);
+//            Canvas c19(0, 0, 1600, 1200, BUFFER);
 //            test(c19,voronoiFunction,true,WHITE);
-//            Canvas c20(0, 0, 1600, 1200, 2000000);
+//            Canvas c20(0, 0, 1600, 1200, BUFFER);
 //            test(c20,shadedVoronoiFunction,false,WHITE);
-//            Cart c21(0, 0, WINDOW_W, WINDOW_H, 0, 0, WINDOW_W, WINDOW_H, 600000);
+//            Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
 //            test(c21,forestFireFunction,false);
 //            Canvas c22(0,0,1200,600,100);
 //            test(c22,imageFunction,false);
-//            Canvas c23(0, 0, 1200, 780, 1201 * 900);
+//            Canvas c23(0, 0, 1200, 900, 1201 * 900);
 //            test(c23, highData, true);
 //            Canvas c24(10);
 //            test(c24,textFunction,true);
@@ -1224,8 +1226,8 @@ int main() {
 //            test(c26,imageCartFunction,false);
 //            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
 //            test(c27,textCartFunction,true);
-            Canvas c28(0, 0, 800, 600, 500000);
-            test(c28,getPixelsFunction,false);
+//            Canvas c28(0, 0, 800, 600, 500000);
+//            test(c28,getPixelsFunction,false);
 //        }
 //    }
     glfwTerminate();    // Release GLFW
