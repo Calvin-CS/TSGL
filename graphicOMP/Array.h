@@ -29,7 +29,7 @@ class Array {
         delete[] myArray;
     }
 
-    /*
+    /*!
      * clear() empties the array and resets it
      */
     void clear() {
@@ -47,7 +47,7 @@ class Array {
         first_ = last_ = size_ = 0;                 // Reset all vars
     }
 
-    /*
+    /*!
      * shallowClear empties the array but does not delete the objects
      *  WILL RESULT IN MEMORY LEAK IF THE OBJECTS ARE NOT POINTED TO ANYWHERE ELSE!
      */
@@ -62,7 +62,7 @@ class Array {
         first_ = last_ = size_ = 0;                 // Reset all vars
     }
 
-    /*
+    /*!
      * operator[] returns the item at the index
      * Parameters:
      *      index, the index of where the item is
@@ -77,22 +77,22 @@ class Array {
             return myArray[(first_ + index) % capacity_];  // Wrap around for the underlying array
     }
 
-    /* size() returns the number of items in the array */
+    /*! size() returns the number of items in the array */
     unsigned int size() const {
         return size_;
     }
 
-    /* capacity() returns the maximum ammount of items the array can store */
+    /*! capacity() returns the maximum ammount of items the array can store */
     unsigned int capacity() const {
         return capacity_;
     }
 
-    /* isEmpty() returns true if the array has no items, false otherwise */
+    /*! isEmpty() returns true if the array has no items, false otherwise */
     bool isEmpty() const {
         return (size_ == 0);
     }
 
-    /*
+    /*!
      * push() adds the item to the end of the array. It will also remove the
      *  oldest item if the array is full
      * Parameters:

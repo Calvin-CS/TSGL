@@ -41,27 +41,11 @@ static const GLchar* textureFragmentSource = "#version 150\n"
     "    outColor = texture(tex, Texcoord) * vec4(Color);"
     "}";
 
-/*
- * Default constructor for the canvas class
- * Parameter:
- *      b, the buffer size for the Shapes
- * Returns: a new 800x600 Canvas on the top left of the screen with no title
- */
+
 Canvas::Canvas(unsigned int b) {
     init(0, 0, 400*3, 300*3, b, "");
 }
 
-/*
- * Explicit constructor for the canvas class
- * Parameters:
- *      xx, the x position of the Canvas window
- *      yy, the y position of the Canvas window
- *      w, the x dimension of the Canvas window
- *      h, the y dimension of the Canvas window
- *      b, the buffer size for the Shapes
- *      title, the title of the window
- * Returns: a new Canvas with the specified positional data and title
- */
 Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title) {
     init(xx, yy, w, h, b, title);
 }
@@ -90,9 +74,6 @@ Canvas::~Canvas() {
     glDeleteTextures(1, &tex);
 }
 
-/*
- * bindToButton binds a button or a key to a function pointer, and on that push, Canvas will call that method
- */
 void Canvas::bindToButton(Key button, Action a, voidFunction f) {
     boundKeys[button + a * (GLFW_KEY_LAST + 1)] = f;
 }
@@ -108,9 +89,6 @@ void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods
     if (&(can->boundKeys[index]) != nullptr) if (can->boundKeys[index]) can->boundKeys[index]();
 }
 
-/*
- * clear removes all shapes and sets the background to the set color
- */
 void Canvas::clear() {
     toClear = true;
 }
@@ -185,27 +163,6 @@ void Canvas::draw() {
             }
         }
 
-        // Update our screenBuffer copy with the screen
-//        glPixelStorei(GL_PACK_ALIGNMENT, 3);
-        // TODO: Be able to turn this on and off
-//        glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-//            std::stringstream ss;
-//            ss << "frames/Image";
-//
-//            int digits = 0, number = framecounter;
-//            if (number <= 0) digits = 1; // remove this line if '-' counts as a digit
-//            while (number) {
-//                number /= 10;
-//                digits++;
-//            }
-//            int padding = 6-digits;
-//            for (int i = 0; i < padding; i++) {
-//                ss << "0";
-//            }
-//
-//            ss << framecounter << ".png";
-//        ImageLoader::saveImageToFile(ss.str().c_str(), screenBuffer, winWidth, winHeight);
-
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
         glFlush();
         glDrawBuffer(GL_BACK_LEFT);
@@ -219,16 +176,7 @@ void Canvas::draw() {
     }
 }
 
-/*
- * drawCircle draws a circle with the given origin coordinates, radius, resolution, and color
- * Parameters:
- *      x, the x coordinate of the circle's origin
- *      y, the y coordinate of the circle's origin
- *      radius, the radius of the circle in pixels
- *      res, the number of sides to use in the circle
- *      color, the color of the circle [optional, default BLACK]
- *      filled, whether the circle should be filled (true) or not (false) [optional, default true]
- */
+
 void Canvas::drawCircle(int x, int y, int radius, int res, RGBfloatType color, bool filled) {
     float delta = 2.0f / res * 3.1415926585f;
     float oldX = 0, oldY = 0, newX = 0, newY = 0;
@@ -259,16 +207,6 @@ void Canvas::drawCircle(int x, int y, int radius, int res, RGBfloatType color, b
     }
 }
 
-/*
- * drawImage draws an image with the given coordinates and dimensions
- * Parameters:
- *      fname, the name of the file to load the image from
- *      x, the x coordinate of the Image's left edge
- *      y, the y coordinate of the Image's top edge
- *      w, the width of the Image
- *      h, the height of the Image
- *      a, the alpha to draw the Image with [optional, default 1.0]
- */
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //    glfwMakeContextCurrent(window);                       // We're drawing to window as soon as it's created
     Image* im = new Image(fname, loader, x, y, w, h, a);  // Creates the Image with the specified coordinates
@@ -276,27 +214,12 @@ void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //    glfwMakeContextCurrent(NULL);                         // We're drawing to window as soon as it's created
 }
 
-/*
- * drawLine draws a line at the given coordinates with the given color
- * Parameters:
- *      x1, the x position of the start of the line
- *      y1, the y position of the start of the line
- *      x2, the x position of the end of the line
- *      y2, the y position of the end of the line
- *      color, the RGB color [optional, default BLACK]
- */
 void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
     drawShape(l);                               // Push it onto our drawing buffer
 }
 
-/*
- * drawPoint draws a point at the given coordinates with the given color
- * Parameters:
- *      x, the x position of the point
- *      y, the y position of the point
- *      color, the RGB color [optional, default BLACK]
- */
+
 void Canvas::drawPoint(int x, int y, RGBfloatType color) {
     mutexLock mlock(pointArray);
     if (pointBufferPosition >= myShapes->capacity()) {
@@ -315,16 +238,7 @@ void Canvas::drawPoint(int x, int y, RGBfloatType color) {
     mlock.unlock();
 }
 
-/*
- * drawRectangle draws a rectangle with the given coordinates, dimensions, and color
- * Parameters:
- *      x, the x coordinate of the Rectangle's left edge
- *      y, the y coordinate of the Rectangle's top edge
- *      w, the width of the Rectangle
- *      h, the height of the Rectangle
- *      color, the RGB color [optional, default BLACK]
- *      filled, whether the rectangle should be filled (true) or not (false) [optional, default true]
- */
+
 void Canvas::drawRectangle(int x, int y, int w, int h, RGBfloatType color, bool filled) {
     if (filled) {
         Rectangle* rec = new Rectangle(x, y, w, h, color);  // Creates the Rectangle with the specified coordinates and color
@@ -347,15 +261,7 @@ inline void Canvas::drawShape(Shape* s) {
     mlock.unlock();
 }
 
-/*
- * drawShinyPolygon draws a ShinyPolygon with the given vertex data
- * Parameters:
- *      size, the number of vertices in the polygon
- *      x, an array of x positions of the vertices
- *      y, an array of y positions of the vertices
- *      color, an array of colors for the vertices [optional, default BLACK]
- *      filled, whether the shiny polygon should be filled (true) or not (false) [optional, default true]
- */
+
 void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], bool filled) {
     if (filled) {
         ShinyPolygon* p = new ShinyPolygon(size);
@@ -373,23 +279,13 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], 
     }
 }
 
+
 void Canvas::drawText(std::string s, int x, int y, RGBfloatType color) {
     Text* t = new Text(s, loader, x, y, color);  // Creates the Point with the specified coordinates and color
     drawShape(t);                                // Push it onto our drawing buffer
 }
 
-/*
- * drawTriangle draws a Triangle with the given vertices
- * Parameters:
- *      x1, the x position of the first vertex of the triangle
- *      y1, the y position of the first vertex of the triangle
- *      x2, the x position of the second vertex of the triangle
- *      y2, the y position of the second vertex of the triangle
- *      x3, the x position of the third vertex of the triangle
- *      y3, the y position of the third vertex of the triangle
- *      color, the RGB color [optional, default BLACK]
- *      filled, whether the triangle should be filled (true) or not (false) [optional, default true]
- */
+
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color, bool filled) {
     if (filled) {
         Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
@@ -405,17 +301,14 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBflo
     }
 }
 
-/*
- * end closes the Canvas
- * Returns: 0 if exit is successful, -1 if the canvas has not started yet
- */
+
 int Canvas::end() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
     renderThread.join();      // Blocks until ready to join, which will be when the window is closed
     return 0;
 }
 
-/*
+/*!
  * getTime returns the time elapsed since the Canvas has started drawing (in microseconds)
  */
 double Canvas::getTime() {
@@ -552,15 +445,14 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     buttonCallback(window, key, action, mods);
 }
 
-/*
+/*!
  * init initializes the Canvas with the values specified in the constructor
- * Parameters:
- *      xx, the x position of the Canvas window
- *      yy, the y position of the Canvas window
- *      width, the x dimension of the Canvas window
- *      height, the y dimension of the Canvas window
- *      b, the buffer size for the Shapes
- *      title, the title of the window to put on the top window bar
+ *      \param xx the x position of the Canvas window
+ *      \param yy the y position of the Canvas window
+ *      \param width the x dimension of the Canvas window
+ *      \param height the y dimension of the Canvas window
+ *      \param b the buffer size for the Shapes
+ *      \param title the title of the window to put on the top window bar
  */
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title) {
     title_ = title;
@@ -597,11 +489,7 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
     if (can->scrollFunction) can->scrollFunction(xpos, ypos);
 }
 
-/*
- * setBackgroundColor sets the background color
- * Parameters:
- *         color, the RGBfloatType with the color. The alpha channel is ignored
- */
+
 void Canvas::setBackgroundColor(RGBfloatType color) {
     delete clearRectangle;
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, color);
@@ -642,10 +530,6 @@ void Canvas::SetupCamera() {
     glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
 }
 
-/*
- * start starts rendering the Canvas
- * Returns: 0 if start is successful, -1 if the canvas has already started
- */
 int Canvas::start() {
     if (started) return -1;
     started = true;
@@ -666,7 +550,11 @@ void Canvas::takeScreenShot(std::string filename) {
 
     }
 }
-
+/*!
+ *  textureShaders toggles the texture shader on or off
+ *
+ *      \param on whether the texture shader is on or not
+ */
 void Canvas::textureShaders(bool on) {
     GLint program;
     if (!on) {

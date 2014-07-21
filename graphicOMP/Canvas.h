@@ -94,7 +94,9 @@ private:
 
     static void buttonCallback(GLFWwindow* window, int key,
                                int action, int mods);                   // GLFW callback for mouse buttons
-    void        draw();                                                 // Method for drawing the canvas and the shapes within
+
+    void        draw();
+
     void        init(int xx,int yy,int ww,int hh,
                      unsigned int b,std::string title);                 // Method for initializing the canvas
     void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
@@ -108,52 +110,248 @@ private:
 protected:
     void     drawShape(Shape* s);                                       // Draw a shape type
 public:
-    Canvas(unsigned int b);                                             // Default constructor for our Canvas
-    Canvas(int xx, int yy, int w, int h,
-           unsigned int b, std::string title = "");                     // Explicit constructor for our Canvas
+    /*!
+     * \brief Constructs a new Canvas.
+     * \details This is the default constructor for the Canvas class
+     *      \param b The size of the Canvas's internal vertex buffer.
+     *      \return A new 800x600 Canvas on the top left of the screen with no title
+     */
+    Canvas(unsigned int b);
+
+    /*!
+     * \brief Explicitly constructs a new Canvas.
+     * \details This is an explicit constructor for the Canvas class.
+     *      \param xx The x position of the Canvas window.
+     *      \param yy The y position of the Canvas window.
+     *      \param w The x dimension of the Canvas window.
+     *      \param h The y dimension of the Canvas window.
+     *      \param b The size of the Canvas's internal vertex buffer.
+     *      \param title The title of the window.
+     *      \return A new Canvas with the specified positional data and title.
+     */
+    Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title = "");
+
+    /*!
+     * \brief Destructor for the Canvas class.
+     */
     virtual ~Canvas();
 
-    void     bindToButton(Key button, Action a, voidFunction f);        // Bind a method to a mouse button or key
-    void     bindToScroll(std::function<void(double, double)> f);       // Bind a method to scrolling
-    void     clear();                                                   // Clears the canvas
+    /*!
+     * \brief Binds a key to a function.
+     * \details This function binds a a key to a function pointer.
+     * Upon pressing or releasing the given key, Canvas will call the specified function.
+     *      \param button The button to bind.
+     *      \param a The action to look out for (PG_PRESS or PG_RELEASE).
+     *      \param f The function to call upon action a on button.
+     */
+    void     bindToButton(Key button, Action a, voidFunction f);
 
-    virtual void drawCircle(int x, int y, int radius, int res,
-                RGBfloatType color = BLACK, bool filled = true);        // Draws a circle at the given coordinates with the given color
-    virtual void drawImage(std::string fname, int x, int y,
-            int w, int h, float a = 1.0f);                              // Draws an image at the given coordinates with the given dimensions
-    virtual void drawLine(int x1, int y1, int x2, int y2,
-            RGBfloatType color = BLACK);                                // Draws a line at the given coordinates with the given color
-    virtual void drawPoint(int x, int y,
-            RGBfloatType color = BLACK);                                // Draws a point at the given coordinates with the given color
-    virtual void drawRectangle(int x, int y, int w, int h,
-            RGBfloatType color = BLACK, bool filled = true);            // Draws a rectangle at the given coordinates with the given dimensions and color
-    virtual void drawShinyPolygon(int size, int x[], int y[],
-            RGBfloatType color[], bool filled = true);                  // Draws a polygon of with given number of vertices with shading across it
-    virtual void drawText(std::string s, int x, int y,
-            RGBfloatType color = BLACK);                                // Draws a string of text at the given coordinates with the given color
-    virtual void drawTriangle(int x1, int y1, int x2, int y2,
-            int x3, int y3, RGBfloatType color = BLACK,
-            bool filled = true);                                        // Draws a triangle with the given vertices and color
+    /*!
+     * \brief Binds the mouse wheel to a function.
+     * \details This function binds the mouse wheel to a function pointer.
+     * Upon scrolling, Canvas will call the specified function.
+     *      \param f A function taking x and y parameters to be called when the mouse is scrolled.
+     */
+    void     bindToScroll(std::function<void(double, double)> f);
 
-    int      end();                                                     // Function to end rendering our Canvas
+    /*!
+     * \brief Clears the Canvas.
+     * \details This function removes all shapes and sets the background to the color specified in setBackgroundColor().
+     */
+    void     clear();
 
-    int      getFrameNumber()      { return framecounter; }             // Accessor for the number of frames rendered so far
-    float    getFPS()              { return realFPS; }                  // Accessor for actual FPS
-    bool     getIsOpen()           { return !isFinished; }              // Returns if the window is closed
-    int      getMouseX()           { return mouseX; }                   // Returns the screen X coordinate of the mouse
-    int      getMouseY()           { return mouseY; }                   // Returns the screen Y coordinate of the mouse
-    uint8_t* getScreenBuffer()     { return screenBuffer; }             // Returns a pointer to a copy of the screen
-    double   getTime();                                                 // Returns the time since initialization
-    int      getWindowWidth()      { return winWidth; }                 // Accessor for the window width
-    int      getWindowHeight()     { return winHeight; }                // Accessor for the window height
-    int      getWindowX()          { return monitorX; }                 // Accessor for the monitor x coord
-    int      getWindowY()          { return monitorY; }                 // Accessor for the monitor y coord
+    /*!
+     * \brief Draw a circle.
+     * \details This function draws a circle with the given origin coordinates, radius, resolution (number of sides), and color.
+     *      \param x The x coordinate of the circle's origin.
+     *      \param y The y coordinate of the circle's origin.
+     *      \param radius The radius of the circle in pixels.
+     *      \param res The number of sides to use in the circle.
+     *      \param color The color of the circle.
+     *      \param filled Whether the circle should be filled.
+     */
+    virtual void drawCircle(int x, int y, int radius, int res, RGBfloatType color = BLACK, bool filled = true);
 
-    void     setShowFPS(bool b)    { showFPS = b; }                     // Mutator to show debugging FPS
-    void     setBackgroundColor(RGBfloatType color);                    // Changes the background color
+    /*!
+     * \brief Draw an image.
+     * \details This function draws an Image with the given coordinates and dimensions.
+     *      \param fname The name of the file to load the image from.
+     *      \param x The x coordinate of the Image's left edge.
+     *      \param y The y coordinate of the Image's top edge.
+     *      \param w The width of the Image.
+     *      \param h The height of the Image.
+     *      \param a The alpha with which to draw the Image.
+     */
+    virtual void drawImage(std::string fname, int x, int y, int w, int h, float a = 1.0f);
 
-    int      start();                                                   // Function to start rendering our Canvas
+    /*!
+     * \brief Draw a line.
+     * \details This function draws a Line at the given coordinates with the given color.
+     *      \param x1 The x position of the start of the line.
+     *      \param y1 The y position of the start of the line.
+     *      \param x2 The x position of the end of the line.
+     *      \param y2 The y position of the end of the line.
+     *      \param color The color of the line.
+     */
+    virtual void drawLine(int x1, int y1, int x2, int y2, RGBfloatType color = BLACK);
 
+    /*!
+     * \brief Draw a single pixel.
+     * \details This function draws a Point at the given coordinates with the given color.
+     *      \param x The x position of the point.
+     *      \param y The y position of the point.
+     *      \param color The color of the point.
+     */
+    virtual void drawPoint(int x, int y, RGBfloatType color = BLACK);
+
+    /*!
+     * \brief Draw a rectangle.
+     * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
+     *      \param x The x coordinate of the Rectangle's left edge.
+     *      \param y The y coordinate of the Rectangle's top edge.
+     *      \param w The width of the Rectangle.
+     *      \param h The height of the Rectangle.
+     *      \param color The color of the rectangle.
+     *      \param filled Whether the rectangle should be filled.
+     */
+    virtual void drawRectangle(int x, int y, int w, int h, RGBfloatType color = BLACK, bool filled = true);
+
+    /*!
+     * \brief Draw an arbitrary polygon with colored vertices.
+     * \details This function draws a ShinyPolygon with the given vertex data
+     *      \param size the number of vertices in the polygon
+     *      \param x an array of x positions of the vertices
+     *      \param y an array of y positions of the vertices
+     *      \param color an array of colors for the vertices
+     *      \param filled whether the shiny polygon should be filled (true) or not (false)
+     */
+    virtual void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], bool filled = true);
+
+    /*!
+     * \brief Draw a string of text.
+     * \details This function draws a given string of Text at the given coordinates with the given color.
+     *      \param s The string to draw.
+     *      \param x The x coordinate of the text's left bound.
+     *      \param y The y coordinate of the text's left bound.
+     *      \param color The color of the Text.
+     */
+    virtual void drawText(std::string s, int x, int y, RGBfloatType color = BLACK);
+
+    /*!
+     * \brief Draw a triangle.
+     * \details This function draws a Triangle with the given vertices.
+     *      \param x1 the x coordinate of the first vertex of the Triangle.
+     *      \param y1 the y coordinate of the first vertex of the Triangle.
+     *      \param x2 the x coordinate of the second vertex of the Triangle.
+     *      \param y2 the y coordinate of the second vertex of the Triangle.
+     *      \param x3 the x coordinate of the third vertex of the Triangle.
+     *      \param y3 the y coordinate of the third vertex of the Triangle.
+     *      \param color the color of the Triangle.
+     *      \param filled Whether the Triangle should be filled.
+     */
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color = BLACK, bool filled = true);
+
+    /*!
+     * \brief Closes the Canvas.
+     * \details This function stops rendering the Canvas.
+     *      \return 0 if exit is successful, -1 if the canvas has not started yet.
+     * \see start()
+     */
+    int      end();
+
+    /*!
+     * \brief Accessor for the current frame number.
+     *      \return The number of frames rendered so far.
+     */
+    int      getFrameNumber()      { return framecounter; }
+
+    /*!
+     * \brief Accessor for the current FPS.
+     *      \return The current actual FPS.
+     */
+    float    getFPS()              { return realFPS; }
+
+    /*!
+     * \brief Accessor for window's closed status.
+     *      \return Whether the window is still open (that is, the user has not closed it).
+     */
+    bool     getIsOpen()           { return !isFinished; }
+
+    /*!
+     * \brief Accessor for the mouse's x-position.
+     *      \return The x coordinates of the mouse on the Canvas.
+     */
+    int      getMouseX()           { return mouseX; }
+
+    /*!
+     * \brief Accessor for the mouse's y-position.
+     *      \return The y coordinates of the mouse on the Canvas.
+     */
+    int      getMouseY()           { return mouseY; }
+
+    /*!
+     * \brief Accessor for the Canvas's currently drawn image.
+     *      \return A pointer to the RGB pixel buffer for the current Canvas.
+     */
+    uint8_t* getScreenBuffer()     { return screenBuffer; }
+
+    /*!
+     * \brief Accessor for the time since the Canvas was initialized.
+     *      \return The time elapsed since the Canvas has started drawing (in microseconds).
+     */
+    double   getTime();
+
+    /*!
+     * \brief Accessor for the Canvas's width.
+     *      \return The width in pixels of the Canvas.
+     */
+    int      getWindowWidth()      { return winWidth; }
+
+    /*!
+     * \brief Accessor for the Canvas's height.
+     *      \return The height in pixels of the Canvas.
+     */
+    int      getWindowHeight()     { return winHeight; }
+
+    /*!
+     * \brief Accessor for the Canvas's x=position.
+     *      \return The x coordinate in pixels of the Canvas (0 = left of monitor).
+     */
+    int      getWindowX()          { return monitorX; }
+
+    /*!
+     * \brief Accessor for the Canvas's y-position.
+     *      \return The y coordinate in pixels of the Canvas (0 = top of monitor).
+     */
+    int      getWindowY()          { return monitorY; }
+
+    /*!
+     * \brief Mutator for showing the FPS.
+     *      \param b Whether to print the FPS to stdout every draw cycle (for debugging purposes).
+     */
+    void     setShowFPS(bool b)    { showFPS = b; }
+
+    /*!
+     * \brief Mutator for the background color.
+     * \details This function sets the color to clear to when Canvas::clear() is called.
+     *      \param color The color to clear to.
+     * \note The alpha channel of the color is ignored
+     */
+    void     setBackgroundColor(RGBfloatType color);
+
+    /*!
+     * \brief Opens the Canvas.
+     * \details This function starts rendering the Canvas.
+     *      \return 0 if start is successful, -1 if the canvas has already started.
+     * \see end()
+     */
+    int      start();
+
+    /*!
+     * \brief Takes a screenshot.
+     * This function saves a screenshot of the current Canvas to the working directory.
+     *      \param filename The name of the file to which the screen will be saved.
+     */
     void     takeScreenShot(std::string filename = "");
 };
 
