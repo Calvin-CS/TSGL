@@ -201,11 +201,11 @@ void langtonFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
               WINDOW_H = can.getWindowHeight();
     bool* filled = new bool[WINDOW_W * WINDOW_H]();  // Create an empty bitmap for the window
-    const int IPF = 1000;  // Iterations per frame
+    const int IPF = 1000;   // Iterations per frame
     int xx = WINDOW_W / 2,  // Start at the center
         yy = WINDOW_H / 2;
     int direction = UP;
-    Timer t(1.0 / (60.0 * IPF));
+    Timer t(1.0 / (FPS * IPF));
     while (can.getIsOpen()) {
         t.sleep();
         if (filled[xx + WINDOW_W * yy]) {
@@ -1101,7 +1101,9 @@ void getPixelsFunction(Canvas& can) {
     can.drawImage("data/test.png", 0, 0, 800, 600);
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
-    Timer::threadSleepFor(1.0);
+    can.setUpdateScreenCopy(true);
+    Timer::threadSleepFor(.25);
+    can.recordForNumFrames(100);
     uint8_t* buffer = can.getScreenBuffer();
     unsigned int blocksize = (double)height / THREADS;
 
@@ -1120,8 +1122,6 @@ void getPixelsFunction(Canvas& can) {
         }
         t.sleep();
     }
-    ImageLoader::saveImageToFile("test.png", buffer, width, height);
-
 }
 
 void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
@@ -1166,8 +1166,8 @@ int main() {
 //            test(c4,lineFanFunction,false);
 //            Canvas c5(65536);
 //            test(c5,spectrumFunction,false);
-            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-            test(c6,mandelbrotFunction,false);
+//            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+//            test(c6,mandelbrotFunction,false);
 //            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
 //            test(c7,langtonFunction,false);
 //            Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
@@ -1213,8 +1213,8 @@ int main() {
 //            test(c26,imageCartFunction,false);
 //            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
 //            test(c27,textCartFunction,true);
-//            Canvas c28(0, 0, 800, 600, 500000);
-//            test(c28,getPixelsFunction,false);
+            Canvas c28(0, 0, 800, 600, 500000);
+            test(c28,getPixelsFunction,false);
 //        }
 //    }
     glfwTerminate();    // Release GLFW

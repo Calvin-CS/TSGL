@@ -186,25 +186,13 @@ void Canvas::draw() {
         }
 
         // Update our screenBuffer copy with the screen
-//        glPixelStorei(GL_PACK_ALIGNMENT, 3);
-        // TODO: Be able to turn this on and off
-//        glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-//            std::stringstream ss;
-//            ss << "frames/Image";
-//
-//            int digits = 0, number = framecounter;
-//            if (number <= 0) digits = 1; // remove this line if '-' counts as a digit
-//            while (number) {
-//                number /= 10;
-//                digits++;
-//            }
-//            int padding = 6-digits;
-//            for (int i = 0; i < padding; i++) {
-//                ss << "0";
-//            }
-//
-//            ss << framecounter << ".png";
-//        ImageLoader::saveImageToFile(ss.str().c_str(), screenBuffer, winWidth, winHeight);
+        if (toUpdateScreenCopy || toRecord > 0) {
+            glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+            if (toRecord > 0) {
+                toRecord--;
+                screenShot();
+            }
+        }
 
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
         glFlush();
@@ -510,12 +498,35 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     isFinished = false;               // We're not done rendering
     pointBufferPosition = pointLastPosition = 0;
     loopAround = false;
+    toRecord = 0;
+    toUpdateScreenCopy = false;
 
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, GREY);
 
     timer = new Timer(FRAME);
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
+}
+
+void Canvas::screenShot() {
+    const unsigned int NUM_DIGITS = 6;
+
+    std::stringstream ss;
+    ss << "frames/Image";
+
+    int digits = 0, number = framecounter;
+    if (number <= 0) digits = 1; // remove this line if '-' counts as a digit
+    while (number) {
+        number /= 10;
+        digits++;
+    }
+    int padding = NUM_DIGITS - digits;
+    for (int i = 0; i < padding; i++) {
+        ss << "0";
+    }
+    ss << framecounter << ".png";
+
+    loader.saveImageToFile(ss.str().c_str(), screenBuffer, winWidth, winHeight);
 }
 
 void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
@@ -587,10 +598,16 @@ void Canvas::startDrawing(Canvas *c) {
     glfwDestroyWindow(c->window);
 }
 
-void Canvas::takeScreenShot(std::string filename) {
-    if (filename.size() == 0) {
+void Canvas::recordForNumFrames(unsigned int num_frames) {
+    toRecord = num_frames;
+}
 
-    }
+void Canvas::stopRecording() {
+    toRecord = 0;
+}
+
+void Canvas::takeScreenShot() {
+    if (toRecord == 0) toRecord = 1;
 }
 
 void Canvas::textureShaders(bool on) {

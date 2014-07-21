@@ -22,7 +22,7 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
     return texture;
 }
 
-bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) {
+bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const {
     std::string extension = filename.substr(filename.find_last_of('.'), 5);
     bool success = false;
     if (extension == ".png")
@@ -377,7 +377,7 @@ GLuint ImageLoader::loadTextureFromJPG(const char* filename, int &width, int &he
     return texture;
 }
 
-bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h) {
+bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const {
     png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
     if (!png) return false;
 

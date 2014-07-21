@@ -80,6 +80,8 @@ private:
                     textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
                     textureShaderVertex;                                // Address of the textured vertex shader
+    unsigned int    toRecord;                                           // To record the screen each frame
+    bool            toUpdateScreenCopy;
     Timer*          timer;                                              // Timer for steady FPS
     std::string     title_;                                             // Title of the window
     bool            toClear;                                            // Flag for clearing the canvas
@@ -100,6 +102,7 @@ private:
     void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
     static void keyCallback(GLFWwindow* window, int key,
                             int scancode, int action, int mods);        // GLFW callback for keys
+    void        screenShot();
     static void scrollCallback(GLFWwindow* window, double xpos,
                                double ypos);                            // GLFW callback for scrolling
     void        SetupCamera();                                          // Setup the 2D camera for smooth rendering
@@ -148,10 +151,13 @@ public:
 
     void     setShowFPS(bool b)    { showFPS = b; }                     // Mutator to show debugging FPS
     void     setBackgroundColor(RGBfloatType color);                    // Changes the background color
+    void     setUpdateScreenCopy(bool b) { toUpdateScreenCopy = b; }
 
     int      start();                                                   // Function to start rendering our Canvas
 
-    void     takeScreenShot(std::string filename = "");
+    void     recordForNumFrames(unsigned int num_frames);
+    void     stopRecording();
+    void     takeScreenShot();
 };
 
 #endif /* CANVAS_H_ */

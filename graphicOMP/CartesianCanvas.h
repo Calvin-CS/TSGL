@@ -44,10 +44,10 @@ public:
 
     void    getCartesianCoordinates(int screenX, int screenY,
                                     Decimal &cartX, Decimal &cartY);    // Returns the equivalent Cartesian coordinates for the specified screen ones
-    Decimal getCartHeight()        { return cartHeight; }               // Accessor for cartHeight
+    Decimal getCartHeight()       { return cartHeight; }                // Accessor for cartHeight
     Decimal getCartWidth()        { return cartWidth; }                 // Accessor for cartWidth
-    Decimal getPixelWidth()        { return pixelWidth; }               // Accessor for pixelWidth
-    Decimal getPixelHeight()    { return pixelHeight; }                 // Accessor for pixelHeight
+    Decimal getPixelWidth()       { return pixelWidth; }                // Accessor for pixelWidth
+    Decimal getPixelHeight()      { return pixelHeight; }               // Accessor for pixelHeight
     Decimal getMaxY()             { return maxY; }                      // Accessor for maxY
     Decimal getMaxX()             { return maxX; }                      // Accessor for maxX
     Decimal getMinX()             { return minX; }                      // Accessor for minX
