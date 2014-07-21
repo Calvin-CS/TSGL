@@ -42,8 +42,6 @@
 
 class Canvas {
 private:
-    typedef std::chrono::high_resolution_clock      highResClock;
-    typedef highResClock::time_point                timePoint;
     typedef std::function<void()>                   voidFunction;
     typedef std::function<void(double, double)>     doubleFunction;
     typedef std::unique_lock<std::mutex>            mutexLock;
@@ -52,7 +50,7 @@ private:
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      buffer;                                             // Mutex for locking the render buffer so that only one thread can read/write at a time
     Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
-    timePoint       cycleTime;                                          // Time when the last frame started
+    timepoint_d     cycleTime;                                          // Time when the last frame started
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
@@ -74,7 +72,7 @@ private:
     std::mutex      shapes;                                             // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
-    timePoint       startTime;                                          // Start time, to show how much time has elapsed
+    timepoint_d     startTime;                                          // Start time, to show how much time has elapsed
     GLuint          tex,                                                // Texture
                     tex2,                                               // Texture 2
                     textureShaderFragment,                              // Address of the textured fragment shader

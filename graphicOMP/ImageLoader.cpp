@@ -8,7 +8,7 @@ ImageLoader::~ImageLoader() {
 
 GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, GLuint &texture) {
     if (loadedTextures.find(filename) == loadedTextures.end()) {  // Load the image if we haven't already
-        std::string extension = filename.substr(filename.find_last_of('.'), 5);
+        std::string extension = filename.substr(filename.find_last_of('.'));
         if (extension == ".png")
             loadedTextures[filename] = loadTextureFromPNG(filename.c_str(), width, height, texture);
         else if (extension == ".jpg" || extension == ".jpeg")
@@ -23,7 +23,7 @@ GLuint ImageLoader::loadTexture(std::string filename, int &width, int &height, G
 }
 
 bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const {
-    std::string extension = filename.substr(filename.find_last_of('.'), 5);
+    std::string extension = filename.substr(filename.find_last_of('.'));
     bool success = false;
     if (extension == ".png")
         success = saveToPNG(filename.c_str(), pixels, w, h);
@@ -115,7 +115,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char*file_name, int &width, int &he
 
     // Allocate the image_data as a big block, to be given to opengl
     png_byte * image_data;
-    image_data = (png_byte*) malloc(rowbytes * temp_height * sizeof(png_byte) + 15);
+    image_data = (png_byte*) malloc((unsigned)(rowbytes * temp_height * sizeof(png_byte) + 15));
     if (image_data == NULL) {
         fprintf(stderr, "error: could not allocate memory for PNG image data\n");
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
@@ -124,7 +124,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char*file_name, int &width, int &he
     }
 
     // row_pointers is for pointing to image_data for reading the png with libpng
-    png_bytep * row_pointers = (png_bytep *) malloc(temp_height * sizeof(png_bytep));
+    png_bytep * row_pointers = (png_bytep *) malloc((unsigned)(temp_height * sizeof(png_bytep)));
     if (row_pointers == NULL) {
         fprintf(stderr, "error: could not allocate memory for PNG row pointers\n");
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
@@ -396,7 +396,7 @@ bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h)
     png_init_io(png, fp);
     png_set_IHDR(png, info, w, h, 8 /* depth */, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
                  PNG_FILTER_TYPE_BASE);
-    png_colorp palette = (png_colorp) png_malloc(png, PNG_MAX_PALETTE_LENGTH * sizeof(png_color));
+    png_colorp palette = (png_colorp) png_malloc(png, (unsigned)(PNG_MAX_PALETTE_LENGTH * sizeof(png_color)));
     if (!palette) {
         fclose(fp);
         png_destroy_write_struct(&png, &info);
@@ -406,7 +406,7 @@ bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h)
     png_write_info(png, info);
     png_set_packing(png);
 
-    png_bytepp rows = (png_bytepp) png_malloc(png, h * sizeof(png_bytep));
+    png_bytepp rows = (png_bytepp) png_malloc(png, (unsigned)(h * sizeof(png_bytep)));
     for (int i = 0; i < h; ++i)
         rows[i] = (png_bytep) (pixels + (h - i - 1) * w * 3);
 
