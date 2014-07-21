@@ -34,12 +34,12 @@ bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, 
     return success;
 }
 
-GLuint ImageLoader::loadTextureFromPNG(const char*file_name, int &width, int &height, GLuint &texture) const {
+GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &height, GLuint &texture) const {
     png_byte header[8];
 
-    FILE* fp = fopen(file_name, "rb");
+    FILE* fp = fopen(filename, "rb");
     if (fp == 0) {
-        perror(file_name);
+        fprintf(stderr, "Can't open %s: so such file\n", filename);
         return 0;
     }
 
@@ -47,7 +47,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char*file_name, int &width, int &he
     fread(header, 1, 8, fp);
 
     if (png_sig_cmp(header, 0, 8)) {
-        fprintf(stderr, "error: %s is not a PNG.\n", file_name);
+        fprintf(stderr, "error: %s is not a PNG.\n", filename);
         fclose(fp);
         return 0;
     }
@@ -161,7 +161,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char*file_name, int &width, int &he
     return texture;
 }
 
-GLuint ImageLoader::loadTextureFromBMP(const char* file_name, int &width, int &height, GLuint &texture) const {
+GLuint ImageLoader::loadTextureFromBMP(const char* filename, int &width, int &height, GLuint &texture) const {
     // Adapted from http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/#Loading__BMP_images_yourself
 
     // Data read from the header of the BMP file
@@ -172,9 +172,9 @@ GLuint ImageLoader::loadTextureFromBMP(const char* file_name, int &width, int &h
     unsigned char * data;
 
     // Open the file
-    FILE * file = fopen(file_name, "rb");
+    FILE * file = fopen(filename, "rb");
     if (!file) {
-        printf("Image could not be opened\n");
+        fprintf(stderr, "Can't open %s: so such file\n", filename);
         return 0;
     }
 
@@ -293,7 +293,7 @@ GLuint ImageLoader::loadTextureFromJPG(const char* filename, int &width, int &he
      */
     FILE* infile = fopen(filename, "rb");
     if (infile == NULL) {
-        fprintf(stderr, "Can't open %s\n", filename);
+        fprintf(stderr, "Can't open %s: so such file\n", filename);
         return false;
     }
 
