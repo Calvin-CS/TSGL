@@ -12,15 +12,44 @@
 
 #include "Shape.h"		    // For extending our Shape object
 #include "ImageLoader.h"    // For loading images
+
+/*! \class Image
+    \brief Draw an image to the Canvas.
+    \details Image is a class which provides a simple interface for loading and drawing images.
+    The Image class currently supports files in the .png, .bmp, and .jpg formats.
+    \note For the time being, there is no way to measure the size of an image once it's loaded.
+    Therefore, the width and height must be specified manually, and stretching may occur if the
+    inputted dimensions don't match the images actual dimesions.
+    \note Additionally, an ImageLoader must be passed as an argument. This ImageLoader is automatically
+    constructed with the Canvas as the private *loader* variable. At the moment, there is no way to
+    extend Canvas::drawImage() function due to this privatization.
+    \warning Aside from an error message output to stderr, Image gives no indication if an image failed to load.
+*/
 class Image : public Shape {
  private:
     float vertices[32];
     std::string myFile;
     ImageLoader myLoader;
  public:
+    /*!
+     * \brief Explicitly constructs a new Image.
+     * details This is the constructor for the Image class.
+     *      \param f The filename of the image to load.
+     *      \param loaded A pointer to the ImageLoader with which to load the image.
+     *      \param x The x coordinate of the left of the Image.
+     *      \param y The y coordinate of the top of the Image.
+     *      \param w The width of the Image.
+     *      \param h The height of the Image.
+     *      \param a The alpha of the Image.
+     *      \return A new Image drawn with the specified coordinates, dimensions, and transparency.
+     * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
+     */
     Image(std::string f, ImageLoader& loader, int x, int y, int w, int h, float a);
 
-    // draw() actually draws the Image to the canvas
+    /*!
+     *  \brief Draw the Image.
+     *  \details This function actually draws the Image to the Canvas.
+     */
     void draw();
 };
 

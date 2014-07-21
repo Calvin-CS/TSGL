@@ -10,19 +10,23 @@
 
 #include "Shape.h"  // For extending our Shape object
 
+/*! \class Rectangle
+    \brief Draw a simple Rectangle.
+    \details Rectangle is a class for holding vertex data for a simple rectangle.
+*/
 class Rectangle : public Shape {
  private:
     float vertices[24];
  public:
-    /*
-     * Explicit constructor for the Rectangle class
-     * Parameters:
-     *      x, the x coordinate of the Rectangle's left edge
-     *      y, the y coordinate of the Rectangle's top edge
-     *      w, the width of the Rectangle
-     *      h, the height of the Rectangle
-     *      color, the color
-     * Returns: a new Rectangle with the specified top left corner, dimensions, and color
+    /*!
+     * \brief Explicitly construct a Rectangle.
+     * \details This is the constructor for the Rectangle class.
+     *      \param x The x coordinate of the Rectangle's left edge.
+     *      \param y The y coordinate of the Rectangle's top edge.
+     *      \param w The width of the Rectangle.
+     *      \param h The height of the Rectangle.
+     *      \param color The color of the Rectangle.
+     * \return a new Rectangle with the specified top left corner, dimensions, and color.
      */
     Rectangle(int x, int y, int w, int h, RGBfloatType color) {
         vertices[0] = x;
@@ -39,7 +43,10 @@ class Rectangle : public Shape {
         vertices[5] = vertices[11] = vertices[17] = vertices[23] = color.A;
     }
 
-    // draw() actually draws the Rectangle to the canvas
+    /*!
+     * \brief Draw the Rectangle.
+     * \details This function actually draws the Rectangle to the Canvas.
+     */
     void draw() {
         glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

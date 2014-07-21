@@ -190,7 +190,7 @@ void Canvas::drawCircle(int x, int y, int radius, int res, RGBfloatType color, b
     float delta = 2.0f / res * 3.1415926585f;
     float oldX = 0, oldY = 0, newX = 0, newY = 0;
     if (filled) {
-        ShinyPolygon *s = new ShinyPolygon(res*3);
+        ColoredPolygon *s = new ColoredPolygon(res*3);
         for (int i = 0; i <= res; i++ ) {
             oldX = newX; oldY = newY;
             newX = x+radius*cos(i*delta);
@@ -209,9 +209,9 @@ void Canvas::drawCircle(int x, int y, int radius, int res, RGBfloatType color, b
             newX = x+radius*cos(i*delta);
             newY = y+radius*sin(i*delta);
             if (i > 0)
-                p->addVertex(oldX, oldY,color);
+                p->addNextVertex(oldX, oldY,color);
         }
-        p->addVertex(newX, newY,color);
+        p->addNextVertex(newX, newY,color);
         drawShape(p);
     }
 }
@@ -255,11 +255,11 @@ void Canvas::drawRectangle(int x, int y, int w, int h, RGBfloatType color, bool 
     }
     else {
         Polyline* p = new Polyline(5);
-        p->addVertex(x,y,color);
-        p->addVertex(x+w,y,color);
-        p->addVertex(x+w,y+h,color);
-        p->addVertex(x,y+h,color);
-        p->addVertex(x,y,color);
+        p->addNextVertex(x,y,color);
+        p->addNextVertex(x+w,y,color);
+        p->addNextVertex(x+w,y+h,color);
+        p->addNextVertex(x,y+h,color);
+        p->addNextVertex(x,y,color);
         drawShape(p);
     }
 }
@@ -273,7 +273,7 @@ inline void Canvas::drawShape(Shape* s) {
 
 void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], bool filled) {
     if (filled) {
-        ShinyPolygon* p = new ShinyPolygon(size);
+        ColoredPolygon* p = new ColoredPolygon(size);
         for (int i = 0; i < size; i++) {
             p->addVertex(x[i], y[i], color[i]);
         }
@@ -282,7 +282,7 @@ void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], 
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
-            p->addVertex(x[i], y[i], color[i]);
+            p->addNextVertex(x[i], y[i], color[i]);
         }
         drawShape(p);  // Push it onto our drawing buffer
     }
@@ -302,10 +302,10 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBflo
     }
     else {
         Polyline* p = new Polyline(4);
-        p->addVertex(x1,y1,color);
-        p->addVertex(x2,y2,color);
-        p->addVertex(x3,y3,color);
-        p->addVertex(x1,y1,color);
+        p->addNextVertex(x1,y1,color);
+        p->addNextVertex(x2,y2,color);
+        p->addNextVertex(x3,y3,color);
+        p->addNextVertex(x1,y1,color);
         drawShape(p);
     }
 }
