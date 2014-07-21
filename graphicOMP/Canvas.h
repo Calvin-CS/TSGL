@@ -2,7 +2,7 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the graphicOMP library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 7/3/2014
+ * Last Modified: Patrick Crain, 7/21/2014
  */
 
 #ifndef CANVAS_H_
@@ -30,7 +30,7 @@
 #include <mutex>            // Needed for locking the Canvas for thread-safety
 #include <omp.h>            // For OpenMP support
 #include <string>           // For window titles
-#include <sstream>
+#include <sstream>          // For string building
 #include <thread>           // For spawning rendering in a different thread
 
 // GL libraries
@@ -80,6 +80,8 @@ private:
                     textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
                     textureShaderVertex;                                // Address of the textured vertex shader
+    unsigned int    toRecord;                                           // To record the screen each frame
+    bool            toUpdateScreenCopy;                                 // Whether we copy the screen to our buffer next draw cycle
     Timer*          timer;                                              // Timer for steady FPS
     std::string     title_;                                             // Title of the window
     bool            toClear;                                            // Flag for clearing the canvas
@@ -95,20 +97,21 @@ private:
     static void buttonCallback(GLFWwindow* window, int key,
                                int action, int mods);                   // GLFW callback for mouse buttons
 
-    void        draw();
+    void        draw();                                                 // Draw loop for the Canvas
 
     void        init(int xx,int yy,int ww,int hh,
                      unsigned int b,std::string title);                 // Method for initializing the canvas
     void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
     static void keyCallback(GLFWwindow* window, int key,
                             int scancode, int action, int mods);        // GLFW callback for keys
+    void        screenShot();                                           // Takes a screenshot
     static void scrollCallback(GLFWwindow* window, double xpos,
                                double ypos);                            // GLFW callback for scrolling
     void        SetupCamera();                                          // Setup the 2D camera for smooth rendering
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
     void        textureShaders(bool state);                             // Turn textures on or off
 protected:
-    void     drawShape(Shape* s);                                       // Draw a shape type
+    void        drawShape(Shape* s);                                    // Draw a shape type
 public:
     /*!
      * \brief Constructs a new Canvas.
@@ -326,10 +329,11 @@ public:
     int      getWindowY()          { return monitorY; }
 
     /*!
-     * \brief Mutator for showing the FPS.
-     *      \param b Whether to print the FPS to stdout every draw cycle (for debugging purposes).
+     * \brief Records the Canvas for a specified number of frames.
+     * \details This function starts dumping screenshots of the Canvas to the file system every draw cycle.
+     *          The function automatically terminates after num_frames cycles have completed.
      */
-    void     setShowFPS(bool b)    { showFPS = b; }
+    void     recordForNumFrames(unsigned int num_frames);
 
     /*!
      * \brief Mutator for the background color.
@@ -338,6 +342,26 @@ public:
      * \note The alpha channel of the color is ignored
      */
     void     setBackgroundColor(RGBfloatType color);
+
+    /*!
+     * \brief Mutator for showing the FPS.
+     *      \param b Whether to print the FPS to stdout every draw cycle (for debugging purposes).
+     */
+    void     setShowFPS(bool b)    { showFPS = b; }
+
+    /*!
+     * \brief Mutator for keeping track of the screen's drawn buffer.
+     *      \param b Whether to copy the screen's contents to an RGB color buffer every draw cycle.
+     * \note The buffer in question can be accessed with getScreenBuffer().
+     * \note takeScreenShot() and recordForNumFrames() automatically sets this to true.
+     */
+    void     setUpdateScreenCopy(bool b) { toUpdateScreenCopy = b; }
+
+    /*!
+     * \brief Stops recording the Canvas.
+     * \details This function stops dumping images to the file system.
+     */
+    void     stopRecording();
 
     /*!
      * \brief Opens the Canvas.
@@ -349,10 +373,9 @@ public:
 
     /*!
      * \brief Takes a screenshot.
-     * This function saves a screenshot of the current Canvas to the working directory.
-     *      \param filename The name of the file to which the screen will be saved.
+     * \details This function saves a screenshot of the current Canvas to the working directory.
      */
-    void     takeScreenShot(std::string filename = "");
+    void     takeScreenShot();
 };
 
 #endif /* CANVAS_H_ */

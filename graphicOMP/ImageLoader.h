@@ -35,14 +35,14 @@ private:
     GLuint loadTextureFromJPG(const char* filename, int &width, int &height, GLuint &texture) const;
     GLuint loadTextureFromPNG(const char* filename, int &width, int &height, GLuint &texture) const;
 
-    static bool saveToPNG(const char *filename, GLubyte *pixels, int w, int h);
+    bool saveToPNG(const char *filename, GLubyte *pixels, int w, int h) const;
     static void my_error_exit (j_common_ptr cinfo);
 public:
     ImageLoader() {}
     ~ImageLoader();
 
     GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture);
-    static bool saveImageToFile(std::string filename, GLubyte *pixels, int w, int h);
+    bool saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const;
 };
 
 #endif /* IMAGELOADER_H_ */
