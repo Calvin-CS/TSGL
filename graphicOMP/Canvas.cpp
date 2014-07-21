@@ -208,6 +208,46 @@ void Canvas::draw() {
 }
 
 /*
+ * drawCircle draws a circle with the given origin coordinates, radius, resolution, and color
+ * Parameters:
+ *      x, the x coordinate of the circle's origin
+ *      y, the y coordinate of the circle's origin
+ *      radius, the radius of the circle in pixels
+ *      res, the number of sides to use in the circle
+ *      color, the color of the circle [optional, default BLACK]
+ *      filled, whether the circle should be filled (true) or not (false) [optional, default true]
+ */
+void Canvas::drawCircle(int x, int y, int radius, int res, RGBfloatType color, bool filled) {
+    float delta = 2.0f / res * 3.1415926585f;
+    float oldX = 0, oldY = 0, newX = 0, newY = 0;
+    if (filled) {
+        ShinyPolygon *s = new ShinyPolygon(res*3);
+        for (int i = 0; i <= res; i++ ) {
+            oldX = newX; oldY = newY;
+            newX = x+radius*cos(i*delta);
+            newY = y+radius*sin(i*delta);
+            if (i > 0) {
+                s->addVertex(x,y,color);
+                s->addVertex(oldX, oldY,color);
+                s->addVertex(newX, newY,color);
+            }
+        }
+        drawShape(s);
+    } else {
+        Polyline *p = new Polyline(res+1);
+        for (int i = 0; i <= res; i++ ) {
+            oldX = newX; oldY = newY;
+            newX = x+radius*cos(i*delta);
+            newY = y+radius*sin(i*delta);
+            if (i > 0)
+                p->addVertex(oldX, oldY,color);
+        }
+        p->addVertex(newX, newY,color);
+        drawShape(p);
+    }
+}
+
+/*
  * drawImage draws an image with the given coordinates and dimensions
  * Parameters:
  *      fname, the name of the file to load the image from
@@ -215,6 +255,7 @@ void Canvas::draw() {
  *      y, the y coordinate of the Image's top edge
  *      w, the width of the Image
  *      h, the height of the Image
+ *      a, the alpha to draw the Image with [optional, default 1.0]
  */
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //    glfwMakeContextCurrent(window);                       // We're drawing to window as soon as it's created
@@ -224,13 +265,13 @@ void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 }
 
 /*
- * drawLineColor draws a line at the given coordinates with the given color
+ * drawLine draws a line at the given coordinates with the given color
  * Parameters:
  *      x1, the x position of the start of the line
  *      y1, the y position of the start of the line
  *      x2, the x position of the end of the line
  *      y2, the y position of the end of the line
- *      color, the RGB color (optional)
+ *      color, the RGB color [optional, default BLACK]
  */
 void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
@@ -238,11 +279,11 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, RGBfloatType color) {
 }
 
 /*
- * drawPointColor draws a point at the given coordinates with the given color
+ * drawPoint draws a point at the given coordinates with the given color
  * Parameters:
  *      x, the x position of the point
  *      y, the y position of the point
- *      color, the RGB color (optional)
+ *      color, the RGB color [optional, default BLACK]
  */
 void Canvas::drawPoint(int x, int y, RGBfloatType color) {
     mutexLock mlock(pointArray);
@@ -263,17 +304,29 @@ void Canvas::drawPoint(int x, int y, RGBfloatType color) {
 }
 
 /*
- * drawRectangleColor draws a rectangle with the given coordinates, dimensions, and color
+ * drawRectangle draws a rectangle with the given coordinates, dimensions, and color
  * Parameters:
  *      x, the x coordinate of the Rectangle's left edge
  *      y, the y coordinate of the Rectangle's top edge
  *      w, the width of the Rectangle
  *      h, the height of the Rectangle
- *      color, the RGB color (optional)
+ *      color, the RGB color [optional, default BLACK]
+ *      filled, whether the rectangle should be filled (true) or not (false) [optional, default true]
  */
-void Canvas::drawRectangle(int x, int y, int w, int h, RGBfloatType color) {
-    Rectangle* rec = new Rectangle(x, y, w, h, color);  // Creates the Rectangle with the specified coordinates and color
-    drawShape(rec);                                     // Push it onto our drawing buffer
+void Canvas::drawRectangle(int x, int y, int w, int h, RGBfloatType color, bool filled) {
+    if (filled) {
+        Rectangle* rec = new Rectangle(x, y, w, h, color);  // Creates the Rectangle with the specified coordinates and color
+        drawShape(rec);                                     // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(5);
+        p->addVertex(x,y,color);
+        p->addVertex(x+w,y,color);
+        p->addVertex(x+w,y+h,color);
+        p->addVertex(x,y+h,color);
+        p->addVertex(x,y,color);
+        drawShape(p);
+    }
 }
 
 inline void Canvas::drawShape(Shape* s) {
@@ -288,14 +341,24 @@ inline void Canvas::drawShape(Shape* s) {
  *      size, the number of vertices in the polygon
  *      x, an array of x positions of the vertices
  *      y, an array of y positions of the vertices
- *      color, an array of colors for the vertices
+ *      color, an array of colors for the vertices [optional, default BLACK]
+ *      filled, whether the shiny polygon should be filled (true) or not (false) [optional, default true]
  */
-void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) {
-    ShinyPolygon* p = new ShinyPolygon(size);
-    for (int i = 0; i < size; i++) {
-        p->addVertex(x[i], y[i], color[i]);
+void Canvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], bool filled) {
+    if (filled) {
+        ShinyPolygon* p = new ShinyPolygon(size);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(x[i], y[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
     }
-    drawShape(p);  // Push it onto our drawing buffer
+    else {
+        Polyline* p = new Polyline(size);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(x[i], y[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
 }
 
 void Canvas::drawText(std::string s, int x, int y, RGBfloatType color) {
@@ -312,11 +375,22 @@ void Canvas::drawText(std::string s, int x, int y, RGBfloatType color) {
  *      y2, the y position of the second vertex of the triangle
  *      x3, the x position of the third vertex of the triangle
  *      y3, the y position of the third vertex of the triangle
- *      color, the RGB color (optional)
+ *      color, the RGB color [optional, default BLACK]
+ *      filled, whether the triangle should be filled (true) or not (false) [optional, default true]
  */
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
-    Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-    drawShape(t);                                               // Push it onto our drawing buffer
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color, bool filled) {
+    if (filled) {
+        Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
+        drawShape(t);                                               // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(4);
+        p->addVertex(x1,y1,color);
+        p->addVertex(x2,y2,color);
+        p->addVertex(x3,y3,color);
+        p->addVertex(x1,y1,color);
+        drawShape(p);
+    }
 }
 
 /*

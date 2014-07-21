@@ -129,7 +129,7 @@ void spectrumFunction(Canvas& can) {
 
 void mandelbrotFunction(CartesianCanvas& can) {
     const unsigned int THREADS = 32;  //omp_get_num_procs();
-    const unsigned int DEPTH = MAX_COLOR*2;
+    const unsigned int DEPTH = MAX_COLOR;
     Timer t(FRAME / 2);
     Decimal firstX, firstY, secondX, secondY;
     bool toRender = true;
@@ -1124,6 +1124,19 @@ void getPixelsFunction(Canvas& can) {
     }
 }
 
+void shapeTestFunction(Canvas& can) {
+    Timer t(FRAME);
+    while (can.getIsOpen()) {
+        can.clear();
+        t.sleep();
+        for (int i = 0; i < 255; i++)
+            can.drawCircle(can.getWindowWidth()/2,can.getWindowHeight()/2,i,64,randomColor(randint(100000)),false);
+        can.drawCircle(can.getWindowWidth()/2,can.getWindowHeight()/2,256,64,randomColor(randint(100000)),true);
+        can.drawRectangle(32,32,can.getWindowWidth()-64,can.getWindowHeight()-64,BLACK,false);
+        can.drawTriangle(can.getWindowWidth()/2,32,can.getWindowWidth()-32,can.getWindowHeight()-32,32,can.getWindowHeight()-32,BLACK,false);
+    }
+}
+
 void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
     c.setBackgroundColor(bg);
     c.start();
@@ -1213,8 +1226,10 @@ int main() {
 //            test(c26,imageCartFunction,false);
 //            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
 //            test(c27,textCartFunction,true);
-            Canvas c28(0, 0, 800, 600, 500000);
-            test(c28,getPixelsFunction,false);
+//            Canvas c28(0, 0, 800, 600, 500000);
+//            test(c28,getPixelsFunction,false);
+              Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+              test(c29,shapeTestFunction,false);
 //        }
 //    }
     glfwTerminate();    // Release GLFW
