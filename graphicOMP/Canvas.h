@@ -40,6 +40,12 @@
 #define FPS 60              // Frames per second
 #define FRAME 1.0f/FPS      // Number of seconds between frames
 
+/*! \class Canvas
+    \brief A GL window with numerous built-in, thread-safe drawing operations
+    \details Canvas provides an easy-to-set-up, easy-to-use Class for drawing various shapes.
+    \details With libpng and libjpeg, Canvas also supports the drawing of images.
+    \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
+*/
 class Canvas {
 private:
     typedef std::chrono::high_resolution_clock      highResClock;
@@ -117,7 +123,7 @@ public:
      * \brief Constructs a new Canvas.
      * \details This is the default constructor for the Canvas class
      *      \param b The size of the Canvas's internal vertex buffer.
-     *      \return A new 800x600 Canvas on the top left of the screen with no title
+     *      \return A new 800x600 Canvas in the middle of the screen with no title.
      */
     Canvas(unsigned int b);
 
