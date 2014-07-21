@@ -60,6 +60,25 @@ void CartesianCanvas::drawAxes(Decimal x, Decimal y, Decimal dx = 0, Decimal dy 
 }
 
 /*
+ * drawCircle draws a circle with the given origin coordinates, radius, resolution, and color
+ * Parameters:
+ *      x, the x coordinate of the circle's origin
+ *      y, the y coordinate of the circle's origin
+ *      radius, the radius of the circle in pixels
+ *      res, the number of sides to use in the circle
+ *      color, the color of the circle [optional, default BLACK]
+ *      filled, whether the circle should be filled (true) or not (false) [optional, default true]
+ */
+void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int res, RGBfloatType color, bool filled) {
+    int actualX, actualY, actualR;
+    getScreenCoordinates(x, y, actualX, actualY);
+    getScreenCoordinates(x+radius,y,actualR,actualY);
+    actualR -= actualX;
+
+    Canvas::drawCircle(actualX, actualY, actualR, res, color, filled);
+}
+
+/*
  * drawFunction draws the Function on the screen
  * Parameters:
  *      f, a Function type extending Function
@@ -76,12 +95,13 @@ void CartesianCanvas::drawFunction(const Function* f) {
 }
 
 /*
- * drawImage draws an image with the given coordinates  dimensions
+ * drawImage draws an image with the given coordinates and dimensions
  * Parameters:
  *      x, the x coordinate of the Image's left edge
  *      y, the y coordinate of the Image's top edge
  *      w, the width of the Image
  *      h, the height of the Image
+ *      a, the alpha of the Image [optional, default 1.0]
  */
 void CartesianCanvas::drawImage(std::string fname, Decimal x, Decimal y, Decimal w, Decimal h, float a) {
     int actualX1, actualY1, actualX2, actualY2;
@@ -98,7 +118,7 @@ void CartesianCanvas::drawImage(std::string fname, Decimal x, Decimal y, Decimal
  *      y1, the y position of the start of the line
  *      x2, the x position of the end of the line
  *      y2, the y position of the end of the line
- *      color, the RGB color (optional)
+ *      color, the RGB color [optional, default BLACK]
  */
 void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, RGBfloatType color) {
     int actualX1, actualY1, actualX2, actualY2;
@@ -113,7 +133,7 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, R
  * Parameters:
  *      x, the x position of the point
  *      y, the y position of the point
- *      color, the RGB color (optional)
+ *      color, the RGB color [optional, default BLACK]
  */
 void CartesianCanvas::drawPoint(Decimal x, Decimal y, RGBfloatType color) {
     int actualX, actualY;
@@ -129,14 +149,15 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, RGBfloatType color) {
  *      y, the y coordinate of the Rectangle's top edge
  *      w, the width of the Rectangle
  *      h, the height of the Rectangle
- *      color, the RGB color (optional)
+ *      color, the RGB color [optional, default BLACK]
+ *      filled, whether the shiny polygon should be filled (true) or not (false) [optional, default true]
  */
-void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, RGBfloatType color) {
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, RGBfloatType color, bool filled) {
     int actualX1, actualY1, actualX2, actualY2;
     getScreenCoordinates(x, y, actualX1, actualY1);
     getScreenCoordinates(x + w, y + h, actualX2, actualY2);
 
-    Canvas::drawRectangle(actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, color);
+    Canvas::drawRectangle(actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, color, filled);
 }
 
 /*
@@ -145,14 +166,15 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, 
  *      size, the number of vertices in the polygon
  *      x, an array of x positions of the vertices
  *      y, an array of y positions of the vertices
- *      color, the RGB color array (optional)
+ *      color, the RGB color array [optional, default BLACK]
+ *      filled, whether the shiny polygon should be filled (true) or not (false) [optional, default true]
  */
-void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[]) {
+void CartesianCanvas::drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], bool filled) {
     for (int i = 0; i < size; i++) {
         getScreenCoordinates(x[i], y[i], x[i], y[i]);
     }
 
-    Canvas::drawShinyPolygon(size, x, y, color);
+    Canvas::drawShinyPolygon(size, x, y, color, filled);
 }
 
 void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, RGBfloatType color) {
@@ -171,15 +193,16 @@ void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, RGBfloatType
  *      y2, the y position of the second vertex of the triangle
  *      x3, the x position of the third vertex of the triangle
  *      y3, the y position of the third vertex of the triangle
- *      color, the RGB color (optional)
+ *      color, the RGB color [optional, default BLACK]
+ *      filled, whether the shiny polygon should be filled (true) or not (false) [optional, default true]
  */
-void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
+void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color, bool filled) {
     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
     getScreenCoordinates(x1, y1, actualX1, actualY1);
     getScreenCoordinates(x2, y2, actualX2, actualY2);
     getScreenCoordinates(x3, y3, actualX3, actualY3);
 
-    Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, color);
+    Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, color, filled);
 }
 
 /*

@@ -26,6 +26,8 @@ public:
                     unsigned int b, std::string = "");                  // Explicit constructor for our CartesianCanvas
 
     void    drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);     // Draws axes crossing at the input coordinates
+    void    drawCircle(Decimal x, Decimal y, Decimal radius, int res,
+                RGBfloatType color = BLACK, bool filled = true);
     void    drawFunction(const Function* f);                            // Draws the Function on the screen
     void    drawImage(std::string fname, Decimal x, Decimal y,
                       Decimal w, Decimal h, float a = 1.0f);            // Draws an image at the given coordinates with the given dimensions
@@ -34,13 +36,15 @@ public:
     void    drawPoint(Decimal x, Decimal y,
                       RGBfloatType color = BLACK);                      // Draws a point at the given coordinates with the given color
     void    drawRectangle(Decimal x, Decimal y, Decimal w,
-                          Decimal h, RGBfloatType color = BLACK);       // Draws a rectangle at the given coordinates with the given dimensions and color
+                          Decimal h, RGBfloatType color = BLACK,
+                          bool filled = true);                          // Draws a rectangle at the given coordinates with the given dimensions and color
     void    drawShinyPolygon(int size, int x[], int y[],
-                             RGBfloatType color[]);                     // Draws an arbitrary polygon with colored vertices
+                             RGBfloatType color[], bool filled = true); // Draws an arbitrary polygon with colored vertices
     void    drawText(std::string s, Decimal x, Decimal y,
                      RGBfloatType color = BLACK);                       // Draws a string of text at the given coordinates with the given color
     void    drawTriangle(int x1, int y1, int x2, int y2,
-                         int x3, int y3, RGBfloatType color = BLACK);   // Draws a triangle with the given vertices and color
+                         int x3, int y3, RGBfloatType color = BLACK,
+                         bool filled = true);                           // Draws a triangle with the given vertices and color
 
     void    getCartesianCoordinates(int screenX, int screenY,
                                     Decimal &cartX, Decimal &cartY);    // Returns the equivalent Cartesian coordinates for the specified screen ones

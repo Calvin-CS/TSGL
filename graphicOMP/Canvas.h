@@ -117,6 +117,8 @@ public:
     void     bindToScroll(std::function<void(double, double)> f);       // Bind a method to scrolling
     void     clear();                                                   // Clears the canvas
 
+    virtual void drawCircle(int x, int y, int radius, int res,
+                RGBfloatType color = BLACK, bool filled = true);        // Draws a circle at the given coordinates with the given color
     virtual void drawImage(std::string fname, int x, int y,
             int w, int h, float a = 1.0f);                              // Draws an image at the given coordinates with the given dimensions
     virtual void drawLine(int x1, int y1, int x2, int y2,
@@ -124,13 +126,14 @@ public:
     virtual void drawPoint(int x, int y,
             RGBfloatType color = BLACK);                                // Draws a point at the given coordinates with the given color
     virtual void drawRectangle(int x, int y, int w, int h,
-            RGBfloatType color = BLACK);                                // Draws a rectangle at the given coordinates with the given dimensions and color
+            RGBfloatType color = BLACK, bool filled = true);            // Draws a rectangle at the given coordinates with the given dimensions and color
     virtual void drawShinyPolygon(int size, int x[], int y[],
-            RGBfloatType color[]);                                      // Draws a polygon of with given number of vertices with shading across it
+            RGBfloatType color[], bool filled = true);                  // Draws a polygon of with given number of vertices with shading across it
     virtual void drawText(std::string s, int x, int y,
             RGBfloatType color = BLACK);                                // Draws a string of text at the given coordinates with the given color
     virtual void drawTriangle(int x1, int y1, int x2, int y2,
-            int x3, int y3, RGBfloatType color = BLACK);                // Draws a triangle with the given vertices and color
+            int x3, int y3, RGBfloatType color = BLACK,
+            bool filled = true);                                        // Draws a triangle with the given vertices and color
 
     int      end();                                                     // Function to end rendering our Canvas
 
