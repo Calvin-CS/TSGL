@@ -16,11 +16,11 @@
 #include "keynums.h"        // Our enums for key presses
 #include "Timer.h"          // Our own timer for steady FPS
 
+#include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices.
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Line.h"           // Our own class for drawing straight lines.
 #include "Polyline.h"       // Our own class for drawing polylines.
 #include "Rectangle.h"      // Our own class for drawing rectangles.
-#include "ShinyPolygon.h"   // Our own class for drawing polygons with colored vertices.
 #include "Text.h"           // Our own class for drawing text
 #include "Triangle.h"       // Our own class for drawing triangles.
 
@@ -42,7 +42,7 @@
 
 /*! \class Canvas
     \brief A GL window with numerous built-in, thread-safe drawing operations
-    \details Canvas provides an easy-to-set-up, easy-to-use Class for drawing various shapes.
+    \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
     \details With libpng and libjpeg, Canvas also supports the drawing of images.
     \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
 */

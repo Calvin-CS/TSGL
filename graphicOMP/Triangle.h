@@ -10,21 +10,25 @@
 
 #include "Shape.h"  // For extending our Shape object
 
+/*! \class Triangle
+    \brief Draw a simple Triangle.
+    \details Triangle is a class for holding vertex data for a simple triangle.
+*/
 class Triangle : public Shape {
  private:
     float vertices[18];
  public:
-    /*
-     * Explicit constructor for the Triangle class
-     * Parameters:
-     *      x1, the first x coordinate
-     *      y1, the first y coordinate
-     *      x2, the second x coordinate
-     *      y2, the second y coordinate
-     *      x3, the third x coordinate
-     *      y3, the third y coordinate
-     *      color, the color
-     * Returns: a new Triangle with the specified vertices and color
+    /*!
+     * \brief Explicitly constructs a new Triangle.
+     * details This is the constructor for the Triangle class.
+     *      \param x1 The x coordinate of the first endpoint.
+     *      \param y1 The y coordinate of the first endpoint.
+     *      \param x2 The x coordinate of the second endpoint.
+     *      \param y2 The y coordinate of the second endpoint.
+     *      \param x3 The x coordinate of the second endpoint.
+     *      \param y3 The y coordinate of the second endpoint.
+     *      \param color The color of the Triangle.
+     *      \return A new Triangle with the specified vertices and color.
      */
     Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
         vertices[0] = x1;
@@ -39,7 +43,10 @@ class Triangle : public Shape {
         vertices[5] = vertices[11] = vertices[17] = color.A;
     }
 
-    // draw() actually draws the Line to the canvas
+    /*!
+     *  \brief Draw the Triangle.
+     *  \details This function actually draws the Triangle to the Canvas.
+     */
     void draw() {
         glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(ColoredVertex), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);

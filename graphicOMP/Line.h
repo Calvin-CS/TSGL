@@ -10,19 +10,23 @@
 
 #include "Shape.h"  // For extending our Shape object
 
+/*! \class Line
+    \brief Draw a simple line.
+    \details Line is a class for holding vertex data for a simple line.
+*/
 class Line : public Shape {
  private:
     float vertices[12];
  public:
-    /*
-     * Explicit constructor for the Line class
-     * Parameters:
-     *      x1, the first x coordinate
-     *      y1, the first y coordinate
-     *      x2, the second x coordinate
-     *      y2, the second y coordinate
-     *      color, a color
-     * Returns: a new Line at the specified positions with the specified color
+    /*!
+     * \brief Explicitly constructs a new Line.
+     * details This is the constructor for the Line class.
+     *      \param x1 The x coordinate of the first endpoint.
+     *      \param y1 The y coordinate of the first endpoint.
+     *      \param x2 The x coordinate of the second endpoint.
+     *      \param y2 The y coordinate of the second endpoint.
+     *      \param color The color of the Line.
+     *      \return A new Line with the specified endpoints and color.
      */
     Line(int x1, int y1, int x2, int y2, RGBfloatType color) {
         vertices[0] = x1;
@@ -35,7 +39,10 @@ class Line : public Shape {
         vertices[5] = vertices[11] = color.A;
     }
 
-    // draw() actually draws the Line to the canvas
+    /*!
+     *  \brief Draw the Line.
+     *  \details This function actually draws the Line to the Canvas.
+     */
     void draw() {
         glBufferData(GL_ARRAY_BUFFER, 2 * sizeof(ColoredVertex), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_LINES, 0, 2);

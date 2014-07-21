@@ -44,7 +44,7 @@ void CartesianCanvas::drawFunction(const Function* f) {
     Polyline *p = new Polyline(1 + (maxX - minX) / pixelWidth);
     for (Decimal x = minX; x <= maxX; x += pixelWidth) {
         getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
-        p->addVertex(screenX, screenY);
+        p->addNextVertex(screenX, screenY);
     }
 
     drawShape(p);
