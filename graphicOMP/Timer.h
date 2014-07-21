@@ -56,7 +56,9 @@ class Timer {
 
     // Sleep the thread until the period has passed
     void sleep() {
-        lastTime = lastTime + period_;
+        #pragma omp critical (timer)
+        if (lastTime + period_ > highResClock::now() && lastTime + period_ < highResClock::now() + period_)
+            lastTime = lastTime + period_;
 //        if (lastTime <= highResClock::now()) std::cout << "no sleep" << std::endl;
         std::this_thread::sleep_until(lastTime);
     }

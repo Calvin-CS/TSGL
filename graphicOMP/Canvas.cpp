@@ -158,9 +158,7 @@ void Canvas::draw() {
         }
         mBufferLock.unlock();
 
-        mutexLock mLock(pointArray);
         int pos = pointBufferPosition;
-        mLock.unlock();
         int posLast = pointLastPosition;
         pointLastPosition = pos;
 
@@ -190,7 +188,6 @@ void Canvas::draw() {
         // Update our screenBuffer copy with the screen
 //        glPixelStorei(GL_PACK_ALIGNMENT, 3);
         // TODO: Be able to turn this on and off
-//        std::cout << winWidth * winHeight << std::endl;
 //        glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
 //            std::stringstream ss;
 //            ss << "frames/Image";
@@ -591,7 +588,9 @@ void Canvas::startDrawing(Canvas *c) {
 }
 
 void Canvas::takeScreenShot(std::string filename) {
+    if (filename.size() == 0) {
 
+    }
 }
 
 void Canvas::textureShaders(bool on) {

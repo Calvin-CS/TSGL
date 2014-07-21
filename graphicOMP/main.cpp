@@ -89,13 +89,14 @@ void lineFanFunction(Canvas& can) {
     const double RAD = M_PI / 180,  // One radian in degrees
     ARC = 7.11;  // Arc length
     Timer t(FRAME);
-    #pragma omp parallel num_threads(omp_get_num_procs())
-    {
-        int a, b, c, d, red, green, blue;
-        double angle, offset = omp_get_thread_num() * ARC;
-        bool reverse = false;
-        while (can.getIsOpen()) {
+
+    while (can.getIsOpen()) {
+        #pragma omp parallel num_threads(omp_get_num_procs())
+        {
             t.sleep();
+            int a, b, c, d, red, green, blue;
+            double angle, offset = omp_get_thread_num() * ARC;;
+            bool reverse = false;
             angle = offset + t.getReps() * RAD;
             a = can.getWindowWidth() / 2 * (1 + sin(angle));
             b = can.getWindowHeight() / 2 * (1 + cos(angle));
@@ -1161,12 +1162,12 @@ int main() {
 //            test(c2,colorPointsFunction,true);
 //            Canvas c3(BUFFER);
 //            test(c3,lineChainFunction,true,BLACK);
-            Canvas c4(500);
-            test(c4,lineFanFunction,false);
+//            Canvas c4(500);
+//            test(c4,lineFanFunction,false);
 //            Canvas c5(65536);
 //            test(c5,spectrumFunction,false);
-//            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-//            test(c6,mandelbrotFunction,false);
+            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+            test(c6,mandelbrotFunction,false);
 //            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
 //            test(c7,langtonFunction,false);
 //            Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
