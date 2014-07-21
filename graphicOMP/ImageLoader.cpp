@@ -408,7 +408,7 @@ bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h)
 
     png_bytepp rows = (png_bytepp) png_malloc(png, h * sizeof(png_bytep));
     for (int i = 0; i < h; ++i)
-        rows[i] = (png_bytep) (pixels + (h - i) * w * 3);
+        rows[i] = (png_bytep) (pixels + (h - i - 1) * w * 3);
 
     png_write_image(png, rows);
     png_write_end(png, info);

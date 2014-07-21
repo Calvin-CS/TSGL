@@ -42,7 +42,6 @@ void graydientFunction(Canvas& can) {
         std::cout << x++ << std::endl;
     });
 
-    can.setOnlyPoints(true);
     int nthreads = omp_get_num_procs();
     #pragma omp parallel num_threads(nthreads)
     {
@@ -56,7 +55,6 @@ void graydientFunction(Canvas& can) {
 }
 void colorPointsFunction(Canvas& can) {
     int myPart = can.getWindowHeight() / omp_get_num_threads();
-    can.setOnlyPoints(true);
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
         int myStart = myPart * omp_get_thread_num();
@@ -117,7 +115,6 @@ void lineFanFunction(Canvas& can) {
 void spectrumFunction(Canvas& can) {
     int nthreads = omp_get_num_procs();
     Timer t(FRAME);
-    can.setOnlyPoints(true);
     #pragma omp parallel num_threads(nthreads)
     {
         while (can.getIsOpen()) {
@@ -162,7 +159,6 @@ void mandelbrotFunction(CartesianCanvas& can) {
         can.zoom(x, y, scale);
         toRender = true;
     });
-    can.setOnlyPoints(true);
 
     while (toRender) {
         toRender = false;
@@ -192,6 +188,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
                 }
                 if (toRender) break;
             }
+
         }
         print(can.getTime());
         while (can.getIsOpen() && !toRender)
@@ -207,7 +204,6 @@ void langtonFunction(Canvas& can) {
     int xx = WINDOW_W / 2,  // Start at the center
         yy = WINDOW_H / 2;
     int direction = UP;
-    can.setOnlyPoints(true);
     Timer t(1.0 / (60.0 * IPF));
     while (can.getIsOpen()) {
         t.sleep();
@@ -268,7 +264,6 @@ void langtonColonyFunction(Canvas& can) {
     green[3] = 0;
     blue[3] = MAX_COLOR;
 
-    can.setOnlyPoints(true);
     for (int i = 0; i < 4; i++) {
         dir[i] = i;
     }
@@ -322,7 +317,6 @@ void langtonRainbowFunction(Canvas& can) {
     xx[3] = WINDOW_W / 2;
     yy[3] = WINDOW_H / 2 + RADIUS;
 
-    can.setOnlyPoints(true);
     for (int i = 0; i < 4; i++) {
         dir[i] = i;
     }
@@ -372,6 +366,7 @@ void dumbSortFunction(Canvas& can) {
     bool goingUp = true;
     for (int i = 0; i < SIZE; i++)
         numbers[i] = rand() % (can.getWindowHeight() - 40);
+    can.setBackgroundColor(GREY);
     Timer t(FRAME);
     while (can.getIsOpen()) {
         t.sleep();
@@ -407,8 +402,7 @@ void dumbSortFunction(Canvas& can) {
             }
         }
 
-        can.drawRectangle(0, 0, can.getWindowWidth(), can.getWindowHeight(),
-                                          RGBintToRGBfloat(MAX_COLOR / 2, MAX_COLOR / 2, MAX_COLOR / 2));
+        can.clear();
         int start = 50, width = 1, height;
         RGBfloatType color;
         for (int i = 0; i < SIZE; i++, start += width * 2) {
@@ -577,7 +571,6 @@ void alphaLangtonFunction(Canvas& can) {
     green[3] = 0;
     blue[3] = MAX_COLOR;
 
-    can.setOnlyPoints(true);
     for (int i = 0; i < 4; i++) {
         dir[i] = i;
     }
@@ -668,7 +661,6 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
         can.zoom(x, y, scale);
         toRender = true;
     });
-    can.setOnlyPoints(true);
 
     while (toRender) {
         toRender = false;
@@ -712,7 +704,6 @@ void novaFunction(CartesianCanvas& can) {
     const unsigned int DEPTH = 200;
     const double BLOCKSTART = (can.getMaxY() - can.getMinY()) / THREADS;
     const long double R = 1.0l;
-    can.setOnlyPoints(true);
     #pragma omp parallel num_threads(THREADS)
     {
         unsigned int iterations;
@@ -756,7 +747,6 @@ void voronoiFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),        // Set the screen sizes
               WINDOW_H = can.getWindowHeight(),
               POINTS = 100*4;                         // Set the number of control points
-    can.setOnlyPoints(true);
     srand(time(NULL));                              // Seed the random number generator
     int* x = new int[POINTS]();                     // Initialize an array for POINTS x coords
     int* y = new int[POINTS]();                     // Do the same for y coords
@@ -810,7 +800,6 @@ void shadedVoronoiFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),        // Set the screen sizes
               WINDOW_H = can.getWindowHeight(),
               POINTS = 100;                         // Set the number of control points
-    can.setOnlyPoints(true);
     srand(time(NULL));                              // Seed the random number generator
     int* x = new int[POINTS]();                     // Initialize an array for POINTS x coords
     int* y = new int[POINTS]();                     // Do the same for y coords
@@ -896,7 +885,6 @@ void forestFireFunction(Canvas& can) {
     const float LIFE = 10,
                 STRENGTH = 0.03,
                 MAXDIST = sqrt(WINDOW_W * WINDOW_W + WINDOW_H * WINDOW_H) / 2;
-    can.setOnlyPoints(true);
     srand(time(NULL));  // Seed the random number generator
     bool* onFire = new bool[WINDOW_W * WINDOW_H]();
     float* flammability = new float[WINDOW_W * WINDOW_H]();
@@ -996,7 +984,6 @@ void imageCartFunction(Cart& can) {
 
 void highData(Canvas& can) {
     Timer t(FRAME);
-    can.setOnlyPoints(true);
     unsigned int reps,
                  width = can.getWindowWidth(),
                  height = can.getWindowHeight();
@@ -1114,7 +1101,6 @@ void getPixelsFunction(Canvas& can) {
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
     Timer::threadSleepFor(1.0);
-    can.setOnlyPoints(true);
     uint8_t* buffer = can.getScreenBuffer();
     unsigned int blocksize = (double)height / THREADS;
 
@@ -1175,8 +1161,8 @@ int main() {
 //            test(c2,colorPointsFunction,true);
 //            Canvas c3(BUFFER);
 //            test(c3,lineChainFunction,true,BLACK);
-//            Canvas c4(500);
-//            test(c4,lineFanFunction,false);
+            Canvas c4(500);
+            test(c4,lineFanFunction,false);
 //            Canvas c5(65536);
 //            test(c5,spectrumFunction,false);
 //            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);

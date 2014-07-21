@@ -18,7 +18,6 @@
 
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Line.h"           // Our own class for drawing straight lines.
-#include "Point.h"          // Our own class for drawing single points.
 #include "Polyline.h"       // Our own class for drawing polylines.
 #include "Rectangle.h"      // Our own class for drawing rectangles.
 #include "ShinyPolygon.h"   // Our own class for drawing polygons with colored vertices.
@@ -31,6 +30,7 @@
 #include <mutex>            // Needed for locking the Canvas for thread-safety
 #include <omp.h>            // For OpenMP support
 #include <string>           // For window titles
+#include <sstream>
 #include <thread>           // For spawning rendering in a different thread
 
 // GL libraries
@@ -48,7 +48,6 @@ private:
     typedef std::function<void(double, double)>     doubleFunction;
     typedef std::unique_lock<std::mutex>            mutexLock;
 
-    bool            allPoints;
     float           aspect;                                             // Aspect ratio used for setting up the window
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      buffer;                                             // Mutex for locking the render buffer so that only one thread can read/write at a time
@@ -147,11 +146,12 @@ public:
     int      getWindowX()          { return monitorX; }                 // Accessor for the monitor x coord
     int      getWindowY()          { return monitorY; }                 // Accessor for the monitor y coord
 
-    void     setOnlyPoints(bool b) { allPoints = b; }                   // Whether we're only drawing points
     void     setShowFPS(bool b)    { showFPS = b; }                     // Mutator to show debugging FPS
     void     setBackgroundColor(RGBfloatType color);                    // Changes the background color
 
     int      start();                                                   // Function to start rendering our Canvas
+
+    void     takeScreenShot(std::string filename = "");
 };
 
 #endif /* CANVAS_H_ */
