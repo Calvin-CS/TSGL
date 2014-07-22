@@ -8,7 +8,6 @@
 #ifndef SHAPE_H_
 #define SHAPE_H_
 
-#include <stdexcept>    // Needed for exceptions
 #include <GL/glew.h>    // Needed for GL function calls
 #include "color.h"      // Needed for color type
 

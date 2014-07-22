@@ -17,9 +17,12 @@ typedef std::chrono::time_point<highResClock, duration_d> timepoint_d;
 
 class Timer {
  private:
+    typedef std::unique_lock<std::mutex> mutexLock;
+
     unsigned int lastRep;
     std::chrono::duration<double> period_;
     timepoint_d startTime, lastTime;
+    std::mutex sleep_;
  public:
     Timer(double period) {
         reset(period);
@@ -56,9 +59,10 @@ class Timer {
 
     // Sleep the thread until the period has passed
     void sleep() {
-        #pragma omp critical (timer)
-        if (lastTime + period_ > highResClock::now() && lastTime + period_ < highResClock::now() + period_)
+        mutexLock sleepLock(sleep_);
+        if (lastTime + period_ > highResClock::now() && lastTime < highResClock::now())
             lastTime = lastTime + period_;
+        sleepLock.unlock();
 //        if (lastTime <= highResClock::now()) std::cout << "no sleep" << std::endl;
         std::this_thread::sleep_until(lastTime);
     }

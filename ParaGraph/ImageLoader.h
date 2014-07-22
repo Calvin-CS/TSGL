@@ -12,7 +12,6 @@
 #include <GL/glut.h>
 #endif
 
-#include <iostream>        // DEBUGGING
 #include <fstream>
 #include <stdio.h>
 #include <string>
@@ -22,7 +21,6 @@
 #include <jpeglib.h>
 #include <png.h>
 
-#include <GL/glew.h>    // For GL drawing calls
 #include <GL/gl.h>      // For GL functions
 
 class ImageLoader {

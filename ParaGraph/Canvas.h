@@ -28,7 +28,6 @@
 #include <functional>       // For callback upon key presses
 #include <iostream>         // DEBUGGING
 #include <mutex>            // Needed for locking the Canvas for thread-safety
-#include <omp.h>            // For OpenMP support
 #include <string>           // For window titles
 #include <sstream>          // For string building
 #include <thread>           // For spawning rendering in a different thread

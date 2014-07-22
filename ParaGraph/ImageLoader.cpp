@@ -28,9 +28,9 @@ bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, 
     if (extension == ".png")
         success = saveToPNG(filename.c_str(), pixels, w, h);
     else if (extension == ".jpg" || extension == ".jpeg")
-        std::cout << "JPG saving not done yet" << std::endl;
+        fprintf(stderr, "JPG saving not implemented yet\n");
     else if (extension == ".bmp")
-        std::cout << "BMP saving not done yet" << std::endl;
+        fprintf(stderr, "BMP saving not implemented yet\n");
     return success;
 }
 
@@ -238,8 +238,6 @@ GLuint ImageLoader::loadTextureFromBMP(const char* filename, int &width, int &he
             data[s2] = tmp;
         }
     }
-
-    std::cout << "BMP: " << height << std::endl;
 
     // Create one OpenGL texture
     glGenTextures(1, &texture);

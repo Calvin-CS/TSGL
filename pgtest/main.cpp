@@ -5,9 +5,7 @@
  * Last Modified: Patrick Crain, 6/17/2014
  */
 
-#include "Canvas.h"
-#include "CartesianCanvas.h"
-#include "Timer.h"
+#include "ParaGraph.h"
 #include <omp.h>
 #include <iostream>
 #include <complex>
@@ -1181,8 +1179,8 @@ int main() {
 //            test(c5,spectrumFunction,false);
 //            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
 //            test(c6,mandelbrotFunction,false);
-//            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
-//            test(c7,langtonFunction,false);
+            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
+            test(c7,langtonFunction,false);
 //            Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
 //            test(c8,langtonColonyFunction,false);
 //            Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
@@ -1228,8 +1226,8 @@ int main() {
 //            test(c27,textCartFunction,true);
 //            Canvas c28(0, 0, 800, 600, 500000);
 //            test(c28,getPixelsFunction,false);
-            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-            test(c29,shapeTestFunction,false);
+//            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+//            test(c29,shapeTestFunction,false);
 //        }
 //    }
     glfwTerminate();    // Release GLFW

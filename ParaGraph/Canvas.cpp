@@ -124,7 +124,6 @@ void Canvas::draw() {
             1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - cycleTime).count() * 1000000000.0);
         cycleTime = end;
 
-        #pragma omp critical (fps)
         if (showFPS) std::cout << realFPS << '/' << FPS << std::endl;
 
         mutexLock mBufferLock(buffer);  // Time to flush our buffer
