@@ -1228,8 +1228,8 @@ int main() {
 //            test(c27,textCartFunction,true);
 //            Canvas c28(0, 0, 800, 600, 500000);
 //            test(c28,getPixelsFunction,false);
-              Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-              test(c29,shapeTestFunction,false);
+            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+            test(c29,shapeTestFunction,false);
 //        }
 //    }
     glfwTerminate();    // Release GLFW
