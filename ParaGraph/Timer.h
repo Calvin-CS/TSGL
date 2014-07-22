@@ -9,6 +9,7 @@
 #define TIMER_H_
 
 #include <chrono>        // For timing
+#include <mutex>         // Needed for locking for thread-safety
 #include <thread>        // For sleeping
 
 typedef std::chrono::high_resolution_clock highResClock;
@@ -60,7 +61,7 @@ class Timer {
     // Sleep the thread until the period has passed
     void sleep() {
         mutexLock sleepLock(sleep_);
-        if (lastTime + period_ > highResClock::now() && lastTime < highResClock::now())
+        if (lastTime < highResClock::now())
             lastTime = lastTime + period_;
         sleepLock.unlock();
 //        if (lastTime <= highResClock::now()) std::cout << "no sleep" << std::endl;

@@ -1179,8 +1179,8 @@ int main() {
 //            test(c5,spectrumFunction,false);
 //            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
 //            test(c6,mandelbrotFunction,false);
-            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
-            test(c7,langtonFunction,false);
+//            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
+//            test(c7,langtonFunction,false);
 //            Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
 //            test(c8,langtonColonyFunction,false);
 //            Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
@@ -1200,13 +1200,13 @@ int main() {
 //            test(c14,gradientWheelFunction,false,BLACK);
 //            Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
 //            test(c15,alphaRectangleFunction,false,BLACK);
-//            Canvas c16(0, 0, 960, 960, 30000);
-//            test(c16,alphaLangtonFunction,false,BLACK);
+            Canvas c16(0, 0, 960, 960, 30000);
+            test(c16,alphaLangtonFunction,false,BLACK);
 //            Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
 //            test(c17,gradientMandelbrotFunction,true);
 //            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
 //            test(c18,novaFunction,true);
-//            Canvas c19(0, 0, 1600, 1200, BUFFER);
+//            Canvas c19(0, 0, 1601, 1200, BUFFER);
 //            test(c19,voronoiFunction,true,WHITE);
 //            Canvas c20(0, 0, 1600, 1200, BUFFER);
 //            test(c20,shadedVoronoiFunction,false,WHITE);
