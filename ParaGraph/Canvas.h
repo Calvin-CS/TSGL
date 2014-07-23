@@ -24,7 +24,6 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Triangle.h"       // Our own class for drawing triangles.
 
-#include <chrono>           // For timing drawing and FPS
 #include <functional>       // For callback upon key presses
 #include <iostream>         // DEBUGGING
 #include <mutex>            // Needed for locking the Canvas for thread-safety
@@ -55,7 +54,6 @@ private:
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      buffer;                                             // Mutex for locking the render buffer so that only one thread can read/write at a time
     Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
-    timepoint_d     cycleTime;                                          // Time when the last frame started
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
@@ -77,7 +75,6 @@ private:
     std::mutex      shapes;                                             // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
-    timepoint_d     startTime;                                          // Start time, to show how much time has elapsed
     GLuint          tex,                                                // Texture
                     tex2,                                               // Texture 2
                     textureShaderFragment,                              // Address of the textured fragment shader

@@ -543,7 +543,7 @@ void alphaRectangleFunction(Canvas& can) {
     }
 }
 void alphaLangtonFunction(Canvas& can) {
-    const int IPF = 5000,                       // Iterations per frame
+    const int IPF = 5000000,                       // Iterations per frame
               WINDOW_W = can.getWindowWidth(),    // Set the window sizes
               WINDOW_H = can.getWindowHeight(),
               RADIUS = WINDOW_H / 6;            // How far apart to space the ants
@@ -1201,12 +1201,12 @@ int main() {
 //            Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
 //            test(c15,alphaRectangleFunction,false,BLACK);
             Canvas c16(0, 0, 960, 960, 30000);
-            test(c16,alphaLangtonFunction,false,BLACK);
+            test(c16,alphaLangtonFunction,true,BLACK);
 //            Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
 //            test(c17,gradientMandelbrotFunction,true);
 //            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
 //            test(c18,novaFunction,true);
-//            Canvas c19(0, 0, 1601, 1200, BUFFER);
+//            Canvas c19(0, 0, 1600, 1200, BUFFER);
 //            test(c19,voronoiFunction,true,WHITE);
 //            Canvas c20(0, 0, 1600, 1200, BUFFER);
 //            test(c20,shadedVoronoiFunction,false,WHITE);

@@ -118,13 +118,13 @@ void Canvas::draw() {
         } else
             glDrawBuffer(GL_LEFT);
 
+        if (showFPS) std::cout << round(1 / timer->getTimeBetweenSleeps()) << '/' << FPS << std::endl;
         // Calculate CycleTime since draw() was last called
-        highResClock::time_point end = highResClock::now();
-        realFPS = round(
-            1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - cycleTime).count() * 1000000000.0);
-        cycleTime = end;
-
-        if (showFPS) std::cout << realFPS << '/' << FPS << std::endl;
+//        highResClock::time_point end = highResClock::now();
+//        realFPS = round(1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - cycleTime).count() * 1000000000.0);
+//        cycleTime = end;
+//
+//        if (showFPS) std::cout << realFPS << '/' << FPS << std::endl;
 
         mutexLock mBufferLock(buffer);  // Time to flush our buffer
         if (myBuffer->size() > 0) {     // But only if there is anything to flush
@@ -320,8 +320,7 @@ int Canvas::end() {
  * getTime returns the time elapsed since the Canvas has started drawing (in microseconds)
  */
 double Canvas::getTime() {
-    return std::chrono::duration_cast<std::chrono::microseconds>(highResClock::now() - startTime).count()
-        / 1000000.0;
+    return timer->getTime();
 }
 
 void Canvas::glInit() {
@@ -565,7 +564,6 @@ int Canvas::start() {
     if (started) return -1;
     started = true;
     renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
-    startTime = highResClock::now();                         // Record the start time
     return 0;
 }
 

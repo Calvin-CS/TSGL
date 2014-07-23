@@ -65,7 +65,7 @@ PG_WORLD_1          = GLFW_KEY_WORLD_1,         /* non-US #1 */
 PG_WORLD_2          = GLFW_KEY_WORLD_2,         /* non-US #2 */
 
 // Function keys
-// Autobound to close window
+// PG_KEY_ESCAPE is bound to close window
 PG_KEY_ESCAPE       = GLFW_KEY_ESCAPE,
 PG_ENTER            = GLFW_KEY_ENTER,
 PG_TAB              = GLFW_KEY_TAB,

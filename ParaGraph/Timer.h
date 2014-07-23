@@ -11,6 +11,7 @@
 #include <chrono>        // For timing
 #include <mutex>         // Needed for locking for thread-safety
 #include <thread>        // For sleeping
+#include <iostream>
 
 typedef std::chrono::high_resolution_clock highResClock;
 typedef std::chrono::duration<double> duration_d;
@@ -20,58 +21,22 @@ class Timer {
  private:
     typedef std::unique_lock<std::mutex> mutexLock;
 
-    unsigned int lastRep;
-    std::chrono::duration<double> period_;
-    timepoint_d startTime, lastTime;
+    unsigned int last_rep;
+    duration_d period_;
+    timepoint_d start_time, last_time;
     std::mutex sleep_;
+    double time_between_sleeps;
  public:
-    Timer(double period) {
-        reset(period);
-    }
+    Timer(double period);
+    virtual ~Timer();
 
-    virtual ~Timer() {}
-
-    // Get the number of reps since start
-    unsigned int getReps() {
-        return (highResClock::now() - startTime) / period_;
-    }
-
-    // Get the time since start
-    double getTime() {
-        return std::chrono::duration_cast<std::chrono::nanoseconds>(highResClock::now() - startTime).count()
-            / 1000000000.0;
-    }
-
-    // Check if the timer has elapsed past the point when it last past the period
-    bool pastPeriod() {
-        if (lastRep < getReps()) {
-            lastRep = getReps();
-            return true;
-        } else
-            return false;
-    }
-
-    // Changes the period to the given interval
-    void reset(double period) {
-        startTime = lastTime = highResClock::now();
-        period_ = duration_d(period);
-        lastRep = 0;
-    }
-
-    // Sleep the thread until the period has passed
-    void sleep() {
-        mutexLock sleepLock(sleep_);
-        if (lastTime < highResClock::now())
-            lastTime = lastTime + period_;
-        sleepLock.unlock();
-//        if (lastTime <= highResClock::now()) std::cout << "no sleep" << std::endl;
-        std::this_thread::sleep_until(lastTime);
-    }
-
-    // Sleep the thread for a specified duration
-    static void threadSleepFor(double duration) {
-        std::this_thread::sleep_for(duration_d(duration));
-    }
+    unsigned int getReps() const;                   // Get the number of reps since start
+    double getTime() const;                         // Get the time since start
+    double getTimeBetweenSleeps() const;            // Get the time between the two last sleeps
+    bool pastPeriod();                              // Check if the timer has elapsed past the point when it last past the period
+    void reset(double period);                      // Changes the period to the given interval
+    void sleep();                                   // Sleep the thread until the period has passed
+    static void threadSleepFor(double duration);    // Sleep the thread for a specified duration
 };
 
 #endif /* TIMER_H_ */
