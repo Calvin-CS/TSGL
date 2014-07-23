@@ -57,21 +57,6 @@ Canvas::~Canvas() {
     delete myBuffer;
     delete timer;
     delete[] vertexData;
-
-    // Free up our resources
-    glDetachShader(shaderProgram, shaderFragment);
-    glDetachShader(shaderProgram, shaderVertex);
-    glDeleteShader(shaderFragment);
-    glDeleteShader(shaderVertex);
-    glDeleteProgram(shaderProgram);
-    glDetachShader(textureShaderProgram, textureShaderFragment);
-    glDetachShader(textureShaderProgram, textureShaderVertex);
-    glDeleteShader(textureShaderFragment);
-    glDeleteShader(textureShaderVertex);
-    glDeleteProgram(textureShaderProgram);
-    glDeleteBuffers(1, &vertexBuffer);
-    glDeleteVertexArrays(1, &vertexArray);
-    glDeleteTextures(1, &tex);
 }
 
 void Canvas::bindToButton(Key button, Action a, voidFunction f) {
@@ -323,6 +308,23 @@ double Canvas::getTime() {
     return timer->getTime();
 }
 
+void Canvas::glDestroy() {
+    // Free up our resources
+    glDetachShader(shaderProgram, shaderFragment);
+    glDetachShader(shaderProgram, shaderVertex);
+    glDeleteShader(shaderFragment);
+    glDeleteShader(shaderVertex);
+    glDeleteProgram(shaderProgram);
+    glDetachShader(textureShaderProgram, textureShaderFragment);
+    glDetachShader(textureShaderProgram, textureShaderVertex);
+    glDeleteShader(textureShaderFragment);
+    glDeleteShader(textureShaderVertex);
+    glDeleteProgram(textureShaderProgram);
+    glDeleteBuffers(1, &vertexBuffer);
+    glDeleteVertexArrays(1, &vertexArray);
+    glDeleteTextures(1, &tex);
+}
+
 void Canvas::glInit() {
     // Create a Window and the Context
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
@@ -572,6 +574,7 @@ void Canvas::startDrawing(Canvas *c) {
     c->draw();
     c->isFinished = true;
     glfwDestroyWindow(c->window);
+    c->glDestroy();
 }
 
 void Canvas::recordForNumFrames(unsigned int num_frames) {

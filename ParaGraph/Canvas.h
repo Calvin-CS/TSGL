@@ -101,6 +101,7 @@ private:
 
     void        init(int xx,int yy,int ww,int hh,
                      unsigned int b,std::string title);                 // Method for initializing the canvas
+    void        glDestroy();                                            // Distroys the GL and GLFW things that are specific for this canvas
     void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
     static void keyCallback(GLFWwindow* window, int key,
                             int scancode, int action, int mods);        // GLFW callback for keys
