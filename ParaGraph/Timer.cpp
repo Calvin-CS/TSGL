@@ -52,16 +52,19 @@ void Timer::sleep() {
         last_time = last_time + period_;
     }
     sleepLock.unlock();
-//      if (lastTime <= highResClock::now()) std::cout << "no sleep" << std::endl;
-//        double seconds = std::chrono::duration_cast<duration_d>(last_time - highResClock::now()).count()
-//            * 1000000000;
-//        std::this_thread::sleep_for(std::chrono::nanoseconds((long long) seconds));
-    std::this_thread::sleep_until(last_time);
 
-    time_between_sleeps = std::chrono::duration_cast<duration_d>(highResClock::now() - last_time).count() + period_.count();
+    long double nano = std::chrono::duration_cast<duration_d>(last_time - highResClock::now()).count();
+    std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (nano * 1000000000)));
+
+//    std::this_thread::sleep_until(last_time);
+
+    time_between_sleeps = std::chrono::duration_cast<duration_d>(highResClock::now() - last_time).count()
+        + period_.count();
 }
 
 // Sleep the thread for a specified duration
 void Timer::threadSleepFor(double duration) {
-    std::this_thread::sleep_for(duration_d(duration));
+    std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (duration * 1000000000)));
+
+//    std::this_thread::sleep_for(duration_d(duration));
 }

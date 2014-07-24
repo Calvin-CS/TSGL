@@ -9,7 +9,12 @@
 #define CANVAS_H_
 
 // Link statically with GLEW
-//#define GLEW_STATIC
+#define GLEW_STATIC
+
+#ifdef _WIN32
+#define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))      // round is not defined in Visual Studio
+#endif
+
 
 #include "Array.h"          // Our own array for buffering drawing operations.
 #include "color.h"          // Our own interface for converting color types
@@ -65,7 +70,7 @@ private:
     Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
     std::mutex      pointArray;                                         // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
-    float           realFPS;                                            // Actual FPS of drawing
+    int             realFPS;                                            // Actual FPS of drawing
     std::thread     renderThread;                                       // Thread dedicated to rendering the Canvas
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
@@ -101,7 +106,7 @@ private:
 
     void        init(int xx,int yy,int ww,int hh,
                      unsigned int b,std::string title);                 // Method for initializing the canvas
-    void        glDestroy();                                            // Distroys the GL and GLFW things that are specific for this canvas
+    void        glDestroy();                                            // Destroys the GL and GLFW things that are specific for this canvas
     void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
     static void keyCallback(GLFWwindow* window, int key,
                             int scancode, int action, int mods);        // GLFW callback for keys

@@ -37,25 +37,31 @@ bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, 
 GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &height, GLuint &texture) const {
     png_byte header[8];
 
-    FILE* fp = fopen(filename, "rb");
-    if (fp == 0) {
+#ifdef _WIN32
+    FILE* file;
+    fopen_s(&file, filename, "rb");
+#else
+    FILE* file = fopen(filename, "rb");
+#endif
+
+    if (file == 0) {
         fprintf(stderr, "Can't open %s: so such file\n", filename);
         return 0;
     }
 
     // read the header
-    fread(header, 1, 8, fp);
+    fread(header, 1, 8, file);
 
     if (png_sig_cmp(header, 0, 8)) {
         fprintf(stderr, "error: %s is not a PNG.\n", filename);
-        fclose(fp);
+        fclose(file);
         return 0;
     }
 
     png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (!png_ptr) {
         fprintf(stderr, "error: png_create_read_struct returned 0.\n");
-        fclose(fp);
+        fclose(file);
         return 0;
     }
 
@@ -64,7 +70,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &he
     if (!info_ptr) {
         fprintf(stderr, "error: png_create_info_struct returned 0.\n");
         png_destroy_read_struct(&png_ptr, (png_infopp) NULL, (png_infopp) NULL);
-        fclose(fp);
+        fclose(file);
         return 0;
     }
 
@@ -73,7 +79,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &he
     if (!end_info) {
         fprintf(stderr, "error: png_create_info_struct returned 0.\n");
         png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp) NULL);
-        fclose(fp);
+        fclose(file);
         return 0;
     }
 
@@ -81,12 +87,12 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &he
     if (setjmp(png_jmpbuf(png_ptr))) {
         fprintf(stderr, "error from libpng\n");
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        fclose(fp);
+        fclose(file);
         return 0;
     }
 
     // init png reading
-    png_init_io(png_ptr, fp);
+    png_init_io(png_ptr, file);
 
     // let libpng know you already read the first 8 bytes
     png_set_sig_bytes(png_ptr, 8);
@@ -119,7 +125,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &he
     if (image_data == NULL) {
         fprintf(stderr, "error: could not allocate memory for PNG image data\n");
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        fclose(fp);
+        fclose(file);
         return 0;
     }
 
@@ -129,7 +135,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &he
         fprintf(stderr, "error: could not allocate memory for PNG row pointers\n");
         png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
         free(image_data);
-        fclose(fp);
+        fclose(file);
         return 0;
     }
 
@@ -157,7 +163,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &he
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
     free(image_data);
     free(row_pointers);
-    fclose(fp);
+    fclose(file);
     return texture;
 }
 
@@ -172,7 +178,13 @@ GLuint ImageLoader::loadTextureFromBMP(const char* filename, int &width, int &he
     unsigned char * data;
 
     // Open the file
-    FILE * file = fopen(filename, "rb");
+#ifdef _WIN32
+    FILE* file;
+    fopen_s(&file, filename, "rb");
+#else
+    FILE* file = fopen(filename, "rb");
+#endif
+
     if (!file) {
         fprintf(stderr, "Can't open %s: so such file\n", filename);
         return 0;
@@ -285,12 +297,15 @@ GLuint ImageLoader::loadTextureFromJPG(const char* filename, int &width, int &he
      */
     struct my_error_mgr jerr;
 
-    /* We want to open the input file before doing anything else.
-     * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
-     * requires it in order to read binary files.
-     */
-    FILE* infile = fopen(filename, "rb");
-    if (infile == NULL) {
+    // We want to open the input file before doing anything else.
+#ifdef _WIN32
+    FILE* file;
+    fopen_s(&file, filename, "rb");
+#else
+    FILE* file = fopen(filename, "rb");
+#endif
+
+    if (file == NULL) {
         fprintf(stderr, "Can't open %s: so such file\n", filename);
         return false;
     }
@@ -307,12 +322,12 @@ GLuint ImageLoader::loadTextureFromJPG(const char* filename, int &width, int &he
          * We need to clean up the JPEG object, close the input file, and return.
          */
         jpeg_destroy_decompress(&cinfo);
-        fclose(infile);
+        fclose(file);
         return false;
     }
 
     jpeg_create_decompress(&cinfo);
-    jpeg_stdio_src(&cinfo, infile);
+    jpeg_stdio_src(&cinfo, file);
     (void) jpeg_read_header(&cinfo, TRUE);
     /* We passed TRUE to reject a tables-only JPEG file as an error.
      * See libjpeg.doc for more info.
@@ -367,7 +382,7 @@ GLuint ImageLoader::loadTextureFromJPG(const char* filename, int &width, int &he
     glBindTexture(GL_TEXTURE_2D, 0);
 
     jpeg_destroy_decompress(&cinfo);
-    fclose(infile);
+    fclose(file);
 
     /* Check if any errors were created */
     if (jerr.pub.num_warnings != 0) return false;
@@ -385,18 +400,24 @@ bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h)
         return false;
     }
 
-    FILE *fp = fopen(filename, "wb");
-    if (!fp) {
+#ifdef _WIN32
+    FILE* file;
+    fopen_s(&file, filename, "rb");
+#else
+    FILE* file = fopen(filename, "rb");
+#endif
+
+    if (!file) {
         png_destroy_write_struct(&png, &info);
         return false;
     }
 
-    png_init_io(png, fp);
+    png_init_io(png, file);
     png_set_IHDR(png, info, w, h, 8 /* depth */, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
                  PNG_FILTER_TYPE_BASE);
     png_colorp palette = (png_colorp) png_malloc(png, (unsigned)(PNG_MAX_PALETTE_LENGTH * sizeof(png_color)));
     if (!palette) {
-        fclose(fp);
+        fclose(file);
         png_destroy_write_struct(&png, &info);
         return false;
     }
@@ -413,7 +434,7 @@ bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h)
     png_free(png, palette);
     png_destroy_write_struct(&png, &info);
 
-    fclose(fp);
+    fclose(file);
     delete[] rows;
     return true;
 }

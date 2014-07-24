@@ -103,13 +103,10 @@ void Canvas::draw() {
         } else
             glDrawBuffer(GL_LEFT);
 
-        if (showFPS) std::cout << round(1 / timer->getTimeBetweenSleeps()) << '/' << FPS << std::endl;
-        // Calculate CycleTime since draw() was last called
-//        highResClock::time_point end = highResClock::now();
-//        realFPS = round(1.0 / std::chrono::duration_cast<std::chrono::nanoseconds>(end - cycleTime).count() * 1000000000.0);
-//        cycleTime = end;
-//
-//        if (showFPS) std::cout << realFPS << '/' << FPS << std::endl;
+        realFPS = round(1 / timer->getTimeBetweenSleeps());
+        if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
+//        fflush(stdout);
+        std::cout.flush();
 
         mutexLock mBufferLock(buffer);  // Time to flush our buffer
         if (myBuffer->size() > 0) {     // But only if there is anything to flush
@@ -335,7 +332,7 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
-    window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), nullptr, nullptr);  // Windowed
+    window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
 
     const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
     glfwSetWindowPos(window, (monInfo->width - winWidth) / 2, (monInfo->height - winHeight) / 2);
@@ -351,7 +348,7 @@ void Canvas::glInit() {
     glEnable(GL_BLEND);                                 // Enable blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
 
-    std::cout << glGetString(GL_VERSION) << std::endl;
+//    std::cout << glGetString(GL_VERSION) << std::endl;
     // Needed?
 //    glEnable(GL_TEXTURE_2D);
 //    glShadeModel(GL_FLAT);
