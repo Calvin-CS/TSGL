@@ -24,24 +24,31 @@
 #include <png.h>
 
 #include <GL/gl.h>      // For GL functions
-
 class ImageLoader {
-private:
+ private:
     typedef std::unordered_map<std::string, GLuint> TextureMap;
 
     TextureMap loadedTextures;
 
-    GLuint loadTextureFromBMP(const char* filename, int &width, int &height, GLuint &texture) const;
-    GLuint loadTextureFromJPG(const char* filename, int &width, int &height, GLuint &texture) const;
-    GLuint loadTextureFromPNG(const char* filename, int &width, int &height, GLuint &texture) const;
+    static void createGLTextureFromBuffer(GLuint &texture, unsigned char* buffer, unsigned int &width,
+                                          unsigned int &height, int components);
 
-    bool saveToPNG(const char *filename, GLubyte *pixels, int w, int h) const;
-    static void my_error_exit (j_common_ptr cinfo);
-public:
-    ImageLoader() {}
+    GLuint loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
+                              GLuint &texture) const;
+    GLuint loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
+                              GLuint &texture) const;
+    GLuint loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
+                              GLuint &texture) const;
+
+    static void my_error_exit(j_common_ptr cinfo);
+
+    bool saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const;
+ public:
+    ImageLoader() {
+    }
     ~ImageLoader();
 
-    GLuint loadTexture(std::string filename, int &width, int &height, GLuint &texture);
+    GLuint loadTexture(std::string filename, unsigned int &width, unsigned int &height, GLuint &texture);
     bool saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const;
 };
 

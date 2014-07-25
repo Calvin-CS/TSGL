@@ -16,7 +16,7 @@ Text::Text(std::string s, ImageLoader& loader, int x, int y, RGBfloatType color)
 }
 
 void Text::draw() {
-    int x, y;
+    unsigned int x, y;
     GLuint fontTexture;
     myLoader.loadTexture("data/font1.png", x, y, fontTexture);
 

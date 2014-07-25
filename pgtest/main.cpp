@@ -177,7 +177,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
         #pragma omp parallel num_threads(THREADS)
         {
             unsigned int iterations;
-            for (int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+            for (unsigned int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
                 long double row = blockstart * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
                 for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
                     complex originalComplex(col, row);
@@ -685,7 +685,7 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
         {
             unsigned int iterations;
             double smooth;
-            for (int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+            for (unsigned int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
                 long double row = blockstart * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
                 for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
                     complex c(col, row);
@@ -724,7 +724,7 @@ void novaFunction(CartesianCanvas& can) {
     {
         unsigned int iterations;
         double smooth;
-        for (int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+        for (unsigned int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
             long double row = BLOCKSTART * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
             for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
                 complex c(col, row);
@@ -769,9 +769,9 @@ void voronoiFunction(Canvas& can) {
     int* kvalue = new int[WINDOW_W * WINDOW_H]();   // Create a mapping of control point values
     RGBfloatType color[POINTS];                     // And for an array of colors
     RGBfloatType tc, rc, lc, bc, xc, yc;            // Color for the top, right, left, bottom, x-average, and y-average
+    int bestk = -1;                                 // Keep track of the current best k-value
     float bdist, dist, xd, yd;                      // Keep track of the closes matches and current distances
     float wdist[POINTS] = { 0 };                    // Keep track of the worst distances for shading
-    int bestk;                                      // Keep track of the current best k-value
     for (int i = 0; i < POINTS; i++) {              // Randomize the control points
         x[i] = rand() % WINDOW_W;
         y[i] = rand() % WINDOW_H;
@@ -1204,67 +1204,67 @@ int main() {
 //    {
 //        #pragma omp section
 //        {
-            Canvas c1(BUFFER);
-            test(c1,graydientFunction,true);
-            Canvas c2(BUFFER);
-            test(c2,colorPointsFunction,true);
-            Canvas c3(BUFFER);
-            test(c3,lineChainFunction,true,BLACK);
-            Canvas c4(500);
-            test(c4,lineFanFunction,false);
-            Canvas c5(65536);
-            test(c5,spectrumFunction,false);
-            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-            test(c6,mandelbrotFunction,false);
-            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
-            test(c7,langtonFunction,false);
-            Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-            test(c8,langtonColonyFunction,false);
-            Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-            test(c9,langtonRainbowFunction,true,BLACK);
-            Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
-            test(c10,dumbSortFunction,true);
-            Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
-            test(c11,colorWheelFunction);
+//            Canvas c1(BUFFER);
+//            test(c1,graydientFunction,true);
+//            Canvas c2(BUFFER);
+//            test(c2,colorPointsFunction,true);
+//            Canvas c3(BUFFER);
+//            test(c3,lineChainFunction,true,BLACK);
+//            Canvas c4(500);
+//            test(c4,lineFanFunction,false);
+//            Canvas c5(65536);
+//            test(c5,spectrumFunction,false);
+//            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+//            test(c6,mandelbrotFunction,false);
+//            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
+//            test(c7,langtonFunction,false);
+//            Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
+//            test(c8,langtonColonyFunction,false);
+//            Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
+//            test(c9,langtonRainbowFunction,true,BLACK);
+//            Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
+//            test(c10,dumbSortFunction,true);
+//            Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
+//            test(c11,colorWheelFunction);
 //        }
 //        #pragma omp section
 //        {
-            Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
-            test(c12,functionFunction,true,WHITE);
-            Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
-            test(c13,cosineIntegralFunction,true,WHITE);
-            Canvas c14(0, 0, 1000, 1000, 1024);
-            test(c14,gradientWheelFunction,false,BLACK);
-            Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
-            test(c15,alphaRectangleFunction,false,BLACK);
-            Canvas c16(0, 0, 960, 960, 30000);
-            test(c16,alphaLangtonFunction,true,BLACK);
-            Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-            test(c17,gradientMandelbrotFunction,true);
-            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
-            test(c18,novaFunction,true);
-            Canvas c19(0, 0, 1600, 1200, BUFFER);
-            test(c19,voronoiFunction,true,WHITE);
-            Canvas c20(0, 0, 1600, 1200, BUFFER);
-            test(c20,shadedVoronoiFunction,false,WHITE);
-            Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
-            test(c21,forestFireFunction,false);
+//            Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
+//            test(c12,functionFunction,true,WHITE);
+//            Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
+//            test(c13,cosineIntegralFunction,true,WHITE);
+//            Canvas c14(0, 0, 1000, 1000, 1024);
+//            test(c14,gradientWheelFunction,false,BLACK);
+//            Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
+//            test(c15,alphaRectangleFunction,false,BLACK);
+//            Canvas c16(0, 0, 960, 960, 30000);
+//            test(c16,alphaLangtonFunction,true,BLACK);
+//            Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+//            test(c17,gradientMandelbrotFunction,true);
+//            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
+//            test(c18,novaFunction,true);
+//            Canvas c19(0, 0, 1600, 1200, BUFFER);
+//            test(c19,voronoiFunction,true,WHITE);
+//            Canvas c20(0, 0, 1600, 1200, BUFFER);
+//            test(c20,shadedVoronoiFunction,false,WHITE);
+//            Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
+//            test(c21,forestFireFunction,false);
             Canvas c22(0,0,1200,600,100);
             test(c22,imageFunction,false);
-            Canvas c23(0, 0, 1200, 900, 1201 * 900);
-            test(c23, highData, true);
-            Canvas c24(10);
-            test(c24,textFunction,true);
-            Canvas c25(0,0,1600,600,1000);
-            test(c25,pongFunction,false, BLACK);
-            Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
-            test(c26,imageCartFunction,false);
-            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
-            test(c27,textCartFunction,true);
-            Canvas c28(0, 0, 800, 600, 500000);
-            test(c28,getPixelsFunction,false);
-            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-            test(c29,shapeTestFunction,false);
+//            Canvas c23(0, 0, 1200, 900, 1201 * 900);
+//            test(c23, highData, true);
+//            Canvas c24(10);
+//            test(c24,textFunction,true);
+//            Canvas c25(0,0,1600,600,1000);
+//            test(c25,pongFunction,false, BLACK);
+//            Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
+//            test(c26,imageCartFunction,false);
+//            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
+//            test(c27,textCartFunction,true);
+//            Canvas c28(0, 0, 800, 600, 500000);
+//            test(c28,getPixelsFunction,false);
+//            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+//            test(c29,shapeTestFunction,false);
 //        }
 //    }
     glfwTerminate();    // Release GLFW

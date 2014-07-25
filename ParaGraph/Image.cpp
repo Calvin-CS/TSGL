@@ -40,7 +40,7 @@ Image::Image(std::string f, ImageLoader& loader, int x, int y, int w, int h, flo
 
 // draw() actually draws the Image to the canvas
 void Image::draw() {
-    int w, h;
+    unsigned int w, h;
     GLuint myTexture;
     myLoader.loadTexture(myFile, w, h, myTexture);
 
