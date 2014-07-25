@@ -41,7 +41,7 @@ bool Timer::pastPeriod() {
 // Changes the period to the given interval
 void Timer::reset(double period) {
     start_time = last_time = highResClock::now();
-    period_ = duration_d(period);
+    if (period > 0) period_ = duration_d(period);
     last_rep = 0;
 }
 

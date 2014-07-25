@@ -18,6 +18,8 @@
 #include <stdexcept>
 #include <unordered_map>
 
+#include <iostream>
+
 #include <jpeglib.h>
 #include <png.h>
 
@@ -25,7 +27,7 @@
 
 class ImageLoader {
 private:
-    typedef std::unordered_map<std::string,GLuint> TextureMap;
+    typedef std::unordered_map<std::string, GLuint> TextureMap;
 
     TextureMap loadedTextures;
 

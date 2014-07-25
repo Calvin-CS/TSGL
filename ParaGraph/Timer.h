@@ -34,7 +34,7 @@ class Timer {
     double getTime() const;                         // Get the time since start
     double getTimeBetweenSleeps() const;            // Get the time between the two last sleeps
     bool pastPeriod();                              // Check if the timer has elapsed past the point when it last past the period
-    void reset(double period);                      // Changes the period to the given interval
+    void reset(double period = 0);                      // Changes the period to the given interval
     void sleep();                                   // Sleep the thread until the period has passed
     static void threadSleepFor(double duration);    // Sleep the thread for a specified duration
 };

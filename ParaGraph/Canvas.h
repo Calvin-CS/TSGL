@@ -29,6 +29,7 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Triangle.h"       // Our own class for drawing triangles.
 
+#include <cmath>
 #include <functional>       // For callback upon key presses
 #include <iostream>         // DEBUGGING
 #include <mutex>            // Needed for locking the Canvas for thread-safety

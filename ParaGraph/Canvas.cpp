@@ -245,7 +245,7 @@ void Canvas::drawRectangle(int x, int y, int w, int h, RGBfloatType color, bool 
     }
 }
 
-inline void Canvas::drawShape(Shape* s) {
+void Canvas::drawShape(Shape* s) {
     mutexLock mlock(buffer);
     myBuffer->push(s);  // Push it onto our drawing buffer
     mlock.unlock();

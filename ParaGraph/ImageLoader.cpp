@@ -45,7 +45,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, int &width, int &he
 #endif
 
     if (file == 0) {
-        fprintf(stderr, "Can't open %s: so such file\n", filename);
+        fprintf(stderr, "Can't open %s: no such file\n", filename);
         return 0;
     }
 
@@ -172,7 +172,7 @@ GLuint ImageLoader::loadTextureFromBMP(const char* filename, int &width, int &he
 
     // Data read from the header of the BMP file
     unsigned char header[54];  // Each BMP file begins by a 54-bytes header
-    unsigned int dataPos;      // Position in the file where the actual data begins
+//    unsigned int dataPos;      // Position in the file where the actual data begins
     unsigned int imageSize;    // = width*height*3
     // Actual RGB data
     unsigned char * data;
@@ -186,31 +186,42 @@ GLuint ImageLoader::loadTextureFromBMP(const char* filename, int &width, int &he
 #endif
 
     if (!file) {
-        fprintf(stderr, "Can't open %s: so such file\n", filename);
+        fprintf(stderr, "Can't open %s: no such file\n", filename);
         return 0;
     }
 
     if (fread(header, 1, 54, file) != 54) {  // If not 54 bytes read : problem
-        printf("Not a correct BMP file\n");
+        fprintf(stderr, "Not a correct BMP file: header incorrectly formated\n");
+        fclose(file);
         return false;
     }
 
     if (header[0] != 'B' || header[1] != 'M') {
-        printf("Not a correct BMP file\n");
+        fprintf(stderr, "Not a correct BMP file: header did not specify BMP type\n");
+        fclose(file);
         return false;
     }
 
+//    unsigned result=0;
+//    for(int i=0; i<4; i++)
+//        result = (result << 8) | fgetc(file);
+
     // Read ints from the byte array
-    dataPos = *(int*) &(header[0x0A]);
+//    dataPos = *(int*) &(header[0x0A]);
+
+//    fread(&dataPos, 0x0A, 1, file);
+//    std::cout << "header at 22" << header[34] << std::endl;
     imageSize = *(int*) &(header[0x22]);
     width = *(int*) &(header[0x12]);
     height = *(int*) &(header[0x16]);
+
+//    std::cout << imageSize << " " << width << " " << height << " " << std::endl;
 
     int components = imageSize / width / height;
 
     // Some BMP files are misformatted, guess missing information
     if (imageSize == 0) imageSize = width * height * 4;  // 4 : one byte for each Red, Green, Blue, and Alpha component
-    if (dataPos == 0) dataPos = 54;                      // The BMP header is done that way
+//    if (dataPos == 0) dataPos = 54;                      // The BMP header is done that way
 
     // Create a buffer
     data = new unsigned char[imageSize];
@@ -306,7 +317,7 @@ GLuint ImageLoader::loadTextureFromJPG(const char* filename, int &width, int &he
 #endif
 
     if (file == NULL) {
-        fprintf(stderr, "Can't open %s: so such file\n", filename);
+        fprintf(stderr, "Can't open %s: no such file\n", filename);
         return false;
     }
 

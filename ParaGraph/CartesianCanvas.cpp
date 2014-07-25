@@ -14,18 +14,25 @@ CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Dec
 void CartesianCanvas::drawAxes(Decimal x, Decimal y, Decimal dx = 0, Decimal dy = 0) {
     drawLine(maxX, y, minX, y);  // Make the two axes
     drawLine(x, maxY, x, minY);
-    if (dx != 0 && dy != 0) {
-        for (int x = dx; x < maxX; x += dx) {
-            drawLine(x, y + 4 * pixelHeight, x, y - 4 * pixelHeight);
+
+    if (dx != 0.0) {
+        if (dx < 0.0) dx = -dx;
+
+        for (Decimal x_ = x + dx; x_ < maxX; x_ += dx) {
+            drawLine(x_, y + 8 * pixelHeight, x_, y - 8 * pixelHeight);
         }
-        for (int x = -dx; x > minX; x -= dx) {
-            drawLine(x, y + 4 * pixelHeight, x, y - 4 * pixelHeight);
+        for (Decimal x_ = x - dx; x_ > minX; x_ -= dx) {
+            drawLine(x_, y + 8 * pixelHeight, x_, y - 8 * pixelHeight);
         }
-        for (int y = dy; y < maxY; y += dy) {
-            drawLine(x + 4 * pixelWidth, y, x - 4 * pixelWidth, y);
+    }
+    if (dy != 0.0) {
+        if (dy < 0.0) dy = -dy;
+
+        for (Decimal y_ = y + dy; y_ < maxY; y_ += dy) {
+            drawLine(x + 8 * pixelWidth, y_, x - 8 * pixelWidth, y_);
         }
-        for (int y = -dy; y > minY; y -= dy) {
-            drawLine(x + 4 * pixelWidth, y, x - 4 * pixelWidth, y);
+        for (Decimal y_ = y - dy; y_ > minY; y_ -= dy) {
+            drawLine(x + 8 * pixelWidth, y_, x - 8 * pixelWidth, y_);
         }
     }
 }
