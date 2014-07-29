@@ -13,7 +13,7 @@ RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a) {
     }
     return {r / 255.0f, g / 255.0f, b / 255.0f, a / 255.0f};
 }
-inline RGBfloatType RGBintToRGBfloat(const RGBintType& color) {
+RGBfloatType RGBintToRGBfloat(const RGBintType& color) {
     return RGBintToRGBfloat(color.R, color.G, color.B, color.A);
 }
 
@@ -68,7 +68,7 @@ RGBfloatType HSVToRGBfloat(float h, float s, float v, float a) {
             throw std::out_of_range("Bad H value");
     }
 }
-inline RGBfloatType HSVToRGBfloat(const HSVType& color) {
+RGBfloatType HSVToRGBfloat(const HSVType& color) {
     return HSVToRGBfloat(color.H, color.S, color.V, color.A);
 }
 
@@ -78,7 +78,7 @@ RGBfloatType divideIntoSections(unsigned int sections, unsigned int section, flo
         "Values must be between 0 and 1 inclusive");
     return HSVToRGBfloat(6.0f / sections * section, 1.0f, value, alpha);
 }
-inline RGBfloatType divideIntoSections(unsigned int sections, unsigned int section) {
+RGBfloatType divideIntoSections(unsigned int sections, unsigned int section) {
     return HSVToRGBfloat(6.0f / sections * section, 1.0f, 1.0f, 1.0f);
 }
 

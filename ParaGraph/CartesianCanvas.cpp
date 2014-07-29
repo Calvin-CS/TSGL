@@ -103,7 +103,7 @@ void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, RGBfloatType
     Canvas::drawText(s, actualX, actualY, color);
 }
 
-void CartesianCanvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color, bool filled) {
+void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, RGBfloatType color, bool filled) {
     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
     getScreenCoordinates(x1, y1, actualX1, actualY1);
     getScreenCoordinates(x2, y2, actualX2, actualY2);

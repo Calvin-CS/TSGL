@@ -5,7 +5,7 @@
  * Last Modified: Patrick Crain, 6/17/2014
  */
 
-#include "ParaGraph.h"
+#include "paragraph.h"
 #include <omp.h>
 #include <iostream>
 #include <complex>
@@ -486,20 +486,20 @@ void functionFunction(CartesianCanvas& can) {
 void cosineIntegralFunction(CartesianCanvas& can) {
     Timer t(FRAME/2);
     const unsigned int THREADS = 8;
+    can.drawAxes(0, 0, PI/4, .5);
     long double pw = can.getPixelWidth();
     Function* function1 = new CosineFunction;
     can.drawFunction(function1);
-    long double offset = can.getCartWidth() / THREADS;
+    long double offset = 3*PI / THREADS;
 
     #pragma omp parallel num_threads(THREADS)
     {
-        long double start = can.getMinX() + omp_get_thread_num() * offset;
+        long double start = -1.5*PI + omp_get_thread_num() * offset;
         long double stop = start + offset;
         for (long double i = start; i < stop; i += pw) {
             if (!can.getIsOpen()) break;
             t.sleep();
-            RGBfloatType color = { (float) omp_get_thread_num() / THREADS, 0, 0, 1.0 };
-            can.drawLine(i, 0, i, function1->valueAt(i), color);
+            can.drawLine(i, 0, i, function1->valueAt(i), divideIntoSections(8, omp_get_thread_num()));
         }
     }
     delete function1;
@@ -760,23 +760,23 @@ void novaFunction(CartesianCanvas& can) {
 }
 
 void voronoiFunction(Canvas& can) {
-    const int WINDOW_W = can.getWindowWidth(),        // Set the screen sizes
+    const int WINDOW_W = can.getWindowWidth(),      // Set the screen sizes
               WINDOW_H = can.getWindowHeight(),
-              POINTS = 100*4;                         // Set the number of control points
+              POINTS = 100*4;                       // Set the number of control points
     srand(time(NULL));                              // Seed the random number generator
     int* x = new int[POINTS]();                     // Initialize an array for POINTS x coords
     int* y = new int[POINTS]();                     // Do the same for y coords
     int* kvalue = new int[WINDOW_W * WINDOW_H]();   // Create a mapping of control point values
     RGBfloatType color[POINTS];                     // And for an array of colors
     RGBfloatType tc, rc, lc, bc, xc, yc;            // Color for the top, right, left, bottom, x-average, and y-average
-    int bestk = -1;                                 // Keep track of the current best k-value
+    int bestk = 0;                                  // Keep track of the current best k-value
     float bdist, dist, xd, yd;                      // Keep track of the closes matches and current distances
     float wdist[POINTS] = { 0 };                    // Keep track of the worst distances for shading
     for (int i = 0; i < POINTS; i++) {              // Randomize the control points
         x[i] = rand() % WINDOW_W;
         y[i] = rand() % WINDOW_H;
     }
-    tc = randomColor(rand());  // Randomize the axis colors
+    tc = randomColor(rand());                       // Randomize the axis colors
     rc = randomColor(rand());
     lc = randomColor(rand());
     bc = randomColor(rand());
@@ -1162,14 +1162,94 @@ void getPixelsFunction(Canvas& can) {
 void shapeTestFunction(Canvas& can) {
     Timer t(FRAME);
     while (can.getIsOpen()) {
-        can.clear();
         t.sleep();
+        can.clear();
         for (int i = 0; i < 255; i++)
             can.drawCircle(can.getWindowWidth()/2,can.getWindowHeight()/2,i,64,randomColor(randint(100000)),false);
         can.drawCircle(can.getWindowWidth()/2,can.getWindowHeight()/2,256,64,randomColor(randint(100000)),true);
         can.drawRectangle(32,32,can.getWindowWidth()-64,can.getWindowHeight()-64,BLACK,false);
         can.drawTriangle(can.getWindowWidth()/2,32,can.getWindowWidth()-32,can.getWindowHeight()-32,32,can.getWindowHeight()-32,BLACK,false);
     }
+}
+
+void screenshotLangtonFunction(Canvas& can) {
+    const int IPF = 5000,                         // Iterations per frame
+              WINDOW_W = can.getWindowWidth(),    // Set the window sizes
+              WINDOW_H = can.getWindowHeight(), RADIUS = WINDOW_H / 6;              // How far apart to space the ants
+    bool paused = false;
+    bool* filled = new bool[WINDOW_W * WINDOW_H]();  // Create an empty bitmap for the window
+    int xx[4], yy[4], dir[4], red[4], green[4], blue[4];
+    xx[0] = WINDOW_W / 2 - RADIUS;
+    yy[0] = WINDOW_H / 2;
+    red[0] = MAX_COLOR;
+    green[0] = 0;
+    blue[0] = 0;
+    xx[1] = WINDOW_W / 2;
+    yy[1] = WINDOW_H / 2 - RADIUS;
+    red[1] = 0;
+    green[1] = 0;
+    blue[1] = MAX_COLOR;
+    xx[2] = WINDOW_W / 2 + RADIUS;
+    yy[2] = WINDOW_H / 2;
+    red[2] = 0;
+    green[2] = MAX_COLOR;
+    blue[2] = 0;
+    xx[3] = WINDOW_W / 2;
+    yy[3] = WINDOW_H / 2 + RADIUS;
+    red[3] = MAX_COLOR;
+    green[3] = 0;
+    blue[3] = MAX_COLOR;
+
+    for (int i = 0; i < 4; i++) {
+        dir[i] = i;
+    }
+    Timer t(FRAME);
+
+    can.bindToButton(PG_ENTER, PG_PRESS, [&paused]() {
+        paused = !paused;
+    });
+    can.bindToButton(PG_SPACE, PG_PRESS, [&can]() {
+        can.clear();
+    });
+
+    while (can.getIsOpen()) {
+        if (!paused) {
+            t.sleep();
+            for (int i = 0; i < IPF; i++) {
+                for (int j = 0; j < 4; j++) {
+                    if (filled[xx[j] + WINDOW_W * yy[j]]) {
+                        dir[j] = (dir[j] + 1) % 4;
+                        can.drawPoint(xx[j], yy[j], RGBintToRGBfloat(MAX_COLOR / 2, MAX_COLOR / 2, MAX_COLOR / 2, 16));
+                    } else {
+                        dir[j] = (dir[j] + 3) % 4;
+                        can.drawPoint(xx[j], yy[j], RGBintToRGBfloat(red[j], green[j], blue[j], 16));
+                    }
+                }
+                for (int j = 0; j < 4; j++) {
+                    filled[xx[j] + WINDOW_W * yy[j]] ^= true;
+                    switch (dir[j]) {
+                        case UP:
+                            yy[j] = (yy[j] > 0) ? yy[j] - 1 : WINDOW_H - 1;
+                            break;
+                        case RIGHT:
+                            xx[j] = (xx[j] < WINDOW_W - 1) ? xx[j] + 1 : 0;
+                            break;
+                        case DOWN:
+                            yy[j] = (yy[j] < WINDOW_H - 1) ? yy[j] + 1 : 0;
+                            break;
+                        case LEFT:
+                            xx[j] = (xx[j] > 0) ? xx[j] - 1 : WINDOW_W - 1;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        } else {
+            t.sleep();
+        }
+    }
+    delete filled;
 }
 
 void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, RGBfloatType bg = GREY) {
@@ -1249,8 +1329,8 @@ int main() {
 //            test(c20,shadedVoronoiFunction,false,WHITE);
 //            Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
 //            test(c21,forestFireFunction,false);
-            Canvas c22(0,0,1200,600,100);
-            test(c22,imageFunction,false);
+//            Canvas c22(0,0,1200,600,100);
+//            test(c22,imageFunction,false);
 //            Canvas c23(0, 0, 1200, 900, 1201 * 900);
 //            test(c23, highData, true);
 //            Canvas c24(10);
@@ -1263,8 +1343,10 @@ int main() {
 //            test(c27,textCartFunction,true);
 //            Canvas c28(0, 0, 800, 600, 500000);
 //            test(c28,getPixelsFunction,false);
-//            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-//            test(c29,shapeTestFunction,false);
+            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+            test(c29,shapeTestFunction,false);
+//            Canvas c30(0, 0, 960, 960, 30000);
+//            test(c30,screenshotLangtonFunction,true,BLACK);
 //        }
 //    }
     glfwTerminate();    // Release GLFW

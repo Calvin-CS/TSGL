@@ -168,7 +168,7 @@ public:
      *      \param filled Whether the Triangle should be filled.
      * \note Identical to Canvas::drawTriangle()
      */
-    void    drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color = BLACK, bool filled = true);
+    void    drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, RGBfloatType color = BLACK, bool filled = true);
 
     /*!
      * \brief Translates Cartesian coordinates into window coordinates.

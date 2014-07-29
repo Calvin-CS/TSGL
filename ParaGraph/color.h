@@ -30,14 +30,14 @@ const RGBfloatType GREY  = { 0.75f, 0.75f, 0.75f, 1.0f };
 const RGBfloatType WHITE = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 RGBfloatType RGBintToRGBfloat(int r, int g, int b, int a = 255);
-inline RGBfloatType RGBintToRGBfloat(const RGBintType& color) ;
+RGBfloatType RGBintToRGBfloat(const RGBintType& color) ;
 
 RGBfloatType HSVToRGBfloat(float h, float s, float v, float a = 1.0f);
-inline RGBfloatType HSVToRGBfloat(const HSVType& color);
+RGBfloatType HSVToRGBfloat(const HSVType& color);
 
 RGBfloatType divideIntoSections(unsigned int sections, unsigned int section, float value,
                                        float alpha = 1.0f);
-inline RGBfloatType divideIntoSections(unsigned int sections, unsigned int section);
+RGBfloatType divideIntoSections(unsigned int sections, unsigned int section);
 
 RGBfloatType randomColor(unsigned int seed, float alpha = 1.0f);
 
