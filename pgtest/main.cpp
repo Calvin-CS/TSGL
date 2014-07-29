@@ -1161,6 +1161,7 @@ void getPixelsFunction(Canvas& can) {
 
 void shapeTestFunction(Canvas& can) {
     Timer t(FRAME);
+    can.recordForNumFrames(3*FPS);
     while (can.getIsOpen()) {
         t.sleep();
         can.clear();
@@ -1341,10 +1342,10 @@ int main() {
 //            test(c26,imageCartFunction,false);
 //            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
 //            test(c27,textCartFunction,true);
-//            Canvas c28(0, 0, 800, 600, 500000);
-//            test(c28,getPixelsFunction,false);
-            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-            test(c29,shapeTestFunction,false);
+            Canvas c28(0, 0, 800, 600, 500000);
+            test(c28,getPixelsFunction,false);
+//            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+//            test(c29,shapeTestFunction,false);
 //            Canvas c30(0, 0, 960, 960, 30000);
 //            test(c30,screenshotLangtonFunction,true,BLACK);
 //        }

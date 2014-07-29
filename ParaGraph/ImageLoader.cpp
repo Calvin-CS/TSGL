@@ -418,9 +418,9 @@ bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h)
 
 #ifdef _WIN32
     FILE* file;
-    fopen_s(&file, filename, "rb");
+    fopen_s(&file, filename, "wb");
 #else
-    FILE* file = fopen(filename, "rb");
+    FILE* file = fopen(filename, "wb");
 #endif
 
     if (!file) {
