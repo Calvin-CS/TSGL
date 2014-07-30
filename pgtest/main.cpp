@@ -769,7 +769,7 @@ void voronoiFunction(Canvas& can) {
     int* kvalue = new int[WINDOW_W * WINDOW_H]();   // Create a mapping of control point values
     RGBfloatType color[POINTS];                     // And for an array of colors
     RGBfloatType tc, rc, lc, bc, xc, yc;            // Color for the top, right, left, bottom, x-average, and y-average
-    int bestk = 0;                                  // Keep track of the current best k-value
+    int bestk;                                      // Keep track of the current best k-value
     float bdist, dist, xd, yd;                      // Keep track of the closes matches and current distances
     float wdist[POINTS] = { 0 };                    // Keep track of the worst distances for shading
     for (int i = 0; i < POINTS; i++) {              // Randomize the control points
@@ -790,6 +790,7 @@ void voronoiFunction(Canvas& can) {
     }
     #pragma omp parallel for private(bdist, xd, yd, dist, bestk)
     for (int i = 0; i < WINDOW_W; i++) {            // For each individual point...
+        bestk = 0;
         for (int j = 0; j < WINDOW_H; j++) {
             bdist = 9999;                           // Reset the best distance
             for (int k = 0; k < POINTS; k++) {      // Find the closest control point
@@ -1329,8 +1330,8 @@ int main() {
 //            test(c17,gradientMandelbrotFunction,true);
 //            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
 //            test(c18,novaFunction,true);
-//            Canvas c19(0, 0, 1600, 1200, BUFFER);
-//            test(c19,voronoiFunction,true,WHITE);
+            Canvas c19(0, 0, 1600, 1200, BUFFER);
+            test(c19,voronoiFunction,true,WHITE);
 //            Canvas c20(0, 0, 1600, 1200, BUFFER);
 //            test(c20,shadedVoronoiFunction,false,WHITE);
 //            Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
@@ -1339,8 +1340,8 @@ int main() {
 //            test(c22,imageFunction,false);
 //            Canvas c23(0, 0, 1200, 900, 1201 * 900);
 //            test(c23, highData, true);
-            Canvas c24(10);
-            test(c24,textFunction,true);
+//            Canvas c24(10);
+//            test(c24,textFunction,true);
 //            Canvas c25(0,0,1600,600,1000);
 //            test(c25,pongFunction,false, BLACK);
 //            Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);

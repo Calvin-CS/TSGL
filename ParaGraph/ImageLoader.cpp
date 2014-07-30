@@ -77,7 +77,7 @@ GLuint ImageLoader::loadTextureFromBMP(const char* filename, unsigned int &width
     }
 
     if (fread(header, 1, 54, file) != 54) {  // If not 54 bytes read : problem
-        fprintf(stderr, "%s: not a correct BMP file: header incorrectly formated\n", filename);
+        fprintf(stderr, "%s: not a correct BMP file: header incorrect size\n", filename);
         fclose(file);
         return 0;
     }
@@ -107,7 +107,11 @@ GLuint ImageLoader::loadTextureFromBMP(const char* filename, unsigned int &width
     data = new unsigned char[imageSize];
 
     // Read the actual data from the file into the buffer
-    fread(data, 1, imageSize, file);
+    if (fread(data, 1, imageSize, file) != imageSize) {  // If not imageSize bytes read : problem
+        fprintf(stderr, "%s: file ended unexpectedly\n", filename);
+        fclose(file);
+        return 0;
+    }
 
     //Everything is in memory now, the file can be closed
     fclose(file);
@@ -268,7 +272,11 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, unsigned int &width
     }
 
     // read the header
-    fread(header, 1, 8, file);
+    if (fread(header, 1, 8, file) != 8) {  // If not 8 bytes read : problem
+        fprintf(stderr, "%s: not a  PNG file: header incorrect size\n", filename);
+        fclose(file);
+        return 0;
+    }
 
     if (png_sig_cmp(header, 0, 8)) {
         fprintf(stderr, "%s: not a PNG file: header incorrectly formated\n", filename);
