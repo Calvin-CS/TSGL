@@ -5,7 +5,7 @@
  *      Author: mbv26
  */
 
-#include "color.h"
+#include "Color.h"
 
 Color::Color() {
     R = G = B = A = 1.0f;

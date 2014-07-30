@@ -11,7 +11,7 @@
 #include "Canvas.h"
 #include "CartesianCanvas.h"
 #include "Timer.h"
-#include "color.h"
+#include "Color.h"
 #include "keynums.h"
 
 #endif /* PARAGRAPH_H_ */

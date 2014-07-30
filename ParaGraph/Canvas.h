@@ -17,7 +17,7 @@
 
 
 #include "Array.h"          // Our own array for buffering drawing operations.
-#include "color.h"          // Our own interface for converting color types
+#include "Color.h"          // Our own interface for converting color types
 #include "keynums.h"        // Our enums for key presses
 #include "Timer.h"          // Our own timer for steady FPS
 

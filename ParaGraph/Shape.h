@@ -9,7 +9,7 @@
 #define SHAPE_H_
 
 #include <GL/glew.h>    // Needed for GL function calls
-#include "color.h"      // Needed for color type
+#include "Color.h"      // Needed for color type
 
 class Shape {
  protected:
