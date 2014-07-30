@@ -150,9 +150,10 @@ public:
      * \brief Binds a key to a function.
      * \details This function binds a a key to a function pointer.
      * Upon pressing or releasing the given key, Canvas will call the specified function.
-     *      \param button The button to bind.
+     *      \param button The button to bind, as specified in the Key enum.
      *      \param a The action to look out for (PG_PRESS or PG_RELEASE).
      *      \param f The function to call upon action a on button.
+     *      \warning PG_KEY_ESCAPE is automatically bound to closing the window. Overriding PG_KEY_ESCAPE will likely make you unable to close the window.
      */
     void     bindToButton(Key button, Action a, voidFunction f);
 
