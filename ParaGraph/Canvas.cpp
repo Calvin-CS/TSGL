@@ -41,7 +41,6 @@ static const GLchar* textureFragmentSource = "#version 150\n"
     "    outColor = texture(tex, Texcoord) * vec4(Color);"
     "}";
 
-
 Canvas::Canvas(unsigned int b) {
     init(0, 0, 400*3, 300*3, b, "");
 }
@@ -161,8 +160,6 @@ void Canvas::draw() {
         glfwPollEvents();                            // Handle any I/O
         glfwGetCursorPos(window, &mouseX, &mouseY);
         glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
-
-
     }
 }
 
@@ -545,7 +542,8 @@ void Canvas::SetupCamera() {
 //    glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
     // Set up camera positioning
-    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -winWidth / 2.0f, winHeight / 2.0f, -winHeight / 2.0f,
+    // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
+    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, winHeight / 2.0f, -winHeight / 2.0f,
         1 };
     glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 
