@@ -28,7 +28,7 @@ class Line : public Shape {
      *      \param color The color of the Line.
      *      \return A new Line with the specified endpoints and color.
      */
-    Line(int x1, int y1, int x2, int y2, RGBfloatType color) {
+    Line(int x1, int y1, int x2, int y2, Color color) {
         vertices[0] = x1;
         vertices[1] = y1;
         vertices[6] = x2;
@@ -44,7 +44,7 @@ class Line : public Shape {
      *  \details This function actually draws the Line to the Canvas.
      */
     void draw() {
-        glBufferData(GL_ARRAY_BUFFER, 2 * sizeof(ColoredVertex), vertices, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, 2 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_LINES, 0, 2);
     }
 };

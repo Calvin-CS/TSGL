@@ -74,7 +74,19 @@ public:
      *      \param filled Whether the circle should be filled.
      *  \note Identical to Canvas::drawCircle()
      */
-    void    drawCircle(Decimal x, Decimal y, Decimal radius, int res, RGBfloatType color = BLACK, bool filled = true);
+    void    drawCircle(Decimal x, Decimal y, Decimal radius, int res, Color color = BLACK, bool filled = true);
+
+    /*!
+     * \brief Draw an arbitrary polygon with colored vertices.
+     * \details This function draws a ColoredPolygon with the given vertex data
+     *      \param size the number of vertices in the polygon
+     *      \param x an array of x positions of the vertices
+     *      \param y an array of y positions of the vertices
+     *      \param color an array of colors for the vertices
+     *      \param filled whether the colored polygon should be filled (true) or not (false)
+     * \note Identical to Canvas::drawColoredPolygon()
+     */
+    void    drawColoredPolygon(int size, int x[], int y[], Color color[], bool filled = true);
 
     /*!
      * \brief Plots a function on the screen
@@ -107,7 +119,7 @@ public:
      *      \param color The color of the line.
      *  \note Identical to Canvas::drawLine()
      */
-    void    drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, RGBfloatType color = BLACK);
+    void    drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Color color = BLACK);
 
     /*!
      * \brief Draw a single pixel.
@@ -117,7 +129,7 @@ public:
      *      \param color The color of the point.
      *  \note Identical to Canvas::drawPoint()
      */
-    void    drawPoint(Decimal x, Decimal y, RGBfloatType color = BLACK);
+    void    drawPoint(Decimal x, Decimal y, Color color = BLACK);
 
     /*!
      * \brief Draw a rectangle.
@@ -130,19 +142,7 @@ public:
      *      \param filled Whether the rectangle should be filled.
      *  \note Identical to Canvas::drawRectangle()
      */
-    void    drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, RGBfloatType color = BLACK, bool filled = true);
-
-    /*!
-     * \brief Draw an arbitrary polygon with colored vertices.
-     * \details This function draws a ShinyPolygon with the given vertex data
-     *      \param size the number of vertices in the polygon
-     *      \param x an array of x positions of the vertices
-     *      \param y an array of y positions of the vertices
-     *      \param color an array of colors for the vertices
-     *      \param filled whether the shiny polygon should be filled (true) or not (false)
-     * \note Identical to Canvas::drawShinyPolygon()
-     */
-    void    drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], bool filled = true);
+    void    drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, Color color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw a string of text.
@@ -153,7 +153,7 @@ public:
      *      \param color The color of the Text.
      * \note Identical to Canvas::drawText().
      */
-    void    drawText(std::string s, Decimal x, Decimal y, RGBfloatType color = BLACK);
+    void    drawText(std::string s, Decimal x, Decimal y, Color color = BLACK);
 
     /*!
      * \brief Draw a triangle.
@@ -168,7 +168,7 @@ public:
      *      \param filled Whether the Triangle should be filled.
      * \note Identical to Canvas::drawTriangle()
      */
-    void    drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, RGBfloatType color = BLACK, bool filled = true);
+    void    drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, Color color = BLACK, bool filled = true);
 
     /*!
      * \brief Translates Cartesian coordinates into window coordinates.

@@ -180,7 +180,18 @@ public:
      *      \param color The color of the circle.
      *      \param filled Whether the circle should be filled.
      */
-    virtual void drawCircle(int x, int y, int radius, int res, RGBfloatType color = BLACK, bool filled = true);
+    virtual void drawCircle(int x, int y, int radius, int res, Color color = BLACK, bool filled = true);
+
+    /*!
+     * \brief Draw an arbitrary polygon with colored vertices.
+     * \details This function draws a ColoredPolygon with the given vertex data
+     *      \param size the number of vertices in the polygon
+     *      \param x an array of x positions of the vertices
+     *      \param y an array of y positions of the vertices
+     *      \param color an array of colors for the vertices
+     *      \param filled whether the colored polygon should be filled (true) or not (false)
+     */
+    virtual void drawColoredPolygon(int size, int x[], int y[], Color color[], bool filled = true);
 
     /*!
      * \brief Draw an image.
@@ -203,7 +214,7 @@ public:
      *      \param y2 The y position of the end of the line.
      *      \param color The color of the line.
      */
-    virtual void drawLine(int x1, int y1, int x2, int y2, RGBfloatType color = BLACK);
+    virtual void drawLine(int x1, int y1, int x2, int y2, Color color = BLACK);
 
     /*!
      * \brief Draw a single pixel.
@@ -212,7 +223,7 @@ public:
      *      \param y The y position of the point.
      *      \param color The color of the point.
      */
-    virtual void drawPoint(int x, int y, RGBfloatType color = BLACK);
+    virtual void drawPoint(int x, int y, Color color = BLACK);
 
     /*!
      * \brief Draw a rectangle.
@@ -224,18 +235,7 @@ public:
      *      \param color The color of the rectangle.
      *      \param filled Whether the rectangle should be filled.
      */
-    virtual void drawRectangle(int x, int y, int w, int h, RGBfloatType color = BLACK, bool filled = true);
-
-    /*!
-     * \brief Draw an arbitrary polygon with colored vertices.
-     * \details This function draws a ShinyPolygon with the given vertex data
-     *      \param size the number of vertices in the polygon
-     *      \param x an array of x positions of the vertices
-     *      \param y an array of y positions of the vertices
-     *      \param color an array of colors for the vertices
-     *      \param filled whether the shiny polygon should be filled (true) or not (false)
-     */
-    virtual void drawShinyPolygon(int size, int x[], int y[], RGBfloatType color[], bool filled = true);
+    virtual void drawRectangle(int x, int y, int w, int h, Color color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw a string of text.
@@ -245,7 +245,7 @@ public:
      *      \param y The y coordinate of the text's left bound.
      *      \param color The color of the Text.
      */
-    virtual void drawText(std::string s, int x, int y, RGBfloatType color = BLACK);
+    virtual void drawText(std::string s, int x, int y, Color color = BLACK);
 
     /*!
      * \brief Draw a triangle.
@@ -259,7 +259,7 @@ public:
      *      \param color the color of the Triangle.
      *      \param filled Whether the Triangle should be filled.
      */
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color = BLACK, bool filled = true);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color = BLACK, bool filled = true);
 
     /*!
      * \brief Closes the Canvas.
@@ -348,7 +348,7 @@ public:
      *      \param color The color to clear to.
      * \note The alpha channel of the color is ignored
      */
-    void     setBackgroundColor(RGBfloatType color);
+    void     setBackgroundColor(Color color);
 
     /*!
      * \brief Mutator for showing the FPS.

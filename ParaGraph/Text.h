@@ -19,7 +19,7 @@
 */
 class Text : public Shape {
  private:
-    RGBfloatType myColor;
+    Color myColor;
     ImageLoader myLoader;
     std::string myString;
     int myX, myY;
@@ -33,7 +33,7 @@ class Text : public Shape {
      *      \param color A color.
      *      \return A new Text instance with the specified string, position, and color.
      */
-    Text(std::string s, ImageLoader& loader, int x, int y, RGBfloatType color);
+    Text(std::string s, ImageLoader& loader, int x, int y, Color color);
 
     /*!
      *  \brief Draw the Text.
