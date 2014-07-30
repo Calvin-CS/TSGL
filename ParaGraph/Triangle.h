@@ -30,7 +30,7 @@ class Triangle : public Shape {
      *      \param color The color of the Triangle.
      *      \return A new Triangle with the specified vertices and color.
      */
-    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBfloatType color) {
+    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color) {
         vertices[0] = x1;
         vertices[1] = y1;
         vertices[6] = x2;
@@ -48,7 +48,7 @@ class Triangle : public Shape {
      *  \details This function actually draws the Triangle to the Canvas.
      */
     void draw() {
-        glBufferData(GL_ARRAY_BUFFER, 3 * sizeof(ColoredVertex), vertices, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, 3 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
     }
 };
