@@ -776,10 +776,11 @@ void voronoiFunction(Canvas& can) {
         x[i] = rand() % WINDOW_W;
         y[i] = rand() % WINDOW_H;
     }
-    tc = randomColor(rand());                       // Randomize the axis colors
-    rc = randomColor(rand());
-    lc = randomColor(rand());
-    bc = randomColor(rand());
+    srand(time(NULL));
+    tc = randomColor(1);                            // Randomize the axis colors
+    rc = randomColor(1);
+    lc = randomColor(1);
+    bc = randomColor(1);
     for (int i = 0; i < POINTS; i++) {              // For each control point...
         float xx = (float) x[i] / WINDOW_W;         // Calculate an value from 0:1 based on x coord
         float yy = (float) y[i] / WINDOW_H;         // Do the same for y
@@ -830,10 +831,11 @@ void shadedVoronoiFunction(Canvas& can) {
         x[i] = rand() % WINDOW_W;
         y[i] = rand() % WINDOW_H;
     }
-    tc = randomColor(rand());                       // Randomize the axis colors
-    rc = randomColor(rand());
-    lc = randomColor(rand());
-    bc = randomColor(rand());
+    srand(time(NULL));
+    tc = randomColor(1);                       // Randomize the axis colors
+    rc = randomColor(1);
+    lc = randomColor(1);
+    bc = randomColor(1);
     for (int i = 0; i < POINTS; i++) {              // For each control point...
         float xx = (float) x[i] / WINDOW_W;         // Calculate an value from 0:1 based on x coord
         float yy = (float) y[i] / WINDOW_H;         // Do the same for y
@@ -1029,13 +1031,16 @@ void highData(Canvas& can) {
 }
 
 void textFunction(Canvas& can) {
+    RGBfloatType RED = {1.0, 0.0, 0.0, 1.0};
+    RGBfloatType GREEN = {0.0, 1.0, 0.0, 1.0};
+    RGBfloatType BLUE = {0.0, 0.0, 1.0, 1.0};
     can.drawText("A long time ago, in a galaxy far, far away.", 16, 50, BLACK);
-    can.drawText("Something extraordinary happened.", 16, 150, BLACK);
-    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, BLACK);
+    can.drawText("Something extraordinary happened.", 16, 150, RED);
+    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, GREEN);
     can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
-                 BLACK);
-    can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, BLACK);
-    can.drawText("And to that I say...oh well.", 16, 550, BLACK);
+                 BLUE);
+    can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, GREY);
+    can.drawText("And to that I say...oh well.", 16, 550, WHITE);
 }
 void textCartFunction(Cart& can) {
     can.drawText("A long time ago, in a galaxy far, far away.", .05, .8, BLACK);
@@ -1334,16 +1339,16 @@ int main() {
 //            test(c22,imageFunction,false);
 //            Canvas c23(0, 0, 1200, 900, 1201 * 900);
 //            test(c23, highData, true);
-//            Canvas c24(10);
-//            test(c24,textFunction,true);
+            Canvas c24(10);
+            test(c24,textFunction,true);
 //            Canvas c25(0,0,1600,600,1000);
 //            test(c25,pongFunction,false, BLACK);
 //            Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
 //            test(c26,imageCartFunction,false);
 //            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
 //            test(c27,textCartFunction,true);
-            Canvas c28(0, 0, 800, 600, 500000);
-            test(c28,getPixelsFunction,false);
+//            Canvas c28(0, 0, 800, 600, 500000);
+//            test(c28,getPixelsFunction,false);
 //            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
 //            test(c29,shapeTestFunction,false);
 //            Canvas c30(0, 0, 960, 960, 30000);

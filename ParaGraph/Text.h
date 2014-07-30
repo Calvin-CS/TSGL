@@ -19,6 +19,7 @@
 */
 class Text : public Shape {
  private:
+    RGBfloatType myColor;
     ImageLoader myLoader;
     std::string myString;
     int myX, myY;

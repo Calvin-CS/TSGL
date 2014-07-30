@@ -39,7 +39,7 @@ RGBfloatType divideIntoSections(unsigned int sections, unsigned int section, flo
                                        float alpha = 1.0f);
 RGBfloatType divideIntoSections(unsigned int sections, unsigned int section);
 
-RGBfloatType randomColor(unsigned int seed, float alpha = 1.0f);
+RGBfloatType randomColor(float alpha = 0.0f);
 
 RGBfloatType blendedColor(RGBfloatType c1, RGBfloatType c2, float bias);
 

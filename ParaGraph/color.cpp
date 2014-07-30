@@ -82,11 +82,12 @@ RGBfloatType divideIntoSections(unsigned int sections, unsigned int section) {
     return HSVToRGBfloat(6.0f / sections * section, 1.0f, 1.0f, 1.0f);
 }
 
-RGBfloatType randomColor(unsigned int seed, float alpha) {
+RGBfloatType randomColor(float alpha) {
     if (alpha > 1 || alpha < 0) {
         throw std::out_of_range("Alpha must be between 0 and 1 inclusive");
     }
-    srand(seed);
+    if (alpha == 0.0f)
+        alpha = rand() % 255 / 255.0f;
     return {rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha};
 }
 

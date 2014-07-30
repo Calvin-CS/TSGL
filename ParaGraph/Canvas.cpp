@@ -135,9 +135,9 @@ void Canvas::draw() {
         unsigned int size = myShapes->size();
 //        if (size == myShapes->capacity()) std::cerr << "BUFFER OVERFLOW" << std::endl;
         for (unsigned int i = 0; i < size; i++) {
-            if (!myShapes->operator[](i)->getIsTextured())
+            if (!myShapes->operator[](i)->getIsTextured()) {
                 myShapes->operator[](i)->draw();  // Iterate through our queue until we've made it to the end
-            else {
+            } else {
                 textureShaders(true);
                 myShapes->operator[](i)->draw();
                 textureShaders(false);
