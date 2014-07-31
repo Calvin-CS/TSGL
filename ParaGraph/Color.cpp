@@ -42,8 +42,8 @@ Colori::operator Color() {
 }
 
 ColorHSV::ColorHSV() {
-    H = S = 0.0f;
-    V = A = 1.0f;
+    H = 0.0f;
+    S = V = A = 1.0f;
 }
 
 ColorHSV::ColorHSV(float h, float s, float v, float a) {
@@ -119,7 +119,7 @@ Color randomColor(float alpha) {
         throw std::out_of_range("Alpha must be between 0 and 1 inclusive");
     }
     if (alpha == 0.0f) alpha = rand() % 255 / 255.0f;
-    return Colori(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
+    return Color(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
 }
 
 Color blendedColor(Color c1, Color c2, float bias) {
