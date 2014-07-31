@@ -303,10 +303,6 @@ public:
     /*!
      * \brief Accessor for the Canvas's currently drawn image.
      *      \return A pointer to the RGB pixel buffer for the current Canvas.
-     * \bug Drawing this buffer pixel by pixel back to the Canvas should render the exact same image in the exact same place.
-     * However, on some tested hardware, the image is re-rendered one pixel to the left of where it should be every frame.
-     * Run getPixelsFunction() in main.cpp to see if this is a problem on your machine.
-     * If so, set Canvas::enableBufferFix() to true.;
      */
     uint8_t* getScreenBuffer()     { return screenBuffer; }
 

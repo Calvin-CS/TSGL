@@ -47,9 +47,9 @@ void graydientFunction(Canvas& can) {
         std::cout << x++ << std::endl;
     });
 
-    int nthreads = omp_get_num_procs();
-    #pragma omp parallel num_threads(nthreads)
+    #pragma omp parallel num_threads(omp_get_num_procs())
     {
+        int nthreads = omp_get_num_threads();
         int color;
         for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i += nthreads) {
             for (int j = 0; j < can.getWindowHeight(); j++) {
@@ -60,10 +60,11 @@ void graydientFunction(Canvas& can) {
     }
 }
 void colorPointsFunction(Canvas& can) {
-    int nthreads = 1;  //omp_get_num_procs();
-    int myPart = can.getWindowHeight() / nthreads;
-    #pragma omp parallel num_threads(nthreads)
+    int threads = omp_get_num_procs();
+    #pragma omp parallel num_threads(threads)
     {
+        int nthreads = omp_get_num_threads();
+        int myPart = can.getWindowHeight() / nthreads;
         int myStart = myPart * omp_get_thread_num();
         for (int j = myStart; j < myStart + myPart; j++) {
             for (int i = 100; i < can.getWindowWidth() - 100; i++) {
@@ -96,12 +97,12 @@ void lineFanFunction(Canvas& can) {
     const double RAD = PI / 180,  // One radian in degrees
     ARC = 7.11;  // Arc length
     Timer t(FRAME);
-    int nthreads = omp_get_num_procs();
-
+    int threads = omp_get_num_procs();
     while (can.getIsOpen()) {
-        #pragma omp parallel num_threads(nthreads)
+        #pragma omp parallel num_threads(threads)
         {
             t.sleep();
+            int nthreads = omp_get_num_threads();
             int a, b, c, d, red, green, blue;
             double angle, offset = omp_get_thread_num() * ARC;;
             bool reverse = false;
@@ -122,11 +123,12 @@ void lineFanFunction(Canvas& can) {
     }
 }
 void spectrumFunction(Canvas& can) {
-    int nthreads = 1;  //omp_get_num_procs();
+    int threads = omp_get_num_procs();
     Timer t(FRAME);
 
-    #pragma omp parallel num_threads(nthreads)
+    #pragma omp parallel num_threads(threads)
     {
+        int nthreads = omp_get_num_threads();
         while (can.getIsOpen()) {
             t.sleep();
             for (int i = omp_get_thread_num(); i < NUM_COLORS; i += nthreads)
@@ -173,11 +175,12 @@ void mandelbrotFunction(CartesianCanvas& can) {
     while (toRender) {
         toRender = false;
         t.reset();
-        double blockstart = can.getCartHeight() / THREADS;
         #pragma omp parallel num_threads(THREADS)
         {
+            int nthreads = omp_get_num_threads();
+            double blockstart = can.getCartHeight() / nthreads;
             unsigned int iterations;
-            for (unsigned int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+            for (unsigned int k = 0; k <= (can.getWindowHeight() / nthreads) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
                 long double row = blockstart * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
                 for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
                     complex originalComplex(col, row);
@@ -193,7 +196,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
                     } else {
                         // Otherwise, draw it with color based on how long it took
                         can.drawPoint(col, row,
-                            Colori(iterations % 151, ((iterations % 131) + omp_get_thread_num() * 128 / THREADS) % 255, iterations % 255));
+                            Colori(iterations % 151, ((iterations % 131) + omp_get_thread_num() * 128 / nthreads) % 255, iterations % 255));
                     }
                     if (toRender) break;
                 }
@@ -430,31 +433,27 @@ void dumbSortFunction(Canvas& can) {
 
 void colorWheelFunction(Canvas& can) {
     const int THREADS = 64,                           // Number of threads to compute with
-              DELTA = NUM_COLORS / THREADS,           // Distance between threads to compute
               WINDOW_CW = can.getWindowWidth() / 2,   // Set the center of the window
               WINDOW_CH = can.getWindowHeight() / 2;
     const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,  // Radius of wheel
     GRADIENT = 2 * PI / NUM_COLORS;                   // Gap between wedges
     Color color;
     float x2, x3, y2, y3, shading;
-    int tid, f;
-    int start[THREADS];
-    Timer t(1.0 / (60.0));
-    while (can.getIsOpen()) {
-        t.sleep();
-        f = t.getReps() % NUM_COLORS;
-        start[0] = f;
-        for (int i = 1; i < THREADS; i++)  // Spread out the threads starting position
-            start[i] = (start[i - 1] + DELTA) % NUM_COLORS;
-#pragma omp parallel num_threads(THREADS) private(color,x2,x3,y2,y3,shading,tid)
-        {
-            tid = omp_get_thread_num();
-            shading = (float) tid / THREADS;
-            color = ColorHSV(start[tid] * 6.0f / NUM_COLORS, 1.0, shading);
-            x2 = WINDOW_CW + RADIUS * sin(GRADIENT * start[tid]);
-            y2 = WINDOW_CH + RADIUS * cos(GRADIENT * start[tid]);
-            x3 = WINDOW_CW + RADIUS * sin(GRADIENT * (start[tid] + 1));
-            y3 = WINDOW_CH + RADIUS * cos(GRADIENT * (start[tid] + 1));
+    Timer t(FRAME);
+    #pragma omp parallel num_threads(THREADS) private(color,x2,x3,y2,y3,shading)
+    {
+        int nthreads = omp_get_num_threads();
+        int delta = NUM_COLORS / nthreads;           // Distance between threads to compute
+        int tid = omp_get_thread_num();
+        while (can.getIsOpen()) {
+            t.sleep();
+            int start = (t.getReps() % NUM_COLORS + tid*delta) % NUM_COLORS;
+            shading = 1 - (float) tid / nthreads;
+            color = ColorHSV(start * 6.0f / NUM_COLORS, 1.0, shading);
+            x2 = WINDOW_CW + RADIUS * sin(GRADIENT * start);
+            y2 = WINDOW_CH + RADIUS * cos(GRADIENT * start);
+            x3 = WINDOW_CW + RADIUS * sin(GRADIENT * (start + 1));
+            y3 = WINDOW_CH + RADIUS * cos(GRADIENT * (start + 1));
             can.drawTriangle(WINDOW_CW, WINDOW_CH, x2, y2, x3, y3, color);
         }
     }
@@ -490,10 +489,11 @@ void cosineIntegralFunction(CartesianCanvas& can) {
     long double pw = can.getPixelWidth();
     Function* function1 = new CosineFunction;
     can.drawFunction(function1);
-    long double offset = 3*PI / THREADS;
 
     #pragma omp parallel num_threads(THREADS)
     {
+        int nthreads = omp_get_num_threads();
+        long double offset = 3*PI / nthreads;
         long double start = -1.5*PI + omp_get_thread_num() * offset;
         long double stop = start + offset;
         for (long double i = start; i < stop; i += pw) {
@@ -506,39 +506,38 @@ void cosineIntegralFunction(CartesianCanvas& can) {
 }
 
 void gradientWheelFunction(Canvas& can) {
-    const int THREADS = 32,                           // Number of threads to compute with
-              DELTA = NUM_COLORS / THREADS,           // Distance between threads to compute
-              WINDOW_CW = can.getWindowWidth() / 2,   // Center of the screen
-              WINDOW_CH = can.getWindowHeight() / 2;
+    const int   THREADS = 32,                           // Number of threads to compute with
+                WINDOW_CW = can.getWindowWidth() / 2,   // Center of the screen
+                WINDOW_CH = can.getWindowHeight() / 2;
     const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,  // Radius of wheel
     			ARCLENGTH = 2 * PI / NUM_COLORS;                   				 // Gap between wedges
-    int start[THREADS];
     Timer t(FRAME);
-    while (can.getIsOpen()) {
-        t.sleep();
-        start[0] = t.getReps() % MAX_COLOR;
-        for (int i = 1; i < THREADS; i++)           			// Calculate the location and color of the
-            start[i] = (start[i - 1] + DELTA) % NUM_COLORS;  	// shapes by the location and frame
-        #pragma omp parallel num_threads(THREADS)
-        {
-            ColorHSV color[3];      			    // HSV color to build
-            Color rgbcolor[3];      			    // RGB color to convert to
-            int xx[3], yy[3];      					// Setup the arrays of values for vertices
-            int tid = omp_get_thread_num();			// Thread ID
-            float shading = (float) tid / THREADS;  // Shading based on thread ID
+    #pragma omp parallel num_threads(THREADS)
+    {
+        int nthreads = omp_get_num_threads();
+        int tid = omp_get_thread_num();         // Thread ID
+        int delta = NUM_COLORS / nthreads;           // Distance between threads to compute
+        float shading = 1 - (float) tid / nthreads;  // Shading based on thread ID
+        ColorHSV color[3];                      // HSV color to build
+        Color rgbcolor[3];                      // RGB color to convert to
+        int xx[3], yy[3];                       // Setup the arrays of values for vertices
+        int start;
+        while (can.getIsOpen()) {
+            t.sleep();
+            start = (t.getReps() % NUM_COLORS + delta*tid) % NUM_COLORS;     // shapes by the location and frame
 
-            color[0] = { start[tid] / 					(float) NUM_COLORS * 6, 0.0f, 1.0f, 1.0f};
-            color[1] = { start[tid] / 					(float) NUM_COLORS * 6, 1.0f, 1.0f, 1.0f};
-            color[2] = {(start[(tid + 1) % THREADS]) /  (float) NUM_COLORS * 6, 1.0f, 1.0f, 1.0f};
+            color[0] = { start / 					    (float) NUM_COLORS * 6, 0.0f, 1.0f, 1.0f};
+            color[1] = { start / 					    (float) NUM_COLORS * 6, 1.0f, 1.0f, 1.0f};
+            color[2] = {( (start+delta) % NUM_COLORS) / (float) NUM_COLORS * 6, 1.0f, 1.0f, 1.0f};
             for (int i = 0; i < 3; i++)
                 color[i].V *= shading;
 
             xx[0] = WINDOW_CW;												// Set first vertex to center of screen
             yy[0] = WINDOW_CH;
-            xx[1] = WINDOW_CW + RADIUS * sin(ARCLENGTH * start[tid]);  		// Add the next two vertices to around the circle
-            yy[1] = WINDOW_CH + RADIUS * cos(ARCLENGTH * start[tid]);
-            xx[2] = WINDOW_CW + RADIUS * sin(ARCLENGTH * (start[tid] + 1));
-            yy[2] = WINDOW_CH + RADIUS * cos(ARCLENGTH * (start[tid] + 1));
+            xx[1] = WINDOW_CW + RADIUS * sin(ARCLENGTH * start);  		// Add the next two vertices to around the circle
+            yy[1] = WINDOW_CH + RADIUS * cos(ARCLENGTH * start);
+            xx[2] = WINDOW_CW + RADIUS * sin(ARCLENGTH * (start + 1));
+            yy[2] = WINDOW_CH + RADIUS * cos(ARCLENGTH * (start + 1));
 
             for (int i = 0; i < 3; i++)
             	rgbcolor[i] = color[i];	   // Implicit cast each color from HSV to RGB
@@ -681,12 +680,13 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
 
     while (toRender) {
         toRender = false;
-        double blockstart = can.getCartHeight() / THREADS;
         #pragma omp parallel num_threads(THREADS)
         {
+            int nthreads = omp_get_num_threads();
+            double blockstart = can.getCartHeight() / nthreads;
             unsigned int iterations;
             double smooth;
-            for (unsigned int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+            for (unsigned int k = 0; k <= (can.getWindowHeight() / nthreads) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
                 long double row = blockstart * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
                 for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
                     complex c(col, row);
@@ -719,13 +719,14 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
 void novaFunction(CartesianCanvas& can) {
     const unsigned int THREADS = 32;
     const unsigned int DEPTH = 200;
-    const double BLOCKSTART = (can.getMaxY() - can.getMinY()) / THREADS;
     const long double R = 1.0l;
     #pragma omp parallel num_threads(THREADS)
     {
+        int nthreads = omp_get_num_threads();
+        double BLOCKSTART = (can.getMaxY() - can.getMinY()) / nthreads;
         unsigned int iterations;
         double smooth;
-        for (unsigned int k = 0; k <= (can.getWindowHeight() / THREADS) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+        for (unsigned int k = 0; k <= (can.getWindowHeight() / nthreads) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
             long double row = BLOCKSTART * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
             for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
                 complex c(col, row);
@@ -1147,11 +1148,12 @@ void getPixelsFunction(Canvas& can) {
     Timer::threadSleepFor(.75);
     can.recordForNumFrames(100);
     uint8_t* buffer = can.getScreenBuffer();
-    unsigned int blocksize = (double)height / THREADS;
 
     while (can.getIsOpen()) {
         #pragma omp parallel num_threads(THREADS)
         {
+            int nthreads = omp_get_num_threads();
+            unsigned int blocksize = (double)height / nthreads;
             unsigned int row = blocksize * omp_get_thread_num();
             for (unsigned int y = row; y < row + blocksize; y++) {
                 int index = y*width*3;
@@ -1287,76 +1289,79 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, Color bg = GREY) {
 
 const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H;
 
+static void runHalfoftheFunctions() {
+    std::cout << "Starting section 1" << std::endl << std::flush;
+    Canvas c1(BUFFER);
+    test(c1,graydientFunction,true);
+    Canvas c2(BUFFER);
+    test(c2,colorPointsFunction,true);
+    Canvas c3(BUFFER);
+    test(c3,lineChainFunction,true,BLACK);
+    Canvas c4(500);
+    test(c4,lineFanFunction,false);
+    Canvas c5(65536);
+    test(c5,spectrumFunction,false);
+    Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+    test(c6,mandelbrotFunction,false);
+    Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
+    test(c7,langtonFunction,false);
+    Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
+    test(c8,langtonColonyFunction,false);
+    Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
+    test(c9,langtonRainbowFunction,true,BLACK);
+    Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
+    test(c10,dumbSortFunction,true);
+    Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
+    test(c11,colorWheelFunction);
+}
+
+static void runOtherHalfoftheFunctions() {
+    std::cout << "Starting section 2" << std::endl << std::flush;
+    Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
+    test(c12,functionFunction,true,WHITE);
+    Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
+    test(c13,cosineIntegralFunction,true,WHITE);
+    Canvas c14(0, 0, 1000, 1000, 1024);
+    test(c14,gradientWheelFunction,false,BLACK);
+    Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
+    test(c15,alphaRectangleFunction,false,BLACK);
+    Canvas c16(0, 0, 960, 960, 30000);
+    test(c16,alphaLangtonFunction,true,BLACK);
+    Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+    test(c17,gradientMandelbrotFunction,true);
+    Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
+    test(c18,novaFunction,true);
+    Canvas c19(0, 0, 1600, 1200, BUFFER);
+    test(c19,voronoiFunction,true,WHITE);
+    Canvas c20(0, 0, 1600, 1200, BUFFER);
+    test(c20,shadedVoronoiFunction,false,WHITE);
+    Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
+    test(c21,forestFireFunction,false);
+    Canvas c22(0,0,1200,600,100);
+    test(c22,imageFunction,false);
+    Canvas c23(0, 0, 1200, 900, 1201 * 900);
+    test(c23, highData, true);
+    Canvas c24(10);
+    test(c24,textFunction,true);
+    Canvas c25(0,0,1600,600,1000);
+    test(c25,pongFunction,false, BLACK);
+    Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
+    test(c26,imageCartFunction,false);
+    Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
+    test(c27,textCartFunction,true);
+    Canvas c28(0, 0, 800, 600, 500000);
+    test(c28,getPixelsFunction,true);
+    Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+    test(c29,shapeTestFunction,true);
+//    Canvas c30(0, 0, 960, 960, 30000);
+//    test(c30,screenshotLangtonFunction,true,BLACK);
+}
+
 int main() {
     glfwInit();  // Initialize GLFW
-//    #pragma omp sections
-//    {
-//        #pragma omp section
-//        {
-//            Canvas c1(BUFFER);
-//            test(c1,graydientFunction,true);
-//            Canvas c2(BUFFER);
-//            test(c2,colorPointsFunction,true);
-//            Canvas c3(BUFFER);
-//            test(c3,lineChainFunction,true,BLACK);
-//            Canvas c4(500);
-//            test(c4,lineFanFunction,false);
-//            Canvas c5(65536);
-//            test(c5,spectrumFunction,false);
-//            Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-//            test(c6,mandelbrotFunction,false);
-//            Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
-//            test(c7,langtonFunction,false);
-//            Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-//            test(c8,langtonColonyFunction,false);
-//            Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-//            test(c9,langtonRainbowFunction,true,BLACK);
-//            Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
-//            test(c10,dumbSortFunction,true);
-//            Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
-//            test(c11,colorWheelFunction);
-//        }
-//        #pragma omp section
-//        {
-//            Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
-//            test(c12,functionFunction,true,WHITE);
-//            Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
-//            test(c13,cosineIntegralFunction,true,WHITE);
-//            Canvas c14(0, 0, 1000, 1000, 1024);
-//            test(c14,gradientWheelFunction,false,BLACK);
-//            Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
-//            test(c15,alphaRectangleFunction,false,BLACK);
-//            Canvas c16(0, 0, 960, 960, 30000);
-//            test(c16,alphaLangtonFunction,true,BLACK);
-//            Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-//            test(c17,gradientMandelbrotFunction,true);
-//            Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
-//            test(c18,novaFunction,true);
-//            Canvas c19(0, 0, 1600, 1200, BUFFER);
-//            test(c19,voronoiFunction,true,WHITE);
-//            Canvas c20(0, 0, 1600, 1200, BUFFER);
-//            test(c20,shadedVoronoiFunction,false,WHITE);
-//            Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
-//            test(c21,forestFireFunction,false);
-//            Canvas c22(0,0,1200,600,100);
-//            test(c22,imageFunction,false);
-//            Canvas c23(0, 0, 1200, 900, 1201 * 900);
-//            test(c23, highData, true);
-//            Canvas c24(10);
-//            test(c24,textFunction,true);
-//            Canvas c25(0,0,1600,600,1000);
-//            test(c25,pongFunction,false, BLACK);
-//            Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
-//            test(c26,imageCartFunction,false);
-//            Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
-//            test(c27,textCartFunction,true);
-            Canvas c28(0, 0, 800, 600, 500000);
-            test(c28,getPixelsFunction,true);
-            Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-            test(c29,shapeTestFunction,true);
-//            Canvas c30(0, 0, 960, 960, 30000);
-//            test(c30,screenshotLangtonFunction,true,BLACK);
-//        }
-//    }
+    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
+    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
+    threadA.join();
+    threadB.join();
     glfwTerminate();    // Release GLFW
 }
