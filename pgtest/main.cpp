@@ -680,7 +680,7 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
         toRender = false;
         #pragma omp parallel num_threads(THREADS)
         {
-            int nthreads = omp_get_num_threads();
+            unsigned int nthreads = omp_get_num_threads();
             double blockstart = can.getCartHeight() / nthreads;
             unsigned int iterations;
             double smooth;
@@ -719,7 +719,7 @@ void novaFunction(CartesianCanvas& can) {
     const long double R = 1.0l;
     #pragma omp parallel num_threads(THREADS)
     {
-        int nthreads = omp_get_num_threads();
+        unsigned int nthreads = omp_get_num_threads();
         double BLOCKSTART = (can.getMaxY() - can.getMinY()) / nthreads;
         unsigned int iterations;
         double smooth;
@@ -1136,7 +1136,7 @@ void getPixelsFunction(Canvas& can) {
     while (can.getIsOpen()) {
         #pragma omp parallel num_threads(THREADS)
         {
-            int nthreads = omp_get_num_threads();
+            unsigned int nthreads = omp_get_num_threads();
             unsigned int blocksize = (double)height / nthreads;
             unsigned int row = blocksize * omp_get_thread_num();
             for (unsigned int y = row; y < row + blocksize; y++) {
@@ -1274,79 +1274,67 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, const Color &bg = GR
 
 const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H;
 
-static void runHalfoftheFunctions() {
-    std::cout << "Starting section 1" << std::endl << std::flush;
-    Canvas c1(BUFFER);
-    test(c1,graydientFunction,true);
-    Canvas c2(BUFFER);
-    test(c2,colorPointsFunction,true);
-    Canvas c3(BUFFER);
-    test(c3,lineChainFunction,true,BLACK);
-    Canvas c4(500);
-    test(c4,lineFanFunction,false);
-    Canvas c5(65536);
-    test(c5,spectrumFunction,false);
-    Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-    test(c6,mandelbrotFunction,false);
-    Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
-    test(c7,langtonFunction,false);
-    Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-    test(c8,langtonColonyFunction,false);
-    Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-    test(c9,langtonRainbowFunction,true,BLACK);
-    Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
-    test(c10,dumbSortFunction,true);
-    Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
-    test(c11,colorWheelFunction);
-}
-
-static void runOtherHalfoftheFunctions() {
-    std::cout << "Starting section 2" << std::endl << std::flush;
-    Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
-    test(c12,functionFunction,true,WHITE);
-    Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
-    test(c13,cosineIntegralFunction,true,WHITE);
-    Canvas c14(0, 0, 1000, 1000, 1024);
-    test(c14,gradientWheelFunction,false,BLACK);
-    Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
-    test(c15,alphaRectangleFunction,false,BLACK);
-    Canvas c16(0, 0, 960, 960, 30000);
-    test(c16,alphaLangtonFunction,true,BLACK);
-    Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-    test(c17,gradientMandelbrotFunction,true);
-    Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
-    test(c18,novaFunction,true);
-    Canvas c19(0, 0, 1600, 1200, BUFFER);
-    test(c19,voronoiFunction,true,WHITE);
-    Canvas c20(0, 0, 1600, 1200, BUFFER);
-    test(c20,shadedVoronoiFunction,false,WHITE);
-    Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
-    test(c21,forestFireFunction,false);
-    Canvas c22(0,0,1200,600,100);
-    test(c22,imageFunction,false);
-    Canvas c23(0, 0, 1200, 900, 1201 * 900);
-    test(c23, highData, true);
-    Canvas c24(10);
-    test(c24,textFunction,true);
-    Canvas c25(0,0,1600,600,1000);
-    test(c25,pongFunction,false, BLACK);
-    Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
-    test(c26,imageCartFunction,false);
-    Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
-    test(c27,textCartFunction,true);
-    Canvas c28(0, 0, 800, 600, 500000);
-    test(c28,getPixelsFunction,true);
-    Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-    test(c29,shapeTestFunction,true);
-//    Canvas c30(0, 0, 960, 960, 30000);
-//    test(c30,screenshotLangtonFunction,true,BLACK);
-}
-
 int main() {
     glfwInit();  // Initialize GLFW
-    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
-    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
-    threadA.join();
-    threadB.join();
+        Canvas c1(BUFFER);
+        test(c1,graydientFunction,true);
+        Canvas c2(BUFFER);
+        test(c2,colorPointsFunction,true);
+        Canvas c3(BUFFER);
+        test(c3,lineChainFunction,true,BLACK);
+        Canvas c4(500);
+        test(c4,lineFanFunction,false);
+        Canvas c5(65536);
+        test(c5,spectrumFunction,false);
+        Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+        test(c6,mandelbrotFunction,false);
+        Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
+        test(c7,langtonFunction,false);
+        Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
+        test(c8,langtonColonyFunction,false);
+        Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
+        test(c9,langtonRainbowFunction,true,BLACK);
+        Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
+        test(c10,dumbSortFunction,true);
+        Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
+        test(c11,colorWheelFunction);
+        Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
+        test(c12,functionFunction,true,WHITE);
+        Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
+        test(c13,cosineIntegralFunction,true,WHITE);
+        Canvas c14(0, 0, 1000, 1000, 1024);
+        test(c14,gradientWheelFunction,false,BLACK);
+        Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
+        test(c15,alphaRectangleFunction,false,BLACK);
+        Canvas c16(0, 0, 960, 960, 30000);
+        test(c16,alphaLangtonFunction,true,BLACK);
+        Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+        test(c17,gradientMandelbrotFunction,true);
+        Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
+        test(c18,novaFunction,true);
+        Canvas c19(0, 0, 1600, 1200, BUFFER);
+        test(c19,voronoiFunction,true,WHITE);
+        Canvas c20(0, 0, 1600, 1200, BUFFER);
+        test(c20,shadedVoronoiFunction,false,WHITE);
+        Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
+        test(c21,forestFireFunction,false);
+        Canvas c22(0,0,1200,600,100);
+        test(c22,imageFunction,false);
+        Canvas c23(0, 0, 1200, 900, 1201 * 900);
+        test(c23, highData, true);
+        Canvas c24(10);
+        test(c24,textFunction,true);
+        Canvas c25(0,0,1600,600,1000);
+        test(c25,pongFunction,false, BLACK);
+        Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
+        test(c26,imageCartFunction,false);
+        Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
+        test(c27,textCartFunction,true);
+        Canvas c28(0, 0, 800, 600, 500000);
+        test(c28,getPixelsFunction,true);
+        Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+        test(c29,shapeTestFunction,true);
+        Canvas c30(0, 0, 960, 960, 30000);
+        test(c30,screenshotLangtonFunction,true,BLACK);
     glfwTerminate();    // Release GLFW
 }

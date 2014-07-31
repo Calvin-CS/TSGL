@@ -39,13 +39,6 @@ class SquareRootFunction : public Function {
     }
 };
 
-class CubedRootFunction : public Function {
- public:
-    virtual Decimal valueAt(Decimal x) const {
-        return cbrt(x);
-    }
-};
-
 class SineFunction : public Function {
  public:
     virtual Decimal valueAt(Decimal x) const {
