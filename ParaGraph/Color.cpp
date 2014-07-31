@@ -38,12 +38,12 @@ Colori::Colori(int r, int g, int b, int a) {
 }
 
 Colori::operator Color() {
-    return {R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f};
+    return Color(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
 }
 
 ColorHSV::ColorHSV() {
-    H = 0.0f;
-    S = V = A = 1.0f;
+    H = S = 0.0f;
+    V = A = 1.0f;
 }
 
 ColorHSV::ColorHSV(float h, float s, float v, float a) {
@@ -119,7 +119,7 @@ Color randomColor(float alpha) {
         throw std::out_of_range("Alpha must be between 0 and 1 inclusive");
     }
     if (alpha == 0.0f) alpha = rand() % 255 / 255.0f;
-    return {rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha};
+    return Colori(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
 }
 
 Color blendedColor(Color c1, Color c2, float bias) {
@@ -130,7 +130,8 @@ Color blendedColor(Color c1, Color c2, float bias) {
     } else if (bias == 0) {
         return c1;
     } else {
-        return {c2.R*bias+c1.R*(1-bias),c2.G*bias+c1.G*(1-bias),c2.B*bias+c1.B*(1-bias),c2.A*bias+c1.A*(1-bias)};
+        return Color(c2.R * bias + c1.R * (1 - bias), c2.G * bias + c1.G * (1 - bias),
+                     c2.B * bias + c1.B * (1 - bias), c2.A * bias + c1.A * (1 - bias));
     }
 }
 

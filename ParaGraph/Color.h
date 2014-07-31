@@ -73,9 +73,9 @@ struct ColorHSV {
     operator Color();
 };
 
-const Color BLACK = { 0.0f, 0.0f, 0.0f, 1.0f };
-const Color GREY = { 0.75f, 0.75f, 0.75f, 1.0f };
-const Color WHITE = { 1.0f, 1.0f, 1.0f, 1.0f };
+const Color BLACK = Color(0.0f, 0.0f, 0.0f, 1.0f);
+const Color GREY = Color(0.75f, 0.75f, 0.75f, 1.0f);
+const Color WHITE = Color(1.0f, 1.0f, 1.0f, 1.0f);
 
 /*!
  * \brief Returns an HSVA color with a hue dependent on the number of sections
