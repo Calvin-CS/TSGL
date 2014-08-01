@@ -24,7 +24,7 @@
 #include <png.h>
 
 #include <GL/gl.h>      // For GL functions
-class ImageLoader {
+class ImageHandler {
  private:
     typedef std::unordered_map<std::string, GLuint> TextureMap;
 
@@ -44,9 +44,9 @@ class ImageLoader {
 
     bool saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const;
  public:
-    ImageLoader() {
+    ImageHandler() {
     }
-    ~ImageLoader();
+    ~ImageHandler();
 
     GLuint loadTexture(std::string filename, unsigned int &width, unsigned int &height, GLuint &texture);
     bool saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const;

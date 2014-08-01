@@ -16,7 +16,7 @@
  *      h, the height of the Image
  * Returns: a new Image with the specified top left corner and dimensions
  */
-Image::Image(std::string f, ImageLoader& loader, int x, int y, int w, int h, float a) {
+Image::Image(std::string f, ImageHandler& loader, int x, int y, int w, int h, float a) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myFile = f;
     myLoader = loader;

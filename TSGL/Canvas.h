@@ -18,7 +18,7 @@
 
 #include "Array.h"          // Our own array for buffering drawing operations.
 #include "Color.h"          // Our own interface for converting color types
-#include "keynums.h"        // Our enums for key presses
+#include "Keynums.h"        // Our enums for key presses
 #include "Timer.h"          // Our own timer for steady FPS
 
 #include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices.
@@ -63,7 +63,7 @@ private:
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
-    ImageLoader     loader;                                             // The ImageLoader that holds all our already loaded textures
+    ImageHandler    loader;                                             // The ImageLoader that holds all our already loaded textures
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called

@@ -1,8 +1,8 @@
-#include "ImageLoader.h"
+#include "ImageHandler.h"
 
 #define GL_GLEXT_PROTOTYPES
 
-ImageLoader::~ImageLoader() {
+ImageHandler::~ImageHandler() {
     for (TextureMap::iterator it = loadedTextures.begin(); it != loadedTextures.end(); ++it) {
         glDeleteTextures(1, &(it->second));
     }
@@ -14,7 +14,7 @@ struct my_error_mgr {
     jmp_buf setjmp_buffer;      // for return to caller
 };
 
-void ImageLoader::createGLTextureFromBuffer(GLuint &texture, unsigned char* buffer, unsigned int &width, unsigned int &height,
+void ImageHandler::createGLTextureFromBuffer(GLuint &texture, unsigned char* buffer, unsigned int &width, unsigned int &height,
                                int components) {
     // Generate the OpenGL texture object
     glGenTextures(1, &texture);
@@ -31,7 +31,7 @@ void ImageLoader::createGLTextureFromBuffer(GLuint &texture, unsigned char* buff
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
-GLuint ImageLoader::loadTexture(std::string filename, unsigned int &width, unsigned int &height,
+GLuint ImageHandler::loadTexture(std::string filename, unsigned int &width, unsigned int &height,
                                 GLuint &texture) {
     if (loadedTextures.find(filename) == loadedTextures.end()) {  // Load the image if we haven't already
         std::string extension = filename.substr(filename.find_last_of('.'));
@@ -52,7 +52,7 @@ GLuint ImageLoader::loadTexture(std::string filename, unsigned int &width, unsig
     return texture;
 }
 
-GLuint ImageLoader::loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
+GLuint ImageHandler::loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
                                        GLuint &texture) const {
     // Adapted from http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/#Loading__BMP_images_yourself
 
@@ -151,7 +151,7 @@ GLuint ImageLoader::loadTextureFromBMP(const char* filename, unsigned int &width
     return texture;
 }
 
-GLuint ImageLoader::loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
+GLuint ImageHandler::loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
                                        GLuint &texture) const {
     /* This struct contains the JPEG decompression parameters and pointers to
      * working space (which is allocated as needed by the JPEG library).
@@ -255,7 +255,7 @@ GLuint ImageLoader::loadTextureFromJPG(const char* filename, unsigned int &width
     return texture;
 }
 
-GLuint ImageLoader::loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
+GLuint ImageHandler::loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
                                        GLuint &texture) const {
     png_byte header[8];
 
@@ -385,7 +385,7 @@ GLuint ImageLoader::loadTextureFromPNG(const char* filename, unsigned int &width
     return texture;
 }
 
-void ImageLoader::my_error_exit(j_common_ptr cinfo) {
+void ImageHandler::my_error_exit(j_common_ptr cinfo) {
     /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
     my_error_mgr* myerr = (my_error_mgr*) cinfo->err;
 
@@ -396,7 +396,7 @@ void ImageLoader::my_error_exit(j_common_ptr cinfo) {
     longjmp(myerr->setjmp_buffer, 1);
 }
 
-bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const {
+bool ImageHandler::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const {
     std::string extension = filename.substr(filename.find_last_of('.'));
     bool success = false;
     if (extension == ".png")
@@ -410,7 +410,7 @@ bool ImageLoader::saveImageToFile(std::string filename, GLubyte *pixels, int w, 
     return success;
 }
 
-bool ImageLoader::saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const {
+bool ImageHandler::saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const {
     png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
     if (!png) {
         fprintf(stderr, "%s: png_create_write_struct returned NULL\n", filename);

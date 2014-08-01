@@ -7,7 +7,7 @@
 
 #include "Text.h"
 
-Text::Text(std::string s, ImageLoader& loader, int x, int y, const Color &color) {
+Text::Text(std::string s, ImageHandler& loader, int x, int y, const Color &color) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myString = s;
     myLoader = loader;

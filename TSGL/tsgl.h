@@ -1,17 +1,17 @@
 /*
- * paragraph.h
+ * tsgl.h
  *
  *  Created on: Jul 21, 2014
  *      Author: mbv26
  */
 
-#ifndef PARAGRAPH_H_
-#define PARAGRAPH_H_
+#ifndef TSGL_H_
+#define TSGL_H_
 
 #include "Canvas.h"
 #include "CartesianCanvas.h"
 #include "Timer.h"
 #include "Color.h"
-#include "keynums.h"
+#include "Keynums.h"
 
-#endif /* PARAGRAPH_H_ */
+#endif /* TSGL_H_ */

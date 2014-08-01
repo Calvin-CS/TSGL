@@ -11,7 +11,7 @@
 #include <string>
 
 #include "Shape.h"		    // For extending our Shape object
-#include "ImageLoader.h"    // For loading images
+#include "ImageHandler.h"   // For loading images
 
 /*! \class Image
     \brief Draw an image to the Canvas.
@@ -29,7 +29,7 @@ class Image : public Shape {
  private:
     float vertices[32];
     std::string myFile;
-    ImageLoader myLoader;
+    ImageHandler myLoader;
  public:
     /*!
      * \brief Explicitly constructs a new Image.
@@ -44,7 +44,7 @@ class Image : public Shape {
      *      \return A new Image drawn with the specified coordinates, dimensions, and transparency.
      * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
      */
-    Image(std::string f, ImageLoader& loader, int x, int y, int w, int h, float a);
+    Image(std::string f, ImageHandler& loader, int x, int y, int w, int h, float a);
 
     /*!
      *  \brief Draw the Image.
