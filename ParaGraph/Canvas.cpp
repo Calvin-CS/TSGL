@@ -41,6 +41,8 @@ static const GLchar* textureFragmentSource = "#version 150\n"
     "    outColor = texture(tex, Texcoord) * vec4(Color);"
     "}";
 
+std::mutex Canvas::glfwMutex;
+
 Canvas::Canvas(unsigned int b) {
     init(0, 0, 400*3, 300*3, b, "");
 }
@@ -328,7 +330,9 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
+    mutexLock glfwLock(glfwMutex);                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
+    glfwLock.unlock();
 
     const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
     glfwSetWindowPos(window, (monInfo->width - winWidth) / 2, (monInfo->height - winHeight) / 2);

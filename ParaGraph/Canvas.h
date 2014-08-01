@@ -100,6 +100,8 @@ private:
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
 
+    static std::mutex glfwMutex;                                        // Keeps GLFW createWindow from getting called at the same time in multiple threads
+
     static void buttonCallback(GLFWwindow* window, int key,
                                int action, int mods);                   // GLFW callback for mouse buttons
 
