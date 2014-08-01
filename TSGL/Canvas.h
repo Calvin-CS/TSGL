@@ -15,7 +15,6 @@
 #define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))      // round is not defined in Visual Studio
 #endif
 
-
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
 #include "Keynums.h"        // Our enums for key presses
@@ -37,8 +36,6 @@
 #include <sstream>          // For string building
 #include <thread>           // For spawning rendering in a different thread
 
-// GL libraries
-#include <GL/gl.h>          // For GL functions
 #include <GLFW/glfw3.h>     // For window creation and management
 
 #define FPS 60              // Frames per second

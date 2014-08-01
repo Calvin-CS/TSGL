@@ -33,18 +33,9 @@ class Polyline : public Shape {
      *      \param v, the number of vertices the complete Polyline will have.
      * \return a new Polyline with a buffer for storing the specified numbered of vertices.
      */
-    Polyline(int v) {
-        if (v < 2) throw std::out_of_range("Cannot have a line with fewer than 2 vertices.");
-        length = v;
-        size = length * 6;
-        current = 0;
-        vertices = new float[size];
-        init = false;
-    }
+    Polyline(int v);
 
-    ~Polyline() {
-        delete vertices;
-    }
+    ~Polyline();
 
     /*!
      * \brief Add another vertex to the Polyline.
@@ -54,28 +45,14 @@ class Polyline : public Shape {
      *      \param color The color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
      */
-    void addNextVertex(int x, int y, const Color &color = BLACK) {
-        if (init) return;
-        vertices[current] = x;
-        vertices[current + 1] = y;
-        vertices[current + 2] = color.R;
-        vertices[current + 3] = color.G;
-        vertices[current + 4] = color.B;
-        vertices[current + 5] = color.A;
-        current += 6;
-        if (current == size) init = true;
-    }
+    void addNextVertex(int x, int y, const Color &color = BLACK);
 
     /*!
      * \brief Draw the Polyline.
      * \details This function actually draws the Polyline to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
      */
-    void draw() {
-        if (!init) return;
-        glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_LINE_STRIP, 0, length);
-    }
+    void draw();
 };
 
 #endif /* POLYLINE_H_ */
