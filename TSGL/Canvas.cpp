@@ -296,11 +296,48 @@ int Canvas::end() {
     return 0;
 }
 
-/*!
- * getTime returns the time elapsed since the Canvas has started drawing (in microseconds)
- */
+int Canvas::getFrameNumber() {
+    return framecounter;
+}
+
+float Canvas::getFPS() {
+    return realFPS;
+}
+
+bool Canvas::getIsOpen() {
+    return !isFinished;
+}
+
+int Canvas::getMouseX() {
+    return mouseX;
+}
+
+int Canvas::getMouseY() {
+    return mouseY;
+}
+
+uint8_t* Canvas::getScreenBuffer() {
+    return screenBuffer;
+}
+
 double Canvas::getTime() {
     return timer->getTime();
+}
+
+int Canvas::getWindowWidth() {
+    return winWidth;
+}
+
+int Canvas::getWindowHeight() {
+    return winHeight;
+}
+
+int Canvas::getWindowX() {
+    return monitorX;
+}
+
+int Canvas::getWindowY() {
+    return monitorY;
 }
 
 void Canvas::glDestroy() {
@@ -522,6 +559,14 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
 void Canvas::setBackgroundColor(Color color) {
     delete clearRectangle;
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, color);
+}
+
+void Canvas::setShowFPS(bool b) {
+    showFPS = b;
+}
+
+void Canvas::setUpdateScreenCopy(bool b) {
+    toUpdateScreenCopy = b;
 }
 
 void Canvas::SetupCamera() {

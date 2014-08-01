@@ -12,15 +12,15 @@
 #include "Shape.h"  // For extending our Shape object
 
 /*! \class ColoredPolygon
-    \brief Draw an arbitrary polygon with colored vertices.
-    \details ColoredPolygon is a class for holding vertex data for a triangle strip with colored vertices.
-    \details Vertices are drawn in triangle strip format, where the first three vertices make up the first triangle,
-    the next vertex plus the previous two make up the second triangle, and so on.
-    \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
-    \note The addVertex() method must be called the same number of times as specified in the constructor.
-    \note Calling addVertex() after all vertices have been added will do nothing.
-    \note Calling draw() before all vertices have been added will do nothing.
-*/
+ *  \brief Draw an arbitrary polygon with colored vertices.
+ *  \details ColoredPolygon is a class for holding vertex data for a triangle strip with colored vertices.
+ *  \details Vertices are drawn in triangle strip format, where the first three vertices make up the first triangle,
+ *   the next vertex plus the previous two make up the second triangle, and so on.
+ *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
+ *  \note The addVertex() method must be called the same number of times as specified in the constructor.
+ *  \note Calling addVertex() after all vertices have been added will do nothing.
+ *  \note Calling draw() before all vertices have been added will do nothing.
+ */
 class ColoredPolygon : public Shape {
  private:
     bool init;          // Whether the vertex has been initialized completely
@@ -32,7 +32,7 @@ class ColoredPolygon : public Shape {
     /*!
      * \brief Explicitly constructor a new ColoredPolygon.
      *      \param v, the number of vertices the complete ColoredPolygon will have.
-     * Returns: a new ColoredPolygon with a buffer for storing the specified numbered of vertices.
+     * \return a new ColoredPolygon with a buffer for storing the specified numbered of vertices.
      */
     ColoredPolygon(int v) {
         if (v < 3) throw std::out_of_range("Cannot have a polygon with fewer than 3 vertices.");
@@ -53,7 +53,7 @@ class ColoredPolygon : public Shape {
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
      *      \param color The color of the vertex.
-     *  \note This function does nothing if the vertex buffer is already full.
+     * \note This function does nothing if the vertex buffer is already full.
      */
     void addVertex(int x, int y, const Color &color) {
         if (init) return;
@@ -70,7 +70,7 @@ class ColoredPolygon : public Shape {
     /*!
      * \brief Draw the ColoredPolygon.
      * \details This function actually draws the ColoredPolygon to the Canvas.
-     *  \note This function does nothing if the vertex buffer is not yet full.
+     * \note This function does nothing if the vertex buffer is not yet full.
      */
     void draw() {
         if (!init) return;

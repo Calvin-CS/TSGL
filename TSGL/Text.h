@@ -12,11 +12,11 @@
 #include "ImageHandler.h"
 
 /*! \class Text
-    \brief Draw a string of text.
-    \details Text is a class for holding the data necessary for rendering a string of text.
-    \note Text is aligned by the upper-left corner.
-    \note At the moment, only a single font is supported.
-*/
+ *  \brief Draw a string of text.
+ *  \details Text is a class for holding the data necessary for rendering a string of text.
+ *  \note Text is aligned by the upper-left corner.
+ *  \note At the moment, only a single font is supported.
+ */
 class Text : public Shape {
  private:
     Color myColor;
@@ -26,7 +26,7 @@ class Text : public Shape {
  public:
     /*!
      * \brief Explicitly constructs a new Text instance.
-     * details This is the constructor for the Text class.
+     * \details This is the constructor for the Text class.
      *      \param s The string to draw.
      *      \param x The x coordinate.
      *      \param y The y coordinate.
@@ -36,8 +36,8 @@ class Text : public Shape {
     Text(std::string s, ImageHandler& loader, int x, int y, const Color &color);
 
     /*!
-     *  \brief Draw the Text.
-     *  \details This function actually draws the Text to the Canvas.
+     * \brief Draw the Text.
+     * \details This function actually draws the Text to the Canvas.
      */
     void draw();
 };

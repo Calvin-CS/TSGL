@@ -1,5 +1,5 @@
 /*
- * keynums.h
+ * Keynums.h
  *
  *  Created on: Jul 3, 2014
  *      Author: mbv26
@@ -12,8 +12,8 @@
 #include <GLFW/glfw3.h>
 
 /*! \brief Enum for keyboard and mouse keys
- \details Key is an enum for the various keyboard and mouse keys.
- \note These are directly mapped to GLFW's integer definitions of the keys.
+ *  \details Key is an enum for the various keyboard and mouse keys.
+ *  \note These are directly mapped to GLFW's integer definitions of the keys.
  */
 enum Key {
 // Printable keys
@@ -61,12 +61,12 @@ enum Key {
     PG_X = GLFW_KEY_X,
     PG_Y = GLFW_KEY_Y,
     PG_Z = GLFW_KEY_Z,
-    PG_LEFT_BRACKET = GLFW_KEY_LEFT_BRACKET, /*! [ */
-    PG_BACKSLASH = GLFW_KEY_BACKSLASH, /*! \ */
-    PG_RIGHT_BRACKET = GLFW_KEY_RIGHT_BRACKET, /*! ] */
-    PG_GRAVE_ACCENT = GLFW_KEY_GRAVE_ACCENT, /*! ` */
-    PG_WORLD_1 = GLFW_KEY_WORLD_1, /*! non-US #1 */
-    PG_WORLD_2 = GLFW_KEY_WORLD_2, /*! non-US #2 */
+    PG_LEFT_BRACKET = GLFW_KEY_LEFT_BRACKET,    /*! [ */
+    PG_BACKSLASH = GLFW_KEY_BACKSLASH,          /*! \ */
+    PG_RIGHT_BRACKET = GLFW_KEY_RIGHT_BRACKET,  /*! ] */
+    PG_GRAVE_ACCENT = GLFW_KEY_GRAVE_ACCENT,    /*! ` */
+    PG_WORLD_1 = GLFW_KEY_WORLD_1,              /*! non-US #1 */
+    PG_WORLD_2 = GLFW_KEY_WORLD_2,              /*! non-US #2 */
 
 // Function keys
 // PG_KEY_ESCAPE is bound to close window
@@ -148,8 +148,8 @@ enum Key {
 };
 
 /*! \brief Enum for keyboard key / mouse button states.
- \details Action is an enum for whether a keyboard / mouse button is pressed or released.
- \note These are directly mapped to GLFW's integer definitions GLFW_PRESS and GLFW_RELEASE.
+ *  \details Action is an enum for whether a keyboard / mouse button is pressed or released.
+ *  \note These are directly mapped to GLFW's integer definitions GLFW_PRESS and GLFW_RELEASE.
  */
 enum Action {
     PG_PRESS = GLFW_PRESS,

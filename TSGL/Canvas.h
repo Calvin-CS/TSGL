@@ -16,18 +16,18 @@
 #endif
 
 
-#include "Array.h"          // Our own array for buffering drawing operations.
+#include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
 #include "Keynums.h"        // Our enums for key presses
 #include "Timer.h"          // Our own timer for steady FPS
 
-#include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices.
+#include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads
-#include "Line.h"           // Our own class for drawing straight lines.
-#include "Polyline.h"       // Our own class for drawing polylines.
-#include "Rectangle.h"      // Our own class for drawing rectangles.
+#include "Line.h"           // Our own class for drawing straight lines
+#include "Polyline.h"       // Our own class for drawing polylines
+#include "Rectangle.h"      // Our own class for drawing rectangles
 #include "Text.h"           // Our own class for drawing text
-#include "Triangle.h"       // Our own class for drawing triangles.
+#include "Triangle.h"       // Our own class for drawing triangles
 
 #include <cmath>
 #include <functional>       // For callback upon key presses
@@ -45,11 +45,11 @@
 #define FRAME 1.0f/FPS      // Number of seconds between frames
 
 /*! \class Canvas
-    \brief A GL window with numerous built-in, thread-safe drawing operations
-    \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
-    \details With libpng and libjpeg, Canvas also supports the drawing of images.
-    \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
-*/
+ *  \brief A GL window with numerous built-in, thread-safe drawing operations
+ *  \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
+ *  \details With libpng and libjpeg, Canvas also supports the drawing of images.
+ *   \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
+ */
 class Canvas {
 private:
     typedef std::function<void()>                   voidFunction;
@@ -126,7 +126,7 @@ public:
      * \brief Constructs a new Canvas.
      * \details This is the default constructor for the Canvas class
      *      \param b The size of the Canvas's internal vertex buffer.
-     *      \return A new 800x600 Canvas in the middle of the screen with no title.
+     * \return A new 800x600 Canvas in the middle of the screen with no title.
      */
     Canvas(unsigned int b);
 
@@ -139,7 +139,7 @@ public:
      *      \param h The y dimension of the Canvas window.
      *      \param b The size of the Canvas's internal vertex buffer.
      *      \param title The title of the window.
-     *      \return A new Canvas with the specified positional data and title.
+     * \return A new Canvas with the specified positional data and title.
      */
     Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title = "");
 
@@ -149,33 +149,36 @@ public:
     virtual ~Canvas();
 
     /*!
-     * \brief Binds a key to a function.
-     * \details This function binds a a key to a function pointer.
-     * Upon pressing or releasing the given key, Canvas will call the specified function.
-     *      \param button The button to bind, as specified in the Key enum.
+     * \brief Binds a key or button to a function.
+     * \details This function binds a key or mouse button to a function pointer.
+     *  Upon pressing or releasing the given key, Canvas will call the specified function.
+     *      \param button The key or button to bind, as specified in the Key enum.
      *      \param a The action to look out for (PG_PRESS or PG_RELEASE).
      *      \param f The function to call upon action a on button.
-     *      \warning PG_KEY_ESCAPE is automatically bound to closing the window. Overriding PG_KEY_ESCAPE will likely make you unable to close the window.
+     * \warning PG_KEY_ESCAPE is automatically bound to closing the window. Overriding PG_KEY_ESCAPE will
+     *  likely make you unable to close the window.
      */
-    void     bindToButton(Key button, Action a, voidFunction f);
+    void bindToButton(Key button, Action a, voidFunction f);
 
     /*!
      * \brief Binds the mouse wheel to a function.
      * \details This function binds the mouse wheel to a function pointer.
-     * Upon scrolling, Canvas will call the specified function.
+     *  Upon scrolling, Canvas will call the specified function.
      *      \param f A function taking x and y parameters to be called when the mouse is scrolled.
      */
-    void     bindToScroll(std::function<void(double, double)> f);
+    void bindToScroll(std::function<void(double, double)> f);
 
     /*!
      * \brief Clears the Canvas.
-     * \details This function removes all shapes and sets the background to the color specified in setBackgroundColor().
+     * \details This function removes all shapes and sets the background to the color specified in
+     *  setBackgroundColor().
      */
-    void     clear();
+    void clear();
 
     /*!
      * \brief Draw a circle.
-     * \details This function draws a circle with the given origin coordinates, radius, resolution (number of sides), and color.
+     * \details This function draws a circle with the given origin coordinates, radius, resolution
+     *  (number of sides), and color.
      *      \param x The x coordinate of the circle's origin.
      *      \param y The y coordinate of the circle's origin.
      *      \param radius The radius of the circle in pixels.
@@ -262,88 +265,89 @@ public:
      *      \param color the color of the Triangle.
      *      \param filled Whether the Triangle should be filled.
      */
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color = BLACK, bool filled = true);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color = BLACK,
+                              bool filled = true);
 
     /*!
      * \brief Closes the Canvas.
      * \details This function stops rendering the Canvas.
-     *      \return 0 if exit is successful, -1 if the canvas has not started yet.
+     * \return 0 if exit is successful, -1 if the canvas has not started yet.
      * \see start()
      */
-    int      end();
+    int end();
 
     /*!
      * \brief Accessor for the current frame number.
-     *      \return The number of frames rendered so far.
+     * \return The number of frames rendered so far.
      */
-    int      getFrameNumber()      { return framecounter; }
+    int getFrameNumber();
 
     /*!
      * \brief Accessor for the current FPS.
-     *      \return The current actual FPS.
+     * \return The current actual FPS.
      */
-    float    getFPS()              { return realFPS; }
+    float getFPS();
 
     /*!
      * \brief Accessor for window's closed status.
-     *      \return Whether the window is still open (that is, the user has not closed it).
+     * \return Whether the window is still open (that is, the user has not closed it).
      */
-    bool     getIsOpen()           { return !isFinished; }
+    bool getIsOpen();
 
     /*!
      * \brief Accessor for the mouse's x-position.
-     *      \return The x coordinates of the mouse on the Canvas.
+     * \return The x coordinates of the mouse on the Canvas.
      */
-    int      getMouseX()           { return mouseX; }
+    int getMouseX();
 
     /*!
      * \brief Accessor for the mouse's y-position.
-     *      \return The y coordinates of the mouse on the Canvas.
+     * \return The y coordinates of the mouse on the Canvas.
      */
-    int      getMouseY()           { return mouseY; }
+    int getMouseY();
 
     /*!
      * \brief Accessor for the Canvas's currently drawn image.
-     *      \return A pointer to the RGB pixel buffer for the current Canvas.
+     * \return A pointer to the RGB pixel buffer for the current Canvas.
      */
-    uint8_t* getScreenBuffer()     { return screenBuffer; }
+    uint8_t* getScreenBuffer();
 
     /*!
      * \brief Accessor for the time since the Canvas was initialized.
-     *      \return The time elapsed since the Canvas has started drawing (in microseconds).
+     * \return The time elapsed since the Canvas has started drawing (in microseconds).
      */
-    double   getTime();
+    double getTime();
 
     /*!
      * \brief Accessor for the Canvas's width.
-     *      \return The width in pixels of the Canvas.
+     * \return The width in pixels of the Canvas.
      */
-    int      getWindowWidth()      { return winWidth; }
+    int getWindowWidth();
 
     /*!
      * \brief Accessor for the Canvas's height.
-     *      \return The height in pixels of the Canvas.
+     * \return The height in pixels of the Canvas.
      */
-    int      getWindowHeight()     { return winHeight; }
+    int getWindowHeight();
 
     /*!
      * \brief Accessor for the Canvas's x=position.
-     *      \return The x coordinate in pixels of the Canvas (0 = left of monitor).
+     * \return The x coordinate in pixels of the Canvas (0 = left of monitor).
      */
-    int      getWindowX()          { return monitorX; }
+    int getWindowX();
 
     /*!
      * \brief Accessor for the Canvas's y-position.
-     *      \return The y coordinate in pixels of the Canvas (0 = top of monitor).
+     * \return The y coordinate in pixels of the Canvas (0 = top of monitor).
      */
-    int      getWindowY()          { return monitorY; }
+    int getWindowY();
 
     /*!
      * \brief Records the Canvas for a specified number of frames.
      * \details This function starts dumping screenshots of the Canvas to the file system every draw cycle.
-     *          The function automatically terminates after num_frames cycles have completed.
+     *  The function automatically terminates after num_frames cycles have completed.
      */
-    void     recordForNumFrames(unsigned int num_frames);
+    void recordForNumFrames(unsigned int num_frames);
 
     /*!
      * \brief Mutator for the background color.
@@ -351,13 +355,13 @@ public:
      *      \param color The color to clear to.
      * \note The alpha channel of the color is ignored
      */
-    void     setBackgroundColor(Color color);
+    void setBackgroundColor(Color color);
 
     /*!
      * \brief Mutator for showing the FPS.
      *      \param b Whether to print the FPS to stdout every draw cycle (for debugging purposes).
      */
-    void     setShowFPS(bool b)    { showFPS = b; }
+    void setShowFPS(bool b);
 
     /*!
      * \brief Mutator for keeping track of the screen's drawn buffer.
@@ -365,28 +369,29 @@ public:
      * \note The buffer in question can be accessed with getScreenBuffer().
      * \note takeScreenShot() and recordForNumFrames() automatically sets this to true.
      */
-    void     setUpdateScreenCopy(bool b) { toUpdateScreenCopy = b; }
+    void setUpdateScreenCopy(bool b);
 
     /*!
      * \brief Stops recording the Canvas.
      * \details This function stops dumping images to the file system.
      */
-    void     stopRecording();
+    void stopRecording();
 
     /*!
      * \brief Opens the Canvas.
      * \details This function starts rendering the Canvas.
-     *      \return 0 if start is successful, -1 if the canvas has already started.
+     * \return 0 if start is successful, -1 if the canvas has already started.
      * \see end()
      */
-    int      start();
+    int start();
 
     /*!
      * \brief Takes a screenshot.
      * \details This function saves a screenshot of the current Canvas to the working directory.
-     * \bug Multiple calls to this function in rapid succession seem to make the FPS counter inaccurate and make rendering slowdown.
+     * \bug Multiple calls to this function in rapid succession seem to make the FPS counter inaccurate and
+     *  make rendering slowdown.
      */
-    void     takeScreenShot();
+    void takeScreenShot();
 };
 
 #endif /* CANVAS_H_ */

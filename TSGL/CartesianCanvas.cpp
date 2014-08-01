@@ -116,6 +116,38 @@ void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal 
     cartY = minY - (screenY - getWindowHeight()) * cartHeight / getWindowHeight();
 }
 
+Decimal CartesianCanvas::getCartHeight() {
+    return cartHeight;
+}
+
+Decimal CartesianCanvas::getCartWidth() {
+    return cartWidth;
+}
+
+Decimal CartesianCanvas::getPixelWidth() {
+    return pixelWidth;
+}
+
+Decimal CartesianCanvas::getPixelHeight() {
+    return pixelHeight;
+}
+
+Decimal CartesianCanvas::getMaxX() {
+    return maxX;
+}
+
+Decimal CartesianCanvas::getMaxY() {
+    return maxY;
+}
+
+Decimal CartesianCanvas::getMinX() {
+    return minX;
+}
+
+Decimal CartesianCanvas::getMinY() {
+    return minY;
+}
+
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
     screenX = ceil((cartX - minX) / cartWidth * getWindowWidth());
     screenY = ceil(getWindowHeight() - (cartY - minY) / cartHeight * getWindowHeight());

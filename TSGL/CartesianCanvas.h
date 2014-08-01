@@ -12,14 +12,14 @@
 #include "Function.h"   // For drawing math functions on the screen
 
 /*! \var typedef long double Decimal
-    \brief A type definition for a long double.
-*/
+ *  \brief A type definition for a long double.
+ */
 typedef long double Decimal;  // Define the variable type to use for coordinates
 
 /*! \class CartesianCanvas
-    \brief Canvas extended for graphic support.
-    \details CartesianCanvas provides a Canvas with a Cartesian coordinate system for ease of plotting.
-*/
+ *  \brief Canvas extended for graphic support.
+ *  \details CartesianCanvas provides a Canvas with a Cartesian coordinate system for ease of plotting.
+ */
 class CartesianCanvas : public Canvas {
 private:
     Decimal cartWidth,                                                  // maxX-minX
@@ -27,12 +27,12 @@ private:
     Decimal minX, maxX, minY, maxY;                                     // Bounding Cartesian coordinates for the window
     Decimal pixelWidth, pixelHeight;                                    // cartWidth/window.w(), cartHeight/window.h()
 public:
-
     /*!
      * \brief Constructs a new CartesianCanvas.
      * \details This is the default constructor for the CartesianCanvas class
      *      \param b The size of the Canvas's internal vertex buffer.
-     *      \return A new 800x600 CartesianCanvas, unscaled (stretching from -400 to +400 on the x axis and -300 to +300 on the y axis) in the middle of the screen with no title.
+     * \return A new 800x600 CartesianCanvas, unscaled (stretching from -400 to +400 on the x axis and
+     *  -300 to +300 on the y axis) in the middle of the screen with no title.
      */
     CartesianCanvas(unsigned int b);
 
@@ -49,32 +49,35 @@ public:
      *      \param yMax The Cartestian coordinates of the CartesianCanvas's top bound.
      *      \param b The size of the Canvas's internal vertex buffer.
      *      \param title The title of the window.
-     *      \return a new CartesianCanvas with the specified positional/scaling data, buffer size, and title
+     * \return a new CartesianCanvas with the specified positional/scaling data, buffer size, and title
      */
-    CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax, unsigned int b, std::string = "");
+    CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax,
+                    unsigned int b, std::string = "");
 
     /*!
      * \brief Draw axes.
-     * \details This function draws axes (with tick marks) on the CartesianCanvas, centered at the given (Cartesian) coordinates
+     * \details This function draws axes (with tick marks) on the CartesianCanvas, centered at the
+     *  given (Cartesian) coordinates
      *      \param x The horizontal location of the y-axis line.
      *      \param y The vertical location of the x-axis line.
      *      \param dx The distance between marks on the x-axis.
      *      \param dy The distance between marks on the y-axis.
      */
-    void    drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);
+    void drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);
 
     /*!
      * \brief Draw a circle.
-     * \details This function draws a circle with the given origin coordinates, radius, resolution (number of sides), and color.
+     * \details This function draws a circle with the given origin coordinates, radius, resolution
+     *  (number of sides), and color.
      *      \param x The x coordinate of the circle's origin.
      *      \param y The y coordinate of the circle's origin.
      *      \param radius The radius of the circle in pixels.
      *      \param res The number of sides to use in the circle.
      *      \param color The color of the circle.
      *      \param filled Whether the circle should be filled.
-     *  \note Identical to Canvas::drawCircle()
+     * \note Identical to Canvas::drawCircle()
      */
-    void    drawCircle(Decimal x, Decimal y, Decimal radius, int res, Color color = BLACK, bool filled = true);
+    void drawCircle(Decimal x, Decimal y, Decimal radius, int res, Color color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw an arbitrary polygon with colored vertices.
@@ -86,7 +89,7 @@ public:
      *      \param filled whether the colored polygon should be filled (true) or not (false)
      * \note Identical to Canvas::drawColoredPolygon()
      */
-    void    drawColoredPolygon(int size, int x[], int y[], Color color[], bool filled = true);
+    void drawColoredPolygon(int size, int x[], int y[], Color color[], bool filled = true);
 
     /*!
      * \brief Plots a function on the screen
@@ -94,20 +97,20 @@ public:
      *      \param f The function to plot.
      * \note The passed function must receive exactly one Decimal parameter, and return a Decimal.
      */
-    void    drawFunction(const Function* f);                            // Draws the Function on the screen
+    void drawFunction(const Function* f);
 
     /*!
-      * \brief Draw an image.
-      * \details This function draws an Image with the given coordinates and dimensions.
-      *      \param fname The name of the file to load the image from.
-      *      \param x The x coordinate of the Image's left edge.
-      *      \param y The y coordinate of the Image's top edge.
-      *      \param w The width of the Image.
-      *      \param h The height of the Image.
-      *      \param a The alpha with which to draw the Image.
-      *  \note Identical to Canvas::drawImage()
-      */
-    void    drawImage(std::string fname, Decimal x, Decimal y, Decimal w, Decimal h, float a = 1.0f);
+     * \brief Draw an image.
+     * \details This function draws an Image with the given coordinates and dimensions.
+     *      \param fname The name of the file to load the image from.
+     *      \param x The x coordinate of the Image's left edge.
+     *      \param y The y coordinate of the Image's top edge.
+     *      \param w The width of the Image.
+     *      \param h The height of the Image.
+     *      \param a The alpha with which to draw the Image.
+     * \note Identical to Canvas::drawImage()
+     */
+    void drawImage(std::string fname, Decimal x, Decimal y, Decimal w, Decimal h, float a = 1.0f);
 
     /*!
      * \brief Draw a line.
@@ -119,7 +122,7 @@ public:
      *      \param color The color of the line.
      *  \note Identical to Canvas::drawLine()
      */
-    void    drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Color color = BLACK);
+    void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Color color = BLACK);
 
     /*!
      * \brief Draw a single pixel.
@@ -127,9 +130,9 @@ public:
      *      \param x The x position of the point.
      *      \param y The y position of the point.
      *      \param color The color of the point.
-     *  \note Identical to Canvas::drawPoint()
+     * \note Identical to Canvas::drawPoint()
      */
-    void    drawPoint(Decimal x, Decimal y, Color color = BLACK);
+    void drawPoint(Decimal x, Decimal y, Color color = BLACK);
 
     /*!
      * \brief Draw a rectangle.
@@ -140,9 +143,9 @@ public:
      *      \param h The height of the Rectangle.
      *      \param color The color of the rectangle.
      *      \param filled Whether the rectangle should be filled.
-     *  \note Identical to Canvas::drawRectangle()
+     * \note Identical to Canvas::drawRectangle()
      */
-    void    drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, Color color = BLACK, bool filled = true);
+    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, Color color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw a string of text.
@@ -153,7 +156,7 @@ public:
      *      \param color The color of the Text.
      * \note Identical to Canvas::drawText().
      */
-    void    drawText(std::string s, Decimal x, Decimal y, Color color = BLACK);
+    void drawText(std::string s, Decimal x, Decimal y, Color color = BLACK);
 
     /*!
      * \brief Draw a triangle.
@@ -168,76 +171,78 @@ public:
      *      \param filled Whether the Triangle should be filled.
      * \note Identical to Canvas::drawTriangle()
      */
-    void    drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, Color color = BLACK, bool filled = true);
+    void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, Color color = BLACK,
+                      bool filled = true);
 
     /*!
      * \brief Translates Cartesian coordinates into window coordinates.
-     * \details getCartesianCoordinates takes a pair of on-screen coordinates and translates them to Cartesian coordinates.
+     * \details getCartesianCoordinates takes a pair of on-screen coordinates and translates them to Cartesian
+     *  coordinates.
      *      \param screenX The window's x coordinate.
      *      \param screenY The window's y coordinate.
      *      \param cartX A reference variable to be filled with screenX's Cartesian position.
      *      \param cartY A reference variable to be filled with screenY's Cartesian position.
      */
-    void    getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY);
+    void getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY);
 
     /*!
      * \brief Accessor for the CartesianCanvas's Cartesian height.
-     *      \return The Cartesian height of the CartesianCanvas.
+     * \return The Cartesian height of the CartesianCanvas.
      */
-    Decimal getCartHeight()       { return cartHeight; }
+    Decimal getCartHeight();
 
     /*!
      * \brief Accessor for the CartesianCanvas's Cartesian width.
-     *      \return The Cartesian width of the CartesianCanvas.
+     * \return The Cartesian width of the CartesianCanvas.
      */
-    Decimal getCartWidth()        { return cartWidth; }
+    Decimal getCartWidth();
 
     /*!
      * \brief Accessor for the CartesianCanvas's effective pixel width.
-     *      \return The width corresponding to a single pixel in the current CartesianCanvas.
+     * \return The width corresponding to a single pixel in the current CartesianCanvas.
      */
-    Decimal getPixelWidth()       { return pixelWidth; }
+    Decimal getPixelWidth();
 
     /*!
      * \brief Accessor for the CartesianCanvas's effective pixel height.
      *      \return The height corresponding to a single pixel in the current CartesianCanvas.
      */
-    Decimal getPixelHeight()      { return pixelHeight; }
+    Decimal getPixelHeight();
 
     /*!
-      * \brief Accessor for the CartesianCanvas's right bound.
-      *      \return The real number corresponding the right of the CartesianCanvas.
-      */
-    Decimal getMaxX()             { return maxX; }
+     * \brief Accessor for the CartesianCanvas's right bound.
+     * \return The real number corresponding the right of the CartesianCanvas.
+     */
+    Decimal getMaxX();
 
     /*!
      * \brief Accessor for the CartesianCanvas's top bound.
-     *      \return The real number corresponding the top of the CartesianCanvas.
+     * \return The real number corresponding the top of the CartesianCanvas.
      */
-    Decimal getMaxY()             { return maxY; }
-
-
-    /*!
-      * \brief Accessor for the CartesianCanvas's left bound.
-      *      \return The real number corresponding the left of the CartesianCanvas.
-      */
-    Decimal getMinX()             { return minX; }
+    Decimal getMaxY();
 
     /*!
-      * \brief Accessor for the CartesianCanvas's bottom bound.
-      *      \return The real number corresponding the bottom of the CartesianCanvas.
-      */
-    Decimal getMinY()             { return minY; }
+     * \brief Accessor for the CartesianCanvas's left bound.
+     * \return The real number corresponding the left of the CartesianCanvas.
+     */
+    Decimal getMinX();
+
+    /*!
+     * \brief Accessor for the CartesianCanvas's bottom bound.
+     * \return The real number corresponding the bottom of the CartesianCanvas.
+     */
+    Decimal getMinY();
 
     /*!
      * \brief Translates window coordinates into Cartesian coordinates.
-     * \details getScreenCoordinates takes a pair of Cartesian coordinates and translates them to on-screen coordinates.
+     * \details getScreenCoordinates takes a pair of Cartesian coordinates and translates them to on-screen
+     *  coordinates.
      *      \param cartX The Cartesian x coordinate.
      *      \param cartY The Cartesian y coordinate.
      *      \param screenX A reference variable to be filled with cartX's window position.
      *      \param screenY A reference variable to be filled with cartY's window position.
      */
-    void    getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY);
+    void getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY);
 
     /*!
      * \brief Recomputes the CartesianCanvas's bounds.
@@ -247,17 +252,18 @@ public:
      *      \param xMax A real number corresponding to the new right edge of the CartesianCanvas.
      *      \param xMax A real number corresponding to the new top edge of the CartesianCanvas.
      */
-    void    recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
+    void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
 
     /*!
      * \brief Zoom the CartesianCanvas with a given center
-     * \details This function will re-center the CartesianCanvas at the given coordinates, then zoom with respect to the given scale.
+     * \details This function will re-center the CartesianCanvas at the given coordinates, then zoom with
+     *  respect to the given scale.
      *      \param x The coordinate to re-center the screen on.
      *      \param y The coordinate to re-center the screen on.
      *      \param scale The part to zoom in by. Less than 1 zooms in, greater than 1 zooms out.
      * \note This function will automatically maintain the current aspect ratio.
      */
-    void    zoom(Decimal x, Decimal y, Decimal scale);
+    void zoom(Decimal x, Decimal y, Decimal scale);
 
     /*!
      * \brief Zoom the CartesianCanvas with the given bounding (Cartesian) coordinates.
@@ -266,11 +272,12 @@ public:
      *      \param y1 The bottom Cartesian bound.
      *      \param x2 The right Cartesian bound.
      *      \param y2 The top Cartesian bound.
-     * \note Setting the right bound lower than the left bound or the top lower than the bottom will just swap the variables.
+     * \note Setting the right bound lower than the left bound or the top lower than the bottom will just
+     *  swap the variables.
      * \warning This function will *NOT* automatically maintain the previous aspect ratio.
      * \warning Change the aspect ratio on-the-fly only with caution.
      */
-    void    zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
+    void zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
 };
 
 #endif /* CARTESIANCANVAS_H_- */

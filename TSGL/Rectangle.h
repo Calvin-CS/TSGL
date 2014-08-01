@@ -11,9 +11,9 @@
 #include "Shape.h"  // For extending our Shape object
 
 /*! \class Rectangle
-    \brief Draw a simple Rectangle.
-    \details Rectangle is a class for holding vertex data for a simple rectangle.
-*/
+ *  \brief Draw a simple Rectangle.
+ *  \details Rectangle is a class for holding vertex data for a simple rectangle.
+ */
 class Rectangle : public Shape {
  private:
     float vertices[24];

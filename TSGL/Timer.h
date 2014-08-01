@@ -18,9 +18,10 @@ typedef std::chrono::duration<double> duration_d;
 typedef std::chrono::time_point<highResClock, duration_d> timepoint_d;
 
 /*! \class Timer
-    \brief A class for various timing operations.
-    \details Timer provides a simple timer for timing, sleeping threads, and keeping track of the current rendering frame.
-*/
+ *  \brief A class for various timing operations.
+ *  \details Timer provides a simple timer for timing, sleeping threads, and keeping track of the
+ *   current rendering frame.
+ */
 class Timer {
  private:
     typedef std::unique_lock<std::mutex> mutexLock;
@@ -67,7 +68,8 @@ class Timer {
 
     /*!
      * \brief Check if the timer's period has elapsed.
-     * \details This function returns whether the period of the Timer has elapsed since the last time the function was called.
+     * \details This function returns whether the period of the Timer has elapsed since the last time
+     *  the function was called.
      * \return True if at least *period* seconds have elapsed since the last call, false otherwise.
      */
     bool pastPeriod();
@@ -75,16 +77,19 @@ class Timer {
     /*!
      * \brief Reset the Timer.
      * \details This function resets the starting time, repetitions, and period of the timer.
-     *      \param period The new period for the Timer. Setting this less than or equal to 0 will keep the current period.
+     *      \param period The new period for the Timer. Setting this less than or equal to 0 will keep
+     *       the current period.
      */
     void reset(double period = 0);
 
     /*!
      * \brief Sleeps the timer's current thread until its period elapses.
-     * \details This function tells the currently executing thread to sleep until the rest of the Timer instance's remaining period expires.
-     * \details If the timer's period has elapsed since last call, the thread will continue execution normally until the next call to sleep().
-     * \note This function does not guarantee the thread will resume immediately after the Timer expires.
-     * Depending on your OS, the thread may sleep for longer.
+     * \details This function tells the currently executing thread to sleep until the rest of the Timer
+     *  instance's remaining period expires.
+     * \details If the timer's period has elapsed since last call, the thread will continue execution
+     *  normally until the next call to sleep().
+     * \note This function does not guarantee the thread will resume immediately after the time expires.
+     *  Depending on your OS, the thread may sleep for longer.
      */
     void sleep();
 
@@ -92,7 +97,7 @@ class Timer {
      * \brief Sleeps the current thread for the specified duration.
      * \details This function tells the currently executing thread to sleep for *duration* seconds.
      * \note This function does not guarantee the thread will resume immediately after *duration* expires.
-     * Depending on your OS, the thread may sleep for longer.
+     *  Depending on your OS, the thread may sleep for longer.
      */
     static void threadSleepFor(double duration);    // Sleep the thread for a specified duration
 };

@@ -12,18 +12,14 @@
 #include <GL/glut.h>
 #endif
 
-#include <fstream>
-#include <stdio.h>
 #include <string>
 #include <stdexcept>
 #include <unordered_map>
 
-#include <iostream>
-
 #include <jpeglib.h>
 #include <png.h>
-
 #include <GL/gl.h>      // For GL functions
+
 class ImageHandler {
  private:
     typedef std::unordered_map<std::string, GLuint> TextureMap;
