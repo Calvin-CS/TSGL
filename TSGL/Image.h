@@ -10,7 +10,7 @@
 
 #include <string>
 
-#include "Shape.h"		    // For extending our Shape object
+#include "Shape.h"          // For extending our Shape object
 #include "ImageHandler.h"   // For loading images
 
 /*! \class Image

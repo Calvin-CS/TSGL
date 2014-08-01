@@ -36,7 +36,7 @@ class Function {
     /*!
      * \brief Method to determine the value of a Function subclass.
      * \details This method should be overridden with the actual function you want to computer.
-     * 		\param x The input to the function.  Assuming your function is F, x will be used to computer F(x).
+     *      \param x The input to the function.  Assuming your function is F, x will be used to computer F(x).
      * \return The Decimal value of F(x).
      * \note This method is abstract and <B>must</B> be overridden.
      */
@@ -48,18 +48,18 @@ class Function {
  */
 class PowerFunction : public Function {
  public:
-	/*!
-	 * \brief Constructs a new PowerFunction.
-	 * 		\param a The power to which the input is raised.
-	 */
+    /*!
+     * \brief Constructs a new PowerFunction.
+     *      \param a The power to which the input is raised.
+     */
     PowerFunction(Decimal a) {
         a_ = a;
     }
-	/*!
-	 * \brief Method to determine the value of PowerFunction.
-	 * 		\param x The input to the function.
-	 * \return *x* raised to the *a*th power.
-	 */
+    /*!
+     * \brief Method to determine the value of PowerFunction.
+     *      \param x The input to the function.
+     * \return *x* raised to the *a*th power.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return pow(x, a_);
     }
@@ -72,10 +72,10 @@ class PowerFunction : public Function {
  */
 class SquareRootFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of SquareRootFunction.
-	 * \return The square root of *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of SquareRootFunction.
+     * \return The square root of *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return sqrt(x);
     }
@@ -86,10 +86,10 @@ class SquareRootFunction : public Function {
  */
 class SineFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of SineFunction.
-	 * \return The sine of *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of SineFunction.
+     * \return The sine of *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return sin(x);
     }
@@ -100,10 +100,10 @@ class SineFunction : public Function {
  */
 class CosineFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of CosineFunction.
-	 * \return The cosine of *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of CosineFunction.
+     * \return The cosine of *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return cos(x);
     }
@@ -114,10 +114,10 @@ class CosineFunction : public Function {
  */
 class TangentFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of TangentFunction.
-	 * \return The tangent of *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of TangentFunction.
+     * \return The tangent of *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return tan(x);
     }
@@ -128,10 +128,10 @@ class TangentFunction : public Function {
  */
 class AbsoluteFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of AbsoluteFunction.
-	 * \return The absolute value of *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of AbsoluteFunction.
+     * \return The absolute value of *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return std::abs(x);
     }
@@ -142,10 +142,10 @@ class AbsoluteFunction : public Function {
  */
 class ExponentialFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of ExponentialFunction.
-	 * \return *e* raised to the power of *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of ExponentialFunction.
+     * \return *e* raised to the power of *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return exp(x);
     }
@@ -156,10 +156,10 @@ class ExponentialFunction : public Function {
  */
 class NaturalLogFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of NaturalLogFunction.
-	 * \return The natural log of *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of NaturalLogFunction.
+     * \return The natural log of *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return log(x);
     }
@@ -170,10 +170,10 @@ class NaturalLogFunction : public Function {
  */
 class CommonLogFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of CommonLogFunction.
-	 * \return The base 10 log of *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of CommonLogFunction.
+     * \return The base 10 log of *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return log10(x);
     }
@@ -184,10 +184,10 @@ class CommonLogFunction : public Function {
  */
 class CeilingFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of CeilingFunction.
-	 * \return The smallest integer greater than or equal to *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of CeilingFunction.
+     * \return The smallest integer greater than or equal to *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return ceil(x);
     }
@@ -198,10 +198,10 @@ class CeilingFunction : public Function {
  */
 class FloorFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of FloorFunction.
-	 * \return The largest integer less than or equal to *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of FloorFunction.
+     * \return The largest integer less than or equal to *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return floor(x);
     }
@@ -212,10 +212,10 @@ class FloorFunction : public Function {
  */
 class RoundFunction : public Function {
  public:
-	/*!
-	 * \brief Method to determine the value of RoundFunction.
-	 * \return The closest integer to *x*.
-	 */
+    /*!
+     * \brief Method to determine the value of RoundFunction.
+     * \return The closest integer to *x*.
+     */
     virtual Decimal valueAt(Decimal x) const {
         return round(x);
     }
