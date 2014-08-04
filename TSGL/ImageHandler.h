@@ -18,16 +18,13 @@
 
 #include <jpeglib.h>
 #include <png.h>
-#include <GL/gl.h>      // For GL functions
+#include <GLFW/glfw3.h>  // For GL functions
 
 class ImageHandler {
  private:
     typedef std::unordered_map<std::string, GLuint> TextureMap;
 
     TextureMap loadedTextures;
-
-    static void createGLTextureFromBuffer(GLuint &texture, unsigned char* buffer, unsigned int &width,
-                                          unsigned int &height, int components);
 
     GLuint loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
                               GLuint &texture) const;
@@ -43,6 +40,9 @@ class ImageHandler {
     ImageHandler() {
     }
     ~ImageHandler();
+
+    static void createGLTextureFromBuffer(GLuint &texture, unsigned char* buffer, unsigned int &width,
+                                              unsigned int &height, int components);
 
     GLuint loadTexture(std::string filename, unsigned int &width, unsigned int &height, GLuint &texture);
     bool saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const;

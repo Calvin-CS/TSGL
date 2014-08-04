@@ -10,6 +10,7 @@
 
 #include "Shape.h"          // For extending our Shape object
 #include "ImageHandler.h"
+#include "TextLoader.h"
 
 /*! \class Text
  *  \brief Draw a string of text.

@@ -19,8 +19,11 @@ void ImageHandler::createGLTextureFromBuffer(GLuint &texture, unsigned char* buf
     // Generate the OpenGL texture object
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    if (components == 3)
+    if (components == 1)
+        components = GL_RED;
+    else if (components == 3)
         components = GL_RGB;
     else if (components == 4)
         components = GL_RGBA;

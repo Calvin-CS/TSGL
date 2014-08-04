@@ -1027,12 +1027,12 @@ void textFunction(Canvas& can) {
     Color BLUE = Color(0.0, 0.0, 1.0, 1.0);
 
     can.drawText("A long time ago, in a galaxy far, far away.", 16, 50, BLACK);
-    can.drawText("Something extraordinary happened.", 16, 150, RED);
-    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, GREEN);
-    can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
+    can.drawText("Something extraordinary happened.", 150, 150, RED);
+    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 250, 250, GREEN);
+    can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 350, 350,
                  BLUE);
-    can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, GREY);
-    can.drawText("And to that I say...oh well.", 16, 550, WHITE);
+    can.drawText("Of *what* exactly that extraordinary event was.", 450, 450, GREY);
+    can.drawText("And to that I say...oh well.", 550, 550, WHITE);
 }
 void textCartFunction(Cart& can) {
     can.drawText("A long time ago, in a galaxy far, far away.", .05, .8, BLACK);
@@ -1276,69 +1276,69 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, const Color &bg = GR
 const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H;
 
 void runHalfoftheFunctions() {
-    Canvas c1(BUFFER);
-    test(c1,graydientFunction,true);
-    Canvas c2(BUFFER);
-    test(c2,colorPointsFunction,true);
-    Canvas c3(BUFFER);
-    test(c3,lineChainFunction,true,BLACK);
-    Canvas c4(500);
-    test(c4,lineFanFunction,false);
-    Canvas c5(65536);
-    test(c5,spectrumFunction,false);
-    Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-    test(c6,mandelbrotFunction,false);
-    Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
-    test(c7,langtonFunction,false);
-    Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-    test(c8,langtonColonyFunction,false);
-    Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-    test(c9,langtonRainbowFunction,true,BLACK);
-    Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
-    test(c10,dumbSortFunction,true);
-    Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
-    test(c11,colorWheelFunction);
-    Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
-    test(c12,functionFunction,true,WHITE);
-    Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
-    test(c13,cosineIntegralFunction,true,WHITE);
-    Canvas c14(0, 0, 1000, 1000, 1024);
-    test(c14,gradientWheelFunction,false,BLACK);
+//    Canvas c1(BUFFER);
+//    test(c1,graydientFunction,true);
+//    Canvas c2(BUFFER);
+//    test(c2,colorPointsFunction,true);
+//    Canvas c3(BUFFER);
+//    test(c3,lineChainFunction,true,BLACK);
+//    Canvas c4(500);
+//    test(c4,lineFanFunction,false);
+//    Canvas c5(65536);
+//    test(c5,spectrumFunction,false);
+//    Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+//    test(c6,mandelbrotFunction,false);
+//    Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
+//    test(c7,langtonFunction,false);
+//    Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
+//    test(c8,langtonColonyFunction,false);
+//    Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
+//    test(c9,langtonRainbowFunction,true,BLACK);
+//    Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
+//    test(c10,dumbSortFunction,true);
+//    Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
+//    test(c11,colorWheelFunction);
+//    Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
+//    test(c12,functionFunction,true,WHITE);
+//    Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
+//    test(c13,cosineIntegralFunction,true,WHITE);
+//    Canvas c14(0, 0, 1000, 1000, 1024);
+//    test(c14,gradientWheelFunction,false,BLACK);
 }
 
 void runOtherHalfoftheFunctions() {
-    Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
-    test(c15,alphaRectangleFunction,false,BLACK);
-    Canvas c16(0, 0, 960, 960, 30000);
-    test(c16,alphaLangtonFunction,true,BLACK);
-    Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-    test(c17,gradientMandelbrotFunction,true);
-    Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
-    test(c18,novaFunction,true);
-    Canvas c19(0, 0, 1600, 1200, BUFFER);
-    test(c19,voronoiFunction,true,WHITE);
-    Canvas c20(0, 0, 1600, 1200, BUFFER);
-    test(c20,shadedVoronoiFunction,false,WHITE);
-    Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
-    test(c21,forestFireFunction,false);
-    Canvas c22(0,0,1200,600,100);
-    test(c22,imageFunction,false);
-    Canvas c23(0, 0, 1200, 900, 1201 * 900);
-    test(c23, highData, true);
+//    Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
+//    test(c15,alphaRectangleFunction,false,BLACK);
+//    Canvas c16(0, 0, 960, 960, 30000);
+//    test(c16,alphaLangtonFunction,true,BLACK);
+//    Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+//    test(c17,gradientMandelbrotFunction,true);
+//    Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
+//    test(c18,novaFunction,true);
+//    Canvas c19(0, 0, 1600, 1200, BUFFER);
+//    test(c19,voronoiFunction,true,WHITE);
+//    Canvas c20(0, 0, 1600, 1200, BUFFER);
+//    test(c20,shadedVoronoiFunction,false,WHITE);
+//    Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
+//    test(c21,forestFireFunction,false);
+//    Canvas c22(0,0,1200,600,100);
+//    test(c22,imageFunction,false);
+//    Canvas c23(0, 0, 1200, 900, 1201 * 900);
+//    test(c23, highData, true);
     Canvas c24(10);
-    test(c24,textFunction,true);
-    Canvas c25(0,0,1600,600,1000);
-    test(c25,pongFunction,false, BLACK);
+    test(c24,textFunction,false);
+//    Canvas c25(0,0,1600,600,1000);
+//    test(c25,pongFunction,false, BLACK);
     Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
     test(c26,imageCartFunction,false);
-    Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
-    test(c27,textCartFunction,true);
-    Canvas c28(0, 0, 800, 600, 500000);
-    test(c28,getPixelsFunction,true);
-    Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-    test(c29,shapeTestFunction,true);
-    Canvas c30(0, 0, 960, 960, 30000);
-    test(c30,screenshotLangtonFunction,true,BLACK);
+//    Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
+//    test(c27,textCartFunction,true);
+//    Canvas c28(0, 0, 800, 600, 500000);
+//    test(c28,getPixelsFunction,true);
+//    Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+//    test(c29,shapeTestFunction,true);
+//    Canvas c30(0, 0, 960, 960, 30000);
+//    test(c30,screenshotLangtonFunction,true,BLACK);
 }
 
 int main() {
