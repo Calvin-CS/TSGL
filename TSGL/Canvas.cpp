@@ -252,11 +252,11 @@ void Canvas::drawRectangle(int x, int y, int w, int h, Color color, bool filled)
     }
     else {
         Polyline* p = new Polyline(5);
-        p->addNextVertex(x,y,color);
-        p->addNextVertex(x+w,y,color);
-        p->addNextVertex(x+w,y+h,color);
-        p->addNextVertex(x,y+h,color);
-        p->addNextVertex(x,y,color);
+        p->addNextVertex(x, y, color);
+        p->addNextVertex(x + w - 1, y, color);
+        p->addNextVertex(x + w - 1, y + h - 1, color);
+        p->addNextVertex(x, y + h - 1, color);
+        p->addNextVertex(x, y, color);
         drawShape(p);
     }
 }

@@ -9,8 +9,7 @@
 #define TEXT_H_
 
 #include "Shape.h"          // For extending our Shape object
-#include "ImageHandler.h"
-#include "TextLoader.h"
+#include "TextureHandler.h"
 
 /*! \class Text
  *  \brief Draw a string of text.
@@ -21,7 +20,7 @@
 class Text : public Shape {
  private:
     Color myColor;
-    ImageHandler myLoader;
+    TextureHandler* myLoader;
     std::string myString;
     int myX, myY;
  public:
@@ -29,12 +28,13 @@ class Text : public Shape {
      * \brief Explicitly constructs a new Text instance.
      * \details This is the constructor for the Text class.
      *      \param s The string to draw.
+     *      \param loaded A pointer to the TextureHandler with which to load the font.
      *      \param x The x coordinate.
      *      \param y The y coordinate.
      *      \param color A color.
      *      \return A new Text instance with the specified string, position, and color.
      */
-    Text(std::string s, ImageHandler& loader, int x, int y, const Color &color);
+    Text(std::string s, TextureHandler &loader, int x, int y, const Color &color);
 
     /*!
      * \brief Draw the Text.

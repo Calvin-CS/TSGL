@@ -1,11 +1,18 @@
-#include "ImageHandler.h"
+#include "TextureHandler.h"
 
 #define GL_GLEXT_PROTOTYPES
 
-ImageHandler::~ImageHandler() {
+TextureHandler::TextureHandler() {
+    fontLibrary = nullptr;
+    fontFace = nullptr;
+}
+
+TextureHandler::~TextureHandler() {
     for (TextureMap::iterator it = loadedTextures.begin(); it != loadedTextures.end(); ++it) {
         glDeleteTextures(1, &(it->second));
     }
+
+    delete fontFace;
 }
 
 struct my_error_mgr {
@@ -14,28 +21,106 @@ struct my_error_mgr {
     jmp_buf setjmp_buffer;      // for return to caller
 };
 
-void ImageHandler::createGLTextureFromBuffer(GLuint &texture, unsigned char* buffer, unsigned int &width, unsigned int &height,
-                               int components) {
+void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char* buffer,
+                                               const unsigned int &width, const unsigned int &height,
+                                               int glMode) {
     // Generate the OpenGL texture object
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    if (components == 1)
-        components = GL_RED;
-    else if (components == 3)
-        components = GL_RGB;
-    else if (components == 4)
-        components = GL_RGBA;
+    if (glMode == GL_ALPHA) {
+        unsigned char* newBuffer = new unsigned char[width * height * 4];
+        unsigned maxSize = width * height;
+        for (unsigned int i = 0, x = 0; i < maxSize; i++, x += 4) {
+            newBuffer[x] = newBuffer[x + 1] = newBuffer[x + 2] = newBuffer[x + 3] = buffer[i];
+        }
 
-    glTexImage2D(GL_TEXTURE_2D, 0, components, width, height, 0, components, GL_UNSIGNED_BYTE, buffer);
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newBuffer);
+        delete newBuffer;
+    } else {
+        if (glMode == GL_RED) {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        } else {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        }
+        glTexImage2D(GL_TEXTURE_2D, 0, glMode, width, height, 0, glMode, GL_UNSIGNED_BYTE, buffer);
+    }
 
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
-GLuint ImageHandler::loadTexture(std::string filename, unsigned int &width, unsigned int &height,
-                                GLuint &texture) {
+Character TextureHandler::loadChar(const char character, unsigned int font_size) {
+    FT_Bitmap* bitmap = &(fontFace->glyph->bitmap);
+    Character char_;
+
+    bool error = FT_Set_Pixel_Sizes(fontFace, 0, font_size);
+    if (error) {
+        fprintf(stderr, "FT_Set_Pixel_Sizes failed\n");
+        return char_;
+    }
+
+    error = FT_Load_Char(fontFace, character, FT_LOAD_RENDER);
+    if (error) {
+        fprintf(stderr, "FT_Load_Char falied\n");
+        return char_;
+    }
+
+    char_.width = bitmap->width;
+    char_.height = bitmap->rows;
+    char_.left = fontFace->glyph->bitmap_left;
+    char_.up = fontFace->glyph->bitmap_top;
+    char_.dx = fontFace->glyph->advance.x / 64;
+    char_.dy = fontFace->glyph->advance.y / 64;
+
+    int glMode = GL_ALPHA;
+
+    if (bitmap->pixel_mode == FT_PIXEL_MODE_MONO)
+       glMode = GL_RED;
+    else if (bitmap->pixel_mode == FT_PIXEL_MODE_GRAY)
+        glMode = GL_ALPHA;
+    else if (bitmap->pixel_mode == FT_PIXEL_MODE_LCD)
+        glMode = GL_RGB;
+    else if (bitmap->pixel_mode == FT_PIXEL_MODE_LCD_V)
+        glMode = GL_RGB;
+    else if (bitmap->pixel_mode == FT_PIXEL_MODE_BGRA)
+        glMode = GL_RGBA;
+
+    GLtexture texture = 0;
+    createGLtextureFromBuffer(texture, bitmap->buffer, char_.width, char_.height, glMode);
+    char_.texture = texture;
+
+    return char_;
+}
+
+bool TextureHandler::loadFont(const std::string& filename) {
+    if (fontLibrary == nullptr) {
+        if (FT_Init_FreeType(&fontLibrary)) {
+            fprintf(stderr, "An error occurred during freetype font library initialization\n");
+            return false;
+        }
+    }
+
+    FT_Face tmp_face;
+    int error = FT_New_Face(fontLibrary, filename.c_str(), 0, &tmp_face);
+    if (error == FT_Err_Unknown_File_Format) {
+        fprintf(stderr, "%s: the font file could be opened and read, but it appears that its"
+                        "font format is unsupported\n", filename.c_str());
+        return false;
+    } else if (error) {
+        fprintf(stderr, "%s: the font file could not be opened and read\n", filename.c_str());
+        return false;
+    }
+
+    delete fontFace;
+    fontFace = tmp_face;
+
+    return true;
+}
+
+GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height,
+                                GLtexture &texture) {
     if (loadedTextures.find(filename) == loadedTextures.end()) {  // Load the image if we haven't already
         std::string extension = filename.substr(filename.find_last_of('.'));
         if (extension == ".png")
@@ -55,8 +140,8 @@ GLuint ImageHandler::loadTexture(std::string filename, unsigned int &width, unsi
     return texture;
 }
 
-GLuint ImageHandler::loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
-                                       GLuint &texture) const {
+GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
+                                       GLtexture &texture) const {
     // Adapted from http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/#Loading__BMP_images_yourself
 
     // Data read from the header of the BMP file
@@ -149,13 +234,18 @@ GLuint ImageHandler::loadTextureFromBMP(const char* filename, unsigned int &widt
         }
     }
 
-    createGLTextureFromBuffer(texture, data, width, height, components);
+    if (components == 3)
+        components = GL_RGB;
+    else if (components == 4)
+        components = GL_RGBA;
+
+    createGLtextureFromBuffer(texture, data, width, height, components);
 
     return texture;
 }
 
-GLuint ImageHandler::loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
-                                       GLuint &texture) const {
+GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
+                                             GLtexture &texture) const {
     /* This struct contains the JPEG decompression parameters and pointers to
      * working space (which is allocated as needed by the JPEG library).
      */
@@ -243,8 +333,14 @@ GLuint ImageHandler::loadTextureFromJPG(const char* filename, unsigned int &widt
 
     width = cinfo.output_width;
     height = cinfo.output_height;
+    int components = cinfo.num_components;
 
-    createGLTextureFromBuffer(texture, raw_image, width, height, cinfo.num_components);
+    if (components == 3)
+        components = GL_RGB;
+    else if (components == 4)
+        components = GL_RGBA;
+
+    createGLtextureFromBuffer(texture, raw_image, width, height, components);
 
     jpeg_destroy_decompress(&cinfo);
     fclose(file);
@@ -258,8 +354,8 @@ GLuint ImageHandler::loadTextureFromJPG(const char* filename, unsigned int &widt
     return texture;
 }
 
-GLuint ImageHandler::loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
-                                       GLuint &texture) const {
+GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
+                                       GLtexture &texture) const {
     png_byte header[8];
 
 #ifdef _WIN32
@@ -373,12 +469,13 @@ GLuint ImageHandler::loadTextureFromPNG(const char* filename, unsigned int &widt
     // read the png into image_data through row_pointers
     png_read_image(png_ptr, row_pointers);
 
+    int components = GL_RGB;
     if (color_type == PNG_COLOR_TYPE_RGB)
-        color_type = 3;
+        components = GL_RGB;
     else if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
-        color_type = 4;
+        components = GL_RGBA;
 
-    createGLTextureFromBuffer(texture, image_data, width, height, color_type);
+    createGLtextureFromBuffer(texture, image_data, width, height, components);
 
     // clean up
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
@@ -388,7 +485,7 @@ GLuint ImageHandler::loadTextureFromPNG(const char* filename, unsigned int &widt
     return texture;
 }
 
-void ImageHandler::my_error_exit(j_common_ptr cinfo) {
+void TextureHandler::my_error_exit(j_common_ptr cinfo) {
     /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
     my_error_mgr* myerr = (my_error_mgr*) cinfo->err;
 
@@ -399,7 +496,7 @@ void ImageHandler::my_error_exit(j_common_ptr cinfo) {
     longjmp(myerr->setjmp_buffer, 1);
 }
 
-bool ImageHandler::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const {
+bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const {
     std::string extension = filename.substr(filename.find_last_of('.'));
     bool success = false;
     if (extension == ".png")
@@ -413,7 +510,7 @@ bool ImageHandler::saveImageToFile(std::string filename, GLubyte *pixels, int w,
     return success;
 }
 
-bool ImageHandler::saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const {
+bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const {
     png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
     if (!png) {
         fprintf(stderr, "%s: png_create_write_struct returned NULL\n", filename);

@@ -986,20 +986,20 @@ void forestFireFunction(Canvas& can) {
 void imageFunction(Canvas& can) {
     can.drawImage("data/test.png", 0, 0, 400, 300);
     can.drawImage("data/ship.bmp", 400, 0, 400, 300);
-    can.drawImage("data/mini.jpg", 800, 300, 400, 300);
+    can.drawImage("data/shiprgb.bmp", 800, 0, 400, 300);
     can.drawImage("data/sky_main.jpg", 0, 300, 400, 300);
-    can.drawImage("data/shiprgb.bmp", 800, 000, 400, 300);
     can.drawImage("data/Captain-falcon.png", 400, 300, 400, 300);
+    can.drawImage("data/mini.jpg", 800, 300, 400, 300);
 
     can.drawImage("data/bestpicture.png", 200, 0, 800, 600, 0.25f);    //ALPHA
 }
 void imageCartFunction(Cart& can) {
     can.drawImage("data/test.png", 0, 3, 2, 1.5);
     can.drawImage("data/ship.bmp", 2, 3, 2, 1.5);
-    can.drawImage("data/mini.jpg", 4, 1.5, 2, 1.5);
-    can.drawImage("data/sky_main.jpg", 0, 1.5, 2, 1.5);
     can.drawImage("data/shiprgb.bmp", 4, 3, 2, 1.5);
+    can.drawImage("data/sky_main.jpg", 0, 1.5, 2, 1.5);
     can.drawImage("data/Captain-falcon.png", 2, 1.5, 2, 1.5);
+    can.drawImage("data/mini.jpg", 4, 1.5, 2, 1.5);
 
     can.drawImage("data/bestpicture.png", 1, 3, 4, 3, 0.25f);    //ALPHA
 }
@@ -1027,12 +1027,12 @@ void textFunction(Canvas& can) {
     Color BLUE = Color(0.0, 0.0, 1.0, 1.0);
 
     can.drawText("A long time ago, in a galaxy far, far away.", 16, 50, BLACK);
-    can.drawText("Something extraordinary happened.", 150, 150, RED);
-    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 250, 250, GREEN);
-    can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 350, 350,
+    can.drawText("Something extraordinary happened.", 16, 150, RED);
+    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, GREEN);
+    can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
                  BLUE);
-    can.drawText("Of *what* exactly that extraordinary event was.", 450, 450, GREY);
-    can.drawText("And to that I say...oh well.", 550, 550, WHITE);
+    can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, GREY);
+    can.drawText("And to that I say...oh well.", 16, 550, WHITE);
 }
 void textCartFunction(Cart& can) {
     can.drawText("A long time ago, in a galaxy far, far away.", .05, .8, BLACK);
@@ -1249,6 +1249,40 @@ void screenshotLangtonFunction(Canvas& can) {
     delete filled;
 }
 
+void greyScaleFunction(Canvas& can) {
+    const int THREADS = 8;
+    const unsigned int thickness = 3;
+    Timer t(FRAME * 2);
+    can.drawImage("data/test.png", 0, 0, 800, 600);
+    unsigned int width = can.getWindowWidth(),
+                 height = can.getWindowHeight();
+    can.setUpdateScreenCopy(true);
+    Timer::threadSleepFor(.25);
+    uint8_t* buffer = can.getScreenBuffer();
+
+    #pragma omp parallel num_threads(THREADS)
+    {
+        unsigned int nthreads = omp_get_num_threads();
+        unsigned int blocksize = height / nthreads;
+        unsigned int row = blocksize * omp_get_thread_num();
+        Color color = divideIntoChromaticSections(nthreads / 2, omp_get_thread_num() % (nthreads / 2));
+        int gray = 0;
+
+        for (unsigned int y = row; y < row + blocksize; y++) {
+            int index = y * width * 3;
+            for (unsigned int x = 0; x < width; x++) {
+                gray = (buffer[index] + buffer[index + 1] + buffer[index + 2]) / 3;
+                can.drawPoint(x, y, Colori(gray, gray, gray));
+                index += 3;
+           }
+            t.sleep();
+        }
+        for (unsigned int i = 0; i < thickness; i++) {
+            can.drawRectangle(0 + i, row + 1 + i, width - 2*i, blocksize - 2*i, color, false);
+        }
+    }
+}
+
 void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, const Color &bg = GREY) {
     c.setBackgroundColor(bg);
     c.start();
@@ -1329,8 +1363,8 @@ void runOtherHalfoftheFunctions() {
     test(c24,textFunction,false);
 //    Canvas c25(0,0,1600,600,1000);
 //    test(c25,pongFunction,false, BLACK);
-    Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
-    test(c26,imageCartFunction,false);
+//    Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
+//    test(c26,imageCartFunction,false);
 //    Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
 //    test(c27,textCartFunction,true);
 //    Canvas c28(0, 0, 800, 600, 500000);
@@ -1339,6 +1373,8 @@ void runOtherHalfoftheFunctions() {
 //    test(c29,shapeTestFunction,true);
 //    Canvas c30(0, 0, 960, 960, 30000);
 //    test(c30,screenshotLangtonFunction,true,BLACK);
+//    Canvas c28(0, 0, 800, 600, 500000);
+//    test(c28,greyScaleFunction,true);
 }
 
 int main() {

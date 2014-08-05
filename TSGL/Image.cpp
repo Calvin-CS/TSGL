@@ -16,10 +16,10 @@
  *      h, the height of the Image
  * Returns: a new Image with the specified top left corner and dimensions
  */
-Image::Image(std::string f, ImageHandler& loader, int x, int y, int w, int h, float a) {
+Image::Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, float a) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myFile = f;
-    myLoader = loader;
+    myLoader = &loader;
     vertices[0] = x;
     vertices[1] = y;
     vertices[8] = x + w;
@@ -41,8 +41,8 @@ Image::Image(std::string f, ImageHandler& loader, int x, int y, int w, int h, fl
 // draw() actually draws the Image to the canvas
 void Image::draw() {
     unsigned int w, h;
-    GLuint myTexture;
-    myLoader.loadTexture(myFile, w, h, myTexture);
+    GLtexture myTexture;
+    myLoader->loadPicture(myFile, w, h, myTexture);
 
     glBindTexture(GL_TEXTURE_2D, myTexture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

@@ -60,7 +60,7 @@ private:
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
-    ImageHandler    loader;                                             // The ImageLoader that holds all our already loaded textures
+    TextureHandler  loader;                                             // The ImageLoader that holds all our already loaded textures
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
@@ -72,13 +72,13 @@ private:
     std::thread     renderThread;                                       // Thread dedicated to rendering the Canvas
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
-    GLuint          shaderFragment,                                     // Address of the fragment shader
+    GLtexture          shaderFragment,                                     // Address of the fragment shader
                     shaderProgram,                                      // Addres of the shader program to send to the GPU
                     shaderVertex;                                       // Address of the vertex shader
     std::mutex      shapes;                                             // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
-    GLuint          tex,                                                // Texture
+    GLtexture          tex,                                                // Texture
                     tex2,                                               // Texture 2
                     textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
@@ -91,7 +91,7 @@ private:
     GLint           uniModel,                                           // Model perspective of the camera
                     uniView,                                            // View perspective of the camera
                     uniProj;                                            // Projection of the camera
-    GLuint          vertexArray,                                        // Address of GL's array buffer object
+    GLtexture          vertexArray,                                        // Address of GL's array buffer object
                     vertexBuffer;                                       // Address of GL's vertex buffer object
     float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to

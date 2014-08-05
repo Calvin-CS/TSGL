@@ -111,7 +111,7 @@ Color divideIntoChromaticSections(unsigned int sections, unsigned int section, f
     return ColorHSV(6.0f / sections * section, 1.0f, value, alpha);
 }
 Color divideIntoChromaticSections(unsigned int sections, unsigned int section) {
-    return ColorHSV(6.0f / sections * section, 1.0f, 1.0f, 1.0f);
+    return divideIntoChromaticSections(sections, section, 1.0f, 1.0f);
 }
 
 Color randomColor(float alpha) {
