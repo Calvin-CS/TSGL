@@ -1,0 +1,22 @@
+# Ignore eclipse .project files
+TSGL/.cproject
+TSGL/.project
+TSGLtest/.cproject
+TSGLtest/.project
+
+# Ignore builds
+TSGL/Debug/
+TSGL/Release/
+TSGLtest/Debug/
+TSGLtest/Release/
+
+# Ignore recorded pictures
+TSGLtest/frames/
+
+# Ignore system specific libraries
+libraries/
+
+# Ignore generated doxygen (for now)
+TSGL/html/
+TSGL/latex/
+
