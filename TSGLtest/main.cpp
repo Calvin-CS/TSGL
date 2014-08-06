@@ -43,7 +43,7 @@ float randint(int max = 10000) {
 
 void graydientFunction(Canvas& can) {
     int x = 0;
-    can.bindToButton(PG_SPACE, PG_PRESS, [&can, &x]() {
+    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &x]() {
         std::cout << x++ << std::endl;
     });
 
@@ -143,19 +143,19 @@ void mandelbrotFunction(CartesianCanvas& can) {
     Timer t(FRAME / 2);
     Decimal firstX, firstY, secondX, secondY;
     bool toRender = true;
-    can.bindToButton(PG_SPACE, PG_PRESS, [&can, &toRender]() {
+    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &toRender]() {
         can.clear();
         toRender = true;
     });
-    can.bindToButton(PG_MOUSE_LEFT, PG_PRESS, [&can, &firstX, &firstY]() {
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&can, &firstX, &firstY]() {
         can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), firstX, firstY);
     });
-    can.bindToButton(PG_MOUSE_LEFT, PG_RELEASE, [&can, &firstX, &firstY, &secondX, &secondY, &toRender]() {
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&can, &firstX, &firstY, &secondX, &secondY, &toRender]() {
         can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), secondX, secondY);
         can.zoom(firstX, firstY, secondX, secondY);
         toRender = true;
     });
-    can.bindToButton(PG_MOUSE_RIGHT, PG_PRESS, [&can, &toRender]() {
+    can.bindToButton(TSGL_MOUSE_RIGHT, TSGL_PRESS, [&can, &toRender]() {
         Decimal x, y;
         can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
         can.zoom(x, y, 1.5);
@@ -478,7 +478,7 @@ void functionFunction(CartesianCanvas& can) {
 }
 
 void cosineIntegralFunction(CartesianCanvas& can) {
-    can.bindToButton(PG_Q, PG_PRESS, [&can](){  // Quit on press of Q
+    can.bindToButton(TSGL_Q, TSGL_PRESS, [&can](){  // Quit on press of Q
         can.end();
     });
 
@@ -604,9 +604,9 @@ void alphaLangtonFunction(Canvas& can) {
         time = pulse.getTime();
         can.clear();
     };
-    can.bindToButton(PG_MOUSE_LEFT, PG_PRESS, tempo);
-    can.bindToButton(PG_ENTER, PG_PRESS, tempo);
-    can.bindToButton(PG_SPACE, PG_PRESS, [&can]() {
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, tempo);
+    can.bindToButton(TSGL_ENTER, TSGL_PRESS, tempo);
+    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
         can.clear();
     });
 
@@ -654,19 +654,19 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
     Timer t(FRAME / 2);
     Decimal firstX, firstY, secondX, secondY;
     bool toRender = true;
-    can.bindToButton(PG_SPACE, PG_PRESS, [&can, &toRender]() {
+    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &toRender]() {
         can.clear();
         toRender = true;
     });
-    can.bindToButton(PG_MOUSE_LEFT, PG_PRESS, [&can, &firstX, &firstY]() {
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&can, &firstX, &firstY]() {
         can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), firstX, firstY);
     });
-    can.bindToButton(PG_MOUSE_LEFT, PG_RELEASE, [&can, &firstX, &firstY, &secondX, &secondY, &toRender]() {
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&can, &firstX, &firstY, &secondX, &secondY, &toRender]() {
         can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), secondX, secondY);
         can.zoom(firstX, firstY, secondX, secondY);
         toRender = true;
     });
-    can.bindToButton(PG_MOUSE_RIGHT, PG_PRESS, [&can, &toRender]() {
+    can.bindToButton(TSGL_MOUSE_RIGHT, TSGL_PRESS, [&can, &toRender]() {
         Decimal x, y;
         can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
         can.zoom(x, y, 1.5);
@@ -1071,14 +1071,14 @@ void pongFunction(Canvas& can) {
     } while (xx > -4 && xx < 4);
     Timer t(FRAME);
     // Set up button bindings
-    can.bindToButton(PG_UP, PG_PRESS, [&rightdir]() {rightdir = -1;});
-    can.bindToButton(PG_DOWN, PG_PRESS, [&rightdir]() {rightdir = 1;});
-    can.bindToButton(PG_UP, PG_RELEASE, [&rightdir]() {if (rightdir == -1) rightdir = 0;});
-    can.bindToButton(PG_DOWN, PG_RELEASE, [&rightdir]() {if (rightdir == 1) rightdir = 0;});
-    can.bindToButton(PG_W, PG_PRESS, [&leftdir] () {leftdir = -1;});
-    can.bindToButton(PG_S, PG_PRESS, [&leftdir] () {leftdir = 1;});
-    can.bindToButton(PG_W, PG_RELEASE, [&leftdir] () {if (leftdir == -1) leftdir = 0;});
-    can.bindToButton(PG_S, PG_RELEASE, [&leftdir] () {if (leftdir == 1) leftdir = 0;});
+    can.bindToButton(TSGL_UP, TSGL_PRESS, [&rightdir]() {rightdir = -1;});
+    can.bindToButton(TSGL_DOWN, TSGL_PRESS, [&rightdir]() {rightdir = 1;});
+    can.bindToButton(TSGL_UP, TSGL_RELEASE, [&rightdir]() {if (rightdir == -1) rightdir = 0;});
+    can.bindToButton(TSGL_DOWN, TSGL_RELEASE, [&rightdir]() {if (rightdir == 1) rightdir = 0;});
+    can.bindToButton(TSGL_W, TSGL_PRESS, [&leftdir] () {leftdir = -1;});
+    can.bindToButton(TSGL_S, TSGL_PRESS, [&leftdir] () {leftdir = 1;});
+    can.bindToButton(TSGL_W, TSGL_RELEASE, [&leftdir] () {if (leftdir == -1) leftdir = 0;});
+    can.bindToButton(TSGL_S, TSGL_RELEASE, [&leftdir] () {if (leftdir == 1) leftdir = 0;});
     // Check to see if the window has been closed
     while (can.getIsOpen()) {
         t.sleep();
@@ -1213,10 +1213,10 @@ void screenshotLangtonFunction(Canvas& can) {
     }
     Timer t(FRAME);
 
-    can.bindToButton(PG_ENTER, PG_PRESS, [&paused]() {
+    can.bindToButton(TSGL_ENTER, TSGL_PRESS, [&paused]() {
         paused = !paused;
     });
-    can.bindToButton(PG_SPACE, PG_PRESS, [&can]() {
+    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
         can.clear();
     });
 

@@ -474,7 +474,7 @@ void Canvas::glInit() {
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
 
-    bindToButton(PG_KEY_ESCAPE, PG_PRESS, [this]() {
+    bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
         glfwSetWindowShouldClose(window, GL_TRUE);
     });
 
