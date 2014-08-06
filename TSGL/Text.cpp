@@ -8,7 +8,7 @@
 #include "Text.h"
 #include "iostream"
 
-Text::Text(std::string s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color) {
+Text::Text(std::wstring s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myString = s;
     myLoader = &loader;
@@ -19,8 +19,6 @@ Text::Text(std::string s, TextureHandler &loader, int x, int y, unsigned int siz
 }
 
 void Text::draw() {
-    myLoader->loadFont("/usr/share/fonts/truetype/freefont/FreeSans.ttf");
-
     float *vertices = new float[32];                                        // Allocate the vertices
 
     vertices[0]  = myX;                                                     // Pre-init the array with the start coords

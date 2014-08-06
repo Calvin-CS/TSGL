@@ -12,7 +12,9 @@ TextureHandler::~TextureHandler() {
         glDeleteTextures(1, &(it->second));
     }
 
-    FT_Done_Face(fontFace);
+    for (FontMap::iterator it = loadedFonts.begin(); it != loadedFonts.end(); ++it) {
+        FT_Done_Face(it->second);
+    }
     FT_Done_FreeType(fontLibrary);
 }
 
@@ -52,8 +54,8 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
-bool TextureHandler::drawText(std::string text, unsigned int font_size, float* vertices) {
-    const char* string = text.c_str();
+bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
+    const wchar_t* string = text.c_str();
     FT_GlyphSlot glyph = fontFace->glyph;
     FT_UInt current_glyph_index, previous_glyph_index = 0;
     int penX = vertices[0],
@@ -66,7 +68,6 @@ bool TextureHandler::drawText(std::string text, unsigned int font_size, float* v
     }
 
     bool use_kerning = FT_HAS_KERNING(fontFace);
-    printf("%i\n", use_kerning);
 
     for (unsigned int i = 0; i < text.size(); i++) {
         current_glyph_index = FT_Get_Char_Index(fontFace, string[i]);
@@ -76,8 +77,6 @@ bool TextureHandler::drawText(std::string text, unsigned int font_size, float* v
             FT_Get_Kerning(fontFace, previous_glyph_index, current_glyph_index, FT_KERNING_DEFAULT, &delta);
             penX += delta.x >> 6;
             penY += delta.y >> 6;
-
-            previous_glyph_index = current_glyph_index;
         }
 
         error = FT_Load_Glyph(fontFace, current_glyph_index, FT_LOAD_RENDER);
@@ -85,6 +84,8 @@ bool TextureHandler::drawText(std::string text, unsigned int font_size, float* v
             fprintf(stderr, "FT_Load_Char falied\n");
             return false;
         }
+
+        previous_glyph_index = current_glyph_index;
 
         int glMode = GL_ALPHA;
 
@@ -122,47 +123,6 @@ bool TextureHandler::drawText(std::string text, unsigned int font_size, float* v
     return true;
 }
 
-FT_GlyphSlot TextureHandler::loadChar(const char character, unsigned int font_size, GLtexture &texture) {
-    FT_GlyphSlot glyph = fontFace->glyph;
-
-    bool error = FT_Set_Pixel_Sizes(fontFace, 0, font_size);
-    if (error) {
-        fprintf(stderr, "FT_Set_Pixel_Sizes failed\n");
-        return NULL;
-    }
-
-    error = FT_Load_Char(fontFace, character, FT_LOAD_RENDER);
-    if (error) {
-        fprintf(stderr, "FT_Load_Char falied\n");
-        return NULL;
-    }
-
-//    char_.width = glyph->bitmap->width;
-//    char_.height = glyph->bitmap->rows;
-//    char_.left = glyph->bitmap_left;
-//    char_.up = glyph->bitmap_top;
-//    char_.dx = glyph->advance.x / 64;
-//    char_.dy = glyph->advance.y / 64;
-
-    int glMode = GL_ALPHA;
-
-    char fontMode = glyph->bitmap.pixel_mode;
-    if (fontMode == FT_PIXEL_MODE_MONO)
-       glMode = GL_RED;
-    else if (fontMode == FT_PIXEL_MODE_GRAY)
-        glMode = GL_ALPHA;
-    else if (fontMode == FT_PIXEL_MODE_LCD)
-        glMode = GL_RGB;
-    else if (fontMode == FT_PIXEL_MODE_LCD_V)
-        glMode = GL_RGB;
-    else if (fontMode == FT_PIXEL_MODE_BGRA)
-        glMode = GL_RGBA;
-
-    createGLtextureFromBuffer(texture, glyph->bitmap.buffer, glyph->bitmap.width, glyph->bitmap.rows, glMode);
-
-    return glyph;
-}
-
 bool TextureHandler::loadFont(const std::string& filename) {
     if (fontLibrary == nullptr) {
         if (FT_Init_FreeType(&fontLibrary)) {
@@ -171,19 +131,24 @@ bool TextureHandler::loadFont(const std::string& filename) {
         }
     }
 
-    FT_Face tmp_face;
-    int error = FT_New_Face(fontLibrary, filename.c_str(), 0, &tmp_face);
-    if (error == FT_Err_Unknown_File_Format) {
-        fprintf(stderr, "%s: the font file could be opened and read, but it appears that its"
-                        "font format is unsupported\n", filename.c_str());
-        return false;
-    } else if (error) {
-        fprintf(stderr, "%s: the font file could not be opened and read\n", filename.c_str());
-        return false;
-    }
+    if (loadedFonts.find(filename) == loadedFonts.end()) {  // Load the image if we haven't already
+        FT_Face tmp_face;
+        int error = FT_New_Face(fontLibrary, filename.c_str(), 0, &tmp_face);
+        if (error == FT_Err_Unknown_File_Format) {
+            fprintf(stderr, "%s: the font file could be opened and read, but it appears that its"
+                            "font format is unsupported\n", filename.c_str());
+            return false;
+        } else if (error) {
+            fprintf(stderr, "%s: the font file could not be opened and read\n", filename.c_str());
+            return false;
+        }
 
-    FT_Done_Face(fontFace);
-    fontFace = tmp_face;
+        loadedFonts[filename] = tmp_face;
+        fontFace = tmp_face;
+        FT_Select_Charmap(fontFace , ft_encoding_unicode);
+    } else {
+        fontFace = loadedFonts[filename];
+    }
 
     return true;
 }

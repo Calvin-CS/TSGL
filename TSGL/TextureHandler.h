@@ -53,8 +53,6 @@ class TextureHandler {
     static void createGLtextureFromBuffer(GLtexture &texture, unsigned char* buffer, const unsigned int &width,
                                           const unsigned int &height, int glMode);
 
-    FT_GlyphSlot loadChar(const char character, unsigned int font_size, GLtexture &texture);
-    Character loadString(std::string string, unsigned int font_size);
     GLtexture loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
                                  GLtexture &texture) const;
     GLtexture loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
@@ -69,7 +67,7 @@ class TextureHandler {
     TextureHandler();
     ~TextureHandler();
 
-    bool drawText(std::string text, unsigned int font_size, float* vertices);
+    bool drawText(std::wstring text, unsigned int font_size, float* vertices);
     bool loadFont(const std::string& filename);
     GLtexture loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture);
     bool saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const;

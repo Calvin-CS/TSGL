@@ -478,12 +478,22 @@ void functionFunction(CartesianCanvas& can) {
 }
 
 void cosineIntegralFunction(CartesianCanvas& can) {
+    can.bindToButton(PG_Q, PG_PRESS, [&can](){  // Quit on press of Q
+        can.end();
+    });
+
     Timer t(FRAME/2);
     const unsigned int THREADS = 8;
     can.drawAxes(0, 0, PI/4, .5);
     long double pw = can.getPixelWidth();
     CosineFunction function1;
     can.drawFunction(function1);
+
+    can.setFont("data/freefont/FreeSerif.ttf");
+    can.drawText(L"-1.5π", -1.5 * PI - .1, .25, 20);  // Note the important capital L, used to support Unicode.
+    can.drawText(L"1.5\u03C0", 1.5 * PI - .2, .25, 20);
+    can.drawText(L"1", .1, 1.05, 20);
+    can.drawText(L"-1", .1, -1.1, 20);
 
     #pragma omp parallel num_threads(THREADS)
     {
@@ -497,8 +507,6 @@ void cosineIntegralFunction(CartesianCanvas& can) {
             can.drawLine(i, 0, i, function1.valueAt(i), Colors::highContrastColor(omp_get_thread_num()));
         }
     }
-    can.drawText("-1.5π", -1.5*PI, .25, 20);
-    can.drawText("1.5\u03C0", 1.5*PI, .25, 20);
 }
 
 void gradientWheelFunction(Canvas& can) {
@@ -1024,22 +1032,24 @@ void textFunction(Canvas& can) {
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-    can.drawText("AVAVAF. long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
-    can.drawText("Something extraordinary happened.", 16, 150, 32, RED);
-    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
-    can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
+    can.setFont("data/freefont/FreeSerif.ttf");
+    can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
+    can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
+    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
+    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
                  32, BLUE);
-    can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
-    can.drawText("And to that I say...oh well.", 16, 550, 32, WHITE);
+    can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
+    can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
 }
 void textCartFunction(Cart& can) {
-    can.drawText("A long time ago, in a galaxy far, far away.", .05, .8, 32, BLACK);
-    can.drawText("Something extraordinary happened.", .05, .6, 32, BLACK);
-    can.drawText("Something far more extraordinary than anything mankind has ever seen.", .05, .4, 32, BLACK);
-    can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", .05, .3,
+    can.setFont("data/freefont/FreeSerif.ttf");
+    can.drawText(L"A long time ago, in a galaxy far, far away.", .05, .8, 32, BLACK);
+    can.drawText(L"Something extraordinary happened.", .05, .6, 32, BLACK);
+    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", .05, .4, 32, BLACK);
+    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", .05, .3,
                  32, BLACK);
-    can.drawText("Of *what* exactly that extraordinary event was.", .05, .2, 32, BLACK);
-    can.drawText("And to that I say...oh well.", .05, .1, 32, BLACK);
+    can.drawText(L"Of *what* exactly that extraordinary event was.", .05, .2, 32, BLACK);
+    can.drawText(L"And to that I say...oh well.", .05, .1, 32, BLACK);
 }
 
 void pongFunction(Canvas& can) {
@@ -1293,7 +1303,7 @@ void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, const ColorFloat
         c.setShowFPS(false);
         print(c.getTime());
     }
-    c.end();
+    c.close();
 }
 void test(Cart& c, void (*f)(Cart&), bool printFPS = false, const ColorFloat &bg = GREY) {
     c.setBackgroundColor(bg);
@@ -1305,7 +1315,7 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, const ColorFloat &bg
         print(c.getTime());
     }
     print(c.getTime());
-    c.end();
+    c.close();
 }
 
 const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H;
@@ -1336,7 +1346,7 @@ void runHalfoftheFunctions() {
 //    Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
 //    test(c12,functionFunction,true,WHITE);
     Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
-    test(c13,cosineIntegralFunction,true,WHITE);
+    test(c13,cosineIntegralFunction,false,WHITE);
 //    Canvas c14(0, 0, 1000, 1000, 1024);
 //    test(c14,gradientWheelFunction,false,BLACK);
 }
@@ -1374,8 +1384,8 @@ void runOtherHalfoftheFunctions() {
 //    test(c29,shapeTestFunction,true);
 //    Canvas c30(0, 0, 960, 960, 30000);
 //    test(c30,screenshotLangtonFunction,true,BLACK);
-    Canvas c31(0, 0, 800, 600, 500000);
-    test(c31,greyScaleFunction,true);
+//    Canvas c31(0, 0, 800, 600, 500000);
+//    test(c31,greyScaleFunction,true);
 }
 
 int main() {

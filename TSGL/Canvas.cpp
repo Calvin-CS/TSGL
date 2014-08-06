@@ -79,10 +79,12 @@ void Canvas::clear() {
     toClear = true;
 }
 
-/*
- * draw actually draws our Canvas and its contents to the display
- * Note: this function is called automatically by the spawned thread, which is why it's private
- */
+int Canvas::close() {
+    if (!started) return -1;  // If we haven't even started yet, return error code -1
+    renderThread.join();      // Blocks until ready to join, which will be when the window is closed
+    return 0;
+}
+
 void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
@@ -90,6 +92,7 @@ void Canvas::draw() {
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
         timer->sleep();
+
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
         if (toClear) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -162,9 +165,10 @@ void Canvas::draw() {
         glfwPollEvents();                            // Handle any I/O
         glfwGetCursorPos(window, &mouseX, &mouseY);
         glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
+
+        if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
     }
 }
-
 
 void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, bool filled) {
     float delta = 2.0f / res * 3.1415926585f;
@@ -225,7 +229,6 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
     drawShape(l);                               // Push it onto our drawing buffer
 }
 
-
 void Canvas::drawPoint(int x, int y, ColorFloat color) {
     mutexLock mlock(pointArray);
     if (pointBufferPosition >= myShapes->capacity()) {
@@ -243,7 +246,6 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     vertexData[tempPos + 5] = color.A;
     mlock.unlock();
 }
-
 
 void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool filled) {
     if (filled) {
@@ -267,12 +269,10 @@ void Canvas::drawShape(Shape* s) {
     mlock.unlock();
 }
 
-
-void Canvas::drawText(std::string s, int x, int y, unsigned int size, ColorFloat color) {
+void Canvas::drawText(std::wstring s, int x, int y, unsigned int size, ColorFloat color) {
     Text* t = new Text(s, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
     drawShape(t);                                // Push it onto our drawing buffer
 }
-
 
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
     if (filled) {
@@ -289,11 +289,8 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
     }
 }
 
-
-int Canvas::end() {
-    if (!started) return -1;  // If we haven't even started yet, return error code -1
-    renderThread.join();      // Blocks until ready to join, which will be when the window is closed
-    return 0;
+void Canvas::end() {
+    toClose = true;
 }
 
 int Canvas::getFrameNumber() {
@@ -488,20 +485,12 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     buttonCallback(window, key, action, mods);
 }
 
-/*!
- * init initializes the Canvas with the values specified in the constructor
- *      \param xx the x position of the Canvas window
- *      \param yy the y position of the Canvas window
- *      \param width the x dimension of the Canvas window
- *      \param height the y dimension of the Canvas window
- *      \param b the buffer size for the Shapes
- *      \param title the title of the window to put on the top window bar
- */
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title) {
     title_ = title;
     winWidth = ww, winHeight = hh;
     aspect = (float) winWidth / winHeight;
     keyDown = false;
+    toClose = false;
     framecounter = 0;
     screenBuffer = new uint8_t[3 * winWidth * winHeight];
 
@@ -555,10 +544,13 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
     if (can->scrollFunction) can->scrollFunction(xpos, ypos);
 }
 
-
 void Canvas::setBackgroundColor(ColorFloat color) {
     delete clearRectangle;
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, color);
+}
+
+void Canvas::setFont(std::string filename) {
+    loader.loadFont(filename);
 }
 
 void Canvas::setShowFPS(bool b) {
@@ -632,11 +624,6 @@ void Canvas::takeScreenShot() {
     if (toRecord == 0) toRecord = 1;
 }
 
-/*!
- *  textureShaders toggles the texture shader on or off
- *
- *      \param on whether the texture shader is on or not
- */
 void Canvas::textureShaders(bool on) {
     GLint program;
     if (!on) {

@@ -157,7 +157,7 @@ public:
      *      \param color The color of the Text.
      * \note Identical to Canvas::drawText().
      */
-    void drawText(std::string s, Decimal x, Decimal y, unsigned int size, ColorFloat color = BLACK);
+    void drawText(std::wstring s, Decimal x, Decimal y, unsigned int size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a triangle.

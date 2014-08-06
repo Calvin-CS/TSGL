@@ -82,6 +82,7 @@ private:
                     textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
                     textureShaderVertex;                                // Address of the textured vertex shader
+    bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
     bool            toUpdateScreenCopy;                                 // Whether we copy the screen to our buffer next draw cycle
     Timer*          timer;                                              // Timer for steady FPS
@@ -172,6 +173,15 @@ public:
     void clear();
 
     /*!
+     * \brief Waits for the user to close the Canvas.
+     * \details This function blocks until the user closes the Canvas. This function has no effect
+     *  and will not request for close. Use end() before this to make that request.
+     * \return 0 if exit is successful, -1 if the canvas has not started yet.
+     * \see start(), end()
+     */
+    int close();
+
+    /*!
      * \brief Draw a circle.
      * \details This function draws a circle with the given origin coordinates, radius, resolution
      *  (number of sides), and color.
@@ -248,7 +258,7 @@ public:
      *      \param size The size of the text in pixels.
      *      \param color The color of the Text.
      */
-    virtual void drawText(std::string s, int x, int y, unsigned int size, ColorFloat color = BLACK);
+    virtual void drawText(std::wstring s, int x, int y, unsigned int size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a triangle.
@@ -266,12 +276,15 @@ public:
                               bool filled = true);
 
     /*!
-     * \brief Closes the Canvas.
-     * \details This function stops rendering the Canvas.
-     * \return 0 if exit is successful, -1 if the canvas has not started yet.
-     * \see start()
+     * \brief Stops the Canvas.
+     * \details This function stops rendering the Canvas. This does not close the Canvas; it will stay open.
+     *  To rejoin the threads and complete the close, close() must be called. end() is not required to close
+     *  the Canvas, closing the window by hitting escape or with the window manager does the same thing.
+     * \details Once end() has been called, either manually, by the window manager, or by pressing escape,
+     *  getIsOpen() will return false, and your computation should exit.
+     * \see start(), close()
      */
-    int end();
+    void end();
 
     /*!
      * \brief Accessor for the current frame number.
@@ -354,6 +367,16 @@ public:
      */
     void setBackgroundColor(ColorFloat color);
 
+
+    /*!
+     * \brief Mutator for the currently loaded font
+     * \details This function sets the loaded font, loading from the file or from disk if the file was
+     *  loaded previously. Subsequent calls to drawText() will use this font to print.
+     *      \param filename The filename of the font to load.
+     * \note Supports all font types that FreeType supports, which is almost anything.
+     */
+    void setFont(std::string filename);
+
     /*!
      * \brief Mutator for showing the FPS.
      *      \param b Whether to print the FPS to stdout every draw cycle (for debugging purposes).
@@ -378,7 +401,7 @@ public:
      * \brief Opens the Canvas.
      * \details This function starts rendering the Canvas.
      * \return 0 if start is successful, -1 if the canvas has already started.
-     * \see end()
+     * \see close(), end()
      */
     int start();
 

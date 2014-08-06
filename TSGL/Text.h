@@ -22,7 +22,7 @@ class Text : public Shape {
     ColorFloat myColor;
     unsigned int myFontSize;
     TextureHandler* myLoader;
-    std::string myString;
+    std::wstring myString;
     int myX, myY;
  public:
     /*!
@@ -36,7 +36,7 @@ class Text : public Shape {
      *      \param color A color.
      *      \return A new Text instance with the specified string, position, and color.
      */
-    Text(std::string s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color);
+    Text(std::wstring s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color);
 
     /*!
      * \brief Draw the Text.
