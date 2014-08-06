@@ -53,11 +53,11 @@ void CartesianCanvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat 
     Canvas::drawColoredPolygon(size, x, y, color, filled);
 }
 
-void CartesianCanvas::drawFunction(const Function* f) {
+void CartesianCanvas::drawFunction(const Function &f) {
     int screenX = 0, screenY = 0;
     Polyline *p = new Polyline(1 + (maxX - minX) / pixelWidth);
     for (Decimal x = minX; x <= maxX; x += pixelWidth) {
-        getScreenCoordinates(x, f->valueAt(x), screenX, screenY);
+        getScreenCoordinates(x, f.valueAt(x), screenX, screenY);
         p->addNextVertex(screenX, screenY);
     }
 

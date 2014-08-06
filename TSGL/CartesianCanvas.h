@@ -97,7 +97,7 @@ public:
      *      \param f The function to plot.
      * \note The passed function must receive exactly one Decimal parameter, and return a Decimal.
      */
-    void drawFunction(const Function* f);
+    void drawFunction(const Function &f);
 
     /*!
      * \brief Draw an image.

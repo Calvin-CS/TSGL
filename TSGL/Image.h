@@ -35,7 +35,7 @@ class Image : public Shape {
      * \brief Explicitly constructs a new Image.
      * \details This is the constructor for the Image class.
      *      \param f The filename of the image to load.
-     *      \param loaded A pointer to the TextureHandler with which to load the image.
+     *      \param loader A pointer to the TextureHandler with which to load the image.
      *      \param x The x coordinate of the left of the Image.
      *      \param y The y coordinate of the top of the Image.
      *      \param w The width of the Image.

@@ -80,6 +80,10 @@ const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f);
 const ColorFloat GREY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f);
 const ColorFloat WHITE = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
 
+/*!
+ * \brief Color utility class.
+ * \details Colors defines color utility methods to construct colors.
+ */
 class Colors {
  public:
     /*!
@@ -127,6 +131,8 @@ class Colors {
      * \return A ColorFloat linearly interpolated between c1 and c2 using the given bias as a weight.
      */
     static ColorFloat blendedColor(ColorFloat c1, ColorFloat c2, float bias);
+
+    static ColorFloat highContrastColor(unsigned int section, int seed = 0);
 
  private:
     Colors();

@@ -29,7 +29,7 @@ class Text : public Shape {
      * \brief Explicitly constructs a new Text instance.
      * \details This is the constructor for the Text class.
      *      \param s The string to draw.
-     *      \param loaded A pointer to the TextureHandler with which to load the font.
+     *      \param loader A pointer to the TextureHandler with which to load the font.
      *      \param x The x coordinate.
      *      \param y The y coordinate.
      *      \param size The size of the text in pixels.
