@@ -13,43 +13,43 @@
 
 /*!
  * \brief Floating point RGBA color struct.
- * \details Color defines a color with floating point red, green, blue, and alpha components
+ * \details ColorFloat defines a color with floating point red, green, blue, and alpha components
  *      \param R Red component, between 0 and 1 inclusive.
  *      \param G Green component, between 0 and 1 inclusive.
  *      \param B Blue component, between 0 and 1 inclusive.
  *      \param A Alpha component, between 0 and 1 inclusive.
  */
-struct Color {
+struct ColorFloat {
  public:
     float R, G, B, A;
 
-    Color();
+    ColorFloat();
 
-    Color(float r, float g, float b, float a = 1.0f);
+    ColorFloat(float r, float g, float b, float a = 1.0f);
 };
 
 /*!
  * \brief Integer RGBA color struct.
- * \details Colori defines a color with integer red, green, blue, and alpha components
+ * \details ColorInt defines a color with integer red, green, blue, and alpha components
  *      \param R Red component, between 0 and 255 inclusive.
  *      \param G Green component, between 0 and 255 inclusive.
  *      \param B Blue component, between 0 and 255 inclusive.
  *      \param A Alpha component, between 0 and 255 inclusive.
  */
-struct Colori {
+struct ColorInt {
  public:
     int R, G, B, A;
 
-    Colori();
+    ColorInt();
 
-    Colori(int r, int g, int b, int a = 255);
+    ColorInt(int r, int g, int b, int a = 255);
 
     /*!
-     * \brief Implicit conversion from Colori to Color
-     * \details This defines the implicit conversion operator from an integer color type (Colori) to a
-     *  floating point color type (Color)
+     * \brief Implicit conversion from ColorInt to ColorFloat
+     * \details This defines the implicit conversion operator from an integer color type (ColorInt) to a
+     *  floating point color type (ColorFloat)
      */
-    operator Color();
+    operator ColorFloat();
 };
 
 /*!
@@ -69,61 +69,70 @@ struct ColorHSV {
     ColorHSV(float h, float s, float v, float a = 1.0f);
 
     /*!
-     * \brief Implicit conversion from ColorHSV to Color
+     * \brief Implicit conversion from ColorHSV to ColorFloat
      * \details This defines the implicit conversion operator from an HSV color type (ColorHSV) to an RGB
-     *  color type (Color)
+     *  color type (ColorFloat)
      */
-    operator Color();
+    operator ColorFloat();
 };
 
-const Color BLACK = Color(0.0f, 0.0f, 0.0f, 1.0f);
-const Color GREY = Color(0.75f, 0.75f, 0.75f, 1.0f);
-const Color WHITE = Color(1.0f, 1.0f, 1.0f, 1.0f);
+const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f);
+const ColorFloat GREY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f);
+const ColorFloat WHITE = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
 
-/*!
- * \brief Returns an HSVA color with a hue dependent on the number of sections
- * \details This function returns a ColorHSV whose hue is calculated from the provided section number and
- *  the total number of sections.
- *  This function is used for creating a chromatic gradient from one part of the spectrum to another.
- *      \param section Integer specifying the current section.
- *      \param sections Integer specifying the total number of sections.
- *      \param value Value component, between 0 and 1 inclusive.
- *      \param alpha Alpha component, between 0 and 1 inclusive.
- * \return A ColorHSV with a hue calculated as 6.0f/sections*section, saturation of 1.0, and the given value
- *  and alpha components.
- */
-Color divideIntoChromaticSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0f);
+class Colors {
+ public:
+    /*!
+     * \brief Returns an HSVA color with a hue dependent on the number of sections
+     * \details This function returns a ColorFloat whose hue is calculated from the provided section number and
+     *  the total number of sections.
+     *  This function is used for creating a chromatic gradient from one part of the spectrum to another.
+     *      \param section Integer specifying the current section.
+     *      \param sections Integer specifying the total number of sections.
+     *      \param value Value component, between 0 and 1 inclusive.
+     *      \param alpha Alpha component, between 0 and 1 inclusive.
+     * \return A ColorFloat with a hue calculated as 6.0f/sections*section, saturation of 1.0, and the given value
+     *  and alpha components.
+     */
+    static ColorFloat divideIntoChromaticSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0f);
 
-/*!
- * \brief Returns an HSVA color with a hue dependent on the number of sections
- * \details This function returns a ColorHSV whose hue is calculated from the provided section number and
- *  the total number of sections.
- *  This function is used for creating a chromatic gradient from one part of the spectrum to another.
- *      \param section Integer specifying the current section.
- *      \param sections Integer specifying the total number of sections.
- * \return A ColorHSV with a hue calculated as 6.0f/sections*section, and a saturation, value, and alpha of 1.0.
- */
-Color divideIntoChromaticSections(unsigned int sections, unsigned int section);
+    /*!
+     * \brief Returns an HSVA color with a hue dependent on the number of sections
+     * \details This function returns a ColorFloat whose hue is calculated from the provided section number and
+     *  the total number of sections.
+     *  This function is used for creating a chromatic gradient from one part of the spectrum to another.
+     *      \param section Integer specifying the current section.
+     *      \param sections Integer specifying the total number of sections.
+     * \return A ColorFloat with a hue calculated as 6.0f/sections*section, and a saturation, value, and alpha of 1.0.
+     */
+    static ColorFloat divideIntoChromaticSections(unsigned int sections, unsigned int section);
 
-/*!
- * \brief Generates a random color.
- * \details This function user rand() to generate a random Color() with an optional specified alpha value.
- *      \param alpha Alpha of the random color to generate. An alpha of 0 will set the alpha to a random
- *       legal value.
- * \return A random Color.
- */
-Color randomColor(float alpha = 0.0f);
+    /*!
+     * \brief Generates a random color.
+     * \details This function user rand() to generate a random ColorFloat with an optional specified alpha value.
+     *      \param alpha Alpha of the random color to generate. An alpha of 0 will set the alpha to a random
+     *       legal value.
+     * \return A random ColorFloat.
+     */
+    static ColorFloat randomColor(float alpha = 0.0f);
 
-/*!
- * \brief Blends two colors with a given bias towards the latter.
- * \details This function blends two Color structs together by taking a linear interpolation between the two
- *  and returns the result as a new Color.
- *      \param c1 A Color.
- *      \param c2 Another Color.
- *      \param bias A bias between 0 and 1 inclusive.  A bias of 0 returns c1, a bias of 1 returns c2, and a
- *       bias in between returns a linear interpolation.
- * \return A Color linearly interpolated between c1 and c2 using the given bias as a weight.
- */
-Color blendedColor(Color c1, Color c2, float bias);
+    /*!
+     * \brief Blends two colors with a given bias towards the latter.
+     * \details This function blends two ColorFloat structs together by taking a linear interpolation between
+     *  the two and returns the result as a new ColorFloat.
+     *      \param c1 A ColorFloat.
+     *      \param c2 Another ColorFloat.
+     *      \param bias A bias between 0 and 1 inclusive.  A bias of 0 returns c1, a bias of 1 returns c2, and a
+     *       bias in between returns a linear interpolation.
+     * \return A ColorFloat linearly interpolated between c1 and c2 using the given bias as a weight.
+     */
+    static ColorFloat blendedColor(ColorFloat c1, ColorFloat c2, float bias);
+
+ private:
+    Colors();
+    ~Colors();
+    Colors(const Colors&);
+    Colors & operator=(const Colors&);
+};
 
 #endif /* COLOR_H_ */

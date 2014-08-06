@@ -19,7 +19,8 @@
  */
 class Text : public Shape {
  private:
-    Color myColor;
+    ColorFloat myColor;
+    unsigned int myFontSize;
     TextureHandler* myLoader;
     std::string myString;
     int myX, myY;
@@ -31,10 +32,11 @@ class Text : public Shape {
      *      \param loaded A pointer to the TextureHandler with which to load the font.
      *      \param x The x coordinate.
      *      \param y The y coordinate.
+     *      \param size The size of the text in pixels.
      *      \param color A color.
      *      \return A new Text instance with the specified string, position, and color.
      */
-    Text(std::string s, TextureHandler &loader, int x, int y, const Color &color);
+    Text(std::string s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color);
 
     /*!
      * \brief Draw the Text.

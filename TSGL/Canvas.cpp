@@ -166,7 +166,7 @@ void Canvas::draw() {
 }
 
 
-void Canvas::drawCircle(int x, int y, int radius, int res, Color color, bool filled) {
+void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, bool filled) {
     float delta = 2.0f / res * 3.1415926585f;
     float oldX = 0, oldY = 0, newX = 0, newY = 0;
     if (filled) {
@@ -196,7 +196,7 @@ void Canvas::drawCircle(int x, int y, int radius, int res, Color color, bool fil
     }
 }
 
-void Canvas::drawColoredPolygon(int size, int x[], int y[], Color color[], bool filled) {
+void Canvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
         ColoredPolygon* p = new ColoredPolygon(size);
         for (int i = 0; i < size; i++) {
@@ -220,13 +220,13 @@ void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //    glfwMakeContextCurrent(NULL);                         // We're drawing to window as soon as it's created
 }
 
-void Canvas::drawLine(int x1, int y1, int x2, int y2, Color color) {
+void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
     drawShape(l);                               // Push it onto our drawing buffer
 }
 
 
-void Canvas::drawPoint(int x, int y, Color color) {
+void Canvas::drawPoint(int x, int y, ColorFloat color) {
     mutexLock mlock(pointArray);
     if (pointBufferPosition >= myShapes->capacity()) {
         loopAround = true;
@@ -245,7 +245,7 @@ void Canvas::drawPoint(int x, int y, Color color) {
 }
 
 
-void Canvas::drawRectangle(int x, int y, int w, int h, Color color, bool filled) {
+void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool filled) {
     if (filled) {
         Rectangle* rec = new Rectangle(x, y, w, h, color);  // Creates the Rectangle with the specified coordinates and color
         drawShape(rec);                                     // Push it onto our drawing buffer
@@ -268,13 +268,13 @@ void Canvas::drawShape(Shape* s) {
 }
 
 
-void Canvas::drawText(std::string s, int x, int y, Color color) {
-    Text* t = new Text(s, loader, x, y, color);  // Creates the Point with the specified coordinates and color
+void Canvas::drawText(std::string s, int x, int y, unsigned int size, ColorFloat color) {
+    Text* t = new Text(s, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
     drawShape(t);                                // Push it onto our drawing buffer
 }
 
 
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color, bool filled) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
     if (filled) {
         Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
         drawShape(t);                                               // Push it onto our drawing buffer
@@ -556,7 +556,7 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
 }
 
 
-void Canvas::setBackgroundColor(Color color) {
+void Canvas::setBackgroundColor(ColorFloat color) {
     delete clearRectangle;
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, color);
 }

@@ -45,7 +45,7 @@ class Polyline : public Shape {
      *      \param color The color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
      */
-    void addNextVertex(int x, int y, const Color &color = BLACK);
+    void addNextVertex(int x, int y, const ColorFloat &color = BLACK);
 
     /*!
      * \brief Draw the Polyline.

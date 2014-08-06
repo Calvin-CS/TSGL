@@ -46,7 +46,7 @@ class ColoredPolygon : public Shape {
      *      \param color The color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
      */
-    void addVertex(int x, int y, const Color &color);
+    void addVertex(int x, int y, const ColorFloat &color);
 
     /*!
      * \brief Draw the ColoredPolygon.

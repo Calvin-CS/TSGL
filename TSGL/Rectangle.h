@@ -28,7 +28,7 @@ class Rectangle : public Shape {
      *      \param color The color of the Rectangle.
      * \return a new Rectangle with the specified top left corner, dimensions, and color.
      */
-    Rectangle(int x, int y, int w, int h, const Color &color);
+    Rectangle(int x, int y, int w, int h, const ColorFloat &color);
 
     /*!
      * \brief Draw the Rectangle.

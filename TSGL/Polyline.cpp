@@ -20,7 +20,7 @@ Polyline::~Polyline() {
     delete vertices;
 }
 
-void Polyline::addNextVertex(int x, int y, const Color &color) {
+void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
     if (init) return;
     vertices[current] = x;
     vertices[current + 1] = y;

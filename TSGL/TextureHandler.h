@@ -12,15 +12,20 @@
 #include <GL/glut.h>
 #endif
 
-#include <string>
-#include <stdexcept>
-#include <unordered_map>
 #include <ft2build.h>
+
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
+#include <freetype.h>
+#include <ftglyph.h>
+
+#include <GL/glew.h>     // Needed for GL function calls
+#include <GLFW/glfw3.h>  // For GL functions
 #include <jpeglib.h>
 #include <png.h>
-#include <GLFW/glfw3.h>  // For GL functions
+#include <stdexcept>
+#include <string>
+#include <unordered_map>
 
 typedef GLuint GLtexture;
 
@@ -48,6 +53,8 @@ class TextureHandler {
     static void createGLtextureFromBuffer(GLtexture &texture, unsigned char* buffer, const unsigned int &width,
                                           const unsigned int &height, int glMode);
 
+    FT_GlyphSlot loadChar(const char character, unsigned int font_size, GLtexture &texture);
+    Character loadString(std::string string, unsigned int font_size);
     GLtexture loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
                                  GLtexture &texture) const;
     GLtexture loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
@@ -62,9 +69,8 @@ class TextureHandler {
     TextureHandler();
     ~TextureHandler();
 
+    bool drawText(std::string text, unsigned int font_size, float* vertices);
     bool loadFont(const std::string& filename);
-    Character loadChar(const char character, unsigned int font_size);
-
     GLtexture loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture);
     bool saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const;
 };

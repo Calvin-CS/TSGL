@@ -7,7 +7,7 @@
 
 #include "Rectangle.h"
 
-Rectangle::Rectangle(int x, int y, int w, int h, const Color &color) {
+Rectangle::Rectangle(int x, int y, int w, int h, const ColorFloat &color) {
     vertices[0] = x;
     vertices[1] = y;
     vertices[6] = x + w;

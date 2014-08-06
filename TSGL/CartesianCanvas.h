@@ -77,7 +77,7 @@ public:
      *      \param filled Whether the circle should be filled.
      * \note Identical to Canvas::drawCircle()
      */
-    void drawCircle(Decimal x, Decimal y, Decimal radius, int res, Color color = BLACK, bool filled = true);
+    void drawCircle(Decimal x, Decimal y, Decimal radius, int res, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw an arbitrary polygon with colored vertices.
@@ -89,7 +89,7 @@ public:
      *      \param filled whether the colored polygon should be filled (true) or not (false)
      * \note Identical to Canvas::drawColoredPolygon()
      */
-    void drawColoredPolygon(int size, int x[], int y[], Color color[], bool filled = true);
+    void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Plots a function on the screen
@@ -122,7 +122,7 @@ public:
      *      \param color The color of the line.
      *  \note Identical to Canvas::drawLine()
      */
-    void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Color color = BLACK);
+    void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a single pixel.
@@ -132,7 +132,7 @@ public:
      *      \param color The color of the point.
      * \note Identical to Canvas::drawPoint()
      */
-    void drawPoint(Decimal x, Decimal y, Color color = BLACK);
+    void drawPoint(Decimal x, Decimal y, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a rectangle.
@@ -145,7 +145,7 @@ public:
      *      \param filled Whether the rectangle should be filled.
      * \note Identical to Canvas::drawRectangle()
      */
-    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, Color color = BLACK, bool filled = true);
+    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw a string of text.
@@ -153,10 +153,11 @@ public:
      *      \param s The string to draw.
      *      \param x The x coordinate of the text's left bound.
      *      \param y The y coordinate of the text's left bound.
+     *      \param size The size of the text in pixels.
      *      \param color The color of the Text.
      * \note Identical to Canvas::drawText().
      */
-    void drawText(std::string s, Decimal x, Decimal y, Color color = BLACK);
+    void drawText(std::string s, Decimal x, Decimal y, unsigned int size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a triangle.
@@ -171,7 +172,7 @@ public:
      *      \param filled Whether the Triangle should be filled.
      * \note Identical to Canvas::drawTriangle()
      */
-    void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, Color color = BLACK,
+    void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color = BLACK,
                       bool filled = true);
 
     /*!

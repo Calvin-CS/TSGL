@@ -37,7 +37,7 @@ void CartesianCanvas::drawAxes(Decimal x, Decimal y, Decimal dx = 0, Decimal dy 
     }
 }
 
-void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int res, Color color, bool filled) {
+void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int res, ColorFloat color, bool filled) {
     int actualX, actualY, actualR;
     getScreenCoordinates(x, y, actualX, actualY);
     getScreenCoordinates(x+radius,y,actualR,actualY);
@@ -46,7 +46,7 @@ void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int res, 
     Canvas::drawCircle(actualX, actualY, actualR, res, color, filled);
 }
 
-void CartesianCanvas::drawColoredPolygon(int size, int x[], int y[], Color color[], bool filled) {
+void CartesianCanvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     for (int i = 0; i < size; i++) {
         getScreenCoordinates(x[i], y[i], x[i], y[i]);
     }
@@ -72,7 +72,7 @@ void CartesianCanvas::drawImage(std::string fname, Decimal x, Decimal y, Decimal
     Canvas::drawImage(fname, actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, a);
 }
 
-void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Color color) {
+void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color) {
     int actualX1, actualY1, actualX2, actualY2;
     getScreenCoordinates(x1, y1, actualX1, actualY1);
     getScreenCoordinates(x2, y2, actualX2, actualY2);
@@ -80,14 +80,14 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, C
     Canvas::drawLine(actualX1, actualY1, actualX2, actualY2, color);
 }
 
-void CartesianCanvas::drawPoint(Decimal x, Decimal y, Color color) {
+void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
     Canvas::drawPoint(actualX, actualY, color);
 }
 
-void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, Color color, bool filled) {
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color, bool filled) {
     int actualX1, actualY1, actualX2, actualY2;
     getScreenCoordinates(x, y, actualX1, actualY1);
     getScreenCoordinates(x + w, y + h, actualX2, actualY2);
@@ -95,14 +95,14 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, 
     Canvas::drawRectangle(actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, color, filled);
 }
 
-void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, Color color) {
+void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, unsigned int size, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
-    Canvas::drawText(s, actualX, actualY, color);
+    Canvas::drawText(s, actualX, actualY, size, color);
 }
 
-void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, Color color, bool filled) {
+void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color, bool filled) {
     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
     getScreenCoordinates(x1, y1, actualX1, actualY1);
     getScreenCoordinates(x2, y2, actualX2, actualY2);

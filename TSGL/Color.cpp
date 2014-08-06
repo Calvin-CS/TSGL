@@ -7,11 +7,11 @@
 
 #include "Color.h"
 
-Color::Color() {
+ColorFloat::ColorFloat() {
     R = G = B = A = 1.0f;
 }
 
-Color::Color(float r, float g, float b, float a) {
+ColorFloat::ColorFloat(float r, float g, float b, float a) {
     if (r > 1 || r < 0 || g > 1 || g < 0 || b > 1 || b < 0 || a > 1 || a < 0) {
         throw std::out_of_range("Values must be between 0 and 1 inclusive");
     }
@@ -22,11 +22,11 @@ Color::Color(float r, float g, float b, float a) {
     A = a;
 }
 
-Colori::Colori() {
+ColorInt::ColorInt() {
     R = G = B = A = 255;
 }
 
-Colori::Colori(int r, int g, int b, int a) {
+ColorInt::ColorInt(int r, int g, int b, int a) {
     if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || a > 255 || a < 0) {
         throw std::out_of_range("Values must be between 0 and 255 inclusive");
     }
@@ -37,8 +37,8 @@ Colori::Colori(int r, int g, int b, int a) {
     A = a;
 }
 
-Colori::operator Color() {
-    return Color(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
+ColorInt::operator ColorFloat() {
+    return ColorFloat(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
 }
 
 ColorHSV::ColorHSV() {
@@ -58,9 +58,9 @@ ColorHSV::ColorHSV(float h, float s, float v, float a) {
     A = a;
 }
 
-ColorHSV::operator Color() {
+ColorHSV::operator ColorFloat() {
     float m, n, f;
-    Color color;
+    ColorFloat color;
     color.A = A;
 
     int i = floor(H);
@@ -105,24 +105,24 @@ ColorHSV::operator Color() {
     }
 }
 
-Color divideIntoChromaticSections(unsigned int sections, unsigned int section, float value, float alpha) {
+ColorFloat Colors::divideIntoChromaticSections(unsigned int sections, unsigned int section, float value, float alpha) {
     if (value > 1 || value < 0 || alpha > 1 || alpha < 0) throw std::out_of_range(
         "Values must be between 0 and 1 inclusive");
     return ColorHSV(6.0f / sections * section, 1.0f, value, alpha);
 }
-Color divideIntoChromaticSections(unsigned int sections, unsigned int section) {
+ColorFloat Colors::divideIntoChromaticSections(unsigned int sections, unsigned int section) {
     return divideIntoChromaticSections(sections, section, 1.0f, 1.0f);
 }
 
-Color randomColor(float alpha) {
+ColorFloat Colors::randomColor(float alpha) {
     if (alpha > 1 || alpha < 0) {
         throw std::out_of_range("Alpha must be between 0 and 1 inclusive");
     }
     if (alpha == 0.0f) alpha = rand() % 255 / 255.0f;
-    return Color(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
+    return ColorFloat(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
 }
 
-Color blendedColor(Color c1, Color c2, float bias) {
+ColorFloat Colors::blendedColor(ColorFloat c1, ColorFloat c2, float bias) {
     if (bias > 1 || bias < 0) {
         throw std::out_of_range("Bias must be between 0 and 1 inclusive");
     } else if (bias == 1) {
@@ -130,7 +130,7 @@ Color blendedColor(Color c1, Color c2, float bias) {
     } else if (bias == 0) {
         return c1;
     } else {
-        return Color(c2.R * bias + c1.R * (1 - bias), c2.G * bias + c1.G * (1 - bias),
+        return ColorFloat(c2.R * bias + c1.R * (1 - bias), c2.G * bias + c1.G * (1 - bias),
                      c2.B * bias + c1.B * (1 - bias), c2.A * bias + c1.A * (1 - bias));
     }
 }

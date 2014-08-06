@@ -12,7 +12,8 @@ TextureHandler::~TextureHandler() {
         glDeleteTextures(1, &(it->second));
     }
 
-    delete fontFace;
+    FT_Done_Face(fontFace);
+    FT_Done_FreeType(fontLibrary);
 }
 
 struct my_error_mgr {
@@ -51,47 +52,115 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
-Character TextureHandler::loadChar(const char character, unsigned int font_size) {
-    FT_Bitmap* bitmap = &(fontFace->glyph->bitmap);
-    Character char_;
+bool TextureHandler::drawText(std::string text, unsigned int font_size, float* vertices) {
+    const char* string = text.c_str();
+    FT_GlyphSlot glyph = fontFace->glyph;
+    FT_UInt current_glyph_index, previous_glyph_index = 0;
+    int penX = vertices[0],
+        penY = vertices[1];
 
     bool error = FT_Set_Pixel_Sizes(fontFace, 0, font_size);
     if (error) {
         fprintf(stderr, "FT_Set_Pixel_Sizes failed\n");
-        return char_;
+        return false;
+    }
+
+    bool use_kerning = FT_HAS_KERNING(fontFace);
+    printf("%i\n", use_kerning);
+
+    for (unsigned int i = 0; i < text.size(); i++) {
+        current_glyph_index = FT_Get_Char_Index(fontFace, string[i]);
+
+        if (use_kerning && previous_glyph_index && current_glyph_index) {
+            FT_Vector delta;
+            FT_Get_Kerning(fontFace, previous_glyph_index, current_glyph_index, FT_KERNING_DEFAULT, &delta);
+            penX += delta.x >> 6;
+            penY += delta.y >> 6;
+
+            previous_glyph_index = current_glyph_index;
+        }
+
+        error = FT_Load_Glyph(fontFace, current_glyph_index, FT_LOAD_RENDER);
+        if (error) {
+            fprintf(stderr, "FT_Load_Char falied\n");
+            return false;
+        }
+
+        int glMode = GL_ALPHA;
+
+        char fontMode = glyph->bitmap.pixel_mode;
+        if (fontMode == FT_PIXEL_MODE_MONO)
+           glMode = GL_RED;
+        else if (fontMode == FT_PIXEL_MODE_GRAY)
+            glMode = GL_ALPHA;
+        else if (fontMode == FT_PIXEL_MODE_LCD)
+            glMode = GL_RGB;
+        else if (fontMode == FT_PIXEL_MODE_LCD_V)
+            glMode = GL_RGB;
+        else if (fontMode == FT_PIXEL_MODE_BGRA)
+            glMode = GL_RGBA;
+
+        GLtexture texture;
+        createGLtextureFromBuffer(texture, glyph->bitmap.buffer, glyph->bitmap.width, glyph->bitmap.rows, glMode);
+        glBindTexture(GL_TEXTURE_2D, texture);                            // Set the current texture
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        vertices[0]  = vertices[16] = penX + glyph->bitmap_left;
+        vertices[8]  = vertices[24] = penX + glyph->bitmap_left + glyph->bitmap.width;
+        vertices[1]  = vertices[9]  = penY - glyph->bitmap_top;
+        vertices[25] = vertices[17] = penY - glyph->bitmap_top + glyph->bitmap.rows;
+
+        penX += glyph->advance.x >> 6;
+        penY += glyph->advance.y >> 6;
+
+        glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);  // Fill the buffer
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);                                         // Draw the character
+    }
+    return true;
+}
+
+FT_GlyphSlot TextureHandler::loadChar(const char character, unsigned int font_size, GLtexture &texture) {
+    FT_GlyphSlot glyph = fontFace->glyph;
+
+    bool error = FT_Set_Pixel_Sizes(fontFace, 0, font_size);
+    if (error) {
+        fprintf(stderr, "FT_Set_Pixel_Sizes failed\n");
+        return NULL;
     }
 
     error = FT_Load_Char(fontFace, character, FT_LOAD_RENDER);
     if (error) {
         fprintf(stderr, "FT_Load_Char falied\n");
-        return char_;
+        return NULL;
     }
 
-    char_.width = bitmap->width;
-    char_.height = bitmap->rows;
-    char_.left = fontFace->glyph->bitmap_left;
-    char_.up = fontFace->glyph->bitmap_top;
-    char_.dx = fontFace->glyph->advance.x / 64;
-    char_.dy = fontFace->glyph->advance.y / 64;
+//    char_.width = glyph->bitmap->width;
+//    char_.height = glyph->bitmap->rows;
+//    char_.left = glyph->bitmap_left;
+//    char_.up = glyph->bitmap_top;
+//    char_.dx = glyph->advance.x / 64;
+//    char_.dy = glyph->advance.y / 64;
 
     int glMode = GL_ALPHA;
 
-    if (bitmap->pixel_mode == FT_PIXEL_MODE_MONO)
+    char fontMode = glyph->bitmap.pixel_mode;
+    if (fontMode == FT_PIXEL_MODE_MONO)
        glMode = GL_RED;
-    else if (bitmap->pixel_mode == FT_PIXEL_MODE_GRAY)
+    else if (fontMode == FT_PIXEL_MODE_GRAY)
         glMode = GL_ALPHA;
-    else if (bitmap->pixel_mode == FT_PIXEL_MODE_LCD)
+    else if (fontMode == FT_PIXEL_MODE_LCD)
         glMode = GL_RGB;
-    else if (bitmap->pixel_mode == FT_PIXEL_MODE_LCD_V)
+    else if (fontMode == FT_PIXEL_MODE_LCD_V)
         glMode = GL_RGB;
-    else if (bitmap->pixel_mode == FT_PIXEL_MODE_BGRA)
+    else if (fontMode == FT_PIXEL_MODE_BGRA)
         glMode = GL_RGBA;
 
-    GLtexture texture = 0;
-    createGLtextureFromBuffer(texture, bitmap->buffer, char_.width, char_.height, glMode);
-    char_.texture = texture;
+    createGLtextureFromBuffer(texture, glyph->bitmap.buffer, glyph->bitmap.width, glyph->bitmap.rows, glMode);
 
-    return char_;
+    return glyph;
 }
 
 bool TextureHandler::loadFont(const std::string& filename) {
@@ -113,7 +182,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
         return false;
     }
 
-    delete fontFace;
+    FT_Done_Face(fontFace);
     fontFace = tmp_face;
 
     return true;

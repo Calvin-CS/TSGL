@@ -17,23 +17,22 @@
 
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
-#include "Keynums.h"        // Our enums for key presses
-#include "Timer.h"          // Our own timer for steady FPS
-
 #include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads
+#include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "Rectangle.h"      // Our own class for drawing rectangles
 #include "Text.h"           // Our own class for drawing text
+#include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
 
 #include <cmath>
 #include <functional>       // For callback upon key presses
 #include <iostream>         // DEBUGGING
 #include <mutex>            // Needed for locking the Canvas for thread-safety
-#include <string>           // For window titles
 #include <sstream>          // For string building
+#include <string>           // For window titles
 #include <thread>           // For spawning rendering in a different thread
 
 #include <GLFW/glfw3.h>     // For window creation and management
@@ -72,13 +71,13 @@ private:
     std::thread     renderThread;                                       // Thread dedicated to rendering the Canvas
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
-    GLtexture          shaderFragment,                                     // Address of the fragment shader
+    GLtexture       shaderFragment,                                     // Address of the fragment shader
                     shaderProgram,                                      // Addres of the shader program to send to the GPU
                     shaderVertex;                                       // Address of the vertex shader
     std::mutex      shapes;                                             // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
-    GLtexture          tex,                                                // Texture
+    GLtexture       tex,                                                // Texture
                     tex2,                                               // Texture 2
                     textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
@@ -91,7 +90,7 @@ private:
     GLint           uniModel,                                           // Model perspective of the camera
                     uniView,                                            // View perspective of the camera
                     uniProj;                                            // Projection of the camera
-    GLtexture          vertexArray,                                        // Address of GL's array buffer object
+    GLtexture       vertexArray,                                        // Address of GL's array buffer object
                     vertexBuffer;                                       // Address of GL's vertex buffer object
     float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
@@ -183,7 +182,7 @@ public:
      *      \param color The color of the circle.
      *      \param filled Whether the circle should be filled.
      */
-    virtual void drawCircle(int x, int y, int radius, int res, Color color = BLACK, bool filled = true);
+    virtual void drawCircle(int x, int y, int radius, int res, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw an arbitrary polygon with colored vertices.
@@ -194,7 +193,7 @@ public:
      *      \param color an array of colors for the vertices
      *      \param filled whether the colored polygon should be filled (true) or not (false)
      */
-    virtual void drawColoredPolygon(int size, int x[], int y[], Color color[], bool filled = true);
+    virtual void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draw an image.
@@ -217,7 +216,7 @@ public:
      *      \param y2 The y position of the end of the line.
      *      \param color The color of the line.
      */
-    virtual void drawLine(int x1, int y1, int x2, int y2, Color color = BLACK);
+    virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a single pixel.
@@ -226,7 +225,7 @@ public:
      *      \param y The y position of the point.
      *      \param color The color of the point.
      */
-    virtual void drawPoint(int x, int y, Color color = BLACK);
+    virtual void drawPoint(int x, int y, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a rectangle.
@@ -238,7 +237,7 @@ public:
      *      \param color The color of the rectangle.
      *      \param filled Whether the rectangle should be filled.
      */
-    virtual void drawRectangle(int x, int y, int w, int h, Color color = BLACK, bool filled = true);
+    virtual void drawRectangle(int x, int y, int w, int h, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw a string of text.
@@ -246,9 +245,10 @@ public:
      *      \param s The string to draw.
      *      \param x The x coordinate of the text's left bound.
      *      \param y The y coordinate of the text's left bound.
+     *      \param size The size of the text in pixels.
      *      \param color The color of the Text.
      */
-    virtual void drawText(std::string s, int x, int y, Color color = BLACK);
+    virtual void drawText(std::string s, int x, int y, unsigned int size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a triangle.
@@ -262,7 +262,7 @@ public:
      *      \param color the color of the Triangle.
      *      \param filled Whether the Triangle should be filled.
      */
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color = BLACK,
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color = BLACK,
                               bool filled = true);
 
     /*!
@@ -352,7 +352,7 @@ public:
      *      \param color The color to clear to.
      * \note The alpha channel of the color is ignored
      */
-    void setBackgroundColor(Color color);
+    void setBackgroundColor(ColorFloat color);
 
     /*!
      * \brief Mutator for showing the FPS.
