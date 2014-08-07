@@ -17,6 +17,15 @@ TSGLtest/frames/
 libraries/
 
 # Ignore generated doxygen (for now)
+Doxyfile
+html/
+latex/
 TSGL/html/
 TSGL/latex/
 
+# Ignore valgrind info
+valgrind*
+
+# Ignore settings
+TSGL/.settings
+TSGLtest/.settings
