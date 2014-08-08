@@ -14,10 +14,10 @@
 typedef long double Decimal;  // Define the variable type to use
 
 /*! \class Function
- *  \brief A base class for creating mathematical functions plottable by a Canvas or CartesianCanvas.
+ *  \brief A base class for creating mathematical functions plottable by a CartesianCanvas.
  *  \details Function provides a base class for the creation of mathematical functions.
- *  By extending this class and overriding the valueAt() method, users can easily plot the values of their function
- *  on a Canvas or a CartesianCanvas.
+ *   By extending this class and overriding the valueAt() method, users can easily plot the values
+ *   of their function on a CartesianCanvas.
  *  \A number of prebuilt Function subclasses are included in the header file for reference.
  */
 class Function {

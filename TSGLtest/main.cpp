@@ -1294,6 +1294,31 @@ void greyScaleFunction(Canvas& can) {
     }
 }
 
+void mouseFunction(Canvas& can) {
+    bool mouseDown = false;
+    int lastX, lastY;
+    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
+        can.clear();
+    });
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &lastX, &lastY]() {
+        lastX = can.getMouseX();
+        lastY = can.getMouseY();
+        mouseDown = true;
+    });
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown]() {
+        mouseDown = false;
+    });
+    Timer t(FRAME);
+    while (can.getIsOpen()) {
+        if (mouseDown) {
+            can.drawLine(lastX, lastY, can.getMouseX(), can.getMouseY());
+            lastX = can.getMouseX();
+            lastY = can.getMouseY();
+        }
+        t.sleep();
+    }
+}
+
 void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, const ColorFloat &bg = GREY) {
     c.setBackgroundColor(bg);
     c.start();
@@ -1345,8 +1370,8 @@ void runHalfoftheFunctions() {
 //    test(c11,colorWheelFunction);
 //    Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
 //    test(c12,functionFunction,true,WHITE);
-    Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
-    test(c13,cosineIntegralFunction,false,WHITE);
+//    Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
+//    test(c13,cosineIntegralFunction,false,WHITE);
 //    Canvas c14(0, 0, 1000, 1000, 1024);
 //    test(c14,gradientWheelFunction,false,BLACK);
 }
@@ -1386,6 +1411,8 @@ void runOtherHalfoftheFunctions() {
 //    test(c30,screenshotLangtonFunction,true,BLACK);
 //    Canvas c31(0, 0, 800, 600, 500000);
 //    test(c31,greyScaleFunction,true);
+    Canvas c32(0, 0, 800, 600, 5000);
+    test(c32,mouseFunction,false);
 }
 
 int main() {
