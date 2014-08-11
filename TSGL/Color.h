@@ -10,6 +10,7 @@
 
 #include <cmath>        // Needed for conversions
 #include <stdexcept>    // Needed for exceptions
+#include <cstdlib>      // Needed for rand()
 
 /*!
  * \brief Floating point RGBA color struct.

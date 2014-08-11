@@ -176,7 +176,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
         t.reset();
         #pragma omp parallel num_threads(THREADS)
         {
-            int nthreads = omp_get_num_threads();
+            unsigned int nthreads = omp_get_num_threads();
             double blockstart = can.getCartHeight() / nthreads;
             unsigned int iterations;
             for (unsigned int k = 0; k <= (can.getWindowHeight() / nthreads) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
@@ -185,7 +185,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
                     complex originalComplex(col, row);
                     complex c(col, row);
                     iterations = 0;
-                    while (std::abs(c) < 2.0 && iterations != DEPTH) {  // Computer until it escapes or we give up
+                    while (std::abs(c) < 2.0 && iterations != DEPTH) {  // Compute it until it escapes or we give up
                         iterations++;
                         c = c * c + originalComplex;
                     }
@@ -1296,24 +1296,31 @@ void greyScaleFunction(Canvas& can) {
 
 void mouseFunction(Canvas& can) {
     bool mouseDown = false;
+    int x[1000];
+    int y[1000];
+    ColorFloat color[1000] = {BLACK};
+    unsigned int index = 0;
     int lastX, lastY;
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
         can.clear();
     });
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &lastX, &lastY]() {
-        lastX = can.getMouseX();
-        lastY = can.getMouseY();
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &lastX, &lastY, &index, &x, &y]() {
+        x[0] = lastX = can.getMouseX();
+        y[0] = lastY = can.getMouseY();
+        index++;
         mouseDown = true;
     });
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown]() {
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown, &can, &index, &x, &y, &color]() {
+        can.drawColoredPolygon(index, x, y, color, true);
         mouseDown = false;
     });
     Timer t(FRAME);
     while (can.getIsOpen()) {
         if (mouseDown) {
             can.drawLine(lastX, lastY, can.getMouseX(), can.getMouseY());
-            lastX = can.getMouseX();
-            lastY = can.getMouseY();
+            x[index] = lastX = can.getMouseX();
+            y[index] = lastY = can.getMouseY();
+            index++;
         }
         t.sleep();
     }
