@@ -366,6 +366,9 @@ void Canvas::glInit() {
 
     mutexLock glfwLock(glfwMutex);                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
+    if (!window) {
+        fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
+    }
     glfwLock.unlock();
 
     const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
