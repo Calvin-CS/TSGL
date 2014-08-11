@@ -90,7 +90,7 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
 void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color, bool filled) {
     int actualX1, actualY1, actualX2, actualY2;
     getScreenCoordinates(x, y, actualX1, actualY1);
-    getScreenCoordinates(x + w, y + h, actualX2, actualY2);
+    getScreenCoordinates(x + w, y - h, actualX2, actualY2);
 
     Canvas::drawRectangle(actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, color, filled);
 }
