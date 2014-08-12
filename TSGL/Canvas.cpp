@@ -293,6 +293,10 @@ void Canvas::end() {
     toClose = true;
 }
 
+void Canvas::errorCallback(int error, const char* string) {
+    fprintf(stderr, "%i: %s\n", error, string);
+}
+
 int Canvas::getFrameNumber() {
     return framecounter;
 }
@@ -359,7 +363,7 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);           // Don't use methods that are deprecated in the target version
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
@@ -372,6 +376,9 @@ void Canvas::glInit() {
     glfwLock.unlock();
 
     const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    if (!monInfo) {
+        fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
+    }
     glfwSetWindowPos(window, (monInfo->width - winWidth) / 2, (monInfo->height - winHeight) / 2);
 
     glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
@@ -473,6 +480,7 @@ void Canvas::glInit() {
 
     textureShaders(false);
 
+    glfwSetErrorCallback(errorCallback);
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);

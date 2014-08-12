@@ -103,6 +103,7 @@ private:
                                int action, int mods);                   // GLFW callback for mouse buttons
 
     void        draw();                                                 // Draw loop for the Canvas
+    static void errorCallback(int error, const char* string);
 
     void        init(int xx,int yy,int ww,int hh,
                      unsigned int b,std::string title);                 // Method for initializing the canvas
@@ -320,6 +321,7 @@ public:
      * \brief Accessor for the Canvas's currently drawn image.
      * \return A pointer to the RGB pixel buffer for the current Canvas.
      */
+    // TODO: Make this return NULL if record isn't on
     uint8_t* getScreenBuffer();
 
     /*!
