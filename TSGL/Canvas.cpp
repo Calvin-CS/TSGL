@@ -359,6 +359,8 @@ void Canvas::glDestroy() {
 }
 
 void Canvas::glInit() {
+    glfwSetErrorCallback(errorCallback);
+
     // Create a Window and the Context
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
@@ -392,7 +394,9 @@ void Canvas::glInit() {
     glEnable(GL_BLEND);                                 // Enable blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
 
-//    std::cout << glGetString(GL_VERSION) << std::endl;
+    printf("%s\n", glGetString(GL_VERSION));
+    printf("%s\n", glfwGetVersionString());
+
     // Needed?
 //    glEnable(GL_TEXTURE_2D);
 //    glShadeModel(GL_FLAT);
@@ -480,7 +484,6 @@ void Canvas::glInit() {
 
     textureShaders(false);
 
-    glfwSetErrorCallback(errorCallback);
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);

@@ -35,6 +35,7 @@
 #include <string>           // For window titles
 #include <thread>           // For spawning rendering in a different thread
 
+#include <GL/glew.h>        // Needed for GL function calls
 #include <GLFW/glfw3.h>     // For window creation and management
 
 #define FPS 60              // Frames per second

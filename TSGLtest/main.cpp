@@ -1296,18 +1296,19 @@ void greyScaleFunction(Canvas& can) {
 
 void mouseFunction(Canvas& can) {
     bool mouseDown = false;
-    int x[1000];
-    int y[1000];
-    ColorFloat color[1000] = {BLACK};
+    int x[10000];
+    int y[10000];
+    ColorFloat color[1000];
     unsigned int index = 0;
     int lastX, lastY;
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
         can.clear();
     });
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &lastX, &lastY, &index, &x, &y]() {
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &lastX, &lastY, &index, &x, &y, &color]() {
         x[0] = lastX = can.getMouseX();
         y[0] = lastY = can.getMouseY();
-        index++;
+        color[0] = Colors::randomColor(1.0f);
+        index = 1;
         mouseDown = true;
     });
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown, &can, &index, &x, &y, &color]() {
@@ -1320,6 +1321,7 @@ void mouseFunction(Canvas& can) {
             can.drawLine(lastX, lastY, can.getMouseX(), can.getMouseY());
             x[index] = lastX = can.getMouseX();
             y[index] = lastY = can.getMouseY();
+            color[index] = Colors::randomColor(1.0f);
             index++;
         }
         t.sleep();
