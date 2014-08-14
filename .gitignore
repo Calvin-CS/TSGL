@@ -1,31 +1,23 @@
 # Ignore eclipse .project files
-TSGL/.cproject
-TSGL/.project
-TSGLtest/.cproject
-TSGLtest/.project
+.cproject
+.project
 
 # Ignore builds
-TSGL/Debug/
-TSGL/Release/
-TSGLtest/Debug/
-TSGLtest/Release/
+bin/
+build/
+lib/
 
 # Ignore recorded pictures
-TSGLtest/frames/
+frames/
 
 # Ignore system specific libraries
 libraries/
 
 # Ignore generated doxygen (for now)
-Doxyfile
 html/
-latex/
-TSGL/html/
-TSGL/latex/
 
 # Ignore valgrind info
 valgrind*
 
 # Ignore settings
-TSGL/.settings
-TSGLtest/.settings
+.settings/

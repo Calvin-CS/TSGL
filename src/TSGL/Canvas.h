@@ -1,5 +1,5 @@
 /*
- * Canvas.h provides a window / canvas for all of the drawing operations in the graphicOMP library
+ * Canvas.h provides a window / canvas for all of the drawing operations in the TSGL library
  *
  * Authors: Patrick Crain, Mark Vander Stel
  * Last Modified: Patrick Crain, 7/21/2014

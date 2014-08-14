@@ -1,8 +1,8 @@
 /*
- * main.cpp provides example usage for the graphicOMP library
+ * tests.cpp provides example usage for the TSGL library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Patrick Crain, 6/17/2014
+ * Last Modified: Mark Vander Stel, 7/14/2014
  */
 
 #include <cmath>
@@ -489,7 +489,7 @@ void cosineIntegralFunction(CartesianCanvas& can) {
     CosineFunction function1;
     can.drawFunction(function1);
 
-    can.setFont("data/freefont/FreeSerif.ttf");
+    can.setFont("assets/freefont/FreeSerif.ttf");
     can.drawText(L"-1.5π", -1.5 * PI - .1, .25, 20);  // Note the important capital L, used to support Unicode.
     can.drawText(L"1.5\u03C0", 1.5 * PI - .2, .25, 20);
     can.drawText(L"1", .1, 1.05, 20);
@@ -990,24 +990,24 @@ void forestFireFunction(Canvas& can) {
 }
 
 void imageFunction(Canvas& can) {
-    can.drawImage("data/test.png", 0, 0, 400, 300);
-    can.drawImage("data/ship.bmp", 400, 0, 400, 300);
-    can.drawImage("data/shiprgb.bmp", 800, 0, 400, 300);
-    can.drawImage("data/sky_main.jpg", 0, 300, 400, 300);
-    can.drawImage("data/Captain-falcon.png", 400, 300, 400, 300);
-    can.drawImage("data/mini.jpg", 800, 300, 400, 300);
+    can.drawImage("assets/test.png", 0, 0, 400, 300);
+    can.drawImage("assets/ship.bmp", 400, 0, 400, 300);
+    can.drawImage("assets/shiprgb.bmp", 800, 0, 400, 300);
+    can.drawImage("assets/sky_main.jpg", 0, 300, 400, 300);
+    can.drawImage("assets/Captain-falcon.png", 400, 300, 400, 300);
+    can.drawImage("assets/mini.jpg", 800, 300, 400, 300);
 
-    can.drawImage("data/bestpicture.png", 200, 0, 800, 600, 0.25f);    //ALPHA
+    can.drawImage("assets/bestpicture.png", 200, 0, 800, 600, 0.25f);    //ALPHA
 }
 void imageCartFunction(Cart& can) {
-    can.drawImage("data/test.png", 0, 3, 2, 1.5);
-    can.drawImage("data/ship.bmp", 2, 3, 2, 1.5);
-    can.drawImage("data/shiprgb.bmp", 4, 3, 2, 1.5);
-    can.drawImage("data/sky_main.jpg", 0, 1.5, 2, 1.5);
-    can.drawImage("data/Captain-falcon.png", 2, 1.5, 2, 1.5);
-    can.drawImage("data/mini.jpg", 4, 1.5, 2, 1.5);
+    can.drawImage("assets/test.png", 0, 3, 2, 1.5);
+    can.drawImage("assets/ship.bmp", 2, 3, 2, 1.5);
+    can.drawImage("assets/shiprgb.bmp", 4, 3, 2, 1.5);
+    can.drawImage("assets/sky_main.jpg", 0, 1.5, 2, 1.5);
+    can.drawImage("assets/Captain-falcon.png", 2, 1.5, 2, 1.5);
+    can.drawImage("assets/mini.jpg", 4, 1.5, 2, 1.5);
 
-    can.drawImage("data/bestpicture.png", 1, 3, 4, 3, 0.25f);    //ALPHA
+    can.drawImage("assets/bestpicture.png", 1, 3, 4, 3, 0.25f);    //ALPHA
 }
 
 void highData(Canvas& can) {
@@ -1032,7 +1032,7 @@ void textFunction(Canvas& can) {
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-    can.setFont("data/freefont/FreeSerif.ttf");
+    can.setFont("assets/freefont/FreeSerif.ttf");
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
@@ -1042,7 +1042,7 @@ void textFunction(Canvas& can) {
     can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
 }
 void textCartFunction(Cart& can) {
-    can.setFont("data/freefont/FreeSerif.ttf");
+    can.setFont("assets/freefont/FreeSerif.ttf");
     can.drawText(L"A long time ago, in a galaxy far, far away.", .05, .8, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", .05, .6, 32, BLACK);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", .05, .4, 32, BLACK);
@@ -1134,7 +1134,7 @@ void pongFunction(Canvas& can) {
 void getPixelsFunction(Canvas& can) {
     const int THREADS = 1;
     Timer t(FRAME);
-    can.drawImage("data/test.png", 0, 0, 800, 600);
+    can.drawImage("assets/test.png", 0, 0, 800, 600);
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
     can.setUpdateScreenCopy(true);
@@ -1264,7 +1264,7 @@ void greyScaleFunction(Canvas& can) {
     const int THREADS = 16;
     const unsigned int thickness = 3;
     Timer t(FRAME * 2);
-    can.drawImage("data/test.png", 0, 0, 800, 600);
+    can.drawImage("assets/test.png", 0, 0, 800, 600);
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
     can.setUpdateScreenCopy(true);
