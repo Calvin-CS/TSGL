@@ -1,0 +1,138 @@
+\hypertarget{class_colors}{\section{Colors Class Reference}
+\label{class_colors}\index{Colors@{Colors}}
+}
+
+
+Color utility class.  
+
+
+
+
+{\ttfamily \#include $<$Color.\+h$>$}
+
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{struct_color_float}{Color\+Float} \hyperlink{class_colors_a9d471a8fb06c0aac407de2945c1c65c6}{divide\+Into\+Chromatic\+Sections} (unsigned int sections, unsigned int section, float value, float alpha=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Returns an H\+S\+V\+A color with a hue dependent on the number of sections. \end{DoxyCompactList}\item 
+static \hyperlink{struct_color_float}{Color\+Float} \hyperlink{class_colors_ad8312b55a80fb26bb20a80e8af8d3f1a}{divide\+Into\+Chromatic\+Sections} (unsigned int sections, unsigned int section)
+\begin{DoxyCompactList}\small\item\em Returns an H\+S\+V\+A color with a hue dependent on the number of sections. \end{DoxyCompactList}\item 
+static \hyperlink{struct_color_float}{Color\+Float} \hyperlink{class_colors_a3155080f6bbee603212059a8f4abe6f3}{random\+Color} (float alpha=0.\+0f)
+\begin{DoxyCompactList}\small\item\em Generates a random color. \end{DoxyCompactList}\item 
+static \hyperlink{struct_color_float}{Color\+Float} \hyperlink{class_colors_ae24518e4d2618cc5a670316f6d53f844}{blended\+Color} (\hyperlink{struct_color_float}{Color\+Float} c1, \hyperlink{struct_color_float}{Color\+Float} c2, float bias)
+\begin{DoxyCompactList}\small\item\em Blends two colors with a given bias towards the latter. \end{DoxyCompactList}\item 
+\hypertarget{class_colors_ae43bb23e649eb2a5a9fd9e34f25092f7}{static \hyperlink{struct_color_float}{Color\+Float} {\bfseries high\+Contrast\+Color} (unsigned int section, int seed=0)}\label{class_colors_ae43bb23e649eb2a5a9fd9e34f25092f7}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Color utility class. 
+
+\hyperlink{class_colors}{Colors} defines color utility methods to construct colors. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_colors_ae24518e4d2618cc5a670316f6d53f844}{\index{Colors@{Colors}!blended\+Color@{blended\+Color}}
+\index{blended\+Color@{blended\+Color}!Colors@{Colors}}
+\subsubsection[{blended\+Color}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color\+Float} Colors\+::blended\+Color (
+\begin{DoxyParamCaption}
+\item[{{\bf Color\+Float}}]{c1, }
+\item[{{\bf Color\+Float}}]{c2, }
+\item[{float}]{bias}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_colors_ae24518e4d2618cc5a670316f6d53f844}
+
+
+Blends two colors with a given bias towards the latter. 
+
+This function blends two \hyperlink{struct_color_float}{Color\+Float} structs together by taking a linear interpolation between the two and returns the result as a new \hyperlink{struct_color_float}{Color\+Float}. 
+\begin{DoxyParams}{Parameters}
+{\em c1} & A \hyperlink{struct_color_float}{Color\+Float}. \\
+\hline
+{\em c2} & Another \hyperlink{struct_color_float}{Color\+Float}. \\
+\hline
+{\em bias} & A bias between 0 and 1 inclusive. A bias of 0 returns c1, a bias of 1 returns c2, and a bias in between returns a linear interpolation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{struct_color_float}{Color\+Float} linearly interpolated between c1 and c2 using the given bias as a weight. 
+\end{DoxyReturn}
+\hypertarget{class_colors_a9d471a8fb06c0aac407de2945c1c65c6}{\index{Colors@{Colors}!divide\+Into\+Chromatic\+Sections@{divide\+Into\+Chromatic\+Sections}}
+\index{divide\+Into\+Chromatic\+Sections@{divide\+Into\+Chromatic\+Sections}!Colors@{Colors}}
+\subsubsection[{divide\+Into\+Chromatic\+Sections}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color\+Float} Colors\+::divide\+Into\+Chromatic\+Sections (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{sections, }
+\item[{unsigned int}]{section, }
+\item[{float}]{value, }
+\item[{float}]{alpha = {\ttfamily 1.0f}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_colors_a9d471a8fb06c0aac407de2945c1c65c6}
+
+
+Returns an H\+S\+V\+A color with a hue dependent on the number of sections. 
+
+This function returns a \hyperlink{struct_color_float}{Color\+Float} whose hue is calculated from the provided section number and the total number of sections. This function is used for creating a chromatic gradient from one part of the spectrum to another. 
+\begin{DoxyParams}{Parameters}
+{\em section} & Integer specifying the current section. \\
+\hline
+{\em sections} & Integer specifying the total number of sections. \\
+\hline
+{\em value} & Value component, between 0 and 1 inclusive. \\
+\hline
+{\em alpha} & Alpha component, between 0 and 1 inclusive. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{struct_color_float}{Color\+Float} with a hue calculated as 6.\+0f/sections$\ast$section, saturation of 1.\+0, and the given value and alpha components. 
+\end{DoxyReturn}
+
+
+Referenced by divide\+Into\+Chromatic\+Sections().
+
+\hypertarget{class_colors_ad8312b55a80fb26bb20a80e8af8d3f1a}{\index{Colors@{Colors}!divide\+Into\+Chromatic\+Sections@{divide\+Into\+Chromatic\+Sections}}
+\index{divide\+Into\+Chromatic\+Sections@{divide\+Into\+Chromatic\+Sections}!Colors@{Colors}}
+\subsubsection[{divide\+Into\+Chromatic\+Sections}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color\+Float} Colors\+::divide\+Into\+Chromatic\+Sections (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{sections, }
+\item[{unsigned int}]{section}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_colors_ad8312b55a80fb26bb20a80e8af8d3f1a}
+
+
+Returns an H\+S\+V\+A color with a hue dependent on the number of sections. 
+
+This function returns a \hyperlink{struct_color_float}{Color\+Float} whose hue is calculated from the provided section number and the total number of sections. This function is used for creating a chromatic gradient from one part of the spectrum to another. 
+\begin{DoxyParams}{Parameters}
+{\em section} & Integer specifying the current section. \\
+\hline
+{\em sections} & Integer specifying the total number of sections. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{struct_color_float}{Color\+Float} with a hue calculated as 6.\+0f/sections$\ast$section, and a saturation, value, and alpha of 1.\+0. 
+\end{DoxyReturn}
+\hypertarget{class_colors_a3155080f6bbee603212059a8f4abe6f3}{\index{Colors@{Colors}!random\+Color@{random\+Color}}
+\index{random\+Color@{random\+Color}!Colors@{Colors}}
+\subsubsection[{random\+Color}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color\+Float} Colors\+::random\+Color (
+\begin{DoxyParamCaption}
+\item[{float}]{alpha = {\ttfamily 0.0f}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_colors_a3155080f6bbee603212059a8f4abe6f3}
+
+
+Generates a random color. 
+
+This function user rand() to generate a random \hyperlink{struct_color_float}{Color\+Float} with an optional specified alpha value. 
+\begin{DoxyParams}{Parameters}
+{\em alpha} & Alpha of the random color to generate. An alpha of 0 will set the alpha to a random legal value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A random \hyperlink{struct_color_float}{Color\+Float}. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Color.\+h\item 
+Color.\+cpp\end{DoxyCompactItemize}

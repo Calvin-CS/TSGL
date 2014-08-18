@@ -1,0 +1,723 @@
+\hypertarget{class_cartesian_canvas}{\section{Cartesian\+Canvas Class Reference}
+\label{class_cartesian_canvas}\index{Cartesian\+Canvas@{Cartesian\+Canvas}}
+}
+
+
+\hyperlink{class_canvas}{Canvas} extended for graphic support.  
+
+
+
+
+{\ttfamily \#include $<$Cartesian\+Canvas.\+h$>$}
+
+Inheritance diagram for Cartesian\+Canvas\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cartesian_canvas}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_cartesian_canvas_ab4387f0226721981adf82ee150751ce0}{Cartesian\+Canvas} (unsigned int b)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. \end{DoxyCompactList}\item 
+\hyperlink{class_cartesian_canvas_ad9a52e5b74df4f6910eb3a2bbac190bf}{Cartesian\+Canvas} (int xx, int yy, int w, int h, Decimal x\+Min, Decimal y\+Min, Decimal x\+Max, Decimal y\+Max, unsigned int b, std\+::string=\char`\"{}\char`\"{})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a24ff3802f7f82e6f8b89993346e50408}{draw\+Axes} (Decimal x, Decimal y, Decimal dx, Decimal dy)
+\begin{DoxyCompactList}\small\item\em Draw axes. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a9acc954ccb5a9df491db2e8481b58b03}{draw\+Circle} (Decimal x, Decimal y, Decimal radius, int res, \hyperlink{struct_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draw a circle. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_aa80eb5c58be2461f76a02d0acc94811b}{draw\+Colored\+Polygon} (int size, int x\mbox{[}$\,$\mbox{]}, int y\mbox{[}$\,$\mbox{]}, \hyperlink{struct_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draw an arbitrary polygon with colored vertices. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_abfa7f10eb248cf6f4bf7400715ec13ac}{draw\+Function} (const \hyperlink{class_function}{Function} \&f)
+\begin{DoxyCompactList}\small\item\em Plots a function on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a005e388fa00cc3cc7549f657cd58db84}{draw\+Image} (std\+::string fname, Decimal x, Decimal y, Decimal w, Decimal h, float a=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Draw an image. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a364a55de8ac9d0734a44a4b4af9d5af5}{draw\+Line} (Decimal x1, Decimal y1, Decimal x2, Decimal y2, \hyperlink{struct_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Draw a line. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_aa8d3c41d0b54358245b0164230225f05}{draw\+Point} (Decimal x, Decimal y, \hyperlink{struct_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Draw a single pixel. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a54ad4dd438a1cbb1353fb3cb5c5da5c4}{draw\+Rectangle} (Decimal x, Decimal y, Decimal w, Decimal h, \hyperlink{struct_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draw a rectangle. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a27f832df7e100315a8ceb385e133326f}{draw\+Text} (std\+::wstring s, Decimal x, Decimal y, unsigned int size, \hyperlink{struct_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Draw a string of text. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a72ddd5a50452068da422fa36847de378}{draw\+Triangle} (Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, \hyperlink{struct_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draw a triangle. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a022ac6bdb68f70b9d0dca1edc0f6cc05}{get\+Cartesian\+Coordinates} (int screen\+X, int screen\+Y, Decimal \&cart\+X, Decimal \&cart\+Y)
+\begin{DoxyCompactList}\small\item\em Translates Cartesian coordinates into window coordinates. \end{DoxyCompactList}\item 
+Decimal \hyperlink{class_cartesian_canvas_a00ab6f569e805c9ee662b1dba3f90b90}{get\+Cart\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s Cartesian height. \end{DoxyCompactList}\item 
+Decimal \hyperlink{class_cartesian_canvas_a2a89763ee9a724fb1b07b3fc7c7351a2}{get\+Cart\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s Cartesian width. \end{DoxyCompactList}\item 
+Decimal \hyperlink{class_cartesian_canvas_a07fffa1ea919da9022e23aaa25a175d8}{get\+Pixel\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s effective pixel width. \end{DoxyCompactList}\item 
+Decimal \hyperlink{class_cartesian_canvas_a9acb1906f1423f336654be45ee7b2a82}{get\+Pixel\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s effective pixel height. \end{DoxyCompactList}\item 
+Decimal \hyperlink{class_cartesian_canvas_a494303f706ba4170b7e4ff011b9eab5e}{get\+Max\+X} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s right bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{class_cartesian_canvas_a84b1a32b3af487cea0588bd6f09a246e}{get\+Max\+Y} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s top bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{class_cartesian_canvas_a598f84f3fda5bea7df9a90952c60ee2c}{get\+Min\+X} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s left bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{class_cartesian_canvas_a970a5877d36bc958564556cae1c3c1cb}{get\+Min\+Y} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s bottom bound. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_abfe025d3658afe6cf30057e4db7bbc19}{get\+Screen\+Coordinates} (Decimal cart\+X, Decimal cart\+Y, int \&screen\+X, int \&screen\+Y)
+\begin{DoxyCompactList}\small\item\em Translates window coordinates into Cartesian coordinates. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a390eb6c87ec9974bc0c9930e8a8d40ac}{recompute\+Dimensions} (Decimal x\+Min, Decimal y\+Min, Decimal x\+Max, Decimal y\+Max)
+\begin{DoxyCompactList}\small\item\em Recomputes the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s bounds. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_adffe30c84884e8046ebb30438ee8eef1}{zoom} (Decimal x, Decimal y, Decimal scale)
+\begin{DoxyCompactList}\small\item\em Zoom the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} with a given center. \end{DoxyCompactList}\item 
+void \hyperlink{class_cartesian_canvas_a048f37a8e92d248edad546d470432f3c}{zoom} (Decimal x1, Decimal y1, Decimal x2, Decimal y2)
+\begin{DoxyCompactList}\small\item\em Zoom the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} with the given bounding (Cartesian) coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_canvas}{Canvas} extended for graphic support. 
+
+\hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} provides a \hyperlink{class_canvas}{Canvas} with a Cartesian coordinate system for ease of plotting. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_cartesian_canvas_ab4387f0226721981adf82ee150751ce0}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\index{Cartesian\+Canvas@{Cartesian\+Canvas}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{Cartesian\+Canvas}]{\setlength{\rightskip}{0pt plus 5cm}Cartesian\+Canvas\+::\+Cartesian\+Canvas (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{b}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_ab4387f0226721981adf82ee150751ce0}
+
+
+Constructs a new \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+
+This is the default constructor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} class 
+\begin{DoxyParams}{Parameters}
+{\em b} & The size of the \hyperlink{class_canvas}{Canvas}'s internal vertex buffer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new 800x600 \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}, unscaled (stretching from -\/400 to +400 on the x axis and -\/300 to +300 on the y axis) in the middle of the screen with no title. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_ad9a52e5b74df4f6910eb3a2bbac190bf}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\index{Cartesian\+Canvas@{Cartesian\+Canvas}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{Cartesian\+Canvas}]{\setlength{\rightskip}{0pt plus 5cm}Cartesian\+Canvas\+::\+Cartesian\+Canvas (
+\begin{DoxyParamCaption}
+\item[{int}]{xx, }
+\item[{int}]{yy, }
+\item[{int}]{w, }
+\item[{int}]{h, }
+\item[{Decimal}]{x\+Min, }
+\item[{Decimal}]{y\+Min, }
+\item[{Decimal}]{x\+Max, }
+\item[{Decimal}]{y\+Max, }
+\item[{unsigned int}]{b, }
+\item[{std\+::string}]{t = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_ad9a52e5b74df4f6910eb3a2bbac190bf}
+
+
+Explicitly constructs a new \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+
+This is an explicit constructor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} class. 
+\begin{DoxyParams}{Parameters}
+{\em xx} & The x position of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} window. \\
+\hline
+{\em yy} & The y position of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} window. \\
+\hline
+{\em w} & The x dimension of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} window. \\
+\hline
+{\em h} & The y dimension of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} window. \\
+\hline
+{\em x\+Min} & The Cartestian coordinates of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s left bound. \\
+\hline
+{\em y\+Min} & The Cartestian coordinates of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s bottom bound. \\
+\hline
+{\em x\+Max} & The Cartestian coordinates of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s right bound. \\
+\hline
+{\em y\+Max} & The Cartestian coordinates of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s top bound. \\
+\hline
+{\em b} & The size of the \hyperlink{class_canvas}{Canvas}'s internal vertex buffer. \\
+\hline
+{\em title} & The title of the window. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a new \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} with the specified positional/scaling data, buffer size, and title 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_cartesian_canvas_a24ff3802f7f82e6f8b89993346e50408}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Axes@{draw\+Axes}}
+\index{draw\+Axes@{draw\+Axes}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Axes}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Axes (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x, }
+\item[{Decimal}]{y, }
+\item[{Decimal}]{dx = {\ttfamily 0}, }
+\item[{Decimal}]{dy = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a24ff3802f7f82e6f8b89993346e50408}
+
+
+Draw axes. 
+
+This function draws axes (with tick marks) on the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}, centered at the given (Cartesian) coordinates 
+\begin{DoxyParams}{Parameters}
+{\em x} & The horizontal location of the y-\/axis line. \\
+\hline
+{\em y} & The vertical location of the x-\/axis line. \\
+\hline
+{\em dx} & The distance between marks on the x-\/axis. \\
+\hline
+{\em dy} & The distance between marks on the y-\/axis. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_cartesian_canvas_a9acc954ccb5a9df491db2e8481b58b03}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Circle@{draw\+Circle}}
+\index{draw\+Circle@{draw\+Circle}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Circle}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Circle (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x, }
+\item[{Decimal}]{y, }
+\item[{Decimal}]{radius, }
+\item[{int}]{res, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a9acc954ccb5a9df491db2e8481b58b03}
+
+
+Draw a circle. 
+
+This function draws a circle with the given origin coordinates, radius, resolution (number of sides), and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the circle's origin. \\
+\hline
+{\em y} & The y coordinate of the circle's origin. \\
+\hline
+{\em radius} & The radius of the circle in pixels. \\
+\hline
+{\em res} & The number of sides to use in the circle. \\
+\hline
+{\em color} & The color of the circle. \\
+\hline
+{\em filled} & Whether the circle should be filled. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{class_canvas_a890f8e6fb35e2dc24cf0892df4981747}{Canvas\+::draw\+Circle()} 
+\end{DoxyNote}
+\hypertarget{class_cartesian_canvas_aa80eb5c58be2461f76a02d0acc94811b}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Colored\+Polygon@{draw\+Colored\+Polygon}}
+\index{draw\+Colored\+Polygon@{draw\+Colored\+Polygon}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Colored\+Polygon}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Colored\+Polygon (
+\begin{DoxyParamCaption}
+\item[{int}]{size, }
+\item[{int}]{x\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{y\mbox{[}$\,$\mbox{]}, }
+\item[{{\bf Color\+Float}}]{color\mbox{[}$\,$\mbox{]}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_cartesian_canvas_aa80eb5c58be2461f76a02d0acc94811b}
+
+
+Draw an arbitrary polygon with colored vertices. 
+
+This function draws a \hyperlink{class_colored_polygon}{Colored\+Polygon} with the given vertex data 
+\begin{DoxyParams}{Parameters}
+{\em size} & the number of vertices in the polygon \\
+\hline
+{\em x} & an array of x positions of the vertices \\
+\hline
+{\em y} & an array of y positions of the vertices \\
+\hline
+{\em color} & an array of colors for the vertices \\
+\hline
+{\em filled} & whether the colored polygon should be filled (true) or not (false) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{class_canvas_a867b3202a838e083e5c7bf703d4a3afc}{Canvas\+::draw\+Colored\+Polygon()} 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_canvas_a867b3202a838e083e5c7bf703d4a3afc}{Canvas}.
+
+\hypertarget{class_cartesian_canvas_abfa7f10eb248cf6f4bf7400715ec13ac}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Function@{draw\+Function}}
+\index{draw\+Function@{draw\+Function}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Function (
+\begin{DoxyParamCaption}
+\item[{const {\bf Function} \&}]{f}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_abfa7f10eb248cf6f4bf7400715ec13ac}
+
+
+Plots a function on the screen. 
+
+This function receives a \hyperlink{class_function}{Function} as a parameter and plots the function on the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\begin{DoxyParams}{Parameters}
+{\em f} & The function to plot. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The passed function must receive exactly one Decimal parameter, and return a Decimal. 
+\end{DoxyNote}
+\hypertarget{class_cartesian_canvas_a005e388fa00cc3cc7549f657cd58db84}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Image@{draw\+Image}}
+\index{draw\+Image@{draw\+Image}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Image}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Image (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{fname, }
+\item[{Decimal}]{x, }
+\item[{Decimal}]{y, }
+\item[{Decimal}]{w, }
+\item[{Decimal}]{h, }
+\item[{float}]{a = {\ttfamily 1.0f}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a005e388fa00cc3cc7549f657cd58db84}
+
+
+Draw an image. 
+
+This function draws an \hyperlink{class_image}{Image} with the given coordinates and dimensions. 
+\begin{DoxyParams}{Parameters}
+{\em fname} & The name of the file to load the image from. \\
+\hline
+{\em x} & The x coordinate of the \hyperlink{class_image}{Image}'s left edge. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{class_image}{Image}'s top edge. \\
+\hline
+{\em w} & The width of the \hyperlink{class_image}{Image}. \\
+\hline
+{\em h} & The height of the \hyperlink{class_image}{Image}. \\
+\hline
+{\em a} & The alpha with which to draw the \hyperlink{class_image}{Image}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{class_canvas_a9c9f7c76fa582510c9fd6bac55d013ab}{Canvas\+::draw\+Image()} 
+\end{DoxyNote}
+\hypertarget{class_cartesian_canvas_a364a55de8ac9d0734a44a4b4af9d5af5}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Line@{draw\+Line}}
+\index{draw\+Line@{draw\+Line}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Line (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x1, }
+\item[{Decimal}]{y1, }
+\item[{Decimal}]{x2, }
+\item[{Decimal}]{y2, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a364a55de8ac9d0734a44a4b4af9d5af5}
+
+
+Draw a line. 
+
+This function draws a \hyperlink{class_line}{Line} at the given coordinates with the given color. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x position of the start of the line. \\
+\hline
+{\em y1} & The y position of the start of the line. \\
+\hline
+{\em x2} & The x position of the end of the line. \\
+\hline
+{\em y2} & The y position of the end of the line. \\
+\hline
+{\em color} & The color of the line. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{class_canvas_a7a017b3bcb4f983b7ea106dea1d1a4f2}{Canvas\+::draw\+Line()} 
+\end{DoxyNote}
+
+
+Referenced by draw\+Axes().
+
+\hypertarget{class_cartesian_canvas_aa8d3c41d0b54358245b0164230225f05}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Point@{draw\+Point}}
+\index{draw\+Point@{draw\+Point}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Point}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Point (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x, }
+\item[{Decimal}]{y, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_aa8d3c41d0b54358245b0164230225f05}
+
+
+Draw a single pixel. 
+
+This function draws a Point at the given coordinates with the given color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the point. \\
+\hline
+{\em y} & The y position of the point. \\
+\hline
+{\em color} & The color of the point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{class_canvas_a6a4cd6d80f90f79e4438deb47b432d74}{Canvas\+::draw\+Point()} 
+\end{DoxyNote}
+\hypertarget{class_cartesian_canvas_a54ad4dd438a1cbb1353fb3cb5c5da5c4}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Rectangle@{draw\+Rectangle}}
+\index{draw\+Rectangle@{draw\+Rectangle}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Rectangle (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x, }
+\item[{Decimal}]{y, }
+\item[{Decimal}]{w, }
+\item[{Decimal}]{h, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a54ad4dd438a1cbb1353fb3cb5c5da5c4}
+
+
+Draw a rectangle. 
+
+This function draws a \hyperlink{class_rectangle}{Rectangle} with the given coordinates, dimensions, and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{class_rectangle}{Rectangle}'s left edge. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{class_rectangle}{Rectangle}'s top edge. \\
+\hline
+{\em w} & The width of the \hyperlink{class_rectangle}{Rectangle}. \\
+\hline
+{\em h} & The height of the \hyperlink{class_rectangle}{Rectangle}. \\
+\hline
+{\em color} & The color of the rectangle. \\
+\hline
+{\em filled} & Whether the rectangle should be filled. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{class_canvas_a33bb124b99c7621514b2b5220dd0bbc3}{Canvas\+::draw\+Rectangle()} 
+\end{DoxyNote}
+\hypertarget{class_cartesian_canvas_a27f832df7e100315a8ceb385e133326f}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Text@{draw\+Text}}
+\index{draw\+Text@{draw\+Text}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Text}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Text (
+\begin{DoxyParamCaption}
+\item[{std\+::wstring}]{s, }
+\item[{Decimal}]{x, }
+\item[{Decimal}]{y, }
+\item[{unsigned int}]{size, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a27f832df7e100315a8ceb385e133326f}
+
+
+Draw a string of text. 
+
+This function draws a given string of \hyperlink{class_text}{Text} at the given coordinates with the given color. 
+\begin{DoxyParams}{Parameters}
+{\em s} & The string to draw. \\
+\hline
+{\em x} & The x coordinate of the text's left bound. \\
+\hline
+{\em y} & The y coordinate of the text's left bound. \\
+\hline
+{\em size} & The size of the text in pixels. \\
+\hline
+{\em color} & The color of the \hyperlink{class_text}{Text}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{class_canvas_a751a2e449ec3803934143d5e7cc5cd0a}{Canvas\+::draw\+Text()}. 
+\end{DoxyNote}
+\hypertarget{class_cartesian_canvas_a72ddd5a50452068da422fa36847de378}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!draw\+Triangle@{draw\+Triangle}}
+\index{draw\+Triangle@{draw\+Triangle}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{draw\+Triangle}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::draw\+Triangle (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x1, }
+\item[{Decimal}]{y1, }
+\item[{Decimal}]{x2, }
+\item[{Decimal}]{y2, }
+\item[{Decimal}]{x3, }
+\item[{Decimal}]{y3, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a72ddd5a50452068da422fa36847de378}
+
+
+Draw a triangle. 
+
+This function draws a \hyperlink{class_triangle}{Triangle} with the given vertices. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & the x coordinate of the first vertex of the \hyperlink{class_triangle}{Triangle}. \\
+\hline
+{\em y1} & the y coordinate of the first vertex of the \hyperlink{class_triangle}{Triangle}. \\
+\hline
+{\em x2} & the x coordinate of the second vertex of the \hyperlink{class_triangle}{Triangle}. \\
+\hline
+{\em y2} & the y coordinate of the second vertex of the \hyperlink{class_triangle}{Triangle}. \\
+\hline
+{\em x3} & the x coordinate of the third vertex of the \hyperlink{class_triangle}{Triangle}. \\
+\hline
+{\em y3} & the y coordinate of the third vertex of the \hyperlink{class_triangle}{Triangle}. \\
+\hline
+{\em color} & the color of the \hyperlink{class_triangle}{Triangle}. \\
+\hline
+{\em filled} & Whether the \hyperlink{class_triangle}{Triangle} should be filled. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{class_canvas_a009d8fcfde43d6967cce737778f9e51d}{Canvas\+::draw\+Triangle()} 
+\end{DoxyNote}
+\hypertarget{class_cartesian_canvas_a022ac6bdb68f70b9d0dca1edc0f6cc05}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Cartesian\+Coordinates@{get\+Cartesian\+Coordinates}}
+\index{get\+Cartesian\+Coordinates@{get\+Cartesian\+Coordinates}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Cartesian\+Coordinates}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::get\+Cartesian\+Coordinates (
+\begin{DoxyParamCaption}
+\item[{int}]{screen\+X, }
+\item[{int}]{screen\+Y, }
+\item[{Decimal \&}]{cart\+X, }
+\item[{Decimal \&}]{cart\+Y}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a022ac6bdb68f70b9d0dca1edc0f6cc05}
+
+
+Translates Cartesian coordinates into window coordinates. 
+
+get\+Cartesian\+Coordinates takes a pair of on-\/screen coordinates and translates them to Cartesian coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em screen\+X} & The window's x coordinate. \\
+\hline
+{\em screen\+Y} & The window's y coordinate. \\
+\hline
+{\em cart\+X} & A reference variable to be filled with screen\+X's Cartesian position. \\
+\hline
+{\em cart\+Y} & A reference variable to be filled with screen\+Y's Cartesian position. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_cartesian_canvas_a00ab6f569e805c9ee662b1dba3f90b90}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Cart\+Height@{get\+Cart\+Height}}
+\index{get\+Cart\+Height@{get\+Cart\+Height}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Cart\+Height}]{\setlength{\rightskip}{0pt plus 5cm}Decimal Cartesian\+Canvas\+::get\+Cart\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a00ab6f569e805c9ee662b1dba3f90b90}
+
+
+Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s Cartesian height. 
+
+\begin{DoxyReturn}{Returns}
+The Cartesian height of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_a2a89763ee9a724fb1b07b3fc7c7351a2}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Cart\+Width@{get\+Cart\+Width}}
+\index{get\+Cart\+Width@{get\+Cart\+Width}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Cart\+Width}]{\setlength{\rightskip}{0pt plus 5cm}Decimal Cartesian\+Canvas\+::get\+Cart\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a2a89763ee9a724fb1b07b3fc7c7351a2}
+
+
+Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s Cartesian width. 
+
+\begin{DoxyReturn}{Returns}
+The Cartesian width of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_a494303f706ba4170b7e4ff011b9eab5e}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Max\+X@{get\+Max\+X}}
+\index{get\+Max\+X@{get\+Max\+X}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Max\+X}]{\setlength{\rightskip}{0pt plus 5cm}Decimal Cartesian\+Canvas\+::get\+Max\+X (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a494303f706ba4170b7e4ff011b9eab5e}
+
+
+Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s right bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the right of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_a84b1a32b3af487cea0588bd6f09a246e}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Max\+Y@{get\+Max\+Y}}
+\index{get\+Max\+Y@{get\+Max\+Y}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Max\+Y}]{\setlength{\rightskip}{0pt plus 5cm}Decimal Cartesian\+Canvas\+::get\+Max\+Y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a84b1a32b3af487cea0588bd6f09a246e}
+
+
+Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s top bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the top of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_a598f84f3fda5bea7df9a90952c60ee2c}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Min\+X@{get\+Min\+X}}
+\index{get\+Min\+X@{get\+Min\+X}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Min\+X}]{\setlength{\rightskip}{0pt plus 5cm}Decimal Cartesian\+Canvas\+::get\+Min\+X (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a598f84f3fda5bea7df9a90952c60ee2c}
+
+
+Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s left bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the left of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_a970a5877d36bc958564556cae1c3c1cb}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Min\+Y@{get\+Min\+Y}}
+\index{get\+Min\+Y@{get\+Min\+Y}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Min\+Y}]{\setlength{\rightskip}{0pt plus 5cm}Decimal Cartesian\+Canvas\+::get\+Min\+Y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a970a5877d36bc958564556cae1c3c1cb}
+
+
+Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s bottom bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the bottom of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_a9acb1906f1423f336654be45ee7b2a82}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Pixel\+Height@{get\+Pixel\+Height}}
+\index{get\+Pixel\+Height@{get\+Pixel\+Height}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Pixel\+Height}]{\setlength{\rightskip}{0pt plus 5cm}Decimal Cartesian\+Canvas\+::get\+Pixel\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a9acb1906f1423f336654be45ee7b2a82}
+
+
+Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s effective pixel height. 
+
+\begin{DoxyReturn}{Returns}
+The height corresponding to a single pixel in the current \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_a07fffa1ea919da9022e23aaa25a175d8}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Pixel\+Width@{get\+Pixel\+Width}}
+\index{get\+Pixel\+Width@{get\+Pixel\+Width}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Pixel\+Width}]{\setlength{\rightskip}{0pt plus 5cm}Decimal Cartesian\+Canvas\+::get\+Pixel\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a07fffa1ea919da9022e23aaa25a175d8}
+
+
+Accessor for the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s effective pixel width. 
+
+\begin{DoxyReturn}{Returns}
+The width corresponding to a single pixel in the current \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\hypertarget{class_cartesian_canvas_abfe025d3658afe6cf30057e4db7bbc19}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!get\+Screen\+Coordinates@{get\+Screen\+Coordinates}}
+\index{get\+Screen\+Coordinates@{get\+Screen\+Coordinates}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{get\+Screen\+Coordinates}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::get\+Screen\+Coordinates (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{cart\+X, }
+\item[{Decimal}]{cart\+Y, }
+\item[{int \&}]{screen\+X, }
+\item[{int \&}]{screen\+Y}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_abfe025d3658afe6cf30057e4db7bbc19}
+
+
+Translates window coordinates into Cartesian coordinates. 
+
+get\+Screen\+Coordinates takes a pair of Cartesian coordinates and translates them to on-\/screen coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em cart\+X} & The Cartesian x coordinate. \\
+\hline
+{\em cart\+Y} & The Cartesian y coordinate. \\
+\hline
+{\em screen\+X} & A reference variable to be filled with cart\+X's window position. \\
+\hline
+{\em screen\+Y} & A reference variable to be filled with cart\+Y's window position. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by draw\+Circle(), draw\+Colored\+Polygon(), draw\+Function(), draw\+Image(), draw\+Line(), draw\+Point(), draw\+Rectangle(), draw\+Text(), and draw\+Triangle().
+
+\hypertarget{class_cartesian_canvas_a390eb6c87ec9974bc0c9930e8a8d40ac}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!recompute\+Dimensions@{recompute\+Dimensions}}
+\index{recompute\+Dimensions@{recompute\+Dimensions}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{recompute\+Dimensions}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::recompute\+Dimensions (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x\+Min, }
+\item[{Decimal}]{y\+Min, }
+\item[{Decimal}]{x\+Max, }
+\item[{Decimal}]{y\+Max}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a390eb6c87ec9974bc0c9930e8a8d40ac}
+
+
+Recomputes the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}'s bounds. 
+
+This function recomputes the size variables of \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} according to new bounds. 
+\begin{DoxyParams}{Parameters}
+{\em x\+Min} & A real number corresponding to the new left edge of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. \\
+\hline
+{\em Y\+Min} & A real number corresponding to the new bottom edge of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. \\
+\hline
+{\em x\+Max} & A real number corresponding to the new right edge of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. \\
+\hline
+{\em x\+Max} & A real number corresponding to the new top edge of the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Cartesian\+Canvas(), and zoom().
+
+\hypertarget{class_cartesian_canvas_adffe30c84884e8046ebb30438ee8eef1}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!zoom@{zoom}}
+\index{zoom@{zoom}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{zoom}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::zoom (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x, }
+\item[{Decimal}]{y, }
+\item[{Decimal}]{scale}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_adffe30c84884e8046ebb30438ee8eef1}
+
+
+Zoom the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} with a given center. 
+
+This function will re-\/center the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} at the given coordinates, then zoom with respect to the given scale. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The coordinate to re-\/center the screen on. \\
+\hline
+{\em y} & The coordinate to re-\/center the screen on. \\
+\hline
+{\em scale} & The part to zoom in by. Less than 1 zooms in, greater than 1 zooms out. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function will automatically maintain the current aspect ratio. 
+\end{DoxyNote}
+
+
+Referenced by zoom().
+
+\hypertarget{class_cartesian_canvas_a048f37a8e92d248edad546d470432f3c}{\index{Cartesian\+Canvas@{Cartesian\+Canvas}!zoom@{zoom}}
+\index{zoom@{zoom}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\subsubsection[{zoom}]{\setlength{\rightskip}{0pt plus 5cm}void Cartesian\+Canvas\+::zoom (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{x1, }
+\item[{Decimal}]{y1, }
+\item[{Decimal}]{x2, }
+\item[{Decimal}]{y2}
+\end{DoxyParamCaption}
+)}}\label{class_cartesian_canvas_a048f37a8e92d248edad546d470432f3c}
+
+
+Zoom the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} with the given bounding (Cartesian) coordinates. 
+
+This function will zoom the \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas} with respect to the given bounding coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The left Cartesian bound. \\
+\hline
+{\em y1} & The bottom Cartesian bound. \\
+\hline
+{\em x2} & The right Cartesian bound. \\
+\hline
+{\em y2} & The top Cartesian bound. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Setting the right bound lower than the left bound or the top lower than the bottom will just swap the variables. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+This function will {\itshape N\+O\+T} automatically maintain the previous aspect ratio. 
+
+Change the aspect ratio on-\/the-\/fly only with caution. 
+\end{DoxyWarning}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Cartesian\+Canvas.\+h\item 
+Cartesian\+Canvas.\+cpp\end{DoxyCompactItemize}

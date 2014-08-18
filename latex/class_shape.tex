@@ -1,0 +1,113 @@
+\hypertarget{class_shape}{\section{Shape Class Reference}
+\label{class_shape}\index{Shape@{Shape}}
+}
+
+
+A class for drawing shapes onto a \hyperlink{class_canvas}{Canvas} or \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}.  
+
+
+
+
+{\ttfamily \#include $<$Shape.\+h$>$}
+
+Inheritance diagram for Shape\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.441442cm]{class_shape}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_shape_aaa8d87171e65e0d8ba3c5459978992a7}{Shape} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{class_shape}{Shape}. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_shape_ac3b9fc48965274893f25b18aa14ba665}{$\sim$\+Shape} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \hyperlink{class_shape}{Shape}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_shape_afacc5aad8e37308c3ce8fef768199b05}{draw} ()=0
+\begin{DoxyCompactList}\small\item\em Actually draws the shape to the \hyperlink{class_canvas}{Canvas}. \end{DoxyCompactList}\item 
+\hypertarget{class_shape_a8ccc804d7528af16e3a14017b52dbe58}{bool \hyperlink{class_shape_a8ccc804d7528af16e3a14017b52dbe58}{get\+Is\+Textured} ()}\label{class_shape_a8ccc804d7528af16e3a14017b52dbe58}
+
+\begin{DoxyCompactList}\small\item\em Accessor for {\itshape is\+Textured}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_shape_ad21644e3f39633feb48ad5b822301495}{bool {\bfseries is\+Textured}}\label{class_shape_ad21644e3f39633feb48ad5b822301495}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A class for drawing shapes onto a \hyperlink{class_canvas}{Canvas} or \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. 
+
+\begin{DoxyWarning}{Warning}
+{\bfseries {\itshape Though extending this class must be allowed due to the way the code is set up, attempting to do so could potentially mess up the internal G\+L calls the library uses. Proceed with great caution.}}
+\end{DoxyWarning}
+\hyperlink{class_shape}{Shape} provides a base class for drawing shapes to a \hyperlink{class_canvas}{Canvas} or \hyperlink{class_cartesian_canvas}{Cartesian\+Canvas}. \hyperlink{class_shape}{Shape} is abstract, and must be extended by the user.
+
+All \hyperlink{class_shape}{Shape} subclasses must override the \hyperlink{class_shape_afacc5aad8e37308c3ce8fef768199b05}{draw()} method. Though theoretically any G\+L calls can be used here, something like the following should be used\+: 
+\begin{DoxyCode}
+glBufferData(GL\_ARRAY\_BUFFER, <numberofvertices> * 6 * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{float}), <vertices>, GL\_DYNAMIC\_DRAW);
+glDrawArrays(<drawingmode>, 0, <numberofvertices>);
+\end{DoxyCode}
+
+
+$<$vertices$>$ should be an array of floating point values in T\+S\+G\+L's vertex format. One vertex consists of 6 floating point values, signifying x,y,red,green,blue,and alpha components respectively. E.\+g., to draw a triangle, you would need 3 vertices = 18 floats -\/$>$ vertices should be an array of length 18.
+
+$<$numberofvertices$>$ should be the actual integer number of vertices to be drawn (e.\+g., {\itshape 3} for a triangle).
+
+$<$drawingmode$>$ should be one of G\+L's primitive drawing modes. See \href{https://www.opengl.org/sdk/docs/man2/xhtml/glBegin.xml}{\tt https\+://www.\+opengl.\+org/sdk/docs/man2/xhtml/gl\+Begin.\+xml} for further information. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_shape_aaa8d87171e65e0d8ba3c5459978992a7}{\index{Shape@{Shape}!Shape@{Shape}}
+\index{Shape@{Shape}!Shape@{Shape}}
+\subsubsection[{Shape}]{\setlength{\rightskip}{0pt plus 5cm}Shape\+::\+Shape (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_shape_aaa8d87171e65e0d8ba3c5459978992a7}
+
+
+Constructs a new \hyperlink{class_shape}{Shape}. 
+
+Whether the shape is textured or not. If extending \hyperlink{class_shape}{Shape}, {\bfseries  you {\itshape must} leave this at false.}
+
+\begin{DoxyWarning}{Warning}
+You {\bfseries must} inherit the parent's constructor if you are extending \hyperlink{class_shape}{Shape}. 
+\end{DoxyWarning}
+\hypertarget{class_shape_ac3b9fc48965274893f25b18aa14ba665}{\index{Shape@{Shape}!````~Shape@{$\sim$\+Shape}}
+\index{````~Shape@{$\sim$\+Shape}!Shape@{Shape}}
+\subsubsection[{$\sim$\+Shape}]{\setlength{\rightskip}{0pt plus 5cm}virtual Shape\+::$\sim$\+Shape (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_shape_ac3b9fc48965274893f25b18aa14ba665}
+
+
+Destructor for the \hyperlink{class_shape}{Shape}. 
+
+\begin{DoxyWarning}{Warning}
+You {\bfseries must} inherit the parent's constructor if you are extending \hyperlink{class_shape}{Shape}. 
+\end{DoxyWarning}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_shape_afacc5aad8e37308c3ce8fef768199b05}{\index{Shape@{Shape}!draw@{draw}}
+\index{draw@{draw}!Shape@{Shape}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Shape\+::draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_shape_afacc5aad8e37308c3ce8fef768199b05}
+
+
+Actually draws the shape to the \hyperlink{class_canvas}{Canvas}. 
+
+This method renders the shape to the \hyperlink{class_canvas}{Canvas}. Please refer to the class description for information and warning about overriding this method. 
+
+Implemented in \hyperlink{class_colored_polygon_a543a3233225455e9288b0b98735fab42}{Colored\+Polygon}, \hyperlink{class_polyline_a21ea8147cb2a0d8d9b61af7b62520395}{Polyline}, \hyperlink{class_image_ae1e16dcef3072e4e49ec2887a9c1245a}{Image}, \hyperlink{class_text_adedc069a9ad622bf9d2cf6d194a01b39}{Text}, \hyperlink{class_triangle_a43067ba4ee3c1d56930a567cc2186624}{Triangle}, \hyperlink{class_line_ab6265993bf5acbc28830181c3e712f10}{Line}, and \hyperlink{class_rectangle_ac895c67f1d6337e3b4f72663b17dd299}{Rectangle}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Shape.\+h\end{DoxyCompactItemize}

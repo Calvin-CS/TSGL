@@ -1,0 +1,89 @@
+\hypertarget{class_line}{\section{Line Class Reference}
+\label{class_line}\index{Line@{Line}}
+}
+
+
+Draw a simple line.  
+
+
+
+
+{\ttfamily \#include $<$Line.\+h$>$}
+
+Inheritance diagram for Line\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_line}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_line_a01fd5349b9a19b2b2ca24a7c7f0e9e9e}{Line} (int x1, int y1, int x2, int y2, const \hyperlink{struct_color_float}{Color\+Float} \&color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{class_line}{Line}. \end{DoxyCompactList}\item 
+void \hyperlink{class_line_ab6265993bf5acbc28830181c3e712f10}{draw} ()
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{class_line}{Line}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw a simple line. 
+
+\hyperlink{class_line}{Line} is a class for holding vertex data for a simple line. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_line_a01fd5349b9a19b2b2ca24a7c7f0e9e9e}{\index{Line@{Line}!Line@{Line}}
+\index{Line@{Line}!Line@{Line}}
+\subsubsection[{Line}]{\setlength{\rightskip}{0pt plus 5cm}Line\+::\+Line (
+\begin{DoxyParamCaption}
+\item[{int}]{x1, }
+\item[{int}]{y1, }
+\item[{int}]{x2, }
+\item[{int}]{y2, }
+\item[{const {\bf Color\+Float} \&}]{color}
+\end{DoxyParamCaption}
+)}}\label{class_line_a01fd5349b9a19b2b2ca24a7c7f0e9e9e}
+
+
+Explicitly constructs a new \hyperlink{class_line}{Line}. 
+
+This is the constructor for the \hyperlink{class_line}{Line} class. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x coordinate of the first endpoint. \\
+\hline
+{\em y1} & The y coordinate of the first endpoint. \\
+\hline
+{\em x2} & The x coordinate of the second endpoint. \\
+\hline
+{\em y2} & The y coordinate of the second endpoint. \\
+\hline
+{\em color} & The color of the \hyperlink{class_line}{Line}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{class_line}{Line} with the specified endpoints and color. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_line_ab6265993bf5acbc28830181c3e712f10}{\index{Line@{Line}!draw@{draw}}
+\index{draw@{draw}!Line@{Line}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void Line\+::draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_line_ab6265993bf5acbc28830181c3e712f10}
+
+
+Draw the \hyperlink{class_line}{Line}. 
+
+This function actually draws the \hyperlink{class_line}{Line} to the \hyperlink{class_canvas}{Canvas}. 
+
+Implements \hyperlink{class_shape_afacc5aad8e37308c3ce8fef768199b05}{Shape}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Line.\+h\item 
+Line.\+cpp\end{DoxyCompactItemize}

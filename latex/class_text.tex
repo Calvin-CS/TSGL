@@ -1,0 +1,97 @@
+\hypertarget{class_text}{\section{Text Class Reference}
+\label{class_text}\index{Text@{Text}}
+}
+
+
+Draw a string of text.  
+
+
+
+
+{\ttfamily \#include $<$Text.\+h$>$}
+
+Inheritance diagram for Text\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_text}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_text_a5f1ef9ca6779f8a01ea78442e4280f55}{Text} (std\+::wstring s, Texture\+Handler \&loader, int x, int y, unsigned int size, const \hyperlink{struct_color_float}{Color\+Float} \&color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{class_text}{Text} instance. \end{DoxyCompactList}\item 
+void \hyperlink{class_text_adedc069a9ad622bf9d2cf6d194a01b39}{draw} ()
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{class_text}{Text}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw a string of text. 
+
+\hyperlink{class_text}{Text} is a class for holding the data necessary for rendering a string of text. \begin{DoxyNote}{Note}
+\hyperlink{class_text}{Text} is aligned by the upper-\/left corner. 
+
+At the moment, only a single font is supported. 
+\end{DoxyNote}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_text_a5f1ef9ca6779f8a01ea78442e4280f55}{\index{Text@{Text}!Text@{Text}}
+\index{Text@{Text}!Text@{Text}}
+\subsubsection[{Text}]{\setlength{\rightskip}{0pt plus 5cm}Text\+::\+Text (
+\begin{DoxyParamCaption}
+\item[{std\+::wstring}]{s, }
+\item[{Texture\+Handler \&}]{loader, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{unsigned int}]{size, }
+\item[{const {\bf Color\+Float} \&}]{color}
+\end{DoxyParamCaption}
+)}}\label{class_text_a5f1ef9ca6779f8a01ea78442e4280f55}
+
+
+Explicitly constructs a new \hyperlink{class_text}{Text} instance. 
+
+This is the constructor for the \hyperlink{class_text}{Text} class. 
+\begin{DoxyParams}{Parameters}
+{\em s} & The string to draw. \\
+\hline
+{\em loader} & A pointer to the Texture\+Handler with which to load the font. \\
+\hline
+{\em x} & The x coordinate. \\
+\hline
+{\em y} & The y coordinate. \\
+\hline
+{\em size} & The size of the text in pixels. \\
+\hline
+{\em color} & A color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{class_text}{Text} instance with the specified string, position, and color. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_text_adedc069a9ad622bf9d2cf6d194a01b39}{\index{Text@{Text}!draw@{draw}}
+\index{draw@{draw}!Text@{Text}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void Text\+::draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_adedc069a9ad622bf9d2cf6d194a01b39}
+
+
+Draw the \hyperlink{class_text}{Text}. 
+
+This function actually draws the \hyperlink{class_text}{Text} to the \hyperlink{class_canvas}{Canvas}. 
+
+Implements \hyperlink{class_shape_afacc5aad8e37308c3ce8fef768199b05}{Shape}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Text.\+h\item 
+Text.\+cpp\end{DoxyCompactItemize}

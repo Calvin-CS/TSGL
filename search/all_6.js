@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['getcartesiancoordinates',['getCartesianCoordinates',['../class_cartesian_canvas.html#a022ac6bdb68f70b9d0dca1edc0f6cc05',1,'CartesianCanvas']]],
+  ['getcartheight',['getCartHeight',['../class_cartesian_canvas.html#a00ab6f569e805c9ee662b1dba3f90b90',1,'CartesianCanvas']]],
+  ['getcartwidth',['getCartWidth',['../class_cartesian_canvas.html#a2a89763ee9a724fb1b07b3fc7c7351a2',1,'CartesianCanvas']]],
+  ['getfps',['getFPS',['../class_canvas.html#a7f5828da2f39dee2602ff624dbe04786',1,'Canvas']]],
+  ['getframenumber',['getFrameNumber',['../class_canvas.html#a2f17624ba40bc6f98d3675e76c1819d7',1,'Canvas']]],
+  ['getisopen',['getIsOpen',['../class_canvas.html#ae409ea5d1261a8ad8bb9ef994ffc1c22',1,'Canvas']]],
+  ['getistextured',['getIsTextured',['../class_shape.html#a8ccc804d7528af16e3a14017b52dbe58',1,'Shape']]],
+  ['getmaxx',['getMaxX',['../class_cartesian_canvas.html#a494303f706ba4170b7e4ff011b9eab5e',1,'CartesianCanvas']]],
+  ['getmaxy',['getMaxY',['../class_cartesian_canvas.html#a84b1a32b3af487cea0588bd6f09a246e',1,'CartesianCanvas']]],
+  ['getminx',['getMinX',['../class_cartesian_canvas.html#a598f84f3fda5bea7df9a90952c60ee2c',1,'CartesianCanvas']]],
+  ['getminy',['getMinY',['../class_cartesian_canvas.html#a970a5877d36bc958564556cae1c3c1cb',1,'CartesianCanvas']]],
+  ['getmousex',['getMouseX',['../class_canvas.html#af5f179835589d447f13544709314c014',1,'Canvas']]],
+  ['getmousey',['getMouseY',['../class_canvas.html#aad34a217c015181b9457a5c02e8aa8f2',1,'Canvas']]],
+  ['getpixelheight',['getPixelHeight',['../class_cartesian_canvas.html#a9acb1906f1423f336654be45ee7b2a82',1,'CartesianCanvas']]],
+  ['getpixelwidth',['getPixelWidth',['../class_cartesian_canvas.html#a07fffa1ea919da9022e23aaa25a175d8',1,'CartesianCanvas']]],
+  ['getreps',['getReps',['../class_timer.html#ab7c94a5d0f7d1e3a0a2370c9bc5f68f3',1,'Timer']]],
+  ['getscreenbuffer',['getScreenBuffer',['../class_canvas.html#a741d355d9f2021c28e048fc9614e3db2',1,'Canvas']]],
+  ['getscreencoordinates',['getScreenCoordinates',['../class_cartesian_canvas.html#abfe025d3658afe6cf30057e4db7bbc19',1,'CartesianCanvas']]],
+  ['gettime',['getTime',['../class_canvas.html#a3f212a576d46a0546a86919f4c9fbb57',1,'Canvas::getTime()'],['../class_timer.html#a8a1e22b1647df0f43d98cbfa1278a210',1,'Timer::getTime()']]],
+  ['gettimebetweensleeps',['getTimeBetweenSleeps',['../class_timer.html#a354cf2011ae82fdb28011bb544e87307',1,'Timer']]],
+  ['getwindowheight',['getWindowHeight',['../class_canvas.html#a59f0970506389b938c2bf1f7c53a3dc5',1,'Canvas']]],
+  ['getwindowwidth',['getWindowWidth',['../class_canvas.html#a313206fc26b6f82770ca462f15d0d8c1',1,'Canvas']]],
+  ['getwindowx',['getWindowX',['../class_canvas.html#ab3a8868f7261a2a48647ab31000a949b',1,'Canvas']]],
+  ['getwindowy',['getWindowY',['../class_canvas.html#ad24fcf3335ad5e0761d629aa59d01208',1,'Canvas']]]
+];
