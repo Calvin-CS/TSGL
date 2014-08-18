@@ -14,7 +14,7 @@ frames/
 libraries/
 
 # Ignore generated doxygen (for now)
-html/
+docs/html/
 
 # Ignore valgrind info
 valgrind*

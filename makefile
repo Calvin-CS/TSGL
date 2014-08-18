@@ -60,7 +60,7 @@ html/index.html: $(HEADERS) Doxyfile
 	doxygen
 
 clean:
-	rm -rf bin/* build/*.o html/* lib/*.a lib/*.so*  *~ *# *.tmp
+	rm -rf bin/* build/*.o docs/html/* lib/*.a lib/*.so*  *~ *# *.tmp
 
 .PHONY: all debug clean tsgl tests docs
 .SECONDARY: $(OBJS) build/tests.o
