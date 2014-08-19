@@ -1,15 +1,19 @@
-
-OBJS=build/Canvas.o build/CartesianCanvas.o build/Color.o build/ColoredPolygon.o build/Image.o \
-	build/Line.o build/Polyline.o build/Rectangle.o build/Text.o build/TextureHandler.o \
-	build/Timer.o build/Triangle.o
-
-HEADERS=src/TSGL/Canvas.h src/TSGL/CartesianCanvas.h src/TSGL/Color.h src/TSGL/ColoredPolygon.h src/TSGL/Image.h \
-	src/TSGL/Line.h src/TSGL/Polyline.h src/TSGL/Rectangle.h src/TSGL/Text.h src/TSGL/TextureHandler.h \
-	src/TSGL/Timer.h src/TSGL/Triangle.h
-
+AR=ar
 CC=g++
+RM=rm -f
 
-CFLAGS=-Wall -D__GXX_EXPERIMENTAL_CXX0X__ -c \
+SRC_PATH=src/TSGL/
+TESTS_PATH=src/tests/
+OBJ_PATH=build/
+
+VPATH=SRC_PATH:TESTS_PATH:OBJ_PATH
+
+HEADERS := $(wildcard src/TSGL/*.h)
+SOURCES := $(wildcard src/TSGL/*.cpp)
+OBJS := $(patsubst src/TSGL/%.cpp,build/%.o,${SOURCES})
+
+CXXFLAGS=-Wall -Wextra -pedantic-errors \
+	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-Isrc/TSGL/ \
 	-I/usr/include/ \
 	-I/opt/AMDAPP/include/ \
@@ -22,7 +26,7 @@ CFLAGS=-Wall -D__GXX_EXPERIMENTAL_CXX0X__ -c \
 
 LFLAGS=-o bin/testTSGL -LTSGL/ -ltsgl \
 	-Llib/ \
-	-L/opt/local/lib \
+	-L/opt/local/lib/ \
 	-L/usr/lib/ \
 	-L/opt/AMDAPP/lib/x86_64/ \
 	-Llibraries/lib/ \
@@ -33,35 +37,51 @@ LFLAGS=-o bin/testTSGL -LTSGL/ -ltsgl \
 	-lX11 -lGL -lXrandr \
 	-fopenmp
 
-all: tsgl tests docs
+DEPFLAGS=-MMD -MP
 
-debug: tsgl tests
+-include build/*.d
+
+all: dif tsgl tests docs
+
+debug: dif tsgl tests
+
+dif: build/build
 
 tsgl: lib/libtsgl.a
 
-lib/libtsgl.a: $(OBJS) 
-	ar -r "lib/libtsgl.a" $(OBJS)
-
-build/%.o: src/TSGL/%.cpp
-	echo "Compiling objs"
-	$(CC) $(CFLAGS) -o "$@" "$<"
-
 tests: bin/testTSGL
 
-bin/testTSGL: build/tests.o lib/libtsgl.a
-	$(CC) build/tests.o lib/libtsgl.a $(LFLAGS)
-
-build/tests.o: src/tests/tests.cpp
-	$(CC) $(CFLAGS) -o "$@" src/tests/tests.cpp
-
-docs: html/index.html
-
-html/index.html: $(HEADERS) Doxyfile
-	doxygen
+docs: docs/html/index.html
 
 clean:
-	rm -rf bin/* build/*.o docs/html/* lib/*.a lib/*.so*  *~ *# *.tmp
+	$(RM) -r bin/* build/* docs/html/* lib/* *~ *# *.tmp
 
-.PHONY: all debug clean tsgl tests docs
-.SECONDARY: $(OBJS) build/tests.o
+build/build: ${HEADERS} ${SOURCES} src/tests/tests.cpp
+	@echo 'Files that changed:'
+	@echo $(patsubst src/%,%,$?)
+
+lib/libtsgl.a: ${OBJS}
+	@echo 'Building $(patsubst lib/%,%,$@)'
+	$(AR) -r $@ $?
+	@touch build/build
+
+bin/testTSGL: build/tests.o lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ $(LFLAGS)
+	@touch build/build
+
+build/%.o: src/TSGL/%.cpp build/%.d
+	@echo 'Building $(patsubst src/TSGL/%,%,$<)'
+	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
+
+build/tests.o: src/tests/tests.cpp
+	@echo 'Building $(patsubst src/tests/%,%,$<)'
+	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
+
+docs/html/index.html: ${HEADERS} Doxyfile
+	@echo 'Generating Doxygen'
+	@doxygen
+
+.PHONY: all debug clean tsgl tests docs dif
+.SECONDARY: ${OBJS} build/tests.o $(OBJS:%.o=%.d)
 

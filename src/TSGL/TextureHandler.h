@@ -16,8 +16,8 @@
 
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
-#include <freetype.h>
-#include <ftglyph.h>
+//#include <freetype.h>
+//#include <ftglyph.h>
 
 #include <GL/glew.h>     // Needed for GL function calls
 #include <GLFW/glfw3.h>  // For GL functions
