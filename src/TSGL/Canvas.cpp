@@ -237,7 +237,7 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     }
     int tempPos = pointBufferPosition * 6;
     pointBufferPosition++;
-    mlock.unlock();
+    // mlock.unlock();
 
     vertexData[tempPos] = x;
     vertexData[tempPos + 1] = y;
@@ -245,7 +245,7 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     vertexData[tempPos + 3] = color.G;
     vertexData[tempPos + 4] = color.B;
     vertexData[tempPos + 5] = color.A;
-//    mlock.unlock();
+   mlock.unlock();
 }
 
 void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool filled) {

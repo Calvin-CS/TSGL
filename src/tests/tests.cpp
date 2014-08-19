@@ -1133,9 +1133,9 @@ void pongFunction(Canvas& can) {
 
 void getPixelsFunction(Canvas& can) {
     const int THREADS = 2;
-    can.drawImage("assets/test.png", 0, 0, 800, 600);
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
+    can.drawImage("assets/test.png", 0, 0, width, height);
     can.setUpdateScreenCopy(true);
     Timer::threadSleepFor(.75);
 //    can.recordForNumFrames(100);
@@ -1264,12 +1264,12 @@ void screenshotLangtonFunction(Canvas& can) {
 }
 
 void greyScaleFunction(Canvas& can) {
-    const int THREADS = 16;
+    const int THREADS = 4;
     const unsigned int thickness = 3;
     Timer t(FRAME * 2);
-    can.drawImage("assets/test.png", 0, 0, 800, 600);
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
+    can.drawImage("assets/colorful_cars.jpg", 0, 0, width, height);
     can.setUpdateScreenCopy(true);
     Timer::threadSleepFor(.25);
     uint8_t* buffer = can.getScreenBuffer();
@@ -1286,7 +1286,7 @@ void greyScaleFunction(Canvas& can) {
             int index = y * width * 3;
             for (unsigned int x = 0; x < width; x++) {
                 gray = (buffer[index] + buffer[index + 1] + buffer[index + 2]) / 3;
-                can.drawPoint(x, y, ColorInt(gray, gray, gray));
+                can.drawPoint(x, height - y, ColorInt(gray, gray, gray));
                 index += 3;
            }
             t.sleep();
@@ -1421,10 +1421,73 @@ void runOtherHalfoftheFunctions() {
    test(c29,shapeTestFunction,true);
    Canvas c30(0, 0, 960, 960, 30000);
    test(c30,screenshotLangtonFunction,true,BLACK);
-   Canvas c31(0, 0, 800, 600, 500000);
+   Canvas c31(0, 0, 1280, 1024, 500000);
    test(c31,greyScaleFunction,true);
    Canvas c32(0, 0, 800, 600, 5000);
    test(c32,mouseFunction,false,WHITE);
+
+    Canvas can1(0, 0, 1024, 768, 500000);
+    Canvas can2(0, 0, 1024, 768, 500000);
+    can2.setBackgroundColor(GREY);
+    can1.start();
+    can2.start();
+
+    const int THREADS = 4;
+    const unsigned int thickness = 3;
+    Timer t(FRAME * 2);
+    unsigned int width = can1.getWindowWidth(),
+                 height = can1.getWindowHeight();
+    can1.drawImage("assets/colorful_cars.jpg", 0, 0, width, height);
+    can1.setUpdateScreenCopy(true);
+    Timer::threadSleepFor(1);
+    uint8_t* buffer = can1.getScreenBuffer();
+
+    bool toStart = false;
+    can2.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&toStart](){
+        toStart = true;
+    });
+    while (can1.getIsOpen() && can2.getIsOpen() && toStart == false) {
+        t.sleep();
+    }
+
+    #pragma omp parallel num_threads(THREADS)
+    {
+        Timer t(FRAME * 2);
+        unsigned int nthreads = omp_get_num_threads();
+        unsigned int blocksize = height / nthreads;
+        unsigned int row = blocksize * omp_get_thread_num();
+        ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
+        int gray = 0;
+
+        for (unsigned int y = row; y < row + blocksize; y++) {
+            int index = y * width * 3;
+            for (unsigned int x = 0; x < width; x++) {
+                gray = (buffer[index] + buffer[index + 1] + buffer[index + 2]) / 3;
+                can2.drawPoint(x, height - y, ColorInt(gray, gray, gray));
+                // can2.drawPoint(x, height - y, ColorInt(255 - buffer[index],
+                //                                        255 - buffer[index + 1],
+                //                                        255 - buffer[index + 2]));
+                index += 3;
+            }
+            if (!(can1.getIsOpen() && can2.getIsOpen())) {
+                can1.end();
+                can2.end();
+                break;
+            }
+            t.sleep();
+        }
+        for (unsigned int i = 0; i < thickness; i++) {
+            can2.drawRectangle(0 + i, row + 1 + i, width - 2*i, blocksize - 2*i, color, false);
+        }
+    }
+    while (can1.getIsOpen() && can2.getIsOpen()) {
+        t.sleep();
+    }
+
+    can1.end();
+    can2.end();
+    can1.close();
+    can2.close();
 }
 
 int main() {

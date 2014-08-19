@@ -318,6 +318,7 @@ public:
 
     /*!
      * \brief Accessor for the Canvas's currently drawn image.
+     * \note This array starts in the bottom left corner of the image.
      * \return A pointer to the RGB pixel buffer for the current Canvas.
      */
     // TODO: Make this return NULL if record isn't on
