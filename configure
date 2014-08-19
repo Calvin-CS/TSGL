@@ -10,8 +10,8 @@
 # 
 # Shell script to configure TSGL
 
-tsgl_version_major=0
-tsgl_version_minor=1
+tsgl_version_major=1
+tsgl_version_minor=0
 tsgl_version_revision=1
 
 bin_dirs=`echo $PATH | sed -e "s/:/ /g"`
@@ -198,4 +198,4 @@ echo "using $f_insttool";
 
 
 
-
+mkdir bin build docs frames lib
