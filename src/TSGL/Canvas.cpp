@@ -355,7 +355,6 @@ void Canvas::glDestroy() {
     glDeleteProgram(textureShaderProgram);
     glDeleteBuffers(1, &vertexBuffer);
     glDeleteVertexArrays(1, &vertexArray);
-    glDeleteTextures(1, &tex);
 }
 
 void Canvas::glInit() {
@@ -394,8 +393,9 @@ void Canvas::glInit() {
     glEnable(GL_BLEND);                                 // Enable blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
 
-    printf("%s\n", glGetString(GL_VERSION));
-    printf("%s\n", glfwGetVersionString());
+    printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+    printf("OpenGL version: %s\n", glGetString(GL_VERSION));
+    printf("GLFW version:   %s\n", glfwGetVersionString());
 
     // Needed?
 //    glEnable(GL_TEXTURE_2D);
@@ -418,27 +418,6 @@ void Canvas::glInit() {
     // Create and bind our Vertex Buffer Object
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-
-    // Create and generate a test texture
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_2D, tex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    // Solid White Texture
-    float pixels[] = { 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-        1.0f };
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_FLOAT, pixels);
-    // Generate and bind the auxillary texture
-    glGenTextures(1, &tex2);
-    glBindTexture(GL_TEXTURE_2D, tex2);
-    // Reset the initial background
-    glBindTexture(GL_TEXTURE_2D, tex);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     // Create / compile vertex shader
     shaderVertex = glCreateShader(GL_VERTEX_SHADER);

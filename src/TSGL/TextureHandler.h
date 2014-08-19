@@ -29,16 +29,6 @@
 
 typedef GLuint GLtexture;
 
-struct Character {
-    GLtexture texture;
-    int width;
-    int height;
-    int left;
-    int up;
-    int dx;
-    int dy;
-};
-
 class TextureHandler {
  private:
     typedef std::unordered_map<std::string, GLtexture> TextureMap;

@@ -45,7 +45,7 @@
  *  \brief A GL window with numerous built-in, thread-safe drawing operations
  *  \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
  *  \details With libpng and libjpeg, Canvas also supports the drawing of images.
- *   \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
+ *  \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
  */
 class Canvas {
 private:
@@ -78,9 +78,7 @@ private:
     std::mutex      shapes;                                             // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
-    GLtexture       tex,                                                // Texture
-                    tex2,                                               // Texture 2
-                    textureShaderFragment,                              // Address of the textured fragment shader
+    GLtexture       textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
                     textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close

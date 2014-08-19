@@ -156,6 +156,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
 GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height,
                                 GLtexture &texture) {
     if (loadedTextures.find(filename) == loadedTextures.end()) {  // Load the image if we haven't already
+        texture = 0;
         std::string extension = filename.substr(filename.find_last_of('.'));
         if (extension == ".png")
             loadedTextures[filename] = loadTextureFromPNG(filename.c_str(), width, height, texture);
