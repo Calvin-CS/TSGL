@@ -61,7 +61,10 @@ class Timer {
 
     /*!
      * \brief Get the elapsed time between sleeps
-     * \details This function returns the time in seconds between the last two calls to sleep().
+     * \details This function returns the time in seconds between the last two calls to sleep() exited.
+     *  This should be the same as the set period in cases where the timer is allowed to sleep. I.e.: 
+     *  sleep() was called more than a periods time after the last time sleep() was called. In this
+     *  case, getTimeBetweenSleeps() is undefined, but most likely less than 0.
      * \return The time in seconds between the last two sleeps
      */
     double getTimeBetweenSleeps() const;
@@ -90,6 +93,7 @@ class Timer {
      *  normally until the next call to sleep().
      * \note This function does not guarantee the thread will resume immediately after the time expires.
      *  Depending on your OS, the thread may sleep for longer.
+     * \see getTimeBetweenSleeps() to get the real time of the sleep.
      */
     void sleep();
 

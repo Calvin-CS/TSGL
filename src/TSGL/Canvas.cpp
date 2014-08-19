@@ -237,6 +237,7 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     }
     int tempPos = pointBufferPosition * 6;
     pointBufferPosition++;
+    mlock.unlock();
 
     vertexData[tempPos] = x;
     vertexData[tempPos + 1] = y;
@@ -244,7 +245,7 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     vertexData[tempPos + 3] = color.G;
     vertexData[tempPos + 4] = color.B;
     vertexData[tempPos + 5] = color.A;
-    mlock.unlock();
+//    mlock.unlock();
 }
 
 void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool filled) {
@@ -514,22 +515,10 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 void Canvas::screenShot() {
     const unsigned int NUM_DIGITS = 6;
 
-    std::stringstream ss;
-    ss << "frames/Image";
+    char filename[25];
+    sprintf(filename, "frames/Image%06d.png", framecounter);
 
-    int digits = 0, number = framecounter;
-    if (number <= 0) digits = 1; // remove this line if '-' counts as a digit
-    while (number) {
-        number /= 10;
-        digits++;
-    }
-    int padding = NUM_DIGITS - digits;
-    for (int i = 0; i < padding; i++) {
-        ss << "0";
-    }
-    ss << framecounter << ".png";
-
-    loader.saveImageToFile(ss.str().c_str(), screenBuffer, winWidth, winHeight);
+    loader.saveImageToFile(filename, screenBuffer, winWidth, winHeight);
 }
 
 void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {

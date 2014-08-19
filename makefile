@@ -12,7 +12,8 @@ HEADERS := $(wildcard src/TSGL/*.h)
 SOURCES := $(wildcard src/TSGL/*.cpp)
 OBJS := $(patsubst src/TSGL/%.cpp,build/%.o,${SOURCES})
 
-CXXFLAGS=-Wall -Wextra -pedantic-errors \
+CXXFLAGS=-O3 -g3 \
+	-Wall -Wextra -pedantic-errors \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-Isrc/TSGL/ \
 	-I/usr/include/ \
@@ -39,8 +40,6 @@ LFLAGS=-o bin/testTSGL -LTSGL/ -ltsgl \
 
 DEPFLAGS=-MMD -MP
 
--include build/*.d
-
 all: dif tsgl tests docs
 
 debug: dif tsgl tests
@@ -56,6 +55,8 @@ docs: docs/html/index.html
 clean:
 	$(RM) -r bin/* build/* docs/html/* lib/* *~ *# *.tmp
 
+-include build/*.d
+
 build/build: ${HEADERS} ${SOURCES} src/tests/tests.cpp
 	@echo 'Files that changed:'
 	@echo $(patsubst src/%,%,$?)
@@ -70,7 +71,7 @@ bin/testTSGL: build/tests.o lib/libtsgl.a
 	$(CC) $^ $(LFLAGS)
 	@touch build/build
 
-build/%.o: src/TSGL/%.cpp build/%.d
+build/%.o: src/TSGL/%.cpp
 	@echo 'Building $(patsubst src/TSGL/%,%,$<)'
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
