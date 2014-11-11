@@ -17,6 +17,7 @@ CXXFLAGS=-O3 -g3 \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-Isrc/TSGL/ \
 	-I/usr/include/ \
+	-I/usr/local/include/ \
 	-I/opt/AMDAPP/include/ \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
@@ -29,6 +30,7 @@ LFLAGS=-o bin/testTSGL -LTSGL/ -ltsgl \
 	-Llib/ \
 	-L/opt/local/lib/ \
 	-L/usr/lib/ \
+	-L/usr/local/lib/ \
 	-L/opt/AMDAPP/lib/x86_64/ \
 	-Llibraries/lib/ \
 	-L/usr/local/lib/ \
