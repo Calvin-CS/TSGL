@@ -22,17 +22,14 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
-	-Ilibraries/include/ \
-	-Ilibraries/include/freetype2/ \
+	-I/usr/local/include/freetype2/ \
         -std=c++0x -fopenmp
 
 LFLAGS=-o bin/testTSGL -LTSGL/ -ltsgl \
 	-Llib/ \
 	-L/opt/local/lib/ \
 	-L/usr/lib/ \
-	-L/usr/local/lib/ \
 	-L/opt/AMDAPP/lib/x86_64/ \
-	-Llibraries/lib/ \
 	-L/usr/local/lib/ \
 	-L/usr/X11/lib/ \
 	-ltsgl -lfreetype -lpng -ljpeg \
