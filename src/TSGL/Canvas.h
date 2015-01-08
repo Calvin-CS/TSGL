@@ -319,9 +319,10 @@ public:
     /*!
      * \brief Accessor for the Canvas's currently drawn image.
      * \note This array starts in the bottom left corner of the image.
+     * \note This will return NULL if the buffer is not being updated. Use
+     *  setUpdateScreenCopy(true) to keep this buffer updated.
      * \return A pointer to the RGB pixel buffer for the current Canvas.
      */
-    // TODO: Make this return NULL if record isn't on
     uint8_t* getScreenBuffer();
 
     /*!

@@ -319,7 +319,11 @@ int Canvas::getMouseY() {
 }
 
 uint8_t* Canvas::getScreenBuffer() {
-    return screenBuffer;
+    if (toUpdateScreenCopy || toRecord > 0) {
+        return screenBuffer;
+    } else {
+        return NULL;
+    }
 }
 
 double Canvas::getTime() {
