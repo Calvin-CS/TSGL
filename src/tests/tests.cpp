@@ -1355,7 +1355,7 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, const ColorFloat &bg
     c.close();
 }
 
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H;
+const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
 void runHalfoftheFunctions() {
    Canvas c1(BUFFER);
@@ -1492,6 +1492,8 @@ void runOtherHalfoftheFunctions() {
 
 int main() {
     glfwInit();  // Initialize GLFW
+//    Canvas::setDrawBuffer(GL_LEFT);		// For ULab
+    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
     std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
     std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
     threadA.join();

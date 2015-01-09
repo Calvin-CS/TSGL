@@ -42,6 +42,7 @@ static const GLchar* textureFragmentSource = "#version 150\n"
     "}";
 
 std::mutex Canvas::glfwMutex;
+int Canvas::drawBuffer = GL_LEFT;
 
 Canvas::Canvas(unsigned int b) {
     init(0, 0, 400*3, 300*3, b, "");
@@ -98,14 +99,14 @@ void Canvas::draw() {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             clearRectangle->draw();
 
-            glDrawBuffer(GL_LEFT);  // See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
+			glDrawBuffer(drawBuffer);  // See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             clearRectangle->draw();
 
             toClear = false;
         } else
-            glDrawBuffer(GL_LEFT);
+			glDrawBuffer(drawBuffer);
 
         realFPS = round(1 / timer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
@@ -492,7 +493,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     framecounter = 0;
     screenBuffer = new uint8_t[3 * winWidth * winHeight];
 
-
     toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet
     monitorX = xx;
@@ -533,6 +533,10 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
 void Canvas::setBackgroundColor(ColorFloat color) {
     delete clearRectangle;
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, color);
+}
+
+void Canvas::setDrawBuffer(int buffer) {
+	Canvas::drawBuffer = buffer;
 }
 
 void Canvas::setFont(std::string filename) {

@@ -96,6 +96,7 @@ private:
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
 
+    static int		drawBuffer;											// Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
     static std::mutex glfwMutex;                                        // Keeps GLFW createWindow from getting called at the same time in multiple threads
 
     static void buttonCallback(GLFWwindow* window, int key,
@@ -370,6 +371,13 @@ public:
      */
     void setBackgroundColor(ColorFloat color);
 
+    /*!
+     * \brief Mutator for the drawing buffer to use.
+     * \details This function sets the GL buffer to use during drawing calls
+     *      \param buffer A GL Buffer (GL_LEFT, GL_RIGHT, etc.)
+     * \note This function is static because it will be called for either no canvases or all canvases on a given computer
+     */
+    static void setDrawBuffer(int buffer);
 
     /*!
      * \brief Mutator for the currently loaded font
