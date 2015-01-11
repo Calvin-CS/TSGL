@@ -58,7 +58,18 @@ void graydientFunction(Canvas& can) {
             }
         }
     }
+    Timer t(FRAME);
+    //TODO:  Weird...succeeds if and only if it runs for at least 4 frames.
+    //glReadPixels() seems to be asynchronous and slow
+    for (int i = 0; i < 5; ++i) {
+    	t.sleep();
+		std::cout << "br: " << can.getPixel(can.getWindowWidth()-1,1).AsString() << std::endl;
+		std::cout << "tr: " << can.getPixel(can.getWindowWidth()-1,can.getWindowHeight()-1).AsString() << std::endl;
+		std::cout << "bl: " << can.getPixel(1,1).AsString() << std::endl;
+		std::cout << "tl: " << can.getPixel(1,can.getWindowHeight()-1).AsString() << std::endl;
+    }
 }
+
 void colorPointsFunction(Canvas& can) {
     int threads = omp_get_num_procs();
     #pragma omp parallel num_threads(threads)
@@ -561,6 +572,7 @@ void alphaRectangleFunction(Canvas& can) {
         b = rand() % WINDOW_H;
         can.drawRectangle(a, b, rand() % (WINDOW_W - a), rand() % (WINDOW_H - b),
                           ColorInt(rand() % MAX_COLOR, rand() % MAX_COLOR, rand() % MAX_COLOR, 16));
+//        std::cout << can.getPixel(WINDOW_W/2,WINDOW_H/2).AsString() << std::endl;
     }
 }
 void alphaLangtonFunction(Canvas& can) {

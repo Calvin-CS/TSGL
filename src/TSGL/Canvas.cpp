@@ -94,6 +94,7 @@ void Canvas::draw() {
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
         timer->sleep();
 
+
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
         if (toClear) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -113,7 +114,7 @@ void Canvas::draw() {
 //        fflush(stdout);
         std::cout.flush();
 
-        mutexLock mBufferLock(buffer);  // Time to flush our buffer
+        mutexLock mBufferLock(bufferMutex);  // Time to flush our buffer
         if (myBuffer->size() > 0) {     // But only if there is anything to flush
             for (unsigned int i = 0; i < myBuffer->size(); i++) {
                 myShapes->push(myBuffer->operator[](i));
@@ -150,13 +151,15 @@ void Canvas::draw() {
         }
 
         // Update our screenBuffer copy with the screen
-        if (toUpdateScreenCopy || toRecord > 0) {
-            glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-            if (toRecord > 0) {
-                toRecord--;
-                screenShot();
-            }
-        }
+//        if (toUpdateScreenCopy || toRecord > 0) {  //toUpdateScreenCopy must always be true with getPixel()
+        mutexLock pixelLock(pixelMutex);
+		glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+		pixelLock.unlock();
+		bufferReady = true;
+		if (toRecord > 0) {
+			toRecord--;
+			screenShot();
+		}
 
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
         glFlush();
@@ -231,7 +234,7 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
 }
 
 void Canvas::drawPoint(int x, int y, ColorFloat color) {
-    mutexLock mlock(pointArray);
+    mutexLock mlock(pointArrayMutex);
     if (pointBufferPosition >= myShapes->capacity()) {
         loopAround = true;
         pointBufferPosition = 0;
@@ -246,7 +249,7 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     vertexData[tempPos + 3] = color.G;
     vertexData[tempPos + 4] = color.B;
     vertexData[tempPos + 5] = color.A;
-   mlock.unlock();
+    mlock.unlock();
 }
 
 void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool filled) {
@@ -266,7 +269,7 @@ void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool fi
 }
 
 void Canvas::drawShape(Shape* s) {
-    mutexLock mlock(buffer);
+    mutexLock mlock(bufferMutex);
     myBuffer->push(s);  // Push it onto our drawing buffer
     mlock.unlock();
 }
@@ -317,6 +320,16 @@ int Canvas::getMouseX() {
 
 int Canvas::getMouseY() {
     return mouseY;
+}
+
+ColorInt Canvas::getPixel(int x, int y) {
+	mutexLock pixelLock(pixelMutex);
+	int offset = 3*(y*winWidth + x);
+	int r = screenBuffer[offset];
+	int g = screenBuffer[offset+1];
+	int b = screenBuffer[offset+2];
+	pixelLock.unlock();
+	return {r,g,b,255};
 }
 
 uint8_t* Canvas::getScreenBuffer() {
@@ -492,6 +505,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     toClose = false;
     framecounter = 0;
     screenBuffer = new uint8_t[3 * winWidth * winHeight];
+    bufferReady = true;
 
     toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet

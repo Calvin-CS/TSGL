@@ -55,7 +55,8 @@ private:
 
     float           aspect;                                             // Aspect ratio used for setting up the window
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
-    std::mutex      buffer;                                             // Mutex for locking the render buffer so that only one thread can read/write at a time
+    std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
+    bool			bufferReady;
     Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
@@ -66,7 +67,8 @@ private:
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
     Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
-    std::mutex      pointArray;                                         // Mutex for the allPoints array
+    std::mutex      pixelMutex;											// Mutex for getPixel()
+    std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
     int             realFPS;                                            // Actual FPS of drawing
     std::thread     renderThread;                                       // Thread dedicated to rendering the Canvas
@@ -75,7 +77,7 @@ private:
     GLtexture       shaderFragment,                                     // Address of the fragment shader
                     shaderProgram,                                      // Addres of the shader program to send to the GPU
                     shaderVertex;                                       // Address of the vertex shader
-    std::mutex      shapes;                                             // Mutex for locking the render array so that only one thread can read/write at a time
+    std::mutex      shapesMutex;                                        // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
     GLtexture       textureShaderFragment,                              // Address of the textured fragment shader
@@ -83,6 +85,7 @@ private:
                     textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
+    //TODO: This is no longer used, since getPixel() requires this to always be true. Remove it?
     bool            toUpdateScreenCopy;                                 // Whether we copy the screen to our buffer next draw cycle
     Timer*          timer;                                              // Timer for steady FPS
     std::string     title_;                                             // Title of the window
@@ -318,6 +321,15 @@ public:
     int getMouseY();
 
     /*!
+     * \brief Gets the color of the pixel drawn on the current Canvas at the given coordinates.
+     * \note (0,0) signifies the bottom-<b>left</b> of the Canvas
+     * 		\param x The x position of the pixel to grab.
+     * 		\param y The y position of the pixel to grab.
+     * \return The ColorInt representation of the pixel at x,y.
+     */
+    ColorInt getPixel(int x, int y);
+
+    /*!
      * \brief Accessor for the Canvas's currently drawn image.
      * \note This array starts in the bottom left corner of the image.
      * \note This will return NULL if the buffer is not being updated. Use
@@ -373,7 +385,8 @@ public:
 
     /*!
      * \brief Mutator for the drawing buffer to use.
-     * \details This function sets the GL buffer to use during drawing calls
+     * \details This function sets the GL buffer to use during drawing calls.
+     * Canvas defaults to using GL_LEFT, but some computers have rendering issues, which setting the buffer to GL_RIGHT will fix.
      *      \param buffer A GL Buffer (GL_LEFT, GL_RIGHT, etc.)
      * \note This function is static because it will be called for either no canvases or all canvases on a given computer
      */
