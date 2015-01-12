@@ -56,7 +56,7 @@ private:
     float           aspect;                                             // Aspect ratio used for setting up the window
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
-    bool			bufferReady;
+    bool            bufferReady;                                        //TODO: Add a comment for what this does
     Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
@@ -67,7 +67,7 @@ private:
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
     Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
-    std::mutex      pixelMutex;											// Mutex for getPixel()
+    std::mutex      pixelMutex;                                         // Mutex for getPixel()
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
     int             realFPS;                                            // Actual FPS of drawing
@@ -99,7 +99,7 @@ private:
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
 
-    static int		drawBuffer;											// Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
+    static int      drawBuffer;                                         // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
     static std::mutex glfwMutex;                                        // Keeps GLFW createWindow from getting called at the same time in multiple threads
 
     static void buttonCallback(GLFWwindow* window, int key,
@@ -323,8 +323,8 @@ public:
     /*!
      * \brief Gets the color of the pixel drawn on the current Canvas at the given coordinates.
      * \note (0,0) signifies the bottom-<b>left</b> of the Canvas
-     * 		\param x The x position of the pixel to grab.
-     * 		\param y The y position of the pixel to grab.
+     *      \param x The x position of the pixel to grab.
+     *      \param y The y position of the pixel to grab.
      * \return The ColorInt representation of the pixel at x,y.
      */
     ColorInt getPixel(int x, int y);
@@ -386,9 +386,11 @@ public:
     /*!
      * \brief Mutator for the drawing buffer to use.
      * \details This function sets the GL buffer to use during drawing calls.
-     * Canvas defaults to using GL_LEFT, but some computers have rendering issues, which setting the buffer to GL_RIGHT will fix.
+     *  Canvas defaults to using GL_LEFT, but some computers have rendering issues, which setting
+     *  the buffer to GL_RIGHT will fix.
      *      \param buffer A GL Buffer (GL_LEFT, GL_RIGHT, etc.)
-     * \note This function is static because it will be called for either no canvases or all canvases on a given computer
+     * \note This function is static because it will be called for either no canvases or all
+     *  canvases on a given computer
      */
     static void setDrawBuffer(int buffer);
 
@@ -433,7 +435,7 @@ public:
      * \brief Takes a screenshot.
      * \details This function saves a screenshot of the current Canvas to the working directory.
      * \bug Multiple calls to this function in rapid succession seem to make the FPS counter inaccurate and
-     *  make rendering slowdown.
+     *  make rendering slow down.
      */
     void takeScreenShot();
 };

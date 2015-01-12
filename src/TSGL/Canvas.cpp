@@ -100,14 +100,15 @@ void Canvas::draw() {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             clearRectangle->draw();
 
-			glDrawBuffer(drawBuffer);  // See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
+            glDrawBuffer(drawBuffer);  // See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             clearRectangle->draw();
 
             toClear = false;
-        } else
-			glDrawBuffer(drawBuffer);
+        } else {
+            glDrawBuffer(drawBuffer);
+        }
 
         realFPS = round(1 / timer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
@@ -153,13 +154,13 @@ void Canvas::draw() {
         // Update our screenBuffer copy with the screen
 //        if (toUpdateScreenCopy || toRecord > 0) {  //toUpdateScreenCopy must always be true with getPixel()
         mutexLock pixelLock(pixelMutex);
-		glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-		pixelLock.unlock();
-		bufferReady = true;
-		if (toRecord > 0) {
-			toRecord--;
-			screenShot();
-		}
+        glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+        pixelLock.unlock();
+        bufferReady = true;
+        if (toRecord > 0) {
+            toRecord--;
+            screenShot();
+        }
 
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
         glFlush();
@@ -323,13 +324,13 @@ int Canvas::getMouseY() {
 }
 
 ColorInt Canvas::getPixel(int x, int y) {
-	mutexLock pixelLock(pixelMutex);
-	int offset = 3*(y*winWidth + x);
-	int r = screenBuffer[offset];
-	int g = screenBuffer[offset+1];
-	int b = screenBuffer[offset+2];
-	pixelLock.unlock();
-	return {r,g,b,255};
+    mutexLock pixelLock(pixelMutex);
+    int offset = 3 * (y * winWidth + x);
+    int r = screenBuffer[offset];
+    int g = screenBuffer[offset + 1];
+    int b = screenBuffer[offset + 2];
+    pixelLock.unlock();
+    return ColorInt(r, g, b, 255);
 }
 
 uint8_t* Canvas::getScreenBuffer() {

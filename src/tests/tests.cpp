@@ -62,11 +62,11 @@ void graydientFunction(Canvas& can) {
     //TODO:  Weird...succeeds if and only if it runs for at least 4 frames.
     //glReadPixels() seems to be asynchronous and slow
     for (int i = 0; i < 5; ++i) {
-    	t.sleep();
-		std::cout << "br: " << can.getPixel(can.getWindowWidth()-1,1).AsString() << std::endl;
-		std::cout << "tr: " << can.getPixel(can.getWindowWidth()-1,can.getWindowHeight()-1).AsString() << std::endl;
-		std::cout << "bl: " << can.getPixel(1,1).AsString() << std::endl;
-		std::cout << "tl: " << can.getPixel(1,can.getWindowHeight()-1).AsString() << std::endl;
+        t.sleep();
+        std::cout << "br: " << can.getPixel(can.getWindowWidth()-1,1).AsString() << std::endl;
+        std::cout << "tr: " << can.getPixel(can.getWindowWidth()-1,can.getWindowHeight()-1).AsString() << std::endl;
+        std::cout << "bl: " << can.getPixel(1,1).AsString() << std::endl;
+        std::cout << "tl: " << can.getPixel(1,can.getWindowHeight()-1).AsString() << std::endl;
     }
 }
 
@@ -1504,11 +1504,10 @@ void runOtherHalfoftheFunctions() {
 
 int main() {
     glfwInit();  // Initialize GLFW
-//    Canvas::setDrawBuffer(GL_LEFT);		// For ULab
-    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
+//    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
     std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
     std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
     threadA.join();
     threadB.join();
-    glfwTerminate();    // Release GLFW
+    glfwTerminate();  // Release GLFW
 }
