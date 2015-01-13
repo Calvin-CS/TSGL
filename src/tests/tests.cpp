@@ -1498,7 +1498,7 @@ void runOtherHalfoftheFunctions() {
 
 int main() {
     glfwInit();  // Initialize GLFW
-//    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
+    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
 //    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
 //    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
 //    threadA.join();

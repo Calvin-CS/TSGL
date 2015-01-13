@@ -53,6 +53,7 @@ class TextureHandler {
     static void my_error_exit(j_common_ptr cinfo);
 
     bool saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const;
+    bool saveToBMP(const char* filename, GLubyte *pixels, int w, int h) const;
  public:
     TextureHandler();
     ~TextureHandler();

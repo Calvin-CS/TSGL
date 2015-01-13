@@ -175,6 +175,106 @@ GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width,
     return texture;
 }
 
+bool TextureHandler::saveToBMP(const char* filename, GLubyte *pixels, int w, int h) const {
+
+  unsigned char header[54];           // Each BMP file begins by a 54-bytes header
+  unsigned int imageSize = w * h * 3; //Byte-size of the data for the image
+  unsigned int totalSize = imageSize + 54;
+
+  // Open the file
+#ifdef _WIN32
+  FILE* file;
+  fopen_s(&file, filename, "wb");
+#else
+  FILE* file = fopen(filename, "wb");
+#endif
+
+  if (!file) {
+      fprintf(stderr, "Can't open %s: no such file\n", filename);
+      return 0;
+  }
+
+  unsigned char padding = 4 -(w * 3) % 4;
+  if (padding == 4) padding = 0;
+  int rawdatasize = (w * 3 + padding) * h;
+
+  header[0] = 'B';
+  header[1] = 'M';
+  header[2] = (unsigned char)totalSize;
+  header[3] = (unsigned char)(totalSize>>8);
+  header[4] = (unsigned char)(totalSize>>16);
+  header[5] = (unsigned char)(totalSize>>24);
+  for (unsigned i = 6; i <= 9; ++i)
+    header[i] = 0;
+  header[10] = 54;
+  for (unsigned i = 11; i <= 13; ++i)
+    header[i] = 0;
+  header[14] = 40;
+  for (unsigned i = 15; i <= 17; ++i)
+    header[i] = 0;
+  header[18] = (unsigned char)w;
+  header[19] = (unsigned char)(w>>8);
+  header[20] = (unsigned char)(w>>16);
+  header[21] = (unsigned char)(w>>24);
+  header[22] = (unsigned char)h;
+  header[23] = (unsigned char)(h>>8);
+  header[24] = (unsigned char)(h>>16);
+  header[25] = (unsigned char)(h>>24);
+  header[26] = 1;
+  header[27] = 0;
+  header[28] = 24;
+  header[29]= 0;
+  for (unsigned i = 30; i <= 33; ++i)
+    header[i] = 0;
+  header[34] = (unsigned char)rawdatasize;
+  header[35] = (unsigned char)(rawdatasize>>8);
+  header[36] = (unsigned char)(rawdatasize>>16);
+  header[37] = (unsigned char)(rawdatasize>>24);
+  header[38] = 19;
+  header[39] = 11;
+  header[40] = 0;
+  header[41] = 0;
+  header[42] = 19;
+  header[43] = 11;
+  header[44] = 0;
+  header[45] = 0;
+  for (unsigned i = 46; i <= 53; ++i)
+    header[i] = 0;
+
+  unsigned char *rawdata = new unsigned char[rawdatasize];
+
+  unsigned rawpos = 0, datapos = 0;
+  for (unsigned j = 0; j < h; ++j) {
+    for (unsigned i = 0; i < w; ++i) {
+      rawdata[rawpos] = pixels[datapos+2];
+      rawdata[rawpos+1] = pixels[datapos+1];
+      rawdata[rawpos+2] = pixels[datapos];
+      rawpos += 3;
+      datapos += 3;
+    }
+    for (unsigned i = 0; i < padding; ++i)
+      rawdata[rawpos++] = 0;
+  }
+
+  fwrite(header,54,1,file);
+  fwrite(rawdata,1,rawdatasize,file);
+  fclose(file);
+
+  delete rawdata;
+
+  return 0;
+
+//  // Create a buffer
+//  data = new unsigned char[imageSize];
+//
+//  // Read the actual data from the file into the buffer
+//  if (fread(data, 1, imageSize, file) != imageSize) {  // If not imageSize bytes read : problem
+//      fprintf(stderr, "%s: file ended unexpectedly\n", filename);
+//      fclose(file);
+//      return 0;
+//  }
+}
+
 GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
                                        GLtexture &texture) const {
     // Adapted from http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/#Loading__BMP_images_yourself
@@ -539,7 +639,7 @@ bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels, int 
     else if (extension == ".jpg" || extension == ".jpeg")
         fprintf(stderr, "JPG saving not implemented yet\n");
     else if (extension == ".bmp")
-        fprintf(stderr, "BMP saving not implemented yet\n");
+        success = saveToBMP(filename.c_str(), pixels, w, h);
     else
         fprintf(stderr, "File extension not found\n");
     return success;
