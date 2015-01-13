@@ -51,12 +51,10 @@ class Canvas {
 private:
     typedef std::function<void()>                   voidFunction;
     typedef std::function<void(double, double)>     doubleFunction;
-    typedef std::unique_lock<std::mutex>            mutexLock;
 
     float           aspect;                                             // Aspect ratio used for setting up the window
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
-    bool            bufferReady;                                        //TODO: Add a comment for what this does
     Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
@@ -67,7 +65,6 @@ private:
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
     Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
-    std::mutex      pixelMutex;                                         // Mutex for getPixel()
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
     int             realFPS;                                            // Actual FPS of drawing
@@ -85,8 +82,6 @@ private:
                     textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
-    //TODO: This is no longer used, since getPixel() requires this to always be true. Remove it?
-    bool            toUpdateScreenCopy;                                 // Whether we copy the screen to our buffer next draw cycle
     Timer*          timer;                                              // Timer for steady FPS
     std::string     title_;                                             // Title of the window
     bool            toClear;                                            // Flag for clearing the canvas
@@ -408,14 +403,6 @@ public:
      *      \param b Whether to print the FPS to stdout every draw cycle (for debugging purposes).
      */
     void setShowFPS(bool b);
-
-    /*!
-     * \brief Mutator for keeping track of the screen's drawn buffer.
-     *      \param b Whether to copy the screen's contents to an RGB color buffer every draw cycle.
-     * \note The buffer in question can be accessed with getScreenBuffer().
-     * \note takeScreenShot() and recordForNumFrames() automatically sets this to true.
-     */
-    void setUpdateScreenCopy(bool b);
 
     /*!
      * \brief Stops recording the Canvas.

@@ -1148,7 +1148,6 @@ void getPixelsFunction(Canvas& can) {
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
     can.drawImage("assets/test.png", 0, 0, width, height);
-    can.setUpdateScreenCopy(true);
     Timer::threadSleepFor(.75);
 //    can.recordForNumFrames(100);
     uint8_t* buffer = can.getScreenBuffer();
@@ -1276,13 +1275,13 @@ void screenshotLangtonFunction(Canvas& can) {
 }
 
 void greyScaleFunction(Canvas& can) {
+    //TODO: Make quit if hit escape
     const int THREADS = 4;
     const unsigned int thickness = 3;
     Timer t(FRAME * 2);
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
     can.drawImage("assets/colorful_cars.jpg", 0, 0, width, height);
-    can.setUpdateScreenCopy(true);
     Timer::threadSleepFor(.25);
     uint8_t* buffer = can.getScreenBuffer();
 
@@ -1450,7 +1449,6 @@ void runOtherHalfoftheFunctions() {
     unsigned int width = can1.getWindowWidth(),
                  height = can1.getWindowHeight();
     can1.drawImage("assets/colorful_cars.jpg", 0, 0, width, height);
-    can1.setUpdateScreenCopy(true);
     Timer::threadSleepFor(1);
     uint8_t* buffer = can1.getScreenBuffer();
 
@@ -1472,14 +1470,10 @@ void runOtherHalfoftheFunctions() {
         int gray = 0;
 
         for (unsigned int y = row; y < row + blocksize; y++) {
-            int index = y * width * 3;
             for (unsigned int x = 0; x < width; x++) {
-                gray = (buffer[index] + buffer[index + 1] + buffer[index + 2]) / 3;
+                ColorInt pixel = can1.getPixel(x, y);
+                gray = (pixel.R + pixel.G + pixel.B) / 3;
                 can2.drawPoint(x, height - y, ColorInt(gray, gray, gray));
-                // can2.drawPoint(x, height - y, ColorInt(255 - buffer[index],
-                //                                        255 - buffer[index + 1],
-                //                                        255 - buffer[index + 2]));
-                index += 3;
             }
             if (!(can1.getIsOpen() && can2.getIsOpen())) {
                 can1.end();

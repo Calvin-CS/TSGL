@@ -115,14 +115,14 @@ void Canvas::draw() {
 //        fflush(stdout);
         std::cout.flush();
 
-        mutexLock mBufferLock(bufferMutex);  // Time to flush our buffer
+        bufferMutex.lock();  // Time to flush our buffer
         if (myBuffer->size() > 0) {     // But only if there is anything to flush
             for (unsigned int i = 0; i < myBuffer->size(); i++) {
                 myShapes->push(myBuffer->operator[](i));
             }
             myBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
         }
-        mBufferLock.unlock();
+        bufferMutex.unlock();
 
         int pos = pointBufferPosition;
         int posLast = pointLastPosition;
@@ -152,11 +152,7 @@ void Canvas::draw() {
         }
 
         // Update our screenBuffer copy with the screen
-//        if (toUpdateScreenCopy || toRecord > 0) {  //toUpdateScreenCopy must always be true with getPixel()
-        mutexLock pixelLock(pixelMutex);
         glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-        pixelLock.unlock();
-        bufferReady = true;
         if (toRecord > 0) {
             toRecord--;
             screenShot();
@@ -235,7 +231,7 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
 }
 
 void Canvas::drawPoint(int x, int y, ColorFloat color) {
-    mutexLock mlock(pointArrayMutex);
+    pointArrayMutex.lock();
     if (pointBufferPosition >= myShapes->capacity()) {
         loopAround = true;
         pointBufferPosition = 0;
@@ -250,7 +246,7 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     vertexData[tempPos + 3] = color.G;
     vertexData[tempPos + 4] = color.B;
     vertexData[tempPos + 5] = color.A;
-    mlock.unlock();
+    pointArrayMutex.unlock();
 }
 
 void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool filled) {
@@ -270,9 +266,9 @@ void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool fi
 }
 
 void Canvas::drawShape(Shape* s) {
-    mutexLock mlock(bufferMutex);
+    bufferMutex.lock();
     myBuffer->push(s);  // Push it onto our drawing buffer
-    mlock.unlock();
+    bufferMutex.unlock();
 }
 
 void Canvas::drawText(std::wstring s, int x, int y, unsigned int size, ColorFloat color) {
@@ -324,21 +320,15 @@ int Canvas::getMouseY() {
 }
 
 ColorInt Canvas::getPixel(int x, int y) {
-    mutexLock pixelLock(pixelMutex);
     int offset = 3 * (y * winWidth + x);
-    int r = screenBuffer[offset];
-    int g = screenBuffer[offset + 1];
-    int b = screenBuffer[offset + 2];
-    pixelLock.unlock();
-    return ColorInt(r, g, b, 255);
+    return ColorInt(screenBuffer[offset],
+                    screenBuffer[offset + 1],
+                    screenBuffer[offset + 2],
+                    255);
 }
 
 uint8_t* Canvas::getScreenBuffer() {
-    if (toUpdateScreenCopy || toRecord > 0) {
-        return screenBuffer;
-    } else {
-        return NULL;
-    }
+    return screenBuffer;
 }
 
 double Canvas::getTime() {
@@ -389,12 +379,12 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
-    mutexLock glfwLock(glfwMutex);                                  // GLFW crashes if you try to make more than once window at once
+    glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
     if (!window) {
         fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
     }
-    glfwLock.unlock();
+    glfwMutex.unlock();
 
     const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
     if (!monInfo) {
@@ -506,7 +496,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     toClose = false;
     framecounter = 0;
     screenBuffer = new uint8_t[3 * winWidth * winHeight];
-    bufferReady = true;
 
     toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet
@@ -522,7 +511,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     pointBufferPosition = pointLastPosition = 0;
     loopAround = false;
     toRecord = 0;
-    toUpdateScreenCopy = false;
 
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, GREY);
 
@@ -532,8 +520,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 }
 
 void Canvas::screenShot() {
-    const unsigned int NUM_DIGITS = 6;
-
     char filename[25];
     sprintf(filename, "frames/Image%06d.png", framecounter);
 
@@ -560,10 +546,6 @@ void Canvas::setFont(std::string filename) {
 
 void Canvas::setShowFPS(bool b) {
     showFPS = b;
-}
-
-void Canvas::setUpdateScreenCopy(bool b) {
-    toUpdateScreenCopy = b;
 }
 
 void Canvas::SetupCamera() {
