@@ -104,8 +104,8 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
         GLtexture texture;
         createGLtextureFromBuffer(texture, glyph->bitmap.buffer, glyph->bitmap.width, glyph->bitmap.rows, glMode);
         glBindTexture(GL_TEXTURE_2D, texture);                            // Set the current texture
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
