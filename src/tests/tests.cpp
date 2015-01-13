@@ -1176,24 +1176,6 @@ void getPixelsFunction(Canvas& can) {
     }
 }
 
-void shapeTestFunction(Canvas& can) {
-    Timer t(FRAME);
-    can.recordForNumFrames(3 * FPS);
-    while (can.getIsOpen()) {
-        t.sleep();
-        can.clear();
-        srand(time(NULL));
-        for (int i = 0; i < 255; i++)
-            can.drawCircle(can.getWindowWidth() / 2, can.getWindowHeight() / 2, i, 64,
-                           Colors::randomColor(1.0f), false);
-        can.drawCircle(can.getWindowWidth() / 2, can.getWindowHeight() / 2, 256, 64,
-                       Colors::randomColor(1.0f), true);
-        can.drawRectangle(32, 32, can.getWindowWidth() - 64, can.getWindowHeight() - 64, BLACK, false);
-        can.drawTriangle(can.getWindowWidth() / 2, 32, can.getWindowWidth() - 32, can.getWindowHeight() - 32, 32,
-                         can.getWindowHeight() - 32, BLACK, false);
-    }
-}
-
 void screenshotLangtonFunction(Canvas& can) {
     const int IPF = 5000,                         // Iterations per frame
               WINDOW_W = can.getWindowWidth(),    // Set the window sizes
@@ -1342,6 +1324,24 @@ void mouseFunction(Canvas& can) {
     }
 }
 
+void screenShotFunction(Canvas& can) {
+    int xOld, yOld, xMid, yMid, xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2;
+    xMid = xNew;
+    yMid = yNew;
+    can.recordForNumFrames(FPS * 30);
+    Timer t(FRAME);
+    while (can.getIsOpen()) {  // Checks to see if the window has been closed
+        t.sleep();
+        xOld = xMid;
+        yOld = yMid;
+        xMid = xNew;
+        yMid = yNew;
+        xNew = rand() % can.getWindowWidth();
+        yNew = rand() % can.getWindowHeight();
+        can.drawTriangle(xOld, yOld, xMid, yMid, xNew, yNew, Colors::randomColor(), true);
+    }
+}
+
 void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, const ColorFloat &bg = GREY) {
     c.setBackgroundColor(bg);
     c.start();
@@ -1426,10 +1426,10 @@ void runOtherHalfoftheFunctions() {
    test(c26,imageCartFunction,false);
    Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
    test(c27,textCartFunction,true);
-    Canvas c28(0, 0, 800, 600, 500000);
-    test(c28,getPixelsFunction,true);
+   Canvas c28(0, 0, 800, 600, 500000);
+   test(c28,getPixelsFunction,true);
    Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-   test(c29,shapeTestFunction,true);
+   test(c29,screenShotFunction,true);
    Canvas c30(0, 0, 960, 960, 30000);
    test(c30,screenshotLangtonFunction,true,BLACK);
    Canvas c31(0, 0, 1280, 1024, 500000);
@@ -1499,9 +1499,11 @@ void runOtherHalfoftheFunctions() {
 int main() {
     glfwInit();  // Initialize GLFW
 //    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
-    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
-    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
-    threadA.join();
-    threadB.join();
+//    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
+//    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
+//    threadA.join();
+//    threadB.join();
+    Canvas c29(0, 0, 1200, 900, 50000);
+    test(c29,screenShotFunction,true);
     glfwTerminate();  // Release GLFW
 }
