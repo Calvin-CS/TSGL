@@ -59,7 +59,6 @@ void graydientFunction(Canvas& can) {
         }
     }
     Timer t(FRAME);
-    //TODO:  Weird...succeeds if and only if it runs for at least 4 frames.
     //glReadPixels() seems to be asynchronous and slow
     for (int i = 0; i < 5; ++i) {
         t.sleep();
@@ -1257,7 +1256,6 @@ void screenshotLangtonFunction(Canvas& can) {
 }
 
 void greyScaleFunction(Canvas& can) {
-    //TODO: Make quit if hit escape
     const int THREADS = 4;
     const unsigned int thickness = 3;
     Timer t(FRAME * 2);
@@ -1281,7 +1279,8 @@ void greyScaleFunction(Canvas& can) {
                 gray = (buffer[index] + buffer[index + 1] + buffer[index + 2]) / 3;
                 can.drawPoint(x, height - y, ColorInt(gray, gray, gray));
                 index += 3;
-           }
+            }
+            if (! can.getIsOpen()) break;
             t.sleep();
         }
         for (unsigned int i = 0; i < thickness; i++) {
@@ -1499,11 +1498,11 @@ void runOtherHalfoftheFunctions() {
 int main() {
     glfwInit();  // Initialize GLFW
 //    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
-//    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
-//    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
-//    threadA.join();
-//    threadB.join();
-    Canvas c29(0, 0, 1200, 900, 50000);
-    test(c29,screenShotFunction,true);
+    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
+    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
+    threadA.join();
+    threadB.join();
+//    Canvas c29(0, 0, 1200, 900, 50000);
+//    test(c29,screenShotFunction,true);
     glfwTerminate();  // Release GLFW
 }
