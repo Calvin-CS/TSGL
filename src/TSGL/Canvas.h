@@ -318,9 +318,9 @@ public:
     /*!
      * \brief Gets the color of the pixel drawn on the current Canvas at the given coordinates.
      * \note (0,0) signifies the bottom-<b>left</b> of the Canvas.
+     * \note getPixel will return the current status of the screen. Any object waiting to be drawn
      *      \param x The x position of the pixel to grab.
      *      \param y The y position of the pixel to grab.
-     * \note getPixel will return the current status of the screen. Any object waiting to be drawn
      *  will not affect what is returned.
      * \return The ColorInt representation of the pixel at x,y.
      */

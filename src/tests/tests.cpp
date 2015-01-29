@@ -2,7 +2,6 @@
  * tests.cpp provides example usage for the TSGL library
  *
  * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 7/14/2014
  */
 
 #include <cmath>
@@ -31,22 +30,22 @@ enum direction {
 typedef CartesianCanvas Cart;
 typedef std::complex<long double> complex;
 
-void print(const double d) {
-    std::cout << d << std::endl;
-}
 float randfloat(int divisor = 10000) {
     return (rand() % divisor) / (float) divisor;
 }
-float randint(int max = 10000) {
-    return rand() % max;
-}
 
+/*!
+ * \brief Draws a diagonal black-to-white gradient using OMP
+ * \details
+ * - A parallel block is set up with #pragma omp parallel using all available processors
+ * - The actual number of threads created is stored in \b nthreads
+ * - The outer for loop is set up in a striping pattern, and the inner for loop runs from 0 to the Canvas height
+ * - The color is set to a shade of gray based on its distance from the top left of the canvas
+ * - The point is drawn to the Canvas
+ * .
+ * \param can Reference to the Canvas being drawn to
+ */
 void graydientFunction(Canvas& can) {
-    int x = 0;
-    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &x]() {
-        std::cout << x++ << std::endl;
-    });
-
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
         int nthreads = omp_get_num_threads();
@@ -58,20 +57,23 @@ void graydientFunction(Canvas& can) {
             }
         }
     }
-    Timer t(FRAME);
-    //glReadPixels() seems to be asynchronous and slow
-    for (int i = 0; i < 5; ++i) {
-        t.sleep();
-        std::cout << "br: " << can.getPixel(can.getWindowWidth()-1,1).AsString() << std::endl;
-        std::cout << "tr: " << can.getPixel(can.getWindowWidth()-1,can.getWindowHeight()-1).AsString() << std::endl;
-        std::cout << "bl: " << can.getPixel(1,1).AsString() << std::endl;
-        std::cout << "tl: " << can.getPixel(1,can.getWindowHeight()-1).AsString() << std::endl;
-    }
 }
 
+/*!
+ * \brief Draws a neat pattern of points to a canvas using OMP
+ * \details
+ * - A parallel block is set up with #pragma omp parallel using all available processors
+ * - The actual number of threads created is stored in \b nthreads
+ * - The number of lines per thread is calculated and stored in \b myPart
+ * - The starting position of each given thread is calculated and stored in \b myStart
+ * - The outer for loop is set up in a block pattern, and the inner for loop runs from 100 to the Canvas width - 100
+ * - Some dark voodoo magic is used to calculate the color for a given point
+ * - The point is drawn to the Canvas
+ * .
+ * \param can Reference to the Canvas being drawn to
+ */
 void colorPointsFunction(Canvas& can) {
-    int threads = omp_get_num_procs();
-    #pragma omp parallel num_threads(threads)
+    #pragma omp parallel num_threads(omp_get_num_procs())
     {
         int nthreads = omp_get_num_threads();
         int myPart = can.getWindowHeight() / nthreads;
@@ -215,7 +217,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
             }
 
         }
-        print(t.getTime());
+        std::cout << t.getTime() << std::endl;
         while (can.getIsOpen() && !toRender)
             t.sleep();
     }
@@ -1348,7 +1350,7 @@ void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, const ColorFloat
     (*f)(c);
     if (printFPS) {
         c.setShowFPS(false);
-        print(c.getTime());
+        std::cout << c.getTime() << std::endl;
     }
     c.close();
 }
@@ -1359,9 +1361,8 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, const ColorFloat &bg
     (*f)(c);
     if (printFPS) {
         c.setShowFPS(false);
-        print(c.getTime());
+        std::cout << c.getTime() << std::endl;
     }
-    print(c.getTime());
     c.close();
 }
 
@@ -1497,7 +1498,7 @@ void runOtherHalfoftheFunctions() {
 
 int main() {
     glfwInit();  // Initialize GLFW
-//    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
+    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
     std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
     std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
     threadA.join();

@@ -39,7 +39,7 @@ LFLAGS=-o bin/testTSGL -LTSGL/ -ltsgl \
 
 DEPFLAGS=-MMD -MP
 
-all: dif tsgl tests docs
+all: dif tsgl tests docs tutorial
 
 debug: dif tsgl tests
 
@@ -51,8 +51,10 @@ tests: bin/testTSGL
 
 docs: docs/html/index.html
 
+tutorial: tutorial/docs/html/index.html
+
 clean:
-	$(RM) -r bin/* build/* docs/html/* lib/* *~ *# *.tmp
+	$(RM) -r bin/* build/* docs/html/* lib/* tutorial/docs/html/* *~ *# *.tmp
 
 -include build/*.d
 
@@ -82,6 +84,10 @@ docs/html/index.html: ${HEADERS} Doxyfile
 	@echo 'Generating Doxygen'
 	@doxygen
 
-.PHONY: all debug clean tsgl tests docs dif
+tutorial/docs/html/index.html: ${HEADERS} TutDoxyfile
+	@echo 'Generating Doxygen'
+	@doxygen TutDoxyfile
+
+.PHONY: all debug clean tsgl tests docs tutorial dif
 .SECONDARY: ${OBJS} build/tests.o $(OBJS:%.o=%.d)
 

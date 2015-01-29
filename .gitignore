@@ -15,6 +15,7 @@ libraries/
 
 # Ignore generated doxygen (for now)
 docs/html/
+tutorial/docs/html
 
 # Ignore valgrind info
 valgrind*
