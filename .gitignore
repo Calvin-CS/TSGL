@@ -22,3 +22,6 @@ valgrind*
 
 # Ignore settings
 .settings/
+
+# Ignore notes
+tsgl-note
