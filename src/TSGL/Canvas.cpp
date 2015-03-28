@@ -320,7 +320,9 @@ int Canvas::getMouseY() {
 }
 
 ColorInt Canvas::getPixel(int x, int y) {
-    int offset = 3 * (y * winWidth + x);
+    int padding = winWidth % 4;  //Apparently, the array is automatically padded to four bytes. Go figure.
+    int yy = winHeight - y; //TODO: glReadPixels starts from the bottom left, and we have no way to change that...
+    int offset = 3 * ( yy * winWidth + x) + padding*yy;
     return ColorInt(screenBuffer[offset],
                     screenBuffer[offset + 1],
                     screenBuffer[offset + 2],
@@ -496,7 +498,11 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     keyDown = false;
     toClose = false;
     framecounter = 0;
-    screenBuffer = new uint8_t[3 * winWidth * winHeight];
+
+    unsigned buffersize = 3 * (winWidth+(winWidth%4)) * winHeight;
+    screenBuffer = new uint8_t[buffersize];
+    for (unsigned i = 0; i < buffersize; ++i)
+      screenBuffer[i] = 0;
 
     toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet
