@@ -25,7 +25,7 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/local/include/freetype2/ \
         -std=c++0x -fopenmp
 
-LFLAGS=-o bin/testTSGL -LTSGL/ -ltsgl \
+LFLAGS=-LTSGL/ -ltsgl \
 	-Llib/ \
 	-L/opt/local/lib/ \
 	-L/usr/lib/ \
@@ -47,7 +47,7 @@ dif: build/build
 
 tsgl: lib/libtsgl.a
 
-tests: bin/testTSGL
+tests: bin/testTSGL bin/testInverter
 
 docs: docs/html/index.html
 
@@ -58,7 +58,7 @@ clean:
 
 -include build/*.d
 
-build/build: ${HEADERS} ${SOURCES} src/tests/tests.cpp
+build/build: ${HEADERS} ${SOURCES} src/tests/tests.cpp src/tests/testInverter.cpp
 	@echo 'Files that changed:'
 	@echo $(patsubst src/%,%,$?)
 
@@ -69,7 +69,12 @@ lib/libtsgl.a: ${OBJS}
 
 bin/testTSGL: build/tests.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ $(LFLAGS)
+	$(CC) $^ -o bin/testTSGL $(LFLAGS)
+	@touch build/build
+	
+bin/testInverter: build/testInverter.o lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testInverter $(LFLAGS)
 	@touch build/build
 
 build/%.o: src/TSGL/%.cpp
@@ -77,6 +82,10 @@ build/%.o: src/TSGL/%.cpp
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
 build/tests.o: src/tests/tests.cpp
+	@echo 'Building $(patsubst src/tests/%,%,$<)'
+	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
+
+build/testInverter.o: src/tests/testInverter.cpp
 	@echo 'Building $(patsubst src/tests/%,%,$<)'
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
