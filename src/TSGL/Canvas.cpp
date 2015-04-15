@@ -230,6 +230,10 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
     drawShape(l);                               // Push it onto our drawing buffer
 }
 
+inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
+    drawPoint(col, row, color);
+}
+
 void Canvas::drawPoint(int x, int y, ColorFloat color) {
     pointArrayMutex.lock();
     if (pointBufferPosition >= myShapes->capacity()) {
@@ -319,10 +323,20 @@ int Canvas::getMouseY() {
     return mouseY;
 }
 
-ColorInt Canvas::getPixel(int x, int y) {
-    int padding = winWidth % 4;  //Apparently, the array is automatically padded to four bytes. Go figure.
-    int yy = winHeight - y; //TODO: glReadPixels starts from the bottom left, and we have no way to change that...
-    int offset = 3 * ( yy * winWidth + x) + padding*yy;
+ColorInt Canvas::getPixel(int row, int col) {
+    return getPoint(col,row);
+//    int padding = winWidth % 4;  // Apparently, the array is automatically padded to four bytes. Go figure.
+//    int offset = 3 * (row * winWidth + col) + padding * row;
+//    return ColorInt(screenBuffer[offset],
+//                    screenBuffer[offset + 1],
+//                    screenBuffer[offset + 2],
+//                    255);
+}
+
+ColorInt Canvas::getPoint(int x, int y) {
+    int padding = winWidth % 4;  // Apparently, the array is automatically padded to four bytes. Go figure.
+    int yy = winHeight - y;      // TODO: glReadPixels starts from the bottom left, and we have no way to change that...
+    int offset = 3 * (yy * winWidth + x) + padding * yy;
     return ColorInt(screenBuffer[offset],
                     screenBuffer[offset + 1],
                     screenBuffer[offset + 2],
@@ -405,9 +419,11 @@ void Canvas::glInit() {
     glEnable(GL_BLEND);                                 // Enable blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
 
+#ifdef DEBUG
     printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
     printf("OpenGL version: %s\n", glGetString(GL_VERSION));
     printf("GLFW version:   %s\n", glfwGetVersionString());
+#endif
 
     // Needed?
 //    glEnable(GL_TEXTURE_2D);

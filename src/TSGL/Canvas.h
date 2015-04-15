@@ -229,7 +229,18 @@ public:
 
     /*!
      * \brief Draw a single pixel.
-     * \details This function draws a Point at the given coordinates with the given color.
+     * \details This function draws a Point at the given screen coordinates with the given color.
+     * \note (0,0) signifies the <b>top-left</b> of the screen.
+     *      \param row The row (y-position) of the pixel.
+     *      \param col The column (x-position) of the pixel.
+     *      \param color The color of the point.
+     */
+    virtual void drawPixel(int row, int col, ColorFloat color = BLACK);
+
+    /*!
+     * \brief Draw a single pixel.
+     * \details This function draws a Point at the given Cartesian coordinates with the given color.
+     * \note (0,0) signifies the <b>bottom-left</b> of the Canvas.
      *      \param x The x position of the point.
      *      \param y The y position of the point.
      *      \param color The color of the point.
@@ -316,15 +327,26 @@ public:
     int getMouseY();
 
     /*!
-     * \brief Gets the color of the pixel drawn on the current Canvas at the given coordinates.
-     * \note (0,0) signifies the bottom-<b>left</b> of the Canvas.
+     * \brief Gets the color of the pixel drawn on the current Canvas at the given screen coordinates.
+     * \note (0,0) signifies the <b>top-left</b> of the screen.
      * \note getPixel will return the current status of the screen. Any object waiting to be drawn
+     *  will not affect what is returned.
+     *      \param row The row (y-position) of the pixel to grab.
+     *      \param col The column (x-position) of the pixel to grab.
+     * \return The ColorInt representation of the pixel at col,row.
+     */
+    ColorInt getPixel(int row, int col);
+
+    /*!
+     * \brief Gets the color of the pixel drawn on the current Canvas at the given Cartesian coordinates.
+     * \note (0,0) signifies the <b>bottom-left</b> of the Canvas.
+     * \note getPixel will return the current status of the screen. Any object waiting to be drawn
+     *  will not affect what is returned.
      *      \param x The x position of the pixel to grab.
      *      \param y The y position of the pixel to grab.
-     *  will not affect what is returned.
      * \return The ColorInt representation of the pixel at x,y.
      */
-    ColorInt getPixel(int x, int y);
+    ColorInt getPoint(int x, int y);
 
     /*!
      * \brief Accessor for the Canvas's currently drawn image.

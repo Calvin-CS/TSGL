@@ -88,10 +88,10 @@ void ImageInverter::invertImage(unsigned numThreads) {
 	for (unsigned row = 0; row < myHeight; row++) {
 		Timer t(0.00001);
 		for (unsigned col = 0; col < myWidth; col++) {
-			pixelColor = myCanvas1.getPixel(col, row);
+			pixelColor = myCanvas1.getPixel(row, col);
 			inverse = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
 //			myCanvas2.drawPoint(col,row, pixelColor );
-			myCanvas2.drawPoint(col, row, ColorInt(inverse, inverse, inverse) );
+			myCanvas2.drawPixel(row, col, ColorInt(inverse,inverse,inverse) );
 			t.sleep();
 		}
 	}
