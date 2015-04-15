@@ -382,9 +382,8 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
-    window = glfwCreateWindow(winWidth, winHeight, "TSGL", NULL, NULL);  // Windowed
-    std::cout << "test" << std::endl;
-    if (window) {
+    window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
+    if (!window) {
         fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
     }
     glfwMutex.unlock();
