@@ -46,19 +46,25 @@ void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int res, 
     Canvas::drawCircle(actualX, actualY, actualR, res, color, filled);
 }
 
-void CartesianCanvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+void CartesianCanvas::drawColoredPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled) {
+    int* int_x = new int[size];
+    int* int_y = new int[size];
+
     for (int i = 0; i < size; i++) {
-        getScreenCoordinates(x[i], y[i], x[i], y[i]);
+        getScreenCoordinates(x[i], y[i], int_x[i], int_y[i]);
     }
-    Canvas::drawColoredPolygon(size, x, y, color, filled);
+    Canvas::drawColoredPolygon(size, int_x, int_y, color, filled);
+
+    delete int_x;
+    delete int_y;
 }
 
-void CartesianCanvas::drawFunction(const Function &f) {
+void CartesianCanvas::drawFunction(const Function &f, ColorFloat color) {
     int screenX = 0, screenY = 0;
     Polyline *p = new Polyline(1 + (maxX - minX) / pixelWidth);
     for (Decimal x = minX; x <= maxX; x += pixelWidth) {
         getScreenCoordinates(x, f.valueAt(x), screenX, screenY);
-        p->addNextVertex(screenX, screenY);
+        p->addNextVertex(screenX, screenY, color);
     }
 
     drawShape(p);

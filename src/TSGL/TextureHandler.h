@@ -52,8 +52,8 @@ class TextureHandler {
 
     static void my_error_exit(j_common_ptr cinfo);
 
-    bool saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const;
-    bool saveToBMP(const char* filename, GLubyte *pixels, int w, int h) const;
+    bool saveToPNG(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
+    bool saveToBMP(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
  public:
     TextureHandler();
     ~TextureHandler();
@@ -61,7 +61,7 @@ class TextureHandler {
     bool drawText(std::wstring text, unsigned int font_size, float* vertices);
     bool loadFont(const std::string& filename);
     GLtexture loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture);
-    bool saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const;
+    bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
 };
 
 #endif /* TEXTURELOADER_H_ */

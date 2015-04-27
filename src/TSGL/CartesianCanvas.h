@@ -89,7 +89,7 @@ public:
      *      \param filled whether the colored polygon should be filled (true) or not (false)
      * \note Identical to Canvas::drawColoredPolygon()
      */
-    void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    void drawColoredPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Plots a function on the screen
@@ -97,7 +97,7 @@ public:
      *      \param f The function to plot.
      * \note The passed function must receive exactly one Decimal parameter, and return a Decimal.
      */
-    void drawFunction(const Function &f);
+    void drawFunction(const Function &f, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw an image.

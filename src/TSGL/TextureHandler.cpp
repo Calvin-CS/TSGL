@@ -531,7 +531,7 @@ void TextureHandler::my_error_exit(j_common_ptr cinfo) {
     longjmp(myerr->setjmp_buffer, 1);
 }
 
-bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels, int w, int h) const {
+bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const {
     std::string extension = filename.substr(filename.find_last_of('.'));
     bool success = false;
     if (extension == ".png")
@@ -545,7 +545,7 @@ bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels, int 
     return success;
 }
 
-bool TextureHandler::saveToBMP(const char* filename, GLubyte *pixels, int w, int h) const {
+bool TextureHandler::saveToBMP(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const {
     unsigned char header[54];           // Each BMP file begins by a 54-bytes header
     unsigned int imageSize = w * h * 3; // Byte-size of the data for the image
     unsigned int totalSize = imageSize + 54;
@@ -635,7 +635,7 @@ bool TextureHandler::saveToBMP(const char* filename, GLubyte *pixels, int w, int
     return true;
 }
 
-bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, int w, int h) const {
+bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const {
     png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
     if (!png) {
         fprintf(stderr, "%s: png_create_write_struct returned NULL\n", filename);
@@ -677,7 +677,7 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, int w, int
     png_set_packing(png);
 
     png_bytepp rows = (png_bytepp) png_malloc(png, (unsigned) (h * sizeof(png_bytep)));
-    for (int i = 0; i < h; ++i)
+    for (unsigned int i = 0; i < h; ++i)
         rows[i] = (png_bytep) (pixels + (h - i - 1) * w * 3);
 
     png_write_image(png, rows);
@@ -689,3 +689,4 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, int w, int
     delete[] rows;
     return true;
 }
+
