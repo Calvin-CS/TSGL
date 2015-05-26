@@ -1785,6 +1785,7 @@ void mouseFunction(Canvas& can) {
     });
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown, &can, &index, &x, &y, &color]() {
         can.drawColoredPolygon(index, x, y, color, true);
+        can.drawConvexPolygon(index, x, y, color, true);  //new, convex polygon
         mouseDown = false;
     });
     Timer t(FRAME);
@@ -1916,43 +1917,43 @@ void runHalfoftheFunctions() {
 }
 
 void runOtherHalfoftheFunctions() {
-//   Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
-//   test(c15,alphaRectangleFunction,false,BLACK);
-//   Canvas c16(0, 0, 960, 960, 30000);
-//   test(c16,alphaLangtonFunction,true,BLACK);
-//   Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-//   test(c17,gradientMandelbrotFunction,true);
-//   Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
-//   test(c18,novaFunction,true);
-//   Canvas c19(0, 0, 1600, 1200, BUFFER);
-//   test(c19,voronoiFunction,true,WHITE);
-//   Canvas c20(0, 0, 1600, 1200, BUFFER);
-//   test(c20,shadedVoronoiFunction,false,WHITE);
-//   Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
-//   test(c21,forestFireFunction,false);
-//   Canvas c22(0,0,1200,600,100);
-//   test(c22,imageFunction,false);
-//   Canvas c23(0, 0, 1200, 900, 1201 * 900);
-//   test(c23, highData, true);
-//   Canvas c24(10);
-//   test(c24,textFunction,false);
-//   Canvas c25(0,0,1600,600,1000);
-//   test(c25,pongFunction,false, BLACK);
-//   Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
-//   test(c26,imageCartFunction,false);
-//   Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
-//   test(c27,textCartFunction,true);
+   Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
+   test(c15,alphaRectangleFunction,false,BLACK);
+   Canvas c16(0, 0, 960, 960, 30000);
+   test(c16,alphaLangtonFunction,true,BLACK);
+   Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER); 
+   test(c17,gradientMandelbrotFunction,true);
+   Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
+   test(c18,novaFunction,true);
+   Canvas c19(0, 0, 1600, 1200, BUFFER);
+   test(c19,voronoiFunction,true,WHITE);
+   Canvas c20(0, 0, 1600, 1200, BUFFER);
+   test(c20,shadedVoronoiFunction,false,WHITE);
+   Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
+   test(c21,forestFireFunction,false);
+   Canvas c22(0,0,1200,600,100);
+   test(c22,imageFunction,false);
+   Canvas c23(0, 0, 1200, 900, 1201 * 900);
+   test(c23, highData, true);
+   Canvas c24(10);
+   test(c24,textFunction,false);
+   Canvas c25(0,0,1600,600,1000);
+   test(c25,pongFunction,false, BLACK);
+   Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
+   test(c26,imageCartFunction,false);
+   Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
+   test(c27,textCartFunction,true);
    Canvas c28(0, 0, 800, 600, 500000);
    test(c28,getPixelsFunction,true);
-//   Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-//   test(c29,screenShotFunction,true);
-//   Canvas c30(0, 0, 960, 960, 30000);
-//   test(c30,screenshotLangtonFunction,true,BLACK);
-//   Canvas c31(0, 0, 1280, 1024, 500000);
-//   test(c31,greyScaleFunction,true);
-//   Canvas c32(0, 0, 800, 600, 5000);
-//   test(c32,mouseFunction,false,WHITE);
-
+   Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+   test(c29,screenShotFunction,true);
+   Canvas c30(0, 0, 960, 960, 30000);
+   test(c30,screenshotLangtonFunction,true,BLACK);
+   Canvas c31(0, 0, 1280, 1024, 500000);
+   test(c31,greyScaleFunction,true);
+   Canvas c32(0, 0, 800, 600, 5000);
+   test(c32,mouseFunction,false,WHITE);
+    
     Canvas can1(0, 0, 1024, 768, 500000);
     Canvas can2(0, 0, 1024, 768, 500000);
     can2.setBackgroundColor(GREY);
@@ -2014,7 +2015,7 @@ void runOtherHalfoftheFunctions() {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
+    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
 //    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
     std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
 //    threadA.join();

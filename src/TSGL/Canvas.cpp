@@ -218,6 +218,24 @@ void Canvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], 
     }
 }
 
+//new method for convex
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+    if (filled) {
+        ConvexPolygon* p = new ConvexPolygon(size);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(x[i], y[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(size);
+        for (int i = 0; i < size; i++) {
+            p->addNextVertex(x[i], y[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+}
+
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //    glfwMakeContextCurrent(window);                       // We're drawing to window as soon as it's created
     Image* im = new Image(fname, loader, x, y, w, h, a);  // Creates the Image with the specified coordinates

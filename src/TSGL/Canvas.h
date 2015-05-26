@@ -18,6 +18,7 @@
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
 #include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
+#include "ConvexPolygon.h"   
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
@@ -203,7 +204,10 @@ public:
      *      \param filled whether the colored polygon should be filled (true) or not (false)
      */
     virtual void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
-
+    
+    //new method for convex polygon
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    
     /*!
      * \brief Draw an image.
      * \details This function draws an Image with the given coordinates and dimensions.

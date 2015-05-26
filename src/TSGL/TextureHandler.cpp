@@ -212,7 +212,7 @@ GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int 
     }
 
     imageSize = width = height = 0;
-
+    //TODO: Maybe fix for Windows...
     // Get info out of header as 4 byte unsigned ints
     for (int i = 3; i >= 0; i--)
         imageSize = (imageSize << 8) | header[0x22 + i];
