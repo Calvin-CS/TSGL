@@ -2081,19 +2081,12 @@ void runOtherHalfoftheFunctions() {
 
 int main() {
     glfwInit();  // Initialize GLFW
-<<<<<<< HEAD
     Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
+    //    Canvas::setDrawBuffer(GL_FRONT_AND_BACK); // For ULab Machines
     std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
 //    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
     threadA.join();
 //    threadB.join();
-=======
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-//    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
-    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
-//    threadA.join();
-    threadB.join();
->>>>>>> 77b812bb87fc34a8ba4ade4d96eada16651b3a4a
 //    Canvas c29(0, 0, 1200, 900, 50000);
 //    test(c29,screenShotFunction,true);
     glfwTerminate();  // Release GLFW
