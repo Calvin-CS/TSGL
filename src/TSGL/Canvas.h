@@ -116,6 +116,7 @@ private:
     void        SetupCamera();                                          // Setup the 2D camera for smooth rendering
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
     void        textureShaders(bool state);                             // Turn textures on or off
+    
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:

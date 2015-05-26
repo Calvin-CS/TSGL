@@ -1396,7 +1396,7 @@ void textFunction(Canvas& can) {
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-    can.setFont("assets/freefont/FreeSerif.ttf");
+  //  can.setFont("assets/freefont/FreeSerif.ttf");   //New, commented out for testing no font set
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
@@ -1404,7 +1404,26 @@ void textFunction(Canvas& can) {
                  32, BLUE);
     can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
     can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
+    
 }
+
+//New test function, checking to see if the font still worked with error handling
+void textFunctionTwo(Canvas& can) {
+    ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
+    ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
+    ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
+
+    can.setFont("assets/freefont/FreeMono.ttf");   
+    can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
+    can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
+    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
+    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
+                 32, BLUE);
+    can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
+    can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
+    
+}
+
 
 /*!
  * \brief Draws some text on a CartesianCanvas
@@ -1937,22 +1956,24 @@ void runOtherHalfoftheFunctions() {
    test(c23, highData, true);
    Canvas c24(10);
    test(c24,textFunction,false);
-   Canvas c25(0,0,1600,600,1000);
-   test(c25,pongFunction,false, BLACK);
-   Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
-   test(c26,imageCartFunction,false);
-   Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
-   test(c27,textCartFunction,true);
-   Canvas c28(0, 0, 800, 600, 500000);
-   test(c28,getPixelsFunction,true);
-   Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-   test(c29,screenShotFunction,true);
-   Canvas c30(0, 0, 960, 960, 30000);
-   test(c30,screenshotLangtonFunction,true,BLACK);
-   Canvas c31(0, 0, 1280, 1024, 500000);
-   test(c31,greyScaleFunction,true);
-   Canvas c32(0, 0, 800, 600, 5000);
-   test(c32,mouseFunction,false,WHITE);
+   Canvas c25(10);
+   test(c25, textFunctionTwo, false);  //Tested text function a second time to make sure it still worked with the no font setting
+   Canvas c26(0,0,1600,600,1000);
+   test(c26,pongFunction,false, BLACK);
+   Cart c27(0, 0, 1200, 600, 0, 0, 6, 3, 10);
+   test(c27,imageCartFunction,false);
+   Cart c28(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
+   test(c28,textCartFunction,true);
+   Canvas c29(0, 0, 800, 600, 500000);
+   test(c29,getPixelsFunction,true);
+   Cart c30(0, 0, 800, 600, 0, 0, 800, 600, 50000);
+   test(c30,screenShotFunction,true);
+   Canvas c31(0, 0, 960, 960, 30000);
+   test(c31,screenshotLangtonFunction,true,BLACK);
+   Canvas c32(0, 0, 1280, 1024, 500000);
+   test(c32,greyScaleFunction,true);
+   Canvas c33(0, 0, 800, 600, 5000);
+   test(c33,mouseFunction,false,WHITE);
     
     Canvas can1(0, 0, 1024, 768, 500000);
     Canvas can2(0, 0, 1024, 768, 500000);
