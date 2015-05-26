@@ -25,3 +25,9 @@ valgrind*
 
 # Ignore notes
 tsgl-note
+
+# Backups
+*~
+
+# Bitmaps
+Image*.bmp

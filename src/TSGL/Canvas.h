@@ -18,7 +18,8 @@
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
 #include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
-#include "ConcavePolygon.h" // Our own class for drawing polygons with colored vertices
+#include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
+//#include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
@@ -116,6 +117,7 @@ private:
     void        SetupCamera();                                          // Setup the 2D camera for smooth rendering
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
     void        textureShaders(bool state);                             // Turn textures on or off
+    
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
@@ -204,7 +206,10 @@ public:
      *      \param filled whether the colored polygon should be filled (true) or not (false)
      */
     virtual void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
-
+    
+    //new method for convex polygon
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    
     /*!
      * \brief Draw an image.
      * \details This function draws an Image with the given coordinates and dimensions.

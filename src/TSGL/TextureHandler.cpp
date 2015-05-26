@@ -56,6 +56,10 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 
 bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
     const wchar_t* string = text.c_str();
+    if(fontFace == nullptr) {   //new, no font is set, load up a default one
+    fprintf(stderr, "No Font set! Now loading from assets/freefont/FreeSerif.ttf ....\n");    //NEW
+    loadFont("assets/freefont/FreeSerif.ttf");    //NEW
+    }
     FT_GlyphSlot glyph = fontFace->glyph;
     FT_UInt current_glyph_index, previous_glyph_index = 0;
     int penX = vertices[0],
@@ -130,7 +134,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
             return false;
         }
     }
-
+	
     if (loadedFonts.find(filename) == loadedFonts.end()) {  // Load the image if we haven't already
         FT_Face tmp_face;
         int error = FT_New_Face(fontLibrary, filename.c_str(), 0, &tmp_face);
@@ -142,7 +146,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
             fprintf(stderr, "%s: the font file could not be opened and read\n", filename.c_str());
             return false;
         }
-
+        
         loadedFonts[filename] = tmp_face;
         fontFace = tmp_face;
         FT_Select_Charmap(fontFace , ft_encoding_unicode);
@@ -212,7 +216,7 @@ GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int 
     }
 
     imageSize = width = height = 0;
-
+    //TODO: Maybe fix for Windows...
     // Get info out of header as 4 byte unsigned ints
     for (int i = 3; i >= 0; i--)
         imageSize = (imageSize << 8) | header[0x22 + i];

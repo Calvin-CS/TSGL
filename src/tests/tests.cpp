@@ -1396,7 +1396,7 @@ void textFunction(Canvas& can) {
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-    can.setFont("assets/freefont/FreeSerif.ttf");
+  //  can.setFont("assets/freefont/FreeSerif.ttf");   //New, commented out for testing no font set
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
@@ -1404,7 +1404,26 @@ void textFunction(Canvas& can) {
                  32, BLUE);
     can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
     can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
+    
 }
+
+//New test function, checking to see if the font still worked with error handling
+void textFunctionTwo(Canvas& can) {
+    ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
+    ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
+    ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
+
+    can.setFont("assets/freefont/FreeMono.ttf");   
+    can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
+    can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
+    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
+    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
+                 32, BLUE);
+    can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
+    can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
+    
+}
+
 
 /*!
  * \brief Draws some text on a CartesianCanvas
@@ -1785,6 +1804,7 @@ void mouseFunction(Canvas& can) {
     });
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown, &can, &index, &x, &y, &color]() {
         can.drawColoredPolygon(index, x, y, color, true);
+        can.drawConvexPolygon(index, x, y, color, true);  //new, convex polygon
         mouseDown = false;
     });
     Timer t(FRAME);
@@ -1967,7 +1987,7 @@ void runOtherHalfoftheFunctions() {
    test(c15,alphaRectangleFunction,false,BLACK);
    Canvas c16(0, 0, 960, 960, 30000);
    test(c16,alphaLangtonFunction,true,BLACK);
-   Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
+   Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER); 
    test(c17,gradientMandelbrotFunction,true);
    Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
    test(c18,novaFunction,true);
@@ -1999,7 +2019,7 @@ void runOtherHalfoftheFunctions() {
    test(c31,greyScaleFunction,true);
    Canvas c32(0, 0, 800, 600, 5000);
    test(c32,mouseFunction,false,WHITE);
-
+    
     Canvas can1(0, 0, 1024, 768, 500000);
     Canvas can2(0, 0, 1024, 768, 500000);
     can2.setBackgroundColor(GREY);
@@ -2061,11 +2081,19 @@ void runOtherHalfoftheFunctions() {
 
 int main() {
     glfwInit();  // Initialize GLFW
+<<<<<<< HEAD
     Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
     std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
 //    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
     threadA.join();
 //    threadB.join();
+=======
+    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
+//    std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
+    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
+//    threadA.join();
+    threadB.join();
+>>>>>>> 77b812bb87fc34a8ba4ade4d96eada16651b3a4a
 //    Canvas c29(0, 0, 1200, 900, 50000);
 //    test(c29,screenShotFunction,true);
     glfwTerminate();  // Release GLFW
