@@ -1,13 +1,13 @@
 #include "CartesianCanvas.h"
 
-CartesianCanvas::CartesianCanvas(unsigned int b)
-    : Canvas(b) {
+CartesianCanvas::CartesianCanvas(unsigned int b, double timerLength)
+    : Canvas(b, timerLength) {
     recomputeDimensions(-400, -300, 400, 300);
 }
 
 CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax,
-                                 Decimal yMax, unsigned int b, std::string t)
-    : Canvas(xx, yy, w, h, b, t) {
+                                 Decimal yMax, unsigned int b,  std::string t, double timerLength)
+    : Canvas(xx, yy, w, h, b, t, timerLength) {
     recomputeDimensions(xMin, yMin, xMax, yMax);
 }
 
@@ -154,6 +154,7 @@ Decimal CartesianCanvas::getMinY() {
     return minY;
 }
 
+
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
     screenX = ceil((cartX - minX) / cartWidth * getWindowWidth());
     screenY = ceil(getWindowHeight() - (cartY - minY) / cartHeight * getWindowHeight());
@@ -170,6 +171,14 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     Decimal yError = cartHeight / getWindowHeight();
     pixelWidth = (cartWidth - xError) / (getWindowWidth() + xError);
     pixelHeight = (cartHeight - yError) / (getWindowHeight() + yError);
+}
+
+void CartesianCanvas::sleep() {
+    Canvas::sleep();
+}
+
+void CartesianCanvas::reset() {
+    Canvas::reset();
 }
 
 void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {

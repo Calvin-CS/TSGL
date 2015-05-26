@@ -107,9 +107,8 @@ void colorPointsFunction(Canvas& can) {
  */
 void lineChainFunction(Canvas& can) {
     int xOld, yOld, xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, red, green, blue;
-    Timer t(FRAME);
     while (can.getIsOpen()) {  // Checks to see if the window has been closed
-        t.sleep();
+        can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
         xOld = xNew;
         yOld = yNew;
         xNew = rand() % can.getWindowWidth();
@@ -139,21 +138,20 @@ void lineChainFunction(Canvas& can) {
  */
 void lineFanFunction(Canvas& can) {
     const double ARC = 7.11;  //(Arbitrary) spacing between arcs of the fan
-    Timer t(FRAME);
     while (can.getIsOpen()) {
         #pragma omp parallel num_threads(omp_get_num_procs())
         {
-            t.sleep();
+            can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
             int a, b, c, d, red, green, blue;
             double angle, offset = omp_get_thread_num() * ARC;
-            angle = offset + t.getReps() * RAD;
+            angle = offset + can.getReps() * RAD;
             a = can.getWindowWidth() / 2 * (1 + sin(angle));
             b = can.getWindowHeight() / 2 * (1 + cos(angle));
             c = can.getWindowWidth() / 2 * (1 - sin(angle));
             d = can.getWindowHeight() / 2 * (1 - cos(angle));
-            red = (a + t.getReps()) % NUM_COLORS;
-            green = (b + t.getReps()) % NUM_COLORS;
-            blue = (a * b + t.getReps()) % NUM_COLORS;
+            red = (a + can.getReps()) % NUM_COLORS;
+            green = (b + can.getReps()) % NUM_COLORS;  
+            blue = (a * b + can.getReps()) % NUM_COLORS;
             can.drawLine(a, b, c, d, ColorInt(red, green, blue));
         }
     }
@@ -176,15 +174,14 @@ void lineFanFunction(Canvas& can) {
  * \param can Reference to the Canvas being drawn to
  */
 void spectrumFunction(Canvas& can) {
-    Timer t(FRAME);
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
         int nthreads = omp_get_num_threads();
         while (can.getIsOpen()) {
-            t.sleep();
+            can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
             for (int i = omp_get_thread_num(); i < NUM_COLORS; i += nthreads)
                 for (int j = 0; j < NUM_COLORS; j++)
-                    can.drawPoint(i, j, ColorInt(i, j, t.getReps() % NUM_COLORS));
+                    can.drawPoint(i, j, ColorInt(i, j, can.getReps() % NUM_COLORS));
         }
     }
 }
@@ -230,7 +227,6 @@ void spectrumFunction(Canvas& can) {
 void mandelbrotFunction(CartesianCanvas& can) {
     const unsigned int THREADS = 8;  //omp_get_num_procs();
     const unsigned int DEPTH = MAX_COLOR;
-    Timer t(FRAME / 2);
     Decimal firstX, firstY, secondX, secondY;
     bool toRedraw = true;
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &toRedraw]() {
@@ -263,7 +259,7 @@ void mandelbrotFunction(CartesianCanvas& can) {
 
     while (toRedraw) {
         toRedraw = false;
-        t.reset();
+        can.reset(); //Removed the timer and replaced it with an internal timer in the Canvas class
         #pragma omp parallel num_threads(THREADS)
         {
             unsigned int nthreads = omp_get_num_threads();
@@ -293,9 +289,9 @@ void mandelbrotFunction(CartesianCanvas& can) {
             }
 
         }
-        std::cout << t.getTime() << std::endl;
+        std::cout << can.getTime() << std::endl;
         while (can.getIsOpen() && !toRedraw)
-            t.sleep();
+            can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }
 }
 
@@ -321,13 +317,11 @@ void langtonFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
               WINDOW_H = can.getWindowHeight();
     bool* filled = new bool[WINDOW_W * WINDOW_H]();  // Create an empty bitmap for the window
-    const int IPF = 1000;   // Iterations per frame
     int xx = WINDOW_W / 2,  // Start at the center
         yy = WINDOW_H / 2;
     int direction = UP;
-    Timer t(FRAME / IPF);
     while (can.getIsOpen()) {
-        t.sleep();
+        can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         if (filled[xx + WINDOW_W * yy]) {
             direction = (direction + 1) % 4;                      // Turn right
             can.drawPoint(xx, yy, ColorInt(MAX_COLOR, 0, 0));     // Color it
@@ -362,8 +356,7 @@ void langtonFunction(Canvas& can) {
  * \param can Reference to the Canvas being drawn to
  */
 void langtonColonyFunction(Canvas& can) {
-    const int IPF = 1000,                       // Iterations per frame
-              WINDOW_W = can.getWindowWidth(),  // Set the window sizes
+    const int WINDOW_W = can.getWindowWidth(),  // Set the window sizes
               WINDOW_H = can.getWindowHeight(),
               RADIUS = WINDOW_H / 6;            // How far apart to space the ants
     bool* filled = new bool[WINDOW_W * WINDOW_H]();  // Create an empty bitmap for the window
@@ -393,9 +386,8 @@ void langtonColonyFunction(Canvas& can) {
         dir[i] = i;
     }
 
-    Timer t(FRAME / IPF);
     while (can.getIsOpen()) {
-        t.sleep();
+        can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int j = 0; j < 4; j++) {
             if (filled[xx[j] + WINDOW_W * yy[j]]) {
                 dir[j] = (dir[j] + 1) % 4;
@@ -433,8 +425,7 @@ void langtonColonyFunction(Canvas& can) {
  * \param can Reference to the Canvas being drawn to
  */
 void langtonRainbowFunction(Canvas& can) {
-    const int IPF = 1000,                                               // Iterations per frame
-              WINDOW_W = can.getWindowWidth(),                          // Set the window sizes
+    const int WINDOW_W = can.getWindowWidth(),                          // Set the window sizes
               WINDOW_H = can.getWindowHeight(),
               RADIUS = WINDOW_H / 6;                                    // How far apart to space the ants
     bool* filled = new bool[WINDOW_W * WINDOW_H]();                     // Create an empty bitmap for the window
@@ -452,9 +443,8 @@ void langtonRainbowFunction(Canvas& can) {
         dir[i] = i;
     }
 
-    Timer t(FRAME / IPF);
     while (can.getIsOpen()) {
-        t.sleep();
+        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int j = 0; j < 4; j++) {
             if (filled[xx[j] + WINDOW_W * yy[j]]) {
                 dir[j] = (dir[j] + 1) % 4;
@@ -523,9 +513,8 @@ void dumbSortFunction(Canvas& can) {
     for (int i = 0; i < SIZE; i++)
         numbers[i] = rand() % (can.getWindowHeight() - 40);
     can.setBackgroundColor(GREY);
-    Timer t(FRAME);
     while (can.getIsOpen()) {
-        t.sleep();
+        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         if (min >= max) return;  // We are done sorting
 
         for (int i = 0; i < IPF; i++) {
@@ -606,7 +595,6 @@ void colorWheelFunction(Canvas& can) {
     const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,  // Radius of wheel
     GRADIENT = 2 * PI / NUM_COLORS;                   // Gap between wedges
     float x2, x3, y2, y3, shading;
-    Timer t(FRAME);
     #pragma omp parallel num_threads(THREADS) private(x2,x3,y2,y3,shading)
     {
         int nthreads = omp_get_num_threads();
@@ -614,8 +602,8 @@ void colorWheelFunction(Canvas& can) {
         int tid = omp_get_thread_num();
         shading = 1 - (float) tid / nthreads;
         while (can.getIsOpen()) {
-            t.sleep();
-            int start = (NUM_COLORS - t.getReps() % NUM_COLORS + tid * delta) % NUM_COLORS;
+            can.sleep();
+            int start = (NUM_COLORS - can.getReps() % NUM_COLORS + tid * delta) % NUM_COLORS;
             x2 = WINDOW_CW + RADIUS * sin(GRADIENT * start);
             y2 = WINDOW_CH + RADIUS * cos(GRADIENT * start);
             x3 = WINDOW_CW + RADIUS * sin(GRADIENT * (start + 1));
@@ -688,7 +676,6 @@ void cosineIntegralFunction(CartesianCanvas& can) {
         can.end();
     });
 
-    Timer t(FRAME/2);
     can.drawAxes(0, 0, PI/4, .5);
     long double pw = can.getPixelWidth();
     CosineFunction function1;
@@ -708,7 +695,7 @@ void cosineIntegralFunction(CartesianCanvas& can) {
         long double stop = start + offset;
         for (long double i = start; i < stop; i += pw) {
             if (!can.getIsOpen()) break;
-            t.sleep();
+            can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
             can.drawLine(i, 0, i, function1.valueAt(i), Colors::highContrastColor(omp_get_thread_num()));
         }
     }
@@ -730,7 +717,6 @@ void gradientWheelFunction(Canvas& can) {
                 WINDOW_CH = can.getWindowHeight() / 2;
     const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,  // Radius of wheel
                 ARCLENGTH = 2 * PI / NUM_COLORS;                                    // Gap between wedges
-    Timer t(FRAME);
     #pragma omp parallel num_threads(THREADS)
     {
         int nthreads = omp_get_num_threads();
@@ -741,8 +727,8 @@ void gradientWheelFunction(Canvas& can) {
         int xx[3], yy[3];                       // Setup the arrays of values for vertices
         int start;
         while (can.getIsOpen()) {
-            t.sleep();
-            start = (NUM_COLORS - t.getReps() % NUM_COLORS + delta*tid) % NUM_COLORS;  // shapes by the location and frame
+            can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+            start = (NUM_COLORS - can.getReps() % NUM_COLORS + delta*tid) % NUM_COLORS;  // shapes by the location and frame
 
             color[0] = ColorHSV(start /                         (float) NUM_COLORS * 6, 0.0f, shading, 1.0f);
             color[1] = ColorHSV(start /                         (float) NUM_COLORS * 6, 1.0f, shading, 1.0f);
@@ -778,9 +764,8 @@ void alphaRectangleFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the center of the window
               WINDOW_H = can.getWindowHeight();
     int a, b;
-    Timer t(FRAME / 10);
     while (can.getIsOpen()) {
-        t.sleep();
+        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         a = rand() % WINDOW_W;
         b = rand() % WINDOW_H;
         can.drawRectangle(a, b, rand() % (WINDOW_W - a), rand() % (WINDOW_H - b),
@@ -834,7 +819,6 @@ void alphaLangtonFunction(Canvas& can) {
     for (int i = 0; i < 4; i++) {
         dir[i] = i;
     }
-    Timer t(FRAME);
     Timer pulse(28.72 / 60);
     double time = pulse.getTime();
 
@@ -851,7 +835,7 @@ void alphaLangtonFunction(Canvas& can) {
     });
 
     while (can.getIsOpen()) {
-        t.sleep();
+        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++) {
             for (int j = 0; j < 4; j++) {
                 if (filled[xx[j] + WINDOW_W * yy[j]]) {
@@ -898,7 +882,6 @@ void alphaLangtonFunction(Canvas& can) {
 void gradientMandelbrotFunction(CartesianCanvas& can) {
     const unsigned int THREADS = 32;
     const unsigned int DEPTH = 32;
-    Timer t(FRAME / 2);
     Decimal firstX, firstY, secondX, secondY;
     bool toRender = true;
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &toRender]() {
@@ -963,7 +946,7 @@ void gradientMandelbrotFunction(CartesianCanvas& can) {
             }
         }
         while (can.getIsOpen() && !toRender)
-            t.sleep();
+            can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
     }
 }
 
@@ -1366,20 +1349,19 @@ void imageCartFunction(Cart& can) {
  * \param can Reference to the Canvas being drawn to
  */
 void highData(Canvas& can) {
-    Timer t(FRAME);
     unsigned int reps,
                  width = can.getWindowWidth(),
                  height = can.getWindowHeight();
     while (can.getIsOpen()) {
-        reps = t.getReps();
+        reps = can.getReps();
         float blue = (reps % 255) / 255.0f;
         for (unsigned int i = 0; i < width; i++) {
             for (unsigned int j = 0; j < height; j++) {
                 can.drawPoint(i, j, ColorFloat(1.0f, 1.0f, blue, 1.0f));
             }
         }
-        t.sleep();
-    }
+        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+    } 
 }
 
 /*!
@@ -1488,7 +1470,6 @@ void pongFunction(Canvas& can) {
         xx = speed * cos(dir);
         yy = speed * sin(dir);
     } while (xx > -4 && xx < 4);
-    Timer t(FRAME);
     // Set up button bindings
     can.bindToButton(TSGL_UP, TSGL_PRESS, [&rightdir]() {rightdir = -1;});
     can.bindToButton(TSGL_DOWN, TSGL_PRESS, [&rightdir]() {rightdir = 1;});
@@ -1500,7 +1481,7 @@ void pongFunction(Canvas& can) {
     can.bindToButton(TSGL_S, TSGL_RELEASE, [&leftdir] () {if (leftdir == 1) leftdir = 0;});
     // Check to see if the window has been closed
     while (can.getIsOpen()) {
-        t.sleep();
+        can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         // Move the ball
         ballX += xx;
         ballY += yy;
@@ -1591,7 +1572,6 @@ void getPixelsFunction(Canvas& can) {
 
     #pragma omp parallel num_threads(THREADS)
     {
-        Timer t(.01);
         unsigned int blocksize = (double)height / omp_get_num_threads();
         unsigned int row = blocksize * omp_get_thread_num();
         while (can.getIsOpen()) {
@@ -1602,8 +1582,8 @@ void getPixelsFunction(Canvas& can) {
                     can.drawPoint(x, y, ColorInt((1+c.R) % 256, (1+c.G) % 256, (1+c.B) % 256));
                 }
             }
-            t.sleep();
-            printf("%f\n", t.getTimeBetweenSleeps());
+            can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+            printf("%f\n", can.getTimeBetweenSleeps());
         }
     }
 }
@@ -1647,7 +1627,6 @@ void screenshotLangtonFunction(Canvas& can) {
     for (int i = 0; i < 4; i++) {
         dir[i] = i;
     }
-    Timer t(FRAME);
 
     can.bindToButton(TSGL_ENTER, TSGL_PRESS, [&paused]() {
         paused = !paused;
@@ -1658,7 +1637,7 @@ void screenshotLangtonFunction(Canvas& can) {
 
     while (can.getIsOpen()) {
         if (!paused) {
-            t.sleep();
+            can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
             for (int i = 0; i < IPF; i++) {
                 for (int j = 0; j < 4; j++) {
                     if (filled[xx[j] + WINDOW_W * yy[j]]) {
@@ -1690,7 +1669,7 @@ void screenshotLangtonFunction(Canvas& can) {
                 }
             }
         } else {
-            t.sleep();
+            can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         }
     }
     delete filled;
@@ -1728,7 +1707,6 @@ void screenshotLangtonFunction(Canvas& can) {
 void greyScaleFunction(Canvas& can) {
     const int THREADS = 4;
     const unsigned int thickness = 3;
-    Timer t(FRAME * 2);
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
     can.drawImage("assets/colorful_cars.jpg", 0, 0, width, height);
@@ -1751,7 +1729,7 @@ void greyScaleFunction(Canvas& can) {
                 index += 3;
             }
             if (! can.getIsOpen()) break;
-            t.sleep();
+            can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         }
         for (unsigned int i = 0; i < thickness; i++) {
             can.drawRectangle(0 + i, row + 1 + i, width - 2*i, blocksize - 2*i, color, false);
@@ -1807,7 +1785,6 @@ void mouseFunction(Canvas& can) {
         can.drawConvexPolygon(index, x, y, color, true);  //new, convex polygon
         mouseDown = false;
     });
-    Timer t(FRAME);
     while (can.getIsOpen()) {
         if (mouseDown) {
             can.drawLine(lastX, lastY, can.getMouseX(), can.getMouseY());
@@ -1816,7 +1793,7 @@ void mouseFunction(Canvas& can) {
             color[index] = Colors::randomColor(1.0f);
             index++;
         }
-        t.sleep();
+        can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }
 }
 
@@ -1841,9 +1818,8 @@ void mouseFunction(Canvas& can) {
 void screenShotFunction(Canvas& can) {
     int xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
     can.recordForNumFrames(FPS * 30);
-    Timer t(FRAME);
     while (can.getIsOpen()) {  // Checks to see if the window has been closed
-        t.sleep();
+        can.sleep();
         xOld = xMid;
         yOld = yMid;
         xMid = xNew;
@@ -1950,78 +1926,108 @@ void concavePolygonFunction(Canvas& can) {
 }
 
 void runHalfoftheFunctions() {
-//   Canvas c1(BUFFER);
-//   test(c1,graydientFunction,true);
-//   Canvas c2(BUFFER);
-//   test(c2,colorPointsFunction,true);
-//   Canvas c3(BUFFER);
-//   test(c3,lineChainFunction,true,BLACK);
-//   Canvas c4(500);
-//   test(c4,lineFanFunction,false);
-//   Canvas c5(0,0,255,255,65536);
-//   test(c5,spectrumFunction,false);
-//   Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER);
-//   test(c6,mandelbrotFunction,false);
-//   Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER);
-//   test(c7,langtonFunction,false);
-//   Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-//   test(c8,langtonColonyFunction,false);
-//   Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER);
-//   test(c9,langtonRainbowFunction,true,BLACK);
-//   Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000);
-//   test(c10,dumbSortFunction,true);
-//   Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512);
-//   test(c11,colorWheelFunction);
-//   Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100);
-//   test(c12,functionFunction,true,WHITE);
-//   Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000);
-//   test(c13,cosineIntegralFunction,false,WHITE);
-//   Canvas c14(0, 0, 1000, 1000, 1024);
-//   test(c14,gradientWheelFunction,false,BLACK);
-   Canvas c15(BUFFER);
-   test(c15,concavePolygonFunction,false,BLACK);
+   Canvas c1(BUFFER);
+   test(c1,graydientFunction,true);
+   Canvas c2(BUFFER);
+   test(c2,colorPointsFunction,true);
+   Canvas c3(BUFFER, FRAME);   //New, changed it so that the tests cooperated with the internal timer
+   test(c3,lineChainFunction,true,BLACK);
+   
+   Canvas c4(500, FRAME);
+   test(c4,lineFanFunction,false);
+   
+   Canvas c5(0,0,255,255,65536, "", FRAME);
+   test(c5,spectrumFunction,false);
+   
+   Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER, "", FRAME / 2);
+   test(c6,mandelbrotFunction,false);
+   
+   const int IPF = 1000;   // Iterations per frame, moved to here since the timer is in the canvas
+   Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER, "", FRAME / IPF);
+   test(c7,langtonFunction,false);
+   
+   Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER, "", FRAME / IPF);
+   test(c8,langtonColonyFunction,false);
+   
+   Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER, "", FRAME / IPF);
+   test(c9,langtonRainbowFunction,true,BLACK);
+   
+   Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000, "", FRAME);
+   test(c10,dumbSortFunction,true);
+   
+   Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512, "", FRAME);
+   test(c11,colorWheelFunction);
+   
+   Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100, "");
+   test(c12,functionFunction,true,WHITE);
+   
+   Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000, "", FRAME / 2);
+   test(c13,cosineIntegralFunction,false,WHITE);
+   
+   Canvas c14(0, 0, 1000, 1000, 1024, "", FRAME);
+   test(c14,gradientWheelFunction,false,BLACK);
 }
 
 void runOtherHalfoftheFunctions() {
-   Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512);
+   Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512, "", FRAME / 10);
    test(c15,alphaRectangleFunction,false,BLACK);
-   Canvas c16(0, 0, 960, 960, 30000);
+   
+   Canvas c16(0, 0, 960, 960, 30000, "", FRAME);
    test(c16,alphaLangtonFunction,true,BLACK);
-   Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER); 
+   
+   Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER, "", FRAME / 2); 
    test(c17,gradientMandelbrotFunction,true);
-   Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER);
+   
+   Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER, "");
    test(c18,novaFunction,true);
-   Canvas c19(0, 0, 1600, 1200, BUFFER);
+   
+   Canvas c19(0, 0, 1600, 1200, BUFFER, "");
    test(c19,voronoiFunction,true,WHITE);
-   Canvas c20(0, 0, 1600, 1200, BUFFER);
+   
+   Canvas c20(0, 0, 1600, 1200, BUFFER, "");
    test(c20,shadedVoronoiFunction,false,WHITE);
-   Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2);
+   
+   Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2, "");
    test(c21,forestFireFunction,false);
-   Canvas c22(0,0,1200,600,100);
+   
+   Canvas c22(0,0,1200,600,100, "");
    test(c22,imageFunction,false);
-   Canvas c23(0, 0, 1200, 900, 1201 * 900);
+   
+   Canvas c23(0, 0, 1200, 900, 1201 * 900, "", FRAME);
    test(c23, highData, true);
+   
    Canvas c24(10);
    test(c24,textFunction,false);
-   Canvas c25(0,0,1600,600,1000);
-   test(c25,pongFunction,false, BLACK);
-   Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10);
-   test(c26,imageCartFunction,false);
-   Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10);
-   test(c27,textCartFunction,true);
-   Canvas c28(0, 0, 800, 600, 500000);
-   test(c28,getPixelsFunction,true);
-   Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000);
-   test(c29,screenShotFunction,true);
-   Canvas c30(0, 0, 960, 960, 30000);
-   test(c30,screenshotLangtonFunction,true,BLACK);
-   Canvas c31(0, 0, 1280, 1024, 500000);
-   test(c31,greyScaleFunction,true);
-   Canvas c32(0, 0, 800, 600, 5000);
-   test(c32,mouseFunction,false,WHITE);
+   
+   Canvas c25(10);
+   test(c25, textFunctionTwo, false);  //Tested text function a second time to make sure it still worked with the no font setting
+ 
+   Canvas c26(0,0,1600,600,1000, "", FRAME);
+   test(c26,pongFunction,false, BLACK);
+  
+   Cart c27(0, 0, 1200, 600, 0, 0, 6, 3, 10, "");
+   test(c27,imageCartFunction,false);
+
+   Cart c28(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10, "");
+   test(c28,textCartFunction,true);
+
+   Canvas c29(0, 0, 800, 600, 500000, "", .01);
+   test(c29,getPixelsFunction,true);
+   
+   Cart c30(0, 0, 800, 600, 0, 0, 800, 600, 50000, "", FRAME);
+   test(c30,screenShotFunction,true);
+   
+   Canvas c31(0, 0, 960, 960, 30000, "", FRAME);
+   test(c31,screenshotLangtonFunction,true,BLACK);
+   
+   Canvas c32(0, 0, 1280, 1024, 500000, "", FRAME * 2);
+   test(c32,greyScaleFunction,true);
+   
+   Canvas c33(0, 0, 800, 600, 5000, "", FRAME);
+   test(c33,mouseFunction,false,WHITE);
     
-    Canvas can1(0, 0, 1024, 768, 500000);
-    Canvas can2(0, 0, 1024, 768, 500000);
+    Canvas can1(0, 0, 1024, 768, 500000, "");
+    Canvas can2(0, 0, 1024, 768, 500000, "");
     can2.setBackgroundColor(GREY);
     can1.start();
     can2.start();
@@ -2081,13 +2087,12 @@ void runOtherHalfoftheFunctions() {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_RIGHT);	// For Patrick's laptop
-    //    Canvas::setDrawBuffer(GL_FRONT_AND_BACK); // For ULab Machines
+    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     std::thread threadA = std::thread(runHalfoftheFunctions);       // Spawn the rendering thread
 //    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
     threadA.join();
 //    threadB.join();
-//    Canvas c29(0, 0, 1200, 900, 50000);
-//    test(c29,screenShotFunction,true);
+    Canvas c34(0, 0, 1200, 900, 50000, "");
+//    test(c34,screenShotFunction,true);
     glfwTerminate();  // Release GLFW
 }

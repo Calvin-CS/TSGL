@@ -44,12 +44,14 @@ static const GLchar* textureFragmentSource = "#version 150\n"
 std::mutex Canvas::glfwMutex;
 int Canvas::drawBuffer = GL_LEFT;
 
-Canvas::Canvas(unsigned int b) {
-    init(0, 0, 400*3, 300*3, b, "");
+//New
+Canvas::Canvas(unsigned int b, double timerLength) {
+    init(0, 0, 400*3, 300*3, b, "", timerLength);
 }
 
-Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title) {
-    init(xx, yy, w, h, b, title);
+//New
+Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title, double timerLength) {
+    init(xx, yy, w, h, b, title, timerLength);
 }
 
 Canvas::~Canvas() {
@@ -58,6 +60,7 @@ Canvas::~Canvas() {
     delete myShapes;
     delete myBuffer;
     delete timer;
+    delete drawTimer;  //New
     delete[] vertexData;
 }
 
@@ -525,7 +528,7 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     buttonCallback(window, key, action, mods);
 }
 
-void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title) {
+void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
     title_ = title;
     winWidth = ww, winHeight = hh;
     aspect = (float) winWidth / winHeight;
@@ -556,6 +559,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, GREY);
 
     timer = new Timer(FRAME);
+    drawTimer = new Timer(timerLength);    //New
+    
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
 }
@@ -638,6 +643,26 @@ void Canvas::startDrawing(Canvas *c) {
     c->isFinished = true;
     glfwDestroyWindow(c->window);
     c->glDestroy();
+}
+
+//New
+void Canvas::sleep() {
+    drawTimer->sleep();
+}
+
+//New
+void Canvas::reset() { 
+    drawTimer->reset();
+}
+
+//New
+unsigned int Canvas::getReps() const {
+    return drawTimer->getReps();
+}
+
+//New
+double Canvas::getTimeBetweenSleeps() const {
+    return drawTimer->getTimeBetweenSleeps();
 }
 
 void Canvas::recordForNumFrames(unsigned int num_frames) {

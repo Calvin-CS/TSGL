@@ -85,6 +85,7 @@ private:
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
     Timer*          timer;                                              // Timer for steady FPS
+    Timer*          drawTimer;                                          // New, for drawing
     std::string     title_;                                             // Title of the window
     bool            toClear;                                            // Flag for clearing the canvas
     GLint           uniModel,                                           // Model perspective of the camera
@@ -106,7 +107,7 @@ private:
     static void errorCallback(int error, const char* string);
 
     void        init(int xx,int yy,int ww,int hh,
-                     unsigned int b,std::string title);                 // Method for initializing the canvas
+                     unsigned int b, std::string title, double timerLength = 0.0);                 // Method for initializing the canvas
     void        glDestroy();                                            // Destroys the GL and GLFW things that are specific for this canvas
     void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
     static void keyCallback(GLFWwindow* window, int key,
@@ -127,7 +128,7 @@ public:
      *      \param b The size of the Canvas's internal vertex buffer.
      * \return A new 800x600 Canvas in the middle of the screen with no title.
      */
-    Canvas(unsigned int b);
+    Canvas(unsigned int b, double timerLength = 0.0);
 
     /*!
      * \brief Explicitly constructs a new Canvas.
@@ -140,7 +141,7 @@ public:
      *      \param title The title of the window.
      * \return A new Canvas with the specified positional data and title.
      */
-    Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title = "");
+    Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title, double timerLength = 0.0);
 
     /*!
      * \brief Destructor for the Canvas class.
@@ -447,7 +448,19 @@ public:
      * \see close(), end()
      */
     int start();
-
+     
+    //new
+    void sleep();
+    
+    //new
+    void reset();
+    
+    //new
+    unsigned int getReps() const;
+    
+    //new
+    double getTimeBetweenSleeps() const;
+    
     /*!
      * \brief Takes a screenshot.
      * \details This function saves a screenshot of the current Canvas to the working directory.

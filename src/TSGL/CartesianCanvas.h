@@ -34,7 +34,7 @@ public:
      * \return A new 800x600 CartesianCanvas, unscaled (stretching from -400 to +400 on the x axis and
      *  -300 to +300 on the y axis) in the middle of the screen with no title.
      */
-    CartesianCanvas(unsigned int b);
+    CartesianCanvas(unsigned int b, double timerLength = 0.0);
 
     /*!
      * \brief Explicitly constructs a new CartesianCanvas.
@@ -52,7 +52,7 @@ public:
      * \return a new CartesianCanvas with the specified positional/scaling data, buffer size, and title
      */
     CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax,
-                    unsigned int b, std::string = "");
+                    unsigned int b, std::string, double timerLength = 0.0);
 
     /*!
      * \brief Draw axes.
@@ -254,7 +254,12 @@ public:
      *      \param xMax A real number corresponding to the new top edge of the CartesianCanvas.
      */
     void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
-
+    
+    //new
+    void sleep();
+    
+    //new
+    void reset();
     /*!
      * \brief Zoom the CartesianCanvas with a given center
      * \details This function will re-center the CartesianCanvas at the given coordinates, then zoom with
