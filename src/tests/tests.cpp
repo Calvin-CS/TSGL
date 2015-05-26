@@ -150,7 +150,7 @@ void lineFanFunction(Canvas& can) {
             c = can.getWindowWidth() / 2 * (1 - sin(angle));
             d = can.getWindowHeight() / 2 * (1 - cos(angle));
             red = (a + can.getReps()) % NUM_COLORS;
-            green = (b + can.getReps()) % NUM_COLORS;  
+            green = (b + can.getReps()) % NUM_COLORS;
             blue = (a * b + can.getReps()) % NUM_COLORS;
             can.drawLine(a, b, c, d, ColorInt(red, green, blue));
         }
@@ -1361,7 +1361,7 @@ void highData(Canvas& can) {
             }
         }
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-    } 
+    }
 }
 
 /*!
@@ -1386,7 +1386,7 @@ void textFunction(Canvas& can) {
                  32, BLUE);
     can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
     can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
-    
+
 }
 
 //New test function, checking to see if the font still worked with error handling
@@ -1395,7 +1395,7 @@ void textFunctionTwo(Canvas& can) {
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-    can.setFont("assets/freefont/FreeMono.ttf");   
+    can.setFont("assets/freefont/FreeMono.ttf");
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
@@ -1403,7 +1403,7 @@ void textFunctionTwo(Canvas& can) {
                  32, BLUE);
     can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
     can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
-    
+
 }
 
 
@@ -1781,7 +1781,7 @@ void mouseFunction(Canvas& can) {
         mouseDown = true;
     });
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown, &can, &index, &x, &y, &color]() {
-        can.drawColoredPolygon(index, x, y, color, true);
+        can.drawConcavePolygon(index, x, y, color, true);
         can.drawConvexPolygon(index, x, y, color, true);  //new, convex polygon
         mouseDown = false;
     });
@@ -1920,8 +1920,8 @@ void concavePolygonFunction(Canvas& can) {
     t.sleep();
 //    for (unsigned i = 0; i < PSIZE; ++i)
 //      color[i] = Colors::randomColor(1.0f);
-    can.drawColoredPolygon(PSIZE, x, y, color, true);
-    can.drawColoredPolygon(PSIZE, xx, yy, color, true);
+    can.drawConcavePolygon(PSIZE, x, y, color, true);
+    can.drawConcavePolygon(PSIZE, xx, yy, color, true);
   }
 }
 
@@ -1932,38 +1932,38 @@ void runHalfoftheFunctions() {
    test(c2,colorPointsFunction,true);
    Canvas c3(BUFFER, FRAME);   //New, changed it so that the tests cooperated with the internal timer
    test(c3,lineChainFunction,true,BLACK);
-   
+
    Canvas c4(500, FRAME);
    test(c4,lineFanFunction,false);
-   
+
    Canvas c5(0,0,255,255,65536, "", FRAME);
    test(c5,spectrumFunction,false);
-   
+
    Cart c6(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER, "", FRAME / 2);
    test(c6,mandelbrotFunction,false);
-   
+
    const int IPF = 1000;   // Iterations per frame, moved to here since the timer is in the canvas
    Canvas c7(0, 0, WINDOW_W, WINDOW_H, BUFFER, "", FRAME / IPF);
    test(c7,langtonFunction,false);
-   
+
    Canvas c8(0, 0, WINDOW_H, WINDOW_H, BUFFER, "", FRAME / IPF);
    test(c8,langtonColonyFunction,false);
-   
+
    Canvas c9(0, 0, WINDOW_H, WINDOW_H, BUFFER, "", FRAME / IPF);
    test(c9,langtonRainbowFunction,true,BLACK);
-   
+
    Canvas c10(0, 0, WINDOW_W, WINDOW_H, 1000, "", FRAME);
    test(c10,dumbSortFunction,true);
-   
+
    Canvas c11(0, 0, WINDOW_W, WINDOW_H, 512, "", FRAME);
    test(c11,colorWheelFunction);
-   
+
    Cart c12(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100, "");
    test(c12,functionFunction,true,WHITE);
-   
+
    Cart c13(0, 0, WINDOW_W, WINDOW_H, -5,-1.5,5,1.5, 16000, "", FRAME / 2);
    test(c13,cosineIntegralFunction,false,WHITE);
-   
+
    Canvas c14(0, 0, 1000, 1000, 1024, "", FRAME);
    test(c14,gradientWheelFunction,false,BLACK);
 }
@@ -1971,40 +1971,40 @@ void runHalfoftheFunctions() {
 void runOtherHalfoftheFunctions() {
    Canvas c15(0, 0, WINDOW_W, WINDOW_H, 512, "", FRAME / 10);
    test(c15,alphaRectangleFunction,false,BLACK);
-   
+
    Canvas c16(0, 0, 960, 960, 30000, "", FRAME);
    test(c16,alphaLangtonFunction,true,BLACK);
-   
-   Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER, "", FRAME / 2); 
+
+   Cart c17(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER, "", FRAME / 2);
    test(c17,gradientMandelbrotFunction,true);
-   
+
    Cart c18(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER, "");
    test(c18,novaFunction,true);
-   
+
    Canvas c19(0, 0, 1600, 1200, BUFFER, "");
    test(c19,voronoiFunction,true,WHITE);
-   
+
    Canvas c20(0, 0, 1600, 1200, BUFFER, "");
    test(c20,shadedVoronoiFunction,false,WHITE);
-   
+
    Canvas c21(0, 0, WINDOW_W, WINDOW_H, BUFFER*2, "");
    test(c21,forestFireFunction,false);
-   
+
    Canvas c22(0,0,1200,600,100, "");
    test(c22,imageFunction,false);
-   
+
    Canvas c23(0, 0, 1200, 900, 1201 * 900, "", FRAME);
    test(c23, highData, true);
-   
+
    Canvas c24(10);
    test(c24,textFunction,false);
-   
+
    Canvas c25(10);
    test(c25, textFunctionTwo, false);  //Tested text function a second time to make sure it still worked with the no font setting
- 
+
    Canvas c26(0,0,1600,600,1000, "", FRAME);
    test(c26,pongFunction,false, BLACK);
-  
+
    Cart c27(0, 0, 1200, 600, 0, 0, 6, 3, 10, "");
    test(c27,imageCartFunction,false);
 
@@ -2013,19 +2013,19 @@ void runOtherHalfoftheFunctions() {
 
    Canvas c29(0, 0, 800, 600, 500000, "", .01);
    test(c29,getPixelsFunction,true);
-   
+
    Cart c30(0, 0, 800, 600, 0, 0, 800, 600, 50000, "", FRAME);
    test(c30,screenShotFunction,true);
-   
+
    Canvas c31(0, 0, 960, 960, 30000, "", FRAME);
    test(c31,screenshotLangtonFunction,true,BLACK);
-   
+
    Canvas c32(0, 0, 1280, 1024, 500000, "", FRAME * 2);
    test(c32,greyScaleFunction,true);
-   
+
    Canvas c33(0, 0, 800, 600, 5000, "", FRAME);
    test(c33,mouseFunction,false,WHITE);
-    
+
     Canvas can1(0, 0, 1024, 768, 500000, "");
     Canvas can2(0, 0, 1024, 768, 500000, "");
     can2.setBackgroundColor(GREY);

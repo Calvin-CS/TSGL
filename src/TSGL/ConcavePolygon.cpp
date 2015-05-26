@@ -11,7 +11,9 @@ ConcavePolygon::ConcavePolygon(int v) {
     if (v < 3) throw std::out_of_range("Cannot have a polygon with fewer than 3 vertices.");
     length = v+1;
     size = length * 6;
+    tsize = 0;
     current = 0;
+    tarray = nullptr;
     vertices = new float[size];
     init = false;
     dirty = false;
@@ -19,6 +21,7 @@ ConcavePolygon::ConcavePolygon(int v) {
 
 ConcavePolygon::~ConcavePolygon() {
     delete vertices;
+    delete tarray;
 }
 
 void ConcavePolygon::addVertex(int x, int y, const ColorFloat &color) {
@@ -139,8 +142,6 @@ void ConcavePolygon::draw() {
       }
 
       tsize = newvertices.size();
-  //    if (newvertexarray != nullptr)
-  //      delete newvertexarray;
       tarray = new float[tsize];
       for (int i = 0; i < tsize; ++i) {
         tarray[i] = newvertices.front();

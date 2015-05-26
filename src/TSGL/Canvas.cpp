@@ -206,7 +206,23 @@ void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, boo
 
 void Canvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
-//        ColoredPolygon* p = new ColoredPolygon(size);
+        ColoredPolygon* p = new ColoredPolygon(size);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(x[i], y[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(size);
+        for (int i = 0; i < size; i++) {
+            p->addNextVertex(x[i], y[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+}
+
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+    if (filled) {
         ConcavePolygon* p = new ConcavePolygon(size);
         for (int i = 0; i < size; i++) {
             p->addVertex(x[i], y[i], color[i]);

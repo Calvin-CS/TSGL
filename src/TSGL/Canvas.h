@@ -207,6 +207,8 @@ public:
      *      \param filled whether the colored polygon should be filled (true) or not (false)
      */
     virtual void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
     
     //new method for convex polygon
     virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);

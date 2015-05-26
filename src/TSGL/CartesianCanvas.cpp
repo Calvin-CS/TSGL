@@ -53,7 +53,7 @@ void CartesianCanvas::drawColoredPolygon(int size, Decimal x[], Decimal y[], Col
     for (int i = 0; i < size; i++) {
         getScreenCoordinates(x[i], y[i], int_x[i], int_y[i]);
     }
-    Canvas::drawColoredPolygon(size, int_x, int_y, color, filled);
+    Canvas::drawConcavePolygon(size, int_x, int_y, color, filled);
 
     delete int_x;
     delete int_y;
