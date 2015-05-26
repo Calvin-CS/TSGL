@@ -18,6 +18,7 @@
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
 #include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
+#include "ConcavePolygon.h" // Our own class for drawing polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines

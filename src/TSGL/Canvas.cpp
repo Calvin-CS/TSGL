@@ -203,7 +203,8 @@ void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, boo
 
 void Canvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
-        ColoredPolygon* p = new ColoredPolygon(size);
+//        ColoredPolygon* p = new ColoredPolygon(size);
+        ConcavePolygon* p = new ConcavePolygon(size);
         for (int i = 0; i < size; i++) {
             p->addVertex(x[i], y[i], color[i]);
         }
