@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for f in bin/test*; do
+  echo "$f"
+  ./"$f"
+done
