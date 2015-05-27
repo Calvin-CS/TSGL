@@ -44,9 +44,9 @@ float randfloat(int divisor = 10000) {
 /*!
  * \brief Draws the area under a predefined function (the integral) using CartesianCanvas
  * \details
- * - Use a predetermined number of threads, storing it in \b THREADS.
+ * - Use a predetermined number of threads, storing it in: \b THREADS.
  * - Bind Q's press event to quit the rendering in case it takes too long.
- * - Set up a timer to expire once every \b FRAME / 2 seconds
+ * - Set up the internal timer of the Canvas to expire once every \b FRAME / 2 seconds
  * - Draw axes through the origin, with spacing PI/4 between x ticks and 0.5 between y ticks.
  * - Store the width of the canvas's pixel in \b pw to avoid thousands of multiple function calls.
  * - Initialize and draw a CosineFunction using the currently rendered area of the CartesianCanvas.
@@ -54,12 +54,12 @@ float randfloat(int divisor = 10000) {
  * - Draw some labels on the CartesianCanvas to make things look pretty.
  * - Set up a parallel block with OMP using \b THREADS threads.
  * - Set \b nthreads to the actual number of threads spawned.
- * - Calculate each thread's share of the work and store it in \b offset.
- * - Calculate each thread's starting position and store it in \b start.
- * - Calculate each thread's stopping position and store it in \b stop.
+ * - Calculate each thread's share of the work and store it in: \b offset.
+ * - Calculate each thread's starting position and store it in: \b start.
+ * - Calculate each thread's stopping position and store it in: \b stop.
  * - For each thread, from \b start to \b stop with step size \b pw:
  *   - If the Canvas was closed, break.
- *   - Sleep the timer until it's ready to render.
+ *   - Sleep the internal timer until it's ready to render.
  *   - Draw a line from x,0 to x,f(x) for the current x.
  *   .
  * .

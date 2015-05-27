@@ -44,12 +44,12 @@ float randfloat(int divisor = 10000) {
 /*!
  * \brief Grabs the pixels from an image on the Canvas and plays with them.
  * \details
- * - Set a predetermined number of threads and store it in \b THREADs.
+ * - Set a predetermined number of threads and store it in: \b THREADS.
  * - Store the Canvas' dimensions for easy use.
  * - Draw an image on the initially blank Canvas, stretched to fill it.
  * - Initialize a pointer to the Canvas' screen buffer.
  * - Set up a parallel OMP block with \b THREADS threads.
- * - Set up a timer that expires every 1/100th of a second.
+ * - Set up the internal timer of the Canvas to expire every 1/100th of a second.
  * - Determine a block size for each thread based on the Canvas' height and the number
  * of spawned threads.
  * - Determine a starting row for each thread based on \b blocksize and the thread's id.
@@ -67,9 +67,8 @@ float randfloat(int divisor = 10000) {
  *   - Sleep until the Canvas is ready to draw again.
  *   .
  * .
- * \note The point is drawn at height - y in the inner for loop because CartesianCanvas, like
- * a real Cartesian plane, has an inverted y-axis.
- * \param can Reference to the Canvas being drawn to
+ *
+ * \param can, Reference to the Canvas being drawn to
  */
 void getPixelsFunction(Canvas& can) {
     const int THREADS = 2;

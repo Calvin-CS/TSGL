@@ -48,7 +48,7 @@ float randfloat(int divisor = 10000) {
  * - Each ant is tracked separately, with arrays holding each type of variable
  * - Cells are not flipped until all ants have moved
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void langtonColonyFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the window sizes

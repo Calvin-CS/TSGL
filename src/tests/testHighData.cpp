@@ -44,8 +44,8 @@ float randfloat(int divisor = 10000) {
 /*!
  * \brief Draws a large number of pixels on a Canvas at a high framerate.
  * \details Very basic stress test for the Canvas' drawPoint() function.
- * - Set up a timer to expire every \b FRAME seconds.
- * - Set Local variables to track the timer's repetitions, and the Canvas' dimensions.
+ * - Set up the internal timer of the Canvas to expire every \b FRAME seconds.
+ * - Set Local variables to track the internal timer's repetitions, and the Canvas' dimensions.
  * - While the Canvas is open:
  *   - Set \b reps to the timer's current number of repetitions.
  *   - Compute the blue component of the current color based on reps.
@@ -53,14 +53,14 @@ float randfloat(int divisor = 10000) {
  *   - Sleep the timer until the Canvas is ready to draw again.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void highData(Canvas& can) {
     unsigned int reps,
                  width = can.getWindowWidth(),
                  height = can.getWindowHeight();
     while (can.getIsOpen()) {
-        reps = can.getReps();
+        reps = can.getReps();  //Added a getReps() function to Canvas that gets the internal timer's reps
         float blue = (reps % 255) / 255.0f;
         for (unsigned int i = 0; i < width; i++) {
             for (unsigned int j = 0; j < height; j++) {

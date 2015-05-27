@@ -49,9 +49,9 @@ float randfloat(int divisor = 10000) {
  * - A flag \b goingUp is set.
  * - Our integer array is filled with random integers under the Canvas' height.
  * - The background color is set to gray for visibility
- * - A timer is set up to expire every \b FRAME seconds.
+ * - The internal timer of the Canvas is set up to expire every \b FRAME seconds.
  * - While the Canvas is open:
- *   - The timer sleeps until the next frame is ready to be drawn
+ *   - The internal timer sleeps until the next frame is ready to be drawn
  *   - If the minimum sorted element equals the maximum, we're done
  *   - At a rate of \b IPF times a second:
  *     - If we're going up and the element above us is less than us, swap.
@@ -65,7 +65,7 @@ float randfloat(int divisor = 10000) {
  *     .
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void dumbSortFunction(Canvas& can) {
     const int SIZE = 550,   // Size of the data pool

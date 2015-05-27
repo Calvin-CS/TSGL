@@ -49,7 +49,7 @@ float randfloat(int divisor = 10000) {
  * declared as an array
  * - At the end, drawColoredPolygon() is called on a polygon with 3 vertices, with arrays for the
  * x coordinates, y coordinates, and color.
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void gradientWheelFunction(Canvas& can) {
     const int   THREADS = 256,                          // Number of threads to compute with

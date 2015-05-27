@@ -46,18 +46,18 @@ float randfloat(int divisor = 10000) {
  * \details
  * - Declare and initialize variables to keep track of each of three vertices for a triangle.
  * - Set the Canvas to record screenshots for 30 seconds (1800 frames).
- * - Set up a timer to expire every \b FRAME seconds.
+ * - Set up the internal timer of the Canvas to expire every \b FRAME seconds.
  * - While the Canvas is open:
- *   - Sleep the timer until the Canvas is ready to draw.
+ *   - Sleep the internal timer until the Canvas is ready to draw.
  *   - Set the old coordinates to last frame's middle ones.
  *   - Set the middle coordinates to last frame's new ones.
  *   - Set the new coordinates to a random position on the Canvas.
- *   - Draw a traingle on the canvas with the given coordinates and a random color.
+ *   - Draw a triangle on the canvas with the given coordinates and a random color.
  *   .
  * .
  * \note The details of the recordForNumFrames() function are handled automatically in Canvas, and
- * are by default written the \i frames/ directory.
- * \param can Reference to the Canvas being drawn to
+ * are by default written to the \i frames/ directory.
+ * \param can, Reference to the Canvas being drawn to
  */
 void screenShotFunction(Canvas& can) {
     int xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;

@@ -45,7 +45,7 @@ float randfloat(int divisor = 10000) {
  * \brief Draws a gradient Nova set on a CartesianCanvas
  * \details Same as gradientMandelbrotFunction(), but with a nova fractal ( more time-consuming
  * to compute; see http://en.wikipedia.org/wiki/Nova_fractal ).
- * \param can Reference to the CartesianCanvas being drawn to
+ * \param can, Reference to the CartesianCanvas being drawn to
  */
 void novaFunction(CartesianCanvas& can) {
     const unsigned int THREADS = 32;

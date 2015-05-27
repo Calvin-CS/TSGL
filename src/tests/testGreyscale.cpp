@@ -45,13 +45,13 @@ float randfloat(int divisor = 10000) {
  * \brief Grabs the pixels from an image on the Canvas and converts them to grayscale.
  * \details
  * - Predetermine the number of threads and line thickness and store them in variables.
- * - Set up a timer to expire every ( \b FRAME / 2 ) seconds.
+ * - Set up the internal timer of the Canvas to expire every ( \b FRAME / 2 ) seconds.
  * - Store the Canvas' dimensions for ease of use.
  * - Stretch a fancy image over the Canvas.
- * - Tell the timer to manually sleep for a quarter of a second (to assure the draw buffer is filled).
+ * - Tell the internal timer to manually sleep for a quarter of a second (to assure the draw buffer is filled).
  * - Initialize a pointer to the Canvas' screen buffer.
  * - Set up a parallel OMP block with \b THREADS threads.
- * - Get the actual number of spawned threads and store it in \b nthreads.
+ * - Get the actual number of spawned threads and store it in: \b nthreads.
  * - Compute the \b blocksize based on the Canvas height and \b nthreads.
  * - Compute the current thread's row based on \b blocksize and the thread's id.
  * - Generate a nice color based on the thread's id.
@@ -68,7 +68,7 @@ float randfloat(int divisor = 10000) {
  * - Once a thread is finished grayscaling, draw a box around its rendered area using
  * the predetermined high contrast color.
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void greyScaleFunction(Canvas& can) {
     const int THREADS = 4;

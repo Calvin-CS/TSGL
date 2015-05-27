@@ -49,15 +49,15 @@ float randfloat(int divisor = 10000) {
  * - The number of iterations per frame is set to a large number
  * - The initial position \b xx, \b yy is set to the center of the Canvas
  * - The initial direction is set to UP
- * - A timer is set up to expire once every \b FRAME / \b IPF seconds
+ * - The internal timer of the Canvas is set up to expire once every \b FRAME / \b IPF seconds
  * - While the Canvas is open:
- *   - The timer sleeps until the next frame is ready to be drawn
+ *   - The internal timer sleeps until the next frame is ready to be drawn
  *   - If the ant's current cell is filled, turn right and color it; otherwise, turn left and blacken it
  *   - Invert the filled status of the square
  *   - Move forward one square from the current position, wrapping around the screen if on a boundary
  * - Deallocate space for the filled array
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void langtonFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes

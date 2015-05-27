@@ -48,16 +48,16 @@ float randfloat(int divisor = 10000) {
  * - The center of the canvas is computed and stored.
  * - The radius of the wheel is computed (using the minimum of the Canvas width / height) and stored.
  * - The size of the \b GRADIENT is computed and stored.
- * - Variables for the second and third vertices of a triangle and the current shading are initiallized.
- * - A timer is set up to expire every \b FRAME seconds.
+ * - Variables for the second and third vertices of a triangle and the current shading are initialized.
+ * - The internal timer of the Canvas is set up to expire every \b FRAME seconds.
  * - The predetermined number of parallel threads is forked off using OMP, pulling along the coordinate
  * and shading variables.
- * - The actual number of threads is stored in \b nthreads.
+ * - The actual number of threads is stored in: \b nthreads.
  * - A color \b delta is computed.
  * - Each thread's thread id ( \b tid ) is stored.
  * - Each thread's shading is computed using it's id and \b nthreads
  * - While the Canvas is open:
- *   - The timer sleeps until the next frame is ready to be drawn
+ *   - The internal timer sleeps until the next frame is ready to be drawn
  *   - Each thread's \b start is computed using the timer's lifetime and it's current id
  *   - The second and third coordinates of a triangle approximating an arc of a circle are
  *   computed using the \b GRADIENT and the thread's \b start position.
@@ -66,7 +66,7 @@ float randfloat(int divisor = 10000) {
  *   full saturation, and a value of \b shading.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void colorWheelFunction(Canvas& can) {
     const int THREADS = 64,                           // Number of threads to compute with

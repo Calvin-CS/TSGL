@@ -55,19 +55,19 @@ float randfloat(int divisor = 10000) {
  * - Draw 32 random square "lakes" with very low flammabilities on the Canvas
  * - Declare a mini-firePoint struct with coordinates, life, and strength.
  * - Make a 3x3 square of fire in the middle of the Canvas, and color the pixels accordingly
- * - A timer is set up to expire every \b FRAME seconds.
+ * - The internal timer of the Canvas is set up to expire every \b FRAME seconds.
  * - While the Canvas is open:
- *   - Sleep until the Canvas is ready to draw.
+ *   - Sleep the internal timer until the Canvas is ready to draw.
  *   - For each fire point:
  *     - Pop it from the queue, pushing it back on only if its life > 0.
  *     - For each cell adjacent to the fire, if it is not on the edge of the screen, not already
- *     on fire, and the random number generator rolls a number nower than the cell's flammability,
+ *     on fire, and the random number generator rolls a number lower than the cell's flammability,
  *     set that cell on fire.
  *     .
  *   .
  * - Deallocate the onFire and flammability arrays.
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void forestFireFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
@@ -116,9 +116,8 @@ void forestFireFunction(Canvas& can) {
             can.drawPoint(WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH));
         }
     }
-    Timer t(FRAME);
     while (can.getIsOpen()) {
-        t.sleep();
+        can.sleep();
         int l = fires.size();
         for (int i = 0; i < l; i++) {
             firePoint f = fires.front();
@@ -159,7 +158,7 @@ void forestFireFunction(Canvas& can) {
 int main() {
     glfwInit();  // Initialize GLFW
     Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c20(0, 0, WINDOW_W, WINDOW_H, BUFFER*2, "");
+    Canvas c20(0, 0, WINDOW_W, WINDOW_H, BUFFER*2, "", FRAME);
     c20.setBackgroundColor(GREY);
     c20.start();
     forestFireFunction(c20);

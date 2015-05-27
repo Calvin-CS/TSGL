@@ -54,7 +54,7 @@ float randfloat(int divisor = 10000) {
  * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear
  * the screen.
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void alphaLangtonFunction(Canvas& can) {
     const int IPF = 5000,                         // Iterations per frame

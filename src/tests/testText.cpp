@@ -45,13 +45,13 @@ float randfloat(int divisor = 10000) {
  * \brief Draws some text on a Canvas
  * \details
  * - We declare some colors to use for drawing.
- * - We set the Canvas' font from an external font file using setFont().
+ * - We changed it so that now a default text font is loaded if one is not specified.
  * - We draw a few lines of text in various colors using drawText().
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void textFunction(Canvas& can) {
-    ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
+	ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
@@ -72,7 +72,6 @@ int main() {
     Canvas c23(10);
     c23.setBackgroundColor(GREY);
     c23.start();
-    textFunction(c23);
     c23.close();
     glfwTerminate();  // Release GLFW
 }

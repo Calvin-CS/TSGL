@@ -44,7 +44,7 @@ float randfloat(int divisor = 10000) {
 /*!
  * \brief Draws various images on a CartesianCanvas.
  * \details Same as imageFunction, but on a CartesianCanvas.
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the CartesianCanvas being drawn to (Cart is a typedef for CartesianCanvas)
  */
 void imageCartFunction(Cart& can) {
     can.drawImage("assets/test.png", 0, 3, 2, 1.5);

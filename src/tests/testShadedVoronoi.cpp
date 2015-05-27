@@ -48,14 +48,14 @@ float randfloat(int divisor = 10000) {
  * - We keep track of the kvalues of each 2nd best point in the array \b kvalue2.
  * - In a second post-processing loop through the screen:
  *   - Find the closest and 2nd closest control points to each pixel.
- *   - Find the distance from the pixel to the closest control point and store it in \b d1.
- *   - Find the distance from the closest to the 2nd closest control point and store it in \b kd.
+ *   - Find the distance from the pixel to the closest control point and store it in: \b d1.
+ *   - Find the distance from the closest to the 2nd closest control point and store it in: \b kd.
  *   - Set \b shading to ( \b d1 / \b kd ).
  *   - Bind \b shading between 0 and 1, and shade the pixel with \b shading.
  *   - Break if the Canvas is closed.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void shadedVoronoiFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),        // Set the screen sizes

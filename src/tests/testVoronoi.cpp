@@ -46,7 +46,7 @@ float randfloat(int divisor = 10000) {
  * ( see http://en.wikipedia.org/wiki/Voronoi_diagram ).
  * \details
  * - The Canvas's dimensions are stored in a local variable.
- * - The number of control points are predetermined and stored in \b POINTS.
+ * - The number of control points are predetermined and stored in: \b POINTS.
  * - We seed the random number generator with the time.
  * - We allocate arrays for x and y coordinates for each of the points.
  * - We allocate an array of k-values for each pixel on the Canvas
@@ -77,7 +77,7 @@ float randfloat(int divisor = 10000) {
  *   .
  *   Deallocate the arrays for x, y, and kvalue.
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void voronoiFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),      // Set the screen sizes

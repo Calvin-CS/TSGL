@@ -32,9 +32,9 @@ float randfloat(int divisor = 10000) {
  * \brief Draws a chain of randomly colored lines at the target framerate (default 60 FPS)
  * \details
  * - \b xNew and \b yNew are set to the middle of the canvas
- * - A timer is set up to go off every \b FRAME seconds (\b FRAME == 1 / \b FPS)
+ * - The internal timer of the Canvas is set up to go off every \b FRAME seconds (\b FRAME == 1 / \b FPS)
  * - While the canvas is open:
- *   - The timer sleeps until the next frame is ready to be drawn
+ *   - The internal timer sleeps until the next frame is ready to be drawn
  *   - \b xOld and \b yOld are set to \b xNew and \b yNew, while \b xNew and \b yNew are set to random positions
  *   - A random color is chosen
  *   - The line is drawn to the Canvas
@@ -57,10 +57,24 @@ void lineChainFunction(Canvas& can) {
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
     Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c2(BUFFER, FRAME);
+    int holder1 = atoi(argv[1]);   //Width
+    int holder2 = atoi(argv[2]);   //Height
+    int width = 0;
+    int height = 0;
+    if (holder1 <= 0 || holder2 <= 0) {    //Check if the width and height arguments are valid
+    	width = WINDOW_W;  //If not, set the default window width and height
+    	height = WINDOW_H;
+    } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
+    	width = WINDOW_W;
+        height = WINDOW_H;
+    } else {
+    	width = holder1;   //Else, set them to the Canvas width and height
+        height = holder2;
+    }
+    Canvas c2(0, 0, width, height, BUFFER, "", FRAME);
     c2.setBackgroundColor(BLACK);
     c2.start();
     lineChainFunction(c2);

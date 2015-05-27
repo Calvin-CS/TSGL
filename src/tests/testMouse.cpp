@@ -54,7 +54,7 @@ float randfloat(int divisor = 10000) {
  * set the array index to 1, and set the mouseDown flag.
  * - Bind the left mouse on-release event to draw a colored polygon with the built-up vertices,
  * and to unset the mouseDown flag.
- * - Set up a timer to expire every \b FRAME seconds.
+ * - Set up the internal timer of the Canvas to expire every \b FRAME seconds.
  * - While the Canvas is open:
  *   - If the mouse is down:
  *     - Draw a line from the mouse's last coordinates to the current ones.
@@ -65,7 +65,7 @@ float randfloat(int divisor = 10000) {
  *   - Sleep the timer until the Canvas is ready to draw again.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void mouseFunction(Canvas& can) {
     bool mouseDown = false;

@@ -31,12 +31,12 @@ float randfloat(int divisor = 10000) {
 /*!
  * \brief Draws a fan of randomly colored lines at the target framerate and a dynamic number of threads using OMP
  * \details
- * - A timer is set up to go off every \b FRAME seconds (\b FRAME == 1 / \b FPS)
+ * - The internal timer of the Canvas is set up to go off every \b FRAME seconds (\b FRAME == 1 / \b FPS)
  * - While the canvas is open:
  *   - The number of threads to use is recalculated, and the process is forked.
- *   - The timer sleeps on each thread until the next frame is ready to be drawn.
+ *   - The internal timer sleeps on each thread until the next frame is ready to be drawn.
  *   - An offset is calculated based on the thread's ID and a predefined arc-length.
- *   - An angle is then calculated using the offset and the Canvas' current lifespan ( as calculated by \b t.getReps() ).
+ *   - An angle is then calculated using the offset and the Canvas' current lifespan ( as calculated by \b can.getReps() ).
  *   - The vertices of the lines to be drawn are chosen using the sines and cosines of the predetermined angle.
  *   - A random color is chosen.
  *   - The line is draw to the Canvas.
@@ -51,6 +51,7 @@ void lineFanFunction(Canvas& can) {
         {
             can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
             int a, b, c, d, red, green, blue;
+            int holder = omp_get_thread_num();
             double angle, offset = omp_get_thread_num() * ARC;
             angle = offset + can.getReps() * RAD;
             a = can.getWindowWidth() / 2 * (1 + sin(angle));
@@ -65,10 +66,17 @@ void lineFanFunction(Canvas& can) {
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
     Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c3(500, FRAME);
+    int holder = atoi(argv[1]);   //Specify the number of lines
+    int numberOfLines = 0;
+    if(holder == 0) {   //Can't be 0 (Bus error (core dumped) error if there are any)
+    	numberOfLines = 500;
+    } else {
+    	numberOfLines = holder;
+    }
+    Canvas c3(numberOfLines, FRAME);
     c3.setBackgroundColor(GREY);
     c3.start();
     lineFanFunction(c3);

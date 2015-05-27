@@ -45,15 +45,15 @@ float randfloat(int divisor = 10000) {
  * \brief Draws semi-transparent rectangles on a Canvas
  * \details
  * - Store the Canvas' width and height in variables for easy reuse.
- * - Set up a timer to expire once every \b FRAME / 10 seconds
+ * - Set up the internal timer of the Canvas to expire once every \b FRAME / 10 seconds
  * - While the Canvas is open:
- *   - Sleep the timer until the Canvas is ready to draw.
+ *   - Sleep the internal timer until the Canvas is ready to draw.
  *   - Select a random position on the Canvas for a corner of a rectangle
- *   - Draw a rectangle stretching from the specified corner to anoter corner on the Canvas,
+ *   - Draw a rectangle stretching from the specified corner to another corner on the Canvas,
  *   with a random color and a transparency of 16 (~0.06).
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void alphaRectangleFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the center of the window

@@ -43,9 +43,9 @@ float randfloat(int divisor = 10000) {
  * \brief Draws the Mandelbrot set on a CartesianCanvas with custom controls, a specified target update rate,
  *  and a dynamic number of threads
  * \details
- * - The number of theads to use is predetermined and stored in \b THREADS.
- * - The number of iterations to check is predetermined and stored in \b DEPTH.
- * - A timer is set up to go off every ( \b FRAME / 2 ) seconds.
+ * - The number of threads to use is predetermined and stored in: \b THREADS.
+ * - The number of iterations to check is predetermined and stored in: \b DEPTH.
+ * - The internal timer of the Canvas is set up to go off every ( \b FRAME / 2 ) seconds.
  * - A flag telling us to redraw is set to true
  * - The spacebar on-press event is set to tell the Canvas to clear and re-render.
  * - The left mouse on-press event is set to grab the mouse's current coordinates
@@ -57,11 +57,11 @@ float randfloat(int divisor = 10000) {
  * current coordinates.
  * While the toRedraw flag is set:
  *   - Set the toRender flag to false
- *   - Reset the timer to 0.
+ *   - Reset the internal timer to 0.
  *   - Fork off the predetermined number of parallel threads using OMP
- *   - Store the actual number of threads spawned in \b nthreads
- *   - Figure the cartesian size of the area each thread is to calculate and store it in \b blocksize
- *   - Figure out the actual number of rows each thread is to calculate and store it in \b blockheight
+ *   - Store the actual number of threads spawned in: \b nthreads
+ *   - Figure the cartesian size of the area each thread is to calculate and store it in: \b blocksize
+ *   - Figure out the actual number of rows each thread is to calculate and store it in: \b blockheight
  *   - Run an outer loop from 0 to blockheight:
  *     - Calculate the cartesian coordinates of the thread's \b row as
  *     \b blocksize * (our ID) + (top of our CartesianCanvas) + (cartesian height of our physical pixels) * k
@@ -75,7 +75,7 @@ float randfloat(int divisor = 10000) {
  *   Sleep the thread for one frame until the Canvas is closed by the user or told to redraw
  *   .
  * .
- * \param can Reference to the CartesianCanvas being drawn to
+ * \param can, Reference to the CartesianCanvas being drawn to
  */
 void mandelbrotFunction(CartesianCanvas& can) {
     const unsigned int THREADS = 8;  //omp_get_num_procs();

@@ -44,7 +44,7 @@ float randfloat(int divisor = 10000) {
 /*!
  * \brief Simulates 4 Langton's Ants at speeds faster than the Canvas' framerate, with nicer colors!
  * \details Same as langtonColonyFunction(), but with dynamically-colored ants.
- * \param can Reference to the Canvas being drawn to
+ * \param can, Reference to the Canvas being drawn to
  */
 void langtonRainbowFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),                          // Set the window sizes

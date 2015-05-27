@@ -45,7 +45,7 @@ float randfloat(int divisor = 10000) {
  * \brief Draws a gradient Mandelbrot set on a CartesianCanvas
  * \details Same as mandelbrotFunction(), but with smoother shading ( see
  * http://linas.org/art-gallery/escape/smooth.html ).
- * \param can Reference to the CartesianCanvas being drawn to
+ * \param can, Reference to the CartesianCanvas being drawn to
  */
 void gradientMandelbrotFunction(CartesianCanvas& can) {
     const unsigned int THREADS = 32;
