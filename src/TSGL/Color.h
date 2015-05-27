@@ -11,6 +11,7 @@
 #include <cmath>        // Needed for conversions
 #include <stdexcept>    // Needed for exceptions
 #include <cstdlib>      // Needed for rand()
+#include <sstream>      // Needed for Windows integer / float to string conversion
 
 /*!
  * \brief Floating point RGBA color struct.

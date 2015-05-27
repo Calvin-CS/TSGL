@@ -23,10 +23,9 @@ ColorFloat::ColorFloat(float r, float g, float b, float a) {
 }
 
 std::string ColorFloat::AsString() {
-	return std::to_string(R) + "R,"
-			+ std::to_string(G) +"G,"
-			+ std::to_string(B) + "B,"
-			+ std::to_string(A) + "A";
+  std::stringstream ss;
+  ss << R << "R," << G << "G," << B << "B," << A << "A";
+	return ss.str();
 }
 
 ColorInt::ColorInt() {
@@ -45,10 +44,9 @@ ColorInt::ColorInt(int r, int g, int b, int a) {
 }
 
 std::string ColorInt::AsString() {
-	return std::to_string(R) + "R,"
-			+ std::to_string(G) +"G,"
-			+ std::to_string(B) + "B,"
-			+ std::to_string(A) + "A";
+  std::stringstream ss;
+  ss << R << "R," << G << "G," << B << "B," << A << "A";
+  return ss.str();
 }
 
 ColorInt::operator ColorFloat() {
@@ -73,10 +71,9 @@ ColorHSV::ColorHSV(float h, float s, float v, float a) {
 }
 
 std::string ColorHSV::AsString() {
-	return std::to_string(H) + "H,"
-			+ std::to_string(S) +"S,"
-			+ std::to_string(V) + "V,"
-			+ std::to_string(A) + "A";
+  std::stringstream ss;
+  ss << H << "H," << S << "S," << V << "V," << A << "A";
+  return ss.str();
 }
 
 ColorHSV::operator ColorFloat() {
