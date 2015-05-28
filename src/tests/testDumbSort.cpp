@@ -66,10 +66,11 @@ float randfloat(int divisor = 10000) {
  *   .
  * .
  * \param can, Reference to the Canvas being drawn to
+ * \param
  */
 void dumbSortFunction(Canvas& can) {
-    const int SIZE = 550,   // Size of the data pool
-        IPF = 50;           // Iterations per frame
+	const int SIZE = 550,   // Size of the data pool (set to 550 by default)
+	          IPF = 50;           // Iterations per frame
     int numbers[SIZE];      // Array to store the data
     int pos = 0, temp, min = 1, max = SIZE - 1, lastSwap = 0;
     bool goingUp = true;
@@ -124,13 +125,26 @@ void dumbSortFunction(Canvas& can) {
     }
 }
 
-int main() {
+//Takes in command line arguments for the window width and height
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c9(0, 0, WINDOW_W, WINDOW_H, 1000, "", FRAME);
+    int holder1 = atoi(argv[1]);   //Width
+    int holder2 = atoi(argv[2]);   //Height
+    int width, height = 0;
+    if (holder1 <= 0 || holder2 <= 0) {   //Check the passed width and height if they are valid
+    	width = WINDOW_W;   //If not, use the default width and height
+    	height = WINDOW_H;
+    } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
+     	width = WINDOW_W;
+        height = WINDOW_H;
+    } else {
+    	width = holder1; //Else, use the passed width and height
+    	height = holder2;
+    }
+    Canvas c9(0, 0, width, height, 1000, "", FRAME);
     c9.setBackgroundColor(GREY);
     c9.start();
-    dumbSortFunction(c9);
+    dumbSortFunction(c9);   //Pass it as an argument
     c9.close();
     glfwTerminate();  // Release GLFW
 }

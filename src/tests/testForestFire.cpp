@@ -157,7 +157,6 @@ void forestFireFunction(Canvas& can) {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Canvas c20(0, 0, WINDOW_W, WINDOW_H, BUFFER*2, "", FRAME);
     c20.setBackgroundColor(GREY);
     c20.start();

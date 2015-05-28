@@ -130,7 +130,6 @@ void screenshotLangtonFunction(Canvas& can) {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Canvas c30(0, 0, 960, 960, 30000, "", FRAME);
     c30.setBackgroundColor(BLACK);
     c30.start();

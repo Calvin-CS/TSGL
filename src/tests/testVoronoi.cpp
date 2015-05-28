@@ -12,34 +12,8 @@
 #include <queue>
 #include <tsgl.h>
 
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
-
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-// Shared values between langton functions
-enum direction {
-    UP = 0,
-    RIGHT = 1,
-    DOWN = 2,
-    LEFT = 3
-};
-
-typedef CartesianCanvas Cart;
-typedef std::complex<long double> complex;
-
 const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
-const int IPF = 1000;  //For those functions that need it
-
-float randfloat(int divisor = 10000) {
-    return (rand() % divisor) / (float) divisor;
-}
 
 /*!
  * \brief Draws a randomly generated Voronoi diagram, using OMP and private variables
@@ -80,65 +54,79 @@ float randfloat(int divisor = 10000) {
  * \param can, Reference to the Canvas being drawn to
  */
 void voronoiFunction(Canvas& can) {
-    const int WINDOW_W = can.getWindowWidth(),      // Set the screen sizes
-              WINDOW_H = can.getWindowHeight(),
-              POINTS = 100*4;                       // Set the number of control points
-    srand(time(NULL));                              // Seed the random number generator
-    int* x = new int[POINTS]();                     // Initialize an array for POINTS x coords
-    int* y = new int[POINTS]();                     // Do the same for y coords
-    int* kvalue = new int[WINDOW_W * WINDOW_H]();   // Create a mapping of control point values
-    ColorFloat color[POINTS];                            // And for an array of colors
-    ColorFloat tc, rc, lc, bc, xc, yc;                   // Color for the top, right, left, bottom, x-average, and y-average
-    int bestk = 0;                                  // Keep track of the current best k-value
-    float bdist, dist, xd, yd;                      // Keep track of the closes matches and current distances
-    for (int i = 0; i < POINTS; i++) {              // Randomize the control points
-        x[i] = rand() % WINDOW_W;
-        y[i] = rand() % WINDOW_H;
-    }
-    srand(time(NULL));
-    tc = Colors::randomColor(1.0f);                            // Randomize the axis colors
-    rc = Colors::randomColor(1.0f);
-    lc = Colors::randomColor(1.0f);
-    bc = Colors::randomColor(1.0f);
-    for (int i = 0; i < POINTS; i++) {              // For each control point...
-        float xx = (float) x[i] / WINDOW_W;         // Calculate an value from 0:1 based on x coord
-        float yy = (float) y[i] / WINDOW_H;         // Do the same for y
-        xc = Colors::blendedColor(lc, rc, xx);              // Interpolate between the left and right colors
-        yc = Colors::blendedColor(tc, bc, yy);              // Do the same for top and bottom
-        color[i] = Colors::blendedColor(xc, yc, 0.5f);      // Complete the 4-way interpolation
-    }
-    #pragma omp parallel for private(bdist, xd, yd, dist, bestk)
-    for (int i = 0; i < WINDOW_W; i++) {            // For each individual point...
-        bestk = 0;
-        for (int j = 0; j < WINDOW_H; j++) {
-            bdist = 9999;                           // Reset the best distance
-            for (int k = 0; k < POINTS; k++) {      // Find the closest control point
-                xd = i - x[k];                      // Calculate the distance from each control point
-                yd = j - y[k];
-                dist = sqrt(xd * xd + yd * yd);
-                if (dist < bdist) {                 // If it's the closest one
-                    bdist = dist;                   // Update the best distance and control point
-                    bestk = k;
-                }
-            }
-            kvalue[i * WINDOW_H + j] = bestk;
-            can.drawPoint(i, j, color[bestk]);      // Draw the point with the closest control's color
-            if (!can.getIsOpen()) break;
-        }
-    }
-    delete x;
-    delete y;
-    delete kvalue;
+	const int WINDOW_W = can.getWindowWidth(),      // Set the screen sizes
+			WINDOW_H = can.getWindowHeight(),
+			POINTS = 100*4;                       // Set the number of control points
+	//Constructor
+	srand(time(NULL));                              // Seed the random number generator
+	int* x = new int[POINTS]();                     // Initialize an array for POINTS x coords
+	int* y = new int[POINTS]();                     // Do the same for y coords
+	int* kvalue = new int[WINDOW_W * WINDOW_H]();   // Create a mapping of control point values
+	//Setting up.... (or entire thing as draw()? )
+	ColorFloat color[POINTS];                            // And for an array of colors
+	ColorFloat tc, rc, lc, bc, xc, yc;                   // Color for the top, right, left, bottom, x-average, and y-average
+	int bestk = 0;                                  // Keep track of the current best k-value
+	float bdist, dist, xd, yd;                      // Keep track of the closes matches and current distances
+	for (int i = 0; i < POINTS; i++) {              // Randomize the control points
+		x[i] = rand() % WINDOW_W;
+		y[i] = rand() % WINDOW_H;
+	}
+	srand(time(NULL));
+	tc = Colors::randomColor(1.0f);                            // Randomize the axis colors
+	rc = Colors::randomColor(1.0f);
+	lc = Colors::randomColor(1.0f);
+	bc = Colors::randomColor(1.0f);
+	for (int i = 0; i < POINTS; i++) {              // For each control point...
+		float xx = (float) x[i] / WINDOW_W;         // Calculate an value from 0:1 based on x coord
+		float yy = (float) y[i] / WINDOW_H;         // Do the same for y
+		xc = Colors::blendedColor(lc, rc, xx);              // Interpolate between the left and right colors
+		yc = Colors::blendedColor(tc, bc, yy);              // Do the same for top and bottom
+		color[i] = Colors::blendedColor(xc, yc, 0.5f);      // Complete the 4-way interpolation
+	}
+#pragma omp parallel for private(bdist, xd, yd, dist, bestk)
+	for (int i = 0; i < WINDOW_W; i++) {            // For each individual point...
+		bestk = 0;
+		for (int j = 0; j < WINDOW_H; j++) {
+			bdist = 9999;                           // Reset the best distance
+			for (int k = 0; k < POINTS; k++) {      // Find the closest control point
+				xd = i - x[k];                      // Calculate the distance from each control point
+				yd = j - y[k];
+				dist = sqrt(xd * xd + yd * yd);
+				if (dist < bdist) {                 // If it's the closest one
+					bdist = dist;                   // Update the best distance and control point
+					bestk = k;
+				}
+			}
+			kvalue[i * WINDOW_H + j] = bestk;
+			can.drawPoint(i, j, color[bestk]);      // Draw the point with the closest control's color
+			if (!can.getIsOpen()) break;
+		}
+	}
+	//~Destructor
+	delete x;
+	delete y;
+	delete kvalue;
 }
 
-int main() {
-    glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c18(0, 0, 1600, 1200, BUFFER, "");
-    c18.setBackgroundColor(WHITE);
-    c18.start();
-    voronoiFunction(c18);
-    c18.close();
-    glfwTerminate();  // Release GLFW
+//Takes command line arguments for the width and height of the window
+int main(int argc, char* argv[]) {
+	glfwInit();  // Initialize GLFW
+	int holder1 = atoi(argv[1]);   //Width
+	int holder2 = atoi(argv[2]);   //Height
+	int width, height = 0;
+	if (holder1 <= 0 || holder2 <= 0) {    //Checked the passed width and height if they are valid
+		width = height = 960;  //If not, set the width and height to a default value
+	} else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
+		width = height = 960;
+	} else {
+		width = holder1;  //Else, they are and so use them
+		height = holder2;
+	}
+	Canvas c18(0, 0, width, height, BUFFER, "");
+	c18.setBackgroundColor(WHITE);
+	c18.start();
+	voronoiFunction(c18);
+	c18.close();
+	glfwTerminate();  // Release GLFW
 }
 

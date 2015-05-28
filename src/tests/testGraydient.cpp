@@ -29,7 +29,8 @@ float randfloat(int divisor = 10000) {
 }
 
 /*!
- * \brief Draws a diagonal black-to-white gradient using OMP
+ * \brief Draws a diagonal black-to-white gradient using OMP and takes in a command line argument for the
+ * number of threads to use
  * \details
  * - A parallel block is set up with #pragma omp parallel using all available processors
  * - The actual number of threads created is stored in: \b nthreads
@@ -66,26 +67,27 @@ void graydientFunction(Canvas& can, int & numberOfThreads) {
     }
 }
 
-//http://www.cplusplus.com/articles/DEN36Up4/
+//Takes in the window width and height as command line arguments for the Canvas
+//as well as for the number of threads to use
+//( see http://www.cplusplus.com/articles/DEN36Up4/ )
 int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     int holder1 = atoi(argv[1]);    //Width
     int holder2 = atoi(argv[2]);    //Height
     int width = 0;
     int height = 0;
-    if(holder1 <= 0 || holder2 <= 0) {
-       width = WINDOW_W;
+    if(holder1 <= 0 || holder2 <= 0) {   //Check to see if they are valid
+       width = WINDOW_W;   //If not, use the default window width and height
        height = WINDOW_H;
     } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
     	width = WINDOW_W;
     	height = WINDOW_H;
     } else {
-    	width = holder1;
+    	width = holder1;   //Else, use them as the window width and height
     	height = holder2;
     }
     Canvas c(0, 0, width, height, BUFFER, "");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
-    int numberOfThreads = atoi(argv[3]);   //Convert the char pointer to an int, http://www.cplusplus.com/forum/beginner/58493/
+    int numberOfThreads = atoi(argv[3]);   //Convert the char pointer to an int ( see http://www.cplusplus.com/forum/beginner/58493/ )
     c.setBackgroundColor(GREY);
     c.start();
     graydientFunction(c, numberOfThreads);  //Now pass the argument for the number of threads to the test function

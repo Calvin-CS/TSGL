@@ -73,10 +73,21 @@ void functionFunction(CartesianCanvas& can) {
     can.drawFunction(function3);
 }
 
-int main() {
+//Takes command line arguments for the window width and height
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Cart c11(0, 0, WINDOW_W, WINDOW_H, -5,-5,5,50, 100, "");
+    int holder1 = atoi(argv[1]);   //Width
+    int holder2 = atoi(argv[2]);   //Height
+    int width, height = 0;
+    if(holder1 <= 0 || holder2 <= 0) {   //Check the width and height to see if they are valid
+    	width = height = 1000;  //If not, set the width and height to a default size
+    } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
+    	width = height = 1000;
+    } else {
+    	width = holder1;  //Else, use the passed width and height
+    	height = holder2;
+    }
+    Cart c11(0, 0, width, height, -5,-5,5,50, 100, "");
     c11.setBackgroundColor(WHITE);
     c11.start();
     functionFunction(c11);

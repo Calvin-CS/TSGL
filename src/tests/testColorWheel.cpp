@@ -77,7 +77,7 @@ void colorWheelFunction(Canvas& can) {
     float x2, x3, y2, y3, shading;
     #pragma omp parallel num_threads(THREADS) private(x2,x3,y2,y3,shading)
     {
-        int nthreads = omp_get_num_threads();
+    	int nthreads = omp_get_num_threads();
         int delta = NUM_COLORS / nthreads;           // Distance between threads to compute
         int tid = omp_get_thread_num();
         shading = 1 - (float) tid / nthreads;
@@ -94,13 +94,25 @@ void colorWheelFunction(Canvas& can) {
     }
 }
 
-int main() {
+
+//Takes command line arguments for the height and width of the window
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c10(0, 0, WINDOW_W, WINDOW_H, 512, "", FRAME);
+    int holder1 = atoi(argv[1]);   //Width
+    int holder2 = atoi(argv[2]);   //Height
+    int width, height = 0;
+    if (holder1 <= 0 || holder2 <= 0) {    //Checked the passed width and height if they are valid
+    	width = height = 960;  //If not, set the width and height to a default value
+    } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
+    	width = height = 960;
+    } else {
+    	width = holder1;  //Else, they are and so use them
+    	height = holder2;
+    }
+    Canvas c10(0, 0, width, height, 512, "", FRAME);
     c10.setBackgroundColor(GREY);
     c10.start();
-    colorWheelFunction(c10);
+    colorWheelFunction(c10);  //Pass it as an argument
     c10.close();
     glfwTerminate();  // Release GLFW
 }

@@ -151,7 +151,6 @@ void pongFunction(Canvas& can) {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Canvas c25(0,0,1600,600,1000, "", FRAME);
     c25.setBackgroundColor(BLACK);
     c25.start();

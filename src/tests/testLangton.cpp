@@ -49,7 +49,7 @@ float randfloat(int divisor = 10000) {
  * - The number of iterations per frame is set to a large number
  * - The initial position \b xx, \b yy is set to the center of the Canvas
  * - The initial direction is set to UP
- * - The internal timer of the Canvas is set up to expire once every \b FRAME / \b IPF seconds
+ * - The internal timer of the Canvas is set up to expire once every \b FRAME / \b IPF seconds (see main() )
  * - While the Canvas is open:
  *   - The internal timer sleeps until the next frame is ready to be drawn
  *   - If the ant's current cell is filled, turn right and color it; otherwise, turn left and blacken it
@@ -92,15 +92,24 @@ void langtonFunction(Canvas& can) {
     delete filled;
 }
 
-int main() {
+//Take command-line arguments for the width and height of the Canvas
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c6(0, 0, WINDOW_W, WINDOW_H, BUFFER, "", FRAME / IPF);
+    int holder1 = atoi(argv[1]);  //Width
+    int holder2 = atoi(argv[1]);  //Length
+    int width, height = 0;    //Actual width and height to be used
+    if (holder1 <= 0 || holder2 <= 0) {  //Check if the passed arguments are valid
+     	height = width = 960;  //If not, set the width and height to 960
+    } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
+     	height = width = 960;
+    } else {
+     	width = holder1;  //Else, set the width and height to the passed command-line arguments
+     	height = holder2;
+    }
+    Canvas c6(0, 0, width, height, BUFFER, "", FRAME / IPF);
     c6.setBackgroundColor(GREY);
     c6.start();
     langtonFunction(c6);
     c6.close();
     glfwTerminate();  // Release GLFW
 }
-
-

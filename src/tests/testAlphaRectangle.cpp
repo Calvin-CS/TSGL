@@ -70,7 +70,6 @@ void alphaRectangleFunction(Canvas& can) {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Canvas c14(0, 0, WINDOW_W, WINDOW_H, 512, "", FRAME / 10);
     c14.setBackgroundColor(BLACK);
     c14.start();

@@ -26,7 +26,7 @@ const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
 /*!
  * \brief Draws the full spectrum across the x, y, and time dimensions at the given framerate
- * and a static number of threads using OMP
+ * and a static number of threads using OMP and takes in a command line argument for the number of threads to use
  * \details
  * - The internal timer of the Canvas is set up to go off every \b FRAME seconds (\b FRAME == 1 / \b FPS).
  * - A parallel block is set up with OMP, using one thread per processor.
@@ -68,7 +68,6 @@ void spectrumFunction(Canvas& can, int & numberOfThreads) {
 
 int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     int numberOfThreads = atoi(argv[1]);   //Number of threads to use
     Canvas c4(0,0,255,255,65536, "", FRAME);
     c4.setBackgroundColor(GREY);

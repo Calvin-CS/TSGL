@@ -57,9 +57,9 @@ void lineChainFunction(Canvas& can) {
     }
 }
 
+//Takes command line arguments for the window width and height
 int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     int holder1 = atoi(argv[1]);   //Width
     int holder2 = atoi(argv[2]);   //Height
     int width = 0;
