@@ -59,7 +59,6 @@ void imageCartFunction(Cart& can) {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10, "");
     c26.setBackgroundColor(GREY);
     c26.start();

@@ -103,7 +103,6 @@ void mouseFunction(Canvas& can) {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Canvas c32(0, 0, 800, 600, 5000, "", FRAME);
     c32.setBackgroundColor(WHITE);
     c32.start();

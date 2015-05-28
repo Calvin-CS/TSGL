@@ -63,7 +63,6 @@ void textFunctionTwo(Canvas& can) {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Canvas c24(10);
     c24.setBackgroundColor(GREY);
     c24.start();

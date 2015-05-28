@@ -29,7 +29,8 @@ float randfloat(int divisor = 10000) {
 }
 
 /*!
- * \brief Draws a neat pattern of points to a canvas using OMP
+ * \brief Draws a neat pattern of points to a canvas using OMP and takes in a command line
+ * argument for the number of threads to use
  * \details
  * - A parallel block is set up with #pragma omp parallel using all available processors
  * - The actual number of threads created is stored in: \b nthreads
@@ -45,6 +46,7 @@ float randfloat(int divisor = 10000) {
  * - The function breaks from the outer for loop if the Canvas is closed
  * .
  * \param can, Reference to the Canvas being drawn to
+ * \param numberOfThreads, Reference to the number of threads to use
  */
 void colorPointsFunction(Canvas& can, int & numberOfThreads) {
 #pragma omp parallel num_threads(omp_get_num_procs())
@@ -72,22 +74,22 @@ void colorPointsFunction(Canvas& can, int & numberOfThreads) {
 	}
 }
 
-//http://www.cplusplus.com/articles/DEN36Up4/
+//Takes in command line arguments for the window width and height as well
+//as for the number of threads to use
 int main(int argc, char* argv[]) {
 	glfwInit();  // Initialize GLFW
-	Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
 	int holder1 = atoi(argv[1]);  //Width
 	int holder2 = atoi(argv[2]);  //Height
 	int width = 0;
 	int height = 0;
-	if (holder1 <= 0 || holder2 <= 0) {   //Check the passed width and height
-		width = WINDOW_W;
+	if (holder1 <= 0 || holder2 <= 0) {   //Check the passed width and height and see if they are valid
+		width = WINDOW_W;  //If not, use the default width and height
 		height = WINDOW_H;
 	} else if(holder1 > WINDOW_W || holder2 > WINDOW_H || holder1 <= 200) {    //Caught a weird situation where if the width was less than or equal to 200 then the pattern would not show up.
 		width = WINDOW_W;
 		height = WINDOW_H;
 	} else {
-		width = holder1;  //If they are valid, use them
+		width = holder1;  //Else they are valid, use them
 		height = holder2;
 	}
 	Canvas c1(0, 0, width, height, BUFFER, "");

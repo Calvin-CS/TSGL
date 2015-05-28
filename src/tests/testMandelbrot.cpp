@@ -12,36 +12,17 @@
 #include <queue>
 #include <tsgl.h>
 
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
-
 // Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-// Shared values between langton functions
-enum direction {
-    UP = 0,
-    RIGHT = 1,
-    DOWN = 2,
-    LEFT = 3
-};
+const int MAX_COLOR = 255;
 
 typedef CartesianCanvas Cart;
 typedef std::complex<long double> complex;
 
 const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
-float randfloat(int divisor = 10000) {
-    return (rand() % divisor) / (float) divisor;
-}
-
 /*!
  * \brief Draws the Mandelbrot set on a CartesianCanvas with custom controls, a specified target update rate,
- *  and a dynamic number of threads
+ *  and a dynamic number of threads and uses command-line arguments to specify the number of threads to use
  * \details
  * - The number of threads to use is predetermined and stored in: \b THREADS.
  * - The number of iterations to check is predetermined and stored in: \b DEPTH.
@@ -76,8 +57,9 @@ float randfloat(int divisor = 10000) {
  *   .
  * .
  * \param can, Reference to the CartesianCanvas being drawn to
+ * \param numberOfThreads, Reference to the number of threads passed via command-line arguments.
  */
-void mandelbrotFunction(CartesianCanvas& can) {
+void mandelbrotFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
     const unsigned int THREADS = 8;  //omp_get_num_procs();
     const unsigned int DEPTH = MAX_COLOR;
     Decimal firstX, firstY, secondX, secondY;
@@ -115,7 +97,13 @@ void mandelbrotFunction(CartesianCanvas& can) {
         can.reset(); //Removed the timer and replaced it with an internal timer in the Canvas class
         #pragma omp parallel num_threads(THREADS)
         {
-            unsigned int nthreads = omp_get_num_threads();
+            unsigned int holder = omp_get_num_threads();  //Temp variable
+            unsigned int nthreads = 1;   //Actual number of threads
+            if (numberOfThreads > holder || numberOfThreads <= 0) {  //Check if the passed number of threads is valid
+            	nthreads = holder;  //If not, use the number of threads that we can use with OMP
+            } else {
+            	nthreads = numberOfThreads;  //Else, use that many threads
+            }
             double blocksize = can.getCartHeight() / nthreads;
             double blockheight = can.getWindowHeight() / nthreads;
             for (unsigned int k = 0; k <= blockheight && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
@@ -148,13 +136,14 @@ void mandelbrotFunction(CartesianCanvas& can) {
     }
 }
 
-int main() {
+//Takes command line arguments for the number of threads
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Cart c5(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER, "", FRAME / 2);
+    unsigned int numberOfThreads = atoi(argv[1]);    //Get the number of threads to use
     c5.setBackgroundColor(GREY);
     c5.start();
-    mandelbrotFunction(c5);
+    mandelbrotFunction(c5, numberOfThreads);   //And pass it as an argument
     c5.close();
     glfwTerminate();  // Release GLFW
 }

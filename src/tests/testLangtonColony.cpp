@@ -114,10 +114,22 @@ void langtonColonyFunction(Canvas& can) {
     delete filled;
 }
 
-int main() {
+//Takes command-line arguments and uses them as the width and height of the
+//Canvas
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c7(0, 0, WINDOW_H, WINDOW_H, BUFFER, "", FRAME / IPF);
+    int holder1 = atoi(argv[1]);  //Width
+    int holder2 = atoi(argv[1]);  //Length
+    int width, height = 0;    //Actual width and height to be used
+     if (holder1 <= 0 || holder2 <= 0) {  //Check if the passed arguments are valid
+     	height = width = 960;  //If not, set the width and height to 960
+     } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
+     	height = width = 960;
+     } else {
+     	width = holder1;  //Else, set the width and height to the passed command-line arguments
+     	height = holder2;
+     }
+    Canvas c7(0, 0, width, height, BUFFER, "", FRAME / IPF);
     c7.setBackgroundColor(GREY);
     c7.start();
     langtonColonyFunction(c7);

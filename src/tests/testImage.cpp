@@ -62,7 +62,6 @@ void imageFunction(Canvas& can) {
 
 int main() {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     Canvas c21(0,0,1200,600,100, "");
     c21.setBackgroundColor(GREY);
     c21.start();

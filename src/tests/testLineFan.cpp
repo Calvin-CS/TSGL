@@ -66,15 +66,16 @@ void lineFanFunction(Canvas& can) {
     }
 }
 
+//Takes in a command line argument for the number of lines to draw
+//on the Canvas
 int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
     int holder = atoi(argv[1]);   //Specify the number of lines
     int numberOfLines = 0;
-    if(holder == 0) {   //Can't be 0 (Bus error (core dumped) error if there are any)
-    	numberOfLines = 500;
+    if(holder == 0) {   //Can't be 0 (Bus error (core dumped) error if so)
+    	numberOfLines = 500;  //Set it to default, 500
     } else {
-    	numberOfLines = holder;
+    	numberOfLines = holder;   //Use the number of lines if valid
     }
     Canvas c3(numberOfLines, FRAME);
     c3.setBackgroundColor(GREY);

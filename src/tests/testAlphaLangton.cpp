@@ -141,10 +141,22 @@ void alphaLangtonFunction(Canvas& can) {
     delete filled;
 }
 
-int main() {
+//Takes command-line arguments and uses them as the height and width
+//of the Canvas
+int main(int argc, char* argv[]) {
     glfwInit();  // Initialize GLFW
-    Canvas::setDrawBuffer(GL_FRONT_AND_BACK);	// For Patrick's laptop
-    Canvas c15(0, 0, 960, 960, 30000, "", FRAME);
+    int holder1 = atoi(argv[1]);  //Width
+    int holder2 = atoi(argv[1]);  //Length
+    int width, height = 0;    //Actual width and height to be used
+    if (holder1 <= 0 || holder2 <= 0) {  //Check if the passed arguments are valid
+    	height = width = 960;  //If not, set the width and height to 960
+    } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
+    	height = width = 960;
+    } else {
+    	width = holder1;  //Else, set the width and height to the passed command-line arguments
+    	height = holder2;
+    }
+    Canvas c15(0, 0, width, height, 30000, "", FRAME);
     c15.setBackgroundColor(BLACK);
     c15.start();
     alphaLangtonFunction(c15);
