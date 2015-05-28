@@ -82,10 +82,20 @@ bin/testTSGL: build/tests.o lib/libtsgl.a
 	$(CC) $^ -o bin/testTSGL $(LFLAGS)
 	@touch build/build
 
+bin/testAlphaLangton: build/testAlphaLangton.o build/tests/AntFarm.o build/tests/LangtonAnt.o lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testAlphaLangton $(LFLAGS)
+	@touch build/build
+
 bin/test%: build/test%.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
+
+build/tests/%.o: src/tests/%.cpp
+	mkdir -p build/tests
+	@echo 'Building $(patsubst src/TSGL/%,%,$<)'
+	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
 build/%.o: src/TSGL/%.cpp
 	@echo 'Building $(patsubst src/TSGL/%,%,$<)'
