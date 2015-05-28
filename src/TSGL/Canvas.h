@@ -59,8 +59,8 @@ private:
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
-    bool            hasStereo;
-    bool            hasBackbuffer;
+    bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
+    bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
     TextureHandler  loader;                                             // The ImageLoader that holds all our already loaded textures
@@ -99,8 +99,9 @@ private:
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
 
-    static int      drawBuffer;                                         // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
+    static int        drawBuffer;                                       // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
     static std::mutex glfwMutex;                                        // Keeps GLFW createWindow from getting called at the same time in multiple threads
+    static unsigned   openCanvases;                                     // Total number of open Canvases
 
     static void buttonCallback(GLFWwindow* window, int key,
                                int action, int mods);                   // GLFW callback for mouse buttons
@@ -120,7 +121,7 @@ private:
     void        SetupCamera();                                          // Setup the 2D camera for smooth rendering
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
     void        textureShaders(bool state);                             // Turn textures on or off
-    
+
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
@@ -211,10 +212,10 @@ public:
     virtual void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
 
     virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
-    
+
     //new method for convex polygon
     virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
-    
+
     /*!
      * \brief Draw an image.
      * \details This function draws an Image with the given coordinates and dimensions.
@@ -452,19 +453,19 @@ public:
      * \see close(), end()
      */
     int start();
-     
+
     //new
     void sleep();
-    
+
     //new
     void reset();
-    
+
     //new
     unsigned int getReps() const;
-    
+
     //new
     double getTimeBetweenSleeps() const;
-    
+
     /*!
      * \brief Takes a screenshot.
      * \details This function saves a screenshot of the current Canvas to the working directory.

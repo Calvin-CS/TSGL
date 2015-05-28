@@ -43,6 +43,7 @@ static const GLchar* textureFragmentSource = "#version 150\n"
 
 std::mutex Canvas::glfwMutex;
 int Canvas::drawBuffer = GL_LEFT;
+unsigned Canvas::openCanvases = 0;
 
 //New (TODO: b now unused; formally replace later)
 Canvas::Canvas(unsigned int b, double timerLength) {
@@ -63,6 +64,8 @@ Canvas::~Canvas() {
     delete timer;
     delete drawTimer;  //New
     delete[] vertexData;
+    if (--openCanvases == 0)
+        glfwTerminate();  // Initialize GLFW
 }
 
 void Canvas::bindToButton(Key button, Action a, voidFunction f) {
@@ -570,6 +573,10 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 }
 
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
+    if (openCanvases == 0)
+        glfwInit();  // Initialize GLFW
+    ++openCanvases;
+
     title_ = title;
     winWidth = ww, winHeight = hh;
     aspect = (float) winWidth / winHeight;
@@ -601,7 +608,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 
     timer = new Timer(FRAME);
     drawTimer = new Timer(timerLength);    //New
-    
+
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
 }
@@ -692,7 +699,7 @@ void Canvas::sleep() {
 }
 
 //New
-void Canvas::reset() { 
+void Canvas::reset() {
     drawTimer->reset();
 }
 
