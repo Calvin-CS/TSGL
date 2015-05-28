@@ -50,12 +50,12 @@ tsgl: lib/libtsgl.a
 tests: bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testLineChain bin/testLineFan bin/testSpectrum bin/testMandelbrot \
 	bin/testLangton bin/testLangtonColony bin/testLangtonRainbow \
-	bin/testDumbSort bin/testColorWheel bin/testFunction bin/testCosineIntegral \
-	bin/testGradientWheel bin/testAlphaRectangle bin/testAlphaLangton \
-	bin/testGradientMandelbrot bin/testNova bin/testVoronoi \
-	bin/testShadedVoronoi bin/testForestFire bin/testImage bin/testHighData \
-	bin/testText bin/testTextTwo bin/testPong bin/testImageCart \
-	bin/testTextCart bin/testGetPixels bin/testScreenshot \
+	bin/testDumbSort bin/testColorWheel bin/testFunction \
+	bin/testCosineIntegral bin/testGradientWheel bin/testAlphaRectangle
+	bin/testAlphaLangton bin/testGradientMandelbrot bin/testNova
+	bin/testVoronoi bin/testShadedVoronoi bin/testForestFire bin/testImage \
+	bin/testHighData bin/testText bin/testTextTwo bin/testPong \
+	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
 	bin/testConcavePolygon
 

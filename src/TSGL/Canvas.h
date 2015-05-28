@@ -59,6 +59,8 @@ private:
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
+    bool            hasStereo;
+    bool            hasBackbuffer;
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
     TextureHandler  loader;                                             // The ImageLoader that holds all our already loaded textures

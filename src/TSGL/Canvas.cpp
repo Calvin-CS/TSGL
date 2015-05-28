@@ -94,25 +94,32 @@ void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
 
+    if (hasStereo) {
+      if (hasBackbuffer)
+        Canvas::setDrawBuffer(GL_FRONT_AND_BACK);
+      else
+        Canvas::setDrawBuffer(GL_FRONT);
+    } else if (hasBackbuffer)
+      Canvas::setDrawBuffer(GL_LEFT);
+    else
+      Canvas::setDrawBuffer(GL_FRONT_LEFT);
+
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
         timer->sleep();
 
-
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
         if (toClear) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-            clearRectangle->draw();
-
             glDrawBuffer(drawBuffer);  // See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
-
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             clearRectangle->draw();
 
             toClear = false;
-        } else {
-            glDrawBuffer(drawBuffer);
         }
+
+//        int buff[1] = {-1};
+//        glGetIntegerv(GL_DRAW_BUFFER,buff);
+//        std::cout << "BUFF " << (int)buff[0] << std::endl;
 
         realFPS = round(1 / timer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
@@ -164,8 +171,10 @@ void Canvas::draw() {
 
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
         glFlush();
-        glDrawBuffer(GL_BACK_LEFT);
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
+
+//        glGetIntegerv(GL_DRAW_BUFFER,buff);
+//        std::cout << "BUFF " << (int)buff[0] << std::endl;
 
         glfwPollEvents();                            // Handle any I/O
         glfwGetCursorPos(window, &mouseX, &mouseY);
@@ -258,10 +267,10 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
 }
 
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
-//    glfwMakeContextCurrent(window);                       // We're drawing to window as soon as it's created
+    glfwMakeContextCurrent(window);                       // We're drawing to window as soon as it's created
     Image* im = new Image(fname, loader, x, y, w, h, a);  // Creates the Image with the specified coordinates
     drawShape(im);                                        // Push it onto our drawing buffer
-//    glfwMakeContextCurrent(NULL);                         // We're drawing to window as soon as it's created
+    glfwMakeContextCurrent(NULL);                         // We're drawing to window as soon as it's created
 }
 
 void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
@@ -432,6 +441,7 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
@@ -537,6 +547,20 @@ void Canvas::glInit() {
     bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
         glfwSetWindowShouldClose(window, GL_TRUE);
     });
+
+//    int stereo[1] = {5}, dbuff[1] = {5};
+//    glGetNamedFramebufferParameteriv(0,GL_STEREO,stereo);
+//    glGetNamedFramebufferParameteriv(0,GL_DOUBLEBUFFER,dbuff);
+    unsigned char stereo[1] = {5}, dbuff[1] = {5};
+    int aux[1] = {5};
+    glGetBooleanv(GL_STEREO,stereo);
+    glGetBooleanv(GL_DOUBLEBUFFER,dbuff);
+    glGetIntegerv(GL_AUX_BUFFERS,aux);
+    int s = (int)stereo[0];
+    int d = (int)dbuff[0];
+    std::cout << s << "," << d << "," << aux[0] << std::endl;
+    hasStereo = (s > 0);
+    hasBackbuffer = (d > 0);
 
     glfwMakeContextCurrent(NULL);   // Reset the context
 }
