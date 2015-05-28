@@ -59,7 +59,6 @@ void lineChainFunction(Canvas& can) {
 
 //Takes command line arguments for the window width and height
 int main(int argc, char* argv[]) {
-    glfwInit();  // Initialize GLFW
     int holder1 = atoi(argv[1]);   //Width
     int holder2 = atoi(argv[2]);   //Height
     int width = 0;
@@ -79,5 +78,4 @@ int main(int argc, char* argv[]) {
     c2.start();
     lineChainFunction(c2);
     c2.close();
-    glfwTerminate();  // Release GLFW
 }

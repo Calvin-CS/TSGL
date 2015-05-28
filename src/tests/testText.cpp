@@ -55,7 +55,7 @@ void textFunction(Canvas& can) {
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-    can.setFont("assets/freefont/FreeSerif.ttf");   //New, commented out for testing no font set
+  //  can.setFont("assets/freefont/FreeSerif.ttf");   //New, commented out for testing no font set
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
@@ -67,11 +67,9 @@ void textFunction(Canvas& can) {
 }
 
 int main() {
-    glfwInit();  // Initialize GLFW
     Canvas c23(10);
     c23.setBackgroundColor(GREY);
     c23.start();
     textFunction(c23);
     c23.close();
-    glfwTerminate();  // Release GLFW
 }

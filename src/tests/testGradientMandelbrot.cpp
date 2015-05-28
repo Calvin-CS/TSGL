@@ -127,12 +127,10 @@ void gradientMandelbrotFunction(CartesianCanvas& can, unsigned int & numberOfThr
 
 //Takes in command line argument for the number of threads
 int main(int argc, char* argv[]) {
-	glfwInit();  // Initialize GLFW
 	Cart c16(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER, "", FRAME / 2);
 	unsigned int numberOfThreads = atoi(argv[1]);    //Get the number of threads to use
 	c16.setBackgroundColor(GREY);
 	c16.start();
 	gradientMandelbrotFunction(c16, numberOfThreads);
 	c16.close();
-	glfwTerminate();  // Release GLFW
 }

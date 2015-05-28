@@ -129,11 +129,9 @@ void screenshotLangtonFunction(Canvas& can) {
 }
 
 int main() {
-    glfwInit();  // Initialize GLFW
     Canvas c30(0, 0, 960, 960, 30000, "", FRAME);
     c30.setBackgroundColor(BLACK);
     c30.start();
     screenshotLangtonFunction(c30);
     c30.close();
-    glfwTerminate();  // Release GLFW
 }

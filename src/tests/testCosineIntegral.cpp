@@ -109,7 +109,6 @@ void cosineIntegralFunction(CartesianCanvas& can, int & numberOfThreads) {
 //Takes in command line arguments for the width and height of the window
 //as well as the number of threads to use
 int main(int argc, char* argv[]) {
-	glfwInit();  // Initialize GLFW
 	int holder1 = atoi(argv[1]);   //Width
 	int holder2 = atoi(argv[2]);   //Height
 	int width, height = 0;
@@ -127,5 +126,4 @@ int main(int argc, char* argv[]) {
 	c12.start();
 	cosineIntegralFunction(c12, numberOfThreads);   //Pass the argument
 	c12.close();
-	glfwTerminate();  // Release GLFW
 }

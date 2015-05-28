@@ -62,11 +62,9 @@ void textFunctionTwo(Canvas& can) {
 }
 
 int main() {
-    glfwInit();  // Initialize GLFW
     Canvas c24(10);
     c24.setBackgroundColor(GREY);
     c24.start();
     textFunctionTwo(c24);
     c24.close();
-    glfwTerminate();  // Release GLFW
 }

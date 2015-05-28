@@ -69,7 +69,6 @@ void lineFanFunction(Canvas& can) {
 //Takes in a command line argument for the number of lines to draw
 //on the Canvas
 int main(int argc, char* argv[]) {
-    glfwInit();  // Initialize GLFW
     int holder = atoi(argv[1]);   //Specify the number of lines
     int numberOfLines = 0;
     if(holder == 0) {   //Can't be 0 (Bus error (core dumped) error if so)
@@ -82,6 +81,5 @@ int main(int argc, char* argv[]) {
     c3.start();
     lineFanFunction(c3);
     c3.close();
-    glfwTerminate();  // Release GLFW
 }
 

@@ -8,10 +8,8 @@
 #include "ImageInverter.h"
 
 int main() {
-  glfwInit();
 
 	ImageInverter ii("pics/Car-colors.jpg", 1022, 1024);
 	ii.run();
 
-	glfwTerminate();
 }

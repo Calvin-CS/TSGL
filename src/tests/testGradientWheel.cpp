@@ -88,7 +88,6 @@ void gradientWheelFunction(Canvas& can) {
 
 //Takes command line arguments for the width and height of the window
 int main(int argc, char* argv[]) {
-	glfwInit();  // Initialize GLFW
 	int holder1 = atoi(argv[1]);  //Width
 	int holder2 = atoi(argv[1]);  //Length
 	int width, height = 0;    //Actual width and height to be used
@@ -105,5 +104,4 @@ int main(int argc, char* argv[]) {
 	c13.start();
 	gradientWheelFunction(c13);
 	c13.close();
-	glfwTerminate();  // Release GLFW
 }

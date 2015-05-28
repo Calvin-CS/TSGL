@@ -77,7 +77,6 @@ void colorPointsFunction(Canvas& can, int & numberOfThreads) {
 //Takes in command line arguments for the window width and height as well
 //as for the number of threads to use
 int main(int argc, char* argv[]) {
-	glfwInit();  // Initialize GLFW
 	int holder1 = atoi(argv[1]);  //Width
 	int holder2 = atoi(argv[2]);  //Height
 	int width = 0;
@@ -98,5 +97,4 @@ int main(int argc, char* argv[]) {
 	c1.start();
 	colorPointsFunction(c1, numberOfThreads);   //Now pass the argument for the number of threads to the test function
 	c1.close();
-	glfwTerminate();  // Release GLFW
 }

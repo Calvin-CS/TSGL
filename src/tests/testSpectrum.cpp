@@ -67,13 +67,11 @@ void spectrumFunction(Canvas& can, int & numberOfThreads) {
 }
 
 int main(int argc, char* argv[]) {
-    glfwInit();  // Initialize GLFW
     int numberOfThreads = atoi(argv[1]);   //Number of threads to use
     Canvas c4(0,0,255,255,65536, "", FRAME);
     c4.setBackgroundColor(GREY);
     c4.start();
     spectrumFunction(c4, numberOfThreads);  //Pass the number of threads as an argument
     c4.close();
-    glfwTerminate();  // Release GLFW
 }
 

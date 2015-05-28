@@ -137,7 +137,6 @@ void shadedVoronoiFunction(Canvas& can) {
 
 //Takes in command line arguments for the width and height of the window
 int main(int argc, char* argv[]) {
-	glfwInit();  // Initialize GLFW
 	int holder1 = atoi(argv[1]);   //Width
 	int holder2 = atoi(argv[2]);   //Height
 	int width, height = 0;
@@ -154,6 +153,5 @@ int main(int argc, char* argv[]) {
 	c19.start();
 	shadedVoronoiFunction(c19);
 	c19.close();
-	glfwTerminate();  // Release GLFW
 }
 

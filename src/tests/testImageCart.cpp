@@ -58,11 +58,9 @@ void imageCartFunction(Cart& can) {
 }
 
 int main() {
-    glfwInit();  // Initialize GLFW
     Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10, "");
     c26.setBackgroundColor(GREY);
     c26.start();
     imageCartFunction(c26);
     c26.close();
-    glfwTerminate();  // Release GLFW
 }

@@ -102,11 +102,9 @@ void mouseFunction(Canvas& can) {
 }
 
 int main() {
-    glfwInit();  // Initialize GLFW
     Canvas c32(0, 0, 800, 600, 5000, "", FRAME);
     c32.setBackgroundColor(WHITE);
     c32.start();
     mouseFunction(c32);
     c32.close();
-    glfwTerminate();  // Release GLFW
 }

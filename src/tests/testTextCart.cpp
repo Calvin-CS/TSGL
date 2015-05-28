@@ -58,11 +58,9 @@ void textCartFunction(Cart& can) {
 }
 
 int main() {
-    glfwInit();  // Initialize GLFW
     Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10, "");
     c27.setBackgroundColor(GREY);
     c27.start();
     textCartFunction(c27);
     c27.close();
-    glfwTerminate();  // Release GLFW
 }

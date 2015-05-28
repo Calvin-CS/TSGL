@@ -71,7 +71,6 @@ void graydientFunction(Canvas& can, int & numberOfThreads) {
 //as well as for the number of threads to use
 //( see http://www.cplusplus.com/articles/DEN36Up4/ )
 int main(int argc, char* argv[]) {
-    glfwInit();  // Initialize GLFW
     int holder1 = atoi(argv[1]);    //Width
     int holder2 = atoi(argv[2]);    //Height
     int width = 0;
@@ -92,5 +91,4 @@ int main(int argc, char* argv[]) {
     c.start();
     graydientFunction(c, numberOfThreads);  //Now pass the argument for the number of threads to the test function
     c.close();
-    glfwTerminate();  // Release GLFW
 }

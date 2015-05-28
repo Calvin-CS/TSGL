@@ -98,12 +98,10 @@ void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
 }
 
 int main(int argc, char* argv[]) {
-	glfwInit();  // Initialize GLFW
 	Cart c17(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER, "");
 	unsigned int numberOfThreads = atoi(argv[1]);  //Number of threads
 	c17.setBackgroundColor(GREY);
 	c17.start();
 	novaFunction(c17, numberOfThreads);  //Pass that as an argument
 	c17.close();
-	glfwTerminate();  // Release GLFW
 }

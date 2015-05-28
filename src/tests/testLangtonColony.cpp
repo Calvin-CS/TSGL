@@ -117,7 +117,6 @@ void langtonColonyFunction(Canvas& can) {
 //Takes command-line arguments and uses them as the width and height of the
 //Canvas
 int main(int argc, char* argv[]) {
-    glfwInit();  // Initialize GLFW
     int holder1 = atoi(argv[1]);  //Width
     int holder2 = atoi(argv[1]);  //Length
     int width, height = 0;    //Actual width and height to be used
@@ -134,5 +133,4 @@ int main(int argc, char* argv[]) {
     c7.start();
     langtonColonyFunction(c7);
     c7.close();
-    glfwTerminate();  // Release GLFW
 }

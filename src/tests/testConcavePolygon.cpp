@@ -102,11 +102,9 @@ void concavePolygonFunction(Canvas& can) {
 }
 
 int main() {
-    glfwInit();  // Initialize GLFW
     Canvas c33(0, 0, 800, 600, 5000, "", FRAME);
     c33.setBackgroundColor(WHITE);
     c33.start();
     concavePolygonFunction(c33);
     c33.close();
-    glfwTerminate();  // Release GLFW
 }

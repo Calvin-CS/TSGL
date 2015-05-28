@@ -114,7 +114,6 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
 //Takes command line arguments for the width and height of the window
 //as well as for the number of threads to use
 int main(int argc, char* argv[]) {
-	glfwInit();  // Initialize GLFW
 	int holder1 = atoi(argv[1]);   //Width
 	int holder2 = atoi(argv[2]);   //Height
 	int width, height = 0;
@@ -132,5 +131,4 @@ int main(int argc, char* argv[]) {
 	c31.start();
 	greyScaleFunction(c31, numberOfThreads);  //Pass it as an argument
 	c31.close();
-	glfwTerminate();  // Release GLFW
 }

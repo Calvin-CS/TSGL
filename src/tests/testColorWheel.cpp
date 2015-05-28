@@ -97,7 +97,6 @@ void colorWheelFunction(Canvas& can) {
 
 //Takes command line arguments for the height and width of the window
 int main(int argc, char* argv[]) {
-    glfwInit();  // Initialize GLFW
     int holder1 = atoi(argv[1]);   //Width
     int holder2 = atoi(argv[2]);   //Height
     int width, height = 0;
@@ -114,5 +113,4 @@ int main(int argc, char* argv[]) {
     c10.start();
     colorWheelFunction(c10);  //Pass it as an argument
     c10.close();
-    glfwTerminate();  // Release GLFW
 }
