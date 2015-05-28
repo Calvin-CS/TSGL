@@ -561,7 +561,7 @@ void Canvas::glInit() {
     glGetIntegerv(GL_AUX_BUFFERS,aux);
     int s = (int)stereo[0];
     int d = (int)dbuff[0];
-    std::cout << s << "," << d << "," << aux[0] << std::endl;
+    // std::cout << s << "," << d << "," << aux[0] << std::endl;
     hasStereo = (s > 0);
     hasBackbuffer = (d > 0);
 

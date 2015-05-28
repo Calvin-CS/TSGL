@@ -8,39 +8,39 @@ run () {
 
 
 # run bin/testConcavePolygon    #SLOW
+# run bin/testGetPixels         #INCONSISTENT
+# run bin/testInverter          #INCONSISTENT
 
-run bin/testAlphaLangton
+run bin/testAlphaLangton 640 480        #Width, Height
 run bin/testAlphaRectangle
 run bin/testColorPoints 400 400 4       #Width, Height, Threads
-run bin/testColorWheel
-run bin/testCosineIntegral
-run bin/testDumbSort
+run bin/testColorWheel 640 640          #Width, Height
+run bin/testCosineIntegral 640 480 32   #Width, Height, Threads
+run bin/testDumbSort 1200 600           #Width, Height
 run bin/testForestFire
-run bin/testFunction
-run bin/testGetPixels
-run bin/testGradientMandelbrot
-run bin/testGradientWheel
+run bin/testFunction 640 480            #Width, Height
+run bin/testGradientMandelbrot 8        #Threads
+run bin/testGradientWheel 640 640       #Width, Height
 run bin/testGraydient 400 400 8         #Width, Height, Threads
-run bin/testGreyscale
+run bin/testGreyscale 640 480 8         #Width, Height, Threads
 run bin/testHighData
 run bin/testImage
 run bin/testImageCart
-run bin/testInverter
-run bin/testLangton
-run bin/testLangtonColony
-run bin/testLangtonRainbow
+run bin/testLangton 640 480             #Width, Height
+run bin/testLangtonColony 640 480       #Width, Height
+run bin/testLangtonRainbow 640 480      #Width, Height
 run bin/testLineChain 400 400 8         #Width, Height, Threads
 run bin/testLineFan 8                   #Threads
-run bin/testMandelbrot
+run bin/testMandelbrot 8                #Threads
 run bin/testMouse
-run bin/testNova
+run bin/testNova 8                      #Threads
 run bin/testPong
 run bin/testScreenshot
 run bin/testScreenshotLangton
-run bin/testShadedVoronoi
+run bin/testShadedVoronoi 640 480 8     #Width, Height, Threads
 run bin/testSpectrum 8                  #Threads
 run bin/testText
 run bin/testTextCart
 run bin/testTextTwo
 run bin/testTSGL
-run bin/testVoronoi
+run bin/testVoronoi 640 480 8           #Width, Height, Threads
