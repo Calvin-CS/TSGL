@@ -67,7 +67,7 @@ ImageInverter::ImageInverter(const string& fileName,
  */
 inline
 void ImageInverter::run(unsigned numThreads) {
-	sleep(1);
+	// sleep(1);
 	invertImage(numThreads);
 	stop();
 }
@@ -86,6 +86,10 @@ void ImageInverter::invertImage(unsigned numThreads) {
 	ColorInt pixelColor;
 	#pragma omp parallel for num_threads(numThreads)
 	for (unsigned row = 0; row < myHeight; row++) {
+		if (! (myCanvas1.getIsOpen() && myCanvas2.getIsOpen()) ) {
+			row = myHeight; //Exit out
+			continue;
+		}
 		Timer t(0.00001);
 		for (unsigned col = 0; col < myWidth; col++) {
 			pixelColor = myCanvas1.getPixel(row, col);

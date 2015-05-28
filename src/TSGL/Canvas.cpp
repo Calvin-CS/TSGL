@@ -267,10 +267,10 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
 }
 
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
-    glfwMakeContextCurrent(window);                       // We're drawing to window as soon as it's created
+//    glfwMakeContextCurrent(window);                       // We're drawing to window as soon as it's created
     Image* im = new Image(fname, loader, x, y, w, h, a);  // Creates the Image with the specified coordinates
     drawShape(im);                                        // Push it onto our drawing buffer
-    glfwMakeContextCurrent(NULL);                         // We're drawing to window as soon as it's created
+//    glfwMakeContextCurrent(NULL);                         // We're drawing to window as soon as it's created
 }
 
 void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {

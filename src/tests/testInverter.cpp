@@ -10,9 +10,6 @@
 int main() {
   glfwInit();
 
-//  Canvas::setDrawBuffer(GL_LEFT);  // Uncomment for ULab computers
-  Canvas::setDrawBuffer(GL_FRONT_AND_BACK);  // Uncomment for Patrick's laptop
-
 	ImageInverter ii("pics/Car-colors.jpg", 1022, 1024);
 	ii.run();
 

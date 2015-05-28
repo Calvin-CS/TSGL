@@ -1,6 +1,46 @@
 #!/bin/bash
 
-for f in bin/test*; do
-  echo "$f"
-  ./"$f"
-done
+run () {
+  echo "$@"
+  $@
+}
+
+
+
+# run bin/testConcavePolygon    #SLOW
+
+run bin/testAlphaLangton
+run bin/testAlphaRectangle
+run bin/testColorPoints 400 400 4       #Width, Height, Threads
+run bin/testColorWheel
+run bin/testCosineIntegral
+run bin/testDumbSort
+run bin/testForestFire
+run bin/testFunction
+run bin/testGetPixels
+run bin/testGradientMandelbrot
+run bin/testGradientWheel
+run bin/testGraydient 400 400 8         #Width, Height, Threads
+run bin/testGreyscale
+run bin/testHighData
+run bin/testImage
+run bin/testImageCart
+run bin/testInverter
+run bin/testLangton
+run bin/testLangtonColony
+run bin/testLangtonRainbow
+run bin/testLineChain 400 400 8         #Width, Height, Threads
+run bin/testLineFan 8                   #Threads
+run bin/testMandelbrot
+run bin/testMouse
+run bin/testNova
+run bin/testPong
+run bin/testScreenshot
+run bin/testScreenshotLangton
+run bin/testShadedVoronoi
+run bin/testSpectrum 8                  #Threads
+run bin/testText
+run bin/testTextCart
+run bin/testTextTwo
+run bin/testTSGL
+run bin/testVoronoi
