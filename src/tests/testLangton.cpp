@@ -95,7 +95,7 @@ void langtonFunction(Canvas& can) {
 //Take command-line arguments for the width and height of the Canvas
 int main(int argc, char* argv[]) {
     int holder1 = atoi(argv[1]);  //Width
-    int holder2 = atoi(argv[1]);  //Length
+    int holder2 = atoi(argv[2]);  //Length
     int width, height = 0;    //Actual width and height to be used
     if (holder1 <= 0 || holder2 <= 0) {  //Check if the passed arguments are valid
      	height = width = 960;  //If not, set the width and height to 960
