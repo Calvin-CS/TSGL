@@ -27,6 +27,7 @@ valgrind*
 tsgl-note
 
 # Backups
+_*
 *~
 
 # Bitmaps
