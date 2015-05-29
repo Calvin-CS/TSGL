@@ -39,17 +39,12 @@ LFLAGS=-LTSGL/ -ltsgl \
 
 DEPFLAGS=-MMD -MP
 
-LANGTON=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
+BIN_RECIPE= \
+	@echo 'Building $(patsubst bin/%,%,$@)' \
+	$(CC) $^ -o $@ $(LFLAGS) \
+	@touch build/build
 
-all: dif tsgl tests docs tutorial
-
-debug: dif tsgl tests
-
-dif: build/build
-
-tsgl: lib/libtsgl.a
-
-tests: bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
+BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testLineChain bin/testLineFan bin/testSpectrum bin/testMandelbrot \
 	bin/testLangton bin/testLangtonColony bin/testLangtonRainbow \
 	bin/testDumbSort bin/testColorWheel bin/testFunction \
@@ -60,6 +55,18 @@ tests: bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
 	bin/testConcavePolygon
+
+LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
+
+all: dif tsgl tests docs tutorial
+
+debug: dif tsgl tests
+
+dif: build/build
+
+tsgl: lib/libtsgl.a
+
+tests: ${BINARIES}
 
 docs: docs/html/index.html
 
@@ -81,49 +88,49 @@ lib/libtsgl.a: ${OBJS}
 
 bin/testTSGL: build/tests.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testTSGL $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testAlphaLangton: build/tests/testAlphaLangton.o ${LANGTON} lib/libtsgl.a
+bin/testAlphaLangton: build/tests/testAlphaLangton.o ${LANGTON_DEPS}
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testAlphaLangton $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testLangtonColony: build/tests/testLangtonColony.o ${LANGTON} lib/libtsgl.a
+bin/testLangtonColony: build/tests/testLangtonColony.o ${LANGTON_DEPS}
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testLangtonColony $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testLangtonRainbow: build/tests/testLangtonRainbow.o ${LANGTON} lib/libtsgl.a
+bin/testLangtonRainbow: build/tests/testLangtonRainbow.o ${LANGTON_DEPS}
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testLangtonRainbow $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testLangton: build/tests/testLangton.o ${LANGTON} lib/libtsgl.a
+bin/testLangton: build/tests/testLangton.o ${LANGTON_DEPS}
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testLangton $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
 bin/testVoronoi: build/tests/testVoronoi.o build/tests/Voronoi.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testVoronoi $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
 bin/testShadedVoronoi: build/tests/testShadedVoronoi.o build/tests/ShadedVoronoi.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testShadedVoronoi $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
 bin/testMandelbrot: build/tests/testMandelbrot.o build/tests/Mandelbrot.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testMandelbrot $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testGradientMandelbrot: build/tests/testGradientMandelbrot.o build/tests/GradientMandelbrot.o lib/libtsgl.a
+bin/testGradientMandelbrot: build/tests/testGradientMandelbrot.o build/tests/Mandelbrot.o build/tests/GradientMandelbrot.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o bin/testGradientMandelbrot $(LFLAGS)
+	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
-		
+
 bin/test%: build/tests/test%.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)

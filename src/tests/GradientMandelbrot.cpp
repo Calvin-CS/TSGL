@@ -5,22 +5,15 @@
  *      Author: Chris Dilley
  */
 
-#include "Mandelbrot.cpp"
+#include "GradientMandelbrot.h"
 
-class GradientMandelbrot : public Mandelbrot {
-private:
-	int myThreads;    //It needed its own threads, depth, and redraw flag
-	unsigned int myDepth;    //but the rest is handled by the parent, Mandelbrot
-	bool myRedraw;
-public:
-
-GradientMandelbrot() : Mandelbrot() {
+GradientMandelbrot::GradientMandelbrot() {
 	myThreads = 32;
 	myDepth = 32;
 	myRedraw = true;
 }
 
-void draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
+void GradientMandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
 	while (myRedraw) {
 		setRedraw(false);
 #pragma omp parallel num_threads(myThreads)
@@ -66,11 +59,9 @@ void draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
 
 }
 
-void setRedraw(bool newValue) {
+void GradientMandelbrot::setRedraw(bool newValue) {
 		myRedraw = newValue;
 }
-
-};
 
 
 

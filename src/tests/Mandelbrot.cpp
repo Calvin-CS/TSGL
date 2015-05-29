@@ -1,72 +1,43 @@
-/*
- * Mandelbrot.cpp
- *
- *  Created on: May 28, 2015
- *      Author: Chris Dilley
- *(NEEDS DOCUMENTATION)
- */
+#include "Mandelbrot.h"
 
-//Imports, constants....
-#include <cmath>
-#include <complex>
-#include <iostream>
-#include <omp.h>
-#include <queue>
-#include <tsgl.h>
-
-const int MAX_COLOR = 255;
-
-typedef CartesianCanvas Cart;
-typedef std::complex<long double> complex;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-class Mandelbrot {
-private:
-	int myThreads;
-	unsigned int myDepth;
-	Decimal myFirstX, myFirstY, mySecondX, mySecondY;
-	bool myRedraw;
-
-public:
-Mandelbrot() {
+Mandelbrot::Mandelbrot() {
 		myThreads = 8;
 		myDepth = MAX_COLOR;
 		myFirstX = myFirstY = mySecondX = mySecondY = 0.0;
 		myRedraw = true;
 }
 
-void bindings(CartesianCanvas& can) {
-		can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &myRedraw]() {
+void Mandelbrot::bindings(CartesianCanvas& can) {
+		can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, this]() {
 			can.clear();
-			myRedraw = true;
+			this->myRedraw = true;
 		});
-		can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&can, &myFirstX, &myFirstY]() {
-			can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), myFirstX, myFirstY);
+		can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&can, this]() {
+			can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), this->myFirstX, this->myFirstY);
 		});
-		can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&can, &myFirstX, &myFirstY, &mySecondX, &mySecondY, &myRedraw]() {
-			can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), mySecondX, mySecondY);
-			can.zoom(myFirstX, myFirstY, mySecondX, mySecondY);
-			myRedraw = true;
+		can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&can, this]() {
+			can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), this->mySecondX, this->mySecondY);
+			can.zoom(this->myFirstX, this->myFirstY, this->mySecondX, this->mySecondY);
+			this->myRedraw = true;
 		});
-		can.bindToButton(TSGL_MOUSE_RIGHT, TSGL_PRESS, [&can, &myRedraw]() {
+		can.bindToButton(TSGL_MOUSE_RIGHT, TSGL_PRESS, [&can, this]() {
 			Decimal x, y;
 			can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
 			can.zoom(x, y, 1.5);
-			myRedraw = true;
+			this->myRedraw = true;
 		});
-		can.bindToScroll([&can, &myRedraw](double dx, double dy) {
+		can.bindToScroll([&can, this](double dx, double dy) {
 			Decimal x, y;
 			can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
 			Decimal scale;
 			if (dy == 1) scale = .5;
 			else scale = 1.5;
 			can.zoom(x, y, scale);
-			myRedraw = true;
+			this->myRedraw = true;
 		});
 	}
 
-void draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
+void Mandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
 		while(myRedraw) {
 			setRedraw(false);
 			can.reset();
@@ -112,8 +83,6 @@ while (can.getIsOpen() && !myRedraw)
 	}
 
 	//mutator
-void setRedraw(bool newValue) {
-		myRedraw = newValue;
-	}
-
-};
+void Mandelbrot::setRedraw(bool newValue) {
+  myRedraw = newValue;
+}
