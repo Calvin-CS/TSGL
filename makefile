@@ -54,7 +54,7 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testHighData bin/testText bin/testTextTwo bin/testPong \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
-	bin/testConcavePolygon
+	bin/testConcavePolygon bin/testConway
 
 all: dif tsgl tests docs tutorial
 
@@ -90,6 +90,11 @@ bin/testTSGL: build/tests.o lib/libtsgl.a
 	@touch build/build
 
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
+
+bin/testConway: build/tests/testConway.o build/tests/Conway/ConwayAnt.o build/tests/Conway/LifeFarm.o
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o $@ $(LFLAGS)
+	@touch build/build
 
 bin/testAlphaLangton: build/tests/testAlphaLangton.o ${LANGTON_DEPS}
 	@echo 'Building $(patsubst bin/%,%,$@)'

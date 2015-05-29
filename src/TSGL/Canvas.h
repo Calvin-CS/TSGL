@@ -55,6 +55,7 @@ private:
     typedef std::function<void(double, double)>     doubleFunction;
 
     float           aspect;                                             // Aspect ratio used for setting up the window
+    ColorFloat      bgcolor;                                            // Color of the Canvas' clearRectangle
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
@@ -307,6 +308,12 @@ public:
      * \see start(), close()
      */
     void end();
+
+    /*!
+     * \brief Accessor for the current background color
+     * \return The background color of the Canvas' clearRectangle.
+     */
+    ColorFloat getBackgroundColor();
 
     /*!
      * \brief Accessor for the current frame number.
