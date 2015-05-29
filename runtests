@@ -11,6 +11,8 @@ run () {
 # run bin/testGetPixels         #INCONSISTENT
 # run bin/testInverter          #INCONSISTENT
 
+run bin/testConway
+
 run bin/testAlphaLangton 640 480        #Width, Height
 run bin/testAlphaRectangle
 run bin/testColorPoints 400 400 4       #Width, Height, Threads

@@ -120,13 +120,8 @@ void Canvas::draw() {
             toClear = false;
         }
 
-//        int buff[1] = {-1};
-//        glGetIntegerv(GL_DRAW_BUFFER,buff);
-//        std::cout << "BUFF " << (int)buff[0] << std::endl;
-
         realFPS = round(1 / timer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
-//        fflush(stdout);
         std::cout.flush();
 
         bufferMutex.lock();  // Time to flush our buffer
@@ -143,12 +138,14 @@ void Canvas::draw() {
         pointLastPosition = pos;
 
         if (loopAround) {
+//            std::cout << myShapes->capacity() - posLast + pos << std::endl;
             glBufferData(GL_ARRAY_BUFFER, (myShapes->capacity() - posLast) * 6 * sizeof(float),
                          &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
             glDrawArrays(GL_POINTS, 0, myShapes->capacity() - posLast);
             posLast = 0;
             loopAround = false;
-        }
+        } else
+//          std::cout << pos - posLast << std::endl;
         glBufferData(GL_ARRAY_BUFFER, (pos - posLast) * 6 * sizeof(float), &vertexData[posLast * 6],
                      GL_DYNAMIC_DRAW);
         glDrawArrays(GL_POINTS, 0, pos - posLast);
@@ -175,9 +172,6 @@ void Canvas::draw() {
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
         glFlush();
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
-
-//        glGetIntegerv(GL_DRAW_BUFFER,buff);
-//        std::cout << "BUFF " << (int)buff[0] << std::endl;
 
         glfwPollEvents();                            // Handle any I/O
         glfwGetCursorPos(window, &mouseX, &mouseY);
@@ -356,6 +350,10 @@ void Canvas::errorCallback(int error, const char* string) {
 
 int Canvas::getFrameNumber() {
     return framecounter;
+}
+
+ColorFloat Canvas::getBackgroundColor() {
+  return bgcolor;
 }
 
 float Canvas::getFPS() {
@@ -604,6 +602,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     loopAround = false;
     toRecord = 0;
 
+    bgcolor = GREY;
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, GREY);
 
     timer = new Timer(FRAME);
@@ -627,6 +626,7 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
 
 void Canvas::setBackgroundColor(ColorFloat color) {
     delete clearRectangle;
+    bgcolor = color;
     clearRectangle = new Rectangle(0, 0, winWidth, winHeight, color);
 }
 

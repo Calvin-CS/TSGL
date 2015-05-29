@@ -48,23 +48,13 @@
 void voronoiFunction(Canvas& can) {
 	Voronoi v1(can);   //Make the Voronoi object
 	v1.draw(can);      //Draw it on the Canvas
-	v1.~Voronoi();     //Free up memory
 }
 
 //Takes command line arguments for the width and height of the window
 int main(int argc, char* argv[]) {
-	int holder1 = atoi(argv[1]);   //Width
-	int holder2 = atoi(argv[2]);   //Height
-	int width, height = 0;
-	if (holder1 <= 0 || holder2 <= 0) {    //Checked the passed width and height if they are valid
-		width = height = 960;  //If not, set the width and height to a default value
-	} else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
-		width = height = 960;
-	} else {
-		width = holder1;  //Else, they are and so use them
-		height = holder2;
-	}
-	Canvas c18(0, 0, width, height, BUFFER, "");
+  int w = (argc > 1) ? atoi(argv[1]) : 960;
+  int h = (argc > 2) ? atoi(argv[2]) : w;
+	Canvas c18(0, 0, w, h, BUFFER, "");
 	c18.setBackgroundColor(WHITE);
 	c18.start();
 	voronoiFunction(c18);

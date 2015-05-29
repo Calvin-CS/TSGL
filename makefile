@@ -54,9 +54,10 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testHighData bin/testText bin/testTextTwo bin/testPong \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
-	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock
+	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway
 
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
+	bin/testConcavePolygon bin/testConway
 
 all: dif tsgl tests docs tutorial
 
@@ -91,6 +92,13 @@ bin/testTSGL: build/tests.o lib/libtsgl.a
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
+LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
+
+bin/testConway: build/tests/testConway.o build/tests/Conway/ConwayAnt.o build/tests/Conway/LifeFarm.o
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o $@ $(LFLAGS)
+	@touch build/build
+
 bin/testAlphaLangton: build/tests/testAlphaLangton.o ${LANGTON_DEPS}
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
@@ -121,12 +129,12 @@ bin/testShadedVoronoi: build/tests/testShadedVoronoi.o build/tests/ShadedVoronoi
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testMandelbrot: build/tests/testMandelbrot.o build/tests/Mandelbrot.o lib/libtsgl.a
+bin/testMandelbrot: build/tests/testMandelbrot.o build/tests/Mandelbrot/Mandelbrot.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testGradientMandelbrot: build/tests/testGradientMandelbrot.o build/tests/Mandelbrot.o build/tests/GradientMandelbrot.o lib/libtsgl.a
+bin/testGradientMandelbrot: build/tests/testGradientMandelbrot.o build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build

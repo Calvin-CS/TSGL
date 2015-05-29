@@ -5,7 +5,7 @@
  *      Author: cpd5
  */
 
-#include "Mandelbrot.h"
+#include "Mandelbrot/Mandelbrot.h"
 
 /*!
  * \brief Draws the Mandelbrot set on a CartesianCanvas with custom controls, a specified target update rate,
