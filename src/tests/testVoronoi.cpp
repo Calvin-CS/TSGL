@@ -5,15 +5,7 @@
  *      Author: cpd5
  */
 
-#include <cmath>
-#include <complex>
-#include <iostream>
-#include <omp.h>
-#include <queue>
-#include <tsgl.h>
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
+#include "Voronoi.cpp"
 
 /*!
  * \brief Draws a randomly generated Voronoi diagram, using OMP and private variables
@@ -54,58 +46,9 @@ const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
  * \param can, Reference to the Canvas being drawn to
  */
 void voronoiFunction(Canvas& can) {
-	const int WINDOW_W = can.getWindowWidth(),      // Set the screen sizes
-			WINDOW_H = can.getWindowHeight(),
-			POINTS = 100*4;                       // Set the number of control points
-	//Constructor
-	srand(time(NULL));                              // Seed the random number generator
-	int* x = new int[POINTS]();                     // Initialize an array for POINTS x coords
-	int* y = new int[POINTS]();                     // Do the same for y coords
-	int* kvalue = new int[WINDOW_W * WINDOW_H]();   // Create a mapping of control point values
-	//Setting up.... (or entire thing as draw()? )
-	ColorFloat color[POINTS];                            // And for an array of colors
-	ColorFloat tc, rc, lc, bc, xc, yc;                   // Color for the top, right, left, bottom, x-average, and y-average
-	int bestk = 0;                                  // Keep track of the current best k-value
-	float bdist, dist, xd, yd;                      // Keep track of the closes matches and current distances
-	for (int i = 0; i < POINTS; i++) {              // Randomize the control points
-		x[i] = rand() % WINDOW_W;
-		y[i] = rand() % WINDOW_H;
-	}
-	srand(time(NULL));
-	tc = Colors::randomColor(1.0f);                            // Randomize the axis colors
-	rc = Colors::randomColor(1.0f);
-	lc = Colors::randomColor(1.0f);
-	bc = Colors::randomColor(1.0f);
-	for (int i = 0; i < POINTS; i++) {              // For each control point...
-		float xx = (float) x[i] / WINDOW_W;         // Calculate an value from 0:1 based on x coord
-		float yy = (float) y[i] / WINDOW_H;         // Do the same for y
-		xc = Colors::blendedColor(lc, rc, xx);              // Interpolate between the left and right colors
-		yc = Colors::blendedColor(tc, bc, yy);              // Do the same for top and bottom
-		color[i] = Colors::blendedColor(xc, yc, 0.5f);      // Complete the 4-way interpolation
-	}
-#pragma omp parallel for private(bdist, xd, yd, dist, bestk)
-	for (int i = 0; i < WINDOW_W; i++) {            // For each individual point...
-		bestk = 0;
-		for (int j = 0; j < WINDOW_H; j++) {
-			bdist = 9999;                           // Reset the best distance
-			for (int k = 0; k < POINTS; k++) {      // Find the closest control point
-				xd = i - x[k];                      // Calculate the distance from each control point
-				yd = j - y[k];
-				dist = sqrt(xd * xd + yd * yd);
-				if (dist < bdist) {                 // If it's the closest one
-					bdist = dist;                   // Update the best distance and control point
-					bestk = k;
-				}
-			}
-			kvalue[i * WINDOW_H + j] = bestk;
-			can.drawPoint(i, j, color[bestk]);      // Draw the point with the closest control's color
-			if (!can.getIsOpen()) break;
-		}
-	}
-	//~Destructor
-	delete x;
-	delete y;
-	delete kvalue;
+	Voronoi v1(can);   //Make the Voronoi object
+	v1.draw(can);      //Draw it on the Canvas
+	v1.~Voronoi();     //Free up memory
 }
 
 //Takes command line arguments for the width and height of the window

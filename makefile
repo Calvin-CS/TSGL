@@ -104,6 +104,26 @@ bin/testLangton: build/tests/testLangton.o ${LANGTON} lib/libtsgl.a
 	$(CC) $^ -o bin/testLangton $(LFLAGS)
 	@touch build/build
 
+bin/testVoronoi: build/tests/testVoronoi.o build/tests/Voronoi.o lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testVoronoi $(LFLAGS)
+	@touch build/build
+
+bin/testShadedVoronoi: build/tests/testShadedVoronoi.o build/tests/ShadedVoronoi.o lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testShadedVoronoi $(LFLAGS)
+	@touch build/build
+
+bin/testMandelbrot: build/tests/testMandelbrot.o build/tests/Mandelbrot.o lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testMandelbrot $(LFLAGS)
+	@touch build/build
+
+bin/testGradientMandelbrot: build/tests/testGradientMandelbrot.o build/tests/GradientMandelbrot.o lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testGradientMandelbrot $(LFLAGS)
+	@touch build/build
+		
 bin/test%: build/tests/test%.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
