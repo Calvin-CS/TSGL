@@ -48,14 +48,14 @@ do {
 }
 
 void bindings(Canvas& can) {
-    can.bindToButton(TSGL_UP, TSGL_PRESS, [&myRightDir]() {myRightDir = -1;});
-    can.bindToButton(TSGL_DOWN, TSGL_PRESS, [&myRightDir]() {myRightDir = 1;});
-    can.bindToButton(TSGL_UP, TSGL_RELEASE, [&myRightDir]() {if (myRightDir == -1) myRightDir = 0;});
-    can.bindToButton(TSGL_DOWN, TSGL_RELEASE, [&myRightDir]() {if (myRightDir == 1) myRightDir = 0;});
-    can.bindToButton(TSGL_W, TSGL_PRESS, [&myLeftDir] () {myLeftDir = -1;});
-    can.bindToButton(TSGL_S, TSGL_PRESS, [&myLeftDir] () {myLeftDir = 1;});
-    can.bindToButton(TSGL_W, TSGL_RELEASE, [&myLeftDir] () {if (myLeftDir == -1) myLeftDir = 0;});
-    can.bindToButton(TSGL_S, TSGL_RELEASE, [&myLeftDir] () {if (myLeftDir == 1) myLeftDir = 0;});
+    can.bindToButton(TSGL_UP, TSGL_PRESS, [this]() {this->myRightDir = -1;});
+    can.bindToButton(TSGL_DOWN, TSGL_PRESS, [this]() {this->myRightDir = 1;});
+    can.bindToButton(TSGL_UP, TSGL_RELEASE, [this]() {if (this->myRightDir == -1) this->myRightDir = 0;});
+    can.bindToButton(TSGL_DOWN, TSGL_RELEASE, [this]() {if (this->myRightDir == 1) this->myRightDir = 0;});
+    can.bindToButton(TSGL_W, TSGL_PRESS, [this] () {this->myLeftDir = -1;});
+    can.bindToButton(TSGL_S, TSGL_PRESS, [this] () {this->myLeftDir = 1;});
+    can.bindToButton(TSGL_W, TSGL_RELEASE, [this] () {if (this->myLeftDir == -1) this->myLeftDir = 0;});
+    can.bindToButton(TSGL_S, TSGL_RELEASE, [this] () {if (this->myLeftDir == 1) this->myLeftDir = 0;});
 }
 
 void draw(Canvas& can) {
