@@ -10,7 +10,6 @@
 AntFarm::AntFarm(int w, int h, int s, Canvas* c) {
   width = w;
   height = h;
-  std::cout << width << "," << height << std::endl;
   cap = s;
   size = 0;
   ants = new LangtonAnt*[cap];
