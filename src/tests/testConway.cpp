@@ -33,7 +33,7 @@ void conwayFunction(Canvas& can) {
 //Take command-line arguments for the width and height of the Canvas
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 960;
-    int h = (argc > 2) ? atoi(argv[2]) : w;
+    int h = (argc > 2) ? atoi(argv[2]) : 480;
     Canvas c6(0, 0, w, h, 300, "", FRAME);
 //    c6.setShowFPS(true);
     c6.setBackgroundColor(WHITE);

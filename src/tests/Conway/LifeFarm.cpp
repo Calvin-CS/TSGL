@@ -24,7 +24,7 @@ LifeFarm::LifeFarm(int w, int h, Canvas* c, bool randomize) {
     filledB[i] = new bool[w];
     if (randomize)
       for (int j = 0; j < w; ++j)
-        filledB[i][j] = ((rand() % 2) > 1);
+        filledB[i][j] = 0;
   }
   flipped = false;
   can = c;
@@ -36,9 +36,9 @@ LifeFarm::~LifeFarm() {
 }
 void LifeFarm::addAnt(int x, int y) {
   if (flipped)
-    filledB[x][y] = true;
+    filledB[y][x] = true;
   else
-    filledA[x][y] = true;
+    filledA[y][x] = true;
 }
 void LifeFarm::moveAnts() {
   const int P1 = 7, P2 = 11, P3 = 17;
@@ -104,32 +104,32 @@ void LifeFarm::moveAnts() {
   }
   flipped ^= true;
 }
-bool LifeFarm::lives(int x, int y) {
+bool LifeFarm::lives(int row, int col) {
   int tl, tm, tr, ml, me, mr, bl, bm, br, total;
-  int xm = x > 1 ? x-1 : width-1;
-  int xp = x < width-1 ? x+1 : 0;
-  int ym = y > 1 ? y-1 : height-1;
-  int yp = y < height-1 ? y+1 : 0;
+  int xm = col > 1 ? col-1 : width-1;
+  int xp = col < width-1 ? col+1 : 0;
+  int ym = row > 1 ? row-1 : height-1;
+  int yp = row < height-1 ? row+1 : 0;
   if (!flipped) {
-    tl = filledA[xm][ym];
-    ml = filledA[xm][y];
-    bl = filledA[xm][yp];
-    tm = filledA[x][ym];
-    me = filledA[x][y];
-    bm = filledA[x][yp];
-    tr = filledA[xp][ym];
-    mr = filledA[xp][y];
-    br = filledA[xp][yp];
+    tl = filledA[ym][xm];
+    ml = filledA[row][xm];
+    bl = filledA[yp][xm];
+    tm = filledA[ym][col];
+    me = filledA[row][col];
+    bm = filledA[yp][col];
+    tr = filledA[ym][xp];
+    mr = filledA[row][xp];
+    br = filledA[yp][xp];
   } else {
-    tl = filledB[xm][ym];
-    ml = filledB[xm][y];
-    bl = filledB[xm][yp];
-    tm = filledB[x][ym];
-    me = filledB[x][y];
-    bm = filledB[x][yp];
-    tr = filledB[xp][ym];
-    mr = filledB[xp][y];
-    br = filledB[xp][yp];
+    tl = filledB[ym][xm];
+    ml = filledB[row][xm];
+    bl = filledB[yp][xm];
+    tm = filledB[ym][col];
+    me = filledB[row][col];
+    bm = filledB[yp][col];
+    tr = filledB[ym][xp];
+    mr = filledB[row][xp];
+    br = filledB[yp][xp];
   }
   total = tl+tm+tr+ml+mr+bl+bm+br;
   return ( (total == 3) || ( (me + total )== 3) );

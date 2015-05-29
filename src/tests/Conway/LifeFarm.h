@@ -20,7 +20,6 @@ class LifeFarm {
 private:
     unsigned framecount;
     bool **filledA, **filledB;
-    bool shading;
     bool drawdead;
     bool flipped;
 public:
@@ -30,7 +29,7 @@ public:
     ~LifeFarm();
     void addAnt(int x, int y);
     void moveAnts();
-    bool lives(int x, int y);
+    bool lives(int row, int col);
     void setDrawdead(bool b);
 };
 
