@@ -54,7 +54,7 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testHighData bin/testText bin/testTextTwo bin/testPong \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
-	bin/testConcavePolygon
+	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock
 
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
 
