@@ -5,11 +5,10 @@
  *      Author: cpd5
  */
 
-#include <iostream>
 #include <omp.h>
 #include <tsgl.h>
 
-#include "AntFarm.h"
+#include "Langton/AntFarm.h"
 
 /*!
  * \brief Simulates 4 Langton's Ants with alpha transparency used for drawing and a couple
@@ -27,10 +26,11 @@
  * \param can, Reference to the Canvas being drawn to
  */
 void alphaLangtonFunction(Canvas& can) {
-    const int IPF = 1000,                   // Iterations per frame
+    const int IPF = 5000,                   // Iterations per frame
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight(),   // Window height
               R = WH / 6;                   // How far apart to space the ants
+
     AntFarm farm(WW,WH,4,&can);
     farm.addAnt(WW / 2 - R,WH / 2,MAX_COLOR,0,0,0);
     farm.addAnt(WW / 2,WH / 2 - R,0,0,MAX_COLOR,1);
@@ -56,8 +56,8 @@ void alphaLangtonFunction(Canvas& can) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
-//        if (pulse.pastPeriod())
-//            can.clear();
+        if (pulse.pastPeriod())
+            can.clear();
     }
 }
 

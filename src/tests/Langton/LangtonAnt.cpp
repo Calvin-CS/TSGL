@@ -15,6 +15,7 @@ LangtonAnt::LangtonAnt(int x, int y, int r, int g, int b, int d, AntFarm* p) {
   myBlue = b;
   myDir = d;
   myFarm = p;
+  myAlpha = 16;
 }
 
 void LangtonAnt::move() {
@@ -34,4 +35,16 @@ void LangtonAnt::move() {
       default:
           break;
   }
+}
+
+void LangtonAnt::changeColor(int r, int g, int b) {
+  myRed = r; myGreen = g; myBlue = b;
+}
+
+void LangtonAnt::changeColor(ColorFloat c) {
+  changeColor(c.R*255,c.G*255,c.B*255);
+}
+
+void LangtonAnt::setAlpha(int a) {
+  myAlpha = a;
 }

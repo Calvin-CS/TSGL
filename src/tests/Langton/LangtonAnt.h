@@ -8,13 +8,6 @@
 #ifndef LANGTONANT_H_
 #define LANGTONANT_H_
 
-#include <cmath>
-#include <complex>
-#include <iostream>
-#include <omp.h>
-#include <queue>
-#include <tsgl.h>
-
 #include "AntFarm.h"
 
 class AntFarm;  //Forward Declaration
@@ -29,11 +22,14 @@ enum direction {
 
 class LangtonAnt {
 public:
-    int myX, myY, myRed, myGreen, myBlue, myDir;
+    int myX, myY, myRed, myGreen, myBlue, myAlpha, myDir;
     AntFarm* myFarm;
 public:
     LangtonAnt(int x, int y, int r, int g, int b, int d, AntFarm* p);
     void move();
+    void changeColor(int r, int g, int b);
+    void changeColor(ColorFloat c);
+    void setAlpha(int a);
 };
 
 #endif /* LANGTONANT_H_ */

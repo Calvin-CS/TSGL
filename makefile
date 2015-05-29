@@ -10,7 +10,7 @@ VPATH=SRC_PATH:TESTS_PATH:OBJ_PATH
 
 HEADERS := $(wildcard src/TSGL/*.h)
 SOURCES := $(wildcard src/TSGL/*.cpp)
-OBJS := $(patsubst src/TSGL/%.cpp,build/%.o,${SOURCES})
+OBJS := $(patsubst src/TSGL/%.cpp,build/TSGL/%.o,${SOURCES})
 
 CXXFLAGS=-O3 -g3 \
 	-Wall -Wextra -pedantic-errors \
@@ -38,6 +38,8 @@ LFLAGS=-LTSGL/ -ltsgl \
 	-fopenmp
 
 DEPFLAGS=-MMD -MP
+
+LANGTON=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
 
 all: dif tsgl tests docs tutorial
 
@@ -82,30 +84,42 @@ bin/testTSGL: build/tests.o lib/libtsgl.a
 	$(CC) $^ -o bin/testTSGL $(LFLAGS)
 	@touch build/build
 
-bin/testAlphaLangton: build/testAlphaLangton.o build/tests/AntFarm.o build/tests/LangtonAnt.o lib/libtsgl.a
+bin/testAlphaLangton: build/tests/testAlphaLangton.o ${LANGTON} lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o bin/testAlphaLangton $(LFLAGS)
 	@touch build/build
 
-bin/test%: build/test%.o lib/libtsgl.a
+bin/testLangtonColony: build/tests/testLangtonColony.o ${LANGTON} lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testLangtonColony $(LFLAGS)
+	@touch build/build
+
+bin/testLangtonRainbow: build/tests/testLangtonRainbow.o ${LANGTON} lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testLangtonRainbow $(LFLAGS)
+	@touch build/build
+
+bin/testLangton: build/tests/testLangton.o ${LANGTON} lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o bin/testLangton $(LFLAGS)
+	@touch build/build
+
+bin/test%: build/tests/test%.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-build/tests/%.o: src/tests/%.cpp
-	mkdir -p build/tests
-	@echo 'Building $(patsubst src/TSGL/%,%,$<)'
-	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
-
-build/%.o: src/TSGL/%.cpp
-	@echo 'Building $(patsubst src/TSGL/%,%,$<)'
+build/%.o: src/%.cpp
+	mkdir -p ${@D}
+	@echo 'Building $(patsubst src/tests/%,%,$<)'
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
 build/tests.o: src/tests/tests.cpp
 	@echo 'Building $(patsubst src/tests/%,%,$<)'
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
-build/test%.o: src/tests/test%.cpp
+build/tests/test%.o: src/tests/test%.cpp
+	mkdir -p ${@D}
 	@echo 'Building $(patsubst src/tests/%,%,$<)'
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
