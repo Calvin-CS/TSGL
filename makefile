@@ -56,8 +56,6 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
 	bin/testConcavePolygon
 
-LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
-
 all: dif tsgl tests docs tutorial
 
 debug: dif tsgl tests
@@ -91,6 +89,8 @@ bin/testTSGL: build/tests.o lib/libtsgl.a
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
+LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
+
 bin/testAlphaLangton: build/tests/testAlphaLangton.o ${LANGTON_DEPS}
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
@@ -121,12 +121,12 @@ bin/testShadedVoronoi: build/tests/testShadedVoronoi.o build/tests/ShadedVoronoi
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testMandelbrot: build/tests/testMandelbrot.o build/tests/Mandelbrot.o lib/libtsgl.a
+bin/testMandelbrot: build/tests/testMandelbrot.o build/tests/Mandelbrot/Mandelbrot.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
-bin/testGradientMandelbrot: build/tests/testGradientMandelbrot.o build/tests/Mandelbrot.o build/tests/GradientMandelbrot.o lib/libtsgl.a
+bin/testGradientMandelbrot: build/tests/testGradientMandelbrot.o build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build

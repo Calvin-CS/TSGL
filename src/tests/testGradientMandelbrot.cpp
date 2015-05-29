@@ -5,7 +5,7 @@
  *      Author: Chris Dilley
  */
 
-#include "GradientMandelbrot.h"
+#include "Mandelbrot/GradientMandelbrot.h"
 
 /*!
  * \brief Draws a gradient Mandelbrot set on a CartesianCanvas
