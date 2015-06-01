@@ -1,7 +1,7 @@
 /*
- * CartesianCanvas.h provides a Canvas with a Cartesian coordinate system for ease of plotting
+ * CartesianCanvas.h provides a Canvas with a Cartesian coordinate system for ease of plotting.
  *
- * Authors: Patrick Crain, Mark Vander Stel
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
  * Last Modified: Patrick Crain, 6/20/2014
  */
 
@@ -28,29 +28,30 @@ private:
     Decimal pixelWidth, pixelHeight;                                    // cartWidth/window.w(), cartHeight/window.h()
 public:
     /*!
-     * \brief Constructs a new CartesianCanvas.
-     * \details This is the default constructor for the CartesianCanvas class
-     *      \param b The size of the Canvas's internal vertex buffer.
-     *
-     * \return A new 800x600 CartesianCanvas, unscaled (stretching from -400 to +400 on the x axis and
+     * \brief Constructs a new CartesianCanvas object.
+     * \details This is the default constructor for the CartesianCanvas class.
+     *      \param timerLength The length of time that the internal drawing timer
+     *             of the CartesianCanvas should run for (set at 0.0 by default if not needed).
+     * \return A new 1200 x 900 CartesianCanvas, unscaled (stretching from -400 to +400 on the x axis and
      *  -300 to +300 on the y axis) in the middle of the screen with no title.
      */
     CartesianCanvas(double timerLength = 0.0);
 
     /*!
-     * \brief Explicitly constructs a new CartesianCanvas.
+     * \brief Explicitly constructs a new CartesianCanvas object.
      * \details This is an explicit constructor for the CartesianCanvas class.
      *      \param xx The x position of the CartesianCanvas window.
      *      \param yy The y position of the CartesianCanvas window.
      *      \param w The x dimension of the CartesianCanvas window.
      *      \param h The y dimension of the CartesianCanvas window.
-     *      \param xMin The Cartestian coordinates of the CartesianCanvas's left bound.
-     *      \param yMin The Cartestian coordinates of the CartesianCanvas's bottom bound.
-     *      \param xMax The Cartestian coordinates of the CartesianCanvas's right bound.
-     *      \param yMax The Cartestian coordinates of the CartesianCanvas's top bound.
-     *      \param b The size of the Canvas's internal vertex buffer.
+     *      \param xMin The Cartesian coordinates of the CartesianCanvas's left bound.
+     *      \param yMin The Cartesian coordinates of the CartesianCanvas's bottom bound.
+     *      \param xMax The Cartesian coordinates of the CartesianCanvas's right bound.
+     *      \param yMax The Cartesian coordinates of the CartesianCanvas's top bound.
      *      \param title The title of the window.
-     * \return a new CartesianCanvas with the specified positional/scaling data, buffer size, and title
+     *      \param timerLength The length of time that the internal drawing timer
+     *             of the CartesianCanvas should go for (set at 0.0 by default if not needed)
+     * \return A new CartesianCanvas with the specified positional/scaling data, buffer size, and title.
      */
     CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax,
                     std::string, double timerLength = 0.0);
@@ -74,28 +75,30 @@ public:
      *      \param y The y coordinate of the circle's origin.
      *      \param radius The radius of the circle in pixels.
      *      \param res The number of sides to use in the circle.
-     *      \param color The color of the circle.
-     *      \param filled Whether the circle should be filled.
-     * \note Identical to Canvas::drawCircle()
+     *      \param color The color of the circle (set to BLACK by default).
+     *      \param filled Whether the circle should be filled (set to true by default).
+     * \note Identical to Canvas::drawCircle().
      */
     void drawCircle(Decimal x, Decimal y, Decimal radius, int res, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw an arbitrary polygon with colored vertices.
-     * \details This function draws a ColoredPolygon with the given vertex data
-     *      \param size the number of vertices in the polygon
-     *      \param x an array of x positions of the vertices
-     *      \param y an array of y positions of the vertices
-     *      \param color an array of colors for the vertices
-     *      \param filled whether the colored polygon should be filled (true) or not (false)
-     * \note Identical to Canvas::drawColoredPolygon()
+     * \details This function draws a ColoredPolygon with the given vertex data.
+     *      \param size The number of vertices in the polygon.
+     *      \param x An array of x positions of the vertices.
+     *      \param y An array of y positions of the vertices.
+     *      \param color An array of colors for the vertices.
+     *      \param filled Whether the colored polygon should be filled (true) or not (false)
+     *             (set to true by default).
+     * \note Identical to Canvas::drawColoredPolygon().
      */
     void drawColoredPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
 
     /*!
-     * \brief Plots a function on the screen
+     * \brief Plots a function on the screen.
      * \details This function receives a Function as a parameter and plots the function on the CartesianCanvas.
-     *      \param f The function to plot.
+     *      \param f Reference to the function to plot.
+     *      \param color The color of the vertices of the plotted function (set to BLACK by default).
      * \note The passed function must receive exactly one Decimal parameter, and return a Decimal.
      */
     void drawFunction(const Function &f, ColorFloat color = BLACK);
@@ -108,8 +111,9 @@ public:
      *      \param y The y coordinate of the Image's top edge.
      *      \param w The width of the Image.
      *      \param h The height of the Image.
-     *      \param a The alpha with which to draw the Image.
-     * \note Identical to Canvas::drawImage()
+     *      \param a The alpha with which to draw the Image
+     *             (set to 1.0f by default).
+     * \note Identical to Canvas::drawImage().
      */
     void drawImage(std::string fname, Decimal x, Decimal y, Decimal w, Decimal h, float a = 1.0f);
 
@@ -120,8 +124,8 @@ public:
      *      \param y1 The y position of the start of the line.
      *      \param x2 The x position of the end of the line.
      *      \param y2 The y position of the end of the line.
-     *      \param color The color of the line.
-     *  \note Identical to Canvas::drawLine()
+     *      \param color The color of the line (set to BLACK by default).
+     *  \note Identical to Canvas::drawLine().
      */
     void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color = BLACK);
 
@@ -130,8 +134,8 @@ public:
      * \details This function draws a Point at the given coordinates with the given color.
      *      \param x The x position of the point.
      *      \param y The y position of the point.
-     *      \param color The color of the point.
-     * \note Identical to Canvas::drawPoint()
+     *      \param color The color of the point (set to BLACK by default).
+     * \note Identical to Canvas::drawPoint().
      */
     void drawPoint(Decimal x, Decimal y, ColorFloat color = BLACK);
 
@@ -142,9 +146,9 @@ public:
      *      \param y The y coordinate of the Rectangle's top edge.
      *      \param w The width of the Rectangle.
      *      \param h The height of the Rectangle.
-     *      \param color The color of the rectangle.
-     *      \param filled Whether the rectangle should be filled.
-     * \note Identical to Canvas::drawRectangle()
+     *      \param color The color of the rectangle (set to BLACK by default).
+     *      \param filled Whether the rectangle should be filled (set to true by default).
+     * \note Identical to Canvas::drawRectangle().
      */
     void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color = BLACK, bool filled = true);
 
@@ -155,7 +159,7 @@ public:
      *      \param x The x coordinate of the text's left bound.
      *      \param y The y coordinate of the text's left bound.
      *      \param size The size of the text in pixels.
-     *      \param color The color of the Text.
+     *      \param color The color of the Text (set to BLACK by default).
      * \note Identical to Canvas::drawText().
      */
     void drawText(std::wstring s, Decimal x, Decimal y, unsigned int size, ColorFloat color = BLACK);
@@ -163,22 +167,22 @@ public:
     /*!
      * \brief Draw a triangle.
      * \details This function draws a Triangle with the given vertices.
-     *      \param x1 the x coordinate of the first vertex of the Triangle.
-     *      \param y1 the y coordinate of the first vertex of the Triangle.
-     *      \param x2 the x coordinate of the second vertex of the Triangle.
-     *      \param y2 the y coordinate of the second vertex of the Triangle.
-     *      \param x3 the x coordinate of the third vertex of the Triangle.
-     *      \param y3 the y coordinate of the third vertex of the Triangle.
-     *      \param color the color of the Triangle.
-     *      \param filled Whether the Triangle should be filled.
-     * \note Identical to Canvas::drawTriangle()
+     *      \param x1 The x coordinate of the first vertex of the Triangle.
+     *      \param y1 The y coordinate of the first vertex of the Triangle.
+     *      \param x2 The x coordinate of the second vertex of the Triangle.
+     *      \param y2 The y coordinate of the second vertex of the Triangle.
+     *      \param x3 The x coordinate of the third vertex of the Triangle.
+     *      \param y3 The y coordinate of the third vertex of the Triangle.
+     *      \param color The color of the Triangle (set to BLACK by default).
+     *      \param filled Whether the Triangle should be filled (set to true by default).
+     * \note Identical to Canvas::drawTriangle().
      */
     void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color = BLACK,
                       bool filled = true);
 
     /*!
      * \brief Translates Cartesian coordinates into window coordinates.
-     * \details getCartesianCoordinates takes a pair of on-screen coordinates and translates them to Cartesian
+     * \details getCartesianCoordinates() takes a pair of on-screen coordinates and translates them to Cartesian
      *  coordinates.
      *      \param screenX The window's x coordinate.
      *      \param screenY The window's y coordinate.
@@ -207,7 +211,7 @@ public:
 
     /*!
      * \brief Accessor for the CartesianCanvas's effective pixel height.
-     *      \return The height corresponding to a single pixel in the current CartesianCanvas.
+     * \return The height corresponding to a single pixel in the current CartesianCanvas.
      */
     Decimal getPixelHeight();
 
@@ -237,7 +241,7 @@ public:
 
     /*!
      * \brief Translates window coordinates into Cartesian coordinates.
-     * \details getScreenCoordinates takes a pair of Cartesian coordinates and translates them to on-screen
+     * \details getScreenCoordinates() takes a pair of Cartesian coordinates and translates them to on-screen
      *  coordinates.
      *      \param cartX The Cartesian x coordinate.
      *      \param cartY The Cartesian y coordinate.
@@ -256,13 +260,24 @@ public:
      */
     void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
     
-    //new
+    /*!
+     * \brief Sleeps the internal drawing timer of a CartesianCanvas object.
+     * \details A timer is put to sleep until a subsequent event is ready to occur.
+     * \details The drawing timer is put to sleep until the next drawing frame is ready to occur.
+     * \note Can be thought of as a wrapper function for a Timer function call.
+     * \note Identical to Canvas::sleep().
+     */
     void sleep();
     
-    //new
-    void reset();
     /*!
-     * \brief Zoom the CartesianCanvas with a given center
+      * \brief Resets the internal drawing timer of a CartesianCanvas object.
+      * \note Can be thought of as a wrapper function for a Timer function call.
+      * \note Identical to Canvas::reset().
+      */
+    void reset();
+
+    /*!
+     * \brief Zoom the CartesianCanvas with a given center.
      * \details This function will re-center the CartesianCanvas at the given coordinates, then zoom with
      *  respect to the given scale.
      *      \param x The coordinate to re-center the screen on.

@@ -45,13 +45,11 @@ std::mutex Canvas::glfwMutex;
 int Canvas::drawBuffer = GL_LEFT;
 unsigned Canvas::openCanvases = 0;
 
-//New (TODO: b now unused; formally replace later)
 Canvas::Canvas(double timerLength) {
     int w = 1200, h = 900;
     init(0, 0, w, h, w*h*2, "", timerLength);
 }
 
-//New
 Canvas::Canvas(int xx, int yy, int w, int h, std::string title, double timerLength) {
     init(xx, yy, w, h, w*h*2, title, timerLength);
 }
@@ -245,7 +243,6 @@ void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], 
     }
 }
 
-//new method for convex
 void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
         ConvexPolygon* p = new ConvexPolygon(size);
@@ -696,22 +693,18 @@ void Canvas::startDrawing(Canvas *c) {
     c->glDestroy();
 }
 
-//New
 void Canvas::sleep() {
     drawTimer->sleep();
 }
 
-//New
 void Canvas::reset() {
     drawTimer->reset();
 }
 
-//New
 unsigned int Canvas::getReps() const {
     return drawTimer->getReps();
 }
 
-//New
 double Canvas::getTimeBetweenSleeps() const {
     return drawTimer->getTimeBetweenSleeps();
 }

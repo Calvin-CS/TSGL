@@ -38,7 +38,14 @@ Image::Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, 
     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
 }
 
-// draw() actually draws the Image to the canvas
+/*!
+ * Draws the image onto the Canvas by loading the image into the internal
+ * Texture Handler, binding the texture, and then drawing it onto the Canvas.
+ *
+ * Parameters:
+ *      None.
+ * Returns: The Canvas with the image drawn on it.
+ */
 void Image::draw() {
     unsigned int w, h;
     GLtexture myTexture;

@@ -151,7 +151,6 @@ Decimal CartesianCanvas::getMinY() {
     return minY;
 }
 
-
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
     screenX = ceil((cartX - minX) / cartWidth * getWindowWidth());
     screenY = ceil(getWindowHeight() - (cartY - minY) / cartHeight * getWindowHeight());

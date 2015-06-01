@@ -40,7 +40,7 @@ class ConvexPolygon : public Shape {
 
     /*!
      * \brief Add another vertex to the ColoredPolygon.
-     * \details This function initalizes the next vertex in the Polyline and adds it to the ColoredPolygon buffer.
+     * \details This function initializes the next vertex in the Polyline and adds it to the ColoredPolygon buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
      *      \param color The color of the vertex.

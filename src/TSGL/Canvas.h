@@ -1,8 +1,8 @@
 /*
- * Canvas.h provides a window / canvas for all of the drawing operations in the TSGL library
+ * Canvas.h provides a window / canvas for all of the drawing operations in the TSGL library.
  *
- * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Patrick Crain, 7/21/2014
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley
+ * Last Modified: Chris Dilley, 6/01/2015
  */
 
 #ifndef CANVAS_H_
@@ -29,7 +29,7 @@
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
 
-#include <cmath>
+#include <cmath>            // For performing math operations
 #include <functional>       // For callback upon key presses
 #include <iostream>         // DEBUGGING
 #include <mutex>            // Needed for locking the Canvas for thread-safety
@@ -44,7 +44,7 @@
 #define FRAME 1.0f/FPS      // Number of seconds between frames
 
 /*! \class Canvas
- *  \brief A GL window with numerous built-in, thread-safe drawing operations
+ *  \brief A GL window with numerous built-in, thread-safe drawing operations.
  *  \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
  *  \details With libpng and libjpeg, Canvas also supports the drawing of images.
  *  \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
@@ -88,7 +88,7 @@ private:
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
     Timer*          timer;                                              // Timer for steady FPS
-    Timer*          drawTimer;                                          // New, for drawing
+    Timer*          drawTimer;                                          // Internal drawing timer for the Canvas
     std::string     title_;                                             // Title of the window
     bool            toClear;                                            // Flag for clearing the canvas
     GLint           uniModel,                                           // Model perspective of the camera
@@ -108,7 +108,7 @@ private:
                                int action, int mods);                   // GLFW callback for mouse buttons
 
     void        draw();                                                 // Draw loop for the Canvas
-    static void errorCallback(int error, const char* string);
+    static void errorCallback(int error, const char* string);           // Display where an error is coming from
 
     void        init(int xx,int yy,int ww,int hh,
                      unsigned int b, std::string title, double timerLength = 0.0);                 // Method for initializing the canvas
@@ -127,35 +127,39 @@ protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
     /*!
-     * \brief Constructs a new Canvas.
-     * \details This is the default constructor for the Canvas class
-     *      \param b The size of the Canvas's internal vertex buffer.
-     * \return A new 800x600 Canvas in the middle of the screen with no title.
+     * \brief Constructs a new Canvas object.
+     * \details This is the default constructor for the Canvas class.
+     *      \param timerLength The length of time that the internal timer of the Canvas should run for
+     *             which is set to 0.0 by default (if not needed).
+     * \return A new 1200 x 900 Canvas in the middle of the screen with no title.
      */
     Canvas(double timerLength = 0.0);
 
     /*!
-     * \brief Explicitly constructs a new Canvas.
+     * \brief Explicitly constructs a new Canvas object.
      * \details This is an explicit constructor for the Canvas class.
      *      \param xx The x position of the Canvas window.
      *      \param yy The y position of the Canvas window.
      *      \param w The x dimension of the Canvas window.
      *      \param h The y dimension of the Canvas window.
-     *      \param b The size of the Canvas's internal vertex buffer.
      *      \param title The title of the window.
-     * \return A new Canvas with the specified positional data and title.
+     *      \param timerLength The length of time that the internal timer of the Canvas is set to run for
+     *             which is set to 0.0 by default (if not needed).
+     * \return A new Canvas with the specified positional data, title, and drawing time length.
      */
     Canvas(int xx, int yy, int w, int h, std::string title, double timerLength = 0.0);
 
     /*!
      * \brief Destructor for the Canvas class.
+     * \details Destroys a Canvas object by freeing up memory that was allocated
+     *          to the Canvas object.
      */
     virtual ~Canvas();
 
     /*!
      * \brief Binds a key or button to a function.
      * \details This function binds a key or mouse button to a function pointer.
-     *  Upon pressing or releasing the given key, Canvas will call the specified function.
+     * \details Upon pressing or releasing the given key, Canvas will call the specified function.
      *      \param button The key or button to bind, as specified in the Key enum.
      *      \param a The action to look out for (PG_PRESS or PG_RELEASE).
      *      \param f The function to call upon action a on button.
@@ -167,7 +171,7 @@ public:
     /*!
      * \brief Binds the mouse wheel to a function.
      * \details This function binds the mouse wheel to a function pointer.
-     *  Upon scrolling, Canvas will call the specified function.
+     * \details Upon scrolling, Canvas will call the specified function.
      *      \param f A function taking x and y parameters to be called when the mouse is scrolled.
      */
     void bindToScroll(std::function<void(double, double)> f);
@@ -181,40 +185,66 @@ public:
 
     /*!
      * \brief Waits for the user to close the Canvas.
-     * \details This function blocks until the user closes the Canvas. This function has no effect
+     * \details This function is blocked until the user closes the Canvas. This function has no effect
      *  and will not request for close. Use end() before this to make that request.
      * \return 0 if exit is successful, -1 if the canvas has not started yet.
-     * \see start(), end()
+     * \see start(), end().
      */
     int close();
 
     /*!
      * \brief Draw a circle.
      * \details This function draws a circle with the given origin coordinates, radius, resolution
-     *  (number of sides), and color.
+     *  (number of sides), and color (filled or not filled).
      *      \param x The x coordinate of the circle's origin.
      *      \param y The y coordinate of the circle's origin.
      *      \param radius The radius of the circle in pixels.
      *      \param res The number of sides to use in the circle.
-     *      \param color The color of the circle.
-     *      \param filled Whether the circle should be filled.
+     *      \param color The color of the circle
+     *             (set to BLACK by default).
+     *      \param filled Whether the circle should be filled
+     *             (set to true by default).
      */
     virtual void drawCircle(int x, int y, int radius, int res, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw an arbitrary polygon with colored vertices.
-     * \details This function draws a ColoredPolygon with the given vertex data
-     *      \param size the number of vertices in the polygon
-     *      \param x an array of x positions of the vertices
-     *      \param y an array of y positions of the vertices
-     *      \param color an array of colors for the vertices
-     *      \param filled whether the colored polygon should be filled (true) or not (false)
+     * \details This function draws a ColoredPolygon with the given vertex data.
+     *      \param size The number of vertices in the polygon.
+     *      \param x An array of x positions of the vertices.
+     *      \param y An array of y positions of the vertices.
+     *      \param color An array of colors for the vertices.
+     *      \param filled Whether the colored polygon should be filled (true) or not (false)
+     *             (set to true by default).
      */
     virtual void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
 
+    /*!
+     * \brief Draw a Concave polygon with colored vertices.
+     * \details This function draws a Concave polygon with the given vertex data.
+     *      \param size The number of vertices in the polygon.
+     *      \param x An array of x positions of said vertices.
+     *      \param y An array of y positions of said vertices.
+     *      \param color An array of colors for the said vertices.
+     *      \param filled Whether the Concave polygon should be filled in or not
+     *             (set to true by default).
+     * \see drawConvexPolygon().
+     */
     virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
 
-    //new method for convex polygon
+    /*!
+     * \brief Draw a Convex polygon with colored vertices.
+     * \details This function draws a Convex polygon with the given vertex data.
+     *      \param size The number of vertices in the polygon.
+     *      \param x An array of the x positions of said vertices.
+     *      \param y An array of the y positions of said vertices.
+     *      \param color An array of colors for the said vertices.
+     *      \param filled Whether the Convex polygon should be filled in or not
+     *             (set to true by default).
+     * \note The difference between a Convex polygon and a Concave polygon
+     *       is that a Convex polygon has all interior angles less than
+     *       180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
+     */
     virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
 
     /*!
@@ -225,7 +255,8 @@ public:
      *      \param y The y coordinate of the Image's top edge.
      *      \param w The width of the Image.
      *      \param h The height of the Image.
-     *      \param a The alpha with which to draw the Image.
+     *      \param a The alpha with which to draw the Image
+     *               (set to 1.0f by default).
      */
     virtual void drawImage(std::string fname, int x, int y, int w, int h, float a = 1.0f);
 
@@ -236,27 +267,28 @@ public:
      *      \param y1 The y position of the start of the line.
      *      \param x2 The x position of the end of the line.
      *      \param y2 The y position of the end of the line.
-     *      \param color The color of the line.
+     *      \param color The color of the line
+     *             (set to BLACK by default).
      */
     virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a single pixel.
      * \details This function draws a Point at the given screen coordinates with the given color.
-     * \note (0,0) signifies the <b>top-left</b> of the screen.
+     * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
      *      \param row The row (y-position) of the pixel.
      *      \param col The column (x-position) of the pixel.
-     *      \param color The color of the point.
+     *      \param color The color of the point (set to BLACK by default).
      */
     virtual void drawPixel(int row, int col, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a single pixel.
      * \details This function draws a Point at the given Cartesian coordinates with the given color.
-     * \note (0,0) signifies the <b>bottom-left</b> of the Canvas.
+     * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas object.
      *      \param x The x position of the point.
      *      \param y The y position of the point.
-     *      \param color The color of the point.
+     *      \param color The color of the point (set to BLACK by default).
      */
     virtual void drawPoint(int x, int y, ColorFloat color = BLACK);
 
@@ -267,8 +299,10 @@ public:
      *      \param y The y coordinate of the Rectangle's top edge.
      *      \param w The width of the Rectangle.
      *      \param h The height of the Rectangle.
-     *      \param color The color of the rectangle.
-     *      \param filled Whether the rectangle should be filled.
+     *      \param color The color of the rectangle
+     *             (set to BLACK by default).
+     *      \param filled Whether the rectangle should be filled
+     *             (set to true by default).
      */
     virtual void drawRectangle(int x, int y, int w, int h, ColorFloat color = BLACK, bool filled = true);
 
@@ -279,21 +313,21 @@ public:
      *      \param x The x coordinate of the text's left bound.
      *      \param y The y coordinate of the text's left bound.
      *      \param size The size of the text in pixels.
-     *      \param color The color of the Text.
+     *      \param color The color of the Text (set to BLACK by default).
      */
     virtual void drawText(std::wstring s, int x, int y, unsigned int size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a triangle.
      * \details This function draws a Triangle with the given vertices.
-     *      \param x1 the x coordinate of the first vertex of the Triangle.
-     *      \param y1 the y coordinate of the first vertex of the Triangle.
-     *      \param x2 the x coordinate of the second vertex of the Triangle.
-     *      \param y2 the y coordinate of the second vertex of the Triangle.
-     *      \param x3 the x coordinate of the third vertex of the Triangle.
-     *      \param y3 the y coordinate of the third vertex of the Triangle.
-     *      \param color the color of the Triangle.
-     *      \param filled Whether the Triangle should be filled.
+     *      \param x1 The x coordinate of the first vertex of the Triangle.
+     *      \param y1 The y coordinate of the first vertex of the Triangle.
+     *      \param x2 The x coordinate of the second vertex of the Triangle.
+     *      \param y2 The y coordinate of the second vertex of the Triangle.
+     *      \param x3 The x coordinate of the third vertex of the Triangle.
+     *      \param y3 The y coordinate of the third vertex of the Triangle.
+     *      \param color The color of the Triangle (set to BLACK by default).
+     *      \param filled Whether the Triangle should be filled (set to true by default).
      */
     virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color = BLACK,
                               bool filled = true);
@@ -301,16 +335,16 @@ public:
     /*!
      * \brief Stops the Canvas.
      * \details This function stops rendering the Canvas. This does not close the Canvas; it will stay open.
-     *  To rejoin the threads and complete the close, close() must be called. end() is not required to close
+     * \details To rejoin the threads and complete the close, close() must be called. end() is not required to close
      *  the Canvas, closing the window by hitting escape or with the window manager does the same thing.
      * \details Once end() has been called, either manually, by the window manager, or by pressing escape,
      *  getIsOpen() will return false, and your computation should exit.
-     * \see start(), close()
+     * \see start(), close().
      */
     void end();
 
     /*!
-     * \brief Accessor for the current background color
+     * \brief Accessor for the current background color.
      * \return The background color of the Canvas' clearRectangle.
      */
     ColorFloat getBackgroundColor();
@@ -347,23 +381,23 @@ public:
 
     /*!
      * \brief Gets the color of the pixel drawn on the current Canvas at the given screen coordinates.
-     * \note (0,0) signifies the <b>top-left</b> of the screen.
+     * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
      * \note getPixel will return the current status of the screen. Any object waiting to be drawn
      *  will not affect what is returned.
      *      \param row The row (y-position) of the pixel to grab.
      *      \param col The column (x-position) of the pixel to grab.
-     * \return The ColorInt representation of the pixel at col,row.
+     * \return The ColorInt representation of the pixel at (col,row).
      */
     ColorInt getPixel(int row, int col);
 
     /*!
      * \brief Gets the color of the pixel drawn on the current Canvas at the given Cartesian coordinates.
-     * \note (0,0) signifies the <b>bottom-left</b> of the Canvas.
+     * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas.
      * \note getPixel will return the current status of the screen. Any object waiting to be drawn
      *  will not affect what is returned.
      *      \param x The x position of the pixel to grab.
      *      \param y The y position of the pixel to grab.
-     * \return The ColorInt representation of the pixel at x,y.
+     * \return The ColorInt representation of the pixel at (x, y).
      */
     ColorInt getPoint(int x, int y);
 
@@ -395,7 +429,7 @@ public:
     int getWindowHeight();
 
     /*!
-     * \brief Accessor for the Canvas's x=position.
+     * \brief Accessor for the Canvas's x-position.
      * \return The x coordinate in pixels of the Canvas (0 = left of monitor).
      */
     int getWindowX();
@@ -409,7 +443,8 @@ public:
     /*!
      * \brief Records the Canvas for a specified number of frames.
      * \details This function starts dumping screenshots of the Canvas to the file system every draw cycle.
-     *  The function automatically terminates after num_frames cycles have completed.
+     * \details The function automatically terminates after num_frames cycles have completed.
+     *      \param num_frames The number of frames to dump screenshots for.
      */
     void recordForNumFrames(unsigned int num_frames);
 
@@ -417,23 +452,23 @@ public:
      * \brief Mutator for the background color.
      * \details This function sets the color to clear to when Canvas::clear() is called.
      *      \param color The color to clear to.
-     * \note The alpha channel of the color is ignored
+     * \note The alpha channel of the color is ignored.
      */
     void setBackgroundColor(ColorFloat color);
 
     /*!
      * \brief Mutator for the drawing buffer to use.
      * \details This function sets the GL buffer to use during drawing calls.
-     *  Canvas defaults to using GL_LEFT, but some computers have rendering issues, which setting
+     * \details Canvas defaults to using GL_LEFT, but some computers have rendering issues, which setting
      *  the buffer to GL_RIGHT will fix.
      *      \param buffer A GL Buffer (GL_LEFT, GL_RIGHT, etc.)
      * \note This function is static because it will be called for either no canvases or all
-     *  canvases on a given computer
+     *  canvases on a given computer.
      */
     static void setDrawBuffer(int buffer);
 
     /*!
-     * \brief Mutator for the currently loaded font
+     * \brief Mutator for the currently loaded font.
      * \details This function sets the loaded font, loading from the file or from disk if the file was
      *  loaded previously. Subsequent calls to drawText() will use this font to print.
      *      \param filename The filename of the font to load.
@@ -457,20 +492,36 @@ public:
      * \brief Opens the Canvas.
      * \details This function starts rendering the Canvas.
      * \return 0 if start is successful, -1 if the canvas has already started.
-     * \see close(), end()
+     * \see close(), end().
      */
     int start();
 
-    //new
+    /*!
+     * \brief Sleeps the internal drawing timer of a Canvas object.
+     * \details A timer is put to sleep until a subsequent event is ready to occur.
+     * \details The drawing timer is put to sleep until the next drawing frame is ready to occur.
+     * \note Can be thought of as a wrapper function for a Timer function call.
+     */
     void sleep();
 
-    //new
+    /*!
+     * \brief Resets the internal drawing timer of a Canvas object.
+     * \note Can be thought of as a wrapper function for a Timer function call.
+     */
     void reset();
 
-    //new
+    /*!
+     * \brief Accessor that gets the number of repetitions the internal drawing timer.
+     * \return drawTimer->getReps() the number of repetitions the internal drawing timer has done since the Canvas has been started.
+     * \note Can be thought of as a wrapper function for a Timer function call.
+     */
     unsigned int getReps() const;
 
-    //new
+    /*!
+     * \brief Accessor that gets the time between two sleep times of the internal drawing timer of a Canvas object.
+     * \return drawTimer->getTimeBetweenSleeps() the time between two sleep cycles of the internal drawing timer.
+     * \note Can be thought of as a wrapper function for a Timer function call.
+     */
     double getTimeBetweenSleeps() const;
 
     /*!

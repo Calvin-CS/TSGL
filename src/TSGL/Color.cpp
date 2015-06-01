@@ -7,10 +7,16 @@
 
 #include "Color.h"
 
+/*!
+ *
+ */
 ColorFloat::ColorFloat() {
     R = G = B = A = 1.0f;
 }
 
+/*!
+ *
+ */
 ColorFloat::ColorFloat(float r, float g, float b, float a) {
     if (r > 1 || r < 0 || g > 1 || g < 0 || b > 1 || b < 0 || a > 1 || a < 0) {
         throw std::out_of_range("Values must be between 0 and 1 inclusive");
@@ -22,16 +28,25 @@ ColorFloat::ColorFloat(float r, float g, float b, float a) {
     A = a;
 }
 
+/*!
+ *
+ */
 std::string ColorFloat::AsString() {
   std::stringstream ss;
   ss << R << "R," << G << "G," << B << "B," << A << "A";
 	return ss.str();
 }
 
+/*!
+ *
+ */
 ColorInt::ColorInt() {
     R = G = B = A = 255;
 }
 
+/*!
+ *
+ */
 ColorInt::ColorInt(int r, int g, int b, int a) {
     if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || a > 255 || a < 0) {
         throw std::out_of_range("Values must be between 0 and 255 inclusive");
@@ -43,21 +58,33 @@ ColorInt::ColorInt(int r, int g, int b, int a) {
     A = a;
 }
 
+/*!
+ *
+ */
 std::string ColorInt::AsString() {
   std::stringstream ss;
   ss << R << "R," << G << "G," << B << "B," << A << "A";
   return ss.str();
 }
 
+/*!
+ *
+ */
 ColorInt::operator ColorFloat() {
     return ColorFloat(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
 }
 
+/*!
+ *
+ */
 ColorHSV::ColorHSV() {
     H = 0.0f;
     S = V = A = 1.0f;
 }
 
+/*!
+ *
+ */
 ColorHSV::ColorHSV(float h, float s, float v, float a) {
     if (h > 6 || h < 0 || s > 1 || s < 0 || v > 1 || v < 0 || a > 1 || a < 0) {
         throw std::out_of_range(
@@ -70,12 +97,18 @@ ColorHSV::ColorHSV(float h, float s, float v, float a) {
     A = a;
 }
 
+/*!
+ *
+ */
 std::string ColorHSV::AsString() {
   std::stringstream ss;
   ss << H << "H," << S << "S," << V << "V," << A << "A";
   return ss.str();
 }
 
+/*!
+ *
+ */
 ColorHSV::operator ColorFloat() {
     float m, n, f;
     ColorFloat color;
@@ -123,15 +156,25 @@ ColorHSV::operator ColorFloat() {
     }
 }
 
+/*!
+ *
+ */
 ColorFloat Colors::divideIntoChromaticSections(unsigned int sections, unsigned int section, float value, float alpha) {
     if (value > 1 || value < 0 || alpha > 1 || alpha < 0) throw std::out_of_range(
         "Values must be between 0 and 1 inclusive");
     return ColorHSV(6.0f / sections * section, 1.0f, value, alpha);
 }
+
+/*!
+ *
+ */
 ColorFloat Colors::divideIntoChromaticSections(unsigned int sections, unsigned int section) {
     return divideIntoChromaticSections(sections, section, 1.0f, 1.0f);
 }
 
+/*!
+ *
+ */
 ColorFloat Colors::randomColor(float alpha) {
     if (alpha > 1 || alpha < 0) {
         throw std::out_of_range("Alpha must be between 0 and 1 inclusive");
@@ -140,6 +183,9 @@ ColorFloat Colors::randomColor(float alpha) {
     return ColorFloat(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
 }
 
+/*!
+ *
+ */
 ColorFloat Colors::blendedColor(ColorFloat c1, ColorFloat c2, float bias) {
     if (bias > 1 || bias < 0) {
         throw std::out_of_range("Bias must be between 0 and 1 inclusive");
@@ -153,6 +199,9 @@ ColorFloat Colors::blendedColor(ColorFloat c1, ColorFloat c2, float bias) {
     }
 }
 
+/*!
+ *
+ */
 ColorFloat Colors::highContrastColor(unsigned int section, int start) {
     const unsigned int PRIME1 = 47, PRIME2 = 71;
     float hue = ((start + PRIME1 * section) % 255) / 255.0f;
@@ -160,4 +209,3 @@ ColorFloat Colors::highContrastColor(unsigned int section, int start) {
     float val = (11 - (section*3  % 7)) / 11.0f;
     return ColorHSV(hue * 6.0f, sat, val, 1.0f);
 }
-

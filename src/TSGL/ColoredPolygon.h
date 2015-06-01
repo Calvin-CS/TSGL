@@ -36,11 +36,16 @@ class ColoredPolygon : public Shape {
      */
     ColoredPolygon(int v);
 
+    /*!
+     * \brief Destructor for a ColoredPolygon object
+     * \details Destroys a ColoredPolygon object and frees up memory that has
+     *          has been allocated to that object.
+     */
     ~ColoredPolygon();
 
     /*!
      * \brief Add another vertex to the ColoredPolygon.
-     * \details This function initalizes the next vertex in the Polyline and adds it to the ColoredPolygon buffer.
+     * \details This function initializes the next vertex in the Polyline and adds it to the ColoredPolygon buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
      *      \param color The color of the vertex.
@@ -52,6 +57,7 @@ class ColoredPolygon : public Shape {
      * \brief Draw the ColoredPolygon.
      * \details This function actually draws the ColoredPolygon to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
+     * \note Implemented inherited abstract method from Shape class.
      */
     void draw();
 };

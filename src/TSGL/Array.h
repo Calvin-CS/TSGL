@@ -11,12 +11,33 @@
 
 #include <stdexcept>  // Needed for exceptions
 
+/*!
+ * \class Array
+ * \brief Creates an Array object.
+ * \details Array creates an Array object capable of storing shapes to be drawn.
+ * \details It creates an Array object with a specified capacity.
+ * \details Shapes to be drawn are pushed into the Array object.
+ * \details Contains utility methods for checking if the Array object is empty,
+ *          emptying and resetting an Array object, and a subscript operator
+ *          for accessing individual elements.
+ * \note The Array has wrap-around behavior so it behaves in a similar fashion as a circular Queue.
+ * \note If a new shape is pushed into a full Array object, the first element is deleted
+ *       and the pointer to the first element is incremented.
+ * \note There is also a method that clears an Array object out but doesn't
+ *       delete the shapes inside of it ( see shallowClear() ).
+ */
 template<typename Item>
 class Array {
  private:
     unsigned int first_, last_, capacity_, size_;
     Item* myArray;
  public:
+
+    /*!
+     * \brief Constructor for an Array object.
+     * \param size the requested size of the Array object.
+     * \return An Array object with capacity size.
+     */
     Array(unsigned int size) {
         capacity_ = size;
         myArray = new Item[size];
@@ -24,13 +45,16 @@ class Array {
         first_ = last_ = size_ = 0;
     }
 
+    /*!
+     * \brief Destructor for the Array class
+     */
     virtual ~Array() {
         clear();
         delete[] myArray;
     }
 
     /*!
-     * clear() empties the array and resets it
+     * \brief clear() empties the array and resets it
      */
     void clear() {
         if (first_ > last_) {                       // If the array wraps around...
@@ -48,8 +72,8 @@ class Array {
     }
 
     /*!
-     * shallowClear empties the array but does not delete the objects
-     *  WILL RESULT IN MEMORY LEAK IF THE OBJECTS ARE NOT POINTED TO ANYWHERE ELSE!
+     * \brief shallowClear empties the array but does not delete the objects
+     * \warning WILL RESULT IN MEMORY LEAK IF THE OBJECTS ARE NOT POINTED TO ANYWHERE ELSE!
      */
     void shallowClear() {
         if (first_ > last_) {                       // If the array wraps around...
@@ -63,10 +87,9 @@ class Array {
     }
 
     /*!
-     * operator[] returns the item at the index
-     * Parameters:
-     *      index, the index of where the item is
-     * Returns: the item at that index
+     * \brief operator[] returns the item at the index.
+     * \param index the index of where the item is
+     * \return the item at that index
      */
     const Item operator[](unsigned int index) const {
         if (size_ == 0)
@@ -77,27 +100,26 @@ class Array {
             return myArray[(first_ + index) % capacity_];  // Wrap around for the underlying array
     }
 
-    /*! size() returns the number of items in the array */
+    /*! \brief size() returns the number of items in the array */
     unsigned int size() const {
         return size_;
     }
 
-    /*! capacity() returns the maximum ammount of items the array can store */
+    /*! \brief capacity() returns the maximum amount of items the array can store */
     unsigned int capacity() const {
         return capacity_;
     }
 
-    /*! isEmpty() returns true if the array has no items, false otherwise */
+    /*! \brief isEmpty() returns true if the array has no items, false otherwise */
     bool isEmpty() const {
         return (size_ == 0);
     }
 
     /*!
-     * push() adds the item to the end of the array. It will also remove the
+     * \brief push() adds the item to the end of the array. It will also remove the
      *  oldest item if the array is full
-     * Parameters:
-     *      item, the item to add
-     * Returns: the same item
+     * \param item the item to add
+     * \return the same item
      */
     Item push(Item item) {
         if (myArray[first_] != nullptr)                         // If the array has items...

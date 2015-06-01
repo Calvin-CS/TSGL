@@ -1,5 +1,5 @@
 /*
- * color.h provides color types and methods of converting between them and generating them
+ * Color.h provides color types and methods of converting between them and generating them
  *
  * Authors: Patrick Crain, Mark Vander Stel
  * Last Modified: Patrick Crain, 7/30/2014
@@ -25,8 +25,14 @@ struct ColorFloat {
  public:
     float R, G, B, A;
 
+    /*!
+     *
+     */
     ColorFloat();
 
+    /*!
+     *
+     */
     ColorFloat(float r, float g, float b, float a = 1.0f);
 
     /*!
@@ -49,8 +55,14 @@ struct ColorInt {
  public:
     int R, G, B, A;
 
+    /*!
+     *
+     */
     ColorInt();
 
+    /*!
+     *
+     */
     ColorInt(int r, int g, int b, int a = 255);
 
     /*!
@@ -80,8 +92,14 @@ struct ColorHSV {
  public:
     float H, S, V, A;
 
+    /*!
+     *
+     */
     ColorHSV();
 
+    /*!
+     *
+     */
     ColorHSV(float h, float s, float v, float a = 1.0f);
 
     /*!
@@ -155,6 +173,9 @@ class Colors {
      */
     static ColorFloat blendedColor(ColorFloat c1, ColorFloat c2, float bias);
 
+    /*!
+     *
+     */
     static ColorFloat highContrastColor(unsigned int section, int seed = 0);
 
  private:
