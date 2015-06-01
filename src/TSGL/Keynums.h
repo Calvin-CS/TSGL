@@ -1,5 +1,6 @@
 /*
- * Keynums.h
+ * Keynums.h provides an enumeration that maps keys and the mouse buttons to
+ *      GLFW's integer definitions of the keys.
  *
  *  Created on: Jul 3, 2014
  *      Author: mbv26
@@ -11,7 +12,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-/*! \brief Enum for keyboard and mouse keys
+/*! \brief Enum for keyboard and mouse keys.
  *  \details Key is an enum for the various keyboard and mouse keys.
  *  \note These are directly mapped to GLFW's integer definitions of the keys.
  */

@@ -150,9 +150,9 @@ public:
     Canvas(int xx, int yy, int w, int h, std::string title, double timerLength = 0.0);
 
     /*!
-     * \brief Destructor for the Canvas class.
-     * \details Destroys a Canvas object by freeing up memory that was allocated
-     *          to the Canvas object.
+     * \brief Destroys a Canvas object.
+     * \details Destructor for a Canvas object.
+     * \details Frees up memory that was allocated to a Canvas object.
      */
     virtual ~Canvas();
 

@@ -1,5 +1,5 @@
 /*
- * Function.h provides functions for drawing with CartesianCanvas
+ * Function.h provides functions for drawing with CartesianCanvas.
  *
  * Created on: Jun 11, 2014
  * Author: Mark Vander Stel
@@ -18,25 +18,27 @@ typedef long double Decimal;  // Define the variable type to use
  *  \details Function provides a base class for the creation of mathematical functions.
  *   By extending this class and overriding the valueAt() method, users can easily plot the values
  *   of their function on a CartesianCanvas.
- *  \A number of prebuilt Function subclasses are included in the header file for reference.
+ *  \details A number of pre-built Function subclasses are included in the header file for reference.
  */
 class Function {
  public:
     /*!
      * \brief Constructs a new Function.
-     * \details This is the default constructor for the Function class
+     * \details This is the default constructor for the Function class.
      * \note The default constructor for the parent Function class does absolutely nothing. Any construction should be defined in the subclass.
      */
     Function() {}
+
     /*!
      * \brief Destructor for the Function class.
      * \note The default destructor for the parent Function class does absolutely nothing. Any destruction should be defined in the subclass.
      */
     virtual ~Function() {}
+
     /*!
      * \brief Method to determine the value of a Function subclass.
-     * \details This method should be overridden with the actual function you want to computer.
-     *      \param x The input to the function.  Assuming your function is F, x will be used to computer F(x).
+     * \details This method should be overridden with the actual function you want to compute.
+     *      \param x The input to the function.  Assuming your function is F, x will be used to compute F(x).
      * \return The Decimal value of F(x).
      * \note This method is abstract and <B>must</B> be overridden.
      */
@@ -55,6 +57,7 @@ class PowerFunction : public Function {
     PowerFunction(Decimal a) {
         a_ = a;
     }
+
     /*!
      * \brief Method to determine the value of PowerFunction.
      *      \param x The input to the function.

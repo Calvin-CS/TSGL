@@ -1,7 +1,7 @@
 /*
- * Rectangle.h extends Shape and provides a class for drawing a rectangle to a Canvas
+ * Rectangle.h extends Shape and provides a class for drawing a rectangle to a Canvas.
  *
- * Authors: Patrick Crain, Mark Vander Stel
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
  * Last Modified: Mark Vander Stel, 7/3/2014
  */
 
@@ -19,14 +19,14 @@ class Rectangle : public Shape {
     float vertices[24];
  public:
     /*!
-     * \brief Explicitly construct a Rectangle.
+     * \brief Explicitly constructs a Rectangle.
      * \details This is the constructor for the Rectangle class.
      *      \param x The x coordinate of the Rectangle's left edge.
      *      \param y The y coordinate of the Rectangle's top edge.
      *      \param w The width of the Rectangle.
      *      \param h The height of the Rectangle.
      *      \param color The color of the Rectangle.
-     * \return a new Rectangle with the specified top left corner, dimensions, and color.
+     * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
     Rectangle(int x, int y, int w, int h, const ColorFloat &color);
 

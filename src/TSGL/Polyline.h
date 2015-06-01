@@ -1,8 +1,8 @@
 /*
- * Polyline.h extends Shape and provides a class for drawing a polyline
- *     with colored vertices to a Canvas
+ * Polyline.h extends Shape and provides a class for drawing a Polyline
+ *     with colored vertices to a Canvas.
  *
- * Authors: Patrick Crain, Mark Vander Stel
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
  * Last Modified: Mark Vander Stel, 7/3/2014
  */
 
@@ -29,20 +29,28 @@ class Polyline : public Shape {
         length;         // Number of vertices in vertices (size / 6)
  public:
     /*!
-     * \brief Explicitly constructor a new Polyline.
+     * \brief Explicitly constructs a new Polyline.
+     * \details Explicit constructor for a new Polyline object.
      *      \param v, the number of vertices the complete Polyline will have.
+     * \warning An invariant is held where if v is less than 2 then an std::out_of_range
+     *          exception is thrown.
      * \return a new Polyline with a buffer for storing the specified numbered of vertices.
      */
     Polyline(int v);
 
+    /*!
+     * \brief Destroys a Line object.
+     * \details Destructor for a Line object.
+     * \details Frees up memory allocated to a Line object.
+     */
     ~Polyline();
 
     /*!
      * \brief Add another vertex to the Polyline.
-     * \details This function initalizes the next vertex in the Polyline and adds it to the Polyline's buffer.
+     * \details This function initializes the next vertex in the Polyline and adds it to the Polyline's buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
-     *      \param color The color of the vertex.
+     *      \param color The reference variable to the color of the vertex (set to BLACK by default).
      * \note This function does nothing if the vertex buffer is already full.
      */
     void addNextVertex(int x, int y, const ColorFloat &color = BLACK);

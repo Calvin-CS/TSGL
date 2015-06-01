@@ -1,7 +1,7 @@
 /*
- * Timer.h provides a simple timer for sleeping and keeping track of iterations
+ * Timer.h provides a simple timer for sleeping and keeping track of iterations.
  *
- * Authors: Patrick Crain, Mark Vander Stel
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
  * Last Modified: Mark Vander Stel, 7/8/2014
  */
 
@@ -41,7 +41,9 @@ class Timer {
     Timer(double period);
 
     /*!
-     * \brief Destructor for the Timer class.
+     * \brief Destroys a Timer object.
+     * \details Destructor for a Timer object.
+     * \details Frees up memory that was allocated to a Timer object.
      */
     virtual ~Timer();
 
@@ -65,7 +67,7 @@ class Timer {
      *  This should be the same as the set period in cases where the timer is allowed to sleep. I.e.: 
      *  sleep() was called more than a periods time after the last time sleep() was called. In this
      *  case, getTimeBetweenSleeps() is undefined, but most likely less than 0.
-     * \return The time in seconds between the last two sleeps
+     * \return The time in seconds between the last two sleeps.
      */
     double getTimeBetweenSleeps() const;
 
@@ -81,7 +83,7 @@ class Timer {
      * \brief Reset the Timer.
      * \details This function resets the starting time, repetitions, and period of the timer.
      *      \param period The new period for the Timer. Setting this less than or equal to 0 will keep
-     *       the current period.
+     *       the current period (set to 0 by default).
      */
     void reset(double period = 0);
 

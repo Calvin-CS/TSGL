@@ -1,7 +1,7 @@
 /*
- * Triangle.h extends Shape and provides a class for drawing a three-sided polygon to a Canvas
+ * Triangle.h extends Shape and provides a class for drawing a three-sided polygon to a Canvas.
  *
- * Authors: Patrick Crain, Mark Vander Stel
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
  * Last Modified: Mark Vander Stel, 7/3/2014
  */
 
@@ -25,8 +25,8 @@ class Triangle : public Shape {
      *      \param y1 The y coordinate of the first endpoint.
      *      \param x2 The x coordinate of the second endpoint.
      *      \param y2 The y coordinate of the second endpoint.
-     *      \param x3 The x coordinate of the second endpoint.
-     *      \param y3 The y coordinate of the second endpoint.
+     *      \param x3 The x coordinate of the third endpoint.
+     *      \param y3 The y coordinate of the third endpoint.
      *      \param color The color of the Triangle.
      * \return A new Triangle with the specified vertices and color.
      */

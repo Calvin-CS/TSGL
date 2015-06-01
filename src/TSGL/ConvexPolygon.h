@@ -1,8 +1,6 @@
 /*
- * ColoredPolygon.h extends Shape and provides a class for drawing a polygon
- *     with colored vertices to a Canvas
- *
- * Authors: Patrick Crain, Mark Vander Stel
+ * ConvexPolygon.h extends Shape and provides a class for drawing a Convex polygon.
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
  * Last Modified: Patrick Crain, 7/20/2014
  */
 
@@ -11,9 +9,9 @@
 
 #include "Shape.h"  // For extending our Shape object
 
-/*! \class ColoredPolygon
- *  \brief Draw an arbitrary polygon with colored vertices.
- *  \details ColoredPolygon is a class for holding vertex data for a triangle strip with colored vertices.
+/*! \class ConvexPolygon
+ *  \brief Draw an arbitrary Convex polygon with colored vertices.
+ *  \details ConvexPolygon is a class for holding vertex data for a triangle strip with colored vertices.
  *  \details Vertices are drawn in triangle strip format, where the first three vertices make up the first triangle,
  *   the next vertex plus the previous two make up the second triangle, and so on.
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
@@ -30,27 +28,35 @@ class ConvexPolygon : public Shape {
         length;         // Number of vertices in vertices (size / 6)
  public:
     /*!
-     * \brief Explicitly constructor a new ColoredPolygon.
-     *      \param v, the number of vertices the complete ColoredPolygon will have.
-     * \return a new ColoredPolygon with a buffer for storing the specified numbered of vertices.
+     * \brief Explicitly constructs a new ConvexPolygon.
+     * \details Explicit constructor for a Convex Polygon object.
+     *      \param v, the number of vertices the complete ConvexPolygon will have.
+     * \warning An invariant is held where if v is less than 3 then an std::out_of_range
+     *          exception is thrown.
+     * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
     ConvexPolygon(int v);
 
+    /*!
+     * \brief Destroys a ConvexPolygon object.
+     * \details Destructor for a ConvexPolygon.
+     * \details Frees up memory that was allocated to a ConvexPolygon object.
+     */
     ~ConvexPolygon();
 
     /*!
-     * \brief Add another vertex to the ColoredPolygon.
-     * \details This function initializes the next vertex in the Polyline and adds it to the ColoredPolygon buffer.
+     * \brief Add another vertex to the ConvexPolygon.
+     * \details This function initializes the next vertex in the Polyline and adds it to the ConvexPolygon buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
-     *      \param color The color of the vertex.
+     *      \param color The reference variable of the color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
      */
     void addVertex(int x, int y, const ColorFloat &color);
 
     /*!
-     * \brief Draw the ColoredPolygon.
-     * \details This function actually draws the ColoredPolygon to the Canvas.
+     * \brief Draw the ConvexPolygon.
+     * \details This function actually draws the ConvexPolygon to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
      */
     void draw();

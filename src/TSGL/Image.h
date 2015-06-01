@@ -1,7 +1,7 @@
 /*
- * Image.h extends Shape and provides a class for drawing an image to a Canvas
+ * Image.h extends Shape and provides a class for drawing an image to a Canvas.
  *
- * Authors: Patrick Crain, Mark Vander Stel
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
  * Last Modified: Patrick Crain, 7/9/2014
  */
 
@@ -19,7 +19,7 @@
  *   The Image class currently supports files in the .png, .bmp, and .jpg formats.
  *  \note For the time being, there is no way to measure the size of an image once it's loaded.
  *   Therefore, the width and height must be specified manually, and stretching may occur if the
- *   inputted dimensions don't match the images actual dimesions.
+ *   input dimensions don't match the images actual dimensions.
  *  \note Additionally, an ImageLoader must be passed as an argument. This ImageLoader is automatically
  *   constructed with the Canvas as the private *loader* variable. At the moment, there is no way to
  *   extend Canvas::drawImage() function due to this privatization.
@@ -33,7 +33,7 @@ class Image : public Shape {
  public:
     /*!
      * \brief Explicitly constructs a new Image.
-     * \details This is the constructor for the Image class.
+     * \details This is the explicit constructor for the Image class.
      *      \param f The filename of the image to load.
      *      \param loader A pointer to the TextureHandler with which to load the image.
      *      \param x The x coordinate of the left of the Image.

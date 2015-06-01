@@ -1,8 +1,8 @@
 /*
  * ColoredPolygon.h extends Shape and provides a class for drawing a polygon
- *     with colored vertices to a Canvas
+ *     with colored vertices to a Canvas.
  *
- * Authors: Patrick Crain, Mark Vander Stel
+ * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
  * Last Modified: Patrick Crain, 7/20/2014
  */
 
@@ -30,16 +30,19 @@ class ColoredPolygon : public Shape {
         length;         // Number of vertices in vertices (size / 6)
  public:
     /*!
-     * \brief Explicitly constructor a new ColoredPolygon.
-     *      \param v, the number of vertices the complete ColoredPolygon will have.
-     * \return a new ColoredPolygon with a buffer for storing the specified numbered of vertices.
+     * \brief Explicitly construct a new ColoredPolygon.
+     * \details Explicit constructor for a ColoredPolygon object.
+     *      \param v, The number of vertices the complete ColoredPolygon will have.
+     * \warning An invariant is held where if v is less than 3 then an std::out_of_range
+     *          exception is thrown.
+     * \return A new ColoredPolygon with a buffer for storing the specified numbered of vertices.
      */
     ColoredPolygon(int v);
 
     /*!
-     * \brief Destructor for a ColoredPolygon object
-     * \details Destroys a ColoredPolygon object and frees up memory that has
-     *          has been allocated to that object.
+     * \brief Destroys a  ColoredPolygon object
+     * \details Destructor for a ColoredPolygon object.
+     * \details Frees up memory that has been allocated to a ColoredPolygon object.
      */
     ~ColoredPolygon();
 
@@ -48,7 +51,7 @@ class ColoredPolygon : public Shape {
      * \details This function initializes the next vertex in the Polyline and adds it to the ColoredPolygon buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
-     *      \param color The color of the vertex.
+     *      \param color The reference variable to a color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
      */
     void addVertex(int x, int y, const ColorFloat &color);

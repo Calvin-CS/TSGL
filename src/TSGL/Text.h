@@ -1,5 +1,5 @@
 /*
- * Text.h extends Shape and provides a class for drawing a string of text to the Canvas
+ * Text.h extends Shape and provides a class for drawing a string of text to the Canvas.
  *
  * Authors: Patrick Crain, Mark Vander Stel
  * Last Modified: Mark Vander Stel, 7/11/2014
@@ -15,7 +15,7 @@
  *  \brief Draw a string of text.
  *  \details Text is a class for holding the data necessary for rendering a string of text.
  *  \note Text is aligned by the upper-left corner.
- *  \note At the moment, only a single font is supported.
+ *  \note Fonts supported by FreeType are also supported.
  */
 class Text : public Shape {
  private:
@@ -34,7 +34,7 @@ class Text : public Shape {
      *      \param y The y coordinate.
      *      \param size The size of the text in pixels.
      *      \param color A color.
-     *      \return A new Text instance with the specified string, position, and color.
+     * \return A new Text instance with the specified string, position, and color.
      */
     Text(std::wstring s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color);
 

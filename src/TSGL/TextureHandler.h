@@ -1,5 +1,5 @@
 /*
- * TextureHandler.h provides an interface for loading a variety of image formats and fonts into GL textures
+ * TextureHandler.h provides an interface for loading a variety of image formats and fonts into GL textures.
  *
  * Author: Patrick Crain
  * Last Modified: Patrick Crain, 7/9/2014
@@ -61,12 +61,62 @@ class TextureHandler {
     bool saveToPNG(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
     bool saveToBMP(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
  public:
+    /*!
+     * \brief Constructs a TextureHandler object.
+     * \details Default constructor for a TextureHandler object.
+     * \return A new TextureHandler object with default values.
+     */
     TextureHandler();
+
+    /*!
+     * \brief Destroys a TextureHandler object.
+     * \details Destructor for a TextureHandler object.
+     * \details Frees up memory that was allocated to a TextureHandler object.
+     */
     ~TextureHandler();
 
+    /*!
+     * \brief Draw text.
+     * \details Draws the text specified by its parameters onto a Canvas.
+     *      \param text The string that contains the text to be drawn.
+     *      \param font_size The size of the text.
+     *      \param vertices The number of vertices that the shape of the text has.
+     * \warning If no font has been specified then a default font will be loaded.
+     * \return True if successful, false otherwise.
+     */
     bool drawText(std::wstring text, unsigned int font_size, float* vertices);
+
+    /*!
+     * \brief Load a font.
+     * \details Loads a font from a specified library given a specific file name.
+     *      \param filename The file name that contains the font to be loaded.
+     * \warning If the font cannot be found then an error message is printed out.
+     * \warning If the font library is not correctly installed then an error message is printed out.
+     * \warning If the font is not supported then an error message is printed out.
+     * \return True if successful, false otherwise.
+     */
     bool loadFont(const std::string& filename);
+
+    /*!
+     * \brief Load a picture.
+     * \details
+     *      \param filename The file name that contains the picture.
+     *      \param width The width of the picture.
+     *      \param height The height of the picture.
+     *      \param texture
+     * \return
+     */
     GLtexture loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture);
+
+    /*!
+     * \brief Saves an Image.
+     * \details Saves an Image to file that was captured from a Canvas object.
+     *      \param filename The name of the image file.
+     *      \param pixels The number of pixels in the Image.
+     *      \param w The width of the Image.
+     *      \param h The height of the Image.
+     * \return True if successful, false otherwise.
+     */
     bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
 };
 

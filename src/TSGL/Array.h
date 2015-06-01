@@ -46,7 +46,9 @@ class Array {
     }
 
     /*!
-     * \brief Destructor for the Array class
+     * \brief Destroys an Array object.
+     * \details Destructor for an Array object.
+     * \details Frees up memory allocated to an Array object.
      */
     virtual ~Array() {
         clear();
@@ -54,7 +56,7 @@ class Array {
     }
 
     /*!
-     * \brief clear() empties the array and resets it
+     * \brief clear() empties the array and resets it.
      */
     void clear() {
         if (first_ > last_) {                       // If the array wraps around...
@@ -72,7 +74,7 @@ class Array {
     }
 
     /*!
-     * \brief shallowClear empties the array but does not delete the objects
+     * \brief shallowClear empties the array but does not delete the objects.
      * \warning WILL RESULT IN MEMORY LEAK IF THE OBJECTS ARE NOT POINTED TO ANYWHERE ELSE!
      */
     void shallowClear() {
@@ -88,8 +90,8 @@ class Array {
 
     /*!
      * \brief operator[] returns the item at the index.
-     * \param index the index of where the item is
-     * \return the item at that index
+     * \param index the index of where the item is.
+     * \return the item at that index.
      */
     const Item operator[](unsigned int index) const {
         if (size_ == 0)
@@ -100,26 +102,26 @@ class Array {
             return myArray[(first_ + index) % capacity_];  // Wrap around for the underlying array
     }
 
-    /*! \brief size() returns the number of items in the array */
+    /*! \brief size() returns the number of items in the array. */
     unsigned int size() const {
         return size_;
     }
 
-    /*! \brief capacity() returns the maximum amount of items the array can store */
+    /*! \brief capacity() returns the maximum amount of items the array can store. */
     unsigned int capacity() const {
         return capacity_;
     }
 
-    /*! \brief isEmpty() returns true if the array has no items, false otherwise */
+    /*! \brief isEmpty() returns true if the array has no items, false otherwise. */
     bool isEmpty() const {
         return (size_ == 0);
     }
 
     /*!
      * \brief push() adds the item to the end of the array. It will also remove the
-     *  oldest item if the array is full
-     * \param item the item to add
-     * \return the same item
+     *  oldest item if the array is full.
+     * \param item the item to add.
+     * \return the same item.
      */
     Item push(Item item) {
         if (myArray[first_] != nullptr)                         // If the array has items...
