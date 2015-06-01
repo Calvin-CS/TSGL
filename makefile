@@ -22,8 +22,8 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
-	-I/usr/local/include/freetype2/ \
-        -std=c++0x -fopenmp
+	$$(pkg-config --cflags freetype2) \
+  -std=c++0x -fopenmp
 
 LFLAGS=-LTSGL/ -ltsgl \
 	-Llib/ \
@@ -33,8 +33,9 @@ LFLAGS=-LTSGL/ -ltsgl \
 	-L/usr/local/lib/ \
 	-L/usr/X11/lib/ \
 	-ltsgl -lfreetype -lpng -ljpeg \
-	-lGLEW -lglfw \
-	-lX11 -lGL -lXrandr \
+	$$(pkg-config --libs glew) \
+	$$(pkg-config --libs glfw3) \
+	$$(pkg-config --libs gl) \
 	-fopenmp
 
 DEPFLAGS=-MMD -MP
@@ -55,9 +56,9 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
 	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway
-		
+
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
-	
+
 
 all: dif tsgl tests docs tutorial
 
@@ -164,7 +165,8 @@ docs/html/index.html: ${HEADERS} Doxyfile
 
 tutorial/docs/html/index.html: ${HEADERS} TutDoxyfile
 	@echo 'Generating Doxygen'
-	@doxygen TutDoxyfile
+	mkdir -p tutorial/docs/html
+	doxygen TutDoxyfile
 
 .PHONY: all debug clean tsgl tests docs tutorial dif
 .SECONDARY: ${OBJS} build/tests.o $(OBJS:%.o=%.d)
