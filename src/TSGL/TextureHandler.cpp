@@ -1,10 +1,24 @@
 #include "TextureHandler.h"
 
+#ifdef _WIN32
+  //The instructions for the stb library say to define it exactly once in a .c or .cpp file (NOT a .h file)
+  #ifndef STB_DEFINE
+    #define STB_IMAGE_WRITE_IMPLEMENTATION
+    #include "stb/stb_image_write.h"
+    #define STB_IMAGE_IMPLEMENTATION
+    #include "stb/stb_image.h"
+    #define STB_DEFINE                                                     
+    #include "stb/stb.h"
+  #endif
+#endif
+
 #define GL_GLEXT_PROTOTYPES
 
 TextureHandler::TextureHandler() {
+#ifndef _WIN32
     fontLibrary = nullptr;
     fontFace = nullptr;
+#endif
 }
 
 TextureHandler::~TextureHandler() {
@@ -12,17 +26,31 @@ TextureHandler::~TextureHandler() {
         glDeleteTextures(1, &(it->second));
     }
 
+#ifndef _WIN32
     for (FontMap::iterator it = loadedFonts.begin(); it != loadedFonts.end(); ++it) {
         FT_Done_Face(it->second);
     }
     FT_Done_FreeType(fontLibrary);
+#endif
 }
 
+#ifndef _WIN32
 struct my_error_mgr {
     struct jpeg_error_mgr pub;  // "public" fields
 
     jmp_buf setjmp_buffer;      // for return to caller
 };
+void TextureHandler::my_error_exit(j_common_ptr cinfo) {
+    /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
+    my_error_mgr* myerr = (my_error_mgr*) cinfo->err;
+
+    /* Always display the message. */
+    (*cinfo->err->output_message)(cinfo);
+
+    /* Return control to the setjmp point */
+    longjmp(myerr->setjmp_buffer, 1);
+}
+#endif
 
 void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char* buffer,
                                                const unsigned int &width, const unsigned int &height,
@@ -55,6 +83,9 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 }
 
 bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
+#ifdef _WIN32
+  return false;
+#else
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //new, no font is set, load up a default one
     fprintf(stderr, "No Font set! Now loading from assets/freefont/FreeSerif.ttf ....\n");    //NEW
@@ -102,8 +133,10 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
             glMode = GL_RGB;
         else if (fontMode == FT_PIXEL_MODE_LCD_V)
             glMode = GL_RGB;
+#ifndef _WIN32
         else if (fontMode == FT_PIXEL_MODE_BGRA)
             glMode = GL_RGBA;
+#endif
 
         GLtexture texture;
         createGLtextureFromBuffer(texture, glyph->bitmap.buffer, glyph->bitmap.width, glyph->bitmap.rows, glMode);
@@ -125,9 +158,13 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);                                         // Draw the character
     }
     return true;
+#endif
 }
 
 bool TextureHandler::loadFont(const std::string& filename) {
+#ifdef _WIN32
+	return false;
+#else
     if (fontLibrary == nullptr) {
         if (FT_Init_FreeType(&fontLibrary)) {
             fprintf(stderr, "An error occurred during freetype font library initialization\n");
@@ -146,7 +183,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
             fprintf(stderr, "%s: the font file could not be opened and read\n", filename.c_str());
             return false;
         }
-        
+
         loadedFonts[filename] = tmp_face;
         fontFace = tmp_face;
         FT_Select_Charmap(fontFace , ft_encoding_unicode);
@@ -155,6 +192,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
     }
 
     return true;
+#endif
 }
 
 GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height,
@@ -285,6 +323,21 @@ GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int 
 
 GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
                                              GLtexture &texture) const {
+#ifdef _WIN32
+    unsigned char *data;
+    int w, h, n;
+    printf("Loading %s\n", filename);
+    data = stbi_load(filename, &w, &h, 0, 4);
+    assert(data);
+    if (!data) {
+      printf("Loading failed");
+      return texture;
+    }
+    printf("Loading succeeded");
+    std::cout << w << "," << h << "," << n << std::endl;
+    createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
+    free(data);
+#else
     /* This struct contains the JPEG decompression parameters and pointers to
      * working space (which is allocated as needed by the JPEG library).
      */
@@ -296,12 +349,7 @@ GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int 
     struct my_error_mgr jerr;
 
     // We want to open the input file before doing anything else.
-#ifdef _WIN32
-    FILE* file;
-    fopen_s(&file, filename, "rb");
-#else
     FILE* file = fopen(filename, "rb");
-#endif
 
     if (file == NULL) {
         fprintf(stderr, "Can't open %s: no such file\n", filename);
@@ -389,20 +437,30 @@ GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int 
         fprintf(stderr, "%s: unknown error from jpeg\n", filename);
         return 0;
     }
+#endif
 
     return texture;
 }
 
 GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
                                        GLtexture &texture) const {
-    png_byte header[8];
-
 #ifdef _WIN32
-    FILE* file;
-    fopen_s(&file, filename, "rb");
+	unsigned char *data;
+	int w, h, n;
+	printf("Loading %s\n", filename);
+	data = stbi_load(filename, &w, &h, 0, 4);
+	assert(data);
+	if (!data) {
+	  printf("Loading failed");
+	  return texture;
+	}
+  printf("Loading succeeded");
+  std::cout << w << "," << h << "," << n << std::endl;
+  createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
+  free(data);
 #else
+    png_byte header[8];
     FILE* file = fopen(filename, "rb");
-#endif
 
     if (file == 0) {
         fprintf(stderr, "Can't open %s: no such file\n", filename);
@@ -508,7 +566,7 @@ GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int 
     // read the png into image_data through row_pointers
     png_read_image(png_ptr, row_pointers);
 
-    int components = GL_RGB;
+	int components = GL_RGB;
     if (color_type == PNG_COLOR_TYPE_RGB)
         components = GL_RGB;
     else if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
@@ -521,18 +579,8 @@ GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int 
     free(image_data);
     free(row_pointers);
     fclose(file);
+#endif
     return texture;
-}
-
-void TextureHandler::my_error_exit(j_common_ptr cinfo) {
-    /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
-    my_error_mgr* myerr = (my_error_mgr*) cinfo->err;
-
-    /* Always display the message. */
-    (*cinfo->err->output_message)(cinfo);
-
-    /* Return control to the setjmp point */
-    longjmp(myerr->setjmp_buffer, 1);
 }
 
 bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const {
@@ -640,6 +688,10 @@ bool TextureHandler::saveToBMP(const char* filename, GLubyte *pixels, unsigned i
 }
 
 bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const {
+#ifdef _WIN32
+	std::cout << "Saving not supported on Windows" << std::endl;
+	return false;
+#else
     png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
     if (!png) {
         fprintf(stderr, "%s: png_create_write_struct returned NULL\n", filename);
@@ -653,12 +705,7 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
         return false;
     }
 
-#ifdef _WIN32
-    FILE* file;
-    fopen_s(&file, filename, "wb");
-#else
     FILE* file = fopen(filename, "wb");
-#endif
 
     if (!file) {
         fprintf(stderr, "Was unable to create file: %s\n", filename);
@@ -692,5 +739,6 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
     fclose(file);
     delete[] rows;
     return true;
+#endif
 }
 

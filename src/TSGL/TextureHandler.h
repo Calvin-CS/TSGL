@@ -8,21 +8,24 @@
 #ifndef TEXTURELOADER_H_
 #define TEXTURELOADER_H_
 
-#ifdef _WIN32
-#include <GL/glut.h>
-#endif
-
+#include <iostream>
 #include <ft2build.h>
 
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
-//#include <freetype.h>
-//#include <ftglyph.h>
 
 #include <GL/glew.h>     // Needed for GL function calls
+
+#ifdef _WIN32
+  #include <GL/glut.h>
+#else
+  #include <freetype.h>
+  #include <ftglyph.h>
+  #include <png.h>
+  #include <jpeglib.h>
+#endif
+
 #include <GLFW/glfw3.h>  // For GL functions
-#include <jpeglib.h>
-#include <png.h>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -32,13 +35,17 @@ typedef GLuint GLtexture;
 class TextureHandler {
  private:
     typedef std::unordered_map<std::string, GLtexture> TextureMap;
-    typedef std::unordered_map<std::string, FT_Face> FontMap;
 
     TextureMap loadedTextures;
-    FontMap loadedFonts;
 
+#ifndef _WIN32
+    typedef std::unordered_map<std::string, FT_Face> FontMap;
+    FontMap loadedFonts;
     FT_Library fontLibrary;
     FT_Face fontFace;
+
+    static void my_error_exit(j_common_ptr cinfo);
+#endif
 
     static void createGLtextureFromBuffer(GLtexture &texture, unsigned char* buffer, const unsigned int &width,
                                           const unsigned int &height, int glMode);
@@ -49,8 +56,6 @@ class TextureHandler {
                                  GLtexture &texture) const;
     GLtexture loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
                                  GLtexture &texture) const;
-
-    static void my_error_exit(j_common_ptr cinfo);
 
     bool saveToPNG(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
     bool saveToBMP(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
