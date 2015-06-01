@@ -57,7 +57,7 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway
 
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
-	bin/testConcavePolygon bin/testConway
+	
 
 all: dif tsgl tests docs tutorial
 
