@@ -8,6 +8,8 @@
 #ifndef ANTFARM_H_
 #define ANTFARM_H_
 
+#include <omp.h>
+
 #include <tsgl.h>
 #include "LangtonAnt.h"
 
@@ -19,6 +21,8 @@ class AntFarm {
 private:
     bool* filled;
     bool shading;
+    bool inParallel;
+    void moveAnt(int j);
 public:
     LangtonAnt** ants;
     int width, height, size, cap;
@@ -28,6 +32,7 @@ public:
     void addAnt(int x, int y, int r, int g, int b, int d);
     void moveAnts();
     void setShading(bool b);
+    void setParallel(bool b);
 };
 
 #endif /* ANTFARM_H_ */
