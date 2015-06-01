@@ -18,8 +18,6 @@ const double PI = M_PI;
 #endif
 const double RAD = PI / 180;  // One radian in degrees
 
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
 // Shared values between langton functions
 enum direction {
     UP = 0,

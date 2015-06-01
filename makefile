@@ -114,6 +114,11 @@ bin/testLangtonRainbow: build/tests/testLangtonRainbow.o ${LANGTON_DEPS}
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
 
+bin/testScreenshotLangton: build/tests/testScreenshotLangton.o ${LANGTON_DEPS}
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o $@ $(LFLAGS)
+	@touch build/build
+
 bin/testLangton: build/tests/testLangton.o ${LANGTON_DEPS}
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)

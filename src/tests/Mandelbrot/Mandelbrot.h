@@ -17,12 +17,8 @@
 #include <queue>
 #include <tsgl.h>
 
-const int MAX_COLOR = 255;
-
 typedef CartesianCanvas Cart;
 typedef std::complex<long double> complex;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
 class Mandelbrot {
 private:

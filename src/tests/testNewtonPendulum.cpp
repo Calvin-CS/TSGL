@@ -8,8 +8,6 @@
 #include "tsgl.h"
 
 const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
 
 void newtonPendulumFunction(Canvas& can) {
   const int WINDOW_W = can.getWindowWidth(), WINDOW_H = can.getWindowHeight(),

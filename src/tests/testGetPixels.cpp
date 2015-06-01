@@ -5,41 +5,10 @@
  *      Author: cpd5
  */
 
-#include <cmath>
-#include <complex>
-#include <iostream>
 #include <omp.h>
-#include <queue>
 #include <tsgl.h>
 
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
-
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-// Shared values between langton functions
-enum direction {
-    UP = 0,
-    RIGHT = 1,
-    DOWN = 2,
-    LEFT = 3
-};
-
 typedef CartesianCanvas Cart;
-typedef std::complex<long double> complex;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-const int IPF = 1000;  //For those functions that need it
-
-float randfloat(int divisor = 10000) {
-    return (rand() % divisor) / (float) divisor;
-}
 
 /*!
  * \brief Grabs the pixels from an image on the Canvas and plays with them.
@@ -77,14 +46,14 @@ void getPixelsFunction(Canvas& can) {
     can.drawImage("assets/test.png", 0, 0, width, height);
     Timer::threadSleepFor(.75);
 //    can.recordForNumFrames(100);
-    uint8_t* buffer = can.getScreenBuffer();
+//    uint8_t* buffer = can.getScreenBuffer();
 
     #pragma omp parallel num_threads(THREADS)
     {
         unsigned int blocksize = (double)height / omp_get_num_threads();
         unsigned int row = blocksize * omp_get_thread_num();
         while (can.getIsOpen()) {
-            uint8_t* buffer_offset = buffer + row * width * 3;
+//            uint8_t* buffer_offset = buffer + row * width * 3;
             for (unsigned int y = row; y < row + blocksize; y++) {
                 for (unsigned int x = 0; x < width; x++) {
                     ColorInt c = can.getPoint(x,y);

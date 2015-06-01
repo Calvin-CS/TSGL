@@ -13,36 +13,36 @@ run () {
 
 run bin/testConway
 
-run bin/testAlphaLangton 640 480        #Width, Height
-run bin/testAlphaRectangle
-run bin/testColorPoints 400 400 4       #Width, Height, Threads
-run bin/testColorWheel 640 640          #Width, Height
-run bin/testCosineIntegral 640 480 32   #Width, Height, Threads
-run bin/testDumbSort 1200 600           #Width, Height
+run bin/testAlphaLangton 640 480            #Width, Height
+run bin/testAlphaRectangle 640 480          #Width, Height
+run bin/testColorPoints 400 400 4           #Width, Height, Threads
+run bin/testColorWheel 640 640              #Width, Height
+run bin/testCosineIntegral 640 480 32       #Width, Height, Threads
+run bin/testDumbSort 1200 600               #Width, Height
 run bin/testForestFire
-run bin/testFunction 640 480            #Width, Height
-run bin/testGradientMandelbrot 8        #Threads
-run bin/testGradientWheel 640 640       #Width, Height
-run bin/testGraydient 400 400 8         #Width, Height, Threads
-run bin/testGreyscale 640 480 8         #Width, Height, Threads
+run bin/testFunction 640 480                #Width, Height
+run bin/testGradientMandelbrot 1200 900 8   #Width, Height, Threads
+run bin/testGradientWheel 640 640           #Width, Height
+run bin/testGraydient 400 400 8             #Width, Height, Threads
+run bin/testGreyscale 640 480 8             #Width, Height, Threads
 run bin/testHighData
 run bin/testImage
 run bin/testImageCart
-run bin/testLangton 640 480             #Width, Height
-run bin/testLangtonColony 640 480       #Width, Height
-run bin/testLangtonRainbow 640 480      #Width, Height
-run bin/testLineChain 400 400 8         #Width, Height, Threads
-run bin/testLineFan                   
-run bin/testMandelbrot 8                #Threads
+run bin/testLangton 640 480                 #Width, Height
+run bin/testLangtonColony 640 480           #Width, Height
+run bin/testLangtonRainbow 640 480          #Width, Height
+run bin/testLineChain 400 400 8             #Width, Height, Threads
+run bin/testLineFan
+run bin/testMandelbrot 1200 900 8           #Width, Height, Threads
 run bin/testMouse
-run bin/testNova 8                      #Threads
+run bin/testNova 1200 900 4                 #Width, Height, Threads
 run bin/testPong
 run bin/testScreenshot
 run bin/testScreenshotLangton
-run bin/testShadedVoronoi 640 480 8     #Width, Height, Threads
-run bin/testSpectrum 8                  #Threads
+run bin/testShadedVoronoi 640 480 8         #Width, Height, Threads
+run bin/testSpectrum 8                      #Threads
 run bin/testText
 run bin/testTextCart
 run bin/testTextTwo
 run bin/testTSGL
-run bin/testVoronoi 640 480 8           #Width, Height, Threads
+run bin/testVoronoi 640 480 8               #Width, Height, Threads

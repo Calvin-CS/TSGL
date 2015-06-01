@@ -5,24 +5,8 @@
  *      Author: cpd5
  */
 
-#include <cmath>
-#include <complex>
-#include <iostream>
 #include <omp.h>
-#include <queue>
 #include <tsgl.h>
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
-
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
 /*!
  * \brief Draws the full spectrum across the x, y, and time dimensions at the given framerate
@@ -67,11 +51,10 @@ void spectrumFunction(Canvas& can, int & numberOfThreads) {
 }
 
 int main(int argc, char* argv[]) {
-    int numberOfThreads = atoi(argv[1]);   //Number of threads to use
+    int t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();   //Number of threads to use
     Canvas c4(0,0,255,255,"", FRAME);
-    c4.setBackgroundColor(GREY);
     c4.start();
-    spectrumFunction(c4, numberOfThreads);  //Pass the number of threads as an argument
+    spectrumFunction(c4, t);  //Pass the number of threads as an argument
     c4.close();
 }
 

@@ -5,41 +5,8 @@
  *      Author: cpd5
  */
 
-#include <cmath>
-#include <complex>
-#include <iostream>
 #include <omp.h>
-#include <queue>
 #include <tsgl.h>
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
-
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-// Shared values between langton functions
-enum direction {
-	UP = 0,
-	RIGHT = 1,
-	DOWN = 2,
-	LEFT = 3
-};
-
-typedef CartesianCanvas Cart;
-typedef std::complex<long double> complex;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-const int IPF = 1000;  //For those functions that need it
-
-float randfloat(int divisor = 10000) {
-	return (rand() % divisor) / (float) divisor;
-}
 
 /*!
  * \brief Grabs the pixels from an image on the Canvas and converts them to grayscale.
@@ -114,19 +81,12 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
 //Takes command line arguments for the width and height of the window
 //as well as for the number of threads to use
 int main(int argc, char* argv[]) {
-	int holder1 = atoi(argv[1]);   //Width
-	int holder2 = atoi(argv[2]);   //Height
-	int width, height = 0;
-	if (holder1 <= 0 || holder2 <= 0) {    //Checked the passed width and height if they are valid
-		width = height = 960;  //If not, set the width and height to a default value
-	} else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
-		width = height = 960;
-	} else {
-		width = holder1;  //Else, they are and so use them
-		height = holder2;
-	}
-	Canvas c31(0, 0, width, height, "", FRAME * 2);
-	int numberOfThreads = atoi(argv[3]);   //Number of threads
+  int w = (argc > 1) ? atoi(argv[1]) : 960;
+  int h = (argc > 2) ? atoi(argv[2]) : w;
+  if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
+    w = h = 960;              //If not, set the width and height to a default value
+	Canvas c31(0, 0, w, h, "", FRAME * 2);
+	int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads
 	c31.setBackgroundColor(GREY);
 	c31.start();
 	greyScaleFunction(c31, numberOfThreads);  //Pass it as an argument

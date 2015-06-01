@@ -5,41 +5,7 @@
  *      Author: cpd5
  */
 
-#include <cmath>
-#include <complex>
-#include <iostream>
-#include <omp.h>
-#include <queue>
 #include <tsgl.h>
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
-
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-// Shared values between langton functions
-enum direction {
-    UP = 0,
-    RIGHT = 1,
-    DOWN = 2,
-    LEFT = 3
-};
-
-typedef CartesianCanvas Cart;
-typedef std::complex<long double> complex;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-const int IPF = 1000;  //For those functions that need it
-
-float randfloat(int divisor = 10000) {
-    return (rand() % divisor) / (float) divisor;
-}
 
 /*!
  * \brief Provides a visualization for a basic (and slow) shaker sort.
@@ -127,20 +93,13 @@ void dumbSortFunction(Canvas& can) {
 
 //Takes in command line arguments for the window width and height
 int main(int argc, char* argv[]) {
-    int holder1 = atoi(argv[1]);   //Width
-    int holder2 = atoi(argv[2]);   //Height
-    int width, height = 0;
-    if (holder1 <= 0 || holder2 <= 0) {   //Check the passed width and height if they are valid
-    	width = WINDOW_W;   //If not, use the default width and height
-    	height = WINDOW_H;
-    } else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
-     	width = WINDOW_W;
-        height = WINDOW_H;
-    } else {
-    	width = holder1; //Else, use the passed width and height
-    	height = holder2;
+    int w = (argc > 1) ? atoi(argv[1]) : 1200;
+    int h = (argc > 2) ? atoi(argv[2]) : 900;
+    if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
+      w = 1200;
+      h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c9(0, 0, width, height, "", FRAME);
+    Canvas c9(0, 0, w, h, "", FRAME);
     c9.setBackgroundColor(GREY);
     c9.start();
     dumbSortFunction(c9);   //Pass it as an argument

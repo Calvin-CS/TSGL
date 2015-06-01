@@ -38,8 +38,7 @@
  * \param can, Reference to the Canvas being drawn to
  */
 void pongFunction(Canvas& can) {
-    //Constructor().....
-	Pong p1(can);
+    Pong p1(can);
     p1.bindings(can);
     p1.draw(can);
 }

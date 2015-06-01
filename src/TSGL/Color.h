@@ -13,6 +13,8 @@
 #include <cstdlib>      // Needed for rand()
 #include <sstream>      // Needed for Windows integer / float to string conversion
 
+const int NUM_COLORS = 256, MAX_COLOR = 255;
+
 /*!
  * \brief Floating point RGBA color struct.
  * \details ColorFloat defines a color with floating point red, green, blue, and alpha components

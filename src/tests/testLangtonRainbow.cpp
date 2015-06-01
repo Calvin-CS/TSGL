@@ -5,7 +5,6 @@
  *      Author: cpd5
  */
 
-#include <omp.h>
 #include <tsgl.h>
 
 #include "Langton/AntFarm.h"

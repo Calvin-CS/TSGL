@@ -22,10 +22,16 @@ void gradientMandelbrotFunction(CartesianCanvas& can, unsigned int & numberOfThr
 
 //Takes in command line argument for the number of threads
 int main(int argc, char* argv[]) {
-	Cart c16(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, "", FRAME / 2);
-	unsigned int numberOfThreads = atoi(argv[1]);    //Get the number of threads to use
+  int w = (argc > 1) ? atoi(argv[1]) : 1200;
+  int h = (argc > 2) ? atoi(argv[2]) : 900;
+  if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
+    w = 1200;
+    h = 900;                  //If not, set the width and height to a default value
+  }
+	Cart c16(0, 0, w, h, -2, -1.125, 1, 1.125, "", FRAME / 2);
+	unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
 	c16.setBackgroundColor(GREY);
 	c16.start();
-	gradientMandelbrotFunction(c16, numberOfThreads);
+	gradientMandelbrotFunction(c16, t);
 	c16.close();
 }

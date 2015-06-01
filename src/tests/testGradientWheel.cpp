@@ -5,11 +5,7 @@
  *      Author: cpd5
  */
 
-#include <cmath>
-#include <complex>
-#include <iostream>
 #include <omp.h>
-#include <queue>
 #include <tsgl.h>
 
 #ifdef _WIN32
@@ -18,28 +14,6 @@ const double PI = 3.1415926535;
 const double PI = M_PI;
 #endif
 const double RAD = PI / 180;  // One radian in degrees
-
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-// Shared values between langton functions
-enum direction {
-	UP = 0,
-	RIGHT = 1,
-	DOWN = 2,
-	LEFT = 3
-};
-
-typedef CartesianCanvas Cart;
-typedef std::complex<long double> complex;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-const int IPF = 1000;  //For those functions that need it
-
-float randfloat(int divisor = 10000) {
-	return (rand() % divisor) / (float) divisor;
-}
 
 /*!
  * \brief Draws a gradient color wheel using OMP with multiple threads per processor and TSGL's colored polygons
@@ -88,18 +62,11 @@ void gradientWheelFunction(Canvas& can) {
 
 //Takes command line arguments for the width and height of the window
 int main(int argc, char* argv[]) {
-	int holder1 = atoi(argv[1]);  //Width
-	int holder2 = atoi(argv[2]);  //Length
-	int width, height = 0;    //Actual width and height to be used
-	if (holder1 <= 0 || holder2 <= 0) {  //Check if the passed arguments are valid
-		height = width = 960;  //If not, set the width and height to 960
-	} else if(holder1 > WINDOW_W || holder2 > WINDOW_H) {
-		height = width = 960;
-	} else {
-		width = holder1;  //Else, set the width and height to the passed command-line arguments
-		height = holder2;
-	}
-	Canvas c13(0, 0, width, height, "", FRAME);
+  int w = (argc > 1) ? atoi(argv[1]) : 960;
+  int h = (argc > 2) ? atoi(argv[2]) : w;
+  if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
+    w = h = 960;              //If not, set the width and height to a default value
+	Canvas c13(0, 0, w, h, "", FRAME);
 	c13.setBackgroundColor(BLACK);
 	c13.start();
 	gradientWheelFunction(c13);

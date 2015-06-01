@@ -5,11 +5,7 @@
  *      Author: cpd5
  */
 
-#include <cmath>
-#include <complex>
-#include <iostream>
 #include <omp.h>
-#include <queue>
 #include <tsgl.h>
 
 #ifdef _WIN32
@@ -18,15 +14,6 @@ const double PI = 3.1415926535;
 const double PI = M_PI;
 #endif
 const double RAD = PI / 180;  // One radian in degrees
-
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-float randfloat(int divisor = 10000) {
-    return (rand() % divisor) / (float) divisor;
-}
 
 /*!
  * \brief Draws a fan of randomly colored lines at the target framerate and a dynamic number of threads using OMP
@@ -51,7 +38,6 @@ void lineFanFunction(Canvas& can) {
         {
             can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
             int a, b, c, d, red, green, blue;
-            int holder = omp_get_thread_num();
             double angle, offset = omp_get_thread_num() * ARC;
             angle = offset + can.getReps() * RAD;
             a = can.getWindowWidth() / 2 * (1 + sin(angle));
@@ -70,7 +56,6 @@ void lineFanFunction(Canvas& can) {
 //on the Canvas
 int main() {
     Canvas c3(FRAME);
-    c3.setBackgroundColor(GREY);
     c3.start();
     lineFanFunction(c3);
     c3.close();

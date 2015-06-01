@@ -11,8 +11,6 @@
 #include <tsgl.h>
 #include <omp.h>
 
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
 class ConwayAnt;  //Forward Declaration
 
 class LifeFarm {

@@ -5,41 +5,7 @@
  *      Author: cpd5
  */
 
-#include <cmath>
-#include <complex>
-#include <iostream>
-#include <omp.h>
-#include <queue>
 #include <tsgl.h>
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
-
-// Some constants that get used a lot
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
-// Shared values between langton functions
-enum direction {
-    UP = 0,
-    RIGHT = 1,
-    DOWN = 2,
-    LEFT = 3
-};
-
-typedef CartesianCanvas Cart;
-typedef std::complex<long double> complex;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-const int IPF = 1000;  //For those functions that need it
-
-float randfloat(int divisor = 10000) {
-    return (rand() % divisor) / (float) divisor;
-}
 
 /*!
  * \brief Draws various images on a Canvas.

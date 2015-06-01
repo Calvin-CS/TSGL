@@ -13,8 +13,6 @@
 #include <tsgl.h>
 #include "LangtonAnt.h"
 
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
 class LangtonAnt;  //Forward Declaration
 
 class AntFarm {
