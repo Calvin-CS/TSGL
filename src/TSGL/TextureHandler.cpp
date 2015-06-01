@@ -322,7 +322,7 @@ GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int 
       return texture;
     }
     printf("Loading succeeded");
-    std::cout << w << "," << h << "," << n << std::endl;
+    std::cout << w << "," << h << std::endl;
     createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
     free(data);
 #else

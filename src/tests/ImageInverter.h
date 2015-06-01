@@ -10,25 +10,32 @@
 
 #include <tsgl.h>     // Canvas, ColorInt, etc.
 #include <iostream>   // cout, string, ...
-#include <unistd.h>    // sleep()
+
+#ifdef _WIN32
+    #include <windows.h>
+    void sleep(unsigned seconds) { Sleep(seconds * 1000); }
+#else
+  #include <unistd.h>    // sleep()
+#endif
+
 using namespace std;
 
 class ImageInverter {
 public:
-	ImageInverter(const string& fileName, unsigned width, unsigned height);
-	virtual ~ImageInverter();
-	virtual void run(unsigned numThreads = 1);
+  ImageInverter(const string& fileName, unsigned width, unsigned height);
+  virtual ~ImageInverter();
+  virtual void run(unsigned numThreads = 1);
 
 protected:
-	virtual void invertImage(unsigned numThreads = 1);
-	virtual void stop();
+  virtual void invertImage(unsigned numThreads = 1);
+  virtual void stop();
 
 private:
-	Canvas myCanvas1;
-	Canvas myCanvas2;
-	unsigned myWidth;
-	unsigned myHeight;
-	string   myFileName;
+  Canvas myCanvas1;
+  Canvas myCanvas2;
+  unsigned myWidth;
+  unsigned myHeight;
+  string   myFileName;
 };
 
 //-----------------  Method definitions ------------------------------
@@ -48,15 +55,15 @@ private:
 
 inline
 ImageInverter::ImageInverter(const string& fileName,
-		                      unsigned width, unsigned height)
+                          unsigned width, unsigned height)
  : myCanvas1(0, 0, width, height, fileName),
    myCanvas2(0, 0, width, height, fileName),
    myWidth(width), myHeight(height), myFileName(fileName)
 {
-	myCanvas1.start();
-	myCanvas1.drawImage(fileName, 0, 0, width, height);
-	sleep(1);
-	myCanvas2.start();
+  myCanvas1.start();
+  myCanvas1.drawImage(fileName, 0, 0, width, height);
+  sleep(1);
+  myCanvas2.start();
 }
 
 /* method to coordinate the image inversion
@@ -67,9 +74,9 @@ ImageInverter::ImageInverter(const string& fileName,
  */
 inline
 void ImageInverter::run(unsigned numThreads) {
-	// sleep(1);
-	invertImage(numThreads);
-	stop();
+  // sleep(1);
+  invertImage(numThreads);
+  stop();
 }
 
 
@@ -82,23 +89,23 @@ void ImageInverter::run(unsigned numThreads) {
 
 inline
 void ImageInverter::invertImage(unsigned numThreads) {
-	int inverse = 0;
-	ColorInt pixelColor;
-	#pragma omp parallel for num_threads(numThreads)
-	for (unsigned row = 0; row < myHeight; row++) {
-		if (! (myCanvas1.getIsOpen() && myCanvas2.getIsOpen()) ) {
-			row = myHeight; //Exit out
-			continue;
-		}
-		Timer t(0.00001);
-		for (unsigned col = 0; col < myWidth; col++) {
-			pixelColor = myCanvas1.getPixel(row, col);
-			inverse = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
-//			myCanvas2.drawPoint(col,row, pixelColor );
-			myCanvas2.drawPixel(row, col, ColorInt(inverse,inverse,inverse) );
-			t.sleep();
-		}
-	}
+  int inverse = 0;
+  ColorInt pixelColor;
+  #pragma omp parallel for num_threads(numThreads)
+  for (int row = 0; row < myHeight; row++) {
+    if (! (myCanvas1.getIsOpen() && myCanvas2.getIsOpen()) ) {
+      ; //Exit out
+    } else {
+    Timer t(0.00001);
+      for (unsigned col = 0; col < myWidth; col++) {
+        pixelColor = myCanvas1.getPixel(row, col);
+        inverse = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+  //      myCanvas2.drawPoint(col,row, pixelColor );
+        myCanvas2.drawPixel(row, col, ColorInt(inverse,inverse,inverse) );
+        t.sleep();
+      }
+    }
+  }
 }
 
 /* helper method to keep Canvases up until the user
@@ -108,8 +115,8 @@ void ImageInverter::invertImage(unsigned numThreads) {
  */
 inline
 void ImageInverter::stop() {
-	myCanvas1.close();
-	myCanvas2.close();
+  myCanvas1.close();
+  myCanvas2.close();
 }
 
 
@@ -122,9 +129,9 @@ void ImageInverter::stop() {
 
 inline
 ImageInverter::~ImageInverter() {
-//	delete myCanvas1;
-//	delete myCanvas2;
-	cout << "\nImageInverter terminated normally.\n" << flush;
+//  delete myCanvas1;
+//  delete myCanvas2;
+  cout << "\nImageInverter terminated normally.\n" << flush;
 }
 
 
