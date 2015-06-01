@@ -40,10 +40,11 @@ void newtonPendulumFunction(Canvas& can) {
   //stop value for line: centerX + 100 (subtract 50 twice)
   //stop value for circle: same as above
   while(rightMoving) {
+  can.clear();
   can.drawLine(centerX + 100, 0, centerX + maxStop, centerY - 22);
   can.drawCircle(centerX + maxStop, centerY, RADIUS, 32, BLACK, false);
   maxStop -= 49 + can.getReps();
-  if(maxStop <= 100) rightMoving = false;
+  if(maxStop <= 100) rightMoving = false; leftMoving = true;
   }
   //left needs to be decremented first, then incremented once it gets far enough off of the screen
   //furthest point for left: centerX - 200
