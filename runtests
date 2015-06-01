@@ -32,7 +32,7 @@ run bin/testLangton 640 480             #Width, Height
 run bin/testLangtonColony 640 480       #Width, Height
 run bin/testLangtonRainbow 640 480      #Width, Height
 run bin/testLineChain 400 400 8         #Width, Height, Threads
-run bin/testLineFan 8                   #Threads
+run bin/testLineFan                   
 run bin/testMandelbrot 8                #Threads
 run bin/testMouse
 run bin/testNova 8                      #Threads

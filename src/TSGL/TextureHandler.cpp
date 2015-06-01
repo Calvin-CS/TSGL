@@ -7,7 +7,7 @@
     #include "stb/stb_image_write.h"
     #define STB_IMAGE_IMPLEMENTATION
     #include "stb/stb_image.h"
-    #define STB_DEFINE                                                     
+    #define STB_DEFINE
     #include "stb/stb.h"
   #endif
 #endif
@@ -88,8 +88,8 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
 #else
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //new, no font is set, load up a default one
-    fprintf(stderr, "No Font set! Now loading from assets/freefont/FreeSerif.ttf ....\n");    //NEW
-    loadFont("assets/freefont/FreeSerif.ttf");    //NEW
+      fprintf(stderr, "No Font set! Now loading from assets/freefont/FreeSerif.ttf ....\n");    //NEW
+      loadFont("assets/freefont/FreeSerif.ttf");    //NEW
     }
     FT_GlyphSlot glyph = fontFace->glyph;
     FT_UInt current_glyph_index, previous_glyph_index = 0;
@@ -171,7 +171,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
             return false;
         }
     }
-	
+
     if (loadedFonts.find(filename) == loadedFonts.end()) {  // Load the image if we haven't already
         FT_Face tmp_face;
         int error = FT_New_Face(fontLibrary, filename.c_str(), 0, &tmp_face);
@@ -741,4 +741,3 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
     return true;
 #endif
 }
-

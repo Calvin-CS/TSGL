@@ -68,14 +68,7 @@ void lineFanFunction(Canvas& can) {
 
 //Takes in a command line argument for the number of lines to draw
 //on the Canvas
-int main(int argc, char* argv[]) {
-    int holder = atoi(argv[1]);   //Specify the number of lines
-    int numberOfLines = 0;
-    if(holder == 0) {   //Can't be 0 (Bus error (core dumped) error if so)
-    	numberOfLines = 500;  //Set it to default, 500
-    } else {
-    	numberOfLines = holder;   //Use the number of lines if valid
-    }
+int main() {
     Canvas c3(FRAME);
     c3.setBackgroundColor(GREY);
     c3.start();
