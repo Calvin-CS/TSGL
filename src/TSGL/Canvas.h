@@ -132,7 +132,7 @@ public:
      *      \param b The size of the Canvas's internal vertex buffer.
      * \return A new 800x600 Canvas in the middle of the screen with no title.
      */
-    Canvas(unsigned int b, double timerLength = 0.0);
+    Canvas(double timerLength = 0.0);
 
     /*!
      * \brief Explicitly constructs a new Canvas.
@@ -145,7 +145,7 @@ public:
      *      \param title The title of the window.
      * \return A new Canvas with the specified positional data and title.
      */
-    Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title, double timerLength = 0.0);
+    Canvas(int xx, int yy, int w, int h, std::string title, double timerLength = 0.0);
 
     /*!
      * \brief Destructor for the Canvas class.

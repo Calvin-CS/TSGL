@@ -69,7 +69,7 @@ void alphaRectangleFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c14(0, 0, WINDOW_W, WINDOW_H, 512, "", FRAME / 10);
+    Canvas c14(0, 0, WINDOW_W, WINDOW_H, "", FRAME / 10);
     c14.setBackgroundColor(BLACK);
     c14.start();
     alphaRectangleFunction(c14);

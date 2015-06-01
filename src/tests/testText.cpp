@@ -67,7 +67,7 @@ void textFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c23(10);
+    Canvas c23;
     c23.setBackgroundColor(GREY);
     c23.start();
     textFunction(c23);

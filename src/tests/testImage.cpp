@@ -61,7 +61,7 @@ void imageFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c21(0,0,1200,600,100, "");
+    Canvas c21(0,0,1200,600,"");
     c21.setBackgroundColor(GREY);
     c21.start();
     imageFunction(c21);

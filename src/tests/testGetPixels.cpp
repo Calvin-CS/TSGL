@@ -98,7 +98,7 @@ void getPixelsFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c28(0, 0, 800, 600, 500000, "", .01);
+    Canvas c28(0, 0, 800, 600, "", .01);
     c28.setBackgroundColor(GREY);
     c28.start();
     getPixelsFunction(c28);

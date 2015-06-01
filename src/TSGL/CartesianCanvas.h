@@ -34,7 +34,7 @@ public:
      * \return A new 800x600 CartesianCanvas, unscaled (stretching from -400 to +400 on the x axis and
      *  -300 to +300 on the y axis) in the middle of the screen with no title.
      */
-    CartesianCanvas(unsigned int b, double timerLength = 0.0);
+    CartesianCanvas(double timerLength = 0.0);
 
     /*!
      * \brief Explicitly constructs a new CartesianCanvas.
@@ -52,7 +52,7 @@ public:
      * \return a new CartesianCanvas with the specified positional/scaling data, buffer size, and title
      */
     CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax,
-                    unsigned int b, std::string, double timerLength = 0.0);
+                    std::string, double timerLength = 0.0);
 
     /*!
      * \brief Draw axes.

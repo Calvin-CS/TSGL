@@ -72,7 +72,7 @@ void highData(Canvas& can) {
 }
 
 int main() {
-    Canvas c22(0, 0, 1200, 900, 1201 * 900, "", FRAME);
+    Canvas c22(0, 0, 1200, 900, "", FRAME);
     c22.setBackgroundColor(GREY);
     c22.start();
     highData(c22);

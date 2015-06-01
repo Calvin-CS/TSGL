@@ -58,7 +58,7 @@ void imageCartFunction(Cart& can) {
 }
 
 int main() {
-    Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, 10, "");
+    Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, "");
     c26.setBackgroundColor(GREY);
     c26.start();
     imageCartFunction(c26);

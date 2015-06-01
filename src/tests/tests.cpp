@@ -2027,8 +2027,8 @@ void runOtherHalfoftheFunctions() {
 //   Canvas c33(0, 0, 800, 600, 5000, "", FRAME);
 //   test(c33,mouseFunction,false,WHITE);
 //
-    Canvas can1(0, 0, 1024, 768, 500000, "");
-    Canvas can2(0, 0, 1024, 768, 500000, "");
+    Canvas can1(0, 0, 1024, 768, "");
+    Canvas can2(0, 0, 1024, 768, "");
     can2.setBackgroundColor(GREY);
     can1.start();
     can2.start();
@@ -2093,7 +2093,7 @@ int main() {
 //    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
 //    threadA.join();
 //    threadB.join();
-    Canvas c34(0, 0, 1200, 900, 50000, "");
+    Canvas c34(0, 0, 1200, 900, "");
 //    test(c34,screenShotFunction,true);
     glfwTerminate();  // Release GLFW
 }

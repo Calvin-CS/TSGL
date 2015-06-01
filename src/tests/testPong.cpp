@@ -45,7 +45,7 @@ void pongFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c25(0,0,1600,600,1000, "", FRAME);
+    Canvas c25(0,0,1600,600,"", FRAME);
     c25.setBackgroundColor(BLACK);
     c25.start();
     pongFunction(c25);

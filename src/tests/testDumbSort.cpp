@@ -140,7 +140,7 @@ int main(int argc, char* argv[]) {
     	width = holder1; //Else, use the passed width and height
     	height = holder2;
     }
-    Canvas c9(0, 0, width, height, 1000, "", FRAME);
+    Canvas c9(0, 0, width, height, "", FRAME);
     c9.setBackgroundColor(GREY);
     c9.start();
     dumbSortFunction(c9);   //Pass it as an argument

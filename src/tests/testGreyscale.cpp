@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
 		width = holder1;  //Else, they are and so use them
 		height = holder2;
 	}
-	Canvas c31(0, 0, width, height, 500000, "", FRAME * 2);
+	Canvas c31(0, 0, width, height, "", FRAME * 2);
 	int numberOfThreads = atoi(argv[3]);   //Number of threads
 	c31.setBackgroundColor(GREY);
 	c31.start();

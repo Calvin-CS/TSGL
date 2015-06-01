@@ -1,13 +1,13 @@
 #include "CartesianCanvas.h"
 
-CartesianCanvas::CartesianCanvas(unsigned int b, double timerLength)
-    : Canvas(b, timerLength) {
+CartesianCanvas::CartesianCanvas(double timerLength)
+    : Canvas(timerLength) {
     recomputeDimensions(-400, -300, 400, 300);
 }
 
 CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax,
-                                 Decimal yMax, unsigned int b,  std::string t, double timerLength)
-    : Canvas(xx, yy, w, h, b, t, timerLength) {
+                                 Decimal yMax, std::string t, double timerLength)
+    : Canvas(xx, yy, w, h, t, timerLength) {
     recomputeDimensions(xMin, yMin, xMax, yMax);
 }
 

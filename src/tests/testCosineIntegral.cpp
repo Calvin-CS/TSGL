@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
 		width = holder1;  //Else, they are and so use them
 		height = holder2;
 	}
-	Cart c12(0, 0, width, height, -5,-1.5,5,1.5, 16000, "", FRAME / 2);
+	Cart c12(0, 0, width, height, -5,-1.5,5,1.5, "", FRAME / 2);
     int numberOfThreads = atoi(argv[3]);   //Number of threads to use
     c12.setBackgroundColor(WHITE);
 	c12.start();

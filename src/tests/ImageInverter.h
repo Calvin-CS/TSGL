@@ -49,8 +49,8 @@ private:
 inline
 ImageInverter::ImageInverter(const string& fileName,
 		                      unsigned width, unsigned height)
- : myCanvas1(0, 0, width, height, 5000000, fileName),
-   myCanvas2(0, 0, width, height, 5000000, fileName),
+ : myCanvas1(0, 0, width, height, fileName),
+   myCanvas2(0, 0, width, height, fileName),
    myWidth(width), myHeight(height), myFileName(fileName)
 {
 	myCanvas1.start();

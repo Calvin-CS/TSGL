@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
     } else {
     	numberOfLines = holder;   //Use the number of lines if valid
     }
-    Canvas c3(numberOfLines, FRAME);
+    Canvas c3(FRAME);
     c3.setBackgroundColor(GREY);
     c3.start();
     lineFanFunction(c3);

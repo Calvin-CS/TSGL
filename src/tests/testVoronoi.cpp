@@ -54,7 +54,7 @@ void voronoiFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 960;
   int h = (argc > 2) ? atoi(argv[2]) : w;
-	Canvas c18(0, 0, w, h, BUFFER, "");
+	Canvas c18(0, 0, w, h, "");
 	c18.setBackgroundColor(WHITE);
 	c18.start();
 	voronoiFunction(c18);

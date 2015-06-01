@@ -156,7 +156,7 @@ void forestFireFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c20(0, 0, WINDOW_W, WINDOW_H, BUFFER*2, "", FRAME);
+    Canvas c20(0, 0, WINDOW_W, WINDOW_H, "", FRAME);
     c20.setBackgroundColor(GREY);
     c20.start();
     forestFireFunction(c20);

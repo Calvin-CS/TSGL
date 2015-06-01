@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
 		width = holder1;  //Else, set the width and height to the passed command-line arguments
 		height = holder2;
 	}
-	Canvas c13(0, 0, width, height, 1024, "", FRAME);
+	Canvas c13(0, 0, width, height, "", FRAME);
 	c13.setBackgroundColor(BLACK);
 	c13.start();
 	gradientWheelFunction(c13);

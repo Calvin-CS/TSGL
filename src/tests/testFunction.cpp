@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
     	width = holder1;  //Else, use the passed width and height
     	height = holder2;
     }
-    Cart c11(0, 0, width, height, -5,-5,5,50, 100, "");
+    Cart c11(0, 0, width, height, -5,-5,5,50, "");
     c11.setBackgroundColor(WHITE);
     c11.start();
     functionFunction(c11);

@@ -58,7 +58,7 @@ void textCartFunction(Cart& can) {
 }
 
 int main() {
-    Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, 10, "");
+    Cart c27(0, 0, WINDOW_W, WINDOW_H, 0, 0, 4, 3, "");
     c27.setBackgroundColor(GREY);
     c27.start();
     textCartFunction(c27);

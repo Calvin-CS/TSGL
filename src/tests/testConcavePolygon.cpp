@@ -102,7 +102,7 @@ void concavePolygonFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c33(0, 0, 800, 600, 5000, "", FRAME);
+    Canvas c33(0, 0, 800, 600, "", FRAME);
     c33.setBackgroundColor(WHITE);
     c33.start();
     concavePolygonFunction(c33);

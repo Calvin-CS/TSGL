@@ -46,13 +46,13 @@ int Canvas::drawBuffer = GL_LEFT;
 unsigned Canvas::openCanvases = 0;
 
 //New (TODO: b now unused; formally replace later)
-Canvas::Canvas(unsigned int b, double timerLength) {
+Canvas::Canvas(double timerLength) {
     int w = 1200, h = 900;
     init(0, 0, w, h, w*h*2, "", timerLength);
 }
 
 //New
-Canvas::Canvas(int xx, int yy, int w, int h, unsigned int b, std::string title, double timerLength) {
+Canvas::Canvas(int xx, int yy, int w, int h, std::string title, double timerLength) {
     init(xx, yy, w, h, w*h*2, title, timerLength);
 }
 

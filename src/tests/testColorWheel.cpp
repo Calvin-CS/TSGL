@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) {
     	width = holder1;  //Else, they are and so use them
     	height = holder2;
     }
-    Canvas c10(0, 0, width, height, 512, "", FRAME);
+    Canvas c10(0, 0, width, height, "", FRAME);
     c10.setBackgroundColor(GREY);
     c10.start();
     colorWheelFunction(c10);  //Pass it as an argument

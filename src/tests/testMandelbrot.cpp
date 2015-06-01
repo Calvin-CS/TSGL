@@ -54,7 +54,7 @@ void mandelbrotFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
 
 //Takes command line arguments for the number of threads
 int main(int argc, char* argv[]) {
-    Cart c5(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, BUFFER, "", FRAME / 2);
+    Cart c5(0, 0, WINDOW_W, WINDOW_H, -2, -1.125, 1, 1.125, "", FRAME / 2);
     unsigned int numberOfThreads = atoi(argv[1]);    //Get the number of threads to use
     c5.setBackgroundColor(GREY);
     c5.start();

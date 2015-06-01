@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
     	width = holder1;   //Else, use them as the window width and height
     	height = holder2;
     }
-    Canvas c(0, 0, width, height, BUFFER, "");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
+    Canvas c(0, 0, width, height, "");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
     int numberOfThreads = atoi(argv[3]);   //Convert the char pointer to an int ( see http://www.cplusplus.com/forum/beginner/58493/ )
     c.setBackgroundColor(GREY);
     c.start();

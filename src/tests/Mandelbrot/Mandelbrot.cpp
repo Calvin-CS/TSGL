@@ -45,7 +45,7 @@ void Mandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
 {
 	unsigned int holder = omp_get_num_threads();  //Temp variable
 	unsigned int nthreads = 1;   //Actual number of threads
-	if (numberOfThreads > holder || numberOfThreads == 0) {  //Check if the passed number of threads is valid
+	if (numberOfThreads > holder || numberOfThreads == 0 || numberOfThreads < myThreads) {  //Check if the passed number of threads is valid
 		nthreads = holder;  //If not, use the number of threads that we can use with OMP
 	} else {
 		nthreads = numberOfThreads;  //Else, use that many threads

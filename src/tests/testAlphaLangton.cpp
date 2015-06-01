@@ -65,7 +65,7 @@ void alphaLangtonFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 960;
     int h = (argc > 2) ? atoi(argv[2]) : w;
-    Canvas c15(0, 0, w, h, 30000, "", FRAME);
+    Canvas c15(0, 0, w, h, "", FRAME);
     c15.setBackgroundColor(BLACK);
     c15.start();
     alphaLangtonFunction(c15);

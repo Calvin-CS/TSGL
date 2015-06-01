@@ -129,7 +129,7 @@ void screenshotLangtonFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c30(0, 0, 960, 960, 30000, "", FRAME);
+    Canvas c30(0, 0, 960, 960, "", FRAME);
     c30.setBackgroundColor(BLACK);
     c30.start();
     screenshotLangtonFunction(c30);

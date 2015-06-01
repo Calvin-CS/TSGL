@@ -22,7 +22,7 @@ void clockFunction(Canvas& can) {
 }
 
 int main() {
-  Canvas c1(0, 0, 400, 400, BUFFER, "");
+  Canvas c1(0, 0, 400, 400, "");
   c1.setBackgroundColor(WHITE);
   c1.start();
   clockFunction(c1);

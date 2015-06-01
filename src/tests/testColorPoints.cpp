@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
 		width = holder1;  //Else they are valid, use them
 		height = holder2;
 	}
-	Canvas c1(0, 0, width, height, BUFFER, "");
+	Canvas c1(0, 0, width, height, "");
 	int numberOfThreads = atoi(argv[3]);    //Convert the char pointer to an int, http://www.cplusplus.com/forum/beginner/58493/
 	c1.setBackgroundColor(GREY);
 	c1.start();

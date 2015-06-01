@@ -62,7 +62,7 @@ void textFunctionTwo(Canvas& can) {
 }
 
 int main() {
-    Canvas c24(10);
+    Canvas c24;
     c24.setBackgroundColor(GREY);
     c24.start();
     textFunctionTwo(c24);

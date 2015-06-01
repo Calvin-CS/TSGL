@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
     	width = holder1;   //Else, set them to the Canvas width and height
         height = holder2;
     }
-    Canvas c2(0, 0, width, height, BUFFER, "", FRAME);
+    Canvas c2(0, 0, width, height, "", FRAME);
     c2.setBackgroundColor(BLACK);
     c2.start();
     lineChainFunction(c2);

@@ -41,7 +41,7 @@ void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
 	{
 		unsigned int holder = omp_get_num_threads();  //Temp variable
 		unsigned int nthreads = 1;   //Actual number of threads
-		if (numberOfThreads > holder || numberOfThreads == 0 || numberOfThreads > 32) {  //Check if the passed number of threads is valid
+		if (numberOfThreads > holder || numberOfThreads == 0 || numberOfThreads > 32 || numberOfThreads < 32) {  //Check if the passed number of threads is valid
 			nthreads = 32;  //If not, use the number of threads that we can use with OMP
 		} else {
 			nthreads = numberOfThreads;  //Else, use that many threads
@@ -84,7 +84,7 @@ void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
 }
 
 int main(int argc, char* argv[]) {
-	Cart c17(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, BUFFER, "");
+	Cart c17(0, 0, WINDOW_W, WINDOW_H, -1, -0.5, 0, 0.5, "");
 	unsigned int numberOfThreads = atoi(argv[1]);  //Number of threads
 	c17.setBackgroundColor(GREY);
 	c17.start();

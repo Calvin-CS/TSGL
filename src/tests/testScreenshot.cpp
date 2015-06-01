@@ -75,7 +75,7 @@ void screenShotFunction(Canvas& can) {
 }
 
 int main() {
-    Cart c29(0, 0, 800, 600, 0, 0, 800, 600, 50000, "", FRAME);
+    Cart c29(0, 0, 800, 600, 0, 0, 800, 600,"", FRAME);
     c29.setBackgroundColor(GREY);
     c29.start();
     screenShotFunction(c29);
