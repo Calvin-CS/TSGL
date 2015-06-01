@@ -10,7 +10,6 @@
 
 #include <tsgl.h>
 #include <omp.h>
-#include "ConwayAnt.h"
 
 const int NUM_COLORS = 256, MAX_COLOR = 255;
 
@@ -18,10 +17,18 @@ class ConwayAnt;  //Forward Declaration
 
 class LifeFarm {
 private:
+    void initGun();
+
     unsigned framecount;
-    bool **filledA, **filledB;
+    bool **alive;
+    int **neighbors;
+    int *livelist;
+    int liststart, listend;
     bool drawdead;
-    bool flipped;
+    ColorFloat bgcolor;
+
+    int *currentstate, *nextstate;
+    int *currentstart, *nextstart;
 public:
     int width, height, size;
     Canvas* can;
@@ -29,8 +36,10 @@ public:
     ~LifeFarm();
     void addAnt(int x, int y);
     void moveAnts();
-    bool lives(int row, int col);
+    void moveAntsOld();
+    void moveAntsNew();
     void setDrawdead(bool b);
+    void life(int *current, int *fresh);
 };
 
 #endif /* ANTFARM_H_ */
