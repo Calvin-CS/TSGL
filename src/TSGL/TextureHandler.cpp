@@ -15,10 +15,8 @@
 #define GL_GLEXT_PROTOTYPES
 
 TextureHandler::TextureHandler() {
-#ifndef _WIN32
     fontLibrary = nullptr;
     fontFace = nullptr;
-#endif
 }
 
 TextureHandler::~TextureHandler() {
@@ -26,12 +24,10 @@ TextureHandler::~TextureHandler() {
         glDeleteTextures(1, &(it->second));
     }
 
-#ifndef _WIN32
     for (FontMap::iterator it = loadedFonts.begin(); it != loadedFonts.end(); ++it) {
         FT_Done_Face(it->second);
     }
     FT_Done_FreeType(fontLibrary);
-#endif
 }
 
 #ifndef _WIN32
@@ -83,9 +79,6 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 }
 
 bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
-#ifdef _WIN32
-  return false;
-#else
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //new, no font is set, load up a default one
       fprintf(stderr, "No Font set! Now loading from assets/freefont/FreeSerif.ttf ....\n");    //NEW
@@ -158,13 +151,9 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);                                         // Draw the character
     }
     return true;
-#endif
 }
 
 bool TextureHandler::loadFont(const std::string& filename) {
-#ifdef _WIN32
-	return false;
-#else
     if (fontLibrary == nullptr) {
         if (FT_Init_FreeType(&fontLibrary)) {
             fprintf(stderr, "An error occurred during freetype font library initialization\n");
@@ -192,7 +181,6 @@ bool TextureHandler::loadFont(const std::string& filename) {
     }
 
     return true;
-#endif
 }
 
 GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height,

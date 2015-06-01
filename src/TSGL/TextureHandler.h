@@ -18,6 +18,8 @@
 
 #ifdef _WIN32
   #include <GL/glut.h>
+  #include <freetype/freetype.h>
+  #include <freetype/ftglyph.h>
 #else
   #include <freetype.h>
   #include <ftglyph.h>
@@ -35,15 +37,14 @@ typedef GLuint GLtexture;
 class TextureHandler {
  private:
     typedef std::unordered_map<std::string, GLtexture> TextureMap;
+    typedef std::unordered_map<std::string, FT_Face> FontMap;
 
     TextureMap loadedTextures;
-
-#ifndef _WIN32
-    typedef std::unordered_map<std::string, FT_Face> FontMap;
     FontMap loadedFonts;
     FT_Library fontLibrary;
     FT_Face fontFace;
 
+#ifndef _WIN32
     static void my_error_exit(j_common_ptr cinfo);
 #endif
 

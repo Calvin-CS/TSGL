@@ -582,7 +582,10 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     toClose = false;
     framecounter = 0;
 
-    unsigned buffersize = 3 * (winWidth+(winWidth%4)) * winHeight;
+    int padwidth = winWidth % 4;
+    if (padwidth > 0)
+       padwidth = 4-padwidth;
+    unsigned buffersize = 3 * (winWidth+padwidth+1) * winHeight;
     screenBuffer = new uint8_t[buffersize];
     for (unsigned i = 0; i < buffersize; ++i)
       screenBuffer[i] = 0;
