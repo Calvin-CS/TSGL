@@ -31,6 +31,7 @@ public:
      * \brief Constructs a new CartesianCanvas.
      * \details This is the default constructor for the CartesianCanvas class
      *      \param b The size of the Canvas's internal vertex buffer.
+     *
      * \return A new 800x600 CartesianCanvas, unscaled (stretching from -400 to +400 on the x axis and
      *  -300 to +300 on the y axis) in the middle of the screen with no title.
      */
