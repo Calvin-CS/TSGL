@@ -49,7 +49,8 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testHighData bin/testText bin/testTextTwo bin/testPong \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
-	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway
+	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway \
+	bin/testBallroom
 
 all: dif tsgl tests docs tutorial
 
