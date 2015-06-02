@@ -181,23 +181,15 @@ void Canvas::draw() {
 
 void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, bool filled) {
     float delta = 2.0f / res * 3.1415926585f;
-    float oldX = 0, oldY = 0, newX = 0, newY = 0;
     if (filled) {
-        ColoredPolygon *s = new ColoredPolygon(res*3);
-        for (int i = 0; i <= res; i++ ) {
-            oldX = newX; oldY = newY;
-            newX = x+radius*cos(i*delta);
-            newY = y+radius*sin(i*delta);
-            if (i > 0) {
-                s->addVertex(x,y,color);
-                s->addVertex(oldX, oldY,color);
-                s->addVertex(newX, newY,color);
-            }
-        }
+        ConvexPolygon *s = new ConvexPolygon(res);
+        for (int i = 0; i < res; ++i)
+          s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),color);
         drawShape(s);
     } else {
+        float oldX = 0, oldY = 0, newX = 0, newY = 0;
         Polyline *p = new Polyline(res+1);
-        for (int i = 0; i <= res; i++ ) {
+        for (int i = 0; i <= res; ++i) {
             oldX = newX; oldY = newY;
             newX = x+radius*cos(i*delta);
             newY = y+radius*sin(i*delta);
