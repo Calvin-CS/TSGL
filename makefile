@@ -50,12 +50,7 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testHighData bin/testText bin/testTextTwo bin/testPong \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
-<<<<<<< HEAD
-	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway bin/testProjectiles
-=======
-	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway \
-	bin/testBallroom
->>>>>>> af86e7b4b3c5c994305cf1024a620c080f0197ab
+	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway bin/testProjectiles bin/testBallroom \
 
 all: dif tsgl tests docs tutorial
 
