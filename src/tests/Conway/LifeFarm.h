@@ -11,8 +11,6 @@
 #include <tsgl.h>
 #include <omp.h>
 
-class ConwayAnt;  //Forward Declaration
-
 class LifeFarm {
 private:
     void initGun();

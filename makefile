@@ -39,11 +39,6 @@ LFLAGS=-LTSGL/ -ltsgl \
 
 DEPFLAGS=-MMD -MP
 
-BIN_RECIPE= \
-	@echo 'Building $(patsubst bin/%,%,$@)' \
-	$(CC) $^ -o $@ $(LFLAGS) \
-	@touch build/build
-
 BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testLineChain bin/testLineFan bin/testSpectrum bin/testMandelbrot \
 	bin/testLangton bin/testLangtonColony bin/testLangtonRainbow \
@@ -55,9 +50,6 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
 	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway
-
-LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
-
 
 all: dif tsgl tests docs tutorial
 
@@ -87,62 +79,26 @@ lib/libtsgl.a: ${OBJS}
 	$(AR) -r $@ $?
 	@touch build/build
 
-bin/testTSGL: build/tests.o lib/libtsgl.a
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
+#List dependencies for test binaries
 
-LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o lib/libtsgl.a
+bin/testTSGL: build/tests.o
 
-bin/testConway: build/tests/testConway.o build/tests/Conway/ConwayAnt.o build/tests/Conway/LifeFarm.o
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
+bin/testConway: build/tests/Conway/LifeFarm.o
 
-bin/testAlphaLangton: build/tests/testAlphaLangton.o ${LANGTON_DEPS}
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
+LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
+bin/testAlphaLangton: ${LANGTON_DEPS}
+bin/testLangtonColony: ${LANGTON_DEPS}
+bin/testLangtonRainbow: ${LANGTON_DEPS}
+bin/testScreenshotLangton: ${LANGTON_DEPS}
+bin/testLangton: ${LANGTON_DEPS}
 
-bin/testLangtonColony: build/tests/testLangtonColony.o ${LANGTON_DEPS}
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
+bin/testVoronoi: build/tests/Voronoi.o
+bin/testShadedVoronoi: build/tests/ShadedVoronoi.o
 
-bin/testLangtonRainbow: build/tests/testLangtonRainbow.o ${LANGTON_DEPS}
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
+bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
+bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o
 
-bin/testScreenshotLangton: build/tests/testScreenshotLangton.o ${LANGTON_DEPS}
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
-
-bin/testLangton: build/tests/testLangton.o ${LANGTON_DEPS}
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
-
-bin/testVoronoi: build/tests/testVoronoi.o build/tests/Voronoi.o lib/libtsgl.a
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
-
-bin/testShadedVoronoi: build/tests/testShadedVoronoi.o build/tests/ShadedVoronoi.o lib/libtsgl.a
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
-
-bin/testMandelbrot: build/tests/testMandelbrot.o build/tests/Mandelbrot/Mandelbrot.o lib/libtsgl.a
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
-
-bin/testGradientMandelbrot: build/tests/testGradientMandelbrot.o build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o lib/libtsgl.a
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
+#Actual compilation recipe for test binaries (appended to earlier dependencies)
 
 bin/test%: build/tests/test%.o lib/libtsgl.a
 	@echo 'Building $(patsubst bin/%,%,$@)'
