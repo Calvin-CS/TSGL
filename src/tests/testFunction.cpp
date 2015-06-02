@@ -19,7 +19,7 @@ typedef CartesianCanvas Cart;
  * - Declare a new function that computes some bizarre polynomial.
  * - Initialize the new function, and draw it using the currently rendered area of the CartesianCanvas.
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can, Reference to the CartesianCanvas being drawn to
  */
 void functionFunction(CartesianCanvas& can) {
     can.drawAxes(0, 0, 1, 5);

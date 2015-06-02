@@ -15,10 +15,12 @@ void clockFunction(Canvas& can) {
             RADIUS = WINDOW_W / 2 - 32;
   int centerX = WINDOW_W / 2;
   int centerY = WINDOW_H / 2;
+  while(can.getIsOpen()) {
+  can.sleep();
   can.drawCircle(centerX, centerY, RADIUS, 64, BLACK, false);
-  can.drawLine(centerX, centerY * 2, centerX, centerY / 2 - centerY);
-  can.drawLine(centerX / 2 - centerX, centerY, centerX * 2, centerY);
   can.drawLine(centerX + 20, centerY, centerX + 166, centerY - 32);
+  can.clear();
+  }
 }
 
 int main() {

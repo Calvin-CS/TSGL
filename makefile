@@ -22,6 +22,7 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
+	-I/tsgl/stb-master/ \
 	$$(pkg-config --cflags freetype2) \
   -std=c++0x -fopenmp
 
@@ -49,7 +50,7 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testHighData bin/testText bin/testTextTwo bin/testPong \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
-	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway
+	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway bin/testProjectiles
 
 all: dif tsgl tests docs tutorial
 
