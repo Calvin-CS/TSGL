@@ -98,13 +98,13 @@ class TextureHandler {
     bool loadFont(const std::string& filename);
 
     /*!
-     * \brief Load a picture.
-     * \details
+     * \brief Load an image.
+     * \details Loads a .png, .jpeg, or .bmp image from a file.
      *      \param filename The file name that contains the picture.
      *      \param width The width of the picture.
      *      \param height The height of the picture.
-     *      \param texture
-     * \return
+     *      \param texture The texture that contains the picture.
+     * \return The texture that was found from opening the file that contains the image.
      */
     GLtexture loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture);
 
