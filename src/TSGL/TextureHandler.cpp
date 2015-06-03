@@ -311,7 +311,7 @@ GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int 
 
 GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
                                              GLtexture &texture) const {
-#ifdef _WIN32
+//#ifdef _WIN32
     unsigned char *data;
     int w, h, n;
     printf("Loading %s\n", filename);
@@ -325,114 +325,114 @@ GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int 
     std::cout << w << "," << h << std::endl;
     createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
     free(data);
-#else
-    /* This struct contains the JPEG decompression parameters and pointers to
-     * working space (which is allocated as needed by the JPEG library).
-     */
-    struct jpeg_decompress_struct cinfo;
-    /* We use our private extension JPEG error handler.
-     * Note that this struct must live as long as the main JPEG parameter
-     * struct, to avoid dangling-pointer problems.
-     */
-    struct my_error_mgr jerr;
-
-    // We want to open the input file before doing anything else.
-    FILE* file = fopen(filename, "rb");
-
-    if (file == NULL) {
-        fprintf(stderr, "Can't open %s: no such file\n", filename);
-        return 0;
-    }
-
-    JSAMPARRAY buffer;        // Sample output row buffer
-    unsigned int row_stride;  // Physical row width in output buffer
-
-    /* Set up the normal JPEG error routines, then override error_exit. */
-    cinfo.err = jpeg_std_error(&jerr.pub);
-    jerr.pub.error_exit = my_error_exit;
-
-    /* Establish the setjmp return context for my_error_exit to use. */
-    if (setjmp(jerr.setjmp_buffer)) {
-        /* If we get here, the JPEG code has signaled an error.
-         * We need to clean up the JPEG object, close the input file, and return.
-         */
-        fprintf(stderr, "%s: internal error from jpeg\n", filename);
-        jpeg_destroy_decompress(&cinfo);
-        fclose(file);
-        return 0;
-    }
-
-    jpeg_create_decompress(&cinfo);
-    jpeg_stdio_src(&cinfo, file);
-    (void) jpeg_read_header(&cinfo, TRUE);
-    /* We passed TRUE to reject a tables-only JPEG file as an error.
-     * See libjpeg.doc for more info.
-     *
-     * We don't need to change any of the defaults set by
-     * jpeg_read_header(), so we do nothing here.
-     */
-
-    (void) jpeg_start_decompress(&cinfo);
-    /* We can ignore the return value since suspension is not possible
-     * with the stdio data source.
-     */
-
-    /* JPEGS are *APPARENTLY* padded to multiples of 4 bytes */
-    int extraBytes = cinfo.image_width % 4;
-    row_stride = cinfo.output_width * cinfo.output_components + extraBytes;
-    /* Make a one-row-high sample array */
-    buffer = (*cinfo.mem->alloc_sarray)((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
-
-    /* Here we use the library's state variable cinfo.output_scanline as the
-     * loop counter, so that we don't have to keep track ourselves.
-     */
-    unsigned int x = 0;
-    unsigned char* raw_image = NULL;
-    raw_image = (unsigned char*) malloc(row_stride * cinfo.output_height);
-    while (cinfo.output_scanline < cinfo.output_height) {
-        /* jpeg_read_scanlines expects an array of pointers to scanlines.
-         * Here the array is only one element long, but you could ask for
-         * more than one scanline at a time if that's more convenient.
-         */
-        (void) jpeg_read_scanlines(&cinfo, buffer, 1);
-        /* Assume put_scanline_someplace wants a pointer and sample count. */
-        for (unsigned int i = 0; i < row_stride; i++, x++) {
-            raw_image[x] = buffer[0][i];
-        }
-    }
-
-    (void) jpeg_finish_decompress(&cinfo);
-    /* We can ignore the return value since suspension is not possible
-     * with the stdio data source.
-     */
-
-    width = cinfo.output_width;
-    height = cinfo.output_height;
-    int components = cinfo.num_components;
-
-    if (components == 3)
-        components = GL_RGB;
-    else if (components == 4)
-        components = GL_RGBA;
-
-    createGLtextureFromBuffer(texture, raw_image, width, height, components);
-
-    jpeg_destroy_decompress(&cinfo);
-    fclose(file);
-
-    /* Check if any errors were created */
-    if (jerr.pub.num_warnings != 0) {
-        fprintf(stderr, "%s: unknown error from jpeg\n", filename);
-        return 0;
-    }
-#endif
+//#else
+//    /* This struct contains the JPEG decompression parameters and pointers to
+//     * working space (which is allocated as needed by the JPEG library).
+//     */
+//    struct jpeg_decompress_struct cinfo;
+//    /* We use our private extension JPEG error handler.
+//     * Note that this struct must live as long as the main JPEG parameter
+//     * struct, to avoid dangling-pointer problems.
+//     */
+//    struct my_error_mgr jerr;
+//
+//    // We want to open the input file before doing anything else.
+//    FILE* file = fopen(filename, "rb");
+//
+//    if (file == NULL) {
+//        fprintf(stderr, "Can't open %s: no such file\n", filename);
+//        return 0;
+//    }
+//
+//    JSAMPARRAY buffer;        // Sample output row buffer
+//    unsigned int row_stride;  // Physical row width in output buffer
+//
+//    /* Set up the normal JPEG error routines, then override error_exit. */
+//    cinfo.err = jpeg_std_error(&jerr.pub);
+//    jerr.pub.error_exit = my_error_exit;
+//
+//    /* Establish the setjmp return context for my_error_exit to use. */
+//    if (setjmp(jerr.setjmp_buffer)) {
+//        /* If we get here, the JPEG code has signaled an error.
+//         * We need to clean up the JPEG object, close the input file, and return.
+//         */
+//        fprintf(stderr, "%s: internal error from jpeg\n", filename);
+//        jpeg_destroy_decompress(&cinfo);
+//        fclose(file);
+//        return 0;
+//    }
+//
+//    jpeg_create_decompress(&cinfo);
+//    jpeg_stdio_src(&cinfo, file);
+//    (void) jpeg_read_header(&cinfo, TRUE);
+//    /* We passed TRUE to reject a tables-only JPEG file as an error.
+//     * See libjpeg.doc for more info.
+//     *
+//     * We don't need to change any of the defaults set by
+//     * jpeg_read_header(), so we do nothing here.
+//     */
+//
+//    (void) jpeg_start_decompress(&cinfo);
+//    /* We can ignore the return value since suspension is not possible
+//     * with the stdio data source.
+//     */
+//
+//    /* JPEGS are *APPARENTLY* padded to multiples of 4 bytes */
+//    int extraBytes = cinfo.image_width % 4;
+//    row_stride = cinfo.output_width * cinfo.output_components + extraBytes;
+//    /* Make a one-row-high sample array */
+//    buffer = (*cinfo.mem->alloc_sarray)((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
+//
+//    /* Here we use the library's state variable cinfo.output_scanline as the
+//     * loop counter, so that we don't have to keep track ourselves.
+//     */
+//    unsigned int x = 0;
+//    unsigned char* raw_image = NULL;
+//    raw_image = (unsigned char*) malloc(row_stride * cinfo.output_height);
+//    while (cinfo.output_scanline < cinfo.output_height) {
+//        /* jpeg_read_scanlines expects an array of pointers to scanlines.
+//         * Here the array is only one element long, but you could ask for
+//         * more than one scanline at a time if that's more convenient.
+//         */
+//        (void) jpeg_read_scanlines(&cinfo, buffer, 1);
+//        /* Assume put_scanline_someplace wants a pointer and sample count. */
+//        for (unsigned int i = 0; i < row_stride; i++, x++) {
+//            raw_image[x] = buffer[0][i];
+//        }
+//    }
+//
+//    (void) jpeg_finish_decompress(&cinfo);
+//    /* We can ignore the return value since suspension is not possible
+//     * with the stdio data source.
+//     */
+//
+//    width = cinfo.output_width;
+//    height = cinfo.output_height;
+//    int components = cinfo.num_components;
+//
+//    if (components == 3)
+//        components = GL_RGB;
+//    else if (components == 4)
+//        components = GL_RGBA;
+//
+//    createGLtextureFromBuffer(texture, raw_image, width, height, components);
+//
+//    jpeg_destroy_decompress(&cinfo);
+//    fclose(file);
+//
+//    /* Check if any errors were created */
+//    if (jerr.pub.num_warnings != 0) {
+//        fprintf(stderr, "%s: unknown error from jpeg\n", filename);
+//        return 0;
+//    }
+//#endif
 
     return texture;
 }
 
 GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
                                        GLtexture &texture) const {
-#ifdef _WIN32
+//#ifdef _WIN32
 	unsigned char *data;
 	int w, h, n;
 	printf("Loading %s\n", filename);
@@ -446,131 +446,131 @@ GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int 
   std::cout << w << "," << h << "," << n << std::endl;
   createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
   free(data);
-#else
-    png_byte header[8];
-    FILE* file = fopen(filename, "rb");
+//#else
+//    png_byte header[8];
+//    FILE* file = fopen(filename, "rb");
+//
+//    if (file == 0) {
+//        fprintf(stderr, "Can't open %s: no such file\n", filename);
+//        return 0;
+//    }
+//
+//    // read the header
+//    if (fread(header, 1, 8, file) != 8) {  // If not 8 bytes read : problem
+//        fprintf(stderr, "%s: not a  PNG file: header incorrect size\n", filename);
+//        fclose(file);
+//        return 0;
+//    }
+//
+//    if (png_sig_cmp(header, 0, 8)) {
+//        fprintf(stderr, "%s: not a PNG file: header incorrectly formated\n", filename);
+//        fclose(file);
+//        return 0;
+//    }
+//
+//    png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+//    if (!png_ptr) {
+//        fprintf(stderr, "%s: png_create_read_struct returned NULL\n", filename);
+//        fclose(file);
+//        return 0;
+//    }
+//
+//    // create png info struct
+//    png_infop info_ptr = png_create_info_struct(png_ptr);
+//    if (!info_ptr) {
+//        fprintf(stderr, "%s: png_create_info_struct returned NULL\n", filename);
+//        png_destroy_read_struct(&png_ptr, (png_infopp) NULL, (png_infopp) NULL);
+//        fclose(file);
+//        return 0;
+//    }
+//
+//    // create png info struct
+//    png_infop end_info = png_create_info_struct(png_ptr);
+//    if (!end_info) {
+//        fprintf(stderr, "%s: png_create_info_struct returned NULL\n", filename);
+//        png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp) NULL);
+//        fclose(file);
+//        return 0;
+//    }
+//
+//#ifdef PNG_SETJMP_SUPPORTED
+//    // the code in this if statement gets called if libpng encounters an error
+//    if (setjmp(png_jmpbuf(png_ptr))) {
+//        fprintf(stderr, "%s: internal error from libpng\n", filename);
+//        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+//        fclose(file);
+//        return 0;
+//    }
+//#endif
+//
+//    // init png reading
+//    png_init_io(png_ptr, file);
+//
+//    // let libpng know you already read the first 8 bytes
+//    png_set_sig_bytes(png_ptr, 8);
+//
+//    // read all the info up to the image data
+//    png_read_info(png_ptr, info_ptr);
+//
+//    // variables to pass to get info
+//    int bit_depth, color_type;
+//
+//    // get info about png
+//    png_uint_32 ww = width, hh = height;
+//    png_get_IHDR(png_ptr, info_ptr, &ww, &hh, &bit_depth, &color_type, NULL, NULL, NULL);
+//    width = ww;
+//    height = hh;
+//
+//    // Update the png info struct.
+//    png_read_update_info(png_ptr, info_ptr);
+//
+//    // Row size in bytes.
+//    long unsigned int rowbytes = png_get_rowbytes(png_ptr, info_ptr);
+//
+//    // glTexImage2d requires rows to be 4-byte aligned
+//    rowbytes += 3 - ((rowbytes - 1) % 4);
+//
+//    // Allocate the image_data as a big block, to be given to opengl
+//    png_byte * image_data;
+//    image_data = (png_byte*) malloc((unsigned) (rowbytes * height * sizeof(png_byte) + 15));
+//    if (image_data == NULL) {
+//        fprintf(stderr, "%s: could not allocate memory for PNG image data\n", filename);
+//        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+//        fclose(file);
+//        return 0;
+//    }
+//
+//    // row_pointers is for pointing to image_data for reading the png with libpng
+//    png_bytep * row_pointers = (png_bytep *) malloc((unsigned) (height * sizeof(png_bytep)));
+//    if (row_pointers == NULL) {
+//        fprintf(stderr, "%s: could not allocate memory for PNG row pointers\n", filename);
+//        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+//        free(image_data);
+//        fclose(file);
+//        return 0;
+//    }
+//
+//    // set the individual row_pointers to point at the correct offsets of image_data
+//    for (unsigned int i = 0; i < height; i++)
+//        row_pointers[i] = image_data + i * rowbytes;
+//
+//    // read the png into image_data through row_pointers
+//    png_read_image(png_ptr, row_pointers);
 
-    if (file == 0) {
-        fprintf(stderr, "Can't open %s: no such file\n", filename);
-        return 0;
-    }
-
-    // read the header
-    if (fread(header, 1, 8, file) != 8) {  // If not 8 bytes read : problem
-        fprintf(stderr, "%s: not a  PNG file: header incorrect size\n", filename);
-        fclose(file);
-        return 0;
-    }
-
-    if (png_sig_cmp(header, 0, 8)) {
-        fprintf(stderr, "%s: not a PNG file: header incorrectly formated\n", filename);
-        fclose(file);
-        return 0;
-    }
-
-    png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
-    if (!png_ptr) {
-        fprintf(stderr, "%s: png_create_read_struct returned NULL\n", filename);
-        fclose(file);
-        return 0;
-    }
-
-    // create png info struct
-    png_infop info_ptr = png_create_info_struct(png_ptr);
-    if (!info_ptr) {
-        fprintf(stderr, "%s: png_create_info_struct returned NULL\n", filename);
-        png_destroy_read_struct(&png_ptr, (png_infopp) NULL, (png_infopp) NULL);
-        fclose(file);
-        return 0;
-    }
-
-    // create png info struct
-    png_infop end_info = png_create_info_struct(png_ptr);
-    if (!end_info) {
-        fprintf(stderr, "%s: png_create_info_struct returned NULL\n", filename);
-        png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp) NULL);
-        fclose(file);
-        return 0;
-    }
-
-#ifdef PNG_SETJMP_SUPPORTED
-    // the code in this if statement gets called if libpng encounters an error
-    if (setjmp(png_jmpbuf(png_ptr))) {
-        fprintf(stderr, "%s: internal error from libpng\n", filename);
-        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        fclose(file);
-        return 0;
-    }
-#endif
-
-    // init png reading
-    png_init_io(png_ptr, file);
-
-    // let libpng know you already read the first 8 bytes
-    png_set_sig_bytes(png_ptr, 8);
-
-    // read all the info up to the image data
-    png_read_info(png_ptr, info_ptr);
-
-    // variables to pass to get info
-    int bit_depth, color_type;
-
-    // get info about png
-    png_uint_32 ww = width, hh = height;
-    png_get_IHDR(png_ptr, info_ptr, &ww, &hh, &bit_depth, &color_type, NULL, NULL, NULL);
-    width = ww;
-    height = hh;
-
-    // Update the png info struct.
-    png_read_update_info(png_ptr, info_ptr);
-
-    // Row size in bytes.
-    long unsigned int rowbytes = png_get_rowbytes(png_ptr, info_ptr);
-
-    // glTexImage2d requires rows to be 4-byte aligned
-    rowbytes += 3 - ((rowbytes - 1) % 4);
-
-    // Allocate the image_data as a big block, to be given to opengl
-    png_byte * image_data;
-    image_data = (png_byte*) malloc((unsigned) (rowbytes * height * sizeof(png_byte) + 15));
-    if (image_data == NULL) {
-        fprintf(stderr, "%s: could not allocate memory for PNG image data\n", filename);
-        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        fclose(file);
-        return 0;
-    }
-
-    // row_pointers is for pointing to image_data for reading the png with libpng
-    png_bytep * row_pointers = (png_bytep *) malloc((unsigned) (height * sizeof(png_bytep)));
-    if (row_pointers == NULL) {
-        fprintf(stderr, "%s: could not allocate memory for PNG row pointers\n", filename);
-        png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-        free(image_data);
-        fclose(file);
-        return 0;
-    }
-
-    // set the individual row_pointers to point at the correct offsets of image_data
-    for (unsigned int i = 0; i < height; i++)
-        row_pointers[i] = image_data + i * rowbytes;
-
-    // read the png into image_data through row_pointers
-    png_read_image(png_ptr, row_pointers);
-
-	int components = GL_RGB;
-    if (color_type == PNG_COLOR_TYPE_RGB)
-        components = GL_RGB;
-    else if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
-        components = GL_RGBA;
-
-    createGLtextureFromBuffer(texture, image_data, width, height, components);
-
-    // clean up
-    png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-    free(image_data);
-    free(row_pointers);
-    fclose(file);
-#endif
+//	int components = GL_RGB;
+//    if (color_type == PNG_COLOR_TYPE_RGB)
+//        components = GL_RGB;
+//    else if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
+//        components = GL_RGBA;
+//
+//    createGLtextureFromBuffer(texture, image_data, width, height, components);
+//
+//    // clean up
+//    png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+//    free(image_data);
+//    free(row_pointers);
+//    fclose(file);
+//#endif
     return texture;
 }
 
@@ -683,52 +683,65 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
 	std::cout << "Saving not supported on Windows" << std::endl;
 	return false;
 #else
-    png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
-    if (!png) {
-        fprintf(stderr, "%s: png_create_write_struct returned NULL\n", filename);
-        return false;
-    }
+//    png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
+//    if (!png) {
+//        fprintf(stderr, "%s: png_create_write_struct returned NULL\n", filename);
+//        return false;
+//    }
+//
+//    png_infop info = png_create_info_struct(png);
+//    if (!info) {
+//        fprintf(stderr, "%s: png_create_info_struct returned NULL\n", filename);
+//        png_destroy_write_struct(&png, &info);
+//        return false;
+//    }
+//
+//    FILE* file = fopen(filename, "wb");
+//
+  // Flip the image, since for some reason the library call
+	// flips the image upside down when it saves
+  for (unsigned int j = 0; j < h - (h / 2); j++) {
+      for (unsigned int i = 0; i <  3 * w; i++) {
+          int s1 =  3 * w * j + i;
+          int s2 =  3 * w * (h - 1 - j) + i;  // This needs to be height *MINUS ONE* minus j
+          char tmp = pixels[s1];
+          pixels[s1] = pixels[s2];
+          pixels[s2] = tmp;
+      }
+  }
+	  stbi_write_png(filename, w, h, 3, pixels, 0);
 
-    png_infop info = png_create_info_struct(png);
-    if (!info) {
-        fprintf(stderr, "%s: png_create_info_struct returned NULL\n", filename);
-        png_destroy_write_struct(&png, &info);
-        return false;
-    }
-
-    FILE* file = fopen(filename, "wb");
-
-    if (!file) {
-        fprintf(stderr, "Was unable to create file: %s\n", filename);
-        png_destroy_write_struct(&png, &info);
-        return false;
-    }
-
-    png_init_io(png, file);
-    png_set_IHDR(png, info, w, h, 8 /* depth */, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
-                 PNG_FILTER_TYPE_BASE);
-    png_colorp palette = (png_colorp) png_malloc(png, (unsigned) (PNG_MAX_PALETTE_LENGTH * sizeof(png_color)));
-    if (!palette) {
-        fprintf(stderr, "%s: was unable to create png color palette\n", filename);
-        fclose(file);
-        png_destroy_write_struct(&png, &info);
-        return false;
-    }
-    png_set_PLTE(png, info, palette, PNG_MAX_PALETTE_LENGTH);
-    png_write_info(png, info);
-    png_set_packing(png);
-
-    png_bytepp rows = (png_bytepp) png_malloc(png, (unsigned) (h * sizeof(png_bytep)));
-    for (unsigned int i = 0; i < h; ++i)
-        rows[i] = (png_bytep) (pixels + (h - i - 1) * w * 3);
-
-    png_write_image(png, rows);
-    png_write_end(png, info);
-    png_free(png, palette);
-    png_destroy_write_struct(&png, &info);
-
-    fclose(file);
-    delete[] rows;
+//    if (!file) {
+//        fprintf(stderr, "Was unable to create file: %s\n", filename);
+//        png_destroy_write_struct(&png, &info);
+//        return false;
+//    }
+//
+//    png_init_io(png, file);
+//    png_set_IHDR(png, info, w, h, 8 /* depth */, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE,
+//                 PNG_FILTER_TYPE_BASE);
+//    png_colorp palette = (png_colorp) png_malloc(png, (unsigned) (PNG_MAX_PALETTE_LENGTH * sizeof(png_color)));
+//    if (!palette) {
+//        fprintf(stderr, "%s: was unable to create png color palette\n", filename);
+//        fclose(file);
+//        png_destroy_write_struct(&png, &info);
+//        return false;
+//    }
+//    png_set_PLTE(png, info, palette, PNG_MAX_PALETTE_LENGTH);
+//    png_write_info(png, info);
+//    png_set_packing(png);
+//
+//    png_bytepp rows = (png_bytepp) png_malloc(png, (unsigned) (h * sizeof(png_bytep)));
+//    for (unsigned int i = 0; i < h; ++i)
+//        rows[i] = (png_bytep) (pixels + (h - i - 1) * w * 3);
+//
+//    png_write_image(png, rows);
+//    png_write_end(png, info);
+//    png_free(png, palette);
+//    png_destroy_write_struct(&png, &info);
+//
+//    fclose(file);
+//    delete[] rows;
     return true;
 #endif
 }

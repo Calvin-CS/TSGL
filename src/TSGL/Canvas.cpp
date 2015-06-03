@@ -606,7 +606,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 
 void Canvas::screenShot() {
     char filename[25];
-    sprintf(filename, "Image%06d.bmp", framecounter);  // TODO: Make this save somewhere not in root
+    sprintf(filename, "Image%06d.png", framecounter);  // TODO: Make this save somewhere not in root
 
     loader.saveImageToFile(filename, screenBuffer, winWidth, winHeight);
 }
