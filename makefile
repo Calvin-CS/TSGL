@@ -13,7 +13,7 @@ SOURCES := $(wildcard src/TSGL/*.cpp)
 OBJS := $(patsubst src/TSGL/%.cpp,build/TSGL/%.o,${SOURCES})
 
 CXXFLAGS=-O3 -g3 \
-	-Wall -Wextra -pedantic-errors \
+	-Wall -Wextra \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-Isrc/TSGL/ \
 	-I/usr/include/ \
@@ -22,9 +22,11 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
-	-I/tsgl/stb-master/ \
+	-I./ \
 	$$(pkg-config --cflags freetype2) \
-  -std=c++0x -fopenmp
+  -std=c++0x -fopenmp \
+  -Wno-narrowing -fpermissive
+  # -pedantic-errors
 
 LFLAGS=-LTSGL/ -ltsgl \
 	-Llib/ \

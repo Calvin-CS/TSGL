@@ -1,6 +1,6 @@
 #include "TextureHandler.h"
 
-#ifdef _WIN32
+//#ifdef _WIN32
   //The instructions for the stb library say to define it exactly once in a .c or .cpp file (NOT a .h file)
   #ifndef STB_DEFINE
     #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -10,7 +10,7 @@
     #define STB_DEFINE
     #include "stb/stb.h"
   #endif
-#endif
+//#endif
 
 #define GL_GLEXT_PROTOTYPES
 

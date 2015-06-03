@@ -10154,7 +10154,14 @@ static void stb__write(unsigned char v)
    ++stb__outbytes;
 }
 
-#define stb_out(v)    (stb__out ? *stb__out++ = (stb_uchar) (v) : stb__write((stb_uchar) (v)))
+static void stb_out(stb_uint v) {
+  if (stb__out) {
+    *stb__out++ = (stb_uchar) (v);
+  } else {
+    stb__write((stb_uchar) (v));
+  }
+}
+//#define stb_out(v)    (stb__out ? *stb__out++ = (stb_uchar) (v) : stb__write((stb_uchar) (v)))
 
 static void stb_out2(stb_uint v)
 {
