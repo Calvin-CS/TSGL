@@ -35,8 +35,10 @@ run bin/testLineChain 400 400 8             #Width, Height, Threads
 run bin/testLineFan
 run bin/testMandelbrot 1200 900 8           #Width, Height, Threads
 run bin/testMouse
+run bin/testNewtonPendulum
 run bin/testNova 1200 900 4                 #Width, Height, Threads
 run bin/testPong
+run bin/testProjectiles
 run bin/testScreenshot
 run bin/testScreenshotLangton
 run bin/testShadedVoronoi 640 480 8         #Width, Height, Threads
@@ -44,5 +46,5 @@ run bin/testSpectrum 8                      #Threads
 run bin/testText
 run bin/testTextCart
 run bin/testTextTwo
-run bin/testTSGL
+run bin/testTSGL                            #Not in TSGL folder anymore...?
 run bin/testVoronoi 640 480 8               #Width, Height, Threads
