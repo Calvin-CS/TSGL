@@ -745,3 +745,7 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
     return true;
 #endif
 }
+
+void TextureHandler::runTests() {
+
+}

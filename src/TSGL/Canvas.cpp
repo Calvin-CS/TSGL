@@ -51,7 +51,12 @@ Canvas::Canvas(double timerLength) {
 }
 
 Canvas::Canvas(int xx, int yy, int w, int h, std::string title, double timerLength) {
-    init(xx, yy, w, h, w*h*2, title, timerLength);
+    //NEW
+   // if(w < 0 || h < 0) {
+    //  throw new std::out_of_range("Cannot have a Canvas with negative width or height!");
+  //  } else {
+     init(xx, yy, w, h, w*h*2, title, timerLength);
+  //  }
 }
 
 Canvas::~Canvas() {
@@ -179,6 +184,8 @@ void Canvas::draw() {
     }
 }
 
+//Negative radii?
+//Invalid color?
 void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, bool filled) {
     float delta = 2.0f / res * 3.1415926585f;
     if (filled) {
@@ -201,6 +208,7 @@ void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, boo
     }
 }
 
+//Negative size?
 void Canvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
         ColoredPolygon* p = new ColoredPolygon(size);
@@ -218,6 +226,7 @@ void Canvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], 
     }
 }
 
+//Negative size?
 void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
         ConcavePolygon* p = new ConcavePolygon(size);
@@ -235,6 +244,7 @@ void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], 
     }
 }
 
+//Negative size?
 void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
         ConvexPolygon* p = new ConvexPolygon(size);
@@ -252,6 +262,7 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
     }
 }
 
+//Invalid width and/or height?
 void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
 //    glfwMakeContextCurrent(window);                       // We're drawing to window as soon as it's created
     Image* im = new Image(fname, loader, x, y, w, h, a);  // Creates the Image with the specified coordinates
@@ -753,4 +764,63 @@ void Canvas::textureShaders(bool on) {
 
     // Update the camera
     SetupCamera();
+}
+
+//-----------------Unit testing-------------------------------------------------------
+void Canvas::runTests() {
+  Canvas c1(0, 0, 500, 500, "", 0.1f);   //Doesn't work if we set it to FRAME for some odd reason
+  c1.setBackgroundColor(WHITE);
+  c1.start();
+  assert(testDraw(c1), "Unit test for draw failed");
+  assert(testLine(c1), "Unit test for line failed");
+  c1.close();
+}
+
+
+bool Canvas::testDraw(Canvas& can) {
+  ColorInt red(255, 0, 0);
+  //Test 1: Drawing a filled shape
+  can.drawCircle(250, 250, 50, 32, red, true);
+  can.sleep();   //Have to call it twice for some odd reason too.....
+  can.sleep();
+  int passed = 0;   //Passed tests
+  int failed = 0;   //Failed tests
+  //Test 1: Get middle pixel and see if its red.
+  if(can.getPixel(250, 250).R == red.R) {
+    passed++;
+  } else {
+    failed++;
+  }
+
+  //Test 2: Get leftmost and rightmost pixel of the circle
+  if(can.getPixel(200, 250).R == red.R && can.getPixel(300, 250).R == red.R) {
+    passed++;
+  } else {
+    failed++;
+  }
+
+  //Test 3: Outside pixels shouldn't equal inside pixels
+  if(can.getPixel(1, 1).G != can.getPixel(250, 250).G) {
+    passed++;
+  } else {
+    failed++;
+  }
+
+  //Determine if we passed all three tests or not
+  if(passed == 3 && failed == 0) {
+    can.clear();
+    std::cout << "Unit test for drawing filled shapes passed!" << std::endl;
+    return true;
+  } else {
+    can.clear();
+    return false;
+  }
+}
+
+bool Canvas::testPerimeter(Canvas& can) {
+
+}
+
+bool Canvas::testLine(Canvas & can) {
+  return true;
 }

@@ -59,3 +59,7 @@ void Image::draw() {
     glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
+
+void Image::runTests() {
+
+}

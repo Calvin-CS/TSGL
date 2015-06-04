@@ -163,3 +163,7 @@ void ConcavePolygon::draw() {
 //    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
 //    glDrawArrays(GL_LINE_STRIP, 0, length);
 }
+
+void ConcavePolygon::runTests() {
+
+}

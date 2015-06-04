@@ -7,6 +7,7 @@
 #ifndef CONVEXPOLYGON_H_
 #define CONVEXPOLYGON_H_
 
+#include "Assert.h"  // For unit testing purposes
 #include "Shape.h"  // For extending our Shape object
 
 /*! \class ConvexPolygon
@@ -60,6 +61,11 @@ class ConvexPolygon : public Shape {
      * \note This function does nothing if the vertex buffer is not yet full.
      */
     void draw();
+
+    /*!
+     *
+     */
+    void runTests();
 };
 
 #endif /* CONVEXPOLYGON_H_ */

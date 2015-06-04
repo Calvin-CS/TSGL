@@ -8,6 +8,8 @@
 #ifndef TEXTURELOADER_H_
 #define TEXTURELOADER_H_
 
+#include "Assert.h"     // For unit testing purposes
+
 #include <iostream>
 #include <ft2build.h>
 
@@ -118,6 +120,11 @@ class TextureHandler {
      * \return True if successful, false otherwise.
      */
     bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
+
+    /*!
+     *
+     */
+    void runTests();
 };
 
 #endif /* TEXTURELOADER_H_ */

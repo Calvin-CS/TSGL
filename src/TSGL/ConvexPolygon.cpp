@@ -37,3 +37,7 @@ void ConvexPolygon::draw() {
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_FAN, 0, length);
 }
+
+void ConvexPolygon::runTests() {
+
+}

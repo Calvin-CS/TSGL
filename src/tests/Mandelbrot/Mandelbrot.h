@@ -28,10 +28,29 @@ protected:
 	unsigned int myDepth;
 	bool myRedraw;
 public:
+	/*!
+	 *
+	 */
   Mandelbrot();
+
+  /*!
+   *
+   */
   virtual ~Mandelbrot() {};
+
+  /*!
+   *
+   */
   void bindings(CartesianCanvas& can);
+
+  /*!
+   *
+   */
   virtual void draw(CartesianCanvas& can, unsigned int & numberOfThreads);
+
+  /*!
+   *
+   */
   virtual void setRedraw(bool newValue); //mutator
 };
 

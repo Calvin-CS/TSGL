@@ -8,6 +8,7 @@
 #ifndef CONCAVEPOLYGON_H_
 #define CONCAVEPOLYGON_H_
 
+#include "Assert.h"  // For unit testing purposes
 #include "Shape.h"  // For extending our Shape object
 #include <queue>          // std::queue
 #include <iostream>         // DEBUGGING
@@ -98,6 +99,11 @@ class ConcavePolygon : public Shape {
      * \note This function does nothing if the vertex buffer is not yet full.
      */
     void draw();
+
+    /*!
+     *
+     */
+    void runTests();
 };
 
 #endif /* COLOREDPOLYGON_H_ */

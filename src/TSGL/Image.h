@@ -10,6 +10,7 @@
 
 #include <string>
 
+#include "Assert.h"          // For unit testing purposes
 #include "Shape.h"           // For extending our Shape object
 #include "TextureHandler.h"  // For loading images
 
@@ -51,6 +52,11 @@ class Image : public Shape {
      * \details This function actually draws the Image to the Canvas.
      */
     void draw();
+
+    /*!
+     *
+     */
+    void runTests();
 };
 
 #endif /* IMAGE_H_ */

@@ -36,6 +36,7 @@
  *    - If the number of targets left is 0:
  *     - Print out the score, clear the Canvas one last time, and get out of the drawing loop.
  * - Repeat loop indefinitely until the Canvas has been closed.
+ * \param can, Reference to the Canvas being drawn on.
  */
 void projectileFunction(Canvas& can) {
   const int WINDOW_W = can.getWindowWidth(), WINDOW_H = can.getWindowHeight();

@@ -8,6 +8,7 @@
 #ifndef CARTESIANCANVAS_H_
 #define CARTESIANCANVAS_H_
 
+#include "Assert.h"     // For unit testing purposes
 #include "Canvas.h"     // We extend Canvas
 #include "Function.h"   // For drawing math functions on the screen
 
@@ -259,7 +260,13 @@ public:
      *      \param xMax A real number corresponding to the new top edge of the CartesianCanvas.
      */
     void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
-    
+    /*!
+      * \brief Resets the internal drawing timer of a CartesianCanvas object.
+      * \note Can be thought of as a wrapper function for a Timer function call.
+      * \note Identical to Canvas::reset().
+      */
+    void reset();
+
     /*!
      * \brief Sleeps the internal drawing timer of a CartesianCanvas object.
      * \details A timer is put to sleep until a subsequent event is ready to occur.
@@ -268,13 +275,6 @@ public:
      * \note Identical to Canvas::sleep().
      */
     void sleep();
-    
-    /*!
-      * \brief Resets the internal drawing timer of a CartesianCanvas object.
-      * \note Can be thought of as a wrapper function for a Timer function call.
-      * \note Identical to Canvas::reset().
-      */
-    void reset();
 
     /*!
      * \brief Zoom the CartesianCanvas with a given center.
@@ -300,6 +300,11 @@ public:
      * \warning Change the aspect ratio on-the-fly only with caution.
      */
     void zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
+
+    /*!
+     *
+     */
+    void runTests();
 };
 
 #endif /* CARTESIANCANVAS_H_- */

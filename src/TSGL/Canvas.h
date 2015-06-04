@@ -16,6 +16,7 @@
 #endif
 
 #include "Array.h"          // Our own array for buffering drawing operations
+#include "Assert.h"         // For unit testing purposes
 #include "Color.h"          // Our own interface for converting color types
 #include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
@@ -123,6 +124,11 @@ private:
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
     void        textureShaders(bool state);                             // Turn textures on or off
 
+    static bool testDraw(Canvas& can);                                  // Unit test for drawing shapes and determining if fill works
+
+    static bool testPerimeter(Canvas& can);                             // Unit test for drawing shapes and determining if the shape is still drawn correctly but not filled
+
+    static bool testLine(Canvas& can);                                  // Unit test for lines
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
@@ -531,6 +537,12 @@ public:
      *  make rendering slow down.
      */
     void takeScreenShot();
+
+    /*!
+     *
+     */
+    static void runTests();
+
 };
 
 #endif /* CANVAS_H_ */

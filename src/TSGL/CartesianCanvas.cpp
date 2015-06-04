@@ -169,12 +169,12 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     pixelHeight = (cartHeight - yError) / (getWindowHeight() + yError);
 }
 
-void CartesianCanvas::sleep() {
-    Canvas::sleep();
-}
-
 void CartesianCanvas::reset() {
     Canvas::reset();
+}
+
+void CartesianCanvas::sleep() {
+    Canvas::sleep();
 }
 
 void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
@@ -186,4 +186,8 @@ void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
 void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
     Decimal scale = (std::abs(x2 - x1) / cartWidth + std::abs(y2 - y1) / cartHeight) / 2.0;
     zoom((x2 + x1) / 2, (y2 + y1) / 2, scale);
+}
+
+void CartesianCanvas::runTests() {
+
 }
