@@ -2,7 +2,7 @@
  * testProjectiles.cpp
  *
  *  Created on: Jun 2, 2015
- *      Author: cpd5
+ *      Author: Chris Dilley
  */
 
 #include "tsgl.h"
@@ -13,17 +13,14 @@
 //bindings to mouse click
 //score counter
 //Increment speed of targets moving....
-//Idea for darkness game:
-// -Canvas will have an all black background
-// -Console will tell user where to click
-// -Console will also give current coordinates
-// -User has to map to them perfectly
-// -If the coordinates match perfectly when the user clicks, the screen turns
-//  all white and whatever was in the darkness will appear.
+/*!
+ * \brief Target practice mini-game!
+ * \details Creates the target practice mini-game in this way:
+ * -
+ */
 void projectileFunction(Canvas& can) {
-  //Data section...
-  const int WINDOW_W = can.getWindowWidth(), WINDOW_H = can.getWindowHeight();  //Window width and height
-  int circleX = 0, circleY = 200, changer = 1, coordinateChanger = 3;  //Used to control target motion
+  const int WINDOW_W = can.getWindowWidth(), WINDOW_H = can.getWindowHeight();
+  int circleX = 0, circleY = WINDOW_W / 2, changer = 1, coordinateChanger = 3;  //Used to control target motion
   int centerX = WINDOW_W / 2, centerY = WINDOW_H / 2;   //Center of screen
   int numberOfTargets = 10;   //Number of targets
   bool hit = false;  //Determine if the target has been hit
@@ -54,7 +51,7 @@ void projectileFunction(Canvas& can) {
       circleY = 200;
       changer = 1;
     }
-    if(hit) {
+    if(hit) {   //If we hit a target....
       score++;
       circleX = WINDOW_W + 60;
       hit = false;
@@ -63,9 +60,9 @@ void projectileFunction(Canvas& can) {
       coordinateChanger = 6;
     }
 
-    if(numberOfTargets == 0) {
+    if(numberOfTargets == 0) {   //End game
       can.clear();
-      std::cout << "Your score: " << score;
+      std::cout << "Your score: " << score << std::endl;
       return;
     }
       can.clear();
@@ -73,8 +70,8 @@ void projectileFunction(Canvas& can) {
     can.clear();
 }
 
-int main() {
-  Canvas c1(0, 0, 400, 400, "", FRAME);
+int main(int argc, char* argv) {
+  Canvas c1(0, 0, 400, 400, "", FRAME);    //Can change the size of the window
   c1.setBackgroundColor(BLACK);
   c1.start();
   projectileFunction(c1);
