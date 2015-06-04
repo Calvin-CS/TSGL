@@ -33,6 +33,11 @@ class ConcavePolygon : public Shape {
         tsize,          // Number of floating point numbers in tarray
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
+
+    static bool testDraw();      // Unit test for drawing on a regular Canvas
+    static bool testIntersects();     // Unit test for intersects()
+    static bool testPointITriangle(); // Unit test for pointInTriangle()
+
  public:
     /*!
      * \brief Explicitly constructs a new ConcavePolygon.
@@ -103,7 +108,7 @@ class ConcavePolygon : public Shape {
     /*!
      *
      */
-    void runTests();
+    static void runTests();
 };
 
 #endif /* COLOREDPOLYGON_H_ */

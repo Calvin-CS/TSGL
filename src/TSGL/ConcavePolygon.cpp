@@ -164,6 +164,22 @@ void ConcavePolygon::draw() {
 //    glDrawArrays(GL_LINE_STRIP, 0, length);
 }
 
+//----------------------------------------------Unit testing------------------------------
 void ConcavePolygon::runTests() {
+  assert(testDraw(), "Unit test for draw failed");
+  assert(testIntersects(), "Unit test for intersect() failed");
+  assert(testPointITriangle(), "Unit test for pointInTriangle() failed");
+  std::cout << "All unit tests passed!" << std::endl;
+}
 
+bool ConcavePolygon::testDraw() {
+  return true;
+}
+
+bool ConcavePolygon::testIntersects() {
+  return true;
+}
+
+bool ConcavePolygon::testPointITriangle() {
+  return true;
 }

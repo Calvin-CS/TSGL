@@ -65,7 +65,7 @@ class ConvexPolygon : public Shape {
     /*!
      *
      */
-    void runTests();
+    static void runTests();
 };
 
 #endif /* CONVEXPOLYGON_H_ */

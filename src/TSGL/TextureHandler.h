@@ -124,7 +124,7 @@ class TextureHandler {
     /*!
      *
      */
-    void runTests();
+    static void runTests();
 };
 
 #endif /* TEXTURELOADER_H_ */

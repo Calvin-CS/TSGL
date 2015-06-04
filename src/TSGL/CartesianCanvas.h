@@ -27,6 +27,11 @@ private:
             cartHeight;                                                 // maxY-minY
     Decimal minX, maxX, minY, maxY;                                     // Bounding Cartesian coordinates for the window
     Decimal pixelWidth, pixelHeight;                                    // cartWidth/window.w(), cartHeight/window.h()
+
+    static bool testAxes(CartesianCanvas& can);                                                    // Unit test for axes
+    static bool testZoom(CartesianCanvas& can);                                                    // Unit test for zoom() methods
+    static bool testRecomputeDimensions(CartesianCanvas& can);                                      // Unit test for recomputeDimensions()
+    static bool testDraw(CartesianCanvas& can);                                                     // Unit test for draw method
 public:
     /*!
      * \brief Constructs a new CartesianCanvas object.
@@ -304,7 +309,7 @@ public:
     /*!
      *
      */
-    void runTests();
+    static void runTests();
 };
 
 #endif /* CARTESIANCANVAS_H_- */

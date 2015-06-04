@@ -772,11 +772,14 @@ void Canvas::runTests() {
   c1.setBackgroundColor(WHITE);
   c1.start();
   assert(testDraw(c1), "Unit test for draw failed");
+  assert(testPerimeter(c1), "Unit test #2 for draw failed");
   assert(testLine(c1), "Unit test for line failed");
+  assert(testAccessors(c1), "Unit test for accessors failed");
   c1.close();
+  std::cout << "All unit tests passed!" << std::endl;
 }
 
-
+//Similar format is used for the remaining unit tests
 bool Canvas::testDraw(Canvas& can) {
   ColorInt red(255, 0, 0);
   //Test 1: Drawing a filled shape
@@ -818,9 +821,48 @@ bool Canvas::testDraw(Canvas& can) {
 }
 
 bool Canvas::testPerimeter(Canvas& can) {
+  int passed = 0;  //Passed tests
+  int failed = 0;  //Failed tests
+  can.sleep();
+  can.sleep();
+  //Test 1: Rectangle
+  can.drawRectangle(250, 250, 50, 100, BLACK, false);
+  //Four corners make a rectangle, so check the corners!
+  if(can.getPixel(300, 350).R == BLACK.R) {
+    passed++;
+  } else {
+    failed++;
+  }
+  std::cout << can.getPixel(250, 250).AsString() << std::endl;
+  std::cout << BLACK.R << std::endl;
+//  while(can.getIsOpen()) {
+//    std::cout << can.getMouseX() << " " << can.getMouseY() << std::endl;
+//  }
+  //Test 2: Circle
+ //can.drawCircle(250, 250, 50, 32, BLACK, false);
+
+  //Check the leftmost, rightmost, top, and bottom coordinates.
+  //They should all be the same color
+
+  //Test 3: Triangle
+ // can.drawTriangle(50, 80, 40, 250, 250, 150, BLACK, false);
+
+  //Check the vertices and then a point in the middle of each side (trickiest test)
+
+  if(passed == 1 && failed == 0) {
+    return true;
+  } else {
+    return false;
+  }
 
 }
 
 bool Canvas::testLine(Canvas & can) {
   return true;
 }
+
+bool Canvas::testAccessors(Canvas& can) {
+  return true;
+}
+
+

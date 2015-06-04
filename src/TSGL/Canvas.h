@@ -129,6 +129,8 @@ private:
     static bool testPerimeter(Canvas& can);                             // Unit test for drawing shapes and determining if the shape is still drawn correctly but not filled
 
     static bool testLine(Canvas& can);                                  // Unit test for lines
+
+    static bool testAccessors(Canvas& can);
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:

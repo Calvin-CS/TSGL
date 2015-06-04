@@ -56,7 +56,7 @@ class Image : public Shape {
     /*!
      *
      */
-    void runTests();
+    static void runTests();
 };
 
 #endif /* IMAGE_H_ */
