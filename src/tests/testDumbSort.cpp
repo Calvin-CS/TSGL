@@ -79,6 +79,7 @@ void dumbSortFunction(Canvas& can) {
 
         can.clear();
         int start = 50, width = 1, height;
+        int cwh = can.getWindowHeight() - 20;
         ColorFloat color;
         for (int i = 0; i < SIZE; i++, start += width * 2) {
             height = numbers[i];
@@ -86,7 +87,7 @@ void dumbSortFunction(Canvas& can) {
                 color = ColorInt(MAX_COLOR, MAX_COLOR, 0);
             else
                 color = ColorInt(MAX_COLOR, 0, 0);
-            can.drawRectangle(start, can.getWindowHeight() - 20 - height, width, height, color);
+            can.drawRectangle(start, cwh - height, start + width, cwh, color);
         }
     }
 }

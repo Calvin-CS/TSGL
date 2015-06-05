@@ -298,18 +298,20 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     pointArrayMutex.unlock();
 }
 
-void Canvas::drawRectangle(int x, int y, int w, int h, ColorFloat color, bool filled) {
+void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
     if (filled) {
-        Rectangle* rec = new Rectangle(x, y, w, h, color);  // Creates the Rectangle with the specified coordinates and color
+        if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+        if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+        Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
         drawShape(rec);                                     // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(5);
-        p->addNextVertex(x, y, color);
-        p->addNextVertex(x + w - 1, y, color);
-        p->addNextVertex(x + w - 1, y + h - 1, color);
-        p->addNextVertex(x, y + h - 1, color);
-        p->addNextVertex(x, y, color);
+        p->addNextVertex(x1, y1, color);
+        p->addNextVertex(x2 - 1, y1, color);
+        p->addNextVertex(x2 - 1, y2 - 1, color);
+        p->addNextVertex(x1, y2 - 1, color);
+        p->addNextVertex(x1, y1, color);
         drawShape(p);
     }
 }

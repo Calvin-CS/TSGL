@@ -303,16 +303,16 @@ public:
     /*!
      * \brief Draw a rectangle.
      * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-     *      \param x The x coordinate of the Rectangle's left edge.
-     *      \param y The y coordinate of the Rectangle's top edge.
-     *      \param w The width of the Rectangle.
-     *      \param h The height of the Rectangle.
+     *      \param x1 The x coordinate of the Rectangle's left edge.
+     *      \param y1 The y coordinate of the Rectangle's top edge.
+     *      \param x2 The x coordinate of the Rectangle's right edge.
+     *      \param y2 The y coordinate of the Rectangle's bottom edge.
      *      \param color The color of the rectangle
      *             (set to BLACK by default).
      *      \param filled Whether the rectangle should be filled
      *             (set to true by default).
      */
-    virtual void drawRectangle(int x, int y, int w, int h, ColorFloat color = BLACK, bool filled = true);
+    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draw a string of text.

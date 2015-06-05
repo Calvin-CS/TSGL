@@ -98,15 +98,18 @@ void draw(Canvas& can) {
         myLeftY += 4 * myLeftDir;
         can.clear();
         // Draw paddles and balls
-        can.drawRectangle(8, myLeftY, 24, 64, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
-        can.drawRectangle(can.getWindowWidth() - 24 - 8, myRightY, 24, 64, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
-        can.drawRectangle(myBallX - 8, myBallY - 8, 16, 16, WHITE);
+        can.drawRectangle(8, myLeftY, 32, myLeftY + 64, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
+        can.drawRectangle(can.getWindowWidth() - 24 - 8, myRightY, can.getWindowWidth() - 8, myRightY + 64, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
+        can.drawRectangle(myBallX - 8, myBallY - 8, myBallX + 8, myBallY + 8, WHITE);
         // Draw Scores
+        int cww = can.getWindowWidth() / 2;
         for (int i = 0; i < myLeftPoints; i++) {
-            can.drawRectangle(can.getWindowWidth() / 2 - 64 - 4 * i, 16, 2, 8, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
+            int x = cww - 64 - 4 * i;
+            can.drawRectangle(x, 16, x+2, 24, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
         }
         for (int i = 0; i < myRightPoints; i++) {
-            can.drawRectangle(can.getWindowWidth() / 2 + 64 + 4 * i, 16, 2, 8, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
+            int x = cww + 64 + 4 * i;
+            can.drawRectangle(x, 16, x + 2, 24, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
         }
     }
 }

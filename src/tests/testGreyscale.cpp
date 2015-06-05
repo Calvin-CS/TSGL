@@ -73,7 +73,7 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
 			can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
 		}
 		for (unsigned int i = 0; i < thickness; i++) {
-			can.drawRectangle(0 + i, row + 1 + i, width - 2*i, blocksize - 2*i, color, false);
+			can.drawRectangle(i, row + 1 + i, width - i, blocksize - i, color, false);
 		}
 	}
 }

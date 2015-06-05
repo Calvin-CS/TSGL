@@ -92,11 +92,11 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
     Canvas::drawPoint(actualX, actualY, color);
 }
 
-void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color, bool filled) {
+void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color, bool filled) {
     int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x, y, actualX1, actualY1);
-    getScreenCoordinates(x + w, y - h, actualX2, actualY2);  //Change y - h to y + h
-    Canvas::drawRectangle(actualX1, actualY1, actualX2 - actualX1, actualY2 -actualY1, color, filled);
+    getScreenCoordinates(x1, y1, actualX1, actualY1);
+    getScreenCoordinates(x2, y2, actualX2, actualY2);  //Change y - h to y + h
+    Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, color, filled);
 }
 
 void CartesianCanvas::drawText(std::wstring s, Decimal x, Decimal y, unsigned int size, ColorFloat color) {
