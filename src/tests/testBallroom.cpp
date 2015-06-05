@@ -118,17 +118,17 @@ public:
     pos += vel;
     if (pos.x <= rad) {
       pos.x = rad;
-      vel.x *= -1;
+      vel.x *= -0.5f;
     } else if (pos.x >= rw-rad) {
       pos.x = rw-rad;
-      vel.x *= -1;
+      vel.x *= -0.5f;
     }
     if (pos.y <= rad) {
       pos.y = rad;
-      vel.y *= -1;
+      vel.y *= -0.5f;
     } else if (pos.y >= rh-rad) {
       pos.y = rh-rad;
-      vel.y *= -1;
+      vel.y *= -0.5f;
     }
     calcSpeed();
     calcDir();
@@ -165,14 +165,17 @@ class BallRoom {
 private:
   int width, height;
   float friction, gravity;
+  bool attract;
   std::list<BouncingBall*> balls;
   std::list<BouncingBall*>::const_iterator it, jt;
 public:
   BallRoom(int w, int h) {
     width = w;
     height = h;
-    friction = 0.99f;
+    friction = 1.00f;
+//    friction = 0.99f;
     gravity = 0.1f;
+    attract = true;
   }
   ~BallRoom() {
     while (!balls.empty()) {
@@ -202,10 +205,20 @@ public:
     balls.push_back(b);
   }
   void step(Canvas* c) {
+    int mx = c->getMouseX(), my = c->getMouseY();
+    Vector2 mvec(mx,my);
+//    if (attract)
+//      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
+//    else
+//      c->drawCircle(mx,my,25,32,ColorFloat(0.5f,1.0f,1.0f,0.5f));
     for (it = balls.begin(); it != balls.end(); ++it) {
       BouncingBall *b = (*it);
 
-      float mdir = (Vector2(c->getMouseX(),c->getMouseY()) - b->pos).angle();
+      float mdir;
+      if (attract)
+        mdir = (mvec - b->pos).angle();
+      else
+        mdir = (b->pos-mvec).angle();
       b->acc = Vector2(cos(mdir),sin(mdir))*gravity;
       b->vel *= friction;
 
@@ -217,8 +230,11 @@ public:
         if (b->bounced)
           break;
       }
-      c->drawCircle(b->pos.x,b->pos.y,b->rad,8,b->color);
+      c->drawCircle(b->pos.x,b->pos.y,b->rad,16,b->color);
     }
+  }
+  inline void toggleAttract() {
+    attract ^= true;
   }
 };
 
@@ -226,15 +242,22 @@ void ballroomFunction(Canvas& can) {
     const int WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
     BallRoom b(WW,WH);
-    for (int i = 0; i < 100; ++ i) {
+    for (int i = 0; i < 500; ++ i) {
       float speed = 5.0f;
       float dir = 2 * 3.14159f * (rand() % 100) / 100.0f;
       b.addBall(25 + rand() % (WW-50),25 + rand() % (WH-50),speed*cos(dir),speed*sin(dir),10,
         ColorInt(64 + rand() % 192,64 + rand() % 192,64 + rand() % 192,255));
     }
+
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&b]() {
+        b.toggleAttract();
+    });
+
+    ColorFloat clearcolor = ColorInt(0,0,0,16);
     while (can.getIsOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-        can.clear();
+        can.drawRectangle(0,0,WW,WH,clearcolor,true);
+//        can.clear();
         b.step(&can);
     }
 }

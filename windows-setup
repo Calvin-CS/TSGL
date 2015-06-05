@@ -1,9 +1,13 @@
-Setup:
+Easy (Automatic) Setup:
+  Clone the repository from https://github.com/Calvin-CS/TSGL into a convenient place; e.g. "workspace/tsgl"
+  Extract windows-files.zip to a convenient place
+  Follow the insturctions in "readme-easy-install.txt"
+
+Manual Setup:
   Install the Windows 32 version of CMake from the official website if it's not already installed
   Clone the repository from https://github.com/Calvin-CS/TSGL into a convenient place; e.g. "workspace/tsgl"
-  Create a folder in a convenient place for includes; e.g. "workspace/includes"
-  Create a folder in a convenient place for libraries; e.g. "workspace/libs"
-  Create a folder in a convenient place for dlls; e.g. "workspace/dlls"
+  Create a folder in a convenient place for includes; e.g. "workspace/tsgl/include"
+  Create a folder in a convenient place for libraries; e.g. "workspace/tsgl/lib"
   Open Visual Studio 2012 (Ultimate)
     File -> New > Project From Existing Code
       Set the project type to Visual C++ and click "Next"
@@ -52,7 +56,6 @@ Setup:
         Rename the include's "freetype2" to "freetype", and copy the inner "freetype" folder back to the root level (e.g., there should be a path to "workspace/includes/freetype/freetype.h")
     Extract the contents of each freetype-2.3.5-1-dep.zip
       Copy bin/zlib1.dll into your earlier dll directory
-    From the lib package
   Download the tarball source for Freeglut from the official site
     Extract the contents of freeglut-3.0.0.tar.gz
     Run the CMake GUI with the extracted folder's root directory as both the source code / binary location
@@ -82,11 +85,9 @@ One-time setup for running tests:
   In the Property Manager Pane, navigate to tsgl -> Debug |Win 32 -> testProperties
   Right click on testProperties -> Properties, and navigate to User Macros
   Verify that the TSGL directories are pointing to the appropriate directories, and, if not, change them accordingly:
-    TsglDllDir should point to your earlier dll directory
-    TsglExternalLibDir should point to your earlier lib directory
-    TsglIncludeDir should point to your earlier includes directory
-    TsglLibDir should point to the directory containing tsgl.lib (by default, the VS solution's Debug output folder)
-    TsglSourceDir should point to the directory containing the tsgl source code (or, specifically, tsgl.h)
+    TsglDllDir should point to your earlier lib directory
+    TsglExternalLibDir should also point to your earlier lib directory
+    TsglIncludeDir should point to your earlier include directory
 
 Creating a new project (for each test; e.g., testMandelbrot)
 (NOTE: This should already be done for the bundled tests; these are intended to be directions for making your own)
