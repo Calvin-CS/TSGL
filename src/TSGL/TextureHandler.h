@@ -8,7 +8,7 @@
 #ifndef TEXTURELOADER_H_
 #define TEXTURELOADER_H_
 
-#include "Assert.h"     // For unit testing purposes
+#include "TsglAssert.h"     // For unit testing purposes
 
 #include <iostream>
 #include <ft2build.h>

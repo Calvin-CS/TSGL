@@ -10,9 +10,9 @@
 
 #include <string>
 
-#include "Assert.h"          // For unit testing purposes
 #include "Shape.h"           // For extending our Shape object
 #include "TextureHandler.h"  // For loading images
+#include "TsglAssert.h"      // For unit testing purposes
 
 /*! \class Image
  *  \brief Draw an image to the Canvas.

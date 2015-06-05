@@ -8,7 +8,6 @@
 #ifndef CARTESIANCANVAS_H_
 #define CARTESIANCANVAS_H_
 
-#include "Assert.h"     // For unit testing purposes
 #include "Canvas.h"     // We extend Canvas
 #include "Function.h"   // For drawing math functions on the screen
 

@@ -8,10 +8,10 @@
 #ifndef CONCAVEPOLYGON_H_
 #define CONCAVEPOLYGON_H_
 
-#include "Assert.h"  // For unit testing purposes
-#include "Shape.h"  // For extending our Shape object
-#include <queue>          // std::queue
-#include <iostream>         // DEBUGGING
+#include "Shape.h"       // For extending our Shape object
+#include "TsglAssert.h"  // For unit testing purposes
+#include <queue>         // std::queue
+#include <iostream>      // DEBUGGING
 
 /*! \class ConcavePolygon
  *  \brief Draw an arbitrary Concave polygon with colored vertices.
