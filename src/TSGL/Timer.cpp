@@ -48,15 +48,13 @@ void Timer::reset(double period) {
 // Sleep the thread until the period has passed
 void Timer::sleep() {
     mutexLock sleepLock(sleep_);
-    if (last_time < highResClock::now()) {
+    while (last_time < highResClock::now()) {
         last_time = last_time + period_;
     }
     sleepLock.unlock();
 
     long double nano = std::chrono::duration_cast<duration_d>(last_time - highResClock::now()).count();
     std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (nano * 1000000000)));
-
-//    std::this_thread::sleep_until(last_time);
 
     time_between_sleeps = std::chrono::duration_cast<duration_d>(highResClock::now() - last_time).count()
         + period_.count();
@@ -65,6 +63,4 @@ void Timer::sleep() {
 // Sleep the thread for a specified duration
 void Timer::threadSleepFor(double duration) {
     std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (duration * 1000000000)));
-
-//    std::this_thread::sleep_for(duration_d(duration));
 }
