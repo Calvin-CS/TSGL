@@ -41,7 +41,6 @@ ShadedVoronoi(Canvas& can) : Voronoi(can) {
 		Voronoi::myXC = Colors::blendedColor(Voronoi::myLC, Voronoi::myRC, xx);              // Interpolate between the left and right colors
 		Voronoi::myYC = Colors::blendedColor(Voronoi::myTC, Voronoi::myBC, yy);              // Do the same for top and bottom
 		myColor[i] = Colors::blendedColor(Voronoi::myXC, Voronoi::myYC, 0.5f);      // Complete the 4-way interpolation
-		//        color[i] = randomColor(rand());           // Or random colors, if you prefer
 	}
 }
 

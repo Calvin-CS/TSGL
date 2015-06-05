@@ -1,5 +1,5 @@
 /*
- * Array.h provides a simple array for storing shapes
+ * Array.h provides a simple array for storing shapes.
  *
  * Created on: Jun 11, 2014
  * Author: Mark Vander Stel

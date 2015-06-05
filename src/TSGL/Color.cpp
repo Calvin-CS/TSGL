@@ -1,5 +1,5 @@
 /*
- * color.cpp
+ * Color.cpp contains the code for creating colors on a Canvas.
  *
  *  Created on: Jul 22, 2014
  *      Author: mbv26

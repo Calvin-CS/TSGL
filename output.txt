@@ -1,0 +1,20 @@
+Files that changed:
+TSGL/Canvas.cpp
+mkdir -p build/TSGL
+Building src/TSGL/Canvas.cpp
+g++ -c -O3 -g3 -Wall -Wextra -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc/TSGL/ -I/usr/include/ -I/usr/local/include/ -I/opt/AMDAPP/include/ -I/usr/include/c++/4.6/ -I/usr/include/c++/4.6/x86_64-linux-gnu/ -I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ -I./ $(pkg-config --cflags freetype2) -std=c++0x -fopenmp -Wno-narrowing -fpermissive -MMD -MP -o "build/TSGL/Canvas.o" "src/TSGL/Canvas.cpp"
+src/TSGL/Canvas.cpp:83:6: warning: unused parameter ‘mods’ [-Wunused-parameter]
+src/TSGL/Canvas.cpp:552:6: warning: unused parameter ‘scancode’ [-Wunused-parameter]
+src/TSGL/Canvas.cpp: In static member function ‘static bool Canvas::testDraw(Canvas&)’:
+src/TSGL/Canvas.cpp:759:71: error: no matching function for call to ‘std::chrono::duration<long int, std::ratio<1l, 1000l> >::duration(double)’
+src/TSGL/Canvas.cpp:759:71: note: candidates are:
+/usr/include/c++/4.6/chrono:247:14: note: template<class _Rep2, class _Period2, class> constexpr std::chrono::duration::duration(const std::chrono::duration<_Rep2, _Period2>&)
+/usr/include/c++/4.6/chrono:240:23: note: template<class _Rep2, class> constexpr std::chrono::duration::duration(const _Rep2&)
+/usr/include/c++/4.6/chrono:234:12: note: constexpr std::chrono::duration<_Rep, _Period>::duration(const std::chrono::duration<_Rep, _Period>&) [with _Rep = long int, _Period = std::ratio<1l, 1000l>, std::chrono::duration<_Rep, _Period> = std::chrono::duration<long int, std::ratio<1l, 1000l> >]
+/usr/include/c++/4.6/chrono:234:12: note:   no known conversion for argument 1 from ‘double’ to ‘const std::chrono::duration<long int, std::ratio<1l, 1000l> >&’
+/usr/include/c++/4.6/chrono:232:12: note: constexpr std::chrono::duration<_Rep, _Period>::duration() [with _Rep = long int, _Period = std::ratio<1l, 1000l>]
+/usr/include/c++/4.6/chrono:232:12: note:   candidate expects 0 arguments, 1 provided
+src/TSGL/Canvas.cpp: At global scope:
+src/TSGL/Canvas.cpp:871:6: warning: unused parameter ‘can’ [-Wunused-parameter]
+cc1plus: warning: unrecognized command line option "-Wno-narrowing" [enabled by default]
+make: *** [build/TSGL/Canvas.o] Error 1

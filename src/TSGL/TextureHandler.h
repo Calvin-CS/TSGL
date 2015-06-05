@@ -62,6 +62,10 @@ class TextureHandler {
 
     bool saveToPNG(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
     bool saveToBMP(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
+
+    static bool testLoadImage();
+    static bool testLoadFont();
+
  public:
     /*!
      * \brief Constructs a TextureHandler object.

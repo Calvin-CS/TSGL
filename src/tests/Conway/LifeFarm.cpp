@@ -55,9 +55,6 @@ LifeFarm::LifeFarm(int w, int h, Canvas* c, bool randomize) {
   else
     initGun();
   can = c;
-//  for (int i = 0; i < 100; ++i)
-//    std::cout << currentstate[i] << ",";
-//  std::cout << std::endl;
   neighbors = new int*[h]();
   for (int i = 0; i < h; ++i)
     neighbors[i] = new int[w];
@@ -189,10 +186,6 @@ void LifeFarm::moveAntsOld() {
       neighbors[i][j] = 0;
 
   //Populate the neighbor list of each living cell
-//  #pragma omp parallel num_threads (1)
-//  {
-//    int nthreads = omp_get_num_threads();
-//    int tid = omp_get_thread_num();
     int tid = 0, nthreads = 1;
     for (int i = tid; i < listend ; i += nthreads) {
       int n = livelist[i];
@@ -241,29 +234,16 @@ void LifeFarm::moveAntsOld() {
 
 
 void LifeFarm::moveAntsNew() {
-//  std::cout << "PREV: ";
-//  for (int i = 0; ; ++i) {
-//    std::cout << currentstate[i] << ",";
-//    if (currentstate[i] == 0) break;
-//  }
-//  std::cout << std::endl;
   life(currentstate,nextstate);
   //Swap pointers to the begnning of the current and next state arrays
   int* temp = nextstart;
   nextstart = currentstart;
   currentstart = temp;
-//  std::cout << "NEXT: ";
-//  for (int i = 0; ; ++i) {
-//    std::cout << nextstate[i] << ",";
-//    if (nextstate[i] == 0) break;
-//  }
-//  std::cout << std::endl;
   //Move the pointers to the beginning of the newly-swapped arrays
   currentstate = currentstart;
   nextstate = nextstart;
   return;
 }
-
 
 void LifeFarm::setDrawdead(bool b) {
   drawdead = b;
@@ -290,7 +270,6 @@ void LifeFarm::life(int *current, int *fresh) {
   static bool init = false;
 
   //Check for init [007 (octal) == 00000111 (binary) -> 3 neighbors]
-//  if(state[007] == 0) {
   if(!init) {
     init = true;
     //Populate a state bitmap
