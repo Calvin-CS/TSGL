@@ -12,7 +12,6 @@
 #define GLEW_STATIC
 
 #include "Array.h"          // Our own array for buffering drawing operations
-#include "Assert.h"         // For unit testing purposes
 #include "Color.h"          // Our own interface for converting color types
 #include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
@@ -25,6 +24,7 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
+#include "TsglAssert.h"     // For unit testing purposes
 
 #include <cmath>            // For performing math operations
 #include <functional>       // For callback upon key presses

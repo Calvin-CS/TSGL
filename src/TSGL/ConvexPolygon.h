@@ -7,8 +7,8 @@
 #ifndef CONVEXPOLYGON_H_
 #define CONVEXPOLYGON_H_
 
-#include "Assert.h"  // For unit testing purposes
-#include "Shape.h"  // For extending our Shape object
+#include "Shape.h"       // For extending our Shape object
+#include "TsglAssert.h"  // For unit testing purposes
 
 /*! \class ConvexPolygon
  *  \brief Draw an arbitrary Convex polygon with colored vertices.

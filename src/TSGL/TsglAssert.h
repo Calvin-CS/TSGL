@@ -5,10 +5,13 @@
  *      Author: Chris Dilley.
  */
 
-#ifndef SRC_TSGL_ASSERT_H_
-#define SRC_TSGL_ASSERT_H_
+#ifndef SRC_TSGL_TSGLASSERT_H_
+#define SRC_TSGL_TSGLASSERT_H_
 
 #include <iostream>
+#ifdef _WIN32
+#include <string>
+#endif
 
 /*!
  *
@@ -19,4 +22,4 @@ static void assert(bool b, std::string message) {
     }
 }
 
-#endif /* SRC_TSGL_ASSERT_H_ */
+#endif /* SRC_TSGL_TSGLASSERT_H_ */
