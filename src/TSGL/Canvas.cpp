@@ -731,17 +731,18 @@ void Canvas::textureShaders(bool on) {
 
 //-----------------Unit testing-------------------------------------------------------
 void Canvas::runTests() {
-  Canvas c1(0, 0, 500, 500, "", FRAME);   //Doesn't work if we set it to FRAME for some odd reason
+  Canvas c1(0, 0, 500, 500, "", FRAME);
   c1.setBackgroundColor(WHITE);
   c1.start();
   std::this_thread::sleep_for(std::chrono::seconds(1));
   assert(testDraw(c1), "Unit test for draw failed");
- // assert(testPerimeter(c1), "Unit test #2 for draw failed");
- // assert(testLine(c1), "Unit test for line failed");
- // assert(testAccessors(c1), "Unit test for accessors failed");
+  assert(testPerimeter(c1), "Unit test #2 for draw failed");
+  assert(testLine(c1), "Unit test for line failed");
+  assert(testAccessors(c1), "Unit test for accessors failed");
   c1.close();
  // std::cout << "All unit tests passed!" << std::endl;
 }
+
 
 //REMEMBER: X & Y ARE FLIPPED!
 //REMEMBER: 1 Pixel has a radius of 1, not 0! (so, if you see that a circle has radius 50
@@ -755,21 +756,21 @@ bool Canvas::testDraw(Canvas& can) {
   int passed = 0;   //Passed tests
   int failed = 0;   //Failed tests
   //Test 1: Get middle pixel and see if its red.
-  if(can.getPixel(250, 250).R == red.R) {
+  if(can.getPixel(250, 250) == red) {
     passed++;
   } else {
     failed++;
   }
 
   //Test 2: Get leftmost and rightmost pixel of the circle
-  if(can.getPixel(201, 250).R == red.R && can.getPixel(299, 250).R == red.R && can.getPixel(201, 250).G == red.G && can.getPixel(299, 250).G == red.G) {
+  if(can.getPixel(201, 250) == red && can.getPixel(299, 250) == red) {
     passed++;
   } else {
     failed++;
   }
 
   //Test 3: Outside pixels shouldn't equal inside pixels
-  if(can.getPixel(1, 1).G != can.getPixel(250, 250).G) {
+  if(can.getPixel(1, 1) != red) {
     passed++;
   } else {
     failed++;
@@ -796,12 +797,12 @@ bool Canvas::testPerimeter(Canvas& can) {
   can.drawTriangle(50, 80, 40, 250, 250, 150, BLACK, false);  //Test 3
   can.sleep();
   can.sleep();
-
+  ColorFloat black = BLACK;
   //Test 1: Rectangle
   //Four corners make a rectangle, so check the corners!
   //Interesting...it appears as if though sometimes the exact coordinate works and sometimes I have to either subtract 1 from one of them or add 1.
   //Not sure if that's a bug, or if i'm missing something.
-  if(can.getPixel(350, 200).R == BLACK.R && can.getPixel(399, 200).R == BLACK.R && can.getPixel(351, 299).R == BLACK.R && can.getPixel(399, 299).R == BLACK.R) {
+  if(ColorFloat(can.getPixel(350, 200)) == black && ColorFloat(can.getPixel(399, 200)) == black && ColorFloat(can.getPixel(351, 299)) == black && ColorFloat(can.getPixel(399, 299)) == black) {
     passed++;
   } else {
     failed++;
@@ -812,7 +813,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //They should all be the same color
   //Add one to rightmost because of center??
   //Subtract one from bottom most because of center??
-  if(can.getPixel(200, 250).R == BLACK.R && can.getPixel(301, 250).R == BLACK.R && can.getPixel(250, 200).R == BLACK.R && can.getPixel(250, 300).R == BLACK.R) {
+  if(ColorFloat(can.getPixel(200, 250)) == black && ColorFloat(can.getPixel(301, 250)) == black && ColorFloat(can.getPixel(250, 200)) == black && ColorFloat(can.getPixel(250, 300)) == black) {
     passed++;
   } else {
     failed++;
@@ -821,14 +822,14 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Test 3: Triangle
   //Check the vertices, and a point in from their line segments
   //Vertices
-  if(can.getPixel(80, 50).R == BLACK.R && can.getPixel(250, 40).R == BLACK.R && can.getPixel(150, 249).R == BLACK.R) {
+  if(ColorFloat(can.getPixel(80, 50)) == black && ColorFloat(can.getPixel(250, 40)) == black && ColorFloat(can.getPixel(150, 249)) == black) {
     passed++;
   } else {
     failed++;
   }
 
   //Point from line segment (Triangle test continued....)
-  if(can.getPixel(152, 46).R == BLACK.R && can.getPixel(113, 143).R == BLACK.R && can.getPixel(200, 147).R == BLACK.R) {
+  if(ColorFloat(can.getPixel(152, 46)) == black && ColorFloat(can.getPixel(113, 143)) == black && ColorFloat(can.getPixel(200, 147)) == black) {
     passed++;
   } else {
     failed++;
@@ -850,14 +851,13 @@ bool Canvas::testLine(Canvas & can) {
    can.drawLine(0, 0, 250, 250, BLACK);
    can.sleep();
    can.sleep();
-   if(can.getPixel(249, 249).R == BLACK.R) {
+   ColorFloat black = BLACK;
+   if(ColorFloat(can.getPixel(250, 251)) == black) {
      passed++;
    } else {
      failed++;
    }
-//   while(can.getIsOpen()) {
-//     std::cout << can.getMouseX() << " " << can.getMouseY() << std::endl;
-//   }
+
    if(passed == 1 && failed == 0) {
      return true;
    } else {
@@ -866,7 +866,32 @@ bool Canvas::testLine(Canvas & can) {
 }
 
 bool Canvas::testAccessors(Canvas& can) {
-  return true;
+    int passed = 0;
+    int failed = 0;
+    ColorFloat white = WHITE;  //Have to set these to new variables so that I can compare them
+    ColorFloat black = BLACK;
+    if(can.getBackgroundColor() == white) {
+      can.setBackgroundColor(BLACK);
+      if(can.getBackgroundColor() == black) {
+        passed++;
+      } else {
+        failed++;
+      }
+    }
+
+
+    if(can.getIsOpen() == true) {
+      passed++;
+    } else {
+      failed++;
+    }
+
+    if(passed == 2 && failed == 0) {
+      std::cout << "Unit test for accessors/mutators passed!" << std::endl;
+      return true;
+    } else {
+      return false;
+    }
 }
 
 

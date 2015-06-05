@@ -28,6 +28,24 @@ std::string ColorFloat::AsString() {
 	return ss.str();
 }
 
+//NEW
+bool ColorFloat::operator==(ColorFloat& c1) {
+    if((*this).R == c1.R && (*this).G == c1.G && (*this).B == c1.B) {
+      return true;
+    } else {
+      return false;
+    }
+}
+
+//NEW
+bool ColorFloat::operator!=(ColorFloat& c1) {
+    if((*this).R == c1.R && (*this).G == c1.G && (*this).B == c1.B) {
+      return false;
+    } else {
+      return true;
+    }
+}
+
 ColorInt::ColorInt() {
     R = G = B = A = 255;
 }
@@ -51,6 +69,26 @@ std::string ColorInt::AsString() {
 
 ColorInt::operator ColorFloat() {
     return ColorFloat(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
+}
+
+//NEW
+//For testing purposes
+bool ColorInt::operator==(ColorInt& c1) {
+    if((*this).R == c1.R && (*this).G == c1.G && (*this).B == c1.B) {
+      return true;
+    } else {
+      return false;
+    }
+}
+
+//NEW
+//For testing purposes
+bool ColorInt::operator!=(ColorInt& c1) {
+    if((*this).R == c1.R && (*this).G == c1.G && (*this).B == c1.B) {
+      return false;
+    } else {
+    return true;
+    }
 }
 
 ColorHSV::ColorHSV() {
@@ -161,3 +199,4 @@ ColorFloat Colors::highContrastColor(unsigned int section, int start) {
     float val = (11 - (section*3  % 7)) / 11.0f;
     return ColorHSV(hue * 6.0f, sat, val, 1.0f);
 }
+

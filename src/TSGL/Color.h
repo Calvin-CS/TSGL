@@ -55,6 +55,12 @@ struct ColorFloat {
      * \return A string representation of the ColorFloat.
      */
     std::string AsString();
+
+    /*!
+     * NEW (For unit testing)
+     */
+    bool operator==(ColorFloat& c1);
+    bool operator!=(ColorFloat& c1);
 };
 
 /*!
@@ -103,6 +109,9 @@ struct ColorInt {
      *  floating point color type (ColorFloat).
      */
     operator ColorFloat();
+
+    bool operator==(ColorInt& c1);
+    bool operator!=(ColorInt& c1);
 };
 
 /*!
