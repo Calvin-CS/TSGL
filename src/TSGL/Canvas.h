@@ -11,10 +11,6 @@
 // Link statically with GLEW
 #define GLEW_STATIC
 
-#ifdef _WIN32
-#define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))      // round is not defined in Visual Studio
-#endif
-
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Assert.h"         // For unit testing purposes
 #include "Color.h"          // Our own interface for converting color types
@@ -43,6 +39,12 @@
 
 #define FPS 60              // Frames per second
 #define FRAME 1.0f/FPS      // Number of seconds between frames
+
+#ifdef _WIN32
+  #define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))      // round is not defined in Visual Studio
+  #define Rectangle tsgl::Rectangle
+  #define Polyline tsgl::Polyline
+#endif
 
 /*! \class Canvas
  *  \brief A GL window with numerous built-in, thread-safe drawing operations.

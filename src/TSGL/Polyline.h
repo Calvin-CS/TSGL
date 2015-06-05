@@ -11,6 +11,10 @@
 
 #include "Shape.h"  // For extending our Shape object
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \class Polyline
  *  \brief Draw multiple lines chained together.
  *  \details Polyline is a class for holding vertex data for multiple lines whose endpoints are connected.
@@ -62,5 +66,9 @@ class Polyline : public Shape {
      */
     void draw();
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* POLYLINE_H_ */

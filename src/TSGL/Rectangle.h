@@ -10,6 +10,10 @@
 
 #include "Shape.h"  // For extending our Shape object
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \class Rectangle
  *  \brief Draw a simple Rectangle.
  *  \details Rectangle is a class for holding vertex data for a simple rectangle.
@@ -36,5 +40,9 @@ class Rectangle : public Shape {
      */
     void draw();
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* RECTANGLE_H_ */

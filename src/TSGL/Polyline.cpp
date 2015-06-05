@@ -7,6 +7,10 @@
 
 #include "Polyline.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 Polyline::Polyline(int v) {
     if (v < 2) throw std::out_of_range("Cannot have a line with fewer than 2 vertices.");
     length = v;
@@ -37,3 +41,7 @@ void Polyline::draw() {
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_LINE_STRIP, 0, length);
 }
+
+#ifdef _WIN32
+}
+#endif

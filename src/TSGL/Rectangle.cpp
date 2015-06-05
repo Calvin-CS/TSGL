@@ -7,6 +7,10 @@
 
 #include "Rectangle.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 Rectangle::Rectangle(int x, int y, int w, int h, const ColorFloat &color) {
     vertices[0] = x;
     vertices[1] = y;
@@ -30,3 +34,7 @@ void Rectangle::draw() {
     glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
+
+#ifdef _WIN32
+}
+#endif
