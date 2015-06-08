@@ -552,12 +552,18 @@ public:
     static void runTests();
 
     /*!
-     *
+     * \brief Begins the process of closing the Canvas.
+     * \details The process of closing the Canvas window is started once this function
+     * is called.
+     * \see wait(), close()
      */
     void stop();
 
     /*!
-     *
+     * \brief Closes the Canvas window.
+     * \details If ready, the Canvas window is closed completely. wait() determines
+     * if the Canvas window is ready to be closed or not.
+     * \see stop(), wait()
      */
     void close();
 };

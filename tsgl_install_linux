@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Install all deps for TSGL
+echo "Install all packages that are needed for building"
+ apt-get install cmake xorg-dev libglew-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev libjpeg-dev xz-utils unzip
+
+# Make a temp folder for all things that must be compiled (because they
+# are out-of-date on the repos)
+mkdir TSGL_temp
+cd TSGL_temp
+
+# libpng
+#CAN BE TAKEN OUT = REPLACED WITH STB
+VERSION="1.6.15"
+echo "Downloading libpng..."
+wget http://downloads.sourceforge.net/project/libpng/libpng16/${VERSION}/libpng-${VERSION}.tar.xz || exit 1
+echo "Unzipping libpng..."
+tar xf libpng-${VERSION}.tar.xz || exit 1
+cd libpng-${VERSION}
+echo "Configuring libpng..."
+./configure --prefix=/usr/local || exit 1
+echo "Compiling libpng..."
+make || exit 1
+echo "Installing libpng..."
+make install || exit 1
+echo "libpng installed"
+cd ..
+
+# freetype
+VERSION="2.5.3"
+echo "Downloading freetype"
+wget http://downloads.sourceforge.net/project/freetype/freetype2/${VERSION}/freetype-${VERSION}.tar.bz2 || exit 1
+echo "Unzipping freetype..."
+tar xf freetype-${VERSION}.tar.bz2 || exit 1
+cd freetype-${VERSION}
+echo "Configuring freetype..."
+./configure --prefix=/usr/local || exit 1
+echo "Compiling freetype..."
+make || exit 1
+echo "Installing freetype..."
+make install || exit 1
+ln -s /usr/local/include/freetype2 /usr/local/include/freetype
+echo "freetype installed"
+cd ..
+
+# glfw
+VERSION="3.0.4"
+echo "Downloading glfw"
+wget http://downloads.sourceforge.net/project/glfw/glfw/${VERSION}/glfw-${VERSION}.zip || exit 1
+echo "Unzipping glfw..."
+unzip -o glfw-${VERSION}.zip || exit 1
+cd glfw-${VERSION}
+echo "Configuring glfw..."
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON || exit 1
+echo "Compiling glfw..."
+make || exit 1
+echo "Installing glfw..."
+make install || exit 1
+echo "glfw installed"
+cd ..
+
+# Install TSGL
+echo "Downloading TSGL..."
+rm -rf TSGL
+git clone https://github.com/Calvin-CS/TSGL.git || exit 1
+cd TSGL
+echo "Compiling TSGL..."
+./configure || exit 1
+make tsgl || exit 1
+echo "Installing TSGL..."
+cp lib/libtsgl.a /usr/local/lib/ || exit 1
+cp -r src/TSGL /usr/local/include/ || exit 1
+echo "Install finished."
+cd ..
+
+echo "Removing temp files..."
+cd ..
+rm -rf TSGL_temp
+echo "Install finished."
