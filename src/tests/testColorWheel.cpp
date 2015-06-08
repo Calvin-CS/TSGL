@@ -80,5 +80,5 @@ int main(int argc, char* argv[]) {
     c10.setBackgroundColor(GREY);
     c10.start();
     colorWheelFunction(c10);  //Pass it as an argument
-    c10.close();
+    c10.wait();
 }

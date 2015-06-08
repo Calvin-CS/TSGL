@@ -29,5 +29,5 @@ int main() {
     Cart c27(0, 0, 1200, 900, 0, 0, 4, 3, "");
     c27.start();
     textCartFunction(c27);
-    c27.close();
+    c27.wait();
 }

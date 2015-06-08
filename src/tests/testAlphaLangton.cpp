@@ -71,5 +71,5 @@ int main(int argc, char* argv[]) {
     c15.setBackgroundColor(BLACK);
     c15.start();
     alphaLangtonFunction(c15);
-    c15.close();
+    c15.wait();
 }

@@ -51,5 +51,5 @@ int main(int argc, char* argv[]) {
     c11.setBackgroundColor(WHITE);
     c11.start();
     functionFunction(c11);
-    c11.close();
+    c11.wait();
 }

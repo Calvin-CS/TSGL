@@ -192,12 +192,12 @@ void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
 void CartesianCanvas::runTests() {
   CartesianCanvas c1(0, 0, 400, 400, -400, 400, -400, 400, "", 0.1f);
   c1.start();
-  assert(testAxes(c1), "Unit test for drawing axes failed");
-  assert(testZoom(c1), "Unit test for zoom() functions failed");
-  assert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed");
-  assert(testDraw(c1), "Unit test for drawing failed");
+  tsglAssert(testAxes(c1), "Unit test for drawing axes failed");
+  tsglAssert(testZoom(c1), "Unit test for zoom() functions failed");
+  tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed");
+  tsglAssert(testDraw(c1), "Unit test for drawing failed");
   std::cout << "All unit tests passed!" << std::endl;
-  c1.close();
+  c1.wait();
 }
 
 bool CartesianCanvas::testAxes(CartesianCanvas& can) {

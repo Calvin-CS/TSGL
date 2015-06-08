@@ -65,5 +65,5 @@ int main(int argc, char* argv[]) {
     c5.setBackgroundColor(GREY);
     c5.start();
     mandelbrotFunction(c5, t);   //And pass it as an argument
-    c5.close();
+    c5.wait();
 }

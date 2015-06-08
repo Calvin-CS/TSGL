@@ -46,5 +46,5 @@ int main() {
     Cart c29(0, 0, 800, 600, 0, 0, 800, 600,"", FRAME);
     c29.start();
     screenShotFunction(c29);
-    c29.close();
+    c29.wait();
 }

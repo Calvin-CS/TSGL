@@ -31,5 +31,5 @@ int main() {
     Canvas c24;
     c24.start();
     textFunctionTwo(c24);
-    c24.close();
+    c24.wait();
 }

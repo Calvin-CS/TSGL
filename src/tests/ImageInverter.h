@@ -115,8 +115,8 @@ void ImageInverter::invertImage(unsigned numThreads) {
  */
 inline
 void ImageInverter::stop() {
-  myCanvas1.close();
-  myCanvas2.close();
+  myCanvas1.wait();
+  myCanvas2.wait();
 }
 
 

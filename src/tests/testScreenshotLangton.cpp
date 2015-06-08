@@ -55,5 +55,5 @@ int main() {
     c30.setBackgroundColor(BLACK);
     c30.start();
     screenshotLangtonFunction(c30);
-    c30.close();
+    c30.wait();
 }

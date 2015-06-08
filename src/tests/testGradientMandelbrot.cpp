@@ -33,5 +33,5 @@ int main(int argc, char* argv[]) {
 	c16.setBackgroundColor(GREY);
 	c16.start();
 	gradientMandelbrotFunction(c16, t);
-	c16.close();
+	c16.wait();
 }

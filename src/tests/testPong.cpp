@@ -48,5 +48,5 @@ int main() {
     c25.setBackgroundColor(BLACK);
     c25.start();
     pongFunction(c25);
-    c25.close();
+    c25.wait();
 }

@@ -91,10 +91,22 @@ void Canvas::clear() {
     toClear = true;
 }
 
-int Canvas::close() {
+//NEW
+void Canvas::stop() {
+    wait();
+}
+
+//NEW
+int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
-    renderThread.join();      // Blocks until ready to join, which will be when the window is closed
+    close();
     return 0;
+}
+
+//NEW
+void Canvas::close() {
+    std::cout << "Window closed successfully." << std::endl;
+    renderThread.join();
 }
 
 void Canvas::draw() {
@@ -734,19 +746,16 @@ void Canvas::runTests() {
   Canvas c1(0, 0, 500, 500, "", FRAME);
   c1.setBackgroundColor(WHITE);
   c1.start();
+  //HACKY SOLUTION: Have a sleep_for statement. Seems to fix the getPixels() problem.
   std::this_thread::sleep_for(std::chrono::seconds(1));
-  assert(testDraw(c1), "Unit test for draw failed");
-  assert(testPerimeter(c1), "Unit test #2 for draw failed");
-  assert(testLine(c1), "Unit test for line failed");
-  assert(testAccessors(c1), "Unit test for accessors failed");
-  c1.close();
- // std::cout << "All unit tests passed!" << std::endl;
+  tsglAssert(testDraw(c1), "Unit test for draw failed");
+  tsglAssert(testPerimeter(c1), "Unit test #2 for draw failed");
+  tsglAssert(testLine(c1), "Unit test for line failed");
+  tsglAssert(testAccessors(c1), "Unit test for accessors failed");
+  c1.wait();
+  std::cout << "All unit tests for Canvas passed!" << std::endl;
 }
 
-
-//REMEMBER: X & Y ARE FLIPPED!
-//REMEMBER: 1 Pixel has a radius of 1, not 0! (so, if you see that a circle has radius 50
-//and is centered at (250, 250), then the leftmost pixel is at (250, 201) and the rightmost is at (250, 299)
 //Similar format is used for the remaining unit tests
 bool Canvas::testDraw(Canvas& can) {
   ColorInt red(255, 0, 0);   //Fill color
@@ -776,7 +785,7 @@ bool Canvas::testDraw(Canvas& can) {
     failed++;
   }
 
-  //Determine if we passed all three tests or not
+  //Determine if we passed all three tests or not, Results:
   if(passed == 3 && failed == 0) {
     can.clear();
     std::cout << "Unit test for drawing filled shapes passed!" << std::endl;
@@ -798,6 +807,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   can.sleep();
   can.sleep();
   ColorFloat black = BLACK;
+
   //Test 1: Rectangle
   //Four corners make a rectangle, so check the corners!
   //Interesting...it appears as if though sometimes the exact coordinate works and sometimes I have to either subtract 1 from one of them or add 1.
@@ -835,6 +845,7 @@ bool Canvas::testPerimeter(Canvas& can) {
     failed++;
   }
 
+  //Results:
   if(passed == 4 && failed == 0) {
     can.clear();
     std::cout << "Unit test for drawing non-filled shapes passed!" << std::endl;
@@ -842,7 +853,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   } else {
     can.clear();
     return false;
-}
+  }
 }
 
 bool Canvas::testLine(Canvas & can) {
@@ -852,15 +863,34 @@ bool Canvas::testLine(Canvas & can) {
    can.sleep();
    can.sleep();
    ColorFloat black = BLACK;
-   if(ColorFloat(can.getPixel(250, 251)) == black) {
+   //Near the ending endpoint?
+   if(ColorFloat(can.getPixel(250, 249)) == black) {
      passed++;
    } else {
      failed++;
    }
 
-   if(passed == 1 && failed == 0) {
+   //Somewhere in the middle?
+   if(ColorFloat(can.getPixel(155, 154)) == black) {
+     passed++;
+   } else {
+     failed++;
+   }
+
+   //Near the starting endpoint?
+   if(ColorFloat(can.getPixel(15, 14)) == black) {
+     passed++;
+   } else {
+     failed++;
+   }
+
+   //Results:
+   if(passed == 3 && failed == 0) {
+     can.clear();
+     std::cout << "Unit test for line passed!" << std::endl;
      return true;
    } else {
+     can.clear();
      return false;
    }
 }
@@ -870,6 +900,7 @@ bool Canvas::testAccessors(Canvas& can) {
     int failed = 0;
     ColorFloat white = WHITE;  //Have to set these to new variables so that I can compare them
     ColorFloat black = BLACK;
+    //Background color
     if(can.getBackgroundColor() == white) {
       can.setBackgroundColor(BLACK);
       if(can.getBackgroundColor() == black) {
@@ -879,19 +910,43 @@ bool Canvas::testAccessors(Canvas& can) {
       }
     }
 
+    //Window width/height
+    if(can.getWindowWidth() == 500) {
+      if(can.getWindowHeight() == 500) {
+        passed++;
+      } else {
+        failed++;
+      }
+    } else {
+      failed++;
+    }
 
+    //Window x/y
+    if(can.getWindowX() == 0) {
+      if(can.getWindowY() == 0) {
+        passed++;
+      } else {
+        failed++;
+      }
+    } else {
+      failed++;
+    }
+
+    //Window open?
     if(can.getIsOpen() == true) {
       passed++;
     } else {
       failed++;
     }
 
-    if(passed == 2 && failed == 0) {
+    //Results:
+    if(passed == 4 && failed == 0) {
+      can.clear();
       std::cout << "Unit test for accessors/mutators passed!" << std::endl;
       return true;
     } else {
+      can.clear();
       return false;
     }
 }
-
-
+//------------End Unit testing--------------------------------------------------------

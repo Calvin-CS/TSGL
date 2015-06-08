@@ -1852,7 +1852,7 @@ void test(Canvas& c, void (*f)(Canvas&), bool printFPS = false, const ColorFloat
         c.setShowFPS(false);
         std::cout << c.getTime() << std::endl;
     }
-    c.close();
+    c.wait();
 }
 
 /*!
@@ -1872,7 +1872,7 @@ void test(Cart& c, void (*f)(Cart&), bool printFPS = false, const ColorFloat &bg
         c.setShowFPS(false);
         std::cout << c.getTime() << std::endl;
     }
-    c.close();
+    c.wait();
 }
 
 //const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
@@ -2080,8 +2080,8 @@ void runOtherHalfoftheFunctions() {
 
     can1.end();
     can2.end();
-    can1.close();
-    can2.close();
+    can1.wait();
+    can2.wait();
 }
 
 int main() {

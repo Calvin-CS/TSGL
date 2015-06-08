@@ -30,5 +30,5 @@ int main() {
     c26.setBackgroundColor(GREY);
     c26.start();
     imageCartFunction(c26);
-    c26.close();
+    c26.wait();
 }

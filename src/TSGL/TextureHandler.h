@@ -8,8 +8,6 @@
 #ifndef TEXTURELOADER_H_
 #define TEXTURELOADER_H_
 
-#include "TsglAssert.h"     // For unit testing purposes
-
 #include <iostream>
 #include <ft2build.h>
 
@@ -33,6 +31,7 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+#include "TsglAssert.h"     // For unit testing purposes
 
 typedef GLuint GLtexture;
 
@@ -64,7 +63,7 @@ class TextureHandler {
     bool saveToBMP(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
 
     static bool testLoadImage();
-    static bool testLoadFont();
+    static bool testLoadFont(TextureHandler& test);
 
  public:
     /*!

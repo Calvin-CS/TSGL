@@ -101,5 +101,5 @@ int main(int argc, char* argv[]) {
   c12.setBackgroundColor(WHITE);
 	c12.start();
 	cosineIntegralFunction(c12, t);   //Pass the argument
-	c12.close();
+	c12.wait();
 }

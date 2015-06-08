@@ -90,5 +90,5 @@ int main(int argc, char* argv[]) {
 	c31.setBackgroundColor(GREY);
 	c31.start();
 	greyScaleFunction(c31, numberOfThreads);  //Pass it as an argument
-	c31.close();
+	c31.wait();
 }

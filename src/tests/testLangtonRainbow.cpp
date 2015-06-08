@@ -46,6 +46,6 @@ int main(int argc, char* argv[]) {
     c8.setBackgroundColor(BLACK);
     c8.start();
     langtonRainbowFunction(c8);
-    c8.close();
+    c8.wait();
 }
 

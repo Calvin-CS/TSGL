@@ -104,5 +104,5 @@ int main(int argc, char* argv[]) {
     c9.setBackgroundColor(GREY);
     c9.start();
     dumbSortFunction(c9);   //Pass it as an argument
-    c9.close();
+    c9.wait();
 }

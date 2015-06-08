@@ -60,6 +60,6 @@ int main(int argc, char* argv[]) {
 	c18.setBackgroundColor(WHITE);
 	c18.start();
 	voronoiFunction(c18);
-	c18.close();
+	c18.wait();
 }
 

@@ -87,5 +87,5 @@ int main() {
   c1.setBackgroundColor(WHITE);
   c1.start();
   newtonPendulumFunction(c1);
-  c1.close();
+  c1.wait();
 }

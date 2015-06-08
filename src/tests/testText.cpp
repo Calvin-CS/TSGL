@@ -36,5 +36,5 @@ int main() {
     Canvas c23;
     c23.start();
     textFunction(c23);
-    c23.close();
+    c23.wait();
 }

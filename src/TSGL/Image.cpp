@@ -61,5 +61,5 @@ void Image::draw() {
 }
 
 void Image::runTests() {
-
+    tsglAssert(true, "false");
 }

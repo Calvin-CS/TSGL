@@ -24,7 +24,7 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
-#include "TsglAssert.h"     // For unit testing purposes
+//#include "TsglAssert.h"     // For unit testing purposes
 
 #include <cmath>            // For performing math operations
 #include <functional>       // For callback upon key presses
@@ -200,7 +200,7 @@ public:
      * \return 0 if exit is successful, -1 if the canvas has not started yet.
      * \see start(), end().
      */
-    int close();
+    int wait();
 
     /*!
      * \brief Draw a circle.
@@ -547,6 +547,15 @@ public:
      */
     static void runTests();
 
+    /*!
+     *
+     */
+    void stop();
+
+    /*!
+     *
+     */
+    void close();
 };
 
 #endif /* CANVAS_H_ */

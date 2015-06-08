@@ -58,6 +58,6 @@ int main() {
     Canvas c3(FRAME);
     c3.start();
     lineFanFunction(c3);
-    c3.close();
+    c3.wait();
 }
 

@@ -9,4 +9,5 @@
 
 int main() {
    Canvas::runTests();
+   TextureHandler::runTests();
 }

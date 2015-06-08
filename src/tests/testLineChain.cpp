@@ -48,5 +48,5 @@ int main(int argc, char* argv[]) {
     c2.setBackgroundColor(BLACK);
     c2.start();
     lineChainFunction(c2);
-    c2.close();
+    c2.wait();
 }

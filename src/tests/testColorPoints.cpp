@@ -58,5 +58,5 @@ int main(int argc, char* argv[]) {
 	Canvas c1(0, 0, w, h, "");
 	c1.start();
 	colorPointsFunction(c1, t);   //Now pass the argument for the number of threads to the test function
-	c1.close();
+	c1.wait();
 }

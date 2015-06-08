@@ -136,5 +136,5 @@ int main(int argc, char* argv[]) {
     c20.setBackgroundColor(GREY);
     c20.start();
     forestFireFunction(c20);
-    c20.close();
+    c20.wait();
 }

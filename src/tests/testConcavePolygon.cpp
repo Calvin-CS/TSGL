@@ -83,5 +83,5 @@ int main(int argc, char* argv[]) {
     c33.setBackgroundColor(WHITE);
     c33.start();
     concavePolygonFunction(c33);
-    c33.close();
+    c33.wait();
 }

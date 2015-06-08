@@ -43,5 +43,5 @@ int main(int argc, char* argv[]) {
     c14.setBackgroundColor(BLACK);
     c14.start();
     alphaRectangleFunction(c14);
-    c14.close();
+    c14.wait();
 }

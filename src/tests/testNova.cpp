@@ -73,5 +73,5 @@ int main(int argc, char* argv[]) {
 	unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();  //Number of threads
 	c17.start();
 	novaFunction(c17, t);  //Pass that as an argument
-	c17.close();
+	c17.wait();
 }

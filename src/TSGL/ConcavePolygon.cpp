@@ -166,9 +166,9 @@ void ConcavePolygon::draw() {
 
 //----------------------------------------------Unit testing------------------------------
 void ConcavePolygon::runTests() {
-  assert(testDraw(), "Unit test for draw failed");
-  assert(testIntersects(), "Unit test for intersect() failed");
-  assert(testPointITriangle(), "Unit test for pointInTriangle() failed");
+  tsglAssert(testDraw(), "Unit test for draw failed");
+  tsglAssert(testIntersects(), "Unit test for intersect() failed");
+  tsglAssert(testPointITriangle(), "Unit test for pointInTriangle() failed");
   std::cout << "All unit tests passed!" << std::endl;
 }
 

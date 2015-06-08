@@ -467,14 +467,25 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
 #endif
 }
 
+//-------------------------Unit testing----------------------------------------------
 void TextureHandler::runTests() {
-
+    TextureHandler tester;
+    tsglAssert(testLoadFont(tester), "Unit test for loading in fonts failed");
 }
 
 bool TextureHandler::testLoadImage() {
   return true;
 }
 
-bool TextureHandler::testLoadFont() {
-  return true;
+bool TextureHandler::testLoadFont(TextureHandler& test) {
+  int passed, failed = 0;
+  if(test.fontFace == nullptr) {
+
+  }
+
+  if(passed == 1 && failed == 0) {
+    return true;
+  } else {
+    return false;
+  }
 }

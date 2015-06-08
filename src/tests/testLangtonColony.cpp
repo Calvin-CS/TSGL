@@ -47,5 +47,5 @@ int main(int argc, char* argv[]) {
     c7.setBackgroundColor(GREY);
     c7.start();
     langtonColonyFunction(c7);
-    c7.close();
+    c7.wait();
 }

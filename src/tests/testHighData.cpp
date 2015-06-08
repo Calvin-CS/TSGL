@@ -41,5 +41,5 @@ int main() {
     Canvas c22(0, 0, 1200, 900, "", FRAME);
     c22.start();
     highData(c22);
-    c22.close();
+    c22.wait();
 }

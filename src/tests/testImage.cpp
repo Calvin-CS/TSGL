@@ -31,5 +31,5 @@ int main() {
     c21.setBackgroundColor(GREY);
     c21.start();
     imageFunction(c21);
-    c21.close();
+    c21.wait();
 }

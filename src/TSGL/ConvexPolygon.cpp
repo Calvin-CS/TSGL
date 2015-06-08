@@ -39,5 +39,5 @@ void ConvexPolygon::draw() {
 }
 
 void ConvexPolygon::runTests() {
-
+    tsglAssert(true, "False");
 }

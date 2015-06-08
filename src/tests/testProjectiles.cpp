@@ -98,5 +98,5 @@ int main(int argc, char* argv[]) {
   c1.setBackgroundColor(BLACK);
   c1.start();
   projectileFunction(c1);
-  c1.close();
+  c1.wait();
 }

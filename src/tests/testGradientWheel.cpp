@@ -70,5 +70,5 @@ int main(int argc, char* argv[]) {
 	c13.setBackgroundColor(BLACK);
 	c13.start();
 	gradientWheelFunction(c13);
-	c13.close();
+	c13.wait();
 }

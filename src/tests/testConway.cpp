@@ -43,5 +43,5 @@ int main(int argc, char* argv[]) {
     c6.setBackgroundColor(BLACK);
     c6.start();
     conwayFunction(c6);
-    c6.close();
+    c6.wait();
 }

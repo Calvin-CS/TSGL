@@ -36,6 +36,6 @@ int main(int argc, char* argv[]) {
 	c19.setBackgroundColor(WHITE);
 	c19.start();
 	shadedVoronoiFunction(c19);
-	c19.close();
+	c19.wait();
 }
 

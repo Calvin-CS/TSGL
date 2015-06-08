@@ -55,6 +55,6 @@ int main(int argc, char* argv[]) {
     Canvas c4(0,0,255,255,"", FRAME);
     c4.start();
     spectrumFunction(c4, t);  //Pass the number of threads as an argument
-    c4.close();
+    c4.wait();
 }
 

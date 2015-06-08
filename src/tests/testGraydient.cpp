@@ -51,5 +51,5 @@ int main(int argc, char* argv[]) {
     int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Convert the char pointer to an int ( see http://www.cplusplus.com/forum/beginner/58493/ )
     c.start();
     graydientFunction(c, numberOfThreads);  //Now pass the argument for the number of threads to the test function
-    c.close();
+    c.wait();
 }

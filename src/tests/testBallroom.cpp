@@ -272,5 +272,5 @@ int main(int argc, char* argv[]) {
     c.setBackgroundColor(BLACK);
     c.start();
     ballroomFunction(c);
-    c.close();
+    c.wait();
 }

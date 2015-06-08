@@ -71,5 +71,5 @@ int main() {
     c28.setBackgroundColor(GREY);
     c28.start();
     getPixelsFunction(c28);
-    c28.close();
+    c28.wait();
 }

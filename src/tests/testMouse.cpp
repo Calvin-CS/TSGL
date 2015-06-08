@@ -72,5 +72,5 @@ int main() {
     c32.setBackgroundColor(WHITE);
     c32.start();
     mouseFunction(c32);
-    c32.close();
+    c32.wait();
 }
