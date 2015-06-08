@@ -14,6 +14,10 @@
 #include "TextureHandler.h"  // For loading images
 #include "TsglAssert.h"      // For unit testing purposes
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \class Image
  *  \brief Draw an image to the Canvas.
  *  \details Image is a class which provides a simple interface for loading and drawing images.
@@ -58,5 +62,9 @@ class Image : public Shape {
      */
     static void runTests();
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* IMAGE_H_ */

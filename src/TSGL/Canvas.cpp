@@ -1,5 +1,9 @@
 #include "Canvas.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 // Shader sources
 static const GLchar* vertexSource = "#version 150 core\n"
     "in vec2 position;"
@@ -949,4 +953,8 @@ bool Canvas::testAccessors(Canvas& can) {
       return false;
     }
 }
+
 //------------End Unit testing--------------------------------------------------------
+#ifdef _WIN32
+}
+#endif

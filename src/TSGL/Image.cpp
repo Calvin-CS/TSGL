@@ -7,6 +7,10 @@
 
 #include "Image.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*
  * Explicit constructor for the Image class
  * Parameters:
@@ -63,3 +67,7 @@ void Image::draw() {
 void Image::runTests() {
     tsglAssert(true, "false");
 }
+
+#ifdef _WIN32
+}
+#endif

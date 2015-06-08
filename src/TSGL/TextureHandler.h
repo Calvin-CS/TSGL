@@ -35,6 +35,10 @@
 
 typedef GLuint GLtexture;
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 class TextureHandler {
  private:
     typedef std::unordered_map<std::string, GLtexture> TextureMap;
@@ -129,5 +133,9 @@ class TextureHandler {
      */
     static void runTests();
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* TEXTURELOADER_H_ */

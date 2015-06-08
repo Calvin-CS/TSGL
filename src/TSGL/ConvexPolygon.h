@@ -10,6 +10,10 @@
 #include "Shape.h"       // For extending our Shape object
 #include "TsglAssert.h"  // For unit testing purposes
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \class ConvexPolygon
  *  \brief Draw an arbitrary Convex polygon with colored vertices.
  *  \details ConvexPolygon is a class for holding vertex data for a triangle strip with colored vertices.
@@ -67,5 +71,9 @@ class ConvexPolygon : public Shape {
      */
     static void runTests();
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* CONVEXPOLYGON_H_ */

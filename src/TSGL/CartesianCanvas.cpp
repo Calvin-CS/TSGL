@@ -1,5 +1,9 @@
 #include "CartesianCanvas.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 CartesianCanvas::CartesianCanvas(double timerLength)
     : Canvas(timerLength) {
     recomputeDimensions(-400, -300, 400, 300);
@@ -215,3 +219,9 @@ bool CartesianCanvas::testRecomputeDimensions(CartesianCanvas& can) {
 bool CartesianCanvas::testDraw(CartesianCanvas& can) {
   return true;
 }
+
+//-----------------End Unit testing----------------------------------------------------
+
+#ifdef _WIN32
+}
+#endif

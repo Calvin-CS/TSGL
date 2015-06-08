@@ -11,6 +11,10 @@
 #include "Shape.h"          // For extending our Shape object
 #include "TextureHandler.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \class Text
  *  \brief Draw a string of text.
  *  \details Text is a class for holding the data necessary for rendering a string of text.
@@ -44,5 +48,9 @@ class Text : public Shape {
      */
     void draw();
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* TEXT_H_ */

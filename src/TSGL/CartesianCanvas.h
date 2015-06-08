@@ -16,6 +16,10 @@
  */
 typedef long double Decimal;  // Define the variable type to use for coordinates
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \class CartesianCanvas
  *  \brief Canvas extended for graphic support.
  *  \details CartesianCanvas provides a Canvas with a Cartesian coordinate system for ease of plotting.
@@ -310,5 +314,9 @@ public:
      */
     static void runTests();
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* CARTESIANCANVAS_H_- */

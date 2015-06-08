@@ -12,6 +12,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \brief Enum for keyboard and mouse keys.
  *  \details Key is an enum for the various keyboard and mouse keys.
  *  \note These are directly mapped to GLFW's integer definitions of the keys.
@@ -156,5 +160,9 @@ enum Action {
     TSGL_PRESS          = GLFW_PRESS,
     TSGL_RELEASE        = GLFW_RELEASE
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* KEYNUMS_H_ */

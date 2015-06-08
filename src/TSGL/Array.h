@@ -11,6 +11,10 @@
 
 #include <stdexcept>  // Needed for exceptions
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*!
  * \class Array
  * \brief Creates an Array object.
@@ -136,5 +140,9 @@ class Array {
         return myArray[last_] = item;                           // Actually add the item
     }
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* ARRAY_H_ */

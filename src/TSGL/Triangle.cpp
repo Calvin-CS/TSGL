@@ -7,6 +7,10 @@
 
 #include "Triangle.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color) {
     vertices[0] = x1;
     vertices[1] = y1;
@@ -28,3 +32,7 @@ void Triangle::draw() {
     glBufferData(GL_ARRAY_BUFFER, 3 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
 }
+
+#ifdef _WIN32
+}
+#endif

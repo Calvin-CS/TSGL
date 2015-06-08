@@ -13,6 +13,10 @@
 
 typedef long double Decimal;  // Define the variable type to use
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \class Function
  *  \brief A base class for creating mathematical functions plottable by a CartesianCanvas.
  *  \details Function provides a base class for the creation of mathematical functions.
@@ -223,5 +227,9 @@ class RoundFunction : public Function {
         return round(x);
     }
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* FUNCTION_H_ */

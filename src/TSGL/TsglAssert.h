@@ -12,7 +12,9 @@
 #ifdef _WIN32
 #include <string>
 #endif
+
 namespace tsgl {
+
 /*!
  *
  */
@@ -25,4 +27,5 @@ static void tsglAssert(bool b, std::string message) {
 #define tsglAssert tsgl::tsglAssert
 
 }
+
 #endif /* SRC_TSGL_TSGLASSERT_H_ */

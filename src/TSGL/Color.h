@@ -15,6 +15,10 @@
 
 const int NUM_COLORS = 256, MAX_COLOR = 255;
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*!
  * \brief Floating point RGBA color struct.
  * \details ColorFloat defines a color with floating point red, green, blue, and alpha components.
@@ -254,5 +258,9 @@ class Colors {
     Colors(const Colors&);
     Colors & operator=(const Colors&);
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* COLOR_H_ */

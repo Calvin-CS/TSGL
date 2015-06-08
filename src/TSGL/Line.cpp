@@ -7,6 +7,10 @@
 
 #include "Line.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 Line::Line(int x1, int y1, int x2, int y2, const ColorFloat &color) {
     vertices[0] = x1;
     vertices[1] = y1;
@@ -22,3 +26,7 @@ void Line::draw() {
     glBufferData(GL_ARRAY_BUFFER, 2 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_LINES, 0, 2);
 }
+
+#ifdef _WIN32
+}
+#endif

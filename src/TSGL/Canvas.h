@@ -46,6 +46,10 @@
   #define Polyline tsgl::Polyline
 #endif
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 /*! \class Canvas
  *  \brief A GL window with numerous built-in, thread-safe drawing operations.
  *  \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
@@ -557,5 +561,9 @@ public:
      */
     void close();
 };
+
+#ifdef _WIN32
+}
+#endif
 
 #endif /* CANVAS_H_ */

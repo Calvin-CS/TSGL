@@ -1,5 +1,9 @@
 #include "TextureHandler.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
   //The instructions for the stb library say to define it exactly once in a .c or .cpp file (NOT a .h file)
   #ifndef STB_DEFINE
     #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -489,3 +493,9 @@ bool TextureHandler::testLoadFont(TextureHandler& test) {
     return false;
   }
 }
+
+//----------------------------End Unit testing---------------------------------------
+
+#ifdef _WIN32
+}
+#endif

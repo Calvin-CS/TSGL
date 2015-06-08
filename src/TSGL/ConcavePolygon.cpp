@@ -7,6 +7,10 @@
 
 #include "ConcavePolygon.h"
 
+#ifdef _WIN32
+namespace tsgl {
+#endif
+
 ConcavePolygon::ConcavePolygon(int v) {
     if (v < 3) throw std::out_of_range("Cannot have a polygon with fewer than 3 vertices.");
     length = v+1;
@@ -183,3 +187,9 @@ bool ConcavePolygon::testIntersects() {
 bool ConcavePolygon::testPointITriangle() {
   return true;
 }
+
+//---------------------------------------------End Unit testing-----------------------
+
+#ifdef _WIN32
+}
+#endif
