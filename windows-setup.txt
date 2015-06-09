@@ -1,7 +1,12 @@
 Easy (Automatic) Setup:
-  Clone the repository from https://github.com/Calvin-CS/TSGL into a convenient place; e.g. "workspace/tsgl"
-  Extract windows-files.zip to a convenient place
-  Follow the insturctions in "readme-easy-install.txt"
+  Prerequisites
+    Visual Studio 11.0 (2012)
+    Visual Studio 10.0 (2010) [potentially]
+  Instructions:
+    Run tsgl-setup.exe, installing to this directory (which should be the default location)
+    Open tsgl.sln in VS 11.0 (2012)
+    Right click on solution -> Build Solution
+    Done! Right click on any of the test projects -> Debug -> Start New Instance to get started!
 
 Manual Setup:
   Install the Windows 32 version of CMake from the official website if it's not already installed
