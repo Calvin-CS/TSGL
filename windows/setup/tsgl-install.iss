@@ -64,12 +64,13 @@ begin
   ProgPage := CreateOutputProgressPage(SetupMessage(msgWizardPreparing), A);
 
  //Populate dpaths with the urls of the files we need
- dpaths[1] := 'http://downloads.sourceforge.net/project/gnuwin32/freetype/2.3.5-1/freetype-2.3.5-1-bin.zip?r=&ts=1433368411&use_mirror=softlayer-dal';
- dpaths[2] := 'http://downloads.sourceforge.net/project/gnuwin32/freetype/2.3.5-1/freetype-2.3.5-1-dep.zip?r=&ts=1433368374&use_mirror=hivelocity';
- dpaths[3] := 'http://downloads.sourceforge.net/project/glew/glew/1.12.0/glew-1.12.0.zip?r=http%3A%2F%2Fglew.sourceforge.net%2F&ts=1433364634&use_mirror=softlayer-dal';
+ //(Note: SourceForge Links automatically redirect to mirrors, and GitHub has no mirrors)
+ dpaths[1] := 'http://downloads.sourceforge.net/project/gnuwin32/freetype/2.3.5-1/freetype-2.3.5-1-bin.zip';
+ dpaths[2] := 'http://downloads.sourceforge.net/project/gnuwin32/freetype/2.3.5-1/freetype-2.3.5-1-dep.zip';
+ dpaths[3] := 'http://downloads.sourceforge.net/project/glew/glew/1.12.0/glew-1.12.0.zip';
  dpaths[4] := 'https://github.com/glfw/glfw/releases/download/3.1.1/glfw-3.1.1.zip';
  dpaths[5] := 'https://github.com/nothings/stb/archive/master.zip';
- dpaths[6] := 'http://downloads.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz?r=&ts=1433364709&use_mirror=iweb';
+ dpaths[6] := 'http://downloads.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz';
 
  //Get the filenames from those paths
  for i := 1 to 6 do begin
@@ -115,7 +116,7 @@ procedure Del(const Src: String); begin DeleteFile(appdir + Src); end;
 procedure DelDir(const Src: String); begin DelTree(appdir + Src,True,True,True); end;
 procedure Unzip(const Src, Dest: String); begin Run(unzipcmd, appdir + Src + ' -d ' + appdir + Dest, ''); end;
 procedure Make(const Src: String); begin Run(cmakecmd, '-G"Visual Studio 11 2012" ' + appdir + Src, appdir + Src); end;
-procedure Build(const Src: String); begin Run(msbuildcmd, appdir + Src + ' /p:PlatformToolset=v100',''); end;
+procedure Build(const Src: String); begin Run(msbuildcmd, appdir + Src + ' /p:VisualStudioVersion=11.0 /p:PlatformToolset=v110',''); end;
 procedure Untar(const Src: String); var S: String; begin
   Run(untarcmd, 'x ' + appdir + Src, '');
   S := Copy(Src,1,Length(Src)-3);
