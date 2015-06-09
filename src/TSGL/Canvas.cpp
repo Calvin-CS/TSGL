@@ -98,19 +98,22 @@ void Canvas::clear() {
 //NEW
 void Canvas::stop() {
     wait();
+    close();
 }
 
 //NEW
 int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
-    close();
+    renderThread.join();
     return 0;
 }
 
 //NEW
 void Canvas::close() {
     std::cout << "Window closed successfully." << std::endl;
-    renderThread.join();
+    bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    });
 }
 
 void Canvas::draw() {
@@ -776,6 +779,7 @@ bool Canvas::testDraw(Canvas& can) {
   }
 
   //Test 2: Get leftmost and rightmost pixel of the circle
+  //Have to add or subtract 1 from the y so that you can get the correct pixel (center radius is 1. No 0 radius).
   if(can.getPixel(201, 250) == red && can.getPixel(299, 250) == red) {
     passed++;
   } else {

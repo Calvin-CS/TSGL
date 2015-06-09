@@ -32,7 +32,7 @@
 void spectrumFunction(Canvas& can, int & numberOfThreads) {
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
-        int holder = omp_get_num_threads();   //Temp variable
+      int holder = omp_get_num_threads();   //Temp variable
     	int nthreads = 0;    //Actual number of threads
     	if (numberOfThreads <= 0) {  //Check if the argument for the number of threads is valid
     		nthreads = holder;  //If not, use the number of threads that we can use with OMP
