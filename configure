@@ -130,9 +130,6 @@ EOF
   exit 0;
 fi
 
-
-
-
 # Check for make ------------------------------------------------------------
 
 printf "  Checking for GNU make tool... "
@@ -196,6 +193,7 @@ if test "$f_insttool" = NO; then
 fi
 echo "using $f_insttool";
 
+#Checking for libraries here....
 
 
 mkdir bin build docs frames lib
