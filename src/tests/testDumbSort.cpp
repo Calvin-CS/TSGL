@@ -38,7 +38,7 @@ void dumbSortFunction(Canvas& can) {
 	const int SIZE = 550,   // Size of the data pool (set to 550 by default)
 	          IPF = 50;           // Iterations per frame
     int numbers[SIZE];      // Array to store the data
-    int pos = 0, temp, min = 1, max = SIZE - 1, lastSwap = 0;
+    int pos = 0, temp, min = 1, max = SIZE - 2, lastSwap = 0;
     bool goingUp = true;
     for (int i = 0; i < SIZE; i++)
         numbers[i] = rand() % (can.getWindowHeight() - 40);
