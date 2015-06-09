@@ -1,14 +1,30 @@
-Easy (Automatic) Setup:
-  Prerequisites
-    Visual Studio 11.0 (2012)
-    Visual Studio 10.0 (2010) [potentially]
-  Instructions:
-    Run tsgl-setup.exe, installing to this directory (which should be the default location)
-    Open tsgl.sln in VS 11.0 (2012)
-    Right click on solution -> Build Solution
-    Done! Right click on any of the test projects -> Debug -> Start New Instance to get started!
+Easy Automatic Installation (Requires Visual Studio 2012):
+  Run tsgl-setup.exe, installing to this directory (which should be the default location)
+  Open tsgl.sln in Visual Studio 2012
+  Right click on solution -> Build Solution
+  Done! Right click on any of the test projects -> Debug -> Start New Instance to get started!
 
-Manual Setup:
+
+Creating a new project in the same solution as TSGL:
+  Right click on "Solution 'tsgl'" -> Add -> New Project, and create an Empty Project with the name of your choice
+  Right click on your project -> Project Dependencies, and check "tsgl"
+  On the Property Manager, right click on your project -> Add Existing Property Sheet
+    Navigate to tsgl's root folder and import testProperties.props
+  You're all set up! Just "#include <tsgl.h>" at the top of all files using TSGL's functions.
+
+
+Creating a new project in a separate solution from TSGL:
+  Click on the View Menu -> Property Manager
+  In the Property Manager Pane, navigate to tsgl -> Debug |Win 32 -> testProperties
+  Right click on testProperties -> Properties, and navigate to User Macros
+  Verify that the TSGL directories are pointing to the appropriate directories, and, if not, change them accordingly:
+    TsglDllDir should point to your earlier lib directory
+    TsglExternalLibDir should also point to your earlier lib directory
+    TsglIncludeDir should point to your earlier include directory
+  Follow the steps under "Creating a new project in the same solution as TSGL"
+
+
+Manual Installation:
   Install the Windows 32 version of CMake from the official website if it's not already installed
   Clone the repository from https://github.com/Calvin-CS/TSGL into a convenient place; e.g. "workspace/tsgl"
   Create a folder in a convenient place for includes; e.g. "workspace/tsgl/include"
@@ -84,30 +100,3 @@ Manual Setup:
     Copy your dlls from your earlier dlls directory into the project's Debug directory (for later)
     Right click on tsgl in the Solution Exploer, and click "Build"
     Run!
-
-One-time setup for running tests:
-  Click on the View Menu -> Property Manager
-  In the Property Manager Pane, navigate to tsgl -> Debug |Win 32 -> testProperties
-  Right click on testProperties -> Properties, and navigate to User Macros
-  Verify that the TSGL directories are pointing to the appropriate directories, and, if not, change them accordingly:
-    TsglDllDir should point to your earlier lib directory
-    TsglExternalLibDir should also point to your earlier lib directory
-    TsglIncludeDir should point to your earlier include directory
-
-Creating a new project (for each test; e.g., testMandelbrot)
-(NOTE: This should already be done for the bundled tests; these are intended to be directions for making your own)
-  Make sure you've completed "Setup for running tests" above
-  Right click on the tsgl Solution -> Add -> New Project
-    Use an Empty Project, named after the relevant test (e.g., testMandelbrot), in the same directory as tsgl
-  Right click on testMandelbrot -> Project Dependencies, and check "tsgl"
-  Right click on testMandelbrot -> Add -> Existing Item
-    Copy the relevant code from tsgl's src/tests folder into your new project's root directory
-  On the Property Manager, right click on testMandelBrot -> Add Existing Property Sheet
-    Navigate to tsgl's root folder and import testProperties.props
-  Right click on testMandelbrot -> Build
-  Run! (Right click on testMandelbrotin Solution Explorer -> Debug -> Start New Instance)
-
-Notes:
-  Polyline / Rectangle have naming conflicts with Windows classes; possible solutions:
-    Rename the TSGL variants to something else (e.g., PolySegment and Quadrangle)
-    Add a namespace around TSGL (might be the best, though it could take a while)
