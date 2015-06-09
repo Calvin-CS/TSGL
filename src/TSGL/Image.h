@@ -14,9 +14,7 @@
 #include "TextureHandler.h"  // For loading images
 #include "TsglAssert.h"      // For unit testing purposes
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 /*! \class Image
  *  \brief Draw an image to the Canvas.
@@ -63,8 +61,6 @@ class Image : public Shape {
     static void runTests();
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* IMAGE_H_ */

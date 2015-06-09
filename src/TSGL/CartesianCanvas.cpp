@@ -1,8 +1,6 @@
 #include "CartesianCanvas.h"
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 CartesianCanvas::CartesianCanvas(double timerLength)
     : Canvas(timerLength) {
@@ -222,6 +220,4 @@ bool CartesianCanvas::testDraw(CartesianCanvas& can) {
 
 //-----------------End Unit testing----------------------------------------------------
 
-#ifdef _WIN32
 }
-#endif

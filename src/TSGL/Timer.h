@@ -17,9 +17,7 @@ typedef std::chrono::high_resolution_clock highResClock;
 typedef std::chrono::duration<double> duration_d;
 typedef std::chrono::time_point<highResClock, duration_d> timepoint_d;
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 /*! \class Timer
  *  \brief A class for various timing operations.
@@ -112,8 +110,6 @@ class Timer {
     static void threadSleepFor(double duration);    // Sleep the thread for a specified duration
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* TIMER_H_ */

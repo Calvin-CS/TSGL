@@ -7,9 +7,7 @@
 
 #include "Color.h"
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 ColorFloat::ColorFloat() {
     R = G = B = A = 1.0f;
@@ -204,6 +202,4 @@ ColorFloat Colors::highContrastColor(unsigned int section, int start) {
     return ColorHSV(hue * 6.0f, sat, val, 1.0f);
 }
 
-#ifdef _WIN32
 }
-#endif

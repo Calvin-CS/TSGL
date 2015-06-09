@@ -10,9 +10,7 @@
 
 #include "Shape.h"  // For extending our Shape object
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 /*! \class Triangle
  *  \brief Draw a simple Triangle.
@@ -43,8 +41,6 @@ class Triangle : public Shape {
     void draw();
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* TRIANGLE_H_ */

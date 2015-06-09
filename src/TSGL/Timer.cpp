@@ -7,9 +7,7 @@
 
 #include "Timer.h"
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 Timer::Timer(double period) {
     reset(period);
@@ -69,6 +67,4 @@ void Timer::threadSleepFor(double duration) {
     std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (duration * 1000000000)));
 }
 
-#ifdef _WIN32
 }
-#endif

@@ -13,9 +13,7 @@
 #include <queue>         // std::queue
 #include <iostream>      // DEBUGGING
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 /*! \class ConcavePolygon
  *  \brief Draw an arbitrary Concave polygon with colored vertices.
@@ -115,8 +113,6 @@ class ConcavePolygon : public Shape {
     static void runTests();
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* COLOREDPOLYGON_H_ */

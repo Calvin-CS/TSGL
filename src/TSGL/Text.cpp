@@ -8,9 +8,7 @@
 #include "Text.h"
 #include "iostream"
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 Text::Text(std::wstring s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color) {
     isTextured = true;  // Let the Canvas know we're a textured object
@@ -43,6 +41,4 @@ void Text::draw() {
     delete vertices;
 }
 
-#ifdef _WIN32
 }
-#endif

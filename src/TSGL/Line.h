@@ -10,9 +10,7 @@
 
 #include "Shape.h"  // For extending our Shape object
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 /*! \class Line
  *  \brief Draw a simple line.
@@ -41,8 +39,6 @@ class Line : public Shape {
     void draw();
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* LINE_H_ */

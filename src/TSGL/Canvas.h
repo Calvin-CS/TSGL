@@ -46,9 +46,7 @@
   #define Polyline tsgl::Polyline
 #endif
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 /*! \class Canvas
  *  \brief A GL window with numerous built-in, thread-safe drawing operations.
@@ -568,8 +566,6 @@ public:
     void close();
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* CANVAS_H_ */

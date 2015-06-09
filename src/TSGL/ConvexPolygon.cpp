@@ -7,9 +7,7 @@
 
 #include "ConvexPolygon.h"
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 ConvexPolygon::ConvexPolygon(int v) {
     if (v < 3) throw std::out_of_range("Cannot have a polygon with fewer than 3 vertices.");
@@ -46,6 +44,4 @@ void ConvexPolygon::runTests() {
     tsglAssert(true, "False");
 }
 
-#ifdef _WIN32
 }
-#endif

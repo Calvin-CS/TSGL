@@ -11,9 +11,7 @@
 #include <GL/glew.h>    // Needed for GL function calls
 #include "Color.h"      // Needed for color type
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 /*! \class Shape
  *  \brief A class for drawing shapes onto a Canvas or CartesianCanvas.
@@ -61,8 +59,6 @@ class Shape {
     bool getIsTextured() { return isTextured; }
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* SHAPE_H_ */

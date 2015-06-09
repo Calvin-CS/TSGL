@@ -11,9 +11,7 @@
 
 #include <stdexcept>  // Needed for exceptions
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 /*!
  * \class Array
@@ -141,8 +139,6 @@ class Array {
     }
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* ARRAY_H_ */

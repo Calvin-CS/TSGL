@@ -35,9 +35,7 @@
 
 typedef GLuint GLtexture;
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 class TextureHandler {
  private:
@@ -134,8 +132,6 @@ class TextureHandler {
     static void runTests();
 };
 
-#ifdef _WIN32
 }
-#endif
 
 #endif /* TEXTURELOADER_H_ */

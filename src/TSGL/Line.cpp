@@ -7,9 +7,7 @@
 
 #include "Line.h"
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 Line::Line(int x1, int y1, int x2, int y2, const ColorFloat &color) {
     vertices[0] = x1;
@@ -27,6 +25,4 @@ void Line::draw() {
     glDrawArrays(GL_LINES, 0, 2);
 }
 
-#ifdef _WIN32
 }
-#endif

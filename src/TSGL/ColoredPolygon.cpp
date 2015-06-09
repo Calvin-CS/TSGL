@@ -7,9 +7,7 @@
 
 #include "ColoredPolygon.h"
 
-#ifdef _WIN32
 namespace tsgl {
-#endif
 
 ColoredPolygon::ColoredPolygon(int v) {
     if (v < 3) throw std::out_of_range("Cannot have a polygon with fewer than 3 vertices.");
@@ -42,6 +40,4 @@ void ColoredPolygon::draw() {
     glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 }
 
-#ifdef _WIN32
 }
-#endif
