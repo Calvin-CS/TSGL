@@ -63,13 +63,17 @@
     </Link>
     <PostBuildEvent>
       <Command>if not exist "$(SolutionDir)Debug\assets\" mkdir "$(SolutionDir)Debug\assets\";
-if not exist "$(SolutionDir)Debug\pics\" mkdir "$(SolutionDir)Debug\pics\";
+if not exist "$(SolutionDir)Debug\assets\pics\" mkdir "$(SolutionDir)Debug\assets\pics\";
+if not exist "$(SolutionDir)Debug\assets\freefont\" mkdir "$(SolutionDir)Debug\assets\freefont\";
 if not exist "$(SolutionDir)vs2012\assets\" mkdir "$(SolutionDir)vs2012\assets\";
-if not exist "$(SolutionDir)vs2012\pics\" mkdir "$(SolutionDir)vs2012\pics\";
+if not exist "$(SolutionDir)vs2012\assets\pics\" mkdir "$(SolutionDir)vs2012\assets\pics\";
+if not exist "$(SolutionDir)vs2012\assets\freefont\" mkdir "$(SolutionDir)vs2012\assets\freefont\";
 copy "$(SolutionDir)assets\*" "$(SolutionDir)Debug\assets\";
-copy "$(SolutionDir)pics\*" "$(SolutionDir)Debug\pics\";
+copy "$(SolutionDir)assets\freefont*" "$(SolutionDir)Debug\assets\freefont\";
+copy "$(SolutionDir)assets\pics\*" "$(SolutionDir)Debug\assets\pics\";
 copy "$(SolutionDir)assets\*" "$(SolutionDir)vs2012\assets\";
-copy "$(SolutionDir)pics\*" "$(SolutionDir)vs2012\pics\";
+copy "$(SolutionDir)assets\freefont\*" "$(SolutionDir)vs2012\assets\freefont\";
+copy "$(SolutionDir)assets\pics\*" "$(SolutionDir)vs2012\assets\pics\";
 copy "$(TsglDllDir)*" "$(SolutionDir)\Debug\";</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
