@@ -8,6 +8,8 @@
 #include <omp.h>
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Draws a neat pattern of points to a canvas using OMP and takes in a command line
  * argument for the number of threads to use

@@ -7,6 +7,8 @@
 
 #include "tsgl.h"
 
+using namespace tsgl;
+
 /*!
  * \brief Target practice mini-game!
  * \details Creates the target practice mini-game in this way:

@@ -7,6 +7,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Tiny little painting function for drawing with the mouse
  * \details

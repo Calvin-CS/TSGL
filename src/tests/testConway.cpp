@@ -6,8 +6,9 @@
  */
 
 #include <tsgl.h>
-
 #include "Conway/LifeFarm.h"
+
+using namespace tsgl;
 
 void conwayFunction(Canvas& can) {
     const int IPF = 100,                   // Iterations per frame

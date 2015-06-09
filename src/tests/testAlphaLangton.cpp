@@ -10,6 +10,8 @@
 
 #include "Langton/AntFarm.h"
 
+using namespace tsgl;
+
 /*!
  * \brief Simulates 4 Langton's Ants with alpha transparency used for drawing and a couple
  * other neat features.

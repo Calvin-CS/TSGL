@@ -13,6 +13,8 @@
 #include <tsgl.h>
 #include "LangtonAnt.h"
 
+using namespace tsgl;
+
 class LangtonAnt;  //Forward Declaration
 
 class AntFarm {

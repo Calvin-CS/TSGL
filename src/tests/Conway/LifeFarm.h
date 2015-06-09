@@ -11,6 +11,8 @@
 #include <tsgl.h>
 #include <omp.h>
 
+using namespace tsgl;
+
 class LifeFarm {
 private:
     void initGun();

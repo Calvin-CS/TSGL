@@ -10,6 +10,8 @@
 
 #include "AntFarm.h"
 
+using namespace tsgl;
+
 class AntFarm;  //Forward Declaration
 
 // Shared values between langton functions

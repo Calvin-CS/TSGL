@@ -7,6 +7,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Provides a visualization for a basic (and slow) shaker sort.
  * \details

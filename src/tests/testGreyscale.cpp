@@ -8,6 +8,8 @@
 #include <omp.h>
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Grabs the pixels from an image on the Canvas and converts them to grayscale.
  * \details

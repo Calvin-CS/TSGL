@@ -12,6 +12,8 @@
 #include <queue>
 #include <tsgl.h>
 
+using namespace tsgl;
+
 #ifdef _WIN32
 const double PI = 3.1415926535;
 #else

@@ -7,6 +7,8 @@
 
 #include "Mandelbrot/GradientMandelbrot.h"
 
+using namespace tsgl;
+
 /*!
  * \brief Draws a gradient Mandelbrot set on a CartesianCanvas
  * \details Same as mandelbrotFunction(), but with smoother shading ( see

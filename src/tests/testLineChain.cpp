@@ -7,6 +7,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Draws a chain of randomly colored lines at the target framerate (default 60 FPS)
  * \details

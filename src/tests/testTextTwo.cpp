@@ -7,6 +7,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /**
  * \brief Tests to see if text is still drawn if a font is specified (just to make sure the error handling for when one is not specified didn't break anything).
  * \details Same as textFunction, but without the setFont line uncommented out.

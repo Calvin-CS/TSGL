@@ -17,6 +17,8 @@
 #include <queue>
 #include <tsgl.h>
 
+using namespace tsgl;
+
 typedef CartesianCanvas Cart;
 typedef std::complex<long double> complex;
 

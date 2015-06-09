@@ -7,6 +7,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Draws semi-transparent rectangles on a Canvas
  * \details

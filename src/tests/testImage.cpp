@@ -7,6 +7,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Draws various images on a Canvas.
  * \details Very basic test function showcasing image drawing capabilities.

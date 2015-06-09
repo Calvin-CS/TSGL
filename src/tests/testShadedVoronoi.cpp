@@ -7,6 +7,8 @@
 
 #include "ShadedVoronoi.cpp"
 
+using namespace tsgl;
+
 /*!
  * \brief Draws a randomly generated Voronoi diagram with fancy shading
  * \details Same principle as voronoiFunction(). Key differences:

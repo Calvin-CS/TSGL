@@ -7,6 +7,8 @@
 
 #include "tsgl.h"
 
+using namespace tsgl;
+
 const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
 /*!

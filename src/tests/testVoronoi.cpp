@@ -7,6 +7,8 @@
 
 #include "Voronoi.cpp"
 
+using namespace tsgl;
+
 /*!
  * \brief Draws a randomly generated Voronoi diagram, using OMP and private variables
  * ( see http://en.wikipedia.org/wiki/Voronoi_diagram ).

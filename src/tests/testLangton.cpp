@@ -10,6 +10,8 @@
 
 #include "Langton/AntFarm.h"
 
+using namespace tsgl;
+
 /*!
  * \brief Simulates Langton's Ant at speeds faster than the Canvas' framerate
  * \details

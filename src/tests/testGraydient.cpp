@@ -8,6 +8,8 @@
 #include <omp.h>
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Draws a diagonal black-to-white gradient using OMP and takes in a command line argument for the
  * number of threads to use

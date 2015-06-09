@@ -7,6 +7,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Draws a large number of pixels on a Canvas at a high framerate.
  * \details Very basic stress test for the Canvas' drawPoint() function.

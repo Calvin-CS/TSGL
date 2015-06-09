@@ -10,6 +10,8 @@
 
 #include "Mandelbrot.h"
 
+using namespace tsgl;
+
 class GradientMandelbrot : public Mandelbrot {
 public:
   GradientMandelbrot();

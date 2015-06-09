@@ -7,6 +7,8 @@
 
 #include "tsgl.h"
 
+using namespace tsgl;
+
 int main() {
    Canvas::runTests();
    TextureHandler::runTests();

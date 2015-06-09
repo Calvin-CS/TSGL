@@ -19,6 +19,7 @@
 #endif
 
 using namespace std;
+using namespace tsgl;
 
 class ImageInverter {
 public:

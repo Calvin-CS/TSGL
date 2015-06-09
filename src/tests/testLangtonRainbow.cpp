@@ -9,6 +9,8 @@
 
 #include "Langton/AntFarm.h"
 
+using namespace tsgl;
+
 /*!
  * \brief Simulates 4 Langton's Ants at speeds faster than the Canvas' framerate, with nicer colors!
  * \details Same as langtonColonyFunction(), but with dynamically-colored ants.

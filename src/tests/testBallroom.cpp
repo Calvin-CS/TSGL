@@ -2,6 +2,8 @@
 #include <cmath>
 #include <tsgl.h>
 
+using namespace tsgl;
+
 struct Vector2 {
  float x,y;
  Vector2() {

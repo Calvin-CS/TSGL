@@ -7,6 +7,8 @@
 
 #include "Pong.cpp"
 
+using namespace tsgl;
+
 /*!
  * \brief Plays a nice game of Pong!
  * \details

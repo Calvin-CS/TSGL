@@ -7,6 +7,8 @@
 
 #include "Mandelbrot/Mandelbrot.h"
 
+using namespace tsgl;
+
 /*!
  * \brief Draws the Mandelbrot set on a CartesianCanvas with custom controls, a specified target update rate,
  *  and a dynamic number of threads and uses command-line arguments to specify the number of threads to use

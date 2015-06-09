@@ -7,6 +7,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 float randfloat(int divisor = 10000) {
     return (rand() % divisor) / (float) divisor;
 }

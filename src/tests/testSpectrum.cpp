@@ -8,6 +8,8 @@
 #include <omp.h>
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * \brief Draws the full spectrum across the x, y, and time dimensions at the given framerate
  * and a static number of threads using OMP and takes in a command line argument for the number of threads to use
