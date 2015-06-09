@@ -52,7 +52,7 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
 	const unsigned int thickness = 3;
 	unsigned int width = can.getWindowWidth(),
 			height = can.getWindowHeight();
-	can.drawImage("assets/colorful_cars.jpg", 0, 0, width, height);
+	can.drawImage("../assets/colorful_cars.jpg", 0, 0, width, height);
 	Timer::threadSleepFor(.25);
 	uint8_t* buffer = can.getScreenBuffer();
 

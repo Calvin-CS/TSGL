@@ -19,7 +19,7 @@ void textFunctionTwo(Canvas& can) {
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-    can.setFont("assets/freefont/FreeMono.ttf");  //This line is commnted out (or has been deleted) in textFunction()
+    can.setFont("../assets/freefont/FreeMono.ttf");  //This line is commnted out (or has been deleted) in textFunction()
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);

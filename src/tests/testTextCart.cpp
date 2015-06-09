@@ -17,7 +17,7 @@ typedef CartesianCanvas Cart;
  * \param can, Reference to the CartesianCanvas being drawn to (Cart is a typedef for CartesianCanvas)
  */
 void textCartFunction(Cart& can) {
-    can.setFont("assets/freefont/FreeSerif.ttf");
+    can.setFont("../assets/freefont/FreeSerif.ttf");
     can.drawText(L"A long time ago, in a galaxy far, far away.", .05, .8, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", .05, .6, 32, BLACK);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", .05, .4, 32, BLACK);

@@ -18,14 +18,14 @@ using namespace tsgl;
  * \param can, Reference to the Canvas being drawn to
  */
 void imageFunction(Canvas& can) {
-    can.drawImage("assets/test.png", 0, 0, 400, 300);
-    can.drawImage("assets/ship.bmp", 400, 0, 400, 300);
-    can.drawImage("assets/shiprgb.bmp", 800, 0, 400, 300);
-    can.drawImage("assets/sky_main.jpg", 0, 300, 400, 300);
-    can.drawImage("assets/Captain-falcon.png", 400, 300, 400, 300);
-    can.drawImage("assets/mini.jpg", 800, 300, 400, 300);
+    can.drawImage("../assets/test.png", 0, 0, 400, 300);
+    can.drawImage("../assets/ship.bmp", 400, 0, 400, 300);
+    can.drawImage("../assets/shiprgb.bmp", 800, 0, 400, 300);
+    can.drawImage("../assets/sky_main.jpg", 0, 300, 400, 300);
+    can.drawImage("../assets/Captain-falcon.png", 400, 300, 400, 300);
+    can.drawImage("../assets/mini.jpg", 800, 300, 400, 300);
 
-    can.drawImage("assets/bestpicture.png", 200, 0, 800, 600, 0.25f);    //ALPHA
+    can.drawImage("../assets/bestpicture.png", 200, 0, 800, 600, 0.25f);    //ALPHA
 }
 
 int main() {

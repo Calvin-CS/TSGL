@@ -81,8 +81,8 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //new, no font is set, load up a default one
-      fprintf(stderr, "No Font set! Now loading from assets/freefont/FreeSerif.ttf ....\n");    //NEW
-      loadFont("assets/freefont/FreeSerif.ttf");    //NEW
+      fprintf(stderr, "No Font set! Now loading from ../assets/freefont/FreeSerif.ttf ....\n");    //NEW
+      loadFont("../assets/freefont/FreeSerif.ttf");    //NEW
     }
     FT_GlyphSlot glyph = fontFace->glyph;
     FT_UInt current_glyph_index, previous_glyph_index = 0;

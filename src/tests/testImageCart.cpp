@@ -17,14 +17,14 @@ typedef CartesianCanvas Cart;
  * \param can, Reference to the CartesianCanvas being drawn to (Cart is a typedef for CartesianCanvas)
  */
 void imageCartFunction(Cart& can) {
-    can.drawImage("assets/test.png", 0, 3, 2, 1.5);
-    can.drawImage("assets/ship.bmp", 2, 3, 2, 1.5);
-    can.drawImage("assets/shiprgb.bmp", 4, 3, 2, 1.5);
-    can.drawImage("assets/sky_main.jpg", 0, 1.5, 2, 1.5);
-    can.drawImage("assets/Captain-falcon.png", 2, 1.5, 2, 1.5);
-    can.drawImage("assets/mini.jpg", 4, 1.5, 2, 1.5);
+    can.drawImage("../assets/test.png", 0, 3, 2, 1.5);
+    can.drawImage("../assets/ship.bmp", 2, 3, 2, 1.5);
+    can.drawImage("../assets/shiprgb.bmp", 4, 3, 2, 1.5);
+    can.drawImage("../assets/sky_main.jpg", 0, 1.5, 2, 1.5);
+    can.drawImage("../assets/Captain-falcon.png", 2, 1.5, 2, 1.5);
+    can.drawImage("../assets/mini.jpg", 4, 1.5, 2, 1.5);
 
-    can.drawImage("assets/bestpicture.png", 1, 3, 4, 3, 0.25f);    //ALPHA
+    can.drawImage("../assets/bestpicture.png", 1, 3, 4, 3, 0.25f);    //ALPHA
 }
 
 int main() {
