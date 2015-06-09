@@ -13,5 +13,6 @@
 #include "Timer.h"
 #include "Color.h"
 #include "Keynums.h"
+#include "Error.h"
 
 #endif /* TSGL_H_ */

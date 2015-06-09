@@ -31,6 +31,8 @@
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
+
+#include "Error.h"
 #include "TsglAssert.h"     // For unit testing purposes
 
 typedef GLuint GLtexture;

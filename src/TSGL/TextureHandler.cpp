@@ -81,7 +81,7 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //new, no font is set, load up a default one
-      fprintf(stderr, "No Font set! Now loading from ../assets/freefont/FreeSerif.ttf ....\n");    //NEW
+      TsglErr("No Font set! Now loading from ../assets/freefont/FreeSerif.ttf....");    //NEW
       loadFont("../assets/freefont/FreeSerif.ttf");    //NEW
     }
     FT_GlyphSlot glyph = fontFace->glyph;
@@ -311,16 +311,16 @@ GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int 
 GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
                                              GLtexture &texture) const {
     unsigned char *data;
-    int w, h, n;
-    printf("Loading %s\n", filename);
+    int w = 0, h = 0;
+    TsglDebug(std::string("Loading ") + filename);
     data = stbi_load(filename, &w, &h, 0, 4);
     assert(data);
     if (!data) {
-      printf("Loading failed");
+      TsglErr(std::string("Loading ") + filename + " failed");
       return texture;
     }
-    printf("Loading succeeded");
-    std::cout << w << "," << h << std::endl;
+    TsglDebug(std::string("Loading ") + filename + " succeeded");
+    TsglDebug(to_string(w) + "," + to_string(h));
     createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
     free(data);
     return texture;
@@ -329,16 +329,16 @@ GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int 
 GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
                                        GLtexture &texture) const {
 	unsigned char *data;
-	int w, h, n;
-	printf("Loading %s\n", filename);
+	int w = 0, h = 0;
+	TsglDebug(std::string("Loading ") + filename);
 	data = stbi_load(filename, &w, &h, 0, 4);
 	assert(data);
 	if (!data) {
-	  printf("Loading failed");
+	  TsglErr(std::string("Loading ") + filename + " failed");
 	  return texture;
 	}
-  printf("Loading succeeded");
-  std::cout << w << "," << h << "," << n << std::endl;
+	TsglDebug(std::string("Loading ") + filename + " succeeded");
+	TsglDebug(to_string(w) + "," + to_string(h));
   createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
   free(data);
   return texture;
