@@ -1,96 +1,10 @@
-Files that changed:
-TSGL/TextureHandler.h TSGL/TextureHandler.cpp
-mkdir -p build/TSGL
-Building src/TSGL/TextureHandler.cpp
-g++ -c -O3 -g3 -Wall -Wextra -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc/TSGL/ -I/usr/include/ -I/usr/local/include/ -I/opt/AMDAPP/include/ -I/usr/include/c++/4.6/ -I/usr/include/c++/4.6/x86_64-linux-gnu/ -I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ -I./ $(pkg-config --cflags freetype2) -std=c++0x -fopenmp -Wno-narrowing -fpermissive -MMD -MP -o "build/TSGL/TextureHandler.o" "src/TSGL/TextureHandler.cpp"
-src/TSGL/TextureHandler.cpp:473:73: error: macro "assert" passed 2 arguments, but takes just 1
-In file included from src/TSGL/TextureHandler.cpp:10:0:
-./stb/stb.h:1040:27: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
-./stb/stb.h:1280:7: warning: unused parameter ‘target_pos’ [-Wunused-parameter]
-./stb/stb.h:1280:7: warning: unused parameter ‘curpos’ [-Wunused-parameter]
-./stb/stb.h:1280:7: warning: unused parameter ‘maxvel’ [-Wunused-parameter]
-./stb/stb.h:1280:7: warning: unused parameter ‘maxacc’ [-Wunused-parameter]
-./stb/stb.h:1280:7: warning: unused parameter ‘dt’ [-Wunused-parameter]
-./stb/stb.h:1280:7: warning: unused parameter ‘curvel’ [-Wunused-parameter]
-./stb/stb.h: In function ‘int stb_float_eq(float, float, float, int)’:
-./stb/stb.h:1288:21: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
-./stb/stb.h:1288:34: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
-./stb/stb.h: In function ‘char* stb_plural(int)’:
-./stb/stb.h:1611:25: warning: invalid conversion from ‘const char*’ to ‘char*’ [-fpermissive]
-./stb/stb.h: In function ‘void* malloc_base(void*, size_t, stb__alloc_type, int)’:
-./stb/stb.h:2637:40: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
-./stb/stb.h: In function ‘unsigned int stb_hashptr(void*)’:
-./stb/stb.h:3142:36: warning: cast from ‘void*’ to ‘unsigned int’ loses precision [-fpermissive]
-./stb/stb.h: In function ‘unsigned int stb_rehash_improved(unsigned int)’:
-./stb/stb.h:3159:32: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-./stb/stb.h: In function ‘unsigned int stb_hash_fast(void*, int)’:
-./stb/stb.h:3191:15: warning: cast from ‘unsigned char*’ to ‘int’ loses precision [-fpermissive]
-./stb/stb.h: In function ‘int stb_filewrite(char*, void*, size_t)’:
-./stb/stb.h:4771:38: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
-./stb/stb.h: In function ‘void stb_fput_varlen64(FILE*, stb_uint64)’:
-./stb/stb.h:5282:19: warning: comparison of unsigned expression < 0 is always false [-Wtype-limits]
-./stb/stb.h: In function ‘void stb_fput_ranged(FILE*, int, int, stb_uint)’:
-./stb/stb.h:5301:21: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
-./stb/stb.h: At global scope:
-./stb/stb.h:5319:9: warning: unused parameter ‘b’ [-Wunused-parameter]
-./stb/stb.h: In function ‘char** stb_getopt(int*, char**)’:
-./stb/stb.h:5392:42: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
-In file included from src/TSGL/TextureHandler.cpp:10:0:
-./stb/stb.h: At global scope:
-./stb/stb.h:5763:29: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
-./stb/stb.h: In function ‘void stb__add_edge(stb_matcher*, int, int, int)’:
-./stb/stb.h:6685:32: warning: narrowing conversion of ‘type’ from ‘int’ to ‘stb_int16 {aka short int}’ inside { } [-fpermissive]
-./stb/stb.h:6685:32: warning: narrowing conversion of ‘to’ from ‘int’ to ‘stb_uint16 {aka short unsigned int}’ inside { } [-fpermissive]
-./stb/stb.h: In function ‘int stb_regex(char*, char*)’:
-./stb/stb.h:7398:39: warning: cast from ‘char*’ to ‘int’ loses precision [-fpermissive]
-./stb/stb.h:7429:54: warning: cast from ‘char*’ to ‘int’ loses precision [-fpermissive]
-./stb/stb.h:7430:38: warning: cast from ‘char*’ to ‘int’ loses precision [-fpermissive]
-./stb/stb.h: In function ‘stbfile* stb_openf(FILE*)’:
-./stb/stb.h:7518:25: warning: missing initializer for member ‘stbfile::inend’ [-Wmissing-field-initializers]
-./stb/stb.h:7518:25: warning: missing initializer for member ‘stbfile::<anonymous>’ [-Wmissing-field-initializers]
-./stb/stb.h: At global scope:
-./stb/stb.h:7527:12: warning: unused parameter ‘f’ [-Wunused-parameter]
-./stb/stb.h:7528:21: warning: unused parameter ‘f’ [-Wunused-parameter]
-./stb/stb.h:7528:21: warning: unused parameter ‘buffer’ [-Wunused-parameter]
-./stb/stb.h:7528:21: warning: unused parameter ‘len’ [-Wunused-parameter]
-./stb/stb.h:7529:12: warning: unused parameter ‘f’ [-Wunused-parameter]
-./stb/stb.h:7529:12: warning: unused parameter ‘ch’ [-Wunused-parameter]
-./stb/stb.h:7530:21: warning: unused parameter ‘f’ [-Wunused-parameter]
-./stb/stb.h:7530:21: warning: unused parameter ‘buffer’ [-Wunused-parameter]
-./stb/stb.h:7530:21: warning: unused parameter ‘len’ [-Wunused-parameter]
-./stb/stb.h:7531:13: warning: unused parameter ‘f’ [-Wunused-parameter]
-./stb/stb.h:7531:13: warning: unused parameter ‘where’ [-Wunused-parameter]
-./stb/stb.h:7531:13: warning: unused parameter ‘buffer’ [-Wunused-parameter]
-./stb/stb.h:7531:13: warning: unused parameter ‘len’ [-Wunused-parameter]
-./stb/stb.h: In function ‘stbfile* stb_open_inbuffer(void*, unsigned int)’:
-./stb/stb.h:7562:72: warning: missing initializer for member ‘stbfile::f’ [-Wmissing-field-initializers]
-./stb/stb.h:7562:72: warning: missing initializer for member ‘stbfile::buffer’ [-Wmissing-field-initializers]
-./stb/stb.h:7562:72: warning: missing initializer for member ‘stbfile::indata’ [-Wmissing-field-initializers]
-./stb/stb.h:7562:72: warning: missing initializer for member ‘stbfile::inend’ [-Wmissing-field-initializers]
-./stb/stb.h:7562:72: warning: missing initializer for member ‘stbfile::<anonymous>’ [-Wmissing-field-initializers]
-./stb/stb.h: In function ‘stbfile* stb_open_outbuffer(unsigned char**)’:
-./stb/stb.h:7644:71: warning: missing initializer for member ‘stbfile::f’ [-Wmissing-field-initializers]
-./stb/stb.h:7644:71: warning: missing initializer for member ‘stbfile::buffer’ [-Wmissing-field-initializers]
-./stb/stb.h:7644:71: warning: missing initializer for member ‘stbfile::indata’ [-Wmissing-field-initializers]
-./stb/stb.h:7644:71: warning: missing initializer for member ‘stbfile::inend’ [-Wmissing-field-initializers]
-./stb/stb.h:7644:71: warning: missing initializer for member ‘stbfile::<anonymous>’ [-Wmissing-field-initializers]
-src/TSGL/TextureHandler.cpp: In member function ‘GLtexture TextureHandler::loadTextureFromJPG(const char*, unsigned int&, unsigned int&, GLtexture&) const’:
-src/TSGL/TextureHandler.cpp:312:15: warning: unused variable ‘n’ [-Wunused-variable]
-src/TSGL/TextureHandler.cpp: At global scope:
-src/TSGL/TextureHandler.cpp:309:11: warning: unused parameter ‘width’ [-Wunused-parameter]
-src/TSGL/TextureHandler.cpp:309:11: warning: unused parameter ‘height’ [-Wunused-parameter]
-src/TSGL/TextureHandler.cpp:327:11: warning: unused parameter ‘width’ [-Wunused-parameter]
-src/TSGL/TextureHandler.cpp:327:11: warning: unused parameter ‘height’ [-Wunused-parameter]
-src/TSGL/TextureHandler.cpp: In static member function ‘static void TextureHandler::runTests()’:
-src/TSGL/TextureHandler.cpp:473:74: warning: statement is a reference, not call, to function ‘assert’ [-Waddress]
-src/TSGL/TextureHandler.cpp:473:74: warning: statement has no effect [-Wunused-value]
-src/TSGL/TextureHandler.cpp: At global scope:
-src/TSGL/TextureHandler.cpp:481:6: warning: unused parameter ‘test’ [-Wunused-parameter]
-In file included from src/TSGL/TextureHandler.cpp:10:0:
-./stb/stb.h: In function ‘char* stb_fget_string(FILE*, void*)’:
-./stb/stb.h:5341:23: warning: ignoring return value of ‘size_t fread(void*, size_t, size_t, FILE*)’, declared with attribute warn_unused_result [-Wunused-result]
-./stb/stb.h: In function ‘int stb_fullpath(char*, int, char*)’:
-./stb/stb.h:4923:28: warning: ignoring return value of ‘char* getcwd(char*, size_t)’, declared with attribute warn_unused_result [-Wunused-result]
-At global scope:
-cc1plus: warning: unrecognized command line option "-Wno-narrowing" [enabled by default]
-make: *** [build/TSGL/TextureHandler.o] Error 1
+mkdir -p build/tests
+Building testShadedVoronoi.cpp
+g++ -c -O3 -g3 -Wall -Wextra -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc/TSGL/ -I/usr/include/ -I/usr/local/include/ -I/opt/AMDAPP/include/ -I/usr/include/c++/4.6/ -I/usr/include/c++/4.6/x86_64-linux-gnu/ -I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ -I./ $(pkg-config --cflags freetype2) -std=c++0x -fopenmp -Wno-narrowing -fpermissive -MMD -MP -o "build/tests/testShadedVoronoi.o" "src/tests/testShadedVoronoi.cpp"
+Building testShadedVoronoi
+g++ build/tests/testShadedVoronoi.o lib/libtsgl.a build/tests/ShadedVoronoi.o -o bin/testShadedVoronoi -LTSGL/ -ltsgl -Llib/ -L/opt/local/lib/ -L/usr/lib/ -L/opt/AMDAPP/lib/x86_64/ -L/usr/local/lib/ -L/usr/X11/lib/ -ltsgl -lfreetype -lpng -ljpeg -lGLEW -lglfw -lX11 -lGL -lXrandr -fopenmp
+/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../x86_64-linux-gnu/crt1.o: In function `_start':
+(.text+0x20): undefined reference to `main'
+collect2: ld returned 1 exit status
+make: *** [bin/testShadedVoronoi] Error 1
+rm build/tests/testShadedVoronoi.o

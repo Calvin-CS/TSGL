@@ -753,16 +753,17 @@ void Canvas::runTests() {
   c1.start();
   //HACKY SOLUTION: Have a sleep_for statement. Seems to fix the getPixels() problem.
   std::this_thread::sleep_for(std::chrono::seconds(1));
-  tsglAssert(testDraw(c1), "Unit test for draw failed");
-  tsglAssert(testPerimeter(c1), "Unit test #2 for draw failed");
-  tsglAssert(testLine(c1), "Unit test for line failed");
-  tsglAssert(testAccessors(c1), "Unit test for accessors failed");
+  tsglAssert(testFilledDraw(c1), "Unit test for filled draw failed!");
+  tsglAssert(testPerimeter(c1), "Unit test for non filled draw failed!");
+  tsglAssert(testLine(c1), "Unit test for line failed!");
+  tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
+  tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
   c1.wait();
   std::cout << "All unit tests for Canvas passed!" << std::endl;
 }
 
 //Similar format is used for the remaining unit tests
-bool Canvas::testDraw(Canvas& can) {
+bool Canvas::testFilledDraw(Canvas& can) {
   ColorInt red(255, 0, 0);   //Fill color
   //Test 1: Drawing a filled shape
   can.drawCircle(250, 250, 50, 32, red, true);
@@ -774,6 +775,7 @@ bool Canvas::testDraw(Canvas& can) {
     passed++;
   } else {
     failed++;
+    std::cout << "Test 1 for testFilledDraw() failed!" << std::endl;
   }
 
   //Test 2: Get leftmost and rightmost pixel of the circle
@@ -782,6 +784,7 @@ bool Canvas::testDraw(Canvas& can) {
     passed++;
   } else {
     failed++;
+    std::cout << "Test 2 for testFilledDraw() failed!" << std::endl;
   }
 
   //Test 3: Outside pixels shouldn't equal inside pixels
@@ -789,17 +792,32 @@ bool Canvas::testDraw(Canvas& can) {
     passed++;
   } else {
     failed++;
+    std::cout << "Test 3 for testFilledDraw() failed!" << std::endl;
+  }
+  //Test 4: A LOT of the pixels on the inside should be red
+  int count = 0;
+  for(int i = 201; i <= 299; i++) {
+    if(can.getPixel(i, 250) == red) {
+      count++;
+    }
+  }
+  //Now check the count, should be 99 (Could be because of the one pixel radius thing...)
+  if(count == 99) {
+    passed++;
+  } else {
+    failed++;
+    std::cout << "Test 4 for testFilledDraw() failed!" << std::endl;
   }
 
   //Determine if we passed all three tests or not, Results:
-  if(passed == 3 && failed == 0) {
+  if(passed == 4 && failed == 0) {
     can.clear();
     std::cout << "Unit test for drawing filled shapes passed!" << std::endl;
     return true;
   } else {
     can.clear();
-    std::cout << "This many passed: " << passed << std::endl;
-    std::cout << "This many failed: " << failed << std::endl;
+    std::cout << "This many passed for Canvas: " << passed << std::endl;
+    std::cout << "This many failed for Canvas: " << failed << std::endl;
     return false;
   }
 }
@@ -815,13 +833,91 @@ bool Canvas::testPerimeter(Canvas& can) {
   ColorFloat black = BLACK;
 
   //Test 1: Rectangle
-  //Four corners make a rectangle, so check the corners!
+  //Four corners make a rectangle, so check the corners, then perimeter.
   //Interesting...it appears as if though sometimes the exact coordinate works and sometimes I have to either subtract 1 from one of them or add 1.
   //Not sure if that's a bug, or if i'm missing something.
+  //Rectangle should look like this:
+  //  (200, 350)-------------------------------(299, 351)
+  //            |                             |
+  //            |                             |
+  //            |                             |
+  //            |                             |
+  //            |                             |
+  //            |                             |
+  //            |                             |
+  //            |                             |
+  //  (200, 399)-------------------------------(299, 399)
+  // The call: can.drawRectangle(200, 350, 300, 400, BLACK, false);
   if(ColorFloat(can.getPixel(350, 200)) == black && ColorFloat(can.getPixel(399, 200)) == black && ColorFloat(can.getPixel(351, 299)) == black && ColorFloat(can.getPixel(399, 299)) == black) {
     passed++;
   } else {
     failed++;
+    std::cout << "Test 1 for testPerimeter() failed!" << std::endl;
+  }
+
+  //Left to right, top
+  //BUG: It looks like the very last pixel for a line has its y-value incremented by 1....?
+  int y = 350;
+  int topCount = 0;
+  for(int i = 200; i <= 299; i++) {
+    if(ColorFloat(can.getPixel(y, i)) == black) {
+      topCount++;
+    }
+    if(i == 298) {  //To compensate for the bug (Take it out to see what I mean)
+      y++;
+    }
+  }
+
+  //Check the results for the top perimeter
+  if(topCount == 100) {
+    passed++;
+  } else {
+    failed++;
+    std::cout << "Test 1, Left to right, top for testPerimeter() failed!" << std::endl;
+  }
+
+  //Top to bottom, left
+  int leftCount = 0;
+  for(int j = 350; j <= 399; j++) {
+    if(ColorFloat(can.getPixel(j, 200)) == black) {
+      leftCount++;
+    }
+  }
+
+  if(leftCount == 50) {
+    passed++;
+  } else {
+    failed++;
+    std::cout << "Test 1, top to bottom, left for testPerimeter() failed!" << std::endl;
+  }
+
+  //Left to right, bottom
+  int bottomCount = 0;
+  for(int k = 200; k <= 299; k++) {
+    if(ColorFloat(can.getPixel(399, k)) == black) {
+      bottomCount++;
+    }
+  }
+
+  if(bottomCount == 100) {
+    passed++;
+  } else {
+    failed++;
+    std::cout << "Test 1, Left to right, bottom for testPerimeter() failed!" << std::endl;
+  }
+  //Top to bottom, right
+  int rightCount = 0;
+  for(int l = 351; l <= 399; l++) {
+    if(ColorFloat(can.getPixel(l, 299)) == black) {
+      rightCount++;
+    }
+  }
+
+  if(rightCount == 49) {
+   passed++;
+  } else {
+   failed++;
+   std::cout << "Test 1, Top to bottom, right for testPerimeter() failed!" << std::endl;
   }
 
   //Test 2: Circle
@@ -833,6 +929,7 @@ bool Canvas::testPerimeter(Canvas& can) {
     passed++;
   } else {
     failed++;
+    std::cout << "Test 2 for testPerimeter() failed!" << std::endl;
   }
 
   //Test 3: Triangle
@@ -842,22 +939,27 @@ bool Canvas::testPerimeter(Canvas& can) {
     passed++;
   } else {
     failed++;
+    std::cout << "Test 3 for testPerimeter() failed!" << std::endl;
+
   }
 
-  //Point from line segment (Triangle test continued....)
+  //Point from line segment (Test 3, part 2)
   if(ColorFloat(can.getPixel(152, 46)) == black && ColorFloat(can.getPixel(113, 143)) == black && ColorFloat(can.getPixel(200, 147)) == black) {
     passed++;
   } else {
     failed++;
+    std::cout << "Test 3, part 2 for testPerimeter() failed!" << std::endl;
   }
 
   //Results:
-  if(passed == 4 && failed == 0) {
+  if(passed == 8 && failed == 0) {
     can.clear();
     std::cout << "Unit test for drawing non-filled shapes passed!" << std::endl;
     return true;
   } else {
     can.clear();
+    std::cout << "This many passed for Canvas: " << passed << std::endl;
+    std::cout << "This many failed for Canvas: " << failed << std::endl;
     return false;
   }
 }
@@ -865,38 +967,59 @@ bool Canvas::testPerimeter(Canvas& can) {
 bool Canvas::testLine(Canvas & can) {
    int passed = 0;
    int failed = 0;
-   can.drawLine(0, 0, 250, 250, BLACK);
+   can.drawLine(0, 0, 250, 250, BLACK);  //Diagonal line
+   can.drawLine(253, 253, 400, 253);  //Straight line
    can.sleep();
    can.sleep();
    ColorFloat black = BLACK;
-   //Near the ending endpoint?
+   //Test 1: Near the ending endpoint? (Diagonal)
    if(ColorFloat(can.getPixel(250, 249)) == black) {
      passed++;
    } else {
      failed++;
+     std::cout << "Test 1 for testLine() failed!" << std::endl;
    }
 
-   //Somewhere in the middle?
+   //Test 2: Somewhere in the middle? (Diagonal)
    if(ColorFloat(can.getPixel(155, 154)) == black) {
      passed++;
    } else {
      failed++;
+     std::cout << "Test 2 for testLine() failed!" << std::endl;
    }
 
-   //Near the starting endpoint?
+   //Test 3: Near the starting endpoint? (Diagonal)
    if(ColorFloat(can.getPixel(15, 14)) == black) {
      passed++;
    } else {
      failed++;
+     std::cout << "Test 3 for testLine() failed!" << std::endl;
+   }
+
+   //Test 4: An entire line? (Straight)
+   int count = 0;
+   for(int i = 253; i <= 399; i++) {
+     if(ColorFloat(can.getPixel(253, i)) == black) {
+       count++;
+     }
+   }
+   //Check the results of the Straight line test
+   if(count == 147) {
+     passed++;
+   } else {
+     failed++;
+     std::cout << "Test 4 for testLine() failed!" << std::endl;
    }
 
    //Results:
-   if(passed == 3 && failed == 0) {
+   if(passed == 4 && failed == 0) {
      can.clear();
      std::cout << "Unit test for line passed!" << std::endl;
      return true;
    } else {
      can.clear();
+     std::cout << "This many passed for Canvas: " << passed << std::endl;
+     std::cout << "This many failed for Canvas: " << failed << std::endl;
      return false;
    }
 }
@@ -906,43 +1029,50 @@ bool Canvas::testAccessors(Canvas& can) {
     int failed = 0;
     ColorFloat white = WHITE;  //Have to set these to new variables so that I can compare them
     ColorFloat black = BLACK;
-    //Background color
+
+    //Test 1: Background color
     if(can.getBackgroundColor() == white) {
       can.setBackgroundColor(BLACK);
       if(can.getBackgroundColor() == black) {
         passed++;
       } else {
         failed++;
+        std::cout << "Test 1 for testAccessors() failed!" << std::endl;
       }
     }
 
-    //Window width/height
+    //Test 2: Window width/height
     if(can.getWindowWidth() == 500) {
       if(can.getWindowHeight() == 500) {
         passed++;
       } else {
         failed++;
+        std::cout << "Test 2 for testAccessors() failed! (height)" << std::endl;
       }
     } else {
       failed++;
+      std::cout << "Test 2 for testAccessors() failed! (width)" << std::endl;
     }
 
-    //Window x/y
+    //Test 3: Window x/y
     if(can.getWindowX() == 0) {
       if(can.getWindowY() == 0) {
         passed++;
       } else {
         failed++;
+        std::cout << "Test 3 for testAccessors() failed! (y)" << std::endl;
       }
     } else {
       failed++;
+      std::cout << "Test 3 for testAccessors() failed! (x)" << std::endl;
     }
 
-    //Window open?
+    //Test 4: Window open?
     if(can.getIsOpen() == true) {
       passed++;
     } else {
       failed++;
+      std::cout << "Test 4 for testAccessors() failed!" << std::endl;
     }
 
     //Results:
@@ -952,9 +1082,50 @@ bool Canvas::testAccessors(Canvas& can) {
       return true;
     } else {
       can.clear();
+      std::cout << "This many passed for Canvas: " << passed << std::endl;
+      std::cout << "This many failed for Canvas: " << failed << std::endl;
       return false;
     }
 }
 
+bool Canvas::testDrawImage(Canvas& can) {
+    can.drawImage("assets/ff0000.png", 0, 0, 200, 200);
+    can.sleep();
+    can.sleep();
+    can.sleep();
+    int passed = 0;
+    int failed = 0;
+    ColorInt red(255, 0, 0);
+    //Test 1: Single pixel
+    if(can.getPixel(1, 1) == red) {
+      passed++;
+    } else {
+      failed++;
+      std::cout << "Test 1, Single pixel for testDrawImage() failed!" << std::endl;
+    }
+
+    //Test 2: Multiple pixels
+    int count = 0;
+    for(int i = 1; i <= 200; i++) {
+      if(can.getPixel(i, 1) == red) {
+        count++;
+      }
+    }
+
+    //Results of Test 2:
+    if(count == 200) {
+      passed++;
+    } else {
+      failed++;
+      std::cout << "Test 2, Multiple pixels for testDrawImage() failed!" << std::endl;
+    }
+
+    //Results of entire Unit test:
+    if(passed == 2 && failed == 0) {
+      return true;
+    } else {
+      return false;
+    }
+}
 //------------End Unit testing--------------------------------------------------------
 }

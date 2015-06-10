@@ -92,6 +92,7 @@ void draw(Canvas& can) {
 	}
 
 }
+
 virtual ~ShadedVoronoi() {
 	delete [] myKValue2;
 	myKValue2 = NULL;

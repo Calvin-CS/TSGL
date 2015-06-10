@@ -472,26 +472,29 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
 //-------------------------Unit testing----------------------------------------------
 void TextureHandler::runTests() {
     TextureHandler tester;
-    tsglAssert(testLoadFont(tester), "Unit test for loading in fonts failed");
-}
-
-bool TextureHandler::testLoadImage() {
-  return true;
+    tsglAssert(testLoadFont(tester), "Unit test for loading in fonts failed!");
+    std::cout << "All tests passed!" << std::endl;
 }
 
 bool TextureHandler::testLoadFont(TextureHandler& test) {
-  int passed, failed = 0;
+  int passed = 0;
+  int failed = 0;
   if(test.fontFace == nullptr) {
-
+     test.loadFont("assets/freefont/FreeMono.ttf");
+     if(test.fontFace != nullptr) {
+       passed++;
+     } else {
+       failed++;
+       std::cout << "Test for testLoadFont failed" << std::endl;
+     }
   }
 
   if(passed == 1 && failed == 0) {
+    std::cout << "Unit test for loading in fonts passed!" << std::endl;
     return true;
   } else {
     return false;
   }
 }
-
 //----------------------------End Unit testing---------------------------------------
-
 }
