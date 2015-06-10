@@ -128,13 +128,15 @@ private:
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
     void        textureShaders(bool state);                             // Turn textures on or off
 
-    static bool testDraw(Canvas& can);                                  // Unit test for drawing shapes and determining if fill works
+    static bool testFilledDraw(Canvas& can);                            // Unit test for drawing shapes and determining if fill works
 
     static bool testPerimeter(Canvas& can);                             // Unit test for drawing shapes and determining if the shape is still drawn correctly but not filled
 
     static bool testLine(Canvas& can);                                  // Unit test for lines
 
     static bool testAccessors(Canvas& can);
+
+    static bool testDrawImage(Canvas& can);                             // Unit test for drawing images (simultaneously a Unit test for Image)
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
