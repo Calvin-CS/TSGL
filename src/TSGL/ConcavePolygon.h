@@ -36,7 +36,6 @@ class ConcavePolygon : public Shape {
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
 
-    static bool testDraw();      // Unit test for drawing on a regular Canvas
     static bool testIntersects();     // Unit test for intersects()
     static bool testPointITriangle(); // Unit test for pointInTriangle()
 

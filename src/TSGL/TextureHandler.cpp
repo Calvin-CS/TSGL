@@ -479,13 +479,14 @@ void TextureHandler::runTests() {
 bool TextureHandler::testLoadFont(TextureHandler& test) {
   int passed = 0;
   int failed = 0;
+  //Test 1: Loading in the font at the start
   if(test.fontFace == nullptr) {
      test.loadFont("assets/freefont/FreeMono.ttf");
      if(test.fontFace != nullptr) {
        passed++;
      } else {
        failed++;
-       std::cout << "Test for testLoadFont failed" << std::endl;
+       std::cout << "Test 1 for testLoadFont() failed!" << std::endl;
      }
   }
 

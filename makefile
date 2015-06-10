@@ -35,10 +35,10 @@ LFLAGS=-LTSGL/ -ltsgl \
 	-L/opt/AMDAPP/lib/x86_64/ \
 	-L/usr/local/lib/ \
 	-L/usr/X11/lib/ \
-	-ltsgl -lfreetype -lpng -ljpeg \
-	-lGLEW -lglfw \
+	-ltsgl -lfreetype -lGLEW -lglfw \
 	-lX11 -lGL -lXrandr \
 	-fopenmp
+	# -lpng -ljpeg \
 
 DEPFLAGS=-MMD -MP
 
