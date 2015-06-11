@@ -214,7 +214,7 @@ void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, boo
         ConvexPolygon *s = new ConvexPolygon(res);
         for (int i = 0; i < res; ++i)
           s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),color);
-        drawShape(s);
+          drawShape(s);
     } else {
         float oldX = 0, oldY = 0, newX = 0, newY = 0;
         Polyline *p = new Polyline(res+1);
@@ -457,7 +457,7 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-//    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
@@ -771,7 +771,7 @@ void Canvas::runTests() {
   tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
   tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
   c1.wait();
-  TsglDebug("All unit tests for Canvas passed!");
+  TsglDebug("Unit tests for Canvas complete.");
   std::cout << std::endl;
 }
 
@@ -781,13 +781,13 @@ bool Canvas::testFilledDraw(Canvas& can) {
   int failed = 0;   //Failed tests
   ColorInt red(255, 0, 0);   //Fill color
   can.drawCircle(250, 250, 50, 32, red, true);  //Draw filled shape
-  can.sleep();   //Have to call it twice for some odd reason too.....
+  can.sleep();
   //Test 1: Get middle pixel and see if its red.
   if(can.getPixel(250, 250) == red) {
     passed++;
   } else {
     failed++;
-   TsglErr("Test 1, middle pixel for testFilledDraw() failed!");
+    TsglErr("Test 1, middle pixel for testFilledDraw() failed!");
   }
 
   //Test 2: Get leftmost and rightmost pixel of the circle
@@ -800,11 +800,25 @@ bool Canvas::testFilledDraw(Canvas& can) {
   }
 
   //Test 3: Outside pixels shouldn't equal inside pixels
+  int test = 0;
+  //Single pixel....
   if(can.getPixel(1, 1) != red) {
-    passed++;
+    //Multiple pixels....
+    for(int i = 201; i <= 299; i++) {
+      if(can.getPixel(1, i) != red) {
+        test++;
+      }
+    }
+    //Results of multiple pixels...
+    if(test == 99) {
+      passed++;
+    } else {
+    failed++;
+    TsglErr("Test 3, outside != inside, Multiple pixels for testFilledDraw() failed!");
+  }
   } else {
     failed++;
-    TsglErr("Test 3, outside != inside for testFilledDraw() failed!");
+    TsglErr("Test 3, outside != inside, Single pixel for testFilledDraw() failed!");
   }
 
   //Test 4: A LOT of the pixels on the inside should be red
@@ -815,7 +829,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
     }
   }
 
-  //Now check the count, should be 99 (Could be because of the one pixel radius thing...)
+  //Now check the count, should be 99
   if(count == 99) {
     passed++;
   } else {
@@ -823,7 +837,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
     TsglErr("Test 4, multiple pixels for testFilledDraw() failed!");
   }
 
-  //Determine if we passed all three tests or not, Results:
+  //Determine if we passed all four tests or not, Results:
   if(passed == 4 && failed == 0) {
     can.clear();
     TsglDebug("Unit test for drawing filled shapes passed!");
@@ -846,7 +860,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   can.drawTriangle(50, 80, 40, 250, 250, 150, BLACK, false);  //Test 3
   can.sleep();
   can.sleep();
-  ColorFloat black = BLACK;  //Need to change it from a constant to a non-constant so that I can use it in comparison tests
+  ColorInt black(0, 0, 0);
 
   //Test 1: Rectangle
   //Four corners make a rectangle, so check the corners, then perimeter.
@@ -864,7 +878,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //            |                             |
   //  (200, 399)-------------------------------(299, 399)
   // The call: can.drawRectangle(200, 350, 300, 400, BLACK, false);
-  if(ColorFloat(can.getPixel(350, 200)) == black && ColorFloat(can.getPixel(399, 200)) == black && ColorFloat(can.getPixel(351, 299)) == black && ColorFloat(can.getPixel(399, 299)) == black) {
+  if(can.getPixel(350, 200) == black && can.getPixel(399, 200) == black && can.getPixel(351, 299) == black && can.getPixel(399, 299) == black) {
     passed++;
   } else {
     failed++;
@@ -876,7 +890,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   int y = 350;
   int topCount = 0;
   for(int i = 200; i <= 299; i++) {
-    if(ColorFloat(can.getPixel(y, i)) == black) {
+    if(can.getPixel(y, i) == black) {
       topCount++;
     }
     if(i == 298) {  //To compensate for the bug(?) (Take it out to see what I mean)
@@ -895,7 +909,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Top to bottom, left
   int leftCount = 0;
   for(int j = 350; j <= 399; j++) {
-    if(ColorFloat(can.getPixel(j, 200)) == black) {
+    if(can.getPixel(j, 200) == black) {
       leftCount++;
     }
   }
@@ -911,7 +925,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Left to right, bottom
   int bottomCount = 0;
   for(int k = 200; k <= 299; k++) {
-    if(ColorFloat(can.getPixel(399, k)) == black) {
+    if(can.getPixel(399, k) == black) {
       bottomCount++;
     }
   }
@@ -927,7 +941,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Top to bottom, right
   int rightCount = 0;
   for(int l = 351; l <= 399; l++) {
-    if(ColorFloat(can.getPixel(l, 299)) == black) {
+    if(can.getPixel(l, 299) == black) {
       rightCount++;
     }
   }
@@ -945,7 +959,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //They should all be the same color
   //Add one to rightmost because of center??
   //Subtract one from bottom most because of center??
-  if(ColorFloat(can.getPixel(200, 250)) == black && ColorFloat(can.getPixel(301, 250)) == black && ColorFloat(can.getPixel(250, 200)) == black && ColorFloat(can.getPixel(250, 300)) == black) {
+  if(can.getPixel(200, 250) == black && can.getPixel(301, 250) == black && can.getPixel(250, 200) == black && can.getPixel(250, 300) == black) {
     passed++;
   } else {
     failed++;
@@ -955,7 +969,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Test 3: Triangle
   //Check the vertices, and a point in from their line segments
   //Vertices
-  if(ColorFloat(can.getPixel(80, 50)) == black && ColorFloat(can.getPixel(250, 40)) == black && ColorFloat(can.getPixel(150, 249)) == black) {
+  if(can.getPixel(80, 50) == black && can.getPixel(250, 40) == black && can.getPixel(150, 249) == black) {
     passed++;
   } else {
     failed++;
@@ -963,7 +977,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   }
 
   //Point from line segment (Test 3, part 2)
-  if(ColorFloat(can.getPixel(152, 46)) == black && ColorFloat(can.getPixel(113, 143)) == black && ColorFloat(can.getPixel(200, 147)) == black) {
+  if(can.getPixel(152, 46) == black && can.getPixel(113, 143) == black && can.getPixel(200, 147) == black) {
     passed++;
   } else {
     failed++;
@@ -992,9 +1006,9 @@ bool Canvas::testLine(Canvas & can) {
    can.drawLine(253, 253, 400, 253);  //Straight line
    can.sleep();
    can.sleep();
-   ColorFloat black = BLACK;
+   ColorInt black(0, 0, 0);
    //Test 1: Near the ending endpoint? (Diagonal)
-   if(ColorFloat(can.getPixel(250, 249)) == black) {
+   if(can.getPixel(250, 249) == black) {
      passed++;
    } else {
      failed++;
@@ -1002,7 +1016,7 @@ bool Canvas::testLine(Canvas & can) {
    }
 
    //Test 2: Somewhere in the middle? (Diagonal)
-   if(ColorFloat(can.getPixel(155, 154)) == black) {
+   if(can.getPixel(155, 154) == black) {
      passed++;
    } else {
      failed++;
@@ -1010,7 +1024,7 @@ bool Canvas::testLine(Canvas & can) {
    }
 
    //Test 3: Near the starting endpoint? (Diagonal)
-   if(ColorFloat(can.getPixel(15, 14)) == black) {
+   if(can.getPixel(15, 14) == black) {
      passed++;
    } else {
      failed++;
@@ -1020,7 +1034,7 @@ bool Canvas::testLine(Canvas & can) {
    //Test 4: An entire line? (Straight)
    int count = 0;
    for(int i = 253; i <= 399; i++) {
-     if(ColorFloat(can.getPixel(253, i)) == black) {
+     if(can.getPixel(253, i) == black) {
        count++;
      }
    }
@@ -1150,7 +1164,7 @@ bool Canvas::testDrawImage(Canvas& can) {
       TsglErr("Test 2, Multiple pixels for testDrawImage() failed!");
     }
 
-    //Results of entire Unit test:
+    //Results of entire Unit test:s
     if(passed == 2 && failed == 0) {
       TsglDebug("Unit test for drawing images passed!");
       return true;

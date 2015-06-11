@@ -137,6 +137,7 @@ private:
     static bool testAccessors(Canvas& can);
 
     static bool testDrawImage(Canvas& can);                             // Unit test for drawing images (simultaneously a Unit test for Image)
+
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:

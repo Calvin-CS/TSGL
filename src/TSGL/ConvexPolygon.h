@@ -29,6 +29,7 @@ class ConvexPolygon : public Shape {
     int size,           // Number of floating point numbers in vertices
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
+    static bool testAddVertex();
  public:
     /*!
      * \brief Explicitly constructs a new ConvexPolygon.
