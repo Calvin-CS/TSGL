@@ -214,7 +214,7 @@ void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, boo
         ConvexPolygon *s = new ConvexPolygon(res);
         for (int i = 0; i < res; ++i)
           s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),color);
-        drawShape(s);
+          drawShape(s);
     } else {
         float oldX = 0, oldY = 0, newX = 0, newY = 0;
         Polyline *p = new Polyline(res+1);
