@@ -23,8 +23,6 @@
 #else
   #include <freetype.h>
   #include <ftglyph.h>
-  #include <png.h>
-  #include <jpeglib.h>
 #endif
 
 #include <GLFW/glfw3.h>  // For GL functions
@@ -48,10 +46,6 @@ class TextureHandler {
     FontMap loadedFonts;
     FT_Library fontLibrary;
     FT_Face fontFace;
-
-#ifndef _WIN32
-    static void my_error_exit(j_common_ptr cinfo);
-#endif
 
     static void createGLtextureFromBuffer(GLtexture &texture, unsigned char* buffer, const unsigned int &width,
                                           const unsigned int &height, int glMode);

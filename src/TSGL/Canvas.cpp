@@ -118,6 +118,11 @@ void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
 
+//    Display *dpy = glXGetCurrentDisplay();
+//    GLXDrawable drawable = glXGetCurrentDrawable();
+//    if (drawable)
+//      glXSwapIntervalEXT(dpy, drawable, -1);
+
     if (hasStereo) {
       if (hasBackbuffer)
         Canvas::setDrawBuffer(GL_FRONT_AND_BACK);
@@ -133,8 +138,10 @@ void Canvas::draw() {
         timer->sleep();
 
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
+//        glfwSwapInterval(100);
+//        std::cout << glfwExtensionSupported("GLX_EXT_swap_control_tear");
         if (toClear) {
-            glDrawBuffer(drawBuffer);  // See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
+//            glDrawBuffer(drawBuffer);  // See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             clearRectangle->draw();
 
@@ -450,7 +457,7 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+//    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
