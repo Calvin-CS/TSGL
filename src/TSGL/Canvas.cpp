@@ -800,11 +800,25 @@ bool Canvas::testFilledDraw(Canvas& can) {
   }
 
   //Test 3: Outside pixels shouldn't equal inside pixels
+  int test = 0;
+  //Single pixel....
   if(can.getPixel(1, 1) != red) {
-    passed++;
+    //Multiple pixels....
+    for(int i = 201; i <= 299; i++) {
+      if(can.getPixel(1, i) != red) {
+        test++;
+      }
+    }
+    //Results of multiple pixels...
+    if(test == 99) {
+      passed++;
+    } else {
+    failed++;
+    TsglErr("Test 3, outside != inside, Multiple pixels for testFilledDraw() failed!");
+  }
   } else {
     failed++;
-    TsglErr("Test 3, outside != inside for testFilledDraw() failed!");
+    TsglErr("Test 3, outside != inside, Single pixel for testFilledDraw() failed!");
   }
 
   //Test 4: A LOT of the pixels on the inside should be red
@@ -823,7 +837,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
     TsglErr("Test 4, multiple pixels for testFilledDraw() failed!");
   }
 
-  //Determine if we passed all three tests or not, Results:
+  //Determine if we passed all four tests or not, Results:
   if(passed == 4 && failed == 0) {
     can.clear();
     TsglDebug("Unit test for drawing filled shapes passed!");
