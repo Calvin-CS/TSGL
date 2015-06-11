@@ -748,6 +748,7 @@ void Canvas::textureShaders(bool on) {
 
 //-----------------Unit testing-------------------------------------------------------
 void Canvas::runTests() {
+  TsglDebug("Testing Canvas class...");
   Canvas c1(0, 0, 500, 500, "", FRAME);
   c1.setBackgroundColor(WHITE);
   c1.start();
@@ -759,23 +760,23 @@ void Canvas::runTests() {
   tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
   tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
   c1.wait();
-  std::cout << "All unit tests for Canvas passed!" << std::endl;
+  TsglDebug("All unit tests for Canvas passed!");
+  std::cout << std::endl;
 }
 
 //Similar format is used for the remaining unit tests
 bool Canvas::testFilledDraw(Canvas& can) {
-  ColorInt red(255, 0, 0);   //Fill color
-  //Test 1: Drawing a filled shape
-  can.drawCircle(250, 250, 50, 32, red, true);
-  can.sleep();   //Have to call it twice for some odd reason too.....
   int passed = 0;   //Passed tests
   int failed = 0;   //Failed tests
+  ColorInt red(255, 0, 0);   //Fill color
+  can.drawCircle(250, 250, 50, 32, red, true);  //Draw filled shape
+  can.sleep();   //Have to call it twice for some odd reason too.....
   //Test 1: Get middle pixel and see if its red.
   if(can.getPixel(250, 250) == red) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 1 for testFilledDraw() failed!" << std::endl;
+   TsglErr("Test 1, middle pixel for testFilledDraw() failed!");
   }
 
   //Test 2: Get leftmost and rightmost pixel of the circle
@@ -784,7 +785,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 2 for testFilledDraw() failed!" << std::endl;
+    TsglErr("Test 2, leftmost and rightmost pixel for testFilledDraw() failed!");
   }
 
   //Test 3: Outside pixels shouldn't equal inside pixels
@@ -792,8 +793,9 @@ bool Canvas::testFilledDraw(Canvas& can) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 3 for testFilledDraw() failed!" << std::endl;
+    TsglErr("Test 3, outside != inside for testFilledDraw() failed!");
   }
+
   //Test 4: A LOT of the pixels on the inside should be red
   int count = 0;
   for(int i = 201; i <= 299; i++) {
@@ -801,23 +803,26 @@ bool Canvas::testFilledDraw(Canvas& can) {
       count++;
     }
   }
+
   //Now check the count, should be 99 (Could be because of the one pixel radius thing...)
   if(count == 99) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 4 for testFilledDraw() failed!" << std::endl;
+    TsglErr("Test 4, multiple pixels for testFilledDraw() failed!");
   }
 
   //Determine if we passed all three tests or not, Results:
   if(passed == 4 && failed == 0) {
     can.clear();
-    std::cout << "Unit test for drawing filled shapes passed!" << std::endl;
+    TsglDebug("Unit test for drawing filled shapes passed!");
     return true;
   } else {
     can.clear();
-    std::cout << "This many passed for Canvas: " << passed << std::endl;
-    std::cout << "This many failed for Canvas: " << failed << std::endl;
+    TsglErr("This many passed for testFilledDraw(): ");
+    std::cerr << " " << passed << std::endl;
+    TsglErr("This many failed for testFilledDraw(): ");
+    std::cerr << " " << failed << std::endl;
     return false;
   }
 }
@@ -830,7 +835,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   can.drawTriangle(50, 80, 40, 250, 250, 150, BLACK, false);  //Test 3
   can.sleep();
   can.sleep();
-  ColorFloat black = BLACK;
+  ColorFloat black = BLACK;  //Need to change it from a constant to a non-constant so that I can use it in comparison tests
 
   //Test 1: Rectangle
   //Four corners make a rectangle, so check the corners, then perimeter.
@@ -852,28 +857,28 @@ bool Canvas::testPerimeter(Canvas& can) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 1 for testPerimeter() failed!" << std::endl;
+    TsglErr("Test 1, Four corners for testPerimeter() failed!");
   }
 
   //Left to right, top
-  //BUG: It looks like the very last pixel for a line has its y-value incremented by 1....?
+  //BUG?: It looks like the very last pixel for a line has its y-value incremented by 1....?
   int y = 350;
   int topCount = 0;
   for(int i = 200; i <= 299; i++) {
     if(ColorFloat(can.getPixel(y, i)) == black) {
       topCount++;
     }
-    if(i == 298) {  //To compensate for the bug (Take it out to see what I mean)
+    if(i == 298) {  //To compensate for the bug(?) (Take it out to see what I mean)
       y++;
     }
   }
 
-  //Check the results for the top perimeter
+  //Results of Left to right, top
   if(topCount == 100) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 1, Left to right, top for testPerimeter() failed!" << std::endl;
+    TsglErr("Test 1, Left to right, top for testPerimeter() failed!");
   }
 
   //Top to bottom, left
@@ -884,11 +889,12 @@ bool Canvas::testPerimeter(Canvas& can) {
     }
   }
 
+  //Results of Top to bottom, left
   if(leftCount == 50) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 1, top to bottom, left for testPerimeter() failed!" << std::endl;
+    TsglErr("Test 1, Top to bottom, left for testPerimeter() failed!");
   }
 
   //Left to right, bottom
@@ -899,12 +905,14 @@ bool Canvas::testPerimeter(Canvas& can) {
     }
   }
 
+  //Results of Left to right, bottom
   if(bottomCount == 100) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 1, Left to right, bottom for testPerimeter() failed!" << std::endl;
+    TsglErr("Test 1, Left to right, bottom for testPerimeter() failed!");
   }
+
   //Top to bottom, right
   int rightCount = 0;
   for(int l = 351; l <= 399; l++) {
@@ -913,11 +921,12 @@ bool Canvas::testPerimeter(Canvas& can) {
     }
   }
 
+  //Results of Top to bottom, right
   if(rightCount == 49) {
    passed++;
   } else {
    failed++;
-   std::cout << "Test 1, Top to bottom, right for testPerimeter() failed!" << std::endl;
+   TsglErr("Test 1, Top to bottom, right for testPerimeter() failed!");
   }
 
   //Test 2: Circle
@@ -929,7 +938,7 @@ bool Canvas::testPerimeter(Canvas& can) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 2 for testPerimeter() failed!" << std::endl;
+    TsglErr("Test 2 for testPerimeter() failed!");
   }
 
   //Test 3: Triangle
@@ -939,8 +948,7 @@ bool Canvas::testPerimeter(Canvas& can) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 3 for testPerimeter() failed!" << std::endl;
-
+    TsglErr("Test 3 for testPerimeter() failed!");
   }
 
   //Point from line segment (Test 3, part 2)
@@ -948,18 +956,20 @@ bool Canvas::testPerimeter(Canvas& can) {
     passed++;
   } else {
     failed++;
-    std::cout << "Test 3, part 2 for testPerimeter() failed!" << std::endl;
+    TsglErr("Test 3, part 2 for testPerimeter() failed!");
   }
 
   //Results:
   if(passed == 8 && failed == 0) {
     can.clear();
-    std::cout << "Unit test for drawing non-filled shapes passed!" << std::endl;
+    TsglDebug("Unit test for drawing non-filled shapes passed!");
     return true;
   } else {
     can.clear();
-    std::cout << "This many passed for Canvas: " << passed << std::endl;
-    std::cout << "This many failed for Canvas: " << failed << std::endl;
+    TsglErr("This many passed for testPerimeter(): ");
+    std::cerr << " " << passed << std::endl;
+    TsglErr("This many failed for testPerimeter(): ");
+    std::cerr << " " << failed << std::endl;
     return false;
   }
 }
@@ -977,7 +987,7 @@ bool Canvas::testLine(Canvas & can) {
      passed++;
    } else {
      failed++;
-     std::cout << "Test 1 for testLine() failed!" << std::endl;
+     TsglErr("Test 1, Near the ending endpoint? for testLine() failed!");
    }
 
    //Test 2: Somewhere in the middle? (Diagonal)
@@ -985,7 +995,7 @@ bool Canvas::testLine(Canvas & can) {
      passed++;
    } else {
      failed++;
-     std::cout << "Test 2 for testLine() failed!" << std::endl;
+     TsglErr("Test 2, Somewhere in the middle? for testLine() failed!");
    }
 
    //Test 3: Near the starting endpoint? (Diagonal)
@@ -993,7 +1003,7 @@ bool Canvas::testLine(Canvas & can) {
      passed++;
    } else {
      failed++;
-     std::cout << "Test 3 for testLine() failed!" << std::endl;
+     TsglErr("Test 3, Near the starting endpoint? for testLine() failed!");
    }
 
    //Test 4: An entire line? (Straight)
@@ -1003,23 +1013,26 @@ bool Canvas::testLine(Canvas & can) {
        count++;
      }
    }
+
    //Check the results of the Straight line test
    if(count == 147) {
      passed++;
    } else {
      failed++;
-     std::cout << "Test 4 for testLine() failed!" << std::endl;
+     TsglErr("Test 4, An entire line? (Straight) for testLine() failed!");
    }
 
    //Results:
    if(passed == 4 && failed == 0) {
      can.clear();
-     std::cout << "Unit test for line passed!" << std::endl;
+     TsglDebug("Unit test for line passed!");
      return true;
    } else {
      can.clear();
-     std::cout << "This many passed for Canvas: " << passed << std::endl;
-     std::cout << "This many failed for Canvas: " << failed << std::endl;
+     TsglErr("This many passed testLine(): ");
+     std::cerr << " " << passed << std::endl;
+     TsglErr("This many failed for testLine(): ");
+     std::cerr << " " << failed << std::endl;
      return false;
    }
 }
@@ -1037,34 +1050,38 @@ bool Canvas::testAccessors(Canvas& can) {
         passed++;
       } else {
         failed++;
-        std::cout << "Test 1 for testAccessors() failed!" << std::endl;
+        TsglErr("Test 1, Background color for testAccessors() failed!");
       }
     }
 
     //Test 2: Window width/height
+    //width
     if(can.getWindowWidth() == 500) {
+      //height
       if(can.getWindowHeight() == 500) {
         passed++;
       } else {
         failed++;
-        std::cout << "Test 2 for testAccessors() failed! (height)" << std::endl;
+        TsglErr("Test 2 for testAccessors() failed! (height)");
       }
     } else {
       failed++;
-      std::cout << "Test 2 for testAccessors() failed! (width)" << std::endl;
+      TsglErr("Test 2 for testAccessors() failed! (width)");
     }
 
     //Test 3: Window x/y
+    //x
     if(can.getWindowX() == 0) {
+      //y
       if(can.getWindowY() == 0) {
         passed++;
       } else {
         failed++;
-        std::cout << "Test 3 for testAccessors() failed! (y)" << std::endl;
+        TsglErr("Test 3 for testAccessors() failed! (y)");
       }
     } else {
       failed++;
-      std::cout << "Test 3 for testAccessors() failed! (x)" << std::endl;
+      TsglErr("Test 3 for testAccessors() failed! (x)");
     }
 
     //Test 4: Window open?
@@ -1072,18 +1089,20 @@ bool Canvas::testAccessors(Canvas& can) {
       passed++;
     } else {
       failed++;
-      std::cout << "Test 4 for testAccessors() failed!" << std::endl;
+      TsglErr("Test 4, Window open? for testAccessors() failed!");
     }
 
     //Results:
     if(passed == 4 && failed == 0) {
       can.clear();
-      std::cout << "Unit test for accessors/mutators passed!" << std::endl;
+      TsglDebug("Unit test for accessors/mutators passed!");
       return true;
     } else {
       can.clear();
-      std::cout << "This many passed for Canvas: " << passed << std::endl;
-      std::cout << "This many failed for Canvas: " << failed << std::endl;
+      TsglErr("This many passed for testAccessors(): ");
+      std::cerr << " " << passed << std::endl;
+      TsglErr("This many failed for testAccessors(): ");
+      std::cerr << " " << failed << std::endl;
       return false;
     }
 }
@@ -1101,7 +1120,7 @@ bool Canvas::testDrawImage(Canvas& can) {
       passed++;
     } else {
       failed++;
-      std::cout << "Test 1, Single pixel for testDrawImage() failed!" << std::endl;
+      TsglErr("Test 1, Single pixel for testDrawImage() failed!");
     }
 
     //Test 2: Multiple pixels
@@ -1117,13 +1136,18 @@ bool Canvas::testDrawImage(Canvas& can) {
       passed++;
     } else {
       failed++;
-      std::cout << "Test 2, Multiple pixels for testDrawImage() failed!" << std::endl;
+      TsglErr("Test 2, Multiple pixels for testDrawImage() failed!");
     }
 
     //Results of entire Unit test:
     if(passed == 2 && failed == 0) {
+      TsglDebug("Unit test for drawing images passed!");
       return true;
     } else {
+      TsglErr("This many passed for testDrawImage(): ");
+      std::cerr << " " << passed << std::endl;
+      TsglErr("This many failed for testDrawImage(): ");
+      std::cerr << " " << failed << std::endl;
       return false;
     }
 }

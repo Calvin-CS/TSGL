@@ -2807,7 +2807,7 @@ $as_echo "$as_me: Exiting installation..." >&6;}
 elif test $GLEW == 0
 then
     { $as_echo "$as_me:${as_lineno-$LINENO}: GLEW library not found. Install this library before proceeding." >&5
-$as_echo "$as_me: GLEW library not found. Install this library before proceeding." >&6;} #GLEW (STILL not working...>:( )
+$as_echo "$as_me: GLEW library not found. Install this library before proceeding." >&6;} #GLEW
     { $as_echo "$as_me:${as_lineno-$LINENO}: Exiting installation..." >&5
 $as_echo "$as_me: Exiting installation..." >&6;}
     exit 1
@@ -2837,3 +2837,6 @@ make debug
 #Back out twice and done.
 cd ..
 cd ..
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Installation complete!" >&5
+$as_echo "$as_me: Installation complete!" >&6;}

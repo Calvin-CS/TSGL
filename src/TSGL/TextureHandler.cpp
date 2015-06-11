@@ -471,14 +471,16 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
 
 //-------------------------Unit testing----------------------------------------------
 void TextureHandler::runTests() {
+    TsglDebug("Testing TextureHandler class...");
     TextureHandler tester;
     tsglAssert(testLoadFont(tester), "Unit test for loading in fonts failed!");
-    std::cout << "All tests passed!" << std::endl;
+    TsglDebug("All unit tests for TextureHandler passed!");
+    std::cout << std::endl;
 }
 
 bool TextureHandler::testLoadFont(TextureHandler& test) {
-  int passed = 0;
-  int failed = 0;
+  int passed = 0;   //Passed tests
+  int failed = 0;   //Failed tests
   //Test 1: Loading in the font at the start
   if(test.fontFace == nullptr) {
      test.loadFont("assets/freefont/FreeMono.ttf");
@@ -486,14 +488,18 @@ bool TextureHandler::testLoadFont(TextureHandler& test) {
        passed++;
      } else {
        failed++;
-       std::cout << "Test 1 for testLoadFont() failed!" << std::endl;
+       TsglErr("Test 1, Loading font for testLoadFont() failed!");
      }
   }
 
   if(passed == 1 && failed == 0) {
-    std::cout << "Unit test for loading in fonts passed!" << std::endl;
+    TsglDebug("Unit test for loading in fonts passed!");
     return true;
   } else {
+    TsglErr("This many tests passed for testLoadFont: ");
+    std::cout << " " << passed << std::endl;
+    TsglErr("This many tests failed for testLoadFont: ");
+    std::cout << " " << failed << std::endl;
     return false;
   }
 }
