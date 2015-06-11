@@ -48,6 +48,10 @@ bool ColorFloat::operator!=(ColorFloat& c1) {
     }
 }
 
+ColorFloat ColorFloat::operator*(float f) {
+    return ColorFloat((*this).R*f,(*this).G*f,(*this).B*f,(*this).A);
+}
+
 ColorInt::ColorInt() {
     R = G = B = A = 255;
 }

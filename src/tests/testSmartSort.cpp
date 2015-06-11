@@ -9,6 +9,8 @@
 #include <omp.h>
 using namespace tsgl;
 
+const int MARGIN = 8;    // Border for drawing
+
 enum MergeState {
   S_MERGE = 1,
   S_SHIFT = 2,
@@ -17,76 +19,66 @@ enum MergeState {
 };
 
 struct sortData {
+  ColorFloat color;            //Color of the thread
   MergeState state;            //Current state of the threads
-  int first, last,             //Start and end of block
+  int first, last,             //Start and end of our block
     left, right,               //Indices of two numbers to compare
     fi, hi, li,                //Indices of first middle and last numbers in a set
     depth;                     //Current depth of the merge
   int* a;                      //Array of numbers to sort
   int seg, segs;               //Current / total segments
 
-  sortData(int* arr, int f, int l) {
-    int tmp;
+  sortData(int* arr, int f, int l, ColorFloat c) {
+    color = c;               //Set the color
     a = arr;                 //Get a pointer to the array we'll be sorting
     first = f;               //Set the first element we need to worry about
     last = l;                //Set the last element we need to worry about
     depth = 0;               //We start at depth 0
-    fi = left = first;       //Set our starting index to first
-    li = hi = last;          //Set our ending and halfway indices to last
     seg = 0; segs = 1;       //We start on segment -1, with a total of 1 segment
-    while (true) {
-      tmp = (left + hi)/2;   //Set our temp index to the median of our first and half index
-      li = hi;               //Set out last index to our old half index
-      hi = tmp;              //Set our new half index to our temp index
-      ++depth;               //Otherwise, increment the depth and repeat the process
-      segs *= 2;             //We have twice as many segments now
-      if ((segs*2) >= (l-f)) //If twice the current number of segments is more than the # of elements
-        break;               //We're done
+    while(segs < (l-f)) {    //If the current number of segments is more than the # of elements, we're done
+      ++depth;               //Otherwise, increment the depth...
+      segs *= 2;             //...and double the number of segments
     }
-    right = hi+1;            //Set our second index to hi + 1
     state = S_SHIFT;         //Start Merging
   }
 
   void restart(int l) {
-    last = l;
     depth = 0;
-    state = S_SHIFT;
+    hi = last;
+    right = hi+1;
+    last = li = l;
+    fi = left = first;
+    state = S_MERGE;
   }
 
   void sortStep() {
     int tmp, pivot, jump;
     switch(state) {
       case S_SHIFT:
-        tmp = depth;
         pivot = jump = segs/2;
         fi = first; li = last;
-        hi = (fi + li) / 2;    //Set our new half index to the median of our first and last
-        while (tmp-- > 0) {
+        hi = (fi + li) / 2;    //Set our half index to the median of our first and last
+        for (tmp = depth; tmp > 0; --tmp) {
           jump /= 2;
           if (seg < pivot) {
             pivot -= jump;
             li = hi;           //Set out last index to our old half index
           } else {
             pivot += jump;
-            fi = hi+1;         //Set out first index to our old half index
+            fi = hi+1;         //Set out first index to our old half index plus one
           }
           hi = (fi + li) / 2;  //Set our new half index to the median of our first and last
-          if (fi == li)
-            break;
         }
-        left = fi;
-        right = hi+1;
-        if (right > li)
-          right = li;
-        state = S_MERGE;         //We're ready to start Merging
+        left = fi; right = hi+1;
+        state = S_MERGE;           //We're ready to start Merging
         break;
       case S_MERGE:
         if (right > last) {
-          seg = 0;               //Reset our segment(s)
-          segs /= 2;             //We're now using half as many segments
+          seg = 0;                 //Reset our segment(s)
+          segs /= 2;               //We're now using half as many segments
           state = (depth-- == 0) ? S_WAIT : S_SHIFT;
         } else if (right > li) {
-          ++seg; state = S_SHIFT;//Move on to the next segment and recalculate our first and last indices
+          ++seg; state = S_SHIFT;  //Move on to the next segment and recalculate our first and last indices
         } else if (left <= hi && a[left] < a[right]) {
           ++left;
         } else {
@@ -97,76 +89,69 @@ struct sortData {
           ++left; ++right; ++hi;
         }
         break;
-      case S_WAIT:
       default:
         break;
     }
   }
 };
 
-void smartSortFunction(Canvas& can, int threads) {
-	  const int SIZE = 1100,   // Size of the data pool (set to 550 by default)
-	            IPF = 25;      // Iterations per frame
-    int numbers[SIZE];       // Array to store the data
-    for (int i = 0; i < SIZE; i++)
-        numbers[i] = rand() % (can.getWindowHeight() - 40);
-    can.setBackgroundColor(GREY);
+void smartSortFunction(Canvas& can, int threads, int size) {
+	  const int IPF = 10;      // Iterations per frame
+    int numbers[size];       // Array to store the data
+    for (int i = 0; i < size; i++)
+        numbers[i] = rand() % (can.getWindowHeight() - MARGIN);
 
-    int bs = SIZE / threads;
-    int ex = SIZE % threads;
-    sortData** tstate = new sortData*[threads];
-    int f, l, active = 1;
+    int bs = size / threads;
+    int ex = size % threads;
+    sortData** sd = new sortData*[threads];
+    int f = 0;
+    int l = (ex == 0) ? bs-1 : bs;
+    int active = 1;
     for (int i = 0; i < threads; ++i) {
-      if (ex == 0 || i < ex) {
-        f = i*bs;
-        l = f + bs - 1;
-      } else {
-        f = ex*bs + (i-ex)*(bs+1);
-        l = f + bs;
-      }
-      tstate[i] = new sortData(numbers,f,l);
+      sd[i] = new sortData(numbers,f,l,Colors::highContrastColor(i));
+      f = l+1;
+      if (i < ex-1) l += (bs + 1);
+      else          l += bs;
     }
     #pragma omp parallel num_threads(threads)
     {
         int tid = omp_get_thread_num();
         while (can.getIsOpen()) {
             can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-            if (tid == 0) {
+            if (tid == 0) {  //Merge arrays of finished threads
               bool allwaiting = true;
-              for (int i = 0; i < threads; ++i) {
-                if (tstate[i]->state != S_WAIT && tstate[i]->state != S_DONE)
-                  allwaiting = false;
-              }
+              for (int i = 0; i < threads; ++i)
+                allwaiting &= (sd[i]->state == S_WAIT || sd[i]->state == S_DONE);
               if (allwaiting && active < threads) {
                 active *= 2;
                 for (int i = 0; i < threads; i ++) {
-                  if (i % active == 0)
-                    tstate[i]->restart(tstate[i+active/2]->last);
-                  else
-                    tstate[i]->state = S_DONE;
+                  if (i % active == 0) {
+                    sd[i+active/2]->state = S_DONE;
+                    sd[i]->restart(sd[i+active/2]->last);
+                  }
                 }
               }
             }
             for (int i = 0; i < IPF; i++)
-              tstate[tid]->sortStep();
+              sd[tid]->sortStep();
             can.clear();
-            int start = 50 + tstate[tid]->first, width = 1, height;
-            int cwh = can.getWindowHeight() - 20;
+            int start = MARGIN/2 + sd[tid]->first, width = 1, height;
+            int cwh = can.getWindowHeight() - MARGIN/2;
             ColorFloat color;
-            if (tstate[tid]->state != S_DONE) {
-              for (int i = tstate[tid]->first; i < tstate[tid]->last; i++, start += width * 1) {
+            if (sd[tid]->state != S_DONE) {
+              for (int i = sd[tid]->first; i < sd[tid]->last; i++, start += width * 1) {
                   height = numbers[i];
-                  if (tstate[tid]->state == S_WAIT)
-                    color = ColorInt(MAX_COLOR, MAX_COLOR, MAX_COLOR);
+                  if (sd[tid]->state == S_WAIT)
+                    color = WHITE;
                   else {
-                    if (i == tstate[tid]->hi)
-                      color = ColorInt(0, MAX_COLOR, MAX_COLOR);
-                    else if (i == tstate[tid]->left || i == tstate[tid]->right)
-                      color = ColorInt(0, MAX_COLOR, 0);
-                    else if (i >= tstate[tid]->fi && i <= tstate[tid]->li)
-                      color = ColorInt(MAX_COLOR, MAX_COLOR, 0);
+                    if (i == sd[tid]->right || i == sd[tid]->left)
+                      color = WHITE;
+                    else if (i < sd[tid]->left)
+                      color = sd[tid]->color;
+                    else if (i >= sd[tid]->fi && i <= sd[tid]->li)
+                      color = Colors::blendedColor(sd[tid]->color, WHITE, 0.5f);
                     else
-                      color = ColorInt(MAX_COLOR, 0, 0);
+                      color = Colors::blendedColor(sd[tid]->color, BLACK, 0.5f);
                   }
                   can.drawRectangle(start, cwh - height, start + width, cwh, color);
               }
@@ -174,22 +159,23 @@ void smartSortFunction(Canvas& can, int threads) {
         }
     }
     for (int i = 0; i < threads; ++i)
-      delete tstate[i];
-    delete [] tstate;
+      delete sd[i];
+    delete [] sd;
 }
 
 //Takes in command line arguments for the window width and height
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 1200;
-    int h = (argc > 2) ? atoi(argv[2]) : 900;
-    if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
-      w = 1200;
-      h = 900;                  //If not, set the width and height to a default value
-    }
-    int t = (argc > 3) ? atoi(argv[3]) : 8;
+    int s = (argc > 1) ? atoi(argv[1]) : 1024;
+    if (s < 10) s = 10;
+    int w = s + MARGIN;
+    int h = w/2;
+
+    int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
+    for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
+
     Canvas c(0, 0, w, h, "", FRAME);
-    c.setBackgroundColor(GREY);
+    c.setBackgroundColor(BLACK);
     c.start();
-    smartSortFunction(c,t);   //Pass it as an argument
+    smartSortFunction(c,threads, s);   //Pass it as an argument
     c.wait();
 }

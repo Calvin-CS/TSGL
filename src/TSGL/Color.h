@@ -61,6 +61,7 @@ struct ColorFloat {
     /*!
      * NEW (For unit testing)
      */
+    ColorFloat operator*(float f);
     bool operator==(ColorFloat& c1);
     bool operator!=(ColorFloat& c1);
 };
