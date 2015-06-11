@@ -15,7 +15,8 @@ enum MergeState {
   S_MERGE = 1,
   S_SHIFT = 2,
   S_WAIT = 3,
-  S_DONE = 4
+  S_DONE = 4,
+  S_HIDE = 5
 };
 
 struct sortData {
@@ -27,6 +28,7 @@ struct sortData {
     depth;                     //Current depth of the merge
   int* a;                      //Array of numbers to sort
   int seg, segs;               //Current / total segments
+  int size;
 
   sortData(int* arr, int f, int l, ColorFloat c) {
     color = c;               //Set the color
@@ -40,6 +42,7 @@ struct sortData {
       segs *= 2;             //...and double the number of segments
     }
     state = S_SHIFT;         //Start Merging
+    size = 2;
   }
 
   void restart(int l) {
@@ -49,6 +52,7 @@ struct sortData {
     last = li = l;
     fi = left = first;
     state = S_MERGE;
+    size *= 2;
   }
 
   void sortStep() {
@@ -73,7 +77,7 @@ struct sortData {
         state = S_MERGE;           //We're ready to start Merging
         break;
       case S_MERGE:
-        if (right > last) {
+        if (left > right || right > last) {
           seg = 0;                 //Reset our segment(s)
           segs /= 2;               //We're now using half as many segments
           state = (depth-- == 0) ? S_WAIT : S_SHIFT;
@@ -96,10 +100,10 @@ struct sortData {
 };
 
 void smartSortFunction(Canvas& can, int threads, int size) {
-	  const int IPF = 10;      // Iterations per frame
+	  const int IPF = 1;      // Iterations per frame
     int numbers[size];       // Array to store the data
     for (int i = 0; i < size; i++)
-        numbers[i] = rand() % (can.getWindowHeight() - MARGIN);
+      numbers[i] = rand() % (can.getWindowHeight() - MARGIN);
 
     int bs = size / threads;
     int ex = size % threads;
@@ -117,29 +121,26 @@ void smartSortFunction(Canvas& can, int threads, int size) {
     {
         int tid = omp_get_thread_num();
         while (can.getIsOpen()) {
-            can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-            if (tid == 0) {  //Merge arrays of finished threads
-              bool allwaiting = true;
-              for (int i = 0; i < threads; ++i)
-                allwaiting &= (sd[i]->state == S_WAIT || sd[i]->state == S_DONE);
-              if (allwaiting && active < threads) {
-                active *= 2;
-                for (int i = 0; i < threads; i ++) {
-                  if (i % active == 0) {
-                    sd[i+active/2]->state = S_DONE;
-                    sd[i]->restart(sd[i+active/2]->last);
-                  }
+            can.sleep();
+            if (sd[tid]->state == S_WAIT) {  //Merge waiting threads
+              if ((tid % sd[tid]->size) > 0)
+                sd[tid]->state = S_DONE;
+              else {
+                int next = tid+sd[tid]->size/2;
+                if (next < threads && sd[next]->state == S_DONE) {
+                  sd[next]->state = S_HIDE;
+                  sd[tid]->restart(sd[next]->last);
                 }
               }
             }
             for (int i = 0; i < IPF; i++)
               sd[tid]->sortStep();
             can.clear();
-            int start = MARGIN/2 + sd[tid]->first, width = 1, height;
+            int start = MARGIN/2 + sd[tid]->first, height;
             int cwh = can.getWindowHeight() - MARGIN/2;
             ColorFloat color;
-            if (sd[tid]->state != S_DONE) {
-              for (int i = sd[tid]->first; i < sd[tid]->last; i++, start += width * 1) {
+            if (sd[tid]->state != S_HIDE) {
+              for (int i = sd[tid]->first; i < sd[tid]->last; ++i, ++start) {
                   height = numbers[i];
                   if (sd[tid]->state == S_WAIT)
                     color = WHITE;
@@ -153,7 +154,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
                     else
                       color = Colors::blendedColor(sd[tid]->color, BLACK, 0.5f);
                   }
-                  can.drawRectangle(start, cwh - height, start + width, cwh, color);
+                  can.drawLine(start, cwh - height, start, cwh, color);
               }
             }
         }
