@@ -760,7 +760,6 @@ void Canvas::textureShaders(bool on) {
 //-----------------Unit testing-------------------------------------------------------
 void Canvas::runTests() {
   TsglDebug("Testing Canvas class...");
-  int passed = 0;
   Canvas c1(0, 0, 500, 500, "", FRAME);
   c1.setBackgroundColor(WHITE);
   c1.start();
@@ -772,7 +771,6 @@ void Canvas::runTests() {
   tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
   tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
   c1.wait();
-  std::cout << passed << std::endl;
   TsglDebug("Unit tests for Canvas complete.");
   std::cout << std::endl;
 }
@@ -1155,7 +1153,6 @@ bool Canvas::testDrawImage(Canvas& can) {
     //Results of entire Unit test:s
     if(passed == 2 && failed == 0) {
       TsglDebug("Unit test for drawing images passed!");
-      std::cout << std::endl;
       return true;
     } else {
       TsglErr("This many passed for testDrawImage(): ");
