@@ -30,24 +30,6 @@ TextureHandler::~TextureHandler() {
     FT_Done_FreeType(fontLibrary);
 }
 
-#ifndef _WIN32
-struct my_error_mgr {
-    struct jpeg_error_mgr pub;  // "public" fields
-
-    jmp_buf setjmp_buffer;      // for return to caller
-};
-void TextureHandler::my_error_exit(j_common_ptr cinfo) {
-    /* cinfo->err really points to a my_error_mgr struct, so coerce pointer */
-    my_error_mgr* myerr = (my_error_mgr*) cinfo->err;
-
-    /* Always display the message. */
-    (*cinfo->err->output_message)(cinfo);
-
-    /* Return control to the setjmp point */
-    longjmp(myerr->setjmp_buffer, 1);
-}
-#endif
-
 void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char* buffer,
                                                const unsigned int &width, const unsigned int &height,
                                                int glMode) {

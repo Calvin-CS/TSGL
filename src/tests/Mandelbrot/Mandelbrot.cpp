@@ -1,7 +1,7 @@
 #include "Mandelbrot.h"
 
-Mandelbrot::Mandelbrot() {
-		myThreads = 8;
+Mandelbrot::Mandelbrot(int threads) {
+		myThreads = threads;
 		myDepth = MAX_COLOR;
 		myFirstX = myFirstY = mySecondX = mySecondY = 0.0;
 		myRedraw = true;
@@ -43,13 +43,7 @@ void Mandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
 			can.reset();
 #pragma omp parallel num_threads(myThreads)
 {
-	unsigned int holder = omp_get_num_threads();  //Temp variable
-	unsigned int nthreads = 1;   //Actual number of threads
-	if (numberOfThreads > holder || numberOfThreads == 0 || numberOfThreads < myThreads) {  //Check if the passed number of threads is valid
-		nthreads = holder;  //If not, use the number of threads that we can use with OMP
-	} else {
-		nthreads = numberOfThreads;  //Else, use that many threads
-	}
+	unsigned int nthreads = omp_get_num_threads();
 	double blocksize = can.getCartHeight() / nthreads;
 	double blockheight = can.getWindowHeight() / nthreads;
 	for(unsigned int k = 0; k <= blockheight && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...

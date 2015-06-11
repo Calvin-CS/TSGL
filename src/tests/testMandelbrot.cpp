@@ -49,7 +49,7 @@ using namespace tsgl;
  * \param numberOfThreads, Reference to the number of threads passed via command-line arguments.
  */
 void mandelbrotFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
-	Mandelbrot m1;
+	Mandelbrot m1(numberOfThreads);
 	m1.bindings(can);
 	m1.draw(can, numberOfThreads);
 }

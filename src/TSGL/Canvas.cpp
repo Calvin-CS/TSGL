@@ -471,7 +471,11 @@ void Canvas::glInit() {
     if (!monInfo) {
         fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
     }
-    glfwSetWindowPos(window, (monInfo->width - winWidth) / 2, (monInfo->height - winHeight) / 2);
+    if (monitorX == -1)
+      monitorX = (monInfo->width - winWidth) / 2;
+    if (monitorY == -1)
+      monitorY = (monInfo->height - winHeight) / 2;
+    glfwSetWindowPos(window, monitorX, monitorY);
 
     glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
     glfwShowWindow(window);                 // Show the window

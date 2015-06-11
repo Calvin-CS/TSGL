@@ -127,10 +127,10 @@ public:
     }
     if (pos.y <= rad) {
       pos.y = rad;
-      vel.y *= -0.5f;
+      vel.y *= -1.0f;
     } else if (pos.y >= rh-rad) {
       pos.y = rh-rad;
-      vel.y *= -0.5f;
+      vel.y *= -1.0f;
     }
     calcSpeed();
     calcDir();
@@ -174,8 +174,8 @@ public:
   BallRoom(int w, int h) {
     width = w;
     height = h;
-    friction = 1.00f;
-//    friction = 0.99f;
+//    friction = 1.00f;
+    friction = 0.99f;
     gravity = 0.1f;
     attract = true;
   }
@@ -244,7 +244,7 @@ void ballroomFunction(Canvas& can) {
     const int WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
     BallRoom b(WW,WH);
-    for (int i = 0; i < 500; ++ i) {
+    for (int i = 0; i < 100; ++ i) {
       float speed = 5.0f;
       float dir = 2 * 3.14159f * (rand() % 100) / 100.0f;
       b.addBall(25 + rand() % (WW-50),25 + rand() % (WH-50),speed*cos(dir),speed*sin(dir),10,
@@ -258,8 +258,8 @@ void ballroomFunction(Canvas& can) {
     ColorFloat clearcolor = ColorInt(0,0,0,16);
     while (can.getIsOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-        can.drawRectangle(0,0,WW,WH,clearcolor,true);
-//        can.clear();
+//        can.drawRectangle(0,0,WW,WH,clearcolor,true);
+        can.clear();
         b.step(&can);
     }
 }

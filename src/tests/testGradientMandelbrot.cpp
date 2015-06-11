@@ -17,7 +17,7 @@ using namespace tsgl;
  * \param numberOfThreads, Reference to the number of threads to use
  */
 void gradientMandelbrotFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
-	GradientMandelbrot m1;
+	GradientMandelbrot m1(numberOfThreads);
 	m1.bindings(can);
 	m1.draw(can, numberOfThreads);
 }

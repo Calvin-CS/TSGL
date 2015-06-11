@@ -33,7 +33,7 @@ public:
 	/*!
 	 *
 	 */
-  Mandelbrot();
+  Mandelbrot(int threads);
 
   /*!
    *

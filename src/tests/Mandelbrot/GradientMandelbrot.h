@@ -14,7 +14,7 @@ using namespace tsgl;
 
 class GradientMandelbrot : public Mandelbrot {
 public:
-  GradientMandelbrot();
+  GradientMandelbrot(int threads);
   void draw(CartesianCanvas& can, unsigned int & numberOfThreads);
   void setRedraw(bool newValue);
 };

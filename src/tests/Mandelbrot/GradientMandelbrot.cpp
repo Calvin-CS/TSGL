@@ -7,7 +7,7 @@
 
 #include "GradientMandelbrot.h"
 
-GradientMandelbrot::GradientMandelbrot() {
+GradientMandelbrot::GradientMandelbrot(int threads) : Mandelbrot(threads) {
 	myThreads = 32;
 	myDepth = 32;
 	myRedraw = true;
