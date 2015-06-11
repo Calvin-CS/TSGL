@@ -456,7 +456,7 @@ void TextureHandler::runTests() {
     TsglDebug("Testing TextureHandler class...");
     TextureHandler tester;
     tsglAssert(testLoadFont(tester), "Unit test for loading in fonts failed!");
-    TsglDebug("All unit tests for TextureHandler passed!");
+    TsglDebug("Unit tests for TextureHandler complete.");
     std::cout << std::endl;
 }
 

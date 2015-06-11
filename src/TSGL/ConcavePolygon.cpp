@@ -169,9 +169,10 @@ void ConcavePolygon::draw() {
 //----------------------------------------------Unit testing------------------------------
 void ConcavePolygon::runTests() {
   TsglDebug("Testing ConcavePolygon class....");
-  tsglAssert(testIntersects(), "Unit test for intersecting lines failed");
-  //  tsglAssert(testPointITriangle(), "Unit test for pointInTriangle() failed");
-  TsglDebug("All unit tests for ConcavePolygon passed!");
+  tsglAssert(testIntersects(), "Unit test for intersecting lines failed!");
+  tsglAssert(testPointITriangle(), "Unit test for pointInTriangle() failed!");
+  TsglDebug("Unit tests for ConcavePolygon complete.");
+  std::cout << std::endl;
 }
 
 bool ConcavePolygon::testIntersects() {
@@ -180,7 +181,7 @@ bool ConcavePolygon::testIntersects() {
   ConcavePolygon c1(10);
 
   //Test 1: Intersecting lines
-  float x1, y1, x2, y2, x3, y3, x4, y4;
+  float x1, y1, x2, y2, x3, y3, x4, y4 = 0.0;
   x1 = 230.0;     //Set up the points so that it simulates two intersecting lines
   y1 = 230.0;
   x2 = 250.0;
@@ -232,7 +233,55 @@ bool ConcavePolygon::testIntersects() {
 }
 
 bool ConcavePolygon::testPointITriangle() {
-  return true;
+    int passed = 0;
+    int failed = 0;
+    ConcavePolygon c2(10);
+    //Test 1: Point is in the triangle
+    float px, py, x1, y1, x2, y2, x3, y3 = 0.0;
+
+    //Simulate a triangle and a point inside of it
+    x1 = 40.0;  //Vertices...
+    y1 = 250.0;
+    x2 = 50.0;
+    y2 = 80.0;
+    x3 = 250.0;
+    y3 = 150.0;
+    px = 50.0;   //Point coordinates...
+    py = 175.0;
+
+    //Point SHOULD be in triangle
+    if(c2.pointInTriangle(px, py, x1, y1, x2, y2, x3, y3)) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 1, Point = in triangle for testPointITriangle() failed!");
+    }
+
+    //Test 2: Point not in triangle
+    px = py = 0.0;  //Reset the point
+
+    px = 400.0;    //Give it new coordinates
+    py = 400.0;
+
+    //Point should NOT be in triangle, so it should return false
+    if(c2.pointInTriangle(px, py, x1, y1, x2, y2, x3, y3)) {
+      failed++;
+      TsglErr("Test 2, Point = NOT in triangle for testPointITriangle() failed!");
+    } else {
+      passed++;
+    }
+
+    //Results:
+    if(passed == 2 && failed == 0) {
+      TsglDebug("Unit test for point in triangle passed!");
+      return true;
+    } else {
+      TsglErr("This many passed for testPointITriangle(): ");
+      std::cout << " " << passed << std::endl;
+      TsglErr("This many failed for testPointITriangle(): ");
+      std::cout << " " << failed << std::endl;
+      return false;
+    }
 }
 //---------------------------------------------End Unit testing-----------------------
 }

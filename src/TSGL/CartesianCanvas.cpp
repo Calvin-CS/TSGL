@@ -192,18 +192,41 @@ void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
 
 //-----------------------Unit testing-------------------------------------------------
 void CartesianCanvas::runTests() {
-  CartesianCanvas c1(0, 0, 400, 400, -400, 400, -400, 400, "", 0.1f);
+  TsglDebug("Testing CartesianCanvas class...");
+  CartesianCanvas c1;
+  c1.setBackgroundColor(WHITE);
   c1.start();
-  tsglAssert(testAxes(c1), "Unit test for drawing axes failed");
-  tsglAssert(testZoom(c1), "Unit test for zoom() functions failed");
-  tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed");
-  tsglAssert(testDraw(c1), "Unit test for drawing failed");
-  std::cout << "All unit tests passed!" << std::endl;
+ // std::this_thread::sleep_for(std::chrono::seconds(1));
+  tsglAssert(testAxes(c1), "Unit test for drawing axes failed!");
+  tsglAssert(testZoom(c1), "Unit test for zoom() functions failed!");
+  tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed!");
+  tsglAssert(testDraw(c1), "Unit test for drawing failed!");
+  std::cout << "Unit tests for CartesianCanvas complete." << std::endl;
   c1.wait();
 }
 
 bool CartesianCanvas::testAxes(CartesianCanvas& can) {
-  return true;
+   int passed = 0;
+   int failed = 0;
+   can.drawAxes(0, 0, 10, 10);
+   ColorFloat black = BLACK;
+   if(ColorFloat(can.getPixel(0, 0)) == black && ColorFloat(can.getPixel(0, 10)) == black) {
+     passed++;
+   } else {
+     failed++;
+     TsglErr("Test 1, distance between axes for testAxes() failed!");
+   }
+
+   if(passed == 1 && failed == 0) {
+     TsglDebug("Unit test for drawing axes passed!");
+     return true;
+   } else {
+     TsglErr("This many tests passed for testAxes(): ");
+     std::cout << " " << passed << std::endl;
+     TsglErr("This many tests failed for testAxes(): ");
+     std::cout << " " << failed << std::endl;
+     return false;
+   }
 }
 
 bool CartesianCanvas::testZoom(CartesianCanvas& can) {
@@ -217,7 +240,5 @@ bool CartesianCanvas::testRecomputeDimensions(CartesianCanvas& can) {
 bool CartesianCanvas::testDraw(CartesianCanvas& can) {
   return true;
 }
-
 //-----------------End Unit testing----------------------------------------------------
-
 }

@@ -457,7 +457,7 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-//    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
@@ -760,6 +760,7 @@ void Canvas::textureShaders(bool on) {
 //-----------------Unit testing-------------------------------------------------------
 void Canvas::runTests() {
   TsglDebug("Testing Canvas class...");
+  int passed = 0;
   Canvas c1(0, 0, 500, 500, "", FRAME);
   c1.setBackgroundColor(WHITE);
   c1.start();
@@ -771,7 +772,8 @@ void Canvas::runTests() {
   tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
   tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
   c1.wait();
-  TsglDebug("All unit tests for Canvas passed!");
+  std::cout << passed << std::endl;
+  TsglDebug("Unit tests for Canvas complete.");
   std::cout << std::endl;
 }
 
@@ -781,13 +783,13 @@ bool Canvas::testFilledDraw(Canvas& can) {
   int failed = 0;   //Failed tests
   ColorInt red(255, 0, 0);   //Fill color
   can.drawCircle(250, 250, 50, 32, red, true);  //Draw filled shape
-  can.sleep();   //Have to call it twice for some odd reason too.....
+  can.sleep();
   //Test 1: Get middle pixel and see if its red.
   if(can.getPixel(250, 250) == red) {
     passed++;
   } else {
     failed++;
-   TsglErr("Test 1, middle pixel for testFilledDraw() failed!");
+    TsglErr("Test 1, middle pixel for testFilledDraw() failed!");
   }
 
   //Test 2: Get leftmost and rightmost pixel of the circle
@@ -1150,9 +1152,10 @@ bool Canvas::testDrawImage(Canvas& can) {
       TsglErr("Test 2, Multiple pixels for testDrawImage() failed!");
     }
 
-    //Results of entire Unit test:
+    //Results of entire Unit test:s
     if(passed == 2 && failed == 0) {
       TsglDebug("Unit test for drawing images passed!");
+      std::cout << std::endl;
       return true;
     } else {
       TsglErr("This many passed for testDrawImage(): ");
