@@ -829,7 +829,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
     }
   }
 
-  //Now check the count, should be 99 (Could be because of the one pixel radius thing...)
+  //Now check the count, should be 99
   if(count == 99) {
     passed++;
   } else {
@@ -860,7 +860,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   can.drawTriangle(50, 80, 40, 250, 250, 150, BLACK, false);  //Test 3
   can.sleep();
   can.sleep();
-  ColorFloat black = BLACK;  //Need to change it from a constant to a non-constant so that I can use it in comparison tests
+  ColorInt black(0, 0, 0);
 
   //Test 1: Rectangle
   //Four corners make a rectangle, so check the corners, then perimeter.
@@ -878,7 +878,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //            |                             |
   //  (200, 399)-------------------------------(299, 399)
   // The call: can.drawRectangle(200, 350, 300, 400, BLACK, false);
-  if(ColorFloat(can.getPixel(350, 200)) == black && ColorFloat(can.getPixel(399, 200)) == black && ColorFloat(can.getPixel(351, 299)) == black && ColorFloat(can.getPixel(399, 299)) == black) {
+  if(can.getPixel(350, 200) == black && can.getPixel(399, 200) == black && can.getPixel(351, 299) == black && can.getPixel(399, 299) == black) {
     passed++;
   } else {
     failed++;
@@ -890,7 +890,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   int y = 350;
   int topCount = 0;
   for(int i = 200; i <= 299; i++) {
-    if(ColorFloat(can.getPixel(y, i)) == black) {
+    if(can.getPixel(y, i) == black) {
       topCount++;
     }
     if(i == 298) {  //To compensate for the bug(?) (Take it out to see what I mean)
@@ -909,7 +909,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Top to bottom, left
   int leftCount = 0;
   for(int j = 350; j <= 399; j++) {
-    if(ColorFloat(can.getPixel(j, 200)) == black) {
+    if(can.getPixel(j, 200) == black) {
       leftCount++;
     }
   }
@@ -925,7 +925,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Left to right, bottom
   int bottomCount = 0;
   for(int k = 200; k <= 299; k++) {
-    if(ColorFloat(can.getPixel(399, k)) == black) {
+    if(can.getPixel(399, k) == black) {
       bottomCount++;
     }
   }
@@ -941,7 +941,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Top to bottom, right
   int rightCount = 0;
   for(int l = 351; l <= 399; l++) {
-    if(ColorFloat(can.getPixel(l, 299)) == black) {
+    if(can.getPixel(l, 299) == black) {
       rightCount++;
     }
   }
@@ -959,7 +959,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //They should all be the same color
   //Add one to rightmost because of center??
   //Subtract one from bottom most because of center??
-  if(ColorFloat(can.getPixel(200, 250)) == black && ColorFloat(can.getPixel(301, 250)) == black && ColorFloat(can.getPixel(250, 200)) == black && ColorFloat(can.getPixel(250, 300)) == black) {
+  if(can.getPixel(200, 250) == black && can.getPixel(301, 250) == black && can.getPixel(250, 200) == black && can.getPixel(250, 300) == black) {
     passed++;
   } else {
     failed++;
@@ -969,7 +969,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Test 3: Triangle
   //Check the vertices, and a point in from their line segments
   //Vertices
-  if(ColorFloat(can.getPixel(80, 50)) == black && ColorFloat(can.getPixel(250, 40)) == black && ColorFloat(can.getPixel(150, 249)) == black) {
+  if(can.getPixel(80, 50) == black && can.getPixel(250, 40) == black && can.getPixel(150, 249) == black) {
     passed++;
   } else {
     failed++;
@@ -977,7 +977,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   }
 
   //Point from line segment (Test 3, part 2)
-  if(ColorFloat(can.getPixel(152, 46)) == black && ColorFloat(can.getPixel(113, 143)) == black && ColorFloat(can.getPixel(200, 147)) == black) {
+  if(can.getPixel(152, 46) == black && can.getPixel(113, 143) == black && can.getPixel(200, 147) == black) {
     passed++;
   } else {
     failed++;
@@ -1006,9 +1006,9 @@ bool Canvas::testLine(Canvas & can) {
    can.drawLine(253, 253, 400, 253);  //Straight line
    can.sleep();
    can.sleep();
-   ColorFloat black = BLACK;
+   ColorInt black(0, 0, 0);
    //Test 1: Near the ending endpoint? (Diagonal)
-   if(ColorFloat(can.getPixel(250, 249)) == black) {
+   if(can.getPixel(250, 249) == black) {
      passed++;
    } else {
      failed++;
@@ -1016,7 +1016,7 @@ bool Canvas::testLine(Canvas & can) {
    }
 
    //Test 2: Somewhere in the middle? (Diagonal)
-   if(ColorFloat(can.getPixel(155, 154)) == black) {
+   if(can.getPixel(155, 154) == black) {
      passed++;
    } else {
      failed++;
@@ -1024,7 +1024,7 @@ bool Canvas::testLine(Canvas & can) {
    }
 
    //Test 3: Near the starting endpoint? (Diagonal)
-   if(ColorFloat(can.getPixel(15, 14)) == black) {
+   if(can.getPixel(15, 14) == black) {
      passed++;
    } else {
      failed++;
@@ -1034,7 +1034,7 @@ bool Canvas::testLine(Canvas & can) {
    //Test 4: An entire line? (Straight)
    int count = 0;
    for(int i = 253; i <= 399; i++) {
-     if(ColorFloat(can.getPixel(253, i)) == black) {
+     if(can.getPixel(253, i) == black) {
        count++;
      }
    }
