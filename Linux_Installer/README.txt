@@ -17,9 +17,6 @@ find one or more of these libraries, please see below for links on where you can
 LDFLAGS="$LDFLAGS -L/the/library/path/that/has/the/library", replacing /the/library/path/that/has/the/library with the library path then hit ENTER. 
 (To determine where your libraries are, type "ldconfig -p | grep LIBRARY_NAME" where LIBRARY_NAME is GLEW, glfw, GL, or freetype.).
 
-+ While running the tests there is a small chance that one of them, testHighData, will seg fault. This is normal, as it was a stress test to see how much the TSGL library could handle.
-(Its the test with the yellow background that changes to white after a few moments).
-
 ---------------------------
 STEPS
 ---------------------------

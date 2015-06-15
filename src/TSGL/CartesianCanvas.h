@@ -29,7 +29,7 @@ private:
     Decimal minX, maxX, minY, maxY;                                     // Bounding Cartesian coordinates for the window
     Decimal pixelWidth, pixelHeight;                                    // cartWidth/window.w(), cartHeight/window.h()
 
-    static bool testAxes(CartesianCanvas& can);                                                    // Unit test for axes
+ //   static bool testAxes(CartesianCanvas& can);                                                    // Unit test for axes
     static bool testZoom(CartesianCanvas& can);                                                    // Unit test for zoom() methods
     static bool testRecomputeDimensions(CartesianCanvas& can);                                     // Unit test for recomputeDimensions()
 public:
