@@ -430,10 +430,6 @@ bool TextureHandler::saveToBMP(const char* filename, GLubyte *pixels, unsigned i
 }
 
 bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const {
-#ifdef _WIN32
-	std::cout << "Saving not supported on Windows" << std::endl;
-	return false;
-#else
   // Flip the image, since for some reason the library call
 	// flips the image upside down when it saves
   for (unsigned int j = 0; j < h - (h / 2); j++) {
@@ -447,7 +443,6 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
   }
 	  stbi_write_png(filename, w, h, 3, pixels, 0);
     return true;
-#endif
 }
 
 //-------------------------Unit testing----------------------------------------------

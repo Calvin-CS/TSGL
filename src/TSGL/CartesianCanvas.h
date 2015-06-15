@@ -31,8 +31,7 @@ private:
 
     static bool testAxes(CartesianCanvas& can);                                                    // Unit test for axes
     static bool testZoom(CartesianCanvas& can);                                                    // Unit test for zoom() methods
-    static bool testRecomputeDimensions(CartesianCanvas& can);                                      // Unit test for recomputeDimensions()
-    static bool testDraw(CartesianCanvas& can);                                                     // Unit test for draw method
+    static bool testRecomputeDimensions(CartesianCanvas& can);                                     // Unit test for recomputeDimensions()
 public:
     /*!
      * \brief Constructs a new CartesianCanvas object.
