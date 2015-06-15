@@ -3,7 +3,8 @@
 namespace tsgl {
 
 // Shader sources
-static const GLchar* vertexSource = "#version 150 core\n"
+static const GLchar* vertexSource =
+    "#version 150 core\n"
     "in vec2 position;"
     "in vec4 color;"
     "out vec4 Color;"
@@ -14,13 +15,15 @@ static const GLchar* vertexSource = "#version 150 core\n"
     "   Color = color;"
     "   gl_Position = proj * view * model * vec4(position, 0.0, 1.0);"
     "}";
-static const GLchar* fragmentSource = "#version 150\n"
+static const GLchar* fragmentSource =
+    "#version 150\n"
     "in vec4 Color;"
     "out vec4 outColor;"
     "void main() {"
     "    outColor = vec4(Color);"
     "}";
-static const GLchar* textureVertexSource = "#version 150 core\n"
+static const GLchar* textureVertexSource =
+    "#version 150 core\n"
     "in vec2 position;"
     "in vec4 color;"
     "in vec2 texcoord;"
@@ -30,11 +33,12 @@ static const GLchar* textureVertexSource = "#version 150 core\n"
     "uniform mat4 view;"
     "uniform mat4 proj;"
     "void main() {"
-    "    Texcoord = texcoord;"
+    "   Texcoord = texcoord;"
     "   Color = color;"
     "   gl_Position = proj * view * model * vec4(position, 0.0, 1.0);"
     "}";
-static const GLchar* textureFragmentSource = "#version 150\n"
+static const GLchar* textureFragmentSource =
+    "#version 150\n"
     "in vec4 Color;"
     "in vec2 Texcoord;"
     "out vec4 outColor;"
@@ -44,7 +48,7 @@ static const GLchar* textureFragmentSource = "#version 150\n"
     "}";
 
 std::mutex Canvas::glfwMutex;
-int Canvas::drawBuffer = GL_LEFT;
+int Canvas::drawBuffer = GL_FRONT_LEFT;
 unsigned Canvas::openCanvases = 0;
 
 //Negative timerLength
@@ -54,24 +58,17 @@ Canvas::Canvas(double timerLength) {
 }
 
 Canvas::Canvas(int xx, int yy, int w, int h, std::string title, double timerLength) {
-    //NEW
-   // if(w < 0 || h < 0) {
-    //  throw new std::out_of_range("Cannot have a Canvas with negative width or height!");
-  //  } else {
-     init(xx, yy, w, h, w*h*2, title, timerLength);
-  //  }
+    init(xx, yy, w, h, w*h*2, title, timerLength);
 }
 
 Canvas::~Canvas() {
     // Free our pointer memory
-    delete clearRectangle;
     delete myShapes;
     delete myBuffer;
-    delete timer;
-    delete drawTimer;  //New
+    delete drawTimer;
     delete[] vertexData;
     if (--openCanvases == 0)
-        glfwTerminate();  // Initialize GLFW
+        glfwTerminate();  // Terminate GLFW
 }
 
 void Canvas::bindToButton(Key button, Action a, voidFunction f) {
@@ -93,20 +90,17 @@ void Canvas::clear() {
     toClear = true;
 }
 
-//NEW
 void Canvas::stop() {
     wait();
     close();
 }
 
-//NEW
 int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
     renderThread.join();
     return 0;
 }
 
-//NEW
 void Canvas::close() {
     std::cout << "Window closed successfully." << std::endl;
     bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
@@ -118,45 +112,29 @@ void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
 
-//    Display *dpy = glXGetCurrentDisplay();
-//    GLXDrawable drawable = glXGetCurrentDrawable();
-//    if (drawable)
-//      glXSwapIntervalEXT(dpy, drawable, -1);
-
-    if (hasStereo) {
-      if (hasBackbuffer)
-        Canvas::setDrawBuffer(GL_FRONT_AND_BACK);
-      else
-        Canvas::setDrawBuffer(GL_FRONT);
-    } else if (hasBackbuffer)
-      Canvas::setDrawBuffer(GL_LEFT);
+    if (hasStereo)
+      Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
     else
-      Canvas::setDrawBuffer(GL_FRONT_LEFT);
+      Canvas::setDrawBuffer(hasBackbuffer ? GL_LEFT : GL_FRONT_LEFT);
+
+    setBackgroundColor(bgcolor); //Set our initial clear / background color
 
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
-        timer->sleep();
+        drawTimer->sleep();
 
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
-//        glfwSwapInterval(100);
-//        std::cout << glfwExtensionSupported("GLX_EXT_swap_control_tear");
-        if (toClear) {
-//            glDrawBuffer(drawBuffer);  // See: http://www.opengl.org/wiki/Default_Framebuffer#Color_buffers
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_ACCUM_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-            clearRectangle->draw();
+        if (toClear) glClear(GL_COLOR_BUFFER_BIT);
+        toClear = false;
 
-            toClear = false;
-        }
-
-        realFPS = round(1 / timer->getTimeBetweenSleeps());
+        realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
         std::cout.flush();
 
         bufferMutex.lock();  // Time to flush our buffer
         if (myBuffer->size() > 0) {     // But only if there is anything to flush
-            for (unsigned int i = 0; i < myBuffer->size(); i++) {
-                myShapes->push(myBuffer->operator[](i));
-            }
+            for (unsigned int i = 0; i < myBuffer->size(); i++)
+              myShapes->push((*myBuffer)[i]);
             myBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
         }
         bufferMutex.unlock();
@@ -166,23 +144,24 @@ void Canvas::draw() {
         pointLastPosition = pos;
 
         if (loopAround) {
-            glBufferData(GL_ARRAY_BUFFER, (myShapes->capacity() - posLast) * 6 * sizeof(float),
+            int toend = myShapes->capacity() - posLast;
+            glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
                          &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, myShapes->capacity() - posLast);
+            glDrawArrays(GL_POINTS, 0, toend);
             posLast = 0;
             loopAround = false;
-        } else
-        glBufferData(GL_ARRAY_BUFFER, (pos - posLast) * 6 * sizeof(float), &vertexData[posLast * 6],
-                     GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_POINTS, 0, pos - posLast);
+        }
+        int pbsize = pos - posLast;
+        glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+        glDrawArrays(GL_POINTS, 0, pbsize);
 
         unsigned int size = myShapes->size();
         for (unsigned int i = 0; i < size; i++) {
-            if (!myShapes->operator[](i)->getIsTextured()) {
-                myShapes->operator[](i)->draw();  // Iterate through our queue until we've made it to the end
+            if (!(*myShapes)[i]->getIsTextured()) {
+                (*myShapes)[i]->draw();  // Iterate through our queue until we've made it to the end
             } else {
                 textureShaders(true);
-                myShapes->operator[](i)->draw();
+                (*myShapes)[i]->draw();
                 textureShaders(false);
             }
         }
@@ -190,12 +169,12 @@ void Canvas::draw() {
         // Update our screenBuffer copy with the screen
         glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
         if (toRecord > 0) {
-            toRecord--;
-            screenShot();
+          screenShot();
+          --toRecord;
         }
 
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
-        glFlush();
+        glFlush();                                   // Flush buffer data to the actual draw buffer
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
 
         glfwPollEvents();                            // Handle any I/O
@@ -412,7 +391,7 @@ uint8_t* Canvas::getScreenBuffer() {
 }
 
 double Canvas::getTime() {
-    return timer->getTime();
+    return drawTimer->getTime();
 }
 
 int Canvas::getWindowWidth() {
@@ -460,14 +439,16 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
+    const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
+//    window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
     if (!window) {
         fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
     }
     glfwMutex.unlock();
 
-    const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
     if (!monInfo) {
         fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
     }
@@ -569,10 +550,8 @@ void Canvas::glInit() {
     glGetBooleanv(GL_STEREO,stereo);
     glGetBooleanv(GL_DOUBLEBUFFER,dbuff);
     glGetIntegerv(GL_AUX_BUFFERS,aux);
-    int s = (int)stereo[0];
-    int d = (int)dbuff[0];
-    hasStereo = (s > 0);
-    hasBackbuffer = (d > 0);
+    hasStereo = ((int)stereo[0] > 0);
+    hasBackbuffer = ((int)dbuff[0] > 0);
 
     glfwMakeContextCurrent(NULL);   // Reset the context
 }
@@ -617,10 +596,15 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     toRecord = 0;
 
     bgcolor = GREY;
-    clearRectangle = new Rectangle(0, 0, winWidth, winHeight, GREY);
+    window = nullptr;
 
-    timer = new Timer(FRAME);
-    drawTimer = new Timer(timerLength);    //New
+    if (timerLength == 0.0f) {
+      drawTimer = new Timer(FRAME);
+//      drawTimer = new Timer(FRAME);
+    } else {
+      drawTimer = new Timer(timerLength);
+//      drawTimer = new Timer(timerLength);
+    }
 
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
@@ -639,9 +623,12 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
 }
 
 void Canvas::setBackgroundColor(ColorFloat color) {
-    delete clearRectangle;
     bgcolor = color;
-    clearRectangle = new Rectangle(0, 0, winWidth, winHeight, color);
+    if (window != nullptr) {
+      glfwMakeContextCurrent(window);
+      glClearColor(color.R,color.G,color.B,color.A);
+      glfwMakeContextCurrent(NULL);
+    }
 }
 
 void Canvas::setDrawBuffer(int buffer) {
@@ -692,7 +679,7 @@ void Canvas::sleep() {
 }
 
 void Canvas::reset() {
-    drawTimer->reset();
+  drawTimer->reset();
 }
 
 unsigned int Canvas::getReps() const {

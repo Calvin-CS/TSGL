@@ -9,14 +9,14 @@ cd bin
 
 # run bin/testConcavePolygon    #SLOW
 # run bin/testGetPixels         #INCONSISTENT
-# run ./testInverter          #INCONSISTENT
-
-run ./testConway
+# run bin/testInverter          #INCONSISTENT
 
 run ./testAlphaLangton 640 480            #Width, Height
 run ./testAlphaRectangle 640 480          #Width, Height
+run ./testBallroom
 run ./testColorPoints 400 400 4           #Width, Height, Threads
 run ./testColorWheel 640 640              #Width, Height
+run ./testConway
 run ./testCosineIntegral 640 480 32       #Width, Height, Threads
 run ./testDumbSort 1200 600               #Width, Height
 run ./testForestFire
@@ -38,13 +38,13 @@ run ./testMouse
 run ./testNewtonPendulum
 run ./testNova 1200 900 4                 #Width, Height, Threads
 run ./testPong
-run ./testProjectiles 400 400				#Width, Height
+run ./testProjectiles 400 400             #Width, Height
 run ./testScreenshot
 run ./testScreenshotLangton
 run ./testShadedVoronoi 640 480 8         #Width, Height, Threads
+run ./testSmartSort 1024                  #Elements, Threads
 run ./testSpectrum 8                      #Threads
 run ./testText
 run ./testTextCart
 run ./testTextTwo
-run ./testTSGL                            #Not in TSGL folder anymore...?
 run ./testVoronoi 640 480 8               #Width, Height, Threads

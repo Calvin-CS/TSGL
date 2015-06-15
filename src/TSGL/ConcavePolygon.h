@@ -103,6 +103,7 @@ class ConcavePolygon : public Shape {
      * \brief Draw the ConcavePolygon.
      * \details This function actually draws the ConcavePolygon to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
+     * \warning This is an order of n-cubed operation, and is thus <b>VERY SLOW</b>.
      */
     void draw();
 

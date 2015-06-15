@@ -142,7 +142,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
             if (sd[tid]->state != S_HIDE) {
               for (int i = sd[tid]->first; i < sd[tid]->last; ++i, ++start) {
                   height = numbers[i];
-                  if (sd[tid]->state == S_WAIT)
+                  if (sd[tid]->state == S_WAIT || sd[tid]->state == S_DONE)
                     color = WHITE;
                   else {
                     if (i == sd[tid]->right || i == sd[tid]->left)
@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) {
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(-1, -1, w, h, "", 1.0f/60.0f);
+    Canvas c(-1, -1, w, h, "", FRAME);
     c.setBackgroundColor(BLACK);
     c.start();
     smartSortFunction(c,threads, s);   //Pass it as an argument

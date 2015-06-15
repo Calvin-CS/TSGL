@@ -63,7 +63,7 @@ private:
     ColorFloat      bgcolor;                                            // Color of the Canvas' clearRectangle
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
-    Rectangle*      clearRectangle;                                     // Rectangle for clearing to the background color
+    Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
@@ -92,8 +92,6 @@ private:
                     textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
-    Timer*          timer;                                              // Timer for steady FPS
-    Timer*          drawTimer;                                          // Internal drawing timer for the Canvas
     std::string     title_;                                             // Title of the window
     bool            toClear;                                            // Flag for clearing the canvas
     GLint           uniModel,                                           // Model perspective of the camera
@@ -110,34 +108,27 @@ private:
     static unsigned   openCanvases;                                     // Total number of open Canvases
 
     static void buttonCallback(GLFWwindow* window, int key,
-                               int action, int mods);                   // GLFW callback for mouse buttons
-
+                  int action, int mods);                                // GLFW callback for mouse buttons
     void        draw();                                                 // Draw loop for the Canvas
     static void errorCallback(int error, const char* string);           // Display where an error is coming from
-
     void        init(int xx,int yy,int ww,int hh,
-                     unsigned int b, std::string title, double timerLength = 0.0);                 // Method for initializing the canvas
+                  unsigned int b, std::string title,
+                  double timerLength);                                  // Method for initializing the canvas
     void        glDestroy();                                            // Destroys the GL and GLFW things that are specific for this canvas
     void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
     static void keyCallback(GLFWwindow* window, int key,
-                            int scancode, int action, int mods);        // GLFW callback for keys
+                  int scancode, int action, int mods);                  // GLFW callback for keys
     void        screenShot();                                           // Takes a screenshot
     static void scrollCallback(GLFWwindow* window, double xpos,
-                               double ypos);                            // GLFW callback for scrolling
+                  double ypos);                                         // GLFW callback for scrolling
     void        SetupCamera();                                          // Setup the 2D camera for smooth rendering
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
     void        textureShaders(bool state);                             // Turn textures on or off
-
     static bool testFilledDraw(Canvas& can);                            // Unit test for drawing shapes and determining if fill works
-
     static bool testPerimeter(Canvas& can);                             // Unit test for drawing shapes and determining if the shape is still drawn correctly but not filled
-
     static bool testLine(Canvas& can);                                  // Unit test for lines
-
     static bool testAccessors(Canvas& can);
-
     static bool testDrawImage(Canvas& can);                             // Unit test for drawing images (simultaneously a Unit test for Image)
-
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
@@ -148,7 +139,7 @@ public:
      *             which is set to 0.0 by default (if not needed).
      * \return A new 1200 x 900 Canvas in the middle of the screen with no title.
      */
-    Canvas(double timerLength = 0.0);
+    Canvas(double timerLength = 0.0f);
 
     /*!
      * \brief Explicitly constructs a new Canvas object.
@@ -162,7 +153,7 @@ public:
      *             which is set to 0.0 by default (if not needed).
      * \return A new Canvas with the specified positional data, title, and drawing time length.
      */
-    Canvas(int xx, int yy, int w, int h, std::string title, double timerLength = 0.0);
+    Canvas(int xx, int yy, int w, int h, std::string title, double timerLength = 0.0f);
 
     /*!
      * \brief Destroys a Canvas object.

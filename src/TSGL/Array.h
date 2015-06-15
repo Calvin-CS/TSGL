@@ -95,7 +95,7 @@ class Array {
      * \param index the index of where the item is.
      * \return the item at that index.
      */
-    const Item operator[](unsigned int index) const {
+    const Item& operator[](unsigned int index) const {
         if (size_ == 0)
             throw std::out_of_range("Array::operator[](): array is empty");
         else if (index >= size_)
@@ -103,6 +103,16 @@ class Array {
         else
             return myArray[(first_ + index) % capacity_];  // Wrap around for the underlying array
     }
+
+    Item& operator[](unsigned int index) {
+        if (size_ == 0)
+            throw std::out_of_range("Array::operator[](): array is empty");
+        else if (index >= size_)
+            throw std::out_of_range("Array::operator[](): index is larger than number of items in array");
+        else
+            return myArray[(first_ + index) % capacity_];  // Wrap around for the underlying array
+    }
+
 
     /*! \brief size() returns the number of items in the array. */
     unsigned int size() const {

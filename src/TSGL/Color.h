@@ -13,6 +13,9 @@
 #include <cstdlib>      // Needed for rand()
 #include <sstream>      // Needed for Windows integer / float to string conversion
 
+#include "Util.h"       // Clamp()
+#include "Error.h"      // TsglErr() / TsglDebug()
+
 const int NUM_COLORS = 256, MAX_COLOR = 255;
 
 namespace tsgl {
