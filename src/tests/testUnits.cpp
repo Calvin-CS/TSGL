@@ -18,5 +18,5 @@ int main() {
    TextureHandler::runTests();   // TextureHandler
    ConcavePolygon::runTests();   // ConcavePolygon
    ConvexPolygon::runTests();    // ConvexPolygon
-//   CartesianCanvas::runTests();  // CartesianCanvas
+   CartesianCanvas::runTests();  // CartesianCanvas
 }
