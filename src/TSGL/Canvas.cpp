@@ -679,7 +679,7 @@ void Canvas::sleep() {
 }
 
 void Canvas::reset() {
-  drawTimer->reset();
+    drawTimer->reset();
 }
 
 unsigned int Canvas::getReps() const {

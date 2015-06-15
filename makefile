@@ -10,7 +10,19 @@ VPATH=SRC_PATH:TESTS_PATH:OBJ_PATH
 
 HEADERS := $(wildcard src/TSGL/*.h)
 SOURCES := $(wildcard src/TSGL/*.cpp)
+TESTS   := $(wildcard src/tests/*.cpp)
 OBJS := $(patsubst src/TSGL/%.cpp,build/TSGL/%.o,${SOURCES})
+TESTOBJS:= $(patsubst src/tests/%.cpp,build/tests/%.o,${TESTS})
+
+UNAME := $(shell uname)
+ifeq ($(UNAME), Linux)
+	OS_LFLAGS :=
+	OS_GLFW := glfw
+endif
+ifeq ($(UNAME), Darwin)
+	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
+	OS_GLFW := glfw3
+endif
 
 CXXFLAGS=-O3 -g3 \
 	-Wall -Wextra \
@@ -22,8 +34,8 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
-	-I./ \
-	$$(pkg-config --cflags freetype2) \
+	-I./ -I/usr/include/freetype2  \
+	-I/usr/include/libpng16 -I/usr/include/harfbuzz \
   -std=c++0x -fopenmp \
   -Wno-narrowing -fpermissive
   # -pedantic-errors
@@ -35,9 +47,9 @@ LFLAGS=-LTSGL/ -ltsgl \
 	-L/opt/AMDAPP/lib/x86_64/ \
 	-L/usr/local/lib/ \
 	-L/usr/X11/lib/ \
-	-ltsgl -lfreetype -lGLEW -lglfw \
+	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
 	-lX11 -lGL -lXrandr \
-	-fopenmp
+	-fopenmp ${OS_LFLAGS}
 	# -lpng -ljpeg \
 
 DEPFLAGS=-MMD -MP
@@ -53,7 +65,8 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
 	bin/testConcavePolygon bin/testNewtonPendulum bin/testClock bin/testConway \
-	bin/testProjectiles bin/testBallroom bin/testUnits bin/testSmartSort bin/testClock
+	bin/testProjectiles bin/testBallroom bin/testUnits bin/testSmartSort bin/testClock \
+	bin/testMaster
 
 all: dif tsgl tests docs tutorial
 
@@ -133,5 +146,5 @@ tutorial/docs/html/index.html: ${HEADERS} TutDoxyfile
 	doxygen TutDoxyfile
 
 .PHONY: all debug clean tsgl tests docs tutorial dif
-.SECONDARY: ${OBJS} build/tests.o $(OBJS:%.o=%.d)
+.SECONDARY: ${OBJS} ${TESTOBJS} build/tests.o $(OBJS:%.o=%.d)
 
