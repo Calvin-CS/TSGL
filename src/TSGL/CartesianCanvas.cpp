@@ -200,8 +200,7 @@ void CartesianCanvas::runTests() {
  // tsglAssert(testAxes(c1), "Unit test for drawing axes failed!");
   tsglAssert(testZoom(c1), "Unit test for zoom() functions failed!");
   tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed!");
-  tsglAssert(testDraw(c1), "Unit test for drawing failed!");
-  std::cout << "Unit tests for CartesianCanvas complete." << std::endl;
+  TsglDebug("Unit tests for CartesianCanvas complete.");
   c1.wait();
 }
 
@@ -238,15 +237,77 @@ bool CartesianCanvas::testAxes(CartesianCanvas& can) {
 }
 
 bool CartesianCanvas::testZoom(CartesianCanvas& can) {
-  return true;
+    int passed = 0;
+    int failed = 0;
+    //Test 1: Zooming out
+    can.zoom(0, 0, 1.5);
+    if(can.getCartWidth() == 1200 && can.getCartHeight() == 900) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 1, Zooming out for testZoom() failed!");
+    }
+
 }
 
 bool CartesianCanvas::testRecomputeDimensions(CartesianCanvas& can) {
-  return true;
-}
+   int passed = 0;
+   int failed = 0;
+   Decimal xMin, xMax;
+   Decimal yMin, yMax;
+   //Test 1: Positive values only (with 0.0)
+   xMin = 0.0;
+   xMax = 500.0;
+   yMin = 0.0;
+   yMax = 500.0;
+   can.recomputeDimensions(xMin, yMin, xMax, yMax);
+   if(can.getCartWidth() == 500.0 && can.getCartHeight() == 500.0) {
+     passed++;
+   } else {
+     failed++;
+     TsglErr("Test 1, Positive values only for testRecomputeDimensions() failed!");
+   }
 
-bool CartesianCanvas::testDraw(CartesianCanvas& can) {
-  return true;
+   //Test 2: Negative values included
+   xMin = xMax = yMin = yMax = 0.0;
+   xMin = -300.0;
+   xMax = 900.0;
+   yMin = -500.0;
+   yMax = 1000.0;
+   can.recomputeDimensions(xMin, yMin, xMax, yMax);
+
+   if(can.getCartWidth() == 1200.0 && can.getCartHeight() == 1500.0) {
+     passed++;
+   } else {
+     failed++;
+     TsglErr("Test 2, Negative values for testRecomputeDimensions() failed!");
+   }
+
+   //Test 3: Same as Test 2, but negative values are max
+   xMin = xMax = yMin = yMax = 0.0;
+   xMin = -900.0;
+   xMax = -100.0;
+   yMin = -800.0;
+   yMax = -50.0;
+   can.recomputeDimensions(xMin, yMin, xMax, yMax);
+
+   if(can.getCartWidth() == 800.0 && can.getCartHeight() == 750.0) {
+     passed++;
+   } else {
+     failed++;
+     TsglErr("Test 3, Max negative values for testRecomputeDimensions() failed!");
+   }
+
+   if(passed == 3 && failed == 0) {
+     TsglDebug("Unit test for recomputing dimensions passed!");
+     return true;
+   } else {
+     TsglErr("This many tests passed for testRecomputeDimensions(): ");
+     std::cout << " " << passed << std::endl;
+     TsglErr("This many tests failed for testRecomputeDimensions(): ");
+     std::cout << " " << failed << std::endl;
+     return false;
+   }
 }
 //-----------------End Unit testing----------------------------------------------------
 }
