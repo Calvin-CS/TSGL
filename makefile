@@ -35,7 +35,7 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
 	-I./ -I/usr/include/freetype2  \
-	-I/usr/include/libpng16 -I/usr/include/harfbuzz \
+	-I/usr/local/include/freetype2  \
   -std=c++0x -fopenmp \
   -Wno-narrowing -fpermissive
   # -pedantic-errors
