@@ -95,11 +95,12 @@ class Timer {
      *  instance's remaining period expires.
      * \details If the timer's period has elapsed since last call, the thread will continue execution
      *  normally until the next call to sleep().
+     *      \param update Whether to update the timer's last_rep status (for Canvas use) or not (for user use)
      * \note This function does not guarantee the thread will resume immediately after the time expires.
      *  Depending on your OS, the thread may sleep for longer.
      * \see getTimeBetweenSleeps() to get the real time of the sleep.
      */
-    void sleep();
+    void sleep(bool update = true);
 
     /*!
      * \brief Sleeps the current thread for the specified duration.

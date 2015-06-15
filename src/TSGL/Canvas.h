@@ -511,6 +511,13 @@ public:
     void sleep();
 
     /*!
+     * \brief Sleeps the current thread for a set amount of time
+     * \details The curren thread put to sleep for a fixed amount of time
+     *        \param milli Number of milliseconds to sleep for
+     */
+    void sleepFor(float seconds);
+
+    /*!
      * \brief Resets the internal drawing timer of a Canvas object.
      * \note Can be thought of as a wrapper function for a Timer function call.
      */

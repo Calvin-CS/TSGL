@@ -36,8 +36,8 @@ bool Timer::pastPeriod() {
     if (last_rep < getReps()) {
         last_rep = getReps();
         return true;
-    } else
-        return false;
+    }
+    return false;
 }
 
 // Changes the period to the given interval
@@ -48,17 +48,21 @@ void Timer::reset(double period) {
 }
 
 // Sleep the thread until the period has passed
-void Timer::sleep() {
+void Timer::sleep(bool update) {
     mutexLock sleepLock(sleep_);
-    while (last_time < highResClock::now()) {
-        last_time = last_time + period_;
+    timepoint_d sleep_time = last_time;
+    while (sleep_time < highResClock::now()) {
+      sleep_time = sleep_time + period_;
     }
     sleepLock.unlock();
 
-    long double nano = std::chrono::duration_cast<duration_d>(last_time - highResClock::now()).count();
+    if (update)
+      last_time = sleep_time;
+
+    long double nano = std::chrono::duration_cast<duration_d>(sleep_time - highResClock::now()).count();
     std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (nano * 1000000000)));
 
-    time_between_sleeps = std::chrono::duration_cast<duration_d>(highResClock::now() - last_time).count()
+    time_between_sleeps = std::chrono::duration_cast<duration_d>(highResClock::now() - sleep_time).count()
         + period_.count();
 }
 

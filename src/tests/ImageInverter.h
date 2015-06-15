@@ -103,7 +103,7 @@ void ImageInverter::invertImage(unsigned numThreads) {
         inverse = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
   //      myCanvas2.drawPoint(col,row, pixelColor );
         myCanvas2.drawPixel(row, col, ColorInt(inverse,inverse,inverse) );
-        t.sleep();
+        t.sleep(false);
       }
     }
   }

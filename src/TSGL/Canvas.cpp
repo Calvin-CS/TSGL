@@ -121,7 +121,7 @@ void Canvas::draw() {
 
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
-        drawTimer->sleep();
+        drawTimer->sleep(true);
 
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
@@ -675,7 +675,11 @@ void Canvas::startDrawing(Canvas *c) {
 }
 
 void Canvas::sleep() {
-    drawTimer->sleep();
+    drawTimer->sleep(false);
+}
+
+void Canvas::sleepFor(float seconds) {
+  std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
 }
 
 void Canvas::reset() {
