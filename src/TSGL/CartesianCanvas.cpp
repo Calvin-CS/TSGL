@@ -196,7 +196,7 @@ void CartesianCanvas::runTests() {
   CartesianCanvas c1;
   c1.setBackgroundColor(WHITE);
   c1.start();
-  std::this_thread::sleep_for(std::chrono::seconds(1));
+//  std::this_thread::sleep_for(std::chrono::seconds(1));
  // tsglAssert(testAxes(c1), "Unit test for drawing axes failed!");
   tsglAssert(testZoom(c1), "Unit test for zoom() functions failed!");
   tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed!");
@@ -204,50 +204,92 @@ void CartesianCanvas::runTests() {
   c1.wait();
 }
 
-bool CartesianCanvas::testAxes(CartesianCanvas& can) {
-   int passed = 0;
-   int failed = 0;
-   can.drawAxes(0, 0, 10, 10);
- //  can.sleep();
-   ColorInt black(0, 0, 0);
-   if(can.getPixel(0, 0) == black && can.getPixel(0, 10) == black) {
-     passed++;
-   } else {
-     failed++;
-     TsglErr("Test 1, distance between axes for testAxes() failed!");
-   }
-
-//   while(can.getIsOpen()) {
-//     std::cout << can.getMouseX() << " " << can.getMouseY() << std::endl;
+//bool CartesianCanvas::testAxes(CartesianCanvas& can) {
+//   int passed = 0;
+//   int failed = 0;
+//   can.drawAxes(0, 0, 10, 10);
+// //  can.sleep();
+//   ColorInt black(0, 0, 0);
+//   if(can.getPixel(0, 0) == black && can.getPixel(0, 10) == black) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, distance between axes for testAxes() failed!");
 //   }
-//   for(unsigned i = 0; i < can.getWindowWidth(); i++) {
-//     std::cout << can.getPixel(460, i).AsString() << std::endl;
+//
+////   while(can.getIsOpen()) {
+////     std::cout << can.getMouseX() << " " << can.getMouseY() << std::endl;
+////   }
+////   for(unsigned i = 0; i < can.getWindowWidth(); i++) {
+////     std::cout << can.getPixel(460, i).AsString() << std::endl;
+////   }
+//
+//   if(passed == 1 && failed == 0) {
+//     TsglDebug("Unit test for drawing axes passed!");
+//     return true;
+//   } else {
+//     TsglErr("This many tests passed for testAxes(): ");
+//     std::cout << " " << passed << std::endl;
+//     TsglErr("This many tests failed for testAxes(): ");
+//     std::cout << " " << failed << std::endl;
+//     return false;
 //   }
-
-   if(passed == 1 && failed == 0) {
-     TsglDebug("Unit test for drawing axes passed!");
-     return true;
-   } else {
-     TsglErr("This many tests passed for testAxes(): ");
-     std::cout << " " << passed << std::endl;
-     TsglErr("This many tests failed for testAxes(): ");
-     std::cout << " " << failed << std::endl;
-     return false;
-   }
-}
+//}
 
 bool CartesianCanvas::testZoom(CartesianCanvas& can) {
     int passed = 0;
     int failed = 0;
     //Test 1: Zooming out
+    //Had to use round() because there was a floating-point error that
+    //propagated to the rest of the tests after the first two
     can.zoom(0, 0, 1.5);
-    if(can.getCartWidth() == 1200 && can.getCartHeight() == 900) {
+    if(round(can.getCartWidth()) == 1200 && round(can.getCartHeight()) == 900) {
       passed++;
     } else {
       failed++;
       TsglErr("Test 1, Zooming out for testZoom() failed!");
     }
 
+    //Test 2: Zooming in
+    can.zoom(0, 0, .5);
+    if(round(can.getCartWidth()) == 600 && round(can.getCartHeight()) == 450) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 2, Zooming in for testZoom() failed!");
+    }
+
+    //Test 3: Zooming out/in on a different point
+
+    //Zooming out....
+    can.zoom(10, 10, 1.2);
+    if(round(can.getCartWidth()) == 720 && round(can.getCartHeight()) == 540) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 3, Zooming out on a different point for testZoom() failed!");
+    }
+
+    //Zooming in....
+    can.zoom(15, 20, .9);
+    if(round(can.getCartWidth()) == 648 && round(can.getCartHeight()) == 486) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 3, Zooming in on a different point for testZoom() failed!");
+    }
+
+    //Results:
+    if(passed == 4 && failed == 0) {
+      TsglDebug("Unit test for zooming in & out passed!");
+      return true;
+    } else {
+      TsglErr("This many passed for testZoom(): ");
+      std::cout << " " << passed << std::endl;
+      TsglErr("This many failed for testZoom(): ");
+      std::cout << " " << failed << std::endl;
+      return false;
+    }
 }
 
 bool CartesianCanvas::testRecomputeDimensions(CartesianCanvas& can) {
