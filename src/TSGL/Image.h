@@ -54,11 +54,6 @@ class Image : public Shape {
      * \details This function actually draws the Image to the Canvas.
      */
     void draw();
-
-    /*!
-     *
-     */
-    static void runTests();
 };
 
 }

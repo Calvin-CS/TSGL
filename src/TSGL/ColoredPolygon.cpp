@@ -10,7 +10,8 @@
 namespace tsgl {
 
 ColoredPolygon::ColoredPolygon(int v) {
-    if (v < 3) throw std::out_of_range("Cannot have a polygon with fewer than 3 vertices.");
+    if (v < 3)
+      TsglErr("Cannot have a polygon with fewer than 3 vertices.");
     length = v;
     size = length * 6;
     current = 0;
@@ -23,7 +24,10 @@ ColoredPolygon::~ColoredPolygon() {
 }
 
 void ColoredPolygon::addVertex(int x, int y, const ColorFloat &color) {
-    if (init) return;
+    if (init) {
+      TsglDebug("Cannot add anymore vertices.");
+      return;
+    }
     vertices[current] = x;
     vertices[current + 1] = y;
     vertices[current + 2] = color.R;
@@ -35,7 +39,10 @@ void ColoredPolygon::addVertex(int x, int y, const ColorFloat &color) {
 }
 
 void ColoredPolygon::draw() {
-    if (!init) return;
+    if (!init) {
+      TsglDebug("Cannot draw yet.");
+      return;
+    }
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 }

@@ -10,7 +10,8 @@
 namespace tsgl {
 
 ConcavePolygon::ConcavePolygon(int v) {
-  if (v < 3) throw std::out_of_range("Cannot have a polygon with fewer than 3 vertices.");
+  if (v < 3)
+    TsglErr("Cannot have a polygon with fewer than 3 vertices.");
   length = v+1;
   size = length * 6;
   tsize = 0;
@@ -27,7 +28,10 @@ ConcavePolygon::~ConcavePolygon() {
 }
 
 void ConcavePolygon::addVertex(int x, int y, const ColorFloat &color) {
-  if (init) return;
+  if (init) {
+    TsglDebug("Cannot add anymore vertices.");
+    return;
+  }
   vertices[current] = x;
   vertices[current + 1] = y;
   vertices[current + 2] = color.R;
@@ -36,6 +40,7 @@ void ConcavePolygon::addVertex(int x, int y, const ColorFloat &color) {
   vertices[current + 5] = color.A;
   current += 6;
   dirty = true;
+
   if (current == size-6) {
     vertices[current] = vertices[0];
     vertices[current + 1] = vertices[1];
@@ -70,7 +75,10 @@ bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, fl
 }
 
 void ConcavePolygon::draw() {
-  if (!init) return;
+  if (!init) {
+    TsglDebug("Cannot draw yet.");
+    return;
+  }
 
   if (dirty) {
     dirty = false;

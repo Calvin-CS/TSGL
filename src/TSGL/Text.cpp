@@ -38,7 +38,7 @@ void Text::draw() {
 
     myLoader->drawText(myString, myFontSize, vertices);
 
-    delete vertices;
+    delete[] vertices;
 }
 
 }

@@ -105,12 +105,13 @@ class Array {
     }
 
     Item& operator[](unsigned int index) {
-        if (size_ == 0)
+        if (size_ == 0) {
             throw std::out_of_range("Array::operator[](): array is empty");
-        else if (index >= size_)
+        } else if (index >= size_) {
             throw std::out_of_range("Array::operator[](): index is larger than number of items in array");
-        else
+        } else {
             return myArray[(first_ + index) % capacity_];  // Wrap around for the underlying array
+        }
     }
 
 

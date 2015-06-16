@@ -35,8 +35,8 @@ class ConvexPolygon : public Shape {
      * \brief Explicitly constructs a new ConvexPolygon.
      * \details Explicit constructor for a Convex Polygon object.
      *      \param v, the number of vertices the complete ConvexPolygon will have.
-     * \warning An invariant is held where if v is less than 3 then an std::out_of_range
-     *          exception is thrown.
+     * \warning An invariant is held where if v is less than 3 then an error is given followed
+     *          by corrective action taken.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
     ConvexPolygon(int v);

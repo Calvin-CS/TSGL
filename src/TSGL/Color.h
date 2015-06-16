@@ -48,8 +48,7 @@ struct ColorFloat {
      *      \param b The blue component of the struct.
      *      \param a The alpha component of the struct (set to 1.0f by default).
      * \warning An invariant is set where if any of the specified R, G, B, or A values
-     *          is out of the range 0 - 1 inclusive then an std::out_of_range exception
-     *          is thrown.
+     *          is out of the range 0 - 1 inclusive then an error message is given with corrective action taken.
      * \return A ColorFloat struct with the specified R, G, B, and A values.
      */
     ColorFloat(float r, float g, float b, float a = 1.0f);
@@ -97,7 +96,7 @@ struct ColorInt {
      *      \param b The blue component of the ColorInt struct.
      *      \param a The alpha component of the ColorInt struct (set to 255 by default).
      * \warning An invariant is held where if any of the specified values is out of the
-     *          range 0 - 255 inclusive then an std::out_of_range exception is thrown.
+     *          range 0 - 255 inclusive then an error is given with corrective action taken.
      * \return A ColorInt struct with the specified R, G, B, and A values.
      */
     ColorInt(int r, int g, int b, int a = 255);
@@ -148,7 +147,7 @@ struct ColorHSV {
      *      \param v Value component of the ColorHSV struct.
      *      \param a Alpha component of the ColorHSV struct (set to 1.0f by default).
      * \warning An invariant is held for each of the components where if any of them are
-     *          out of range then an std::out_of_range exception.
+     *          out of range then an error is given followed by corrective action taken.
      * \return A ColorHSV struct with specified H, S, V, and A values.
      */
     ColorHSV(float h, float s, float v, float a = 1.0f);
@@ -201,8 +200,8 @@ class Colors {
      *      \param section Integer specifying the current section.
      *      \param value Value component, between 0 and 1 inclusive.
      *      \param alpha Alpha component, between 0 and 1 inclusive (set to 1.0f by default).
-     * \warning An invariant is held where if value or alpha is greater than 1 or less than 0 then a std::out_of_range
-     *          exception is thrown.
+     * \warning An invariant is held where if value or alpha is greater than 1 or less than 0 then an error is given
+     *          followed by corrective action taken.
      * \return A ColorFloat with a hue calculated as 6.0f / sections*section, saturation of 1.0, and the given value
      *  and alpha components.
      */
@@ -225,7 +224,7 @@ class Colors {
      *      \param alpha Alpha of the random color to generate. An alpha of 0 will set the alpha to a random
      *       legal value (set to 0.0f by default).
      * \warning An invariant is held for the alpha value where if its greater than 1 or less than 0
-     *          then an std::out_of_range exception is thrown.
+     *          then an error is given followed by corrective action taken.
      * \return A random ColorFloat.
      */
     static ColorFloat randomColor(float alpha = 0.0f);
@@ -239,7 +238,7 @@ class Colors {
      *      \param bias A bias between 0 and 1 inclusive.  A bias of 0 returns c1, a bias of 1 returns c2, and a
      *       bias in between returns a linear interpolation.
      * \warning An invariant is held for the bias where if its greater than 1 or less than 0 then
-     *          an std::out_of_range exception is thrown.
+     *          an error is given followed by corrective action taken.
      * \return A ColorFloat linearly interpolated between c1 and c2 using the given bias as a weight.
      */
     static ColorFloat blendedColor(ColorFloat c1, ColorFloat c2, float bias);

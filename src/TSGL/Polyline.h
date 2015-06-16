@@ -34,8 +34,8 @@ class Polyline : public Shape {
      * \brief Explicitly constructs a new Polyline.
      * \details Explicit constructor for a new Polyline object.
      *      \param v, the number of vertices the complete Polyline will have.
-     * \warning An invariant is held where if v is less than 2 then an std::out_of_range
-     *          exception is thrown.
+     * \warning An invariant is held where if v is less than 2 then an error is given followed by
+     *          corrective action taken.
      * \return a new Polyline with a buffer for storing the specified numbered of vertices.
      */
     Polyline(int v);
@@ -61,6 +61,8 @@ class Polyline : public Shape {
      * \brief Draw the Polyline.
      * \details This function actually draws the Polyline to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
+     * \note A warning message indicating that the Polyline cannot be drawn yet will be given
+     *      if the above condition is met (vertex buffer = not full).
      */
     void draw();
 };

@@ -307,7 +307,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         p->addNextVertex(x1, y2, color);
         p->addNextVertex(x2, y2, color);
         //TODO: This should not have to be decremented by 1...
-        p->addNextVertex(x2, y1-1, color);
+        p->addNextVertex(x2, y1, color);
         p->addNextVertex(x1, y1, color);
         drawShape(p);
     }
@@ -650,7 +650,7 @@ void Canvas::SetupCamera() {
     glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 
     // Set up camera zooming
-    float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.00000191f, -1, 0, 0, -0.02000002f, 0 };
+    float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
     glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
 
     // Set up camera transformation
@@ -770,6 +770,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
   ColorInt red(255, 0, 0);   //Fill color
   can.drawCircle(250, 250, 50, 32, red, true);  //Draw filled shape
   can.sleepFor(1);
+
   //Test 1: Get middle pixel and see if its red.
   if(can.getPixel(250, 250) == red) {
     passed++;
@@ -845,13 +846,10 @@ bool Canvas::testPerimeter(Canvas& can) {
   int failed = 0;  //Failed tests
   can.drawRectangle(200, 350, 300, 400, BLACK, false);   //Test 1
   can.drawCircle(250, 250, 50, 32, BLACK, false);  //Test 2
-  can.drawTriangle(50, 80, 40, 250, 250, 150, BLACK, false);  //Test 3
+  can.drawTriangle(50, 80, 150, 80, 50, 150, BLACK, false);  //Test 3
   can.sleepFor(1);
   ColorInt black(0, 0, 0);
 
-//  while(can.getIsOpen()) {
-//    std::cout << can.getMouseX() << " " << can.getMouseY() << std::endl;
-//  }
   //Test 1: Rectangle
   //Four corners make a rectangle, so check the corners, then perimeter.
   //Interesting...it appears as if though sometimes the exact coordinate works and sometimes I have to either subtract 1 from one of them or add 1.
@@ -876,7 +874,6 @@ bool Canvas::testPerimeter(Canvas& can) {
   }
 
   //Left to right, top
-//  int y = 350;
   int topCount = 0;
   for(int i = 200; i <= 300; i++) {
     if(can.getPoint(i, 350) == black) {
@@ -953,9 +950,9 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Test 3: Triangle
   //Check the vertices, and a point in from their line segments
   //NOTE: The vertices themselves aren't necessarily drawn, as the points taper off due to the sharp
-  //  angles of the triangle
+  //  angles of the triangle (Unless we are dealing with a right triangle).
   //Vertices
-  if(can.getPoint(50, 81) == black && can.getPoint(40, 250) == black && can.getPoint(249, 150) == black) {
+  if(can.getPoint(50, 80) == black && can.getPoint(150, 80) == black && can.getPoint(50, 150) == black) {
     passed++;
   } else {
     failed++;
@@ -963,7 +960,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   }
 
   //Point from line segment (Test 3, part 2)
-  if(can.getPoint(46, 152) == black && can.getPoint(143, 113) == black && can.getPoint(147, 200) == black) {
+  if(can.getPoint(50, 109) == black && can.getPoint(100, 80) == black && can.getPoint(100, 115) == black) {
     passed++;
   } else {
     failed++;

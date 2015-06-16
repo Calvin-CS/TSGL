@@ -62,8 +62,4 @@ void Image::draw() {
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void Image::runTests() {
-    tsglAssert(true, "false");
-}
-
 }

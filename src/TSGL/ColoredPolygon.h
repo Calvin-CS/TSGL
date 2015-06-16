@@ -35,8 +35,8 @@ class ColoredPolygon : public Shape {
      * \brief Explicitly construct a new ColoredPolygon.
      * \details Explicit constructor for a ColoredPolygon object.
      *      \param v, The number of vertices the complete ColoredPolygon will have.
-     * \warning An invariant is held where if v is less than 3 then an std::out_of_range
-     *          exception is thrown.
+     * \warning An invariant is held where if v is less than 3 then an error is given followed
+     *          by corrective action taken.
      * \return A new ColoredPolygon with a buffer for storing the specified numbered of vertices.
      */
     ColoredPolygon(int v);

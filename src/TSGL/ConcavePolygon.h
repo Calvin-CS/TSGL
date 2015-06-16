@@ -44,8 +44,8 @@ class ConcavePolygon : public Shape {
      * \brief Explicitly constructs a new ConcavePolygon.
      * \details Explicit constructor for a ConcavePolygon object.
      *      \param v, The number of vertices the complete ConcavePolygon will have.
-     * \warning An invariant is held where if v is less than 3 then an std::out_of_range exception
-     *          is thrown.
+     * \warning An invariant is held where if v is less than 3 then an error is given
+     *          followed by corrective action taken.
      * \return A new ConcavePolygon with a buffer for storing the specified numbered of vertices.
      */
     ConcavePolygon(int v);
