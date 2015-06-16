@@ -201,6 +201,7 @@ void CartesianCanvas::runTests() {
   tsglAssert(testZoom(c1), "Unit test for zoom() functions failed!");
   tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed!");
   TsglDebug("Unit tests for CartesianCanvas complete.");
+  TsglDebug("CLOSE THE CARTESIAN CANVAS WINDOW PLEASE!");
   c1.wait();
 }
 

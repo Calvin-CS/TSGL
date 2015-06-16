@@ -754,13 +754,12 @@ void Canvas::runTests() {
   Canvas c1(0, 0, 500, 500, "", FRAME);
   c1.setBackgroundColor(WHITE);
   c1.start();
-  //HACKY SOLUTION: Have a sleep_for statement. Seems to fix the getPixels() problem.
-  std::this_thread::sleep_for(std::chrono::seconds(1));
   tsglAssert(testFilledDraw(c1), "Unit test for filled draw failed!");
   tsglAssert(testPerimeter(c1), "Unit test for non filled draw failed!");
   tsglAssert(testLine(c1), "Unit test for line failed!");
   tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
   tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
+  TsglDebug("CLOSE THE CANVAS WINDOW PLEASE!");
   c1.wait();
   TsglDebug("Unit tests for Canvas complete.");
   std::cout << std::endl;
@@ -772,7 +771,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
   int failed = 0;   //Failed tests
   ColorInt red(255, 0, 0);   //Fill color
   can.drawCircle(250, 250, 50, 32, red, true);  //Draw filled shape
-  can.sleep();
+  can.sleepFor(1);
   //Test 1: Get middle pixel and see if its red.
   if(can.getPixel(250, 250) == red) {
     passed++;
@@ -849,16 +848,18 @@ bool Canvas::testPerimeter(Canvas& can) {
   can.drawRectangle(200, 350, 300, 400, BLACK, false);   //Test 1
   can.drawCircle(250, 250, 50, 32, BLACK, false);  //Test 2
   can.drawTriangle(50, 80, 40, 250, 250, 150, BLACK, false);  //Test 3
-  can.sleep();
-  can.sleep();
+  can.sleepFor(1);
   ColorInt black(0, 0, 0);
 
+//  while(can.getIsOpen()) {
+//    std::cout << can.getMouseX() << " " << can.getMouseY() << std::endl;
+//  }
   //Test 1: Rectangle
   //Four corners make a rectangle, so check the corners, then perimeter.
   //Interesting...it appears as if though sometimes the exact coordinate works and sometimes I have to either subtract 1 from one of them or add 1.
   //Not sure if that's a bug, or if i'm missing something.
   //Rectangle should look like this:
-  //  (200, 350)-------------------------------(299, 351)
+  //  (200, 350)-------------------------------(300, 350)
   //            |                             |
   //            |                             |
   //            |                             |
@@ -867,8 +868,11 @@ bool Canvas::testPerimeter(Canvas& can) {
   //            |                             |
   //            |                             |
   //            |                             |
-  //  (200, 399)-------------------------------(299, 399)
+  //  (200, 400)-------------------------------(300, 400)
   // The call: can.drawRectangle(200, 350, 300, 400, BLACK, false);
+  //NOT TRUE:
+  //I had to add or subtract one to get the right pixel coordinates.
+  //I double checked them. That is the pixel coordinate.
   if(can.getPixel(350, 200) == black && can.getPixel(399, 200) == black && can.getPixel(351, 299) == black && can.getPixel(399, 299) == black) {
     passed++;
   } else {
@@ -876,8 +880,16 @@ bool Canvas::testPerimeter(Canvas& can) {
     TsglErr("Test 1, Four corners for testPerimeter() failed!");
   }
 
+//  if(can.getPixel(350, 200) == black && can.getPixel(400, 200) == black && can.getPixel(350, 300) == black && can.getPixel(400, 300) == black) {
+//    passed++;
+//  } else {
+//    failed++;
+//    TsglErr("Test 1, Four corners for testPerimeter() failed!");
+//  }
+
   //Left to right, top
   //BUG?: It looks like the very last pixel for a line has its y-value incremented by 1....?
+  //Comment out the first statement followed by the y++ in the second if-else clause
   int y = 350;
   int topCount = 0;
   for(int i = 200; i <= 299; i++) {
@@ -995,8 +1007,7 @@ bool Canvas::testLine(Canvas & can) {
    int failed = 0;
    can.drawLine(0, 0, 250, 250, BLACK);  //Diagonal line
    can.drawLine(253, 253, 400, 253);  //Straight line
-   can.sleep();
-   can.sleep();
+   can.sleepFor(1);
    ColorInt black(0, 0, 0);
    //Test 1: Near the ending endpoint? (Diagonal)
    if(can.getPixel(250, 249) == black) {
@@ -1125,9 +1136,7 @@ bool Canvas::testAccessors(Canvas& can) {
 
 bool Canvas::testDrawImage(Canvas& can) {
     can.drawImage("assets/ff0000.png", 0, 0, 200, 200);
-    can.sleep();
-    can.sleep();
-    can.sleep();
+    can.sleepFor(1);
     int passed = 0;
     int failed = 0;
     ColorInt red(255, 0, 0);

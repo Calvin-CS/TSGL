@@ -19,4 +19,6 @@ int main() {
    ConcavePolygon::runTests();   // ConcavePolygon
    ConvexPolygon::runTests();    // ConvexPolygon
    CartesianCanvas::runTests();  // CartesianCanvas
+   std::cout << std::endl;
+   TsglDebug("All Unit Tests have passed!");
 }
