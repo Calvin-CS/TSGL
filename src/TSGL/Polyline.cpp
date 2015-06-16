@@ -29,7 +29,7 @@ void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
       return;
     }
     vertices[current] = x;
-    vertices[current + 1] = y - 0.5f;
+    vertices[current + 1] = y;
     vertices[current + 2] = color.R;
     vertices[current + 3] = color.G;
     vertices[current + 4] = color.B;
