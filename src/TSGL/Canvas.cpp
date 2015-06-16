@@ -91,8 +91,8 @@ void Canvas::clear() {
 }
 
 void Canvas::stop() {
-    wait();
     close();
+    wait();
 }
 
 int Canvas::wait() {
@@ -102,10 +102,8 @@ int Canvas::wait() {
 }
 
 void Canvas::close() {
-    std::cout << "Window closed successfully." << std::endl;
-    bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    });
+    glfwSetWindowShouldClose(window, GL_TRUE);
+    TsglDebug("Window closed successfully.");
 }
 
 void Canvas::draw() {
@@ -306,9 +304,10 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
     else {
         Polyline* p = new Polyline(5);
         p->addNextVertex(x1, y1, color);
-        p->addNextVertex(x2, y1, color);
-        p->addNextVertex(x2, y2, color);
         p->addNextVertex(x1, y2, color);
+        p->addNextVertex(x2, y2, color);
+        //TODO: This should not have to be decremented by 1...
+        p->addNextVertex(x2, y1-1, color);
         p->addNextVertex(x1, y1, color);
         drawShape(p);
     }
@@ -754,13 +753,12 @@ void Canvas::runTests() {
   Canvas c1(0, 0, 500, 500, "", FRAME);
   c1.setBackgroundColor(WHITE);
   c1.start();
-//  tsglAssert(testFilledDraw(c1), "Unit test for filled draw failed!");
+  tsglAssert(testFilledDraw(c1), "Unit test for filled draw failed!");
   tsglAssert(testPerimeter(c1), "Unit test for non filled draw failed!");
-//  tsglAssert(testLine(c1), "Unit test for line failed!");
-//  tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
-//  tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
-  TsglDebug("CLOSE THE CANVAS WINDOW PLEASE!");
-  c1.wait();
+  tsglAssert(testLine(c1), "Unit test for line failed!");
+  tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
+  tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
+  c1.stop();
   TsglDebug("Unit tests for Canvas complete.");
   std::cout << std::endl;
 }
@@ -870,10 +868,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //            |                             |
   //  (200, 400)-------------------------------(300, 400)
   // The call: can.drawRectangle(200, 350, 300, 400, BLACK, false);
-  //NOT TRUE:
-  //I had to add or subtract one to get the right pixel coordinates.
-  //I double checked them. That is the pixel coordinate.
-  if(can.getPixel(350, 200) == black && can.getPixel(400, 200) == black && can.getPixel(350, 300) == black && can.getPixel(400, 300) == black) {
+  if(can.getPoint(200, 350) == black && can.getPoint(200, 400) == black && can.getPoint(300, 350) == black && can.getPoint(300, 400) == black) {
     passed++;
   } else {
     failed++;
@@ -881,21 +876,16 @@ bool Canvas::testPerimeter(Canvas& can) {
   }
 
   //Left to right, top
-  //BUG?: It looks like the very last pixel for a line has its y-value incremented by 1....?
-  //Comment out the first statement followed by the y++ in the second if-else clause
 //  int y = 350;
   int topCount = 0;
   for(int i = 200; i <= 300; i++) {
-    if(can.getPixel(350, i) == black) {
+    if(can.getPoint(i, 350) == black) {
       topCount++;
     }
-//    if(i == 298) {  //To compensate for the bug(?) (Take it out to see what I mean)
-////      y++;
-//    }
   }
 
-  //Results of Left to right, top
-  if(topCount == 100) {
+  //Results of Left to right top
+  if(topCount == 101) {
     passed++;
   } else {
     failed++;
@@ -905,13 +895,13 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Top to bottom, left
   int leftCount = 0;
   for(int j = 350; j <= 400; j++) {
-    if(can.getPixel(j, 200) == black) {
+    if(can.getPoint(200, j) == black) {
       leftCount++;
     }
   }
 
   //Results of Top to bottom, left
-  if(leftCount == 50) {
+  if(leftCount == 51) {
     passed++;
   } else {
     failed++;
@@ -921,13 +911,13 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Left to right, bottom
   int bottomCount = 0;
   for(int k = 200; k <= 300; k++) {
-    if(can.getPixel(400, k) == black) {
+    if(can.getPoint(k, 400) == black) {
       bottomCount++;
     }
   }
 
   //Results of Left to right, bottom
-  if(bottomCount == 100) {
+  if(bottomCount == 101) {
     passed++;
   } else {
     failed++;
@@ -937,13 +927,13 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Top to bottom, right
   int rightCount = 0;
   for(int l = 350; l <= 400; l++) {
-    if(can.getPixel(l, 400) == black) {
+    if(can.getPoint(300, l) == black) {
       rightCount++;
     }
   }
 
   //Results of Top to bottom, right
-  if(rightCount == 49) {
+  if(rightCount == 51) {
    passed++;
   } else {
    failed++;
@@ -953,9 +943,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   //Test 2: Circle
   //Check the leftmost, rightmost, top, and bottom coordinates.
   //They should all be the same color
-  //Add one to rightmost because of center??
-  //Subtract one from bottom most because of center??
-  if(can.getPixel(200, 250) == black && can.getPixel(301, 250) == black && can.getPixel(250, 200) == black && can.getPixel(250, 300) == black) {
+  if(can.getPoint(250, 200) == black && can.getPoint(250, 300) == black && can.getPoint(200, 250) == black && can.getPoint(300, 250) == black) {
     passed++;
   } else {
     failed++;
@@ -964,8 +952,10 @@ bool Canvas::testPerimeter(Canvas& can) {
 
   //Test 3: Triangle
   //Check the vertices, and a point in from their line segments
+  //NOTE: The vertices themselves aren't necessarily drawn, as the points taper off due to the sharp
+  //  angles of the triangle
   //Vertices
-  if(can.getPixel(80, 50) == black && can.getPixel(250, 40) == black && can.getPixel(150, 249) == black) {
+  if(can.getPoint(50, 81) == black && can.getPoint(40, 250) == black && can.getPoint(249, 150) == black) {
     passed++;
   } else {
     failed++;
@@ -973,7 +963,7 @@ bool Canvas::testPerimeter(Canvas& can) {
   }
 
   //Point from line segment (Test 3, part 2)
-  if(can.getPixel(152, 46) == black && can.getPixel(113, 143) == black && can.getPixel(200, 147) == black) {
+  if(can.getPoint(46, 152) == black && can.getPoint(143, 113) == black && can.getPoint(147, 200) == black) {
     passed++;
   } else {
     failed++;
@@ -1003,7 +993,7 @@ bool Canvas::testLine(Canvas & can) {
    can.sleepFor(1);
    ColorInt black(0, 0, 0);
    //Test 1: Near the ending endpoint? (Diagonal)
-   if(can.getPixel(250, 249) == black) {
+   if(can.getPoint(249, 250) == black) {
      passed++;
    } else {
      failed++;
@@ -1011,7 +1001,7 @@ bool Canvas::testLine(Canvas & can) {
    }
 
    //Test 2: Somewhere in the middle? (Diagonal)
-   if(can.getPixel(155, 154) == black) {
+   if(can.getPoint(154, 155) == black) {
      passed++;
    } else {
      failed++;
@@ -1019,7 +1009,7 @@ bool Canvas::testLine(Canvas & can) {
    }
 
    //Test 3: Near the starting endpoint? (Diagonal)
-   if(can.getPixel(15, 14) == black) {
+   if(can.getPoint(14, 15) == black) {
      passed++;
    } else {
      failed++;
@@ -1029,7 +1019,7 @@ bool Canvas::testLine(Canvas & can) {
    //Test 4: An entire line? (Straight)
    int count = 0;
    for(int i = 253; i <= 399; i++) {
-     if(can.getPixel(253, i) == black) {
+     if(can.getPoint(i, 253) == black) {
        count++;
      }
    }
@@ -1134,7 +1124,7 @@ bool Canvas::testDrawImage(Canvas& can) {
     int failed = 0;
     ColorInt red(255, 0, 0);
     //Test 1: Single pixel
-    if(can.getPixel(1, 1) == red) {
+    if(can.getPoint(1, 1) == red) {
       passed++;
     } else {
       failed++;
@@ -1144,7 +1134,7 @@ bool Canvas::testDrawImage(Canvas& can) {
     //Test 2: Multiple pixels
     int count = 0;
     for(int i = 1; i <= 200; i++) {
-      if(can.getPixel(i, 1) == red) {
+      if(can.getPoint(1, i) == red) {
         count++;
       }
     }

@@ -193,16 +193,15 @@ void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
 //-----------------------Unit testing-------------------------------------------------
 void CartesianCanvas::runTests() {
   TsglDebug("Testing CartesianCanvas class...");
-  CartesianCanvas c1;
+  CartesianCanvas c1(0.0f);
   c1.setBackgroundColor(WHITE);
   c1.start();
-//  std::this_thread::sleep_for(std::chrono::seconds(1));
- // tsglAssert(testAxes(c1), "Unit test for drawing axes failed!");
+
+  std::this_thread::sleep_for(std::chrono::seconds(1));
   tsglAssert(testZoom(c1), "Unit test for zoom() functions failed!");
   tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed!");
+  c1.stop();
   TsglDebug("Unit tests for CartesianCanvas complete.");
-  TsglDebug("CLOSE THE CARTESIAN CANVAS WINDOW PLEASE!");
-  c1.wait();
 }
 
 //bool CartesianCanvas::testAxes(CartesianCanvas& can) {
