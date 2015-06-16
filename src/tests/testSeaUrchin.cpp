@@ -14,21 +14,21 @@ using namespace tsgl;
 
 void seaUrchinFunction(Canvas& can) {
   const int CENTER_X = can.getWindowWidth() / 2, CENTER_Y = can.getWindowHeight() / 2;
+  int oldX, oldY = 250;
+  int newX, newY = 0;
+  ColorFloat red(1.0f, 0, 0);
+  ColorFloat blue(0, 1.0f, 0);
+  ColorFloat green(0, 0, 1.0f);
   while(can.getIsOpen()) {
     srand(time(NULL));
     can.sleep();
     float delta = 2.0f / 32 * 3.1415926585f;
-    int x = 250;
-    int y = 250;
-    int oldX = 250;
-    int oldY = 250;
-    int newX, newY = 0;
     for(int i = 0; i < 32; ++i) {
       //Plus = clockwise
       //Minus = counterclockwise
       newX = oldX + 50 * cos(i *delta + can.getReps());
-      newY = oldY + 200* sin(i *delta + can.getReps());
-      can.drawLine(oldX, oldY, newX, newY);
+      newY = oldY + 200 * sin(i *delta + can.getReps());
+      can.drawLine(oldX, oldY, newX, newY, red);
       can.clear();
     }
     newX = newY = 0;
@@ -36,7 +36,7 @@ void seaUrchinFunction(Canvas& can) {
     for(int j = 0; j < 64; ++j) {
       newX = oldX + 50 * cos(j *delta + can.getReps());
       newY = oldY + 50 * sin(j *delta + can.getReps());
-      can.drawLine(oldX, oldY, newX, newY);
+      can.drawLine(oldX, oldY, newX, newY, green);
       can.clear();
     }
 
@@ -45,7 +45,7 @@ void seaUrchinFunction(Canvas& can) {
     for(int k = 0; k < 128; ++k) {
       newX = oldX + 50 * cos(k *delta + can.getReps());
       newY = oldY + 50 * sin(k *delta + can.getReps());
-      can.drawLine(oldX, oldY, newX, newY);
+      can.drawLine(oldX, oldY, newX, newY, blue);
       can.clear();
     }
   }
