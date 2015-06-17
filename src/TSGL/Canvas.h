@@ -111,6 +111,7 @@ private:
                     vertexBuffer;                                       // Address of GL's vertex buffer object
     float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
+    std::mutex      windowMutex;
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
 
     static int        drawBuffer;                                       // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
@@ -468,6 +469,8 @@ public:
      */
     int getWindowY();
 
+    void handleIO();
+
     /*!
      * \brief Records the Canvas for a specified number of frames.
      * \details This function starts dumping screenshots of the Canvas to the file system every draw cycle.
@@ -529,6 +532,7 @@ public:
      * \details A timer is put to sleep until a subsequent event is ready to occur.
      * \details The drawing timer is put to sleep until the next drawing frame is ready to occur.
      * \note Can be thought of as a wrapper function for a Timer function call.
+     * \note This function also handles IO events on OS X.
      */
     void sleep();
 
@@ -536,6 +540,7 @@ public:
      * \brief Sleeps the current thread for a set amount of time
      * \details The curren thread put to sleep for a fixed amount of time
      *        \param milli Number of milliseconds to sleep for
+     * \note This function also handles IO events on OS X.
      */
     void sleepFor(float seconds);
 

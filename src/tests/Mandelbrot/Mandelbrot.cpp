@@ -38,43 +38,45 @@ void Mandelbrot::bindings(CartesianCanvas& can) {
 	}
 
 void Mandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
-		while(myRedraw) {
-			setRedraw(false);
-			can.reset();
-#pragma omp parallel num_threads(myThreads)
-{
-	unsigned int nthreads = omp_get_num_threads();
-	double blocksize = can.getCartHeight() / nthreads;
-	double blockheight = can.getWindowHeight() / nthreads;
-	for(unsigned int k = 0; k <= blockheight && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
-		long double row = blocksize * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
-		for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
-			complex originalComplex(col, row);
-			complex c(col, row);
-			unsigned iterations = 0;
-			while (std::abs(c) < 2.0 && iterations != myDepth) {  // Compute it until it escapes or we give up
-				iterations++;
-				c = c * c + originalComplex;
+	while(myRedraw) {
+		setRedraw(false);
+		can.reset();
+		#pragma omp parallel num_threads(myThreads)
+		{
+			unsigned int nthreads = omp_get_num_threads();
+			double blocksize = can.getCartHeight() / nthreads;
+			double blockheight = can.getWindowHeight() / nthreads;
+			for(unsigned int k = 0; k <= blockheight && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+				long double row = blocksize * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
+				for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
+		//			std::cout << col << std::endl;
+					complex originalComplex(col, row);
+					complex c(col, row);
+					unsigned iterations = 0;
+					while (std::abs(c) < 2.0 && iterations != myDepth) {  // Compute it until it escapes or we give up
+						iterations++;
+						c = c * c + originalComplex;
+					}
+					if(iterations == myDepth) { // If the point never escaped, draw it black
+						can.drawPoint(col, row, BLACK);
+					} else { // Otherwise, draw it with color based on how long it took
+						can.drawPoint(col, row,
+								ColorInt(iterations % 151,
+										((iterations % 131) + omp_get_thread_num() * 128 / nthreads) % 255,
+										iterations % 255));
+					}
+					if (myRedraw) break;
+				}
+				can.handleIO();
+				if (myRedraw) break;
 			}
-			if(iterations == myDepth) { // If the point never escaped, draw it black
-				can.drawPoint(col, row, BLACK);
-			} else { // Otherwise, draw it with color based on how long it took
-				can.drawPoint(col, row,
-						ColorInt(iterations % 151,
-								((iterations % 131) + omp_get_thread_num() * 128 / nthreads) % 255,
-								iterations % 255));
-			}
-			if (myRedraw) break;
 		}
-		if (myRedraw) break;
+		std::cout << can.getTime() << std::endl;
+		while (can.getIsOpen() && !myRedraw) {
+			can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
+		}
 	}
 }
-std::cout << can.getTime() << std::endl;
-while (can.getIsOpen() && !myRedraw)
-	can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-		}
-
-	}
 
 	//mutator
 void Mandelbrot::setRedraw(bool newValue) {
