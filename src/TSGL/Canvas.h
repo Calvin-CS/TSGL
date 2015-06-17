@@ -32,7 +32,12 @@
 #include <mutex>            // Needed for locking the Canvas for thread-safety
 #include <sstream>          // For string building
 #include <string>           // For window titles
-#include <thread>           // For spawning rendering in a different thread
+#ifdef __APPLE__
+  #include <pthread.h>
+#else
+  #include <thread>           // For spawning rendering in a different thread
+#endif
+
 
 #include <GL/glew.h>        // Needed for GL function calls
 #include <GLFW/glfw3.h>     // For window creation and management
@@ -71,6 +76,7 @@ private:
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
     TextureHandler  loader;                                             // The ImageLoader that holds all our already loaded textures
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
+    GLFWvidmode*    monInfo;                                            // Info about our display
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
@@ -78,7 +84,11 @@ private:
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
     int             realFPS;                                            // Actual FPS of drawing
-    std::thread     renderThread;                                       // Thread dedicated to rendering the Canvas
+  #ifdef __APPLE__
+    pthread_t     renderThread;
+  #else
+    std::thread   renderThread;                                         // Thread dedicated to rendering the Canvas
+  #endif
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
     GLtexture       shaderFragment,                                     // Address of the fragment shader
@@ -121,8 +131,12 @@ private:
     void        screenShot();                                           // Takes a screenshot
     static void scrollCallback(GLFWwindow* window, double xpos,
                   double ypos);                                         // GLFW callback for scrolling
-    void        SetupCamera();                                          // Setup the 2D camera for smooth rendering
+    void        setupCamera();                                          // Setup the 2D camera for smooth rendering
+  #ifdef __APPLE__
+    static void* startDrawing(void* cPtr);
+  #else
     static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
+  #endif
     void        textureShaders(bool state);                             // Turn textures on or off
     static bool testFilledDraw(Canvas& can);                            // Unit test for drawing shapes and determining if fill works
     //Theory why it doesn't work:

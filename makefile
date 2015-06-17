@@ -18,19 +18,23 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 	OS_LFLAGS :=
 	OS_GLFW := glfw
+	OS_GL := -lGL
 endif
 ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_GLFW := glfw3
+	OS_GL :=
 endif
 
 CXXFLAGS=-O3 -g3 \
 	-Wall -Wextra \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
+	-I/usr/local/include/Cellar/glfw3/3.1.1/include/ \
 	-Isrc/TSGL/ \
 	-I/usr/include/ \
 	-I/usr/local/include/ \
 	-I/opt/AMDAPP/include/ \
+	-I/opt/local/include/freetype2 \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
@@ -48,7 +52,7 @@ LFLAGS=-LTSGL/ -ltsgl \
 	-L/usr/local/lib/ \
 	-L/usr/X11/lib/ \
 	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
-	-lX11 -lGL -lXrandr \
+	-lX11 ${OS_GL} -lXrandr \
 	-fopenmp ${OS_LFLAGS}
 	# -lpng -ljpeg \
 

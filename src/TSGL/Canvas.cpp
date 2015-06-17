@@ -97,7 +97,11 @@ void Canvas::stop() {
 
 int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
+  #ifdef __APPLE__
+    pthread_exit(NULL);
+  #else
     renderThread.join();
+  #endif
     return 0;
 }
 
@@ -175,8 +179,10 @@ void Canvas::draw() {
         glFlush();                                   // Flush buffer data to the actual draw buffer
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
 
+      #ifndef __APPLE__
         glfwPollEvents();                            // Handle any I/O
         glfwGetCursorPos(window, &mouseX, &mouseY);
+      #endif
         glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
 
         if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
@@ -438,7 +444,7 @@ void Canvas::glInit() {
     glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
-    const GLFWvidmode* monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
@@ -642,7 +648,7 @@ void Canvas::setShowFPS(bool b) {
     showFPS = b;
 }
 
-void Canvas::SetupCamera() {
+void Canvas::setupCamera() {
     // Set up camera positioning
     // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
     float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, winHeight / 2.0f, -winHeight / 2.0f,
@@ -661,10 +667,24 @@ void Canvas::SetupCamera() {
 int Canvas::start() {
     if (started) return -1;
     started = true;
+  #ifdef __APPLE__
+    pthread_create(&renderThread,NULL,startDrawing,(void*)this);
+  #else
     renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
+  #endif
     return 0;
 }
 
+#ifdef __APPLE__
+void* Canvas::startDrawing(void* cPtr) {
+    Canvas* c = (Canvas*)cPtr;
+    c->glInit();
+    c->draw();
+    c->isFinished = true;
+    glfwDestroyWindow(c->window);
+    c->glDestroy();
+}
+#else
 void Canvas::startDrawing(Canvas *c) {
     c->glInit();
     c->draw();
@@ -672,6 +692,7 @@ void Canvas::startDrawing(Canvas *c) {
     glfwDestroyWindow(c->window);
     c->glDestroy();
 }
+#endif
 
 void Canvas::sleep() {
     drawTimer->sleep(false);
@@ -744,7 +765,7 @@ void Canvas::textureShaders(bool on) {
     uniProj = glGetUniformLocation(program, "proj");
 
     // Update the camera
-    SetupCamera();
+    setupCamera();
 }
 
 //-----------------Unit testing-------------------------------------------------------
