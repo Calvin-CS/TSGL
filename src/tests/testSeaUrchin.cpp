@@ -108,6 +108,7 @@ void seaUrchinFunction(Canvas& can) {
     }
     can.clear();
   }
+  std::cout << "YOU KILLED MY SEA URCHINS! :'(" << std::endl;
 }
 
 //KEEP THE WINDOW WIDTH AND HEIGHT THE SAME PLEASE!

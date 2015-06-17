@@ -39,6 +39,7 @@ run ./testNewtonPendulum
 run ./testNova 1200 900 4                 #Width, Height, Threads
 run ./testPong
 run ./testProjectiles 400 400             #Width, Height
+run ./testSeaUrchin
 run ./testScreenshot
 run ./testScreenshotLangton
 run ./testShadedVoronoi 640 480 8         #Width, Height, Threads
