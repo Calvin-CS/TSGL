@@ -97,7 +97,11 @@ void Canvas::stop() {
 
 int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
-  #ifndef __APPLE__
+  #ifdef __APPLE__
+    while(!isFinished)
+      sleepFor(0.1f);
+    pthread_join(renderThread, NULL);
+  #else
     renderThread.join();
   #endif
     return 0;
