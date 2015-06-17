@@ -97,6 +97,7 @@ build/build: ${HEADERS} ${SOURCES} src/tests/tests.cpp src/tests/testInverter.cp
 
 lib/libtsgl.a: ${OBJS}
 	@echo 'Building $(patsubst lib/%,%,$@)'
+	mkdir -p lib 
 	$(AR) -r $@ $?
 	@touch build/build
 
@@ -122,6 +123,7 @@ bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mand
 #Actual compilation recipe for test binaries (appended to earlier dependencies)
 
 bin/test%: build/tests/test%.o lib/libtsgl.a
+	mkdir -p bin
 	@echo 'Building $(patsubst bin/%,%,$@)'
 	$(CC) $^ -o $@ $(LFLAGS)
 	@touch build/build
