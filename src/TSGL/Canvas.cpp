@@ -536,101 +536,105 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     glfwSetErrorCallback(errorCallback);
 
      // Create a Window and the Context
-     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
-     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
-     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
-     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
-     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
-     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-     glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
-     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
+    glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
-     monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
-     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
- //    window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
-     if (!window) {
-         fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
-     }
-     glfwMutex.unlock();
+    glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
+    window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
+ //   window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
+    if (!window) {
+        fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
+    }
+    glfwMutex.unlock();
 
-     if (!monInfo) {
-         fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
-     }
-     if (monitorX == -1)
-       monitorX = (monInfo->width - winWidth) / 2;
-     if (monitorY == -1)
-       monitorY = (monInfo->height - winHeight) / 2;
-     glfwSetWindowPos(window, monitorX, monitorY);
-     glfwShowWindow(window);                 // Show the window
+    if (!monInfo) {
+        fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
+    }
+    if (monitorX == -1)
+      monitorX = (monInfo->width - winWidth) / 2;
+    if (monitorY == -1)
+      monitorY = (monInfo->height - winHeight) / 2;
+    glfwSetWindowPos(window, monitorX, monitorY);
 
-     glfwSetMouseButtonCallback(window, buttonCallback);
-     glfwSetKeyCallback(window, keyCallback);
-     glfwSetScrollCallback(window, scrollCallback);
+    glfwMakeContextCurrent(window);
+    glfwShowWindow(window);                 // Show the window
+    glfwSetWindowUserPointer(window, this);
 
-     // Enable Experimental GLEW to Render Properly
-     glewExperimental = GL_TRUE;
-     GLenum err = glewInit();
-     if (GLEW_OK != err) {
-         // Problem: glewInit failed, something is seriously wrong.
-         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
-     }
+    glfwSetMouseButtonCallback(window, buttonCallback);
+    glfwSetKeyCallback(window, keyCallback);
+    glfwSetScrollCallback(window, scrollCallback);
 
-     GLint status;
+    // Enable Experimental GLEW to Render Properly
+    glewExperimental = GL_TRUE;
+    GLenum err = glewInit();
+    if (GLEW_OK != err) {
+        // Problem: glewInit failed, something is seriously wrong.
+        fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+    }
 
-     // Create and bind our Vertex Array Object
-     glGenVertexArrays(1, &vertexArray);
-     glBindVertexArray(vertexArray);
+    GLint status;
 
-     // Create and bind our Vertex Buffer Object
-     glGenBuffers(1, &vertexBuffer);
-     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    // Create and bind our Vertex Array Object
+    glGenVertexArrays(1, &vertexArray);
+    glBindVertexArray(vertexArray);
 
-     // Create / compile vertex shader
-     shaderVertex = glCreateShader(GL_VERTEX_SHADER);
-     glShaderSource(shaderVertex, 1, &vertexSource, NULL);
-     glCompileShader(shaderVertex);
-     glGetShaderiv(shaderVertex, GL_COMPILE_STATUS, &status);
+    // Create and bind our Vertex Buffer Object
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 
-     // Create / compile fragment shader
-     shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
-     glShaderSource(shaderFragment, 1, &fragmentSource, NULL);
-     glCompileShader(shaderFragment);
-     glGetShaderiv(shaderFragment, GL_COMPILE_STATUS, &status);
+    // Create / compile vertex shader
+    shaderVertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(shaderVertex, 1, &vertexSource, NULL);
+    glCompileShader(shaderVertex);
+    glGetShaderiv(shaderVertex, GL_COMPILE_STATUS, &status);
 
-     // Attach both shaders to a shader program, link the program
-     shaderProgram = glCreateProgram();
-     glAttachShader(shaderProgram, shaderVertex);
-     glAttachShader(shaderProgram, shaderFragment);
-     glBindFragDataLocation(shaderProgram, 0, "outColor");
+    // Create / compile fragment shader
+    shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(shaderFragment, 1, &fragmentSource, NULL);
+    glCompileShader(shaderFragment);
+    glGetShaderiv(shaderFragment, GL_COMPILE_STATUS, &status);
 
-     // Specify the layout of the vertex data in our standard shader
-     glLinkProgram(shaderProgram);
+    // Attach both shaders to a shader program, link the program
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, shaderVertex);
+    glAttachShader(shaderProgram, shaderFragment);
+    glBindFragDataLocation(shaderProgram, 0, "outColor");
 
-     // Create / compile textured vertex shader
-     textureShaderVertex = glCreateShader(GL_VERTEX_SHADER);
-     glShaderSource(textureShaderVertex, 1, &textureVertexSource, NULL);
-     glCompileShader(textureShaderVertex);
-     glGetShaderiv(textureShaderVertex, GL_COMPILE_STATUS, &status);
+    // Specify the layout of the vertex data in our standard shader
+    glLinkProgram(shaderProgram);
 
-     // Create / compile textured fragment shader
-     textureShaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
-     glShaderSource(textureShaderFragment, 1, &textureFragmentSource, NULL);
-     glCompileShader(textureShaderFragment);
-     glGetShaderiv(textureShaderFragment, GL_COMPILE_STATUS, &status);
+    // Create / compile textured vertex shader
+    textureShaderVertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(textureShaderVertex, 1, &textureVertexSource, NULL);
+    glCompileShader(textureShaderVertex);
+    glGetShaderiv(textureShaderVertex, GL_COMPILE_STATUS, &status);
 
-     // Attach both shaders to another shader program, link the program
-     textureShaderProgram = glCreateProgram();
-     glAttachShader(textureShaderProgram, textureShaderVertex);
-     glAttachShader(textureShaderProgram, textureShaderFragment);
-     glBindFragDataLocation(textureShaderProgram, 0, "outColor");
+    // Create / compile textured fragment shader
+    textureShaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(textureShaderFragment, 1, &textureFragmentSource, NULL);
+    glCompileShader(textureShaderFragment);
+    glGetShaderiv(textureShaderFragment, GL_COMPILE_STATUS, &status);
 
-     // Specify the layout of the vertex data in our textured shader
-     glLinkProgram(textureShaderProgram);
+    // Attach both shaders to another shader program, link the program
+    textureShaderProgram = glCreateProgram();
+    glAttachShader(textureShaderProgram, textureShaderVertex);
+    glAttachShader(textureShaderProgram, textureShaderFragment);
+    glBindFragDataLocation(textureShaderProgram, 0, "outColor");
 
-     textureShaders(false);
+    // Specify the layout of the vertex data in our textured shader
+    glLinkProgram(textureShaderProgram);
 
+    textureShaders(false);
+
+    glfwMakeContextCurrent(NULL);   // Reset the context
 }
 
 void Canvas::screenShot() {
