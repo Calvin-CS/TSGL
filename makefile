@@ -60,7 +60,7 @@ LFLAGS=-Llib/ \
 
 DEPFLAGS=-MMD -MP
 
-BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
+BINARIES=bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testLineChain bin/testLineFan bin/testSpectrum bin/testMandelbrot \
 	bin/testLangton bin/testLangtonColony bin/testLangtonRainbow \
 	bin/testDumbSort bin/testColorWheel bin/testFunction \
@@ -71,8 +71,8 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
 	bin/testConcavePolygon bin/testNewtonPendulum bin/testConway \
-	bin/testProjectiles bin/testBallroom bin/testUnits bin/testSmartSort bin/testSeaUrchin \
-	bin/testBuddhabrot bin/testMaster
+	bin/testProjectiles bin/testBallroom bin/testUnits bin/testSmartSort \
+	bin/testSeaUrchin bin/testBuddhabrot bin/testMaster
 
 all: dif tsgl tests docs tutorial
 
@@ -91,9 +91,9 @@ tutorial: tutorial/docs/html/index.html
 clean:
 	$(RM) -r bin/* build/* docs/html/* lib/* tutorial/docs/html/* *~ *# *.tmp
 
--include build/*.d
+# -include build/*.d
 
-build/build: ${HEADERS} ${SOURCES} src/tests/tests.cpp src/tests/testInverter.cpp
+build/build: ${HEADERS} ${SOURCES} ${TESTS}
 	@echo 'Files that changed:'
 	@echo $(patsubst src/%,%,$?)
 
@@ -104,8 +104,6 @@ lib/libtsgl.a: ${OBJS}
 	@touch build/build
 
 #List dependencies for test binaries
-
-bin/testTSGL: build/tests.o
 
 bin/testConway: build/tests/Conway/LifeFarm.o
 

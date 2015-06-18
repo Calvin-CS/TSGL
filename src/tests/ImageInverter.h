@@ -9,6 +9,7 @@
 #define IMAGEINVERTER_H_
 
 #include <tsgl.h>     // Canvas, ColorInt, etc.
+#include <omp.h>
 #include <iostream>   // cout, string, ...
 
 #ifdef _WIN32
@@ -103,7 +104,7 @@ void ImageInverter::invertImage(unsigned numThreads) {
         inverse = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
   //      myCanvas2.drawPoint(col,row, pixelColor );
         myCanvas2.drawPixel(row, col, ColorInt(inverse,inverse,inverse) );
-        t.sleep(false);
+        myCanvas1.sleepFor(0.000001f);
       }
     }
   }

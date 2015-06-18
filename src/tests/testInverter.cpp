@@ -10,6 +10,6 @@
 int main() {
 
 	ImageInverter ii("../assets/pics/Car-colors.jpg", 1022, 1024);
-	ii.run();
+	ii.run(omp_get_num_procs());
 
 }
