@@ -14,12 +14,12 @@ using namespace tsgl;
  * \details Same as mandelbrotFunction(), but with smoother shading ( see
  * http://linas.org/art-gallery/escape/smooth.html ).
  * \param can, Reference to the CartesianCanvas being drawn to
- * \param numberOfThreads, Reference to the number of threads to use
+ * \param threads, Reference to the number of threads to use
  */
-void gradientMandelbrotFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
-	GradientMandelbrot m1(numberOfThreads);
+void gradientMandelbrotFunction(CartesianCanvas& can, unsigned & threads, unsigned depth) {
+	GradientMandelbrot m1(threads,depth);
 	m1.bindings(can);
-	m1.draw(can, numberOfThreads);
+	m1.draw(can, threads);
 }
 
 //Takes in command line argument for the number of threads
@@ -32,8 +32,11 @@ int main(int argc, char* argv[]) {
   }
 	Cart c16(0, 0, w, h, -2, -1.125, 1, 1.125, "", FRAME / 2);
 	unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
+  if (t == 0)
+    t = omp_get_num_procs();
+  unsigned d = (argc > 4) ? atoi(argv[4]) : 32;
 	c16.setBackgroundColor(GREY);
 	c16.start();
-	gradientMandelbrotFunction(c16, t);
+	gradientMandelbrotFunction(c16, t, d);
 	c16.wait();
 }

@@ -7,46 +7,46 @@ run () {
 
 cd bin
 
-# run bin/testConcavePolygon    #SLOW
-# run bin/testGetPixels         #INCONSISTENT
-# run bin/testInverter          #INCONSISTENT
+# run bin/testConcavePolygon                #SLOW
+# run bin/testGetPixels                     #INCONSISTENT
+# run bin/testInverter                      #INCONSISTENT
 
-run ./testAlphaLangton 640 480            #Width, Height
-run ./testAlphaRectangle 640 480          #Width, Height
+run ./testAlphaLangton 640 480              #Width, Height
+run ./testAlphaRectangle 640 480            #Width, Height
 run ./testBallroom
-run ./testBuddhabrot 1200 900 4 1000      #Width, Height, Threads, Depth
-run ./testColorPoints 400 400 4           #Width, Height, Threads
-run ./testColorWheel 640 640              #Width, Height
+run ./testBuddhabrot 1200 900 4 1000        #Width, Height, Threads, Depth
+run ./testColorPoints 400 400 4             #Width, Height, Threads
+run ./testColorWheel 640 640                #Width, Height
 run ./testConway
-run ./testCosineIntegral 640 480 32       #Width, Height, Threads
-run ./testDumbSort 1200 600               #Width, Height
+run ./testCosineIntegral 640 480 32         #Width, Height, Threads
+run ./testDumbSort 1200 600                 #Width, Height
 run ./testForestFire
-run ./testFunction 640 480                #Width, Height
-run ./testGradientMandelbrot 1200 900 8   #Width, Height, Threads
-run ./testGradientWheel 640 640           #Width, Height
-run ./testGraydient 400 400 8             #Width, Height, Threads
-run ./testGreyscale 640 480 8             #Width, Height, Threads
+run ./testFunction 640 480                  #Width, Height
+run ./testGradientMandelbrot 1200 900 8 32  #Width, Height, Threads, Depth
+run ./testGradientWheel 640 640             #Width, Height
+run ./testGraydient 400 400 8               #Width, Height, Threads
+run ./testGreyscale 640 480 8               #Width, Height, Threads
 run ./testHighData
 run ./testImage
 run ./testImageCart
-run ./testLangton 640 480                 #Width, Height
-run ./testLangtonColony 640 480           #Width, Height
-run ./testLangtonRainbow 640 480          #Width, Height
-run ./testLineChain 400 400 8             #Width, Height, Threads
+run ./testLangton 640 480                   #Width, Height
+run ./testLangtonColony 640 480             #Width, Height
+run ./testLangtonRainbow 640 480            #Width, Height
+run ./testLineChain 400 400 8               #Width, Height, Threads
 run ./testLineFan
-run ./testMandelbrot 1200 900 8           #Width, Height, Threads
+run ./testMandelbrot 1200 900 8 255         #Width, Height, Threads, Depth
 run ./testMouse
 run ./testNewtonPendulum
-run ./testNova 1200 900 4                 #Width, Height, Threads
+run ./testNova 1200 900 4                   #Width, Height, Threads
 run ./testPong
-run ./testProjectiles 400 400             #Width, Height
+run ./testProjectiles 400 400               #Width, Height
 run ./testSeaUrchin
 run ./testScreenshot
 run ./testScreenshotLangton
-run ./testShadedVoronoi 640 480 8         #Width, Height, Threads
-run ./testSmartSort 1024                  #Elements, Threads
-run ./testSpectrum 8                      #Threads
+run ./testShadedVoronoi 640 480 8           #Width, Height, Threads
+run ./testSmartSort 1024                    #Elements, Threads
+run ./testSpectrum 8                        #Threads
 run ./testText
 run ./testTextCart
 run ./testTextTwo
-run ./testVoronoi 640 480 8               #Width, Height, Threads
+run ./testVoronoi 640 480 8                 #Width, Height, Threads

@@ -1,8 +1,8 @@
 #include "Mandelbrot.h"
 
-Mandelbrot::Mandelbrot(int threads) {
+Mandelbrot::Mandelbrot(unsigned threads, unsigned depth) {
 		myThreads = threads;
-		myDepth = MAX_COLOR;
+		myDepth = depth;
 		myFirstX = myFirstY = mySecondX = mySecondY = 0.0;
 		myRedraw = true;
 }
@@ -44,12 +44,13 @@ void Mandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
 		#pragma omp parallel num_threads(myThreads)
 		{
 			unsigned int nthreads = omp_get_num_threads();
+			ColorFloat tcolor = Colors::highContrastColor(omp_get_thread_num());
 			double blocksize = can.getCartHeight() / nthreads;
 			double blockheight = can.getWindowHeight() / nthreads;
+			long double startrow = blocksize * omp_get_thread_num() + can.getMinY();
 			for(unsigned int k = 0; k <= blockheight && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
-				long double row = blocksize * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
+				long double row = startrow + can.getPixelHeight() * k;
 				for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
-		//			std::cout << col << std::endl;
 					complex originalComplex(col, row);
 					complex c(col, row);
 					unsigned iterations = 0;
@@ -60,10 +61,8 @@ void Mandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
 					if(iterations == myDepth) { // If the point never escaped, draw it black
 						can.drawPoint(col, row, BLACK);
 					} else { // Otherwise, draw it with color based on how long it took
-						can.drawPoint(col, row,
-								ColorInt(iterations % 151,
-										((iterations % 131) + omp_get_thread_num() * 128 / nthreads) % 255,
-										iterations % 255));
+					  float mult = iterations/(float)myDepth;
+					  can.drawPoint(col, row, Colors::blendedColor(tcolor,WHITE,0.25f+0.5f*mult)*mult);
 					}
 					if (myRedraw) break;
 				}

@@ -46,12 +46,12 @@ using namespace tsgl;
  *   .
  * .
  * \param can, Reference to the CartesianCanvas being drawn to
- * \param numberOfThreads, Reference to the number of threads passed via command-line arguments.
+ * \param threads, Reference to the number of threads passed via command-line arguments.
  */
-void mandelbrotFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
-	Mandelbrot m1(numberOfThreads);
+void mandelbrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
+	Mandelbrot m1(threads,depth);
 	m1.bindings(can);
-	m1.draw(can, numberOfThreads);
+	m1.draw(can, threads);
 }
 
 //Takes command line arguments for the number of threads
@@ -64,8 +64,11 @@ int main(int argc, char* argv[]) {
     }
     Cart c5(0, 0, w, h, -2, -1.125, 1, 1.125, "", FRAME / 2);
     unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
+    if (t == 0)
+      t = omp_get_num_procs();
+    unsigned d = (argc > 4) ? atoi(argv[4]) : MAX_COLOR;
     c5.setBackgroundColor(GREY);
     c5.start();
-    mandelbrotFunction(c5, t);   //And pass it as an argument
+    mandelbrotFunction(c5, t, d);   //And pass it as an argument
     c5.wait();
 }

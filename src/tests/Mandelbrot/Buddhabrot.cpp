@@ -7,7 +7,7 @@
 
 #include "Buddhabrot.h"
 
-Buddhabrot::Buddhabrot(unsigned threads, unsigned depth = 1000) : Mandelbrot(threads) {
+Buddhabrot::Buddhabrot(unsigned threads, unsigned depth = 1000) : Mandelbrot(threads, depth) {
 	myThreads = threads;
 	myDepth = depth;
 	myRedraw = true;
@@ -71,12 +71,12 @@ void Buddhabrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
               continue;
             int boxY = (znums[its].imag()-cMiny)/cph;
             int boxX = (znums[its].real()-cMinx)/cpw;
-            #pragma omp atomic update
+            #pragma omp atomic
               ++(counter[boxY][boxX]);
             can.drawPixel(boxY, boxX, tcolor);
           }
         }
-        #pragma omp atomic update
+        #pragma omp atomic
           ++cycles;
         if (cycles % (MAXITS/100) == 0) {
           std::cout << (100*cycles)/MAXITS << "%" << std::endl;

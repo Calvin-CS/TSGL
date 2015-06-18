@@ -7,9 +7,9 @@
 
 #include "GradientMandelbrot.h"
 
-GradientMandelbrot::GradientMandelbrot(int threads) : Mandelbrot(threads) {
-	myThreads = 32;
-	myDepth = 32;
+GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {
+	myThreads = threads;
+	myDepth = depth;
 	myRedraw = true;
 }
 
@@ -18,13 +18,7 @@ void GradientMandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThrea
 		setRedraw(false);
 #pragma omp parallel num_threads(myThreads)
 		{
-			unsigned int holder = omp_get_num_threads();  //Temp variable
-			unsigned int nthreads = 1;   //Actual number of threads
-			if (numberOfThreads > holder || numberOfThreads == 0 || numberOfThreads < myThreads) {  //Check if the passed number of threads is valid
-				nthreads = holder;  //If not, use the number of threads that we can use with OMP
-			} else {
-				nthreads = numberOfThreads;  //Else, use that many threads
-			}
+			unsigned int nthreads = omp_get_num_threads();  //Temp variable
 			double blockstart = can.getCartHeight() / nthreads;
 			unsigned int iterations;
 			double smooth;
@@ -40,14 +34,9 @@ void GradientMandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThrea
 						z = z * z + c;
 						smooth += exp(-std::abs(z));
 					}
-					int i;
-					for (i = 0; i < 2; i++) {
-						iterations++;
-						z = z * z + c;
-						smooth += exp(-std::abs(z));
-					}
-					smooth /= (myDepth + i + 1);
-					can.drawPoint(col, row, ColorHSV((float) smooth * 6.0f, 1.0f, 1.0f, 1.0f));
+					smooth /= (myDepth + 1);
+					float value = (float)iterations/myDepth;
+					can.drawPoint(col, row, ColorHSV((float)smooth * 6.0f, 1.0f, value, 1.0f));
 					if (myRedraw) break;
 				}
 				can.handleIO();
