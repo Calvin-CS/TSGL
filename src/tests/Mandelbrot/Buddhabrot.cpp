@@ -21,7 +21,7 @@ Buddhabrot::~Buddhabrot() {
   delete[] counter;
 }
 
-void Buddhabrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
+void Buddhabrot::draw(CartesianCanvas& can) {
   cww = can.getWindowWidth(), cwh = can.getWindowHeight();
   const unsigned long MAXITS = cww*cwh*10;
   ColorFloat tcolor(1.0f,1.0f,1.0f,0.1f);
@@ -39,10 +39,9 @@ void Buddhabrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
 		  cMinx = can.getMinX(), cMiny = can.getMinY(),
 		  cMaxx = cMinx+cpw*(cww-1), cMaxy = cMiny+cph*(cwh-1);
 		unsigned long cycles = 0;
-    #pragma omp parallel num_threads(numberOfThreads)
+    #pragma omp parallel num_threads(myThreads)
 		{
 		  unsigned tid = omp_get_thread_num(), threads = omp_get_num_threads();
-		  unsigned bsize = RPREC / threads;
 		  Decimal offset = cMiny+(cph*cwh*tid)/threads;
 	    const float wscale = (cpw*cww)/(float)RPREC;
 	    const float hscale = (cph*cwh/threads)/(float)RPREC;
@@ -94,7 +93,7 @@ void Buddhabrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
         if (counter[i][j] > maxIts)
           maxIts = counter[i][j];
     std::cout << maxIts << " max iterations" << std::endl;
-    #pragma omp parallel num_threads(numberOfThreads)
+    #pragma omp parallel num_threads(myThreads)
     {
       for (int i = omp_get_thread_num(); i < cwh; i += omp_get_num_threads())
         for (int j = 0; j < cww; ++j) {

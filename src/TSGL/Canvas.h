@@ -63,6 +63,7 @@ class Canvas {
 private:
     typedef std::function<void()>                   voidFunction;
     typedef std::function<void(double, double)>     doubleFunction;
+    typedef GLFWvidmode const*                      displayInfo;
 
     float           aspect;                                             // Aspect ratio used for setting up the window
     ColorFloat      bgcolor;                                            // Color of the Canvas' clearRectangle
@@ -76,7 +77,7 @@ private:
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
     TextureHandler  loader;                                             // The ImageLoader that holds all our already loaded textures
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
-    GLFWvidmode*    monInfo;                                            // Info about our display
+    displayInfo     monInfo;                                            // Info about our display
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array

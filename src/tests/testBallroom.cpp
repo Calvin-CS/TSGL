@@ -255,7 +255,7 @@ void ballroomFunction(Canvas& can) {
         b.toggleAttract();
     });
 
-    ColorFloat clearcolor = ColorInt(0,0,0,16);
+//    ColorFloat clearcolor = ColorInt(0,0,0,16);
     while (can.getIsOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
 //        can.drawRectangle(0,0,WW,WH,clearcolor,true);

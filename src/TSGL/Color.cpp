@@ -128,6 +128,7 @@ ColorHSV::operator ColorFloat() {
     switch (i) {
         case 6:
         case 0:
+        default:
             color.R = V;
             color.G = n;
             color.B = m;

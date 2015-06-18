@@ -18,7 +18,7 @@ using namespace tsgl;
  */
 void buddhabrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
   Buddhabrot m1(threads, depth);
-	m1.draw(can, threads);
+	m1.draw(can);
 }
 
 //Takes in command line argument for the number of threads

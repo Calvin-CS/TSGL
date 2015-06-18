@@ -30,16 +30,12 @@ void shadedVoronoiFunction(Canvas& can) {
 	s1.draw(can);
 }
 
-void run(int a, char* av[]){
-  int w = (a > 1) ? atoi(av[1]) : 960;
-  int h = (a > 2) ? atoi(av[2]) : w;
+int main(int argc, char* argv[]) {
+  int w = (argc > 1) ? atoi(argv[1]) : 960;
+  int h = (argc > 2) ? atoi(argv[2]) : w;
   Canvas c19(0, 0, w, h, "");
   c19.setBackgroundColor(WHITE);
   c19.start();
   shadedVoronoiFunction(c19);
   c19.wait();
-}
-
-int main() {
-
 }

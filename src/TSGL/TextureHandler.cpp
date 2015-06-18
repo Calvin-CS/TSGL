@@ -303,6 +303,7 @@ GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int 
     TsglDebug(std::string("Loading ") + filename + " succeeded");
     TsglDebug(to_string(w) + "," + to_string(h));
     createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
+    width = w, height = h;
     free(data);
     return texture;
 }
@@ -321,6 +322,7 @@ GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int 
 	TsglDebug(std::string("Loading ") + filename + " succeeded");
 	TsglDebug(to_string(w) + "," + to_string(h));
   createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
+  width = w, height = h;
   free(data);
   return texture;
 }

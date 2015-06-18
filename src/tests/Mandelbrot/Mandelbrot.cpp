@@ -37,7 +37,7 @@ void Mandelbrot::bindings(CartesianCanvas& can) {
 		});
 	}
 
-void Mandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
+void Mandelbrot::draw(CartesianCanvas& can) {
 	while(myRedraw) {
 		setRedraw(false);
 		can.reset();

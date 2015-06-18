@@ -93,7 +93,7 @@ void ImageInverter::invertImage(unsigned numThreads) {
   int inverse = 0;
   ColorInt pixelColor;
   #pragma omp parallel for num_threads(numThreads)
-  for (int row = 0; row < myHeight; row++) {
+  for (unsigned row = 0; row < myHeight; row++) {
     if (! (myCanvas1.getIsOpen() && myCanvas2.getIsOpen()) ) {
       ; //Exit out
     } else {

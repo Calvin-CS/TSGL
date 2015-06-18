@@ -2027,63 +2027,63 @@ void runOtherHalfoftheFunctions() {
 //   Canvas c33(0, 0, 800, 600, 5000, "", FRAME);
 //   test(c33,mouseFunction,false,WHITE);
 //
-    Canvas can1(0, 0, 1024, 768, "");
-    Canvas can2(0, 0, 1024, 768, "");
-    can2.setBackgroundColor(GREY);
-    can1.start();
-    can2.start();
-
-    const int THREADS = 4;
-    const unsigned int thickness = 3;
-    Timer t(FRAME * 2);
-    unsigned int width = can1.getWindowWidth(),
-                 height = can1.getWindowHeight();
-    can1.drawImage("assets/colorful_cars.jpg", 0, 0, width, height);
-    Timer::threadSleepFor(1);
-    uint8_t* buffer = can1.getScreenBuffer();
-
-    bool toStart = false;
-    can2.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&toStart](){
-        toStart = true;
-    });
-    while (can1.getIsOpen() && can2.getIsOpen() && toStart == false) {
-        t.sleep();
-    }
-
-    #pragma omp parallel num_threads(THREADS)
-    {
-        Timer t(FRAME * 2);
-        unsigned int nthreads = omp_get_num_threads();
-        unsigned int blocksize = height / nthreads;
-        unsigned int row = blocksize * omp_get_thread_num();
-        ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
-        int gray = 0;
-
-        for (unsigned int y = row; y < row + blocksize; y++) {
-            for (unsigned int x = 0; x < width; x++) {
-                ColorInt pixel = can1.getPoint(x, y);
-                gray = (pixel.R + pixel.G + pixel.B) / 3;
-                can2.drawPoint(x, y, ColorInt(gray, gray, gray));
-            }
-            if (!(can1.getIsOpen() && can2.getIsOpen())) {
-                can1.end();
-                can2.end();
-                break;
-            }
-            t.sleep();
-        }
-        for (unsigned int i = 0; i < thickness; i++) {
-            can2.drawRectangle(0 + i, row + 1 + i, width - 2*i, blocksize - 2*i, color, false);
-        }
-    }
-    while (can1.getIsOpen() && can2.getIsOpen()) {
-        t.sleep();
-    }
-
-    can1.end();
-    can2.end();
-    can1.wait();
-    can2.wait();
+//    Canvas can1(0, 0, 1024, 768, "");
+//    Canvas can2(0, 0, 1024, 768, "");
+//    can2.setBackgroundColor(GREY);
+//    can1.start();
+//    can2.start();
+//
+//    const int THREADS = 4;
+//    const unsigned int thickness = 3;
+//    Timer t(FRAME * 2);
+//    unsigned int width = can1.getWindowWidth(),
+//                 height = can1.getWindowHeight();
+//    can1.drawImage("assets/colorful_cars.jpg", 0, 0, width, height);
+//    Timer::threadSleepFor(1);
+//    uint8_t* buffer = can1.getScreenBuffer();
+//
+//    bool toStart = false;
+//    can2.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&toStart](){
+//        toStart = true;
+//    });
+//    while (can1.getIsOpen() && can2.getIsOpen() && toStart == false) {
+//        t.sleep();
+//    }
+//
+//    #pragma omp parallel num_threads(THREADS)
+//    {
+//        Timer t(FRAME * 2);
+//        unsigned int nthreads = omp_get_num_threads();
+//        unsigned int blocksize = height / nthreads;
+//        unsigned int row = blocksize * omp_get_thread_num();
+//        ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
+//        int gray = 0;
+//
+//        for (unsigned int y = row; y < row + blocksize; y++) {
+//            for (unsigned int x = 0; x < width; x++) {
+//                ColorInt pixel = can1.getPoint(x, y);
+//                gray = (pixel.R + pixel.G + pixel.B) / 3;
+//                can2.drawPoint(x, y, ColorInt(gray, gray, gray));
+//            }
+//            if (!(can1.getIsOpen() && can2.getIsOpen())) {
+//                can1.end();
+//                can2.end();
+//                break;
+//            }
+//            t.sleep();
+//        }
+//        for (unsigned int i = 0; i < thickness; i++) {
+//            can2.drawRectangle(0 + i, row + 1 + i, width - 2*i, blocksize - 2*i, color, false);
+//        }
+//    }
+//    while (can1.getIsOpen() && can2.getIsOpen()) {
+//        t.sleep();
+//    }
+//
+//    can1.end();
+//    can2.end();
+//    can1.wait();
+//    can2.wait();
 }
 
 int main() {
@@ -2093,7 +2093,7 @@ int main() {
 //    std::thread threadB = std::thread(runOtherHalfoftheFunctions);  // Spawn the rendering thread
 //    threadA.join();
 //    threadB.join();
-    Canvas c34(0, 0, 1200, 900, "");
+//    Canvas c34(0, 0, 1200, 900, "");
 //    test(c34,screenShotFunction,true);
 //    glfwTerminate();  // Release GLFW
 }

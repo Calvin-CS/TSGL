@@ -110,7 +110,6 @@ void smartSortFunction(Canvas& can, int threads, int size) {
     sortData** sd = new sortData*[threads];
     int f = 0;
     int l = (ex == 0) ? bs-1 : bs;
-    int active = 1;
     for (int i = 0; i < threads; ++i) {
       sd[i] = new sortData(numbers,f,l,Colors::highContrastColor(i));
       f = l+1;

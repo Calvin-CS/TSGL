@@ -41,9 +41,9 @@ using namespace tsgl;
  * \param can, Reference to the Canvas being drawn on.
  */
 void projectileFunction(Canvas& can) {
-  const int WINDOW_W = can.getWindowWidth(), WINDOW_H = can.getWindowHeight();
+  const int WINDOW_W = can.getWindowWidth();
   int targetX = 0, targetY = WINDOW_W / 2, coordinateChangerY = 1, coordinateChangerX = 3;  //Used to control target motion
-  int centerX = WINDOW_W / 2, centerY = WINDOW_H / 2;   //Center of screen
+  int centerX = WINDOW_W / 2;// centerY = WINDOW_H / 2;   //Center of screen
   int numberOfTargets = 10;   //Number of targets
   bool hit = false;  //Determine if the target has been hit
   int score = 0;   //Score
@@ -95,8 +95,9 @@ void projectileFunction(Canvas& can) {
 
 //Takes command-line arguments for the width and height
 int main(int argc, char* argv[]) {
-  int width = atoi(argv[1]), height = atoi(argv[2]);
-  Canvas c1(0, 0, width, height, "", FRAME);    //Can change the size of the window
+  int w = (argc > 1) ? atoi(argv[1]) : 960;
+  int h = (argc > 2) ? atoi(argv[2]) : w;
+  Canvas c1(0, 0, w, h, "", FRAME);    //Can change the size of the window
   c1.setBackgroundColor(BLACK);
   c1.start();
   projectileFunction(c1);

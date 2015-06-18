@@ -48,7 +48,7 @@ public:
   /*!
    *
    */
-  virtual void draw(CartesianCanvas& can, unsigned int & numberOfThreads);
+  virtual void draw(CartesianCanvas& can);
 
   /*!
    *

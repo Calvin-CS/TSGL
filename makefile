@@ -14,14 +14,18 @@ TESTS   := $(wildcard src/tests/*.cpp)
 OBJS := $(patsubst src/TSGL/%.cpp,build/TSGL/%.o,${SOURCES})
 TESTOBJS:= $(patsubst src/tests/%.cpp,build/tests/%.o,${TESTS})
 
+NOWARN := -Wno-unused-parameter -Wno-unused-function -Wno-narrowing
+
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 	OS_LFLAGS :=
+	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
 	OS_GLFW := glfw
 	OS_GL := -lGL
 endif
 ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
+	OS_LDIRS :=
 	OS_GLFW := glfw3
 	OS_GL :=
 endif
@@ -38,23 +42,21 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
-	-I./ -I/usr/include/freetype2  \
+	-I/usr/include/freetype2  \
 	-I/usr/local/include/freetype2  \
+	-I./ \
   -std=c++0x -fopenmp \
-  -Wno-narrowing -fpermissive
+  ${NOWARN} -fpermissive
   # -pedantic-errors
 
-LFLAGS=-LTSGL/ -ltsgl \
-	-Llib/ \
+LFLAGS=-Llib/ \
 	-L/opt/local/lib/ \
 	-L/usr/lib/ \
-	-L/opt/AMDAPP/lib/x86_64/ \
 	-L/usr/local/lib/ \
 	-L/usr/X11/lib/ \
 	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
-	-lX11 ${OS_GL} -lXrandr \
-	-fopenmp ${OS_LFLAGS}
-	# -lpng -ljpeg \
+	-lX11 ${OS_GL} -lXrandr -fopenmp \
+	${OS_LDIRS} ${OS_LFLAGS}
 
 DEPFLAGS=-MMD -MP
 
@@ -97,7 +99,7 @@ build/build: ${HEADERS} ${SOURCES} src/tests/tests.cpp src/tests/testInverter.cp
 
 lib/libtsgl.a: ${OBJS}
 	@echo 'Building $(patsubst lib/%,%,$@)'
-	mkdir -p lib 
+	mkdir -p lib
 	$(AR) -r $@ $?
 	@touch build/build
 

@@ -13,7 +13,7 @@ GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mande
 	myRedraw = true;
 }
 
-void GradientMandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThreads) {
+void GradientMandelbrot::draw(CartesianCanvas& can) {
 	while (myRedraw) {
 		setRedraw(false);
 #pragma omp parallel num_threads(myThreads)

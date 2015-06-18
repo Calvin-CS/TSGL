@@ -13,17 +13,10 @@ using namespace tsgl;
 void conwayFunction(Canvas& can) {
     const int IPF = 100,                   // Iterations per frame
               WW = can.getWindowWidth(),    // Window width
-              WH = can.getWindowHeight(),   // Window height
-              HW = WW / 2,
-              HH = WH / 2;
+              WH = can.getWindowHeight();   // Window height
     LifeFarm farm(WW,WH,&can,false);
 //    LifeFarm farm(WW,WH,&can,true);
     farm.setDrawdead(true);
-//    farm.addAnt(HW-1,HH);
-//    farm.addAnt(HW,HH);
-//    farm.addAnt(HW+1,HH);
-//    farm.addAnt(HW+1,HH-1);
-//    farm.addAnt(HW,HH-2);
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
       can.recordForNumFrames(1);  //Screenshot
     });

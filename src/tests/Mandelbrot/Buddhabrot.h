@@ -21,7 +21,7 @@ private:
 public:
   Buddhabrot(unsigned threads, unsigned depth);
   ~Buddhabrot();
-  void draw(CartesianCanvas& can, unsigned int & numberOfThreads);
+  void draw(CartesianCanvas& can);
 };
 
 #endif /* BUDDHABROT_H_ */
