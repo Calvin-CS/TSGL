@@ -200,6 +200,8 @@ void Canvas::draw() {
 //Workaround for OS X
 void Canvas::handleIO() {
   #ifdef __APPLE__
+	if (isFinished)
+		return;
 	if (pthread_main_np() == 0)
 		return;  //If we're not the main thread, we can't call this
 	windowMutex.lock();
@@ -526,13 +528,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     bgcolor = GREY;
     window = nullptr;
 
-    if (timerLength == 0.0f) {
-      drawTimer = new Timer(FRAME);
-//      drawTimer = new Timer(FRAME);
-    } else {
-      drawTimer = new Timer(timerLength);
-//      drawTimer = new Timer(timerLength);
-    }
+    drawTimer = new Timer((timerLength > 0.0f) ? timerLength : FRAME);
 
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
@@ -556,11 +552,13 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
  //   window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
     if (!window) {
         fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
+        exit(100);
     }
     glfwMutex.unlock();
 
     if (!monInfo) {
         fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
+        exit(101);
     }
     if (monitorX == -1)
       monitorX = (monInfo->width - winWidth) / 2;
@@ -582,6 +580,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     if (GLEW_OK != err) {
         // Problem: glewInit failed, something is seriously wrong.
         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+        exit(102);
     }
 
     GLint status;

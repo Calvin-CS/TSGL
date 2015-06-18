@@ -32,3 +32,9 @@ _*
 
 # Bitmaps
 Image*.bmp
+
+# OS X Stuff
+*.DS_Store*
+
+# Eclipse stuff
+.metadata
