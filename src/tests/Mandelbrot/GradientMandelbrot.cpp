@@ -50,6 +50,7 @@ void GradientMandelbrot::draw(CartesianCanvas& can, unsigned int & numberOfThrea
 					can.drawPoint(col, row, ColorHSV((float) smooth * 6.0f, 1.0f, 1.0f, 1.0f));
 					if (myRedraw) break;
 				}
+				can.handleIO();
 				if (myRedraw) break;
 		 }
 	 }

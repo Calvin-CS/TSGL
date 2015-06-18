@@ -70,7 +70,7 @@ BINARIES= bin/testTSGL bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
 	bin/testConcavePolygon bin/testNewtonPendulum bin/testConway \
 	bin/testProjectiles bin/testBallroom bin/testUnits bin/testSmartSort bin/testSeaUrchin \
-	bin/testMaster
+	bin/testBuddhabrot bin/testMaster
 
 all: dif tsgl tests docs tutorial
 
@@ -118,6 +118,7 @@ bin/testShadedVoronoi: build/tests/ShadedVoronoi.o
 
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
 bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o
+bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/Buddhabrot.o
 
 #Actual compilation recipe for test binaries (appended to earlier dependencies)
 

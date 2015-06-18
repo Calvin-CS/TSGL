@@ -14,6 +14,7 @@ cd bin
 run ./testAlphaLangton 640 480            #Width, Height
 run ./testAlphaRectangle 640 480          #Width, Height
 run ./testBallroom
+run ./testBuddhabrot 1200 900 4 1000      #Width, Height, Threads, Depth
 run ./testColorPoints 400 400 4           #Width, Height, Threads
 run ./testColorWheel 640 640              #Width, Height
 run ./testConway
