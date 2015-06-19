@@ -73,7 +73,7 @@ BINARIES=bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testConcavePolygon bin/testNewtonPendulum bin/testConway \
 	bin/testProjectiles bin/testBallroom bin/testUnits bin/testSmartSort \
 	bin/testSeaUrchin bin/testBuddhabrot bin/testMultiCanvas bin/testMaster \
-	bin/testProgressBar
+	bin/testProgressBar bin/testJulia
 
 all: dif tsgl tests docs tutorial
 
@@ -119,6 +119,7 @@ bin/testVoronoi: build/tests/Voronoi.o
 bin/testShadedVoronoi: build/tests/ShadedVoronoi.o
 
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
+bin/testJulia: build/tests/Mandelbrot/Julia.o
 bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o
 bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/Buddhabrot.o
 
