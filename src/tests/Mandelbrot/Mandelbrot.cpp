@@ -17,8 +17,10 @@ void Mandelbrot::bindings(CartesianCanvas& can) {
 		});
 		can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&can, this]() {
 			can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), this->mySecondX, this->mySecondY);
-			can.zoom(this->myFirstX, this->myFirstY, this->mySecondX, this->mySecondY);
-			this->myRedraw = true;
+			if (!(this->myFirstX == this->mySecondX || this->myFirstY == this->mySecondY)) {
+        can.zoom(this->myFirstX, this->myFirstY, this->mySecondX, this->mySecondY);
+        this->myRedraw = true;
+      }
 		});
 		can.bindToButton(TSGL_MOUSE_RIGHT, TSGL_PRESS, [&can, this]() {
 			Decimal x, y;
@@ -38,17 +40,32 @@ void Mandelbrot::bindings(CartesianCanvas& can) {
 	}
 
 void Mandelbrot::draw(CartesianCanvas& can) {
+  Canvas pCan(0, 0, 800, 50, "");  //Canvas for our progress bar
+  pCan.start();
+  ProgressBar pb(
+    10,10,pCan.getWindowWidth()-20,pCan.getWindowHeight()-20,
+    0,can.getWindowHeight(),myThreads
+  );
 	while(myRedraw) {
 		setRedraw(false);
 		can.reset();
+		pCan.clear();
+		for (int i = 0; i < myThreads; ++i)
+		  pb.update(i,0);
 		#pragma omp parallel num_threads(myThreads)
 		{
+		  unsigned int tid = omp_get_thread_num();
 			unsigned int nthreads = omp_get_num_threads();
-			ColorFloat tcolor = Colors::highContrastColor(omp_get_thread_num());
+			ColorFloat tcolor = Colors::highContrastColor(tid);
 			double blocksize = can.getCartHeight() / nthreads;
 			double blockheight = can.getWindowHeight() / nthreads;
-			long double startrow = blocksize * omp_get_thread_num() + can.getMinY();
+			pb.update(tid,blockheight*tid);
+			pCan.drawProgress(&pb);
+			long double startrow = blocksize * tid + can.getMinY();
 			for(unsigned int k = 0; k <= blockheight && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+			  pb.update(tid,k+blockheight*tid);
+			  pCan.clear();
+        pCan.drawProgress(&pb);
 				long double row = startrow + can.getPixelHeight() * k;
 				for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
 					complex originalComplex(col, row);
@@ -75,6 +92,7 @@ void Mandelbrot::draw(CartesianCanvas& can) {
 			can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
 		}
 	}
+	pCan.stop();  //Close our progress bar if we're done
 }
 
 	//mutator

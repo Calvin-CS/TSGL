@@ -169,11 +169,12 @@ void Canvas::draw() {
 
         unsigned int size = myShapes->size();
         for (unsigned int i = 0; i < size; i++) {
-            if (!(*myShapes)[i]->getIsTextured()) {
-                (*myShapes)[i]->draw();  // Iterate through our queue until we've made it to the end
+            Shape* s = (*myShapes)[i];
+            if (!s->getIsTextured()) {
+                s->draw();  // Iterate through our queue until we've made it to the end
             } else {
                 textureShaders(true);
-                (*myShapes)[i]->draw();
+                s->draw();
                 textureShaders(false);
             }
         }
@@ -329,10 +330,10 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
 }
 
 void Canvas::drawProgress(ProgressBar* p) {
-    for (int i = 0; i < p->segs; ++i) {
-      drawShape(p->rects[i]);
+    for (int i = 0; i < p->getSegs(); ++i) {
+      drawShape(p->getRect(i));
+      drawShape(p->getBorder(i));
     }
-//    drawShape(p);
 }
 
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {

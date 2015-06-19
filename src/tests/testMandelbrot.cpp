@@ -69,6 +69,8 @@ int main(int argc, char* argv[]) {
     unsigned d = (argc > 4) ? atoi(argv[4]) : MAX_COLOR;
     c5.setBackgroundColor(GREY);
     c5.start();
+
     mandelbrotFunction(c5, t, d);   //And pass it as an argument
+
     c5.wait();
 }
