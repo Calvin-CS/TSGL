@@ -80,7 +80,7 @@ void Julia::draw(CartesianCanvas& can) {
 					  float mult = iterations/(float)myDepth;
 					  can.drawPoint(col, row, Colors::blendedColor(tcolor,WHITE,0.25f+0.5f*mult)*mult);
 					}
-					if (myRedraw) break;
+					if (!can.getIsOpen() || myRedraw) break;
 				}
 				vq.update(myNext,1);
 				can.handleIO();

@@ -29,6 +29,7 @@ run ./testGreyscale 640 480 8               #Width, Height, Threads
 run ./testHighData
 run ./testImage
 run ./testImageCart
+run ./testJulia 1200 900 8 1000             #Width, Height, Threads, Depth
 run ./testLangton 640 480                   #Width, Height
 run ./testLangtonColony 640 480             #Width, Height
 run ./testLangtonRainbow 640 480            #Width, Height
