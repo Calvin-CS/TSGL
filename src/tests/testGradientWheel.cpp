@@ -18,14 +18,14 @@ const double PI = M_PI;
 const double RAD = PI / 180;  // One radian in degrees
 
 /*!
- * \brief Draws a gradient color wheel using OMP with multiple threads per processor and TSGL's colored polygons
+ * \brief Draws a gradient color wheel using OMP with multiple threads per processor and TSGL's colored polygons.
  * \details Same principle as colorWheelFunction(). Since colored polygons take arrays as parameters
  * to allow for arbitrary-length polygons, there are some key differences:
  * - Colors, x and y coordinates are declared within the #pragma omp block so they can be
- * declared as an array
+ * declared as an array.
  * - At the end, drawColoredPolygon() is called on a polygon with 3 vertices, with arrays for the
  * x coordinates, y coordinates, and color.
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void gradientWheelFunction(Canvas& can) {
 	const int THREADS = 256,                          // Number of threads to compute with

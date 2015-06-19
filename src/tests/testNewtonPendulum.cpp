@@ -17,15 +17,17 @@ const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
  * - A Canvas is made and the center of it is determined.
  * - Stopping points for the left and right moving balls are determined.
  * - Ints determining whether or not a ball is moving are also made (-1 = moving left, 0 = stationary, 1 = moving right).
- * - While the Canvas has not been close:
- *  - The Canvas' internal timer is put to sleep until the next drawing loop is ready to be made on the Canvas.
- *  - The Canvas is cleared (not necessary for the first frame but necessary for the subsequent frames afterwards).
+ * - While the Canvas has not been closed:
+ *  - The Canvas' internal timer is put to sleep until the next drawing loop.
  *  - Three circles are made with respect to the center of the Canvas.
  *  - The middle circle is the first to be drawn, followed by the left and then the right.
  *  - Then, lines are drawn from those circles so that drawn image looks like the middle three stationary balls of Newton's Pendulum.
  *  - Now, two more circles and lines are drawn. These will be the ones moving from right to left.
- *  - Conditonals determine whether to increment the motion of the left or right ball.
- * - The drawing loop continues on indefinitely until the Canvas is closed.
+ *  - Conditionals determine whether to increment the motion of the left or right ball.
+ *  - The Canvas is cleared.
+ *  - The drawing loop continues on indefinitely until the Canvas is closed.
+ *  .
+ * .
  * \param can Reference to the Canvas to draw on.
  */
 void newtonPendulumFunction(Canvas& can) {
@@ -40,7 +42,6 @@ void newtonPendulumFunction(Canvas& can) {
   rightMoving = -1;
   while(can.getIsOpen()) {
     can.sleep();
-    can.clear();
     //Stationary lines
     can.drawLine(centerX, 0, centerX, centerY - 21);  //Middle line
     can.drawLine(centerX - 50, 0, centerX - 50, centerY - 21);
@@ -81,6 +82,7 @@ void newtonPendulumFunction(Canvas& can) {
         leftStop = -100;
       }
     }
+    can.clear();
   }
 }
 

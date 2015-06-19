@@ -23,27 +23,20 @@ const double RAD = PI / 180;  // One radian in degrees
 
 typedef CartesianCanvas Cart;
 
-float randfloat(int divisor = 10000) {
-	return (rand() % divisor) / (float) divisor;
-}
-
 /*!
  * \brief Draws the area under a predefined function (the integral) using CartesianCanvas
- * and takes a command line argument for the number of threads to use
+ * and takes a command line argument for the number of threads to use.
  * \details
- * - Use a predetermined number of threads, storing it in: \b THREADS.
+ * - Use the number of threads passed via command-line arguments.
+ * - If that number is negative, just use one thread.
  * - Bind Q's press event to quit the rendering in case it takes too long.
- * - Set up the internal timer of the Canvas to expire once every \b FRAME / 2 seconds
+ * - Set up the internal timer of the Canvas to expire once every \b FRAME / 2 seconds .
  * - Draw axes through the origin, with spacing PI/4 between x ticks and 0.5 between y ticks.
  * - Store the width of the canvas's pixel in \b pw to avoid thousands of multiple function calls.
  * - Initialize and draw a CosineFunction using the currently rendered area of the CartesianCanvas.
  * - Set the CartesianCanvas' font from an external font file using setFont().
  * - Draw some labels on the CartesianCanvas to make things look pretty.
- * - Set up a parallel block with OMP using \b THREADS threads.
- * - Check if the argument for the number of threads is valid:
- *   - If it is less than or equal to 0, use the number of threads that we can use with OMP.
- *   - If it is greater than the number of threads that we can use, use only the number of threads that we can use with OMP.
- *   - Else, its valid and use that many threads.
+ * - Set up a parallel block with OMP using \b threads as the number of threads to use.
  * - Set \b nthreads to the actual number of threads spawned.
  * - Calculate each thread's share of the work and store it in: \b offset.
  * - Calculate each thread's starting position and store it in: \b start.
@@ -54,10 +47,10 @@ float randfloat(int divisor = 10000) {
  *   - Draw a line from x,0 to x,f(x) for the current x.
  *   .
  * .
- * \param can Reference to the CartesianCanvas being drawn to
- * \param numberOfThreads, Reference to the number of threads to use
+ * \param can Reference to the CartesianCanvas being drawn to.
+ * \param numberOfThreads Reference to the number of threads to use.
  */
-void cosineIntegralFunction(CartesianCanvas& can, int & numberOfThreads) {
+void cosineIntegralFunction(Cart& can, int & numberOfThreads) {
   int threads = numberOfThreads;
 	if (threads <= 0) {
 	  threads = 1;
@@ -79,7 +72,7 @@ void cosineIntegralFunction(CartesianCanvas& can, int & numberOfThreads) {
 
 #pragma omp parallel num_threads(threads)
 	{
-		int nthreads = omp_get_num_threads();   //Temp variable
+		int nthreads = omp_get_num_threads();
 		long double offset = 3*PI / nthreads;
 		long double start = -1.5*PI + omp_get_thread_num() * offset;
 		long double stop = start + offset;

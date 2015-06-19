@@ -12,29 +12,28 @@ using namespace tsgl;
 /*!
  * \brief Provides a visualization for a basic (and slow) shaker sort.
  * \details
- * - The \b SIZE of the list of items and the number of iterations per frame ( \b IPF) are set.
+ * - The size of the list of items ( \b SIZE ) and the number of iterations per frame ( \b IPF ) are set.
  * - An integer array of size \b SIZE is allocated.
  * - A flag \b goingUp is set.
  * - Our integer array is filled with random integers under the Canvas' height.
- * - The background color is set to gray for visibility
+ * - The background color is set to gray for visibility.
  * - The internal timer of the Canvas is set up to expire every \b FRAME seconds.
  * - While the Canvas is open:
- *   - The internal timer sleeps until the next frame is ready to be drawn
- *   - If the minimum sorted element equals the maximum, we're done
+ *   - The internal timer sleeps until the next frame is ready to be drawn.
+ *   - If the minimum sorted element is greater than or equals the maximum, we're done.
  *   - At a rate of \b IPF times a second:
  *     - If we're going up and the element above us is less than us, swap.
  *     - If we're going down and the element below us is less than us, swap.
  *     - Move in the current direction, inverting our direction if we've reached the minimum / maximum.
  *     .
- *   - Clear the Canvas
+ *   - Clear the Canvas.
  *   - From 0 to \b SIZE:
- *     - Get the height of each element in the integer array
+ *     - Get the height of each element in the integer array.
  *     - Draw it as a yellow rectangle if it's the currently-computed member; draw it red otherwise.
  *     .
  *   .
  * .
- * \param can, Reference to the Canvas being drawn to
- * \param
+ * \param can Reference to the Canvas being drawn to.
  */
 void dumbSortFunction(Canvas& can) {
 	const int SIZE = 550,   // Size of the data pool (set to 550 by default)
@@ -105,6 +104,6 @@ int main(int argc, char* argv[]) {
     Canvas c9(-1, -1, w, h, "", FRAME);
     c9.setBackgroundColor(GREY);
     c9.start();
-    dumbSortFunction(c9);   //Pass it as an argument
+    dumbSortFunction(c9);   //Pass the Canvas as an argument
     c9.wait();
 }

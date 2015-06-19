@@ -12,25 +12,21 @@ using namespace tsgl;
 
 /*!
  * \brief Draws a diagonal black-to-white gradient using OMP and takes in a command line argument for the
- * number of threads to use
+ * number of threads to use.
  * \details
- * - A parallel block is set up with #pragma omp parallel using all available processors
- * - The actual number of threads created is stored in: \b nthreads
- * - Check if the argument for the number of threads is valid:
- *   - If it is less than or equal to 0, use the number of threads that we can use with OMP.
- *   - If it is greater than the number of threads that we can use, use only the number of threads that we can use with OMP.
- *   - Else, its valid and use that many threads.
- * - The outer for loop is set up in a striping pattern, and the inner for loop runs from 0 to the Canvas height
- * - The color is set to a shade of gray based on its distance from the top left of the canvas
- * - The point is drawn to the Canvas
+ * - A parallel block is set up with #pragma omp parallel using the number of threads passed as a command-line argument.
+ * - The actual number of threads created is stored in: \b nthreads .
+ * - The outer for loop is set up in a striping pattern, and the inner for loop runs from 0 to the Canvas height.
+ * - The color ( \b color ) is set to a shade of gray based on its distance from the top left of the canvas.
+ * - The point is drawn to the Canvas.
  * .
- * \param can, Reference to the Canvas being drawn to
- * \param numberOfThreads, Reference to the number of threads to use in the function
+ * \param can Reference to the Canvas being drawn to.
+ * \param numberOfThreads Reference to the number of threads to use in the function.
  */
 void graydientFunction(Canvas& can, int & numberOfThreads) {
     #pragma omp parallel num_threads(numberOfThreads)
     {
-        int nthreads = omp_get_num_threads();   //Temp variable
+        int nthreads = omp_get_num_threads();
         int color;
         for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i += nthreads) {
             for (int j = 0; j < can.getWindowHeight(); j++) {

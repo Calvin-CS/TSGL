@@ -30,13 +30,37 @@ private:
 public:
     int width, height, size;
     Canvas* can;
+    /*!
+     *
+     */
     LifeFarm(int w, int h, Canvas* can, bool randomize);
+    /*!
+     *
+     */
     ~LifeFarm();
+    /*!
+     *
+     */
     void addAnt(int x, int y);
+    /*!
+     *
+     */
     void moveAnts();
+    /*!
+     *
+     */
     void moveAntsOld();
+    /*!
+     *
+     */
     void moveAntsNew();
+    /*!
+     *
+     */
     void setDrawdead(bool b);
+    /*!
+     *
+     */
     void life(int *current, int *fresh);
 };
 

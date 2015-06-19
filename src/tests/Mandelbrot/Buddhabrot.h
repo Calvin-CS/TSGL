@@ -19,8 +19,17 @@ private:
   int **counter;
   int cww, cwh;
 public:
+  /*!
+   *
+   */
   Buddhabrot(unsigned threads, unsigned depth);
+  /*!
+   *
+   */
   ~Buddhabrot();
+  /*!
+   *
+   */
   void draw(CartesianCanvas& can);
 };
 

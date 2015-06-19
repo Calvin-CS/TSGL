@@ -27,11 +27,29 @@ public:
     LangtonAnt** ants;
     int width, height, size, cap;
     Canvas* can;
+    /*!
+     *
+     */
     AntFarm(int w, int h, int s, Canvas* can);
+    /*!
+     *
+     */
     ~AntFarm();
+    /*!
+     *
+     */
     void addAnt(int x, int y, int r, int g, int b, int d);
+    /*!
+     *
+     */
     void moveAnts();
+    /*!
+     *
+     */
     void setShading(bool b);
+    /*!
+     *
+     */
     void setParallel(bool b);
 };
 

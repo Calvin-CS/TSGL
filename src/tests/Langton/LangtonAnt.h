@@ -27,10 +27,25 @@ public:
     int myX, myY, myRed, myGreen, myBlue, myAlpha, myDir;
     AntFarm* myFarm;
 public:
+    /*!
+     *
+     */
     LangtonAnt(int x, int y, int r, int g, int b, int d, AntFarm* p);
+    /*!
+     *
+     */
     void move();
+    /*!
+     *
+     */
     void changeColor(int r, int g, int b);
+    /*!
+     *
+     */
     void changeColor(ColorFloat c);
+    /*!
+     *
+     */
     void setAlpha(int a);
 };
 

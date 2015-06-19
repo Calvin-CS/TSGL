@@ -10,8 +10,9 @@
 using namespace tsgl;
 
 /*!
- * \brief Draws a randomly generated Voronoi diagram with fancy shading
- * \details Same principle as voronoiFunction(). Key differences:
+ * \brief Draws a randomly generated Voronoi diagram with fancy shading.
+ * \details Same principle as voronoiFunction(). Also has a class.
+ * - Key differences:
  * - We keep track of the second best distance to each point in \b nbdist.
  * - We keep track of the kvalues of each 2nd best point in the array \b kvalue2.
  * - In a second post-processing loop through the screen:
@@ -23,13 +24,14 @@ using namespace tsgl;
  *   - Break if the Canvas is closed.
  *   .
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void shadedVoronoiFunction(Canvas& can) {
 	ShadedVoronoi s1(can);
 	s1.draw(can);
 }
 
+//Takes command-line arguments for the width and height of the Canvas window
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;

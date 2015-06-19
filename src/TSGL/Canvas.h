@@ -57,8 +57,19 @@ namespace tsgl {
 /*! \class Canvas
  *  \brief A GL window with numerous built-in, thread-safe drawing operations.
  *  \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
- *  \details With libpng and libjpeg, Canvas also supports the drawing of images.
+ *  \details Using stb, Canvas also supports the drawing of images.
  *  \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
+ *  \note \b FOR MAC USERS: There were a few issues that needed to be addressed in order to get TSGL running on Mac.
+ *           Specifically:
+ *            - There was a new function added, handleIO(), that was needed in order to handle any input/output events
+ *              ( keyboard/mouse presses ). The reason is because on Mac, whenever a window is created using OpenGL,
+ *              the main thread has to handle i/o calls. No other thread may handle them. So, handleIO() is called
+ *              by the main thread whenever an i/o event occurs. This call is in Canvas' sleep() method, since users must
+ *              use sleep() whenever they are drawing before they begin drawing.
+ *            - In order to use threads, we had to use pthreads instead of the standard C++ threads.
+ *            - The makefile was edited in order to accommodate the use of frameworks.
+ *            -
+ *            -
  */
 class Canvas {
 private:
@@ -222,6 +233,7 @@ public:
      * \details This function is blocked until the user closes the Canvas. This function has no effect
      *  and will not request for close. Use end() before this to make that request.
      * \return 0 if exit is successful, -1 if the canvas has not started yet.
+     * \note \b FOR MAC USERS:
      * \see start(), end().
      */
     int wait();

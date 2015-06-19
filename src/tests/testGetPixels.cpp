@@ -10,36 +10,30 @@
 
 using namespace tsgl;
 
-typedef CartesianCanvas Cart;
-
 /*!
  * \brief Grabs the pixels from an image on the Canvas and plays with them.
  * \details
  * - Set a predetermined number of threads and store it in: \b THREADS.
  * - Store the Canvas' dimensions for easy use.
  * - Draw an image on the initially blank Canvas, stretched to fill it.
- * - Initialize a pointer to the Canvas' screen buffer.
  * - Set up a parallel OMP block with \b THREADS threads.
  * - Set up the internal timer of the Canvas to expire every 1/100th of a second.
  * - Determine a block size for each thread based on the Canvas' height and the number
  * of spawned threads.
  * - Determine a starting row for each thread based on \b blocksize and the thread's id.
  * - While the Canvas is open:
- *   - Initialize a new offset pointer to the Canvas' draw buffer + row*width pixels
- *   ( times 3 colors ).
  *   - For each row:
- *     - Reset the index to 0.
  *     - For each column:
  *       - Over each old pixel, draw a new pixel with each of the RGB components incremented
  *       and wrapped.
  *       .
- *     - Increment the buffer offset by \b width pixels ( times 3 colors ).
  *     .
  *   - Sleep until the Canvas is ready to draw again.
+ *   - Print the time between sleeps of the Canvas' internal timer.
  *   .
  * .
  *
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void getPixelsFunction(Canvas& can) {
     const int THREADS = 2;

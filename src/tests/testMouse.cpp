@@ -10,7 +10,7 @@
 using namespace tsgl;
 
 /*!
- * \brief Tiny little painting function for drawing with the mouse
+ * \brief Tiny little painting function for drawing with the mouse.
  * \details
  * - Initialize and unset a flag for whether the mouse is pressed.
  * - Allocate some large arrays for x,y coordinates and colors.
@@ -20,7 +20,7 @@ using namespace tsgl;
  * - Bind the left mouse on-press event to setting the lastX, lastY, and first x,y array
  * coordinate to the mouse's current position, and the first color to a random color; also,
  * set the array index to 1, and set the mouseDown flag.
- * - Bind the left mouse on-release event to draw a colored polygon with the built-up vertices,
+ * - Bind the left mouse on-release event to draw a Concave & Convex polygon with the built-up vertices,
  * and to unset the mouseDown flag.
  * - Set up the internal timer of the Canvas to expire every \b FRAME seconds.
  * - While the Canvas is open:
@@ -33,7 +33,7 @@ using namespace tsgl;
  *   - Sleep the timer until the Canvas is ready to draw again.
  *   .
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void mouseFunction(Canvas& can) {
     bool mouseDown = false;

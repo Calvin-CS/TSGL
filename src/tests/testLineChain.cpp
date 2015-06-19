@@ -10,18 +10,18 @@
 using namespace tsgl;
 
 /*!
- * \brief Draws a chain of randomly colored lines at the target framerate (default 60 FPS)
+ * \brief Draws a chain of randomly colored lines at the target framerate ( default 60 FPS ).
  * \details
- * - \b xNew and \b yNew are set to the middle of the canvas
- * - The internal timer of the Canvas is set up to go off every \b FRAME seconds (\b FRAME == 1 / \b FPS)
+ * - \b xNew and \b yNew are set to the middle of the canvas.
+ * - The internal timer of the Canvas is set up to go off every \b FRAME seconds ( \b FRAME == 1 / \b FPS ).
  * - While the canvas is open:
- *   - The internal timer sleeps until the next frame is ready to be drawn
- *   - \b xOld and \b yOld are set to \b xNew and \b yNew, while \b xNew and \b yNew are set to random positions
- *   - A random color is chosen
- *   - The line is drawn to the Canvas
+ *   - The internal timer sleeps until the next frame is ready to be drawn.
+ *   - \b xOld and \b yOld are set to \b xNew and \b yNew, while \b xNew and \b yNew are set to random positions.
+ *   - A random color is chosen.
+ *   - The line is drawn to the Canvas.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void lineChainFunction(Canvas& can) {
     int xOld, yOld, xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, red, green, blue;

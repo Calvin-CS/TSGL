@@ -18,9 +18,9 @@ const double PI = M_PI;
 const double RAD = PI / 180;  // One radian in degrees
 
 /*!
- * \brief Draws a fan of randomly colored lines at the target framerate and a dynamic number of threads using OMP
+ * \brief Draws a fan of randomly colored lines at the target framerate and a dynamic number of threads using OMP.
  * \details
- * - The internal timer of the Canvas is set up to go off every \b FRAME seconds (\b FRAME == 1 / \b FPS)
+ * - The internal timer of the Canvas is set up to go off every \b FRAME seconds ( \b FRAME == 1 / \b FPS ).
  * - While the canvas is open:
  *   - The number of threads to use is recalculated, and the process is forked.
  *   - The internal timer sleeps on each thread until the next frame is ready to be drawn.
@@ -31,7 +31,7 @@ const double RAD = PI / 180;  // One radian in degrees
  *   - The line is draw to the Canvas.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void lineFanFunction(Canvas& can) {
     const double ARC = 7.11;  //(Arbitrary) spacing between arcs of the fan
@@ -54,12 +54,9 @@ void lineFanFunction(Canvas& can) {
     }
 }
 
-//Takes in a command line argument for the number of lines to draw
-//on the Canvas
 int main() {
     Canvas c3(FRAME);
     c3.start();
     lineFanFunction(c3);
     c3.wait();
 }
-

@@ -17,11 +17,11 @@ using namespace tsgl;
  * - While the Canvas is open:
  *   - Set \b reps to the timer's current number of repetitions.
  *   - Compute the blue component of the current color based on reps.
- *   - Attempt to draw every pixel with the current 1.0,1.0,blue
+ *   - Attempt to draw every pixel with the current 1.0,1.0,blue.
  *   - Sleep the timer until the Canvas is ready to draw again.
  *   .
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void highData(Canvas& can) {
     unsigned int reps,
