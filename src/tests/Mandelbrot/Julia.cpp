@@ -45,7 +45,7 @@ void Julia::bindings(CartesianCanvas& can) {
 
 void Julia::draw(CartesianCanvas& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
-  VisualQueue vq(CH,8,0.75f);
+  VisualQueue vq(CH,12,0.75f);
 	while(myRedraw) {
 		setRedraw(false);
 		can.reset();
@@ -64,7 +64,8 @@ void Julia::draw(CartesianCanvas& can) {
 			  }
 			  if (myNext >= can.getWindowHeight())
 			    break;
-			  vq.update(myNext,0);
+			  vq.update(myNext,1);
+			  break;
 				long double row = can.getMinY() + can.getPixelHeight() * myNext;
 				for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
 					complex z(-0.8f, 0.156f);

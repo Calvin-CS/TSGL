@@ -17,11 +17,11 @@ void juliaFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
 
 //Takes command line arguments for the number of threads
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 0.6*Canvas::getDisplayHeight();
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
-      w = 1200;
-      h = 900;                  //If not, set the width and height to a default value
+      w = 1.2*Canvas::getDisplayHeight();
+      h = 0.75*w;               //If not, set the width and height to a default value
     }
     int x = Canvas::getDisplayWidth()-w- 64;
     Cart c5(x, -1, w, h, -2, -1.125, 1, 1.125, "", FRAME / 2);
