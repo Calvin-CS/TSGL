@@ -9,20 +9,26 @@ ProgressBar::ProgressBar(int x, int y, int w, int h, float minV, float maxV, uns
     xx = x; yy = y;
     width = w; height = h;
     segs = segments;
-    for (int i = 0; i < segs; ++i)
-      startX[i] = endX[i] = x + i*(w/segs);
+    startX[0] = x; endX[0] = x + width/segs;
+    for (int i = 1; i < segs; ++i) {
+      startX[i] = endX[i-1];
+      endX[i] = startX[i] + width/segs;
+    }
 }
 
 ProgressBar::~ProgressBar() {
   delete [] startX; delete [] endX;
 }
 
-void ProgressBar::update(unsigned seg, float newV) {
+void ProgressBar::update(float newV, int seg) {
+  if (seg == -1)
+    seg = omp_get_thread_num();
   float d = max-min;
-  float start = min+seg*d/segs;
+  float start = min + (d * seg)/segs;
   float end = start + d/segs;
   clamp(newV,start,end);
-  endX[seg] = xx+width*(newV-min)/d;
+  float percent = (newV-start) / (end-start);
+  endX[seg] = startX[seg]+percent*(width/segs);
 }
 
 Rectangle* ProgressBar::getRect(int i) {
@@ -30,11 +36,11 @@ Rectangle* ProgressBar::getRect(int i) {
 }
 
 Polyline* ProgressBar::getBorder(int i) {
-  int x2 = xx+(width*(i+1))/segs, y2 = yy+height;
+  int y2 = yy+height;
   Polyline* p = new Polyline(5);
     p->addNextVertex(startX[i],yy,BLACK);
-    p->addNextVertex(x2,yy,BLACK);
-    p->addNextVertex(x2,y2,BLACK);
+    p->addNextVertex(startX[i]+width/segs,yy,BLACK);
+    p->addNextVertex(startX[i]+width/segs,y2,BLACK);
     p->addNextVertex(startX[i],y2,BLACK);
     p->addNextVertex(startX[i],yy,BLACK);
   return p;

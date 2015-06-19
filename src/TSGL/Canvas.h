@@ -351,7 +351,18 @@ public:
      *      \param size The size of the text in pixels.
      *      \param color The color of the Text (set to BLACK by default).
      */
-    virtual void drawText(std::wstring s, int x, int y, unsigned int size, ColorFloat color = BLACK);
+    virtual void drawText(std::string s, int x, int y, unsigned size, ColorFloat color = BLACK);
+
+    /*!
+     * \brief Draw a string of text.
+     * \details This function draws a given string of Text at the given coordinates with the given color.
+     *      \param s The UTF8-encoded string to draw.
+     *      \param x The x coordinate of the text's left bound.
+     *      \param y The y coordinate of the text's left bound.
+     *      \param size The size of the text in pixels.
+     *      \param color The color of the Text (set to BLACK by default).
+     */
+    virtual void drawText(std::wstring s, int x, int y, unsigned int size, ColorFloat color);
 
     /*!
      * \brief Draw a triangle.

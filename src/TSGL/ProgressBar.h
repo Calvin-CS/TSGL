@@ -7,6 +7,8 @@
 #ifndef PROGRESSBAR_H
 #define PROGRESSBAR_H
 
+#include <omp.h>
+
 #include "Polyline.h"
 #include "Rectangle.h"
 
@@ -24,7 +26,7 @@ class ProgressBar {
  public:
     ProgressBar(int x, int y, int w, int h, float minV, float maxV, unsigned segments);
     ~ProgressBar();
-    void update( unsigned segment, float newV);
+    void update(float newV, int seg = -1);
 
     int getSegs() { return segs; }
     Rectangle* getRect(int i);

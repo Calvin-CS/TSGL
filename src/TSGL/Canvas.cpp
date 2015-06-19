@@ -361,7 +361,24 @@ void Canvas::drawShape(Shape* s) {
     bufferMutex.unlock();
 }
 
-void Canvas::drawText(std::wstring s, int x, int y, unsigned int size, ColorFloat color) {
+
+
+int StringToWString(std::wstring &ws, const std::string &s)
+{
+    std::wstring wsTmp(s.begin(), s.end());
+
+    ws = wsTmp;
+
+    return 0;
+}
+
+void Canvas::drawText(std::string s, int x, int y, unsigned size, ColorFloat color) {
+    std::wstring wsTmp(s.begin(), s.end());
+    std::wstring ws = wsTmp;
+    drawText(ws, x, y, size, color);
+}
+
+void Canvas::drawText(std::wstring s, int x, int y, unsigned size, ColorFloat color) {
     Text* t = new Text(s, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
     drawShape(t);                                // Push it onto our drawing buffer
 }

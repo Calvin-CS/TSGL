@@ -32,7 +32,7 @@ void progressBarFunction(Canvas& can) {
         can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
         ++progress;
         for (unsigned i = 0; i < SEGS; ++i)
-          pb.update(i,progress+i*(MAX/SEGS));
+          pb.update(progress+i*(MAX/SEGS),i);
         can.drawProgress(&pb);
     }
 }
