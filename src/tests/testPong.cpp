@@ -46,7 +46,9 @@ void pongFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c25(0,0,1600,600,"", FRAME);
+    int w = 1.5*Canvas::getDisplayHeight();
+    int h = 0.5*w;
+    Canvas c25(-1,-1,w,h,"", FRAME);
     c25.setBackgroundColor(BLACK);
     c25.start();
     pongFunction(c25);

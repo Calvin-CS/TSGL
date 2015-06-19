@@ -45,11 +45,11 @@ void functionFunction(CartesianCanvas& can) {
 
 //Takes command line arguments for the window width and height
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 1200;
-    int h = (argc > 2) ? atoi(argv[2]) : 900;
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 1000;             //If not, set the width and height to a default value
-    Cart c11(0, 0, w, h, -5,-5,5,50, "");
+    Cart c11(-1, -1, w, h, -5,-5,5,50, "");
     c11.setBackgroundColor(WHITE);
     c11.start();
     functionFunction(c11);

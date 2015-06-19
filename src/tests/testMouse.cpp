@@ -69,8 +69,10 @@ void mouseFunction(Canvas& can) {
     }
 }
 
-int main() {
-    Canvas c32(0, 0, 800, 600, "", FRAME);
+int main(int argc, char* argv[]) {
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
+    Canvas c32(-1, -1, w, h, "", FRAME);
     c32.setBackgroundColor(WHITE);
     c32.start();
     mouseFunction(c32);

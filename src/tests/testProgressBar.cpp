@@ -1,8 +1,5 @@
 /*
- * testGraydient.cpp
- *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * testProgressBar.cpp
  */
 
 #include <omp.h>
@@ -27,17 +24,13 @@ using namespace tsgl;
  * \param can, Reference to the Canvas being drawn to
  * \param numberOfThreads, Reference to the number of threads to use in the function
  */
-void graydientFunction(Canvas& can, int & numberOfThreads) {
-    #pragma omp parallel num_threads(numberOfThreads)
-    {
-        int nthreads = omp_get_num_threads();   //Temp variable
-        int color;
-        for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i += nthreads) {
-            for (int j = 0; j < can.getWindowHeight(); j++) {
-                color = i * MAX_COLOR / 2 / can.getWindowWidth() + j * MAX_COLOR / 2 / can.getWindowHeight();
-                can.drawPoint(i, j, ColorInt(color, color, color));
-            }
-        }
+void progressBarFunction(Canvas& can) {
+    ProgressBar* pb = new ProgressBar(100,100,100,20,0,100,1);
+    int progress = 0;
+    while (can.getIsOpen()) {  // Checks to see if the window has been closed
+        can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
+        pb->update(0,++progress);
+        can.drawProgress(pb);
     }
 }
 
@@ -50,8 +43,7 @@ int main(int argc, char* argv[]) {
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;              //If not, set the width and height to a default value
     Canvas c(-1, -1, w, h, "");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
-    int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Convert the char pointer to an int ( see http://www.cplusplus.com/forum/beginner/58493/ )
     c.start();
-    graydientFunction(c, numberOfThreads);  //Now pass the argument for the number of threads to the test function
+    progressBarFunction(c);  //Now pass the argument for the number of threads to the test function
     c.wait();
 }

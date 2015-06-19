@@ -47,14 +47,17 @@ static const GLchar* textureFragmentSource =
     "    outColor = texture(tex, Texcoord) * vec4(Color);"
     "}";
 
-std::mutex Canvas::glfwMutex;
 int Canvas::drawBuffer = GL_FRONT_LEFT;
+bool Canvas::glfwIsReady = false;
+std::mutex Canvas::glfwMutex;
+GLFWvidmode const* Canvas::monInfo;
 unsigned Canvas::openCanvases = 0;
 
 //Negative timerLength
 Canvas::Canvas(double timerLength) {
-    int w = 1200, h = 900;
-    init(0, 0, w, h, w*h*2, "", timerLength);
+    int w = 1.2*Canvas::getDisplayHeight();
+    int h = 0.75*w;
+    init(-1, -1, w, h, w*h*2, "", timerLength);
 }
 
 Canvas::Canvas(int xx, int yy, int w, int h, std::string title, double timerLength) {
@@ -67,8 +70,10 @@ Canvas::~Canvas() {
     delete myBuffer;
     delete drawTimer;
     delete[] vertexData;
-    if (--openCanvases == 0)
+    if (--openCanvases == 0) {
+        glfwIsReady = false;
         glfwTerminate();  // Terminate GLFW
+    }
 }
 
 void Canvas::bindToButton(Key button, Action a, voidFunction f) {
@@ -323,6 +328,13 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     pointArrayMutex.unlock();
 }
 
+void Canvas::drawProgress(ProgressBar* p) {
+    for (int i = 0; i < p->segs; ++i) {
+      drawShape(p->rects[i]);
+    }
+//    drawShape(p);
+}
+
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
     if (filled) {
         if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
@@ -382,6 +394,16 @@ int Canvas::getFrameNumber() {
 
 ColorFloat Canvas::getBackgroundColor() {
   return bgcolor;
+}
+
+int Canvas::getDisplayHeight() {
+  initGlfw();
+  return monInfo->height;
+}
+
+int Canvas::getDisplayWidth() {
+  initGlfw();
+  return monInfo->width;
 }
 
 float Canvas::getFPS() {
@@ -454,45 +476,8 @@ void Canvas::glDestroy() {
     glDeleteVertexArrays(1, &vertexArray);
 }
 
-void Canvas::glInit() {
-    glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
-    glfwSetWindowUserPointer(window, this);
-
-    // Enable and disable necessary stuff
-    glDisable(GL_DEPTH_TEST);                           // Disable depth testing because we're not drawing in 3d
-    glDisable(GL_DITHER);                               // Disable dithering because pixels do not (generally) overlap
-    glDisable(GL_CULL_FACE);                            // Disable culling because the camera is stationary
-    glEnable(GL_BLEND);                                 // Enable blending
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
-
-#ifdef DEBUG
-    printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
-    printf("OpenGL version: %s\n", glGetString(GL_VERSION));
-    printf("GLFW version:   %s\n", glfwGetVersionString());
-#endif
-
-    bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    });
-
-    unsigned char stereo[1] = {5}, dbuff[1] = {5};
-    int aux[1] = {5};
-    glGetBooleanv(GL_STEREO,stereo);
-    glGetBooleanv(GL_DOUBLEBUFFER,dbuff);
-    glGetIntegerv(GL_AUX_BUFFERS,aux);
-    hasStereo = ((int)stereo[0] > 0);
-    hasBackbuffer = ((int)dbuff[0] > 0);
-
-    glfwMakeContextCurrent(NULL);   // Reset the context
-}
-
-void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    buttonCallback(window, key, action, mods);
-}
-
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
-    if (openCanvases == 0)
-        glfwInit();  // Initialize GLFW
+    initGlfw();
     ++openCanvases;
 
     title_ = title;
@@ -544,8 +529,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
-
-    monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
@@ -640,6 +623,50 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     glfwMakeContextCurrent(NULL);   // Reset the context
 }
 
+void Canvas::initGl() {
+    glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
+    glfwSetWindowUserPointer(window, this);
+
+    // Enable and disable necessary stuff
+    glDisable(GL_DEPTH_TEST);                           // Disable depth testing because we're not drawing in 3d
+    glDisable(GL_DITHER);                               // Disable dithering because pixels do not (generally) overlap
+    glDisable(GL_CULL_FACE);                            // Disable culling because the camera is stationary
+    glEnable(GL_BLEND);                                 // Enable blending
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
+
+#ifdef DEBUG
+    printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+    printf("OpenGL version: %s\n", glGetString(GL_VERSION));
+    printf("GLFW version:   %s\n", glfwGetVersionString());
+#endif
+
+    bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    });
+
+    unsigned char stereo[1] = {5}, dbuff[1] = {5};
+    int aux[1] = {5};
+    glGetBooleanv(GL_STEREO,stereo);
+    glGetBooleanv(GL_DOUBLEBUFFER,dbuff);
+    glGetIntegerv(GL_AUX_BUFFERS,aux);
+    hasStereo = ((int)stereo[0] > 0);
+    hasBackbuffer = ((int)dbuff[0] > 0);
+
+    glfwMakeContextCurrent(NULL);   // Reset the context
+}
+
+void Canvas::initGlfw() {
+  if (!glfwIsReady) {
+    glfwInit();  // Initialize GLFW
+    monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    glfwIsReady = true;
+  }
+}
+
+void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    buttonCallback(window, key, action, mods);
+}
+
 void Canvas::screenShot() {
     char filename[25];
     sprintf(filename, "Image%06d.png", framecounter);  // TODO: Make this save somewhere not in root
@@ -703,7 +730,7 @@ int Canvas::start() {
 #ifdef __APPLE__
 void* Canvas::startDrawing(void* cPtr) {
     Canvas* c = (Canvas*)cPtr;
-    c->glInit();
+    c->initGl();
     c->draw();
     c->isFinished = true;
     glfwDestroyWindow(c->window);
@@ -712,7 +739,7 @@ void* Canvas::startDrawing(void* cPtr) {
 }
 #else
 void Canvas::startDrawing(Canvas *c) {
-    c->glInit();
+    c->initGl();
     c->draw();
     c->isFinished = true;
     glfwDestroyWindow(c->window);

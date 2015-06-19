@@ -40,13 +40,13 @@ void lineChainFunction(Canvas& can) {
 
 //Takes command line arguments for the window width and height
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 1200;
-    int h = (argc > 2) ? atoi(argv[2]) : 900;
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
       w = 1200;
       h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c2(0, 0, w, h, "", FRAME);
+    Canvas c2(-1, -1, w, h, "", FRAME);
     c2.setBackgroundColor(BLACK);
     c2.start();
     lineChainFunction(c2);

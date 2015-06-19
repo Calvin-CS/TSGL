@@ -113,7 +113,7 @@ void seaUrchinFunction(Canvas& can) {
 
 //KEEP THE WINDOW WIDTH AND HEIGHT THE SAME PLEASE!
 int main() {
-  Canvas c1(0, 0, 500, 500, "Sea Urchins in the Spotlight!", FRAME);
+  Canvas c1(-1, -1, 500, 500, "Sea Urchins in the Spotlight!", FRAME);
   c1.setBackgroundColor(BLACK);
   c1.start();
   seaUrchinFunction(c1);

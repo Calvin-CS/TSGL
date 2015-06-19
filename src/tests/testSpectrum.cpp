@@ -54,7 +54,7 @@ void spectrumFunction(Canvas& can, int & numberOfThreads) {
 
 int main(int argc, char* argv[]) {
     int t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();   //Number of threads to use
-    Canvas c4(0,0,255,255,"", FRAME);
+    Canvas c4(-1,-1,255,255,"", FRAME);
     c4.start();
     spectrumFunction(c4, t);  //Pass the number of threads as an argument
     c4.wait();

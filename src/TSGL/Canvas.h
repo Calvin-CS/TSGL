@@ -20,6 +20,7 @@
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
 #include "Polyline.h"       // Our own class for drawing polylines
+#include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
@@ -71,13 +72,12 @@ private:
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
-    bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
+    bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
     TextureHandler  loader;                                             // The ImageLoader that holds all our already loaded textures
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
-    displayInfo     monInfo;                                            // Info about our display
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
@@ -115,19 +115,22 @@ private:
     std::mutex      windowMutex;
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
 
-    static int        drawBuffer;                                       // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
-    static std::mutex glfwMutex;                                        // Keeps GLFW createWindow from getting called at the same time in multiple threads
-    static unsigned   openCanvases;                                     // Total number of open Canvases
+    static displayInfo  monInfo;                                        // Info about our display
+    static int          drawBuffer;                                     // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
+    static bool         glfwIsReady;                                    // Whether or not we have info about our monitor
+    static std::mutex   glfwMutex;                                      // Keeps GLFW createWindow from getting called at the same time in multiple threads
+    static unsigned     openCanvases;                                   // Total number of open Canvases
 
     static void buttonCallback(GLFWwindow* window, int key,
                   int action, int mods);                                // GLFW callback for mouse buttons
     void        draw();                                                 // Draw loop for the Canvas
     static void errorCallback(int error, const char* string);           // Display where an error is coming from
+    void        glDestroy();                                            // Destroys the GL and GLFW things that are specific for this canvas
     void        init(int xx,int yy,int ww,int hh,
                   unsigned int b, std::string title,
                   double timerLength);                                  // Method for initializing the canvas
-    void        glDestroy();                                            // Destroys the GL and GLFW things that are specific for this canvas
-    void        glInit();                                               // Initializes the GL and GLFW things that are specific for this canvas
+    void        initGl();                                               // Initializes the GL things that are specific for this canvas
+    static void initGlfw();
     static void keyCallback(GLFWwindow* window, int key,
                   int scancode, int action, int mods);                  // GLFW callback for keys
     void        screenShot();                                           // Takes a screenshot
@@ -153,6 +156,7 @@ private:
     static bool testLine(Canvas& can);                                  // Unit test for lines
     static bool testAccessors(Canvas& can);
     static bool testDrawImage(Canvas& can);                             // Unit test for drawing images (simultaneously a Unit test for Image)
+
 protected:
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
@@ -322,6 +326,8 @@ public:
      */
     virtual void drawPoint(int x, int y, ColorFloat color = BLACK);
 
+    virtual void drawProgress(ProgressBar* p);
+
     /*!
      * \brief Draw a rectangle.
      * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
@@ -396,6 +402,10 @@ public:
      * \return Whether the window is still open (that is, the user has not closed it).
      */
     bool getIsOpen();
+
+    static int getDisplayHeight();
+
+    static int getDisplayWidth();
 
     /*!
      * \brief Accessor for the mouse's x-position.

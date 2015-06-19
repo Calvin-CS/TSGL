@@ -43,9 +43,9 @@ void langtonColonyFunction(Canvas& can) {
 
 //Takes command-line arguments and uses them as the width and height of the Canvas
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 960;
+    int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
-    Canvas c7(0, 0, w, h, "", FRAME);
+    Canvas c7(-1, -1, w, h, "", FRAME);
     c7.setBackgroundColor(GREY);
     c7.start();
     langtonColonyFunction(c7);

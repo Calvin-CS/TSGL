@@ -83,11 +83,11 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
 //Takes command line arguments for the width and height of the window
 //as well as for the number of threads to use
 int main(int argc, char* argv[]) {
-  int w = (argc > 1) ? atoi(argv[1]) : 960;
+  int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-	Canvas c31(0, 0, w, h, "", FRAME * 2);
+	Canvas c31(-1, -1, w, h, "", FRAME * 2);
 	int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads
 	c31.setBackgroundColor(GREY);
 	c31.start();

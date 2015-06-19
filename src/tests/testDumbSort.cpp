@@ -96,13 +96,13 @@ void dumbSortFunction(Canvas& can) {
 
 //Takes in command line arguments for the window width and height
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 1200;
-    int h = (argc > 2) ? atoi(argv[2]) : 900;
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
       w = 1200;
       h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c9(0, 0, w, h, "", FRAME);
+    Canvas c9(-1, -1, w, h, "", FRAME);
     c9.setBackgroundColor(GREY);
     c9.start();
     dumbSortFunction(c9);   //Pass it as an argument

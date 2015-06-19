@@ -23,8 +23,8 @@ void buddhabrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth)
 
 //Takes in command line argument for the number of threads
 int main(int argc, char* argv[]) {
-  int w = (argc > 1) ? atoi(argv[1]) : 1200;
-  int h = (argc > 2) ? atoi(argv[2]) : 900;
+  int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+  int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
   if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
     w = 1200;
     h = 900;                  //If not, set the width and height to a default value

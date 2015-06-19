@@ -128,13 +128,13 @@ void forestFireFunction(Canvas& can) {
 }
 
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 1200;
-    int h = (argc > 2) ? atoi(argv[2]) : 900;
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
       w = 1200;
       h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c20(0, 0, w, h, "", FRAME);
+    Canvas c20(-1, -1, w, h, "", FRAME);
     c20.setBackgroundColor(GREY);
     c20.start();
     forestFireFunction(c20);

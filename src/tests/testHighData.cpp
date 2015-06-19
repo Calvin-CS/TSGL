@@ -40,7 +40,9 @@ void highData(Canvas& can) {
 }
 
 int main() {
-    Canvas c22(0, 0, 1200, 900, "", FRAME);
+    int w = 1.2*Canvas::getDisplayHeight();
+    int h = 0.75*w;
+    Canvas c22(-1, -1, w, h, "", FRAME);
     c22.start();
     highData(c22);
     c22.wait();

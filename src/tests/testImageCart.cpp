@@ -28,7 +28,9 @@ void imageCartFunction(Cart& can) {
 }
 
 int main() {
-    Cart c26(0, 0, 1200, 600, 0, 0, 6, 3, "");
+    int w = 1.2*Canvas::getDisplayHeight();
+    int h = 0.5*w;
+    Cart c26(-1, -1, w, h, 0, 0, 6, 3, "");
     c26.setBackgroundColor(GREY);
     c26.start();
     imageCartFunction(c26);

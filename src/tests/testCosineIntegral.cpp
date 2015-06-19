@@ -94,11 +94,11 @@ void cosineIntegralFunction(CartesianCanvas& can, int & numberOfThreads) {
 //Takes in command line arguments for the width and height of the window
 //as well as the number of threads to use
 int main(int argc, char* argv[]) {
-  int w = (argc > 1) ? atoi(argv[1]) : 960;
-  int h = (argc > 2) ? atoi(argv[2]) : w;
+  int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+  int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-	Cart c12(0, 0, w, h, -5,-1.5,5,1.5, "", FRAME / 2);
+	Cart c12(-1, -1, w, h, -5,-1.5,5,1.5, "", FRAME / 2);
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads to use
   c12.setBackgroundColor(WHITE);
 	c12.start();

@@ -65,13 +65,13 @@ void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
 }
 
 int main(int argc, char* argv[]) {
-  int w = (argc > 1) ? atoi(argv[1]) : 1200;
-  int h = (argc > 2) ? atoi(argv[2]) : 900;
+  int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+  int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
   if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
     w = 1200;
     h = 900;                  //If not, set the width and height to a default value
   }
-	Cart c17(0, 0, w, h, -1, -0.5, 0, 0.5, "");
+	Cart c17(-1, -1, w, h, -1, -0.5, 0, 0.5, "");
 	unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();  //Number of threads
 	c17.start();
 	novaFunction(c17, t);  //Pass that as an argument

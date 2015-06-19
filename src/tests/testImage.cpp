@@ -29,7 +29,9 @@ void imageFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c21(0,0,1200,600,"");
+    int w = 1.2*Canvas::getDisplayHeight();
+    int h = 0.5*w;
+    Canvas c21(-1, -1, w, h ,"");
     c21.setBackgroundColor(GREY);
     c21.start();
     imageFunction(c21);
