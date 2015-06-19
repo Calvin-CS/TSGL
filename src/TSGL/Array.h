@@ -93,6 +93,7 @@ class Array {
     /*!
      * \brief operator[] returns the item at the index.
      * \param index the index of where the item is.
+     * \note This is the read version of the subscript operator.
      * \return the item at that index.
      */
     const Item& operator[](unsigned int index) const {
@@ -104,6 +105,12 @@ class Array {
             return myArray[(first_ + index) % capacity_];  // Wrap around for the underlying array
     }
 
+    /*!
+     * \brief operator[] returns the item at the index.
+     * \param index the index of where the item is.
+     * \note This is the write version of the subscript operator.
+     * \return the item at that index.
+     */
     Item& operator[](unsigned int index) {
         if (size_ == 0) {
             throw std::out_of_range("Array::operator[](): array is empty");

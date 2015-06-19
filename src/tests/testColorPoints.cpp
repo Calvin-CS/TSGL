@@ -11,24 +11,20 @@
 using namespace tsgl;
 
 /*!
- * \brief Draws a neat pattern of points to a canvas using OMP and takes in a command line
- * argument for the number of threads to use
+ * \brief Draws a neat pattern of points to a Canvas using OMP and takes in a command line
+ * argument for the number of threads to use.
  * \details
- * - A parallel block is set up with #pragma omp parallel using all available processors
- * - The actual number of threads created is stored in: \b nthreads
- * - Check if the passed argument for the number of threads is valid:
- *   - If the argument is less than or equal to 0, use the number of threads that we can use with OMP.
- *   - If the argument greater than the number of threads that we can use, then just use the number of threads that we can use with OMP.
- *   - Else, the argument is valid and we can use that number of threads in the function.
- * - The number of lines per thread is calculated and stored in: \b myPart
- * - The starting position of each given thread is calculated and stored in: \b myStart
- * - The outer for loop is set up in a block pattern, and the inner for loop runs from 100 to the Canvas width - 100
- * - Some dark voodoo magic is used to calculate the color for a given point (we aren't really sure yet how the color for a given point is calculated)
- * - The point is drawn to the Canvas
- * - The function breaks from the outer for loop if the Canvas is closed
+ * - A parallel block is set up with #pragma omp parallel using the number of threads passed.
+ * - The actual number of threads created is stored in: \b nthreads .
+ * - The number of lines per thread is calculated and stored in: \b myPart .
+ * - The starting position of each given thread is calculated and stored in: \b myStart .
+ * - The outer for loop is set up in a block pattern, and the inner for loop runs from 0 to the Canvas width.
+ * - The color for a given point is calculated.
+ * - The point is drawn to the Canvas.
+ * - The function breaks from the outer for loop if the Canvas is closed.
  * .
- * \param can, Reference to the Canvas being drawn to
- * \param numberOfThreads, Reference to the number of threads to use
+ * \param can Reference to the Canvas being drawn to.
+ * \param numberOfThreads Reference to the number of threads to use.
  */
 void colorPointsFunction(Canvas& can, int & numberOfThreads) {
 #pragma omp parallel num_threads(numberOfThreads)

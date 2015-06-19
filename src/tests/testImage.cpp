@@ -15,7 +15,7 @@ using namespace tsgl;
  * - The first 6 images are drawn opaque.
  * - The 7th image is drawn across the entire Canvas with alpha transparency.
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void imageFunction(Canvas& can) {
     can.drawImage("../assets/test.png", 0, 0, 400, 300);

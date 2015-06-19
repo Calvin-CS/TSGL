@@ -12,9 +12,9 @@ using namespace tsgl;
 typedef CartesianCanvas Cart;
 
 /*!
- * \brief Draws some text on a CartesianCanvas
+ * \brief Draws some text on a CartesianCanvas.
  * \details Same as textFunction, but with a CartesianCanvas and black text.
- * \param can, Reference to the CartesianCanvas being drawn to (Cart is a typedef for CartesianCanvas)
+ * \param can Reference to the CartesianCanvas being drawn to (Cart is a typedef for CartesianCanvas).
  */
 void textCartFunction(Cart& can) {
     can.setFont("../assets/freefont/FreeSerif.ttf");

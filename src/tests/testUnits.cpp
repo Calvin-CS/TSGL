@@ -20,5 +20,5 @@ int main() {
    ConvexPolygon::runTests();    // ConvexPolygon
    CartesianCanvas::runTests();  // CartesianCanvas
    std::cout << std::endl;
-   TsglDebug("All Unit Tests have passed!");
+   TsglDebug("All Unit Tests have completed!");
 }

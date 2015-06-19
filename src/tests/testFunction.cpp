@@ -1,5 +1,5 @@
 /*
- * testFunction.cpp
+ * testFunction.cpp tests the ability of a CartesianCanvas to draw mathematical functions.
  *
  *  Created on: May 27, 2015
  *      Author: cpd5
@@ -12,7 +12,7 @@ using namespace tsgl;
 typedef CartesianCanvas Cart;
 
 /*!
- * \brief Draws the outputs of some functions using CartesianCanvas
+ * \brief Draws the outputs of some functions using CartesianCanvas.
  * \details
  * - Draw axes through the origin, with spacing 1.0 between x ticks and 5.0 between y ticks.
  * - Initialize a CosineFunction, and draw it using the currently rendered area of the CartesianCanvas.
@@ -21,7 +21,7 @@ typedef CartesianCanvas Cart;
  * - Declare a new function that computes some bizarre polynomial.
  * - Initialize the new function, and draw it using the currently rendered area of the CartesianCanvas.
  * .
- * \param can, Reference to the CartesianCanvas being drawn to
+ * \param can Reference to the CartesianCanvas being drawn to.
  */
 void functionFunction(CartesianCanvas& can) {
     can.drawAxes(0, 0, 1, 5);

@@ -24,9 +24,9 @@ float randfloat(int divisor = 10000) {
  *   - Get its distance from the center of the Canvas.
  *   - Set its flammability and color based upon a semi-arbitrary single-line function.
  *   .
- * - Draw 32 random square "lakes" with very low flammabilities on the Canvas
+ * - Draw 32 random square "lakes" with very low flammabilities onto the Canvas.
  * - Declare a mini-firePoint struct with coordinates, life, and strength.
- * - Make a 3x3 square of fire in the middle of the Canvas, and color the pixels accordingly
+ * - Make a 3x3 square of fire in the middle of the Canvas, and color the pixels accordingly.
  * - The internal timer of the Canvas is set up to expire every \b FRAME seconds.
  * - While the Canvas is open:
  *   - Sleep the internal timer until the Canvas is ready to draw.
@@ -39,7 +39,7 @@ float randfloat(int divisor = 10000) {
  *   .
  * - Deallocate the onFire and flammability arrays.
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void forestFireFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
@@ -50,6 +50,7 @@ void forestFireFunction(Canvas& can) {
     srand(time(NULL));  // Seed the random number generator
     bool* onFire = new bool[WINDOW_W * WINDOW_H]();
     float* flammability = new float[WINDOW_W * WINDOW_H]();
+    //Setting each pixel's flammablity
     for (int i = 0; i < WINDOW_W; i++) {  // For each individual point
         for (int j = 0; j < WINDOW_H; j++) {
             float xi = std::abs(WINDOW_W / 2 - i);
@@ -60,6 +61,7 @@ void forestFireFunction(Canvas& can) {
             can.drawPoint(i, j, ColorFloat(0.0f, f, 0.0f, 1.0f));
         }
     }
+    //"Lakes"
     for (int reps = 0; reps < 32; reps++) {
         int x = rand() % WINDOW_W;
         int y = rand() % WINDOW_H;
@@ -127,6 +129,7 @@ void forestFireFunction(Canvas& can) {
     delete flammability;
 }
 
+//Takes width and height as command line arguments
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;

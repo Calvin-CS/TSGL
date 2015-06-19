@@ -10,20 +10,19 @@
 using namespace tsgl;
 
 /*!
- * \brief Draws some text on a Canvas
+ * \brief Draws some text on a Canvas.
  * \details
  * - We declare some colors to use for drawing.
  * - We changed it so that now a default text font is loaded if one is not specified.
  * - We draw a few lines of text in various colors using drawText().
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void textFunction(Canvas& can) {
-	ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
+	  ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-  //  can.setFont("../assets/freefont/FreeSerif.ttf");   //New, commented out for testing no font set
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
