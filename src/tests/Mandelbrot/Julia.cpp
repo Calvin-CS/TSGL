@@ -64,8 +64,7 @@ void Julia::draw(CartesianCanvas& can) {
 			  }
 			  if (myNext >= can.getWindowHeight())
 			    break;
-			  vq.update(myNext,1);
-			  break;
+			  vq.update(myNext,0);
 				long double row = can.getMinY() + can.getPixelHeight() * myNext;
 				for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
 					complex z(-0.8f, 0.156f);
