@@ -108,7 +108,7 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
             glMode = GL_RGB;
         else if (fontMode == FT_PIXEL_MODE_LCD_V)
             glMode = GL_RGB;
-#ifdef _WIN32
+#ifndef _WIN32
         else if (fontMode == FT_PIXEL_MODE_BGRA)
             glMode = GL_RGBA;
 #endif

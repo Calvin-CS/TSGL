@@ -15,7 +15,7 @@ void TsglErr(std::string message) {
 void TsglDebug(std::string message) {
 #ifdef TSGL_DEBUG
   #ifdef _WIN32
-    SetConsoleTextAttribute(std_con_out, ((unsigned)0<<4)|(unsigned)12);
+    SetConsoleTextAttribute(std_con_out, ((unsigned)0<<4)|(unsigned)13);
     std::cerr << message << std::endl;
     SetConsoleTextAttribute(std_con_out, ((unsigned)0<<4)|(unsigned)15);
   #else

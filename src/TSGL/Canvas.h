@@ -141,7 +141,9 @@ private:
                   unsigned int b, std::string title,
                   double timerLength);                                  // Method for initializing the canvas
     void        initGl();                                               // Initializes the GL things that are specific for this canvas
+	void        initGlew();
     static void initGlfw();
+	void        initWindow();
     static void keyCallback(GLFWwindow* window, int key,
                   int scancode, int action, int mods);                  // GLFW callback for keys
     void        screenShot();                                           // Takes a screenshot

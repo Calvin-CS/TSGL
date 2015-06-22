@@ -495,7 +495,6 @@ void Canvas::glDestroy() {
 }
 
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
-    initGlfw();
     ++openCanvases;
 
     title_ = title;
@@ -536,45 +535,52 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
 
-    glfwSetErrorCallback(errorCallback);
+	initGlfw();
+#ifndef _WIN32
+    initWindow()
+    initGlew();
+	glfwMakeContextCurrent(NULL);   // Reset the context
+#endif
+}
 
-     // Create a Window and the Context
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
-    glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
-    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
-
-    glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
-    window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
- //   window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
-    if (!window) {
-        fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
-        exit(100);
-    }
-    glfwMutex.unlock();
-
-    if (!monInfo) {
-        fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
-        exit(101);
-    }
-    if (monitorX == -1)
-      monitorX = (monInfo->width - winWidth) / 2;
-    if (monitorY == -1)
-      monitorY = (monInfo->height - winHeight) / 2;
-    glfwSetWindowPos(window, monitorX, monitorY);
-
-    glfwMakeContextCurrent(window);
-    glfwShowWindow(window);                 // Show the window
+void Canvas::initGl() {
+#ifdef _WIN32
+	initWindow();
+	initGlew();
+#else
+    glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
     glfwSetWindowUserPointer(window, this);
+#endif
 
-    glfwSetMouseButtonCallback(window, buttonCallback);
-    glfwSetKeyCallback(window, keyCallback);
-    glfwSetScrollCallback(window, scrollCallback);
+    // Enable and disable necessary stuff
+    glDisable(GL_DEPTH_TEST);                           // Disable depth testing because we're not drawing in 3d
+    glDisable(GL_DITHER);                               // Disable dithering because pixels do not (generally) overlap
+    glDisable(GL_CULL_FACE);                            // Disable culling because the camera is stationary
+    glEnable(GL_BLEND);                                 // Enable blending
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
 
+#ifdef DEBUG
+    printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+    printf("OpenGL version: %s\n", glGetString(GL_VERSION));
+    printf("GLFW version:   %s\n", glfwGetVersionString());
+#endif
+
+    bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    });
+
+    unsigned char stereo[1] = {5}, dbuff[1] = {5};
+    int aux[1] = {5};
+    glGetBooleanv(GL_STEREO,stereo);
+    glGetBooleanv(GL_DOUBLEBUFFER,dbuff);
+    glGetIntegerv(GL_AUX_BUFFERS,aux);
+    hasStereo = ((int)stereo[0] > 0);
+    hasBackbuffer = ((int)dbuff[0] > 0);
+
+    glfwMakeContextCurrent(NULL);   // Reset the context
+}
+
+void Canvas::initGlew() {
     // Enable Experimental GLEW to Render Properly
     glewExperimental = GL_TRUE;
     GLenum err = glewInit();
@@ -637,40 +643,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     glLinkProgram(textureShaderProgram);
 
     textureShaders(false);
-
-    glfwMakeContextCurrent(NULL);   // Reset the context
-}
-
-void Canvas::initGl() {
-    glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
-    glfwSetWindowUserPointer(window, this);
-
-    // Enable and disable necessary stuff
-    glDisable(GL_DEPTH_TEST);                           // Disable depth testing because we're not drawing in 3d
-    glDisable(GL_DITHER);                               // Disable dithering because pixels do not (generally) overlap
-    glDisable(GL_CULL_FACE);                            // Disable culling because the camera is stationary
-    glEnable(GL_BLEND);                                 // Enable blending
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
-
-#ifdef DEBUG
-    printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
-    printf("OpenGL version: %s\n", glGetString(GL_VERSION));
-    printf("GLFW version:   %s\n", glfwGetVersionString());
-#endif
-
-    bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    });
-
-    unsigned char stereo[1] = {5}, dbuff[1] = {5};
-    int aux[1] = {5};
-    glGetBooleanv(GL_STEREO,stereo);
-    glGetBooleanv(GL_DOUBLEBUFFER,dbuff);
-    glGetIntegerv(GL_AUX_BUFFERS,aux);
-    hasStereo = ((int)stereo[0] > 0);
-    hasBackbuffer = ((int)dbuff[0] > 0);
-
-    glfwMakeContextCurrent(NULL);   // Reset the context
 }
 
 void Canvas::initGlfw() {
@@ -679,6 +651,47 @@ void Canvas::initGlfw() {
     monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
     glfwIsReady = true;
   }
+}
+
+void Canvas::initWindow() {
+	glfwSetErrorCallback(errorCallback);
+
+     // Create a Window and the Context
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
+    glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
+
+    glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
+    window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
+ //   window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
+    if (!window) {
+        fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
+        exit(100);
+    }
+    glfwMutex.unlock();
+
+    if (!monInfo) {
+        fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
+        exit(101);
+    }
+    if (monitorX == -1)
+      monitorX = (monInfo->width - winWidth) / 2;
+    if (monitorY == -1)
+      monitorY = (monInfo->height - winHeight) / 2;
+    glfwSetWindowPos(window, monitorX, monitorY);
+
+	glfwMakeContextCurrent(window);
+    glfwShowWindow(window);                 // Show the window
+    glfwSetWindowUserPointer(window, this);
+
+	glfwSetMouseButtonCallback(window, buttonCallback);
+    glfwSetKeyCallback(window, keyCallback);
+    glfwSetScrollCallback(window, scrollCallback);
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
