@@ -537,7 +537,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 
 	initGlfw();
 #ifndef _WIN32
-    initWindow()
+    initWindow();
     initGlew();
 	glfwMakeContextCurrent(NULL);   // Reset the context
 #endif
