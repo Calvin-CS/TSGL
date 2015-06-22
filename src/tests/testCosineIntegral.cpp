@@ -55,9 +55,6 @@ void cosineIntegralFunction(Cart& can, int & numberOfThreads) {
   if (threads <= 0) {
     threads = 1;
   }
-  can.bindToButton(TSGL_Q, TSGL_PRESS, [&can](){  // Quit on press of Q
-    can.end();
-  });
 
   can.drawAxes(0, 0, PI/4, .5);
   long double pw = can.getPixelWidth();

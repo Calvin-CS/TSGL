@@ -361,17 +361,6 @@ void Canvas::drawShape(Shape* s) {
     bufferMutex.unlock();
 }
 
-
-
-int StringToWString(std::wstring &ws, const std::string &s)
-{
-    std::wstring wsTmp(s.begin(), s.end());
-
-    ws = wsTmp;
-
-    return 0;
-}
-
 void Canvas::drawText(std::string s, int x, int y, unsigned size, ColorFloat color) {
     std::wstring wsTmp(s.begin(), s.end());
     std::wstring ws = wsTmp;
@@ -396,10 +385,6 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
         p->addNextVertex(x1,y1,color);
         drawShape(p);
     }
-}
-
-void Canvas::end() {
-    toClose = true;
 }
 
 void Canvas::errorCallback(int error, const char* string) {
