@@ -9,6 +9,77 @@
 
 namespace tsgl {
 
+// in foo.cpp
+//static const unsigned char Foo_Msg_data[] = {0x00,0x01};
+
+static const ColorFloat DISTINCT_ARRAY_DATA[] = {
+   ColorInt(0,255,0, 255),
+   ColorInt(0,0,255, 255),
+   ColorInt(255,0,0, 255),
+   ColorInt(1,255,254, 255),
+   ColorInt(255,166,254, 255),
+   ColorInt(255,219,102, 255),
+   ColorInt(0,100,1, 255),
+   ColorInt(1,0,103, 255),
+   ColorInt(149,0,58, 255),
+   ColorInt(0,125,181, 255),
+   ColorInt(255,0,246, 255),
+   ColorInt(255,238,232, 255),
+   ColorInt(119,77,0, 255),
+   ColorInt(144,251,146, 255),
+   ColorInt(0,118,255, 255),
+   ColorInt(213,255,0, 255),
+   ColorInt(255,147,126, 255),
+   ColorInt(106,130,108, 255),
+   ColorInt(255,2,157, 255),
+   ColorInt(254,137,0, 255),
+   ColorInt(122,71,130, 255),
+   ColorInt(126,45,210, 255),
+   ColorInt(133,169,0, 255),
+   ColorInt(255,0,86, 255),
+   ColorInt(164,36,0, 255),
+   ColorInt(0,174,126, 255),
+   ColorInt(104,61,59, 255),
+   ColorInt(189,198,255, 255),
+   ColorInt(38,52,0, 255),
+   ColorInt(189,211,147, 255),
+   ColorInt(0,185,23, 255),
+   ColorInt(158,0,142, 255),
+   ColorInt(0,21,68, 255),
+   ColorInt(194,140,159, 255),
+   ColorInt(255,116,163, 255),
+   ColorInt(1,208,255, 255),
+   ColorInt(0,71,84, 255),
+   ColorInt(229,111,254, 255),
+   ColorInt(120,130,49, 255),
+   ColorInt(14,76,161, 255),
+   ColorInt(145,208,203, 255),
+   ColorInt(190,153,112, 255),
+   ColorInt(150,138,232, 255),
+   ColorInt(187,136,0, 255),
+   ColorInt(67,0,44, 255),
+   ColorInt(222,255,116, 255),
+   ColorInt(0,255,198, 255),
+   ColorInt(255,229,2, 255),
+   ColorInt(98,14,0, 255),
+   ColorInt(0,143,156, 255),
+   ColorInt(152,255,82, 255),
+   ColorInt(117,68,177, 255),
+   ColorInt(181,0,255, 255),
+   ColorInt(0,255,120, 255),
+   ColorInt(255,110,65, 255),
+   ColorInt(0,95,57, 255),
+   ColorInt(107,104,130, 255),
+   ColorInt(95,173,78, 255),
+   ColorInt(167,87,64, 255),
+   ColorInt(165,255,210, 255),
+   ColorInt(255,177,103, 255),
+   ColorInt(0,155,255, 255),
+   ColorInt(232,94,190, 255),
+   ColorInt(255,255,255, 255),
+};
+const ColorFloat* Colors::DISTINCT_ARRAY = DISTINCT_ARRAY_DATA;
+
 ColorFloat::ColorFloat() {
     R = G = B = A = 1.0f;
 }
@@ -186,11 +257,12 @@ ColorFloat Colors::blendedColor(ColorFloat c1, ColorFloat c2, float bias) {
 }
 
 ColorFloat Colors::highContrastColor(unsigned int section, int start) {
-    const unsigned int PRIME1 = 61, PRIME2 = 71;
-    float hue = ((start + PRIME1 * section) % 255) / 255.0f;
-    float sat = (255 - (section-start + PRIME2 * (section-start)) % 80) / 255.0f;
-    float val = (11 - (section*3  % 7)) / 11.0f;
-    return ColorHSV(hue * 6.0f, sat, val, 1.0f);
+    return DISTINCT_ARRAY_DATA[(section+start)%64];
+//    const unsigned int PRIME1 = 61, PRIME2 = 71;
+//    float hue = ((start + PRIME1 * section) % 255) / 255.0f;
+//    float sat = (255 - (section-start + PRIME2 * (section-start)) % 80) / 255.0f;
+//    float val = (11 - (section*3  % 7)) / 11.0f;
+//    return ColorHSV(hue * 6.0f, sat, val, 1.0f);
 }
 
 }

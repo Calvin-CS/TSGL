@@ -348,7 +348,6 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         p->addNextVertex(x1, y1, color);
         p->addNextVertex(x1, y2, color);
         p->addNextVertex(x2, y2, color);
-        //TODO: This should not have to be decremented by 1...
         p->addNextVertex(x2, y1, color);
         p->addNextVertex(x1, y1, color);
         drawShape(p);

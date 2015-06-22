@@ -9,13 +9,18 @@
 
 using namespace tsgl;
 
+enum VQState {
+  RUNNING = 0,
+  FINISHED = 1
+};
+
 class VisualQueue {
 private:
   int space, border;
   Canvas* vcan;
   int rowLength, blockSize, totalElements;
 public:
-  VisualQueue(int elements, int sideLength, float aspect, int spacing = 2, int borderLength = 8);
+  VisualQueue(int elements, int sideLength = 12, float aspect = 1.0f, int spacing = 2, int borderLength = 8);
   ~VisualQueue();
   void update(int index, int state);
   void reset();

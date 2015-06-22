@@ -45,7 +45,7 @@ void Julia::bindings(CartesianCanvas& can) {
 
 void Julia::draw(CartesianCanvas& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
-  VisualQueue vq(CH,12,0.75f);
+  VisualQueue vq(CH);
   while(myRedraw) {
     setRedraw(false);
     can.reset();
@@ -64,7 +64,7 @@ void Julia::draw(CartesianCanvas& can) {
         }
         if (myNext >= can.getWindowHeight())
           break;
-        vq.update(myNext,0);
+        vq.update(myNext,RUNNING);
         long double row = can.getMinY() + can.getPixelHeight() * myNext;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex z(-0.8f, 0.156f);
@@ -78,11 +78,12 @@ void Julia::draw(CartesianCanvas& can) {
             can.drawPoint(col, row, BLACK);
           } else { // Otherwise, draw it with color based on how long it took
             float mult = iterations/(float)myDepth;
-            can.drawPoint(col, row, Colors::blendedColor(tcolor,WHITE,0.25f+0.5f*mult)*mult);
+//            can.drawPoint(col, row, Colors::blendedColor(tcolor,WHITE,0.25f+0.5f*mult)*mult);
+            can.drawPoint(col, row, Colors::blendedColor(BLACK,WHITE,0.25f+0.5f*mult)*mult);
           }
           if (!can.getIsOpen() || myRedraw) break;
         }
-        vq.update(myNext,1);
+        vq.update(myNext,FINISHED);
         can.handleIO();
         if (myRedraw) break;
       }

@@ -22,7 +22,7 @@ void VisualQueue::update(int index, int state) {
     border+x*(blockSize+space),border+y*(blockSize+space),
     border+x*(blockSize+space)+blockSize,border+y*(blockSize+space)+blockSize,
     Colors::blendedColor(
-      Colors::highContrastColor(omp_get_thread_num()),(state == 0) ? BLACK : WHITE,0.5f
+      Colors::highContrastColor(omp_get_thread_num()),(state == RUNNING) ? BLACK : WHITE,0.5f
     ),true
   );
 }

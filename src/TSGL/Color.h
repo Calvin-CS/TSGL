@@ -258,6 +258,8 @@ class Colors {
     ~Colors();
     Colors(const Colors&);
     Colors & operator=(const Colors&);
+//    static ColorFloat DISTINCT_ARRAY[64];
+    static const ColorFloat* DISTINCT_ARRAY;
 };
 
 }
