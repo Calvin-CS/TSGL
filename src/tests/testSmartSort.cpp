@@ -100,7 +100,7 @@ struct sortData {
 };
 
 void smartSortFunction(Canvas& can, int threads, int size) {
-	const int IPF = 1;      // Iterations per frame
+  const int IPF = 1;      // Iterations per frame
     int* numbers = new int[size];       // Array to store the data
     for (int i = 0; i < size; i++)
       numbers[i] = rand() % (can.getWindowHeight() - MARGIN);
@@ -161,7 +161,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
     for (int i = 0; i < threads; ++i)
       delete sd[i];
     delete [] sd;
-	delete [] numbers;
+  delete [] numbers;
 }
 
 //Takes in command line arguments for the window width and height

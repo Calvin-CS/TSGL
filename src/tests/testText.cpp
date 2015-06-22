@@ -19,7 +19,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void textFunction(Canvas& can) {
-	  ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
+    ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 

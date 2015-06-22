@@ -27,8 +27,8 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void shadedVoronoiFunction(Canvas& can) {
-	ShadedVoronoi s1(can);
-	s1.draw(can);
+  ShadedVoronoi s1(can);
+  s1.draw(can);
 }
 
 //Takes command-line arguments for the width and height of the Canvas window

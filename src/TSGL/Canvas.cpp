@@ -206,15 +206,15 @@ void Canvas::draw() {
 //Workaround for OS X
 void Canvas::handleIO() {
   #ifdef __APPLE__
-	if (isFinished)
-		return;
-	if (pthread_main_np() == 0)
-		return;  //If we're not the main thread, we can't call this
-	windowMutex.lock();
-	glfwMakeContextCurrent(window);
-	glfwPollEvents();
-	glfwMakeContextCurrent(NULL);
-	windowMutex.unlock();
+    if (isFinished)
+        return;
+    if (pthread_main_np() == 0)
+        return;  //If we're not the main thread, we can't call this
+    windowMutex.lock();
+    glfwMakeContextCurrent(window);
+    glfwPollEvents();
+    glfwMakeContextCurrent(NULL);
+    windowMutex.unlock();
   #endif
 }
 
@@ -535,18 +535,18 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
 
-	initGlfw();
+    initGlfw();
 #ifndef _WIN32
     initWindow();
     initGlew();
-	glfwMakeContextCurrent(NULL);   // Reset the context
+    glfwMakeContextCurrent(NULL);   // Reset the context
 #endif
 }
 
 void Canvas::initGl() {
 #ifdef _WIN32
-	initWindow();
-	initGlew();
+    initWindow();
+    initGlew();
 #else
     glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
     glfwSetWindowUserPointer(window, this);
@@ -654,7 +654,7 @@ void Canvas::initGlfw() {
 }
 
 void Canvas::initWindow() {
-	glfwSetErrorCallback(errorCallback);
+    glfwSetErrorCallback(errorCallback);
 
      // Create a Window and the Context
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
@@ -685,11 +685,11 @@ void Canvas::initWindow() {
       monitorY = (monInfo->height - winHeight) / 2;
     glfwSetWindowPos(window, monitorX, monitorY);
 
-	glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(window);
     glfwShowWindow(window);                 // Show the window
     glfwSetWindowUserPointer(window, this);
 
-	glfwSetMouseButtonCallback(window, buttonCallback);
+    glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
 }
@@ -720,7 +720,7 @@ void Canvas::setBackgroundColor(ColorFloat color) {
 }
 
 void Canvas::setDrawBuffer(int buffer) {
-	Canvas::drawBuffer = buffer;
+    Canvas::drawBuffer = buffer;
 }
 
 void Canvas::setFont(std::string filename) {
@@ -780,14 +780,14 @@ void Canvas::startDrawing(Canvas *c) {
 
 void Canvas::sleep() {
   #ifdef __APPLE__
-	handleIO();
+    handleIO();
   #endif
     drawTimer->sleep(false);
 }
 
 void Canvas::sleepFor(float seconds) {
 #ifdef __APPLE__
-	handleIO();
+    handleIO();
 #endif
     std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
 }

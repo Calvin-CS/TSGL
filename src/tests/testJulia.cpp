@@ -10,9 +10,9 @@
 using namespace tsgl;
 
 void juliaFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
-	Julia j(threads,depth);
-	j.bindings(can);
-	j.draw(can);
+    Julia j(threads,depth);
+    j.bindings(can);
+    j.draw(can);
 }
 
 //Takes command line arguments for the number of threads

@@ -54,7 +54,7 @@ void colorWheelFunction(Canvas& can) {
     float x2, x3, y2, y3, shading;
     #pragma omp parallel num_threads(THREADS) private(x2,x3,y2,y3,shading)
     {
-    	int nthreads = omp_get_num_threads();
+        int nthreads = omp_get_num_threads();
         int delta = NUM_COLORS / nthreads;           // Distance between threads to compute
         int tid = omp_get_thread_num();
         shading = 1 - (float) tid / nthreads;
@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-    	w = h = 960;              //If not, set the width and height to a default value
+        w = h = 960;              //If not, set the width and height to a default value
     Canvas c10(-1, -1, w, h, "", FRAME);
     c10.setBackgroundColor(GREY);
     c10.start();

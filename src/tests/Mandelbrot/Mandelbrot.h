@@ -24,15 +24,15 @@ typedef std::complex<long double> complex;
 
 class Mandelbrot {
 private:
-	Decimal myFirstX, myFirstY, mySecondX, mySecondY;
+  Decimal myFirstX, myFirstY, mySecondX, mySecondY;
 protected:
-	int myThreads;
-	unsigned int myDepth;
-	bool myRedraw;
+  int myThreads;
+  unsigned int myDepth;
+  bool myRedraw;
 public:
-	/*!
-	 *
-	 */
+  /*!
+   *
+   */
   Mandelbrot(unsigned threads, unsigned depth);
 
   /*!

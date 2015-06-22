@@ -28,20 +28,20 @@ using namespace tsgl;
  */
 void colorPointsFunction(Canvas& can, int & numberOfThreads) {
 #pragma omp parallel num_threads(numberOfThreads)
-	{
-		int nthreads = omp_get_num_threads();  //Actual number of threads to use
-		int myPart = can.getWindowHeight() / nthreads;
-		int myStart = myPart * omp_get_thread_num();
-		for (int j = myStart; j < myStart + myPart; j++) {
-			for (int i = 0; i < can.getWindowWidth(); i++) {
-				if (i % 2 == 0)
-					can.drawPoint(i, j, ColorInt(j % NUM_COLORS, i % NUM_COLORS, (i * j) % 113));
-				else
-					can.drawPoint(i, j, ColorInt(i % NUM_COLORS, j % NUM_COLORS, (i * j) % NUM_COLORS));
-			}
-			if (!can.getIsOpen()) break;
-		}
-	}
+  {
+    int nthreads = omp_get_num_threads();  //Actual number of threads to use
+    int myPart = can.getWindowHeight() / nthreads;
+    int myStart = myPart * omp_get_thread_num();
+    for (int j = myStart; j < myStart + myPart; j++) {
+      for (int i = 0; i < can.getWindowWidth(); i++) {
+        if (i % 2 == 0)
+          can.drawPoint(i, j, ColorInt(j % NUM_COLORS, i % NUM_COLORS, (i * j) % 113));
+        else
+          can.drawPoint(i, j, ColorInt(i % NUM_COLORS, j % NUM_COLORS, (i * j) % NUM_COLORS));
+      }
+      if (!can.getIsOpen()) break;
+    }
+  }
 }
 
 //Takes in command line arguments for the window width and height as well
@@ -53,8 +53,8 @@ int main(int argc, char* argv[]) {
     w = h = 960;              //If not, set the width and height to a default value
   //Convert the char pointer to an int, http://www.cplusplus.com/forum/beginner/58493/
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
-	Canvas c1(-1, -1, w, h, "");
-	c1.start();
-	colorPointsFunction(c1, t);   //Now pass the argument for the number of threads to the test function
-	c1.wait();
+  Canvas c1(-1, -1, w, h, "");
+  c1.start();
+  colorPointsFunction(c1, t);   //Now pass the argument for the number of threads to the test function
+  c1.wait();
 }

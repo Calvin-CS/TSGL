@@ -9,10 +9,10 @@
 
 Buddhabrot::Buddhabrot(unsigned threads, unsigned depth = 1000) : Mandelbrot(threads, depth) {
 	myThreads = threads;
-	myDepth = depth;
+  myDepth = depth;
 	myRedraw = true;
-	counter = nullptr;
-	cww = cwh = 0;
+  counter = nullptr;
+  cww = cwh = 0;
 }
 
 Buddhabrot::~Buddhabrot() {
@@ -29,26 +29,26 @@ void Buddhabrot::draw(CartesianCanvas& can) {
   counter = new int*[cwh];
   for (int i = 0; i < cwh; ++i)
     counter[i] = new int[cww];
-	while (myRedraw) {
-	  myRedraw = false;
-	  can.clear();
-	  for (int i = 0; i < cwh; ++i)
-	    for (int j = 0; j < cww; ++j)
-	      counter[i][j] = 0;
-		const Decimal cph = can.getPixelHeight(), cpw = can.getPixelWidth(),
-		  cMinx = can.getMinX(), cMiny = can.getMinY(),
-		  cMaxx = cMinx+cpw*(cww-1), cMaxy = cMiny+cph*(cwh-1);
-		unsigned long cycles = 0;
+  while (myRedraw) {
+    myRedraw = false;
+    can.clear();
+    for (int i = 0; i < cwh; ++i)
+      for (int j = 0; j < cww; ++j)
+        counter[i][j] = 0;
+    const Decimal cph = can.getPixelHeight(), cpw = can.getPixelWidth(),
+      cMinx = can.getMinX(), cMiny = can.getMinY(),
+      cMaxx = cMinx+cpw*(cww-1), cMaxy = cMiny+cph*(cwh-1);
+    unsigned long cycles = 0;
     #pragma omp parallel num_threads(myThreads)
-		{
-		  unsigned tid = omp_get_thread_num(), threads = omp_get_num_threads();
-		  Decimal offset = cMiny+(cph*cwh*tid)/threads;
-	    const float wscale = (cpw*cww)/(float)RPREC;
-	    const float hscale = (cph*cwh/threads)/(float)RPREC;
-		  ColorFloat tc = Colors::highContrastColor(tid);
-		  ColorFloat tcolor(tc.R,tc.G,tc.B,0.1f);
-		  complex* znums = new complex[myDepth];
-		  long double col, row;
+    {
+      unsigned tid = omp_get_thread_num(), threads = omp_get_num_threads();
+      Decimal offset = cMiny+(cph*cwh*tid)/threads;
+      const float wscale = (cpw*cww)/(float)RPREC;
+      const float hscale = (cph*cwh/threads)/(float)RPREC;
+      ColorFloat tc = Colors::highContrastColor(tid);
+      ColorFloat tcolor(tc.R,tc.G,tc.B,0.1f);
+      complex* znums = new complex[myDepth];
+      long double col, row;
       for (unsigned long i = tid; i < MAXITS; i+= threads) {
         if (myRedraw) break;
         col = cMinx+wscale*(rand() % RPREC);    //Between cMinx and cMaxx
@@ -84,10 +84,10 @@ void Buddhabrot::draw(CartesianCanvas& can) {
         if (myRedraw || !can.getIsOpen())
           break;
       }
-	  delete [] znums;
-		}
-		if (!can.getIsOpen())
-		  return;
+    delete [] znums;
+    }
+    if (!can.getIsOpen())
+      return;
     int maxIts = 0;
     for (int i = 0; i < cwh; ++i)
       for (int j = 0; j < cww; ++j)
@@ -102,8 +102,8 @@ void Buddhabrot::draw(CartesianCanvas& can) {
           can.drawPixel(i, j, (ColorFloat)can.getPixel(i,j)*normalize);
         }
     }
-		while (can.getIsOpen() && !myRedraw)
-			can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-	}
+    while (can.getIsOpen() && !myRedraw)
+      can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+  }
 }
 

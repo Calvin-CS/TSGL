@@ -52,8 +52,8 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void voronoiFunction(Canvas& can) {
-	Voronoi v1(can);   //Make the Voronoi object
-	v1.draw(can);      //Draw it on the Canvas
+  Voronoi v1(can);   //Make the Voronoi object
+  v1.draw(can);      //Draw it on the Canvas
 }
 
 //Takes command line arguments for the width and height of the window
@@ -62,10 +62,10 @@ int main(int argc, char* argv[]) {
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-	Canvas c18(-1, -1, w, h, "");
-	c18.setBackgroundColor(WHITE);
-	c18.start();
-	voronoiFunction(c18);
-	c18.wait();
+  Canvas c18(-1, -1, w, h, "");
+  c18.setBackgroundColor(WHITE);
+  c18.start();
+  voronoiFunction(c18);
+  c18.wait();
 }
 

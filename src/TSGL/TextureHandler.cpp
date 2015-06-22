@@ -310,17 +310,17 @@ GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int 
 
 GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int &width, unsigned int &height,
                                        GLtexture &texture) const {
-	unsigned char *data;
-	int w = 0, h = 0;
-	TsglDebug(std::string("Loading ") + filename);
-	data = stbi_load(filename, &w, &h, 0, 4);
-	assert(data);
-	if (!data) {
-	  TsglErr(std::string("Loading ") + filename + " failed");
-	  return texture;
-	}
-	TsglDebug(std::string("Loading ") + filename + " succeeded");
-	TsglDebug(to_string(w) + "," + to_string(h));
+  unsigned char *data;
+  int w = 0, h = 0;
+  TsglDebug(std::string("Loading ") + filename);
+  data = stbi_load(filename, &w, &h, 0, 4);
+  assert(data);
+  if (!data) {
+    TsglErr(std::string("Loading ") + filename + " failed");
+    return texture;
+  }
+  TsglDebug(std::string("Loading ") + filename + " succeeded");
+  TsglDebug(to_string(w) + "," + to_string(h));
   createGLtextureFromBuffer(texture, data, w, h, GL_RGBA);
   width = w, height = h;
   free(data);
@@ -433,7 +433,7 @@ bool TextureHandler::saveToBMP(const char* filename, GLubyte *pixels, unsigned i
 
 bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned int w, unsigned int h) const {
   // Flip the image, since for some reason the library call
-	// flips the image upside down when it saves
+  // flips the image upside down when it saves
   for (unsigned int j = 0; j < h - (h / 2); j++) {
       for (unsigned int i = 0; i <  3 * w; i++) {
           int s1 =  3 * w * j + i;
@@ -443,7 +443,7 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
           pixels[s2] = tmp;
       }
   }
-	  stbi_write_png(filename, w, h, 3, pixels, 0);
+    stbi_write_png(filename, w, h, 3, pixels, 0);
     return true;
 }
 

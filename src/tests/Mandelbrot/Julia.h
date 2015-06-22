@@ -16,11 +16,11 @@ typedef std::complex<long double> complex;
 
 class Julia {
 private:
-	Decimal myFirstX, myFirstY, mySecondX, mySecondY;
+  Decimal myFirstX, myFirstY, mySecondX, mySecondY;
 protected:
-	int myThreads;
-	unsigned int myDepth;
-	bool myRedraw;
+  int myThreads;
+  unsigned int myDepth;
+  bool myRedraw;
 public:
   Julia(unsigned threads, unsigned depth);
   virtual ~Julia();
