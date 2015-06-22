@@ -47,7 +47,7 @@ void Buddhabrot::draw(CartesianCanvas& can) {
 	    const float hscale = (cph*cwh/threads)/(float)RPREC;
 		  ColorFloat tc = Colors::highContrastColor(tid);
 		  ColorFloat tcolor(tc.R,tc.G,tc.B,0.1f);
-		  complex znums[myDepth];
+		  complex* znums = new complex[myDepth];
 		  long double col, row;
       for (unsigned long i = tid; i < MAXITS; i+= threads) {
         if (myRedraw) break;
@@ -84,6 +84,7 @@ void Buddhabrot::draw(CartesianCanvas& can) {
         if (myRedraw || !can.getIsOpen())
           break;
       }
+	  delete [] znums;
 		}
 		if (!can.getIsOpen())
 		  return;

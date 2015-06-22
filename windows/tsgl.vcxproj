@@ -62,8 +62,9 @@
       <AdditionalDependencies>glfw3.lib;glew32sd.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "$(SolutionDir)lib\freetype6.dll" "$(SolutionDir)Debug\freetype6.dll";
+copy "$(SolutionDir)lib\zlib1.dll" "$(SolutionDir)Debug\zlib1.dll";
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -88,14 +89,17 @@
     <ClCompile Include="src\tsgl\ColoredPolygon.cpp" />
     <ClCompile Include="src\tsgl\ConcavePolygon.cpp" />
     <ClCompile Include="src\tsgl\ConvexPolygon.cpp" />
+    <ClCompile Include="src\TSGL\Error.cpp" />
     <ClCompile Include="src\tsgl\Image.cpp" />
     <ClCompile Include="src\tsgl\Line.cpp" />
     <ClCompile Include="src\tsgl\Polyline.cpp" />
+    <ClCompile Include="src\TSGL\ProgressBar.cpp" />
     <ClCompile Include="src\tsgl\Rectangle.cpp" />
     <ClCompile Include="src\tsgl\Text.cpp" />
     <ClCompile Include="src\tsgl\TextureHandler.cpp" />
     <ClCompile Include="src\tsgl\Timer.cpp" />
     <ClCompile Include="src\tsgl\Triangle.cpp" />
+    <ClCompile Include="src\TSGL\VisualQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tsgl\Array.h" />
@@ -105,11 +109,13 @@
     <ClInclude Include="src\tsgl\ColoredPolygon.h" />
     <ClInclude Include="src\tsgl\ConcavePolygon.h" />
     <ClInclude Include="src\tsgl\ConvexPolygon.h" />
+    <ClInclude Include="src\TSGL\Error.h" />
     <ClInclude Include="src\tsgl\Function.h" />
     <ClInclude Include="src\tsgl\Image.h" />
     <ClInclude Include="src\tsgl\Keynums.h" />
     <ClInclude Include="src\tsgl\Line.h" />
     <ClInclude Include="src\tsgl\Polyline.h" />
+    <ClInclude Include="src\TSGL\ProgressBar.h" />
     <ClInclude Include="src\tsgl\Rectangle.h" />
     <ClInclude Include="src\tsgl\Shape.h" />
     <ClInclude Include="src\tsgl\Text.h" />
@@ -117,6 +123,9 @@
     <ClInclude Include="src\tsgl\Timer.h" />
     <ClInclude Include="src\tsgl\Triangle.h" />
     <ClInclude Include="src\tsgl\tsgl.h" />
+    <ClInclude Include="src\TSGL\TsglAssert.h" />
+    <ClInclude Include="src\TSGL\Util.h" />
+    <ClInclude Include="src\TSGL\VisualQueue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
