@@ -12,9 +12,10 @@
 using namespace tsgl;
 
 /*!
- * \brief Simulates 4 Langton's Ants at speeds faster than the Canvas' framerate, with nicer colors!
- * \details Same as langtonColonyFunction(), but with dynamically-colored ants.
- * \param can, Reference to the Canvas being drawn to
+ * \brief Simulates 4 LangtonAnts at speeds faster than the Canvas' framerate, with nicer colors!
+ * \details Same as langtonColonyFunction(), but with dynamically-colored LangtonAnts.
+ *    .
+ * \param can Reference to the Canvas being drawn to.
  */
 void langtonRainbowFunction(Canvas& can) {
     const int IPF = 5000,                   // Iterations per frame
