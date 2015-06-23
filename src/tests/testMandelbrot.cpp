@@ -46,19 +46,23 @@ using namespace tsgl;
  *      - For 0 to \b blockheight and as long as we aren't trying to render off of the screen:
  *        - Update the ProgressBar.
  *        - Redraw the ProgressBar with labels for the ID of each thread above each segment of the ProgressBar.
- *        -
- *
- *        - (Basic Mandelbrot calculations; see http://en.wikipedia.org/wiki/Mandelbrot_set#Computer_drawings )
- *        - Break if the Canvas is to redraw
+ *        - Make an inner loop which determines whether to color the pixels black or a different color based off of whether they escaped or not.
+ *          - (Basic Mandelbrot calculations; see http://en.wikipedia.org/wiki/Mandelbrot_set#Computer_drawings ).
+ *          - Break if the Canvas is to redraw.
+ *            .
+ *          .
+ *      - Break if the Canvas is to redraw.
  *        .
- *      - Break if the Canvas is to redraw
+ *      - Output the time it took to compute the screen.
+ *      - While the Canvas has not been closed and it isn't time to redraw yet:
+ *        - Sleep the thread for one frame until the Canvas is closed by the user or told to redraw.
  *        .
- *   - Output the time it took to compute the screen
- *   Sleep the thread for one frame until the Canvas is closed by the user or told to redraw
- *   .
+ *     .
+ * - If the ProgressBar Canvas is still open, close it up.
  * .
- * \param can, Reference to the CartesianCanvas being drawn to
- * \param threads, Reference to the number of threads passed via command-line arguments.
+ * \param can Reference to the CartesianCanvas being drawn to.
+ * \param threads Reference to the number of threads passed via command-line arguments.
+ * \param depth The number of iterations to go to in order to draw the Mandelbrot set.
  */
 void mandelbrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
     Mandelbrot m1(threads,depth);
@@ -66,7 +70,8 @@ void mandelbrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth)
     m1.draw(can);
 }
 
-//Takes command line arguments for the number of threads
+//Takes command line arguments for the width and height of the screen
+//as well as the number of threads to use and the number of iterations to draw the Mandelbrot set
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;

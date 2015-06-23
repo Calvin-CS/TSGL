@@ -50,7 +50,7 @@ public:
    * \brief Explicitly construct a Mandelbrot object.
    * \details Explicit constructor for the Mandelbrot class.
    *    \param threads The number of threads to use in drawing the Mandelbrot object onto the CartesianCanvas.
-   *    \param depth The number of iterations to go to until we are finished drawing the Mandelbrot object.
+   *    \param depth The number of iterations to go to in order to draw the Mandelbrot object.
    * \return The constructed Mandelbrot object.
    */
   Mandelbrot(unsigned threads, unsigned depth);

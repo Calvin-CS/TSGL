@@ -31,7 +31,7 @@ public:
    * \brief Explicitly construct a Buddhabrot object.
    * \details Explicit constructor for the Buddhabrot class.
    *    \param threads The number of threads to use when drawing the Buddhabrot object to the CartesianCanvas.
-   *    \param depth The number of iterations to go to until the Buddhabrot is complete.
+   *    \param depth The number of iterations to go to in order to draw the Buddhabrot object.
    * \return The constructed Buddhabrot object.
    */
   Buddhabrot(unsigned threads, unsigned depth);

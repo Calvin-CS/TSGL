@@ -10,18 +10,21 @@
 using namespace tsgl;
 
 /*!
- * \brief Draws a gradient Mandelbrot set on a CartesianCanvas
- * \details Same as mandelbrotFunction(), but with smoother shading ( see
- * http://linas.org/art-gallery/escape/smooth.html ).
- * \param can, Reference to the CartesianCanvas being drawn to
- * \param numberOfThreads, Reference to the number of threads to use
+ * \brief Draws a Buddhabrot set on a CartesianCanvas.
+ * \details Same as mandelbrotFunction(), but with a different shading algorithm and no
+ * ProgressBar.
+ * ( see https://en.wikipedia.org/wiki/Buddhabrot ).
+ * \param can Reference to the CartesianCanvas being drawn to.
+ * \param numberOfThreads Reference to the number of threads to use.
+ * \param depth The number of iterations to go to in order to draw the Buddhabrot set.
  */
 void buddhabrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
   Buddhabrot m1(threads, depth);
   m1.draw(can);
 }
 
-//Takes in command line argument for the number of threads
+//Takes in command line argument for the width and height of the screen as well as
+//for the number of threads to use and the number of iterations to draw the Buddhabrot set
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;

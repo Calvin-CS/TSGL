@@ -43,7 +43,7 @@ public:
    * \brief Explicitly constructs a Julia object.
    * \details Explicit constructor for the Julia class.
    *    \param threads The number of threads to use in drawing the Julia object onto the CartesianCanvas.
-   *    \param depth The number of iterations to go to until the Julia object has been drawn onto the CartesianCanvas.
+   *    \param depth The number of iterations to go to in order to draw the Julia object.
    *\return The constructed Julia object.
    */
   Julia(unsigned threads, unsigned depth);

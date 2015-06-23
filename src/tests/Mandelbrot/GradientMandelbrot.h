@@ -27,7 +27,7 @@ public:
    * \brief Explicitly constructs a GradientMandelbrot set.
    * \details Explicit constructor for the GradienMandelbrot class.
    *    \param threads The number of threads to use in the drawing of the GradientMandelbrot object.
-   *    \param depth The number of iterations until we are finished drawing the GradientMandelbrot object.
+   *    \param depth The number of iterations to go to in order to draw the GradientMandelbrot object.
    * \return The GradientMandelbrot object ready to be drawn onto the CartesianCanvas.
    */
   GradientMandelbrot(unsigned threads, unsigned depth);
