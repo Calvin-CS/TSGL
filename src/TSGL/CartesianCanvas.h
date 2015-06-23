@@ -172,6 +172,7 @@ public:
      */
     void drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color = BLACK, bool filled = true);
 
+
     /*!
      * \brief Draw a string of text.
      * \details This function draws a given string of Text at the given coordinates with the given color.
@@ -180,9 +181,21 @@ public:
      *   \param y The y coordinate of the text's left bound.
      *   \param size The size of the text in pixels.
      *   \param color The color of the Text (set to BLACK by default).
-     * \note Identical to Canvas::drawText().
+     * \note Identical to Canvas::drawText(std::string,..).
      */
-    void drawText(std::wstring s, Decimal x, Decimal y, unsigned int size, ColorFloat color = BLACK);
+    void drawText(std::string s, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
+
+    /*!
+     * \brief Draw a string of text.
+     * \details This function draws a given string of Text at the given coordinates with the given color.
+     *   \param s The UTF8-encoded string to draw.
+     *   \param x The x coordinate of the text's left bound.
+     *   \param y The y coordinate of the text's left bound.
+     *   \param size The size of the text in pixels.
+     *   \param color The color of the Text (set to BLACK by default).
+     * \note Identical to Canvas::drawText(std::wstring,..).
+     */
+    void drawText(std::wstring s, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a triangle.

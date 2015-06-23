@@ -101,7 +101,14 @@ void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal 
     Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, color, filled);
 }
 
-void CartesianCanvas::drawText(std::wstring s, Decimal x, Decimal y, unsigned int size, ColorFloat color) {
+void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, unsigned size, ColorFloat color) {
+    int actualX, actualY;
+    getScreenCoordinates(x, y, actualX, actualY);
+
+    Canvas::drawText(s, actualX, actualY, size, color);
+}
+
+void CartesianCanvas::drawText(std::wstring s, Decimal x, Decimal y, unsigned size, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 

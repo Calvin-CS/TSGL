@@ -345,6 +345,9 @@ public:
      * \details This function draws a previously created ProgressBar to the Canvas, as
      *   specified in that ProgressBar's constructor.
      *   \param p A pointer to a ProgressBar.
+     * \note There is no equivalent function for CartesianCanvas. If you'd like to draw
+     *   a ProgressBar on a CartesianCanvas, you may still use this function, but you must
+     *   use absolute Canvas coordinates rather than the scaled CartesianCanvas coordinates.
      */
     virtual void drawProgress(ProgressBar* p);
 
