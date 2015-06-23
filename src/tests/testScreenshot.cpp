@@ -27,7 +27,7 @@ typedef CartesianCanvas Cart;
  * .
  * \note The details of the recordForNumFrames() function are handled automatically in Canvas, and
  * are by default written to the \i frames/ directory.
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void screenShotFunction(Canvas& can) {
     int xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
