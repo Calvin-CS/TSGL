@@ -240,6 +240,26 @@ public:
   }
 };
 
+/*!
+ * \brief Lots and lots of multicolored balls!
+ * \details Draws a lot of multicolored balls onto the Canvas that follow the mouse around.
+ * It is drawn in this way:
+ * - Get the window width and height for convenience of use.
+ * - Create the area for the balls based off of the window width and height.
+ * - For 0 to 100:
+ *   - Set the speed of the balls to 5.0f.
+ *   - Set their direction.
+ *   - Add a ball to the ballroom created off of the speed and direction given.
+ *   .
+ * - Bind the left mouse button so that when you click the screen the balls will repel from the mouse instead of follwing it.
+ * - While the Canvas is open:
+ *   - Sleep the internal timer until the next draw cycle.
+ *   - Clear the Canvas.
+ *   - Animate the balls and have them bounce off of one another.
+ *   .
+ *  .
+ * \param can Reference to the Canvas to draw on.
+ */
 void ballroomFunction(Canvas& can) {
     const int WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height

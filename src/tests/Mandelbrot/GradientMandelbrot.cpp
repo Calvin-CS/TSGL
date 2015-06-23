@@ -13,12 +13,12 @@ GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mande
   myRedraw = true;
 }
 
-void GradientMandelbrot::draw(CartesianCanvas& can) {
+void GradientMandelbrot::draw(Cart& can) {
   while (myRedraw) {
     setRedraw(false);
     #pragma omp parallel num_threads(myThreads)
     {
-      unsigned int nthreads = omp_get_num_threads();  //Temp variable
+      unsigned int nthreads = omp_get_num_threads();
       double blockstart = can.getCartHeight() / nthreads;
       unsigned int iterations;
       double smooth;

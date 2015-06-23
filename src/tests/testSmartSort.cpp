@@ -99,6 +99,10 @@ struct sortData {
   }
 };
 
+/*!
+ * \brief Visualization of the mergesort algorithm.
+ *
+ */
 void smartSortFunction(Canvas& can, int threads, int size) {
   const int IPF = 1;      // Iterations per frame
     int* numbers = new int[size];       // Array to store the data

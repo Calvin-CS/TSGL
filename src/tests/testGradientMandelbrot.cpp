@@ -10,16 +10,18 @@
 using namespace tsgl;
 
 /*!
- * \brief Draws a gradient Mandelbrot set on a CartesianCanvas
+ * \brief Draws a gradient Mandelbrot set on a CartesianCanvas.
  * \details Same as mandelbrotFunction(), but with smoother shading ( see
  * http://linas.org/art-gallery/escape/smooth.html ).
- * \param can, Reference to the CartesianCanvas being drawn to
- * \param threads, Reference to the number of threads to use
+ * \param can Reference to the CartesianCanvas being drawn to.
+ * \param threads Reference to the number of threads to use.
+ * \param depth Number of iterations used to determine how close we are to being finished (whether the Mandelbrot set has been drawn or not).
+ * \see mandelbrotFunction(), GradientMandelbrot class.
  */
 void gradientMandelbrotFunction(CartesianCanvas& can, unsigned & threads, unsigned depth) {
-  GradientMandelbrot m1(threads,depth);
-  m1.bindings(can);
-  m1.draw(can);
+  GradientMandelbrot m1(threads,depth);  //Create the GradientMandelbrot
+  m1.bindings(can);  //Bind the mouse wheel
+  m1.draw(can);  //Draw it
 }
 
 //Takes in command line argument for the number of threads
