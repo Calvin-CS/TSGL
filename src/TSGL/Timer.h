@@ -22,7 +22,7 @@ namespace tsgl {
 /*! \class Timer
  *  \brief A class for various timing operations.
  *  \details Timer provides a simple timer for timing, sleeping threads, and keeping track of the
- *   current rendering frame.
+ *    current rendering frame.
  */
 class Timer {
  private:
@@ -35,78 +35,75 @@ class Timer {
     double time_between_sleeps;
  public:
     /*!
-     * \brief Constructs a new Timer.
+     * \brief Default Timer constructor method.
      * \details This is the default constructor for the Timer class.
-     *      \param period Time in seconds specifying the maximum amount of time to sleep.
+     *   \param period Time in seconds specifying the maximum amount of time to sleep.
      * \return A new Timer with the specified period.
      */
     Timer(double period);
 
     /*!
-     * \brief Destroys a Timer object.
-     * \details Destructor for a Timer object.
-     * \details Frees up memory that was allocated to a Timer object.
+     * \brief Timer destructor method.
+     * \details This is the destructor for the Timer class.
+     * \details Frees up memory that was allocated to a Timer instance.
      */
     virtual ~Timer();
 
     /*!
-     * \brief Get the number of repetitions since start.
-     * \details This function returns the number of times the Timer instance's period has elapsed.
-     * \return The number of times the period has elapsed since the Timer has been started.
+     * \brief Gets the number of repetitions since starting the timer.
+     * \return The number of times the <code>period</period> has elapsed since the Timer has been started.
      */
     unsigned int getReps() const;
 
     /*!
-     * \brief Get the elapsed time since starting the timer
-     * \details This function returns the time in seconds since the Timer has been started.
+     * \brief Gets the elapsed time since starting the timer
      * \return The time in seconds since starting the Timer.
      */
     double getTime() const;
 
     /*!
      * \brief Get the elapsed time between sleeps
-     * \details This function returns the time in seconds between the last two calls to sleep() exited.
-     *  This should be the same as the set period in cases where the timer is allowed to sleep. I.e.: 
-     *  sleep() was called more than a periods time after the last time sleep() was called. In this
-     *  case, getTimeBetweenSleeps() is undefined, but most likely less than 0.
+     * \details This function returns the time in seconds between returning from the last two calls to sleep().
+     *   This should be the same as <code>period</code> in cases where the Timer is allowed to sleep. If the
+     *   Timer has yet to sleep twice, getTimeBetweenSleeps() is undefined, but will most likely be less than 0.
      * \return The time in seconds between the last two sleeps.
      */
     double getTimeBetweenSleeps() const;
 
     /*!
-     * \brief Check if the timer's period has elapsed.
+     * \brief Check if the Timer's period has elapsed.
      * \details This function returns whether the period of the Timer has elapsed since the last time
-     *  the function was called.
-     * \return True if at least *period* seconds have elapsed since the last call, false otherwise.
+     *   the function was called.
+     * \return True if at least <code>period</code> seconds have elapsed since the last call, false otherwise.
      */
     bool pastPeriod();
 
     /*!
      * \brief Reset the Timer.
      * \details This function resets the starting time, repetitions, and period of the timer.
-     *      \param period The new period for the Timer. Setting this less than or equal to 0 will keep
-     *       the current period (set to 0 by default).
+     *   \param period The new period for the Timer. Setting this less than or equal to 0 will keep
+     *     the current period.
      */
     void reset(double period = 0);
 
     /*!
-     * \brief Sleeps the timer's current thread until its period elapses.
+     * \brief Sleeps the Timer's current thread until its period elapses.
      * \details This function tells the currently executing thread to sleep until the rest of the Timer
-     *  instance's remaining period expires.
-     * \details If the timer's period has elapsed since last call, the thread will continue execution
-     *  normally until the next call to sleep().
-     *      \param update Whether to update the timer's last_rep status (for Canvas use) or not (for user use)
+     *   instance's remaining period expires.
+     * \details If the Timer's period has elapsed since last call, the thread will continue execution
+     *   normally until the next call to sleep().
+     *   \param update Whether to update the timer's last_rep status or not.
      * \note This function does not guarantee the thread will resume immediately after the time expires.
-     *  Depending on your OS, the thread may sleep for longer.
-     * \see getTimeBetweenSleeps() to get the real time of the sleep.
+     *   Depending on your OS, the thread may sleep for longer.
+     * \see getTimeBetweenSleeps(), to get the actual elapsed time between sleeps.
      */
     void sleep(bool update = true);
 
     /*!
      * \brief Sleeps the current thread for the specified duration.
-     * \details This function tells the currently executing thread to sleep for *duration* seconds.
-     * \note This function does not guarantee the thread will resume immediately after *duration* expires.
-     *  Depending on your OS, the thread may sleep for longer.
+     * \details This function tells the currently executing thread to sleep for <code>duration</code> seconds.
+     * \note This function does not guarantee the thread will resume immediately after <code>duration</code> expires.
+     *   Depending on your OS, the thread may sleep for longer.
      */
     static void threadSleepFor(double duration);    // Sleep the thread for a specified duration
 };

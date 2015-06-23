@@ -180,9 +180,6 @@ public:
      *   \param y The y coordinate of the text's left bound.
      *   \param size The size of the text in pixels.
      *   \param color The color of the Text (set to BLACK by default).
-     * \note If no font is loaded before calling this function, TSGL will attempt to locate a font at
-     *   ../assets/freefont/FreeMono.ttf.
-     * \bug If the font specified above cannot be located, TSGL will crash.
      * \note Identical to Canvas::drawText().
      */
     void drawText(std::wstring s, Decimal x, Decimal y, unsigned int size, ColorFloat color = BLACK);
@@ -265,21 +262,21 @@ public:
     /*!
      * \brief Translates window coordinates into Cartesian coordinates.
      * \details getScreenCoordinates() takes a pair of Cartesian coordinates and translates them to on-screen
-     *  coordinates.
-     *      \param cartX The Cartesian x coordinate.
-     *      \param cartY The Cartesian y coordinate.
-     *      \param screenX A reference variable to be filled with cartX's window position.
-     *      \param screenY A reference variable to be filled with cartY's window position.
+     *   coordinates.
+     *   \param cartX The Cartesian x coordinate.
+     *   \param cartY The Cartesian y coordinate.
+     *   \param screenX A reference variable to be filled with cartX's window position.
+     *   \param screenY A reference variable to be filled with cartY's window position.
      */
     void getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY);
 
     /*!
      * \brief Recomputes the CartesianCanvas's bounds.
      * \details This function recomputes the size variables of CartesianCanvas according to new bounds.
-     *      \param xMin A real number corresponding to the new left edge of the CartesianCanvas.
-     *      \param YMin A real number corresponding to the new bottom edge of the CartesianCanvas.
-     *      \param xMax A real number corresponding to the new right edge of the CartesianCanvas.
-     *      \param xMax A real number corresponding to the new top edge of the CartesianCanvas.
+     *   \param xMin A real number corresponding to the new left edge of the CartesianCanvas.
+     *   \param YMin A real number corresponding to the new bottom edge of the CartesianCanvas.
+     *   \param xMax A real number corresponding to the new right edge of the CartesianCanvas.
+     *   \param xMax A real number corresponding to the new top edge of the CartesianCanvas.
      */
     void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
     /*!
@@ -293,7 +290,6 @@ public:
      * \brief Sleeps the internal drawing timer of a CartesianCanvas object.
      * \details A timer is put to sleep until a subsequent event is ready to occur.
      * \details The drawing timer is put to sleep until the next drawing frame is ready to occur.
-     * \note Can be thought of as a wrapper function for a Timer function call.
      * \note Identical to Canvas::sleep().
      */
     void sleep();
@@ -301,10 +297,10 @@ public:
     /*!
      * \brief Zoom the CartesianCanvas with a given center.
      * \details This function will re-center the CartesianCanvas at the given coordinates, then zoom with
-     *  respect to the given scale.
-     *      \param x The coordinate to re-center the screen on.
-     *      \param y The coordinate to re-center the screen on.
-     *      \param scale The part to zoom in by. Less than 1 zooms in, greater than 1 zooms out.
+     *   respect to the given scale.
+     *   \param x The coordinate to re-center the screen on.
+     *   \param y The coordinate to re-center the screen on.
+     *   \param scale The zoom scale compared to the original. Less than 1 zooms in, greater than 1 zooms out.
      * \note This function will automatically maintain the current aspect ratio.
      */
     void zoom(Decimal x, Decimal y, Decimal scale);
@@ -312,12 +308,12 @@ public:
     /*!
      * \brief Zoom the CartesianCanvas with the given bounding (Cartesian) coordinates.
      * \details This function will zoom the CartesianCanvas with respect to the given bounding coordinates.
-     *      \param x1 The left Cartesian bound.
-     *      \param y1 The bottom Cartesian bound.
-     *      \param x2 The right Cartesian bound.
-     *      \param y2 The top Cartesian bound.
+     *   \param x1 The left Cartesian bound.
+     *   \param y1 The bottom Cartesian bound.
+     *   \param x2 The right Cartesian bound.
+     *   \param y2 The top Cartesian bound.
      * \note Setting the right bound lower than the left bound or the top lower than the bottom will just
-     *  swap the variables.
+     *   swap the variables.
      * \warning This function will *NOT* automatically maintain the previous aspect ratio.
      * \warning Change the aspect ratio on-the-fly only with caution.
      */
