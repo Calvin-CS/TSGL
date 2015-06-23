@@ -29,7 +29,7 @@ using namespace tsgl;
  *      and bottom right corners.
  *    - Clear the Canvas.
  *    .
- *- If the Canvas has been closed, output a message to the console saying "YOU KILLED MY SEA URCHINS :'(!"
+ *- If the Canvas has been closed, output a message to the console saying "YOU KILLED MY SEA URCHINS! :'("
  * .
  * \param can Reference to the Canvas being drawn on.
  */
