@@ -1,9 +1,6 @@
 /*
  * Keynums.h provides an enumeration that maps keys and the mouse buttons to
- *      GLFW's integer definitions of the keys.
- *
- *  Created on: Jul 3, 2014
- *      Author: mbv26
+ *   GLFW's integer definitions of the keys.
  */
 
 #ifndef KEYNUMS_H_
@@ -72,7 +69,7 @@ enum Key {
     TSGL_WORLD_2        = GLFW_KEY_WORLD_2,         /*! non-US #2 */
 
 // Function keys
-// PG_KEY_ESCAPE is bound to close window
+// TSGL_KEY_ESCAPE is bound to close window
     TSGL_KEY_ESCAPE     = GLFW_KEY_ESCAPE,
     TSGL_ENTER          = GLFW_KEY_ENTER,
     TSGL_TAB            = GLFW_KEY_TAB,

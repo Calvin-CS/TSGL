@@ -185,7 +185,7 @@ public:
      *   \param title The title of the window.
      *   \param timerLength The minimum number of seconds between draw cycles for the Canvas.
      *     A value less than or equal to 0 sets it to automatic.
-     * \return A new Canvas with the specified positio, dimensions, title, and draw cycle length.
+     * \return A new Canvas with the specified position, dimensions, title, and draw cycle length.
      */
     Canvas(int xx, int yy, int w, int h, std::string title, double timerLength = 0.0f);
 
@@ -201,10 +201,10 @@ public:
      * \details This function binds a key or mouse button to a function pointer.
      * \details Upon pressing or releasing the given key, Canvas will call the specified function.
      *   \param button The key or button to bind, as specified in Keynums.h.
-     *   \param a The action to look out for (PG_PRESS or PG_RELEASE).
+     *   \param a The action to look out for (TSGL_PRESS or TSGL_RELEASE).
      *   \param f The function to call upon action <code>a</code> on button.
-     * \warning <b>PG_KEY_ESCAPE is automatically bound to closing the window. Overriding PG_KEY_ESCAPE will
-     *  likely make you unable to close the window through the escape key.</b>
+     * \warning <b>TSGL_KEY_ESCAPE is automatically bound to closing the window. Overriding TSGL_KEY_ESCAPE will
+     *   likely make you unable to close the window through the escape key.</b>
      */
     void bindToButton(Key button, Action a, voidFunction f);
 
@@ -370,9 +370,6 @@ public:
      *   \param y The y coordinate of the text's left bound.
      *   \param size The size of the text in pixels.
      *   \param color The color of the Text (set to BLACK by default).
-     * \note If no font is loaded before calling this function, TSGL will attempt to locate a font at
-     *   ../assets/freefont/FreeMono.ttf.
-     * \bug If the font specified above cannot be located, TSGL will crash.
      */
     virtual void drawText(std::string s, int x, int y, unsigned size, ColorFloat color = BLACK);
 

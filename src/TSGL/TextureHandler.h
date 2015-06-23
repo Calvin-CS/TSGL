@@ -37,6 +37,11 @@ typedef GLuint GLtexture;
 
 namespace tsgl {
 
+/*! \class TextureHandler
+ *  \brief Handles saving, loading, and rendering of images and textures.
+ *  \details TextureHandler provides an interface for saving, loading, and rendering images and text to Canvas
+ *    and CartesianCanvas through the use of GLTextures.
+ */
 class TextureHandler {
  private:
     typedef std::unordered_map<std::string, GLtexture> TextureMap;
@@ -64,34 +69,39 @@ class TextureHandler {
 
  public:
     /*!
-     * \brief Constructs a TextureHandler object.
-     * \details Default constructor for a TextureHandler object.
-     * \return A new TextureHandler object with default values.
+     * \brief Default TextureHandler constructor method.
+     * \details This is the default constructor for theTextureHandler Canvas class.
+     * \return A new TextureHandler instance.
      */
     TextureHandler();
 
     /*!
-     * \brief Destroys a TextureHandler object.
-     * \details Destructor for a TextureHandler object.
-     * \details Frees up memory that was allocated to a TextureHandler object.
+     * \brief TextureHandler destructor method.
+     * \details This is the destructor for the TextureHandler class.
+     * \details Frees up memory that was allocated to a TextureHandler instance.
      */
     ~TextureHandler();
 
     /*!
-     * \brief Draw text.
+     * \brief Draws text.
      * \details Draws the text specified by its parameters onto a Canvas.
-     *      \param text The string that contains the text to be drawn.
-     *      \param font_size The size of the text.
-     *      \param vertices The number of vertices that the shape of the text has.
-     * \warning If no font has been specified then a default font will be loaded.
+     *   \param text The UTF-8 encoded string of text to be drawn.
+     *   \param font_size The size of the text in pixels.
+     *   \param vertices An array of vertex data for the bonding box of the text.
+     * \note <code>vertices</code> will be partially automatically set by drawText()
+     *   itself in order to draw / kern the text properly, but the color, starting
+     *   position, and texture coordinates will be left unchanged.
+     * \note If no font is loaded before calling this function, TSGL will attempt to locate a
+     *   default font at <i>../assets/freefont/FreeMono.ttf.</i>
+     * \bug If the default font cannot be located, TSGL will crash.
      * \return True if successful, false otherwise.
      */
     bool drawText(std::wstring text, unsigned int font_size, float* vertices);
 
     /*!
-     * \brief Load a font.
-     * \details Loads a font from a specified library given a specific file name.
-     *      \param filename The file name that contains the font to be loaded.
+     * \brief Loads a font.
+     * \details Loads a font from the library given by <code>filename</code>.
+     *   \param filename The file name of the font to be loaded.
      * \warning If the font cannot be found then an error message is printed out.
      * \warning If the font library is not correctly installed then an error message is printed out.
      * \warning If the font is not supported then an error message is printed out.
@@ -100,23 +110,24 @@ class TextureHandler {
     bool loadFont(const std::string& filename);
 
     /*!
-     * \brief Load an image.
+     * \brief Loads an image.
      * \details Loads a .png, .jpeg, or .bmp image from a file.
-     *      \param filename The file name that contains the picture.
-     *      \param width The width of the picture.
-     *      \param height The height of the picture.
-     *      \param texture The texture that contains the picture.
-     * \return The texture that was found from opening the file that contains the image.
+     *   \param filename The file name of the picture.
+     *   \param width A reference variable for holding the width of the picture.
+     *   \param height A reference variable for holding the height of the picture.
+     *   \param texture A reference variable for holding the texture of the picture.
+     *     (same as return value)
+     * \return The texture that created from the loaded image.
      */
     GLtexture loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture);
 
     /*!
      * \brief Saves an Image.
      * \details Saves an Image to file that was captured from a Canvas object.
-     *      \param filename The name of the image file.
-     *      \param pixels The number of pixels in the Image.
-     *      \param w The width of the Image.
-     *      \param h The height of the Image.
+     *   \param filename The name of the file to save the Image to.
+     *   \param pixels The pixel data for the Image.
+     *   \param w The width of the Image.
+     *   \param h The height of the Image.
      * \return True if successful, false otherwise.
      */
     bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
