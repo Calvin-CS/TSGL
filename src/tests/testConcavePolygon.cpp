@@ -14,23 +14,25 @@ const double PI = 3.1415926535;
 #else
 const double PI = M_PI;
 #endif
+
 const double RAD = PI / 180;  // One radian in degrees
 
 /**
- * \brief Draw concave polygons, which have one or more interior angles > 180
- * ( see http://www.mathopenref.com/polygonconcave.html )
+ * \brief Draw Concave polygons, which have one or more interior angles > 180
+ * ( see http://www.mathopenref.com/polygonconcave.html ).
  * \details
- * - Initialize a constant \b PSIZE
- * - Have four arrays of integers \b x, \b y, \b xx, and \b yy and set them to have size \b PSIZE
+ * - Initialize a constant \b PSIZE.
+ * - Have four arrays of integers \b x, \b y, \b xx, and \b yy and set them to have size \b PSIZE.
  * - Create an empty array of colors of size \b PSIZE and fill it with random colors.
- * - Fill the arrays of integers, \b x and \b y with specific values (which will then be used in the while loop to draw a concave polygon).
+ * - Fill the arrays of integers, \b x and \b y with specific values (which will then be used in the while loop to draw a Concave polygon).
  * - Fill the other arrays of integers, \b xx and \b yy, with specific values.
  * - While the Canvas is open:
  *   - Sleep the internal timer of the Canvas until the Canvas is ready to draw.
- *   - Draw a concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
- *   - Draw another concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
- *
- * \param can, Reference to the Canvas being drawn to
+ *   - Draw a Concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
+ *   - Draw another Concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
+ *  .
+ * .
+ * \param can Reference to the Canvas being drawn to.
  */
 void concavePolygonFunction(Canvas& can) {
   const int PSIZE = 64;
@@ -54,8 +56,6 @@ void concavePolygonFunction(Canvas& can) {
   x[10] = 100; y[10] = 400;
   x[11] = 100; y[11] = 100;
 
-
-//Could use #pragma omp parallel for to speed this up?
   for (int i = 0; i < PSIZE; ++i) {
     if (i % 2 == 0) {
       xx[i] = 600 + 150 * sin((1.0f*i)/(PSIZE) * PI * 2);

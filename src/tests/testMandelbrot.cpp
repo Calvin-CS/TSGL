@@ -11,37 +11,49 @@ using namespace tsgl;
 
 /*!
  * \brief Draws the Mandelbrot set on a CartesianCanvas with custom controls, a specified target update rate,
- *  and a dynamic number of threads and uses command-line arguments to specify the number of threads to use
+ *  and a dynamic number of threads and uses command-line arguments to specify the number of threads to use.
+ *  There is also a ProgressBar that shows the progress made by each thread as the Mandelbrot set is drawn onto the CartesianCanvas.
  * \details
- * - The number of threads to use is predetermined and stored in: \b THREADS.
- * - The number of iterations to check is predetermined and stored in: \b DEPTH.
- * - The internal timer of the Canvas is set up to go off every ( \b FRAME / 2 ) seconds.
- * - A flag telling us to redraw is set to true
- * - The spacebar on-press event is set to tell the Canvas to clear and re-render.
- * - The left mouse on-press event is set to grab the mouse's current coordinates
- * - The left mouse on-release event is set to grab the mouse's current coordinates, and tell the Canvas to zoom into the
- * bounding rectangle between the current coordinates and those from the left mouse's on press event.
- * - The right mouse on-press event is set to grab the mouse's current coordinates, and tell the Canvas to zoom out
- * from that area.
- * - The mouse's scroll wheel is set to tell the Canvas to zoom in / out by a predetermined amount at the mouse's
- * current coordinates.
- * While the toRedraw flag is set:
- *   - Set the toRender flag to false
- *   - Reset the internal timer to 0.
- *   - Fork off the predetermined number of parallel threads using OMP
- *   - Store the actual number of threads spawned in: \b nthreads
- *   - Figure the cartesian size of the area each thread is to calculate and store it in: \b blocksize
- *   - Figure out the actual number of rows each thread is to calculate and store it in: \b blockheight
- *   - Run an outer loop from 0 to blockheight:
- *     - Calculate the cartesian coordinates of the thread's \b row as
- *     \b blocksize * (our ID) + (top of our CartesianCanvas) + (cartesian height of our physical pixels) * k
- *     - Run an inner loop from the minimum to maximum x values of the Cartesian Canvas, stepping by pixel width:
- *       - (Basic Mandelbrot calculations; see http://en.wikipedia.org/wiki/Mandelbrot_set#Computer_drawings )
- *       - Break if the Canvas is to redraw
- *       .
- *     - Break if the Canvas is to redraw
- *     .
- *   Output the time it took to compute the screen
+ * - A class containing all of the data and method to draw a Mandelbrot set has been made.
+ * - When you create a Mandelbrot object:
+ *    - The number of threads to use is predetermined and stored in: \b THREADS.
+ *    - The number of iterations to check is predetermined and stored in: \b DEPTH.
+ *    - The internal timer of the Canvas is set up to go off every ( \b FRAME / 2 ) seconds.
+ *    - A flag telling us to redraw is set to true.
+ *    .
+ * - When you bind the buttons:
+ *    - The spacebar on-press event is set to tell the Canvas to clear and re-render.
+ *    - The left mouse on-press event is set to grab the mouse's current coordinates.
+ *    - The left mouse on-release event is set to grab the mouse's current coordinates, and tell the Canvas to zoom into the
+ *      bounding rectangle between the current coordinates and those from the left mouse's on press event.
+ *    - The right mouse on-press event is set to grab the mouse's current coordinates, and tell the Canvas to zoom out
+ *      from that area.
+ *    - The mouse's scroll wheel is set to tell the Canvas to zoom in / out by a predetermined amount at the mouse's
+ *      current coordinates.
+ *    .
+ * - When you actually draw the Mandelbrot object onto the CartesianCanvas:
+ *   - Create the Canvas that will draw the ProgressBar and the ProgressBar object.
+ *   - While the toRedraw flag is set:
+ *      - Set the toRender flag to false.
+ *      - Reset the internal timer to 0.
+ *      - Fork off the predetermined number of parallel threads using OMP.
+ *      - Store the actual number of threads spawned in: \b nthreads.
+ *      - Figure the cartesian size of the area each thread is to calculate and store it in: \b blocksize.
+ *      - Figure out the actual number of rows each thread is to calculate and store it in: \b blockheight.
+ *      - Clear the Canvas that holds the ProgressBar.
+ *      - Update the ProgressBar.
+ *      - Draw the ProgressBar onto the Canvas.
+ *      - For 0 to \b blockheight and as long as we aren't trying to render off of the screen:
+ *        - Update the ProgressBar.
+ *        - Redraw the ProgressBar with labels for the ID of each thread above each segment of the ProgressBar.
+ *        -
+ *
+ *        - (Basic Mandelbrot calculations; see http://en.wikipedia.org/wiki/Mandelbrot_set#Computer_drawings )
+ *        - Break if the Canvas is to redraw
+ *        .
+ *      - Break if the Canvas is to redraw
+ *        .
+ *   - Output the time it took to compute the screen
  *   Sleep the thread for one frame until the Canvas is closed by the user or told to redraw
  *   .
  * .

@@ -15,7 +15,7 @@ using namespace tsgl;
  * http://linas.org/art-gallery/escape/smooth.html ).
  * \param can Reference to the CartesianCanvas being drawn to.
  * \param threads Reference to the number of threads to use.
- * \param depth Number of iterations used to determine how close we are to being finished (whether the Mandelbrot set has been drawn or not).
+ * \param depth Number of iterations used to determine how close we are to being finished (whether the GradientMandelbrot set has been drawn or not).
  * \see mandelbrotFunction(), GradientMandelbrot class.
  */
 void gradientMandelbrotFunction(CartesianCanvas& can, unsigned & threads, unsigned depth) {
