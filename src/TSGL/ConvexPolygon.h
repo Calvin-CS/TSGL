@@ -29,14 +29,14 @@ class ConvexPolygon : public Shape {
     int size,           // Number of floating point numbers in vertices
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
-    static bool testAddVertex();
+
+    static bool testAddVertex();  // Unit test for addVertex()
  public:
     /*!
      * \brief Explicitly constructs a new ConvexPolygon.
      * \details Explicit constructor for a Convex Polygon object.
-     *      \param v, the number of vertices the complete ConvexPolygon will have.
-     * \warning An invariant is held where if v is less than 3 then an error is given followed
-     *          by corrective action taken.
+     *      \param v the number of vertices the complete ConvexPolygon will have.
+     * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
     ConvexPolygon(int v);
@@ -49,12 +49,13 @@ class ConvexPolygon : public Shape {
     ~ConvexPolygon();
 
     /*!
-     * \brief Add another vertex to the ConvexPolygon.
-     * \details This function initializes the next vertex in the Polyline and adds it to the ConvexPolygon buffer.
+     * \brief Adds another vertex to a ConvexPolygon.
+     * \details This function initializes the next vertex in the Polyline and adds it to a ConvexPolygon buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
      *      \param color The reference variable of the color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
+     * \note A message is given indicating when the vertex buffer is full.
      */
     void addVertex(int x, int y, const ColorFloat &color);
 
@@ -62,11 +63,13 @@ class ConvexPolygon : public Shape {
      * \brief Draw the ConvexPolygon.
      * \details This function actually draws the ConvexPolygon to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
+     * \note A message is given indicating that the ConvexPolygon is *NOT* ready to be drawn yet (vertex buffer = not full).
      */
     void draw();
 
     /*!
-     *
+     * \brief Runs the Unit tests.
+     * \details Runs the Unit tests for the ConvexPolygon class. addVertex() is tested.
      */
     static void runTests();
 };

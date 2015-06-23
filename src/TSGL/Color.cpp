@@ -12,6 +12,9 @@ namespace tsgl {
 // in foo.cpp
 //static const unsigned char Foo_Msg_data[] = {0x00,0x01};
 
+/*!
+ * \brief Contains ColorInts that are used in the function highContrastColor().
+ */
 static const ColorFloat DISTINCT_ARRAY_DATA[] = {
    ColorInt(0,255,0, 255),
    ColorInt(0,0,255, 255),
@@ -101,16 +104,16 @@ std::string ColorFloat::AsString() {
     return ss.str();
 }
 
-bool ColorFloat::operator==(ColorFloat& c1) {
-    if((*this).R == c1.R && (*this).G == c1.G && (*this).B == c1.B) {
+bool ColorFloat::operator==(ColorFloat& c2) {
+    if((*this).R == c2.R && (*this).G == c2.G && (*this).B == c2.B) {
       return true;
     } else {
       return false;
     }
 }
 
-bool ColorFloat::operator!=(ColorFloat& c1) {
-    if((*this).R == c1.R && (*this).G == c1.G && (*this).B == c1.B) {
+bool ColorFloat::operator!=(ColorFloat& c2) {
+    if((*this).R == c2.R && (*this).G == c2.G && (*this).B == c2.B) {
       return false;
     } else {
       return true;
@@ -146,16 +149,16 @@ ColorInt::operator ColorFloat() {
     return ColorFloat(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
 }
 
-bool ColorInt::operator==(ColorInt& c1) {
-    if((*this).R == c1.R && (*this).G == c1.G && (*this).B == c1.B) {
+bool ColorInt::operator==(ColorInt& c2) {
+    if((*this).R == c2.R && (*this).G == c2.G && (*this).B == c2.B) {
       return true;
     } else {
       return false;
     }
 }
 
-bool ColorInt::operator!=(ColorInt& c1) {
-    if((*this).R == c1.R && (*this).G == c1.G && (*this).B == c1.B) {
+bool ColorInt::operator!=(ColorInt& c2) {
+    if((*this).R == c2.R && (*this).G == c2.G && (*this).B == c2.B) {
       return false;
     } else {
     return true;

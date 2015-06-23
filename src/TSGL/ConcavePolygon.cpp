@@ -23,8 +23,8 @@ ConcavePolygon::ConcavePolygon(int v) {
 }
 
 ConcavePolygon::~ConcavePolygon() {
-  delete vertices;
-  delete tarray;
+  delete[] vertices;
+  delete[] tarray;
 }
 
 void ConcavePolygon::addVertex(int x, int y, const ColorFloat &color) {

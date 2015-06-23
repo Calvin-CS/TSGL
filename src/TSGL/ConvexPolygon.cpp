@@ -20,7 +20,7 @@ ConvexPolygon::ConvexPolygon(int v) {
 }
 
 ConvexPolygon::~ConvexPolygon() {
-    delete vertices;
+    delete[] vertices;
 }
 
 void ConvexPolygon::addVertex(int x, int y, const ColorFloat &color) {
@@ -51,7 +51,7 @@ void ConvexPolygon::runTests() {
     TsglDebug("Testing ConvexPolygon class...");
     tsglAssert(testAddVertex(), "Unit test for adding vertices failed");
     TsglDebug("Unit tests for ConvexPolygon complete.");
-
+    std::cout << std::endl;
 }
 
 bool ConvexPolygon::testAddVertex() {

@@ -34,27 +34,27 @@ class ColoredPolygon : public Shape {
     /*!
      * \brief Explicitly construct a new ColoredPolygon.
      * \details Explicit constructor for a ColoredPolygon object.
-     *      \param v, The number of vertices the complete ColoredPolygon will have.
-     * \warning An invariant is held where if v is less than 3 then an error is given followed
-     *          by corrective action taken.
+     *      \param v The number of vertices the complete ColoredPolygon will have.
+     * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ColoredPolygon with a buffer for storing the specified numbered of vertices.
      */
     ColoredPolygon(int v);
 
     /*!
-     * \brief Destroys a  ColoredPolygon object
+     * \brief Destroys a ColoredPolygon object
      * \details Destructor for a ColoredPolygon object.
      * \details Frees up memory that has been allocated to a ColoredPolygon object.
      */
     ~ColoredPolygon();
 
     /*!
-     * \brief Add another vertex to the ColoredPolygon.
-     * \details This function initializes the next vertex in the Polyline and adds it to the ColoredPolygon buffer.
+     * \brief Adds another vertex to a ColoredPolygon.
+     * \details This function initializes the next vertex in the Polyline and adds it to a ColoredPolygon buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
      *      \param color The reference variable to a color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
+     * \note A message will be given to show when the vertex buffer is full.
      */
     void addVertex(int x, int y, const ColorFloat &color);
 
@@ -62,6 +62,7 @@ class ColoredPolygon : public Shape {
      * \brief Draw the ColoredPolygon.
      * \details This function actually draws the ColoredPolygon to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
+     * \note A message will be given to show if the ColoredPolygon is *NOT* ready to be drawn (vertex buffer = not full).
      * \note Implemented inherited abstract method from Shape class.
      */
     void draw();

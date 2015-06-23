@@ -9,15 +9,6 @@
 
 namespace tsgl {
 
-/*
- * Explicit constructor for the Image class
- * Parameters:
- *      x, the x coordinate of the Image's left edge
- *      y, the y coordinate of the Image's top edge
- *      w, the width of the Image
- *      h, the height of the Image
- * Returns: a new Image with the specified top left corner and dimensions
- */
 Image::Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, float a) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myFile = f;
@@ -40,14 +31,6 @@ Image::Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, 
     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
 }
 
-/*!
- * Draws the image onto the Canvas by loading the image into the internal
- * Texture Handler, binding the texture, and then drawing it onto the Canvas.
- *
- * Parameters:
- *      None.
- * Returns: The Canvas with the image drawn on it.
- */
 void Image::draw() {
     unsigned int w, h;
     GLtexture myTexture;

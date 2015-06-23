@@ -2,7 +2,7 @@
  * TsglAssert.h is for unit testing purposes.
  *
  *  Created on: Jun 4, 2015
- *      Author: Chris Dilley, Patrick Crain.
+ *      Authors: Chris Dilley, Patrick Crain.
  */
 
 #ifndef SRC_TSGL_TSGLASSERT_H_
@@ -19,8 +19,7 @@ namespace tsgl {
 /*!
  * \brief Assertion used in Unit testing.
  * \details Assertion mechanism used in Unit testing where a function
- * that returns a boolean is passed and an error message is passed if
- * the function returns false.
+ * that returns a boolean is passed and an error message is given if the function returns false.
  *    \param b A boolean returned from a Unit test function.
  *    \param message A string representing the error message to print out if b is false.
  * \note Can also pass a boolean expression; it doesn't necessarily have to be a function.

@@ -20,7 +20,7 @@ ColoredPolygon::ColoredPolygon(int v) {
 }
 
 ColoredPolygon::~ColoredPolygon() {
-    delete vertices;
+    delete[] vertices;
 }
 
 void ColoredPolygon::addVertex(int x, int y, const ColorFloat &color) {

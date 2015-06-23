@@ -22,10 +22,6 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFl
     vertices[5] = vertices[11] = vertices[17] = color.A;
 }
 
-/*!
- * \brief Draw the Triangle.
- * \details This function actually draws the Triangle to the Canvas.
- */
 void Triangle::draw() {
     glBufferData(GL_ARRAY_BUFFER, 3 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);

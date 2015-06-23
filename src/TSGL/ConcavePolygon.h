@@ -43,10 +43,9 @@ class ConcavePolygon : public Shape {
     /*!
      * \brief Explicitly constructs a new ConcavePolygon.
      * \details Explicit constructor for a ConcavePolygon object.
-     *      \param v, The number of vertices the complete ConcavePolygon will have.
-     * \warning An invariant is held where if v is less than 3 then an error is given
-     *          followed by corrective action taken.
-     * \return A new ConcavePolygon with a buffer for storing the specified numbered of vertices.
+     *      \param v The number of vertices the complete ConcavePolygon will have.
+     * \warning An invariant is held where if v is less than 3 then an error message is given.
+     * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
     ConcavePolygon(int v);
 
@@ -59,24 +58,25 @@ class ConcavePolygon : public Shape {
 
     /*!
      * \brief Determines if two lines intersect.
-     * \details Determines whether two lines inside of a ConcavePolygon object intersect.
-     *      \param p0_x The x coordinate of the first point of a line.
-     *      \param p0_y The y coordinate of the first point of a line.
-     *      \param p1_x The x coordinate of the second point of a line.
-     *      \param p1_y The y coordinate of the second point of a line.
-     *      \param p2_x The x coordinate of the first point of a second line.
-     *      \param p2_y The y coordinate of the first point of a second line.
-     *      \param p3_x The x coordinate of the second point of a second line.
-     *      \param p3_y The y coordinate of the second point of a second line.
-     * \returns True if the lines do intersect, false otherwise.
+     * \details Simulates two lines inside of a ConcavePolygon object and determines whether
+     * those two lines intersect.
+     *      \param p0_x The x coordinate of the first point of the first line.
+     *      \param p0_y The y coordinate of the first point of the first line.
+     *      \param p1_x The x coordinate of the second point of the first line.
+     *      \param p1_y The y coordinate of the second point of the first line.
+     *      \param p2_x The x coordinate of the first point of the second line.
+     *      \param p2_y The y coordinate of the first point of the second line.
+     *      \param p3_x The x coordinate of the second point of the second line.
+     *      \param p3_y The y coordinate of the second point of the second line.
+     * \returns true if the lines do intersect, false if otherwise.
      */
     bool intersects(float p0_x, float p0_y, float p1_x, float p1_y,
                     float p2_x, float p2_y, float p3_x, float p3_y);
 
     /*!
      * \brief Determines whether a point resides inside of a Triangle.
-     * \details Determines whether a point resides inside of a Triangle that resides inside of
-     *  a ConcavePolygon object.
+     * \details Simulates a Triangle and point inside of a ConcavePolygon object and determines whether the point resides inside of
+     * the Triangle.
      *      \param px The x coordinate of the point.
      *      \param py The y coordinate of the point.
      *      \param x1 The x coordinate of the first vertex of the Triangle.
@@ -85,17 +85,18 @@ class ConcavePolygon : public Shape {
      *      \param y2 The y coordinate of the second vertex of the Triangle.
      *      \param x3 The x coordinate of the third vertex of the Triangle.
      *      \param y3 The y coordinate of the third vertex of the Triangle.
-     * \returns True if the point does reside in the Triangle, false otherwise.
+     * \returns true if the point does reside in the Triangle, false if otherwise.
      */
     bool pointInTriangle (float px, float py, float x1, float y1, float x2, float y2, float x3, float y3);
 
     /*!
-     * \brief Add another vertex to the ConcavePolygon.
-     * \details This function initializes the next vertex in the Polyline and adds it to the ConcavePolygon buffer.
+     * \brief Adds another vertex to a ConcavePolygon.
+     * \details This function initializes the next vertex in the Polyline and adds it to a ConcavePolygon buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
      *      \param color The reference variable of the color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
+     * \note A message is given indicating that the vertex buffer is full.
      */
     void addVertex(int x, int y, const ColorFloat &color);
 
@@ -103,12 +104,14 @@ class ConcavePolygon : public Shape {
      * \brief Draw the ConcavePolygon.
      * \details This function actually draws the ConcavePolygon to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
+     * \note A message is given indicating that the ConcavePolygon is *NOT* ready to be drawn yet (vertex buffer = not full).
      * \warning This is an order of n-cubed operation, and is thus <b>VERY SLOW</b>.
      */
     void draw();
 
     /*!
-     *
+     * \brief Runs the Unit tests.
+     * \details Runs the Unit tests for the ConcavePolygon class. intersects() and pointInTriangle() are tested.
      */
     static void runTests();
 };

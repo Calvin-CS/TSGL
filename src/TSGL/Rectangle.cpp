@@ -24,10 +24,6 @@ Rectangle::Rectangle(int x, int y, int w, int h, const ColorFloat &color) {
     vertices[5] = vertices[11] = vertices[17] = vertices[23] = color.A;
 }
 
-/*!
- * \brief Draw the Rectangle.
- * \details This function actually draws the Rectangle to the Canvas.
- */
 void Rectangle::draw() {
     glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

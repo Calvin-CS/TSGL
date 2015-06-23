@@ -48,7 +48,7 @@ struct ColorFloat {
      *      \param b The blue component of the struct.
      *      \param a The alpha component of the struct (set to 1.0f by default).
      * \warning An invariant is set where if any of the specified R, G, B, or A values
-     *          is out of the range 0 - 1 inclusive then an error message is given with corrective action taken.
+     *          is out of the range 0 - 1 inclusive then an error message is given.
      * \return A ColorFloat struct with the specified R, G, B, and A values.
      */
     ColorFloat(float r, float g, float b, float a = 1.0f);
@@ -60,12 +60,29 @@ struct ColorFloat {
      */
     std::string AsString();
 
-    /*!
-     * NEW (For unit testing)
-     */
     ColorFloat operator*(float f);
-    bool operator==(ColorFloat& c1);
-    bool operator!=(ColorFloat& c1);
+
+    /*!
+     * \brief Determines if two ColorFloats are equivalent.
+     * \details Equality operator for two ColorFloats. Determines if they are equivalent.
+     *    \param c2 Reference to the ColorFloat struct that is the second one in the equivalence comparison.
+     * \note This function relies on (*this), which is a dereferenced pointer to the first ColorFloat struct in the comparison.
+     *       (its the one on the left side of the == sign).
+     * \note This function is also only used in Unit testing.
+     * \returns true if the two ColorFloats are equivalent, false if otherwise.
+     */
+    bool operator==(ColorFloat& c2);
+
+    /*!
+     * \brief Determines if two ColorFloats are *NOT* equivalent.
+     * \details Inequality operator for two ColorFloats. Determines if they are *NOT* equivalent.
+     *    \param c2 Reference to the ColorFloat struct that is the second one in the inequality comparison.
+     * \note This function relies on (*this), which is a dereferenced pointer to the first ColorFloat struct in the inequality comparison.
+     *       (its the one on the left side of the != sign).
+     * \note Thus function is also only used in Unit testing.
+     * \returns true if the two ColorFloats are not equivalent, false if otherwise.
+     */
+    bool operator!=(ColorFloat& c2);
 };
 
 /*!
@@ -89,14 +106,14 @@ struct ColorInt {
     ColorInt();
 
     /*!
-     * \brief Explicitly create a ColorInt struct.
+     * \brief Explicitly constructs a ColorInt struct.
      * \details Explicit constructor for a ColorInt struct.
      *      \param r The red component of the ColorInt struct.
      *      \param g The green component of the ColorInt struct.
      *      \param b The blue component of the ColorInt struct.
      *      \param a The alpha component of the ColorInt struct (set to 255 by default).
-     * \warning An invariant is held where if any of the specified values is out of the
-     *          range 0 - 255 inclusive then an error is given with corrective action taken.
+     * \warning An invariant is held where if any of the specified values are out of the
+     *          range 0 - 255 inclusive then an error message is given.
      * \return A ColorInt struct with the specified R, G, B, and A values.
      */
     ColorInt(int r, int g, int b, int a = 255);
@@ -115,8 +132,27 @@ struct ColorInt {
      */
     operator ColorFloat();
 
-    bool operator==(ColorInt& c1);
-    bool operator!=(ColorInt& c1);
+    /*!
+     * \brief Determines if two ColorInts are equivalent.
+     * \details Equality operator for two ColorInts. Determines if they are equivalent.
+     *    \param c2 Reference to the ColorInt struct that is the second one in the equivalence comparison.
+     * \note This function relies on (*this), which is a dereferenced pointer to the first ColorInt struct in the comparison.
+     *       (its the one on the left side of the == sign).
+     * \note This function is also only used in Unit testing.
+     * \returns true if the two ColorInt are equivalent, false if otherwise.
+     */
+    bool operator==(ColorInt& c2);
+
+    /*!
+     * \brief Determines if two ColorInts are *NOT* equivalent.
+     * \details Inequality operator for two ColorInts. Determines if they are *NOT* equivalent.
+     *    \param c2 Reference to the ColorInt struct that is the second one in the inequality comparison.
+     * \note This function relies on (*this), which is a dereferenced pointer to the first ColorInt struct in the inequality comparison.
+     *       (its the one on the left side of the != sign).
+     * \note Thus function is also only used in Unit testing.
+     * \returns true if the two ColorInts are not equivalent, false if otherwise.
+     */
+    bool operator!=(ColorInt& c2);
 };
 
 /*!
@@ -147,7 +183,7 @@ struct ColorHSV {
      *      \param v Value component of the ColorHSV struct.
      *      \param a Alpha component of the ColorHSV struct (set to 1.0f by default).
      * \warning An invariant is held for each of the components where if any of them are
-     *          out of range then an error is given followed by corrective action taken.
+     *          out of range then an error message is given.
      * \return A ColorHSV struct with specified H, S, V, and A values.
      */
     ColorHSV(float h, float s, float v, float a = 1.0f);
@@ -196,13 +232,12 @@ class Colors {
      * \details This function returns a ColorFloat whose hue is calculated from the provided section number and
      *  the total number of sections.
      *  This function is used for creating a chromatic gradient from one part of the spectrum to another.
-     *      \param sections Integer specifying the total number of sections.
-     *      \param section Integer specifying the current section.
+     *      \param sections Unsigned integer specifying the total number of sections.
+     *      \param section Unsigned integer specifying the current section.
      *      \param value Value component, between 0 and 1 inclusive.
      *      \param alpha Alpha component, between 0 and 1 inclusive (set to 1.0f by default).
-     * \warning An invariant is held where if value or alpha is greater than 1 or less than 0 then an error is given
-     *          followed by corrective action taken.
-     * \return A ColorFloat with a hue calculated as 6.0f / sections*section, saturation of 1.0, and the given value
+     * \warning An invariant is held where if value or alpha is greater than 1 or less than 0 then an error message is given.
+     * \return A ColorFloat with a hue calculated as 6.0f / sections*section, saturation of 1.0f, and the given value
      *  and alpha components.
      */
     static ColorFloat divideIntoChromaticSections(unsigned int sections, unsigned int section, float value, float alpha = 1.0f);
@@ -212,9 +247,9 @@ class Colors {
      * \details This function returns a ColorFloat whose hue is calculated from the provided section number and
      *  the total number of sections.
      *  This function is used for creating a chromatic gradient from one part of the spectrum to another.
-     *      \param sections Integer specifying the total number of sections.
-     *      \param section Integer specifying the current section.
-     * \return A ColorFloat with a hue calculated as 6.0f / sections*section, and a saturation, value, and alpha of 1.0.
+     *      \param sections Unsigned integer specifying the total number of sections.
+     *      \param section Unsigned integer specifying the current section.
+     * \return A ColorFloat with a hue calculated as 6.0f / sections*section, and a saturation, value, and alpha of 1.0f.
      */
     static ColorFloat divideIntoChromaticSections(unsigned int sections, unsigned int section);
 
@@ -224,7 +259,7 @@ class Colors {
      *      \param alpha Alpha of the random color to generate. An alpha of 0 will set the alpha to a random
      *       legal value (set to 0.0f by default).
      * \warning An invariant is held for the alpha value where if its greater than 1 or less than 0
-     *          then an error is given followed by corrective action taken.
+     *          then an error message is given.
      * \return A random ColorFloat.
      */
     static ColorFloat randomColor(float alpha = 0.0f);
@@ -238,7 +273,7 @@ class Colors {
      *      \param bias A bias between 0 and 1 inclusive.  A bias of 0 returns c1, a bias of 1 returns c2, and a
      *       bias in between returns a linear interpolation.
      * \warning An invariant is held for the bias where if its greater than 1 or less than 0 then
-     *          an error is given followed by corrective action taken.
+     *          an error message is given.
      * \return A ColorFloat linearly interpolated between c1 and c2 using the given bias as a weight.
      */
     static ColorFloat blendedColor(ColorFloat c1, ColorFloat c2, float bias);
@@ -247,9 +282,9 @@ class Colors {
      * \brief Returns an HSV color with high contrast.
      * \details This function returns a ColorHSV with hue, saturation, and value all calculated
      *  from the section number and start.
-     *      \param section Integer representing the current section.
+     *      \param section Unsigned integer representing the current section.
      *      \param start Integer representing where to start at that section (set to 0 by default).
-     * \return A ColorFloat.
+     * \return A ColorFloat determined from an array of ColorFloats where the index of the returned ColorFloat is at (section+start) % 64.
      */
     static ColorFloat highContrastColor(unsigned int section, int start = 0);
 

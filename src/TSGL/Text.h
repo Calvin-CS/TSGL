@@ -31,11 +31,11 @@ class Text : public Shape {
      * \brief Explicitly constructs a new Text instance.
      * \details This is the constructor for the Text class.
      *      \param s The string to draw.
-     *      \param loader A pointer to the TextureHandler with which to load the font.
+     *      \param loader A reference pointer to the TextureHandler with which to load the font.
      *      \param x The x coordinate.
      *      \param y The y coordinate.
      *      \param size The size of the text in pixels.
-     *      \param color A color.
+     *      \param color A reference to the ColorFloat to use.
      * \return A new Text instance with the specified string, position, and color.
      */
     Text(std::wstring s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color);

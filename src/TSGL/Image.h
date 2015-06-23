@@ -38,13 +38,13 @@ class Image : public Shape {
      * \brief Explicitly constructs a new Image.
      * \details This is the explicit constructor for the Image class.
      *      \param f The filename of the image to load.
-     *      \param loader A pointer to the TextureHandler with which to load the image.
+     *      \param loader A reference pointer to the TextureHandler with which to load the image.
      *      \param x The x coordinate of the left of the Image.
      *      \param y The y coordinate of the top of the Image.
      *      \param w The width of the Image.
      *      \param h The height of the Image.
      *      \param a The alpha of the Image.
-     * \return A new Image drawn with the specified coordinates, dimensions, and transparency.
+     * \return A new Image is drawn with the specified coordinates, dimensions, and transparency.
      * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
      */
     Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, float a);
