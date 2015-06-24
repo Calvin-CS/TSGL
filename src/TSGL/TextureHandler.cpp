@@ -9,7 +9,36 @@ namespace tsgl {
     #define STB_IMAGE_IMPLEMENTATION
     #include "stb/stb_image.h"
     #define STB_DEFINE
-    #include "stb/stb.h"
+//It may look truly awful....but its an easy way to turn off warnings
+//solely for stb.h. Sorry :'(
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-fpermissive"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-compare"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wwrite-strings"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wint-to-pointer-cast"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wtype-limits"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
+  #include "stb/stb.h"
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
+#pragma GCC diagnostic pop
   #endif
 
 #define GL_GLEXT_PROTOTYPES

@@ -58,7 +58,7 @@ public:
   /*!
    * \brief Destroys a Mandelbrot object and any children of the Mandelbrot class.
    * \details Destructor for the Mandelbrot class and its children.
-   * \note Does not actually do anything.
+   * \note Does absolutely nothing.
    */
   virtual ~Mandelbrot() {};
 

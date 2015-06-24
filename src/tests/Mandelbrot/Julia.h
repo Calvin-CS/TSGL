@@ -51,7 +51,7 @@ public:
   /*!
    * \brief Destroys a Julia object.
    * \details Destructor for the Julia class.
-   * \return Frees up any allocated memory from a Julia object.
+   * \note Does absolutely nothing.
    */
   virtual ~Julia();
 

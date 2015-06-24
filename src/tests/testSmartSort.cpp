@@ -101,7 +101,12 @@ struct sortData {
 
 /*!
  * \brief Visualization of the mergesort algorithm.
- *
+ * \details Utilizes the sortData struct and sorts a number of items using the mergesort algorithm.
+ * \details Uses lines to represent the items being sorted.
+ * \details At the start, the items being sorted are all divided.
+ * \details Once items have been sorted in one divided section, then sections are merged and the process repeats itself.
+ * \details Different colors represent different sections being sorted.
+ * \details Once all items have been sorted and merged, the animation stops and all lines are colored white.
  */
 void smartSortFunction(Canvas& can, int threads, int size) {
   const int IPF = 1;      // Iterations per frame
@@ -169,6 +174,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
 }
 
 //Takes in command line arguments for the window width and height
+//as well as for the number of threads to use
 int main(int argc, char* argv[]) {
     int s = (argc > 1) ? atoi(argv[1]) : 1024;
     if (s < 10) s = 10;

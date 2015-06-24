@@ -14,12 +14,16 @@ using namespace tsgl;
  * \brief Grabs the pixels from an image on the Canvas and converts them to grayscale.
  * \details
  * - Predetermine the number of threads and line thickness and store them in variables.
- * - Set up the internal timer of the Canvas to expire every ( \b FRAME / 2 ) seconds.
+ * - Check if the passed parameter for the number of threads is valid:
+ *    - If its a negative value, change the sign to be positive.
+ *    - If its greater than 30, assign 30 to the number of threads to use.
+ *    - Else, assign the passed parameter to the number of threads to use.
+ * - Set up the internal timer of the Canvas to expire every ( \b FRAME * 2 ) seconds.
  * - Store the Canvas' dimensions for ease of use.
  * - Stretch a fancy image over the Canvas.
  * - Tell the internal timer to manually sleep for a quarter of a second (to assure the draw buffer is filled).
  * - Initialize a pointer to the Canvas' screen buffer.
- * - Set up a parallel OMP block with \b THREADS threads.
+ * - Set up a parallel OMP block with \b threads threads.
  * - Get the actual number of spawned threads and store it in: \b nthreads.
  * - Compute the \b blocksize based on the Canvas height and \b nthreads.
  * - Compute the current thread's row based on \b blocksize and the thread's id.
@@ -41,7 +45,7 @@ using namespace tsgl;
  * \param numberOfThreads Reference to the number of threads to use.
  */
 void greyScaleFunction(Canvas& can, int & numberOfThreads) {
-    int threads = 0;
+  int threads = 0;
   if (numberOfThreads < 0) {
     numberOfThreads *= -1;
     threads = numberOfThreads;
@@ -52,7 +56,7 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
   }
   const unsigned int thickness = 3;
   unsigned int width = can.getWindowWidth(),
-      height = can.getWindowHeight();
+               height = can.getWindowHeight();
   can.drawImage("../assets/colorful_cars.jpg", 0, 0, width, height);
   Timer::threadSleepFor(.25);
   uint8_t* buffer = can.getScreenBuffer();
