@@ -1,8 +1,8 @@
 /*
- * testAlphaLangton.cpp
+ * LangtonAnt.h contains the class that creates a Langton's Ant that is used for the testLangton functions.
  *
  *  Created on: May 27, 2015
- *      Author: cpd5
+ *      Author: Patrick Crain
  */
 
 #ifndef LANGTONANT_H_
@@ -23,7 +23,13 @@ enum direction {
 };
 
 /*!
- *
+ * \class LangtonAnt
+ * \brief Create one of Langton's Ant!
+ * \details Contains all of the data and method needed in order to simulate a LangtonAnt.
+ * \details You can change the color either by manually setting the red, green, and blue components
+ * or by passing a ColorFloat struct that contains those values.
+ * \details The movement of each LangtonAnt is determined by its direction; UP, DOWN, LEFT, or RIGHT.
+ * \details You can also set each LangtonAnt object to have an alpha value in order to make them transparent.
  */
 class LangtonAnt {
 public:
@@ -40,11 +46,13 @@ public:
      * \param b Blue component for the color of the LangtonAnt object.
      * \param d The direction of the LangtonAnt object.
      * \param p Pointer to the AntFarm object that the LangtonAnt object belongs to.
+     * \return The constructed LangtonAnt object.
      */
     LangtonAnt(int x, int y, int r, int g, int b, int d, AntFarm* p);
 
     /*!
-     *
+     * \brief Move the LangtonAnt object.
+     * \details Set to movement of the LangtonAnt object based off of its current direction (UP, DOWN, LEFT, or RIGHT).
      */
     void move();
 

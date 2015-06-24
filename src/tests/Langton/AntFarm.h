@@ -18,7 +18,12 @@ using namespace tsgl;
 class LangtonAnt;  //Forward Declaration
 
 /*!
- *
+ * \class AntFarm
+ * \brief Display one or more of Langton's Ant!
+ * \details Contains the data and method needed in order to hold and move around one or more LangtonAnt objects.
+ * \details You can have one LangtonAnt, or multiple.
+ * \details You can move them in parallel, or in sequence.
+ * \details You can also shade the colors of each LangtonAnt.
  */
 class AntFarm {
 private:
@@ -61,17 +66,22 @@ public:
     void addAnt(int x, int y, int r, int g, int b, int d);
 
     /*!
-     *
+     * \brief Move the ants.
+     * \details Move the LangtonAnts that are currently in the AntFarm object.
      */
     void moveAnts();
 
     /*!
-     *
+     * \brief Shade the ants.
+     * \details Determines if we should shade the LangtonAnt(s) so that they have a darker color or not.
+     * \param b A boolean determining if we should shade the LangtonAnt(s) or not.
      */
     void setShading(bool b);
 
     /*!
-     *
+     * \brief Moves the ants in parallel.
+     * \details Determines if we should move the LangtonAnt(s) in parallel or not.
+     * \param b A boolean determining if we should move the LangtonAnt(s) in parallel or not.
      */
     void setParallel(bool b);
 };

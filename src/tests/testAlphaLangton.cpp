@@ -16,8 +16,9 @@ using namespace tsgl;
  * \brief Simulates 4 Langton's Ants with alpha transparency used for drawing and a couple
  * other neat features.
  * \details Mostly the same as langtonColonyFunction(), but with a couple key differences:
- * - Each ant is drawn with an alpha (transparency) value of 16 (~0.06)
- * - We set up an additional timer \b pulse to keep track of intervals between clearing the screen
+ * - Each ant is drawn with an alpha (transparency) value of 16 (~0.06).
+ * - There are four LangtonAnts in the AntFarm object (same as langtonColonyFunction() ) *BUT* they have alpha transparency.
+ * - We set up an additional timer \b pulse to keep track of intervals between clearing the screen.
  * - We set up a function \b tempo, which resets the \b pulse timer, sets its interval to the
  * time since the last reset, and makes the Canvas clear itself at that interval.
  * - We bind the left mouse button and the enter button to the described \b tempo function.
@@ -25,7 +26,7 @@ using namespace tsgl;
  * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear
  * the screen.
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void alphaLangtonFunction(Canvas& can) {
     const int IPF = 5000,                   // Iterations per frame

@@ -12,12 +12,11 @@
 using namespace tsgl;
 
 /*!
- * \brief Simulates 4 Langton's Ants with alpha transparency (with screenshot capabilities).
+ * \brief Simulates 4 LangtonAnts with alpha transparency (with screenshot capabilities).
  * \details Same as alphaLangtonFunction, with a few key differences:
  * - The enter key is bound to pause the whole animation.
  * - The space key is bound to clear the screen.
- * -
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void screenshotLangtonFunction(Canvas& can) {
     const int IPF = 5000,                         // Iterations per frame
@@ -52,6 +51,7 @@ void screenshotLangtonFunction(Canvas& can) {
     }
 }
 
+//Takes command-line arguments for the width and height of the screen
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;

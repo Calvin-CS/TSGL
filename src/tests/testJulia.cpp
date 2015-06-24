@@ -9,6 +9,11 @@
 
 using namespace tsgl;
 
+/*!
+ * \brief Draws a Julia set.
+ * \details It is drawn in this way:
+ * -
+ */
 void juliaFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
     Julia j(threads,depth);
     j.bindings(can);
