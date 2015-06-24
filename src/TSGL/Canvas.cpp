@@ -130,13 +130,13 @@ void Canvas::draw() {
 
     setBackgroundColor(bgcolor); //Set our initial clear / background color
 
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    
+    glViewport(0,0,winWidth,winHeight);
+
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
-//        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//        glViewport(0,0,winWidth,winHeight);
         drawTimer->sleep(true);
-//        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-//        glViewport(0,0,winWidth,winHeight);
 
       #ifdef __APPLE__
         windowMutex.lock();
@@ -144,11 +144,12 @@ void Canvas::draw() {
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
 
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
+
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frameBuffer);
+        glDrawBuffer(GL_COLOR_ATTACHMENT0);
+        glViewport(0,0,winWidth,winHeight);
+        if (toClear) glClear(GL_COLOR_BUFFER_BIT);
         toClear = false;
-
-//        glPointSize(20);
-
-        drawRectangle(0,0,100,100,ColorFloat(1,1,1,0.5f));
 
         realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
@@ -191,22 +192,45 @@ void Canvas::draw() {
         }
 
         // Update our screenBuffer copy with the screen
+        //glViewport(0,0,winWidth*2,winHeight*2);
+        myShapes->clear();                           // Clear our buffer of shapes to be drawn
+
+
+        //glBindFramebuffer(GL_DRAW_FRAMEBUFFER,frameBuffer);
+        glBindFramebuffer(GL_READ_FRAMEBUFFER,frameBuffer);
+        //glDrawBuffer(GL_COLOR_ATTACHMENT0);
+        glReadBuffer(GL_COLOR_ATTACHMENT0);
+        //glViewport(0,0,winWidth,winHeight);
+        //glDrawPixels(winWidth/2,winHeight/2,GL_RGB,GL_UNSIGNED_BYTE,screenBuffer);
+
+        //glFlush();                                   // Flush buffer data to the actual draw buffer
+        //glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
+
         glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
         if (toRecord > 0) {
           screenShot();
           --toRecord;
         }
-        myShapes->clear();                           // Clear our buffer of shapes to be drawn
+      
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
+        glDrawBuffer(drawBuffer);
+        glBindFramebuffer(GL_READ_FRAMEBUFFER,0);
+        glReadBuffer(drawBuffer);
 
-//        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//        glViewport(0,0,winWidth,winHeight);
-
+        float vertices[32] = {0,0,1,1,1,1,0,0,winWidth,0,1,1,1,1,1,0,0,winHeight,1,1,1,1,0,1,winWidth,winHeight,1,1,1,1,1,1};
+        glBindTexture(GL_TEXTURE_2D,renderedTexture);
+        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+        //glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,winWidth,winHeight,0,GL_RGB,GL_UNSIGNED_BYTE,screenBuffer);
+        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        //glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
+        //glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+        //glRasterPos4f(0,0,0,1);
+        //glDrawPixels(winWidth,winHeight,GL_RGB,GL_UNSIGNED_BYTE,screenBuffer);
         glFlush();                                   // Flush buffer data to the actual draw buffer
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
-
-//        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-//        glViewport(0,0,winWidth,winHeight);
-
       #ifndef __APPLE__
         glfwPollEvents();                            // Handle any I/O
       #endif
@@ -653,7 +677,6 @@ void Canvas::initGlew() {
     glGenFramebuffers(1, &frameBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
     // The texture we're going to render to
-    GLuint renderedTexture;
     glGenTextures(1, &renderedTexture);
     // "Bind" the newly created texture : all future texture functions will modify this texture
     glBindTexture(GL_TEXTURE_2D, renderedTexture);
@@ -672,7 +695,7 @@ void Canvas::initGlew() {
       TsglErr("FRAMEBUFFER CREATION FAILED");
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0,0,winWidth,winHeight);
+    //glViewport(0,0,winWidth,winHeight);
 }
 
 void Canvas::initGlfw() {
@@ -693,7 +716,7 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);                    // Disable the back buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once

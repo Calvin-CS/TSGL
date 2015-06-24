@@ -74,6 +74,7 @@ private:
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     uint8_t*        focusBuffer;                                        // Holds a copy of the Canvas's window when it loses focus
     GLuint          frameBuffer;
+    GLuint          renderedTexture;
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
