@@ -145,7 +145,11 @@ void Canvas::draw() {
 
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
 
+      #ifdef __APPLE__
         glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+      #else
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+      #endif
         glDrawBuffer(GL_COLOR_ATTACHMENT0);
         glViewport(0,0,winWidth,winHeight);
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
@@ -197,7 +201,11 @@ void Canvas::draw() {
 
 
         //glBindFramebuffer(GL_DRAW_FRAMEBUFFER,frameBuffer);
-        glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT,frameBuffer);
+      #ifdef __APPLE__
+        glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+      #else
+        glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+      #endif
         //glDrawBuffer(GL_COLOR_ATTACHMENT0);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
         //glViewport(0,0,winWidth,winHeight);
@@ -214,8 +222,6 @@ void Canvas::draw() {
       
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
         glDrawBuffer(drawBuffer);
-        glBindFramebuffer(GL_READ_FRAMEBUFFER,0);
-        glReadBuffer(drawBuffer);
 
         textureShaders(true);
         float vertices[32] = {
@@ -680,7 +686,11 @@ void Canvas::initGlew() {
     // Create a framebuffer
     frameBuffer = 0;
     glGenFramebuffersEXT(1, &frameBuffer);
+#ifdef __APPLE__
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBuffer);
+#else
+    glBindFramebuffer(GL_FRAMEBUFFER_EXT, frameBuffer);
+#endif
     // The texture we're going to render to
     glGenTextures(1, &renderedTexture);
     // "Bind" the newly created texture : all future texture functions will modify this texture
