@@ -25,10 +25,12 @@ using namespace tsgl;
  *    - Reset the old x and old y to some new coordinates.
  *    - Draw the second sea urchin.
  *    - Continue the pattern until all sea urchins are drawn.
- *    - Now, draw the spotlights in the top left and bottom right corners.
+ *    - After the sea urchins have been drawn, draw the spotlights in the top left
+ *      and bottom right corners.
  *    - Clear the Canvas.
- *- Repeat this process until the Canvas has been closed.
- *- If the Canvas has been closed, output a message to the console saying "You killed my sea urchins!"
+ *    .
+ *- If the Canvas has been closed, output a message to the console saying "YOU KILLED MY SEA URCHINS! :'("
+ * .
  * \param can Reference to the Canvas being drawn on.
  */
 void seaUrchinFunction(Canvas& can) {

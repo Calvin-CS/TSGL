@@ -15,7 +15,9 @@ void juliaFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
     j.draw(can);
 }
 
-//Takes command line arguments for the number of threads
+//Takes command line arguments for the width and height of the screen
+//as well as for the number of threads and for the number of iterations to go to
+//in order to draw the Julia set.
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;

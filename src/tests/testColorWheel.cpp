@@ -19,9 +19,9 @@ const double PI = M_PI;
 const double RAD = PI / 180;  // One radian in degrees
 
 /*!
- * \brief Draws a gradient color wheel using OMP with multiple threads per processor and private per-thread variables
+ * \brief Draws a gradient color wheel using OMP with multiple threads per processor and private per-thread variables.
  * \details
- * - \b THREADS is set to a number greater than the number of physical processors
+ * - \b THREADS is set to a number greater than the number of physical processors.
  * - The center of the canvas is computed and stored.
  * - The radius of the wheel is computed (using the minimum of the Canvas width / height) and stored.
  * - The size of the \b GRADIENT is computed and stored.
@@ -32,18 +32,18 @@ const double RAD = PI / 180;  // One radian in degrees
  * - The actual number of threads is stored in: \b nthreads.
  * - A color \b delta is computed.
  * - Each thread's thread id ( \b tid ) is stored.
- * - Each thread's shading is computed using it's id and \b nthreads
+ * - Each thread's shading is computed using it's id and \b nthreads.
  * - While the Canvas is open:
- *   - The internal timer sleeps until the next frame is ready to be drawn
- *   - Each thread's \b start is computed using the timer's lifetime and it's current id
+ *   - The internal timer sleeps until the next frame is ready to be drawn.
+ *   - Each thread's \b start is computed using the timer's lifetime and it's current id.
  *   - The second and third coordinates of a triangle approximating an arc of a circle are
  *   computed using the \b GRADIENT and the thread's \b start position.
- *   A triangle is drawn on the Canvas for each thread, with the first vertex in the center, and
+ *   - A triangle is drawn on the Canvas for each thread, with the first vertex in the center, and
  *   the second and third vertices as computed above, with a hue based on the precomputed \b start,
  *   full saturation, and a value of \b shading.
  *   .
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to
  */
 void colorWheelFunction(Canvas& can) {
     const int THREADS = 64,                           // Number of threads to compute with

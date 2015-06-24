@@ -4,8 +4,6 @@ QUICK NOTES
 + To close the window after each successive test, press the ESC key.
 + Some tests have I/O capabilities, in particular: testAlphaLangton, testBallroom, testGradientMandelbrot, testJulia,  testMandelbrot, testMouse, testPong, testProjectiles, and
     testScreenshotLangton.
-+ Some are not in the runtests bash script. They are the ones that have stars next to their names. But they can still be run by typing: cd bin, and then typing ./test******* and replacing 
-    the ******* with whatever the name of the test you wish to run is. You can also do this for each individual test.
 + Some of the tests also take command-line arguments. They will be marked with a ++.
 + Lastly, some tests will have two windows. One will be a progress bar/tiled square, the other will be a window for the test animation. Close each window with ESC key as normal.
     The progress bar shows how much work each thread needs to do, the tiled square shows how much work each thread did in the animation.
@@ -22,7 +20,7 @@ testBuddhabrot++ - Draws a Buddhabrot on the screen, see https://en.wikipedia.or
 				             width and height of the screen as well as the number of threads to use.
 testColorPoints++ -  A pattern is drawn to the screen. Takes command-line arguments for the width and height of the screen as well as for the number of threads to use. 
 testColorWheel++ - Shows a color wheel that acts as a sort of sonar device. Takes command-line arguments for the width and height of the screen. 
-testConcavePolygon*++ - Draws two Concave polygons on the screen. See http://www.mathopenref.com/polygonconcave.html for information on what a Concave polygon is.
+testConcavePolygon++ - Draws two Concave polygons on the screen. See http://www.mathopenref.com/polygonconcave.html for information on what a Concave polygon is.
 						    Takes command-line arguments for the width and height of the screen.
 testConway++ - Simulates Conway's game of life. See https://en.wikipedia.org/wiki/Conway's_Game_of_Life for more details. Takes command-line arguments for the width and 
 				    height of the screen.	
@@ -32,7 +30,7 @@ testDumbSort++ - Visual representation of a Shaker sort (or Bubble sort as some 
 testForestFire++ - Simulates a forest fire. Takes command-line arguments for the width and height of the screen.
 testFunction++ - Visualizes the output of certain functions on the screen. In particular, the Cosine and Power functions as well as a special one. Takes command-line arguments for 
 				      the width and height of the screen.
-testGetPixels* - Takes a few pixels from a photo and overwrites them with a new pixel that has a different color. 
+testGetPixels - Takes a few pixels from a photo and overwrites them with a new pixel that has a different color. 
 testGradientMandelbrot++ - Draws a Mandelbrot set but with a gradient fill and color palate. See http://linas.org/art-gallery/escape/smooth.html for what a Mandelbrot set is. 
 								 I/O capabilities:  Scroll up on the mouse wheel to zoom in, scroll down to zoom out. Clicking on the left mouse button does the same thing for zooming
 								in. Clicking on the right mouse button does the same thing for zooming out. Takes command-line arguments for the width and height of the screen as 
@@ -44,7 +42,7 @@ testGreyscale++ - Takes pixels from an colored image and converts them to greysc
 testHighData - Simple stress test for the Canvas class where a large number of pixels are drawn to the screen at a high framerate.
 testImage - Draws a set of images on a screen. 
 testImageCart - Draws a set of images on a screen that has a Cartesian coordinate system. 
-testInverter* - Inverts the colors of an colored image to their greyscale colors. 
+testInverter - Inverts the colors of an colored image to their greyscale colors. 
 testJulia++ - Displays a Julia set. See https://en.wikipedia.org/wiki/Julia_set for more details on what a Julia set is. Takes command-line arguments for the width and the height of the
 			     screen as well as for the number of threads to use and the depth of the set. I/O capabilities: Scroll up with the mouse wheel to zoom in, scroll down to zoom out.
 testLangton++ -  Displays another simulation of Langton's Ant with red ants. Takes command-line arguments for the width and height of the screen.
@@ -59,13 +57,13 @@ testMaster* - Does nothing at the moment.
 testMouse++ - A painting tool with the mouse on a white screen. I/O capabilities:  Clicking and holding down on the left mouse button while dragging the mouse around on the 
 				white background draws a line. Releasing the left mouse button draws a Convex polygon based on the outline of the shape drawn with the mouse's path.
 				Pressing the spacebar clears the screen. Takes command-line arguments for the width and height of the screen.
-testMultiCanvas++* - Tests the ability of the library to have multiple screens open at once.
+testMultiCanvas++ - Tests the ability of the library to have multiple screens open at once.
 testNewtonPendulum - Displays a simulation of Newton's Pendulum (or Newton's Cradle as some call it). See https://en.wikipedia.org/wiki/Newton's_cradle for more details.
 testNova++ - Displays a Nova fractal. See http://en.wikipedia.org/wiki/Nova_fractal for more details. Takes command-line arguments for the width and height of the screen as well as
 			      for the number of threads to use.
 testPong - Play the hit old-school game, Pong. I/O capabilities: The w and s keys are for moving the left paddle up and down (respectively) and the up and down arrow keys move the
 			right paddle up and down (respectively). 
-testProgressBar++* - Displays the progress bar that is shown in testMandelbrot. Takes command-line arguments for the width and height of the screen.
+testProgressBar++ - Displays the progress bar that is shown in testMandelbrot. Takes command-line arguments for the width and height of the screen.
 testProjectiles++ - Play a target shooting game. There are 10 targets and you have to hit the center of the target in order to get a point. Your score is printed after all 10 targets have 
 					  been displayed. I/O capabilities: Click the mouse in the center of the target to get a point. Takes command-line arguments for the width and height of the screen.
 testSeaUrchin - Displays colorful sea urchins with the title, "Sea Urchins in the Spotlight!" If you close the window, the message "YOU KILLED MY SEA URCHINS! : ' (" is outputted to the
@@ -82,5 +80,5 @@ testSpectrum++ - Draws the full spectrum of colors across the screen and changes
 testText - Displays text on the screen. 
 testTextCart - Displays text on a screen that has a Cartesian coordinate system.
 testTextTwo - Displays text on the screen (in a different font).
-testUnits* - Unit tests for a set number of key classes used in the library. 
+testUnits - Unit tests for a set number of key classes used in the library. 
 testVoronoi++ - Displays another Voronoi pattern. Takes command-line arguments for the width and height of the screen.  

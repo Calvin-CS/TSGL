@@ -7,7 +7,7 @@ Mandelbrot::Mandelbrot(unsigned threads, unsigned depth) {
     myRedraw = true;
 }
 
-void Mandelbrot::bindings(CartesianCanvas& can) {
+void Mandelbrot::bindings(Cart& can) {
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, this]() {
       can.clear();
       this->myRedraw = true;
@@ -39,7 +39,7 @@ void Mandelbrot::bindings(CartesianCanvas& can) {
     });
   }
 
-void Mandelbrot::draw(CartesianCanvas& can) {
+void Mandelbrot::draw(Cart& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
   const int XBRD = 10;                    //Border for out progress bar
   const int YBRD = 40;                    //Border for out progress bar

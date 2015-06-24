@@ -133,7 +133,7 @@ class TextureHandler {
     bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
 
     /*!
-     *
+     * \brief Runs the Unit tests for TextureHandler.
      */
     static void runTests();
 };

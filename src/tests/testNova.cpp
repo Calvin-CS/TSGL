@@ -15,10 +15,11 @@ typedef CartesianCanvas Cart;
 typedef std::complex<long double> complex;
 
 /*!
- * \brief Draws a gradient Nova set on a CartesianCanvas
+ * \brief Draws a gradient Nova set on a CartesianCanvas.
  * \details Same as gradientMandelbrotFunction(), but with a nova fractal ( more time-consuming
- * to compute; see http://en.wikipedia.org/wiki/Nova_fractal ).
- * \param can, Reference to the CartesianCanvas being drawn to
+ * to compute; see http://en.wikipedia.org/wiki/Nova_fractal )and no class, ProgressBar, and depth.
+ * \param can Reference to the CartesianCanvas being drawn to.
+ * \param numberOfThreads Reference to the number of threads to use.
  */
 void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
   const unsigned int DEPTH = 200;
@@ -64,6 +65,8 @@ void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
   }
 }
 
+//Takes command-line arguments for the width and height of the screen as well as for
+//the number of threads to use
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;

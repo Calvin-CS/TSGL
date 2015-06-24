@@ -11,7 +11,7 @@ Julia::~Julia() {
 //Do nothing
 }
 
-void Julia::bindings(CartesianCanvas& can) {
+void Julia::bindings(Cart& can) {
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, this]() {
       can.clear();
       this->myRedraw = true;
@@ -43,7 +43,7 @@ void Julia::bindings(CartesianCanvas& can) {
     });
   }
 
-void Julia::draw(CartesianCanvas& can) {
+void Julia::draw(Cart& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
   VisualQueue vq(CH);
   while(myRedraw) {

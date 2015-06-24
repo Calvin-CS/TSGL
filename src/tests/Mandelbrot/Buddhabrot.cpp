@@ -21,7 +21,7 @@ Buddhabrot::~Buddhabrot() {
   delete[] counter;
 }
 
-void Buddhabrot::draw(CartesianCanvas& can) {
+void Buddhabrot::draw(Cart& can) {
   cww = can.getWindowWidth(), cwh = can.getWindowHeight();
   const unsigned long MAXITS = cww*cwh*10;
   ColorFloat tcolor(1.0f,1.0f,1.0f,0.1f);

@@ -10,18 +10,18 @@
 using namespace tsgl;
 
 /*!
- * \brief Draws semi-transparent rectangles on a Canvas
+ * \brief Draws semi-transparent rectangles on a Canvas.
  * \details
  * - Store the Canvas' width and height in variables for easy reuse.
- * - Set up the internal timer of the Canvas to expire once every \b FRAME / 10 seconds
+ * - Set up the internal timer of the Canvas to expire once every \b FRAME / 10 seconds.
  * - While the Canvas is open:
  *   - Sleep the internal timer until the Canvas is ready to draw.
- *   - Select a random position on the Canvas for a corner of a rectangle
+ *   - Select a random position on the Canvas for a corner of a rectangle.
  *   - Draw a rectangle stretching from the specified corner to another corner on the Canvas,
  *   with a random color and a transparency of 16 (~0.06).
  *   .
  * .
- * \param can, Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void alphaRectangleFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the center of the window
@@ -36,6 +36,7 @@ void alphaRectangleFunction(Canvas& can) {
     }
 }
 
+//Takes command-line arguments for the width and height of the screen
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;

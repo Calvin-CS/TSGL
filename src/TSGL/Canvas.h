@@ -617,7 +617,7 @@ public:
     void takeScreenShot();
 
     /*!
-     * \brief Runs unit tests for the Canvas,
+     * \brief Runs unit tests for the Canvas.
      */
     static void runTests();
 
