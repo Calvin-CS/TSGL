@@ -145,7 +145,7 @@ void Canvas::draw() {
 
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
 
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frameBuffer);
+        glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
         glDrawBuffer(GL_COLOR_ATTACHMENT0);
         glViewport(0,0,winWidth,winHeight);
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
@@ -197,7 +197,7 @@ void Canvas::draw() {
 
 
         //glBindFramebuffer(GL_DRAW_FRAMEBUFFER,frameBuffer);
-        glBindFramebuffer(GL_READ_FRAMEBUFFER,frameBuffer);
+        glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT,frameBuffer);
         //glDrawBuffer(GL_COLOR_ATTACHMENT0);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
         //glViewport(0,0,winWidth,winHeight);
@@ -217,20 +217,25 @@ void Canvas::draw() {
         glBindFramebuffer(GL_READ_FRAMEBUFFER,0);
         glReadBuffer(drawBuffer);
 
-        float vertices[32] = {0,0,1,1,1,1,0,0,winWidth,0,1,1,1,1,1,0,0,winHeight,1,1,1,1,0,1,winWidth,winHeight,1,1,1,1,1,1};
+        textureShaders(true);
+        float vertices[32] = {
+            0,       0,        1,1,1,1,0,1,
+            winWidth,0,        1,1,1,1,1,1,
+            0,       winHeight,1,1,1,1,0,0,
+            winWidth,winHeight,1,1,1,1,1,0
+        };
         glBindTexture(GL_TEXTURE_2D,renderedTexture);
         glPixelStorei(GL_UNPACK_ALIGNMENT,1);
-        //glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,winWidth,winHeight,0,GL_RGB,GL_UNSIGNED_BYTE,screenBuffer);
-        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        //glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-        //glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
-        //glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-        //glRasterPos4f(0,0,0,1);
-        //glDrawPixels(winWidth,winHeight,GL_RGB,GL_UNSIGNED_BYTE,screenBuffer);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+        glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
+        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+//        glDrawPixels(winWidth,winHeight,GL_RGB,GL_UNSIGNED_BYTE,screenBuffer);
         glFlush();                                   // Flush buffer data to the actual draw buffer
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
+        textureShaders(false);
       #ifndef __APPLE__
         glfwPollEvents();                            // Handle any I/O
       #endif
@@ -674,8 +679,8 @@ void Canvas::initGlew() {
     /****** NEW ******/
     // Create a framebuffer
     frameBuffer = 0;
-    glGenFramebuffers(1, &frameBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    glGenFramebuffersEXT(1, &frameBuffer);
+    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBuffer);
     // The texture we're going to render to
     glGenTextures(1, &renderedTexture);
     // "Bind" the newly created texture : all future texture functions will modify this texture
@@ -683,10 +688,12 @@ void Canvas::initGlew() {
     // Give an empty image to OpenGL ( the last "0" )
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, winWidth, winHeight, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
     // Poor filtering. Needed !
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     // Set "renderedTexture" as our colour attachement #0
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture, 0);
+    glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D,renderedTexture, 0);
     // Set the list of draw buffers.
     GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
     glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
@@ -718,6 +725,7 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
+    glfwWindowHint(GLFW_SAMPLES,4);
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
