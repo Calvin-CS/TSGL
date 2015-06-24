@@ -333,7 +333,7 @@ public:
     void zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
 
     /*!
-     *
+     * \brief Runs the Unit tests for CartesianCanvas.
      */
     static void runTests();
 };
