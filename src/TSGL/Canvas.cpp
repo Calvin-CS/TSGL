@@ -70,6 +70,8 @@ Canvas::~Canvas() {
     delete myBuffer;
     delete drawTimer;
     delete[] vertexData;
+    delete [] screenBuffer;
+    delete [] focusBuffer;
     if (--openCanvases == 0) {
         glfwIsReady = false;
         glfwTerminate();  // Terminate GLFW
@@ -130,14 +132,23 @@ void Canvas::draw() {
 
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
+//        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//        glViewport(0,0,winWidth,winHeight);
         drawTimer->sleep(true);
+//        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+//        glViewport(0,0,winWidth,winHeight);
 
       #ifdef __APPLE__
         windowMutex.lock();
       #endif
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
+
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
         toClear = false;
+
+//        glPointSize(20);
+
+        drawRectangle(0,0,100,100,ColorFloat(1,1,1,0.5f));
 
         realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
@@ -185,10 +196,16 @@ void Canvas::draw() {
           screenShot();
           --toRecord;
         }
-
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
+
+//        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//        glViewport(0,0,winWidth,winHeight);
+
         glFlush();                                   // Flush buffer data to the actual draw buffer
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
+
+//        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+//        glViewport(0,0,winWidth,winHeight);
 
       #ifndef __APPLE__
         glfwPollEvents();                            // Handle any I/O
@@ -493,8 +510,11 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
        padwidth = 4-padwidth;
     unsigned buffersize = 3 * (winWidth+padwidth+1) * winHeight;
     screenBuffer = new uint8_t[buffersize];
-    for (unsigned i = 0; i < buffersize; ++i)
+    focusBuffer = new uint8_t[buffersize];
+    for (unsigned i = 0; i < buffersize; ++i) {
       screenBuffer[i] = 0;
+      focusBuffer[i] = 0;
+    }
 
     toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet
@@ -625,8 +645,34 @@ void Canvas::initGlew() {
 
     // Specify the layout of the vertex data in our textured shader
     glLinkProgram(textureShaderProgram);
-
     textureShaders(false);
+
+    /****** NEW ******/
+    // Create a framebuffer
+    frameBuffer = 0;
+    glGenFramebuffers(1, &frameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    // The texture we're going to render to
+    GLuint renderedTexture;
+    glGenTextures(1, &renderedTexture);
+    // "Bind" the newly created texture : all future texture functions will modify this texture
+    glBindTexture(GL_TEXTURE_2D, renderedTexture);
+    // Give an empty image to OpenGL ( the last "0" )
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, winWidth, winHeight, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    // Poor filtering. Needed !
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    // Set "renderedTexture" as our colour attachement #0
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderedTexture, 0);
+    // Set the list of draw buffers.
+    GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+    glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
+    // Always check that our framebuffer is ok
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+      TsglErr("FRAMEBUFFER CREATION FAILED");
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0,0,winWidth,winHeight);
 }
 
 void Canvas::initGlfw() {
@@ -647,7 +693,7 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
@@ -676,6 +722,8 @@ void Canvas::initWindow() {
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
+//    glfwSetWindowRefreshCallback(window, refreshCallback);
+//    glfwSetWindowFocusCallback(window, focusCallback);
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

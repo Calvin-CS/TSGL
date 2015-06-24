@@ -72,6 +72,8 @@ private:
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
+    uint8_t*        focusBuffer;                                        // Holds a copy of the Canvas's window when it loses focus
+    GLuint          frameBuffer;
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
