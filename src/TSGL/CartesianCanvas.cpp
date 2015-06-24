@@ -54,7 +54,33 @@ void CartesianCanvas::drawColoredPolygon(int size, Decimal x[], Decimal y[], Col
     for (int i = 0; i < size; i++) {
         getScreenCoordinates(x[i], y[i], int_x[i], int_y[i]);
     }
+    Canvas::drawColoredPolygon(size, int_x, int_y, color, filled);
+
+    delete int_x;
+    delete int_y;
+}
+
+void CartesianCanvas::drawConcavePolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled) {
+    int* int_x = new int[size];
+    int* int_y = new int[size];
+
+    for (int i = 0; i < size; i++) {
+        getScreenCoordinates(x[i], y[i], int_x[i], int_y[i]);
+    }
     Canvas::drawConcavePolygon(size, int_x, int_y, color, filled);
+
+    delete int_x;
+    delete int_y;
+}
+
+void CartesianCanvas::drawConvexPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled) {
+    int* int_x = new int[size];
+    int* int_y = new int[size];
+
+    for (int i = 0; i < size; i++) {
+        getScreenCoordinates(x[i], y[i], int_x[i], int_y[i]);
+    }
+    Canvas::drawConvexPolygon(size, int_x, int_y, color, filled);
 
     delete int_x;
     delete int_y;

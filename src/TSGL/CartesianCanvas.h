@@ -109,6 +109,40 @@ public:
     void drawColoredPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
 
     /*!
+     * \brief Draws a concave polygon with colored vertices.
+     * \details This function draws a ConcavePolygon with the given vertex data, specified as the
+     *   outer perimeter of the polygon.
+     *   \param size The number of vertices in the polygon.
+     *   \param x An array of x positions of said vertices.
+     *   \param y An array of y positions of said vertices.
+     *   \param color An array of colors for the said vertices.
+     *   \param filled Whether the Concave polygon should be filled in or not
+     *     (set to true by default).
+     * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
+     *   that you draw convex polygons with this function.
+     * \note Identical to Canvas::drawConcavePolygon().
+     * \see drawConvexPolygon().
+     */
+    void drawConcavePolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
+
+    /*!
+     * \brief Draws a convex polygon with colored vertices.
+     * \details This function draws a ConvexPolygon with the given vertex data, specified as the
+     *   outer perimeter of the polygon.
+     *   \param size The number of vertices in the polygon.
+     *   \param x An array of the x positions of said vertices.
+     *   \param y An array of the y positions of said vertices.
+     *   \param color An array of colors for the said vertices.
+     *   \param filled Whether the ConvexPolygon should be filled in or not
+     *     (set to true by default).
+     * \note The difference between a convex polygon and a concave polygon
+     *   is that a convex polygon has all interior angles less than
+     *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
+     * \note Identical to Canvas::drawConvexPolygon().
+     */
+    void drawConvexPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
+
+    /*!
      * \brief Plots a function on the screen.
      * \details This function receives a Function as a parameter and plots the function on the CartesianCanvas.
      *   \param f Reference to the Function to plot.
