@@ -109,7 +109,7 @@ public:
     void drawColoredPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
 
     /*!
-     * \brief Draws a concave polygon with colored vertices.
+     * \brief Draws a Concave polygon with colored vertices.
      * \details This function draws a ConcavePolygon with the given vertex data, specified as the
      *   outer perimeter of the polygon.
      *   \param size The number of vertices in the polygon.
@@ -119,7 +119,7 @@ public:
      *   \param filled Whether the Concave polygon should be filled in or not
      *     (set to true by default).
      * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
-     *   that you draw convex polygons with this function.
+     *   that you draw Convex polygons with this function.
      * \note Identical to Canvas::drawConcavePolygon().
      * \see drawConvexPolygon().
      */
