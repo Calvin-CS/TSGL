@@ -43,7 +43,8 @@ void Mandelbrot::draw(Cart& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
   const int XBRD = 10;                    //Border for out progress bar
   const int YBRD = 40;                    //Border for out progress bar
-  Canvas pCan(0, 0, 800, 100, "");        //Canvas for our progress bar
+  const int PBWIDTH = 800;
+  Canvas pCan(0, 0, PBWIDTH, 100, "");        //Canvas for our progress bar
   pCan.start();
   ProgressBar pb(
     XBRD,YBRD,pCan.getWindowWidth()-XBRD*2,pCan.getWindowHeight()-YBRD*2,
@@ -65,8 +66,10 @@ void Mandelbrot::draw(Cart& can) {
       long double startrow = blocksize * tid + can.getMinY();
       for(unsigned int k = 0; k <= blockheight && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
         pb.update(k+(CH*tid)/nthreads);
-        pCan.drawRectangle(XBRD,YBRD,pCan.getWindowWidth()-XBRD,pCan.getWindowHeight()-YBRD,pCan.getBackgroundColor(),true);
-        pCan.drawText(to_string(tid), 100 + tid*200, 32, 32, BLACK);
+        //Messy, but effective
+//        pCan.drawRectangle(XBRD,YBRD,pCan.getWindowWidth()-XBRD,pCan.getWindowHeight()-YBRD,pCan.getBackgroundColor(),true);
+        //Elegant, but flickery
+        pCan.clear();
         pCan.drawProgress(&pb);
         long double row = startrow + can.getPixelHeight() * k;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {

@@ -14,6 +14,6 @@
 #include "Color.h"
 #include "Keynums.h"
 #include "Error.h"
-#include "VisualQueue.h"
+#include "VisualTaskQueue.h"
 
 #endif /* TSGL_H_ */

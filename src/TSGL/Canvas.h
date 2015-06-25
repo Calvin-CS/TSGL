@@ -73,10 +73,11 @@ private:
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     uint8_t*        focusBuffer;                                        // Holds a copy of the Canvas's window when it loses focus
-    GLuint          frameBuffer;
-    GLuint          renderedTexture;
+    GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
+    GLuint          renderedTexture;                                    // Texture to which we render to every frame
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
+    bool            hasEXTFramebuffer;                                  // Whether or not the hard supports EXT FBOs
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice

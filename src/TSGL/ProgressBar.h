@@ -65,6 +65,9 @@ class ProgressBar {
      */
     int getSegs() { return segs; }
 
+    int getSegX(int i) { return startX[i]; }
+    int getSegY() { return yy; }
+
     /*!
      * \brief Accessor for the ProgressBar's representative Rectangle array.
      * \return A pointer to the Rectangle array representing the segments of the ProgressBar.

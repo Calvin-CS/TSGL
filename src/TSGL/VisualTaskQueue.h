@@ -1,5 +1,5 @@
-#ifndef VISUALQUEUE_H_
-#define VISUALQUEUE_H_
+#ifndef VISUALTASKQUEUE_H_
+#define VISUALTASKQUEUE_H_
 
 #include <cmath>
 #include <omp.h>
@@ -28,7 +28,7 @@ enum VQState {
  *    darker shade of the current thread's color, and finished elements are displayed in a lighter shade of the
  *    color of the thread the completed the element.
  */
-class VisualQueue {
+class VisualTaskQueue {
 private:
   int space, border;
   Canvas* vcan;
@@ -48,14 +48,14 @@ public:
    * \return A new VisualQueue with the specified maximum number of elements, rectangle side length,
    *   approximate aspect ratio, spacing between rectangles, and spacing around the borders.
    */
-  VisualQueue(int elements, int sideLength = 12, float aspect = 1.0f, int spacing = 2, int borderLength = 8);
+  VisualTaskQueue(int elements, int sideLength = 12, float aspect = 1.0f, int spacing = 2, int borderLength = 8);
 
   /*!
    * \brief VisualQueue destructor method.
    * \details This is the destructor for the VisualQueue class.
    * \details Frees up memory that was allocated to a VisualQueue instance.
    */
-  ~VisualQueue();
+  ~VisualTaskQueue();
 
   /*!
    * \brief Updates the state of the VisualQueue.
@@ -81,4 +81,4 @@ public:
 
 }
 
-#endif /* VISUALQUEUE_H_ */
+#endif /* VISUALTASKQUEUE_H_ */

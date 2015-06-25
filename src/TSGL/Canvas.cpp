@@ -145,11 +145,10 @@ void Canvas::draw() {
 
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
 
-      #ifdef __APPLE__
-        glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-      #else
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-      #endif
+        if (hasEXTFramebuffer)
+          glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+        else
+          glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
         glDrawBuffer(GL_COLOR_ATTACHMENT0);
         glViewport(0,0,winWidth,winHeight);
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
@@ -199,11 +198,10 @@ void Canvas::draw() {
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
 
 
-      #ifdef __APPLE__
-        glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-      #else
-        glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-      #endif
+        if (hasEXTFramebuffer)
+          glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+        else
+          glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
 
         glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
@@ -218,16 +216,16 @@ void Canvas::draw() {
         textureShaders(true);
         float vertices[32] = {
             0,       0,        1,1,1,1,0,1,
-            winWidth,0,        1,1,1,1,1,1,
+            winWidth-1,0,        1,1,1,1,1,1,
             0,       winHeight,1,1,1,1,0,0,
-            winWidth,winHeight,1,1,1,1,1,0
+            winWidth-1,winHeight,1,1,1,1,1,0
         };
         glBindTexture(GL_TEXTURE_2D,renderedTexture);
         glPixelStorei(GL_UNPACK_ALIGNMENT,1);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
         glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_STRIP,0,4);
         glFlush();                                   // Flush buffer data to the actual draw buffer
@@ -374,6 +372,7 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
 
 void Canvas::drawProgress(ProgressBar* p) {
     for (int i = 0; i < p->getSegs(); ++i) {
+      drawText(to_string(i),p->getSegX(i)+8,p->getSegY()-8,32,BLACK);
       drawShape(p->getRect(i));
       drawShape(p->getBorder(i));
     }
@@ -589,12 +588,6 @@ void Canvas::initGl() {
     glEnable(GL_BLEND);                                 // Enable blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
 
-#ifdef DEBUG
-    printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
-    printf("OpenGL version: %s\n", glGetString(GL_VERSION));
-    printf("GLFW version:   %s\n", glfwGetVersionString());
-#endif
-
     bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
         glfwSetWindowShouldClose(window, GL_TRUE);
     });
@@ -619,6 +612,29 @@ void Canvas::initGlew() {
         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
         exit(102);
     }
+
+    hasEXTFramebuffer = false;
+
+    GLint n, i;
+    glGetIntegerv(GL_NUM_EXTENSIONS, &n);
+    for (i = 0; i < n; i++) {
+      std::string s = reinterpret_cast< char const * >(glGetStringi(GL_EXTENSIONS, i));
+      if (s == "GL_EXT_framebuffer_object") {
+        hasEXTFramebuffer = true;
+        break;
+      }
+    }
+//    #define DEBUG
+    #ifdef DEBUG
+        printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+        printf("OpenGL version: %s\n", glGetString(GL_VERSION));
+        printf("GLFW version:   %s\n", glfwGetVersionString());
+        printf("GL Extension: ");
+        for (i = 0; i < n; i++)
+          printf("%s, ", glGetStringi(GL_EXTENSIONS, i));
+        if (hasEXTFramebuffer)
+          TsglDebug("EXT Framebuffer available");
+    #endif
 
     GLint status;
 
@@ -677,11 +693,10 @@ void Canvas::initGlew() {
     // Create a framebuffer
     frameBuffer = 0;
     glGenFramebuffersEXT(1, &frameBuffer);
-#ifdef __APPLE__
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBuffer);
-#else
-    glBindFramebuffer(GL_FRAMEBUFFER_EXT, frameBuffer);
-#endif
+    if (hasEXTFramebuffer)
+      glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBuffer);
+    else
+      glBindFramebuffer(GL_FRAMEBUFFER_EXT, frameBuffer);
     // The texture we're going to render to
     glGenTextures(1, &renderedTexture);
     // "Bind" the newly created texture : all future texture functions will modify this texture

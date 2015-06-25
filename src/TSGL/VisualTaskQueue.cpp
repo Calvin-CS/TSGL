@@ -1,8 +1,8 @@
-#include "VisualQueue.h"
+#include <VisualTaskQueue.h>
 
 namespace tsgl {
 
-VisualQueue::VisualQueue(int elements, int sideLength, float aspect, int spacing, int borderLength) {
+VisualTaskQueue::VisualTaskQueue(int elements, int sideLength, float aspect, int spacing, int borderLength) {
     space = spacing;
     border = borderLength;
     totalElements = elements;
@@ -13,11 +13,11 @@ VisualQueue::VisualQueue(int elements, int sideLength, float aspect, int spacing
     vcan->start();
 }
 
-VisualQueue::~VisualQueue() {
+VisualTaskQueue::~VisualTaskQueue() {
   delete vcan;
 }
 
-void VisualQueue::update(int index, VQState state) {
+void VisualTaskQueue::update(int index, VQState state) {
   int x = index % rowLength;
   int y = index / rowLength;
   vcan->drawRectangle(
@@ -29,7 +29,7 @@ void VisualQueue::update(int index, VQState state) {
   );
 }
 
-void VisualQueue::reset() {
+void VisualTaskQueue::reset() {
   for (int i = 0; i < totalElements; ++i) {
     int x = i % rowLength;
     int y = i / rowLength;
@@ -41,7 +41,7 @@ void VisualQueue::reset() {
   }
 }
 
-void VisualQueue::close() {
+void VisualTaskQueue::close() {
   if (vcan->getIsOpen())
     vcan->close();
   vcan->wait();  //Close our progress bar if we're done
