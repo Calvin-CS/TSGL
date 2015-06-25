@@ -46,6 +46,7 @@ run ./testScreenshot
 run ./testScreenshotLangton
 run ./testShadedVoronoi 640 480 8           #Width, Height, Threads
 run ./testSmartSort 1024                    #Elements, Threads
+run ./testSpectrogram ../assets/test.png    #Image
 run ./testSpectrum 8                        #Threads
 run ./testText
 run ./testTextCart

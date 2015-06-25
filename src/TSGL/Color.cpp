@@ -104,6 +104,42 @@ std::string ColorFloat::AsString() {
     return ss.str();
 }
 
+//From http://stackoverflow.com/questions/3018313/algorithm-to-convert-rgb-to-hsv-and-hsv-to-rgb-in-range-0-255-for-both
+ColorFloat::operator ColorHSV() {
+    ColorHSV    out;
+    double      min, max, delta;
+
+    min = R < G ? R : G;
+    min = min  < B ? min  : B;
+
+    max = R > G ? R : G;
+    max = max  > B ? max  : B;
+
+    out.V = max;                                // v
+    delta = max - min;
+    if( max > 0.0 ) { // NOTE: if Max is == 0, this divide would cause a crash
+        out.S = (delta / max);                  // s
+    } else {
+        // if max is 0, then r = g = b = 0
+            // s = 0, v is undefined
+        out.S = 0.0;
+        out.H = NAN;                            // its now undefined
+        return out;
+    }
+    if( R >= max )                           // > is bogus, just keeps compilor happy
+        out.H = ( G - B ) / delta;        // between yellow & magenta
+    else
+    if( G >= max )
+        out.H = 2.0 + ( B - R ) / delta;  // between cyan & yellow
+    else
+        out.H = 4.0 + ( R - G ) / delta;  // between magenta & cyan
+
+    if( out.H < 0.0 )
+        out.H += 6.0;
+
+    return out;
+}
+
 bool ColorFloat::operator==(ColorFloat& c2) {
     if((*this).R == c2.R && (*this).G == c2.G && (*this).B == c2.B) {
       return true;
@@ -147,6 +183,10 @@ std::string ColorInt::AsString() {
 
 ColorInt::operator ColorFloat() {
     return ColorFloat(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
+}
+
+ColorInt::operator ColorHSV() {
+    return (ColorHSV)ColorFloat(R / 255.0f, G / 255.0f, B / 255.0f, A / 255.0f);
 }
 
 bool ColorInt::operator==(ColorInt& c2) {

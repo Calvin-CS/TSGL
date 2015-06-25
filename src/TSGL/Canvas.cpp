@@ -196,23 +196,15 @@ void Canvas::draw() {
         }
 
         // Update our screenBuffer copy with the screen
-        //glViewport(0,0,winWidth*2,winHeight*2);
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
 
 
-        //glBindFramebuffer(GL_DRAW_FRAMEBUFFER,frameBuffer);
       #ifdef __APPLE__
         glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
       #else
         glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
       #endif
-        //glDrawBuffer(GL_COLOR_ATTACHMENT0);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
-        //glViewport(0,0,winWidth,winHeight);
-        //glDrawPixels(winWidth/2,winHeight/2,GL_RGB,GL_UNSIGNED_BYTE,screenBuffer);
-
-        //glFlush();                                   // Flush buffer data to the actual draw buffer
-        //glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
 
         glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
         if (toRecord > 0) {
@@ -238,7 +230,6 @@ void Canvas::draw() {
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
         glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-//        glDrawPixels(winWidth,winHeight,GL_RGB,GL_UNSIGNED_BYTE,screenBuffer);
         glFlush();                                   // Flush buffer data to the actual draw buffer
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
         textureShaders(false);

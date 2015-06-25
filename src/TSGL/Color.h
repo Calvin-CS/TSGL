@@ -20,6 +20,10 @@ const int NUM_COLORS = 256, MAX_COLOR = 255;
 
 namespace tsgl {
 
+struct ColorFloat;
+struct ColorInt;
+struct ColorHSV;
+
 /*!
  * \brief Floating point RGBA color struct.
  * \details ColorFloat defines a color with floating point red, green, blue, and alpha components.
@@ -59,6 +63,8 @@ struct ColorFloat {
      * \return A string representation of the ColorFloat.
      */
     std::string AsString();
+
+    operator ColorHSV();
 
     ColorFloat operator*(float f);
 
@@ -131,6 +137,8 @@ struct ColorInt {
      *  floating point color type (ColorFloat).
      */
     operator ColorFloat();
+
+    operator ColorHSV();
 
     /*!
      * \brief Determines if two ColorInts are equivalent.
