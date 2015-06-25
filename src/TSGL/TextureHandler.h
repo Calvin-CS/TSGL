@@ -28,6 +28,7 @@
 #include <GLFW/glfw3.h>  // For GL functions
 #include <stdexcept>
 #include <string>
+#include <cstring>
 #include <unordered_map>
 
 #include "Error.h"
@@ -108,6 +109,16 @@ class TextureHandler {
      * \return True if successful, false otherwise.
      */
     bool loadFont(const std::string& filename);
+
+    /*!
+     * \brief Gets the dimensions of an image
+     * \details Loads the header of a .png, .jpeg, or .bmp image to read their dimensions.
+     *   \param filename The file name of the picture.
+     *   \param width A reference variable for holding the width of the picture.
+     *   \param height A reference variable for holding the height of the picture.
+     * \return The texture that created from the loaded image.
+     */
+    static void getDimensions(std::string filename, int &width, int &height);
 
     /*!
      * \brief Loads an image.

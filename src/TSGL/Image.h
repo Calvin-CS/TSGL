@@ -30,8 +30,10 @@ namespace tsgl {
  */
 class Image : public Shape {
  private:
+    int myWidth, myHeight;
     float vertices[32];
     std::string myFile;
+    GLtexture myTexture;
     TextureHandler* myLoader;
  public:
     /*!
@@ -54,6 +56,9 @@ class Image : public Shape {
      * \details This function actually draws the Image to the Canvas.
      */
     void draw();
+
+    int getWidth() { return myWidth; }
+    int getHeight() { return myHeight; }
 };
 
 }

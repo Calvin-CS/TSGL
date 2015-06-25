@@ -318,6 +318,12 @@ GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int 
     return texture;
 }
 
+void TextureHandler::getDimensions(std::string filename, int &width, int &height) {
+    int w = 0, h = 0;
+    stbi_load(filename.c_str(), &w, &h, 0, 4);
+    width = w; height = h;
+}
+
 GLtexture TextureHandler::loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
                                              GLtexture &texture) const {
     unsigned char *data;

@@ -11,16 +11,20 @@ namespace tsgl {
 
 Image::Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, float a) {
     isTextured = true;  // Let the Canvas know we're a textured object
+    myWidth = w; myHeight = h;
+    if (myWidth <= 0 || myHeight <= 0) {
+      TextureHandler::getDimensions(f,myWidth,myHeight);
+    }
     myFile = f;
     myLoader = &loader;
     vertices[0] = x;
     vertices[1] = y;
-    vertices[8] = x + w;
+    vertices[8] = x + myWidth;
     vertices[9] = y;
     vertices[16] = x;
-    vertices[17] = y + h;
-    vertices[24] = x + w;
-    vertices[25] = y + h;
+    vertices[17] = y + myHeight;
+    vertices[24] = x + myWidth;
+    vertices[25] = y + myHeight;
     vertices[2] = vertices[10] = vertices[18] = vertices[26] = 1.0f;  // Texture color of the coords
     vertices[3] = vertices[11] = vertices[19] = vertices[27] = 1.0f;
     vertices[4] = vertices[12] = vertices[20] = vertices[28] = 1.0f;
@@ -33,7 +37,6 @@ Image::Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, 
 
 void Image::draw() {
     unsigned int w, h;
-    GLtexture myTexture;
     myLoader->loadPicture(myFile, w, h, myTexture);
 
     glBindTexture(GL_TEXTURE_2D, myTexture);

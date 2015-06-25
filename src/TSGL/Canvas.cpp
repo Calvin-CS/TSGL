@@ -197,7 +197,6 @@ void Canvas::draw() {
         // Update our screenBuffer copy with the screen
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
 
-
         if (hasEXTFramebuffer)
           glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
         else
