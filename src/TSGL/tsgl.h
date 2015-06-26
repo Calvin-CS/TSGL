@@ -15,5 +15,6 @@
 #include "Keynums.h"
 #include "Error.h"
 #include "VisualTaskQueue.h"
+#include "Spectrogram.h"
 
 #endif /* TSGL_H_ */

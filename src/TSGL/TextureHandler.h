@@ -94,8 +94,8 @@ class TextureHandler {
      *   position, and texture coordinates will be left unchanged.
      * \note If no font is loaded before calling this function, TSGL will attempt to locate a
      *   default font at <i>../assets/freefont/FreeMono.ttf.</i>
-     * \bug If the default font cannot be located, TSGL will crash.
      * \return True if successful, false otherwise.
+     * \bug If the default font cannot be located, TSGL will crash.
      */
     bool drawText(std::wstring text, unsigned int font_size, float* vertices);
 

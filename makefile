@@ -73,7 +73,7 @@ BINARIES=bin/testInverter bin/testGraydient bin/testColorPoints \
 	bin/testConcavePolygon bin/testNewtonPendulum bin/testConway \
 	bin/testProjectiles bin/testBallroom bin/testUnits bin/testSmartSort \
 	bin/testSeaUrchin bin/testBuddhabrot bin/testMultiCanvas bin/testMaster \
-	bin/testProgressBar bin/testJulia bin/testSpectrogram
+	bin/testProgressBar bin/testJulia bin/testSpectrogram bin/testCalcPi
 
 all: dif tsgl tests docs tutorial
 
@@ -124,6 +124,16 @@ bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mand
 bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/Buddhabrot.o
 
 #Actual compilation recipe for test binaries (appended to earlier dependencies)
+
+bin/testCalcPi: build/tests/Integrals/testCalcPi.o lib/libtsgl.a
+	@echo 'Building $(patsubst bin/%,%,$@)'
+	$(CC) $^ -o $@ $(LFLAGS)
+	@touch build/build
+
+build/tests/Integrals/testCalcPi.o: src/tests/Integrals/testCalcPi.cpp src/tests/Integrals/Integral.h
+	mkdir -p build/tests/Integrals
+	@echo 'Building testCalcPi'
+	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
 bin/test%: build/tests/test%.o lib/libtsgl.a
 	mkdir -p bin
