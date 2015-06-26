@@ -11,7 +11,7 @@ void spectrogramFunction(Canvas& can, Canvas& ocan, std::string fname) {
     float count[NUM_COLORS+1] = {0}, maxCount = 0;
     int xx[NUM_COLORS+1], yy[NUM_COLORS+1] ,maxx[NUM_COLORS+1], maxy[NUM_COLORS+1];
     ColorFloat col[NUM_COLORS+1];
-    ColorFloat black[NUM_COLORS+1](BLACK);
+    ColorFloat black[NUM_COLORS+1]{BLACK};
     xx[0] = (ow)/2;
     yy[0] = (oh)/2;
     col[0] = WHITE;
