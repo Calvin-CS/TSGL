@@ -46,6 +46,7 @@ void Julia::bindings(Cart& can) {
 void Julia::draw(Cart& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
   VisualTaskQueue vq(CH);
+  vq.showLegend(myThreads);
   while(myRedraw) {
     setRedraw(false);
     can.reset();
