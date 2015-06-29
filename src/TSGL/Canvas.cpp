@@ -130,7 +130,7 @@ void Canvas::draw() {
 
     setBackgroundColor(bgcolor); //Set our initial clear / background color
 
-//    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
     
 //    glViewport(0,0,winWidth,winHeight);
 
@@ -145,11 +145,11 @@ void Canvas::draw() {
 
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
 
-//        if (hasEXTFramebuffer)
-//          glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-//        else
-//          glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-//        glDrawBuffer(GL_COLOR_ATTACHMENT0);
+        if (hasEXTFramebuffer)
+          glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+        else
+          glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+        glDrawBuffer(GL_COLOR_ATTACHMENT0);
 //        glViewport(0,0,winWidth,winHeight);
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
         toClear = false;
@@ -197,11 +197,11 @@ void Canvas::draw() {
         // Update our screenBuffer copy with the screen
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
 
-//        if (hasEXTFramebuffer)
-//          glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-//        else
-//          glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-//        glReadBuffer(GL_COLOR_ATTACHMENT0);
+        if (hasEXTFramebuffer)
+          glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+        else
+          glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+        glReadBuffer(GL_COLOR_ATTACHMENT0);
 
         glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
         if (toRecord > 0) {
@@ -701,7 +701,7 @@ void Canvas::initGlew() {
     // "Bind" the newly created texture : all future texture functions will modify this texture
     glBindTexture(GL_TEXTURE_2D, renderedTexture);
     // Give an empty image to OpenGL ( the last "0" )
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, winWidth+1, winHeight, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, winWidth+1, winHeight-1, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
     // Poor filtering. Needed !
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -1179,7 +1179,7 @@ bool Canvas::testLine(Canvas & can) {
    can.sleepFor(1);
    ColorInt black(0, 0, 0);
    //Test 1: Near the ending endpoint? (Diagonal)
-   if(can.getPoint(249, 250) == black) {
+   if(can.getPoint(249, 249) == black) {
      passed++;
    } else {
      failed++;
@@ -1187,7 +1187,7 @@ bool Canvas::testLine(Canvas & can) {
    }
 
    //Test 2: Somewhere in the middle? (Diagonal)
-   if(can.getPoint(154, 155) == black) {
+   if(can.getPoint(155, 155) == black) {
      passed++;
    } else {
      failed++;
@@ -1195,7 +1195,7 @@ bool Canvas::testLine(Canvas & can) {
    }
 
    //Test 3: Near the starting endpoint? (Diagonal)
-   if(can.getPoint(14, 15) == black) {
+   if(can.getPoint(15, 15) == black) {
      passed++;
    } else {
      failed++;

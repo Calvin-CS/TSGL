@@ -116,7 +116,6 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, C
 void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
-    std::cout << actualX << "," << actualY << std::endl;
 
     Canvas::drawPoint(actualX, actualY, color);
 }
@@ -237,8 +236,6 @@ void CartesianCanvas::runTests() {
   CartesianCanvas c2(-1, -1, 800, 600, -1, -1, 3, 2,"");
   c2.setBackgroundColor(WHITE);
   c2.start();
-
-  std::this_thread::sleep_for(std::chrono::seconds(1));
   tsglAssert(testDraw(c2), "Unit test for drawing functions failed!");
   c2.stop();
 
@@ -253,46 +250,76 @@ bool CartesianCanvas::testDraw(CartesianCanvas& can) {
   float ph = can.getPixelHeight();
 
   //Test 1: Physical to Cartesian point mapping
-  can.drawPoint(-1.0f,-1.0f,BLACK); //bottomleft
-  can.drawPoint(3.0f,-1.0f,BLACK);  //bottomright
-  can.drawPoint(-1.0f,2.0f,BLACK);  //topleft
-  can.drawPoint(3.0f,2.0f,BLACK);   //topright
+  can.drawPoint(-1.0f,-1.0f,BLACK); //outer bottomleft
+  can.drawPoint(3.0f,-1.0f,BLACK);  //outer bottomright
+  can.drawPoint(-1.0f,2.0f,BLACK);  //outer topleft
+  can.drawPoint(3.0f,2.0f,BLACK);   //outer topright
+  can.drawPoint(0.0f,0.0f,BLACK);   //1/4 over, 1/3 down (origin)
 
-  can.drawPoint(-1.0f+pw,-1.0f+ph,BLACK); //bottomleft
-  can.drawPoint(3.0f-pw,-1.0f+ph,BLACK);  //bottomright
-  can.drawPoint(-1.0f+pw,2.0f-ph,BLACK);  //topleft
-  can.drawPoint(3.0f-pw,2.0f-ph,BLACK);   //topright
+  can.drawPoint(-1.0f+pw,-1.0f+ph,BLACK); //inner bottomleft
+  can.drawPoint(3.0f-pw,-1.0f+ph,BLACK);  //inner bottomright
+  can.drawPoint(-1.0f+pw,2.0f-ph,BLACK);  //inner topleft
+  can.drawPoint(3.0f-pw,2.0f-ph,BLACK);   //inner topright
   can.sleepFor(1.0f);
 
+  if(can.getPoint(200,399).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, origin pixel for testDraw() failed!");
+  }
   if(can.getPoint(0,0).R == 0) {
     passed++;
   } else {
     failed++;
-    TsglErr("Test 1, topleft pixel for testDraw() failed!");
+    TsglErr("Test 1, outer topleft pixel for testDraw() failed!");
   }
   if(can.getPoint(799,0).R == 0) {
     passed++;
   } else {
     failed++;
-    TsglErr("Test 1, topright pixel for testDraw() failed!");
+    TsglErr("Test 1, outer topright pixel for testDraw() failed!");
   }
   if(can.getPoint(0,599).R == 0) {
     passed++;
   } else {
     failed++;
-    TsglErr("Test 1, bottomleft pixel for testDraw() failed!");
+    TsglErr("Test 1, outer bottomleft pixel for testDraw() failed!");
   }
   if(can.getPoint(799,599).R == 0) {
     passed++;
   } else {
     failed++;
-    TsglErr("Test 1, bottomright pixel for testDraw() failed!");
+    TsglErr("Test 1, outer bottomright pixel for testDraw() failed!");
   }
 
-  can.wait();
+  if(can.getPoint(1,1).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, inner topleft pixel for testDraw() failed!");
+  }
+  if(can.getPoint(798,1).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, inner topright pixel for testDraw() failed!");
+  }
+  if(can.getPoint(1,598).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, inner bottomleft pixel for testDraw() failed!");
+  }
+  if(can.getPoint(798,598).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, inner bottomright pixel for testDraw() failed!");
+  }
 
   //Results:
-  if(passed == 4 && failed == 0) {
+  if(failed == 0) {
     TsglDebug("Unit test for drawing passed!");
     return true;
   } else {
