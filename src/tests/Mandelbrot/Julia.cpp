@@ -46,7 +46,6 @@ void Julia::bindings(Cart& can) {
 void Julia::draw(Cart& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
   VisualTaskQueue vq(CH);
-  vq.showLegend(myThreads);
   while(myRedraw) {
     setRedraw(false);
     can.reset();
@@ -54,10 +53,11 @@ void Julia::draw(Cart& can) {
     vq.reset();
     #pragma omp parallel num_threads(myThreads)
     {
+      vq.showLegend();
       int myNext;
-      unsigned tid = omp_get_thread_num();
-      unsigned nthreads = omp_get_num_threads();
-      ColorFloat tcolor = Colors::highContrastColor(tid);
+//      unsigned tid = omp_get_thread_num();
+//      unsigned nthreads = omp_get_num_threads();
+//      ColorFloat tcolor = Colors::highContrastColor(tid);
       while(true) {  // As long as we aren't trying to render off of the screen...
         #pragma omp critical
         {

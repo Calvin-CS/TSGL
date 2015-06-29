@@ -21,9 +21,18 @@ VisualTaskQueue::~VisualTaskQueue() {
 }
 
 void VisualTaskQueue::showLegend(int t) {
-  if (!showingLegend) {
+  bool canContinue = false;
+  #pragma omp critical
+  {
+    if (!showingLegend) {
+      showingLegend = true;
+      canContinue = true;
+    }
+  }
+  if (canContinue) {
     const int TEXTW = 24, GAP = 4;
-    showingLegend = true;
+    if (t == -1)
+      t = omp_get_num_threads();
 
     //Ugly calculations :(
     int offset = border+space;
@@ -83,10 +92,12 @@ void VisualTaskQueue::reset() {
 void VisualTaskQueue::close() {
   if (lcan->getIsOpen())
     lcan->close();
-  if (vcan->getIsOpen())
-    vcan->close();
   lcan->wait();
-  vcan->wait();
+  if (showingLegend) {
+    if (vcan->getIsOpen())
+      vcan->close();
+    vcan->wait();
+  }
 }
 
 }

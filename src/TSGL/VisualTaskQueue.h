@@ -58,7 +58,13 @@ public:
    */
   ~VisualTaskQueue();
 
-  void showLegend(int t);
+  /*!
+   * \brief Shows a key/legend for the VisualQueue.
+   * \details This function opens up a separate Canvas displaying a legend for the VisualQueue, showing which
+   *   colors correspond to which threads.
+   *   \param t The number of threads the VisualQueue is using.
+   */
+  void showLegend(int t = -1);
 
   /*!
    * \brief Updates the state of the VisualQueue.
