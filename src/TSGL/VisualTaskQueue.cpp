@@ -32,12 +32,12 @@ void VisualTaskQueue::showLegend(int t) {
     int yStart = TEXTW + offset;
     int yDelta = blockSize+space;
     int oheight = vcan->getWindowHeight();
-    int myHeight = TEXTW + t * yDelta;
+    int myHeight = TEXTW + (t+1) * yDelta;
     if (myHeight > oheight)
       myHeight = oheight;
     int perColumn = (myHeight-yStart)/yDelta;
-    int yCutoff = yStart + yDelta*((myHeight-yStart)/yDelta)-blockSize;
-    int myWidth = 2*border + ((t-1)/perColumn)*xDelta+blockSize+TEXTW;
+    int yCutoff = yStart + yDelta*perColumn-blockSize;
+    int myWidth = 2*border + ((t)/perColumn)*xDelta+blockSize+TEXTW;
 
     //Actually draw things
     lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
