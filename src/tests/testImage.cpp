@@ -19,14 +19,14 @@ using namespace tsgl;
  */
 void imageFunction(Canvas& can) {
     int ww = can.getWindowWidth()/3, hh = can.getWindowHeight()/2;
-    can.drawImage("../assets/test.png", 0, 0, ww, hh);
-    can.drawImage("../assets/ship.bmp", ww, 0, ww, hh);
-    can.drawImage("../assets/shiprgb.bmp", ww*2, 0, ww, hh);
-    can.drawImage("../assets/sky_main.jpg", 0, hh, ww, hh);
-    can.drawImage("../assets/Captain-falcon.png", ww, hh, ww, hh);
-    can.drawImage("../assets/mini.jpg", ww*2, hh, ww, hh);
+    can.drawImage("../assets/pics/test.png", 0, 0, ww, hh);
+    can.drawImage("../assets/pics/ship.bmp", ww, 0, ww, hh);
+    can.drawImage("../assets/pics/shiprgb.bmp", ww*2, 0, ww, hh);
+    can.drawImage("../assets/pics/sky_main.jpg", 0, hh, ww, hh);
+    can.drawImage("../assets/pics/Captain-falcon.png", ww, hh, ww, hh);
+    can.drawImage("../assets/pics/mini.jpg", ww*2, hh, ww, hh);
 
-    can.drawImage("../assets/bestpicture.png", ww/2, 0, ww*2, hh*2, 0.25f);    //ALPHA
+    can.drawImage("../assets/pics/bestpicture.png", ww/2, 0, ww*2, hh*2, 0.25f);    //ALPHA
 }
 
 int main() {

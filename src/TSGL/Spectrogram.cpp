@@ -38,12 +38,17 @@ Spectrogram::~Spectrogram() {
 }
 
 void Spectrogram::update(int i, float weight, float decay) {
-  for (int k = 0; k < MAX_COLOR/2; ++k) {
-    int index = (i + k) % MAX_COLOR;
+  int index = i % NUM_COLORS;
+  count[index] += weight;
+  if (count[index] > maxCount)
+    maxCount = count[index];
+  weight *= decay;
+  for (int k = 1; k < NUM_COLORS/2; ++k) {
+    index = (i + k) % NUM_COLORS;
     count[index] += weight;
     if (count[index] > maxCount)
       maxCount = count[index];
-    index = (i + MAX_COLOR - k) % MAX_COLOR;
+    index = (i + NUM_COLORS - k) % NUM_COLORS;
     count[index] += weight;
     if (count[index] > maxCount)
       maxCount = count[index];
@@ -55,10 +60,14 @@ void Spectrogram::draw(float ratio) {
   if (maxCount > 0) {
     switch (myDrawMode) {
     case CIRCULAR:
+      const float DELTA = (2*PI)/NUM_COLORS;
+      float invcount = 1.0f/maxCount;
+      float mult = ratio*myHeight*sqrt(invcount);
       for (int k = 0; k < MAX_COLOR; ++k) {
-        xx[k+1] = (myWidth + ratio*count[k]*myHeight*cos((2*PI*k)/NUM_COLORS)/maxCount)/2;
-        yy[k+1] = (myHeight + ratio*count[k]*myHeight*sin((2*PI*k)/NUM_COLORS)/maxCount)/2;
-        col[k+1] = ColorHSV(6.0f*k/255.0f,(1.0f*count[k])/maxCount,1.0f);
+        float kroot = mult*sqrt(count[k]);
+        xx[k+1] = (myWidth + kroot*cos(k*DELTA))/2;
+        yy[k+1] = (myHeight + kroot*sin(k*DELTA))/2;
+        col[k+1] = ColorHSV(6.0f*k/255.0f,invcount*count[k],1.0f);
       }
       xx[NUM_COLORS] = xx[1];
       yy[NUM_COLORS] = yy[1];

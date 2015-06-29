@@ -39,7 +39,7 @@ void getPixelsFunction(Canvas& can) {
     const int THREADS = 2;
     unsigned int width = can.getWindowWidth(),
                  height = can.getWindowHeight();
-    can.drawImage("../assets/test.png", 0, 0, width, height);
+    can.drawImage("../assets/pics/test.png", 0, 0, width, height);
     Timer::threadSleepFor(.75);
 //    can.recordForNumFrames(100);
 //    uint8_t* buffer = can.getScreenBuffer();

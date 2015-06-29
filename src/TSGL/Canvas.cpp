@@ -1304,7 +1304,7 @@ bool Canvas::testAccessors(Canvas& can) {
 }
 
 bool Canvas::testDrawImage(Canvas& can) {
-    can.drawImage("assets/ff0000.png", 0, 0, 200, 200);
+    can.drawImage("assets/pics/ff0000.png", 0, 0, 200, 200);
     can.sleepFor(1);
     int passed = 0;
     int failed = 0;
