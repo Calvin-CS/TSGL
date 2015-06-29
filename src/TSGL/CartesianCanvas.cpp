@@ -7,52 +7,52 @@ CartesianCanvas::CartesianCanvas(double timerLength)
     recomputeDimensions(-400, -300, 400, 300);
 }
 
-CartesianCanvas::CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax,
+CartesianCanvas::CartesianCanvas(int x, int y, int width, int height, Decimal xMin, Decimal yMin, Decimal xMax,
                                  Decimal yMax, std::string t, double timerLength)
-    : Canvas(xx, yy, w, h, t, timerLength) {
+    : Canvas(x, y, width, height, t, timerLength) {
     recomputeDimensions(xMin, yMin, xMax, yMax);
 }
 
-void CartesianCanvas::drawAxes(Decimal x, Decimal y, Decimal dx = 0, Decimal dy = 0) {
-    drawLine(maxX, y, minX, y);  // Make the two axes
-    drawLine(x, maxY, x, minY);
+void CartesianCanvas::drawAxes(Decimal originX, Decimal originY, Decimal spacingX = 0, Decimal spacingY = 0) {
+    drawLine(maxX, originY, minX, originY);  // Make the two axes
+    drawLine(originX, maxY, originX, minY);
 
-    if (dx != 0.0) {
-        if (dx < 0.0) dx = -dx;
+    if (spacingX != 0.0) {
+        if (spacingX < 0.0) spacingX = -spacingX;
 
-        for (Decimal x_ = x + dx; x_ < maxX; x_ += dx) {
-            drawLine(x_, y + 8 * pixelHeight, x_, y - 8 * pixelHeight);
+        for (Decimal x_ = originX + spacingX; x_ < maxX; x_ += spacingX) {
+            drawLine(x_, originY + 8 * pixelHeight, x_, originY - 8 * pixelHeight);
         }
-        for (Decimal x_ = x - dx; x_ > minX; x_ -= dx) {
-            drawLine(x_, y + 8 * pixelHeight, x_, y - 8 * pixelHeight);
+        for (Decimal x_ = originX - spacingX; x_ > minX; x_ -= spacingX) {
+            drawLine(x_, originY + 8 * pixelHeight, x_, originY - 8 * pixelHeight);
         }
     }
-    if (dy != 0.0) {
-        if (dy < 0.0) dy = -dy;
+    if (spacingY != 0.0) {
+        if (spacingY < 0.0) spacingY = -spacingY;
 
-        for (Decimal y_ = y + dy; y_ < maxY; y_ += dy) {
-            drawLine(x + 8 * pixelWidth, y_, x - 8 * pixelWidth, y_);
+        for (Decimal y_ = originY + spacingY; y_ < maxY; y_ += spacingY) {
+            drawLine(originX + 8 * pixelWidth, y_, originX - 8 * pixelWidth, y_);
         }
-        for (Decimal y_ = y - dy; y_ > minY; y_ -= dy) {
-            drawLine(x + 8 * pixelWidth, y_, x - 8 * pixelWidth, y_);
+        for (Decimal y_ = originY - spacingY; y_ > minY; y_ -= spacingY) {
+            drawLine(originX + 8 * pixelWidth, y_, originX - 8 * pixelWidth, y_);
         }
     }
 }
 
-void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int res, ColorFloat color, bool filled) {
+void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int sides, ColorFloat color, bool filled) {
     int actualX, actualY, actualR;
     getScreenCoordinates(x, y, actualX, actualY);
     getScreenCoordinates(x+radius,y,actualR,actualY);
     actualR -= actualX;
-    Canvas::drawCircle(actualX, actualY, actualR, res, color, filled);
+    Canvas::drawCircle(actualX, actualY, actualR, sides, color, filled);
 }
 
-void CartesianCanvas::drawColoredPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled) {
+void CartesianCanvas::drawColoredPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
     int* int_x = new int[size];
     int* int_y = new int[size];
 
     for (int i = 0; i < size; i++) {
-        getScreenCoordinates(x[i], y[i], int_x[i], int_y[i]);
+        getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
     }
     Canvas::drawColoredPolygon(size, int_x, int_y, color, filled);
 
@@ -60,12 +60,12 @@ void CartesianCanvas::drawColoredPolygon(int size, Decimal x[], Decimal y[], Col
     delete int_y;
 }
 
-void CartesianCanvas::drawConcavePolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled) {
+void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
     int* int_x = new int[size];
     int* int_y = new int[size];
 
     for (int i = 0; i < size; i++) {
-        getScreenCoordinates(x[i], y[i], int_x[i], int_y[i]);
+        getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
     }
     Canvas::drawConcavePolygon(size, int_x, int_y, color, filled);
 
@@ -73,12 +73,12 @@ void CartesianCanvas::drawConcavePolygon(int size, Decimal x[], Decimal y[], Col
     delete int_y;
 }
 
-void CartesianCanvas::drawConvexPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled) {
+void CartesianCanvas::drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
     int* int_x = new int[size];
     int* int_y = new int[size];
 
     for (int i = 0; i < size; i++) {
-        getScreenCoordinates(x[i], y[i], int_x[i], int_y[i]);
+        getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
     }
     Canvas::drawConvexPolygon(size, int_x, int_y, color, filled);
 
@@ -86,23 +86,23 @@ void CartesianCanvas::drawConvexPolygon(int size, Decimal x[], Decimal y[], Colo
     delete int_y;
 }
 
-void CartesianCanvas::drawFunction(const Function &f, ColorFloat color) {
+void CartesianCanvas::drawFunction(const Function &function, ColorFloat color) {
     int screenX = 0, screenY = 0;
     Polyline *p = new Polyline(1 + (maxX - minX) / pixelWidth);
     for (Decimal x = minX; x <= maxX; x += pixelWidth) {
-        getScreenCoordinates(x, f.valueAt(x), screenX, screenY);
+        getScreenCoordinates(x, function.valueAt(x), screenX, screenY);
         p->addNextVertex(screenX, screenY, color);
     }
 
     drawShape(p);
 }
 
-void CartesianCanvas::drawImage(std::string fname, Decimal x, Decimal y, Decimal w, Decimal h, float a) {
+void CartesianCanvas::drawImage(std::string function, Decimal x, Decimal y, Decimal w, Decimal h, float a) {
     int actualX1, actualY1, actualX2, actualY2;
     getScreenCoordinates(x, y, actualX1, actualY1);
     getScreenCoordinates(x + w, y - h, actualX2, actualY2);
 
-    Canvas::drawImage(fname, actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, a);
+    Canvas::drawImage(function, actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, a);
 }
 
 void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color) {
@@ -127,18 +127,18 @@ void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal 
     Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, color, filled);
 }
 
-void CartesianCanvas::drawText(std::string s, Decimal x, Decimal y, unsigned size, ColorFloat color) {
+void CartesianCanvas::drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
-    Canvas::drawText(s, actualX, actualY, size, color);
+    Canvas::drawText(text, actualX, actualY, size, color);
 }
 
-void CartesianCanvas::drawText(std::wstring s, Decimal x, Decimal y, unsigned size, ColorFloat color) {
+void CartesianCanvas::drawText(std::wstring text, Decimal x, Decimal y, unsigned size, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
-    Canvas::drawText(s, actualX, actualY, size, color);
+    Canvas::drawText(text, actualX, actualY, size, color);
 }
 
 void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color, bool filled) {

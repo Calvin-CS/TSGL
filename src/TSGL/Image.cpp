@@ -9,13 +9,13 @@
 
 namespace tsgl {
 
-Image::Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, float a) {
+Image::Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha) {
     isTextured = true;  // Let the Canvas know we're a textured object
-    myWidth = w; myHeight = h;
+    myWidth = width; myHeight = height;
     if (myWidth <= 0 || myHeight <= 0) {
-      TextureHandler::getDimensions(f,myWidth,myHeight);
+      TextureHandler::getDimensions(filename,myWidth,myHeight);
     }
-    myFile = f;
+    myFile = filename;
     myLoader = &loader;
     vertices[0] = x;
     vertices[1] = y;
@@ -28,7 +28,7 @@ Image::Image(std::string f, TextureHandler &loader, int x, int y, int w, int h, 
     vertices[2] = vertices[10] = vertices[18] = vertices[26] = 1.0f;  // Texture color of the coords
     vertices[3] = vertices[11] = vertices[19] = vertices[27] = 1.0f;
     vertices[4] = vertices[12] = vertices[20] = vertices[28] = 1.0f;
-    vertices[5] = vertices[13] = vertices[21] = vertices[29] = a;
+    vertices[5] = vertices[13] = vertices[21] = vertices[29] = alpha;
     vertices[6] = vertices[7] = 0.0f;           // Texture coords of top left
     vertices[14] = 1.0f, vertices[15] = 0.0f;   // Texture coords of top right
     vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left

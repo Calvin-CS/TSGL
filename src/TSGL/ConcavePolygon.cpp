@@ -9,10 +9,10 @@
 
 namespace tsgl {
 
-ConcavePolygon::ConcavePolygon(int v) {
-  if (v < 3)
+ConcavePolygon::ConcavePolygon(int numVertices) {
+  if (numVertices < 3)
     TsglErr("Cannot have a polygon with fewer than 3 vertices.");
-  length = v+1;
+  length = numVertices+1;
   size = length * 6;
   tsize = 0;
   current = 0;

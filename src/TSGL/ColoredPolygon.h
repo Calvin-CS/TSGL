@@ -34,11 +34,11 @@ class ColoredPolygon : public Shape {
     /*!
      * \brief Explicitly construct a new ColoredPolygon.
      * \details Explicit constructor for a ColoredPolygon object.
-     *      \param v The number of vertices the complete ColoredPolygon will have.
+     *   \param numVertices The number of vertices the complete ColoredPolygon will have.
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ColoredPolygon with a buffer for storing the specified numbered of vertices.
      */
-    ColoredPolygon(int v);
+    ColoredPolygon(int numVertices);
 
     /*!
      * \brief Destroys a ColoredPolygon object

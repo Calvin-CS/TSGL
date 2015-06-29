@@ -6,15 +6,18 @@ using namespace tsgl;
 void spectrogramFunction(Canvas& can, std::string fname) {
     const int cww = can.getWindowWidth(), cwh = can.getWindowHeight();
     can.drawImage(fname, 0, 0, cww, cwh);
-    Spectrogram sp(CIRCULAR,500);
-    for (int j = 0; can.getIsOpen() && j < cwh; ++j) {
-      can.sleep();
-      for (int i = 0; i < cww; ++i) {
-        ColorHSV hsv = can.getPoint(i,j);
-        if (hsv.H == hsv.H) //Check for NAN
-          sp.update(MAX_COLOR*hsv.H/6);
+    Spectrogram sp(HORIZONTAL,500);
+    #pragma omp parallel for
+    for (int j = 0; j < cwh; ++j) {
+      if (can.getIsOpen()) {
+        can.sleep();
+        for (int i = 0; i < cww; ++i) {
+          ColorHSV hsv = can.getPoint(i,j);
+          if (hsv.H == hsv.H) //Check for NAN
+            sp.update(MAX_COLOR*hsv.H/6,1.0f,0.8f);
+        }
+        sp.draw((float)j/cwh);
       }
-      sp.draw((float)j/cwh);
     }
     sp.finish();
 }

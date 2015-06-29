@@ -137,11 +137,11 @@ class TextureHandler {
      * \details Saves an Image to file that was captured from a Canvas object.
      *   \param filename The name of the file to save the Image to.
      *   \param pixels The pixel data for the Image.
-     *   \param w The width of the Image.
-     *   \param h The height of the Image.
+     *   \param width The width of the Image.
+     *   \param height The height of the Image.
      * \return True if successful, false otherwise.
      */
-    bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const;
+    bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int width, unsigned int height) const;
 
     /*!
      * \brief Runs the Unit tests for TextureHandler.

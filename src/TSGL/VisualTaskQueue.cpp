@@ -20,7 +20,7 @@ VisualTaskQueue::~VisualTaskQueue() {
     delete lcan;
 }
 
-void VisualTaskQueue::showLegend(int t) {
+void VisualTaskQueue::showLegend(int threads) {
   bool canContinue = false;
   #pragma omp critical
   {
@@ -31,8 +31,8 @@ void VisualTaskQueue::showLegend(int t) {
   }
   if (canContinue) {
     const int TEXTW = 24, GAP = 4;
-    if (t == -1)
-      t = omp_get_num_threads();
+    if (threads == -1)
+      threads = omp_get_num_threads();
 
     //Ugly calculations :(
     int offset = border+space;
@@ -41,19 +41,19 @@ void VisualTaskQueue::showLegend(int t) {
     int yStart = TEXTW + offset;
     int yDelta = blockSize+space;
     int oheight = vcan->getWindowHeight();
-    int myHeight = TEXTW + (t+1) * yDelta;
+    int myHeight = TEXTW + (threads+1) * yDelta;
     if (myHeight > oheight)
       myHeight = oheight;
     int perColumn = (myHeight-yStart)/yDelta;
     int yCutoff = yStart + yDelta*perColumn-blockSize;
-    int myWidth = 2*border + ((t)/perColumn)*xDelta+blockSize+TEXTW;
+    int myWidth = 2*border + ((threads)/perColumn)*xDelta+blockSize+TEXTW;
 
     //Actually draw things
     lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
     lcan->start();
     lcan->drawText("Legend:",TEXTW/2,TEXTW,TEXTW,BLACK);
     int xx = xStart, yy = yStart;
-    for (int i = 0; i < t; ++i) {
+    for (int i = 0; i < threads; ++i) {
       lcan->drawRectangle(xx,yy,xx+blockSize,yy+blockSize,Colors::highContrastColor(i));
       lcan->drawText(to_string(i),xx+blockSize+GAP,yy+blockSize,TEXTW/2);
       yy += yDelta;

@@ -2,10 +2,12 @@
 
 namespace tsgl {
 
-Spectrogram::Spectrogram(SpectrogramDrawmode s, int w, int h) {
-  myWidth = w;
-  myHeight = (h > 0) ? h : w;
-  myDrawMode = s;
+Spectrogram::Spectrogram(SpectrogramDrawmode drawMode, int width, int height) {
+  myWidth = width;
+  myHeight = (height > 0) ? height : width;
+  myDrawMode = drawMode;
+  if (myDrawMode == HORIZONTAL)
+    myHeight = NUM_COLORS;
 
   can = new Canvas(-1, 0, myWidth, myHeight ,"");
   maxCount = 0;
@@ -37,32 +39,32 @@ Spectrogram::~Spectrogram() {
   delete can;
 }
 
-void Spectrogram::update(int i, float weight, float decay) {
-  int index = i % NUM_COLORS;
-  count[index] += weight;
-  if (count[index] > maxCount)
-    maxCount = count[index];
+void Spectrogram::update(int index, float weight, float decay) {
+  int i = index % NUM_COLORS;
+  count[i] += weight;
+  if (count[i] > maxCount)
+    maxCount = count[i];
   weight *= decay;
   for (int k = 1; k < NUM_COLORS/2; ++k) {
-    index = (i + k) % NUM_COLORS;
-    count[index] += weight;
-    if (count[index] > maxCount)
-      maxCount = count[index];
-    index = (i + NUM_COLORS - k) % NUM_COLORS;
-    count[index] += weight;
-    if (count[index] > maxCount)
-      maxCount = count[index];
+    i = (index + k) % NUM_COLORS;
+    count[i] += weight;
+    if (count[i] > maxCount)
+      maxCount = count[i];
+    i = (index + NUM_COLORS - k) % NUM_COLORS;
+    count[i] += weight;
+    if (count[i] > maxCount)
+      maxCount = count[i];
     weight *= decay;
   }
 }
 
 void Spectrogram::draw(float ratio) {
   if (maxCount > 0) {
+    const float DELTA = (2*PI)/NUM_COLORS;
+    float invcount = 1.0f/maxCount;
+    float mult = ratio*myHeight*sqrt(invcount);
     switch (myDrawMode) {
     case CIRCULAR:
-      const float DELTA = (2*PI)/NUM_COLORS;
-      float invcount = 1.0f/maxCount;
-      float mult = ratio*myHeight*sqrt(invcount);
       for (int k = 0; k < MAX_COLOR; ++k) {
         float kroot = mult*sqrt(count[k]);
         xx[k+1] = (myWidth + kroot*cos(k*DELTA))/2;

@@ -35,11 +35,11 @@ class ConvexPolygon : public Shape {
     /*!
      * \brief Explicitly constructs a new ConvexPolygon.
      * \details Explicit constructor for a Convex Polygon object.
-     *      \param v the number of vertices the complete ConvexPolygon will have.
+     *   \param numVertices the number of vertices the complete ConvexPolygon will have.
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
-    ConvexPolygon(int v);
+    ConvexPolygon(int numVertices);
 
     /*!
      * \brief Destroys a ConvexPolygon object.
@@ -51,9 +51,9 @@ class ConvexPolygon : public Shape {
     /*!
      * \brief Adds another vertex to a ConvexPolygon.
      * \details This function initializes the next vertex in the Polyline and adds it to a ConvexPolygon buffer.
-     *      \param x The x position of the vertex.
-     *      \param y The y position of the vertex.
-     *      \param color The reference variable of the color of the vertex.
+     *   \param x The x position of the vertex.
+     *   \param y The y position of the vertex.
+     *   \param color The reference variable of the color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating when the vertex buffer is full.
      */

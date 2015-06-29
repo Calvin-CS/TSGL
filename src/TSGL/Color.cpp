@@ -275,14 +275,14 @@ ColorHSV::operator ColorFloat() {
     }
 }
 
-ColorFloat Colors::divideIntoChromaticSections(unsigned int sections, unsigned int section, float value, float alpha) {
+ColorFloat Colors::divideIntoChromaticSections(unsigned int totalSections, unsigned int index, float value, float alpha) {
     if (clamp(value,0,1) || clamp(alpha,0,1))
       TsglErr("Values must be between 0 and 1 inclusive");
-    return ColorHSV(6.0f / sections * section, 1.0f, value, alpha);
+    return ColorHSV(6.0f / totalSections * index, 1.0f, value, alpha);
 }
 
-ColorFloat Colors::divideIntoChromaticSections(unsigned int sections, unsigned int section) {
-    return divideIntoChromaticSections(sections, section, 1.0f, 1.0f);
+ColorFloat Colors::divideIntoChromaticSections(unsigned int totalSections, unsigned int index) {
+    return divideIntoChromaticSections(totalSections, index, 1.0f, 1.0f);
 }
 
 ColorFloat Colors::randomColor(float alpha) {
@@ -299,12 +299,12 @@ ColorFloat Colors::blendedColor(ColorFloat c1, ColorFloat c2, float bias) {
                       c2.B * bias + c1.B * (1 - bias), c2.A * bias + c1.A * (1 - bias));
 }
 
-ColorFloat Colors::highContrastColor(unsigned int section, int start) {
+ColorFloat Colors::highContrastColor(unsigned int index, int offset) {
 //    return DISTINCT_ARRAY_DATA[(section+start)%64];
     const unsigned int PRIME1 = 61, PRIME2 = 71;
-    float hue = ((start + PRIME1 * section) % 255) / 255.0f;
-    float sat = (255 - (section-start + PRIME2 * (section-start)) % 80) / 255.0f;
-    float val = (11 - (section*3  % 7)) / 11.0f;
+    float hue = ((offset + PRIME1 * index) % 255) / 255.0f;
+    float sat = (255 - (index-offset + PRIME2 * (index-offset)) % 80) / 255.0f;
+    float val = (11 - (index*3  % 7)) / 11.0f;
     return ColorHSV(hue * 6.0f, sat, val, 1.0f);
 }
 

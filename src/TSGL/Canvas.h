@@ -182,16 +182,16 @@ public:
     /*!
      * \brief Explicit Canvas constructor method.
      * \details This is the explicit constructor for the Canvas class.
-     *   \param xx The x position of the Canvas window.
-     *   \param yy The y position of the Canvas window.
-     *   \param w The x dimension of the Canvas window.
-     *   \param h The y dimension of the Canvas window.
+     *   \param x The x position of the Canvas window.
+     *   \param y The y position of the Canvas window.
+     *   \param width The x dimension of the Canvas window.
+     *   \param height The y dimension of the Canvas window.
      *   \param title The title of the window.
      *   \param timerLength The minimum number of seconds between draw cycles for the Canvas.
      *     A value less than or equal to 0 sets it to automatic.
      * \return A new Canvas with the specified position, dimensions, title, and draw cycle length.
      */
-    Canvas(int xx, int yy, int w, int h, std::string title, double timerLength = 0.0f);
+    Canvas(int x, int y, int width, int height, std::string title, double timerLength = 0.0f);
 
     /*!
      * \brief Canvas destructor method.
@@ -205,20 +205,20 @@ public:
      * \details This function binds a key or mouse button to a function pointer.
      * \details Upon pressing or releasing the given key, Canvas will call the specified function.
      *   \param button The key or button to bind, as specified in Keynums.h.
-     *   \param a The action to look out for (TSGL_PRESS or TSGL_RELEASE).
-     *   \param f The function to call upon action <code>a</code> on button.
+     *   \param action The action to look out for (TSGL_PRESS or TSGL_RELEASE).
+     *   \param function The function to call upon action <code>a</code> on button.
      * \warning <b>TSGL_KEY_ESCAPE is automatically bound to closing the window. Overriding TSGL_KEY_ESCAPE will
      *   likely make you unable to close the window through the escape key.</b>
      */
-    void bindToButton(Key button, Action a, voidFunction f);
+    void bindToButton(Key button, Action action, voidFunction function);
 
     /*!
      * \brief Binds the mouse wheel to a function.
      * \details This function binds the mouse wheel to a function pointer.
      * \details Upon scrolling, Canvas will call the specified function.
-     *   \param f A function taking x and y parameters to be called when the mouse is scrolled.
+     *   \param function A function taking x and y parameters to be called when the mouse is scrolled.
      */
-    void bindToScroll(std::function<void(double, double)> f);
+    void bindToScroll(std::function<void(double, double)> function);
 
     /*!
      * \brief Clears the Canvas.
@@ -242,34 +242,34 @@ public:
      *   \param x The x coordinate of the circle's center.
      *   \param y The y coordinate of the circle's center.
      *   \param radius The radius of the circle in pixels.
-     *   \param res The number of sides to use in the circle.
+     *   \param sides The number of sides to use in the circle.
      *   \param color The color of the circle
      *     (set to BLACK by default).
      *   \param filled Whether the circle should be filled
      *     (set to true by default).
      */
-    virtual void drawCircle(int x, int y, int radius, int res, ColorFloat color = BLACK, bool filled = true);
+    virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draws an arbitrary polygon with colored vertices.
      * \details This function draws a ColoredPolygon with the given vertex data, specified as
      *   a triangle strip.
      *   \param size The number of vertices in the polygon.
-     *   \param x An array of x positions of the vertices.
-     *   \param y An array of y positions of the vertices.
+     *   \param xverts An array of x positions of the vertices.
+     *   \param yverts An array of y positions of the vertices.
      *   \param color An array of colors for the vertices.
      *   \param filled Whether the colored polygon should be filled (true) or not (false)
      *     (set to true by default).
      */
-    virtual void drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    virtual void drawColoredPolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draws a concave polygon with colored vertices.
      * \details This function draws a ConcavePolygon with the given vertex data, specified as the
      *   outer perimeter of the polygon.
      *   \param size The number of vertices in the polygon.
-     *   \param x An array of x positions of said vertices.
-     *   \param y An array of y positions of said vertices.
+     *   \param xverts An array of x positions of said vertices.
+     *   \param yverts An array of y positions of said vertices.
      *   \param color An array of colors for the said vertices.
      *   \param filled Whether the Concave polygon should be filled in or not
      *     (set to true by default).
@@ -277,15 +277,15 @@ public:
      *   that you draw convex polygons with this function.
      * \see drawConvexPolygon().
      */
-    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    virtual void drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draws a convex polygon with colored vertices.
      * \details This function draws a ConvexPolygon with the given vertex data, specified as the
      *   outer perimeter of the polygon.
      *   \param size The number of vertices in the polygon.
-     *   \param x An array of the x positions of said vertices.
-     *   \param y An array of the y positions of said vertices.
+     *   \param xverts An array of the x positions of said vertices.
+     *   \param yverts An array of the y positions of said vertices.
      *   \param color An array of colors for the said vertices.
      *   \param filled Whether the ConvexPolygon should be filled in or not
      *     (set to true by default).
@@ -293,20 +293,19 @@ public:
      *   is that a convex polygon has all interior angles less than
      *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
      */
-    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    virtual void drawConvexPolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draws an image.
      * \details This function draws an Image with the given coordinates and dimensions.
-     *   \param fname The name of the file to load the image from.
+     *   \param filename The name of the file to load the image from.
      *   \param x The x coordinate of the Image's left edge.
      *   \param y The y coordinate of the Image's top edge.
-     *   \param w The width of the Image.
-     *   \param h The height of the Image.
-     *   \param a The alpha with which to draw the Image
-     *     (set to 1.0f by default).
+     *   \param width The width of the Image.
+     *   \param height The height of the Image.
+     *   \param alpha The alpha with which to draw the Image
      */
-    virtual void drawImage(std::string fname, int x, int y, int w, int h, float a = 1.0f);
+    virtual void drawImage(std::string filename, int x, int y, int width, int height, float alpha = 1.0f);
 
     /*!
      * \brief Draws a line.
@@ -372,18 +371,18 @@ public:
     /*!
      * \brief Draw a string of text.
      * \details This function draws a given string of Text at the given coordinates with the given color.
-     *   \param s The string to draw.
+     *   \param text The string to draw.
      *   \param x The x coordinate of the text's left bound.
      *   \param y The y coordinate of the text's left bound.
      *   \param size The size of the text in pixels.
      *   \param color The color of the Text (set to BLACK by default).
      */
-    virtual void drawText(std::string s, int x, int y, unsigned size, ColorFloat color = BLACK);
+    virtual void drawText(std::string text, int x, int y, unsigned size, ColorFloat color = BLACK);
 
      /*!
      * \brief Draws a string of text.
      * \details This function draws a given string of Text at the given coordinates with the given color.
-     *   \param s The UTF8-encoded string to draw.
+     *   \param text The UTF8-encoded string to draw.
      *   \param x The x coordinate of the text's left bound.
      *   \param y The y coordinate of the text's left bound.
      *   \param size The size of the text in pixels.
@@ -391,7 +390,7 @@ public:
      * \note Identical to the drawText(std::string, ...) aside from the first parameter.
      * \see drawText(std::string s, int x, int y, unsigned size, ColorFloat color = BLACK)
      */
-    virtual void drawText(std::wstring s, int x, int y, unsigned int size, ColorFloat color);
+    virtual void drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color);
 
     /*!
      * \brief Draws a triangle.

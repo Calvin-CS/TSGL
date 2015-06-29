@@ -23,14 +23,14 @@ class Rectangle : public Shape {
     /*!
      * \brief Explicitly constructs a Rectangle.
      * \details This is the constructor for the Rectangle class.
-     *      \param x The x coordinate of the Rectangle's left edge.
-     *      \param y The y coordinate of the Rectangle's top edge.
-     *      \param w The width of the Rectangle.
-     *      \param h The height of the Rectangle.
-     *      \param color The color of the Rectangle.
+     *   \param x The x coordinate of the Rectangle's left edge.
+     *   \param y The y coordinate of the Rectangle's top edge.
+     *   \param width The width of the Rectangle.
+     *   \param height The height of the Rectangle.
+     *   \param color The color of the Rectangle.
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
-    Rectangle(int x, int y, int w, int h, const ColorFloat &color);
+    Rectangle(int x, int y, int width, int height, const ColorFloat &color);
 
     /*!
      * \brief Draw the Rectangle.

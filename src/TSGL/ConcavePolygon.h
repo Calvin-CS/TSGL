@@ -43,11 +43,11 @@ class ConcavePolygon : public Shape {
     /*!
      * \brief Explicitly constructs a new ConcavePolygon.
      * \details Explicit constructor for a ConcavePolygon object.
-     *      \param v The number of vertices the complete ConcavePolygon will have.
+     *   \param numVertices The number of vertices the complete ConcavePolygon will have.
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
-    ConcavePolygon(int v);
+    ConcavePolygon(int numVertices);
 
     /*!
      * \brief Destroys a ConcavePolygon object.
@@ -77,14 +77,14 @@ class ConcavePolygon : public Shape {
      * \brief Determines whether a point resides inside of a Triangle.
      * \details Simulates a Triangle and point inside of a ConcavePolygon object and determines whether the point resides inside of
      * the Triangle.
-     *      \param px The x coordinate of the point.
-     *      \param py The y coordinate of the point.
-     *      \param x1 The x coordinate of the first vertex of the Triangle.
-     *      \param y1 The y coordinate of the first vertex of the Triangle.
-     *      \param x2 The x coordinate of the second vertex of the Triangle.
-     *      \param y2 The y coordinate of the second vertex of the Triangle.
-     *      \param x3 The x coordinate of the third vertex of the Triangle.
-     *      \param y3 The y coordinate of the third vertex of the Triangle.
+     *   \param px The x coordinate of the point.
+     *   \param py The y coordinate of the point.
+     *   \param x1 The x coordinate of the first vertex of the Triangle.
+     *   \param y1 The y coordinate of the first vertex of the Triangle.
+     *   \param x2 The x coordinate of the second vertex of the Triangle.
+     *   \param y2 The y coordinate of the second vertex of the Triangle.
+     *   \param x3 The x coordinate of the third vertex of the Triangle.
+     *   \param y3 The y coordinate of the third vertex of the Triangle.
      * \returns true if the point does reside in the Triangle, false if otherwise.
      */
     bool pointInTriangle (float px, float py, float x1, float y1, float x2, float y2, float x3, float y3);

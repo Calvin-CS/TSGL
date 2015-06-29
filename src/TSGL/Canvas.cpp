@@ -60,8 +60,8 @@ Canvas::Canvas(double timerLength) {
     init(-1, -1, w, h, w*h*2, "", timerLength);
 }
 
-Canvas::Canvas(int xx, int yy, int w, int h, std::string title, double timerLength) {
-    init(xx, yy, w, h, w*h*2, title, timerLength);
+Canvas::Canvas(int x, int y, int width, int height, std::string title, double timerLength) {
+    init(x, y, width, height, width*height*2, title, timerLength);
 }
 
 Canvas::~Canvas() {
@@ -78,12 +78,12 @@ Canvas::~Canvas() {
     }
 }
 
-void Canvas::bindToButton(Key button, Action a, voidFunction f) {
-    boundKeys[button + a * (GLFW_KEY_LAST + 1)] = f;
+void Canvas::bindToButton(Key button, Action action, voidFunction function) {
+    boundKeys[button + action * (GLFW_KEY_LAST + 1)] = function;
 }
 
-void Canvas::bindToScroll(std::function<void(double, double)> f) {
-    scrollFunction = f;
+void Canvas::bindToScroll(std::function<void(double, double)> function) {
+    scrollFunction = function;
 }
 
 void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -260,20 +260,20 @@ void Canvas::handleIO() {
 
 //Negative radii?
 //Invalid color?
-void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, bool filled) {
-    float delta = 2.0f / res * 3.1415926585f;
+void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
+    float delta = 2.0f / sides * 3.1415926585f;
     if (filled) {
-        ConvexPolygon *s = new ConvexPolygon(res);
-        for (int i = 0; i < res; ++i)
-          s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),color);
+        ConvexPolygon *s = new ConvexPolygon(sides);
+        for (int i = 0; i < sides; ++i)
+          s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
           drawShape(s);
     } else {
         float oldX = 0, oldY = 0, newX = 0, newY = 0;
-        Polyline *p = new Polyline(res+1);
-        for (int i = 0; i <= res; ++i) {
+        Polyline *p = new Polyline(sides+1);
+        for (int i = 0; i <= sides; ++i) {
             oldX = newX; oldY = newY;
-            newX = x+radius*cos(i*delta);
-            newY = y+radius*sin(i*delta);
+            newX = xverts+radius*cos(i*delta);
+            newY = yverts+radius*sin(i*delta);
             if (i > 0)
                 p->addNextVertex(oldX, oldY,color);
         }
@@ -283,36 +283,36 @@ void Canvas::drawCircle(int x, int y, int radius, int res, ColorFloat color, boo
 }
 
 //Negative size?
-void Canvas::drawColoredPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+void Canvas::drawColoredPolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
         ColoredPolygon* p = new ColoredPolygon(size);
         for (int i = 0; i < size; i++) {
-            p->addVertex(x[i], y[i], color[i]);
+            p->addVertex(xverts[i], yverts[i], color[i]);
         }
         drawShape(p);  // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
-            p->addNextVertex(x[i], y[i], color[i]);
+            p->addNextVertex(xverts[i], yverts[i], color[i]);
         }
         drawShape(p);  // Push it onto our drawing buffer
     }
 }
 
 //Negative size?
-void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
         ConcavePolygon* p = new ConcavePolygon(size);
         for (int i = 0; i < size; i++) {
-            p->addVertex(x[i], y[i], color[i]);
+            p->addVertex(xverts[i], yverts[i], color[i]);
         }
         drawShape(p);  // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
-            p->addNextVertex(x[i], y[i], color[i]);
+            p->addNextVertex(xverts[i], yverts[i], color[i]);
         }
         drawShape(p);  // Push it onto our drawing buffer
     }
@@ -337,8 +337,8 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
 }
 
 //Invalid width and/or height?
-void Canvas::drawImage(std::string fname, int x, int y, int w, int h, float a) {
-    Image* im = new Image(fname, loader, x, y, w, h, a);  // Creates the Image with the specified coordinates
+void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
+    Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
     drawShape(im);                                        // Push it onto our drawing buffer
 }
 
@@ -401,14 +401,14 @@ void Canvas::drawShape(Shape* s) {
     bufferMutex.unlock();
 }
 
-void Canvas::drawText(std::string s, int x, int y, unsigned size, ColorFloat color) {
-    std::wstring wsTmp(s.begin(), s.end());
+void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
+    std::wstring wsTmp(text.begin(), text.end());
     std::wstring ws = wsTmp;
     drawText(ws, x, y, size, color);
 }
 
-void Canvas::drawText(std::wstring s, int x, int y, unsigned size, ColorFloat color) {
-    Text* t = new Text(s, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
+void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
+    Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
     drawShape(t);                                // Push it onto our drawing buffer
 }
 

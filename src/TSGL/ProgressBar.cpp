@@ -2,17 +2,17 @@
 
 namespace tsgl {
 
-ProgressBar::ProgressBar(int x, int y, int w, int h, float minV, float maxV, unsigned segments) {
-    startX = new float[segments];
-    endX = new float[segments];
-    min = minV; max = maxV;
+ProgressBar::ProgressBar(int x, int y, int width, int height, float minValue, float maxValue, unsigned numSegments) {
+    startX = new float[numSegments];
+    endX = new float[numSegments];
+    min = minValue; max = maxValue;
     xx = x; yy = y;
-    width = w; height = h;
-    segs = segments;
-    startX[0] = x; endX[0] = x + width/segs;
+    myWidth = width; myHeight = height;
+    segs = numSegments;
+    startX[0] = x; endX[0] = x + myWidth/segs;
     for (int i = 1; i < segs; ++i) {
       startX[i] = endX[i-1];
-      endX[i] = startX[i] + width/segs;
+      endX[i] = startX[i] + myWidth/segs;
     }
 }
 
@@ -20,29 +20,29 @@ ProgressBar::~ProgressBar() {
   delete [] startX; delete [] endX;
 }
 
-void ProgressBar::update(float newV, int seg) {
-  if (seg == -1)
-    seg = omp_get_thread_num();
+void ProgressBar::update(float newValue, int segnum) {
+  if (segnum == -1)
+    segnum = omp_get_thread_num();
   float d = max-min;
-  float start = min + (d * seg)/segs;
+  float start = min + (d * segnum)/segs;
   float end = start + d/segs;
-  clamp(newV,start,end);
-  float percent = (newV-start) / (end-start);
-  endX[seg] = startX[seg]+percent*(width/segs);
+  clamp(newValue,start,end);
+  float percent = (newValue-start) / (end-start);
+  endX[segnum] = startX[segnum]+percent*(myWidth/segs);
 }
 
-Rectangle* ProgressBar::getRect(int i) {
-  return new Rectangle(startX[i], yy, endX[i]-startX[i], height, Colors::highContrastColor(i));
+Rectangle* ProgressBar::getRect(int index) {
+  return new Rectangle(startX[index], yy, endX[index]-startX[index], myHeight, Colors::highContrastColor(index));
 }
 
-Polyline* ProgressBar::getBorder(int i) {
-  int y2 = yy+height;
+Polyline* ProgressBar::getBorder(int index) {
+  int y2 = yy+myHeight;
   Polyline* p = new Polyline(5);
-    p->addNextVertex(startX[i],yy,BLACK);
-    p->addNextVertex(startX[i]+width/segs,yy,BLACK);
-    p->addNextVertex(startX[i]+width/segs,y2,BLACK);
-    p->addNextVertex(startX[i],y2,BLACK);
-    p->addNextVertex(startX[i],yy,BLACK);
+    p->addNextVertex(startX[index],yy,BLACK);
+    p->addNextVertex(startX[index]+myWidth/segs,yy,BLACK);
+    p->addNextVertex(startX[index]+myWidth/segs,y2,BLACK);
+    p->addNextVertex(startX[index],y2,BLACK);
+    p->addNextVertex(startX[index],yy,BLACK);
   return p;
 }
 

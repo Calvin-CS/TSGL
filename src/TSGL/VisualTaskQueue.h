@@ -62,15 +62,15 @@ public:
    * \brief Shows a key/legend for the VisualQueue.
    * \details This function opens up a separate Canvas displaying a legend for the VisualQueue, showing which
    *   colors correspond to which threads.
-   *   \param t The number of threads the VisualQueue is using.
+   *   \param threads The number of threads the VisualQueue is using.
    */
-  void showLegend(int t = -1);
+  void showLegend(int threads = -1);
 
   /*!
    * \brief Updates the state of the VisualQueue.
    * \details This function updates an element of the VisualQueue with a new state.
    *   \param index The index of the element to update.
-   *   \param state The new state to put the element in.
+   *   \param state The new state to put the element in. Must be one of RUNNING or FINISHED.
    */
   void update(int index, VQState state);
 

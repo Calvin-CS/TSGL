@@ -10,13 +10,13 @@
 
 namespace tsgl {
 
-Text::Text(std::wstring s, TextureHandler &loader, int x, int y, unsigned int size, const ColorFloat &color) {
+Text::Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int fontsize, const ColorFloat &color) {
     isTextured = true;  // Let the Canvas know we're a textured object
-    myString = s;
+    myString = text;
     myLoader = &loader;
     myX = x;
     myY = y;
-    myFontSize = size;
+    myFontSize = fontsize;
     myColor = color;
 }
 

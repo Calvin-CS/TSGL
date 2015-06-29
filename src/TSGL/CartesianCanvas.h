@@ -51,10 +51,10 @@ public:
     /*!
      * \brief Explicit CartesianCanvas constructor method.
      * \details This is an explicit constructor for the CartesianCanvas class.
-     *   \param xx The x position of the CartesianCanvas window.
-     *   \param yy The y position of the CartesianCanvas window.
-     *   \param w The x dimension of the CartesianCanvas window.
-     *   \param h The y dimension of the CartesianCanvas window.
+     *   \param x The x position of the CartesianCanvas window.
+     *   \param y The y position of the CartesianCanvas window.
+     *   \param width The x dimension of the CartesianCanvas window.
+     *   \param height The y dimension of the CartesianCanvas window.
      *   \param xMin The Cartesian coordinates of the CartesianCanvas's left bound.
      *   \param yMin The Cartesian coordinates of the CartesianCanvas's bottom bound.
      *   \param xMax The Cartesian coordinates of the CartesianCanvas's right bound.
@@ -65,19 +65,19 @@ public:
      * \return A new CartesianCanvas with the specified position, dimensions, scaling, title,
      *   and timer length.
      */
-    CartesianCanvas(int xx, int yy, int w, int h, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax,
+    CartesianCanvas(int x, int y, int width, int height, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax,
                     std::string t, double timerLength = 0.0);
 
     /*!
      * \brief Draws axes on the Cartesian Canvas.
      * \details This function draws axes (with tick marks) on the CartesianCanvas, centered at the
      *  given (Cartesian) coordinates
-     *    \param x The horizontal location of the y-axis line.
-     *    \param y The vertical location of the x-axis line.
-     *    \param dx The distance between marks on the x-axis.
-     *    \param dy The distance between marks on the y-axis.
+     *    \param originX The horizontal location of the y-axis line.
+     *    \param originY The vertical location of the x-axis line.
+     *    \param spacingX The distance between marks on the x-axis.
+     *    \param spacingY The distance between marks on the y-axis.
      */
-    void drawAxes(Decimal x, Decimal y, Decimal dx, Decimal dy);
+    void drawAxes(Decimal originX, Decimal originY, Decimal spacingX, Decimal spacingY);
 
     /*!
      * \brief Draws a circle.
@@ -86,36 +86,36 @@ public:
      *   \param x The x coordinate of the circle's center.
      *   \param y The y coordinate of the circle's center.
      *   \param radius The radius of the circle in pixels.
-     *   \param res The number of sides to use in the circle.
+     *   \param sides The number of sides to use in the circle.
      *   \param color The color of the circle
      *     (set to BLACK by default).
      *   \param filled Whether the circle should be filled
      *     (set to true by default).
      * \note Identical to Canvas::drawCircle().
      */
-    void drawCircle(Decimal x, Decimal y, Decimal radius, int res, ColorFloat color = BLACK, bool filled = true);
+    void drawCircle(Decimal x, Decimal y, Decimal radius, int sides, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draws an arbitrary polygon with colored vertices.
      * \details This function draws a ColoredPolygon with the given vertex data, specified as
      *   a triangle strip.
      *   \param size The number of vertices in the polygon.
-     *   \param x An array of x positions of the vertices.
-     *   \param y An array of y positions of the vertices.
+     *   \param xverts An array of x positions of the vertices.
+     *   \param yverts An array of y positions of the vertices.
      *   \param color An array of colors for the vertices.
      *   \param filled Whether the colored polygon should be filled (true) or not (false)
      *     (set to true by default).
      * \note Identical to Canvas::drawColoredPolygon().
      */
-    void drawColoredPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
+    void drawColoredPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draws a Concave polygon with colored vertices.
      * \details This function draws a ConcavePolygon with the given vertex data, specified as the
      *   outer perimeter of the polygon.
      *   \param size The number of vertices in the polygon.
-     *   \param x An array of x positions of said vertices.
-     *   \param y An array of y positions of said vertices.
+     *   \param xverts An array of x positions of said vertices.
+     *   \param yverts An array of y positions of said vertices.
      *   \param color An array of colors for the said vertices.
      *   \param filled Whether the Concave polygon should be filled in or not
      *     (set to true by default).
@@ -124,15 +124,15 @@ public:
      * \note Identical to Canvas::drawConcavePolygon().
      * \see drawConvexPolygon().
      */
-    void drawConcavePolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
+    void drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draws a convex polygon with colored vertices.
      * \details This function draws a ConvexPolygon with the given vertex data, specified as the
      *   outer perimeter of the polygon.
      *   \param size The number of vertices in the polygon.
-     *   \param x An array of the x positions of said vertices.
-     *   \param y An array of the y positions of said vertices.
+     *   \param xverts An array of the x positions of said vertices.
+     *   \param yverts An array of the y positions of said vertices.
      *   \param color An array of colors for the said vertices.
      *   \param filled Whether the ConvexPolygon should be filled in or not
      *     (set to true by default).
@@ -141,21 +141,21 @@ public:
      *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
      * \note Identical to Canvas::drawConvexPolygon().
      */
-    void drawConvexPolygon(int size, Decimal x[], Decimal y[], ColorFloat color[], bool filled = true);
+    void drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Plots a function on the screen.
      * \details This function receives a Function as a parameter and plots the function on the CartesianCanvas.
-     *   \param f Reference to the Function to plot.
+     *   \param function Reference to the Function to plot.
      *   \param color The color of the vertices of the plotted function (set to BLACK by default).
      * \note The passed function must receive exactly one Decimal x parameter, and return a Decimal y parameter.
      */
-    void drawFunction(const Function &f, ColorFloat color = BLACK);
+    void drawFunction(const Function &function, ColorFloat color = BLACK);
 
     /*!
      * \brief Draws an image.
      * \details This function draws an Image with the given coordinates and dimensions.
-     *   \param fname The name of the file to load the image from.
+     *   \param function The name of the file to load the image from.
      *   \param x The x coordinate of the Image's left edge.
      *   \param y The y coordinate of the Image's top edge.
      *   \param w The width of the Image.
@@ -164,7 +164,7 @@ public:
      *     (set to 1.0f by default).
      * \note Identical to Canvas::drawImage().
      */
-    void drawImage(std::string fname, Decimal x, Decimal y, Decimal w, Decimal h, float a = 1.0f);
+    void drawImage(std::string filename, Decimal x, Decimal y, Decimal w, Decimal h, float a = 1.0f);
 
     /*!
      * \brief Draws a line.
@@ -211,26 +211,26 @@ public:
     /*!
      * \brief Draw a string of text.
      * \details This function draws a given string of Text at the given coordinates with the given color.
-     *   \param s The string to draw.
+     *   \paramtexts The string to draw.
      *   \param x The x coordinate of the text's left bound.
      *   \param y The y coordinate of the text's left bound.
      *   \param size The size of the text in pixels.
      *   \param color The color of the Text (set to BLACK by default).
      * \note Identical to Canvas::drawText(std::string,..).
      */
-    void drawText(std::string s, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
+    void drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a string of text.
      * \details This function draws a given string of Text at the given coordinates with the given color.
-     *   \param s The UTF8-encoded string to draw.
+     *   \param text The UTF8-encoded string to draw.
      *   \param x The x coordinate of the text's left bound.
      *   \param y The y coordinate of the text's left bound.
      *   \param size The size of the text in pixels.
      *   \param color The color of the Text (set to BLACK by default).
      * \note Identical to Canvas::drawText(std::wstring,..).
      */
-    void drawText(std::wstring s, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
+    void drawText(std::wstring text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draw a triangle.

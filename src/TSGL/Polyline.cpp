@@ -9,10 +9,10 @@
 
 namespace tsgl {
 
-Polyline::Polyline(int v) {
-    if (v < 2)
+Polyline::Polyline(int numVertices) {
+    if (numVertices < 2)
       TsglErr("Cannot have a line with fewer than 2 vertices.");
-    length = v;
+    length = numVertices;
     size = length * 6;
     current = 0;
     vertices = new float[size];

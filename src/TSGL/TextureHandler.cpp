@@ -362,15 +362,16 @@ GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int 
   return texture;
 }
 
-bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels, unsigned int w, unsigned int h) const {
+bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels,
+                                     unsigned int width, unsigned int height) const {
     std::string extension = filename.substr(filename.find_last_of('.'));
     bool success = false;
     if (extension == ".png")
-        success = saveToPNG(filename.c_str(), pixels, w, h);
+        success = saveToPNG(filename.c_str(), pixels, width, height);
     else if (extension == ".jpg" || extension == ".jpeg")
         fprintf(stderr, "JPG saving not implemented yet\n");
     else if (extension == ".bmp")
-        success = saveToBMP(filename.c_str(), pixels, w, h);
+        success = saveToBMP(filename.c_str(), pixels, width, height);
     else
         fprintf(stderr, "File extension not found\n");
     return success;

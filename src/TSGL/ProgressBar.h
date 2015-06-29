@@ -24,21 +24,21 @@ class ProgressBar {
  private:
    float *startX, *endX;
    float min, max;
-   int xx, yy, width, height, segs;
+   int xx, yy, myWidth, myHeight, segs;
  public:
     /*!
      * \brief Explicit ProgressBar constructor method.
      * \details This is the explicit constructor for the ProgressBar class.
      *   \param x The x position of the left edge of the ProgressBar.
      *   \param y The y position of the top edge of the ProgressBar.
-     *   \param w The maximum width in pixels of the ProgressBar.
-     *   \param h The maximum height in pixels of the ProgressBar.
-     *   \param minV The minimum value represented by the ProgressBar.
-     *   \param maxV The maximum value represented by the ProgressBar.
-     *   \param segments The number of segments in the progress bar
+     *   \param width The maximum width in pixels of the ProgressBar.
+     *   \param height The maximum height in pixels of the ProgressBar.
+     *   \param minValue The minimum value represented by the ProgressBar.
+     *   \param maxValue The maximum value represented by the ProgressBar.
+     *   \param numSegments The number of segments in the progress bar
      * \return A new ProgressBar with the specified coordinates, maximum dimensions, value range, and segments.
      */
-    ProgressBar(int x, int y, int w, int h, float minV, float maxV, unsigned segments);
+    ProgressBar(int x, int y, int width, int height, float minValue, float maxValue, unsigned numSegments);
     /*!
      * \brief ProgressBar destructor method.
      * \details This is the destructor for the ProgressBar class.
@@ -52,12 +52,12 @@ class ProgressBar {
      *   the new value <code>newV</code>. If newV is less than the segment's minimum value, the segment
      *   is set to its minimum value. If newV is more than the segment's maximum value, the segment
      *   is set to its maximum value.
-     *   \param newV The value to set the segment to.
-     *   \param seg The segment whose value to update. A value of -1 indicates the current thread number.
+     *   \param newValue The value to set the segment to.
+     *   \param segnum The segment whose value to update. A value of -1 indicates the current thread number.
      * \note The minimum value for a segment is calculated as <code>minV + (maxV-minV)*seg/segs</code>
      * \note The maximum value for a segment is calculated as <code>minV + (maxV-minV)*(seg+1)/segs</code>
      */
-    void update(float newV, int seg = -1);
+    void update(float newValue, int segnum = -1);
 
     /*!
      * \brief Accessor for the ProgressBar's number of segments
@@ -70,15 +70,17 @@ class ProgressBar {
 
     /*!
      * \brief Accessor for the ProgressBar's representative Rectangle array.
-     * \return A pointer to the Rectangle array representing the segments of the ProgressBar.
+     *   \param index Index of the segment to access.
+     * \return A pointer to the Rectangle array representing segment <code>i</code> of the ProgressBar.
      */
-    Rectangle* getRect(int i);
+    Rectangle* getRect(int index);
 
     /*!
      * \brief Accessor for the ProgressBar's representative Polyline array.
-     * \return A pointer to the Polyline array representing the segment borders of the ProgressBar.
+     *   \param index Index of the segment to access.
+     * \return A pointer to the Polyline array representing segment border <code>i</code>  of the ProgressBar.
      */
-    Polyline* getBorder(int i);
+    Polyline* getBorder(int index);
 };
 
 }
