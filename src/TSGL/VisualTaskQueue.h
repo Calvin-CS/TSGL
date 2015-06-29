@@ -31,7 +31,8 @@ enum VQState {
 class VisualTaskQueue {
 private:
   int space, border;
-  Canvas* vcan;
+  bool showingLegend;
+  Canvas *vcan, *lcan;
   int rowLength, blockSize, totalElements;
 public:
   /*!
@@ -56,6 +57,8 @@ public:
    * \details Frees up memory that was allocated to a VisualQueue instance.
    */
   ~VisualTaskQueue();
+
+  void showLegend(int t);
 
   /*!
    * \brief Updates the state of the VisualQueue.

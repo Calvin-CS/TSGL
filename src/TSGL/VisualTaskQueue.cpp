@@ -3,6 +3,7 @@
 namespace tsgl {
 
 VisualTaskQueue::VisualTaskQueue(int elements, int sideLength, float aspect, int spacing, int borderLength) {
+    showingLegend = false;
     space = spacing;
     border = borderLength;
     totalElements = elements;
@@ -15,6 +16,44 @@ VisualTaskQueue::VisualTaskQueue(int elements, int sideLength, float aspect, int
 
 VisualTaskQueue::~VisualTaskQueue() {
   delete vcan;
+  if (showingLegend)
+    delete lcan;
+}
+
+void VisualTaskQueue::showLegend(int t) {
+  if (!showingLegend) {
+    const int TEXTW = 24, GAP = 4;
+    showingLegend = true;
+
+    //Ugly calculations :(
+    int offset = border+space;
+    int xStart = border;
+    int xDelta = TEXTW*2;
+    int yStart = TEXTW + offset;
+    int yDelta = blockSize+space;
+    int oheight = vcan->getWindowHeight();
+    int myHeight = TEXTW + t * yDelta;
+    if (myHeight > oheight)
+      myHeight = oheight;
+    int perColumn = (myHeight-yStart)/yDelta;
+    int yCutoff = yStart + yDelta*((myHeight-yStart)/yDelta)-blockSize;
+    int myWidth = 2*border + ((t-1)/perColumn)*xDelta+blockSize+TEXTW;
+
+    //Actually draw things
+    lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
+    lcan->start();
+    lcan->drawText("Legend:",TEXTW/2,TEXTW,TEXTW,BLACK);
+    int xx = xStart, yy = yStart;
+    for (int i = 0; i < t; ++i) {
+      lcan->drawRectangle(xx,yy,xx+blockSize,yy+blockSize,Colors::highContrastColor(i));
+      lcan->drawText(to_string(i),xx+blockSize+GAP,yy+blockSize,TEXTW/2);
+      yy += yDelta;
+      if (yy > yCutoff) {
+        yy = yStart;
+        xx += xDelta;
+      }
+    }
+  }
 }
 
 void VisualTaskQueue::update(int index, VQState state) {
@@ -42,9 +81,12 @@ void VisualTaskQueue::reset() {
 }
 
 void VisualTaskQueue::close() {
+  if (lcan->getIsOpen())
+    lcan->close();
   if (vcan->getIsOpen())
     vcan->close();
-  vcan->wait();  //Close our progress bar if we're done
+  lcan->wait();
+  vcan->wait();
 }
 
 }

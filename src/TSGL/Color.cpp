@@ -300,12 +300,12 @@ ColorFloat Colors::blendedColor(ColorFloat c1, ColorFloat c2, float bias) {
 }
 
 ColorFloat Colors::highContrastColor(unsigned int section, int start) {
-    return DISTINCT_ARRAY_DATA[(section+start)%64];
-//    const unsigned int PRIME1 = 61, PRIME2 = 71;
-//    float hue = ((start + PRIME1 * section) % 255) / 255.0f;
-//    float sat = (255 - (section-start + PRIME2 * (section-start)) % 80) / 255.0f;
-//    float val = (11 - (section*3  % 7)) / 11.0f;
-//    return ColorHSV(hue * 6.0f, sat, val, 1.0f);
+//    return DISTINCT_ARRAY_DATA[(section+start)%64];
+    const unsigned int PRIME1 = 61, PRIME2 = 71;
+    float hue = ((start + PRIME1 * section) % 255) / 255.0f;
+    float sat = (255 - (section-start + PRIME2 * (section-start)) % 80) / 255.0f;
+    float val = (11 - (section*3  % 7)) / 11.0f;
+    return ColorHSV(hue * 6.0f, sat, val, 1.0f);
 }
 
 }
