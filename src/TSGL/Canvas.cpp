@@ -130,9 +130,9 @@ void Canvas::draw() {
 
     setBackgroundColor(bgcolor); //Set our initial clear / background color
 
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+//    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
     
-    glViewport(0,0,winWidth,winHeight);
+//    glViewport(0,0,winWidth,winHeight);
 
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
@@ -145,12 +145,12 @@ void Canvas::draw() {
 
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
 
-        if (hasEXTFramebuffer)
-          glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-        else
-          glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-        glDrawBuffer(GL_COLOR_ATTACHMENT0);
-        glViewport(0,0,winWidth,winHeight);
+//        if (hasEXTFramebuffer)
+//          glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+//        else
+//          glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+//        glDrawBuffer(GL_COLOR_ATTACHMENT0);
+//        glViewport(0,0,winWidth,winHeight);
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
         toClear = false;
 
@@ -197,11 +197,11 @@ void Canvas::draw() {
         // Update our screenBuffer copy with the screen
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
 
-        if (hasEXTFramebuffer)
-          glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-        else
-          glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-        glReadBuffer(GL_COLOR_ATTACHMENT0);
+//        if (hasEXTFramebuffer)
+//          glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+//        else
+//          glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+//        glReadBuffer(GL_COLOR_ATTACHMENT0);
 
         glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
         if (toRecord > 0) {
@@ -213,11 +213,11 @@ void Canvas::draw() {
         glDrawBuffer(drawBuffer);
 
         textureShaders(true);
-        float vertices[32] = {
-            0,       0,        1,1,1,1,0,1,
-            winWidth-1,0,        1,1,1,1,1,1,
-            0,       winHeight,1,1,1,1,0,0,
-            winWidth-1,winHeight,1,1,1,1,1,0
+        const float vertices[32] = {
+            0,         0,        1,1,1,1,0,1,
+            winWidth,0,        1,1,1,1,1,1,
+            0,         winHeight,1,1,1,1,0,0,
+            winWidth,winHeight,1,1,1,1,1,0
         };
         glBindTexture(GL_TEXTURE_2D,renderedTexture);
         glPixelStorei(GL_UNPACK_ALIGNMENT,1);
@@ -471,7 +471,7 @@ ColorInt Canvas::getPixel(int row, int col) {
 
 ColorInt Canvas::getPoint(int x, int y) {
     int padding = winWidth % 4;  // Apparently, the array is automatically padded to four bytes. Go figure.
-    int yy = winHeight - y;      // TODO: glReadPixels starts from the bottom left, and we have no way to change that...
+    int yy = (winHeight-1) - y;      // TODO: glReadPixels starts from the bottom left, and we have no way to change that...
     int offset = 3 * (yy * winWidth + x) + padding * yy;
     return ColorInt(screenBuffer[offset],
                     screenBuffer[offset + 1],
@@ -701,7 +701,7 @@ void Canvas::initGlew() {
     // "Bind" the newly created texture : all future texture functions will modify this texture
     glBindTexture(GL_TEXTURE_2D, renderedTexture);
     // Give an empty image to OpenGL ( the last "0" )
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, winWidth, winHeight, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, winWidth+1, winHeight, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
     // Poor filtering. Needed !
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -812,7 +812,7 @@ void Canvas::setShowFPS(bool b) {
 void Canvas::setupCamera() {
     // Set up camera positioning
     // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
-    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, winHeight / 2.0f, -winHeight / 2.0f,
+    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, (winHeight-1) / 2.0f, -winHeight / 2.0f,
         1 };
     glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 

@@ -116,6 +116,7 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, C
 void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
+    std::cout << actualX << "," << actualY << std::endl;
 
     Canvas::drawPoint(actualX, actualY, color);
 }
@@ -187,8 +188,8 @@ Decimal CartesianCanvas::getMinY() {
 }
 
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
-    screenX = ceil((cartX - minX) / cartWidth * getWindowWidth());
-    screenY = ceil(getWindowHeight() - (cartY - minY) / cartHeight * getWindowHeight());
+    screenX = round((cartX - minX) / pixelWidth);
+    screenY = getWindowHeight() - 1 - round((cartY - minY) / pixelHeight);
 }
 
 void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax) {
@@ -198,10 +199,8 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     maxY = yMax;
     cartWidth = maxX - minX;
     cartHeight = maxY - minY;
-    Decimal xError = cartWidth / getWindowWidth();
-    Decimal yError = cartHeight / getWindowHeight();
-    pixelWidth = (cartWidth - xError) / (getWindowWidth() + xError);
-    pixelHeight = (cartHeight - yError) / (getWindowHeight() + yError);
+    pixelWidth = cartWidth / (getWindowWidth() - 1);
+    pixelHeight = cartHeight / (getWindowHeight() - 1);
 }
 
 void CartesianCanvas::reset() {
@@ -234,7 +233,75 @@ void CartesianCanvas::runTests() {
   tsglAssert(testZoom(c1), "Unit test for zoom() functions failed!");
   tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed!");
   c1.stop();
+
+  CartesianCanvas c2(-1, -1, 800, 600, -1, -1, 3, 2,"");
+  c2.setBackgroundColor(WHITE);
+  c2.start();
+
+  std::this_thread::sleep_for(std::chrono::seconds(1));
+  tsglAssert(testDraw(c2), "Unit test for drawing functions failed!");
+  c2.stop();
+
   TsglDebug("Unit tests for CartesianCanvas complete.");
+}
+
+bool CartesianCanvas::testDraw(CartesianCanvas& can) {
+  int passed = 0;
+  int failed = 0;
+
+  float pw = can.getPixelWidth();
+  float ph = can.getPixelHeight();
+
+  //Test 1: Physical to Cartesian point mapping
+  can.drawPoint(-1.0f,-1.0f,BLACK); //bottomleft
+  can.drawPoint(3.0f,-1.0f,BLACK);  //bottomright
+  can.drawPoint(-1.0f,2.0f,BLACK);  //topleft
+  can.drawPoint(3.0f,2.0f,BLACK);   //topright
+
+  can.drawPoint(-1.0f+pw,-1.0f+ph,BLACK); //bottomleft
+  can.drawPoint(3.0f-pw,-1.0f+ph,BLACK);  //bottomright
+  can.drawPoint(-1.0f+pw,2.0f-ph,BLACK);  //topleft
+  can.drawPoint(3.0f-pw,2.0f-ph,BLACK);   //topright
+  can.sleepFor(1.0f);
+
+  if(can.getPoint(0,0).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, topleft pixel for testDraw() failed!");
+  }
+  if(can.getPoint(799,0).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, topright pixel for testDraw() failed!");
+  }
+  if(can.getPoint(0,599).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, bottomleft pixel for testDraw() failed!");
+  }
+  if(can.getPoint(799,599).R == 0) {
+    passed++;
+  } else {
+    failed++;
+    TsglErr("Test 1, bottomright pixel for testDraw() failed!");
+  }
+
+  can.wait();
+
+  //Results:
+  if(passed == 4 && failed == 0) {
+    TsglDebug("Unit test for drawing passed!");
+    return true;
+  } else {
+    TsglErr("This many passed for testDraw(): ");
+    std::cout << " " << passed << std::endl;
+    TsglErr("This many failed for testDraw(): ");
+    std::cout << " " << failed << std::endl;
+    return false;
+  }
 }
 
 //bool CartesianCanvas::testAxes(CartesianCanvas& can) {
