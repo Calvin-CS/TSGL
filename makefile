@@ -156,12 +156,13 @@ build/tests/test%.o: src/tests/test%.cpp
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
 docs/html/index.html: ${HEADERS} Doxyfile
+	mkdir -p docs
 	@echo 'Generating Doxygen'
 	@doxygen
 
 tutorial/docs/html/index.html: ${HEADERS} TutDoxyfile
 	@echo 'Generating Doxygen'
-	mkdir -p tutorial/docs/html
+	mkdir -p tutorial/docs
 	doxygen TutDoxyfile
 
 .PHONY: all debug clean tsgl tests docs tutorial dif
