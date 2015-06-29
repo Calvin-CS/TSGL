@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['rectangle',['Rectangle',['../class_rectangle.html',1,'']]],
-  ['roundfunction',['RoundFunction',['../class_round_function.html',1,'']]]
+  ['rectangle',['Rectangle',['../classtsgl_1_1_rectangle.html',1,'tsgl']]],
+  ['roundfunction',['RoundFunction',['../classtsgl_1_1_round_function.html',1,'tsgl']]]
 ];

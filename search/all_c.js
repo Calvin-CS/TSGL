@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['randomcolor',['randomColor',['../class_colors.html#a3155080f6bbee603212059a8f4abe6f3',1,'Colors']]],
-  ['recomputedimensions',['recomputeDimensions',['../class_cartesian_canvas.html#a390eb6c87ec9974bc0c9930e8a8d40ac',1,'CartesianCanvas']]],
-  ['recordfornumframes',['recordForNumFrames',['../class_canvas.html#aa298d691c19203544f450cfe0b85cfa0',1,'Canvas']]],
-  ['rectangle',['Rectangle',['../class_rectangle.html',1,'Rectangle'],['../class_rectangle.html#aefa6120fd93fe488322280e9abfafde4',1,'Rectangle::Rectangle()']]],
-  ['reset',['reset',['../class_timer.html#a7f1c5a4ef711075eec9a42afb6204a25',1,'Timer']]],
-  ['roundfunction',['RoundFunction',['../class_round_function.html',1,'']]]
+  ['pastperiod',['pastPeriod',['../classtsgl_1_1_timer.html#ac7c908b06a735f09841367c7067f44dd',1,'tsgl::Timer']]],
+  ['pointintriangle',['pointInTriangle',['../classtsgl_1_1_concave_polygon.html#afb5de38c8571d6cc808aeaec000f4522',1,'tsgl::ConcavePolygon']]],
+  ['polyline',['Polyline',['../classtsgl_1_1_polyline.html',1,'tsgl']]],
+  ['polyline',['Polyline',['../classtsgl_1_1_polyline.html#adc501ce6f5d7e653d21211cf469379cc',1,'tsgl::Polyline']]],
+  ['powerfunction',['PowerFunction',['../classtsgl_1_1_power_function.html',1,'tsgl']]],
+  ['powerfunction',['PowerFunction',['../classtsgl_1_1_power_function.html#a0a5d692e9bc9cf2a176ecab4ffc06519',1,'tsgl::PowerFunction']]],
+  ['progressbar',['ProgressBar',['../classtsgl_1_1_progress_bar.html#aee54b95dea3f338d0d54463fc9a36ee7',1,'tsgl::ProgressBar']]],
+  ['progressbar',['ProgressBar',['../classtsgl_1_1_progress_bar.html',1,'tsgl']]],
+  ['push',['push',['../classtsgl_1_1_array.html#aca25dfa4218b2c872d1e1cd2a1a32caa',1,'tsgl::Array']]]
 ];

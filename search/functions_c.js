@@ -1,11 +1,15 @@
 var searchData=
 [
-  ['setbackgroundcolor',['setBackgroundColor',['../class_canvas.html#a9fa635156cf4e82aa27a7a4878823f1d',1,'Canvas']]],
-  ['setfont',['setFont',['../class_canvas.html#a72698fe3b651fd6e630884a1ceaadc55',1,'Canvas']]],
-  ['setshowfps',['setShowFPS',['../class_canvas.html#abb5ef4023451ce81f81112641384e80c',1,'Canvas']]],
-  ['setupdatescreencopy',['setUpdateScreenCopy',['../class_canvas.html#a0a7d72a13049a5af280f2cbc6c49c08d',1,'Canvas']]],
-  ['shape',['Shape',['../class_shape.html#aaa8d87171e65e0d8ba3c5459978992a7',1,'Shape']]],
-  ['sleep',['sleep',['../class_timer.html#a6b3d6e79d249b567a71104c4091d652f',1,'Timer']]],
-  ['start',['start',['../class_canvas.html#acb0e91ff615b90fee442ccd43d003a42',1,'Canvas']]],
-  ['stoprecording',['stopRecording',['../class_canvas.html#a6503d6e8efc953a492f04895f5131dff',1,'Canvas']]]
+  ['saveimagetofile',['saveImageToFile',['../classtsgl_1_1_texture_handler.html#aa4f56141895c91c9580b77f09e9a70de',1,'tsgl::TextureHandler']]],
+  ['setbackgroundcolor',['setBackgroundColor',['../classtsgl_1_1_canvas.html#abb668fe42e2fe7f269b255152df959d8',1,'tsgl::Canvas']]],
+  ['setfont',['setFont',['../classtsgl_1_1_canvas.html#a692edf8e37c7714cdf2a58ea530c63e9',1,'tsgl::Canvas']]],
+  ['setshowfps',['setShowFPS',['../classtsgl_1_1_canvas.html#a8722c579dfa55a45e139bfeb269d73ff',1,'tsgl::Canvas']]],
+  ['shallowclear',['shallowClear',['../classtsgl_1_1_array.html#afe9d7b1dd294e8c74280b961ac84ac10',1,'tsgl::Array']]],
+  ['shape',['Shape',['../classtsgl_1_1_shape.html#ad283a47aa40bf80dcd308cc581c9e2dd',1,'tsgl::Shape']]],
+  ['size',['size',['../classtsgl_1_1_array.html#a590e6a7c3bbf1470aff97a83f23f83c3',1,'tsgl::Array']]],
+  ['sleep',['sleep',['../classtsgl_1_1_canvas.html#a2604fa056d4541f918ccf447eda1f3cf',1,'tsgl::Canvas::sleep()'],['../classtsgl_1_1_cartesian_canvas.html#a3ae99570b9a5f68f4ccf31593867edb0',1,'tsgl::CartesianCanvas::sleep()'],['../classtsgl_1_1_timer.html#a5c6e0dca6793d48c675e05b983da7f07',1,'tsgl::Timer::sleep()']]],
+  ['sleepfor',['sleepFor',['../classtsgl_1_1_canvas.html#a6674cc86b9a54b6a564021fddce47e36',1,'tsgl::Canvas']]],
+  ['start',['start',['../classtsgl_1_1_canvas.html#a654315f9b08a9b3b072eebf4b4d8ae89',1,'tsgl::Canvas']]],
+  ['stop',['stop',['../classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c',1,'tsgl::Canvas']]],
+  ['stoprecording',['stopRecording',['../classtsgl_1_1_canvas.html#ac6035d87aa3bf077031bc0bb6f419b17',1,'tsgl::Canvas']]]
 ];

@@ -142,7 +142,9 @@
 % Used by @image, @dotfile, @dot ... @enddot, and @msc ... @endmsc
 % (only if no caption is specified)
 \newenvironment{DoxyImageNoCaption}{%
+  \begin{center}%
 }{%
+  \end{center}%
 }
 
 % Used by @attention
@@ -433,6 +435,16 @@
              {*{#1}{|>{\PBS\raggedright\hspace{0pt}}p{\the\tmplength}}|}%
 }%
 {\end{xtabular*}\par}%
+
+% Used by nested tables
+\newenvironment{TabularNC}[1]%
+{%
+\setlength{\tmplength}%
+     {\linewidth/(#1)-\tabcolsep*2-\arrayrulewidth*(#1+1)/(#1)}%
+      \par\begin{tabular*}{\linewidth}%
+             {*{#1}{|>{\PBS\raggedright\hspace{0pt}}p{\the\tmplength}}|}%
+}%
+{\end{tabular*}\par}%
 
 % Used for member group headers
 \newenvironment{Indent}{%

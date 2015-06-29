@@ -1,0 +1,138 @@
+\hypertarget{structtsgl_1_1_color_h_s_v}{}\section{tsgl\+:\+:Color\+H\+S\+V Struct Reference}
+\label{structtsgl_1_1_color_h_s_v}\index{tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}}
+
+
+Floating point H\+S\+V\+A color struct.  
+
+
+
+
+{\ttfamily \#include $<$Color.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structtsgl_1_1_color_h_s_v_a36b4390ed6aba9f00ac9559ccca74f8a}{Color\+H\+S\+V} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_h_s_v_a9ff97b9a0434ab700883b24c3738645d}{Color\+H\+S\+V} (float h, float s, float v, float a=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_h_s_v_a85a62f8d581801540717d3b3cd0ae782}{operator Color\+Float} ()
+\begin{DoxyCompactList}\small\item\em Implicit conversion from \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} to \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{structtsgl_1_1_color_h_s_v_a17c6cd6cdc7487d2b0c1f19427f7fde8}{As\+String} ()
+\begin{DoxyCompactList}\small\item\em Returns a string representation of the \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structtsgl_1_1_color_h_s_v_afd87dfc2483324bddf502bf2ba5266b3}{}float {\bfseries H}\label{structtsgl_1_1_color_h_s_v_afd87dfc2483324bddf502bf2ba5266b3}
+
+\item 
+\hypertarget{structtsgl_1_1_color_h_s_v_a70be2ef38632107a9756740bcca86b45}{}float {\bfseries S}\label{structtsgl_1_1_color_h_s_v_a70be2ef38632107a9756740bcca86b45}
+
+\item 
+\hypertarget{structtsgl_1_1_color_h_s_v_a56a41d0935fedf853e0ead44c03d0626}{}float {\bfseries V}\label{structtsgl_1_1_color_h_s_v_a56a41d0935fedf853e0ead44c03d0626}
+
+\item 
+\hypertarget{structtsgl_1_1_color_h_s_v_a188f4a1bb6de8bef57b6913be75e0534}{}float {\bfseries A}\label{structtsgl_1_1_color_h_s_v_a188f4a1bb6de8bef57b6913be75e0534}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Floating point H\+S\+V\+A color struct. 
+
+\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} defines a color with floating point hue, saturation, value, and alpha components. 
+\begin{DoxyParams}{Parameters}
+{\em H} & Hue component, between 0 and 6 inclusive. \\
+\hline
+{\em S} & Saturation component, between 0 and 1 inclusive. \\
+\hline
+{\em V} & Value component, between 0 and 1 inclusive. \\
+\hline
+{\em A} & Alpha component, between 0 and 1 inclusive. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structtsgl_1_1_color_h_s_v_a36b4390ed6aba9f00ac9559ccca74f8a}{}\index{tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}!Color\+H\+S\+V@{Color\+H\+S\+V}}
+\index{Color\+H\+S\+V@{Color\+H\+S\+V}!tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}}
+\subsubsection[{Color\+H\+S\+V}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+H\+S\+V\+::\+Color\+H\+S\+V (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_h_s_v_a36b4390ed6aba9f00ac9559ccca74f8a}
+
+
+Constructs a \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. 
+
+Default constructor for a \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. \begin{DoxyNote}{Note}
+H is set to 0.\+0f by default. S, V, and A are set to 1.\+0f by default. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct with default H, S, V, and A values. 
+\end{DoxyReturn}
+\hypertarget{structtsgl_1_1_color_h_s_v_a9ff97b9a0434ab700883b24c3738645d}{}\index{tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}!Color\+H\+S\+V@{Color\+H\+S\+V}}
+\index{Color\+H\+S\+V@{Color\+H\+S\+V}!tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}}
+\subsubsection[{Color\+H\+S\+V}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+H\+S\+V\+::\+Color\+H\+S\+V (
+\begin{DoxyParamCaption}
+\item[{float}]{h, }
+\item[{float}]{s, }
+\item[{float}]{v, }
+\item[{float}]{a = {\ttfamily 1.0f}}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_h_s_v_a9ff97b9a0434ab700883b24c3738645d}
+
+
+Explicitly constructs a \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. 
+
+Explicit constructor for a \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. 
+\begin{DoxyParams}{Parameters}
+{\em h} & Hue component of the \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. \\
+\hline
+{\em s} & Saturation component of the \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. \\
+\hline
+{\em v} & Value component of the \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct. \\
+\hline
+{\em a} & Alpha component of the \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct (set to 1.\+0f by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held for each of the components where if any of them are out of range then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} struct with specified H, S, V, and A values. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structtsgl_1_1_color_h_s_v_a17c6cd6cdc7487d2b0c1f19427f7fde8}{}\index{tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}!As\+String@{As\+String}}
+\index{As\+String@{As\+String}!tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}}
+\subsubsection[{As\+String}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string tsgl\+::\+Color\+H\+S\+V\+::\+As\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_h_s_v_a17c6cd6cdc7487d2b0c1f19427f7fde8}
+
+
+Returns a string representation of the \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}. 
+
+This function returns a std\+::string representation of the \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}. \begin{DoxyReturn}{Returns}
+A string representation of the \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}. 
+\end{DoxyReturn}
+\hypertarget{structtsgl_1_1_color_h_s_v_a85a62f8d581801540717d3b3cd0ae782}{}\index{tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}!operator Color\+Float@{operator Color\+Float}}
+\index{operator Color\+Float@{operator Color\+Float}!tsgl\+::\+Color\+H\+S\+V@{tsgl\+::\+Color\+H\+S\+V}}
+\subsubsection[{operator Color\+Float}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+H\+S\+V\+::operator {\bf Color\+Float} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_h_s_v_a85a62f8d581801540717d3b3cd0ae782}
+
+
+Implicit conversion from \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V} to \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. 
+
+This defines the implicit conversion operator from an H\+S\+V color type (\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}) to an R\+G\+B color type (\hyperlink{structtsgl_1_1_color_float}{Color\+Float}). 
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Color.\+h\item 
+Color.\+cpp\end{DoxyCompactItemize}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exponentialfunction',['ExponentialFunction',['../class_exponential_function.html',1,'']]]
+  ['exponentialfunction',['ExponentialFunction',['../classtsgl_1_1_exponential_function.html',1,'tsgl']]]
 ];

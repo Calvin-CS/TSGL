@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['takescreenshot',['takeScreenShot',['../class_canvas.html#a82f53634a21ab8bf7daf6586ad4c313f',1,'Canvas']]],
-  ['text',['Text',['../class_text.html#a5f1ef9ca6779f8a01ea78442e4280f55',1,'Text']]],
-  ['threadsleepfor',['threadSleepFor',['../class_timer.html#aed9d38e6cefef77017f990558ae72ebb',1,'Timer']]],
-  ['timer',['Timer',['../class_timer.html#aa9efcdd947c18f71b15205162483c79c',1,'Timer']]],
-  ['triangle',['Triangle',['../class_triangle.html#a22609a1523399fd46fa3751afe692a1d',1,'Triangle']]]
+  ['takescreenshot',['takeScreenShot',['../classtsgl_1_1_canvas.html#ac035f43763b198f6915a0772973a5ea9',1,'tsgl::Canvas']]],
+  ['text',['Text',['../classtsgl_1_1_text.html#a9f903a24af7fd62666b7532c1fa2d182',1,'tsgl::Text']]],
+  ['texturehandler',['TextureHandler',['../classtsgl_1_1_texture_handler.html#a1a0db4cec4146d0735bc84cacfdaa5e5',1,'tsgl::TextureHandler']]],
+  ['threadsleepfor',['threadSleepFor',['../classtsgl_1_1_timer.html#ae8c5b39a6c5cae2a24abe2a298b05b64',1,'tsgl::Timer']]],
+  ['timer',['Timer',['../classtsgl_1_1_timer.html#abd022bb9ea6ddf5b69ff645ac8f5594d',1,'tsgl::Timer']]],
+  ['triangle',['Triangle',['../classtsgl_1_1_triangle.html#a5ee7f4735479c2692d1d6a2d22ba5c28',1,'tsgl::Triangle']]]
 ];

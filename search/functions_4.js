@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['end',['end',['../class_canvas.html#a5118913e1b6d376171b8856ca2f4b508',1,'Canvas']]]
+  ['function',['Function',['../classtsgl_1_1_function.html#aaf959c9d39bb45c2aded83fd754c288d',1,'tsgl::Function']]]
 ];

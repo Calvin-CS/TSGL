@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['floorfunction',['FloorFunction',['../class_floor_function.html',1,'']]],
-  ['function',['Function',['../class_function.html',1,'Function'],['../class_function.html#ae206568fd4fd4c885e3ccff76345c4e6',1,'Function::Function()']]]
+  ['floorfunction',['FloorFunction',['../classtsgl_1_1_floor_function.html',1,'tsgl']]],
+  ['function',['Function',['../classtsgl_1_1_function.html#aaf959c9d39bb45c2aded83fd754c288d',1,'tsgl::Function']]],
+  ['function',['Function',['../classtsgl_1_1_function.html',1,'tsgl']]]
 ];

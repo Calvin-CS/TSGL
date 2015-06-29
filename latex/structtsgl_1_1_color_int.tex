@@ -1,0 +1,193 @@
+\hypertarget{structtsgl_1_1_color_int}{}\section{tsgl\+:\+:Color\+Int Struct Reference}
+\label{structtsgl_1_1_color_int}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+
+
+Integer R\+G\+B\+A color struct.  
+
+
+
+
+{\ttfamily \#include $<$Color.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structtsgl_1_1_color_int_a7826d99c97b598cadc325716a8b06dbe}{Color\+Int} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_int_a0f0dea0c416a290eb4fdaf7583e27285}{Color\+Int} (int r, int g, int b, int a=255)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{structtsgl_1_1_color_int_ad03b5c33b1096924e2cbeac28fe690e4}{As\+String} ()
+\begin{DoxyCompactList}\small\item\em Returns a string representation of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int}. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_int_a34855245876c1ccee51625086f671ebf}{operator Color\+Float} ()
+\begin{DoxyCompactList}\small\item\em Implicit conversion from \hyperlink{structtsgl_1_1_color_int}{Color\+Int} to \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. \end{DoxyCompactList}\item 
+\hypertarget{structtsgl_1_1_color_int_acbd82ad2c6388389aa3474f042a25353}{}{\bfseries operator Color\+H\+S\+V} ()\label{structtsgl_1_1_color_int_acbd82ad2c6388389aa3474f042a25353}
+
+\item 
+bool \hyperlink{structtsgl_1_1_color_int_a7d6282c79f42d4ba9a70c4475b8170c2}{operator==} (\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \&c2)
+\begin{DoxyCompactList}\small\item\em Determines if two Color\+Ints are equivalent. \end{DoxyCompactList}\item 
+bool \hyperlink{structtsgl_1_1_color_int_af83865a1b76eb8c0a5e0fe4bc34fab2d}{operator!=} (\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \&c2)
+\begin{DoxyCompactList}\small\item\em Determines if two Color\+Ints are {\itshape N\+O\+T} equivalent. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structtsgl_1_1_color_int_a72ab1d2040360a98871f96bccdc85da6}{}int {\bfseries R}\label{structtsgl_1_1_color_int_a72ab1d2040360a98871f96bccdc85da6}
+
+\item 
+\hypertarget{structtsgl_1_1_color_int_a031a5d8f7e402908648ed67d04341796}{}int {\bfseries G}\label{structtsgl_1_1_color_int_a031a5d8f7e402908648ed67d04341796}
+
+\item 
+\hypertarget{structtsgl_1_1_color_int_a3f8bc859cdf8167c3aaaabb493301ea8}{}int {\bfseries B}\label{structtsgl_1_1_color_int_a3f8bc859cdf8167c3aaaabb493301ea8}
+
+\item 
+\hypertarget{structtsgl_1_1_color_int_af095bf47ede3084b3d0b4ca5e5638ce3}{}int {\bfseries A}\label{structtsgl_1_1_color_int_af095bf47ede3084b3d0b4ca5e5638ce3}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Integer R\+G\+B\+A color struct. 
+
+\hyperlink{structtsgl_1_1_color_int}{Color\+Int} defines a color with integer red, green, blue, and alpha components. 
+\begin{DoxyParams}{Parameters}
+{\em R} & Red component, between 0 and 255 inclusive. \\
+\hline
+{\em G} & Green component, between 0 and 255 inclusive. \\
+\hline
+{\em B} & Blue component, between 0 and 255 inclusive. \\
+\hline
+{\em A} & Alpha component, between 0 and 255 inclusive. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{structtsgl_1_1_color_int_a7826d99c97b598cadc325716a8b06dbe}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!Color\+Int@{Color\+Int}}
+\index{Color\+Int@{Color\+Int}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{Color\+Int}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+Int\+::\+Color\+Int (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_a7826d99c97b598cadc325716a8b06dbe}
+
+
+Constructs a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. 
+
+Default constructor for the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \begin{DoxyNote}{Note}
+R, G, B, and A are all set to 255 by default. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct with default R, G, B, and A values. 
+\end{DoxyReturn}
+\hypertarget{structtsgl_1_1_color_int_a0f0dea0c416a290eb4fdaf7583e27285}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!Color\+Int@{Color\+Int}}
+\index{Color\+Int@{Color\+Int}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{Color\+Int}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+Int\+::\+Color\+Int (
+\begin{DoxyParamCaption}
+\item[{int}]{r, }
+\item[{int}]{g, }
+\item[{int}]{b, }
+\item[{int}]{a = {\ttfamily 255}}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_a0f0dea0c416a290eb4fdaf7583e27285}
+
+
+Explicitly constructs a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. 
+
+Explicit constructor for a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. 
+\begin{DoxyParams}{Parameters}
+{\em r} & The red component of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \\
+\hline
+{\em g} & The green component of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \\
+\hline
+{\em b} & The blue component of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \\
+\hline
+{\em a} & The alpha component of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct (set to 255 by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if any of the specified values are out of the range 0 -\/ 255 inclusive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct with the specified R, G, B, and A values. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{structtsgl_1_1_color_int_ad03b5c33b1096924e2cbeac28fe690e4}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!As\+String@{As\+String}}
+\index{As\+String@{As\+String}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{As\+String}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string tsgl\+::\+Color\+Int\+::\+As\+String (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_ad03b5c33b1096924e2cbeac28fe690e4}
+
+
+Returns a string representation of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int}. 
+
+This function returns a std\+::string representation of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int}. \begin{DoxyReturn}{Returns}
+A string representation of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int}. 
+\end{DoxyReturn}
+\hypertarget{structtsgl_1_1_color_int_a34855245876c1ccee51625086f671ebf}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!operator Color\+Float@{operator Color\+Float}}
+\index{operator Color\+Float@{operator Color\+Float}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{operator Color\+Float}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+Int\+::operator {\bf Color\+Float} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_a34855245876c1ccee51625086f671ebf}
+
+
+Implicit conversion from \hyperlink{structtsgl_1_1_color_int}{Color\+Int} to \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. 
+
+This defines the implicit conversion operator from an integer color type (\hyperlink{structtsgl_1_1_color_int}{Color\+Int}) to a floating point color type (\hyperlink{structtsgl_1_1_color_float}{Color\+Float}). \hypertarget{structtsgl_1_1_color_int_af83865a1b76eb8c0a5e0fe4bc34fab2d}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{operator"!=}]{\setlength{\rightskip}{0pt plus 5cm}bool tsgl\+::\+Color\+Int\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{{\bf Color\+Int} \&}]{c2}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_af83865a1b76eb8c0a5e0fe4bc34fab2d}
+
+
+Determines if two Color\+Ints are {\itshape N\+O\+T} equivalent. 
+
+Inequality operator for two Color\+Ints. Determines if they are {\itshape N\+O\+T} equivalent. 
+\begin{DoxyParams}{Parameters}
+{\em c2} & Reference to the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct that is the second one in the inequality comparison. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function relies on ($\ast$this), which is a dereferenced pointer to the first \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct in the inequality comparison. (its the one on the left side of the != sign). 
+
+Thus function is also only used in Unit testing. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+true if the two Color\+Ints are not equivalent, false if otherwise. 
+\end{DoxyReturn}
+\hypertarget{structtsgl_1_1_color_int_a7d6282c79f42d4ba9a70c4475b8170c2}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!operator==@{operator==}}
+\index{operator==@{operator==}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool tsgl\+::\+Color\+Int\+::operator== (
+\begin{DoxyParamCaption}
+\item[{{\bf Color\+Int} \&}]{c2}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_a7d6282c79f42d4ba9a70c4475b8170c2}
+
+
+Determines if two Color\+Ints are equivalent. 
+
+Equality operator for two Color\+Ints. Determines if they are equivalent. 
+\begin{DoxyParams}{Parameters}
+{\em c2} & Reference to the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct that is the second one in the equivalence comparison. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function relies on ($\ast$this), which is a dereferenced pointer to the first \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct in the comparison. (its the one on the left side of the == sign). 
+
+This function is also only used in Unit testing. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+true if the two \hyperlink{structtsgl_1_1_color_int}{Color\+Int} are equivalent, false if otherwise. 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Color.\+h\item 
+Color.\+cpp\end{DoxyCompactItemize}

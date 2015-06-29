@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['floorfunction',['FloorFunction',['../class_floor_function.html',1,'']]],
-  ['function',['Function',['../class_function.html',1,'']]]
+  ['floorfunction',['FloorFunction',['../classtsgl_1_1_floor_function.html',1,'tsgl']]],
+  ['function',['Function',['../classtsgl_1_1_function.html',1,'tsgl']]]
 ];

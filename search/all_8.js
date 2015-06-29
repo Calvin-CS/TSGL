@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['line',['Line',['../class_line.html',1,'Line'],['../class_line.html#a01fd5349b9a19b2b2ca24a7c7f0e9e9e',1,'Line::Line()']]]
+  ['image',['Image',['../classtsgl_1_1_image.html',1,'tsgl']]],
+  ['image',['Image',['../classtsgl_1_1_image.html#ae468f22b369f66494d11816a6f41382b',1,'tsgl::Image']]],
+  ['intersects',['intersects',['../classtsgl_1_1_concave_polygon.html#a0fdc4936df5e1bff64031041fa84fee5',1,'tsgl::ConcavePolygon']]],
+  ['isempty',['isEmpty',['../classtsgl_1_1_array.html#a2676cc880c5638849db5777f33680c9c',1,'tsgl::Array']]]
 ];

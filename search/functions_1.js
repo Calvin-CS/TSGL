@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bindtobutton',['bindToButton',['../class_canvas.html#a15f16cb84c520e6c4135bfb52434cfae',1,'Canvas']]],
-  ['bindtoscroll',['bindToScroll',['../class_canvas.html#a2125433e0574691a9472783694a32bb6',1,'Canvas']]],
-  ['blendedcolor',['blendedColor',['../class_colors.html#ae24518e4d2618cc5a670316f6d53f844',1,'Colors']]]
+  ['bindtobutton',['bindToButton',['../classtsgl_1_1_canvas.html#a6a7dabf1d946e917cbeeba657da6ee84',1,'tsgl::Canvas']]],
+  ['bindtoscroll',['bindToScroll',['../classtsgl_1_1_canvas.html#a65ba120d9d16ca68553996ed2bc87493',1,'tsgl::Canvas']]],
+  ['blendedcolor',['blendedColor',['../classtsgl_1_1_colors.html#ad80ab51c314f84ea53f9af81e54f8d51',1,'tsgl::Colors']]]
 ];

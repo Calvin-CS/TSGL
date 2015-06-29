@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['naturallogfunction',['NaturalLogFunction',['../class_natural_log_function.html',1,'']]]
+  ['naturallogfunction',['NaturalLogFunction',['../classtsgl_1_1_natural_log_function.html',1,'tsgl']]]
 ];
