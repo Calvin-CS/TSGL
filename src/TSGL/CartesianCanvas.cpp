@@ -237,7 +237,8 @@ void CartesianCanvas::runTests() {
   c2.setBackgroundColor(WHITE);
   c2.start();
   tsglAssert(testDraw(c2), "Unit test for drawing functions failed!");
-  c2.stop();
+//  c2.stop();
+  c2.wait();
 
   TsglDebug("Unit tests for CartesianCanvas complete.");
 }

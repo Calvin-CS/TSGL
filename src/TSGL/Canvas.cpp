@@ -129,8 +129,6 @@ void Canvas::draw() {
 
     setBackgroundColor(bgcolor); //Set our initial clear / background color
 
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
         drawTimer->sleep(true);
@@ -691,7 +689,7 @@ void Canvas::initGlew() {
     // "Bind" the newly created texture : all future texture functions will modify this texture
     glBindTexture(GL_TEXTURE_2D, renderedTexture);
     // Give an empty image to OpenGL ( the last "0" )
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, winWidth+1, winHeight-1, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGBA, winWidth+1, winHeight, 0,GL_RGBA, GL_UNSIGNED_BYTE, 0);
     // Poor filtering. Needed !
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -799,7 +797,7 @@ void Canvas::setShowFPS(bool b) {
 void Canvas::setupCamera() {
     // Set up camera positioning
     // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
-    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, (winHeight-1) / 2.0f, -winHeight / 2.0f,
+    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f,
         1 };
     glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 

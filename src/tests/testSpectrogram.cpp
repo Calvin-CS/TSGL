@@ -9,14 +9,14 @@ void spectrogramFunction(Canvas& can, std::string fname) {
     const int cww = can.getWindowWidth(), cwh = can.getWindowHeight();
     can.drawImage(fname, 0, 0, cww, cwh);
     Spectrogram sp(HORIZONTAL,500);
-    can.sleepFor(0.25f);
-    can.recordForNumFrames(FPS);
+//    can.recordForNumFrames(FPS);
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
       int tid = omp_get_thread_num(), nthreads = omp_get_num_threads();
       int blockSize = cwh / nthreads;
       int start = tid * blockSize;
       int end = (tid == (nthreads-1)) ? cwh : (tid+1) * blockSize;
+      can.sleep();
       for (int j = start; j < end; ++j) {
         if (can.getIsOpen()) {
           can.sleep();
