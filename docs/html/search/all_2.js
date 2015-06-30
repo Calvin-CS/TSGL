@@ -7,7 +7,7 @@ var searchData=
   ['cartesiancanvas',['CartesianCanvas',['../classtsgl_1_1_cartesian_canvas.html#a4438f368eae3def6a70e0faa15d28daa',1,'tsgl::CartesianCanvas::CartesianCanvas(double timerLength=0.0)'],['../classtsgl_1_1_cartesian_canvas.html#a7ca80bfa69d89fdbe110a7ec3aa6f100',1,'tsgl::CartesianCanvas::CartesianCanvas(int x, int y, int width, int height, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax, std::string t, double timerLength=0.0)']]],
   ['ceilingfunction',['CeilingFunction',['../classtsgl_1_1_ceiling_function.html',1,'tsgl']]],
   ['clear',['clear',['../classtsgl_1_1_array.html#acc5f5148a71c7f606be6cc337116bad6',1,'tsgl::Array::clear()'],['../classtsgl_1_1_canvas.html#abe209d60de2c9b2259ab0588c4e30cef',1,'tsgl::Canvas::clear()']]],
-  ['close',['close',['../classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938',1,'tsgl::Canvas']]],
+  ['close',['close',['../classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938',1,'tsgl::Canvas::close()'],['../classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79',1,'tsgl::VisualTaskQueue::close()']]],
   ['coloredpolygon',['ColoredPolygon',['../classtsgl_1_1_colored_polygon.html',1,'tsgl']]],
   ['coloredpolygon',['ColoredPolygon',['../classtsgl_1_1_colored_polygon.html#a027216c5958ce1974d3ef6429ce479c7',1,'tsgl::ColoredPolygon']]],
   ['colorfloat',['ColorFloat',['../structtsgl_1_1_color_float.html',1,'tsgl']]],

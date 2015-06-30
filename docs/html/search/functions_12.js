@@ -11,5 +11,6 @@ var searchData=
   ['_7eshape',['~Shape',['../classtsgl_1_1_shape.html#aa9bfac883a0748471600fe9752e85948',1,'tsgl::Shape']]],
   ['_7espectrogram',['~Spectrogram',['../classtsgl_1_1_spectrogram.html#abf1ff8d5acade39017321d6a2006f0f1',1,'tsgl::Spectrogram']]],
   ['_7etexturehandler',['~TextureHandler',['../classtsgl_1_1_texture_handler.html#a64d0ef81c3c79edb06e23d62ca220c5d',1,'tsgl::TextureHandler']]],
-  ['_7etimer',['~Timer',['../classtsgl_1_1_timer.html#a817d6b360361c744b13ff10377c130af',1,'tsgl::Timer']]]
+  ['_7etimer',['~Timer',['../classtsgl_1_1_timer.html#a817d6b360361c744b13ff10377c130af',1,'tsgl::Timer']]],
+  ['_7evisualtaskqueue',['~VisualTaskQueue',['../classtsgl_1_1_visual_task_queue.html#ae961a57508ba1d38570d1431c4367a09',1,'tsgl::VisualTaskQueue']]]
 ];

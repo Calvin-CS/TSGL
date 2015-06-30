@@ -88,8 +88,12 @@ int \hyperlink{classtsgl_1_1_canvas_ad6e98d17d3e43d79628a3bd05221ee8b}{get\+Wind
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s y-\/position. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O} ()
 \begin{DoxyCompactList}\small\item\em Manually handles keyboard/mouse I/\+O. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+Drawing} ()
+\begin{DoxyCompactList}\small\item\em Pauses the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}{record\+For\+Num\+Frames} (unsigned int num\+\_\+frames)
 \begin{DoxyCompactList}\small\item\em Records the \hyperlink{classtsgl_1_1_canvas}{Canvas} for a specified number of frames. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing} ()
+\begin{DoxyCompactList}\small\item\em Resumes the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}{set\+Background\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
 \begin{DoxyCompactList}\small\item\em Mutator for the background color. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_a692edf8e37c7714cdf2a58ea530c63e9}{set\+Font} (std\+::string filename)
@@ -297,7 +301,7 @@ Any threads that have called \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e2
 \end{DoxySeeAlso}
 
 
-Referenced by stop().
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::close(), and stop().
 
 \hypertarget{classtsgl_1_1_canvas_a2162c16f6aeaee01f8e29696f5818c03}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Circle@{draw\+Circle}}
 \index{draw\+Circle@{draw\+Circle}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -622,7 +626,7 @@ This function draws a \hyperlink{classtsgl_1_1_rectangle}{Rectangle} with the gi
 \end{DoxyParams}
 
 
-Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Rectangle().
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Rectangle(), tsgl\+::\+Visual\+Task\+Queue\+::reset(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), and tsgl\+::\+Visual\+Task\+Queue\+::update().
 
 \hypertarget{classtsgl_1_1_canvas_a3457e7ebd17fa5003025ff6bcaaeedf6}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Text@{draw\+Text}}
 \index{draw\+Text@{draw\+Text}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -654,7 +658,7 @@ This function draws a given string of \hyperlink{classtsgl_1_1_text}{Text} at th
 \end{DoxyParams}
 
 
-Referenced by draw\+Progress(), and tsgl\+::\+Cartesian\+Canvas\+::draw\+Text().
+Referenced by draw\+Progress(), tsgl\+::\+Cartesian\+Canvas\+::draw\+Text(), and tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend().
 
 \hypertarget{classtsgl_1_1_canvas_a1873adb0f3f43e3ebec33fdaf6c6a3d5}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Text@{draw\+Text}}
 \index{draw\+Text@{draw\+Text}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -822,6 +826,10 @@ Accessor for window\textquotesingle{}s closed status.
 \begin{DoxyReturn}{Returns}
 Whether the window is still open (that is, the user has not closed it). 
 \end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::close().
+
 \hypertarget{classtsgl_1_1_canvas_a4af9bed83746f998474039185d2a765a}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Mouse\+X@{get\+Mouse\+X}}
 \index{get\+Mouse\+X@{get\+Mouse\+X}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
 \subsubsection[{get\+Mouse\+X}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Mouse\+X (
@@ -990,7 +998,7 @@ The height in pixels of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window.
 \end{DoxyReturn}
 
 
-Referenced by tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates(), tsgl\+::\+Cartesian\+Canvas\+::get\+Screen\+Coordinates(), and tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions().
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates(), tsgl\+::\+Cartesian\+Canvas\+::get\+Screen\+Coordinates(), tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions(), and tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend().
 
 \hypertarget{classtsgl_1_1_canvas_a086a0322f4a6ab27da6929b1aa0593af}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+Width@{get\+Window\+Width}}
 \index{get\+Window\+Width@{get\+Window\+Width}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -1008,7 +1016,7 @@ The width in pixels of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window.
 \end{DoxyReturn}
 
 
-Referenced by tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates(), and tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions().
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates(), tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions(), and tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend().
 
 \hypertarget{classtsgl_1_1_canvas_a011ce2354d4565f9d2a323411a47d52d}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+X@{get\+Window\+X}}
 \index{get\+Window\+X@{get\+Window\+X}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -1024,6 +1032,10 @@ Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s x-\
 \begin{DoxyReturn}{Returns}
 The x coordinate in pixels of the left of the \hyperlink{classtsgl_1_1_canvas}{Canvas} (0 = left of monitor). 
 \end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend().
+
 \hypertarget{classtsgl_1_1_canvas_ad6e98d17d3e43d79628a3bd05221ee8b}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+Y@{get\+Window\+Y}}
 \index{get\+Window\+Y@{get\+Window\+Y}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
 \subsubsection[{get\+Window\+Y}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Window\+Y (
@@ -1038,6 +1050,10 @@ Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s y-\
 \begin{DoxyReturn}{Returns}
 The y coordinate in pixels of the top of the \hyperlink{classtsgl_1_1_canvas}{Canvas} (0 = top of monitor). 
 \end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend().
+
 \hypertarget{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!handle\+I\+O@{handle\+I\+O}}
 \index{handle\+I\+O@{handle\+I\+O}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
 \subsubsection[{handle\+I\+O}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::handle\+I\+O (
@@ -1058,6 +1074,26 @@ This function will return immediately if not called from the main thread.
 
 Referenced by sleep(), and sleep\+For().
 
+\hypertarget{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!pause\+Drawing@{pause\+Drawing}}
+\index{pause\+Drawing@{pause\+Drawing}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{pause\+Drawing}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::pause\+Drawing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}
+
+
+Pauses the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function forces the calling thread to wait until the \hyperlink{classtsgl_1_1_canvas}{Canvas} finishes its draw cycle, them prevents the \hyperlink{classtsgl_1_1_canvas}{Canvas} from rendering further updates until resume\+Drawing is called. \begin{DoxyNote}{Note}
+This method may be called from any number of threads, so long as a matching number of calls to \hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing()} are made. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+{\bfseries This function makes use of a mutex lock. Do not call this without later calling \hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing()}.} 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing()} 
+\end{DoxySeeAlso}
 \hypertarget{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!record\+For\+Num\+Frames@{record\+For\+Num\+Frames}}
 \index{record\+For\+Num\+Frames@{record\+For\+Num\+Frames}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
 \subsubsection[{record\+For\+Num\+Frames}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::record\+For\+Num\+Frames (
@@ -1078,6 +1114,26 @@ The function automatically terminates after num\+\_\+frames cycles have complete
 {\em num\+\_\+frames} & The number of frames to dump screenshots for. \\
 \hline
 \end{DoxyParams}
+\hypertarget{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!resume\+Drawing@{resume\+Drawing}}
+\index{resume\+Drawing@{resume\+Drawing}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{resume\+Drawing}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::resume\+Drawing (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}
+
+
+Resumes the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function should be called after pause\+Drawing to let the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{} rendering thread know that it may resume rendering. \begin{DoxyNote}{Note}
+This method may be called from any number of threads, so long as a matching number of calls to \hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+Drawing()} are made. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+{\bfseries This function makes use of a mutex lock. Do not call this without having first called \hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+Drawing()}.} 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+Drawing()} 
+\end{DoxySeeAlso}
 \hypertarget{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!set\+Background\+Color@{set\+Background\+Color}}
 \index{set\+Background\+Color@{set\+Background\+Color}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
 \subsubsection[{set\+Background\+Color}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::set\+Background\+Color (
@@ -1196,7 +1252,7 @@ This function opens a G\+L window and tells the \hyperlink{classtsgl_1_1_canvas}
 \end{DoxySeeAlso}
 
 
-Referenced by tsgl\+::\+Cartesian\+Canvas\+::run\+Tests(), run\+Tests(), and tsgl\+::\+Spectrogram\+::\+Spectrogram().
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::run\+Tests(), run\+Tests(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), tsgl\+::\+Spectrogram\+::\+Spectrogram(), and tsgl\+::\+Visual\+Task\+Queue\+::\+Visual\+Task\+Queue().
 
 \hypertarget{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!stop@{stop}}
 \index{stop@{stop}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -1261,7 +1317,7 @@ This function blocks the calling thread until the user closes the \hyperlink{cla
 \end{DoxySeeAlso}
 
 
-Referenced by tsgl\+::\+Spectrogram\+::finish(), and stop().
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::close(), tsgl\+::\+Spectrogram\+::finish(), tsgl\+::\+Cartesian\+Canvas\+::run\+Tests(), and stop().
 
 
 

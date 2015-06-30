@@ -221,9 +221,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa499851e5e4b97bb99ca4fb3d633c17e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#aa499851e5e4b97bb99ca4fb3d633c17e">handleIO</a> ()</td></tr>
 <tr class="memdesc:aa499851e5e4b97bb99ca4fb3d633c17e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manually handles keyboard/mouse I/O.  <a href="#aa499851e5e4b97bb99ca4fb3d633c17e">More...</a><br /></td></tr>
 <tr class="separator:aa499851e5e4b97bb99ca4fb3d633c17e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe021ab5148cc1327523689bced0f35a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#abe021ab5148cc1327523689bced0f35a">pauseDrawing</a> ()</td></tr>
+<tr class="memdesc:abe021ab5148cc1327523689bced0f35a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pauses the rendering thread of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>.  <a href="#abe021ab5148cc1327523689bced0f35a">More...</a><br /></td></tr>
+<tr class="separator:abe021ab5148cc1327523689bced0f35a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47436daa39473ddb4044bac7b3b27151"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a47436daa39473ddb4044bac7b3b27151">recordForNumFrames</a> (unsigned int num_frames)</td></tr>
 <tr class="memdesc:a47436daa39473ddb4044bac7b3b27151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Records the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> for a specified number of frames.  <a href="#a47436daa39473ddb4044bac7b3b27151">More...</a><br /></td></tr>
 <tr class="separator:a47436daa39473ddb4044bac7b3b27151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56bf3c6e4eb7b06015d1c115aaa143f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a56bf3c6e4eb7b06015d1c115aaa143f8">resumeDrawing</a> ()</td></tr>
+<tr class="memdesc:a56bf3c6e4eb7b06015d1c115aaa143f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resumes the rendering thread of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>.  <a href="#a56bf3c6e4eb7b06015d1c115aaa143f8">More...</a><br /></td></tr>
+<tr class="separator:a56bf3c6e4eb7b06015d1c115aaa143f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb668fe42e2fe7f269b255152df959d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#abb668fe42e2fe7f269b255152df959d8">setBackgroundColor</a> (<a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a> color)</td></tr>
 <tr class="memdesc:abb668fe42e2fe7f269b255152df959d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutator for the background color.  <a href="#abb668fe42e2fe7f269b255152df959d8">More...</a><br /></td></tr>
 <tr class="separator:abb668fe42e2fe7f269b255152df959d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -515,7 +521,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>drawShape</b> (<a cla
 <p>This function tells the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to stop rendering and to close its rendering window.</p>
 <p>Any threads that have called <a class="el" href="classtsgl_1_1_canvas.html#a39e69fd4d1ad8cf0e22ecea12f1ddf08" title="Waits for the user to close the Canvas. ">wait()</a> will continue. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#a654315f9b08a9b3b072eebf4b4d8ae89" title="Opens the Canvas. ">start()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c" title="Begins the process of closing the Canvas. ">stop()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a39e69fd4d1ad8cf0e22ecea12f1ddf08" title="Waits for the user to close the Canvas. ">wait()</a> </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c">stop()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>, and <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c">stop()</a>.</p>
 
 </div>
 </div>
@@ -1144,7 +1150,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>drawShape</b> (<a cla
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a5e88e7d751e24ae78d158f1d8e9faf5e">tsgl::CartesianCanvas::drawRectangle()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a5e88e7d751e24ae78d158f1d8e9faf5e">tsgl::CartesianCanvas::drawRectangle()</a>, <a class="el" href="classtsgl_1_1_visual_task_queue.html#a1cd23a5361c0209ac950db6afcd68a19">tsgl::VisualTaskQueue::reset()</a>, <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>, and <a class="el" href="classtsgl_1_1_visual_task_queue.html#a2fc5733a57213a6eee116408738851fc">tsgl::VisualTaskQueue::update()</a>.</p>
 
 </div>
 </div>
@@ -1210,7 +1216,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>drawShape</b> (<a cla
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_canvas.html#aea792059486ebe6d25d7f81bdadf751d">drawProgress()</a>, and <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a7df01e80ce99d0ce6b45532034c0940c">tsgl::CartesianCanvas::drawText()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_canvas.html#aea792059486ebe6d25d7f81bdadf751d">drawProgress()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a7df01e80ce99d0ce6b45532034c0940c">tsgl::CartesianCanvas::drawText()</a>, and <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>.</p>
 
 </div>
 </div>
@@ -1492,6 +1498,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>drawShape</b> (<a cla
 <p>Accessor for window's closed status. </p>
 <dl class="section return"><dt>Returns</dt><dd>Whether the window is still open (that is, the user has not closed it). </dd></dl>
 
+<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a4af9bed83746f998474039185d2a765a"></a>
@@ -1704,7 +1712,7 @@ getPixel will return the current status of the screen. Any object waiting to be 
 <p>Accessor for the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>'s window height. </p>
 <dl class="section return"><dt>Returns</dt><dd>The height in pixels of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> window. </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a736935074bb6d90bcc0c7af2edd8a4aa">tsgl::CartesianCanvas::getCartesianCoordinates()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a8fea34cfcee9bc577c1e1ab6d28a8185">tsgl::CartesianCanvas::getScreenCoordinates()</a>, and <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ac833a44fe7367f6411292707de37beef">tsgl::CartesianCanvas::recomputeDimensions()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a736935074bb6d90bcc0c7af2edd8a4aa">tsgl::CartesianCanvas::getCartesianCoordinates()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a8fea34cfcee9bc577c1e1ab6d28a8185">tsgl::CartesianCanvas::getScreenCoordinates()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ac833a44fe7367f6411292707de37beef">tsgl::CartesianCanvas::recomputeDimensions()</a>, and <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>.</p>
 
 </div>
 </div>
@@ -1724,7 +1732,7 @@ getPixel will return the current status of the screen. Any object waiting to be 
 <p>Accessor for the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>'s window width. </p>
 <dl class="section return"><dt>Returns</dt><dd>The width in pixels of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> window. </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a736935074bb6d90bcc0c7af2edd8a4aa">tsgl::CartesianCanvas::getCartesianCoordinates()</a>, and <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ac833a44fe7367f6411292707de37beef">tsgl::CartesianCanvas::recomputeDimensions()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a736935074bb6d90bcc0c7af2edd8a4aa">tsgl::CartesianCanvas::getCartesianCoordinates()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ac833a44fe7367f6411292707de37beef">tsgl::CartesianCanvas::recomputeDimensions()</a>, and <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>.</p>
 
 </div>
 </div>
@@ -1744,6 +1752,8 @@ getPixel will return the current status of the screen. Any object waiting to be 
 <p>Accessor for the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>'s x-position. </p>
 <dl class="section return"><dt>Returns</dt><dd>The x coordinate in pixels of the left of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> (0 = left of monitor). </dd></dl>
 
+<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="ad6e98d17d3e43d79628a3bd05221ee8b"></a>
@@ -1761,6 +1771,8 @@ getPixel will return the current status of the screen. Any object waiting to be 
 
 <p>Accessor for the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>'s y-position. </p>
 <dl class="section return"><dt>Returns</dt><dd>The y coordinate in pixels of the top of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> (0 = top of monitor). </dd></dl>
+
+<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>.</p>
 
 </div>
 </div>
@@ -1783,6 +1795,26 @@ getPixel will return the current status of the screen. Any object waiting to be 
 <b>OS X:</b> This function exists for OS X compatibility purposes. This function does nothing on Linux or Windows. </dd></dl>
 
 <p>Referenced by <a class="el" href="classtsgl_1_1_canvas.html#a2604fa056d4541f918ccf447eda1f3cf">sleep()</a>, and <a class="el" href="classtsgl_1_1_canvas.html#a6674cc86b9a54b6a564021fddce47e36">sleepFor()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abe021ab5148cc1327523689bced0f35a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::pauseDrawing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pauses the rendering thread of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. </p>
+<p>This function forces the calling thread to wait until the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> finishes its draw cycle, them prevents the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> from rendering further updates until resumeDrawing is called. </p><dl class="section note"><dt>Note</dt><dd>This method may be called from any number of threads, so long as a matching number of calls to <a class="el" href="classtsgl_1_1_canvas.html#a56bf3c6e4eb7b06015d1c115aaa143f8" title="Resumes the rendering thread of the Canvas. ">resumeDrawing()</a> are made. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd><b>This function makes use of a mutex lock. Do not call this without later calling <a class="el" href="classtsgl_1_1_canvas.html#a56bf3c6e4eb7b06015d1c115aaa143f8" title="Resumes the rendering thread of the Canvas. ">resumeDrawing()</a>.</b> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#a56bf3c6e4eb7b06015d1c115aaa143f8" title="Resumes the rendering thread of the Canvas. ">resumeDrawing()</a> </dd></dl>
 
 </div>
 </div>
@@ -1809,6 +1841,26 @@ getPixel will return the current status of the screen. Any object waiting to be 
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="a56bf3c6e4eb7b06015d1c115aaa143f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::resumeDrawing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resumes the rendering thread of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. </p>
+<p>This function should be called after pauseDrawing to let the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>' rendering thread know that it may resume rendering. </p><dl class="section note"><dt>Note</dt><dd>This method may be called from any number of threads, so long as a matching number of calls to <a class="el" href="classtsgl_1_1_canvas.html#abe021ab5148cc1327523689bced0f35a" title="Pauses the rendering thread of the Canvas. ">pauseDrawing()</a> are made. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd><b>This function makes use of a mutex lock. Do not call this without having first called <a class="el" href="classtsgl_1_1_canvas.html#abe021ab5148cc1327523689bced0f35a" title="Pauses the rendering thread of the Canvas. ">pauseDrawing()</a>.</b> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#abe021ab5148cc1327523689bced0f35a" title="Pauses the rendering thread of the Canvas. ">pauseDrawing()</a> </dd></dl>
 
 </div>
 </div>
@@ -1952,7 +2004,7 @@ getPixel will return the current status of the screen. Any object waiting to be 
 <p>This function opens a GL window and tells the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to start rendering. </p><dl class="section return"><dt>Returns</dt><dd>0 if start is successful, -1 if the canvas has already started. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#a39e69fd4d1ad8cf0e22ecea12f1ddf08" title="Waits for the user to close the Canvas. ">wait()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c" title="Begins the process of closing the Canvas. ">stop()</a>, <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a> </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a3365d92635f650cca2eda69812bef60b">runTests()</a>, and <a class="el" href="classtsgl_1_1_spectrogram.html#a806d3244b086b9ed2c982b7178eb5139">tsgl::Spectrogram::Spectrogram()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a3365d92635f650cca2eda69812bef60b">runTests()</a>, <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>, <a class="el" href="classtsgl_1_1_spectrogram.html#a806d3244b086b9ed2c982b7178eb5139">tsgl::Spectrogram::Spectrogram()</a>, and <a class="el" href="classtsgl_1_1_visual_task_queue.html#ad82aabf35ec367b2b0c5894999f5e76e">tsgl::VisualTaskQueue::VisualTaskQueue()</a>.</p>
 
 </div>
 </div>
@@ -2030,7 +2082,7 @@ getPixel will return the current status of the screen. Any object waiting to be 
 <p>This function blocks the calling thread until the user closes the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or until <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a> is called. This function has no effect if the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> has not started. </p><dl class="section return"><dt>Returns</dt><dd>0 if exit is successful, -1 if the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> has not started yet. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#a654315f9b08a9b3b072eebf4b4d8ae89" title="Opens the Canvas. ">start()</a>, end(), <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c" title="Begins the process of closing the Canvas. ">stop()</a>. </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_spectrogram.html#a9e6eb0489ee0fb9f96b2a5202868a1c2">tsgl::Spectrogram::finish()</a>, and <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c">stop()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>, <a class="el" href="classtsgl_1_1_spectrogram.html#a9e6eb0489ee0fb9f96b2a5202868a1c2">tsgl::Spectrogram::finish()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, and <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c">stop()</a>.</p>
 
 </div>
 </div>
@@ -2041,7 +2093,7 @@ getPixel will return the current status of the screen. Any object waiting to be 
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 30 2015 10:51:35 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jun 30 2015 17:50:27 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

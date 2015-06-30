@@ -6,6 +6,7 @@ var searchData=
   ['setshowfps',['setShowFPS',['../classtsgl_1_1_canvas.html#a8722c579dfa55a45e139bfeb269d73ff',1,'tsgl::Canvas']]],
   ['shallowclear',['shallowClear',['../classtsgl_1_1_array.html#afe9d7b1dd294e8c74280b961ac84ac10',1,'tsgl::Array']]],
   ['shape',['Shape',['../classtsgl_1_1_shape.html#ad283a47aa40bf80dcd308cc581c9e2dd',1,'tsgl::Shape']]],
+  ['showlegend',['showLegend',['../classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc',1,'tsgl::VisualTaskQueue']]],
   ['size',['size',['../classtsgl_1_1_array.html#a590e6a7c3bbf1470aff97a83f23f83c3',1,'tsgl::Array']]],
   ['sleep',['sleep',['../classtsgl_1_1_canvas.html#a2604fa056d4541f918ccf447eda1f3cf',1,'tsgl::Canvas::sleep()'],['../classtsgl_1_1_cartesian_canvas.html#a3ae99570b9a5f68f4ccf31593867edb0',1,'tsgl::CartesianCanvas::sleep()'],['../classtsgl_1_1_timer.html#a5c6e0dca6793d48c675e05b983da7f07',1,'tsgl::Timer::sleep()']]],
   ['sleepfor',['sleepFor',['../classtsgl_1_1_canvas.html#a6674cc86b9a54b6a564021fddce47e36',1,'tsgl::Canvas']]],
