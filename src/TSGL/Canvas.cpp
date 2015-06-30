@@ -122,6 +122,11 @@ void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
 
+    // Get actual framebuffer size and adjust scaling accordingly
+    int fbw, fbh;
+    glfwGetFramebufferSize(window, &fbw, &fbh);
+    int scaling = round((1.0f*fbw)/winWidth);
+
     if (hasStereo)
       Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
     else
@@ -145,6 +150,8 @@ void Canvas::draw() {
         else
           glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
         glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+        glViewport(0,0,winWidth,winHeight);
 
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
         toClear = false;
@@ -190,6 +197,7 @@ void Canvas::draw() {
         }
 
         // Update our screenBuffer copy with the screen
+        glViewport(0,0,winWidth*scaling,winHeight*scaling);
         myShapes->clear();                           // Clear our buffer of shapes to be drawn
 
         if (hasEXTFramebuffer)
