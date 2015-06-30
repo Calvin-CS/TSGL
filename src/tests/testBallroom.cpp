@@ -232,8 +232,14 @@ public:
         if (b->bounced)
           break;
       }
+    }
+    c->pauseDrawing();
+    c->clear();
+    for (it = balls.begin(); it != balls.end(); ++it) {
+      BouncingBall *b = (*it);
       c->drawCircle(b->pos.x,b->pos.y,b->rad,16,b->color);
     }
+    c->resumeDrawing();
   }
   inline void toggleAttract() {
     attract ^= true;
@@ -279,7 +285,6 @@ void ballroomFunction(Canvas& can) {
     while (can.getIsOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
 //        can.drawRectangle(0,0,WW,WH,clearcolor,true);
-        can.clear();
         b.step(&can);
     }
 }

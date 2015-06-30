@@ -61,11 +61,14 @@ void projectileFunction(Canvas& can) {
   //Draw loop
   while(can.getIsOpen()) {
     can.sleep();
+    can.pauseDrawing();
+    can.clear();
     targetX += coordinateChangerX;  //Horizontal movement
     targetY -= coordinateChangerY; //Vertical movement
     can.drawCircle(targetX, targetY, 50, 32, blueTarget, true);   //Outer circle
     can.drawCircle(targetX, targetY, 30, 32, redTarget, true);  //Middle
     can.drawCircle(targetX, targetY, 10, 32, yellowTarget, true); //Inner
+    can.resumeDrawing();
     if(targetX >= centerX) { //If it hits the middle of the screen, invert the vertical direction
       coordinateChangerY = -1;
     }
@@ -85,13 +88,10 @@ void projectileFunction(Canvas& can) {
     }
 
     if(numberOfTargets == 0) {   //End game
-      can.clear();
       std::cout << "Your score: " << score << std::endl;
       return;
     }
-      can.clear();
-   }
-    can.clear();
+  }
 }
 
 //Takes command-line arguments for the width and height
