@@ -1,0 +1,1271 @@
+\hypertarget{classtsgl_1_1_canvas}{}\section{tsgl\+:\+:Canvas Class Reference}
+\label{classtsgl_1_1_canvas}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+
+
+A G\+L window with numerous built-\/in, thread-\/safe drawing operations.  
+
+
+
+
+{\ttfamily \#include $<$Canvas.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Canvas\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_canvas}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_canvas_ac7e73a23238b067d0b91f73f3af53623}{Canvas} (double timer\+Length=0.\+0f)
+\begin{DoxyCompactList}\small\item\em Default \hyperlink{classtsgl_1_1_canvas}{Canvas} constructor method. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_canvas_a6fac624c804bf5a7169507607d5d876d}{Canvas} (int x, int y, int width, int height, std\+::string title, double timer\+Length=0.\+0f)
+\begin{DoxyCompactList}\small\item\em Explicit \hyperlink{classtsgl_1_1_canvas}{Canvas} constructor method. \end{DoxyCompactList}\item 
+virtual \hyperlink{classtsgl_1_1_canvas_ab976c3999c68347818d64010b641e14f}{$\sim$\+Canvas} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{classtsgl_1_1_canvas}{Canvas} destructor method. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a26f2f1acf2b80eee95e42bc13dbc7600}{bind\+To\+Button} (Key button, Action action, void\+Function function)
+\begin{DoxyCompactList}\small\item\em Binds a key or button to a function. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_aecd3d94790d2e660db380a5e951ae394}{bind\+To\+Scroll} (std\+::function$<$ void(double, double)$>$ function)
+\begin{DoxyCompactList}\small\item\em Binds the mouse wheel to a function. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_abe209d60de2c9b2259ab0588c4e30cef}{clear} ()
+\begin{DoxyCompactList}\small\item\em Clears the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait} ()
+\begin{DoxyCompactList}\small\item\em Waits for the user to close the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a2162c16f6aeaee01f8e29696f5818c03}{draw\+Circle} (int x, int y, int radius, int sides, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draws a circle. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a2165615afc3cebfe38e4313c25bd17b9}{draw\+Colored\+Polygon} (int size, int xverts\mbox{[}$\,$\mbox{]}, int yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draws an arbitrary polygon with colored vertices. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_ad98cb8db661ef24279b61c4c11fd29ea}{draw\+Concave\+Polygon} (int size, int xverts\mbox{[}$\,$\mbox{]}, int yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draws a concave polygon with colored vertices. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a9cb84248c3559c81e4cb2e0d194b2437}{draw\+Convex\+Polygon} (int size, int xverts\mbox{[}$\,$\mbox{]}, int yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draws a convex polygon with colored vertices. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_ae94a586629d20b7fabcb402d1c654628}{draw\+Image} (std\+::string filename, int x, int y, int width, int height, float alpha=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Draws an image. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a6e5c605b03a69e615fe4ccee30be1959}{draw\+Line} (int x1, int y1, int x2, int y2, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Draws a line. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_af17d456eca4ad5a55842f2cf02f48a97}{draw\+Pixel} (int row, int col, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Draws a single pixel, specified in row,column format. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a6c17c90cd13f7b0184a25e4acc2b7426}{draw\+Point} (int x, int y, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Draws a single pixel, specified in x,y format. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_aea792059486ebe6d25d7f81bdadf751d}{draw\+Progress} (\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar} $\ast$p)
+\begin{DoxyCompactList}\small\item\em Draws a progress bar. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a752754cd16d14447cb5e5b0438bebf16}{draw\+Rectangle} (int x1, int y1, int x2, int y2, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draws a rectangle. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a3457e7ebd17fa5003025ff6bcaaeedf6}{draw\+Text} (std\+::string text, int x, int y, unsigned size, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Draw a string of text. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a1873adb0f3f43e3ebec33fdaf6c6a3d5}{draw\+Text} (std\+::wstring text, int x, int y, unsigned int size, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Draws a string of text. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a8abc9ed7d3c55c5d701009040c65000e}{draw\+Triangle} (int x1, int y1, int x2, int y2, int x3, int y3, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draws a triangle. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_float}{Color\+Float} \hyperlink{classtsgl_1_1_canvas_a2b39e50888d61e88527a66ac0f6ac880}{get\+Background\+Color} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the current background color. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_af4f8f2b1abd27316a4a39ae097407d37}{get\+Frame\+Number} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the current frame number. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_canvas_a1c8ac321138948650a3006f325dfb886}{get\+F\+P\+S} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the current F\+P\+S. \end{DoxyCompactList}\item 
+bool \hyperlink{classtsgl_1_1_canvas_aa933363de2d19ec516603a2ed3b4f817}{get\+Is\+Open} ()
+\begin{DoxyCompactList}\small\item\em Accessor for window\textquotesingle{}s closed status. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a4af9bed83746f998474039185d2a765a}{get\+Mouse\+X} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the mouse\textquotesingle{}s x-\/position. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a7fc8592848aaa14c3ff440d0ed3c9e4f}{get\+Mouse\+Y} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the mouse\textquotesingle{}s y-\/position. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \hyperlink{classtsgl_1_1_canvas_a1f54dba4b09d248e2611f3409353c2c6}{get\+Pixel} (int row, int col)
+\begin{DoxyCompactList}\small\item\em Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_canvas}{Canvas} at the given screen coordinates, specified in row,column format. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \hyperlink{classtsgl_1_1_canvas_aa31883b3c9b09006cf82b270ad7a0a9f}{get\+Point} (int x, int y)
+\begin{DoxyCompactList}\small\item\em Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_canvas}{Canvas} at the given screen coordinates, specified in x,y format. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \hyperlink{classtsgl_1_1_canvas_a71f072dd82ca3b5cecfd65cde6d8a226}{get\+Screen\+Buffer} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s currently drawn image. \end{DoxyCompactList}\item 
+double \hyperlink{classtsgl_1_1_canvas_aef462ab48e59571b9c88076bbdc8f0b3}{get\+Time} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the time since the \hyperlink{classtsgl_1_1_canvas}{Canvas} was initialized. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a086a0322f4a6ab27da6929b1aa0593af}{get\+Window\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window width. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_ad740ebe5d6bd69ab79cde3e84f369f35}{get\+Window\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window height. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a011ce2354d4565f9d2a323411a47d52d}{get\+Window\+X} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s x-\/position. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_ad6e98d17d3e43d79628a3bd05221ee8b}{get\+Window\+Y} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s y-\/position. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O} ()
+\begin{DoxyCompactList}\small\item\em Manually handles keyboard/mouse I/\+O. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}{record\+For\+Num\+Frames} (unsigned int num\+\_\+frames)
+\begin{DoxyCompactList}\small\item\em Records the \hyperlink{classtsgl_1_1_canvas}{Canvas} for a specified number of frames. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}{set\+Background\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Mutator for the background color. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a692edf8e37c7714cdf2a58ea530c63e9}{set\+Font} (std\+::string filename)
+\begin{DoxyCompactList}\small\item\em Mutator for the currently loaded font. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a8722c579dfa55a45e139bfeb269d73ff}{set\+Show\+F\+P\+S} (bool b)
+\begin{DoxyCompactList}\small\item\em Mutator for showing the F\+P\+S. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_ac6035d87aa3bf077031bc0bb6f419b17}{stop\+Recording} ()
+\begin{DoxyCompactList}\small\item\em Stops recording the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start} ()
+\begin{DoxyCompactList}\small\item\em Opens the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}{sleep} ()
+\begin{DoxyCompactList}\small\item\em Sleeps the calling thread to sync with the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a6674cc86b9a54b6a564021fddce47e36}{sleep\+For} (float seconds)
+\begin{DoxyCompactList}\small\item\em Sleeps the calling thread for a set amount of time. \end{DoxyCompactList}\item 
+\hypertarget{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}{}void \hyperlink{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}{reset} ()\label{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}
+
+\begin{DoxyCompactList}\small\item\em Resets the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} instance. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{classtsgl_1_1_canvas_a8f0819f368b41b147f1a7f560a7af6a4}{get\+Reps} () const 
+\begin{DoxyCompactList}\small\item\em Accessor for the number of theoretical draw cycles that have elapsed. \end{DoxyCompactList}\item 
+double \hyperlink{classtsgl_1_1_canvas_a8786d28042b767f5c075361100227af4}{get\+Time\+Between\+Sleeps} () const 
+\begin{DoxyCompactList}\small\item\em Accessor that gets the time between two sleep times of the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_ac035f43763b198f6915a0772973a5ea9}{take\+Screen\+Shot} ()
+\begin{DoxyCompactList}\small\item\em Takes a screenshot. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop} ()
+\begin{DoxyCompactList}\small\item\em Begins the process of closing the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close} ()
+\begin{DoxyCompactList}\small\item\em Closes the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classtsgl_1_1_canvas_a664b101f972845eaf5fdc4d9e664e623}{get\+Display\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the height of the user\textquotesingle{}s primary monitor. \end{DoxyCompactList}\item 
+static int \hyperlink{classtsgl_1_1_canvas_abbe5c392cac2320fecf1f2751afb207c}{get\+Display\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the width of the user\textquotesingle{}s primary monitor. \end{DoxyCompactList}\item 
+\hypertarget{classtsgl_1_1_canvas_a3365d92635f650cca2eda69812bef60b}{}static void \hyperlink{classtsgl_1_1_canvas_a3365d92635f650cca2eda69812bef60b}{run\+Tests} ()\label{classtsgl_1_1_canvas_a3365d92635f650cca2eda69812bef60b}
+
+\begin{DoxyCompactList}\small\item\em Runs unit tests for the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtsgl_1_1_canvas_a560e3f64f3b2e5a7af8a8d7b92d8e660}{}void {\bfseries draw\+Shape} (\hyperlink{classtsgl_1_1_shape}{Shape} $\ast$s)\label{classtsgl_1_1_canvas_a560e3f64f3b2e5a7af8a8d7b92d8e660}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A G\+L window with numerous built-\/in, thread-\/safe drawing operations. 
+
+\hyperlink{classtsgl_1_1_canvas}{Canvas} provides an easy-\/to-\/set-\/up, easy-\/to-\/use class for drawing various shapes.
+
+Using stb, \hyperlink{classtsgl_1_1_canvas}{Canvas} also supports the drawing of images.
+
+On top of being easy to use, \hyperlink{classtsgl_1_1_canvas}{Canvas} is also thread-\/safe, so any number of images may be drawn at once. \begin{DoxyNote}{Note}
+{\bfseries O\+S X\+:} Due to the way O\+S X handles I/\+O, either \hyperlink{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}{sleep()} or \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} must be manually called whenever the user wants to handle any input/output events (keyboard/mouse presses). Whenever a window is created using Open\+G\+L, O\+S X requires the main thread to handle I/\+O calls. 
+
+{\bfseries O\+S X\+:} O\+S X also uses p\+\_\+thread instead of std\+::thread for threading. 
+\end{DoxyNote}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtsgl_1_1_canvas_ac7e73a23238b067d0b91f73f3af53623}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!Canvas@{Canvas}}
+\index{Canvas@{Canvas}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{Canvas}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Canvas\+::\+Canvas (
+\begin{DoxyParamCaption}
+\item[{double}]{timer\+Length = {\ttfamily 0.0f}}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_ac7e73a23238b067d0b91f73f3af53623}
+
+
+Default \hyperlink{classtsgl_1_1_canvas}{Canvas} constructor method. 
+
+This is the default constructor for the \hyperlink{classtsgl_1_1_canvas}{Canvas} class. 
+\begin{DoxyParams}{Parameters}
+{\em timer\+Length} & The minimum number of seconds between draw cycles for the \hyperlink{classtsgl_1_1_canvas}{Canvas}. A value less than or equal to 0 sets it to automatic. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_canvas}{Canvas} in the middle of the screen with no title. The created \hyperlink{classtsgl_1_1_canvas}{Canvas} will take up approximately 90\% of the monitor\textquotesingle{}s height, and will have a 4\+:3 aspect ratio. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_a6fac624c804bf5a7169507607d5d876d}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!Canvas@{Canvas}}
+\index{Canvas@{Canvas}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{Canvas}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Canvas\+::\+Canvas (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{width, }
+\item[{int}]{height, }
+\item[{std\+::string}]{title, }
+\item[{double}]{timer\+Length = {\ttfamily 0.0f}}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a6fac624c804bf5a7169507607d5d876d}
+
+
+Explicit \hyperlink{classtsgl_1_1_canvas}{Canvas} constructor method. 
+
+This is the explicit constructor for the \hyperlink{classtsgl_1_1_canvas}{Canvas} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \\
+\hline
+{\em y} & The y position of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \\
+\hline
+{\em width} & The x dimension of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \\
+\hline
+{\em height} & The y dimension of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \\
+\hline
+{\em title} & The title of the window. \\
+\hline
+{\em timer\+Length} & The minimum number of seconds between draw cycles for the \hyperlink{classtsgl_1_1_canvas}{Canvas}. A value less than or equal to 0 sets it to automatic. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_canvas}{Canvas} with the specified position, dimensions, title, and draw cycle length. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_ab976c3999c68347818d64010b641e14f}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!````~Canvas@{$\sim$\+Canvas}}
+\index{````~Canvas@{$\sim$\+Canvas}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{$\sim$\+Canvas}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Canvas\+::$\sim$\+Canvas (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_ab976c3999c68347818d64010b641e14f}
+
+
+\hyperlink{classtsgl_1_1_canvas}{Canvas} destructor method. 
+
+This is the destructor for the \hyperlink{classtsgl_1_1_canvas}{Canvas} class.
+
+Frees up memory that was allocated to a \hyperlink{classtsgl_1_1_canvas}{Canvas} instance. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classtsgl_1_1_canvas_a26f2f1acf2b80eee95e42bc13dbc7600}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!bind\+To\+Button@{bind\+To\+Button}}
+\index{bind\+To\+Button@{bind\+To\+Button}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{bind\+To\+Button}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::bind\+To\+Button (
+\begin{DoxyParamCaption}
+\item[{Key}]{button, }
+\item[{Action}]{action, }
+\item[{void\+Function}]{function}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a26f2f1acf2b80eee95e42bc13dbc7600}
+
+
+Binds a key or button to a function. 
+
+This function binds a key or mouse button to a function pointer.
+
+Upon pressing or releasing the given key, \hyperlink{classtsgl_1_1_canvas}{Canvas} will call the specified function. 
+\begin{DoxyParams}{Parameters}
+{\em button} & The key or button to bind, as specified in \hyperlink{_keynums_8h_source}{Keynums.\+h}. \\
+\hline
+{\em action} & The action to look out for (T\+S\+G\+L\+\_\+\+P\+R\+E\+S\+S or T\+S\+G\+L\+\_\+\+R\+E\+L\+E\+A\+S\+E). \\
+\hline
+{\em function} & The function to call upon action {\ttfamily a} on button. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\bfseries T\+S\+G\+L\+\_\+\+K\+E\+Y\+\_\+\+E\+S\+C\+A\+P\+E is automatically bound to closing the window. Overriding T\+S\+G\+L\+\_\+\+K\+E\+Y\+\_\+\+E\+S\+C\+A\+P\+E will likely make you unable to close the window through the escape key.} 
+\end{DoxyWarning}
+\hypertarget{classtsgl_1_1_canvas_aecd3d94790d2e660db380a5e951ae394}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!bind\+To\+Scroll@{bind\+To\+Scroll}}
+\index{bind\+To\+Scroll@{bind\+To\+Scroll}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{bind\+To\+Scroll}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::bind\+To\+Scroll (
+\begin{DoxyParamCaption}
+\item[{std\+::function$<$ void(double, double)$>$}]{function}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_aecd3d94790d2e660db380a5e951ae394}
+
+
+Binds the mouse wheel to a function. 
+
+This function binds the mouse wheel to a function pointer.
+
+Upon scrolling, \hyperlink{classtsgl_1_1_canvas}{Canvas} will call the specified function. 
+\begin{DoxyParams}{Parameters}
+{\em function} & A function taking x and y parameters to be called when the mouse is scrolled. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_canvas_abe209d60de2c9b2259ab0588c4e30cef}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!clear@{clear}}
+\index{clear@{clear}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_abe209d60de2c9b2259ab0588c4e30cef}
+
+
+Clears the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function clears the screen to the color specified in \hyperlink{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}{set\+Background\+Color()}. 
+
+Referenced by tsgl\+::\+Spectrogram\+::draw().
+
+\hypertarget{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!close@{close}}
+\index{close@{close}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}
+
+
+Closes the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. 
+
+This function tells the \hyperlink{classtsgl_1_1_canvas}{Canvas} to stop rendering and to close its rendering window.
+
+Any threads that have called \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} will continue. \begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop()}, \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} 
+\end{DoxySeeAlso}
+
+
+Referenced by stop().
+
+\hypertarget{classtsgl_1_1_canvas_a2162c16f6aeaee01f8e29696f5818c03}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Circle@{draw\+Circle}}
+\index{draw\+Circle@{draw\+Circle}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Circle}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Circle (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{radius, }
+\item[{int}]{sides, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a2162c16f6aeaee01f8e29696f5818c03}
+
+
+Draws a circle. 
+
+This function draws a circle with the given center, radius, resolution (number of sides), color, and fill status. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the circle\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the circle\textquotesingle{}s center. \\
+\hline
+{\em radius} & The radius of the circle in pixels. \\
+\hline
+{\em sides} & The number of sides to use in the circle. \\
+\hline
+{\em color} & The color of the circle (set to B\+L\+A\+C\+K by default). \\
+\hline
+{\em filled} & Whether the circle should be filled (set to true by default). \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Circle().
+
+\hypertarget{classtsgl_1_1_canvas_a2165615afc3cebfe38e4313c25bd17b9}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Colored\+Polygon@{draw\+Colored\+Polygon}}
+\index{draw\+Colored\+Polygon@{draw\+Colored\+Polygon}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Colored\+Polygon}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Colored\+Polygon (
+\begin{DoxyParamCaption}
+\item[{int}]{size, }
+\item[{int}]{xverts\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{yverts\mbox{[}$\,$\mbox{]}, }
+\item[{{\bf Color\+Float}}]{color\mbox{[}$\,$\mbox{]}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a2165615afc3cebfe38e4313c25bd17b9}
+
+
+Draws an arbitrary polygon with colored vertices. 
+
+This function draws a \hyperlink{classtsgl_1_1_colored_polygon}{Colored\+Polygon} with the given vertex data, specified as a triangle strip. 
+\begin{DoxyParams}{Parameters}
+{\em size} & The number of vertices in the polygon. \\
+\hline
+{\em xverts} & An array of x positions of the vertices. \\
+\hline
+{\em yverts} & An array of y positions of the vertices. \\
+\hline
+{\em color} & An array of colors for the vertices. \\
+\hline
+{\em filled} & Whether the colored polygon should be filled (true) or not (false) (set to true by default). \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Colored\+Polygon().
+
+\hypertarget{classtsgl_1_1_canvas_ad98cb8db661ef24279b61c4c11fd29ea}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Concave\+Polygon@{draw\+Concave\+Polygon}}
+\index{draw\+Concave\+Polygon@{draw\+Concave\+Polygon}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Concave\+Polygon}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Concave\+Polygon (
+\begin{DoxyParamCaption}
+\item[{int}]{size, }
+\item[{int}]{xverts\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{yverts\mbox{[}$\,$\mbox{]}, }
+\item[{{\bf Color\+Float}}]{color\mbox{[}$\,$\mbox{]}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_ad98cb8db661ef24279b61c4c11fd29ea}
+
+
+Draws a concave polygon with colored vertices. 
+
+This function draws a \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} with the given vertex data, specified as the outer perimeter of the polygon. 
+\begin{DoxyParams}{Parameters}
+{\em size} & The number of vertices in the polygon. \\
+\hline
+{\em xverts} & An array of x positions of said vertices. \\
+\hline
+{\em yverts} & An array of y positions of said vertices. \\
+\hline
+{\em color} & An array of colors for the said vertices. \\
+\hline
+{\em filled} & Whether the Concave polygon should be filled in or not (set to true by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\bfseries This function is significantly slower than \hyperlink{classtsgl_1_1_canvas_a9cb84248c3559c81e4cb2e0d194b2437}{draw\+Convex\+Polygon()}. It is not recommended that you draw convex polygons with this function. }
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+{\bfseries  \hyperlink{classtsgl_1_1_canvas_a9cb84248c3559c81e4cb2e0d194b2437}{draw\+Convex\+Polygon()}. }
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Concave\+Polygon().
+
+\hypertarget{classtsgl_1_1_canvas_a9cb84248c3559c81e4cb2e0d194b2437}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Convex\+Polygon@{draw\+Convex\+Polygon}}
+\index{draw\+Convex\+Polygon@{draw\+Convex\+Polygon}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Convex\+Polygon}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Convex\+Polygon (
+\begin{DoxyParamCaption}
+\item[{int}]{size, }
+\item[{int}]{xverts\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{yverts\mbox{[}$\,$\mbox{]}, }
+\item[{{\bf Color\+Float}}]{color\mbox{[}$\,$\mbox{]}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a9cb84248c3559c81e4cb2e0d194b2437}
+
+
+Draws a convex polygon with colored vertices. 
+
+This function draws a \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} with the given vertex data, specified as the outer perimeter of the polygon. 
+\begin{DoxyParams}{Parameters}
+{\em size} & The number of vertices in the polygon. \\
+\hline
+{\em xverts} & An array of the x positions of said vertices. \\
+\hline
+{\em yverts} & An array of the y positions of said vertices. \\
+\hline
+{\em color} & An array of colors for the said vertices. \\
+\hline
+{\em filled} & Whether the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} should be filled in or not (set to true by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The difference between a convex polygon and a concave polygon is that a convex polygon has all interior angles less than 180 degrees ( see \href{http://www.mathopenref.com/polygonconvex.html}{\tt http\+://www.\+mathopenref.\+com/polygonconvex.\+html} ). 
+\end{DoxyNote}
+
+
+Referenced by tsgl\+::\+Spectrogram\+::draw(), and tsgl\+::\+Cartesian\+Canvas\+::draw\+Convex\+Polygon().
+
+\hypertarget{classtsgl_1_1_canvas_ae94a586629d20b7fabcb402d1c654628}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Image@{draw\+Image}}
+\index{draw\+Image@{draw\+Image}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Image}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Image (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{filename, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{width, }
+\item[{int}]{height, }
+\item[{float}]{alpha = {\ttfamily 1.0f}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_ae94a586629d20b7fabcb402d1c654628}
+
+
+Draws an image. 
+
+This function draws an \hyperlink{classtsgl_1_1_image}{Image} with the given coordinates and dimensions. 
+\begin{DoxyParams}{Parameters}
+{\em filename} & The name of the file to load the image from. \\
+\hline
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s left edge. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s top edge. \\
+\hline
+{\em width} & The width of the \hyperlink{classtsgl_1_1_image}{Image}. \\
+\hline
+{\em height} & The height of the \hyperlink{classtsgl_1_1_image}{Image}. \\
+\hline
+{\em alpha} & The alpha with which to draw the \hyperlink{classtsgl_1_1_image}{Image} \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Image().
+
+\hypertarget{classtsgl_1_1_canvas_a6e5c605b03a69e615fe4ccee30be1959}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Line@{draw\+Line}}
+\index{draw\+Line@{draw\+Line}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Line}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Line (
+\begin{DoxyParamCaption}
+\item[{int}]{x1, }
+\item[{int}]{y1, }
+\item[{int}]{x2, }
+\item[{int}]{y2, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a6e5c605b03a69e615fe4ccee30be1959}
+
+
+Draws a line. 
+
+This function draws a \hyperlink{classtsgl_1_1_line}{Line} at the given coordinates with the given color. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x position of the start of the line. \\
+\hline
+{\em y1} & The y position of the start of the line. \\
+\hline
+{\em x2} & The x position of the end of the line. \\
+\hline
+{\em y2} & The y position of the end of the line. \\
+\hline
+{\em color} & The color of the line (set to B\+L\+A\+C\+K by default). \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Spectrogram\+::draw(), and tsgl\+::\+Cartesian\+Canvas\+::draw\+Line().
+
+\hypertarget{classtsgl_1_1_canvas_af17d456eca4ad5a55842f2cf02f48a97}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Pixel@{draw\+Pixel}}
+\index{draw\+Pixel@{draw\+Pixel}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Pixel}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Pixel (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{int}]{col, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_af17d456eca4ad5a55842f2cf02f48a97}
+
+
+Draws a single pixel, specified in row,column format. 
+
+This function draws a pixel at the given screen coordinates with the given color. \begin{DoxyNote}{Note}
+(0,0) signifies the {\bfseries top-\/left} of the screen when working with a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. 
+
+(0,0) signifies the {\bfseries bottom-\/left} of the screen when working with a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} object. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row (y-\/position) of the pixel. \\
+\hline
+{\em col} & The column (x-\/position) of the pixel. \\
+\hline
+{\em color} & The color of the point (set to B\+L\+A\+C\+K by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a6c17c90cd13f7b0184a25e4acc2b7426}{draw\+Point()} 
+\end{DoxySeeAlso}
+\hypertarget{classtsgl_1_1_canvas_a6c17c90cd13f7b0184a25e4acc2b7426}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Point@{draw\+Point}}
+\index{draw\+Point@{draw\+Point}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Point}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Point (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a6c17c90cd13f7b0184a25e4acc2b7426}
+
+
+Draws a single pixel, specified in x,y format. 
+
+This function draws a pixel at the given Cartesian coordinates with the given color. \begin{DoxyNote}{Note}
+(0,0) signifies the {\bfseries left-\/top} of the screen when working with a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. 
+
+(0,0) signifies the {\bfseries left-\/bottom} of the screen when working with a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} object. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the point. \\
+\hline
+{\em y} & The y position of the point. \\
+\hline
+{\em color} & The color of the point (set to B\+L\+A\+C\+K by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_af17d456eca4ad5a55842f2cf02f48a97}{draw\+Pixel()} 
+\end{DoxySeeAlso}
+
+
+Referenced by draw\+Pixel(), and tsgl\+::\+Cartesian\+Canvas\+::draw\+Point().
+
+\hypertarget{classtsgl_1_1_canvas_aea792059486ebe6d25d7f81bdadf751d}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Progress@{draw\+Progress}}
+\index{draw\+Progress@{draw\+Progress}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Progress}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Progress (
+\begin{DoxyParamCaption}
+\item[{{\bf Progress\+Bar} $\ast$}]{p}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_aea792059486ebe6d25d7f81bdadf751d}
+
+
+Draws a progress bar. 
+
+This function draws a previously created \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}, as specified in that \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}\textquotesingle{}s constructor. 
+\begin{DoxyParams}{Parameters}
+{\em p} & A pointer to a \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+There is no equivalent function for \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. If you\textquotesingle{}d like to draw a \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar} on a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, you may still use this function, but you must use absolute \hyperlink{classtsgl_1_1_canvas}{Canvas} coordinates rather than the scaled \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} coordinates. 
+\end{DoxyNote}
+\hypertarget{classtsgl_1_1_canvas_a752754cd16d14447cb5e5b0438bebf16}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Rectangle@{draw\+Rectangle}}
+\index{draw\+Rectangle@{draw\+Rectangle}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Rectangle (
+\begin{DoxyParamCaption}
+\item[{int}]{x1, }
+\item[{int}]{y1, }
+\item[{int}]{x2, }
+\item[{int}]{y2, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a752754cd16d14447cb5e5b0438bebf16}
+
+
+Draws a rectangle. 
+
+This function draws a \hyperlink{classtsgl_1_1_rectangle}{Rectangle} with the given coordinates, dimensions, and color. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s left edge. \\
+\hline
+{\em y1} & The y coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s top edge. \\
+\hline
+{\em x2} & The x coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s right edge. \\
+\hline
+{\em y2} & The y coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s bottom edge. \\
+\hline
+{\em color} & The color of the rectangle (set to B\+L\+A\+C\+K by default). \\
+\hline
+{\em filled} & Whether the rectangle should be filled (set to true by default). \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Rectangle().
+
+\hypertarget{classtsgl_1_1_canvas_a3457e7ebd17fa5003025ff6bcaaeedf6}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Text@{draw\+Text}}
+\index{draw\+Text@{draw\+Text}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Text}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Text (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{text, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{unsigned}]{size, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a3457e7ebd17fa5003025ff6bcaaeedf6}
+
+
+Draw a string of text. 
+
+This function draws a given string of \hyperlink{classtsgl_1_1_text}{Text} at the given coordinates with the given color. 
+\begin{DoxyParams}{Parameters}
+{\em text} & The string to draw. \\
+\hline
+{\em x} & The x coordinate of the text\textquotesingle{}s left bound. \\
+\hline
+{\em y} & The y coordinate of the text\textquotesingle{}s left bound. \\
+\hline
+{\em size} & The size of the text in pixels. \\
+\hline
+{\em color} & The color of the \hyperlink{classtsgl_1_1_text}{Text} (set to B\+L\+A\+C\+K by default). \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by draw\+Progress(), and tsgl\+::\+Cartesian\+Canvas\+::draw\+Text().
+
+\hypertarget{classtsgl_1_1_canvas_a1873adb0f3f43e3ebec33fdaf6c6a3d5}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Text@{draw\+Text}}
+\index{draw\+Text@{draw\+Text}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Text}]{\setlength{\rightskip}{0pt plus 5cm}virtual void tsgl\+::\+Canvas\+::draw\+Text (
+\begin{DoxyParamCaption}
+\item[{std\+::wstring}]{text, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{unsigned int}]{size, }
+\item[{{\bf Color\+Float}}]{color}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a1873adb0f3f43e3ebec33fdaf6c6a3d5}
+
+
+Draws a string of text. 
+
+This function draws a given string of \hyperlink{classtsgl_1_1_text}{Text} at the given coordinates with the given color. 
+\begin{DoxyParams}{Parameters}
+{\em text} & The U\+T\+F8-\/encoded string to draw. \\
+\hline
+{\em x} & The x coordinate of the text\textquotesingle{}s left bound. \\
+\hline
+{\em y} & The y coordinate of the text\textquotesingle{}s left bound. \\
+\hline
+{\em size} & The size of the text in pixels. \\
+\hline
+{\em color} & The color of the \hyperlink{classtsgl_1_1_text}{Text} (set to B\+L\+A\+C\+K by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to the draw\+Text(std\+::string, ...) aside from the first parameter. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a3457e7ebd17fa5003025ff6bcaaeedf6}{draw\+Text}(std\+::string s, int x, int y, unsigned size, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color = B\+L\+A\+C\+K) 
+\end{DoxySeeAlso}
+\hypertarget{classtsgl_1_1_canvas_a8abc9ed7d3c55c5d701009040c65000e}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Triangle@{draw\+Triangle}}
+\index{draw\+Triangle@{draw\+Triangle}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{draw\+Triangle}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::draw\+Triangle (
+\begin{DoxyParamCaption}
+\item[{int}]{x1, }
+\item[{int}]{y1, }
+\item[{int}]{x2, }
+\item[{int}]{y2, }
+\item[{int}]{x3, }
+\item[{int}]{y3, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_canvas_a8abc9ed7d3c55c5d701009040c65000e}
+
+
+Draws a triangle. 
+
+This function draws a \hyperlink{classtsgl_1_1_triangle}{Triangle} with the given vertices. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x coordinate of the first vertex of the \hyperlink{classtsgl_1_1_triangle}{Triangle}. \\
+\hline
+{\em y1} & The y coordinate of the first vertex of the \hyperlink{classtsgl_1_1_triangle}{Triangle}. \\
+\hline
+{\em x2} & The x coordinate of the second vertex of the \hyperlink{classtsgl_1_1_triangle}{Triangle}. \\
+\hline
+{\em y2} & The y coordinate of the second vertex of the \hyperlink{classtsgl_1_1_triangle}{Triangle}. \\
+\hline
+{\em x3} & The x coordinate of the third vertex of the \hyperlink{classtsgl_1_1_triangle}{Triangle}. \\
+\hline
+{\em y3} & The y coordinate of the third vertex of the \hyperlink{classtsgl_1_1_triangle}{Triangle}. \\
+\hline
+{\em color} & The color of the \hyperlink{classtsgl_1_1_triangle}{Triangle} (set to B\+L\+A\+C\+K by default). \\
+\hline
+{\em filled} & Whether the \hyperlink{classtsgl_1_1_triangle}{Triangle} should be filled (set to true by default). \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Triangle().
+
+\hypertarget{classtsgl_1_1_canvas_a2b39e50888d61e88527a66ac0f6ac880}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Background\+Color@{get\+Background\+Color}}
+\index{get\+Background\+Color@{get\+Background\+Color}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Background\+Color}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color\+Float} tsgl\+::\+Canvas\+::get\+Background\+Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a2b39e50888d61e88527a66ac0f6ac880}
+
+
+Accessor for the current background color. 
+
+\begin{DoxyReturn}{Returns}
+The color that the \hyperlink{classtsgl_1_1_canvas}{Canvas} clears to when \hyperlink{classtsgl_1_1_canvas_abe209d60de2c9b2259ab0588c4e30cef}{clear()} is called. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_a664b101f972845eaf5fdc4d9e664e623}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Display\+Height@{get\+Display\+Height}}
+\index{get\+Display\+Height@{get\+Display\+Height}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Display\+Height}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Display\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classtsgl_1_1_canvas_a664b101f972845eaf5fdc4d9e664e623}
+
+
+Accessor for the height of the user\textquotesingle{}s primary monitor. 
+
+\begin{DoxyReturn}{Returns}
+The height of the user\textquotesingle{}s primary monitor. 
+\end{DoxyReturn}
+
+
+Referenced by Canvas().
+
+\hypertarget{classtsgl_1_1_canvas_abbe5c392cac2320fecf1f2751afb207c}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Display\+Width@{get\+Display\+Width}}
+\index{get\+Display\+Width@{get\+Display\+Width}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Display\+Width}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Display\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{classtsgl_1_1_canvas_abbe5c392cac2320fecf1f2751afb207c}
+
+
+Accessor for the width of the user\textquotesingle{}s primary monitor. 
+
+\begin{DoxyReturn}{Returns}
+The width of the user\textquotesingle{}s primary monitor. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_a1c8ac321138948650a3006f325dfb886}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+F\+P\+S@{get\+F\+P\+S}}
+\index{get\+F\+P\+S@{get\+F\+P\+S}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+F\+P\+S}]{\setlength{\rightskip}{0pt plus 5cm}float tsgl\+::\+Canvas\+::get\+F\+P\+S (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a1c8ac321138948650a3006f325dfb886}
+
+
+Accessor for the current F\+P\+S. 
+
+\begin{DoxyReturn}{Returns}
+The average number of frames being rendered per second. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_af4f8f2b1abd27316a4a39ae097407d37}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Frame\+Number@{get\+Frame\+Number}}
+\index{get\+Frame\+Number@{get\+Frame\+Number}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Frame\+Number}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Frame\+Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_af4f8f2b1abd27316a4a39ae097407d37}
+
+
+Accessor for the current frame number. 
+
+\begin{DoxyReturn}{Returns}
+The number of actual draw cycles / frames the \hyperlink{classtsgl_1_1_canvas}{Canvas} has rendered so far. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a8f0819f368b41b147f1a7f560a7af6a4}{get\+Reps()} 
+\end{DoxySeeAlso}
+\hypertarget{classtsgl_1_1_canvas_aa933363de2d19ec516603a2ed3b4f817}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Is\+Open@{get\+Is\+Open}}
+\index{get\+Is\+Open@{get\+Is\+Open}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Is\+Open}]{\setlength{\rightskip}{0pt plus 5cm}bool tsgl\+::\+Canvas\+::get\+Is\+Open (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_aa933363de2d19ec516603a2ed3b4f817}
+
+
+Accessor for window\textquotesingle{}s closed status. 
+
+\begin{DoxyReturn}{Returns}
+Whether the window is still open (that is, the user has not closed it). 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_a4af9bed83746f998474039185d2a765a}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Mouse\+X@{get\+Mouse\+X}}
+\index{get\+Mouse\+X@{get\+Mouse\+X}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Mouse\+X}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Mouse\+X (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a4af9bed83746f998474039185d2a765a}
+
+
+Accessor for the mouse\textquotesingle{}s x-\/position. 
+
+\begin{DoxyReturn}{Returns}
+The x coordinates of the mouse on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_a7fc8592848aaa14c3ff440d0ed3c9e4f}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Mouse\+Y@{get\+Mouse\+Y}}
+\index{get\+Mouse\+Y@{get\+Mouse\+Y}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Mouse\+Y}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Mouse\+Y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a7fc8592848aaa14c3ff440d0ed3c9e4f}
+
+
+Accessor for the mouse\textquotesingle{}s y-\/position. 
+
+\begin{DoxyReturn}{Returns}
+The y coordinates of the mouse on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_a1f54dba4b09d248e2611f3409353c2c6}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Pixel@{get\+Pixel}}
+\index{get\+Pixel@{get\+Pixel}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Pixel}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color\+Int} tsgl\+::\+Canvas\+::get\+Pixel (
+\begin{DoxyParamCaption}
+\item[{int}]{row, }
+\item[{int}]{col}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a1f54dba4b09d248e2611f3409353c2c6}
+
+
+Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_canvas}{Canvas} at the given screen coordinates, specified in row,column format. 
+
+\begin{DoxyNote}{Note}
+(0,0) signifies the {\bfseries top-\/left} of the screen when working with a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. 
+
+(0,0) signifies the {\bfseries bottom-\/left} of the screen when working with a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+
+get\+Pixel will return the current status of the screen. Any object waiting to be drawn will not affect what is returned. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row (y-\/position) of the pixel to grab. \\
+\hline
+{\em col} & The column (x-\/position) of the pixel to grab. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} containing the color of the pixel at (col,row). 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_aa31883b3c9b09006cf82b270ad7a0a9f}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Point@{get\+Point}}
+\index{get\+Point@{get\+Point}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Point}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color\+Int} tsgl\+::\+Canvas\+::get\+Point (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_aa31883b3c9b09006cf82b270ad7a0a9f}
+
+
+Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_canvas}{Canvas} at the given screen coordinates, specified in x,y format. 
+
+\begin{DoxyNote}{Note}
+(0,0) signifies the {\bfseries left-\/top} of the screen when working with a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. 
+
+(0,0) signifies the {\bfseries left-\/bottom} of the screen when working with a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+
+get\+Pixel will return the current status of the screen. Any object waiting to be drawn will not affect what is returned. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the pixel to grab. \\
+\hline
+{\em y} & The y position of the pixel to grab. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} containing the color of the pixel at (x, y). 
+\end{DoxyReturn}
+
+
+Referenced by get\+Pixel().
+
+\hypertarget{classtsgl_1_1_canvas_a8f0819f368b41b147f1a7f560a7af6a4}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Reps@{get\+Reps}}
+\index{get\+Reps@{get\+Reps}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Reps}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int tsgl\+::\+Canvas\+::get\+Reps (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\label{classtsgl_1_1_canvas_a8f0819f368b41b147f1a7f560a7af6a4}
+
+
+Accessor for the number of theoretical draw cycles that have elapsed. 
+
+This function returns the time elapsed since the \hyperlink{classtsgl_1_1_canvas}{Canvas} has been opened divided by the draw\+Timer\textquotesingle{}s period. \begin{DoxyReturn}{Returns}
+The number of times the draw\+Timer has expired since starting the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_af4f8f2b1abd27316a4a39ae097407d37}{get\+Frame\+Number()} 
+\end{DoxySeeAlso}
+\hypertarget{classtsgl_1_1_canvas_a71f072dd82ca3b5cecfd65cde6d8a226}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Screen\+Buffer@{get\+Screen\+Buffer}}
+\index{get\+Screen\+Buffer@{get\+Screen\+Buffer}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Screen\+Buffer}]{\setlength{\rightskip}{0pt plus 5cm}uint8\+\_\+t $\ast$ tsgl\+::\+Canvas\+::get\+Screen\+Buffer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a71f072dd82ca3b5cecfd65cde6d8a226}
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s currently drawn image. 
+
+\begin{DoxyNote}{Note}
+This array starts in the bottom left corner of the image. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+A pointer to the R\+G\+B pixel buffer for the current \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_aef462ab48e59571b9c88076bbdc8f0b3}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Time@{get\+Time}}
+\index{get\+Time@{get\+Time}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Time}]{\setlength{\rightskip}{0pt plus 5cm}double tsgl\+::\+Canvas\+::get\+Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_aef462ab48e59571b9c88076bbdc8f0b3}
+
+
+Accessor for the time since the \hyperlink{classtsgl_1_1_canvas}{Canvas} was initialized. 
+
+\begin{DoxyReturn}{Returns}
+The elapsed time in microseconds since the \hyperlink{classtsgl_1_1_canvas}{Canvas} has started drawing. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_a8786d28042b767f5c075361100227af4}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Time\+Between\+Sleeps@{get\+Time\+Between\+Sleeps}}
+\index{get\+Time\+Between\+Sleeps@{get\+Time\+Between\+Sleeps}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Time\+Between\+Sleeps}]{\setlength{\rightskip}{0pt plus 5cm}double tsgl\+::\+Canvas\+::get\+Time\+Between\+Sleeps (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\label{classtsgl_1_1_canvas_a8786d28042b767f5c075361100227af4}
+
+
+Accessor that gets the time between two sleep times of the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. 
+
+\begin{DoxyReturn}{Returns}
+The time between two sleep cycles of the internal drawing timer. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_ad740ebe5d6bd69ab79cde3e84f369f35}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+Height@{get\+Window\+Height}}
+\index{get\+Window\+Height@{get\+Window\+Height}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Window\+Height}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Window\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_ad740ebe5d6bd69ab79cde3e84f369f35}
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window height. 
+
+\begin{DoxyReturn}{Returns}
+The height in pixels of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates(), tsgl\+::\+Cartesian\+Canvas\+::get\+Screen\+Coordinates(), and tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions().
+
+\hypertarget{classtsgl_1_1_canvas_a086a0322f4a6ab27da6929b1aa0593af}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+Width@{get\+Window\+Width}}
+\index{get\+Window\+Width@{get\+Window\+Width}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Window\+Width}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Window\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a086a0322f4a6ab27da6929b1aa0593af}
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window width. 
+
+\begin{DoxyReturn}{Returns}
+The width in pixels of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates(), and tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions().
+
+\hypertarget{classtsgl_1_1_canvas_a011ce2354d4565f9d2a323411a47d52d}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+X@{get\+Window\+X}}
+\index{get\+Window\+X@{get\+Window\+X}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Window\+X}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Window\+X (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a011ce2354d4565f9d2a323411a47d52d}
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s x-\/position. 
+
+\begin{DoxyReturn}{Returns}
+The x coordinate in pixels of the left of the \hyperlink{classtsgl_1_1_canvas}{Canvas} (0 = left of monitor). 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_ad6e98d17d3e43d79628a3bd05221ee8b}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+Y@{get\+Window\+Y}}
+\index{get\+Window\+Y@{get\+Window\+Y}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{get\+Window\+Y}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::get\+Window\+Y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_ad6e98d17d3e43d79628a3bd05221ee8b}
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s y-\/position. 
+
+\begin{DoxyReturn}{Returns}
+The y coordinate in pixels of the top of the \hyperlink{classtsgl_1_1_canvas}{Canvas} (0 = top of monitor). 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!handle\+I\+O@{handle\+I\+O}}
+\index{handle\+I\+O@{handle\+I\+O}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{handle\+I\+O}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::handle\+I\+O (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}
+
+
+Manually handles keyboard/mouse I/\+O. 
+
+\begin{DoxyNote}{Note}
+This function will return immediately if not called from the main thread. 
+
+{\bfseries O\+S X\+:} This function exists for O\+S X compatibility purposes. This function does nothing on Linux or Windows. 
+\end{DoxyNote}
+
+
+Referenced by sleep(), and sleep\+For().
+
+\hypertarget{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!record\+For\+Num\+Frames@{record\+For\+Num\+Frames}}
+\index{record\+For\+Num\+Frames@{record\+For\+Num\+Frames}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{record\+For\+Num\+Frames}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::record\+For\+Num\+Frames (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{num\+\_\+frames}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}
+
+
+Records the \hyperlink{classtsgl_1_1_canvas}{Canvas} for a specified number of frames. 
+
+This function starts dumping screenshots of the \hyperlink{classtsgl_1_1_canvas}{Canvas} to the working directory every draw cycle.
+
+Images are saved as Image\+X\+X\+X\+X\+X\+X.\+png, where X\+X\+X\+X\+X\+X is the current frame number.
+
+The function automatically terminates after num\+\_\+frames cycles have completed. 
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+frames} & The number of frames to dump screenshots for. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!set\+Background\+Color@{set\+Background\+Color}}
+\index{set\+Background\+Color@{set\+Background\+Color}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{set\+Background\+Color}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::set\+Background\+Color (
+\begin{DoxyParamCaption}
+\item[{{\bf Color\+Float}}]{color}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}
+
+
+Mutator for the background color. 
+
+This function sets the clear color for when \hyperlink{classtsgl_1_1_canvas_abe209d60de2c9b2259ab0588c4e30cef}{Canvas\+::clear()} is called. 
+\begin{DoxyParams}{Parameters}
+{\em color} & The color to clear to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The alpha channel of the color is ignored. 
+\end{DoxyNote}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::run\+Tests(), and run\+Tests().
+
+\hypertarget{classtsgl_1_1_canvas_a692edf8e37c7714cdf2a58ea530c63e9}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!set\+Font@{set\+Font}}
+\index{set\+Font@{set\+Font}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{set\+Font}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::set\+Font (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{filename}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a692edf8e37c7714cdf2a58ea530c63e9}
+
+
+Mutator for the currently loaded font. 
+
+This function sets the font with the specified filename into memory. Subsequent calls to \hyperlink{classtsgl_1_1_canvas_a3457e7ebd17fa5003025ff6bcaaeedf6}{draw\+Text()} will use this font to print. 
+\begin{DoxyParams}{Parameters}
+{\em filename} & The filename of the font to load. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Supports all font types that Free\+Type supports, which is almost anything. 
+\end{DoxyNote}
+\hypertarget{classtsgl_1_1_canvas_a8722c579dfa55a45e139bfeb269d73ff}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!set\+Show\+F\+P\+S@{set\+Show\+F\+P\+S}}
+\index{set\+Show\+F\+P\+S@{set\+Show\+F\+P\+S}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{set\+Show\+F\+P\+S}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::set\+Show\+F\+P\+S (
+\begin{DoxyParamCaption}
+\item[{bool}]{b}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a8722c579dfa55a45e139bfeb269d73ff}
+
+
+Mutator for showing the F\+P\+S. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & Whether to print the F\+P\+S to stdout every draw cycle (for debugging purposes). \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!sleep@{sleep}}
+\index{sleep@{sleep}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{sleep}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::sleep (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}
+
+
+Sleeps the calling thread to sync with the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+Tells the calling thread to sleep until the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{} draw\+Timer expires. \begin{DoxyNote}{Note}
+{\bfseries O\+S X\+:} This function calls \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} on O\+S X. 
+\end{DoxyNote}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::sleep().
+
+\hypertarget{classtsgl_1_1_canvas_a6674cc86b9a54b6a564021fddce47e36}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!sleep\+For@{sleep\+For}}
+\index{sleep\+For@{sleep\+For}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{sleep\+For}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::sleep\+For (
+\begin{DoxyParamCaption}
+\item[{float}]{seconds}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a6674cc86b9a54b6a564021fddce47e36}
+
+
+Sleeps the calling thread for a set amount of time. 
+
+Tells the calling thread to sleep for {\ttfamily seconds} seconds. 
+\begin{DoxyParams}{Parameters}
+{\em seconds} & Number of seconds to sleep for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+{\bfseries O\+S X\+:} This function calls \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} on O\+S X. 
+\end{DoxyNote}
+
+
+Referenced by wait().
+
+\hypertarget{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!start@{start}}
+\index{start@{start}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::start (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}
+
+
+Opens the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function opens a G\+L window and tells the \hyperlink{classtsgl_1_1_canvas}{Canvas} to start rendering. \begin{DoxyReturn}{Returns}
+0 if start is successful, -\/1 if the canvas has already started. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()}, \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop()}, \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()} 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::run\+Tests(), run\+Tests(), and tsgl\+::\+Spectrogram\+::\+Spectrogram().
+
+\hypertarget{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!stop@{stop}}
+\index{stop@{stop}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}
+
+
+Begins the process of closing the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function calls \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()} followed by \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} to gracefully close the \hyperlink{classtsgl_1_1_canvas}{Canvas} at the earliest available opportunity. \begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()}, \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()} 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::run\+Tests(), and run\+Tests().
+
+\hypertarget{classtsgl_1_1_canvas_ac6035d87aa3bf077031bc0bb6f419b17}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!stop\+Recording@{stop\+Recording}}
+\index{stop\+Recording@{stop\+Recording}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{stop\+Recording}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::stop\+Recording (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_ac6035d87aa3bf077031bc0bb6f419b17}
+
+
+Stops recording the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function tells the \hyperlink{classtsgl_1_1_canvas}{Canvas} to stop dumping images to the file system. \hypertarget{classtsgl_1_1_canvas_ac035f43763b198f6915a0772973a5ea9}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!take\+Screen\+Shot@{take\+Screen\+Shot}}
+\index{take\+Screen\+Shot@{take\+Screen\+Shot}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{take\+Screen\+Shot}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Canvas\+::take\+Screen\+Shot (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_ac035f43763b198f6915a0772973a5ea9}
+
+
+Takes a screenshot. 
+
+This function saves a screenshot of the current \hyperlink{classtsgl_1_1_canvas}{Canvas} to the working directory.
+
+Images are saved as Image\+X\+X\+X\+X\+X\+X.\+png, where X\+X\+X\+X\+X\+X is the current frame number. \begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000001}{Bug}]Multiple calls to this function in rapid succession seem to make the F\+P\+S counter inaccurate. \end{DoxyRefDesc}
+\hypertarget{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!wait@{wait}}
+\index{wait@{wait}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::wait (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}
+
+
+Waits for the user to close the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function blocks the calling thread until the user closes the \hyperlink{classtsgl_1_1_canvas}{Canvas} or until \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()} is called. This function has no effect if the \hyperlink{classtsgl_1_1_canvas}{Canvas} has not started. \begin{DoxyReturn}{Returns}
+0 if exit is successful, -\/1 if the \hyperlink{classtsgl_1_1_canvas}{Canvas} has not started yet. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, end(), \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()}, \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop()}. 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Spectrogram\+::finish(), and stop().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Canvas.\+h\item 
+Canvas.\+cpp\end{DoxyCompactItemize}
