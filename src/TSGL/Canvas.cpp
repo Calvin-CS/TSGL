@@ -707,6 +707,22 @@ void Canvas::initGlew() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+void Canvas::setupCamera() {
+    // Set up camera positioning
+    // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
+    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f,
+        1 };
+    glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
+
+    // Set up camera zooming
+    float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
+    glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
+
+    // Set up camera transformation
+    float modelF[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+    glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
+}
+
 void Canvas::initGlfw() {
   if (!glfwIsReady) {
     glfwInit();  // Initialize GLFW
@@ -792,22 +808,6 @@ void Canvas::setFont(std::string filename) {
 
 void Canvas::setShowFPS(bool b) {
     showFPS = b;
-}
-
-void Canvas::setupCamera() {
-    // Set up camera positioning
-    // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
-    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f,
-        1 };
-    glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
-
-    // Set up camera zooming
-    float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
-    glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
-
-    // Set up camera transformation
-    float modelF[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-    glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
 }
 
 int Canvas::start() {
@@ -955,7 +955,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
 
   //Test 2: Get leftmost and rightmost pixel of the circle
   //Have to add or subtract 1 from the y so that you can get the correct pixel (center radius is 1. No 0 radius).
-  if(can.getPixel(201, 250) == red && can.getPixel(299, 250) == red) {
+  if(can.getPixel(250, 201) == red && can.getPixel(250, 299) == red) {
     passed++;
   } else {
     failed++;
@@ -987,7 +987,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
   //Test 4: A LOT of the pixels on the inside should be red
   int count = 0;
   for(int i = 201; i <= 299; i++) {
-    if(can.getPixel(i, 250) == red) {
+    if(can.getPixel(250, i) == red) {
       count++;
     }
   }
@@ -997,6 +997,7 @@ bool Canvas::testFilledDraw(Canvas& can) {
     passed++;
   } else {
     failed++;
+    std::cout << "Count: " << count << std::endl;
     TsglErr("Test 4, multiple pixels for testFilledDraw() failed!");
   }
 
@@ -1304,7 +1305,7 @@ bool Canvas::testDrawImage(Canvas& can) {
 
     //Test 2: Multiple pixels
     int count = 0;
-    for(int i = 1; i <= 200; i++) {
+    for(int i = 0; i < 200; i++) {
       if(can.getPoint(1, i) == red) {
         count++;
       }
@@ -1315,6 +1316,7 @@ bool Canvas::testDrawImage(Canvas& can) {
       passed++;
     } else {
       failed++;
+      std::cout << "Count: " << count << std::endl;
       TsglErr("Test 2, Multiple pixels for testDrawImage() failed!");
     }
 
