@@ -1,0 +1,153 @@
+\hypertarget{classtsgl_1_1_visual_task_queue}{}\section{tsgl\+:\+:Visual\+Task\+Queue Class Reference}
+\label{classtsgl_1_1_visual_task_queue}\index{tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}}
+
+
+Provides a a visualization tool for a parallel queue of elements.  
+
+
+
+
+{\ttfamily \#include $<$Visual\+Task\+Queue.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_visual_task_queue_ad82aabf35ec367b2b0c5894999f5e76e}{Visual\+Task\+Queue} (int elements, int side\+Length=12, float aspect=1.\+0f, int spacing=2, int border\+Length=8)
+\begin{DoxyCompactList}\small\item\em Default \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} constructor method. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_visual_task_queue_ae961a57508ba1d38570d1431c4367a09}{$\sim$\+Visual\+Task\+Queue} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} destructor method. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_visual_task_queue_a7153e63b78fc257f162410c3e55e13dc}{show\+Legend} (int threads=-\/1)
+\begin{DoxyCompactList}\small\item\em Shows a key/legend for the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_visual_task_queue_a2fc5733a57213a6eee116408738851fc}{update} (int index, V\+Q\+State state)
+\begin{DoxyCompactList}\small\item\em Updates the state of the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_visual_task_queue_a1cd23a5361c0209ac950db6afcd68a19}{reset} ()
+\begin{DoxyCompactList}\small\item\em Resets all of the elements in the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_visual_task_queue_a7340d211424a9f947152fed22cce4d79}{close} ()
+\begin{DoxyCompactList}\small\item\em Closes the visual queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Provides a a visualization tool for a parallel queue of elements. 
+
+\hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} is a self-\/contained \hyperlink{classtsgl_1_1_canvas}{Canvas} intended to help visualize the progress of a parallel queue of taks or elements.
+
+Given a maximum queue length of {\ttfamily N} elements, a \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} will display {\ttfamily N} rectangles on its internal \hyperlink{classtsgl_1_1_canvas}{Canvas}. These rectangles can be in one of three states\+: cleared, running, or finished. Cleared elements are always displayed in white, whereas running elements are displayed in a darker shade of the current thread\textquotesingle{}s color, and finished elements are displayed in a lighter shade of the color of the thread the completed the element. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtsgl_1_1_visual_task_queue_ad82aabf35ec367b2b0c5894999f5e76e}{}\index{tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}!Visual\+Task\+Queue@{Visual\+Task\+Queue}}
+\index{Visual\+Task\+Queue@{Visual\+Task\+Queue}!tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}}
+\subsubsection[{Visual\+Task\+Queue}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Visual\+Task\+Queue\+::\+Visual\+Task\+Queue (
+\begin{DoxyParamCaption}
+\item[{int}]{elements, }
+\item[{int}]{side\+Length = {\ttfamily 12}, }
+\item[{float}]{aspect = {\ttfamily 1.0f}, }
+\item[{int}]{spacing = {\ttfamily 2}, }
+\item[{int}]{border\+Length = {\ttfamily 8}}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_visual_task_queue_ad82aabf35ec367b2b0c5894999f5e76e}
+
+
+Default \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} constructor method. 
+
+This is the default constructor for the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} class. 
+\begin{DoxyParams}{Parameters}
+{\em elements} & The maximum number of elements to be drawn on the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. Setting this to higher than the actual number of elements may result in some unused, empty rectangle. Setting this to lower than the actual number of elements may result in some rectangles being drawn off the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} \hyperlink{classtsgl_1_1_canvas}{Canvas}. \\
+\hline
+{\em side\+Length} & The side length in pixels of the task rectangles to be drawn on the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} \hyperlink{classtsgl_1_1_canvas}{Canvas}. \\
+\hline
+{\em aspec} & The approximate aspect ratio of height/width for the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} \hyperlink{classtsgl_1_1_canvas}{Canvas}. \\
+\hline
+{\em spacing} & The space in pixels between the rectangles representing elements in the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. \\
+\hline
+{\em border\+Length} & The space in pixels between the outer \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} rectangles and the border of the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} \hyperlink{classtsgl_1_1_canvas}{Canvas}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} with the specified maximum number of elements, rectangle side length, approximate aspect ratio, spacing between rectangles, and spacing around the borders. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_visual_task_queue_ae961a57508ba1d38570d1431c4367a09}{}\index{tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}!````~Visual\+Task\+Queue@{$\sim$\+Visual\+Task\+Queue}}
+\index{````~Visual\+Task\+Queue@{$\sim$\+Visual\+Task\+Queue}!tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}}
+\subsubsection[{$\sim$\+Visual\+Task\+Queue}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Visual\+Task\+Queue\+::$\sim$\+Visual\+Task\+Queue (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_visual_task_queue_ae961a57508ba1d38570d1431c4367a09}
+
+
+\hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} destructor method. 
+
+This is the destructor for the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} class.
+
+Frees up memory that was allocated to a \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} instance. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classtsgl_1_1_visual_task_queue_a7340d211424a9f947152fed22cce4d79}{}\index{tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}!close@{close}}
+\index{close@{close}!tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Visual\+Task\+Queue\+::close (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_visual_task_queue_a7340d211424a9f947152fed22cce4d79}
+
+
+Closes the visual queue. 
+
+This function closes and destroys the internal \hyperlink{classtsgl_1_1_canvas}{Canvas} created by the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. \begin{DoxyWarning}{Warning}
+{\bfseries  Do not attempt to \hyperlink{classtsgl_1_1_visual_task_queue_a1cd23a5361c0209ac950db6afcd68a19}{reset()} or \hyperlink{classtsgl_1_1_visual_task_queue_a2fc5733a57213a6eee116408738851fc}{update()} the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} after closing it.} 
+\end{DoxyWarning}
+\hypertarget{classtsgl_1_1_visual_task_queue_a1cd23a5361c0209ac950db6afcd68a19}{}\index{tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}!reset@{reset}}
+\index{reset@{reset}!tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Visual\+Task\+Queue\+::reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_visual_task_queue_a1cd23a5361c0209ac950db6afcd68a19}
+
+
+Resets all of the elements in the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. 
+
+This function tells \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} to clear the state information of all of the elements. 
+
+Referenced by Visual\+Task\+Queue().
+
+\hypertarget{classtsgl_1_1_visual_task_queue_a7153e63b78fc257f162410c3e55e13dc}{}\index{tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}!show\+Legend@{show\+Legend}}
+\index{show\+Legend@{show\+Legend}!tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}}
+\subsubsection[{show\+Legend}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend (
+\begin{DoxyParamCaption}
+\item[{int}]{threads = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_visual_task_queue_a7153e63b78fc257f162410c3e55e13dc}
+
+
+Shows a key/legend for the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. 
+
+This function opens up a separate \hyperlink{classtsgl_1_1_canvas}{Canvas} displaying a legend for the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}, showing which colors correspond to which threads. 
+\begin{DoxyParams}{Parameters}
+{\em threads} & The number of threads the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} is using. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_visual_task_queue_a2fc5733a57213a6eee116408738851fc}{}\index{tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}!update@{update}}
+\index{update@{update}!tsgl\+::\+Visual\+Task\+Queue@{tsgl\+::\+Visual\+Task\+Queue}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Visual\+Task\+Queue\+::update (
+\begin{DoxyParamCaption}
+\item[{int}]{index, }
+\item[{V\+Q\+State}]{state}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_visual_task_queue_a2fc5733a57213a6eee116408738851fc}
+
+
+Updates the state of the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue}. 
+
+This function updates an element of the \hyperlink{classtsgl_1_1_visual_task_queue}{Visual\+Task\+Queue} with a new state. 
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the element to update. \\
+\hline
+{\em state} & The new state to put the element in. Must be one of R\+U\+N\+N\+I\+N\+G or F\+I\+N\+I\+S\+H\+E\+D. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Visual\+Task\+Queue.\+h\item 
+Visual\+Task\+Queue.\+cpp\end{DoxyCompactItemize}
