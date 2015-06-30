@@ -8,6 +8,8 @@
 #ifndef SRC_TSGL_SPECTROGRAM_H_
 #define SRC_TSGL_SPECTROGRAM_H_
 
+#include <omp.h>
+
 #include "Canvas.h"
 #include "Color.h"
 
@@ -28,6 +30,8 @@ class Spectrogram {
 private:
   const int B = 16;  //Border
   const float PI = 3.14159;
+
+  omp_lock_t writelock[NUM_COLORS];
   int myHeight, myWidth;
   float maxCount;
   int xx[NUM_COLORS+1], yy[NUM_COLORS+1], maxx[NUM_COLORS+1], maxy[NUM_COLORS+1];

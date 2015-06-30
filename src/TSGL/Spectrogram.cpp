@@ -3,6 +3,8 @@
 namespace tsgl {
 
 Spectrogram::Spectrogram(SpectrogramDrawmode drawMode, int width, int height) {
+  for (int i = 0; i < NUM_COLORS; ++i)
+    omp_init_lock(&(writelock[i]));
   myWidth = width;
   myHeight = (height > 0) ? height : width;
   myDrawMode = drawMode;
@@ -36,6 +38,8 @@ Spectrogram::Spectrogram(SpectrogramDrawmode drawMode, int width, int height) {
 }
 
 Spectrogram::~Spectrogram() {
+  for (int i = 0; i < NUM_COLORS; ++i)
+    omp_destroy_lock(&(writelock[i]));
   delete can;
 }
 
@@ -47,13 +51,17 @@ void Spectrogram::update(int index, float weight, float decay) {
   weight *= decay;
   for (int k = 1; k < NUM_COLORS/2; ++k) {
     i = (index + k) % NUM_COLORS;
-    count[i] += weight;
-    if (count[i] > maxCount)
-      maxCount = count[i];
+    omp_set_lock(&(writelock[i]));
+      count[i] += weight;
+      if (count[i] > maxCount)
+        maxCount = count[i];
+    omp_unset_lock(&(writelock[i]));
     i = (index + NUM_COLORS - k) % NUM_COLORS;
-    count[i] += weight;
-    if (count[i] > maxCount)
-      maxCount = count[i];
+    omp_set_lock(&(writelock[i]));
+      count[i] += weight;
+      if (count[i] > maxCount)
+        maxCount = count[i];
+    omp_unset_lock(&(writelock[i]));
     weight *= decay;
   }
 }
