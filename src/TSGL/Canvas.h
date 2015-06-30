@@ -103,6 +103,8 @@ private:
     std::mutex      shapesMutex;                                        // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
+    std::mutex      syncMutex;                                          // Mutex for syncing the rendering thread with a computational thread
+    int             syncMutexLocked;                                    // Whether the syncMutex is currently locked
     GLtexture       textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
                     textureShaderVertex;                                // Address of the textured vertex shader
@@ -529,6 +531,18 @@ public:
     void handleIO();
 
     /*!
+     * \brief Pauses the rendering thread of the Canvas
+     * \details This function forces the calling thread to wait until the Canvas finishes its draw cycle,
+     *   them prevents the Canvas from rendering further updates until resumeDrawing is called.
+     * \note This method may be called from any number of threads, so long as a matching number of calls
+     *   to resumeDrawing() are made.
+     * \warning <b>This function makes use of a mutex lock. Do not call this without later calling
+     *   resumeDrawing().</b>
+     * \see resumeDrawing()
+     */
+    void pauseDrawing();
+
+    /*!
      * \brief Records the Canvas for a specified number of frames.
      * \details This function starts dumping screenshots of the Canvas to the working directory every draw
      *   cycle.
@@ -537,6 +551,18 @@ public:
      *   \param num_frames The number of frames to dump screenshots for.
      */
     void recordForNumFrames(unsigned int num_frames);
+
+    /*!
+     * \brief Resumes the rendering thread of the Canvas
+     * \details This function should be called after pauseDrawing to let the Canvas' rendering thread
+     *   know that it may resume rendering.
+     * \note This method may be called from any number of threads, so long as a matching number of calls
+     *   to pauseDrawing() are made.
+     * \warning <b>This function makes use of a mutex lock. Do not call this without having
+     *   first called pauseDrawing().</b>
+     * \see pauseDrawing()
+     */
+    void resumeDrawing();
 
     /*!
      * \brief Mutator for the background color.

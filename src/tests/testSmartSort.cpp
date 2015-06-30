@@ -143,11 +143,13 @@ void smartSortFunction(Canvas& can, int threads, int size) {
             }
             for (int i = 0; i < IPF; i++)
               sd[tid]->sortStep();
-            can.clear();
+            can.pauseDrawing();  //Tell the Canvas to stop updating the screen temporarily
             int start = MARGIN/2 + sd[tid]->first, height;
             int cwh = can.getWindowHeight() - MARGIN/2;
             ColorFloat color;
             if (sd[tid]->state != S_HIDE) {
+              //Draw a black rectangle over our portion of the screen to cover up the old drawing
+              can.drawRectangle(start,0,start + sd[tid]->last - sd[tid]->first,cwh,can.getBackgroundColor());
               for (int i = sd[tid]->first; i < sd[tid]->last; ++i, ++start) {
                   height = numbers[i];
                   if (sd[tid]->state == S_WAIT || sd[tid]->state == S_DONE)
@@ -165,6 +167,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
                   can.drawLine(start, cwh - height, start, cwh, color);
               }
             }
+            can.resumeDrawing();  //Tell the Canvas it can resume updating
         }
     }
     for (int i = 0; i < threads; ++i)

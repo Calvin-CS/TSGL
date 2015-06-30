@@ -61,6 +61,7 @@ void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
           smooth -= 1;
         can.drawPoint(col, row, ColorHSV((float) smooth * 6.0f, 1.0f, (float) smooth, 1.0f));
       }
+      can.handleIO();
     }
   }
 }

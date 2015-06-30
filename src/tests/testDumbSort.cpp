@@ -78,10 +78,11 @@ void dumbSortFunction(Canvas& can) {
             }
         }
 
-        can.clear();
         int start = 50, width = 1, height;
         int cwh = can.getWindowHeight() - 20;
         ColorFloat color;
+        can.pauseDrawing(); //Tell the Canvas to stop updating the screen temporarily
+        can.clear();
         for (int i = 0; i < SIZE; i++, start += width * 2) {
             height = numbers[i];
             if (i == pos)
@@ -90,6 +91,7 @@ void dumbSortFunction(Canvas& can) {
                 color = ColorInt(MAX_COLOR, 0, 0);
             can.drawRectangle(start, cwh - height, start + width, cwh, color);
         }
+        can.resumeDrawing(); //Tell the Canvas it can resume drawing
     }
 }
 

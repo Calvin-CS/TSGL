@@ -138,6 +138,8 @@ void Canvas::draw() {
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
         drawTimer->sleep(true);
 
+        syncMutex.lock();
+
       #ifdef __APPLE__
         windowMutex.lock();
       #endif
@@ -242,23 +244,10 @@ void Canvas::draw() {
         windowMutex.unlock();
       #endif
 
+        syncMutex.unlock();
+
         if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
     }
-}
-
-//Workaround for OS X
-void Canvas::handleIO() {
-  #ifdef __APPLE__
-    if (isFinished)
-        return;
-    if (pthread_main_np() == 0)
-        return;  //If we're not the main thread, we can't call this
-    windowMutex.lock();
-    glfwMakeContextCurrent(window);
-    glfwPollEvents();
-    glfwMakeContextCurrent(NULL);
-    windowMutex.unlock();
-  #endif
 }
 
 //Negative radii?
@@ -434,10 +423,6 @@ void Canvas::errorCallback(int error, const char* string) {
     fprintf(stderr, "%i: %s\n", error, string);
 }
 
-int Canvas::getFrameNumber() {
-    return framecounter;
-}
-
 ColorFloat Canvas::getBackgroundColor() {
   return bgcolor;
 }
@@ -454,6 +439,10 @@ int Canvas::getDisplayWidth() {
 
 float Canvas::getFPS() {
     return realFPS;
+}
+
+int Canvas::getFrameNumber() {
+    return framecounter;
 }
 
 bool Canvas::getIsOpen() {
@@ -478,12 +467,20 @@ ColorInt Canvas::getPoint(int x, int y) {
     return ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
 }
 
+unsigned int Canvas::getReps() const {
+    return drawTimer->getReps();
+}
+
 uint8_t* Canvas::getScreenBuffer() {
     return screenBuffer;
 }
 
 double Canvas::getTime() {
     return drawTimer->getTime();
+}
+
+double Canvas::getTimeBetweenSleeps() const {
+    return drawTimer->getTimeBetweenSleeps();
 }
 
 int Canvas::getWindowWidth() {
@@ -518,6 +515,21 @@ void Canvas::glDestroy() {
     glDeleteVertexArrays(1, &vertexArray);
 }
 
+//Workaround for OS X
+void Canvas::handleIO() {
+  #ifdef __APPLE__
+    if (isFinished)
+        return;
+    if (pthread_main_np() == 0)
+        return;  //If we're not the main thread, we can't call this
+    windowMutex.lock();
+    glfwMakeContextCurrent(window);
+    glfwPollEvents();
+    glfwMakeContextCurrent(NULL);
+    windowMutex.unlock();
+  #endif
+}
+
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
     ++openCanvases;
 
@@ -527,6 +539,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     keyDown = false;
     toClose = false;
     framecounter = 0;
+    syncMutexLocked = 0;
 
     int padwidth = winWidth % 4;
     if (padwidth > 0)
@@ -715,22 +728,6 @@ void Canvas::initGlew() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void Canvas::setupCamera() {
-    // Set up camera positioning
-    // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
-    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f,
-        1 };
-    glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
-
-    // Set up camera zooming
-    float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
-    glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
-
-    // Set up camera transformation
-    float modelF[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-    glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
-}
-
 void Canvas::initGlfw() {
   if (!glfwIsReady) {
     glfwInit();  // Initialize GLFW
@@ -785,6 +782,32 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
     buttonCallback(window, key, action, mods);
 }
 
+void Canvas::pauseDrawing() {
+  #pragma omp critical
+  {
+    if (syncMutexLocked == 0)
+      syncMutex.lock();
+    ++syncMutexLocked;
+  }
+}
+
+void Canvas::recordForNumFrames(unsigned int num_frames) {
+    toRecord = num_frames;
+}
+
+void Canvas::reset() {
+    drawTimer->reset();
+}
+
+void Canvas::resumeDrawing() {
+  #pragma omp critical
+  {
+    if (syncMutexLocked == 1)
+      syncMutex.unlock();
+    --syncMutexLocked;
+  }
+}
+
 void Canvas::screenShot() {
     char filename[25];
     sprintf(filename, "Image%06d.png", framecounter);  // TODO: Make this save somewhere not in root
@@ -818,6 +841,36 @@ void Canvas::setShowFPS(bool b) {
     showFPS = b;
 }
 
+void Canvas::setupCamera() {
+    // Set up camera positioning
+    // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
+    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f,
+        1 };
+    glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
+
+    // Set up camera zooming
+    float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
+    glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
+
+    // Set up camera transformation
+    float modelF[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+    glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
+}
+
+void Canvas::sleep() {
+  #ifdef __APPLE__
+    handleIO();
+  #endif
+    drawTimer->sleep(false);
+}
+
+void Canvas::sleepFor(float seconds) {
+#ifdef __APPLE__
+    handleIO();
+#endif
+    std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
+}
+
 int Canvas::start() {
     if (started) return -1;
     started = true;
@@ -848,36 +901,6 @@ void Canvas::startDrawing(Canvas *c) {
     c->glDestroy();
 }
 #endif
-
-void Canvas::sleep() {
-  #ifdef __APPLE__
-    handleIO();
-  #endif
-    drawTimer->sleep(false);
-}
-
-void Canvas::sleepFor(float seconds) {
-#ifdef __APPLE__
-    handleIO();
-#endif
-    std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
-}
-
-void Canvas::reset() {
-    drawTimer->reset();
-}
-
-unsigned int Canvas::getReps() const {
-    return drawTimer->getReps();
-}
-
-double Canvas::getTimeBetweenSleeps() const {
-    return drawTimer->getTimeBetweenSleeps();
-}
-
-void Canvas::recordForNumFrames(unsigned int num_frames) {
-    toRecord = num_frames;
-}
 
 void Canvas::stopRecording() {
     toRecord = 0;
