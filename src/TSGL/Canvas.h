@@ -71,8 +71,8 @@ private:
     ColorFloat      bgcolor;                                            // Color of the Canvas' clearRectangle
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
+    unsigned        buffersize;                                         // Size of the screen buffer
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
-    uint8_t*        focusBuffer;                                        // Holds a copy of the Canvas's window when it loses focus
     GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
     GLuint          renderedTexture;                                    // Texture to which we render to every frame
     int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
@@ -119,6 +119,7 @@ private:
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     std::mutex      windowMutex;                                        // (OS X) Mutex for handling window contexts
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
+    int             winWidthPadded;                                     // Padded window width (for taking screenshots)
 
     static displayInfo  monInfo;                                        // Info about our display
     static int          drawBuffer;                                     // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)

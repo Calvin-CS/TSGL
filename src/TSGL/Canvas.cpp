@@ -71,7 +71,6 @@ Canvas::~Canvas() {
     delete drawTimer;
     delete[] vertexData;
     delete [] screenBuffer;
-    delete [] focusBuffer;
     if (--openCanvases == 0) {
         glfwIsReady = false;
         glfwTerminate();  // Terminate GLFW
@@ -132,8 +131,6 @@ void Canvas::draw() {
 
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
     
-//    glViewport(0,0,winWidth,winHeight);
-
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
         drawTimer->sleep(true);
@@ -150,7 +147,7 @@ void Canvas::draw() {
         else
           glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
         glDrawBuffer(GL_COLOR_ATTACHMENT0);
-//        glViewport(0,0,winWidth,winHeight);
+
         if (toClear) glClear(GL_COLOR_BUFFER_BIT);
         toClear = false;
 
@@ -203,20 +200,20 @@ void Canvas::draw() {
           glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
         glReadBuffer(GL_COLOR_ATTACHMENT0);
 
-        glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+        glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
         if (toRecord > 0) {
           screenShot();
           --toRecord;
         }
-      
+
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
         glDrawBuffer(drawBuffer);
 
         textureShaders(true);
         const float vertices[32] = {
-            0,         0,        1,1,1,1,0,1,
+            0,       0,        1,1,1,1,0,1,
             winWidth,0,        1,1,1,1,1,1,
-            0,         winHeight,1,1,1,1,0,0,
+            0,       winHeight,1,1,1,1,0,0,
             winWidth,winHeight,1,1,1,1,1,0
         };
         glBindTexture(GL_TEXTURE_2D,renderedTexture);
@@ -470,13 +467,9 @@ ColorInt Canvas::getPixel(int row, int col) {
 }
 
 ColorInt Canvas::getPoint(int x, int y) {
-    int padding = winWidth % 4;  // Apparently, the array is automatically padded to four bytes. Go figure.
-    int yy = (winHeight-1) - y;      // TODO: glReadPixels starts from the bottom left, and we have no way to change that...
-    int offset = 3 * (yy * winWidth + x) + padding * yy;
-    return ColorInt(screenBuffer[offset],
-                    screenBuffer[offset + 1],
-                    screenBuffer[offset + 2],
-                    255);
+    int yy = (winHeight-1) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
+    int off = 3 * (yy * winWidthPadded + x);
+    return ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
 }
 
 uint8_t* Canvas::getScreenBuffer() {
@@ -532,20 +525,17 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     int padwidth = winWidth % 4;
     if (padwidth > 0)
        padwidth = 4-padwidth;
-    unsigned buffersize = 3 * (winWidth+padwidth+1) * winHeight;
+    winWidthPadded = winWidth + padwidth;
+    buffersize = 3 * (winWidthPadded+1) * winHeight;
     screenBuffer = new uint8_t[buffersize];
-    focusBuffer = new uint8_t[buffersize];
     for (unsigned i = 0; i < buffersize; ++i) {
       screenBuffer[i] = 0;
-      focusBuffer[i] = 0;
     }
 
     toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet
     monitorX = xx;
     monitorY = yy;
-    winWidth = ww;
-    winHeight = hh;                   // Initialize translation
     myShapes = new Array<Shape*>(b);  // Initialize myShapes
     myBuffer = new Array<Shape*>(b);
     vertexData = new float[6 * b];    // Buffer for vertexes for points
@@ -717,7 +707,6 @@ void Canvas::initGlew() {
       TsglErr("FRAMEBUFFER CREATION FAILED");
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    //glViewport(0,0,winWidth,winHeight);
 }
 
 void Canvas::initGlfw() {
@@ -768,8 +757,6 @@ void Canvas::initWindow() {
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
-//    glfwSetWindowRefreshCallback(window, refreshCallback);
-//    glfwSetWindowFocusCallback(window, focusCallback);
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -780,7 +767,7 @@ void Canvas::screenShot() {
     char filename[25];
     sprintf(filename, "Image%06d.png", framecounter);  // TODO: Make this save somewhere not in root
 
-    loader.saveImageToFile(filename, screenBuffer, winWidth, winHeight);
+    loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
 }
 
 void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {

@@ -10,6 +10,7 @@ void spectrogramFunction(Canvas& can, std::string fname) {
     can.drawImage(fname, 0, 0, cww, cwh);
     Spectrogram sp(HORIZONTAL,500);
     can.sleepFor(0.25f);
+    can.recordForNumFrames(FPS);
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
       int tid = omp_get_thread_num(), nthreads = omp_get_num_threads();
