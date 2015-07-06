@@ -1,0 +1,78 @@
+#!/bin/bash
+# Easy install script for TSGL on OS X
+
+#Function for checking command availability
+has () {
+  (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
+}
+
+#Install Xcode command line tools (will do nothing if already installed)
+xcode-select --install
+
+#Make and cd into a workspace
+mkdir workspace
+cd workspace
+
+#Install brew
+if [ $(has brew) = 0 ]; then
+  echo "Installing Homebrew..."
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+else
+  echo "Homebrew already installed."
+fi
+
+#Install glfw3 (will do nothing if already installed)
+echo "Installing GLFW..."
+brew install homebrew/versions/glfw3
+
+#Install port
+if [ $(has port) = 0 ]; then
+  echo "Installing Macports..."
+  curl -O https://distfiles.macports.org/MacPorts/MacPorts-2.3.3.tar.bz2
+  tar xf MacPorts-2.3.3.tar.bz2
+  cd MacPorts-2.3.3/
+  ./configure
+  make
+  sudo make install
+  cd ..
+else
+  echo "Macports already installed."
+fi
+
+#Get port packages
+echo "Installing GLEW..."
+sudo port install glew
+echo "Installing Freetype2..."
+sudo port install freetype
+echo "Installing GCC 4.9...this may take a while, please be patient..."
+sudo port install gcc49
+echo "Switiching default compiler to mp-gcc49"
+sudo port select --set gcc mp-gcc49
+echo "Fixing wonky symlinks"
+if [ ! -e /usr/X11/lib/libX11.dylib ]; then
+  sudo ln -s /usr/X11/lib/libX11.6.dylib /usr/X11/lib/libX11.dylib
+fi
+if [ ! -e /usr/X11/lib/libXrandr.dylib ]; then
+  sudo ln -s /usr/X11/lib/libXrandr.2.dylib /usr/X11/lib/libXrandr.dylib
+fi
+if [ -e /usr/lib/libstdc++.dylib ]; then
+  sudo mv /usr/lib/libstdc++.dylib /usr/lib/libstdc++.dylib-old
+fi
+
+#Clone and make TSGL
+echo "Making TSGL"
+git clone https://github.com/Calvin-CS/TSGL
+cd TSGL
+make debug
+
+#Print X11 warning
+if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
+  echo "Installing X11"
+  curl -L -O http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.7.dmg
+  open XQuartz-2.7.7.dmg
+  echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
+  echo "Afterwards, navigate into $(pwd) and run \"./runtests\" to verify everything is working."
+  echo "Installation complete!"
+else
+  echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
+fi
