@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-  Canvas c18(-1, -1, w, h, "");
+  Canvas c18(-1, -1, w, h, "Voronoi");
   c18.setBackgroundColor(WHITE);
   c18.start();
   voronoiFunction(c18);

@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     w = 1200;
     h = 900;                  //If not, set the width and height to a default value
   }
-  Cart c17(-1, -1, w, h, -1, -0.5, 0, 0.5, "");
+  Cart c17(-1, -1, w, h, -1, -0.5, 0, 0.5, "Nova Fractal");
   unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();  //Number of threads
   c17.start();
   novaFunction(c17, t);  //Pass that as an argument

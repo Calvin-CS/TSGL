@@ -25,7 +25,7 @@ Polyline::~Polyline() {
 
 void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
     if (init)  {
-      TsglDebug("Cannot add anymore vertices.");
+      TsglErr("Cannot add anymore vertices.");
       return;
     }
     vertices[current] = x;
@@ -39,8 +39,8 @@ void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
 }
 
 void Polyline::draw() {
-    if (!init) {
-      TsglDebug("Cannot draw yet.");
+    if (!init || length < 2) {
+      TsglErr("Cannot draw uninitialized Polyline.");
       return;
     }
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);

@@ -46,7 +46,7 @@ void langtonColonyFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
-    Canvas c7(-1, -1, w, h, "", FRAME);
+    Canvas c7(-1, -1, w, h, "4x Langton's Ants", FRAME);
     c7.setBackgroundColor(GREY);
     c7.start();
     langtonColonyFunction(c7);

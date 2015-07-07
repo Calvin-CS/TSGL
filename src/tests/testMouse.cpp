@@ -72,7 +72,7 @@ void mouseFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
-    Canvas c32(-1, -1, w, h, "", FRAME);
+    Canvas c32(-1, -1, w, h, "Draw With Your Mouse!", FRAME);
     c32.setBackgroundColor(WHITE);
     c32.start();
     mouseFunction(c32);

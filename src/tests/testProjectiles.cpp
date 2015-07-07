@@ -98,7 +98,7 @@ void projectileFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
-  Canvas c1(-1, -1, w, h, "", FRAME);    //Can change the size of the window
+  Canvas c1(-1, -1, w, h, "Click the Target!", FRAME);    //Can change the size of the window
   c1.setBackgroundColor(BLACK);
   c1.start();
   projectileFunction(c1);

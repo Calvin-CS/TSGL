@@ -844,8 +844,10 @@ void Canvas::setShowFPS(bool b) {
 void Canvas::setupCamera() {
     // Set up camera positioning
     // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
-    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f,
-        1 };
+    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
+      -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f, 1 };
+//    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
+//      -(winWidth-1) / 2.0f, (winHeight+0.5f) / 2.0f, -(winHeight-0.5f) / 2.0f, 1 };
     glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 
     // Set up camera zooming
@@ -897,7 +899,7 @@ void Canvas::startDrawing(Canvas *c) {
     c->initGl();
     c->draw();
     c->isFinished = true;
-    glfwDestroyWindow(c->window);
+//    glfwDestroyWindow(c->window);
     c->glDestroy();
 }
 #endif

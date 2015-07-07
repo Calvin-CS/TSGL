@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
   int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-  Cart c12(-1, -1, w, h, -5,-1.5,5,1.5, "", FRAME / 2);
+  Cart c12(-1, -1, w, h, -5,-1.5,5,1.5, "Cosine Integral", FRAME / 2);
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads to use
   c12.setBackgroundColor(WHITE);
   c12.start();

@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
       h = 0.75*w;               //If not, set the width and height to a default value
     }
     int x = Canvas::getDisplayWidth()-w- 64;
-    Cart c5(x, -1, w, h, -2, -1.125, 1, 1.125, "", FRAME / 2);
+    Cart c5(x, -1, w, h, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
     unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
     if (t == 0)
       t = omp_get_num_procs();

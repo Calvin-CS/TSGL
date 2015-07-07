@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;              //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
+    Canvas c(-1, -1, w, h, "Progress Bar Example");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
     c.start();
     progressBarFunction(c);  //Now pass the argument for the number of threads to the test function
     c.wait();

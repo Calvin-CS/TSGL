@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     std::string fname = argc > 1 ? argv[1] : "../assets/pics/colorful_cars.jpg";
     int w, h;
     TextureHandler::getDimensions(fname,w,h);
-    Canvas c(-1, Canvas::getDisplayHeight()-h, w, h ,"");
+    Canvas c(-1, Canvas::getDisplayHeight()-h, w, h ,"Spectrogram");
     c.start();
     spectrogramFunction(c,fname);
     c.wait();

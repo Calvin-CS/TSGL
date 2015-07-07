@@ -368,6 +368,7 @@ public:
      *     (set to BLACK by default).
      *   \param filled Whether the rectangle should be filled
      *     (set to true by default).
+     * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
      */
     virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, bool filled = true);
 

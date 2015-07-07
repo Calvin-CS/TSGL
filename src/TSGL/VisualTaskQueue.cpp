@@ -9,7 +9,7 @@ VisualTaskQueue::VisualTaskQueue(int elements, int sideLength, float aspect, int
     totalElements = elements;
     rowLength = ceil(sqrt(totalElements/aspect));  //Number of elements per row
     blockSize = sideLength;
-    vcan = new Canvas(0,-1,2*border+(blockSize+space)*rowLength,2*border+(blockSize+space)*elements/rowLength,"");
+    vcan = new Canvas(0,-1,2*border+(blockSize+space)*rowLength,2*border+(blockSize+space)*elements/rowLength,"Thread colors");
     reset();
     vcan->start();
 }

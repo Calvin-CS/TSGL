@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
       w = 1200;
       h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c9(-1, -1, w, h, "", FRAME);
+    Canvas c9(-1, -1, w, h, "Shaker Sort", FRAME);
     c9.setBackgroundColor(GREY);
     c9.start();
     dumbSortFunction(c9);   //Pass the Canvas as an argument
