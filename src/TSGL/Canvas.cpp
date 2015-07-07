@@ -530,7 +530,7 @@ void Canvas::handleIO() {
     glfwMakeContextCurrent(NULL);
     windowMutex.unlock();
     if (toClose && !windowClosed) {
-        windowClosed = false;
+        windowClosed = true;
         while (!isFinished)
           sleepFor(0.1f);
         glfwDestroyWindow(window);  //We have to do this on the main thread for OS X
