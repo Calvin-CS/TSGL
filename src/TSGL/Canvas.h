@@ -119,6 +119,7 @@ private:
                     vertexBuffer;                                       // Address of GL's vertex buffer object
     float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
+    bool            windowClosed;                                       // Whether we've closed the Canvas' window or not
     std::mutex      windowMutex;                                        // (OS X) Mutex for handling window contexts
     int             winWidth, winHeight;                                // Window sizes used for setting up the window
     int             winWidthPadded;                                     // Padded window width (for taking screenshots)

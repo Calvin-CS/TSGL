@@ -529,11 +529,11 @@ void Canvas::handleIO() {
     glfwPollEvents();
     glfwMakeContextCurrent(NULL);
     windowMutex.unlock();
-    if (toClose) {
-        toClose = false;
+    if (toClose && !windowClosed) {
+        windowClosed = false;
         while (!isFinished)
           sleepFor(0.1f);
-        glfwDestroyWindow(window);
+        glfwDestroyWindow(window);  //We have to do this on the main thread for OS X
         glDestroy();
     }
   #endif
@@ -547,6 +547,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     aspect = (float) winWidth / winHeight;
     keyDown = false;
     toClose = false;
+    windowClosed = false;
     framecounter = 0;
     syncMutexLocked = 0;
 
@@ -607,7 +608,7 @@ void Canvas::initGl() {
 
     bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
         glfwSetWindowShouldClose(window, GL_TRUE);
-        toClose = 1;
+        toClose = true;
     });
 
     unsigned char stereo[1] = {5}, dbuff[1] = {5};
@@ -899,7 +900,7 @@ void* Canvas::startDrawing(void* cPtr) {
     Canvas* c = (Canvas*)cPtr;
     c->initGl();
     c->draw();
-    //glfwDestroyWindow(c->window);
+    //glfwDestroyWindow(c->window);  //Now handled in handleIO() when appropriae
     //c->glDestroy();
     c->isFinished = true;
     pthread_exit(NULL);
@@ -909,7 +910,7 @@ void Canvas::startDrawing(Canvas *c) {
     c->initGl();
     c->draw();
     c->isFinished = true;
-//    glfwDestroyWindow(c->window);
+    glfwDestroyWindow(c->window);
     c->glDestroy();
 }
 #endif
