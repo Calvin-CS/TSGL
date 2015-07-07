@@ -42,7 +42,7 @@ void highData(Canvas& can) {
 int main() {
     int w = 1.2*Canvas::getDisplayHeight();
     int h = 0.75*w;
-    Canvas c22(-1, -1, w, h, "", FRAME);
+    Canvas c22(-1, -1, w, h, "Pixel Drawing Load Test", FRAME);
     c22.start();
     highData(c22);
     c22.wait();

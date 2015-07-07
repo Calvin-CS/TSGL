@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
       w = 1200;
       h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c2(-1, -1, w, h, "", FRAME);
+    Canvas c2(-1, -1, w, h, "Line Strip", FRAME);
     c2.setBackgroundColor(BLACK);
     c2.start();
     lineChainFunction(c2);

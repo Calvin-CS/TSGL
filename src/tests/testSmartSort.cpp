@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(-1, -1, w, h, "", FRAME);
+    Canvas c(-1, -1, w, h, "Merge Sort", FRAME);
     c.setBackgroundColor(BLACK);
     c.start();
     smartSortFunction(c,threads, s);   //Pass it as an argument

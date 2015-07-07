@@ -45,7 +45,7 @@ void screenShotFunction(Canvas& can) {
 }
 
 int main() {
-    Cart c29(-1, -1, 800, 600, 0, 0, 800, 600,"", FRAME);
+    Cart c29(-1, -1, 800, 600, 0, 0, 800, 600,"Screenshot Test", FRAME);
     c29.start();
     screenShotFunction(c29);
     c29.wait();

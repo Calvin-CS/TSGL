@@ -158,12 +158,12 @@ build/tests/test%.o: src/tests/test%.cpp
 docs/html/index.html: ${HEADERS} Doxyfile
 	mkdir -p docs
 	@echo 'Generating Doxygen'
-	@doxygen
+	@doxygen doxyfile
 
 tutorial/docs/html/index.html: ${HEADERS} TutDoxyfile
 	@echo 'Generating Doxygen'
 	mkdir -p tutorial/docs
-	doxygen TutDoxyfile
+	doxygen tutDoxyFile
 
 .PHONY: all debug clean tsgl tests docs tutorial dif
 .SECONDARY: ${OBJS} ${TESTOBJS} build/tests.o $(OBJS:%.o=%.d)

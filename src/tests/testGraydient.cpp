@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;              //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
+    Canvas c(-1, -1, w, h, "Black-white Gradient");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
     int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Convert the char pointer to an int ( see http://www.cplusplus.com/forum/beginner/58493/ )
     c.start();
     graydientFunction(c, numberOfThreads);  //Now pass the argument for the number of threads to the test function

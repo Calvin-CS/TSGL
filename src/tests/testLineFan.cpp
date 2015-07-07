@@ -55,7 +55,8 @@ void lineFanFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c3(FRAME);
+    int w = 1.2*Canvas::getDisplayHeight();
+    Canvas c3(-1,-1,w,0.75f*w,"Line Fan");
     c3.start();
     lineFanFunction(c3);
     c3.wait();

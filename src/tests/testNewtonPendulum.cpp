@@ -87,7 +87,7 @@ void newtonPendulumFunction(Canvas& can) {
 }
 
 int main() {
-  Canvas c1(-1, -1, 400, 400, "", FRAME); //THIS MUST STAY EXACTLY THE SAME
+  Canvas c1(-1, -1, 400, 400, "Newton's Pendulum", FRAME); //THIS MUST STAY EXACTLY THE SAME
   c1.setBackgroundColor(WHITE);
   c1.start();
   newtonPendulumFunction(c1);

@@ -44,7 +44,7 @@ void Mandelbrot::draw(Cart& can) {
   const int XBRD = 10;                    //Border for out progress bar
   const int YBRD = 40;                    //Border for out progress bar
   const int PBWIDTH = 800;
-  Canvas pCan(0, 0, PBWIDTH, 100, "");        //Canvas for our progress bar
+  Canvas pCan(0, 0, PBWIDTH, 100, "Thread Workloads");        //Canvas for our progress bar
   pCan.start();
   ProgressBar pb(
     XBRD,YBRD,pCan.getWindowWidth()-XBRD*2,pCan.getWindowHeight()-YBRD*2,

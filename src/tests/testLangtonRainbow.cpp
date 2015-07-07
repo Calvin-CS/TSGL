@@ -45,7 +45,7 @@ void langtonRainbowFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
-    Canvas c8(-1, -1, w, h, "", FRAME);
+    Canvas c8(-1, -1, w, h, "Colorful Langton's Ants", FRAME);
     c8.setBackgroundColor(BLACK);
     c8.start();
     langtonRainbowFunction(c8);

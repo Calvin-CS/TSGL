@@ -30,7 +30,7 @@ void textCartFunction(Cart& can) {
 int main() {
     int w = 1.2*Canvas::getDisplayHeight();
     int h = 0.75*w;
-    Cart c27(-1, -1, w, h, 0, 0, 4, 3, "");
+    Cart c27(-1, -1, w, h, 0, 0, 4, 3, "Text on a Cartesian Canvas");
     c27.start();
     textCartFunction(c27);
     c27.wait();

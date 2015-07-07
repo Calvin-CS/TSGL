@@ -28,10 +28,10 @@ int main(int argc, char* argv[]) {
     const int NCAN = 4;
     int mw = Canvas::getDisplayWidth(), mh = Canvas::getDisplayHeight(), w = 0.5*mw, h = 0.5*mh;
     Canvas* c[NCAN] {
-        new Canvas(0,   0,   w,h,""),
-        new Canvas(mw-w,0,   w,h,""),
-        new Canvas(0,   mh-h,w,h,""),
-        new Canvas(mw-w,mh-h,w,h,"")
+        new Canvas(0,   0,   w,h,"Canvas 1"),
+        new Canvas(mw-w,0,   w,h,"Canvas 2"),
+        new Canvas(0,   mh-h,w,h,"Canvas 3"),
+        new Canvas(mw-w,mh-h,w,h,"Canvas 4")
     };
     std::thread t[NCAN];
     for (unsigned i = 0; i < NCAN; ++i) {

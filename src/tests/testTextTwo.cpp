@@ -30,7 +30,8 @@ void textFunctionTwo(Canvas& can) {
 }
 
 int main() {
-    Canvas c24;
+    int w = 1.2f*Canvas::getDisplayHeight();
+    Canvas c24(-1, -1, w, 0.75f*w, "More Text on a Canvas");
     c24.start();
     textFunctionTwo(c24);
     c24.wait();

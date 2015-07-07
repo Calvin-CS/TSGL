@@ -34,7 +34,8 @@ void textFunction(Canvas& can) {
 }
 
 int main() {
-    Canvas c23;
+    int w = 1.2f*Canvas::getDisplayHeight();
+    Canvas c23(-1, -1, w, 0.75f*w, "Text on a Canvas");
     c23.start();
     textFunction(c23);
     c23.wait();

@@ -55,32 +55,32 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
     threads = numberOfThreads;
   }
   const unsigned int thickness = 3;
-  unsigned int width = can.getWindowWidth(),
-               height = can.getWindowHeight();
-  can.drawImage("../assets/pics/colorful_cars.jpg", 0, 0, width, height);
+  const unsigned ww = can.getWindowWidth(),
+                 wh = can.getWindowHeight();
+  can.drawImage("../assets/pics/colorful_cars.jpg", 0, 0, ww, wh);
   Timer::threadSleepFor(.25);
   uint8_t* buffer = can.getScreenBuffer();
 
 #pragma omp parallel num_threads(threads)
   {
     int nthreads = omp_get_num_threads();
-    unsigned int blocksize = height / nthreads;
+    unsigned int blocksize = wh / nthreads;
     unsigned int row = blocksize * omp_get_thread_num();
     ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
     int gray = 0;
 
     for (unsigned int y = row; y < row + blocksize; y++) {
-      int index = y * width * 3;
-      for (unsigned int x = 0; x < width; x++) {
+      int index = y * ww * 3;
+      for (unsigned int x = 0; x < ww; x++) {
         gray = (buffer[index] + buffer[index + 1] + buffer[index + 2]) / 3;
-        can.drawPoint(x, height - y, ColorInt(gray, gray, gray));
+        can.drawPoint(x, wh - y, ColorInt(gray, gray, gray));
         index += 3;
       }
       if (! can.getIsOpen()) break;
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
     }
     for (unsigned int i = 0; i < thickness; i++) {
-      can.drawRectangle(i, row + 1 + i, width - i, blocksize - i, color, false);
+      can.drawRectangle(i, row + i, ww - 1 - i, row + blocksize - i, color, false);
     }
   }
 }
@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-  Canvas c31(-1, -1, w, h, "", FRAME * 2);
+  Canvas c31(-1, -1, w, h, "Image Greyscaling", FRAME * 2);
   int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads
   c31.setBackgroundColor(GREY);
   c31.start();
