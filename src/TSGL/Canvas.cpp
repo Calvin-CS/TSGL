@@ -136,11 +136,13 @@ void Canvas::draw() {
 
     // Start the drawing loop
     for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
+        //std::cout << "Begin" << std::endl;
         drawTimer->sleep(true);
 
         syncMutex.lock();
 
       #ifdef __APPLE__
+        //std::cout << "End" << std::endl;
         windowMutex.lock();
       #endif
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
@@ -527,6 +529,13 @@ void Canvas::handleIO() {
     glfwPollEvents();
     glfwMakeContextCurrent(NULL);
     windowMutex.unlock();
+    if (toClose) {
+        toClose = false;
+        while (!isFinished)
+          sleepFor(0.1f);
+        glfwDestroyWindow(window);
+        glDestroy();
+    }
   #endif
 }
 
@@ -598,6 +607,7 @@ void Canvas::initGl() {
 
     bindToButton(TSGL_KEY_ESCAPE, TSGL_PRESS, [this]() {
         glfwSetWindowShouldClose(window, GL_TRUE);
+        toClose = 1;
     });
 
     unsigned char stereo[1] = {5}, dbuff[1] = {5};
@@ -887,9 +897,9 @@ void* Canvas::startDrawing(void* cPtr) {
     Canvas* c = (Canvas*)cPtr;
     c->initGl();
     c->draw();
+    //glfwDestroyWindow(c->window);
+    //c->glDestroy();
     c->isFinished = true;
-    glfwDestroyWindow(c->window);
-    c->glDestroy();
     pthread_exit(NULL);
 }
 #else
