@@ -38,6 +38,8 @@ void \hyperlink{classtsgl_1_1_cartesian_canvas_ab2f3e7633f4f05711083eba01b0a3f4e
 \begin{DoxyCompactList}\small\item\em Draws an image. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_ace015a630f1ff280b2ecd6a864cdc5e2}{draw\+Line} (Decimal x1, Decimal y1, Decimal x2, Decimal y2, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
 \begin{DoxyCompactList}\small\item\em Draws a line. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_ad0bdf8651a9f703cfd6f71a6bd6ffe17}{draw\+Pixel} (Decimal row, Decimal col, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Draws a single pixel, specified in row,column format. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a2ef932501dd03f885fd0ff30ddffae01}{draw\+Point} (Decimal x, Decimal y, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
 \begin{DoxyCompactList}\small\item\em Draws a single pixel, specified in x,y format. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a5e88e7d751e24ae78d158f1d8e9faf5e}{draw\+Rectangle} (Decimal x1, Decimal y1, Decimal x2, Decimal y2, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
@@ -412,6 +414,39 @@ Identical to \hyperlink{classtsgl_1_1_canvas_a6e5c605b03a69e615fe4ccee30be1959}{
 
 Referenced by draw\+Axes().
 
+\hypertarget{classtsgl_1_1_cartesian_canvas_ad0bdf8651a9f703cfd6f71a6bd6ffe17}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Pixel@{draw\+Pixel}}
+\index{draw\+Pixel@{draw\+Pixel}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{draw\+Pixel}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::draw\+Pixel (
+\begin{DoxyParamCaption}
+\item[{Decimal}]{row, }
+\item[{Decimal}]{col, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtsgl_1_1_cartesian_canvas_ad0bdf8651a9f703cfd6f71a6bd6ffe17}
+
+
+Draws a single pixel, specified in row,column format. 
+
+This function draws a pixel at the given screen coordinates with the given color. \begin{DoxyNote}{Note}
+(0,0) signifies the {\bfseries top-\/left} of the screen when working with a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. 
+
+(0,0) signifies the {\bfseries bottom-\/left} of the screen when working with a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} object. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em row} & The row (y-\/position) of the pixel. \\
+\hline
+{\em col} & The column (x-\/position) of the pixel. \\
+\hline
+{\em color} & The color of the point (set to B\+L\+A\+C\+K by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_cartesian_canvas_ad0bdf8651a9f703cfd6f71a6bd6ffe17}{draw\+Pixel()} 
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{classtsgl_1_1_canvas_af17d456eca4ad5a55842f2cf02f48a97}{Canvas\+::draw\+Pixel()}. 
+\end{DoxyNote}
 \hypertarget{classtsgl_1_1_cartesian_canvas_a2ef932501dd03f885fd0ff30ddffae01}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Point@{draw\+Point}}
 \index{draw\+Point@{draw\+Point}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
 \subsubsection[{draw\+Point}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::draw\+Point (
@@ -440,11 +475,15 @@ This function draws a pixel at the given Cartesian coordinates with the given co
 \hline
 \end{DoxyParams}
 \begin{DoxySeeAlso}{See also}
-\hyperlink{classtsgl_1_1_canvas_af17d456eca4ad5a55842f2cf02f48a97}{draw\+Pixel()} 
+\hyperlink{classtsgl_1_1_cartesian_canvas_a2ef932501dd03f885fd0ff30ddffae01}{draw\+Point()} 
 \end{DoxySeeAlso}
 \begin{DoxyNote}{Note}
 Identical to \hyperlink{classtsgl_1_1_canvas_a6c17c90cd13f7b0184a25e4acc2b7426}{Canvas\+::draw\+Point()}. 
 \end{DoxyNote}
+
+
+Referenced by draw\+Pixel().
+
 \hypertarget{classtsgl_1_1_cartesian_canvas_a5e88e7d751e24ae78d158f1d8e9faf5e}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Rectangle@{draw\+Rectangle}}
 \index{draw\+Rectangle@{draw\+Rectangle}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
 \subsubsection[{draw\+Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::draw\+Rectangle (

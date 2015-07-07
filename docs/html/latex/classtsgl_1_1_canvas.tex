@@ -30,8 +30,8 @@ void \hyperlink{classtsgl_1_1_canvas_aecd3d94790d2e660db380a5e951ae394}{bind\+To
 \begin{DoxyCompactList}\small\item\em Binds the mouse wheel to a function. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_abe209d60de2c9b2259ab0588c4e30cef}{clear} ()
 \begin{DoxyCompactList}\small\item\em Clears the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
-int \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait} ()
-\begin{DoxyCompactList}\small\item\em Waits for the user to close the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close} ()
+\begin{DoxyCompactList}\small\item\em Closes the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classtsgl_1_1_canvas_a2162c16f6aeaee01f8e29696f5818c03}{draw\+Circle} (int x, int y, int radius, int sides, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
 \begin{DoxyCompactList}\small\item\em Draws a circle. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classtsgl_1_1_canvas_a2165615afc3cebfe38e4313c25bd17b9}{draw\+Colored\+Polygon} (int size, int xverts\mbox{[}$\,$\mbox{]}, int yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
@@ -74,10 +74,14 @@ int \hyperlink{classtsgl_1_1_canvas_a7fc8592848aaa14c3ff440d0ed3c9e4f}{get\+Mous
 \begin{DoxyCompactList}\small\item\em Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_canvas}{Canvas} at the given screen coordinates, specified in row,column format. \end{DoxyCompactList}\item 
 \hyperlink{structtsgl_1_1_color_int}{Color\+Int} \hyperlink{classtsgl_1_1_canvas_aa31883b3c9b09006cf82b270ad7a0a9f}{get\+Point} (int x, int y)
 \begin{DoxyCompactList}\small\item\em Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_canvas}{Canvas} at the given screen coordinates, specified in x,y format. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{classtsgl_1_1_canvas_a8f0819f368b41b147f1a7f560a7af6a4}{get\+Reps} () const 
+\begin{DoxyCompactList}\small\item\em Accessor for the number of theoretical draw cycles that have elapsed. \end{DoxyCompactList}\item 
 uint8\+\_\+t $\ast$ \hyperlink{classtsgl_1_1_canvas_a71f072dd82ca3b5cecfd65cde6d8a226}{get\+Screen\+Buffer} ()
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s currently drawn image. \end{DoxyCompactList}\item 
 double \hyperlink{classtsgl_1_1_canvas_aef462ab48e59571b9c88076bbdc8f0b3}{get\+Time} ()
 \begin{DoxyCompactList}\small\item\em Accessor for the time since the \hyperlink{classtsgl_1_1_canvas}{Canvas} was initialized. \end{DoxyCompactList}\item 
+double \hyperlink{classtsgl_1_1_canvas_a8786d28042b767f5c075361100227af4}{get\+Time\+Between\+Sleeps} () const 
+\begin{DoxyCompactList}\small\item\em Accessor that gets the time between two sleep times of the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. \end{DoxyCompactList}\item 
 int \hyperlink{classtsgl_1_1_canvas_a086a0322f4a6ab27da6929b1aa0593af}{get\+Window\+Width} ()
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window width. \end{DoxyCompactList}\item 
 int \hyperlink{classtsgl_1_1_canvas_ad740ebe5d6bd69ab79cde3e84f369f35}{get\+Window\+Height} ()
@@ -92,6 +96,9 @@ void \hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+D
 \begin{DoxyCompactList}\small\item\em Pauses the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}{record\+For\+Num\+Frames} (unsigned int num\+\_\+frames)
 \begin{DoxyCompactList}\small\item\em Records the \hyperlink{classtsgl_1_1_canvas}{Canvas} for a specified number of frames. \end{DoxyCompactList}\item 
+\hypertarget{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}{}void \hyperlink{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}{reset} ()\label{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}
+
+\begin{DoxyCompactList}\small\item\em Resets the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} instance. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing} ()
 \begin{DoxyCompactList}\small\item\em Resumes the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}{set\+Background\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
@@ -100,27 +107,20 @@ void \hyperlink{classtsgl_1_1_canvas_a692edf8e37c7714cdf2a58ea530c63e9}{set\+Fon
 \begin{DoxyCompactList}\small\item\em Mutator for the currently loaded font. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_a8722c579dfa55a45e139bfeb269d73ff}{set\+Show\+F\+P\+S} (bool b)
 \begin{DoxyCompactList}\small\item\em Mutator for showing the F\+P\+S. \end{DoxyCompactList}\item 
-void \hyperlink{classtsgl_1_1_canvas_ac6035d87aa3bf077031bc0bb6f419b17}{stop\+Recording} ()
-\begin{DoxyCompactList}\small\item\em Stops recording the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
-int \hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start} ()
-\begin{DoxyCompactList}\small\item\em Opens the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}{sleep} ()
 \begin{DoxyCompactList}\small\item\em Sleeps the calling thread to sync with the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_a6674cc86b9a54b6a564021fddce47e36}{sleep\+For} (float seconds)
 \begin{DoxyCompactList}\small\item\em Sleeps the calling thread for a set amount of time. \end{DoxyCompactList}\item 
-\hypertarget{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}{}void \hyperlink{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}{reset} ()\label{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}
-
-\begin{DoxyCompactList}\small\item\em Resets the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} instance. \end{DoxyCompactList}\item 
-unsigned int \hyperlink{classtsgl_1_1_canvas_a8f0819f368b41b147f1a7f560a7af6a4}{get\+Reps} () const 
-\begin{DoxyCompactList}\small\item\em Accessor for the number of theoretical draw cycles that have elapsed. \end{DoxyCompactList}\item 
-double \hyperlink{classtsgl_1_1_canvas_a8786d28042b767f5c075361100227af4}{get\+Time\+Between\+Sleeps} () const 
-\begin{DoxyCompactList}\small\item\em Accessor that gets the time between two sleep times of the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. \end{DoxyCompactList}\item 
-void \hyperlink{classtsgl_1_1_canvas_ac035f43763b198f6915a0772973a5ea9}{take\+Screen\+Shot} ()
-\begin{DoxyCompactList}\small\item\em Takes a screenshot. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start} ()
+\begin{DoxyCompactList}\small\item\em Opens the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop} ()
 \begin{DoxyCompactList}\small\item\em Begins the process of closing the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
-void \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close} ()
-\begin{DoxyCompactList}\small\item\em Closes the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \end{DoxyCompactList}\end{DoxyCompactItemize}
+void \hyperlink{classtsgl_1_1_canvas_ac6035d87aa3bf077031bc0bb6f419b17}{stop\+Recording} ()
+\begin{DoxyCompactList}\small\item\em Stops recording the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_ac035f43763b198f6915a0772973a5ea9}{take\+Screen\+Shot} ()
+\begin{DoxyCompactList}\small\item\em Takes a screenshot. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait} ()
+\begin{DoxyCompactList}\small\item\em Waits for the user to close the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -591,7 +591,7 @@ This function draws a previously created \hyperlink{classtsgl_1_1_progress_bar}{
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
-There is no equivalent function for \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. If you\textquotesingle{}d like to draw a \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar} on a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, you may still use this function, but you must use absolute \hyperlink{classtsgl_1_1_canvas}{Canvas} coordinates rather than the scaled \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} coordinates. 
+There is no equivalent function for \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. If you\textquotesingle{}d like to draw a \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar} on a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, you can still use this function, but you must use absolute \hyperlink{classtsgl_1_1_canvas}{Canvas} coordinates rather than the scaled \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} coordinates. 
 \end{DoxyNote}
 \hypertarget{classtsgl_1_1_canvas_a752754cd16d14447cb5e5b0438bebf16}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!draw\+Rectangle@{draw\+Rectangle}}
 \index{draw\+Rectangle@{draw\+Rectangle}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -624,6 +624,8 @@ This function draws a \hyperlink{classtsgl_1_1_rectangle}{Rectangle} with the gi
 {\em filled} & Whether the rectangle should be filled (set to true by default). \\
 \hline
 \end{DoxyParams}
+\begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000001}{Bug}]The bottom-\/right pixel of a non-\/filled rectangle may not get drawn on some machines. \end{DoxyRefDesc}
 
 
 Referenced by tsgl\+::\+Cartesian\+Canvas\+::draw\+Rectangle(), tsgl\+::\+Visual\+Task\+Queue\+::reset(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), and tsgl\+::\+Visual\+Task\+Queue\+::update().
@@ -875,7 +877,7 @@ Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_canvas
 
 (0,0) signifies the {\bfseries bottom-\/left} of the screen when working with a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
 
-get\+Pixel will return the current status of the screen. Any object waiting to be drawn will not affect what is returned. 
+\hyperlink{classtsgl_1_1_canvas_a1f54dba4b09d248e2611f3409353c2c6}{get\+Pixel()} will return only what is currently drawn the screen. Any object waiting to be drawn will not affect what is returned. 
 \end{DoxyNote}
 
 \begin{DoxyParams}{Parameters}
@@ -904,7 +906,7 @@ Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_canvas
 
 (0,0) signifies the {\bfseries left-\/bottom} of the screen when working with a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
 
-get\+Pixel will return the current status of the screen. Any object waiting to be drawn will not affect what is returned. 
+\hyperlink{classtsgl_1_1_canvas_aa31883b3c9b09006cf82b270ad7a0a9f}{get\+Point()} will return only what is currently drawn the screen. Any object waiting to be drawn will not affect what is returned. 
 \end{DoxyNote}
 
 \begin{DoxyParams}{Parameters}
@@ -948,12 +950,12 @@ The number of times the draw\+Timer has expired since starting the \hyperlink{cl
 
 Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s currently drawn image. 
 
-\begin{DoxyNote}{Note}
-This array starts in the bottom left corner of the image. 
-\end{DoxyNote}
 \begin{DoxyReturn}{Returns}
 A pointer to the R\+G\+B pixel buffer for the current \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
 \end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The array starts in the bottom left corner of the image, and is in row-\/major ordering. 
+\end{DoxyNote}
 \hypertarget{classtsgl_1_1_canvas_aef462ab48e59571b9c88076bbdc8f0b3}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Time@{get\+Time}}
 \index{get\+Time@{get\+Time}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
 \subsubsection[{get\+Time}]{\setlength{\rightskip}{0pt plus 5cm}double tsgl\+::\+Canvas\+::get\+Time (
@@ -1174,7 +1176,7 @@ This function sets the font with the specified filename into memory. Subsequent 
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
-Supports all font types that Free\+Type supports, which is almost anything. 
+Supports all font types that Free\+Type supports. 
 \end{DoxyNote}
 \hypertarget{classtsgl_1_1_canvas_a8722c579dfa55a45e139bfeb269d73ff}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!set\+Show\+F\+P\+S@{set\+Show\+F\+P\+S}}
 \index{set\+Show\+F\+P\+S@{set\+Show\+F\+P\+S}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -1204,7 +1206,7 @@ Mutator for showing the F\+P\+S.
 Sleeps the calling thread to sync with the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
 
 Tells the calling thread to sleep until the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{} draw\+Timer expires. \begin{DoxyNote}{Note}
-{\bfseries O\+S X\+:} This function calls \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} on O\+S X. 
+{\bfseries O\+S X\+:} This function automatically calls \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} on O\+S X. 
 \end{DoxyNote}
 
 
@@ -1227,11 +1229,11 @@ Tells the calling thread to sleep for {\ttfamily seconds} seconds.
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
-{\bfseries O\+S X\+:} This function calls \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} on O\+S X. 
+{\bfseries O\+S X\+:} This function automatically calls \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} on O\+S X. 
 \end{DoxyNote}
 
 
-Referenced by wait().
+Referenced by handle\+I\+O(), and wait().
 
 \hypertarget{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!start@{start}}
 \index{start@{start}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
@@ -1297,7 +1299,7 @@ Takes a screenshot.
 This function saves a screenshot of the current \hyperlink{classtsgl_1_1_canvas}{Canvas} to the working directory.
 
 Images are saved as Image\+X\+X\+X\+X\+X\+X.\+png, where X\+X\+X\+X\+X\+X is the current frame number. \begin{DoxyRefDesc}{Bug}
-\item[\hyperlink{bug__bug000001}{Bug}]Multiple calls to this function in rapid succession seem to make the F\+P\+S counter inaccurate. \end{DoxyRefDesc}
+\item[\hyperlink{bug__bug000002}{Bug}]Multiple calls to this function in rapid succession render the F\+P\+S counter inaccurate. \end{DoxyRefDesc}
 \hypertarget{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!wait@{wait}}
 \index{wait@{wait}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
 \subsubsection[{wait}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Canvas\+::wait (

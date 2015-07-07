@@ -81,15 +81,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_bug000001"></a>Member <a class="el" href="classtsgl_1_1_canvas.html#ac035f43763b198f6915a0772973a5ea9">tsgl::Canvas::takeScreenShot</a>  ()</dt>
-<dd>Multiple calls to this function in rapid succession seem to make the FPS counter inaccurate.  </dd>
-<dt><a class="anchor" id="_bug000002"></a>Member <a class="el" href="classtsgl_1_1_texture_handler.html#a7f3103ea7f43f5a042609b443a748c88">tsgl::TextureHandler::drawText</a>  (std::wstring text, unsigned int font_size, float *vertices)</dt>
+<dt><a class="anchor" id="_bug000001"></a>Member <a class="el" href="classtsgl_1_1_canvas.html#a752754cd16d14447cb5e5b0438bebf16">tsgl::Canvas::drawRectangle</a>  (int x1, int y1, int x2, int y2, <a class="el" href="structtsgl_1_1_color_float.html" title="Floating point RGBA color struct. ">ColorFloat</a> color=BLACK, bool filled=true)</dt>
+<dd>The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.  </dd>
+<dt><a class="anchor" id="_bug000002"></a>Member <a class="el" href="classtsgl_1_1_canvas.html#ac035f43763b198f6915a0772973a5ea9">tsgl::Canvas::takeScreenShot</a>  ()</dt>
+<dd>Multiple calls to this function in rapid succession render the FPS counter inaccurate.  </dd>
+<dt><a class="anchor" id="_bug000003"></a>Member <a class="el" href="classtsgl_1_1_texture_handler.html#a7f3103ea7f43f5a042609b443a748c88">tsgl::TextureHandler::drawText</a>  (std::wstring text, unsigned int font_size, float *vertices)</dt>
 <dd>If the default font cannot be located, TSGL will crash. </dd>
 </dl>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jun 30 2015 17:50:27 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jul 7 2015 16:09:26 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

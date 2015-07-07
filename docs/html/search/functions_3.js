@@ -10,7 +10,7 @@ var searchData=
   ['drawfunction',['drawFunction',['../classtsgl_1_1_cartesian_canvas.html#aa2da030609cf410eecfc154fd67491cf',1,'tsgl::CartesianCanvas']]],
   ['drawimage',['drawImage',['../classtsgl_1_1_canvas.html#ae94a586629d20b7fabcb402d1c654628',1,'tsgl::Canvas::drawImage()'],['../classtsgl_1_1_cartesian_canvas.html#ab2f3e7633f4f05711083eba01b0a3f4e',1,'tsgl::CartesianCanvas::drawImage()']]],
   ['drawline',['drawLine',['../classtsgl_1_1_canvas.html#a6e5c605b03a69e615fe4ccee30be1959',1,'tsgl::Canvas::drawLine()'],['../classtsgl_1_1_cartesian_canvas.html#ace015a630f1ff280b2ecd6a864cdc5e2',1,'tsgl::CartesianCanvas::drawLine()']]],
-  ['drawpixel',['drawPixel',['../classtsgl_1_1_canvas.html#af17d456eca4ad5a55842f2cf02f48a97',1,'tsgl::Canvas']]],
+  ['drawpixel',['drawPixel',['../classtsgl_1_1_canvas.html#af17d456eca4ad5a55842f2cf02f48a97',1,'tsgl::Canvas::drawPixel()'],['../classtsgl_1_1_cartesian_canvas.html#ad0bdf8651a9f703cfd6f71a6bd6ffe17',1,'tsgl::CartesianCanvas::drawPixel()']]],
   ['drawpoint',['drawPoint',['../classtsgl_1_1_canvas.html#a6c17c90cd13f7b0184a25e4acc2b7426',1,'tsgl::Canvas::drawPoint()'],['../classtsgl_1_1_cartesian_canvas.html#a2ef932501dd03f885fd0ff30ddffae01',1,'tsgl::CartesianCanvas::drawPoint()']]],
   ['drawprogress',['drawProgress',['../classtsgl_1_1_canvas.html#aea792059486ebe6d25d7f81bdadf751d',1,'tsgl::Canvas']]],
   ['drawrectangle',['drawRectangle',['../classtsgl_1_1_canvas.html#a752754cd16d14447cb5e5b0438bebf16',1,'tsgl::Canvas::drawRectangle()'],['../classtsgl_1_1_cartesian_canvas.html#a5e88e7d751e24ae78d158f1d8e9faf5e',1,'tsgl::CartesianCanvas::drawRectangle()']]],
