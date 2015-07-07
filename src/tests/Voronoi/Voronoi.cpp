@@ -1,32 +1,8 @@
-/*
- * Voronoi.cpp
- *
- *  Created on: May 29, 2015
- *      Author: Chris Dilley
- */
-
-#include <cmath>
-#include <complex>
-#include <iostream>
-#include <omp.h>
-#include <queue>
-#include <tsgl.h>
+#include "Voronoi.h"
 
 using namespace tsgl;
 
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-class Voronoi {
-protected:
-static const int MY_POINTS = 100 * 4;
-int * myX;
-int * myY;
-int * myKValue;
-ColorFloat myColor[MY_POINTS];                            // And for an array of colors
-ColorFloat myTC, myRC, myLC, myBC, myXC, myYC;                   // Color for the top, right, left, bottom, x-average, and y-average
-
-public:
-Voronoi(Canvas& can) {
+Voronoi::Voronoi(Canvas& can) {
   const int NEW_WINDOW_W = can.getWindowWidth(),      // Set the screen sizes
         NEW_WINDOW_H = can.getWindowHeight();
   srand(time(NULL));
@@ -52,10 +28,10 @@ Voronoi(Canvas& can) {
 
 }
 
-void draw(Canvas& can) {
+void Voronoi::draw(Canvas& can) {
   int myBestK = 0;                                  // Keep track of the current best k-value
   float myBDist, myDist, myXD, myYD;                      // Keep track of the closes matches and current distances
-#pragma omp parallel for private(myBDist, myXD, myYD, myDist, myBestK)
+  #pragma omp parallel for private(myBDist, myXD, myYD, myDist, myBestK)
   for (int i = 0; i < can.getWindowWidth(); i++) {            // For each individual point...
     myBestK = 0;
     for (int j = 0; j < can.getWindowHeight(); j++) {
@@ -76,12 +52,10 @@ void draw(Canvas& can) {
   }
 }
 
-virtual ~Voronoi() {
+Voronoi::~Voronoi() {
   delete [] myX;
   delete [] myY;
   delete [] myKValue;
   myX = myY = myKValue = NULL;
 }
-
-};
 

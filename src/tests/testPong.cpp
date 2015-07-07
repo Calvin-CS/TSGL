@@ -5,7 +5,7 @@
  *      Author: cpd5
  */
 
-#include "Pong.cpp"
+#include "Pong/Pong.h"
 
 using namespace tsgl;
 

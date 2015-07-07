@@ -115,8 +115,10 @@ bin/testLangtonRainbow: ${LANGTON_DEPS}
 bin/testScreenshotLangton: ${LANGTON_DEPS}
 bin/testLangton: ${LANGTON_DEPS}
 
-bin/testVoronoi: build/tests/Voronoi.o
-bin/testShadedVoronoi: build/tests/ShadedVoronoi.o
+bin/testVoronoi: build/tests/Voronoi/Voronoi.o
+bin/testShadedVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
+
+bin/testPong: build/tests/Pong/Pong.o
 
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
 bin/testJulia: build/tests/Mandelbrot/Julia.o

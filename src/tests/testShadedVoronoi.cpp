@@ -5,7 +5,7 @@
  *      Author: cpd5
  */
 
-#include "ShadedVoronoi.cpp"
+#include "Voronoi/ShadedVoronoi.h"
 
 using namespace tsgl;
 

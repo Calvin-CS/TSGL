@@ -5,7 +5,7 @@
  *      Author: cpd5
  */
 
-#include "Voronoi.cpp"
+#include "Voronoi/Voronoi.h"
 
 using namespace tsgl;
 
