@@ -33,10 +33,10 @@ const double RAD = PI / 180;  // One radian in degrees
  * .
  * \param can Reference to the Canvas being drawn to.
  */
-void lineFanFunction(Canvas& can) {
+void lineFanFunction(Canvas& can, int t) {
     const double ARC = 7.11;  //(Arbitrary) spacing between arcs of the fan
     while (can.getIsOpen()) {
-        #pragma omp parallel num_threads(omp_get_num_procs())
+        #pragma omp parallel num_threads(t)
         {
             can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
             int a, b, c, d, red, green, blue;
@@ -54,10 +54,18 @@ void lineFanFunction(Canvas& can) {
     }
 }
 
-int main() {
-    int w = 1.2*Canvas::getDisplayHeight();
-    Canvas c3(-1,-1,w,0.75f*w,"Line Fan");
+int main(int argc, char** argv) {
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
+    if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
+      w = 1200;
+      h = 900;                  //If not, set the width and height to a default value
+    }
+    unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
+    if (t == 0)
+      t = omp_get_num_procs();
+    Canvas c3(-1,-1,w,h,"Line Fan");
     c3.start();
-    lineFanFunction(c3);
+    lineFanFunction(c3,t);
     c3.wait();
 }

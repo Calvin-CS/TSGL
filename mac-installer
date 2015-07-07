@@ -6,6 +6,14 @@ has () {
   (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
 }
 
+#Print X11 warning
+if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
+  echo "Installing X11"
+  curl -L -O http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.7.dmg
+  open -W XQuartz-2.7.7.dmg
+  echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
+fi
+
 #Install Xcode command line tools (will do nothing if already installed)
 xcode-select --install
 
@@ -65,14 +73,4 @@ git clone https://github.com/Calvin-CS/TSGL
 cd TSGL
 make debug
 
-#Print X11 warning
-if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
-  echo "Installing X11"
-  curl -L -O http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.7.dmg
-  open XQuartz-2.7.7.dmg
-  echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
-  echo "Afterwards, navigate into $(pwd) and run \"./runtests\" to verify everything is working."
-  echo "Installation complete!"
-else
-  echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
-fi
+echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
