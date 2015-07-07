@@ -231,13 +231,12 @@ public:
     void clear();
 
     /*!
-     * \brief Waits for the user to close the Canvas.
-     * \details This function blocks the calling thread until the user closes the Canvas or until
-     *   close() is called. This function has no effect if the Canvas has not started.
-     * \return 0 if exit is successful, -1 if the Canvas has not started yet.
-     * \see start(), end(), close(), stop().
+     * \brief Closes the Canvas window.
+     * \details This function tells the Canvas to stop rendering and to close its rendering window.
+     * \details Any threads that have called wait() will continue.
+     * \see start(), stop(), wait()
      */
-    int wait();
+    void close();
 
     /*!
      * \brief Draws a circle.
@@ -353,7 +352,7 @@ public:
      *   specified in that ProgressBar's constructor.
      *   \param p A pointer to a ProgressBar.
      * \note There is no equivalent function for CartesianCanvas. If you'd like to draw
-     *   a ProgressBar on a CartesianCanvas, you may still use this function, but you must
+     *   a ProgressBar on a CartesianCanvas, you can still use this function, but you must
      *   use absolute Canvas coordinates rather than the scaled CartesianCanvas coordinates.
      */
     virtual void drawProgress(ProgressBar* p);
@@ -466,7 +465,7 @@ public:
      *   specified in row,column format.
      * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
      * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas.
-     * \note getPixel will return the current status of the screen. Any object waiting to be drawn
+     * \note getPixel() will return only what is currently drawn the screen. Any object waiting to be drawn
      *  will not affect what is returned.
      *      \param row The row (y-position) of the pixel to grab.
      *      \param col The column (x-position) of the pixel to grab.
@@ -479,7 +478,7 @@ public:
      *   specified in x,y format.
      * \note (0,0) signifies the <b>left-top</b> of the screen when working with a Canvas object.
      * \note (0,0) signifies the <b>left-bottom</b> of the screen when working with a CartesianCanvas.
-     * \note getPixel will return the current status of the screen. Any object waiting to be drawn
+     * \note getPoint() will return only what is currently drawn the screen. Any object waiting to be drawn
      *  will not affect what is returned.
      *      \param x The x position of the pixel to grab.
      *      \param y The y position of the pixel to grab.
@@ -488,9 +487,18 @@ public:
     ColorInt getPoint(int x, int y);
 
     /*!
+     * \brief Accessor for the number of theoretical draw cycles that have elapsed
+     * \details This function returns the time elapsed since the Canvas has been opened divided
+     *   by the drawTimer's period.
+     * \return The number of times the drawTimer has expired since starting the Canvas.
+     * \see getFrameNumber()
+     */
+    unsigned int getReps() const;
+
+    /*!
      * \brief Accessor for the Canvas's currently drawn image.
-     * \note This array starts in the bottom left corner of the image.
      * \return A pointer to the RGB pixel buffer for the current Canvas.
+     * \note The array starts in the bottom left corner of the image, and is in row-major ordering.
      */
     uint8_t* getScreenBuffer();
 
@@ -499,6 +507,12 @@ public:
      * \return The elapsed time in microseconds since the Canvas has started drawing.
      */
     double getTime();
+
+    /*!
+     * \brief Accessor that gets the time between two sleep times of the internal drawing timer of a Canvas object.
+     * \return The time between two sleep cycles of the internal drawing timer.
+     */
+    double getTimeBetweenSleeps() const;
 
     /*!
      * \brief Accessor for the Canvas's window width.
@@ -555,6 +569,11 @@ public:
     void recordForNumFrames(unsigned int num_frames);
 
     /*!
+     * \brief Resets the internal drawing timer of a Canvas instance.
+     */
+    void reset();
+
+    /*!
      * \brief Resumes the rendering thread of the Canvas
      * \details This function should be called after pauseDrawing to let the Canvas' rendering thread
      *   know that it may resume rendering.
@@ -579,7 +598,7 @@ public:
      * \details This function sets the font with the specified filename into memory.
      *   Subsequent calls to drawText() will use this font to print.
      *   \param filename The filename of the font to load.
-     * \note Supports all font types that FreeType supports, which is almost anything.
+     * \note Supports all font types that FreeType supports.
      */
     void setFont(std::string filename);
 
@@ -590,10 +609,19 @@ public:
     void setShowFPS(bool b);
 
     /*!
-     * \brief Stops recording the Canvas.
-     * \details This function tells the Canvas to stop dumping images to the file system.
+     * \brief Sleeps the calling thread to sync with the Canvas.
+     * \details Tells the calling thread to sleep until the Canvas' drawTimer expires.
+     * \note <b>OS X:</b> This function automatically calls handleIO() on OS X.
      */
-    void stopRecording();
+    void sleep();
+
+    /*!
+     * \brief Sleeps the calling thread for a set amount of time
+     * \details Tells the calling thread to sleep for <code>seconds</code> seconds.
+     *   \param seconds Number of seconds to sleep for
+     * \note <b>OS X:</b> This function automatically calls handleIO() on OS X.
+     */
+    void sleepFor(float seconds);
 
     /*!
      * \brief Opens the Canvas.
@@ -604,54 +632,6 @@ public:
     int start();
 
     /*!
-     * \brief Sleeps the calling thread to sync with the Canvas.
-     * \details Tells the calling thread to sleep until the Canvas' drawTimer expires.
-     * \note <b>OS X:</b> This function calls handleIO() on OS X.
-     */
-    void sleep();
-
-    /*!
-     * \brief Sleeps the calling thread for a set amount of time
-     * \details Tells the calling thread to sleep for <code>seconds</code> seconds.
-     *   \param seconds Number of seconds to sleep for
-     * \note <b>OS X:</b> This function calls handleIO() on OS X.
-     */
-    void sleepFor(float seconds);
-
-    /*!
-     * \brief Resets the internal drawing timer of a Canvas instance.
-     */
-    void reset();
-
-    /*!
-     * \brief Accessor for the number of theoretical draw cycles that have elapsed
-     * \details This function returns the time elapsed since the Canvas has been opened divided
-     *   by the drawTimer's period.
-     * \return The number of times the drawTimer has expired since starting the Canvas.
-     * \see getFrameNumber()
-     */
-    unsigned int getReps() const;
-
-    /*!
-     * \brief Accessor that gets the time between two sleep times of the internal drawing timer of a Canvas object.
-     * \return The time between two sleep cycles of the internal drawing timer.
-     */
-    double getTimeBetweenSleeps() const;
-
-    /*!
-     * \brief Takes a screenshot.
-     * \details This function saves a screenshot of the current Canvas to the working directory.
-     * \details Images are saved as ImageXXXXXX.png, where XXXXXX is the current frame number.
-     * \bug Multiple calls to this function in rapid succession seem to make the FPS counter inaccurate.
-     */
-    void takeScreenShot();
-
-    /*!
-     * \brief Runs unit tests for the Canvas.
-     */
-    static void runTests();
-
-    /*!
      * \brief Begins the process of closing the Canvas.
      * \details This function calls close() followed by wait() to gracefully close the Canvas
      *   at the earliest available opportunity.
@@ -660,12 +640,32 @@ public:
     void stop();
 
     /*!
-     * \brief Closes the Canvas window.
-     * \details This function tells the Canvas to stop rendering and to close its rendering window.
-     * \details Any threads that have called wait() will continue.
-     * \see start(), stop(), wait()
+     * \brief Stops recording the Canvas.
+     * \details This function tells the Canvas to stop dumping images to the file system.
      */
-    void close();
+    void stopRecording();
+
+    /*!
+     * \brief Takes a screenshot.
+     * \details This function saves a screenshot of the current Canvas to the working directory.
+     * \details Images are saved as ImageXXXXXX.png, where XXXXXX is the current frame number.
+     * \bug Multiple calls to this function in rapid succession render the FPS counter inaccurate.
+     */
+    void takeScreenShot();
+
+    /*!
+     * \brief Waits for the user to close the Canvas.
+     * \details This function blocks the calling thread until the user closes the Canvas or until
+     *   close() is called. This function has no effect if the Canvas has not started.
+     * \return 0 if exit is successful, -1 if the Canvas has not started yet.
+     * \see start(), end(), close(), stop().
+     */
+    int wait();
+
+    /*!
+     * \brief Runs unit tests for the Canvas.
+     */
+    static void runTests();
 };
 
 }

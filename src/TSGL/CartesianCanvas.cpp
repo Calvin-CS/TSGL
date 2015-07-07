@@ -113,6 +113,10 @@ void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, C
     Canvas::drawLine(actualX1, actualY1, actualX2, actualY2, color);
 }
 
+inline void CartesianCanvas::drawPixel(Decimal row, Decimal col, ColorFloat color) {
+    drawPoint(col, row, color);
+}
+
 void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);

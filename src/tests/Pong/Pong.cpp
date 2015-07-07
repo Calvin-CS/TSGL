@@ -84,6 +84,6 @@ void Pong::draw(Canvas& can) {
   }
 }
 
-float Pong::randfloat(int divisor = 10000) {
+float Pong::randfloat(int divisor) {
     return (rand() % divisor) / (float) divisor;
 }

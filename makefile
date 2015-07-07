@@ -157,12 +157,12 @@ build/tests/test%.o: src/tests/test%.cpp
 	@echo 'Building $(patsubst src/tests/%,%,$<)'
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
-docs/html/index.html: ${HEADERS} Doxyfile
+docs/html/index.html: ${HEADERS} doxyfile
 	mkdir -p docs
 	@echo 'Generating Doxygen'
 	@doxygen doxyfile
 
-tutorial/docs/html/index.html: ${HEADERS} TutDoxyfile
+tutorial/docs/html/index.html: ${HEADERS} tutDoxyfile
 	@echo 'Generating Doxygen'
 	mkdir -p tutorial/docs
 	doxygen tutDoxyFile

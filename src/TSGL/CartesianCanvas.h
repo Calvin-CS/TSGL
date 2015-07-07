@@ -180,6 +180,19 @@ public:
     void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color = BLACK);
 
     /*!
+     * \brief Draws a single pixel, specified in row,column format.
+     * \details This function draws a pixel at the given screen coordinates with the given color.
+     * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
+     * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas object.
+     *   \param row The row (y-position) of the pixel.
+     *   \param col The column (x-position) of the pixel.
+     *   \param color The color of the point (set to BLACK by default).
+     * \see drawPixel()
+     * \note Identical to Canvas::drawPixel().
+     */
+    void drawPixel(Decimal row, Decimal col, ColorFloat color = BLACK);
+
+    /*!
      * \brief Draws a single pixel, specified in x,y format.
      * \details This function draws a pixel at the given Cartesian coordinates with the given color.
      * \note (0,0) signifies the <b>left-top</b> of the screen when working with a Canvas object.
@@ -187,7 +200,7 @@ public:
      *   \param x The x position of the point.
      *   \param y The y position of the point.
      *   \param color The color of the point (set to BLACK by default).
-     * \see drawPixel()
+     * \see drawPoint()
      * \note Identical to Canvas::drawPoint().
      */
     void drawPoint(Decimal x, Decimal y, ColorFloat color = BLACK);
