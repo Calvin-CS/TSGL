@@ -11,16 +11,16 @@ cd bin
 # run bin/testGetPixels                          #INCONSISTENT
 # run bin/testInverter                           #INCONSISTENT
 
-run ./testAlphaLangton 640 480                   #Width, Height
+run ./testAlphaLangton 640 640                   #Width, Height
 run ./testAlphaRectangle 640 480                 #Width, Height
-run ./testBallroom
+run ./testBallroom 640 640                       #Width, Height
 run ./testBuddhabrot 1200 900 4 1000             #Width, Height, Threads, Depth
 run ./testColorPoints 400 400 4                  #Width, Height, Threads
 run ./testColorWheel 640 640                     #Width, Height
-run ./testConway
+run ./testConway 640 640                         #Width, Height
 run ./testCosineIntegral 640 480 32              #Width, Height, Threads
 run ./testDumbSort 1200 600                      #Width, Height
-run ./testForestFire
+run ./testForestFire 800 600                     #Width, Height
 run ./testFunction 640 480                       #Width, Height
 run ./testGradientMandelbrot 1200 900 8 32       #Width, Height, Threads, Depth
 run ./testGradientWheel 640 640                  #Width, Height
@@ -30,11 +30,11 @@ run ./testHighData
 run ./testImage
 run ./testImageCart
 run ./testJulia 1200 900 8 1000                  #Width, Height, Threads, Depth
-run ./testLangton 640 480                        #Width, Height
-run ./testLangtonColony 640 480                  #Width, Height
-run ./testLangtonRainbow 640 480                 #Width, Height
+run ./testLangton 640 640                        #Width, Height
+run ./testLangtonColony 640 640                  #Width, Height
+run ./testLangtonRainbow 640 640                 #Width, Height
 run ./testLineChain 400 400 8                    #Width, Height, Threads
-run ./testLineFan
+run ./testLineFan 800 800 16                     #Width, Height, Threads
 run ./testMandelbrot 1200 900 8 255              #Width, Height, Threads, Depth
 run ./testMouse
 run ./testNewtonPendulum

@@ -40,6 +40,7 @@ void colorPointsFunction(Canvas& can, int & numberOfThreads) {
           can.drawPoint(i, j, ColorInt(i % NUM_COLORS, j % NUM_COLORS, (i * j) % NUM_COLORS));
       }
       if (!can.getIsOpen()) break;
+      can.sleep();
     }
   }
 }
@@ -53,7 +54,7 @@ int main(int argc, char* argv[]) {
     w = h = 960;              //If not, set the width and height to a default value
   //Convert the char pointer to an int, http://www.cplusplus.com/forum/beginner/58493/
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
-  Canvas c1(-1, -1, w, h, "Blue and Yellow, Blue and Yellow");
+  Canvas c1(-1, -1, w, h, "Dithered Points");
   c1.start();
   colorPointsFunction(c1, t);   //Now pass the argument for the number of threads to the test function
   c1.wait();

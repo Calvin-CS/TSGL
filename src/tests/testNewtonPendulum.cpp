@@ -31,63 +31,70 @@ const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
  * \param can Reference to the Canvas to draw on.
  */
 void newtonPendulumFunction(Canvas& can) {
-  const int WINDOW_W = can.getWindowWidth(), WINDOW_H = can.getWindowHeight(),
-      RADIUS = WINDOW_W / 2 - 175;  //Radius of circles
-  int centerX = WINDOW_W / 2;   //Center of window
-  int centerY = WINDOW_H / 2;
-  int leftMoving, rightMoving;  //ints for seeing if the left or right ball is moving
-  int rightStop = 200;    //Stopping points for the left and right ball
-  int leftStop = -100;
-  leftMoving = 0;           //Right goes first, left stays stationary
-  rightMoving = -1;
+  //User variables
+  const int   SIDES = 128,      //Sizes for each circle
+              BALLS = 7,        //Keep this odd
+              RADIUS = 20;      //Radius of circles
+  const float ACCEL = 0.5f,     //Acceleration of balls
+              TOPSPEED = 9.0f, //Starting speed of balls
+              AMP = 100;        //Inverse amplitude of balls
+
+  //Automatic variables
+  const int   WINDOW_W = can.getWindowWidth(),
+              WINDOW_H = can.getWindowHeight(),
+              CX = WINDOW_W / 2,   //Center of window
+              CY = WINDOW_H / 2;
+  const float LINELEN = CY,
+              OFFSET = RADIUS*(BALLS-1);
+
+  //Computation
+  float rightPos = 0, leftPos = 0;               //Initial positions of the edge balls
+  float leftMoving = 0, rightMoving = TOPSPEED;  //Right goes first, left stays stationary
   while(can.getIsOpen()) {
     can.sleep();
-    //Stationary lines
-    can.drawLine(centerX, 0, centerX, centerY - 21);  //Middle line
-    can.drawLine(centerX - 50, 0, centerX - 50, centerY - 21);
-    can.drawLine(centerX + 50, 0, centerX + 50, centerY - 21);
-    //Stationary balls
-    can.drawCircle(centerX, centerY, RADIUS, 32, BLACK, false); //Middle ball
-    can.drawCircle(centerX - 50, centerY, RADIUS, 32, BLACK, false);
-    can.drawCircle(centerX + 50, centerY, RADIUS, 32, BLACK, false);
 
     //Drawing conditional for right ball motion
-    can.drawLine(centerX + 100, 0, centerX + rightStop, centerY - 21);
-    can.drawCircle(centerX + rightStop, centerY + 1, RADIUS, 32, BLACK, false);
-    if(rightMoving != 0) {   //If the ball isn't stationary
-      rightStop += 10 * rightMoving + 3;  //Move it
-      if(rightStop <= 100) {  //If its hit the stopping point
-        leftMoving = -1;   //Make it stationary and make the left ball move
+    if(rightMoving != 0 || rightPos != 0) {   //If the ball isn't stationary
+      rightMoving -= ACCEL;
+      rightPos += rightMoving;  //Move it
+      if(rightPos < 0) {  //If its hit the stopping point
+        leftMoving = -TOPSPEED;   //Make it stationary and make the left ball move
         rightMoving = 0;
-        rightStop = 100;    //Reset the stopping point
-      } else if(rightStop >= 200) {  //This is when the right ball is moving to the right (so that it can move to the left and "hit" the other balls)
-        rightMoving = -1;
-        rightStop = 200;
+        rightPos = 0;    //Reset the stopping point
+      }
+    }
+    //Drawing conditional for left ball motion
+    //Similar to the right ball motion, but with the left stop value and left ball
+    if(leftMoving != 0 || leftPos != 0) {
+      leftMoving += ACCEL;
+      leftPos += leftMoving;
+      if(leftPos > 0) {
+        rightMoving = TOPSPEED;
+        leftMoving = 0;
+        leftPos = 0;
       }
     }
 
-    //Drawing conditional for left ball motion
-    //Similar to the right ball motion, but with the left stop value and left ball
-    can.drawLine(centerX - 100, 0, centerX + leftStop, centerY - 21);
-    can.drawCircle(centerX + leftStop, centerY + 1, RADIUS, 32, BLACK, false);
-    if(leftMoving != 0) {
-      leftStop += 10 * leftMoving + 3;
-      if(leftStop <= -200) {
-        leftMoving = 1;
-        rightMoving = 0;
-        leftStop = -200;
-      } else if(leftStop >= -100) {
-        rightMoving = 1;
-        leftMoving = 0;
-        leftStop = -100;
-      }
-    }
+    can.pauseDrawing();
     can.clear();
+    //Draw stationary lines and balls
+    for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
+      can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN);
+      can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, SIDES, GREY, true);
+    }
+    //Draw moving lines and balls!
+    //Left
+    can.drawLine(CX - OFFSET, 0, CX - OFFSET + LINELEN*sin(leftPos/AMP), LINELEN*cos(leftPos/AMP));
+    can.drawCircle(CX - OFFSET + LINELEN*sin(leftPos/AMP),  LINELEN*cos(leftPos/AMP), RADIUS, SIDES, GREY, true);
+    //Right
+    can.drawLine(CX + OFFSET, 0, CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
+    can.drawCircle(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP), RADIUS, SIDES, GREY, true);
+    can.resumeDrawing();
   }
 }
 
 int main() {
-  Canvas c1(-1, -1, 400, 400, "Newton's Pendulum", FRAME); //THIS MUST STAY EXACTLY THE SAME
+  Canvas c1(-1, -1, 600, 400, "Newton's Pendulum"); //THIS MUST STAY EXACTLY THE SAME
   c1.setBackgroundColor(WHITE);
   c1.start();
   newtonPendulumFunction(c1);

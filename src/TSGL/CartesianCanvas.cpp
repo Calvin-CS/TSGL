@@ -86,15 +86,33 @@ void CartesianCanvas::drawConvexPolygon(int size, Decimal xverts[], Decimal yver
     delete int_y;
 }
 
-void CartesianCanvas::drawFunction(const Function &function, ColorFloat color) {
-    int screenX = 0, screenY = 0;
-    Polyline *p = new Polyline(1 + (maxX - minX) / pixelWidth);
-    for (Decimal x = minX; x <= maxX; x += pixelWidth) {
-        getScreenCoordinates(x, function.valueAt(x), screenX, screenY);
-        p->addNextVertex(screenX, screenY, color);
+void CartesianCanvas::drawFunction(const Function &function, float sleepTime, ColorFloat color) {
+    if (sleepTime > 0.0f) {
+      bool first = true;
+      Decimal lastX, lastY, y;
+      for (Decimal x = minX; x < maxX; x += pixelWidth) {
+          if (!getIsOpen()) break;
+          y = function.valueAt(x);
+          if (!first)
+            drawLine(lastX,lastY,x,y,color);
+          first = false;
+          lastX = x;
+          lastY = y;
+          if (y > minY && y < maxY)  //Don't waste time if it's offscreen
+            sleepFor(sleepTime);
+      }
+    } else {
+      int screenX = 0, screenY = 0;
+      int size = (maxX - minX) / pixelWidth;
+      Polyline *p = new Polyline(size);
+      Decimal x = minX;
+      for (int i = 0; i < size; ++i) {
+          getScreenCoordinates(x, function.valueAt(x), screenX, screenY);
+          p->addNextVertex(screenX, screenY, color);
+          x += pixelWidth;
+      }
+      drawShape(p);
     }
-
-    drawShape(p);
 }
 
 void CartesianCanvas::drawImage(std::string function, Decimal x, Decimal y, Decimal w, Decimal h, float a) {

@@ -147,10 +147,11 @@ public:
      * \brief Plots a function on the screen.
      * \details This function receives a Function as a parameter and plots the function on the CartesianCanvas.
      *   \param function Reference to the Function to plot.
+     *   \param sleepTime Time to sleep between plotting points
      *   \param color The color of the vertices of the plotted function (set to BLACK by default).
      * \note The passed function must receive exactly one Decimal x parameter, and return a Decimal y parameter.
      */
-    void drawFunction(const Function &function, ColorFloat color = BLACK);
+    void drawFunction(const Function &function, float sleepTime = 0.0f, ColorFloat color = BLACK);
 
     /*!
      * \brief Draws an image.

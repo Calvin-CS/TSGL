@@ -72,7 +72,7 @@ void Buddhabrot::draw(Cart& can) {
             int boxX = (znums[its].real()-cMinx)/cpw;
             #pragma omp atomic
               ++(counter[boxY][boxX]);
-            can.drawPixel(boxY, boxX, tcolor);
+            can.Canvas::drawPixel(boxY, boxX, tcolor);
           }
         }
         #pragma omp atomic
@@ -99,7 +99,7 @@ void Buddhabrot::draw(Cart& can) {
       for (int i = omp_get_thread_num(); i < cwh; i += omp_get_num_threads())
         for (int j = 0; j < cww; ++j) {
           float normalize = sqrt((float)counter[i][j]/maxIts);
-          can.drawPixel(i, j, (ColorFloat)can.getPixel(i,j)*normalize);
+          can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j)*normalize);
         }
     }
     while (can.getIsOpen() && !myRedraw)

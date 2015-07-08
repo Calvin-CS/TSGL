@@ -26,13 +26,14 @@ using namespace tsgl;
 void alphaRectangleFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the center of the window
               WINDOW_H = can.getWindowHeight();
-    int a, b;
+    int a, b, c, d;
     while (can.getIsOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         a = rand() % WINDOW_W;
         b = rand() % WINDOW_H;
-        can.drawRectangle(a, b, rand() % (WINDOW_W - a), rand() % (WINDOW_H - b),
-                          ColorInt(rand() % MAX_COLOR, rand() % MAX_COLOR, rand() % MAX_COLOR, 16));
+        c = rand() % WINDOW_W;
+        d = rand() % WINDOW_H;
+        can.drawRectangle(a, b, c, d, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16));
     }
 }
 

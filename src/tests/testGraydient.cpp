@@ -24,17 +24,17 @@ using namespace tsgl;
  * \param numberOfThreads Reference to the number of threads to use in the function.
  */
 void graydientFunction(Canvas& can, int & numberOfThreads) {
-    #pragma omp parallel num_threads(numberOfThreads)
-    {
-        int nthreads = omp_get_num_threads();
-        int color;
-        for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i += nthreads) {
-            for (int j = 0; j < can.getWindowHeight(); j++) {
-                color = i * MAX_COLOR / 2 / can.getWindowWidth() + j * MAX_COLOR / 2 / can.getWindowHeight();
-                can.drawPoint(i, j, ColorInt(color, color, color));
-            }
-        }
+  #pragma omp parallel num_threads(numberOfThreads)
+  {
+    for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i += omp_get_num_threads()) {
+      if (!can.getIsOpen()) break;
+      for (int j = 0; j < can.getWindowHeight(); j++) {
+        int color = i * MAX_COLOR / 2 / can.getWindowWidth() + j * MAX_COLOR / 2 / can.getWindowHeight();
+        can.drawPoint(i, j, ColorInt(color, color, color));
+      }
+      can.sleep();
     }
+  }
 }
 
 //Takes in the window width and height as command line arguments for the Canvas
