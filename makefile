@@ -5,18 +5,15 @@ RM=rm -f
 SRC_PATH=src/TSGL/
 TESTS_PATH=src/tests/
 OBJ_PATH=build/
-
 VPATH=SRC_PATH:TESTS_PATH:OBJ_PATH
 
-HEADERS := $(wildcard src/TSGL/*.h)
-SOURCES := $(wildcard src/TSGL/*.cpp)
-TESTS   := $(wildcard src/tests/*.cpp)
-OBJS := $(patsubst src/TSGL/%.cpp,build/TSGL/%.o,${SOURCES})
-TESTOBJS:= $(patsubst src/tests/%.cpp,build/tests/%.o,${TESTS})
-
-NOWARN := -Wno-unused-parameter -Wno-unused-function -Wno-narrowing
-
-UNAME := $(shell uname)
+HEADERS  := $(wildcard src/TSGL/*.h)
+SOURCES  := $(wildcard src/TSGL/*.cpp)
+TESTS    := $(wildcard src/tests/*.cpp)
+OBJS     := $(patsubst src/TSGL/%.cpp,build/TSGL/%.o,${SOURCES})
+TESTOBJS := $(patsubst src/tests/%.cpp,build/tests/%.o,${TESTS})
+NOWARN   := -Wno-unused-parameter -Wno-unused-function -Wno-narrowing
+UNAME    := $(shell uname)
 ifeq ($(UNAME), Linux)
 	OS_LFLAGS :=
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
@@ -60,20 +57,56 @@ LFLAGS=-Llib/ \
 
 DEPFLAGS=-MMD -MP
 
-BINARIES=bin/testInverter bin/testGraydient bin/testColorPoints \
-	bin/testLineChain bin/testLineFan bin/testSpectrum bin/testMandelbrot \
-	bin/testLangton bin/testLangtonColony bin/testLangtonRainbow \
-	bin/testDumbSort bin/testColorWheel bin/testFunction \
-	bin/testCosineIntegral bin/testGradientWheel bin/testAlphaRectangle \
-	bin/testAlphaLangton bin/testGradientMandelbrot bin/testNova \
-	bin/testVoronoi bin/testShadedVoronoi bin/testForestFire bin/testImage \
-	bin/testHighData bin/testText bin/testTextTwo bin/testPong \
-	bin/testImageCart bin/testTextCart bin/testGetPixels bin/testScreenshot \
-	bin/testScreenshotLangton bin/testGreyscale bin/testMouse \
-	bin/testConcavePolygon bin/testNewtonPendulum bin/testConway \
-	bin/testProjectiles bin/testBallroom bin/testUnits bin/testSmartSort \
-	bin/testSeaUrchin bin/testBuddhabrot bin/testMultiCanvas bin/testMaster \
-	bin/testProgressBar bin/testJulia bin/testSpectrogram bin/testCalcPi
+BINARIES= \
+	bin/testAlphaLangton \
+	bin/testAlphaRectangle \
+	bin/testBallroom \
+	bin/testBuddhabrot \
+	bin/testCalcPi \
+	bin/testColorPoints \
+	bin/testColorWheel \
+	bin/testConcavePolygon \
+	bin/testConway \
+	bin/testCosineIntegral \
+	bin/testDumbSort \
+	bin/testForestFire \
+	bin/testFunction \
+	bin/testGetPixels \
+	bin/testGradientMandelbrot \
+	bin/testGradientWheel \
+	bin/testGraydient \
+	bin/testGreyscale \
+	bin/testHighData \
+	bin/testImage \
+	bin/testImageCart \
+	bin/testInverter \
+	bin/testJulia \
+	bin/testLangton \
+	bin/testLangtonColony \
+	bin/testLangtonRainbow \
+	bin/testLineChain \
+	bin/testLineFan \
+	bin/testMandelbrot \
+	bin/testMaster \
+	bin/testMouse \
+	bin/testMultiCanvas \
+	bin/testNewtonPendulum \
+	bin/testNova \
+	bin/testPong \
+	bin/testProgressBar \
+	bin/testProjectiles \
+	bin/testScreenshot \
+	bin/testScreenshotLangton \
+	bin/testSeaUrchin \
+	bin/testShadedVoronoi \
+	bin/testSmartSort \
+	bin/testSpectrogram \
+	bin/testSpectrum \
+	bin/testText \
+	bin/testTextCart \
+	bin/testTextTwo \
+	bin/testUnits \
+	bin/testVoronoi
 
 all: dif tsgl tests docs tutorial
 
@@ -104,29 +137,28 @@ lib/libtsgl.a: ${OBJS}
 	$(AR) -r $@ $?
 	@touch build/build
 
-#List dependencies for test binaries
-
-bin/testConway: build/tests/Conway/LifeFarm.o
-
+#List additional dependencies for test binaries
+#Langtons
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
 bin/testAlphaLangton: ${LANGTON_DEPS}
 bin/testLangtonColony: ${LANGTON_DEPS}
 bin/testLangtonRainbow: ${LANGTON_DEPS}
 bin/testScreenshotLangton: ${LANGTON_DEPS}
 bin/testLangton: ${LANGTON_DEPS}
-
+#Voronois
 bin/testVoronoi: build/tests/Voronoi/Voronoi.o
 bin/testShadedVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
-
-bin/testPong: build/tests/Pong/Pong.o
-
+#Fractals
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
 bin/testJulia: build/tests/Mandelbrot/Julia.o
 bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o
 bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/Buddhabrot.o
+#Other
+bin/testConway: build/tests/Conway/LifeFarm.o
+bin/testInverter: build/tests/ImageInverter/ImageInverter.o
+bin/testPong: build/tests/Pong/Pong.o
 
-#Actual compilation recipe for test binaries (appended to earlier dependencies)
-
+#General compilation recipes for test binaries (appended to earlier dependencies)
 bin/test%: build/tests/test%.o lib/libtsgl.a
 	mkdir -p bin
 	@echo 'Building $(patsubst bin/%,%,$@)'
@@ -138,15 +170,7 @@ build/%.o: src/%.cpp
 	@echo 'Building $(patsubst src/tests/%,%,$<)'
 	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
-build/tests.o: src/tests/tests.cpp
-	@echo 'Building $(patsubst src/tests/%,%,$<)'
-	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
-
-build/tests/test%.o: src/tests/test%.cpp
-	mkdir -p ${@D}
-	@echo 'Building $(patsubst src/tests/%,%,$<)'
-	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
-
+#Doxygen stuff
 docs/html/index.html: ${HEADERS} doxyfile
 	mkdir -p docs
 	@echo 'Generating Doxygen'
@@ -158,5 +182,4 @@ tutorial/docs/html/index.html: ${HEADERS} tutDoxyfile
 	doxygen tutDoxyFile
 
 .PHONY: all debug clean tsgl tests docs tutorial dif
-.SECONDARY: ${OBJS} ${TESTOBJS} build/tests.o $(OBJS:%.o=%.d)
-
+.SECONDARY: ${OBJS} ${TESTOBJS} $(OBJS:%.o=%.d)

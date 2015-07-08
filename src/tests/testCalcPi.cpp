@@ -7,7 +7,6 @@
  *  Usage: ./testCalcPi [numIntervals] [numThreads]
  */
 
-#include <IntegralViewer.h>
 #include <stdio.h>              // printf(), ...
 #include <string>               // stoll(), ...
 #include <stdlib.h>             // exit()
@@ -39,9 +38,9 @@ int main(int argc, char** argv) {
   Integral i(fPtr, 0.0l, 1.0l, 0.0l, 1.0l, "unit circle");
 
   //Go!
-  printf("\nReference pi:  3.141592653589793238462643383279...)\n");
+  printf("Reference pi:  3.141592653589793238462643383279...)\n");
   long double rectanglesPi = i.rectangleEvaluate(numIntervals) * 4.0;
   printf("Rectangles pi: %32.30Lf in %f secs\n", rectanglesPi, i.getRecTime() );
   long double trapezoidsPi = i.trapezoidEvaluate(numIntervals) * 4.0;
-  printf("Trapezoids pi: %32.30Lf in %f secs\n\n", trapezoidsPi, i.getTrapTime() );
+  printf("Trapezoids pi: %32.30Lf in %f secs\n", trapezoidsPi, i.getTrapTime() );
 }
