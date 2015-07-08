@@ -16,8 +16,9 @@
 namespace tsgl {
 
 enum SpectrogramDrawmode {
-  CIRCULAR = 0,
-  HORIZONTAL = 1
+  RADIAL = 0,
+  HORIZONTAL = 1,
+  VERTICAL = 2
 };
 
 /*! \class Spectrogram
@@ -31,7 +32,7 @@ private:
   const int B = 16;  //Border
   const float PI = 3.14159;
 
-  omp_lock_t writelock[NUM_COLORS];
+  omp_lock_t writelock[NUM_COLORS], masterlock;
   int myHeight, myWidth;
   float maxCount;
   int xx[NUM_COLORS+1], yy[NUM_COLORS+1], maxx[NUM_COLORS+1], maxy[NUM_COLORS+1];
@@ -60,7 +61,7 @@ public:
   ~Spectrogram();
 
   /*!
-   * \brief Updates a spectrogram with new data.
+   * \brief Updates a spectrogram with new data, using locks for thread safety.
    * \details This function adds the value of <code>weight</code> to the hue specified
    *   by <code>index</code>, and adds the value (<code>decay</code>^<code>n</code>)*
    *   <code>weight</code> to all hues <code>n</code> steps away from <code>index</code>.
@@ -68,7 +69,18 @@ public:
    *   \param weight The value to add to <code>index</code>.
    *   \param decay Falloff for <code>weight</code> upon adjacent values.
    */
-  void update(int index, float weight = 1.0f, float decay = 0.8f);
+  void updateLocked(int index, float weight = 1.0f, float decay = 0.8f);
+
+  /*!
+   * \brief Updates a spectrogram with new data, using critical sections for thread safety.
+   * \details This function adds the value of <code>weight</code> to the hue specified
+   *   by <code>index</code>, and adds the value (<code>decay</code>^<code>n</code>)*
+   *   <code>weight</code> to all hues <code>n</code> steps away from <code>index</code>.
+   *   \param index Index of the hue to update. Value is taken mod 256.
+   *   \param weight The value to add to <code>index</code>.
+   *   \param decay Falloff for <code>weight</code> upon adjacent values.
+   */
+  void updateCritical(int index, float weight = 1.0f, float decay = 0.8f);
 
   /*!
    * \brief Updates the image on the spectrogram.

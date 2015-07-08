@@ -5,11 +5,14 @@ namespace tsgl {
 Spectrogram::Spectrogram(SpectrogramDrawmode drawMode, int width, int height) {
   for (int i = 0; i < NUM_COLORS; ++i)
     omp_init_lock(&(writelock[i]));
+  omp_init_lock(&masterlock);
   myWidth = width;
   myHeight = (height > 0) ? height : width;
   myDrawMode = drawMode;
   if (myDrawMode == HORIZONTAL)
     myHeight = NUM_COLORS;
+  else if (myDrawMode == VERTICAL)
+    myWidth = NUM_COLORS;
 
   can = new Canvas(-1, 0, myWidth, myHeight ,"");
   maxCount = 0;
@@ -40,39 +43,63 @@ Spectrogram::Spectrogram(SpectrogramDrawmode drawMode, int width, int height) {
 Spectrogram::~Spectrogram() {
   for (int i = 0; i < NUM_COLORS; ++i)
     omp_destroy_lock(&(writelock[i]));
+  omp_destroy_lock(&masterlock);
   delete can;
 }
 
-void Spectrogram::update(int index, float weight, float decay) {
+void Spectrogram::updateLocked(int index, float weight, float decay) {
   int i = index % NUM_COLORS;
-  count[i] += weight;
-  if (count[i] > maxCount)
-    maxCount = count[i];
+  omp_set_lock(&(writelock[i]));
+    count[i] += weight;
+    if (count[i] > maxCount) maxCount = count[i];
+  omp_unset_lock(&(writelock[i]));
   weight *= decay;
   for (int k = 1; k < NUM_COLORS/2; ++k) {
     i = (index + k) % NUM_COLORS;
     omp_set_lock(&(writelock[i]));
       count[i] += weight;
-      if (count[i] > maxCount)
-        maxCount = count[i];
+      if (count[i] > maxCount) maxCount = count[i];
     omp_unset_lock(&(writelock[i]));
     i = (index + NUM_COLORS - k) % NUM_COLORS;
     omp_set_lock(&(writelock[i]));
       count[i] += weight;
-      if (count[i] > maxCount)
-        maxCount = count[i];
+      maxCount > count[i] ? true : maxCount = count[i];
+      if (count[i] > maxCount) maxCount = count[i];
     omp_unset_lock(&(writelock[i]));
     weight *= decay;
+  }
+}
+
+void Spectrogram::updateCritical(int index, float weight, float decay) {
+  int i = index % NUM_COLORS;
+  #pragma omp critical
+  {
+    count[i] += weight;
+    if (count[i] > maxCount)
+      maxCount = count[i];
+    weight *= decay;
+    for (int k = 1; k < NUM_COLORS/2; ++k) {
+      i = (index + k) % NUM_COLORS;
+      count[i] += weight;
+      if (count[i] > maxCount)
+        maxCount = count[i];
+      i = (index + NUM_COLORS - k) % NUM_COLORS;
+      count[i] += weight;
+      if (count[i] > maxCount)
+        maxCount = count[i];
+      weight *= decay;
+    }
   }
 }
 
 void Spectrogram::draw(float ratio) {
   if (maxCount > 0) {
     const float DELTA = (2*PI)/NUM_COLORS;
-    float invcount = 1.0f/maxCount;
+    float localmax = maxCount;
+    float invcount = 1.0f/localmax;
     float mult = ratio*myHeight*sqrt(invcount);
     switch (myDrawMode) {
-    case CIRCULAR:
+    case RADIAL:
       for (int k = 0; k < MAX_COLOR; ++k) {
         float kroot = mult*sqrt(count[k]);
         xx[k+1] = (myWidth + kroot*cos(k*DELTA))/2;
@@ -87,8 +114,18 @@ void Spectrogram::draw(float ratio) {
       can->drawConvexPolygon(NUM_COLORS+1,xx,yy,col,true);
       break;
     case HORIZONTAL:
+      can->pauseDrawing();
+      can->clear();
       for (int k = 0; k < MAX_COLOR; ++k)
-        can->drawLine(0,k,(ratio*myWidth*count[k])/maxCount,k,ColorHSV((6.0f*k)/MAX_COLOR,1.0f,1.0f));
+        can->drawLine(0,k,(ratio*myWidth*count[k])/localmax,k,ColorHSV((6.0f*k)/MAX_COLOR,1.0f,1.0f));
+      can->resumeDrawing();
+      break;
+    case VERTICAL:
+      can->pauseDrawing();
+//      can->clear();
+      for (int k = 0; k < MAX_COLOR; ++k)
+        can->drawLine(k,myHeight,k,myHeight-(ratio*myHeight*count[k])/localmax,ColorHSV((6.0f*k)/MAX_COLOR,1.0f,1.0f));
+      can->resumeDrawing();
       break;
     }
   }

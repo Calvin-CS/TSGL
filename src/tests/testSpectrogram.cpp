@@ -8,9 +8,10 @@ using namespace tsgl;
 void spectrogramFunction(Canvas& can, std::string fname) {
     const int cww = can.getWindowWidth(), cwh = can.getWindowHeight();
     can.drawImage(fname, 0, 0, cww, cwh);
-    Spectrogram sp(HORIZONTAL,500);
+    Spectrogram sp(VERTICAL,500);
     can.sleepFor(0.1f);
 //    can.recordForNumFrames(FPS);
+    unsigned numChecked = 0;
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
       int tid = omp_get_thread_num(), nthreads = omp_get_num_threads();
@@ -23,10 +24,13 @@ void spectrogramFunction(Canvas& can, std::string fname) {
           for (int i = 0; i < cww; ++i) {
             ColorHSV hsv = can.getPoint(i,j);
             if (hsv.H == hsv.H) //Check for NAN
-              sp.update(MAX_COLOR*hsv.H/6,1.0f,0.8f);
+              sp.updateLocked(MAX_COLOR*hsv.H/6,1.0f,0.8f);
+//              sp.updateCritical(MAX_COLOR*hsv.H/6,1.0f,0.8f);
             can.drawPoint(i,j,ColorHSV(0.0f,0.0f,hsv.V));
           }
-          sp.draw((float)(j-start)/blockSize);
+          #pragma omp atomic
+            ++numChecked;
+          sp.draw((float)(1.0f*numChecked)/cwh);
         }
       }
     }
