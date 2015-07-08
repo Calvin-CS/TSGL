@@ -16,6 +16,7 @@
  * \brief A type definition for a long double.
  */
 typedef long double Decimal;  // Define the variable type to use for coordinates
+typedef Decimal (*functionPointer)(Decimal x);
 
 namespace tsgl {
 
@@ -145,13 +146,37 @@ public:
 
     /*!
      * \brief Plots a function on the screen.
-     * \details This function receives a Function as a parameter and plots the function on the CartesianCanvas.
+     * \details This function receives a TSGL Function instance as a parameter and plots the function on the CartesianCanvas.
      *   \param function Reference to the Function to plot.
      *   \param sleepTime Time to sleep between plotting points
      *   \param color The color of the vertices of the plotted function (set to BLACK by default).
-     * \note The passed function must receive exactly one Decimal x parameter, and return a Decimal y parameter.
      */
     void drawFunction(const Function &function, float sleepTime = 0.0f, ColorFloat color = BLACK);
+
+    /*!
+     * \brief Plots a function on the screen.
+     * \details This function receives a pointer to a function method as a parameter and plots the function on
+     *   the CartesianCanvas.
+     *   \param function Pointer to the function-drawing method to plot.
+     *   \param sleepTime Time to sleep between plotting points
+     *   \param color The color of the vertices of the plotted function (set to BLACK by default).
+     * \note <code>function</code> must receive exactly one Decimal x parameter, and return a Decimal y parameter.
+     */
+    void drawFunction(functionPointer &function, float sleepTime = 0.0f, ColorFloat color = BLACK);
+
+    /*!
+     * \brief Plots part of a function on the screen.
+     * \details This function receives a pointer to a function method as a parameter and plots the function on
+     *   the CartesianCanvas between the specified minimum and maximum coordinates.
+     *   \param function Pointer to the function-drawing method to plot.
+     *   \param min Minimum x value to evaluate and plot
+     *   \param max Maximum x value to evaluate and plot
+     *   \param sleepTime Time to sleep between plotting points
+     *   \param color The color of the vertices of the plotted function (set to BLACK by default).
+     * \note <code>function</code> must receive exactly one Decimal x parameter, and return a Decimal y parameter.
+     */
+    void drawPartialFunction(functionPointer &function, Decimal min, Decimal max,
+                             float sleepTime = 0.0f, ColorFloat color = BLACK);
 
     /*!
      * \brief Draws an image.

@@ -127,16 +127,6 @@ bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/B
 
 #Actual compilation recipe for test binaries (appended to earlier dependencies)
 
-bin/testCalcPi: build/tests/Integrals/testCalcPi.o lib/libtsgl.a
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
-
-build/tests/Integrals/testCalcPi.o: src/tests/Integrals/testCalcPi.cpp src/tests/Integrals/Integral.h
-	mkdir -p build/tests/Integrals
-	@echo 'Building testCalcPi'
-	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
-
 bin/test%: build/tests/test%.o lib/libtsgl.a
 	mkdir -p bin
 	@echo 'Building $(patsubst bin/%,%,$@)'

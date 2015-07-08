@@ -13,8 +13,8 @@
 #include <iostream>   // cout, string, ...
 
 #ifdef _WIN32
-    #include <windows.h>
-    void sleep(unsigned seconds) { Sleep(seconds * 1000); }
+  #include <windows.h>
+  void sleep(unsigned seconds) { Sleep(seconds * 1000); }
 #else
   #include <unistd.h>    // sleep()
 #endif
