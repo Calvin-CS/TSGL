@@ -104,7 +104,7 @@ ColorFloat::ColorFloat(float r, float g, float b, float a) {
     R = r; G = g; B = b; A = a;
 }
 
-std::string ColorFloat::AsString() {
+std::string ColorFloat::asString() {
     std::stringstream ss;
     ss << R << "R," << G << "G," << B << "B," << A << "A";
     return ss.str();
@@ -187,7 +187,7 @@ ColorInt::ColorInt(int r, int g, int b, int a) {
     R = r; G = g; B = b; A = a;
 }
 
-std::string ColorInt::AsString() {
+std::string ColorInt::asString() {
     std::stringstream ss;
     ss << R << "R," << G << "G," << B << "B," << A << "A";
     return ss.str();
@@ -233,7 +233,7 @@ ColorHSV::ColorHSV(float h, float s, float v, float a) {
     H = h; S = s; V = v; A = a;
 }
 
-std::string ColorHSV::AsString() {
+std::string ColorHSV::asString() {
     std::stringstream ss;
     ss << H << "H," << S << "S," << V << "V," << A << "A";
     return ss.str();

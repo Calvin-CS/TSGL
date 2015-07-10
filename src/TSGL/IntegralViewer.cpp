@@ -49,7 +49,7 @@ void IntegralViewer::setupCanvas(CartesianCanvas*& can, const std::string& label
   can = new CartesianCanvas(-1, -1, myWidth, myHeight, myStartX - BORDER, myStartY - BORDER,
                             myStopX + BORDER, myStopY + BORDER, label, delay);
 
-  can->setBackgroundColor(ColorFloat(0.9f, 0.9f, 0.9f, 1.0f));
+  can->setBackgroundColor(ColorFloat(0.95f, 0.95f, 0.95f, 1.0f));
 
   can->drawRectangle(myStartX,myStartY,myStopX,myStopY,WHITE);        //Area we're drawing to
   can->drawPartialFunction(myF,myStartX,myStopX,0,ColorInt(0,0,255)); //Outline of function
@@ -65,22 +65,19 @@ long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
               halfRecWidth = recWidth / 2.0;
   #pragma omp parallel reduction(+:result)
   {
-    int tid = omp_get_thread_num(), nthreads = omp_get_num_threads();
-    float bsize = numRectangles*1.0f/nthreads;
-    int start = bsize*tid, end = bsize*(tid+1);
-
     long double xLo = 0.0, xMid = 0.0, y = 0.0;
-    ColorFloat tcol = Colors::highContrastColor(tid);
+    ColorFloat tcol = Colors::highContrastColor(omp_get_thread_num());
     tcol.A = 0.7f;
 
-    for (long long i = start; i < end; ++i) {
+    #pragma omp for
+    for (long long i = 0; i < numRectangles; ++i) {
       if (!myRecCanvas->getIsOpen()) continue;
+      myRecCanvas->sleep();
       xLo = myStartX + i * recWidth;
       xMid = xLo + halfRecWidth;
       y = (*myF)(xMid);
       result += y;
       myRecCanvas->drawRectangle(xLo, 0, xLo+recWidth, y, tcol);
-      myRecCanvas->sleep();
     }
     result *= recWidth;
   }
@@ -96,17 +93,14 @@ long double IntegralViewer::trapezoidEvaluate(long long numTrapezoids) {
               halfTrapWidth = trapWidth / 2.0;
   #pragma omp parallel reduction(+:result)
   {
-    int tid = omp_get_thread_num(), nthreads = omp_get_num_threads();
-    float bsize = numTrapezoids*1.0f/nthreads;
-    int start = bsize*tid, end = bsize*(tid+1);
-
     long double leftX = 0.0, rightX = 0.0, leftY = 0.0, rightY = 0.0;
     long double xValues[4] = {0.0}, yValues[4] = {0.0};
     ColorFloat tcol = Colors::highContrastColor(omp_get_thread_num());
     tcol.A = 0.7;
     ColorFloat colorValues[4] = {tcol, tcol, tcol, tcol};
 
-    for (long long i = start; i < end; ++i) {
+    #pragma omp for
+    for (long long i = 0; i < numTrapezoids; ++i) {
       if (!myTrapCanvas->getIsOpen()) continue;
       leftX = myStartX + i * trapWidth;
       rightX = leftX + trapWidth;

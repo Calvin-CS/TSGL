@@ -57,8 +57,17 @@ class Image : public Shape {
      */
     void draw();
 
-    int getWidth() { return myWidth; }
+    /*!
+     * \brief Accessor for the image's height.
+     * \return The height of the Image.
+     */
     int getHeight() { return myHeight; }
+
+    /*!
+     * \brief Accessor for the image's width.
+     * \return The width of the Image.
+     */
+    int getWidth() { return myWidth; }
 };
 
 }

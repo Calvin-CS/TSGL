@@ -611,6 +611,8 @@ public:
     /*!
      * \brief Sleeps the calling thread to sync with the Canvas.
      * \details Tells the calling thread to sleep until the Canvas' drawTimer expires.
+     * \note It is recommened that you call sleep() at least once before doing any drawing;
+     *   otherwise, the Canvas may not render the first frame of drawing.
      * \note <b>OS X:</b> This function automatically calls handleIO() on OS X.
      */
     void sleep();

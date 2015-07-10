@@ -74,7 +74,7 @@ struct ColorFloat {
      * \details This function returns a std::string representation of the ColorFloat.
      * \return A string representation of the ColorFloat.
      */
-    std::string AsString();
+    std::string asString();
 
     /*!
      * \brief Implicit conversion from ColorFloat to ColorHSV.
@@ -163,7 +163,7 @@ struct ColorInt {
      * \details This function returns a std::string representation of the ColorInt.
      * \return A string representation of the ColorInt.
      */
-    std::string AsString();
+    std::string asString();
 
     /*!
      * \brief Implicit conversion from ColorInt to ColorFloat.
@@ -245,7 +245,7 @@ struct ColorHSV {
      * \details This function returns a std::string representation of the ColorHSV.
      * \return A string representation of the ColorHSV.
      */
-    std::string AsString();
+    std::string asString();
 };
 
 const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),

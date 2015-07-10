@@ -60,13 +60,11 @@ class ProgressBar {
     void update(float newValue, int segnum = -1);
 
     /*!
-     * \brief Accessor for the ProgressBar's number of segments
-     * \return The number of segments in the ProgressBar.
+     * \brief Accessor for the ProgressBar's representative Polyline array.
+     *   \param index Index of the segment to access.
+     * \return A pointer to the Polyline array representing segment border <code>i</code>  of the ProgressBar.
      */
-    int getSegs() { return segs; }
-
-    int getSegX(int i) { return startX[i]; }
-    int getSegY() { return yy; }
+    Polyline* getBorder(int index);
 
     /*!
      * \brief Accessor for the ProgressBar's representative Rectangle array.
@@ -76,11 +74,23 @@ class ProgressBar {
     Rectangle* getRect(int index);
 
     /*!
-     * \brief Accessor for the ProgressBar's representative Polyline array.
-     *   \param index Index of the segment to access.
-     * \return A pointer to the Polyline array representing segment border <code>i</code>  of the ProgressBar.
+     * \brief Accessor for the ProgressBar's number of segments
+     * \return The number of segments in the ProgressBar.
      */
-    Polyline* getBorder(int index);
+    int getSegs() { return segs; }
+
+    /*!
+     * \brief Accessor for a segment's x position
+     *   \param i Index of the segment
+     * \return The x-coordinate of the left edge of segment <code>i</code> in the ProgressBar.
+     */
+    int getSegX(int i) { return startX[i]; }
+
+    /*!
+     * \brief Accessor for a segment's y position
+     * \return The y-coordinate of the top edge of the ProgressBar.
+     */
+    int getSegY() { return yy; }
 };
 
 }
