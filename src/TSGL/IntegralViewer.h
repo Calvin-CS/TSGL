@@ -16,18 +16,21 @@ using namespace tsgl;
 
 typedef Decimal (*functionPointer)(Decimal x);
 
-class Integral {
+class IntegralViewer {
 private:
   functionPointer myF;
+  int myWidth, myHeight;
   long double myStartX, myStopX, myStartY, myStopY;
   double myRecTime, myTrapTime, myDelay;
   CartesianCanvas *myRecCanvas, *myTrapCanvas;
+
+  void drawLabels(CartesianCanvas*& can);
 protected:
   void setupCanvas(CartesianCanvas*& can, const std::string& label = "", double delay = 0.0);
 public:
-  Integral(functionPointer f, Decimal startX, Decimal stopX, Decimal startY = 0, Decimal stopY = 1,
+  IntegralViewer(functionPointer f, int width, int height, Decimal startX, Decimal stopX, Decimal startY = 0, Decimal stopY = 1,
            std::string fname  = "function");
-  ~Integral();
+  ~IntegralViewer();
   double getRecTime() const  { return myRecTime; }
   double getTrapTime() const { return myTrapTime; }
   long double rectangleEvaluate(long long numRectangles);

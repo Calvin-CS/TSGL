@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
     if (t == 0)
       t = omp_get_num_procs();
     unsigned d = (argc > 4) ? atoi(argv[4]) : 1000;
-    c5.setBackgroundColor(GREY);
+    c5.setBackgroundColor(GRAY);
     c5.start();
 
     juliaFunction(c5, t, d);   //And pass it as an argument

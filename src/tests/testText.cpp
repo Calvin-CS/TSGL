@@ -28,7 +28,7 @@ void textFunction(Canvas& can) {
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
     can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
                  32, BLUE);
-    can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GREY);
+    can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
     can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
 
 }

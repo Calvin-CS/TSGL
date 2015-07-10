@@ -64,7 +64,7 @@ void getPixelsFunction(Canvas& can) {
 
 int main() {
     Canvas c28(-1, -1, 800, 600, "Pixel Shifter", .01);
-    c28.setBackgroundColor(GREY);
+    c28.setBackgroundColor(GRAY);
     c28.start();
     getPixelsFunction(c28);
     c28.wait();

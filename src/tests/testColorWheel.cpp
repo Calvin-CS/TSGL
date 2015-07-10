@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
         w = h = 960;              //If not, set the width and height to a default value
     Canvas c10(-1, -1, w, h, "Color Wheel", FRAME);
-    c10.setBackgroundColor(GREY);
+    c10.setBackgroundColor(GRAY);
     c10.start();
     colorWheelFunction(c10);  //Pass it as an argument
     c10.wait();

@@ -33,7 +33,7 @@ int main() {
     int w = 1.2*Canvas::getDisplayHeight();
     int h = 0.5*w;
     Canvas c21(-1, -1, w, h ,"Images");
-    c21.setBackgroundColor(GREY);
+    c21.setBackgroundColor(GRAY);
     c21.start();
     imageFunction(c21);
     c21.wait();

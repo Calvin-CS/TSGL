@@ -17,8 +17,9 @@ inline Decimal unitCircleFunction(long double x) {
   return (abs(x) < 1.0L) ? sqrt( 1.0L - (x*x) ) : 0.0L;
 }
 
-inline Decimal arbitraryFunction(long double x) {
-  Decimal d = cos(16*x);
+inline Decimal sineFunction(long double x) {
+  return cos(8*x);
+  Decimal d = cos(8*x);
   return d > 0 ? d : -d;
 }
 
@@ -33,14 +34,17 @@ int main(int argc, char** argv) {
 
   //Setup
   omp_set_num_threads(numThreads);
-  functionPointer fPtr = &unitCircleFunction;
-//  functionPointer fPtr = &arbitraryFunction;
-  Integral i(fPtr, 0.0l, 1.0l, 0.0l, 1.0l, "unit circle");
+  IntegralViewer i1(&unitCircleFunction, 800, 800, 0.0l, 1.0l, 0.0l, 1.0l, "unit circle");
 
   //Go!
   printf("Reference pi:  3.141592653589793238462643383279...)\n");
-  long double rectanglesPi = i.rectangleEvaluate(numIntervals) * 4.0;
-  printf("Rectangles pi: %32.30Lf in %f secs\n", rectanglesPi, i.getRecTime() );
-  long double trapezoidsPi = i.trapezoidEvaluate(numIntervals) * 4.0;
-  printf("Trapezoids pi: %32.30Lf in %f secs\n", trapezoidsPi, i.getTrapTime() );
+  long double rectanglesPi = i1.rectangleEvaluate(numIntervals) * 4.0;
+  printf("Rectangles pi: %32.30Lf in %f secs\n", rectanglesPi, i1.getRecTime() );
+  long double trapezoidsPi = i1.trapezoidEvaluate(numIntervals) * 4.0;
+  printf("Trapezoids pi: %32.30Lf in %f secs\n", trapezoidsPi, i1.getTrapTime() );
+
+  //Bonus!
+  IntegralViewer i2(&sineFunction, 1200, 800, -1.1l, 1.2l, -1.3l, 1.4l, "cosine");
+  i2.rectangleEvaluate(numIntervals);
+  i2.trapezoidEvaluate(numIntervals);
 }

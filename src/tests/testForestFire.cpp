@@ -138,7 +138,7 @@ int main(int argc, char* argv[]) {
       h = 900;                  //If not, set the width and height to a default value
     }
     Canvas c20(-1, -1, w, h, "Forest Fire", FRAME);
-    c20.setBackgroundColor(GREY);
+    c20.setBackgroundColor(GRAY);
     c20.start();
     forestFireFunction(c20);
     c20.wait();

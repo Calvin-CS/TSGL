@@ -31,7 +31,7 @@ int main() {
     int w = 1.2*Canvas::getDisplayHeight();
     int h = 0.5*w;
     Cart c26(-1, -1, w, h, 0, 0, 6, 3, "Cartesian Images");
-    c26.setBackgroundColor(GREY);
+    c26.setBackgroundColor(GRAY);
     c26.start();
     imageCartFunction(c26);
     c26.wait();

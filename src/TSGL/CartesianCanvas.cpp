@@ -119,6 +119,22 @@ void CartesianCanvas::drawFunction(functionPointer &function, float sleepTime, C
   drawPartialFunction(function,minX,maxX,sleepTime,color);
 }
 
+void CartesianCanvas::drawImage(std::string function, Decimal x, Decimal y, Decimal w, Decimal h, float a) {
+    int actualX1, actualY1, actualX2, actualY2;
+    getScreenCoordinates(x, y, actualX1, actualY1);
+    getScreenCoordinates(x + w, y - h, actualX2, actualY2);
+
+    Canvas::drawImage(function, actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, a);
+}
+
+void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color) {
+    int actualX1, actualY1, actualX2, actualY2;
+    getScreenCoordinates(x1, y1, actualX1, actualY1);
+    getScreenCoordinates(x2, y2, actualX2, actualY2);
+
+    Canvas::drawLine(actualX1, actualY1, actualX2, actualY2, color);
+}
+
 void CartesianCanvas::drawPartialFunction(functionPointer &function, Decimal min, Decimal max, float sleepTime, ColorFloat color) {
   if (sleepTime > 0.0f) {
     bool first = true;
@@ -136,7 +152,7 @@ void CartesianCanvas::drawPartialFunction(functionPointer &function, Decimal min
     }
   } else {
     int screenX = 0, screenY = 0;
-    int size = (max - min) / pixelWidth;
+    int size = 1 + ceil((max - min) / pixelWidth);
     Polyline *p = new Polyline(size);
     Decimal x = min;
     for (int i = 0; i < size; ++i) {
@@ -146,22 +162,6 @@ void CartesianCanvas::drawPartialFunction(functionPointer &function, Decimal min
     }
     drawShape(p);
   }
-}
-
-void CartesianCanvas::drawImage(std::string function, Decimal x, Decimal y, Decimal w, Decimal h, float a) {
-    int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x, y, actualX1, actualY1);
-    getScreenCoordinates(x + w, y - h, actualX2, actualY2);
-
-    Canvas::drawImage(function, actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, a);
-}
-
-void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color) {
-    int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x1, y1, actualX1, actualY1);
-    getScreenCoordinates(x2, y2, actualX2, actualY2);
-
-    Canvas::drawLine(actualX1, actualY1, actualX2, actualY2, color);
 }
 
 void CartesianCanvas::drawPixel(Decimal row, Decimal col, ColorFloat color) {

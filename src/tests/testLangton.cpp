@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;              //If not, set the width and height to a default value
     Canvas c6(-1, -1, w, h, "Langton's Ant", FRAME);
-    c6.setBackgroundColor(GREY);
+    c6.setBackgroundColor(GRAY);
     c6.start();
     langtonFunction(c6);
     c6.wait();

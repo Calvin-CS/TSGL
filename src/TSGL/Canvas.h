@@ -22,7 +22,6 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
-//#include "TsglAssert.h"     // For unit testing purposes
 
 #include <cmath>            // For performing math operations
 #include <functional>       // For callback upon key presses
@@ -63,19 +62,18 @@ namespace tsgl {
  */
 class Canvas {
 private:
-    typedef std::function<void()>                   voidFunction;
-    typedef std::function<void(double, double)>     doubleFunction;
     typedef GLFWvidmode const*                      displayInfo;
+    typedef std::function<void(double, double)>     doubleFunction;
+    typedef std::function<void()>                   voidFunction;
 
     float           aspect;                                             // Aspect ratio used for setting up the window
     ColorFloat      bgcolor;                                            // Color of the Canvas' clearRectangle
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
-    unsigned        buffersize;                                         // Size of the screen buffer
+    unsigned        bufferSize;                                         // Size of the screen buffer
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
-    GLuint          renderedTexture;                                    // Texture to which we render to every frame
-    int             framecounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
+    int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
     bool            hasEXTFramebuffer;                                  // Whether or not the hard supports EXT FBOs
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
@@ -90,6 +88,7 @@ private:
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
     int             realFPS;                                            // Actual FPS of drawing
+    GLuint          renderedTexture;                                    // Texture to which we render to every frame
   #ifdef __APPLE__
     pthread_t     renderThread;                                         // Thread dedicated to rendering the Canvas
   #else
@@ -110,7 +109,6 @@ private:
                     textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
-    std::string     title_;                                             // Title of the window
     bool            toClear;                                            // Flag for clearing the canvas
     GLint           uniModel,                                           // Model perspective of the camera
                     uniView,                                            // View perspective of the camera
@@ -121,41 +119,43 @@ private:
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     bool            windowClosed;                                       // Whether we've closed the Canvas' window or not
     std::mutex      windowMutex;                                        // (OS X) Mutex for handling window contexts
-    int             winWidth, winHeight;                                // Window sizes used for setting up the window
-    int             winWidthPadded;                                     // Padded window width (for taking screenshots)
+    int             winHeight;                                          // Height of the Canvas' window
+    std::string     winTitle;                                           // Title of the window
+    int             winWidth;                                           // Width of the Canvas' window
+    int             winWidthPadded;                                     // Window width padded to a multiple of 4 (necessary for taking screenshots)
 
-    static displayInfo  monInfo;                                        // Info about our display
     static int          drawBuffer;                                     // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
     static bool         glfwIsReady;                                    // Whether or not we have info about our monitor
     static std::mutex   glfwMutex;                                      // Keeps GLFW createWindow from getting called at the same time in multiple threads
+    static displayInfo  monInfo;                                        // Info about our display
     static unsigned     openCanvases;                                   // Total number of open Canvases
 
-    static void buttonCallback(GLFWwindow* window, int key,
-                  int action, int mods);                                // GLFW callback for mouse buttons
-    void        draw();                                                 // Draw loop for the Canvas
-    static void errorCallback(int error, const char* string);           // Display where an error is coming from
-    void        glDestroy();                                            // Destroys the GL and GLFW things that are specific for this canvas
-    void        init(int xx,int yy,int ww,int hh,
-                  unsigned int b, std::string title,
-                  double timerLength);                                  // Method for initializing the canvas
-    void        initGl();                                               // Initializes the GL things specific to the Canvas
-    void        initGlew();                                             // Initialized the GLEW things specific to the Canvas
-    static void initGlfw();                                             // Initalizes GLFW for all future canvases.
-    void        initWindow();                                           // Initalizes the window specific to the Canvas
-    static void keyCallback(GLFWwindow* window, int key,
-                  int scancode, int action, int mods);                  // GLFW callback for keys
-    void        screenShot();                                           // Takes a screenshot
-    static void scrollCallback(GLFWwindow* window, double xpos,
-                  double ypos);                                         // GLFW callback for scrolling
-    static void setDrawBuffer(int buffer);                              // Sets the buffer used for drawing
-    void        setupCamera();                                          // Setup the 2D camera for smooth rendering
+    static void  buttonCallback(GLFWwindow* window, int key,
+                   int action, int mods);                               // GLFW callback for mouse buttons
+    void         draw();                                                // Draw loop for the Canvas
+    static void  errorCallback(int error, const char* string);          // Display where an error is coming from
+    void         glDestroy();                                           // Destroys the GL and GLFW things that are specific for this canvas
+    void         init(int xx,int yy,int ww,int hh,
+                   unsigned int b, std::string title,
+                   double timerLength);                                 // Method for initializing the canvas
+    void         initGl();                                              // Initializes the GL things specific to the Canvas
+    void         initGlew();                                            // Initialized the GLEW things specific to the Canvas
+    static void  initGlfw();                                            // Initalizes GLFW for all future canvases.
+    void         initWindow();                                          // Initalizes the window specific to the Canvas
+    static void  keyCallback(GLFWwindow* window, int key,
+                   int scancode, int action, int mods);                 // GLFW callback for keys
+    void         screenShot();                                          // Takes a screenshot
+    static void  scrollCallback(GLFWwindow* window, double xpos,
+                   double ypos);                                        // GLFW callback for scrolling
+    static void  setDrawBuffer(int buffer);                             // Sets the buffer used for drawing
+    void         setupCamera();                                         // Setup the 2D camera for smooth rendering
   #ifdef __APPLE__
     static void* startDrawing(void* cPtr);
   #else
-    static void startDrawing(Canvas *c);                                // Static method that is called by the render thread
+    static void  startDrawing(Canvas *c);                               // Static method that is called by the render thread
   #endif
-    void        textureShaders(bool state);                             // Turn textures on or off
-    static bool testFilledDraw(Canvas& can);                            // Unit test for drawing shapes and determining if fill works
+    void         textureShaders(bool state);                            // Turn textures on or off
+    static bool  testFilledDraw(Canvas& can);                           // Unit test for drawing shapes and determining if fill works
     //Theory why it doesn't work:
     //Different graphics cards; Nvidia vs. ATI.
     //It works for Patrick's machine, which is has an Nvidia.
@@ -418,6 +418,18 @@ public:
     ColorFloat getBackgroundColor();
 
     /*!
+     * \brief Accessor for the height of the user's primary monitor.
+     * \return The height of the user's primary monitor.
+     */
+    static int getDisplayHeight();
+
+    /*!
+     * \brief Accessor for the width of the user's primary monitor.
+     * \return The width of the user's primary monitor.
+     */
+    static int getDisplayWidth();
+
+    /*!
      * \brief Accessor for the current frame number.
      * \return The number of actual draw cycles / frames the Canvas has rendered so far.
      * \see getReps()
@@ -435,18 +447,6 @@ public:
      * \return Whether the window is still open (that is, the user has not closed it).
      */
     bool getIsOpen();
-
-    /*!
-     * \brief Accessor for the height of the user's primary monitor.
-     * \return The height of the user's primary monitor.
-     */
-    static int getDisplayHeight();
-
-    /*!
-     * \brief Accessor for the width of the user's primary monitor.
-     * \return The width of the user's primary monitor.
-     */
-    static int getDisplayWidth();
 
     /*!
      * \brief Accessor for the mouse's x-position.
@@ -515,16 +515,16 @@ public:
     double getTimeBetweenSleeps() const;
 
     /*!
-     * \brief Accessor for the Canvas's window width.
-     * \return The width in pixels of the Canvas window.
-     */
-    int getWindowWidth();
-
-    /*!
      * \brief Accessor for the Canvas's window height.
      * \return The height in pixels of the Canvas window.
      */
     int getWindowHeight();
+
+    /*!
+     * \brief Accessor for the Canvas's window width.
+     * \return The width in pixels of the Canvas window.
+     */
+    int getWindowWidth();
 
     /*!
      * \brief Accessor for the Canvas's x-position.

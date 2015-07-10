@@ -37,16 +37,28 @@ struct ColorFloat {
     float R, G, B, A;
 
     /*!
-     * \brief Constructs a ColorFloat struct.
-     * \details Default constructor for a ColorFloat struct.
+     * \brief Default ColorFloat constructor method.
+     * \details This is the default constructor for the ColorFloat struct.
      * \note R, G, B, and A are all set to 1.0f by default.
      * \return A ColorFloat struct with default R, G, B, and A values.
      */
     ColorFloat();
 
     /*!
-     * \brief Explicitly constructs a ColorFloat struct.
-     * \details Explicit constructor for a ColorFloat struct.
+     * \brief Basic explicit ColorFloat constructor method.
+     * \details This is the basic explicit constructor for the ColorFloat struct.
+     *    \param v The value component of the color.
+     *    \param a The alpha component of the struct (set to 1.0f by default).
+     * \warning An invariant is set where if any of the specified R, G, B, or A values
+     *    is out of the range 0 - 1 inclusive then an error message is given.
+     * \return A ColorFloat struct with equal R, G, and B values set to <code>v</code>,
+     *    and the specified A value.
+     */
+    ColorFloat(float v, float a = 1.0f);
+
+    /*!
+     * \brief Full explicit ColorFloat constructor method.
+     * \details This is the full explicit constructor for the ColorFloat struct.
      *    \param r The red component of the struct.
      *    \param g The green component of the struct.
      *    \param b The blue component of the struct.
@@ -64,8 +76,20 @@ struct ColorFloat {
      */
     std::string AsString();
 
+    /*!
+     * \brief Implicit conversion from ColorFloat to ColorHSV.
+     * \details This defines the implicit conversion operator from a floating point color type (ColorFloat) to an
+     *   HSV color type (ColorHSV).
+     */
     operator ColorHSV();
 
+    /*!
+     * \brief Multiplies the values of a ColorFloat by a float
+     * \details This operator multiplies each of the components of a ColorFloat
+     *   by amount <code>f</code>.
+     * \param f Amount to multiply each component by
+     * \returns A new ColorFloat constructed as ColorFloat(orig.R*f, orig.G*f, orig.b*f, orig.A*f)
+     */
     ColorFloat operator*(float f);
 
     /*!
@@ -102,22 +126,34 @@ struct ColorInt {
     int R, G, B, A;
 
     /*!
-     * \brief Constructs a ColorInt struct.
-     * \details Default constructor for the ColorInt struct.
+     * \brief Default ColorInt constructor method.
+     * \details This is the default constructor for the ColorInt struct.
      * \note R, G, B, and A are all set to 255 by default.
      * \return A ColorInt struct with default R, G, B, and A values.
      */
     ColorInt();
 
     /*!
-     * \brief Explicitly constructs a ColorInt struct.
-     * \details Explicit constructor for a ColorInt struct.
-     *    \param r The red component of the ColorInt struct.
-     *    \param g The green component of the ColorInt struct.
-     *    \param b The blue component of the ColorInt struct.
-     *    \param a The alpha component of the ColorInt struct (set to 255 by default).
+     * \brief Basic explicit ColorInt constructor method.
+     * \details This is the basic explicit constructor for the ColorInt struct.
+     *   \param v The value component of the color.
+     *   \param a The alpha component of the struct (set to 255 by default).
      * \warning An invariant is held where if any of the specified values are out of the
-     *    range 0 - 255 inclusive then an error message is given.
+     *   range 0 - 255 inclusive then an error message is given.
+     * \return A ColorInt struct with equal R, G, and B values set to <code>v</code>,
+     *   and the specified A value.
+     */
+    ColorInt(int v, int a = 255);
+
+    /*!
+     * \brief Full explicit ColorInt constructor method.
+     * \details This is the full explicit constructor for the ColorInt struct.
+     *   \param r The red component of the ColorInt struct.
+     *   \param g The green component of the ColorInt struct.
+     *   \param b The blue component of the ColorInt struct.
+     *   \param a The alpha component of the ColorInt struct (set to 255 by default).
+     * \warning An invariant is held where if any of the specified values are out of the
+     *   range 0 - 255 inclusive then an error message is given.
      * \return A ColorInt struct with the specified R, G, B, and A values.
      */
     ColorInt(int r, int g, int b, int a = 255);
@@ -136,6 +172,11 @@ struct ColorInt {
      */
     operator ColorFloat();
 
+    /*!
+     * \brief Implicit conversion from ColorInt to ColorHSV.
+     * \details This defines the implicit conversion operator from an integer color type (ColorInt) to an
+     *   HSV color type (ColorHSV).
+     */
     operator ColorHSV();
 
     /*!
@@ -207,23 +248,20 @@ struct ColorHSV {
     std::string AsString();
 };
 
-/*!
- * \var BLACK
- * \details A ColorFloat constant which represents the color black.
- */
-const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f);
-
-/*!
- * \var GREY
- * \details A ColorFloat which constant represents the color grey.
- */
-const ColorFloat GREY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f);
-
-/*!
- * \var WHITE
- * \details A ColorFloat constant which represents the color white.
- */
-const ColorFloat WHITE = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
+const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),
+                 DARKGRAY = ColorFloat(0.5f, 0.5f, 0.5f, 1.0f),
+                 GRAY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f),
+                 WHITE = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f),
+                 RED = ColorFloat(1.0f, 0.0f, 0.0f, 1.0f),
+                 ORANGE = ColorFloat(1.0f, 0.75f, 0.5f, 1.0f),
+                 YELLOW = ColorFloat(1.0f, 1.0f, 0.0f, 1.0f),
+                 GREEN = ColorFloat(0.0f, 1.0f, 0.0f, 1.0f),
+                 BLUE = ColorFloat(0.0f, 0.0f, 1.0f, 1.0f),
+                 PURPLE = ColorFloat(0.75f, 0.0f, 0.75f, 1.0f),
+                 MAGENTA = ColorFloat(1.0f, 0.0f, 1.0f, 1.0f),
+                 LIME = ColorFloat(0.5f, 1.0f, 0.5f, 1.0f),
+                 CYAN = ColorFloat(0.0f, 1.0f, 1.0f, 1.0f),
+                 BROWN = ColorFloat(0.5f, 0.3f, 0.0f, 1.0f);
 
 /*!
  * \brief Color utility class.

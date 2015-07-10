@@ -32,10 +32,9 @@ private:
     Decimal minX, maxX, minY, maxY;                                     // Bounding Cartesian coordinates for the window
     Decimal pixelWidth, pixelHeight;                                    // cartWidth/window.w(), cartHeight/window.h()
 
- //   static bool testAxes(CartesianCanvas& can);                                                    // Unit test for axes
-    static bool testZoom(CartesianCanvas& can);                                                    // Unit test for zoom() methods
-    static bool testRecomputeDimensions(CartesianCanvas& can);                                     // Unit test for recomputeDimensions()
-    static bool testDraw(CartesianCanvas& can);                                     // Unit test for drawing
+    static bool testZoom(CartesianCanvas& can);                         // Unit test for zoom() methods
+    static bool testRecomputeDimensions(CartesianCanvas& can);          // Unit test for recomputeDimensions()
+    static bool testDraw(CartesianCanvas& can);                         // Unit test for drawing
 public:
     /*!
      * \brief Default CartesianCanvas constructor method.
@@ -165,20 +164,6 @@ public:
     void drawFunction(functionPointer &function, float sleepTime = 0.0f, ColorFloat color = BLACK);
 
     /*!
-     * \brief Plots part of a function on the screen.
-     * \details This function receives a pointer to a function method as a parameter and plots the function on
-     *   the CartesianCanvas between the specified minimum and maximum coordinates.
-     *   \param function Pointer to the function-drawing method to plot.
-     *   \param min Minimum x value to evaluate and plot
-     *   \param max Maximum x value to evaluate and plot
-     *   \param sleepTime Time to sleep between plotting points
-     *   \param color The color of the vertices of the plotted function (set to BLACK by default).
-     * \note <code>function</code> must receive exactly one Decimal x parameter, and return a Decimal y parameter.
-     */
-    void drawPartialFunction(functionPointer &function, Decimal min, Decimal max,
-                             float sleepTime = 0.0f, ColorFloat color = BLACK);
-
-    /*!
      * \brief Draws an image.
      * \details This function draws an Image with the given coordinates and dimensions.
      *   \param function The name of the file to load the image from.
@@ -204,6 +189,20 @@ public:
      *  \note Identical to Canvas::drawLine().
      */
     void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color = BLACK);
+
+    /*!
+     * \brief Plots part of a function on the screen.
+     * \details This function receives a pointer to a function method as a parameter and plots the function on
+     *   the CartesianCanvas between the specified minimum and maximum coordinates.
+     *   \param function Pointer to the function-drawing method to plot.
+     *   \param min Minimum x value to evaluate and plot
+     *   \param max Maximum x value to evaluate and plot
+     *   \param sleepTime Time to sleep between plotting points
+     *   \param color The color of the vertices of the plotted function (set to BLACK by default).
+     * \note <code>function</code> must receive exactly one Decimal x parameter, and return a Decimal y parameter.
+     */
+    void drawPartialFunction(functionPointer &function, Decimal min, Decimal max,
+                             float sleepTime = 0.0f, ColorFloat color = BLACK);
 
     /*!
      * \brief Draws a single pixel, specified in row,column format.
@@ -311,18 +310,6 @@ public:
     Decimal getCartWidth();
 
     /*!
-     * \brief Accessor for the CartesianCanvas's effective pixel width.
-     * \return The width corresponding to a single pixel in the current CartesianCanvas.
-     */
-    Decimal getPixelWidth();
-
-    /*!
-     * \brief Accessor for the CartesianCanvas's effective pixel height.
-     * \return The height corresponding to a single pixel in the current CartesianCanvas.
-     */
-    Decimal getPixelHeight();
-
-    /*!
      * \brief Accessor for the CartesianCanvas's right bound.
      * \return The real number corresponding the right of the CartesianCanvas.
      */
@@ -345,6 +332,18 @@ public:
      * \return The real number corresponding the bottom of the CartesianCanvas.
      */
     Decimal getMinY();
+
+    /*!
+     * \brief Accessor for the CartesianCanvas's effective pixel width.
+     * \return The width corresponding to a single pixel in the current CartesianCanvas.
+     */
+    Decimal getPixelWidth();
+
+    /*!
+     * \brief Accessor for the CartesianCanvas's effective pixel height.
+     * \return The height corresponding to a single pixel in the current CartesianCanvas.
+     */
+    Decimal getPixelHeight();
 
     /*!
      * \brief Translates window coordinates into Cartesian coordinates.

@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
     w = h = 960;              //If not, set the width and height to a default value
   Canvas c31(-1, -1, w, h, "Image Greyscaling", FRAME * 2);
   int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads
-  c31.setBackgroundColor(GREY);
+  c31.setBackgroundColor(GRAY);
   c31.start();
   greyScaleFunction(c31, numberOfThreads);  //Pass it as an argument
   c31.wait();

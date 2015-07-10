@@ -43,7 +43,7 @@ void dumbSortFunction(Canvas& can) {
     bool goingUp = true;
     for (int i = 0; i < SIZE; i++)
         numbers[i] = rand() % (can.getWindowHeight() - 40);
-    can.setBackgroundColor(GREY);
+    can.setBackgroundColor(GRAY);
     while (can.getIsOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         if (min >= max) return;  // We are done sorting
@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
       h = 900;                  //If not, set the width and height to a default value
     }
     Canvas c9(-1, -1, w, h, "Shaker Sort", FRAME);
-    c9.setBackgroundColor(GREY);
+    c9.setBackgroundColor(GRAY);
     c9.start();
     dumbSortFunction(c9);   //Pass the Canvas as an argument
     c9.wait();

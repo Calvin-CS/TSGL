@@ -96,23 +96,6 @@ void Canvas::clear() {
     toClear = true;
 }
 
-void Canvas::stop() {
-    close();
-    wait();
-}
-
-int Canvas::wait() {
-    if (!started) return -1;  // If we haven't even started yet, return error code -1
-  #ifdef __APPLE__
-    while(!isFinished)
-      sleepFor(0.1f);
-    pthread_join(renderThread, NULL);
-  #else
-    renderThread.join();
-  #endif
-    return 0;
-}
-
 void Canvas::close() {
     glfwSetWindowShouldClose(window, GL_TRUE);
     TsglDebug("Window closed successfully.");
@@ -135,7 +118,7 @@ void Canvas::draw() {
     setBackgroundColor(bgcolor); //Set our initial clear / background color
 
     // Start the drawing loop
-    for (framecounter = 0; !glfwWindowShouldClose(window); framecounter++) {
+    for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
         //std::cout << "Begin" << std::endl;
         drawTimer->sleep(true);
 
@@ -444,7 +427,7 @@ float Canvas::getFPS() {
 }
 
 int Canvas::getFrameNumber() {
-    return framecounter;
+    return frameCounter;
 }
 
 bool Canvas::getIsOpen() {
@@ -485,12 +468,12 @@ double Canvas::getTimeBetweenSleeps() const {
     return drawTimer->getTimeBetweenSleeps();
 }
 
-int Canvas::getWindowWidth() {
-    return winWidth;
-}
-
 int Canvas::getWindowHeight() {
     return winHeight;
+}
+
+int Canvas::getWindowWidth() {
+    return winWidth;
 }
 
 int Canvas::getWindowX() {
@@ -542,22 +525,22 @@ void Canvas::handleIO() {
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
     ++openCanvases;
 
-    title_ = title;
+    winTitle = title;
     winWidth = ww, winHeight = hh;
     aspect = (float) winWidth / winHeight;
     keyDown = false;
     toClose = false;
     windowClosed = false;
-    framecounter = 0;
+    frameCounter = 0;
     syncMutexLocked = 0;
 
     int padwidth = winWidth % 4;
     if (padwidth > 0)
        padwidth = 4-padwidth;
     winWidthPadded = winWidth + padwidth;
-    buffersize = 3 * (winWidthPadded+1) * winHeight;
-    screenBuffer = new uint8_t[buffersize];
-    for (unsigned i = 0; i < buffersize; ++i) {
+    bufferSize = 3 * (winWidthPadded+1) * winHeight;
+    screenBuffer = new uint8_t[bufferSize];
+    for (unsigned i = 0; i < bufferSize; ++i) {
       screenBuffer[i] = 0;
     }
 
@@ -574,7 +557,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     loopAround = false;
     toRecord = 0;
 
-    bgcolor = GREY;
+    bgcolor = GRAY;
     window = nullptr;
 
     drawTimer = new Timer((timerLength > 0.0f) ? timerLength : FRAME);
@@ -762,7 +745,7 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_SAMPLES,4);
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
-    window = glfwCreateWindow(winWidth, winHeight, title_.c_str(), NULL, NULL);  // Windowed
+    window = glfwCreateWindow(winWidth, winHeight, winTitle.c_str(), NULL, NULL);  // Windowed
  //   window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
     if (!window) {
         fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
@@ -821,7 +804,7 @@ void Canvas::resumeDrawing() {
 
 void Canvas::screenShot() {
     char filename[25];
-    sprintf(filename, "Image%06d.png", framecounter);  // TODO: Make this save somewhere not in root
+    sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
 
     loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
 }
@@ -915,6 +898,11 @@ void Canvas::startDrawing(Canvas *c) {
 }
 #endif
 
+void Canvas::stop() {
+    close();
+    wait();
+}
+
 void Canvas::stopRecording() {
     toRecord = 0;
 }
@@ -963,6 +951,18 @@ void Canvas::textureShaders(bool on) {
 
     // Update the camera
     setupCamera();
+}
+
+int Canvas::wait() {
+    if (!started) return -1;  // If we haven't even started yet, return error code -1
+  #ifdef __APPLE__
+    while(!isFinished)
+      sleepFor(0.1f);
+    pthread_join(renderThread, NULL);
+  #else
+    renderThread.join();
+  #endif
+    return 0;
 }
 
 //-----------------Unit testing-------------------------------------------------------

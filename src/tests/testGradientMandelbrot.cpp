@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
   if (t == 0)
     t = omp_get_num_procs();
   unsigned d = (argc > 4) ? atoi(argv[4]) : 32;
-  c16.setBackgroundColor(GREY);
+  c16.setBackgroundColor(GRAY);
   c16.start();
   gradientMandelbrotFunction(c16, t, d);
   c16.wait();

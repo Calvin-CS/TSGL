@@ -87,6 +87,12 @@ ColorFloat::ColorFloat() {
     R = G = B = A = 1.0f;
 }
 
+ColorFloat::ColorFloat(float v, float a) {
+    if (clamp(v,0,1))
+      TsglErr("Out of range parameter specified for ColorFloat");
+    R = v; G = v; B = v; A = a;
+}
+
 ColorFloat::ColorFloat(float r, float g, float b, float a) {
     bool oor = false;
     oor |= clamp(r,0,1);
@@ -162,6 +168,12 @@ ColorFloat ColorFloat::operator*(float f) {
 
 ColorInt::ColorInt() {
     R = G = B = A = 255;
+}
+
+ColorInt::ColorInt(int v, int a) {
+    if (clamp(v,0,255))
+      TsglErr("Out of range parameter specified for ColorFloat");
+    R = v; G = v; B = v; A = a;
 }
 
 ColorInt::ColorInt(int r, int g, int b, int a) {
