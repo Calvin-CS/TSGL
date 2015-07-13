@@ -29,8 +29,8 @@ enum SpectrogramDrawmode {
  */
 class Spectrogram {
 private:
-  const int B = 16;  //Border
-  const float PI = 3.14159;
+  static const int B;  //Border
+  static const float PI;
 
   omp_lock_t writelock[NUM_COLORS], masterlock;
   int myHeight, myWidth;

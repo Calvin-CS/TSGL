@@ -2,6 +2,8 @@
 
 namespace tsgl {
 
+const int Spectrogram::B = 16;
+const float Spectrogram::PI = 3.149f;
 Spectrogram::Spectrogram(SpectrogramDrawmode drawMode, int width, int height) {
   for (int i = 0; i < NUM_COLORS; ++i)
     omp_init_lock(&(writelock[i]));
