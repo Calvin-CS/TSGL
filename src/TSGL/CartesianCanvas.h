@@ -16,7 +16,6 @@ namespace tsgl {
 
 typedef Decimal (*functionPointer)(Decimal x);
 
-
 /*!
  * \class CartesianCanvas
  * \brief Canvas extended for graphic support.

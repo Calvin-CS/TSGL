@@ -11,7 +11,18 @@
 #include <sstream>
 
 #include <iostream>
-#include "Util.h"
+
+#ifdef _WIN32
+  #include <string>
+  #ifndef _INC_WINDOWS
+    #include<windows.h>
+  #endif /*_INC_WINDOWS*/
+  #define std_con_out GetStdHandle(STD_OUTPUT_HANDLE)
+#else
+  const std::string TSGL_RED = "\033[1;31m";
+  const std::string TSGL_MGN = "\033[1;35m";
+  const std::string TSGL_CLR = "\033[0m";
+#endif
 
 namespace tsgl {
 

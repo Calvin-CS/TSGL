@@ -12,9 +12,8 @@
 #include <tsgl.h>
 #include <sstream>
 #include "Util.h"  //Decimal typedef
-using namespace tsgl;
 
-typedef Decimal (*functionPointer)(Decimal x);
+using namespace tsgl;
 
 class IntegralViewer {
 private:
