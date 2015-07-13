@@ -18,27 +18,33 @@ using namespace tsgl;
  * - Get the number of targets (10).
  * - Get the score counter.
  * - Get the colors for the target (outer, middle, and bulls-eye center).
- * - Bind the mouse so that when one clicks and hits the target the score counter goes up.
+ * - Bind the mouse so that when one clicks and hits the target in the middle then
+ *   the score counter goes up.
  * - While the Canvas is still open:
  *    - Sleep the internal timer of the Canvas until the next drawing loop is ready to be drawn.
- *    - Increment the targetX by the coordinate changer.
- *    - Move the target up vertically by coordinate changer for y.
+ *    - Increment the target's x-coordinate by the coordinate changer.
+ *    - Move the target up vertically by coordinate changer for its y-coordinate.
  *    - Draw the actual target.
  *    - If the target hits the middle of the screen:
  *     - Invert the y change so that the target moves downward.
- *    - If the target goes off screen:
+ *     .
+ *    - If the target goes off screen to the right:
  *     - Decrement the number of targets left.
  *     - Reset the targetX, targetY, and the coordinate changer for y.
- *    - If we hit a target:
+ *     .
+ *    - If we hit a target in the middle:
  *     - Increment the score.
  *     - Change the hit to false;
- *     - Move the target off screen.
+ *     - Move the target off of the screen.
+ *     .
  *    - If the number of targets is less than 5:
  *     - Speed up the movement of the remaining targets.
+ *     .
  *    - If the number of targets left is 0:
  *     - Print out the score, clear the Canvas one last time, and get out of the drawing loop.
+ *     .
  *   .
- *  .
+ * .
  * \param can Reference to the Canvas being drawn on.
  */
 void projectileFunction(Canvas& can) {

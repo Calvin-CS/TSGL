@@ -12,7 +12,7 @@ using namespace tsgl;
 
 /*!
  * \brief Draws the full spectrum across the x, y, and time dimensions at the given framerate
- * and a static number of threads using OMP and takes in a command line argument for the number of threads to use.
+ *  and a static number of threads using OMP and takes in a command line argument for the number of threads to use.
  * \details
  * - The internal timer of the Canvas is set up to go off every \b FRAME seconds ( \b FRAME == 1 / \b FPS ).
  * - A parallel block is set up with OMP, using one thread per processor.
@@ -21,6 +21,7 @@ using namespace tsgl;
  *   - If it is less than or equal to 0, use the number of threads that we can use with OMP.
  *   - If it is greater than the number of threads that we can use, use only the number of threads that we can use with OMP.
  *   - Else, its valid and use that many threads.
+ *   .
  * - While the canvas is open:
  *   - The internal timer sleeps until the next frame is ready to be drawn.
  *   - An outer for loop from 0 to 255 is set up in a per-thread striping pattern.

@@ -17,7 +17,7 @@ typedef std::complex<long double> complex;
 /*!
  * \brief Draws a gradient Nova set on a CartesianCanvas.
  * \details Same as gradientMandelbrotFunction(), but with a nova fractal ( more time-consuming
- * to compute; see http://en.wikipedia.org/wiki/Nova_fractal )and no class, ProgressBar, and depth.
+ *  to compute; see http://en.wikipedia.org/wiki/Nova_fractal ) and no class, ProgressBar, and depth.
  * \param can Reference to the CartesianCanvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.
  */
