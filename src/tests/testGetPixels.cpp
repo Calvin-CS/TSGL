@@ -19,7 +19,7 @@ using namespace tsgl;
  * - Set up a parallel OMP block with \b THREADS threads.
  * - Set up the internal timer of the Canvas to expire every 1/100th of a second.
  * - Determine a block size for each thread based on the Canvas' height and the number
- * of spawned threads.
+ *   of spawned threads.
  * - Determine a starting row for each thread based on \b blocksize and the thread's id.
  * - While the Canvas is open:
  *   - For each row:
