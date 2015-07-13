@@ -7,6 +7,12 @@
 
 #include "Color.h"
 
+//Workaround for VS not defining NAN (
+#ifdef _MSC_VER
+#define INFINITY (DBL_MAX + DBL_MAX)
+#define NAN (INFINITY - INFINITY)
+#endif
+
 namespace tsgl {
 
 // in foo.cpp

@@ -66,10 +66,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\tests\ImageInverter.h" />
+    <ClCompile Include="..\src\tests\ImageInverter\ImageInverter.cpp" />
+    <ClCompile Include="..\src\tests\testInverter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\tests\testInverter.cpp" />
+    <ClInclude Include="..\src\tests\ImageInverter\ImageInverter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -208,6 +208,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testSmartSort", "vs2012\tes
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testCalcPi", "vs2012\testCalcPi.vcxproj", "{5DABC267-9C2D-468C-B546-F859F8A93827}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testProjectiles", "vs2012\testProjectiles.vcxproj", "{404FB540-9351-4519-83E9-EF1243C5AF60}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -382,6 +392,14 @@ Global
 		{841706E2-3993-4FAA-8792-75EBB6B61446}.Debug|Win32.Build.0 = Debug|Win32
 		{841706E2-3993-4FAA-8792-75EBB6B61446}.Release|Win32.ActiveCfg = Release|Win32
 		{841706E2-3993-4FAA-8792-75EBB6B61446}.Release|Win32.Build.0 = Release|Win32
+		{5DABC267-9C2D-468C-B546-F859F8A93827}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5DABC267-9C2D-468C-B546-F859F8A93827}.Debug|Win32.Build.0 = Debug|Win32
+		{5DABC267-9C2D-468C-B546-F859F8A93827}.Release|Win32.ActiveCfg = Release|Win32
+		{5DABC267-9C2D-468C-B546-F859F8A93827}.Release|Win32.Build.0 = Release|Win32
+		{404FB540-9351-4519-83E9-EF1243C5AF60}.Debug|Win32.ActiveCfg = Debug|Win32
+		{404FB540-9351-4519-83E9-EF1243C5AF60}.Debug|Win32.Build.0 = Debug|Win32
+		{404FB540-9351-4519-83E9-EF1243C5AF60}.Release|Win32.ActiveCfg = Release|Win32
+		{404FB540-9351-4519-83E9-EF1243C5AF60}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

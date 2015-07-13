@@ -13,7 +13,6 @@
 
 #ifdef _WIN32
   #include <windows.h>
-  void sleep(unsigned seconds) { Sleep(seconds * 1000); }
 #else
   #include <unistd.h>    // sleep()
 #endif
@@ -27,6 +26,9 @@ private:
   unsigned myWidth;
   unsigned myHeight;
   std::string   myFileName;
+  #ifdef _WIN32
+  void sleep(unsigned seconds) { Sleep(seconds * 1000); }
+  #endif
 protected:
   /* invertImage inverts the image using a given number of threads
    * @param: numThreads, the number of threads to use

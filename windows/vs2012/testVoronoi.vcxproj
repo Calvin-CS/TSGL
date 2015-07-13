@@ -67,7 +67,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\tests\testVoronoi.cpp" />
-    <ClCompile Include="..\src\tests\Voronoi.cpp" />
+    <ClCompile Include="..\src\tests\Voronoi\Voronoi.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\tests\Voronoi\Voronoi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

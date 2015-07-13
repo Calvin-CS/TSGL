@@ -18,8 +18,13 @@
     <ClCompile Include="..\src\tests\testVoronoi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\tests\Voronoi.cpp">
+    <ClCompile Include="..\src\tests\Voronoi\Voronoi.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\tests\Voronoi\Voronoi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -25,7 +25,9 @@ void ImageInverter::invertImage(unsigned numThreads) {
   #pragma omp parallel for num_threads(numThreads)
   for (int row = 0; row < myHeight; row++) {
     if (! (myCanvas1.getIsOpen() && myCanvas2.getIsOpen()) ) {
-      row = myHeight; //Exit out
+      #ifndef _WIN32
+      row = myHeight; //Exit out (not allowed on Windows)
+	  #endif
       continue;
     }
     for (unsigned col = 0; col < myWidth; col++) {
