@@ -26,11 +26,13 @@ using namespace tsgl;
  *     - If we're going down and the element below us is less than us, swap.
  *     - Move in the current direction, inverting our direction if we've reached the minimum / maximum.
  *     .
+ *   - Pause the animation.
  *   - Clear the Canvas.
  *   - From 0 to \b SIZE:
  *     - Get the height of each element in the integer array.
  *     - Draw it as a yellow rectangle if it's the currently-computed member; draw it red otherwise.
  *     .
+ *   - Resume the animation.
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.

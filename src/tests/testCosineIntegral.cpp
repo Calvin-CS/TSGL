@@ -22,7 +22,6 @@ typedef CartesianCanvas Cart;
  * \details
  * - Use the number of threads passed via command-line arguments.
  * - If that number is negative, just use one thread.
- * - Bind Q's press event to quit the rendering in case it takes too long.
  * - Set up the internal timer of the Canvas to expire once every \b FRAME / 2 seconds .
  * - Draw axes through the origin, with spacing PI/4 between x ticks and 0.5 between y ticks.
  * - Store the width of the canvas's pixel in \b pw to avoid thousands of multiple function calls.

@@ -125,8 +125,8 @@ void forestFireFunction(Canvas& can) {
             }
         }
     }
-    delete onFire;
-    delete flammability;
+    delete[] onFire;
+    delete[] flammability;
 }
 
 //Takes width and height as command line arguments

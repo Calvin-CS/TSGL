@@ -36,7 +36,7 @@ using namespace tsgl;
  *   full saturation, and a value of \b shading.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to
+ * \param can Reference to the Canvas being drawn to.
  */
 void colorWheelFunction(Canvas& can) {
     const int THREADS = 64,                           // Number of threads to compute with

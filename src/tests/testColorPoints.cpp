@@ -19,9 +19,11 @@ using namespace tsgl;
  * - The number of lines per thread is calculated and stored in: \b myPart .
  * - The starting position of each given thread is calculated and stored in: \b myStart .
  * - The outer for loop is set up in a block pattern, and the inner for loop runs from 0 to the Canvas width.
- * - The color for a given point is calculated.
- * - The point is drawn to the Canvas.
- * - The function breaks from the outer for loop if the Canvas is closed.
+ *   - The color for a given point is calculated.
+ *   - The point is drawn to the Canvas.
+ *   - The function breaks from the outer for loop if the Canvas is closed.
+ *   .
+ * - Sleep the internal timer of the Canvas until the next draw cycle.
  * .
  * \param can Reference to the Canvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.

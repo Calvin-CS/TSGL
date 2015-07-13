@@ -17,7 +17,7 @@ typedef CartesianCanvas Cart;
  * - Draw axes through the origin, with spacing 1.0 between x ticks and 5.0 between y ticks.
  * - Initialize a CosineFunction, and draw it using the currently rendered area of the CartesianCanvas.
  * - Initialize a PowerFunction with argument 2 (square), and draw it using
- * the currently rendered area of the CartesianCanvas.
+ *   the currently rendered area of the CartesianCanvas.
  * - Declare a new function that computes some bizarre polynomial.
  * - Initialize the new function, and draw it using the currently rendered area of the CartesianCanvas.
  * .

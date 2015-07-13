@@ -23,7 +23,7 @@ using namespace tsgl;
  *   - Sleep the internal timer of the Canvas until the Canvas is ready to draw.
  *   - Draw a Concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
  *   - Draw another Concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
- *  .
+ *   .
  * .
  * \param can Reference to the Canvas being drawn to.
  */
