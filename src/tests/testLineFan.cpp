@@ -7,15 +7,9 @@
 
 #include <omp.h>
 #include <tsgl.h>
+#include "Util.h"
 
 using namespace tsgl;
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
 
 /*!
  * \brief Draws a fan of randomly colored lines at the target framerate and a dynamic number of threads using OMP.

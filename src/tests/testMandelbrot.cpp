@@ -14,10 +14,10 @@ using namespace tsgl;
  *  and a dynamic number of threads and uses command-line arguments to specify the number of threads to use.
  *  There is also a ProgressBar that shows the progress made by each thread as the Mandelbrot set is drawn onto the CartesianCanvas.
  * \details
- * - A class containing all of the data and method to draw a Mandelbrot set has been made.
+ * - A class containing all of the data and methods to draw a Mandelbrot set has been made.
  * - When you create a Mandelbrot object:
- *    - The number of threads to use is predetermined and stored in: \b THREADS.
- *    - The number of iterations to check is predetermined and stored in: \b DEPTH.
+ *    - The number of threads to use is predetermined (passed as the \b threads parameter) and stored in: \b myThreads.
+ *    - The number of iterations to check is predetermined (passed as the \b depth parameter) and stored in: \b myDepth.
  *    - The internal timer of the Canvas is set up to go off every ( \b FRAME / 2 ) seconds.
  *    - A flag telling us to redraw is set to true.
  *    .
@@ -33,11 +33,12 @@ using namespace tsgl;
  *    .
  * - When you actually draw the Mandelbrot object onto the CartesianCanvas:
  *   - Create the Canvas that will draw the ProgressBar and the ProgressBar object.
- *   - While the toRedraw flag is set:
- *      - Set the toRender flag to false.
+ *   - While the myRedraw flag is set:
+ *      - Set the myRedraw flag to false.
  *      - Reset the internal timer to 0.
  *      - Fork off the predetermined number of parallel threads using OMP.
  *      - Store the actual number of threads spawned in: \b nthreads.
+ *      - Assign a color to each thread.
  *      - Figure the cartesian size of the area each thread is to calculate and store it in: \b blocksize.
  *      - Figure out the actual number of rows each thread is to calculate and store it in: \b blockheight.
  *      - Clear the Canvas that holds the ProgressBar.
@@ -49,15 +50,15 @@ using namespace tsgl;
  *        - Make an inner loop which determines whether to color the pixels black or a different color based off of whether they escaped or not.
  *          - (Basic Mandelbrot calculations; see http://en.wikipedia.org/wiki/Mandelbrot_set#Computer_drawings ).
  *          - Break if the Canvas is to redraw.
- *            .
- *          .
- *      - Break if the Canvas is to redraw.
  *        .
+ *        - Handle any IO events (OS X version only).
+ *        - Break if the Canvas is to redraw.
+ *      .
  *      - Output the time it took to compute the screen.
  *      - While the Canvas has not been closed and it isn't time to redraw yet:
  *        - Sleep the thread for one frame until the Canvas is closed by the user or told to redraw.
- *        .
- *     .
+ *      .
+ *   .
  * - If the ProgressBar Canvas is still open, close it up.
  * .
  * \param can Reference to the CartesianCanvas being drawn to.
@@ -65,9 +66,9 @@ using namespace tsgl;
  * \param depth The number of iterations to go to in order to draw the Mandelbrot set.
  */
 void mandelbrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
-    Mandelbrot m1(threads,depth);
-    m1.bindings(can);
-    m1.draw(can);
+    Mandelbrot m1(threads,depth);  //Make the object
+    m1.bindings(can); //Bind the buttons
+    m1.draw(can);  //Draw the Mandelbrot object onto the Canvas
 }
 
 //Takes command line arguments for the width and height of the screen

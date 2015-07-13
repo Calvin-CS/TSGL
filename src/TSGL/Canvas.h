@@ -22,8 +22,8 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
+#include "Util.h"           // Needed constants and has cmath for performing math operations
 
-#include <cmath>            // For performing math operations
 #include <functional>       // For callback upon key presses
 #include <iostream>         // DEBUGGING
 #include <mutex>            // Needed for locking the Canvas for thread-safety
@@ -35,12 +35,8 @@
   #include <thread>           // For spawning rendering in a different thread
 #endif
 
-
 #include <GL/glew.h>        // Needed for GL function calls
 #include <GLFW/glfw3.h>     // For window creation and management
-
-#define FPS 60              // Frames per second
-#define FRAME 1.0f/FPS      // Number of seconds between frames
 
 #ifdef _WIN32
   #define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))      // round is not defined in Visual Studio

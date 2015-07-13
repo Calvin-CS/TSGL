@@ -9,9 +9,7 @@
 #ifndef FUNCTION_H_
 #define FUNCTION_H_
 
-#include <cmath>
-
-typedef long double Decimal;  // Define the variable type to use
+#include "Util.h"
 
 namespace tsgl {
 

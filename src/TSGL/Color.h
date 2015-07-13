@@ -16,8 +16,6 @@
 #include "Util.h"       // Clamp()
 #include "Error.h"      // TsglErr() / TsglDebug()
 
-const int NUM_COLORS = 256, MAX_COLOR = 255;
-
 namespace tsgl {
 
 struct ColorFloat;

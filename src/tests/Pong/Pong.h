@@ -8,23 +8,14 @@
 #ifndef PONG_H_
 #define PONG_H_
 
-#include <cmath>
 #include <complex>
 #include <iostream>
 #include <omp.h>
 #include <queue>
 #include <tsgl.h>
+#include "Util.h"
 
 using namespace tsgl;
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
 class Pong {
 private:

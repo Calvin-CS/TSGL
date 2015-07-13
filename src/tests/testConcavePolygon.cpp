@@ -6,16 +6,9 @@
  */
 
 #include <tsgl.h>
+#include "Util.h"  //Constants
 
 using namespace tsgl;
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-
-const double RAD = PI / 180;  // One radian in degrees
 
 /**
  * \brief Draw Concave polygons, which have one or more interior angles > 180

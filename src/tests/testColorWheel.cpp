@@ -5,18 +5,11 @@
  *      Author: cpd5
  */
 
-#include <cmath>
 #include <omp.h>
 #include <tsgl.h>
+#include "Util.h"  //Constants
 
 using namespace tsgl;
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-const double RAD = PI / 180;  // One radian in degrees
 
 /*!
  * \brief Draws a gradient color wheel using OMP with multiple threads per processor and private per-thread variables.
