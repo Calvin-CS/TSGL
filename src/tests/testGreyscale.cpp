@@ -18,6 +18,7 @@ using namespace tsgl;
  *    - If its a negative value, change the sign to be positive.
  *    - If its greater than 30, assign 30 to the number of threads to use.
  *    - Else, assign the passed parameter to the number of threads to use.
+ *   .
  * - Set up the internal timer of the Canvas to expire every ( \b FRAME * 2 ) seconds.
  * - Store the Canvas' dimensions for ease of use.
  * - Stretch a fancy image over the Canvas.
