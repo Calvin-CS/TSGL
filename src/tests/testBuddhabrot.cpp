@@ -12,7 +12,7 @@ using namespace tsgl;
 /*!
  * \brief Draws a Buddhabrot set on a CartesianCanvas.
  * \details Same as mandelbrotFunction(), but with a different shading algorithm and no
- * ProgressBar.
+ *  ProgressBar.
  * ( see https://en.wikipedia.org/wiki/Buddhabrot ).
  * \param can Reference to the CartesianCanvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.

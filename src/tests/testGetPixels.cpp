@@ -25,7 +25,7 @@ using namespace tsgl;
  *   - For each row:
  *     - For each column:
  *       - Over each old pixel, draw a new pixel with each of the RGB components incremented
- *       and wrapped.
+ *         and wrapped.
  *       .
  *     .
  *   - Sleep until the Canvas is ready to draw again.

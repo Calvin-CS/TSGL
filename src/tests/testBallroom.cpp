@@ -249,7 +249,7 @@ public:
 /*!
  * \brief Lots and lots of multicolored balls!
  * \details Draws a lot of multicolored balls onto the Canvas that follow the mouse around.
- * It is drawn in this way:
+ * - It is drawn in this way:
  * - Get the window width and height for convenience of use.
  * - Create the area for the balls based off of the window width and height.
  * - For 0 to 100:

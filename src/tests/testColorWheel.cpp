@@ -21,7 +21,7 @@ using namespace tsgl;
  * - Variables for the second and third vertices of a triangle and the current shading are initialized.
  * - The internal timer of the Canvas is set up to expire every \b FRAME seconds.
  * - The predetermined number of parallel threads is forked off using OMP, pulling along the coordinate
- * and shading variables.
+ *   and shading variables.
  * - The actual number of threads is stored in: \b nthreads.
  * - A color \b delta is computed.
  * - Each thread's thread id ( \b tid ) is stored.
@@ -30,10 +30,10 @@ using namespace tsgl;
  *   - The internal timer sleeps until the next frame is ready to be drawn.
  *   - Each thread's \b start is computed using the timer's lifetime and it's current id.
  *   - The second and third coordinates of a triangle approximating an arc of a circle are
- *   computed using the \b GRADIENT and the thread's \b start position.
+ *     computed using the \b GRADIENT and the thread's \b start position.
  *   - A triangle is drawn on the Canvas for each thread, with the first vertex in the center, and
- *   the second and third vertices as computed above, with a hue based on the precomputed \b start,
- *   full saturation, and a value of \b shading.
+ *     the second and third vertices as computed above, with a hue based on the precomputed \b start,
+ *     full saturation, and a value of \b shading.
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.

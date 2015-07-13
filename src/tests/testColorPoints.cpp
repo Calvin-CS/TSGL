@@ -12,7 +12,7 @@ using namespace tsgl;
 
 /*!
  * \brief Draws a neat pattern of points to a Canvas using OMP and takes in a command line
- * argument for the number of threads to use.
+ *  argument for the number of threads to use.
  * \details
  * - A parallel block is set up with #pragma omp parallel using the number of threads passed.
  * - The actual number of threads created is stored in: \b nthreads .
