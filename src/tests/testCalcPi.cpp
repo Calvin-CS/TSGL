@@ -13,22 +13,33 @@
 #include <omp.h>                // OpenMP functions
 #include <tsgl.h>               // IntegralViewer
 
+/*!
+ * \brief Compute a Unit circle.
+ * \details
+ */
 inline Decimal unitCircleFunction(long double x) {
   return (abs(x) < 1.0L) ? sqrt( 1.0L - (x*x) ) : 0.0L;
 }
 
+/*!
+ *
+ */
 inline Decimal sineFunction(long double x) {
   return cos(8*x);
   Decimal d = cos(8*x);
   return d > 0 ? d : -d;
 }
 
+//Main method
 int main(int argc, char** argv) {
   //Handle command line
   if (argc > 3) {
     fprintf(stderr, "\nUsage: calcPI2 [intervals] [numThreads]\n\n");
     exit(1);
   }
+
+  //Check if the number of intervals and the number of threads was passed
+  //If one was not, set it to a default value
   long long numIntervals = (argc > 1) ? std::stoll(argv[1], 0, 10) : 1;
   unsigned numThreads = (argc > 2) ? std::stoll(argv[2], 0, 10) : 1;
 

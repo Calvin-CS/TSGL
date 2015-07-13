@@ -7,11 +7,11 @@
 #ifndef INTEGRAL_H_
 #define INTEGRAL_H_
 
-#include <cmath>   // abs()
 #include <string>
 #include <omp.h>
 #include <tsgl.h>
 #include <sstream>
+#include "Util.h"  //Decimal typedef
 using namespace tsgl;
 
 typedef Decimal (*functionPointer)(Decimal x);

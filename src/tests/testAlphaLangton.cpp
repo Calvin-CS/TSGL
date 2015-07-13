@@ -20,7 +20,7 @@ using namespace tsgl;
  * - There are four LangtonAnts in the AntFarm object (same as langtonColonyFunction() ) *BUT* they have alpha transparency.
  * - We set up an additional timer \b pulse to keep track of intervals between clearing the screen.
  * - We set up a function \b tempo, which resets the \b pulse timer, sets its interval to the
- * time since the last reset, and makes the Canvas clear itself at that interval.
+ *   time since the last reset, and makes the Canvas clear itself at that interval.
  * - We bind the left mouse button and the enter button to the described \b tempo function.
  * - We bind the space button to clearing the Canvas.
  * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear

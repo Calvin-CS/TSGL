@@ -19,8 +19,8 @@ using namespace tsgl;
  * \param depth The number of iterations to go to in order to draw the Buddhabrot set.
  */
 void buddhabrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
-  Buddhabrot m1(threads, depth);
-  m1.draw(can);
+  Buddhabrot m1(threads, depth);  //Create the Buddhabrot object
+  m1.draw(can);  //Draw it
 }
 
 //Takes in command line argument for the width and height of the screen as well as

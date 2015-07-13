@@ -10,15 +10,12 @@
 
 #include "Canvas.h"     // We extend Canvas
 #include "Function.h"   // For drawing math functions on the screen
-
-/*!
- * \var typedef long double Decimal
- * \brief A type definition for a long double.
- */
-typedef long double Decimal;  // Define the variable type to use for coordinates
-typedef Decimal (*functionPointer)(Decimal x);
+#include "Util.h"
 
 namespace tsgl {
+
+typedef Decimal (*functionPointer)(Decimal x);
+
 
 /*!
  * \class CartesianCanvas

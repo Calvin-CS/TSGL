@@ -253,17 +253,19 @@ public:
  * - Get the window width and height for convenience of use.
  * - Create the area for the balls based off of the window width and height.
  * - For 0 to 100:
- *   - Set the speed of the balls to 5.0f.
- *   - Set their direction.
- *   - Add a ball to the ballroom created off of the speed and direction given.
+ *   - Set the speed of a ball to 5.0f.
+ *   - Calculate its direction.
+ *   - Add it to the area created with the calculated speed and direction as well as with a random color.
  *   .
- * - Bind the left mouse button so that when you click the screen the balls will repel from the mouse instead of follwing it.
+ * - Bind the left mouse button so that when you click the screen the attraction of the balls will change.
+ *   (If they are attracted to the mouse then they will be repelled. If they are repelled, then they will be attracted
+ *   to the mouse).
  * - While the Canvas is open:
  *   - Sleep the internal timer until the next draw cycle.
  *   - Clear the Canvas.
  *   - Animate the balls and have them bounce off of one another.
  *   .
- *  .
+ * .
  * \param can Reference to the Canvas to draw on.
  */
 void ballroomFunction(Canvas& can) {

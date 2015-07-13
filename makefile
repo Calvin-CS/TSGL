@@ -14,12 +14,14 @@ OBJS     := $(patsubst src/TSGL/%.cpp,build/TSGL/%.o,${SOURCES})
 TESTOBJS := $(patsubst src/tests/%.cpp,build/tests/%.o,${TESTS})
 NOWARN   := -Wno-unused-parameter -Wno-unused-function -Wno-narrowing
 UNAME    := $(shell uname)
+
 ifeq ($(UNAME), Linux)
 	OS_LFLAGS :=
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
 	OS_GLFW := glfw
 	OS_GL := -lGL
 endif
+
 ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_LDIRS :=
@@ -138,6 +140,7 @@ lib/libtsgl.a: ${OBJS}
 	@touch build/build
 
 #List additional dependencies for test binaries
+
 #Langtons
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
 bin/testAlphaLangton: ${LANGTON_DEPS}
@@ -145,14 +148,17 @@ bin/testLangtonColony: ${LANGTON_DEPS}
 bin/testLangtonRainbow: ${LANGTON_DEPS}
 bin/testScreenshotLangton: ${LANGTON_DEPS}
 bin/testLangton: ${LANGTON_DEPS}
+
 #Voronois
 bin/testVoronoi: build/tests/Voronoi/Voronoi.o
 bin/testShadedVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
+
 #Fractals
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
 bin/testJulia: build/tests/Mandelbrot/Julia.o
 bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o
 bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/Buddhabrot.o
+
 #Other
 bin/testConway: build/tests/Conway/LifeFarm.o
 bin/testInverter: build/tests/ImageInverter/ImageInverter.o

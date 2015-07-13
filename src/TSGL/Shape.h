@@ -31,27 +31,33 @@ namespace tsgl {
  *  \details <code>numberofvertices</code> should be the actual integer number of vertices to be drawn (e.g., *3* for a triangle).
  *  \details <code>drawingmode</code> should be one of GL's primitive drawing modes.
  *  See https://www.opengl.org/sdk/docs/man2/xhtml/glBegin.xml for further information.
+ *  \details Theoretically, you could potentially extend the Shape class so that you can create another Shape class that suits your needs.
+ *  \details However, this is not recommended for normal use of the TSGL library.
  */
 class Shape {
  protected:
     bool isTextured; /*! Whether the shape is textured or not. If extending Shape, <B> you *must* leave this at false.</B> */
  public:
+
     /*!
      *  \brief Constructs a new Shape.
      *  \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Shape.</b>
      */
     Shape() { isTextured = false; }
+
     /*!
      * \brief Destructor for the Shape.
      *  \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Shape.</b>
      */
     virtual ~Shape() {}
+
     /*!
-     *  \brief Actually draws the shape to the Canvas.
+     *  \brief Actually draws the Shape to the Canvas.
      *  \details This method renders the shape to the Canvas.
      *    Please refer to the class description for information and warnings about overriding this method.
      */
     virtual void draw() = 0;  // Abstract method for actually drawing the shape
+
     /*!
      *  \brief Accessor for <code>isTextured</code>.
      *  \return Whether the shape is a textured primitive or not.

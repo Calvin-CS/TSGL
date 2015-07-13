@@ -6,16 +6,9 @@
  */
 
 #include <tsgl.h>
+#include "Util.h"  //Constants
 
 using namespace tsgl;
-
-#ifdef _WIN32
-const double PI = 3.1415926535;
-#else
-const double PI = M_PI;
-#endif
-
-const double RAD = PI / 180;  // One radian in degrees
 
 /**
  * \brief Draw Concave polygons, which have one or more interior angles > 180
@@ -30,7 +23,7 @@ const double RAD = PI / 180;  // One radian in degrees
  *   - Sleep the internal timer of the Canvas until the Canvas is ready to draw.
  *   - Draw a Concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
  *   - Draw another Concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
- *  .
+ *   .
  * .
  * \param can Reference to the Canvas being drawn to.
  */

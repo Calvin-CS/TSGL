@@ -6,10 +6,9 @@
  */
 
 #include "tsgl.h"
+#include "Util.h"
 
 using namespace tsgl;
-
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
 
 /*!
  * \brief Simulates Newton's Cradle (or Newton's Pendulum as some call it) ( see http://s.hswstatic.com/gif/newtons-cradle-1.jpg ).
