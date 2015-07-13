@@ -253,8 +253,8 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     maxY = yMax;
     cartWidth = maxX - minX;
     cartHeight = maxY - minY;
-    pixelWidth = cartWidth / (getWindowWidth() - 1);
-    pixelHeight = cartHeight / (getWindowHeight() - 1);
+    pixelWidth = cartWidth / getWindowWidth();
+    pixelHeight = cartHeight / (getWindowHeight() - 1);  //Minor hacky fix
 }
 
 void CartesianCanvas::reset() {

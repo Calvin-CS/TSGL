@@ -67,14 +67,12 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
     unsigned int blocksize = wh / nthreads;
     unsigned int row = blocksize * omp_get_thread_num();
     ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
-    int gray = 0;
 
     for (unsigned int y = row; y < row + blocksize; y++) {
-      int index = y * ww * 3;
       for (unsigned int x = 0; x < ww; x++) {
-        gray = (buffer[index] + buffer[index + 1] + buffer[index + 2]) / 3;
-        can.drawPoint(x, wh - y, ColorInt(gray, gray, gray));
-        index += 3;
+		ColorInt pixelColor = can.getPoint(x, y);
+        int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+        can.drawPoint(x, y, ColorInt(gray, gray, gray));
       }
       if (! can.getIsOpen()) break;
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class

@@ -10,8 +10,8 @@ VisualTaskQueue::VisualTaskQueue(int elements, int sideLength, float aspect, int
     rowLength = ceil(sqrt(totalElements/aspect));  //Number of elements per row
     blockSize = sideLength;
     vcan = new Canvas(0,-1,2*border+(blockSize+space)*rowLength,2*border+(blockSize+space)*elements/rowLength,"Thread colors");
-    reset();
     vcan->start();
+	reset();
 }
 
 VisualTaskQueue::~VisualTaskQueue() {
@@ -47,9 +47,14 @@ void VisualTaskQueue::showLegend(int threads) {
     int perColumn = (myHeight-yStart)/yDelta;
     int yCutoff = yStart + yDelta*perColumn-blockSize;
     int myWidth = 2*border + ((threads)/perColumn)*xDelta+blockSize+TEXTW;
+  #ifdef _WIN32
+	if (myWidth < 116);  //Magic number for Windows windows...
+	myWidth = 116;
+  #endif
 
     //Actually draw things
     lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
+	std::cout << lcan->getWindowWidth();
     lcan->start();
     lcan->drawText("Legend:",TEXTW/2,TEXTW,TEXTW,BLACK);
     int xx = xStart, yy = yStart;

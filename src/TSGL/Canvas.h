@@ -87,6 +87,7 @@ private:
     Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
+	bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
     int             realFPS;                                            // Actual FPS of drawing
     GLuint          renderedTexture;                                    // Texture to which we render to every frame
   #ifdef __APPLE__
@@ -104,6 +105,7 @@ private:
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
     std::mutex      syncMutex;                                          // Mutex for syncing the rendering thread with a computational thread
     int             syncMutexLocked;                                    // Whether the syncMutex is currently locked
+	int             syncMutexOwner;                                     // Thread ID of the owner of the syncMutex
     GLtexture       textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
                     textureShaderVertex;                                // Address of the textured vertex shader

@@ -34,8 +34,8 @@ void ImageInverter::invertImage(unsigned numThreads) {
       pixelColor = myCanvas1.getPixel(row, col);
       inverse = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
       myCanvas2.drawPixel(row, col, ColorInt(inverse,inverse,inverse) );
-      myCanvas1.sleepFor(0.000001f);
     }
+	myCanvas1.sleepFor(FRAME);
   }
 }
 

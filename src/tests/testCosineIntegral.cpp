@@ -61,8 +61,9 @@ void cosineIntegralFunction(Cart& can, int & numberOfThreads) {
   CosineFunction function1;
   can.drawFunction(function1);
 
+  //\u03C0 = π
   can.setFont("../assets/freefont/FreeSerif.ttf");
-  can.drawText(L"-1.5π", -1.5 * PI - .1, .25, 20);  // Note the important capital L, used to support Unicode.
+  can.drawText(L"-1.5\u03C0", -1.5 * PI - .1, .25, 20);  // Note the important capital L, used to support Unicode.
   can.drawText(L"1.5\u03C0", 1.5 * PI - .2, .25, 20);
   can.drawText(L"1", .1, 1.05, 20);
   can.drawText(L"-1", .1, -1.1, 20);

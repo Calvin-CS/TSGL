@@ -57,7 +57,6 @@ void getPixelsFunction(Canvas& can) {
                 }
             }
             can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-            printf("%f\n", can.getTimeBetweenSleeps());
         }
     }
 }
