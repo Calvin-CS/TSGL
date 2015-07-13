@@ -15,8 +15,9 @@ using namespace tsgl;
  * \brief Draws a fan of randomly colored lines at the target framerate and a dynamic number of threads using OMP.
  * \details
  * - The internal timer of the Canvas is set up to go off every \b FRAME seconds ( \b FRAME == 1 / \b FPS ).
+ * - The spacing in between the arcs of the fan is stored in the constant: \b ARC .
  * - While the canvas is open:
- *   - The number of threads to use is recalculated, and the process is forked.
+ *   - The number of threads to use is recalculated, and the process is forked based off of the passed number of threads: \b t.
  *   - The internal timer sleeps on each thread until the next frame is ready to be drawn.
  *   - An offset is calculated based on the thread's ID and a predefined arc-length.
  *   - An angle is then calculated using the offset and the Canvas' current lifespan ( as calculated by \b can.getReps() ).
@@ -26,6 +27,7 @@ using namespace tsgl;
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
+ * \param t The number of threads to use in the function.
  */
 void lineFanFunction(Canvas& can, int t) {
     const double ARC = 7.11;  //(Arbitrary) spacing between arcs of the fan
@@ -48,6 +50,8 @@ void lineFanFunction(Canvas& can, int t) {
     }
 }
 
+//Takes command-line arguments for the width and height of the screen as well as for the
+//number of threads to use in the function
 int main(int argc, char** argv) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;

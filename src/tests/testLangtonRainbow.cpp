@@ -41,7 +41,7 @@ void langtonRainbowFunction(Canvas& can) {
     }
 }
 
-//Takes in command line arguments for the window width and height
+//Takes in command-line arguments for the window width and height
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;

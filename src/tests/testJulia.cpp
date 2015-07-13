@@ -29,12 +29,12 @@ using namespace tsgl;
  *    .
  * - When you actually draw the Julia object onto the CartesianCanvas:
  *    - Store the window width of the Canvas.
- *    - Create a VisualQueue object that displays how much work each thread did in drawing
+ *    - Create a VisualTaskQueue object that displays how much work each thread did in drawing
  *      the Julia object.
  *    - While its time to redraw:
  *        - Set the redraw flag to false.
  *        - Reset the Canvas' internal timer to 0.
- *        - Reset the VisualQueue object.
+ *        - Reset the VisualTaskQueue object.
  *        - A parallel block is made using: \b myThreads threads.
  *            - Store the thread id number and the number of threads.
  *            - Store the thread color.
@@ -42,7 +42,7 @@ using namespace tsgl;
  *              object are made and the Julia object is drawn. Once the Julia object has been drawn, the
  *              loop is broken out of. Also, if the Canvas is not open or the redraw flag is set, the loop
  *              is also broken out of. Also, if one of the threads tries to render off of the screen, the loop
- *              is broken out of. The VisualQueue is also updated in this loop, and if you are a Mac user,
+ *              is broken out of. The VisualTaskQueue is also updated in this loop, and if you are a Mac user,
  *              I/O events are handled here as well.
  *              .
  *           .
@@ -51,7 +51,7 @@ using namespace tsgl;
  *          - Sleep the internal timer until the next draw cycle.
  *          .
  *       .
- *    - Close the VisualQueue.
+ *    - Close the VisualTaskQueue.
  *  .
  * \param can Reference to the CartesianCanvas to draw to.
  * \param threads Reference to the number of threads to use when drawing the Julia object.

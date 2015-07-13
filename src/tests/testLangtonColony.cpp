@@ -15,7 +15,7 @@ using namespace tsgl;
 /*!
  * \brief Simulates 4 LangtonAnts at speeds faster than the Canvas' framerate.
  * \details Same principle as langtonFunction(). Key differences:
- * - A variable \b RADIUS holds the distance from the center for each ant.
+ * - A variable \b R holds the distance from the center for each ant.
  * - There are four LangtonAnts inside of the AntFarm object.
  * - Each ant is tracked separately, with arrays holding each type of variable.
  * - The LangtonAnts are shaded this time.
