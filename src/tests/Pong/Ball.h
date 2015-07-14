@@ -16,8 +16,9 @@ class Ball {
   void draw(Canvas& can);
   float getX() const;
   float getY() const;
+  void invert(int choice);
   void move();
-  void reset();
+  void reset(Canvas& can);
   virtual ~Ball();
   float randfloat(int divisor = 10000);
 private:

@@ -13,6 +13,8 @@
 #include <omp.h>
 #include <queue>
 #include <tsgl.h>
+#include "Ball.h"
+#include "Paddle.h"
 #include "Util.h"
 
 using namespace tsgl;
@@ -20,8 +22,9 @@ using namespace tsgl;
 class Pong {
 public:
   Pong(Canvas& can);
-  void bindings(Canvas& can);
-  void draw(Canvas& can);
+  Paddle * leftPaddle;
+  Paddle * rightPaddle;
+  Ball * pongBall;
 };
 
 #endif /* PONG_H_ */

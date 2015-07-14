@@ -94,6 +94,7 @@ BINARIES= \
 	bin/testMultiCanvas \
 	bin/testNewtonPendulum \
 	bin/testNova \
+	bin/testPong \
 	bin/testProgressBar \
 	bin/testProjectiles \
 	bin/testScreenshot \
@@ -161,7 +162,7 @@ bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/B
 #Other
 bin/testConway: build/tests/Conway/LifeFarm.o
 bin/testInverter: build/tests/ImageInverter/ImageInverter.o
-bin/testPong: build/tests/Pong/Pong.o
+bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
 
 #General compilation recipes for test binaries (appended to earlier dependencies)
 bin/test%: build/tests/test%.o lib/libtsgl.a

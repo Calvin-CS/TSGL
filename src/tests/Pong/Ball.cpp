@@ -33,13 +33,23 @@ float Ball::getX() const {
 float Ball::getY() const {
   return myY;
 }
+void Ball::invert(int choice) {
+  if(choice == 0) {
+    myYY = -myYY;
+  } else if(choice == 1) {
+    myXX = -myXX;
+    myYY += randfloat(1000) * 2 - 1;
+  }
+}
 
 void Ball::move() {
   myX += myXX;
   myY += myYY;
 }
 
-void Ball::reset() {
+void Ball::reset(Canvas& can) {
+  myX = can.getWindowWidth() / 2 - 8;
+  myY = can.getWindowHeight() / 2 - 8;
   do {
     myDir = randfloat(1000) * 2 * 3.14159f;
     myXX = mySpeed * cos(myDir);

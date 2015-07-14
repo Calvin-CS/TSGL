@@ -49,7 +49,6 @@ using namespace tsgl;
  */
 void pongFunction(Canvas& can) {
     Pong p1(can); //Create the Pong object
-    p1.bindings(can);  //Bind the buttons needed
     p1.draw(can);  //Draw the game
 }
 

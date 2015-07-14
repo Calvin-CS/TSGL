@@ -16,12 +16,11 @@ public:
   Paddle(Canvas& can);
   virtual ~Paddle();
   void bindings(Canvas& can, int side);
-  void checkBoundColl(Ball& b, Canvas& can, int side);
-  void checkPadColl(Ball& b, Canvas& can, int side);
   void draw(Canvas& can, int side);
   void increment();
   void move();
   int getPoints() const;
+  float getY() const;
   void setDir(int direction);
 private:
   int myDir;  //-1 = up, 1 = down, 0 = stationary
