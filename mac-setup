@@ -26,7 +26,7 @@ if [ $(has brew) = 0 ]; then
   echo "Installing Homebrew..."
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
-  echo "Homebrew already installed."
+  echo "Homebrew detected."
 fi
 
 #Install glfw3 (will do nothing if already installed)
@@ -44,7 +44,7 @@ if [ $(has port) = 0 ]; then
   sudo make install
   cd ..
 else
-  echo "Macports already installed."
+  echo "Macports detected."
 fi
 
 #Get port packages
@@ -56,7 +56,7 @@ echo "Installing GCC 4.9...this may take a while, please be patient..."
 sudo port install gcc49
 echo "Switiching default compiler to mp-gcc49"
 sudo port select --set gcc mp-gcc49
-echo "Fixing wonky symlinks"
+echo "Fixing missing symlinks"
 if [ ! -e /usr/X11/lib/libX11.dylib ]; then
   sudo ln -s /usr/X11/lib/libX11.6.dylib /usr/X11/lib/libX11.dylib
 fi
@@ -66,11 +66,19 @@ fi
 if [ -e /usr/lib/libstdc++.dylib ]; then
   sudo mv /usr/lib/libstdc++.dylib /usr/lib/libstdc++.dylib-old
 fi
+if [ -e /usr/bin/gcc_tsglbak ]; then
+  sudo mv /usr/bin/gcc /usr/bin/gcc_tsglbak
+  sudo ln -s /opt/local/bin/gcc-mp-4.9 /usr/bin/gcc
+fi
+if [ -e /usr/bin/g++_tsglbak ]; then
+  sudo mv /usr/bin/g++ /usr/bin/g++_tsglbak
+  sudo ln -s /opt/local/bin/g++-mp-4.9 /usr/bin/g++
+fi
 
 #Clone and make TSGL
 echo "Making TSGL"
 git clone https://github.com/Calvin-CS/TSGL
 cd TSGL
-make debug
+make -j$(nproc) debug
 
 echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
