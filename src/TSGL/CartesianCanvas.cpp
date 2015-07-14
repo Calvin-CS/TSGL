@@ -243,7 +243,10 @@ Decimal CartesianCanvas::getMinY() {
 
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
     screenX = round((cartX - minX) / pixelWidth);
-    screenY = getWindowHeight() - 1 - round((cartY - minY) / pixelHeight);
+    if (atiCard)
+      screenY = getWindowHeight() - round((cartY - minY) / pixelHeight);
+    else
+      screenY = getWindowHeight() - 1 - round((cartY - minY) / pixelHeight);
 }
 
 void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax) {
@@ -253,7 +256,7 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     maxY = yMax;
     cartWidth = maxX - minX;
     cartHeight = maxY - minY;
-    pixelWidth = cartWidth / getWindowWidth();
+    pixelWidth = cartWidth / (getWindowWidth() - 1);
     pixelHeight = cartHeight / (getWindowHeight() - 1);  //Minor hacky fix
 }
 
