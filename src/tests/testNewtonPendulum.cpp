@@ -13,18 +13,18 @@ using namespace tsgl;
 /*!
  * \brief Simulates Newton's Cradle (or Newton's Pendulum as some call it) ( see http://s.hswstatic.com/gif/newtons-cradle-1.jpg ).
  * \details Simulates Newton's Pendulum in the following way:
- * - A Canvas is made and the center of it is determined.
- * - Stopping points for the left and right moving balls are determined.
- * - Ints determining whether or not a ball is moving are also made (-1 = moving left, 0 = stationary, 1 = moving right).
+ * - User variables store the sizes of each ball, the number of balls, and the radius of each ball.
+ *   They also store the acceleration, top speed, and the amount to inverse the direction of the swing of the balls.
+ * - Automatic variables store the window width and height, the center of the window, the line length, and the offset of each ball.
+ * - Initial positions of the edge balls are determined.
+ * - The leftmost ball is stationary; the rightmost is moving at top speed.
  * - While the Canvas has not been closed:
  *  - The Canvas' internal timer is put to sleep until the next drawing loop.
- *  - Three circles are made with respect to the center of the Canvas.
- *  - The middle circle is the first to be drawn, followed by the left and then the right.
- *  - Then, lines are drawn from those circles so that drawn image looks like the middle three stationary balls of Newton's Pendulum.
- *  - Now, two more circles and lines are drawn. These will be the ones moving from right to left.
- *  - Conditionals determine whether to increment the motion of the left or right ball.
+ *  - Conditionals determine the left and right ball motion.
+ *  - The animation loop is paused.
  *  - The Canvas is cleared.
- *  - The drawing loop continues on indefinitely until the Canvas is closed.
+ *  - The stationary balls and lines are drawn first, followed by the moving balls and lines.
+ *  - The animation is resumed.
  *  .
  * .
  * \param can Reference to the Canvas to draw on.

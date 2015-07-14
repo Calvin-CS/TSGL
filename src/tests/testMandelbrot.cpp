@@ -25,16 +25,19 @@ using namespace tsgl;
  *    - The spacebar on-press event is set to tell the Canvas to clear and re-render.
  *    - The left mouse on-press event is set to grab the mouse's current coordinates.
  *    - The left mouse on-release event is set to grab the mouse's current coordinates, and tell the Canvas to zoom into the
- *      bounding rectangle between the current coordinates and those from the left mouse's on press event.
+ *      bounding rectangle between the current coordinates and those from the left mouse's on press event and to redraw the Mandelbrot
+ *      at that point.
  *    - The right mouse on-press event is set to grab the mouse's current coordinates, and tell the Canvas to zoom out
- *      from that area.
+ *      from that area and redraw the Mandlebrot at that point.
  *    - The mouse's scroll wheel is set to tell the Canvas to zoom in / out by a predetermined amount at the mouse's
- *      current coordinates.
+ *      current coordinates and redraw the Mandelbrot at that point.
  *    .
  * - When you actually draw the Mandelbrot object onto the CartesianCanvas:
- *   - Create the Canvas that will draw the ProgressBar and the ProgressBar object.
- *   - While the myRedraw flag is set:
- *      - Set the myRedraw flag to false.
+ *   - Store the height of the Canvas, the x and y-coordinates for the ProgressBar, and the width of the ProgressBar Canvas.
+ *   - Create the Canvas that will draw the ProgressBar object.
+ *   - Create the ProgressBar object.
+ *   - While the redraw flag is set:
+ *      - Set the redraw flag to false.
  *      - Reset the internal timer to 0.
  *      - Fork off the predetermined number of parallel threads using OMP.
  *      - Store the actual number of threads spawned in: \b nthreads.
@@ -47,7 +50,7 @@ using namespace tsgl;
  *      - For 0 to \b blockheight and as long as we aren't trying to render off of the screen:
  *        - Update the ProgressBar.
  *        - Redraw the ProgressBar with labels for the ID of each thread above each segment of the ProgressBar.
- *        - Make an inner loop which determines whether to color the pixels black or a different color based off of whether they escaped or not.
+ *        - Make an inner loop which determines whether to color the pixels black or a different color based off of whether they've escaped or not.
  *          - (Basic Mandelbrot calculations; see http://en.wikipedia.org/wiki/Mandelbrot_set#Computer_drawings ).
  *          - Break if the Canvas is to redraw.
  *        .

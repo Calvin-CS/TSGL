@@ -18,11 +18,6 @@
 using namespace tsgl;
 
 class Pong {
-private:
-  float myLeftY, myRightY, myBallX, myBallY;
-  float myXX, myYY, mySpeed, myDir;
-  int myLeftDir, myRightDir, myLeftPoints, myRightPoints;
-  float randfloat(int divisor = 10000);
 public:
   Pong(Canvas& can);
   void bindings(Canvas& can);
