@@ -1,6 +1,9 @@
 #!/bin/bash
 # Easy install script for TSGL on OS X
 
+VER_XQ="XQuartz-2.7.7"
+VER_MP="MacPorts-2.3.3"
+
 #Function for checking command availability
 has () {
   (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
@@ -9,13 +12,19 @@ has () {
 #Print X11 warning
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   echo "Installing X11"
-  curl -L -O http://xquartz.macosforge.org/downloads/SL/XQuartz-2.7.7.dmg
-  open -W XQuartz-2.7.7.dmg
+  curl -L -O "http://xquartz.macosforge.org/downloads/SL/$VER_XQ.dmg"
+  open -W "$VER_XQ.dmg"
   echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
 fi
 
 #Install Xcode command line tools (will do nothing if already installed)
-xcode-select --install
+if [ ! -e "/Library/Developer/CommandLineTools" ]; then
+  cmd="xcode-select --install"
+  $cmd # Fix for vim syntax highlighting bugginess
+  echo "Please select \"Install\" from the confirmation window that appears."
+  echo "Press enter to continue once Xcode command line tools has finished installing"
+  read
+fi
 
 #Make and cd into a workspace
 mkdir workspace
@@ -36,9 +45,9 @@ brew install homebrew/versions/glfw3
 #Install port
 if [ $(has port) = 0 ]; then
   echo "Installing Macports..."
-  curl -O https://distfiles.macports.org/MacPorts/MacPorts-2.3.3.tar.bz2
-  tar xf MacPorts-2.3.3.tar.bz2
-  cd MacPorts-2.3.3/
+  curl -O "https://distfiles.macports.org/MacPorts/$VER_MP.tar.bz2"
+  tar xf "$VER_MP.tar.bz2"
+  cd "$VER_MP/"
   ./configure
   make
   sudo make install
