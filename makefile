@@ -94,7 +94,6 @@ BINARIES= \
 	bin/testMultiCanvas \
 	bin/testNewtonPendulum \
 	bin/testNova \
-	bin/testPong \
 	bin/testProgressBar \
 	bin/testProjectiles \
 	bin/testScreenshot \
