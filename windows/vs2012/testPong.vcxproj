@@ -66,10 +66,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\tests\Pong\Ball.cpp" />
+    <ClCompile Include="..\src\tests\Pong\Paddle.cpp" />
     <ClCompile Include="..\src\tests\Pong\Pong.cpp" />
     <ClCompile Include="..\src\tests\testPong.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\tests\Pong\Ball.h" />
+    <ClInclude Include="..\src\tests\Pong\Paddle.h" />
     <ClInclude Include="..\src\tests\Pong\Pong.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
