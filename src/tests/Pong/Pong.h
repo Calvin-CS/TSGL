@@ -22,6 +22,7 @@ using namespace tsgl;
 class Pong {
 public:
   Pong(Canvas& can);
+  void draw(Canvas& can);
   Paddle * leftPaddle;
   Paddle * rightPaddle;
   Ball * pongBall;
