@@ -33,7 +33,7 @@ CXXFLAGS=-O3 -g3 \
 	-Wall -Wextra \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-I/usr/local/include/Cellar/glfw3/3.1.1/include/ \
-	-Isrc/TSGL/ \
+	-I${SRC_PATH}/ \
 	-I/usr/include/ \
 	-I/usr/local/include/ \
 	-I/opt/AMDAPP/include/ \
@@ -108,7 +108,7 @@ BINARIES= \
 	bin/testTextCart \
 	bin/testTextTwo \
 	bin/testUnits \
-	bin/testVoronoi
+	bin/testVoronoi \
 
 all: dif tsgl tests docs tutorial
 

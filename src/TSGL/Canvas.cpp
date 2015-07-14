@@ -158,7 +158,7 @@ void Canvas::draw() {
 		if (loopAround || pos != posLast)
 			nothingDrawn = false;
 
-		if (!nothingDrawn) {
+		if (!nothingDrawn || frameCounter == 0) {
 
 			//if (toClear) glClear(GL_COLOR_BUFFER_BIT);
 
@@ -237,8 +237,9 @@ void Canvas::draw() {
 			glDrawArrays(GL_TRIANGLE_STRIP,0,4);
 			glFlush();                                   // Flush buffer data to the actual draw buffer
 			glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
-			textureShaders(false);
 		}
+
+		textureShaders(false);
 
       #ifndef __APPLE__
         glfwPollEvents();                            // Handle any I/O

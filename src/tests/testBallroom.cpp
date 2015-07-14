@@ -191,7 +191,7 @@ public:
   }
   void addBall(int x, int y, int vx, int vy, int r, ColorFloat c = WHITE) {
     BouncingBall* b = new BouncingBall(x,y,vx,vy,r,width,height,c);
-    const int MAXFAIL = 10;
+    const int MAXFAIL = 1000;
     int fails = 0;
     for (it = balls.begin(); it != balls.end(); ++it) {
       while (b->collides((*it))) {
