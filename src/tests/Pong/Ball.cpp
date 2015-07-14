@@ -18,10 +18,6 @@ Ball::Ball(Canvas& can) {
   } while(myXX > -4 && myXX < 4);
 }
 
-Ball::~Ball() {
-  // TODO Auto-generated destructor stub
-}
-
 void Ball::draw(Canvas& can) {
   can.drawRectangle(myX - 8, myY - 8, myX + 8, myY + 8, WHITE);
 }
@@ -47,6 +43,10 @@ void Ball::move() {
   myY += myYY;
 }
 
+float Ball::randfloat(int divisor) {
+    return (rand() % divisor) / (float) divisor;
+}
+
 void Ball::reset(Canvas& can) {
   myX = can.getWindowWidth() / 2 - 8;
   myY = can.getWindowHeight() / 2 - 8;
@@ -55,8 +55,4 @@ void Ball::reset(Canvas& can) {
     myXX = mySpeed * cos(myDir);
     myYY = mySpeed * sin(myDir);
   } while (myXX > -4 && myXX < 4);
-}
-
-float Ball::randfloat(int divisor) {
-    return (rand() % divisor) / (float) divisor;
 }

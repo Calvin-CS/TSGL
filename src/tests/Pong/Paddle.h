@@ -11,21 +11,61 @@
 #include <tsgl.h>
 #include "Ball.h"
 
+/*!
+ * class Paddle
+ * \brief Let's play some Pong!
+ * \details Creates a Paddle in order to play the game, Pong.
+ * \details
+ * \details
+ * \details
+ */
 class Paddle {
 public:
+  /*!
+   * \brief Construct a Paddle object.
+   * \details Explic
+   * \return The constructed Paddle object.
+   */
   Paddle(Canvas& can);
-  virtual ~Paddle();
+
+  /*!
+   * \brief
+   */
   void bindings(Canvas& can, int side);
+
+  /*!
+   * \brief
+   */
   void draw(Canvas& can, int side);
+
+  /*!
+   * \brief
+   */
   void increment();
+
+  /*!
+   * \brief
+   */
   void move();
+
+  /*!
+   * \brief
+   */
   int getPoints() const;
+
+  /*!
+   * \brief
+   */
   float getY() const;
+
+  /*!
+   * \brief
+   */
   void setDir(int direction);
 private:
   int myDir;  //-1 = up, 1 = down, 0 = stationary
-  int myPoints;
-  float myY;
+  int myPoints;  //Score
+  float myY; //y-coordinate for Paddle
 };
 
 #endif /* PADDLE_H_ */

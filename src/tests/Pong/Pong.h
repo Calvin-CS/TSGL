@@ -23,6 +23,7 @@ class Pong {
 public:
   Pong(Canvas& can);
   void draw(Canvas& can);
+private:
   Paddle * leftPaddle;
   Paddle * rightPaddle;
   Ball * pongBall;

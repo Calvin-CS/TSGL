@@ -12,18 +12,44 @@
 
 class Ball {
  public:
+  /*!
+   * \brief
+   */
   Ball(Canvas& can);
+
+  /*!
+   * \brief
+   */
   void draw(Canvas& can);
+
+  /*!
+   * \brief
+   */
   float getX() const;
+
+  /*!
+   * \brief
+   */
   float getY() const;
+
+  /*!
+   * \brief
+   */
   void invert(int choice);
+
+  /*!
+   * \brief
+   */
   void move();
+
+  /*!
+   * \brief
+   */
   void reset(Canvas& can);
-  virtual ~Ball();
-  float randfloat(int divisor = 10000);
+
 private:
   float myX, myY, myXX, myYY, mySpeed, myDir;
-
+  float randfloat(int divisor = 10000);
 
 };
 

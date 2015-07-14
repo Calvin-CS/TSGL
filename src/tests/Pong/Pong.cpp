@@ -4,35 +4,28 @@ using namespace tsgl;
 
 Pong::Pong(Canvas& can) {
   srand(time(NULL));
-  leftPaddle = new Paddle(can);
+  leftPaddle = new Paddle(can);  // Create the Paddle objects and the Ball object
   rightPaddle = new Paddle(can);
   pongBall = new Ball(can);
 }
 
 void Pong::draw(Canvas& can) {
   //Bind the buttons
-  leftPaddle->bindings(can, -1);
-  rightPaddle->bindings(can, 1);
-
-  // Check to see if the window has been closed
+  leftPaddle->bindings(can, -1);  // W & S keys
+  rightPaddle->bindings(can, 1);  // Up and Down arrow keys
+  // While the window has not been closed....
   while (can.getIsOpen()) {
     can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-
     // Move the ball
     pongBall->move();
-
     // Handle ball boundary collisions
-
     if (pongBall->getX() > can.getWindowWidth() + 8) {
-      leftPaddle->increment();
-      pongBall->reset(can);
-
+      leftPaddle->increment();   // Increment the points
+      pongBall->reset(can);   // Reset the ball's position
     } else if (pongBall->getX() < -8) {
       rightPaddle->increment();
       pongBall->reset(can);
-
-    } else if (pongBall->getY() > can.getWindowHeight() - 8 || pongBall->getY() < 8) pongBall->invert(0);
-
+    } else if (pongBall->getY() > can.getWindowHeight() - 8 || pongBall->getY() < 8) pongBall->invert(0); //Invert the ball's y-coordinate changer
     // Handle ball paddle collisions
     if (pongBall->getX() < 32 && pongBall->getX() > 0 && pongBall->getY() > leftPaddle->getY() - 8 && pongBall->getY() < leftPaddle->getY() + 72) {
       pongBall->invert(1);
@@ -43,12 +36,10 @@ void Pong::draw(Canvas& can) {
     leftPaddle->move();
     rightPaddle->move();
     can.clear();
-
-    //draw the paddles and ball
+    // Draw the paddles and ball
     leftPaddle->draw(can, -1);
     rightPaddle->draw(can, 1);
     pongBall->draw(can);
-
     // Draw Scores
     int cww = can.getWindowWidth() / 2;
     for (int i = 0; i < leftPaddle->getPoints(); i++) {
@@ -61,4 +52,3 @@ void Pong::draw(Canvas& can) {
     }
   }
 }
-

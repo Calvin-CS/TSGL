@@ -53,8 +53,3 @@ float Paddle::getY() const {
 void Paddle::setDir(int direction) {
   myDir = direction;
 }
-
-Paddle::~Paddle() {
-  // TODO Auto-generated destructor stub
-}
-
