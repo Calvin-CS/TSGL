@@ -22,14 +22,16 @@
 class Paddle {
 public:
   /*!
-   * \brief Construct a Paddle object.
-   * \details Explic
+   * \brief Explicitly constructs a Paddle object.
+   * \details Explicit constructor for a Paddle object.
+   * \param can Reference to the Canvas
    * \return The constructed Paddle object.
    */
   Paddle(Canvas& can);
 
   /*!
-   * \brief
+   * \brief Binds the buttons.
+   * \details Binds the buttons with the Canvas.
    */
   void bindings(Canvas& can, int side);
 
