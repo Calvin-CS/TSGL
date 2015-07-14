@@ -118,7 +118,10 @@ void Canvas::draw() {
 
     setBackgroundColor(bgcolor); //Set our initial clear / background color
 
-	readyToDraw = true;
+    glClear(GL_COLOR_BUFFER_BIT);
+    glfwSwapBuffers(window);
+
+    readyToDraw = true;
 
     // Start the drawing loop
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
@@ -651,9 +654,12 @@ void Canvas::initGlew() {
         break;
       }
     }
+    const GLubyte* gfxVendor = glGetString(GL_VENDOR);
+    std::string gfx(gfxVendor, gfxVendor + strlen((char*)gfxVendor));
+    atiCard = (gfx.find("ATI") != std::string::npos);
 //    #define DEBUG
     #ifdef DEBUG
-        printf("Vendor:         %s %s\n", glGetString(GL_VENDOR), glGetString(GL_RENDERER));
+        printf("Vendor:         %s %s\n", gfx.c_str(), glGetString(GL_RENDERER));
         printf("OpenGL version: %s\n", glGetString(GL_VERSION));
         printf("GLFW version:   %s\n", glfwGetVersionString());
         printf("GL Extension: ");

@@ -168,6 +168,7 @@ private:
     static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
 
 protected:
+    bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
     /*!
