@@ -473,7 +473,11 @@ ColorInt Canvas::getPixel(int row, int col) {
 }
 
 ColorInt Canvas::getPoint(int x, int y) {
-    int yy = (winHeight-1) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
+    int yy;
+    if (atiCard)
+      yy = (winHeight) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
+    else
+      yy = (winHeight-1) - y;
     int off = 3 * (yy * winWidthPadded + x);
     return ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
 }
