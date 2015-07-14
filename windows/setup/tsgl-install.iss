@@ -231,6 +231,8 @@ begin
   //Copy the remaining files in the windows folder
     ProgPage.SetText(('Copying Visual Studio Files'),'');
     ProgPage.SetProgress(95, 100);
+	Move('windows\readmetests.txt','readmetests.txt');
+	Move('windows\runtests.bat','runtests.bat');
     Move('windows\testProperties.props','testProperties.props');
     Move('windows\tsgl.sln','tsgl.sln');
     Move('windows\tsgl.v11.suo','tsgl.v11.suo');
