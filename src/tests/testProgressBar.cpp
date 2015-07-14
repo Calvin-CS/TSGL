@@ -9,20 +9,22 @@ using namespace tsgl;
 
 /*!
  * \brief Draws a diagonal black-to-white gradient using OMP and takes in a command line argument for the
- * number of threads to use
+ *  number of threads to use.
  * \details
- * - A parallel block is set up with #pragma omp parallel using all available processors
- * - The actual number of threads created is stored in: \b nthreads
- * - Check if the argument for the number of threads is valid:
- *   - If it is less than or equal to 0, use the number of threads that we can use with OMP.
- *   - If it is greater than the number of threads that we can use, use only the number of threads that we can use with OMP.
- *   - Else, its valid and use that many threads.
- * - The outer for loop is set up in a striping pattern, and the inner for loop runs from 0 to the Canvas height
- * - The color is set to a shade of gray based on its distance from the top left of the canvas
- * - The point is drawn to the Canvas
+ * - Compute and store the necessary information in order to draw the ProgressBar object
+ *   (x-coordinate, y-coordinate, width, height, minimum, maximum, and the number of segments).
+ * - Create the ProgressBar object with the information calculated in the previous step.
+ * - Set the progress of drawing the ProgressBar object and store it in: \b progress.
+ * - While the Canvas is open:
+ *   - Sleep the Canvas' internal timer until the next draw cycle.
+ *   - Increment the progress so far.
+ *   - For 0 to the number of segments:
+ *     - Update the ProgressBar object.
+ *     .
+ *   - Draw the ProgressBar onto the Canvas.
+ *   .
  * .
- * \param can, Reference to the Canvas being drawn to
- * \param numberOfThreads, Reference to the number of threads to use in the function
+ * \param can Reference to the Canvas being drawn to.
  */
 void progressBarFunction(Canvas& can) {
     const int X = 100, Y = X, W = can.getWindowWidth()-X*2, H = 20, MIN = 0, MAX = 1000, SEGS = 8;

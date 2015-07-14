@@ -40,7 +40,7 @@ using namespace tsgl;
  *   - Sleep until the Canvas is ready to render again.
  *   .
  * - Once a thread is finished grayscaling, draw a box around its rendered area using
- * the predetermined high contrast color.
+ *   the predetermined high contrast color.
  * .
  * \param can Reference to the Canvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.

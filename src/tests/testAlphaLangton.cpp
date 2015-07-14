@@ -14,7 +14,7 @@ using namespace tsgl;
 
 /*!
  * \brief Simulates 4 Langton's Ants with alpha transparency used for drawing and a couple
- * other neat features.
+ *  other neat features.
  * \details Mostly the same as langtonColonyFunction(), but with a couple key differences:
  * - Each ant is drawn with an alpha (transparency) value of 16 (~0.06).
  * - There are four LangtonAnts in the AntFarm object (same as langtonColonyFunction() ) *BUT* they have alpha transparency.

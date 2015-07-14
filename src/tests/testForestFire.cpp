@@ -33,8 +33,8 @@ float randfloat(int divisor = 10000) {
  *   - For each fire point:
  *     - Pop it from the queue, pushing it back on only if its life > 0.
  *     - For each cell adjacent to the fire, if it is not on the edge of the screen, not already
- *     on fire, and the random number generator rolls a number lower than the cell's flammability,
- *     set that cell on fire.
+ *       on fire, and the random number generator rolls a number lower than the cell's flammability,
+ *       set that cell on fire.
  *     .
  *   .
  * - Deallocate the onFire and flammability arrays.

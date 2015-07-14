@@ -12,14 +12,14 @@ using namespace tsgl;
 /*!
  * \brief Displays different colored sea urchins.
  * \details Displays different colored sea urchins with spotlights in the
- * top left and bottom right corners. Two of the sea urchins have random colors.
+ *  top left and bottom right corners. Two of the sea urchins have random colors.
  * It is drawn as follows:
  * - The sea urchins are drawn in a similar way as the line fan in testLineFan.
  * - Get an old x and old y value and a new x and new y value.
  * - Set the new x and y to 0, don't set the old x and y.
  * - Get the colors of the sea urchins.
- * - While the Canvas has not been close:
- *    - Sleep the internal timer.
+ * - While the Canvas has not been closed:
+ *    - Sleep the internal timer until the next draw cycle.
  *    - Set the old x and old y to half of the window width.
  *    - Draw the first sea urchin.
  *    - Reset the old x and old y to some new coordinates.
@@ -29,7 +29,8 @@ using namespace tsgl;
  *      and bottom right corners.
  *    - Clear the Canvas.
  *    .
- *- If the Canvas has been closed, output a message to the console saying "YOU KILLED MY SEA URCHINS! :'("
+ *- If the Canvas has been closed, output a message to the console saying "YOU KILLED MY SEA URCHINS! :'(" .
+ *  .
  * .
  * \param can Reference to the Canvas being drawn on.
  */

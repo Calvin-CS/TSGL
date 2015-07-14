@@ -18,7 +18,7 @@ using namespace tsgl;
  *   - Sleep the internal timer until the Canvas is ready to draw.
  *   - Select a random position on the Canvas for a corner of a rectangle.
  *   - Draw a rectangle stretching from the specified corner to another corner on the Canvas,
- *   with a random color and a transparency of 16 (~0.06).
+ *     with a random color and a transparency of 16 (~0.06).
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.

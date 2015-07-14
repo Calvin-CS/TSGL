@@ -16,6 +16,7 @@ using namespace tsgl;
  * \details Same as alphaLangtonFunction, with a few key differences:
  * - The enter key is bound to pause the whole animation.
  * - The space key is bound to clear the screen.
+ * .
  * \param can Reference to the Canvas being drawn to.
  */
 void screenshotLangtonFunction(Canvas& can) {

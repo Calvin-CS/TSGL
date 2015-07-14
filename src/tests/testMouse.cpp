@@ -18,10 +18,10 @@ using namespace tsgl;
  * - Declare variables for last x and y coordinates.
  * - Bind the spacebar on-press event to clearing the Canvas.
  * - Bind the left mouse on-press event to setting the lastX, lastY, and first x,y array
- * coordinate to the mouse's current position, and the first color to a random color; also,
- * set the array index to 1, and set the mouseDown flag.
+ *   coordinate to the mouse's current position, and the first color to a random color; also,
+ *   set the array index to 1, and set the mouseDown flag.
  * - Bind the left mouse on-release event to draw a Concave & Convex polygon with the built-up vertices,
- * and to unset the mouseDown flag.
+ *   and to unset the mouseDown flag.
  * - Set up the internal timer of the Canvas to expire every \b FRAME seconds.
  * - While the Canvas is open:
  *   - If the mouse is down:
