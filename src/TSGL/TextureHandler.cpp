@@ -497,7 +497,7 @@ bool TextureHandler::testLoadFont(TextureHandler& test) {
   int failed = 0;   //Failed tests
   //Test 1: Loading in the font at the start
   if(test.fontFace == nullptr) {
-     test.loadFont("assets/freefont/FreeMono.ttf");
+     test.loadFont("../assets/freefont/FreeMono.ttf");
      if(test.fontFace != nullptr) {
        passed++;
      } else {
