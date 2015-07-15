@@ -40,9 +40,9 @@ class Polyline : public Shape {
     Polyline(int numVertices);
 
     /*!
-     * \brief Destroys a Line object.
-     * \details Destructor for a Line object.
-     * \details Frees up memory allocated to a Line object.
+     * \brief Destroys a Polyline object.
+     * \details Destructor for a Polyline object.
+     * \details Frees up memory allocated to a Polyline object.
      */
     ~Polyline();
 
