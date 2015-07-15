@@ -109,9 +109,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abf1ff8d5acade39017321d6a2006f0f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_spectrogram.html#abf1ff8d5acade39017321d6a2006f0f1">~Spectrogram</a> ()</td></tr>
 <tr class="memdesc:abf1ff8d5acade39017321d6a2006f0f1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classtsgl_1_1_spectrogram.html" title="Displays a spectrogram of a given data set. ">Spectrogram</a> destructor method.  <a href="#abf1ff8d5acade39017321d6a2006f0f1">More...</a><br /></td></tr>
 <tr class="separator:abf1ff8d5acade39017321d6a2006f0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fc0e145d5ad8673cc51876e698fb162"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_spectrogram.html#a8fc0e145d5ad8673cc51876e698fb162">update</a> (int index, float weight=1.0f, float decay=0.8f)</td></tr>
-<tr class="memdesc:a8fc0e145d5ad8673cc51876e698fb162"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a spectrogram with new data.  <a href="#a8fc0e145d5ad8673cc51876e698fb162">More...</a><br /></td></tr>
-<tr class="separator:a8fc0e145d5ad8673cc51876e698fb162"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52be3a5f280c4fe6b82960283df7d91d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_spectrogram.html#a52be3a5f280c4fe6b82960283df7d91d">updateLocked</a> (int index, float weight=1.0f, float decay=0.8f)</td></tr>
+<tr class="memdesc:a52be3a5f280c4fe6b82960283df7d91d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a spectrogram with new data, using locks for thread safety.  <a href="#a52be3a5f280c4fe6b82960283df7d91d">More...</a><br /></td></tr>
+<tr class="separator:a52be3a5f280c4fe6b82960283df7d91d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a671efc29173bc9c5578090c3d4ff331a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_spectrogram.html#a671efc29173bc9c5578090c3d4ff331a">updateCritical</a> (int index, float weight=1.0f, float decay=0.8f)</td></tr>
+<tr class="memdesc:a671efc29173bc9c5578090c3d4ff331a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates a spectrogram with new data, using critical sections for thread safety.  <a href="#a671efc29173bc9c5578090c3d4ff331a">More...</a><br /></td></tr>
+<tr class="separator:a671efc29173bc9c5578090c3d4ff331a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef15257f0daa13a57d99cd621d402bd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_spectrogram.html#aef15257f0daa13a57d99cd621d402bd5">draw</a> (float ratio)</td></tr>
 <tr class="memdesc:aef15257f0daa13a57d99cd621d402bd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates the image on the spectrogram.  <a href="#aef15257f0daa13a57d99cd621d402bd5">More...</a><br /></td></tr>
 <tr class="separator:aef15257f0daa13a57d99cd621d402bd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -201,7 +204,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Updates the image on the spectrogram. </p>
-<p>This function updates the <a class="el" href="classtsgl_1_1_spectrogram.html" title="Displays a spectrogram of a given data set. ">Spectrogram</a>'s <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> with the data since the last call to <a class="el" href="classtsgl_1_1_spectrogram.html#a8fc0e145d5ad8673cc51876e698fb162" title="Updates a spectrogram with new data. ">update()</a> and redraws it. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This function updates the <a class="el" href="classtsgl_1_1_spectrogram.html" title="Displays a spectrogram of a given data set. ">Spectrogram</a>'s <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> with the data since the last call to update() and redraws it. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ratio</td><td>The scaling of the visualizer. Accepts values between 0.0f and 1.0f. </td></tr>
   </table>
@@ -228,12 +231,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8fc0e145d5ad8673cc51876e698fb162"></a>
+<a class="anchor" id="a671efc29173bc9c5578090c3d4ff331a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tsgl::Spectrogram::update </td>
+          <td class="memname">void tsgl::Spectrogram::updateCritical </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>index</em>, </td>
@@ -258,7 +261,49 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Updates a spectrogram with new data. </p>
+<p>Updates a spectrogram with new data, using critical sections for thread safety. </p>
+<p>This function adds the value of <code>weight</code> to the hue specified by <code>index</code>, and adds the value (<code>decay</code>^<code>n</code>)* <code>weight</code> to all hues <code>n</code> steps away from <code>index</code>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Index of the hue to update. Value is taken mod 256. </td></tr>
+    <tr><td class="paramname">weight</td><td>The value to add to <code>index</code>. </td></tr>
+    <tr><td class="paramname">decay</td><td>Falloff for <code>weight</code> upon adjacent values. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a52be3a5f280c4fe6b82960283df7d91d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Spectrogram::updateLocked </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>weight</em> = <code>1.0f</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>decay</em> = <code>0.8f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Updates a spectrogram with new data, using locks for thread safety. </p>
 <p>This function adds the value of <code>weight</code> to the hue specified by <code>index</code>, and adds the value (<code>decay</code>^<code>n</code>)* <code>weight</code> to all hues <code>n</code> steps away from <code>index</code>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Index of the hue to update. Value is taken mod 256. </td></tr>
@@ -277,7 +322,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 7 2015 16:09:27 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 15 2015 13:33:45 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

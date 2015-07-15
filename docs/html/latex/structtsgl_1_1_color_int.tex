@@ -13,16 +13,17 @@ Integer R\+G\+B\+A color struct.
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{structtsgl_1_1_color_int_a7826d99c97b598cadc325716a8b06dbe}{Color\+Int} ()
-\begin{DoxyCompactList}\small\item\em Constructs a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Default \hyperlink{structtsgl_1_1_color_int}{Color\+Int} constructor method. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_int_a64b15a8e4e8fb79c13f59da83107a2ea}{Color\+Int} (int v, int a=255)
+\begin{DoxyCompactList}\small\item\em Basic explicit \hyperlink{structtsgl_1_1_color_int}{Color\+Int} constructor method. \end{DoxyCompactList}\item 
 \hyperlink{structtsgl_1_1_color_int_a0f0dea0c416a290eb4fdaf7583e27285}{Color\+Int} (int r, int g, int b, int a=255)
-\begin{DoxyCompactList}\small\item\em Explicitly constructs a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \end{DoxyCompactList}\item 
-std\+::string \hyperlink{structtsgl_1_1_color_int_ad03b5c33b1096924e2cbeac28fe690e4}{As\+String} ()
+\begin{DoxyCompactList}\small\item\em Full explicit \hyperlink{structtsgl_1_1_color_int}{Color\+Int} constructor method. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{structtsgl_1_1_color_int_af2d134cd71ac7b14eccedca5bde627a0}{as\+String} ()
 \begin{DoxyCompactList}\small\item\em Returns a string representation of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int}. \end{DoxyCompactList}\item 
 \hyperlink{structtsgl_1_1_color_int_a34855245876c1ccee51625086f671ebf}{operator Color\+Float} ()
 \begin{DoxyCompactList}\small\item\em Implicit conversion from \hyperlink{structtsgl_1_1_color_int}{Color\+Int} to \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. \end{DoxyCompactList}\item 
-\hypertarget{structtsgl_1_1_color_int_acbd82ad2c6388389aa3474f042a25353}{}{\bfseries operator Color\+H\+S\+V} ()\label{structtsgl_1_1_color_int_acbd82ad2c6388389aa3474f042a25353}
-
-\item 
+\hyperlink{structtsgl_1_1_color_int_acbd82ad2c6388389aa3474f042a25353}{operator Color\+H\+S\+V} ()
+\begin{DoxyCompactList}\small\item\em Implicit conversion from \hyperlink{structtsgl_1_1_color_int}{Color\+Int} to \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}. \end{DoxyCompactList}\item 
 bool \hyperlink{structtsgl_1_1_color_int_a7d6282c79f42d4ba9a70c4475b8170c2}{operator==} (\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \&c2)
 \begin{DoxyCompactList}\small\item\em Determines if two Color\+Ints are equivalent. \end{DoxyCompactList}\item 
 bool \hyperlink{structtsgl_1_1_color_int_af83865a1b76eb8c0a5e0fe4bc34fab2d}{operator!=} (\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \&c2)
@@ -70,13 +71,38 @@ Integer R\+G\+B\+A color struct.
 )}\label{structtsgl_1_1_color_int_a7826d99c97b598cadc325716a8b06dbe}
 
 
-Constructs a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. 
+Default \hyperlink{structtsgl_1_1_color_int}{Color\+Int} constructor method. 
 
-Default constructor for the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \begin{DoxyNote}{Note}
+This is the default constructor for the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \begin{DoxyNote}{Note}
 R, G, B, and A are all set to 255 by default. 
 \end{DoxyNote}
 \begin{DoxyReturn}{Returns}
 A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct with default R, G, B, and A values. 
+\end{DoxyReturn}
+\hypertarget{structtsgl_1_1_color_int_a64b15a8e4e8fb79c13f59da83107a2ea}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!Color\+Int@{Color\+Int}}
+\index{Color\+Int@{Color\+Int}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{Color\+Int}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+Int\+::\+Color\+Int (
+\begin{DoxyParamCaption}
+\item[{int}]{v, }
+\item[{int}]{a = {\ttfamily 255}}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_a64b15a8e4e8fb79c13f59da83107a2ea}
+
+
+Basic explicit \hyperlink{structtsgl_1_1_color_int}{Color\+Int} constructor method. 
+
+This is the basic explicit constructor for the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. 
+\begin{DoxyParams}{Parameters}
+{\em v} & The value component of the color. \\
+\hline
+{\em a} & The alpha component of the struct (set to 255 by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if any of the specified values are out of the range 0 -\/ 255 inclusive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct with equal R, G, and B values set to {\ttfamily v}, and the specified A value. 
 \end{DoxyReturn}
 \hypertarget{structtsgl_1_1_color_int_a0f0dea0c416a290eb4fdaf7583e27285}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!Color\+Int@{Color\+Int}}
 \index{Color\+Int@{Color\+Int}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
@@ -90,9 +116,9 @@ A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct with default R, G, B, 
 )}\label{structtsgl_1_1_color_int_a0f0dea0c416a290eb4fdaf7583e27285}
 
 
-Explicitly constructs a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. 
+Full explicit \hyperlink{structtsgl_1_1_color_int}{Color\+Int} constructor method. 
 
-Explicit constructor for a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. 
+This is the full explicit constructor for the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. 
 \begin{DoxyParams}{Parameters}
 {\em r} & The red component of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct. \\
 \hline
@@ -112,13 +138,13 @@ A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct with the specified R, 
 
 
 \subsection{Member Function Documentation}
-\hypertarget{structtsgl_1_1_color_int_ad03b5c33b1096924e2cbeac28fe690e4}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!As\+String@{As\+String}}
-\index{As\+String@{As\+String}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
-\subsubsection[{As\+String}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string tsgl\+::\+Color\+Int\+::\+As\+String (
+\hypertarget{structtsgl_1_1_color_int_af2d134cd71ac7b14eccedca5bde627a0}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!as\+String@{as\+String}}
+\index{as\+String@{as\+String}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{as\+String}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string tsgl\+::\+Color\+Int\+::as\+String (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}\label{structtsgl_1_1_color_int_ad03b5c33b1096924e2cbeac28fe690e4}
+)}\label{structtsgl_1_1_color_int_af2d134cd71ac7b14eccedca5bde627a0}
 
 
 Returns a string representation of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int}. 
@@ -137,7 +163,18 @@ A string representation of the \hyperlink{structtsgl_1_1_color_int}{Color\+Int}.
 
 Implicit conversion from \hyperlink{structtsgl_1_1_color_int}{Color\+Int} to \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. 
 
-This defines the implicit conversion operator from an integer color type (\hyperlink{structtsgl_1_1_color_int}{Color\+Int}) to a floating point color type (\hyperlink{structtsgl_1_1_color_float}{Color\+Float}). \hypertarget{structtsgl_1_1_color_int_af83865a1b76eb8c0a5e0fe4bc34fab2d}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!operator"!=@{operator"!=}}
+This defines the implicit conversion operator from an integer color type (\hyperlink{structtsgl_1_1_color_int}{Color\+Int}) to a floating point color type (\hyperlink{structtsgl_1_1_color_float}{Color\+Float}). \hypertarget{structtsgl_1_1_color_int_acbd82ad2c6388389aa3474f042a25353}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!operator Color\+H\+S\+V@{operator Color\+H\+S\+V}}
+\index{operator Color\+H\+S\+V@{operator Color\+H\+S\+V}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{operator Color\+H\+S\+V}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+Int\+::operator {\bf Color\+H\+S\+V} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_acbd82ad2c6388389aa3474f042a25353}
+
+
+Implicit conversion from \hyperlink{structtsgl_1_1_color_int}{Color\+Int} to \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}. 
+
+This defines the implicit conversion operator from an integer color type (\hyperlink{structtsgl_1_1_color_int}{Color\+Int}) to an H\+S\+V color type (\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}). \hypertarget{structtsgl_1_1_color_int_af83865a1b76eb8c0a5e0fe4bc34fab2d}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!operator"!=@{operator"!=}}
 \index{operator"!=@{operator"!=}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
 \subsubsection[{operator"!=}]{\setlength{\rightskip}{0pt plus 5cm}bool tsgl\+::\+Color\+Int\+::operator!= (
 \begin{DoxyParamCaption}

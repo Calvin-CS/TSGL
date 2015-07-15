@@ -32,12 +32,16 @@ void \hyperlink{classtsgl_1_1_cartesian_canvas_a7f84b79ab6fd77277c5c71fce7d0ec6a
 \begin{DoxyCompactList}\small\item\em Draws a Concave polygon with colored vertices. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_abefc7f373711cdff2477d0665b37212f}{draw\+Convex\+Polygon} (int size, Decimal xverts\mbox{[}$\,$\mbox{]}, Decimal yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
 \begin{DoxyCompactList}\small\item\em Draws a convex polygon with colored vertices. \end{DoxyCompactList}\item 
-void \hyperlink{classtsgl_1_1_cartesian_canvas_aa2da030609cf410eecfc154fd67491cf}{draw\+Function} (const \hyperlink{classtsgl_1_1_function}{Function} \&function, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
+void \hyperlink{classtsgl_1_1_cartesian_canvas_aa8c215b817d95e3e05ff26f835470c41}{draw\+Function} (const \hyperlink{classtsgl_1_1_function}{Function} \&function, float sleep\+Time=0.\+0f, Color\+Float color=\+B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Plots a function on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_acf5536fbf6dca6df1fec719e13630a02}{draw\+Function} (function\+Pointer \&function, float sleep\+Time=0.\+0f, Color\+Float color=\+B\+L\+A\+C\+K)
 \begin{DoxyCompactList}\small\item\em Plots a function on the screen. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_ab2f3e7633f4f05711083eba01b0a3f4e}{draw\+Image} (std\+::string filename, Decimal x, Decimal y, Decimal w, Decimal h, float a=1.\+0f)
 \begin{DoxyCompactList}\small\item\em Draws an image. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_ace015a630f1ff280b2ecd6a864cdc5e2}{draw\+Line} (Decimal x1, Decimal y1, Decimal x2, Decimal y2, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
 \begin{DoxyCompactList}\small\item\em Draws a line. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a8b0d9607230111dd6bef5bf270394b03}{draw\+Partial\+Function} (function\+Pointer \&function, Decimal min, Decimal max, float sleep\+Time=0.\+0f, Color\+Float color=\+B\+L\+A\+C\+K)
+\begin{DoxyCompactList}\small\item\em Plots part of a function on the screen. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_ad0bdf8651a9f703cfd6f71a6bd6ffe17}{draw\+Pixel} (Decimal row, Decimal col, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
 \begin{DoxyCompactList}\small\item\em Draws a single pixel, specified in row,column format. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a2ef932501dd03f885fd0ff30ddffae01}{draw\+Point} (Decimal x, Decimal y, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K)
@@ -56,10 +60,6 @@ Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a66657636eaf20ff465898d3f93206
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s Cartesian height. \end{DoxyCompactList}\item 
 Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a829a97323261515097b7589bc96c109c}{get\+Cart\+Width} ()
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s Cartesian width. \end{DoxyCompactList}\item 
-Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_ac9bb990b8c34a1575bcb861e4b819372}{get\+Pixel\+Width} ()
-\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s effective pixel width. \end{DoxyCompactList}\item 
-Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a699c2b41b3b46bfac8649fb38b24c901}{get\+Pixel\+Height} ()
-\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s effective pixel height. \end{DoxyCompactList}\item 
 Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_ae3cbac386f78ecff082b8c4cbd9081ed}{get\+Max\+X} ()
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s right bound. \end{DoxyCompactList}\item 
 Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a68c0616f8180690423d39e9e83045b8c}{get\+Max\+Y} ()
@@ -68,6 +68,10 @@ Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a4ab031c60f6fed675e8163c30c01e
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s left bound. \end{DoxyCompactList}\item 
 Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a99c935c99c9a29f2cc918963d734d9a6}{get\+Min\+Y} ()
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s bottom bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_ac9bb990b8c34a1575bcb861e4b819372}{get\+Pixel\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s effective pixel width. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a699c2b41b3b46bfac8649fb38b24c901}{get\+Pixel\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s effective pixel height. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a8fea34cfcee9bc577c1e1ab6d28a8185}{get\+Screen\+Coordinates} (Decimal cart\+X, Decimal cart\+Y, int \&screen\+X, int \&screen\+Y)
 \begin{DoxyCompactList}\small\item\em Translates window coordinates into Cartesian coordinates. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_ac833a44fe7367f6411292707de37beef}{recompute\+Dimensions} (Decimal x\+Min, Decimal y\+Min, Decimal x\+Max, Decimal y\+Max)
@@ -323,27 +327,52 @@ The difference between a convex polygon and a concave polygon is that a convex p
 
 Identical to \hyperlink{classtsgl_1_1_canvas_a9cb84248c3559c81e4cb2e0d194b2437}{Canvas\+::draw\+Convex\+Polygon()}. 
 \end{DoxyNote}
-\hypertarget{classtsgl_1_1_cartesian_canvas_aa2da030609cf410eecfc154fd67491cf}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Function@{draw\+Function}}
+\hypertarget{classtsgl_1_1_cartesian_canvas_aa8c215b817d95e3e05ff26f835470c41}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Function@{draw\+Function}}
 \index{draw\+Function@{draw\+Function}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
 \subsubsection[{draw\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::draw\+Function (
 \begin{DoxyParamCaption}
 \item[{const {\bf Function} \&}]{function, }
+\item[{float}]{sleep\+Time = {\ttfamily 0.0f}, }
 \item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
 \end{DoxyParamCaption}
-)}\label{classtsgl_1_1_cartesian_canvas_aa2da030609cf410eecfc154fd67491cf}
+)}\label{classtsgl_1_1_cartesian_canvas_aa8c215b817d95e3e05ff26f835470c41}
 
 
 Plots a function on the screen. 
 
-This function receives a \hyperlink{classtsgl_1_1_function}{Function} as a parameter and plots the function on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+This function receives a T\+S\+G\+L \hyperlink{classtsgl_1_1_function}{Function} instance as a parameter and plots the function on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
 \begin{DoxyParams}{Parameters}
 {\em function} & Reference to the \hyperlink{classtsgl_1_1_function}{Function} to plot. \\
+\hline
+{\em sleep\+Time} & Time to sleep between plotting points \\
+\hline
+{\em color} & The color of the vertices of the plotted function (set to B\+L\+A\+C\+K by default). \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_cartesian_canvas_acf5536fbf6dca6df1fec719e13630a02}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Function@{draw\+Function}}
+\index{draw\+Function@{draw\+Function}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{draw\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::draw\+Function (
+\begin{DoxyParamCaption}
+\item[{function\+Pointer \&}]{function, }
+\item[{float}]{sleep\+Time = {\ttfamily 0.0f}, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_acf5536fbf6dca6df1fec719e13630a02}
+
+
+Plots a function on the screen. 
+
+This function receives a pointer to a function method as a parameter and plots the function on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\begin{DoxyParams}{Parameters}
+{\em function} & Pointer to the function-\/drawing method to plot. \\
+\hline
+{\em sleep\+Time} & Time to sleep between plotting points \\
 \hline
 {\em color} & The color of the vertices of the plotted function (set to B\+L\+A\+C\+K by default). \\
 \hline
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
-The passed function must receive exactly one Decimal x parameter, and return a Decimal y parameter. 
+{\ttfamily function} must receive exactly one Decimal x parameter, and return a Decimal y parameter. 
 \end{DoxyNote}
 \hypertarget{classtsgl_1_1_cartesian_canvas_ab2f3e7633f4f05711083eba01b0a3f4e}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Image@{draw\+Image}}
 \index{draw\+Image@{draw\+Image}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
@@ -412,7 +441,42 @@ Identical to \hyperlink{classtsgl_1_1_canvas_a6e5c605b03a69e615fe4ccee30be1959}{
 \end{DoxyNote}
 
 
-Referenced by draw\+Axes().
+Referenced by draw\+Axes(), draw\+Function(), and draw\+Partial\+Function().
+
+\hypertarget{classtsgl_1_1_cartesian_canvas_a8b0d9607230111dd6bef5bf270394b03}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Partial\+Function@{draw\+Partial\+Function}}
+\index{draw\+Partial\+Function@{draw\+Partial\+Function}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{draw\+Partial\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::draw\+Partial\+Function (
+\begin{DoxyParamCaption}
+\item[{function\+Pointer \&}]{function, }
+\item[{Decimal}]{min, }
+\item[{Decimal}]{max, }
+\item[{float}]{sleep\+Time = {\ttfamily 0.0f}, }
+\item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_a8b0d9607230111dd6bef5bf270394b03}
+
+
+Plots part of a function on the screen. 
+
+This function receives a pointer to a function method as a parameter and plots the function on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} between the specified minimum and maximum coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em function} & Pointer to the function-\/drawing method to plot. \\
+\hline
+{\em min} & Minimum x value to evaluate and plot \\
+\hline
+{\em max} & Maximum x value to evaluate and plot \\
+\hline
+{\em sleep\+Time} & Time to sleep between plotting points \\
+\hline
+{\em color} & The color of the vertices of the plotted function (set to B\+L\+A\+C\+K by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+{\ttfamily function} must receive exactly one Decimal x parameter, and return a Decimal y parameter. 
+\end{DoxyNote}
+
+
+Referenced by draw\+Function().
 
 \hypertarget{classtsgl_1_1_cartesian_canvas_ad0bdf8651a9f703cfd6f71a6bd6ffe17}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Pixel@{draw\+Pixel}}
 \index{draw\+Pixel@{draw\+Pixel}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
@@ -422,7 +486,7 @@ Referenced by draw\+Axes().
 \item[{Decimal}]{col, }
 \item[{{\bf Color\+Float}}]{color = {\ttfamily BLACK}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtsgl_1_1_cartesian_canvas_ad0bdf8651a9f703cfd6f71a6bd6ffe17}
+)}\label{classtsgl_1_1_cartesian_canvas_ad0bdf8651a9f703cfd6f71a6bd6ffe17}
 
 
 Draws a single pixel, specified in row,column format. 
@@ -782,7 +846,7 @@ Translates window coordinates into Cartesian coordinates.
 \end{DoxyParams}
 
 
-Referenced by draw\+Circle(), draw\+Colored\+Polygon(), draw\+Concave\+Polygon(), draw\+Convex\+Polygon(), draw\+Function(), draw\+Image(), draw\+Line(), draw\+Point(), draw\+Rectangle(), draw\+Text(), and draw\+Triangle().
+Referenced by draw\+Circle(), draw\+Colored\+Polygon(), draw\+Concave\+Polygon(), draw\+Convex\+Polygon(), draw\+Function(), draw\+Image(), draw\+Line(), draw\+Partial\+Function(), draw\+Point(), draw\+Rectangle(), draw\+Text(), and draw\+Triangle().
 
 \hypertarget{classtsgl_1_1_cartesian_canvas_ac833a44fe7367f6411292707de37beef}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!recompute\+Dimensions@{recompute\+Dimensions}}
 \index{recompute\+Dimensions@{recompute\+Dimensions}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}

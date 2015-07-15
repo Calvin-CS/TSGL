@@ -18,18 +18,16 @@ Draws and updates a progress bar.
 \begin{DoxyCompactList}\small\item\em \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar} destructor method. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_progress_bar_a4274998e4935f33eb9212b2174d9c0c5}{update} (float new\+Value, int segnum=-\/1)
 \begin{DoxyCompactList}\small\item\em Updates a \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar} segment with a new value. \end{DoxyCompactList}\item 
-int \hyperlink{classtsgl_1_1_progress_bar_a25576903783f18f8d74570aed2f80d95}{get\+Segs} ()
-\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}\textquotesingle{}s number of segments. \end{DoxyCompactList}\item 
-\hypertarget{classtsgl_1_1_progress_bar_a7ecdc35e44496db7cf2e25b2ee6577d4}{}int {\bfseries get\+Seg\+X} (int i)\label{classtsgl_1_1_progress_bar_a7ecdc35e44496db7cf2e25b2ee6577d4}
-
-\item 
-\hypertarget{classtsgl_1_1_progress_bar_a7efb6be08196ad2b48d4417a93d750ad}{}int {\bfseries get\+Seg\+Y} ()\label{classtsgl_1_1_progress_bar_a7efb6be08196ad2b48d4417a93d750ad}
-
-\item 
+\hyperlink{classtsgl_1_1_polyline}{Polyline} $\ast$ \hyperlink{classtsgl_1_1_progress_bar_ac2b51bdb0d19afaa03d60a9928fc873f}{get\+Border} (int index)
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}\textquotesingle{}s representative \hyperlink{classtsgl_1_1_polyline}{Polyline} array. \end{DoxyCompactList}\item 
 \hyperlink{classtsgl_1_1_rectangle}{Rectangle} $\ast$ \hyperlink{classtsgl_1_1_progress_bar_aa360099f70e0c33c99f349cf28cbe610}{get\+Rect} (int index)
 \begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}\textquotesingle{}s representative \hyperlink{classtsgl_1_1_rectangle}{Rectangle} array. \end{DoxyCompactList}\item 
-\hyperlink{classtsgl_1_1_polyline}{Polyline} $\ast$ \hyperlink{classtsgl_1_1_progress_bar_ac2b51bdb0d19afaa03d60a9928fc873f}{get\+Border} (int index)
-\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}\textquotesingle{}s representative \hyperlink{classtsgl_1_1_polyline}{Polyline} array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int \hyperlink{classtsgl_1_1_progress_bar_a25576903783f18f8d74570aed2f80d95}{get\+Segs} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}\textquotesingle{}s number of segments. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_progress_bar_a7ecdc35e44496db7cf2e25b2ee6577d4}{get\+Seg\+X} (int i)
+\begin{DoxyCompactList}\small\item\em Accessor for a segment\textquotesingle{}s x position. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_progress_bar_a7efb6be08196ad2b48d4417a93d750ad}{get\+Seg\+Y} ()
+\begin{DoxyCompactList}\small\item\em Accessor for a segment\textquotesingle{}s y position. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -150,6 +148,47 @@ Accessor for the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}\textquote
 
 \begin{DoxyReturn}{Returns}
 The number of segments in the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}. 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Canvas\+::draw\+Progress().
+
+\hypertarget{classtsgl_1_1_progress_bar_a7ecdc35e44496db7cf2e25b2ee6577d4}{}\index{tsgl\+::\+Progress\+Bar@{tsgl\+::\+Progress\+Bar}!get\+Seg\+X@{get\+Seg\+X}}
+\index{get\+Seg\+X@{get\+Seg\+X}!tsgl\+::\+Progress\+Bar@{tsgl\+::\+Progress\+Bar}}
+\subsubsection[{get\+Seg\+X}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Progress\+Bar\+::get\+Seg\+X (
+\begin{DoxyParamCaption}
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtsgl_1_1_progress_bar_a7ecdc35e44496db7cf2e25b2ee6577d4}
+
+
+Accessor for a segment\textquotesingle{}s x position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Index of the segment \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The x-\/coordinate of the left edge of segment {\ttfamily i} in the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}. 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Canvas\+::draw\+Progress().
+
+\hypertarget{classtsgl_1_1_progress_bar_a7efb6be08196ad2b48d4417a93d750ad}{}\index{tsgl\+::\+Progress\+Bar@{tsgl\+::\+Progress\+Bar}!get\+Seg\+Y@{get\+Seg\+Y}}
+\index{get\+Seg\+Y@{get\+Seg\+Y}!tsgl\+::\+Progress\+Bar@{tsgl\+::\+Progress\+Bar}}
+\subsubsection[{get\+Seg\+Y}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Progress\+Bar\+::get\+Seg\+Y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtsgl_1_1_progress_bar_a7efb6be08196ad2b48d4417a93d750ad}
+
+
+Accessor for a segment\textquotesingle{}s y position. 
+
+\begin{DoxyReturn}{Returns}
+The y-\/coordinate of the top edge of the \hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}. 
 \end{DoxyReturn}
 
 
