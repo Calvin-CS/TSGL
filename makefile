@@ -96,7 +96,6 @@ BINARIES= \
 	bin/testProjectiles \
 	bin/testScreenshot \
 	bin/testSeaUrchin \
-	bin/testShadedVoronoi \
 	bin/testSmartSort \
 	bin/testSpectrogram \
 	bin/testSpectrum \
@@ -141,9 +140,8 @@ lib/libtsgl.a: ${OBJS}
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
 bin/testLangton: ${LANGTON_DEPS}
 
-#Voronois
-bin/testVoronoi: build/tests/Voronoi/Voronoi.o
-bin/testShadedVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
+#Voronoi
+bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 
 #Fractals
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
