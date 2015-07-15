@@ -13,7 +13,7 @@
 
 /*!
  * class Paddle
- * \brief How can you hit the ball without a paddle?
+ * \brief How can you hit a ball without a paddle?
  * \details Creates a Paddle in order to play the game, Pong.
  * \details The W and S keys move the left paddle, the Up and Down arrow keys move the right paddle in the game.
  * \details Collisions with the ball are not handled here; they are handled in the Pong class' draw() method.
