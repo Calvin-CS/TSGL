@@ -4,8 +4,8 @@
  *  Created on: Apr 23, 2015
  */
 
-#ifndef INTEGRAL_H_
-#define INTEGRAL_H_
+#ifndef INTEGRALVIEWER_H_
+#define INTEGRALVIEWER_H_
 
 #include <string>
 #include <omp.h>
@@ -13,7 +13,7 @@
 #include <sstream>
 #include "Util.h"  //Decimal typedef
 
-using namespace tsgl;
+namespace tsgl {
 
 /*! \class IntegralViewer
  *  \brief Provides a a tool for computing and visualizing integrals of functions
@@ -90,5 +90,7 @@ public:
   long double trapezoidEvaluate(long long numTrapezoids);
 };
 
-#endif /* INTEGRAL_H_ */
+}
+
+#endif /* INTEGRALVIEWER_H_ */
 

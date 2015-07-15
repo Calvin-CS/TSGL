@@ -1,6 +1,6 @@
 #include "IntegralViewer.h"
 
-using namespace tsgl;
+namespace tsgl {
 
 IntegralViewer::IntegralViewer(functionPointer f, int width, int height, Decimal startX, Decimal stopX, Decimal startY, Decimal stopY, std::string fname) {
   myF = f;
@@ -122,3 +122,4 @@ long double IntegralViewer::trapezoidEvaluate(long long numTrapezoids) {
   return result;
 }
 
+}
