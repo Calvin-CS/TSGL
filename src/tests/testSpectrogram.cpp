@@ -34,6 +34,7 @@ void spectrogramFunction(Canvas& can, std::string fname) {
         }
       }
     }
+    can.sleepFor(FRAME);
     can.drawImage(fname, 0, 0, cww, cwh);
     sp.finish();
 }
