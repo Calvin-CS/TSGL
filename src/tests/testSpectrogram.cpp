@@ -5,6 +5,16 @@
 #include <tsgl.h>
 using namespace tsgl;
 
+/*!
+ * \brief Displays a spectrogram.
+ * \details Shows a spectrogram for the colors of a chosen photo.
+ * - The window width and height are stored for ease of use.
+ * - The image is drawn onto the Canvas.
+ * - A Spectrogram object is created which will display the spectrogram.
+ * - A parallel block is created and the process is forked.
+ * - The thread id and the actual number of threads spawned are stored.
+ * -
+ */
 void spectrogramFunction(Canvas& can, std::string fname) {
     const int cww = can.getWindowWidth(), cwh = can.getWindowHeight();
     can.drawImage(fname, 0, 0, cww, cwh);
@@ -38,6 +48,7 @@ void spectrogramFunction(Canvas& can, std::string fname) {
     sp.finish();
 }
 
+//Takes command-line arguments for the file name of the picture to use in the spectrogram function
 int main(int argc, char* argv[]) {
     std::string fname = argc > 1 ? argv[1] : "../assets/pics/colorful_cars.jpg";
     int w, h;

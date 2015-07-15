@@ -31,9 +31,9 @@ using namespace tsgl;
  * - Generate a nice color based on the thread's id.
  * - Set a grayscale color variable to 0.
  * - For each row:
- *   - Set a buffer index variable based on the row and column ( times 3 colors ).
  *   - For each column:
- *     - Set the gray color variable to the average of the RGB components.
+ *     - Get the pixel color of a point of the Canvas.
+ *     - Set a gray color variable to the average of the RGB components.
  *     - Draw the grayed point over the old point, and increment the index by one pixel.
  *     .
  *   - Break if the Canvas was closed.
@@ -71,7 +71,7 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
 
     for (unsigned int y = row; y < row + blocksize; y++) {
       for (unsigned int x = 0; x < ww; x++) {
-		ColorInt pixelColor = can.getPoint(x, y);
+		    ColorInt pixelColor = can.getPoint(x, y);
         int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
         can.drawPoint(x, y, ColorInt(gray, gray, gray));
       }
