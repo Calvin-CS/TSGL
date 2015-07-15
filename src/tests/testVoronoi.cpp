@@ -1,11 +1,7 @@
-/*
- * testVoronoi.cpp
- *
- *  Created on: May 27, 2015
- *      Author: cpd5
- */
+/* testVoronoi.cpp contains multiple functions that display a Voronoi diagram in similar fashions. */
 
 #include "Voronoi/Voronoi.h"
+#include "Voronoi/ShadedVoronoi.h"
 
 using namespace tsgl;
 
@@ -59,16 +55,45 @@ void voronoiFunction(Canvas& can) {
   v1.draw(can);      //Draw it on the Canvas
 }
 
+/*!
+ * \brief Draws a randomly generated Voronoi diagram with fancy shading.
+ * \details Same principle as voronoiFunction(). Also has a class.
+ * - Key differences:
+ * - We keep track of the second best distance to each point in \b nbdist.
+ * - We keep track of the kvalues of each 2nd best point in the array \b kvalue2.
+ * - In a second post-processing loop through the screen:
+ *   - Find the closest and 2nd closest control points to each pixel.
+ *   - Find the distance from the pixel to the closest control point and store it in: \b d1.
+ *   - Find the distance from the closest to the 2nd closest control point and store it in: \b kd.
+ *   - Set \b shading to ( \b d1 / \b kd ).
+ *   - Bind \b shading between 0 and 1, and shade the pixel with \b shading.
+ *   - Break if the Canvas is closed.
+ *   .
+ * .
+ * \param can Reference to the Canvas being drawn to.
+ */
+void shadedVoronoiFunction(Canvas& can) {
+  ShadedVoronoi s1(can);
+  s1.draw(can);
+}
+
 //Takes command line arguments for the width and height of the window
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
+  //Normal Voronoi
+  std::cout << "Regular Voronoi" << std::endl;
   Canvas c18(-1, -1, w, h, "Voronoi");
   c18.setBackgroundColor(WHITE);
   c18.start();
   voronoiFunction(c18);
   c18.wait();
+  std::cout << "Special Voronoi" << std::endl;
+  Canvas c19(-1, -1, w, h, "Shaded Voronoi");
+  c19.setBackgroundColor(WHITE);
+  c19.start();
+  shadedVoronoiFunction(c19);
+  c19.wait();
 }
-
