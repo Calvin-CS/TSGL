@@ -5,7 +5,7 @@ var searchData=
   ['recordfornumframes',['recordForNumFrames',['../classtsgl_1_1_canvas.html#a47436daa39473ddb4044bac7b3b27151',1,'tsgl::Canvas']]],
   ['rectangle',['Rectangle',['../classtsgl_1_1_rectangle.html',1,'tsgl']]],
   ['rectangle',['Rectangle',['../classtsgl_1_1_rectangle.html#a1fb2a492ffc57b2da380ea23d89e887b',1,'tsgl::Rectangle']]],
-  ['rectangleevaluate',['rectangleEvaluate',['../class_integral_viewer.html#adbc445570ed3ba2d6bf18404b972a633',1,'IntegralViewer']]],
+  ['rectangleevaluate',['rectangleEvaluate',['../classtsgl_1_1_integral_viewer.html#a213d814ac293686ecd06c45344fa242f',1,'tsgl::IntegralViewer']]],
   ['reset',['reset',['../classtsgl_1_1_canvas.html#ada6403439b583910d27e497148da5f2e',1,'tsgl::Canvas::reset()'],['../classtsgl_1_1_cartesian_canvas.html#a735ebb290eb1be110b3f7bb033018a21',1,'tsgl::CartesianCanvas::reset()'],['../classtsgl_1_1_timer.html#a67a01c03c033c52056b7f1c733cd93e4',1,'tsgl::Timer::reset()'],['../classtsgl_1_1_visual_task_queue.html#a1cd23a5361c0209ac950db6afcd68a19',1,'tsgl::VisualTaskQueue::reset()']]],
   ['resumedrawing',['resumeDrawing',['../classtsgl_1_1_canvas.html#a56bf3c6e4eb7b06015d1c115aaa143f8',1,'tsgl::Canvas']]],
   ['roundfunction',['RoundFunction',['../classtsgl_1_1_round_function.html',1,'tsgl']]],

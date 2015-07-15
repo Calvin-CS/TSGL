@@ -1506,7 +1506,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>Accessor for window's closed status. </p>
 <dl class="section return"><dt>Returns</dt><dd>Whether the window is still open (that is, the user has not closed it). </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#aa8c215b817d95e3e05ff26f835470c41">tsgl::CartesianCanvas::drawFunction()</a>, and <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a8b0d9607230111dd6bef5bf270394b03">tsgl::CartesianCanvas::drawPartialFunction()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#aa8c215b817d95e3e05ff26f835470c41">tsgl::CartesianCanvas::drawFunction()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a8b0d9607230111dd6bef5bf270394b03">tsgl::CartesianCanvas::drawPartialFunction()</a>, <a class="el" href="classtsgl_1_1_integral_viewer.html#a213d814ac293686ecd06c45344fa242f">tsgl::IntegralViewer::rectangleEvaluate()</a>, <a class="el" href="classtsgl_1_1_integral_viewer.html#a485bd58c87267460baf013cdf786eae7">tsgl::IntegralViewer::trapezoidEvaluate()</a>, and <a class="el" href="classtsgl_1_1_integral_viewer.html#a50961f189bd1988fb9b96b66b701fdf2">tsgl::IntegralViewer::~IntegralViewer()</a>.</p>
 
 </div>
 </div>
@@ -2038,7 +2038,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>Begins the process of closing the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. </p>
 <p>This function calls <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a> followed by <a class="el" href="classtsgl_1_1_canvas.html#a39e69fd4d1ad8cf0e22ecea12f1ddf08" title="Waits for the user to close the Canvas. ">wait()</a> to gracefully close the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> at the earliest available opportunity. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#a654315f9b08a9b3b072eebf4b4d8ae89" title="Opens the Canvas. ">start()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a39e69fd4d1ad8cf0e22ecea12f1ddf08" title="Waits for the user to close the Canvas. ">wait()</a>, <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a> </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, and <a class="el" href="classtsgl_1_1_canvas.html#a3365d92635f650cca2eda69812bef60b">runTests()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a3365d92635f650cca2eda69812bef60b">runTests()</a>, and <a class="el" href="classtsgl_1_1_integral_viewer.html#a50961f189bd1988fb9b96b66b701fdf2">tsgl::IntegralViewer::~IntegralViewer()</a>.</p>
 
 </div>
 </div>
@@ -2096,7 +2096,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>This function blocks the calling thread until the user closes the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or until <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a> is called. This function has no effect if the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> has not started. </p><dl class="section return"><dt>Returns</dt><dd>0 if exit is successful, -1 if the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> has not started yet. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#a654315f9b08a9b3b072eebf4b4d8ae89" title="Opens the Canvas. ">start()</a>, end(), <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c" title="Begins the process of closing the Canvas. ">stop()</a>. </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>, <a class="el" href="classtsgl_1_1_spectrogram.html#a9e6eb0489ee0fb9f96b2a5202868a1c2">tsgl::Spectrogram::finish()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, and <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c">stop()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>, <a class="el" href="classtsgl_1_1_spectrogram.html#a9e6eb0489ee0fb9f96b2a5202868a1c2">tsgl::Spectrogram::finish()</a>, <a class="el" href="classtsgl_1_1_integral_viewer.html#a213d814ac293686ecd06c45344fa242f">tsgl::IntegralViewer::rectangleEvaluate()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c">stop()</a>, and <a class="el" href="classtsgl_1_1_integral_viewer.html#a485bd58c87267460baf013cdf786eae7">tsgl::IntegralViewer::trapezoidEvaluate()</a>.</p>
 
 </div>
 </div>
@@ -2107,7 +2107,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 15 2015 13:33:43 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jul 15 2015 13:52:23 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

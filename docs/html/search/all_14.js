@@ -6,7 +6,7 @@ var searchData=
   ['_7econcavepolygon',['~ConcavePolygon',['../classtsgl_1_1_concave_polygon.html#ae1465a7135bb7ef4aa00584fa63b2530',1,'tsgl::ConcavePolygon']]],
   ['_7econvexpolygon',['~ConvexPolygon',['../classtsgl_1_1_convex_polygon.html#a46a5bde76d6843d47c754a04cc847e64',1,'tsgl::ConvexPolygon']]],
   ['_7efunction',['~Function',['../classtsgl_1_1_function.html#a3b8cbd26a32c6ae75b12e7397bb42c41',1,'tsgl::Function']]],
-  ['_7eintegralviewer',['~IntegralViewer',['../class_integral_viewer.html#ab7a08c6cd6c29ad8eea8e7775ca27e1a',1,'IntegralViewer']]],
+  ['_7eintegralviewer',['~IntegralViewer',['../classtsgl_1_1_integral_viewer.html#a50961f189bd1988fb9b96b66b701fdf2',1,'tsgl::IntegralViewer']]],
   ['_7epolyline',['~Polyline',['../classtsgl_1_1_polyline.html#a5e186f8a65dae833d123480552b0eaad',1,'tsgl::Polyline']]],
   ['_7eprogressbar',['~ProgressBar',['../classtsgl_1_1_progress_bar.html#aa3ad600db2cbd0e8f9221c264535df21',1,'tsgl::ProgressBar']]],
   ['_7eshape',['~Shape',['../classtsgl_1_1_shape.html#aa9bfac883a0748471600fe9752e85948',1,'tsgl::Shape']]],
