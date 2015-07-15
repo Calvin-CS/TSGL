@@ -26,9 +26,9 @@ typedef CartesianCanvas Cart;
 
 /*!
  * \var complex
- * \brief Typedef for std::complex<long double>.
+ * \brief Typedef for std::complex<Decimal>.
  */
-typedef std::complex<long double> complex;
+typedef std::complex<Decimal> complex;
 
 /*!
  * \class Mandelbrot

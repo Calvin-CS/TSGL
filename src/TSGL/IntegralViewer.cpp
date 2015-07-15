@@ -66,7 +66,7 @@ long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
               halfRecWidth = recWidth / 2.0;
   #pragma omp parallel reduction(+:result)
   {
-    long double xLo = 0.0, xMid = 0.0, y = 0.0;
+    Decimal xLo = 0.0, xMid = 0.0, y = 0.0;
     ColorFloat tcol = Colors::highContrastColor(omp_get_thread_num());
     tcol.A = 0.7f;
 
@@ -94,8 +94,8 @@ long double IntegralViewer::trapezoidEvaluate(long long numTrapezoids) {
               halfTrapWidth = trapWidth / 2.0;
   #pragma omp parallel reduction(+:result)
   {
-    long double leftX = 0.0, rightX = 0.0, leftY = 0.0, rightY = 0.0;
-    long double xValues[4] = {0.0}, yValues[4] = {0.0};
+    Decimal leftX = 0.0, rightX = 0.0, leftY = 0.0, rightY = 0.0;
+    Decimal xValues[4] = {0.0}, yValues[4] = {0.0};
     ColorFloat tcol = Colors::highContrastColor(omp_get_thread_num());
     tcol.A = 0.7;
     ColorFloat colorValues[4] = {tcol, tcol, tcol, tcol};
