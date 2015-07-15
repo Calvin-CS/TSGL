@@ -262,7 +262,6 @@ public:
  *   to the mouse).
  * - While the Canvas is open:
  *   - Sleep the internal timer until the next draw cycle.
- *   - Clear the Canvas.
  *   - Animate the balls and have them bounce off of one another.
  *   .
  * .
