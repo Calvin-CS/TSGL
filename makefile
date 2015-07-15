@@ -62,7 +62,6 @@ DEPFLAGS=-MMD -MP
 BINARIES= \
 	bin/testAlphaRectangle \
 	bin/testBallroom \
-	bin/testBuddhabrot \
 	bin/testCalcPi \
 	bin/testColorPoints \
 	bin/testColorWheel \
@@ -73,7 +72,6 @@ BINARIES= \
 	bin/testForestFire \
 	bin/testFunction \
 	bin/testGetPixels \
-	bin/testGradientMandelbrot \
 	bin/testGradientWheel \
 	bin/testGraydient \
 	bin/testGreyscale \
@@ -81,7 +79,6 @@ BINARIES= \
 	bin/testImage \
 	bin/testImageCart \
 	bin/testInverter \
-	bin/testJulia \
 	bin/testLangton \
 	bin/testLineChain \
 	bin/testLineFan \
@@ -144,11 +141,10 @@ bin/testLangton: ${LANGTON_DEPS}
 bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 
 #Fractals
-bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
-bin/testJulia: build/tests/Mandelbrot/Julia.o
-bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o
-bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/Buddhabrot.o
-
+bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
+                    build/tests/Mandelbrot/GradientMandelbrot.o \
+                    build/tests/Mandelbrot/Buddhabrot.o \
+					build/tests/Mandelbrot/Julia.o
 #Other
 bin/testConway: build/tests/Conway/LifeFarm.o
 bin/testInverter: build/tests/ImageInverter/ImageInverter.o

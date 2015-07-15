@@ -91,6 +91,7 @@ int main(int argc, char* argv[]) {
   voronoiFunction(c18);
   c18.wait();
   std::cout << "Special Voronoi" << std::endl;
+  //Shaded Voronoi
   Canvas c19(-1, -1, w, h, "Shaded Voronoi");
   c19.setBackgroundColor(WHITE);
   c19.start();

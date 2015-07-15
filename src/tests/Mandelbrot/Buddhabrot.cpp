@@ -103,7 +103,7 @@ void Buddhabrot::draw(Cart& can) {
       for (int i = omp_get_thread_num(); i < cwh; i += omp_get_num_threads())
         for (int j = 0; j < cww; ++j) {
           float normalize = sqrt((float)counter[i][j]/maxIts);
-          can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j)*normalize);
+          can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j) * normalize);
         }
     }
     while (can.getIsOpen() && !myRedraw)
