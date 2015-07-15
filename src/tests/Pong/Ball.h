@@ -10,6 +10,8 @@
 
 #include <tsgl.h>
 
+using namespace tsgl;
+
 /*!
  * class Ball
  * \brief We can't play Pong without a Ball!

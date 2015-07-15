@@ -13,6 +13,8 @@
 #include <omp.h>                // OpenMP functions
 #include <tsgl.h>               // IntegralViewer
 
+using namespace tsgl;
+
 /*!
  * \brief Compute a Unit circle.
  * \details

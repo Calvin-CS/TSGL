@@ -11,6 +11,8 @@
 #include <tsgl.h>
 #include "Ball.h"
 
+using namespace tsgl;
+
 /*!
  * class Paddle
  * \brief How can you hit a ball without a paddle?
