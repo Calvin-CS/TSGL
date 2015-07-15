@@ -117,21 +117,18 @@ void Canvas::draw() {
 
 
     setBackgroundColor(bgcolor); //Set our initial clear / background color
-
     glClear(GL_COLOR_BUFFER_BIT);
     glfwSwapBuffers(window);
-
     readyToDraw = true;
+    bool nothingDrawn = false;  //Always draw the first frame
 
     // Start the drawing loop
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
-        //std::cout << "Begin" << std::endl;
         drawTimer->sleep(true);
 
         syncMutex.lock();
 
       #ifdef __APPLE__
-        //std::cout << "End" << std::endl;
         windowMutex.lock();
       #endif
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
@@ -140,14 +137,12 @@ void Canvas::draw() {
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
         std::cout.flush();
 
-		bool nothingDrawn = true;
-
         bufferMutex.lock();  // Time to flush our buffer
         if (myBuffer->size() > 0) {     // But only if there is anything to flush
-			nothingDrawn = false;
-            for (unsigned int i = 0; i < myBuffer->size(); i++)
-              myShapes->push((*myBuffer)[i]);
-            myBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
+          nothingDrawn = false;
+          for (unsigned int i = 0; i < myBuffer->size(); i++)
+            myShapes->push((*myBuffer)[i]);
+          myBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
         }
         bufferMutex.unlock();
 
@@ -155,91 +150,92 @@ void Canvas::draw() {
         int posLast = pointLastPosition;
         pointLastPosition = pos;
 
-		if (loopAround || pos != posLast)
-			nothingDrawn = false;
+        if (loopAround || pos != posLast)
+          nothingDrawn = false;
 
-		if (!nothingDrawn || frameCounter == 0) {
+        if (!nothingDrawn) {
 
-			//if (toClear) glClear(GL_COLOR_BUFFER_BIT);
+          if (hasEXTFramebuffer)
+            glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+          else
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+          glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
-			if (hasEXTFramebuffer)
-			  glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-			else
-			  glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-			glDrawBuffer(GL_COLOR_ATTACHMENT0);
+          glViewport(0,0,winWidth,winHeight);
 
-			glViewport(0,0,winWidth,winHeight);
+          if (toClear) glClear(GL_COLOR_BUFFER_BIT);
+          toClear = false;
 
-			if (toClear) glClear(GL_COLOR_BUFFER_BIT);
-			toClear = false;
+          unsigned int size = myShapes->size();
+          for (unsigned int i = 0; i < size; i++) {
+            Shape* s = (*myShapes)[i];
+            if (!s->getIsTextured()) {
+              s->draw();  // Iterate through our queue until we've made it to the end
+            } else {
+              textureShaders(true);
+              s->draw();
+              textureShaders(false);
+            }
+          }
 
-			unsigned int size = myShapes->size();
-			for (unsigned int i = 0; i < size; i++) {
-				Shape* s = (*myShapes)[i];
-				if (!s->getIsTextured()) {
-					s->draw();  // Iterate through our queue until we've made it to the end
-				} else {
-					textureShaders(true);
-					s->draw();
-					textureShaders(false);
-				}
-			}
+          if (loopAround) {
+            nothingDrawn = false;
+            int toend = myShapes->capacity() - posLast;
+            glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
+                   &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+            glDrawArrays(GL_POINTS, 0, toend);
+            posLast = 0;
+            loopAround = false;
+          }
+          int pbsize = pos - posLast;
+          if (pbsize > 0) {
+            nothingDrawn = false;
+            glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+            glDrawArrays(GL_POINTS, 0, pbsize);
+          }
+        }
 
-			if (loopAround) {
-				nothingDrawn = false;
-				int toend = myShapes->capacity() - posLast;
-				glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
-							 &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-				glDrawArrays(GL_POINTS, 0, toend);
-				posLast = 0;
-				loopAround = false;
-			}
-			int pbsize = pos - posLast;
-			if (pbsize > 0) {
-				nothingDrawn = false;
-				glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-				glDrawArrays(GL_POINTS, 0, pbsize);
-			}
+        // Reset drawn status for the next frame
+        nothingDrawn = true;
 
-			// Update our screenBuffer copy with the screen
-			glViewport(0,0,winWidth*scaling,winHeight*scaling);
-			myShapes->clear();                           // Clear our buffer of shapes to be drawn
+        // Update our screenBuffer copy with the screen
+        glViewport(0,0,winWidth*scaling,winHeight*scaling);
+        myShapes->clear();                           // Clear our buffer of shapes to be drawn
 
-			if (hasEXTFramebuffer)
-			  glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-			else
-			  glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-			glReadBuffer(GL_COLOR_ATTACHMENT0);
+        if (hasEXTFramebuffer)
+          glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+        else
+          glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+        glReadBuffer(GL_COLOR_ATTACHMENT0);
 
-			glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-			if (toRecord > 0) {
-			  screenShot();
-			  --toRecord;
-			}
+        glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+        if (toRecord > 0) {
+          screenShot();
+          --toRecord;
+        }
 
-			glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
-			glDrawBuffer(drawBuffer);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
+        glDrawBuffer(drawBuffer);
 
-			textureShaders(true);
-			const float vertices[32] = {
-				0,       0,        1,1,1,1,0,1,
-				winWidth,0,        1,1,1,1,1,1,
-				0,       winHeight,1,1,1,1,0,0,
-				winWidth,winHeight,1,1,1,1,1,0
-			};
-			glBindTexture(GL_TEXTURE_2D,renderedTexture);
-			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
-			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-			glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
-			glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-			glFlush();                                   // Flush buffer data to the actual draw buffer
-			glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
-		}
+        textureShaders(true);
+        const float vertices[32] = {
+          0,       0,        1,1,1,1,0,1,
+          winWidth,0,        1,1,1,1,1,1,
+          0,       winHeight,1,1,1,1,0,0,
+          winWidth,winHeight,1,1,1,1,1,0
+        };
+        glBindTexture(GL_TEXTURE_2D,renderedTexture);
+        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
+        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+        glFlush();                                   // Flush buffer data to the actual draw buffer
+        glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
 
-		textureShaders(false);
+        textureShaders(false);
 
       #ifndef __APPLE__
         glfwPollEvents();                            // Handle any I/O
@@ -816,11 +812,12 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
 void Canvas::pauseDrawing() {
   #pragma omp critical (pauseResume)
   {
-    if (syncMutexLocked == 0) {
+    if (syncMutexLocked == 0 && syncMutexOwner == -1) {
       syncMutex.lock();
       syncMutexOwner = omp_get_thread_num();
     }
-    ++syncMutexLocked;
+    #pragma omp atomic
+      ++syncMutexLocked;
   }
 }
 
