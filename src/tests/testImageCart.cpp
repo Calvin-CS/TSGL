@@ -21,10 +21,10 @@ void imageCartFunction(Cart& can) {
     can.drawImage("../assets/pics/ship.bmp", 2, 3, 2, 1.5);
     can.drawImage("../assets/pics/shiprgb.bmp", 4, 3, 2, 1.5);
     can.drawImage("../assets/pics/sky_main.jpg", 0, 1.5, 2, 1.5);
-    can.drawImage("../assets/pics/Captain-falcon.png", 2, 1.5, 2, 1.5);
-    can.drawImage("../assets/pics/mini.jpg", 4, 1.5, 2, 1.5);
+    can.drawImage("../assets/pics/cow.jpg", 2, 1.5, 2, 1.5);
+    can.drawImage("../assets/pics/colorfulKeyboard.jpg", 4, 1.5, 2, 1.5);
 
-    can.drawImage("../assets/pics/bestpicture.png", 1, 3, 4, 3, 0.25f);    //ALPHA
+    can.drawImage("../assets/pics/colorful-cars-circle.jpg", 1, 3, 4, 3, 0.25f);    //ALPHA
 }
 
 int main() {

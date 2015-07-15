@@ -23,10 +23,10 @@ void imageFunction(Canvas& can) {
     can.drawImage("../assets/pics/ship.bmp", ww, 0, ww, hh);
     can.drawImage("../assets/pics/shiprgb.bmp", ww*2, 0, ww, hh);
     can.drawImage("../assets/pics/sky_main.jpg", 0, hh, ww, hh);
-    can.drawImage("../assets/pics/Captain-falcon.png", ww, hh, ww, hh);
-    can.drawImage("../assets/pics/mini.jpg", ww*2, hh, ww, hh);
+    can.drawImage("../assets/pics/colorfulKeyboard.jpg", ww, hh, ww, hh);
+    can.drawImage("../assets/pics/cow.jpg", ww*2, hh, ww, hh);
 
-    can.drawImage("../assets/pics/bestpicture.png", ww/2, 0, ww*2, hh*2, 0.25f);    //ALPHA
+    can.drawImage("../assets/pics/background.jpg", ww/2, 0, ww*2, hh*2, 0.25f);    //ALPHA
 }
 
 int main() {
