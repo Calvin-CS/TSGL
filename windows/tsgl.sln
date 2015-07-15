@@ -3,11 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tsgl", "tsgl.vcxproj", "{4436E331-0E22-4404-B1CB-CCC5B20C459E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testAlphaLangton", "vs2012\testAlphaLangton.vcxproj", "{DDE7D685-BE55-4B66-9F3C-5E3F7DDF8028}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testAlphaRectangle", "vs2012\testAlphaRectangle.vcxproj", "{C3C493B7-A293-49F1-A094-9465349D8661}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
@@ -53,11 +48,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testGetPixels", "vs2012\tes
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testGradientMandelbrot", "vs2012\testGradientMandelbrot.vcxproj", "{1F3B80CE-170D-4F50-BCB2-6175B440671E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testGradientWheel", "vs2012\testGradientWheel.vcxproj", "{B34DE966-8249-4D10-B2A8-38076DF60446}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
@@ -94,16 +84,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testInverter", "vs2012\test
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testLangton", "vs2012\testLangton.vcxproj", "{2420042C-1EF3-4BF2-BE56-0125A671E824}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testLangtonColony", "vs2012\testLangtonColony.vcxproj", "{245C1543-04B2-4496-BCE4-DC610A80CD3A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testLangtonRainbow", "vs2012\testLangtonRainbow.vcxproj", "{E2690080-E9B0-4539-8362-967949A2CB0D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
 	EndProjectSection
@@ -148,16 +128,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testScreenshot", "vs2012\te
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testScreenshotLangton", "vs2012\testScreenshotLangton.vcxproj", "{3EC22F58-6C0C-4F4A-8776-563D1E2FDA26}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testShadedVoronoi", "vs2012\testShadedVoronoi.vcxproj", "{E5B9C066-AA62-4ED5-9950-53B45ECDE9E0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testSpectrum", "vs2012\testSpectrum.vcxproj", "{DE83CA2E-4F10-4263-9D72-31079735A4A9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
@@ -184,16 +154,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testVoronoi", "vs2012\testV
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testBallRoom", "vs2012\testBallRoom.vcxproj", "{97562F72-6F1B-4348-9787-C568A7A7FC5B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testBuddhaBrot", "vs2012\testBuddhaBrot.vcxproj", "{CCE05DC5-CD32-4576-BDE6-0FE19604684C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testJulia", "vs2012\testJulia.vcxproj", "{FFC6E03B-7BF1-496C-801A-CA5DE2146578}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E} = {4436E331-0E22-4404-B1CB-CCC5B20C459E}
 	EndProjectSection
@@ -238,10 +198,6 @@ Global
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E}.Debug|Win32.Build.0 = Debug|Win32
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E}.Release|Win32.ActiveCfg = Release|Win32
 		{4436E331-0E22-4404-B1CB-CCC5B20C459E}.Release|Win32.Build.0 = Release|Win32
-		{DDE7D685-BE55-4B66-9F3C-5E3F7DDF8028}.Debug|Win32.ActiveCfg = Debug|Win32
-		{DDE7D685-BE55-4B66-9F3C-5E3F7DDF8028}.Debug|Win32.Build.0 = Debug|Win32
-		{DDE7D685-BE55-4B66-9F3C-5E3F7DDF8028}.Release|Win32.ActiveCfg = Release|Win32
-		{DDE7D685-BE55-4B66-9F3C-5E3F7DDF8028}.Release|Win32.Build.0 = Release|Win32
 		{C3C493B7-A293-49F1-A094-9465349D8661}.Debug|Win32.ActiveCfg = Debug|Win32
 		{C3C493B7-A293-49F1-A094-9465349D8661}.Debug|Win32.Build.0 = Debug|Win32
 		{C3C493B7-A293-49F1-A094-9465349D8661}.Release|Win32.ActiveCfg = Release|Win32
@@ -278,10 +234,6 @@ Global
 		{C0E045F9-E70E-4A1B-8F91-490E4863AFAE}.Debug|Win32.Build.0 = Debug|Win32
 		{C0E045F9-E70E-4A1B-8F91-490E4863AFAE}.Release|Win32.ActiveCfg = Release|Win32
 		{C0E045F9-E70E-4A1B-8F91-490E4863AFAE}.Release|Win32.Build.0 = Release|Win32
-		{1F3B80CE-170D-4F50-BCB2-6175B440671E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1F3B80CE-170D-4F50-BCB2-6175B440671E}.Debug|Win32.Build.0 = Debug|Win32
-		{1F3B80CE-170D-4F50-BCB2-6175B440671E}.Release|Win32.ActiveCfg = Release|Win32
-		{1F3B80CE-170D-4F50-BCB2-6175B440671E}.Release|Win32.Build.0 = Release|Win32
 		{B34DE966-8249-4D10-B2A8-38076DF60446}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B34DE966-8249-4D10-B2A8-38076DF60446}.Debug|Win32.Build.0 = Debug|Win32
 		{B34DE966-8249-4D10-B2A8-38076DF60446}.Release|Win32.ActiveCfg = Release|Win32
@@ -314,14 +266,6 @@ Global
 		{2420042C-1EF3-4BF2-BE56-0125A671E824}.Debug|Win32.Build.0 = Debug|Win32
 		{2420042C-1EF3-4BF2-BE56-0125A671E824}.Release|Win32.ActiveCfg = Release|Win32
 		{2420042C-1EF3-4BF2-BE56-0125A671E824}.Release|Win32.Build.0 = Release|Win32
-		{245C1543-04B2-4496-BCE4-DC610A80CD3A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{245C1543-04B2-4496-BCE4-DC610A80CD3A}.Debug|Win32.Build.0 = Debug|Win32
-		{245C1543-04B2-4496-BCE4-DC610A80CD3A}.Release|Win32.ActiveCfg = Release|Win32
-		{245C1543-04B2-4496-BCE4-DC610A80CD3A}.Release|Win32.Build.0 = Release|Win32
-		{E2690080-E9B0-4539-8362-967949A2CB0D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E2690080-E9B0-4539-8362-967949A2CB0D}.Debug|Win32.Build.0 = Debug|Win32
-		{E2690080-E9B0-4539-8362-967949A2CB0D}.Release|Win32.ActiveCfg = Release|Win32
-		{E2690080-E9B0-4539-8362-967949A2CB0D}.Release|Win32.Build.0 = Release|Win32
 		{4B6B49DC-E40B-45F1-9A6E-A6A75EEDBA4F}.Debug|Win32.ActiveCfg = Debug|Win32
 		{4B6B49DC-E40B-45F1-9A6E-A6A75EEDBA4F}.Debug|Win32.Build.0 = Debug|Win32
 		{4B6B49DC-E40B-45F1-9A6E-A6A75EEDBA4F}.Release|Win32.ActiveCfg = Release|Win32
@@ -354,14 +298,6 @@ Global
 		{FFDE8917-365E-4F5A-BF48-1EC9ECAA132A}.Debug|Win32.Build.0 = Debug|Win32
 		{FFDE8917-365E-4F5A-BF48-1EC9ECAA132A}.Release|Win32.ActiveCfg = Release|Win32
 		{FFDE8917-365E-4F5A-BF48-1EC9ECAA132A}.Release|Win32.Build.0 = Release|Win32
-		{3EC22F58-6C0C-4F4A-8776-563D1E2FDA26}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3EC22F58-6C0C-4F4A-8776-563D1E2FDA26}.Debug|Win32.Build.0 = Debug|Win32
-		{3EC22F58-6C0C-4F4A-8776-563D1E2FDA26}.Release|Win32.ActiveCfg = Release|Win32
-		{3EC22F58-6C0C-4F4A-8776-563D1E2FDA26}.Release|Win32.Build.0 = Release|Win32
-		{E5B9C066-AA62-4ED5-9950-53B45ECDE9E0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E5B9C066-AA62-4ED5-9950-53B45ECDE9E0}.Debug|Win32.Build.0 = Debug|Win32
-		{E5B9C066-AA62-4ED5-9950-53B45ECDE9E0}.Release|Win32.ActiveCfg = Release|Win32
-		{E5B9C066-AA62-4ED5-9950-53B45ECDE9E0}.Release|Win32.Build.0 = Release|Win32
 		{DE83CA2E-4F10-4263-9D72-31079735A4A9}.Debug|Win32.ActiveCfg = Debug|Win32
 		{DE83CA2E-4F10-4263-9D72-31079735A4A9}.Debug|Win32.Build.0 = Debug|Win32
 		{DE83CA2E-4F10-4263-9D72-31079735A4A9}.Release|Win32.ActiveCfg = Release|Win32
@@ -386,14 +322,6 @@ Global
 		{97562F72-6F1B-4348-9787-C568A7A7FC5B}.Debug|Win32.Build.0 = Debug|Win32
 		{97562F72-6F1B-4348-9787-C568A7A7FC5B}.Release|Win32.ActiveCfg = Release|Win32
 		{97562F72-6F1B-4348-9787-C568A7A7FC5B}.Release|Win32.Build.0 = Release|Win32
-		{CCE05DC5-CD32-4576-BDE6-0FE19604684C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{CCE05DC5-CD32-4576-BDE6-0FE19604684C}.Debug|Win32.Build.0 = Debug|Win32
-		{CCE05DC5-CD32-4576-BDE6-0FE19604684C}.Release|Win32.ActiveCfg = Release|Win32
-		{CCE05DC5-CD32-4576-BDE6-0FE19604684C}.Release|Win32.Build.0 = Release|Win32
-		{FFC6E03B-7BF1-496C-801A-CA5DE2146578}.Debug|Win32.ActiveCfg = Debug|Win32
-		{FFC6E03B-7BF1-496C-801A-CA5DE2146578}.Debug|Win32.Build.0 = Debug|Win32
-		{FFC6E03B-7BF1-496C-801A-CA5DE2146578}.Release|Win32.ActiveCfg = Release|Win32
-		{FFC6E03B-7BF1-496C-801A-CA5DE2146578}.Release|Win32.Build.0 = Release|Win32
 		{9B53EED3-25C7-440B-8BFA-B1F6037D6600}.Debug|Win32.ActiveCfg = Debug|Win32
 		{9B53EED3-25C7-440B-8BFA-B1F6037D6600}.Debug|Win32.Build.0 = Debug|Win32
 		{9B53EED3-25C7-440B-8BFA-B1F6037D6600}.Release|Win32.ActiveCfg = Release|Win32
