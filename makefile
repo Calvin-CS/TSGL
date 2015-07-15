@@ -60,7 +60,6 @@ LFLAGS=-Llib/ \
 DEPFLAGS=-MMD -MP
 
 BINARIES= \
-	bin/testAlphaLangton \
 	bin/testAlphaRectangle \
 	bin/testBallroom \
 	bin/testBuddhabrot \
@@ -84,8 +83,6 @@ BINARIES= \
 	bin/testInverter \
 	bin/testJulia \
 	bin/testLangton \
-	bin/testLangtonColony \
-	bin/testLangtonRainbow \
 	bin/testLineChain \
 	bin/testLineFan \
 	bin/testMandelbrot \
@@ -98,7 +95,6 @@ BINARIES= \
 	bin/testProgressBar \
 	bin/testProjectiles \
 	bin/testScreenshot \
-	bin/testScreenshotLangton \
 	bin/testSeaUrchin \
 	bin/testShadedVoronoi \
 	bin/testSmartSort \
@@ -141,12 +137,8 @@ lib/libtsgl.a: ${OBJS}
 
 #List additional dependencies for test binaries
 
-#Langtons
+#Langton
 LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
-bin/testAlphaLangton: ${LANGTON_DEPS}
-bin/testLangtonColony: ${LANGTON_DEPS}
-bin/testLangtonRainbow: ${LANGTON_DEPS}
-bin/testScreenshotLangton: ${LANGTON_DEPS}
 bin/testLangton: ${LANGTON_DEPS}
 
 #Voronois

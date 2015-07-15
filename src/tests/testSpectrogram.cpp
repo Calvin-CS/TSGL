@@ -13,7 +13,10 @@ using namespace tsgl;
  * - A Spectrogram object is created which will display the spectrogram.
  * - A parallel block is created and the process is forked.
  * - The thread id and the actual number of threads spawned are stored.
- * -
+ * - Start and stopping points for the thread are stored.
+ * - For the starting point to the ending point of rendering:
+ *   - Get a hue color based off of the current pixel.
+ *   -
  */
 void spectrogramFunction(Canvas& can, std::string fname) {
     const int cww = can.getWindowWidth(), cwh = can.getWindowHeight();
