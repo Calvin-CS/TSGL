@@ -55,6 +55,7 @@ namespace tsgl {
  *       whenever the user wants to handle any input/output events (keyboard/mouse presses). Whenever a window is
  *       created using OpenGL, OS X requires the main thread to handle I/O calls.
  *  \note <b>OS X:</b> OS X also uses p_thread instead of std::thread for threading.
+ *  \note If you try to do anything with X Forwarding and TSGL, it won't work.
  */
 class Canvas {
 private:
