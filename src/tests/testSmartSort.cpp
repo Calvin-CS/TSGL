@@ -100,7 +100,7 @@ struct sortData {
 };
 
 /*!
- * \brief Visualization of the mergesort algorithm.
+ * \brief Visualization of the bottom-up mergesort algorithm.
  * \details Utilizes the sortData struct and sorts a number of items using the mergesort algorithm.
  * \details Uses lines to represent the items being sorted.
  * \details At the start, the items being sorted are all divided.
@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(-1, -1, w, h, "Merge Sort", FRAME);
+    Canvas c(-1, -1, w, h, "Bottom-up Merge Sort", FRAME);
     c.setBackgroundColor(BLACK);
     c.start();
     smartSortFunction(c,threads, s);   //Pass it as an argument

@@ -24,14 +24,14 @@ run ./testFunction 640 480                       #Width, Height
 run ./testGradientWheel 640 640                  #Width, Height
 run ./testGraydient 400 400 8                    #Width, Height, Threads
 run ./testGreyscale 640 480 8                    #Width, Height, Threads
-run ./testHighData
+run ./testHighData 1200 900 4                    #Width, Height, Threads
 run ./testImage
 run ./testImageCart
 run ./testLangton 640 640                        #Width, Height
 run ./testLineChain 400 400 8                    #Width, Height, Threads
 run ./testLineFan 800 800 16                     #Width, Height, Threads
 run ./testMandelbrot 1200 900 8 255              #Width, Height, Threads, Depth
-run ./testMouse
+run ./testMouse 900 900 5                        #Width, Height, Threads, Depth
 run ./testNewtonPendulum
 run ./testNova 1200 900 4                        #Width, Height, Threads
 run ./testPong
