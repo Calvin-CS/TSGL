@@ -36,7 +36,7 @@ run ./testNewtonPendulum
 run ./testNova 1200 900 4                        #Width, Height, Threads
 run ./testPong
 run ./testProjectiles 400 400                    #Width, Height
-run ./testSeaUrchin
+run ./testSeaUrchin 32 1                         #Threads, Color Scheme (0 = all same, 1 = all different)
 run ./testScreenshot
 run ./testSmartSort 1024                         #Elements, Threads
 run ./testSpectrogram ../assets/pics/test.png    #Image
