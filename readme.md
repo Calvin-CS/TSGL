@@ -22,6 +22,8 @@ Windows - https://www.youtube.com/watch?v=b1IdC_bSxRQ&feature=youtu.be
 
 Linux - https://www.youtube.com/watch?v=547CmVftA1g
 
+Mac - https://www.youtube.com/watch?v=QlVh_MAstyg
+
 ------------
 Dependencies
 ------------
