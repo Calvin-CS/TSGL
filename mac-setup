@@ -75,11 +75,11 @@ fi
 if [ -e /usr/lib/libstdc++.dylib ]; then
   sudo mv /usr/lib/libstdc++.dylib /usr/lib/libstdc++.dylib-old
 fi
-if [ -e /usr/bin/gcc_tsglbak ]; then
+if [ ! -e /usr/bin/gcc_tsglbak ]; then
   sudo mv /usr/bin/gcc /usr/bin/gcc_tsglbak
   sudo ln -s /opt/local/bin/gcc-mp-4.9 /usr/bin/gcc
 fi
-if [ -e /usr/bin/g++_tsglbak ]; then
+if [ ! -e /usr/bin/g++_tsglbak ]; then
   sudo mv /usr/bin/g++ /usr/bin/g++_tsglbak
   sudo ln -s /opt/local/bin/g++-mp-4.9 /usr/bin/g++
 fi

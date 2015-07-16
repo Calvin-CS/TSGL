@@ -37,6 +37,7 @@ void highData(Canvas& can, unsigned threads) {
       for (unsigned i = bstart; i <= bend; i++)
         for (unsigned int j = 0; j < height; j++)
           can.drawPoint(i, j, tcol);
+      can.handleIO();
     }
   }
 }
