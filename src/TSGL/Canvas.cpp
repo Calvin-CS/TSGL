@@ -225,7 +225,7 @@ void Canvas::draw() {
           winWidth,winHeight,1,1,1,1,1,0
         };
         glBindTexture(GL_TEXTURE_2D,renderedTexture);
-        glPixelStorei(GL_UNPACK_ALIGNMENT,1);
+        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
@@ -354,8 +354,9 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     int tempPos = pointBufferPosition * 6;
     pointBufferPosition++;
 
+    float atioff = atiCard ? 0.5f : 0;
     vertexData[tempPos] = x;
-    vertexData[tempPos + 1] = y;
+    vertexData[tempPos + 1] = y+atioff;
     vertexData[tempPos + 2] = color.R;
     vertexData[tempPos + 3] = color.G;
     vertexData[tempPos + 4] = color.B;
@@ -472,9 +473,9 @@ ColorInt Canvas::getPixel(int row, int col) {
 ColorInt Canvas::getPoint(int x, int y) {
     int yy;
     //if (atiCard)
-      yy = (winHeight-1) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
+    //  yy = (winHeight) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
     //else
-    //  yy = (winHeight-1) - y;
+      yy = (winHeight-1) - y;
     int off = 3 * (yy * winWidthPadded + x);
     return ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
 }
@@ -773,7 +774,7 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    //glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
 

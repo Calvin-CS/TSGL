@@ -172,7 +172,10 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
-    Canvas::drawPoint(actualX, actualY, color);
+    if (atiCard)
+      Canvas::drawPoint(actualX, actualY-1, color);
+    else
+      Canvas::drawPoint(actualX, actualY, color);
 }
 
 void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color, bool filled) {
