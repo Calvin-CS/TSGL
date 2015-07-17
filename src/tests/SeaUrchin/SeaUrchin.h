@@ -52,7 +52,7 @@ public:
 private:
   static const int MY_SPOKES = 8;
   int myOldX, myOldY, myNewX, myNewY;
-  ColorHSV myColor;
+  ColorFloat myColor;
 };
 
 #endif /* SEAURCHIN_H_ */

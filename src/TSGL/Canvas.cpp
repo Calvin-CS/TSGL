@@ -55,9 +55,7 @@ unsigned Canvas::openCanvases = 0;
 
 //Negative timerLength
 Canvas::Canvas(double timerLength) {
-    int w = 1.2*Canvas::getDisplayHeight();
-    int h = 0.75*w;
-    init(-1, -1, w, h, w*h*2, "", timerLength);
+    init(-1, -1, -1, -1, -1, "", timerLength);
 }
 
 Canvas::Canvas(int x, int y, int width, int height, std::string title, double timerLength) {
@@ -553,16 +551,22 @@ void Canvas::handleIO() {
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
     ++openCanvases;
 
+    if (ww == -1)
+      ww = 1.2*Canvas::getDisplayHeight();
+    if (hh == -1)
+      hh = 0.75*ww;
+    b = ww*hh*2;
+
     winTitle = title;
     winWidth = ww, winHeight = hh;
     aspect = (float) winWidth / winHeight;
     keyDown = false;
     toClose = false;
     windowClosed = false;
-	readyToDraw = false;
+	  readyToDraw = false;
     frameCounter = 0;
     syncMutexLocked = 0;
-	syncMutexOwner = -1;
+	  syncMutexOwner = -1;
 
     int padwidth = winWidth % 4;
     if (padwidth > 0)

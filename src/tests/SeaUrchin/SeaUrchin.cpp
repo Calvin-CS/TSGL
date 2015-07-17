@@ -5,7 +5,7 @@
  *      Author: cpd5
  */
 
-#include "SeaUrchin.h"
+#include <src/tests/SeaUrchin/SeaUrchin.h>
 
 SeaUrchin::SeaUrchin(Canvas& can, int & threadId) {
   myOldX = myOldY = 50;

@@ -6,8 +6,10 @@
  */
 
 #include "tsgl.h"
-#include "SeaUrchin.h"
 #include <omp.h>
+
+#include "SeaUrchin/SeaUrchin.h"
+
 using namespace tsgl;
 
 /*!

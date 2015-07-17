@@ -15,13 +15,15 @@ if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   curl -L -O "http://xquartz.macosforge.org/downloads/SL/$VER_XQ.dmg"
   open -W "$VER_XQ.dmg"
   echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
+  echo "Please enter to continue once XQuartz has finished installing."
+  read
 fi
 
 #Install Xcode command line tools (will do nothing if already installed)
 if [ ! -e "/Library/Developer/CommandLineTools" ]; then
   cmd="xcode-select --install"
   $cmd # Fix for vim syntax highlighting bugginess
-  echo "Please select \"Install\" from the confirmation window that appears."
+  echo "Please select \"Install\" from the confirmation window that appears, and Agree to the license terms."
   echo "Press enter to continue once Xcode command line tools has finished installing"
   read
 fi
@@ -90,4 +92,5 @@ git clone https://github.com/Calvin-CS/TSGL
 cd TSGL
 make -j$(nproc) debug
 
+echo
 echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."

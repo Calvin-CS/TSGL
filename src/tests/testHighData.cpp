@@ -29,11 +29,12 @@ void highData(Canvas& can, unsigned threads) {
   #pragma omp parallel num_threads(threads)
   {
     float tid = omp_get_thread_num(), nthreads = omp_get_num_threads();
+    int offset = (MAX_COLOR*tid)/nthreads;
     unsigned bstart = tid*(width/nthreads);
     unsigned bend = (tid==nthreads) ? width-1 : bstart + width/nthreads;
     ColorHSV tcol= Colors::highContrastColor(tid);
     while (can.getIsOpen()) {
-      tcol.H = HVAL * ((int)(can.getReps() + MAX_COLOR*tid/nthreads) % MAX_COLOR);
+      tcol.H = HVAL * ((can.getReps() + offset) % MAX_COLOR);
       for (unsigned i = bstart; i <= bend; i++)
         for (unsigned int j = 0; j < height; j++)
           can.drawPoint(i, j, tcol);

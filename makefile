@@ -132,25 +132,16 @@ lib/libtsgl.a: ${OBJS}
 	@touch build/build
 
 #List additional dependencies for test binaries
-
-#Langton
-LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
-bin/testLangton: ${LANGTON_DEPS}
-
-#Voronoi
+bin/testLangton: build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
 bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
-
-#Fractals
-bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
-                    build/tests/Mandelbrot/GradientMandelbrot.o \
-                    build/tests/Mandelbrot/Buddhabrot.o \
-					build/tests/Mandelbrot/Julia.o
-#Other
 bin/testConway: build/tests/Conway/LifeFarm.o
 bin/testInverter: build/tests/ImageInverter/ImageInverter.o
-bin/testPong: build/tests/Pong/Pong.o \
-			  build/tests/Pong/Paddle.o \
-			  build/tests/Pong/Ball.o
+bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
+bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
+bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
+	build/tests/Mandelbrot/GradientMandelbrot.o \
+	build/tests/Mandelbrot/Buddhabrot.o \
+	build/tests/Mandelbrot/Julia.o
 
 #General compilation recipes for test binaries (appended to earlier dependencies)
 bin/test%: build/tests/test%.o lib/libtsgl.a
