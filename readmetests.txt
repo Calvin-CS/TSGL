@@ -2,8 +2,8 @@
 QUICK NOTES
 -------------------------------
 + To close the window after each successive test, press the ESC key.
-+ Every test can take in at least one command-line argument.
-+ Some tests have I/O capabilities, in particular: testBallroom, testGradientMandelbrot, testJulia,  testMandelbrot, testMouse, testPong, testProjectiles, and
++ Every test except testConcavePolygon can take in at least one command-line argument.
++ Some tests have I/O capabilities, in particular: testBallroom, testConway, testGradientMandelbrot, testJulia,  testMandelbrot, testMouse, testPong, testProjectiles, and
     testLangton.
 
 + Lastly, some tests will have two windows. One will be a progress bar/tiled square, the other will be a window for the test animation. Close each window with ESC key as normal.
@@ -12,19 +12,20 @@ QUICK NOTES
 -----------------------------------
 DESCRIPTIONS
 -----------------------------------
-testAlphaRectangle - Partially transparent rectangles are drawn to the screen. Takes command-line arguments for the width and height of the screen. 
-testBallroom - Multiple colored balls are drawn and follow the mouse wherever it goes. I/O capabilities: The balls follow the mouse wherever it goes on the screen. Click the left 
+1). testAlphaRectangle - Partially transparent rectangles are drawn to the screen. Takes command-line arguments for the width and height of the screen. 
+2). testBallroom - Multiple colored balls are drawn and follow the mouse wherever it goes. I/O capabilities: The balls follow the mouse wherever it goes on the screen. Click the left 
 				       mouse button to make them repel from the mouse. Click the left mouse button again to make them follow the mouse again. Takes command-line arguments for the 
 				       width and height of the screen.
-testBuddhabrot - Draws a Buddhabrot on the screen, see https://en.wikipedia.org/wiki/Buddhabrot for details on what a Buddhabrot is. Takes command-line arguments for the 
+3). testBuddhabrot - Draws a Buddhabrot on the screen, see https://en.wikipedia.org/wiki/Buddhabrot for details on what a Buddhabrot is. Takes command-line arguments for the 
 				             width and height of the screen as well as the number of threads to use and the depth.
-testCalcPi - 
-testColorPoints -  A pattern is drawn to the screen. Takes command-line arguments for the width and height of the screen as well as for the number of threads to use. 
-testColorWheel - Shows a color wheel that acts as a sort of sonar device. Takes command-line arguments for the width and height of the screen. 
-testConcavePolygon - Draws two Concave polygons on the screen. See http://www.mathopenref.com/polygonconcave.html for information on what a Concave polygon is.
-						    Takes command-line arguments for the width and height of the screen.
-testConway - Simulates Conway's game of life. See https://en.wikipedia.org/wiki/Conway's_Game_of_Life for more details. Takes command-line arguments for the width and 
-				    height of the screen.	
+4). testCalcPi - 
+5). testColorPoints -  A pattern is drawn to the screen. Takes command-line arguments for the width and height of the screen as well as for the number of threads to use. 
+6). testColorWheel - Shows a color wheel that acts as a sort of sonar device. Takes command-line arguments for the width and height of the screen. 
+7). testConcavePolygon - Draws two Concave polygons on the screen. See http://www.mathopenref.com/polygonconcave.html for information on what a Concave polygon is.
+8). testConway - Simulates Conway's game of life. See https://en.wikipedia.org/wiki/Conway's_Game_of_Life for more details. Takes command-line arguments for the 
+             width and height of the screen. I/O capablilities: Press the spacebar to pause the animation loop and take a screenshot. Press it again to resume the loop and take another
+             screenshot. Hold the left mouse button down when the loop is paused/unpaused and *SLOWLY* drag it across the screen in order to add more cells to the game. Release it 
+             so that they can show up.
 testCosineIntegral - Visualizes the integration of the Cosine function. Takes command-line arguments for the width and height of the screen as well as the number of threads to 
 						   use. 
 testDumbSort++ - Visual representation of a Shaker sort (or Bubble sort as some call it). Takes command-line arguments for the width and height of the screen. 

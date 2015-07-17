@@ -7,7 +7,6 @@ run () {
 
 cd bin
 
-
 run ./testAlphaRectangle 640 480                                   #Width, Height
 run ./testBallroom 640 640                                         #Width, Height
 run ./testCalcPi 100 4                                             #Segments, Threads
