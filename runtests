@@ -7,7 +7,6 @@ run () {
 
 cd bin
 
-
 run ./testAlphaRectangle 640 480                                   #Width, Height
 run ./testBallroom 640 640                                         #Width, Height
 run ./testBlurImage 36 ../assets/pics/HDR_landscape.jpg            #Image
