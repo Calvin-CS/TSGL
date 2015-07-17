@@ -7,7 +7,8 @@
 
 #include "Paddle.h"
 
-Paddle::Paddle(Canvas& can) {
+Paddle::Paddle(Canvas& can, int & speed) {
+  mySpeed = speed;
   myDir = myPoints = 0;
   myY = can.getWindowHeight() / 2 - 32;
 }
@@ -39,7 +40,7 @@ void Paddle::increment() {
 }
 
 void Paddle::move() {
-  myY += 4 * myDir;
+  myY += mySpeed * myDir;
 }
 
 int Paddle::getPoints() const {

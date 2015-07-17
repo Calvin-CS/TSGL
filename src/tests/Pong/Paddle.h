@@ -33,9 +33,10 @@ public:
    * \brief Explicitly constructs a Paddle object.
    * \details Explicit constructor for a Paddle object.
    * \param can Reference to the Canvas to have the Paddle object on.
+   * \param speed Reference to the speed of the Paddle object.
    * \return The constructed Paddle object.
    */
-  Paddle(Canvas& can);
+  Paddle(Canvas& can, int & speed);
 
   /*!
    * \brief Binds the buttons.
@@ -84,6 +85,7 @@ public:
 private:
   int myDir;  //-1 = up, 1 = down, 0 = stationary
   int myPoints;  //Score
+  int mySpeed;  //Speed
   float myY; //y-coordinate for Paddle
 };
 

@@ -92,8 +92,15 @@ void newtonPendulumFunction(Canvas& can) {
   }
 }
 
-int main() {
-  Canvas c1(-1, -1, 600, 400, "Newton's Pendulum"); //THIS MUST STAY EXACTLY THE SAME
+//Takes command line arguments for the width and height of the screen
+int main(int argc, char * argv[]) {
+  int w = (argc > 1) ? atoi(argv[1]) : 1.2 * Canvas::getDisplayHeight();
+  int h = (argc > 2) ? atoi(argv[2]) : 0.75 * w;
+  if(w <= 0 || h <= 0) {
+    w = 1200;
+    h = 900;
+  }
+  Canvas c1(-1, -1, w, h, "Newton's Pendulum"); //THIS MUST STAY EXACTLY THE SAME
   c1.setBackgroundColor(WHITE);
   c1.start();
   newtonPendulumFunction(c1);

@@ -32,9 +32,9 @@ run ./testLineChain 400 400 8                    #Width, Height, Threads
 run ./testLineFan 800 800 16                     #Width, Height, Threads
 run ./testMandelbrot 1200 900 8 255              #Width, Height, Threads, Depth
 run ./testMouse 900 900 5                        #Width, Height, Threads, Depth
-run ./testNewtonPendulum
+run ./testNewtonPendulum 900 400                 #Width, Height
 run ./testNova 1200 900 4                        #Width, Height, Threads
-run ./testPong
+run ./testPong 7 4                               #Ball Speed, Paddle Speed
 run ./testProjectiles 400 400                    #Width, Height
 run ./testSeaUrchin 32 1                         #Threads, Color Scheme (0 = all same, 1 = all different)
 run ./testScreenshot

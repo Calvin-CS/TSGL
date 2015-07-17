@@ -7,10 +7,10 @@
 
 #include "Ball.h"
 
-Ball::Ball(Canvas& can) {
-  mySpeed = 8;
-  myX = can.getWindowWidth() / 2 - 8;
-  myY = can.getWindowHeight() / 2 - 8;
+Ball::Ball(Canvas& can, int & speed) {
+  mySpeed = speed;
+  myX = can.getWindowWidth() / 2-8;
+  myY = can.getWindowHeight() / 2-8;
   do {
     myDir = randfloat(1000) * 2 * PI;
     myXX = mySpeed * cos(myDir);
@@ -48,8 +48,8 @@ float Ball::randfloat(int divisor) {
 }
 
 void Ball::reset(Canvas& can) {
-  myX = can.getWindowWidth() / 2 - 8;
-  myY = can.getWindowHeight() / 2 - 8;
+  myX = can.getWindowWidth() / 2-8;
+  myY = can.getWindowHeight() / 2-8;
   do {
     myDir = randfloat(1000) * 2 * 3.14159f;
     myXX = mySpeed * cos(myDir);

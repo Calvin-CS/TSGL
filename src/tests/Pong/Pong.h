@@ -37,8 +37,10 @@ public:
    * \details Explicit constructor for the game, Pong. It sets up the Paddle objects and the Ball object
    * in order to play.
    * \param can Reference to the Canvas to use when playing Pong.
+   * \param ballSpeed Reference to the ball speed to use in the game.
+   * \param paddleSpeed Reference to the paddle speed to use in the game.
    */
-  Pong(Canvas& can);
+  Pong(Canvas& can, int & ballSpeed, int & paddleSpeed);
 
   /*!
    * \brief Draw the game of Pong.
