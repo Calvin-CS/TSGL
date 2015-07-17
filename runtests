@@ -32,11 +32,11 @@ run ./testLineChain 400 400 8                    #Width, Height, Threads
 run ./testLineFan 800 800 16                     #Width, Height, Threads
 run ./testMandelbrot 1200 900 8 255              #Width, Height, Threads, Depth
 run ./testMouse 900 900 5                        #Width, Height, Threads, Depth
-run ./testNewtonPendulum 900 400                 #Width, Height
+run ./testNewtonPendulum 900 400 11              #Width, Height, Number Of Balls
 run ./testNova 1200 900 4                        #Width, Height, Threads
 run ./testPong 7 4                               #Ball Speed, Paddle Speed
 run ./testProjectiles 400 400                    #Width, Height
-run ./testSeaUrchin 32 1                         #Threads, Color Scheme (0 = all same, 1 = all different)
+run ./testSeaUrchin 16                           #Threads
 run ./testScreenshot
 run ./testSmartSort 1024                         #Elements, Threads
 run ./testSpectrogram ../assets/pics/test.png    #Image

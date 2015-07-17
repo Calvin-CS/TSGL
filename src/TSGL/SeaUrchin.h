@@ -12,6 +12,17 @@
 
 using namespace tsgl;
 
+/*!
+ * \class SeaUrchin
+ * \brief Who doesn't love sea urchins?
+ * \details Draws a sea urchin onto the Canvas.
+ * \details Used as an example of what it means to put a process on a thread.
+ * \details The SeaUrchin objects are created in a parallel block, and each thread gets one SeaUrchin.
+ * \details Then, the thread draws the SeaUrchin onto the Canvas.
+ * \details Each SeaUrchin object has its own color and plot data based off of the thread's id number.
+ * \details SeaUrchin objects are drawn similar to the line fan in testLineFan.
+ * \see testLineFan.
+ */
 class SeaUrchin {
 public:
 
@@ -19,11 +30,10 @@ public:
    * \brief Explicitly construct a SeaUrchin object.
    * \details Explicit constructor for a SeaUrchin object.
    * \param can Reference to the Canvas to draw to.
-   * \param threadId The thread that is currently creating a SeaUrchin object.
-   * \param colorScheme 0 equals all of the SeaUrchin objects created are the same color, 1 equals the inverse.
+   * \param threadId The id of the thread that is currently creating a SeaUrchin object.
    * \return The constructed SeaUrchin object.
    */
-  SeaUrchin(Canvas& can, int threadId, int colorScheme);  //Default constructor
+  SeaUrchin(Canvas& can, int & threadId);  //Default constructor
 
   /*!
    * \brief Draw the SeaUrchin.
@@ -40,7 +50,7 @@ public:
   virtual ~SeaUrchin();
 
 private:
-  static const int MY_SPOKES = 16;
+  static const int MY_SPOKES = 8;
   int myOldX, myOldY, myNewX, myNewY;
   ColorHSV myColor;
 };

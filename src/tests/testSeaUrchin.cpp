@@ -11,43 +11,45 @@
 using namespace tsgl;
 
 /*!
- * \brief Displays different colored sea urchins.
- * \details Displays different colored sea urchins with spotlights in the
- *  top left and bottom right corners. Two of the sea urchins have random colors.
+ * \brief Displays different colored sea urchins and takes a command-line argument.
+ * \details Displays different colored sea urchins where each sea urchin is drawn by a thread
+ * (the command-line argument is the number of threads to use).
  * It is drawn as follows:
  * - The sea urchins are drawn in a similar way as the line fan in testLineFan.
- * - Get an old x and old y value and a new x and new y value.
- * - Set the new x and y to 0, don't set the old x and y.
- * - Get the colors of the sea urchins.
- * - While the Canvas has not been closed:
- *    - Sleep the internal timer until the next draw cycle.
- *    - Set the old x and old y to half of the window width.
- *    - Draw the first sea urchin.
- *    - Reset the old x and old y to some new coordinates.
- *    - Draw the second sea urchin.
- *    - Continue the pattern until all sea urchins are drawn.
- *    - After the sea ]urchins have been drawn, draw the spotlights in the top left
- *      and bottom right corners.
- *    - Clear the Canvas.
- *    .
- *- If the Canvas has been closed, output a message to the console saying "YOU KILLED MY SEA URCHINS! :'(" .
+ * - A class contains all of the necessary data and methods to draw the sea urchins.
+ * - A parallel block is created and the process is forked.
+ * - The current thread's id number is stored.
+ * - When you create the SeaUrchin object:
+ *  - Set old x and y-coordinate values and increment them based off of the current thread's id number.
+ *  - Set new x and y-coordinate values to 0.
+ *  - Assign a color to the current thread.
  *  .
+ * - While the Canvas is open:
+ *   - Sleep the Canvas' internal timer until the next draw cycle.
+ *   - Clear the Canvas.
+ *   - When you draw the SeaUrchin onto the Canvas:
+ *     - Set a delta value to make the SeaUrchins spin.
+ *     - For i to the number of spokes of a SeaUrchin:
+ *       - Calculate the new x and y-coordinate values based off of the delta value and the old x and y-coordinate values.
+ *       - Draw a spoke of the SeaUrchin on the Canvas.
+ *       .
+ *     .
+ *   .
+ * - If the Canvas has been closed, output a message to the console saying "YOU KILLED MY SEA URCHINS! :'(" .
  * .
  * \param can Reference to the Canvas being drawn on.
+ * \param threads Reference to the number of threads to use in the process.
+ * \see testLineFan, SeaUrchin class.
  */
-void seaUrchinFunction(Canvas& can, int & threads, int colorScheme) {
-  srand(time(NULL));
+void seaUrchinFunction(Canvas& can, int & threads) {
 #pragma omp parallel num_threads(threads)
   {
   int id = omp_get_thread_num();
-  SeaUrchin s1(can, id, colorScheme);   //A thread gets a Sea Urchin
+  SeaUrchin s1(can, id);   //A thread gets a Sea Urchin
   while(can.getIsOpen()) {   //Draw loop
     can.sleep();
     can.clear();
-//    can.pauseDrawing();
     s1.draw(can);  //And draws it
-    #pragma omp barrier
-//    can.resumeDrawing();
   }
   }
   std::cout << "YOU KILLED MY SEA URCHINS! :'(" << std::endl;
@@ -55,18 +57,14 @@ void seaUrchinFunction(Canvas& can, int & threads, int colorScheme) {
 
 //KEEP THE WINDOW WIDTH AND HEIGHT THE SAME PLEASE!
 int main(int argc, char * argv[]) {
-  int nthreads = (argv > 1) ? atoi(argv[1]) : 32;  //Number of threads
-  int colorChoice = (argv > 2) ? atoi(argv[2]) : 0; //0 = all same color, 1 = all different color
-  if(nthreads > 32 || nthreads < 0) {
-    nthreads = 32;  //For now...
+  int nthreads = (argc > 1) ? atoi(argv[1]) : 16;  //Number of threads
+  if(nthreads > 16 || nthreads < 0) {  //Max number of threads is 16
+    nthreads = 16;
   }
-  if(colorChoice != 0 && colorChoice != 1) {
-    colorChoice = 0; //Default
-  }
-  Canvas c1(-1, -1, 880, 445, "Sea Urchins!", FRAME);
+  Canvas c1(-1, -1, 885, 230, "Sea Urchins!", FRAME * 2);
   c1.setBackgroundColor(BLACK);
   c1.start();
-  seaUrchinFunction(c1, nthreads, colorChoice);
+  seaUrchinFunction(c1, nthreads);
   c1.wait();
 }
 
