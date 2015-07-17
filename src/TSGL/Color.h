@@ -316,7 +316,7 @@ class Colors {
      *   an error message is given.
      * \return A ColorFloat linearly interpolated between c1 and c2 using the given bias as a weight.
      */
-    static ColorFloat blendedColor(ColorFloat c1, ColorFloat c2, float bias);
+    static ColorFloat blend(ColorFloat c1, ColorFloat c2, float bias = 0.5f);
 
     /*!
      * \brief Returns an HSV color with high contrast.

@@ -21,9 +21,9 @@ Voronoi::Voronoi(Canvas& can) {
   for (int j = 0; j < MY_POINTS; j++) {              // For each control point...
     float xx = (float) myX[j] / NEW_WINDOW_W;         // Calculate an value from 0:1 based on x coord
     float yy = (float) myY[j] / NEW_WINDOW_H;         // Do the same for y
-    myXC = Colors::blendedColor(myLC, myRC, xx);              // Interpolate between the left and right colors
-    myYC = Colors::blendedColor(myTC, myBC, yy);              // Do the same for top and bottom
-    myColor[j] = Colors::blendedColor(myXC, myYC, 0.5f);      // Complete the 4-way interpolation
+    myXC = Colors::blend(myLC, myRC, xx);              // Interpolate between the left and right colors
+    myYC = Colors::blend(myTC, myBC, yy);              // Do the same for top and bottom
+    myColor[j] = Colors::blend(myXC, myYC, 0.5f);      // Complete the 4-way interpolation
   }
 
 }

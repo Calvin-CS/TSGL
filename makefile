@@ -62,6 +62,7 @@ DEPFLAGS=-MMD -MP
 BINARIES= \
 	bin/testAlphaRectangle \
 	bin/testBallroom \
+	bin/testBlurImage \
 	bin/testCalcPi \
 	bin/testColorPoints \
 	bin/testColorWheel \

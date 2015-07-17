@@ -84,7 +84,7 @@ void Mandelbrot::draw(Cart& can) {
             can.drawPoint(col, row, BLACK);
           } else { // Otherwise, draw it with color based on how long it took
             float mult = iterations/(float)myDepth;
-            can.drawPoint(col, row, Colors::blendedColor(tcolor,WHITE,0.25f+0.5f*mult)*mult);
+            can.drawPoint(col, row, Colors::blend(tcolor,WHITE,0.25f+0.5f*mult)*mult);
           }
           if (myRedraw) break;
         }

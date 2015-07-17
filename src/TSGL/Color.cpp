@@ -310,7 +310,7 @@ ColorFloat Colors::randomColor(float alpha) {
     return ColorFloat(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
 }
 
-ColorFloat Colors::blendedColor(ColorFloat c1, ColorFloat c2, float bias) {
+ColorFloat Colors::blend(ColorFloat c1, ColorFloat c2, float bias) {
     if (clamp(bias,0,1))
         TsglErr("Bias must be between 0 and 1 inclusive");
     return ColorFloat(c2.R * bias + c1.R * (1 - bias), c2.G * bias + c1.G * (1 - bias),

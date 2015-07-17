@@ -160,9 +160,9 @@ void smartSortFunction(Canvas& can, int threads, int size) {
                     else if (i < sd[tid]->left)
                       color = sd[tid]->color;
                     else if (i >= sd[tid]->fi && i <= sd[tid]->li)
-                      color = Colors::blendedColor(sd[tid]->color, WHITE, 0.5f);
+                      color = Colors::blend(sd[tid]->color, WHITE, 0.5f);
                     else
-                      color = Colors::blendedColor(sd[tid]->color, BLACK, 0.5f);
+                      color = Colors::blend(sd[tid]->color, BLACK, 0.5f);
                   }
                   can.drawLine(start, cwh - height, start, cwh, color);
               }
