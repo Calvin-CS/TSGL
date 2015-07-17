@@ -7,41 +7,41 @@ run () {
 
 cd bin
 
-# run bin/testConcavePolygon                     #SLOW
-# run bin/testGetPixels                          #INCONSISTENT
-# run bin/testInverter                           #INCONSISTENT
 
-run ./testAlphaRectangle 640 480                 #Width, Height
-run ./testBallroom 640 640                       #Width, Height
-run ./testCalcPi 100 4                           #Segments, Threads
-run ./testColorPoints 400 400 4                  #Width, Height, Threads
-run ./testColorWheel 640 640                     #Width, Height
-run ./testConway 640 640                         #Width, Height
-run ./testCosineIntegral 640 480 32              #Width, Height, Threads
-run ./testDumbSort 1200 600                      #Width, Height
-run ./testForestFire 800 600                     #Width, Height
-run ./testFunction 640 480                       #Width, Height
-run ./testGradientWheel 640 640                  #Width, Height
-run ./testGraydient 400 400 8                    #Width, Height, Threads
-run ./testGreyscale 640 480 8                    #Width, Height, Threads
-run ./testHighData 1200 900 4                    #Width, Height, Threads
-run ./testImage 1200 900                         #Width, Height
-run ./testImageCart 1200 900                     #Width, Height
-run ./testLangton 640 640                        #Width, Height
-run ./testLineChain 400 400 8                    #Width, Height, Threads
-run ./testLineFan 800 800 16                     #Width, Height, Threads
-run ./testMandelbrot 1200 900 8 255              #Width, Height, Threads, Depth
-run ./testMouse 900 900 5                        #Width, Height, Threads, Depth
-run ./testNewtonPendulum 900 400 11              #Width, Height, Number Of Balls
-run ./testNova 1200 900 4                        #Width, Height, Threads
-run ./testPong 7 4                               #Ball Speed, Paddle Speed
-run ./testProjectiles 400 400                    #Width, Height
-run ./testSeaUrchin 16                           #Threads
-run ./testScreenshot 900 650                    #Width, Height
-run ./testSmartSort 1024                         #Elements, Threads
-run ./testSpectrogram ../assets/pics/test.png    #Image
-run ./testSpectrum 8                             #Threads
-run ./testText 1200 900 ../assets/freefont/FreeSerif.ttf  #Width, Height, Font                        
+run ./testAlphaRectangle 640 480                                   #Width, Height
+run ./testBallroom 640 640                                         #Width, Height
+run ./testCalcPi 100 4                                             #Segments, Threads
+run ./testColorPoints 400 400 4                                    #Width, Height, Threads
+run ./testColorWheel 640 640                                       #Width, Height
+# run ./testConcavePolygon                                           #SLOW
+run ./testConway 640 640                                           #Width, Height
+run ./testCosineIntegral 640 480 32                                #Width, Height, Threads
+run ./testDumbSort 1200 600                                        #Width, Height
+run ./testForestFire 800 600                                       #Width, Height
+run ./testFunction 640 480                                         #Width, Height
+run ./testGetPixels 4                                              #Threads
+run ./testGradientWheel 640 640                                    #Width, Height
+run ./testGraydient 400 400 8                                      #Width, Height, Threads
+run ./testGreyscale 640 480 8                                      #Width, Height, Threads
+run ./testHighData 1200 900 4                                      #Width, Height, Threads
+run ./testImage 1200 900                                           #Width, Height
+run ./testImageCart 1200 900                                       #Width, Height
+run ./testInverter 8                                               #Threads
+run ./testLangton 640 640                                          #Width, Height
+run ./testLineChain 400 400 8                                      #Width, Height, Threads
+run ./testLineFan 800 800 16                                       #Width, Height, Threads
+run ./testMandelbrot 1200 900 8 255                                #Width, Height, Threads, Depth
+run ./testMouse 900 900 5                                          #Width, Height, Threads
+run ./testNewtonPendulum 900 400 11                                #Width, Height, Number Of Balls
+run ./testNova 1200 900 4                                          #Width, Height, Threads
+run ./testPong 7 4                                                 #Ball Speed, Paddle Speed
+run ./testProjectiles 400 400                                      #Width, Height
+run ./testSeaUrchin 16                                             #Threads
+run ./testScreenshot 900 650                                       #Width, Height
+run ./testSmartSort 1024                                           #Elements, Threads
+run ./testSpectrogram ../assets/pics/test.png                      #Image
+run ./testSpectrum 8                                               #Threads
+run ./testText 1200 900 ../assets/freefont/FreeSerif.ttf           #Width, Height, Font
 run ./testTextCart 1200 900 ../assets/freefont/FreeSerifItalic.ttf #Width, Height, Font
-run ./testTextTwo 1200 900                       #Width, Height
-run ./testVoronoi 640 480 8                      #Width, Height, Threads
+run ./testTextTwo 1200 900                                         #Width, Height
+run ./testVoronoi 640 480 8                                        #Width, Height, Threads
