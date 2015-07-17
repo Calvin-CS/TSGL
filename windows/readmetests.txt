@@ -2,29 +2,30 @@
 QUICK NOTES
 -------------------------------
 + To close the window after each successive test, press the ESC key.
-+ Some tests have I/O capabilities, in particular: testAlphaLangton, testBallroom, testGradientMandelbrot, testJulia,  testMandelbrot, testMouse, testPong, testProjectiles, and
-    testScreenshotLangton.
-+ Some of the tests also take command-line arguments. They will be marked with a ++.
++ Every test can take in at least one command-line argument.
++ Some tests have I/O capabilities, in particular: testBallroom, testGradientMandelbrot, testJulia,  testMandelbrot, testMouse, testPong, testProjectiles, and
+    testLangton.
+
 + Lastly, some tests will have two windows. One will be a progress bar/tiled square, the other will be a window for the test animation. Close each window with ESC key as normal.
     The progress bar shows how much work each thread needs to do, the tiled square shows how much work each thread did in the animation.
+
 -----------------------------------
 DESCRIPTIONS
 -----------------------------------
-testAlphaLangton++ - Simulates four Langton's Ants that are alpha transparent. I/O capabilities: Click the left mouse button or press the ENTER key to make the screen flash more. 
-					          Press the spacebar to clear the screen. ( For a detailed look at Langton's Ant, go here: https://en.wikipedia.org/?title=Langton%27s_ant ). Takes command-line
-					          arguments for the width and height of the screen. 
-testAlphaRectangle++ - Partially transparent rectangles are drawn to the screen. Takes command-line arguments for the width and height of the screen. 
-testBallroom++ - Multiple colored balls are drawn and follow the mouse wherever it goes. I/O capabilities: The balls follow the mouse wherever it goes on the screen. Click the left 
-				       mouse button to make them repel from the mouse. Takes command-line arguments for the width and height of the screen.
-testBuddhabrot++ - Draws a Buddhabrot on the screen, see https://en.wikipedia.org/wiki/Buddhabrot for details on what a Buddhabrot is. Takes command-line arguments for the 
-				             width and height of the screen as well as the number of threads to use.
-testColorPoints++ -  A pattern is drawn to the screen. Takes command-line arguments for the width and height of the screen as well as for the number of threads to use. 
-testColorWheel++ - Shows a color wheel that acts as a sort of sonar device. Takes command-line arguments for the width and height of the screen. 
-testConcavePolygon++ - Draws two Concave polygons on the screen. See http://www.mathopenref.com/polygonconcave.html for information on what a Concave polygon is.
+testAlphaRectangle - Partially transparent rectangles are drawn to the screen. Takes command-line arguments for the width and height of the screen. 
+testBallroom - Multiple colored balls are drawn and follow the mouse wherever it goes. I/O capabilities: The balls follow the mouse wherever it goes on the screen. Click the left 
+				       mouse button to make them repel from the mouse. Click the left mouse button again to make them follow the mouse again. Takes command-line arguments for the 
+				       width and height of the screen.
+testBuddhabrot - Draws a Buddhabrot on the screen, see https://en.wikipedia.org/wiki/Buddhabrot for details on what a Buddhabrot is. Takes command-line arguments for the 
+				             width and height of the screen as well as the number of threads to use and the depth.
+testCalcPi - 
+testColorPoints -  A pattern is drawn to the screen. Takes command-line arguments for the width and height of the screen as well as for the number of threads to use. 
+testColorWheel - Shows a color wheel that acts as a sort of sonar device. Takes command-line arguments for the width and height of the screen. 
+testConcavePolygon - Draws two Concave polygons on the screen. See http://www.mathopenref.com/polygonconcave.html for information on what a Concave polygon is.
 						    Takes command-line arguments for the width and height of the screen.
-testConway++ - Simulates Conway's game of life. See https://en.wikipedia.org/wiki/Conway's_Game_of_Life for more details. Takes command-line arguments for the width and 
+testConway - Simulates Conway's game of life. See https://en.wikipedia.org/wiki/Conway's_Game_of_Life for more details. Takes command-line arguments for the width and 
 				    height of the screen.	
-testCosineIntegral++ - Visualizes the integration of the Cosine function. Takes command-line arguments for the width and height of the screen as well as the number of threads to 
+testCosineIntegral - Visualizes the integration of the Cosine function. Takes command-line arguments for the width and height of the screen as well as the number of threads to 
 						   use. 
 testDumbSort++ - Visual representation of a Shaker sort (or Bubble sort as some call it). Takes command-line arguments for the width and height of the screen. 
 testForestFire++ - Simulates a forest fire. Takes command-line arguments for the width and height of the screen.
@@ -45,9 +46,18 @@ testImageCart - Draws a set of images on a screen that has a Cartesian coordinat
 testInverter - Inverts the colors of an colored image to their greyscale colors. 
 testJulia++ - Displays a Julia set. See https://en.wikipedia.org/wiki/Julia_set for more details on what a Julia set is. Takes command-line arguments for the width and the height of the
 			     screen as well as for the number of threads to use and the depth of the set. I/O capabilities: Scroll up with the mouse wheel to zoom in, scroll down to zoom out.
-testLangton++ -  Displays another simulation of Langton's Ant with red ants. Takes command-line arguments for the width and height of the screen.
-testLangtonColony++ - Displays another simulation of Langton's Ant with four different colored ants. Takes command-line arguments for the width and the height of the screen.  
-testLangtonRainbow++ - Displays another simulation of Langton's Ant with dynamically colored ants. Takes command-line arguments for the width and the height of the screen.
+
+testLangton -  Displays several visualizations of Langton's Ant (For a detailed look at Langton's Ant, go here: https://en.wikipedia.org/?title=Langton%27s_ant ). Takes command-line
+                                 arguments for the width and height of the screen. There are five visualizations in total. Some may have I/O capabilities. Hit ESC to iterate through each one. 
+                                 The visualizations are described below:
+				+  Simulates four Langton's Ants that are alpha transparent.   I/O capabilities: Click the left mouse button or press the ENTER key to make the screen flash more. 
+				     Press the spacebar to clear the screen.
+                                +   Displays one Langton's Ant. 
+                                +   Displays four different colored Langton's Ants.
+                                +   Display four dynamically colored Langton's Ants.  
+                                +   Displays another simulation of Langton's Ant with four colored ants on a black background. I/O capabilities: Press the ENTER key to pause the animation.
+                                      Press the ENTER key again to resume the animation. Press the spacebar to clear the screen. The screenshots are saved to wherever the test is running (if you 
+	                              run it in the bin folder, they will be saved there. If you run it anywhere else, they'll be saved in whatever folder the test is located in).
 testLineChain++ - Displays randomly colored lines. Takes command-line arguments for the width and height of the screen.
 testLineFan - Displays a vibrant fan of colored lines.
 testMandelbrot++ - Draws another Mandelbrot set with a colored outline on a black background. I/O capabilities: Scroll up on the mouse wheel to zoom in, scroll down to zoom out. 
@@ -68,11 +78,9 @@ testProjectiles++ - Play a target shooting game. There are 10 targets and you ha
 					  been displayed. I/O capabilities: Click the mouse in the center of the target to get a point. Takes command-line arguments for the width and height of the screen.
 testSeaUrchin - Displays colorful sea urchins with the title, "Sea Urchins in the Spotlight!" If you close the window, the message "YOU KILLED MY SEA URCHINS! : ' (" is outputted to the
 				   console.
-testScreenshot - Displays multiple colorful triangles then takes a screenshot of each drawing frame. The screenshots are saved in the root directory at the moment, but will be 
-				      saved to their own directory in the future.
-testScreenshotLangton++ - Displays another simulation of Langton's Ant with four colored ants on a black background. I/O capabilities: Press the ENTER key to pause the animation.
-							  Press the ENTER key again to resume the animation. Press the spacebar to clear the screen. Screenshots are not currently saved in any directory at the
-						          moment but will be in the future. Takes command-line arguments for the width and height of the screen. 
+testScreenshot - Displays multiple colorful triangles then takes a screenshot of each drawing frame. The screenshots are saved in a similar fashion as they are in the 
+				      testLangton's fifth visualization (wherever the test is running is where the screenshots will be saved). Takes command-line arguments for the width and height of the
+                                      screen.
 testShadedVoronoi++ - Displays a Voronoi diagram that has been shaded. See https://en.wikipedia.org/wiki/Voronoi_diagram for more details on what a Voronoi diagram is. Takes 
 						command-line arguments for the width and height of the screen. 
 testSmartSort++ - Simulates the mergesort algorithm. Takes command-line arguments for the size of the screen as well as for the number of threads to use. 

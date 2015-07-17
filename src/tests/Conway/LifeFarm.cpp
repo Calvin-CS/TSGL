@@ -158,7 +158,7 @@ LifeFarm::~LifeFarm() {
   delete nextstate;
 }
 
-inline void LifeFarm::addAnt(int x, int y) {
+void LifeFarm::addAnt(int x, int y) {
   livelist[listend++] = y*width+x;
   alive[y][x] = true;
 }
