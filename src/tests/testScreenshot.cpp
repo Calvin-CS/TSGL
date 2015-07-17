@@ -44,8 +44,15 @@ void screenShotFunction(Canvas& can) {
     }
 }
 
-int main() {
-    Cart c29(-1, -1, 800, 600, 0, 0, 800, 600,"Screenshot Test", FRAME);
+//Takes command-line arguments for the width and height of the screen
+int main(int argc, char * argv[]) {
+    int w = (argc > 1) ? atoi(argv[1]) : 800; //Width and height
+    int h = (argc > 2) ? atoi(argv[2]) : 600;
+    if(w <= 0 || h <= 0) { //Check validity of width and height
+      w = 800;
+      h = 600;
+    }
+    Cart c29(-1, -1, w, h, 0, 0, 800, 600,"Screenshot Test", FRAME);
     c29.start();
     screenShotFunction(c29);
     c29.wait();

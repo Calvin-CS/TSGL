@@ -25,8 +25,8 @@ run ./testGradientWheel 640 640                  #Width, Height
 run ./testGraydient 400 400 8                    #Width, Height, Threads
 run ./testGreyscale 640 480 8                    #Width, Height, Threads
 run ./testHighData 1200 900 4                    #Width, Height, Threads
-run ./testImage
-run ./testImageCart
+run ./testImage 1200 900                         #Width, Height
+run ./testImageCart 1200 900                     #Width, Height
 run ./testLangton 640 640                        #Width, Height
 run ./testLineChain 400 400 8                    #Width, Height, Threads
 run ./testLineFan 800 800 16                     #Width, Height, Threads
@@ -37,11 +37,11 @@ run ./testNova 1200 900 4                        #Width, Height, Threads
 run ./testPong 7 4                               #Ball Speed, Paddle Speed
 run ./testProjectiles 400 400                    #Width, Height
 run ./testSeaUrchin 16                           #Threads
-run ./testScreenshot
+run ./testScreenshot 900 650                    #Width, Height
 run ./testSmartSort 1024                         #Elements, Threads
 run ./testSpectrogram ../assets/pics/test.png    #Image
 run ./testSpectrum 8                             #Threads
-run ./testText
-run ./testTextCart
-run ./testTextTwo
+run ./testText 1200 900 ../assets/freefont/FreeSerif.ttf  #Width, Height, Font                        
+run ./testTextCart 1200 900 ../assets/freefont/FreeSerifItalic.ttf #Width, Height, Font
+run ./testTextTwo 1200 900                       #Width, Height
 run ./testVoronoi 640 480 8                      #Width, Height, Threads
