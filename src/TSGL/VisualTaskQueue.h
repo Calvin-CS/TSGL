@@ -14,7 +14,7 @@ namespace tsgl {
 
 /*! \brief Enum for states of elements in the VisualTaskQueue
  *  \details VQState is an enum for the valid states of an element in the VisualTaskQueue.
- *  \details <code>RUNNING</code> specifies an element is currently being worked on by a thread.
+ *  \details <code>RUNNING</code> specifies an element is currently being worked on by some thread.
  *  \details <code>FINISHED</code> specifies an element has been completed by some thread
  */
 enum VQState {

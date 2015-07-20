@@ -199,27 +199,25 @@ int main(int argc, char* argv[]) {
       w = h = 960;              //If not, set the width and height to a default value
     //Alpha Langton
     std::cout << "Alpha Langton's Ant" << std::endl;
-    Canvas c1(-1, -1, w, h, "Langton's Ant (Cool Alpha Edition)", FRAME);
+    Canvas c1(-1, -1, w, h, "Langton's Ant (Cool Alpha Edition)");
     c1.setBackgroundColor(BLACK);
     c1.run(alphaLangtonFunction);
     //Regular Langton
     std::cout << "Regular Langton's Ant" << std::endl;
-    Canvas c2(-1, -1, w, h, "Langton's Ant", FRAME);
-    c2.setBackgroundColor(GRAY);
+    Canvas c2(-1, -1, w, h, "Langton's Ant");
     c2.run(langtonFunction);
     //Colony Langton
     std::cout << "Multiple Langton's Ants" << std::endl;
-    Canvas c3(-1, -1, w, h, "4x Langton's Ants", FRAME);
-    c3.setBackgroundColor(GRAY);
+    Canvas c3(-1, -1, w, h, "4x Langton's Ants");
     c3.run(langtonColonyFunction);
     //Colorful Langton
     std::cout << "Dynamically Colored Langton's Ants" << std::endl;
-    Canvas c4(-1, -1, w, h, "Colorful Langton's Ants", FRAME);
+    Canvas c4(-1, -1, w, h, "Colorful Langton's Ants");
     c4.setBackgroundColor(BLACK);
     c4.run(langtonRainbowFunction);
     //Screenshot Langton
     std::cout << "Screenshot Langton's Ant" << std::endl;
-    Canvas c5(-1, -1, w, h, "Langton's Ant (enter to pause)", FRAME);
+    Canvas c5(-1, -1, w, h, "Langton's Ant (enter to pause)");
     c5.setBackgroundColor(BLACK);
     c5.run(screenshotLangtonFunction);
 }

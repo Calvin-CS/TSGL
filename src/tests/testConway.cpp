@@ -11,7 +11,7 @@ using namespace tsgl;
 
 /*!
  * \brief Simulates Conway's Game of Life! (Now interactive!)
- * ( see https://en.wikipedia.org/wiki/Conway's_Game_of_Life )
+ * \note See https://en.wikipedia.org/wiki/Conway's_Game_of_Life
  * \details It is drawn in this way:
  * - Get the iterations per frame, window width and window height and store them.
  * - Create a LifeFarm object to hold the objects (ants) that move around on the screen.
@@ -46,7 +46,6 @@ void conwayFunction(Canvas& can) {
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
     LifeFarm farm(WW,WH,&can,false);    //Change the false to true for something awesome!
-//    LifeFarm farm(WW,WH,&can,true);
     farm.setDrawdead(true);
     bool paused = false;
     bool mouseDown = false;
@@ -77,7 +76,7 @@ void conwayFunction(Canvas& can) {
       if(mouseDown) {
         farm.addAnt(can.getMouseX(), can.getMouseY());
         can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
-    }
+      }
     }
 }
 
@@ -85,8 +84,7 @@ void conwayFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
-    Canvas c(-1, -1, w, h, "Conway's Game of Life", FRAME);
-//    c6.setShowFPS(true);
+    Canvas c(-1, -1, w, h, "Conway's Game of Life");
     c.setBackgroundColor(BLACK);
     c.run(conwayFunction);
 }

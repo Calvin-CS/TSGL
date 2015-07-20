@@ -16,12 +16,6 @@
 using namespace tsgl;
 
 /*!
- * \var Cart
- * \brief Typedef for CartesianCanvas.
- */
-typedef CartesianCanvas Cart;
-
-/*!
  * \var complex
  * \brief Typedef for std::complex<Decimal>.
  */

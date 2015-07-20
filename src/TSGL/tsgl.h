@@ -14,5 +14,6 @@
 #include "VisualTaskQueue.h"
 #include "Spectrogram.h"
 #include "IntegralViewer.h"
+#include "Util.h"
 
 #endif /* TSGL_H_ */

@@ -8,8 +8,6 @@
 
 using namespace tsgl;
 
-typedef CartesianCanvas Cart;
-
 /*!
  * \brief Draws various images on a CartesianCanvas.
  * \details Same as imageFunction, but on a CartesianCanvas.
@@ -23,7 +21,7 @@ void imageCartFunction(Cart& can) {
     can.drawImage("../assets/pics/cow.jpg", 2, 1.5, 2, 1.5);
     can.drawImage("../assets/pics/colorfulKeyboard.jpg", 4, 1.5, 2, 1.5);
 
-    can.drawImage("../assets/pics/colorful-cars-circle.jpg", 1, 3, 4, 3, 0.25f);    //ALPHA
+    can.drawImage("../assets/pics/colorful-cars-circle.jpg", 1, 3, 4, 3, 0.25f); //Overlay
 }
 
 //Takes command-line arguments for the width and height of the screen
@@ -35,6 +33,5 @@ int main(int argc, char * argv[]) {
       h = 0.5 * w;
     }
     Cart c(-1, -1, w, h, 0, 0, 6, 3, "Cartesian Images");
-    c.setBackgroundColor(GRAY);
     c.run(imageCartFunction);
 }

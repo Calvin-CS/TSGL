@@ -8,8 +8,6 @@
 
 using namespace tsgl;
 
-typedef CartesianCanvas Cart;
-
 /*!
  * \brief Draws some text on a CartesianCanvas.
  * \details Same as textFunction, but with a CartesianCanvas and black text.

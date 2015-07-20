@@ -287,10 +287,8 @@ void ballroomFunction(Canvas& can) {
         b.toggleAttract();
     });
 
-//    ColorFloat clearcolor = ColorInt(0,0,0,16);
     while (can.getIsOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-//        can.drawRectangle(0,0,WW,WH,clearcolor,true);
         b.step(&can);
     }
 }
@@ -301,7 +299,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;            //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "The Ballroom", FRAME);
+    Canvas c(-1, -1, w, h, "The Ballroom");
     c.setBackgroundColor(BLACK);
     c.run(ballroomFunction);
 }

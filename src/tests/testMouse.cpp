@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : -1;
   int h = (argc > 2) ? atoi(argv[2]) : w;
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
-  Canvas c(-1, -1, w, h, "Draw With Your Mouse!", FRAME);
+  Canvas c(-1, -1, w, h, "Draw With Your Mouse!");
   c.setBackgroundColor(WHITE);
   c.run(mouseFunction,t);
 }

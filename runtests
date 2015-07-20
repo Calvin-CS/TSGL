@@ -9,10 +9,10 @@ cd bin
 
 run ./testAlphaRectangle 640 480                                   #Width, Height
 run ./testBallroom 640 640                                         #Width, Height
-run ./testBlurImage 36 ../assets/pics/HDR_landscape.jpg            #Image
+run ./testBlurImage 36 ../assets/pics/HDR_landscape.jpg            #Threads, Image
 run ./testCalcPi 100 4                                             #Segments, Threads
 run ./testColorPoints 400 400 4                                    #Width, Height, Threads
-run ./testColorWheel 640 640                                       #Width, Height
+run ./testColorWheel 640 640 64                                    #Width, Height, Threads
 # run ./testConcavePolygon                                           #SLOW
 run ./testConway 640 640                                           #Width, Height
 run ./testCosineIntegral 640 480 32                                #Width, Height, Threads
@@ -20,12 +20,12 @@ run ./testDumbSort 1200 600                                        #Width, Heigh
 run ./testForestFire 800 600                                       #Width, Height
 run ./testFunction 640 480                                         #Width, Height
 run ./testGetPixels 4                                              #Threads
-run ./testGradientWheel 640 640                                    #Width, Height
+run ./testGradientWheel 640 640 256                                #Width, Height, Threads
 run ./testGraydient 400 400 8                                      #Width, Height, Threads
 run ./testGreyscale 640 480 8                                      #Width, Height, Threads
 run ./testHighData 1200 900 4                                      #Width, Height, Threads
-run ./testImage 1200 900                                           #Width, Height
-run ./testImageCart 1200 900                                       #Width, Height
+run ./testImage 1200 600                                           #Width, Height
+run ./testImageCart 1200 600                                       #Width, Height
 run ./testInverter 8                                               #Threads
 run ./testLangton 640 640                                          #Width, Height
 run ./testLineChain 400 400 8                                      #Width, Height, Threads

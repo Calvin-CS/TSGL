@@ -8,8 +8,6 @@
 
 using namespace tsgl;
 
-typedef CartesianCanvas Cart;
-
 /*!
  * \brief Draws the outputs of some functions using CartesianCanvas.
  * \details
@@ -33,7 +31,7 @@ void functionFunction(CartesianCanvas& can) {
 
     class myFunction : public Function {
      public:
-        virtual long double valueAt(long double x) const {
+        long double valueAt(long double x) const {
             return 5 * pow(x, 4) + 2 * pow(x, 3) + x + 15;
         }
     };

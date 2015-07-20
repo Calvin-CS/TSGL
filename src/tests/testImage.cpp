@@ -25,7 +25,7 @@ void imageFunction(Canvas& can) {
     can.drawImage("../assets/pics/colorfulKeyboard.jpg", ww, hh, ww, hh);
     can.drawImage("../assets/pics/cow.jpg", ww*2, hh, ww, hh);
 
-    can.drawImage("../assets/pics/background.jpg", ww/2, 0, ww*2, hh*2, 0.25f);    //ALPHA
+    can.drawImage("../assets/pics/background.jpg", ww/2, 0, ww*2, hh*2, 0.25f); //Overlay
 }
 
 //Takes command-line arguments for the width and height of the screen
@@ -33,10 +33,8 @@ int main(int argc, char * argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.5*w;
     if(w <= 0 || h <= 0) { //Check width and height validity
-      w = 1.2*Canvas::getDisplayHeight();
-      h = 0.5*w;
+      w = 1.2*Canvas::getDisplayHeight(); h = 0.5*w;
     }
     Canvas c(-1, -1, w, h ,"Images");
-    c.setBackgroundColor(GRAY);
     c.run(imageFunction);
 }

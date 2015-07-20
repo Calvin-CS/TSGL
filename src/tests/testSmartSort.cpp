@@ -6,6 +6,7 @@
 
 #include <tsgl.h>
 #include <omp.h>
+
 using namespace tsgl;
 
 const int MARGIN = 8;    // Border for drawing
@@ -188,7 +189,7 @@ int main(int argc, char* argv[]) {
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(-1, -1, w, h, "Bottom-up Merge Sort", FRAME);
+    Canvas c(-1, -1, w, h, "Bottom-up Merge Sort");
     c.setBackgroundColor(BLACK);
     c.run(smartSortFunction, threads, s);
 }

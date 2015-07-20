@@ -55,7 +55,7 @@ void spectrumFunction(Canvas& can, int numberOfThreads) {
 //Takes command-line arguments for the number of threads to use
 int main(int argc, char* argv[]) {
     int t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();   //Number of threads to use
-    Canvas c(-1,-1,255,255,"The Color Spectrum", FRAME);
+    Canvas c(-1,-1,255,255,"The Color Spectrum");
     c.run(spectrumFunction, t);
 }
 

@@ -46,53 +46,48 @@ void dumbSortFunction(Canvas& can) {
         numbers[i] = rand() % (can.getWindowHeight() - 40);
     can.setBackgroundColor(GRAY);
     while (can.getIsOpen()) {
-        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-        if (min >= max) return;  // We are done sorting
-
-        for (int i = 0; i < IPF; i++) {
-            if (goingUp) {
-                if (numbers[pos] > numbers[pos + 1]) {
-                    temp = numbers[pos];
-                    numbers[pos] = numbers[pos + 1];
-                    numbers[pos + 1] = temp;
-                    lastSwap = pos;
-                }
-                if (pos >= max) {
-                    pos = max;
-                    max = (lastSwap < max) ? lastSwap : max - 1;
-                    goingUp = !goingUp;
-                } else
-                    pos++;
-            } else {
-                if (numbers[pos] < numbers[pos - 1]) {
-                    temp = numbers[pos];
-                    numbers[pos] = numbers[pos - 1];
-                    numbers[pos - 1] = temp;
-                    lastSwap = pos;
-                }
-                if (pos <= min) {
-                    pos = min;
-                    min = (lastSwap > min) ? lastSwap : min + 1;
-                    goingUp = !goingUp;
-                } else
-                    pos--;
-            }
+      can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+      if (min >= max) return;  // We are done sorting
+      for (int i = 0; i < IPF; i++) {
+        if (goingUp) {
+          if (numbers[pos] > numbers[pos + 1]) {
+            temp = numbers[pos];
+            numbers[pos] = numbers[pos + 1];
+            numbers[pos + 1] = temp;
+            lastSwap = pos;
+          }
+          if (pos >= max) {
+            pos = max;
+            max = (lastSwap < max) ? lastSwap : max - 1;
+            goingUp = !goingUp;
+          } else
+            pos++;
+        } else {
+          if (numbers[pos] < numbers[pos - 1]) {
+            temp = numbers[pos];
+            numbers[pos] = numbers[pos - 1];
+            numbers[pos - 1] = temp;
+            lastSwap = pos;
+          }
+          if (pos <= min) {
+            pos = min;
+            min = (lastSwap > min) ? lastSwap : min + 1;
+            goingUp = !goingUp;
+          } else
+            pos--;
         }
-
-        int start = 50, width = 1, height;
-        int cwh = can.getWindowHeight() - 20;
-        ColorFloat color;
-        can.pauseDrawing(); //Tell the Canvas to stop updating the screen temporarily
-        can.clear();
-        for (int i = 0; i < SIZE; i++, start += width * 2) {
-            height = numbers[i];
-            if (i == pos)
-                color = ColorInt(MAX_COLOR, MAX_COLOR, 0);
-            else
-                color = ColorInt(MAX_COLOR, 0, 0);
-            can.drawRectangle(start, cwh - height, start + width, cwh, color);
-        }
-        can.resumeDrawing(); //Tell the Canvas it can resume drawing
+      }
+      int start = 50, width = 1, height;
+      int cwh = can.getWindowHeight() - 20;
+      ColorFloat color;
+      can.pauseDrawing(); //Tell the Canvas to stop updating the screen temporarily
+      can.clear();
+      for (int i = 0; i < SIZE; i++, start += width * 2) {
+        height = numbers[i];
+        color = ColorInt(MAX_COLOR, (i == pos) ? MAX_COLOR : 0, 0);
+        can.drawRectangle(start, cwh - height, start + width, cwh, color);
+      }
+      can.resumeDrawing(); //Tell the Canvas it can resume drawing
     }
 }
 
@@ -100,11 +95,9 @@ void dumbSortFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
-    if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
-      w = 1200;
-      h = 900;                  //If not, set the width and height to a default value
+    if (w <= 0 || h <= 0) {     // Checked the passed width and height if they are valid
+      w = 1200; h = 900;        // If not, set the width and height to a default value
     }
-    Canvas c(-1, -1, w, h, "Shaker Sort", FRAME);
-    c.setBackgroundColor(GRAY);
+    Canvas c(-1, -1, w, h, "Shaker Sort");
     c.run(dumbSortFunction);
 }

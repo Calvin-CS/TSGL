@@ -8,8 +8,6 @@
 
 using namespace tsgl;
 
-typedef CartesianCanvas Cart;
-
 /*!
  * \brief Draws a bunch of triangles and outputs each frame to an image.
  * \details
@@ -28,7 +26,7 @@ typedef CartesianCanvas Cart;
  * are by default written to the \i frames/ directory.
  * \param can Reference to the Canvas being drawn to.
  */
-void screenShotFunction(Canvas& can) {
+void screenShotFunction(Cart& can) {
     int xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
     can.recordForNumFrames(FPS * 30);
     while (can.getIsOpen()) {  // Checks to see if the window has been closed
@@ -51,6 +49,6 @@ int main(int argc, char * argv[]) {
       w = 800;
       h = 600;
     }
-    Cart c(-1, -1, w, h, 0, 0, 800, 600,"Screenshot Test", FRAME);
+    Cart c(-1, -1, w, h, 0, 0, 800, 600,"Screenshot Test");
     c.run(screenShotFunction);
 }

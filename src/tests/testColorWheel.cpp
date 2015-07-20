@@ -1,7 +1,7 @@
 /*
  * testColorWheel.cpp
  *
- * Usage: ./testColorWheel <width> <height>
+ * Usage: ./testColorWheel <width> <height> <numThreads>
  */
 
 #include <omp.h>
@@ -37,27 +37,25 @@ using namespace tsgl;
  * .
  * \param can Reference to the Canvas being drawn to.
  */
-void colorWheelFunction(Canvas& can) {
-    const int THREADS = 64,                           // Number of threads to compute with
-              WINDOW_CW = can.getWindowWidth() / 2,   // Set the center of the window
-              WINDOW_CH = can.getWindowHeight() / 2;
-    const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,  // Radius of wheel
-    GRADIENT = 2 * PI / NUM_COLORS;                   // Gap between wedges
-    float x2, x3, y2, y3, shading;
-    #pragma omp parallel num_threads(THREADS) private(x2,x3,y2,y3,shading)
+void colorWheelFunction(Canvas& can, int threads) {
+    const int CW = can.getWindowWidth() / 2,          // Half the window's width
+              CH = can.getWindowHeight() / 2;         // Half the window's height
+    const float RADIUS = (CH < CW ? CH : CW) * .95,   // Radius of wheel
+                GRADIENT = 2 * PI / NUM_COLORS;       // Gap between wedges
+    #pragma omp parallel num_threads(threads)
     {
-        int nthreads = omp_get_num_threads();
-        int delta = NUM_COLORS / nthreads;           // Distance between threads to compute
+        float x2, x3, y2, y3, shading;
         int tid = omp_get_thread_num();
-        shading = 1 - (float) tid / nthreads;
+        int delta = tid * NUM_COLORS / threads;           // Distance between threads to compute
+        shading = 1 - (float) tid / threads;
         while (can.getIsOpen()) {
             can.sleep();
-            int start = (NUM_COLORS - can.getReps() % NUM_COLORS + tid * delta) % NUM_COLORS;
-            x2 = WINDOW_CW + RADIUS * sin(GRADIENT * start);
-            y2 = WINDOW_CH + RADIUS * cos(GRADIENT * start);
-            x3 = WINDOW_CW + RADIUS * sin(GRADIENT * (start + 1));
-            y3 = WINDOW_CH + RADIUS * cos(GRADIENT * (start + 1));
-            can.drawTriangle(WINDOW_CW, WINDOW_CH, x2, y2, x3, y3,
+            int start = (NUM_COLORS - (can.getReps() % NUM_COLORS) + delta) % NUM_COLORS;
+            x2 = CW + RADIUS * sin(GRADIENT * start);
+            y2 = CH + RADIUS * cos(GRADIENT * start);
+            x3 = CW + RADIUS * sin(GRADIENT * (start + 1));
+            y3 = CH + RADIUS * cos(GRADIENT * (start + 1));
+            can.drawTriangle(CW, CH, x2, y2, x3, y3,
                              ColorHSV(start * 6.0f / NUM_COLORS, 1.0f, shading));
         }
     }
@@ -69,8 +67,8 @@ int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-        w = h = 960;              //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "Color Wheel", FRAME);
-    c.setBackgroundColor(GRAY);
-    c.run(colorWheelFunction);
+        w = h = 960;          //If not, set the width and height to a default value
+    int t = (argc > 3) ? atoi(argv[3]) : 64;
+    Canvas c(-1, -1, w, h, "Color Wheel");
+    c.run(colorWheelFunction,t);
 }

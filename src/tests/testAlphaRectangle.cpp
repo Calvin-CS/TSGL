@@ -23,13 +23,12 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void alphaRectangleFunction(Canvas& can) {
-    const int WINDOW_W = can.getWindowWidth(),
-              WINDOW_H = can.getWindowHeight();
+    const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
     int a, b, c, d;
     while (can.getIsOpen()) {
         can.sleep();
-        a = rand() % WINDOW_W; b = rand() % WINDOW_H;
-        c = rand() % WINDOW_W; d = rand() % WINDOW_H;
+        a = rand() % WW; b = rand() % WH;
+        c = rand() % WW; d = rand() % WH;
         can.drawRectangle(a, b, c, d, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16));
     }
 }
@@ -40,7 +39,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;            //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "Fancy Rectangles", FRAME);
+    Canvas c(-1, -1, w, h, "Fancy Rectangles");
     c.setBackgroundColor(BLACK);
     c.run(alphaRectangleFunction);
 }

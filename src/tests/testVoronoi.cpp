@@ -92,11 +92,9 @@ int main(int argc, char* argv[]) {
   //Normal Voronoi
   std::cout << "Regular Voronoi" << std::endl;
   Canvas c1(-1, -1, w, h, "Voronoi");
-  c1.setBackgroundColor(WHITE);
   c1.run(voronoiFunction);
   std::cout << "Special Voronoi" << std::endl;
   //Shaded Voronoi
   Canvas c2(-1, -1, w, h, "Shaded Voronoi");
-  c2.setBackgroundColor(WHITE);
   c2.run(shadedVoronoiFunction);
 }

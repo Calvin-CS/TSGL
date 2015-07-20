@@ -8,21 +8,19 @@
 #include <cmath>  //To determine M_PI and is also used for math operations
 
 namespace tsgl {
+
+class CartesianCanvas;  //Forward declaration for typedef
+
 //Constants to be used by TSGL classes and tests
-//Tests
 #ifdef _WIN32
-const double PI = 3.1415926535;
+const double PI = 3.14159265358979323846;
 #else
 const double PI = M_PI;
 #endif
-const double RAD = PI / 180;  // One radian in degrees
+const double RAD = PI / 180;     // One radian in degrees
 
-const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
-
-//Classes
-//Canvas.h
-#define FPS 60              // Frames per second
-#define FRAME 1.0f/FPS      // Number of seconds between frames
+const int FPS = 60;                // Frames per second
+const float FRAME = 1.0f/FPS;      // Number of seconds between frames
 
 /*!
  * \var typedef long double Decimal
@@ -30,8 +28,8 @@ const int WINDOW_W = 400*3, WINDOW_H = 300*3, BUFFER = WINDOW_W * WINDOW_H * 2;
  * \note Used by: CartesianCanvas, Function, and IntegralViewer.
  */
 typedef long double Decimal;  // Define the variable type to use for coordinates
+typedef CartesianCanvas Cart; // Shorter name for CartesianCanvas
 
-//Color.h
 const int NUM_COLORS = 256, MAX_COLOR = 255;
 
 inline bool clamp(float& f, float min, float max) {
