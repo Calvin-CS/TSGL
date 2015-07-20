@@ -1,8 +1,5 @@
 /*
  * CartesianCanvas.h provides a Canvas with a Cartesian coordinate system for ease of plotting.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Patrick Crain, 6/20/2014
  */
 
 #ifndef CARTESIANCANVAS_H_
@@ -367,6 +364,76 @@ public:
       * \note Identical to Canvas::reset().
       */
     void reset();
+
+    /*!
+     * \brief Start the CartesianCanvas, run a function on it, and wait for the user to close it
+     * \details This function binds another function to the current CartesianCanvas, waits until that function is
+     *   complete, and waits for the user to close the CartesianCanvas.  This function effectively calls start(),
+     *   <code>myFunction</code>(), and wait() in sequence.
+     * \param myFunction The function to run on the CartesianCanvas. Must take exactly one parameter of type
+     *   CartesianCanvas&, which is a reference to the CartesianCanvas to render to.
+     */
+    void run(void (*myFunction)(CartesianCanvas&));
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the CartesianCanvas. Must take exactly one parameter of type
+     *   CartesianCanvas&, which is a reference to the CartesianCanvas to render to.
+     * \param i An integer argument to myFunction
+     */
+    void run(void (*myFunction)(CartesianCanvas&, int), int i);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the CartesianCanvas. Must take exactly one parameter of type
+     *   CartesianCanvas&, which is a reference to the CartesianCanvas to render to.
+     * \param u An unsigned integer argument to myFunction
+     */
+    void run(void (*myFunction)(CartesianCanvas&, unsigned), unsigned u);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the CartesianCanvas. Must take exactly one parameter of type
+     *   CartesianCanvas&, which is a reference to the CartesianCanvas to render to.
+     * \param i1 An integer argument to myFunction
+     * \param i2 An integer argument to myFunction
+     */
+    void run(void (*myFunction)(CartesianCanvas&, int, int), int i1, int i2);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the CartesianCanvas. Must take exactly one parameter of type
+     *   CartesianCanvas&, which is a reference to the CartesianCanvas to render to.
+     * \param u1 An unsigned integer argument to myFunction
+     * \param u2 An unsigned integer argument to myFunction
+     */
+    void run(void (*myFunction)(CartesianCanvas&, unsigned, unsigned), unsigned u1, unsigned u2);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the CartesianCanvas. Must take exactly one parameter of type
+     *   CartesianCanvas&, which is a reference to the CartesianCanvas to render to.
+     * \param s A string argument to myFunction
+     */
+    void run(void (*myFunction)(CartesianCanvas&, std::string),std::string s);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the CartesianCanvas. Must take exactly one parameter of type
+     *   CartesianCanvas&, which is a reference to the CartesianCanvas to render to.
+     * \param i An integer argument to myFunction
+     * \param s A string argument to myFunction
+     */
+    void run(void (*myFunction)(CartesianCanvas&, int, std::string), int i, std::string s);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the CartesianCanvas. Must take exactly one parameter of type
+     *   CartesianCanvas&, which is a reference to the CartesianCanvas to render to.
+     * \param s A string argument to myFunction
+     * \param i An integer argument to myFunction
+     */
+    void run(void (*myFunction)(CartesianCanvas&, std::string, int), std::string s, int i);
 
     /*!
      * \brief Sleeps the internal drawing timer of a CartesianCanvas object.

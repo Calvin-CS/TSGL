@@ -1,8 +1,7 @@
 /*
  * testGradientWheel.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testGradientWheel <width> <height>
  */
 
 #include <omp.h>
@@ -62,9 +61,7 @@ int main(int argc, char* argv[]) {
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-  Canvas c13(-1, -1, w, h, "Gradient Color Wheel", FRAME);
-  c13.setBackgroundColor(BLACK);
-  c13.start();
-  gradientWheelFunction(c13);
-  c13.wait();
+  Canvas c(-1, -1, w, h, "Gradient Color Wheel", FRAME);
+  c.setBackgroundColor(BLACK);
+  c.run(gradientWheelFunction);
 }

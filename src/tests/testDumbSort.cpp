@@ -1,8 +1,7 @@
 /*
  * testDumbSort.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testDumbSort <width> <height>
  */
 
 #include <tsgl.h>
@@ -105,9 +104,7 @@ int main(int argc, char* argv[]) {
       w = 1200;
       h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c9(-1, -1, w, h, "Shaker Sort", FRAME);
-    c9.setBackgroundColor(GRAY);
-    c9.start();
-    dumbSortFunction(c9);   //Pass the Canvas as an argument
-    c9.wait();
+    Canvas c(-1, -1, w, h, "Shaker Sort", FRAME);
+    c.setBackgroundColor(GRAY);
+    c.run(dumbSortFunction);
 }

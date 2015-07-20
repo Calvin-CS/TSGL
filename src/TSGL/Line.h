@@ -1,8 +1,5 @@
 /*
  * Line.h extends Shape and provides a class for drawing a single line to a Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 7/2/2014
  */
 
 #ifndef LINE_H_

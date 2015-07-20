@@ -1,3 +1,9 @@
+/*
+ * testBlurImage.cpp
+ *
+ * Usage: ./testBlurImage <numThreads> <imagePath>
+ */
+
 #include <omp.h>
 #include <tsgl.h>
 
@@ -50,7 +56,5 @@ int main(int argc, char* argv[]) {
   std::string fname = (argc > 2) ? argv[2] : "../assets/pics/colorful_cars.jpg";
   TextureHandler::getDimensions(fname,w,h);
   Canvas c(-1, -1, w, h, "Blurring using recursive splitting", FRAME);
-  c.start();
-  blurImageFunction(c,fname,t);
-  c.wait();
+  c.run(blurImageFunction,fname,t);
 }

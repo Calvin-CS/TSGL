@@ -1,8 +1,5 @@
 /*
  * Pong.h
- *
- *  Created on: May 29, 2015
- *      Author: cpd5
  */
 
 #ifndef PONG_H_

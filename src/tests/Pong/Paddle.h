@@ -1,8 +1,5 @@
 /*
  * Paddle.h
- *
- *  Created on: Jul 14, 2015
- *      Author: cpd5
  */
 
 #ifndef PADDLE_H_

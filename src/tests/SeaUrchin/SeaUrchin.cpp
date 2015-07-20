@@ -1,13 +1,10 @@
 /*
  * SeaUrchin.cpp
- *
- *  Created on: Jul 16, 2015
- *      Author: cpd5
  */
 
 #include <src/tests/SeaUrchin/SeaUrchin.h>
 
-SeaUrchin::SeaUrchin(Canvas& can, int & threadId) {
+SeaUrchin::SeaUrchin(Canvas& can, int threadId) {
   myOldX = myOldY = 50;
   myOldX += (threadId % 8) * 110;
   myOldY += (threadId / 8) * 110;

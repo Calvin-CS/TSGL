@@ -1,7 +1,5 @@
 /*
  * IntegralViewer.h
- *
- *  Created on: Apr 23, 2015
  */
 
 #ifndef INTEGRALVIEWER_H_

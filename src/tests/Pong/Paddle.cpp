@@ -1,8 +1,5 @@
 /*
  * Paddle.cpp
- *
- *  Created on: Jul 14, 2015
- *      Author: cpd5
  */
 
 #include "Paddle.h"

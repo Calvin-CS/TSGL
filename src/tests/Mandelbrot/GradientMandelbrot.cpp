@@ -1,8 +1,5 @@
 /*
  * GradientMandelbrot.cpp
- *
- *  Created on: May 28, 2015
- *      Author: Chris Dilley
  */
 
 #include "GradientMandelbrot.h"

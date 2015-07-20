@@ -1,10 +1,3 @@
-/*
- * Color.cpp contains the code for creating colors on a Canvas.
- *
- *  Created on: Jul 22, 2014
- *      Author: mbv26
- */
-
 #include "Color.h"
 
 //Workaround for VS not defining NAN (

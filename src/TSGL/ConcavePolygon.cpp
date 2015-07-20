@@ -1,10 +1,3 @@
-/*
- * ConcavePolygon.cpp
- *
- *  Created on: May 26, 2015
- *      Author: pac3
- */
-
 #include "ConcavePolygon.h"
 
 namespace tsgl {

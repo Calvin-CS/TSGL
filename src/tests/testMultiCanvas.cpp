@@ -1,8 +1,7 @@
 /*
- * testGraydient.cpp
+ * testMultiCanvas.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testMultiCanvas
  */
 
 #include <omp.h>

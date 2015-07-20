@@ -1,8 +1,7 @@
 /*
  * testNewtonPendulum.cpp
  *
- *  Created on: May 29, 2015
- *      Authors: Chris Dilley, Patrick Crain
+ * Usage: ./testNewtonPendulum <width> <height> <numBalls>
  */
 
 #include "tsgl.h"
@@ -110,9 +109,7 @@ int main(int argc, char * argv[]) {
   } else if(numberOfBalls % 2 == 0) { //If even, add 1
     numberOfBalls++;
   }
-  Canvas c1(-1, -1, w, h, "Newton's Pendulum");
-  c1.setBackgroundColor(WHITE);
-  c1.start();
-  newtonPendulumFunction(c1, numberOfBalls);
-  c1.wait();
+  Canvas c(-1, -1, w, h, "Newton's Pendulum");
+  c.setBackgroundColor(WHITE);
+  c.run(newtonPendulumFunction,numberOfBalls);
 }

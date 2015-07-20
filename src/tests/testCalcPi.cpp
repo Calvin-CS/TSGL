@@ -1,10 +1,7 @@
 /*
  * testCalcPi.cpp
  *
- *  Created on: Apr 23, 2015
- *  Authors: Joel Adams and Patrick Crain, at Calvin College
- *
- *  Usage: ./testCalcPi [numIntervals] [numThreads]
+ * Usage: ./testCalcPi <numIntervals> <numThreads>
  */
 
 #include <stdio.h>              // printf(), ...

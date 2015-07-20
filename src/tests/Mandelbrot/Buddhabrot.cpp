@@ -1,8 +1,5 @@
 /*
  * Buddhabrot.cpp
- *
- *  Created on: June 18, 2015
- *      Author: Patrick Crain
  */
 
 #include "Buddhabrot.h"

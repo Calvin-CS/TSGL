@@ -1,3 +1,7 @@
+/*
+ * Julia.cpp
+ */
+
 #include "Julia.h"
 
 Julia::Julia(unsigned threads, unsigned depth) {

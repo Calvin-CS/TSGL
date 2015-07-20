@@ -1,10 +1,9 @@
-///*
-// * main.cpp is a driver for an ImageInverter program.
-// *
-// *  Created on: Nov 14, 2014
-// *      Author: adams
-// */
-//
+/*
+ * testInverter.cpp
+ *
+ * Usage: ./testInverter <numThreads>
+ */
+
 #include "ImageInverter/ImageInverter.h"
 
 int main(int argc, char* argv[]) {

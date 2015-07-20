@@ -1,10 +1,3 @@
-/*
- * Timer.cpp
- *
- *  Created on: Jul 23, 2014
- *      Author: mbv26
- */
-
 #include "Timer.h"
 
 namespace tsgl {

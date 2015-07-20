@@ -1,8 +1,5 @@
 /*
  * Ball.h
- *
- *  Created on: Jul 14, 2015
- *      Author: cpd5
  */
 
 #ifndef BALL_H_

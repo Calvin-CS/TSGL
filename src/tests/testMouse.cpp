@@ -1,8 +1,7 @@
 /*
  * testMouse.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testMouse <width> <height> <numThreads>
  */
 
 #include <tsgl.h>
@@ -98,9 +97,7 @@ int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : -1;
   int h = (argc > 2) ? atoi(argv[2]) : w;
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
-  Canvas c32(-1, -1, w, h, "Draw With Your Mouse!", FRAME);
-  c32.setBackgroundColor(WHITE);
-  c32.start();
-  mouseFunction(c32,t);
-  c32.wait();
+  Canvas c(-1, -1, w, h, "Draw With Your Mouse!", FRAME);
+  c.setBackgroundColor(WHITE);
+  c.run(mouseFunction,t);
 }

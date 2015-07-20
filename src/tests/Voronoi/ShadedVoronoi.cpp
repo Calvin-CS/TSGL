@@ -1,3 +1,7 @@
+/*
+ * ShadedVoronoi.cpp
+ */
+
 #include "ShadedVoronoi.h"
 
 using namespace tsgl;

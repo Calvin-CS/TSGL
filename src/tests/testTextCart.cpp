@@ -1,8 +1,7 @@
 /*
  * testTextCart.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testTextCart <width> <height> <fontPath>
  */
 
 #include <tsgl.h>
@@ -39,8 +38,6 @@ int main(int argc, char * argv[]) {
       w = 1.2 * Canvas::getDisplayHeight();
       h = 0.75 * w;
     }
-    Cart c27(-1, -1, w, h, 0, 0, 4, 3, "Text on a Cartesian Canvas");
-    c27.start();
-    textCartFunction(c27, font);
-    c27.wait();
+    Cart c(-1, -1, w, h, 0, 0, 4, 3, "Text on a Cartesian Canvas");
+    c.run(textCartFunction, font);
 }

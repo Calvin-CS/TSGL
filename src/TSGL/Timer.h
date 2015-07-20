@@ -1,8 +1,5 @@
 /*
  * Timer.h provides a simple timer for sleeping and keeping track of iterations.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Mark Vander Stel, 7/8/2014
  */
 
 #ifndef TIMER_H_

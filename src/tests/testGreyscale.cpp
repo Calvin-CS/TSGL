@@ -1,8 +1,7 @@
 /*
- * testGreyscale.cpp
+ * testGreyScale.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testGreyScale <width> <height> <numThreads>
  */
 
 #include <omp.h>
@@ -45,7 +44,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.
  */
-void greyScaleFunction(Canvas& can, int & numberOfThreads) {
+void greyScaleFunction(Canvas& can, int numberOfThreads) {
   int threads = 0;
   if (numberOfThreads < 0) {
     numberOfThreads *= -1;
@@ -60,7 +59,6 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
                  wh = can.getWindowHeight();
   can.drawImage("../assets/pics/colorful_cars.jpg", 0, 0, ww, wh);
   Timer::threadSleepFor(.25);
-  uint8_t* buffer = can.getScreenBuffer();
 
 #pragma omp parallel num_threads(threads)
   {
@@ -91,10 +89,8 @@ int main(int argc, char* argv[]) {
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-  Canvas c31(-1, -1, w, h, "Image Greyscaling", FRAME * 2);
+  Canvas c(-1, -1, w, h, "Image Greyscaling", FRAME * 2);
   int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads
-  c31.setBackgroundColor(GRAY);
-  c31.start();
-  greyScaleFunction(c31, numberOfThreads);  //Pass it as an argument
-  c31.wait();
+  c.setBackgroundColor(GRAY);
+  c.run(greyScaleFunction,numberOfThreads);
 }

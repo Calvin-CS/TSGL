@@ -1,8 +1,7 @@
 /*
  * testPong.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testPong <ballSpeed> <paddleSpeed>
  */
 
 #include "Pong/Pong.h"
@@ -48,7 +47,7 @@ using namespace tsgl;
  * \param ballSpeed Reference to the ball speed in the game.
  * \param paddleSpeed Reference to the paddle speed in the game.
  */
-void pongFunction(Canvas& can, int & ballSpeed, int & paddleSpeed) {
+void pongFunction(Canvas& can, int ballSpeed, int paddleSpeed) {
     Pong p1(can, ballSpeed, paddleSpeed); //Create the Pong object
     p1.draw(can);  //Draw the game
 }
@@ -68,9 +67,7 @@ int main(int argc, char * argv[]) {
       ballSpeed = BALL_DEFAULT_SPEED;
       paddleSpeed = PADDLE_DEFAULT_SPEED;
     }
-    Canvas c25(-1,-1,w,h,"Tennis for Two", FRAME);
-    c25.setBackgroundColor(BLACK);
-    c25.start();
-    pongFunction(c25, ballSpeed, paddleSpeed);
-    c25.wait();
+    Canvas c(-1,-1,w,h,"Tennis for Two", FRAME);
+    c.setBackgroundColor(BLACK);
+    c.run(pongFunction,ballSpeed, paddleSpeed);
 }

@@ -586,6 +586,76 @@ public:
     void resumeDrawing();
 
     /*!
+     * \brief Start the Canvas, run a function on it, and wait for the user to close it
+     * \details This function binds another function to the current Canvas, waits until that function is
+     *   complete, and waits for the user to close the Canvas.  This function effectively calls start(),
+     *   <code>myFunction</code>(), and wait() in sequence.
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     */
+    virtual void run(void (*myFunction)(Canvas&));
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param i An integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, int), int i);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param u An unsigned integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, unsigned), unsigned u);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param i1 An integer argument to myFunction
+     * \param i2 An integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, int, int), int i1, int i2);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param u1 An unsigned integer argument to myFunction
+     * \param u2 An unsigned integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, unsigned, unsigned), unsigned u1, unsigned u2);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param s A string argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, std::string),std::string s);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param i An integer argument to myFunction
+     * \param s A string argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, int, std::string), int i, std::string s);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param s A string argument to myFunction
+     * \param i An integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, std::string, int), std::string s, int i);
+
+    /*!
      * \brief Mutator for the background color.
      * \details This function sets the clear color for when Canvas::clear() is called.
      *   \param color The color to clear to.

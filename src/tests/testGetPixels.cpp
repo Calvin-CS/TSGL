@@ -1,8 +1,7 @@
 /*
  * testGetPixels.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testGetPixels <numThreads>
  */
 
 #include <omp.h>
@@ -57,8 +56,6 @@ void getPixelsFunction(Canvas& can, int threads) {
 
 int main(int argc, char* argv[]) {
   int t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();
-  Canvas c28(-1, -1, 800, 600, "Pixel Shifter", .01);
-  c28.start();
-  getPixelsFunction(c28,t);
-  c28.wait();
+  Canvas c(-1, -1, 800, 600, "Pixel Shifter", .01);
+  c.run(getPixelsFunction,t);
 }

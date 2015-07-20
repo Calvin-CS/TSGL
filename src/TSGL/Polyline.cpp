@@ -1,10 +1,3 @@
-/*
- * Polyline.cpp
- *
- *  Created on: Aug 1, 2014
- *      Author: mbv26
- */
-
 #include "Polyline.h"
 
 namespace tsgl {

@@ -1,8 +1,7 @@
- /*
+/*
  * testTextTwo.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testTextTwo <width> <height>
  */
 
 #include <tsgl.h>
@@ -37,8 +36,6 @@ int main(int argc, char * argv[]) {
       w = 1.2f*Canvas::getDisplayHeight();
       h = 0.75f*w;
     }
-    Canvas c24(-1, -1, w, h, "More Text on a Canvas");
-    c24.start();
-    textFunctionTwo(c24);
-    c24.wait();
+    Canvas c(-1, -1, w, h, "More Text on a Canvas");
+    c.run(textFunctionTwo);
 }

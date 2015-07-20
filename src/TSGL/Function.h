@@ -1,9 +1,5 @@
 /*
  * Function.h provides functions for drawing with CartesianCanvas.
- *
- * Created on: Jun 11, 2014
- * Author: Mark Vander Stel
- * Last Modified: Mark Vander Stel, 7/2/2014
  */
 
 #ifndef FUNCTION_H_

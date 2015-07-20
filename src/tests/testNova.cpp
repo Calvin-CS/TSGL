@@ -1,8 +1,7 @@
 /*
  * testNova.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testNova <width> <height> <numThreads>
  */
 
 #include <complex>
@@ -21,7 +20,7 @@ typedef std::complex<long double> complex;
  * \param can Reference to the CartesianCanvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.
  */
-void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
+void novaFunction(CartesianCanvas& can, unsigned numberOfThreads) {
   const unsigned int DEPTH = 200;
   const long double R = 1.0l;
 #pragma omp parallel num_threads(numberOfThreads)
@@ -75,9 +74,7 @@ int main(int argc, char* argv[]) {
     w = 1200;
     h = 900;                  //If not, set the width and height to a default value
   }
-  Cart c17(-1, -1, w, h, -1, -0.5, 0, 0.5, "Nova Fractal");
+  Cart c(-1, -1, w, h, -1, -0.5, 0, 0.5, "Nova Fractal");
   unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();  //Number of threads
-  c17.start();
-  novaFunction(c17, t);  //Pass that as an argument
-  c17.wait();
+  c.run(novaFunction,t);
 }

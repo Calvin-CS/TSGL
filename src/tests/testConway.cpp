@@ -1,8 +1,7 @@
 /*
  * testConway.cpp
  *
- *  Created on: May 27, 2015
- *      Author: Patrick Crain
+ * Usage: ./testConway <width> <height>
  */
 
 #include <tsgl.h>
@@ -86,10 +85,8 @@ void conwayFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
-    Canvas c6(-1, -1, w, h, "Conway's Game of Life", FRAME);
+    Canvas c(-1, -1, w, h, "Conway's Game of Life", FRAME);
 //    c6.setShowFPS(true);
-    c6.setBackgroundColor(BLACK);
-    c6.start();
-    conwayFunction(c6);
-    c6.wait();
+    c.setBackgroundColor(BLACK);
+    c.run(conwayFunction);
 }

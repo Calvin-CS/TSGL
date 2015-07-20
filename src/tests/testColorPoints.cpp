@@ -1,8 +1,7 @@
 /*
  * testColorPoints.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testColorPoints <width> <height> <numThreads>
  */
 
 #include <omp.h>
@@ -28,7 +27,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.
  */
-void colorPointsFunction(Canvas& can, int & numberOfThreads) {
+void colorPointsFunction(Canvas& can, int numberOfThreads) {
 #pragma omp parallel num_threads(numberOfThreads)
   {
     int nthreads = omp_get_num_threads();  //Actual number of threads to use
@@ -56,8 +55,6 @@ int main(int argc, char* argv[]) {
     w = h = 960;              //If not, set the width and height to a default value
   //Convert the char pointer to an int, http://www.cplusplus.com/forum/beginner/58493/
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
-  Canvas c1(-1, -1, w, h, "Dithered Points");
-  c1.start();
-  colorPointsFunction(c1, t);   //Now pass the argument for the number of threads to the test function
-  c1.wait();
+  Canvas c(-1, -1, w, h, "Dithered Points");
+  c.run(colorPointsFunction,t);
 }

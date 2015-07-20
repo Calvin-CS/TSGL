@@ -1,8 +1,5 @@
 /*
  * Color.h provides color types and methods of converting between them and generating them.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Patrick Crain, 7/30/2014
  */
 
 #ifndef COLOR_H_

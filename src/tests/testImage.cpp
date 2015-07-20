@@ -1,8 +1,7 @@
 /*
  * testImage.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testImage <width> <height>
  */
 
 #include <tsgl.h>
@@ -37,9 +36,7 @@ int main(int argc, char * argv[]) {
       w = 1.2*Canvas::getDisplayHeight();
       h = 0.5*w;
     }
-    Canvas c21(-1, -1, w, h ,"Images");
-    c21.setBackgroundColor(GRAY);
-    c21.start();
-    imageFunction(c21);
-    c21.wait();
+    Canvas c(-1, -1, w, h ,"Images");
+    c.setBackgroundColor(GRAY);
+    c.run(imageFunction);
 }

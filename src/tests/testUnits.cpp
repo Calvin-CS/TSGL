@@ -1,9 +1,10 @@
 /*
- * testUnits.cpp runs the unit tests for the TSGL library.
+ * testUnits.cpp
  *
- *  Created on: Jun 4, 2015
- *      Author: cpd5
+ * Usage: ./testUnits
  */
+
+/* testUnits.cpp runs the unit tests for the TSGL library. */
 
 #include "tsgl.h"
 

@@ -1,8 +1,5 @@
 /*
  * Util.h contains commonly used constants and typedefs as well as some utility functions.
- *
- *  Created on: Jun 5, 2015
- *      Author: pretzel
  */
 
 #ifndef SRC_TSGL_UTIL_H_

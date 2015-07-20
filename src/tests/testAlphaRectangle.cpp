@@ -1,8 +1,7 @@
 /*
  * testAlphaRectangle.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testAlphaRectangle <width> <height>
  */
 
 #include <tsgl.h>
@@ -24,15 +23,13 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void alphaRectangleFunction(Canvas& can) {
-    const int WINDOW_W = can.getWindowWidth(),  // Set the center of the window
+    const int WINDOW_W = can.getWindowWidth(),
               WINDOW_H = can.getWindowHeight();
     int a, b, c, d;
     while (can.getIsOpen()) {
-        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-        a = rand() % WINDOW_W;
-        b = rand() % WINDOW_H;
-        c = rand() % WINDOW_W;
-        d = rand() % WINDOW_H;
+        can.sleep();
+        a = rand() % WINDOW_W; b = rand() % WINDOW_H;
+        c = rand() % WINDOW_W; d = rand() % WINDOW_H;
         can.drawRectangle(a, b, c, d, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16));
     }
 }
@@ -42,10 +39,8 @@ int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-      w = h = 960;              //If not, set the width and height to a default value
-    Canvas c14(-1, -1, w, h, "Fancy Rectangles", FRAME / 10);
-    c14.setBackgroundColor(BLACK);
-    c14.start();
-    alphaRectangleFunction(c14);
-    c14.wait();
+      w = h = 960;            //If not, set the width and height to a default value
+    Canvas c(-1, -1, w, h, "Fancy Rectangles", FRAME);
+    c.setBackgroundColor(BLACK);
+    c.run(alphaRectangleFunction);
 }

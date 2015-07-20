@@ -1,8 +1,5 @@
 /*
  * LifeFarm.cpp
- *
- *  Created on: May 28, 2015
- *      Author: pretzel
  */
 
 #include "LifeFarm.h"

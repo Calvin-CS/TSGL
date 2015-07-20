@@ -1,4 +1,8 @@
-/* testLangton.cpp contains multiple functions that simulate Langton's Ant in a similar fashion. */
+/*
+ * testLangton.cpp
+ *
+ * Usage: ./testLangton <width> <height>
+ */
 
 #include <omp.h>
 #include <tsgl.h>
@@ -195,37 +199,27 @@ int main(int argc, char* argv[]) {
       w = h = 960;              //If not, set the width and height to a default value
     //Alpha Langton
     std::cout << "Alpha Langton's Ant" << std::endl;
-    Canvas c6(-1, -1, w, h, "Langton's Ant (Cool Alpha Edition)", FRAME);
-    c6.setBackgroundColor(BLACK);
-    c6.start();
-    alphaLangtonFunction(c6);
-    c6.wait();
+    Canvas c1(-1, -1, w, h, "Langton's Ant (Cool Alpha Edition)", FRAME);
+    c1.setBackgroundColor(BLACK);
+    c1.run(alphaLangtonFunction);
     //Regular Langton
     std::cout << "Regular Langton's Ant" << std::endl;
-    Canvas c7(-1, -1, w, h, "Langton's Ant", FRAME);
-    c7.setBackgroundColor(GRAY);
-    c7.start();
-    langtonFunction(c7);
-    c7.wait();
+    Canvas c2(-1, -1, w, h, "Langton's Ant", FRAME);
+    c2.setBackgroundColor(GRAY);
+    c2.run(langtonFunction);
     //Colony Langton
     std::cout << "Multiple Langton's Ants" << std::endl;
-    Canvas c8(-1, -1, w, h, "4x Langton's Ants", FRAME);
-    c8.setBackgroundColor(GRAY);
-    c8.start();
-    langtonColonyFunction(c8);
-    c8.wait();
+    Canvas c3(-1, -1, w, h, "4x Langton's Ants", FRAME);
+    c3.setBackgroundColor(GRAY);
+    c3.run(langtonColonyFunction);
     //Colorful Langton
     std::cout << "Dynamically Colored Langton's Ants" << std::endl;
-    Canvas c9(-1, -1, w, h, "Colorful Langton's Ants", FRAME);
-    c9.setBackgroundColor(BLACK);
-    c9.start();
-    langtonRainbowFunction(c9);
-    c9.wait();
+    Canvas c4(-1, -1, w, h, "Colorful Langton's Ants", FRAME);
+    c4.setBackgroundColor(BLACK);
+    c4.run(langtonRainbowFunction);
     //Screenshot Langton
     std::cout << "Screenshot Langton's Ant" << std::endl;
-    Canvas c10(-1, -1, w, h, "Langton's Ant (enter to pause)", FRAME);
-    c10.setBackgroundColor(BLACK);
-    c10.start();
-    screenshotLangtonFunction(c10);
-    c10.wait();
+    Canvas c5(-1, -1, w, h, "Langton's Ant (enter to pause)", FRAME);
+    c5.setBackgroundColor(BLACK);
+    c5.run(screenshotLangtonFunction);
 }

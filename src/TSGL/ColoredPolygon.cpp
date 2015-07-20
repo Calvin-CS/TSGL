@@ -1,10 +1,3 @@
-/*
- * ColoredPolygon.cpp
- *
- *  Created on: Aug 1, 2014
- *      Author: mbv26
- */
-
 #include "ColoredPolygon.h"
 
 namespace tsgl {

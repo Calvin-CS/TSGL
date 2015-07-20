@@ -1,8 +1,7 @@
 /*
  * testSeaUrchin.cpp
  *
- *  Created on: May 29, 2015
- *      Author: cpd5
+ * Usage: ./testSeaUrchin <numThreads>
  */
 
 #include "tsgl.h"
@@ -43,30 +42,24 @@ using namespace tsgl;
  * \param threads Reference to the number of threads to use in the process.
  * \see testLineFan, SeaUrchin class.
  */
-void seaUrchinFunction(Canvas& can, int & threads) {
-#pragma omp parallel num_threads(threads)
+void seaUrchinFunction(Canvas& can, int threads) {
+  #pragma omp parallel num_threads(threads)
   {
-  int id = omp_get_thread_num();
-  SeaUrchin s1(can, id);   //A thread gets a Sea Urchin
-  while(can.getIsOpen()) {   //Draw loop
-    can.sleep();
-    can.clear();
-    s1.draw(can);  //And draws it
-  }
+    SeaUrchin s(can, omp_get_thread_num());   //A thread gets a Sea Urchin
+    while(can.getIsOpen()) {   //Draw loop
+      can.sleep();
+      can.clear();
+      s.draw(can);  //And draws it
+    }
   }
   std::cout << "YOU KILLED MY SEA URCHINS! :'(" << std::endl;
 }
 
-//KEEP THE WINDOW WIDTH AND HEIGHT THE SAME PLEASE!
 int main(int argc, char * argv[]) {
   int nthreads = (argc > 1) ? atoi(argv[1]) : 16;  //Number of threads
-  if(nthreads > 16 || nthreads < 0) {  //Max number of threads is 16
-    nthreads = 16;
-  }
-  Canvas c1(-1, -1, 885, 230, "Sea Urchins!", FRAME * 2);
-  c1.setBackgroundColor(BLACK);
-  c1.start();
-  seaUrchinFunction(c1, nthreads);
-  c1.wait();
+  clamp(nthreads,1,16);                            //Max number of threads is 16
+  Canvas c(-1, -1, 885, 230, "Sea Urchins!", FRAME * 2);
+  c.setBackgroundColor(BLACK);
+  c.run(seaUrchinFunction, nthreads);
 }
 

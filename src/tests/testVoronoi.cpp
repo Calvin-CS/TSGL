@@ -1,3 +1,9 @@
+/*
+ * testVoronoi.cpp
+ *
+ * Usage: ./testVoronoi <width> <height>
+ */
+
 /* testVoronoi.cpp contains multiple functions that display a Voronoi diagram in similar fashions. */
 
 #include "Voronoi/Voronoi.h"
@@ -82,19 +88,15 @@ int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-    w = h = 960;              //If not, set the width and height to a default value
+    w = h = 960;            //If not, set the width and height to a default value
   //Normal Voronoi
   std::cout << "Regular Voronoi" << std::endl;
-  Canvas c18(-1, -1, w, h, "Voronoi");
-  c18.setBackgroundColor(WHITE);
-  c18.start();
-  voronoiFunction(c18);
-  c18.wait();
+  Canvas c1(-1, -1, w, h, "Voronoi");
+  c1.setBackgroundColor(WHITE);
+  c1.run(voronoiFunction);
   std::cout << "Special Voronoi" << std::endl;
   //Shaded Voronoi
-  Canvas c19(-1, -1, w, h, "Shaded Voronoi");
-  c19.setBackgroundColor(WHITE);
-  c19.start();
-  shadedVoronoiFunction(c19);
-  c19.wait();
+  Canvas c2(-1, -1, w, h, "Shaded Voronoi");
+  c2.setBackgroundColor(WHITE);
+  c2.run(shadedVoronoiFunction);
 }

@@ -1,8 +1,7 @@
 /*
  * testImageCart.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testImageCart <width> <height>
  */
 
 #include <tsgl.h>
@@ -35,9 +34,7 @@ int main(int argc, char * argv[]) {
       w = 1.2 * Canvas::getDisplayHeight();
       h = 0.5 * w;
     }
-    Cart c26(-1, -1, w, h, 0, 0, 6, 3, "Cartesian Images");
-    c26.setBackgroundColor(GRAY);
-    c26.start();
-    imageCartFunction(c26);
-    c26.wait();
+    Cart c(-1, -1, w, h, 0, 0, 6, 3, "Cartesian Images");
+    c.setBackgroundColor(GRAY);
+    c.run(imageCartFunction);
 }

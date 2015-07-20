@@ -1,4 +1,10 @@
-/* testMandelbrot.cpp contains multiple functions that display a Mandelbrot set in similar fashions (and one that displays a Julia set). */
+/*
+ * testMandelbrot.cpp
+ *
+ * Usage: ./testMandelbrot <width> <height> <numThreads> <maxIterations>
+ */
+
+/*testMandelbrot.cpp contains multiple functions that display a Mandelbrot set in similar fashions (and one that displays a Julia set). */
 
 #include "Mandelbrot/Buddhabrot.h"
 #include "Mandelbrot/Mandelbrot.h"
@@ -66,7 +72,7 @@ using namespace tsgl;
  * \param threads Reference to the number of threads passed via command-line arguments.
  * \param depth The number of iterations to go to in order to draw the Mandelbrot set.
  */
-void mandelbrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
+void mandelbrotFunction(CartesianCanvas& can, unsigned threads, unsigned depth) {
     Mandelbrot m1(threads,depth);  //Make the object
     m1.bindings(can); //Bind the buttons
     m1.draw(can);  //Draw the Mandelbrot object onto the Canvas
@@ -81,7 +87,7 @@ void mandelbrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth)
  * \param depth The number of iterations to go to in order to draw the Gradient Mandelbrot set.
  * \see mandelbrotFunction(), GradientMandelbrot class.
  */
-void gradientMandelbrotFunction(CartesianCanvas& can, unsigned & threads, unsigned depth) {
+void gradientMandelbrotFunction(CartesianCanvas& can, unsigned threads, unsigned depth) {
   GradientMandelbrot m1(threads,depth);  //Create the GradientMandelbrot
   m1.bindings(can);  //Bind the mouse wheel
   m1.draw(can);  //Draw it
@@ -96,7 +102,7 @@ void gradientMandelbrotFunction(CartesianCanvas& can, unsigned & threads, unsign
  * \param numberOfThreads Reference to the number of threads to use.
  * \param depth The number of iterations to go to in order to draw the Buddhabrot set.
  */
-void buddhabrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
+void buddhabrotFunction(CartesianCanvas& can, unsigned threads, unsigned depth) {
   Buddhabrot m1(threads, depth);  //Create the Buddhabrot object
   m1.draw(can);  //Draw it
 }
@@ -149,7 +155,7 @@ void buddhabrotFunction(CartesianCanvas& can, unsigned &threads, unsigned depth)
  * \param threads Reference to the number of threads to use when drawing the Julia object.
  * \param depth The number of iterations to go to in order to draw the Julia object.
  */
-void juliaFunction(CartesianCanvas& can, unsigned &threads, unsigned depth) {
+void juliaFunction(CartesianCanvas& can, unsigned threads, unsigned depth) {
     Julia j(threads,depth);  //Create the Julia object
     j.bindings(can);  //Bind the buttons
     j.draw(can);  //Draw it
@@ -177,29 +183,21 @@ int main(int argc, char* argv[]) {
     unsigned d3 = (argc > 4) ? atoi(argv[4]) : 1000; //Buddhabrot & Julia
     //Normal Mandelbrot
     std::cout << "Normal Mandelbrot" << std::endl;
-    Cart c5(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
-    c5.setBackgroundColor(GRAY);
-    c5.start();
-    mandelbrotFunction(c5, t, d);   //And pass it as an argument
-    c5.wait();
+    Cart c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
+    c1.setBackgroundColor(GRAY);
+    c1.run(mandelbrotFunction,t,d);
     //Gradient Mandelbrot
     std::cout << "Gradient Mandelbrot" << std::endl;
-    Cart c6(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
-    c6.setBackgroundColor(GRAY);
-    c6.start();
-    gradientMandelbrotFunction(c6, t, d2);
-    c6.wait();
+    Cart c2(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
+    c2.setBackgroundColor(GRAY);
+    c2.run(gradientMandelbrotFunction,t,d2);
     std::cout << "Buddhabrot" << std::endl;
     //Buddhabrot
-    Cart c7(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
-    c7.setBackgroundColor(BLACK);
-    c7.start();
-    buddhabrotFunction(c7, t, d3);
-    c7.wait();
+    Cart c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
+    c3.setBackgroundColor(BLACK);
+    c3.run(buddhabrotFunction,t,d3);
     //Julia
     std::cout << "Julia set (similar to a Mandelbrot set)" << std::endl;
-    Cart c8(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
-    c8.start();
-    juliaFunction(c8, t, d3);
-    c8.wait();
+    Cart c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
+    c4.run(juliaFunction,t,d3);
 }

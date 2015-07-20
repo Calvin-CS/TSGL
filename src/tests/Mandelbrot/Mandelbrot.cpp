@@ -1,3 +1,7 @@
+/*
+ * Mandelbrot.cpp
+ */
+
 #include "Mandelbrot.h"
 
 Mandelbrot::Mandelbrot(unsigned threads, unsigned depth) {

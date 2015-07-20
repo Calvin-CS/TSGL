@@ -1,8 +1,5 @@
 /*
- * Mandelbrot.cpp
- *
- *  Created on: May 28, 2015
- *      Author: Chris Dilley
+ * Mandelbrot.h
  */
 
 #ifndef MANDELBROT_H_

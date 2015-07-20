@@ -1,8 +1,7 @@
 /*
  * testSpectrum.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testSpectrum <numThreads>
  */
 
 #include <omp.h>
@@ -32,7 +31,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.
  */
-void spectrumFunction(Canvas& can, int & numberOfThreads) {
+void spectrumFunction(Canvas& can, int numberOfThreads) {
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
       int holder = omp_get_num_threads();   //Temp variable
@@ -56,9 +55,7 @@ void spectrumFunction(Canvas& can, int & numberOfThreads) {
 //Takes command-line arguments for the number of threads to use
 int main(int argc, char* argv[]) {
     int t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();   //Number of threads to use
-    Canvas c4(-1,-1,255,255,"The Color Spectrum", FRAME);
-    c4.start();
-    spectrumFunction(c4, t);  //Pass the number of threads as an argument
-    c4.wait();
+    Canvas c(-1,-1,255,255,"The Color Spectrum", FRAME);
+    c.run(spectrumFunction, t);
 }
 

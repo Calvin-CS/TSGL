@@ -1,9 +1,6 @@
 /*
  * ColoredPolygon.h extends Shape and provides a class for drawing a polygon
  *     with colored vertices to a Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Patrick Crain, 7/20/2014
  */
 
 #ifndef COLOREDPOLYGON_H_

@@ -1,3 +1,7 @@
+/*
+ * VisualTaskQueue.h provides a visual reprsentation of a generic parallel task queue
+ */
+
 #ifndef VISUALTASKQUEUE_H_
 #define VISUALTASKQUEUE_H_
 

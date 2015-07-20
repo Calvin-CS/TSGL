@@ -1,8 +1,5 @@
 /*
  * GradientMandelbrot.h
- *
- *  Created on: May 28, 2015
- *      Author: Chris Dilley
  */
 
 #ifndef GRADIENTMANDELBROT_H_

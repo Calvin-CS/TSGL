@@ -1,8 +1,5 @@
 /*
  * Image.h extends Shape and provides a class for drawing an image to a Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Patrick Crain, 7/9/2014
  */
 
 #ifndef IMAGE_H_

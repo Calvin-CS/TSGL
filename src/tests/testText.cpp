@@ -1,8 +1,7 @@
 /*
  * testText.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testSpectrum <width> <height> <fontPath>
  */
 
 #include <tsgl.h>
@@ -45,8 +44,6 @@ int main(int argc, char * argv[]) {
       w = 1.2f*Canvas::getDisplayHeight();
       h = 0.75f*w;
     }
-    Canvas c23(-1, -1, w, h, "Text on a Canvas");
-    c23.start();
-    textFunction(c23, font);
-    c23.wait();
+    Canvas c(-1, -1, w, h, "Text on a Canvas");
+    c.run(textFunction, font);
 }

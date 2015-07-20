@@ -1,8 +1,7 @@
 /*
  * testSmartSort.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testSmartSort <numElements> <numThreads>
  */
 
 #include <tsgl.h>
@@ -31,6 +30,8 @@ struct sortData {
   int size;
 
   sortData(int* arr, int f, int l, ColorFloat c) {
+    fi = hi = li = 0;        //Initialize indices
+    left = right = 0;        //Initialize bounds
     color = c;               //Set the color
     a = arr;                 //Get a pointer to the array we'll be sorting
     first = f;               //Set the first element we need to worry about
@@ -189,7 +190,5 @@ int main(int argc, char* argv[]) {
 
     Canvas c(-1, -1, w, h, "Bottom-up Merge Sort", FRAME);
     c.setBackgroundColor(BLACK);
-    c.start();
-    smartSortFunction(c,threads, s);   //Pass it as an argument
-    c.wait();
+    c.run(smartSortFunction, threads, s);
 }

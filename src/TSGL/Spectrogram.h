@@ -1,8 +1,5 @@
 /*
  * Spectrogram.h
- *
- *  Created on: Jun 26, 2015
- *      Author: pretzel
  */
 
 #ifndef SRC_TSGL_SPECTROGRAM_H_

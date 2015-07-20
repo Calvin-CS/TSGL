@@ -1,8 +1,7 @@
 /*
  * testHighData.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testHighData <width> <height> <numThreads>
  */
 
 #include <tsgl.h>
@@ -49,8 +48,6 @@ int main(int argc, char* argv[]) {
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = 1.2*Canvas::getDisplayHeight(), h = 0.75*w; //If not, set the width and height to a default value
     int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
-    Canvas c22(-1, -1, w, h, "Pixel Drawing Load Test", FRAME);
-    c22.start();
-    highData(c22,t);
-    c22.wait();
+    Canvas c(-1, -1, w, h, "Pixel Drawing Load Test", FRAME);
+    c.run(highData,t);
 }

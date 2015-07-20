@@ -1,8 +1,7 @@
 /*
  * testGraydient.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testGraydient <width> <height> <numThreads>
  */
 
 #include <omp.h>
@@ -25,7 +24,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use in the function.
  */
-void graydientFunction(Canvas& can, int & numberOfThreads) {
+void graydientFunction(Canvas& can, int numberOfThreads) {
   #pragma omp parallel num_threads(numberOfThreads)
   {
     for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i += omp_get_num_threads()) {
@@ -49,7 +48,5 @@ int main(int argc, char* argv[]) {
       w = h = 960;              //If not, set the width and height to a default value
     Canvas c(-1, -1, w, h, "Black-white Gradient");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
     int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Convert the char pointer to an int ( see http://www.cplusplus.com/forum/beginner/58493/ )
-    c.start();
-    graydientFunction(c, numberOfThreads);  //Now pass the argument for the number of threads to the test function
-    c.wait();
+    c.run(graydientFunction,numberOfThreads);
 }

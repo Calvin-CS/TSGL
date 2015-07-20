@@ -1,3 +1,7 @@
+/*
+ * Pong.cpp
+ */
+
 #include "Pong.h"
 
 using namespace tsgl;

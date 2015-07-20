@@ -1,3 +1,7 @@
+/*
+ * ImageInverter.cpp
+ */
+
 #include "ImageInverter.h"
 
 using namespace tsgl;

@@ -850,6 +850,31 @@ void Canvas::resumeDrawing() {
     sleepFor(FRAME/2);
 }
 
+void Canvas::run(void (*myFunction)(Canvas&) ) {
+  start(); myFunction(*this); wait();
+}
+void Canvas::run(void (*myFunction)(Canvas&, int), int i) {
+  start(); myFunction(*this, i); wait();
+}
+void Canvas::run(void (*myFunction)(Canvas&, unsigned), unsigned u) {
+  start(); myFunction(*this, u); wait();
+}
+void Canvas::run(void (*myFunction)(Canvas&, int, int), int i1, int i2) {
+  start(); myFunction(*this, i1, i2); wait();
+}
+void Canvas::run(void (*myFunction)(Canvas&, unsigned, unsigned), unsigned u1, unsigned u2) {
+  start(); myFunction(*this, u1, u2); wait();
+}
+void Canvas::run(void (*myFunction)(Canvas&, std::string),std::string s) {
+  start(); myFunction(*this, s); wait();
+}
+void Canvas::run(void (*myFunction)(Canvas&, int, std::string), int i, std::string s) {
+  start(); myFunction(*this, i, s); wait();
+}
+void Canvas::run(void (*myFunction)(Canvas&, std::string, int), std::string s, int i) {
+  start(); myFunction(*this, s, i); wait();
+}
+
 void Canvas::screenShot() {
     char filename[25];
     sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root

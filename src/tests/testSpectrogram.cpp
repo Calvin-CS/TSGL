@@ -1,4 +1,8 @@
-/* testSpectrogram.cpp */
+/*
+ * testSpectrogram.cpp
+ *
+ * Usage: ./testSpectrogram <imagePath>
+ */
 
 #include <omp.h>
 
@@ -75,7 +79,5 @@ int main(int argc, char* argv[]) {
     int w, h;
     TextureHandler::getDimensions(fname,w,h);
     Canvas c(-1, Canvas::getDisplayHeight()-h, w, h ,"Spectrogram");
-    c.start();
-    spectrogramFunction(c,fname);
-    c.wait();
+    c.run(spectrogramFunction, fname);
 }

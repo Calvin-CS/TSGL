@@ -1,8 +1,5 @@
 /*
  * tsgl.h
- *
- *  Created on: Jul 21, 2014
- *      Author: mbv26
  */
 
 #ifndef TSGL_H_

@@ -1,7 +1,5 @@
 /*
  * ProgressBar.h extends Shape and provides a class for drawing a progress bar to a Canvas.
- *
- * Authors: Patrick Crain
  */
 
 #ifndef PROGRESSBAR_H

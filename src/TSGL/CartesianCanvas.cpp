@@ -267,6 +267,31 @@ void CartesianCanvas::reset() {
     Canvas::reset();
 }
 
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&) ) {
+  start(); myFunction(*this); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, int), int i) {
+  start(); myFunction(*this, i); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, unsigned), unsigned u) {
+  start(); myFunction(*this, u); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, int, int), int i1, int i2) {
+  start(); myFunction(*this, i1, i2); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, unsigned, unsigned), unsigned u1, unsigned u2) {
+  start(); myFunction(*this, u1, u2); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, std::string),std::string s) {
+  start(); myFunction(*this, s); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, int, std::string), int i, std::string s) {
+  start(); myFunction(*this, i, s); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, std::string, int), std::string s, int i) {
+  start(); myFunction(*this, s, i); wait();
+}
+
 void CartesianCanvas::sleep() {
     Canvas::sleep();
 }

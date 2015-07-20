@@ -1,8 +1,7 @@
 /*
  * testScreenshot.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testScreenshot <width> <height>
  */
 
 #include <tsgl.h>
@@ -52,8 +51,6 @@ int main(int argc, char * argv[]) {
       w = 800;
       h = 600;
     }
-    Cart c29(-1, -1, w, h, 0, 0, 800, 600,"Screenshot Test", FRAME);
-    c29.start();
-    screenShotFunction(c29);
-    c29.wait();
+    Cart c(-1, -1, w, h, 0, 0, 800, 600,"Screenshot Test", FRAME);
+    c.run(screenShotFunction);
 }

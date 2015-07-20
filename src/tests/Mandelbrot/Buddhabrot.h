@@ -1,8 +1,5 @@
 /*
  * Buddhabrot.h
- *
- *  Created on: June 18, 2015
- *      Author: Patrick Crain
  */
 
 #ifndef BUDDHABROT_H_

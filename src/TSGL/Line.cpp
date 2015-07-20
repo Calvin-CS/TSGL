@@ -1,10 +1,3 @@
-/*
- * Line.cpp
- *
- *  Created on: Aug 1, 2014
- *      Author: mbv26
- */
-
 #include "Line.h"
 
 namespace tsgl {

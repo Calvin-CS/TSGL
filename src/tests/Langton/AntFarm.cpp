@@ -1,8 +1,5 @@
 /*
  * AntFarm.cpp
- *
- *  Created on: May 28, 2015
- *      Author: pretzel
  */
 
 #include "AntFarm.h"

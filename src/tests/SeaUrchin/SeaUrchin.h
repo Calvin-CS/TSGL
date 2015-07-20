@@ -1,8 +1,5 @@
 /*
  * SeaUrchin.h
- *
- *  Created on: Jul 16, 2015
- *      Author: cpd5
  */
 
 #ifndef SEAURCHIN_H_
@@ -33,7 +30,7 @@ public:
    * \param threadId The id of the thread that is currently creating a SeaUrchin object.
    * \return The constructed SeaUrchin object.
    */
-  SeaUrchin(Canvas& can, int & threadId);  //Default constructor
+  SeaUrchin(Canvas& can, int threadId);  //Default constructor
 
   /*!
    * \brief Draw the SeaUrchin.

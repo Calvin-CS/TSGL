@@ -1,8 +1,7 @@
 /*
  * testLineFan.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testLineFan <width> <height> <numThreads>
  */
 
 #include <omp.h>
@@ -62,8 +61,6 @@ int main(int argc, char** argv) {
     unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
     if (t == 0)
       t = omp_get_num_procs();
-    Canvas c3(-1,-1,w,h,"Line Fan");
-    c3.start();
-    lineFanFunction(c3,t);
-    c3.wait();
+    Canvas c(-1,-1,w,h,"Line Fan");
+    c.run(lineFanFunction,t);
 }

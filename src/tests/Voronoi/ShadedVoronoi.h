@@ -1,8 +1,5 @@
 /*
  * ShadedVoronoi.h
- *
- *  Created on: May 29, 2015
- *      Author: cpd5
  */
 
 #ifndef SHADEDVORONOI_H_

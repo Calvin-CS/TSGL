@@ -1,8 +1,5 @@
 /*
  * LifeFarm.h
- *
- *  Created on: May 28, 2015
- *      Author: pretzel
  */
 
 #ifndef ANTFARM_H_

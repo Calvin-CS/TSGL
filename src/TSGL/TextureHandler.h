@@ -1,8 +1,5 @@
 /*
  * TextureHandler.h provides an interface for loading a variety of image formats and fonts into GL textures.
- *
- * Author: Patrick Crain
- * Last Modified: Patrick Crain, 7/9/2014
  */
 
 #ifndef TEXTURELOADER_H_

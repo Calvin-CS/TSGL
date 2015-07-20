@@ -1,3 +1,9 @@
+/*
+ * testBallroom.cpp
+ *
+ * Usage: ./testBallroom <width> <height>
+ */
+
 #include <list>
 #include <cmath>
 #include <tsgl.h>
@@ -174,7 +180,6 @@ public:
   BallRoom(int w, int h) {
     width = w;
     height = h;
-//    friction = 1.00f;
     friction = 0.99f;
     gravity = 0.1f;
     attract = true;
@@ -209,10 +214,10 @@ public:
   void step(Canvas* c) {
     int mx = c->getMouseX(), my = c->getMouseY();
     Vector2 mvec(mx,my);
-//    if (attract)
-//      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
-//    else
-//      c->drawCircle(mx,my,25,32,ColorFloat(0.5f,1.0f,1.0f,0.5f));
+    if (attract)
+      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
+    else
+      c->drawCircle(mx,my,25,32,ColorFloat(0.5f,1.0f,1.0f,0.5f));
     for (it = balls.begin(); it != balls.end(); ++it) {
       BouncingBall *b = (*it);
 
@@ -298,7 +303,5 @@ int main(int argc, char* argv[]) {
       w = h = 960;            //If not, set the width and height to a default value
     Canvas c(-1, -1, w, h, "The Ballroom", FRAME);
     c.setBackgroundColor(BLACK);
-    c.start();
-    ballroomFunction(c);
-    c.wait();
+    c.run(ballroomFunction);
 }

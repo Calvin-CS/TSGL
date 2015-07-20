@@ -1,8 +1,5 @@
 /*
  * Voronoi.h
- *
- *  Created on: May 29, 2015
- *      Author: Chris Dilley
  */
 
 #ifndef VORONOI_H_
