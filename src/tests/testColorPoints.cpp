@@ -18,8 +18,12 @@ using namespace tsgl;
  * - The number of lines per thread is calculated and stored in: \b myPart .
  * - The starting position of each given thread is calculated and stored in: \b myStart .
  * - The outer for loop is set up in a block pattern, and the inner for loop runs from 0 to the Canvas width.
- *   - The color for a given point is calculated.
- *   - The point is drawn to the Canvas.
+ *   - The color for a thread is calculated.
+ *   - If the point's coordinate is even:
+ *     - Draw a point on the Canvas in the thread's color.
+ *   - Else:
+ *     - Draw the point normally.
+ *   .
  *   - The function breaks from the outer for loop if the Canvas is closed.
  *   .
  * - Sleep the internal timer of the Canvas until the next draw cycle.
@@ -35,8 +39,10 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
     int myStart = myPart * omp_get_thread_num();
     for (int j = myStart; j < myStart + myPart; j++) {
       for (int i = 0; i < can.getWindowWidth(); i++) {
+        int id = omp_get_thread_num();
+        ColorFloat color = Colors::highContrastColor(id);
         if (i % 2 == 0)
-          can.drawPoint(i, j, ColorInt(j % NUM_COLORS, i % NUM_COLORS, (i * j) % 113));
+          can.drawPoint(i, j, color);
         else
           can.drawPoint(i, j, ColorInt(i % NUM_COLORS, j % NUM_COLORS, (i * j) % NUM_COLORS));
       }
