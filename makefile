@@ -70,7 +70,9 @@ BINARIES= \
 	bin/testConway \
 	bin/testCosineIntegral \
 	bin/testDumbSort \
+	bin/testFireworks \
 	bin/testForestFire \
+	bin/testFractal \
 	bin/testFunction \
 	bin/testGetPixels \
 	bin/testGradientWheel \
