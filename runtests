@@ -35,6 +35,7 @@ run ./testMandelbrot 1200 900 8 255                                #Width, Heigh
 run ./testMouse 900 900 5                                          #Width, Height, Threads
 run ./testNewtonPendulum 900 400 11                                #Width, Height, Number Of Balls
 run ./testNova 1200 900 4                                          #Width, Height, Threads
+run ./testPhilosophers
 run ./testPong 7 4                                                 #Ball Speed, Paddle Speed
 run ./testProjectiles 400 400                                      #Width, Height
 run ./testSeaUrchin 16                                             #Threads
