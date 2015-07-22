@@ -21,7 +21,8 @@ using namespace tsgl;
  * - We set up a function \b tempo, which resets the \b pulse timer, sets its interval to the
  *   time since the last reset, and makes the Canvas clear itself at that interval.
  * - We bind the left mouse button and the enter button to the described \b tempo function.
- * - We bind the space button to clearing the Canvas.
+ * - We bind the enter key to pause the animation.
+ * - We bind the space key to clearing the Canvas.
  * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear
  * the screen.
  * .
@@ -32,6 +33,7 @@ void alphaLangtonFunction(Canvas& can) {
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight(),   // Window height
               R = WH / 6;                   // How far apart to space the ants
+    bool paused = false;
 
     AntFarm farm(WW,WH,4,&can);
     farm.addAnt(WW / 2 - R,WH / 2,MAX_COLOR,0,0,0);
@@ -49,17 +51,21 @@ void alphaLangtonFunction(Canvas& can) {
         can.clear();
     };
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, tempo);
-    can.bindToButton(TSGL_ENTER, TSGL_PRESS, tempo);
+    can.bindToButton(TSGL_ENTER, TSGL_PRESS, [&paused]() {
+        paused = !paused;
+    });
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
         can.clear();
     });
 
     while (can.getIsOpen()) {
+      if (!paused) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
         if (pulse.pastPeriod())
             can.clear();
+      }
     }
 }
 
@@ -158,38 +164,6 @@ void langtonRainbowFunction(Canvas& can) {
  * .
  * \param can Reference to the Canvas being drawn to.
  */
-void screenshotLangtonFunction(Canvas& can) {
-    const int IPF = 5000,                         // Iterations per frame
-              WW = can.getWindowWidth(),    // Set the window sizes
-              WH = can.getWindowHeight(),
-              R = WH / 6;              // How far apart to space the ants
-    bool paused = false;
-
-    AntFarm farm(WW,WH,4,&can);
-    farm.addAnt(WW / 2 - R,WH / 2,MAX_COLOR,0,0,0);
-    farm.addAnt(WW / 2,WH / 2 - R,0,0,MAX_COLOR,1);
-    farm.addAnt(WW / 2 + R,WH / 2,0,MAX_COLOR,0,2);
-    farm.addAnt(WW / 2,WH / 2 + R,MAX_COLOR,0,MAX_COLOR,3);
-
-    can.bindToButton(TSGL_ENTER, TSGL_PRESS, [&paused]() {
-        paused = !paused;
-    });
-    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-        can.clear();
-    });
-
-    while (can.getIsOpen()) {
-        if (!paused) {
-          can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-          for (int j = 0; j < 4; j++)
-            farm.ants[j]->changeColor(ColorHSV((can.getFrameNumber() + 3 * j) % 12 / 2.0f, 1.0f, 1.0f, .25f));
-          for (int i = 0; i < IPF; i++)
-              farm.moveAnts();
-        } else {
-            can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-        }
-    }
-}
 
 //Take command-line arguments for the width and height of the Canvas
 int main(int argc, char* argv[]) {
@@ -199,7 +173,7 @@ int main(int argc, char* argv[]) {
       w = h = 960;              //If not, set the width and height to a default value
     //Alpha Langton
     std::cout << "Alpha Langton's Ant" << std::endl;
-    Canvas c1(-1, -1, w, h, "Langton's Ant (Cool Alpha Edition)");
+    Canvas c1(-1, -1, w, h, "Langton's Ant w/Alpha (enter to pause)");
     c1.setBackgroundColor(BLACK);
     c1.run(alphaLangtonFunction);
     //Regular Langton
@@ -215,9 +189,4 @@ int main(int argc, char* argv[]) {
     Canvas c4(-1, -1, w, h, "Colorful Langton's Ants");
     c4.setBackgroundColor(BLACK);
     c4.run(langtonRainbowFunction);
-    //Screenshot Langton
-    std::cout << "Screenshot Langton's Ant" << std::endl;
-    Canvas c5(-1, -1, w, h, "Langton's Ant (enter to pause)");
-    c5.setBackgroundColor(BLACK);
-    c5.run(screenshotLangtonFunction);
 }

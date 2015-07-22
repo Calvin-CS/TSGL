@@ -16,15 +16,13 @@ struct Vector2 {
    x = y = 0;
  }
  Vector2(float xx,float yy) {
-   x = xx;
-   y = yy;
+   x = xx; y = yy;
  }
  Vector2 operator+(const Vector2 &o) {
    return Vector2(x+o.x,y+o.y);
  }
  Vector2& operator+=(const Vector2 &o) {
-   x += o.x;
-   y += o.y;
+   x += o.x; y += o.y;
    return (*this);
  }
  Vector2 operator-(const Vector2 &o) {
@@ -34,16 +32,14 @@ struct Vector2 {
    return Vector2(-x,-y);
  }
  Vector2& operator-=(const Vector2 &o) {
-   x -= o.x;
-   y -= o.y;
+   x -= o.x; y -= o.y;
    return (*this);
  }
  Vector2 operator*(const float f) {
    return Vector2(x*f,y*f);
  }
  Vector2& operator*=(const float f) {
-   x *= f;
-   y *= f;
+   x *= f; y *= f;
    return (*this);
  }
  float dot(const Vector2 &o) const {
@@ -257,9 +253,9 @@ public:
  * - It is drawn in this way:
  * - Get the window width and height for convenience of use.
  * - Create the area for the balls based off of the window width and height.
- * - For 0 to 100:
- *   - Set the speed of a ball to 5.0f.
- *   - Calculate its direction.
+ * - For each ball:
+ *   - Set its speed to 5.
+ *   - Randomize its initial direction.
  *   - Add it to the area created with the calculated speed and direction as well as with a random color.
  *   .
  * - Bind the left mouse button so that when you click the screen the attraction of the balls will change.

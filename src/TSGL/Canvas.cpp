@@ -821,8 +821,10 @@ void Canvas::pauseDrawing() {
       syncMutex.lock();
       syncMutexOwner = omp_get_thread_num();
     }
-    #pragma omp atomic
+    #pragma omp critical (syncMutLock)
+    {
       ++syncMutexLocked;
+    }
   }
 }
 
@@ -835,8 +837,10 @@ void Canvas::reset() {
 }
 
 void Canvas::resumeDrawing() {
-  #pragma omp atomic
+  #pragma omp critical (syncMutLock)
+  {
     --syncMutexLocked;
+  }
   #pragma omp critical (pauseResume)
   {
     if (syncMutexOwner == omp_get_thread_num()) {
