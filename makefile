@@ -163,7 +163,7 @@ docs/html/index.html: ${HEADERS} doxyfile
 	@echo 'Generating Doxygen'
 	@doxygen doxyfile
 
-tutorial/docs/html/index.html: ${HEADERS} tutDoxyfile
+tutorial/docs/html/index.html: ${HEADERS} tutDoxyFile
 	@echo 'Generating Doxygen'
 	mkdir -p tutorial/docs
 	doxygen tutDoxyFile

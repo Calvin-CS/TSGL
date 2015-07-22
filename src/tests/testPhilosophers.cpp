@@ -23,8 +23,8 @@ enum PhilMethod {
 
 struct Fork {
   int user = -1, id = 0;
-  void draw(Canvas& can, int x, int y) {
-    can.drawCircle(x,y,16,32,(user == -1) ? BLACK : RED,true);
+  void draw(Canvas& can, int x, int y, ColorFloat c) {
+    can.drawCircle(x,y,16,32,c,true);
   }
 };
 
@@ -38,15 +38,18 @@ public:
     setId(0,1); meals = 0; state = hasNone; action = doNothing;
   }
   void draw(Canvas& can, int x, int y) {
+    const int SIZE = 32;
     switch(state) {
       case hasNone:
-        can.drawCircle(x,y,32,32,WHITE,true); break;
+        can.drawCircle(x,y,SIZE,SIZE,RED,true); break;
       case nasRight:
+        can.drawCircle(x,y,SIZE,SIZE,ORANGE,true); break;
       case hasLeft:
-        can.drawCircle(x,y,32,32,BLUE,true); break;
+        can.drawCircle(x,y,SIZE,SIZE,YELLOW,true); break;
       case hasBoth:
+        can.drawCircle(x,y,SIZE,SIZE,GREEN,true); break;
       case isFull:
-        can.drawCircle(x,y,32,32,GREEN,true); break;
+        can.drawCircle(x,y,SIZE,SIZE,BLUE,true); break;
     }
   }
   bool acquire(Fork& f) {
@@ -296,74 +299,77 @@ public:
   }
 
   void checkStep(PhilMethod p) {
-    std::cout << " State: ";
-    for (int i = 0; i < numPhilosophers; ++i) {
-      std::cout << phils[i].getState();
-      if (phils[i].getState() == isFull) {
-        phils[i].eat();
-        continue;
-      }
-      switch(p) {
-        case forfeitWhenBlocked:
-          forfeitWhenBlockedMethod(i);
-          break;
-        case waitWhenBlocked:
-          waitWhenBlockedBlockedMethod(i);
-          break;
-        case nFrameRelease:
-          nFrameReleaseMethod(i);
-          break;
-        case resourceHierarchy:
-          hieararchyMethod(i);
-          break;
-        case oddEven:
-          oddEvenMethod(i);
-          break;
-        default:
-          break;
-      }
+    // std::cout << " State: ";
+    int i = omp_get_thread_num();
+    // for (int i = 0; i < numPhilosophers; ++i) {
+    // std::cout << phils[i].getState();
+    if (phils[i].getState() == isFull) {
+      phils[i].eat();
+      // continue;
+      return;
     }
-    std::cout << std::endl;
+    switch(p) {
+      case forfeitWhenBlocked:
+        forfeitWhenBlockedMethod(i);
+        break;
+      case waitWhenBlocked:
+        waitWhenBlockedBlockedMethod(i);
+        break;
+      case nFrameRelease:
+        nFrameReleaseMethod(i);
+        break;
+      case resourceHierarchy:
+        hieararchyMethod(i);
+        break;
+      case oddEven:
+        oddEvenMethod(i);
+        break;
+      default:
+        break;
+    }
+    // }
+    // std::cout << std::endl;
   }
 
   void actStep() {
-    std::cout << " Action:";
-    for (int i = 0; i < numPhilosophers; ++i) {
-      int left = i, right = (i+numPhilosophers-1)%numPhilosophers;
-      std::cout << phils[i].getAction();
-      switch(phils[i].getAction()) {
-        case tryLeft:
-          phils[i].acquire(forks[left]);
-          break;
-        case tryRight:
-          phils[i].acquire(forks[right]);
-          break;
-        case tryBoth:
-          phils[i].acquire(forks[left]);
-          phils[i].acquire(forks[right]);
-          break;
-        case releaseLeft:
-          phils[i].release(forks[left]);
-          break;
-        case releaseRight:
-          phils[i].release(forks[right]);
-          break;
-        case releaseBoth:
-          phils[i].release(forks[left]);
-          phils[i].release(forks[right]);
-          break;
-        default:
-          break;
-      }
+    // std::cout << " Action:";
+    // for (int i = 0; i < numPhilosophers; ++i) {
+    int i = omp_get_thread_num();
+    int left = i, right = (i+numPhilosophers-1)%numPhilosophers;
+    // std::cout << phils[i].getAction();
+    switch(phils[i].getAction()) {
+      case tryLeft:
+        phils[i].acquire(forks[left]);
+        break;
+      case tryRight:
+        phils[i].acquire(forks[right]);
+        break;
+      case tryBoth:
+        phils[i].acquire(forks[left]);
+        phils[i].acquire(forks[right]);
+        break;
+      case releaseLeft:
+        phils[i].release(forks[left]);
+        break;
+      case releaseRight:
+        phils[i].release(forks[right]);
+        break;
+      case releaseBoth:
+        phils[i].release(forks[left]);
+        phils[i].release(forks[right]);
+        break;
+      default:
+        break;
     }
-    std::cout << std::endl;
+    // }
+    // std::cout << std::endl;
   }
 
   void drawStep() {
     const int RAD = 300;
     const float ARC =2*PI/numPhilosophers;
+    const float CLOSE = 0.15f;
     const float BASEDIST = RAD+64;
-
     myCan->drawCircle(tabX,tabY,RAD-48,RAD,DARKGRAY);
     for (int i = 0; i < numPhilosophers; ++i) {
       float pangle = (i*2*PI)/numPhilosophers;
@@ -372,14 +378,23 @@ public:
         float angle = pangle+(j/10)*2*PI/RAD, dist = BASEDIST+8*(j%10);
         myCan->drawCircle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
       }
-      float fangle;
-      if (forks[i].user == i)
-        fangle = (i+0.25f)*ARC;
-      else if((forks[i].user == (i+1)%numPhilosophers))
-        fangle = (i+0.75f)*ARC;
-      else
-        fangle = (i+0.5f)*ARC;
-      forks[i].draw(*myCan,tabX+RAD*cos(fangle),tabY+RAD*sin(fangle));
+      ColorFloat fcolor = BLACK;
+      float fangle = (i+0.5f)*ARC;;
+      if (forks[i].user == i) {
+        fangle = i*ARC + CLOSE;
+        if (phils[i].getState() == hasBoth)
+          fcolor = GREEN;
+        else
+          fcolor = YELLOW;
+      }
+      else if((forks[i].user == (i+1)%numPhilosophers)) {
+        fangle = ((i+1)*ARC) - CLOSE;
+        if (phils[(i+1)%numPhilosophers].getState() == hasBoth)
+          fcolor = GREEN;
+        else
+          fcolor = ORANGE;
+      }
+      forks[i].draw(*myCan,tabX+RAD*cos(fangle),tabY+RAD*sin(fangle),fcolor);
     }
   }
 };
@@ -387,19 +402,23 @@ public:
 void philosopherFunction(Canvas& can,int philosophers) {
   Table t(can,philosophers);
   can.sleep();
-  while(can.getIsOpen()) {
-    std::cout << can.getFrameNumber() << std::endl;
-//    t.checkStep(waitWhenBlocked);     //Deadlock
-//    t.checkStep(forfeitWhenBlocked);  //Livelock
-//    t.checkStep(nFrameRelease);       //No locking; mostly fair for N philosophers, N >= 5
-//    t.checkStep(resourceHierarchy);   //No locking; mostly fair for N philosophers, N >= 2
-    t.checkStep(oddEven);             //No locking; perfectly fair for N philosophers, N >= 2
-    t.actStep();
-    can.pauseDrawing();
-    can.clear();
-    t.drawStep();
-    can.resumeDrawing();
-    can.sleep();
+  #pragma omp parallel num_threads(philosophers)
+  {
+    while(can.getIsOpen()) {
+      // std::cout << can.getFrameNumber() << std::endl;
+      // t.checkStep(waitWhenBlocked);     //Deadlock
+      // t.checkStep(forfeitWhenBlocked);  //Livelock
+      t.checkStep(nFrameRelease);       //No locking; mostly fair for N philosophers, N >= 5
+      // t.checkStep(resourceHierarchy);   //No locking; mostly fair for N philosophers, N >= 2
+      // t.checkStep(oddEven);             //No locking; perfectly fair for N philosophers, N >= 2
+      // #pragma omp barrier
+      t.actStep();
+      can.pauseDrawing();
+      can.clear();
+      t.drawStep();
+      can.resumeDrawing();
+      can.sleep();
+    }
   }
 }
 
