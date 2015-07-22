@@ -61,6 +61,7 @@ DEPFLAGS=-MMD -MP
 
 BINARIES= \
 	bin/testAlphaRectangle \
+	bin/testAura \
 	bin/testBallroom \
 	bin/testBlurImage \
 	bin/testCalcPi \
