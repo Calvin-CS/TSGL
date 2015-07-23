@@ -34,3 +34,8 @@ Mac - https://www.youtube.com/watch?v=QlVh_MAstyg
 Dependencies
 ------------
 TSGL needs these libraries in order to function properly: GLEW, glfw, GL, freetype and stb. The stb library comes bundled with the TSGL source code, but the other four are not. For platform-specific dependencies, please see the "Installation help" section and then choose the video that shows the installtion of TSGL on the platform.
+
+------------
+Tutorials
+------------
+Want to learn how to utilize the TSGL library? Check out the wiki pages for some tutorials!
