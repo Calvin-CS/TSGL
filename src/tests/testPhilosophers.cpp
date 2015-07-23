@@ -163,7 +163,6 @@ public:
    *     .
    *   - Philosopher has right fork:
    *     - If the left fork is free, try to get that fork.
-   *     - Else, release the right fork.
    *     .
    *   - Philosopher has the left fork:
    *     - If the right fork is free, try to get that fork.
@@ -234,7 +233,7 @@ public:
    * \param id The id number of the current Philosopher.
    * \note This is an example of Livelock amongst threads.
    */
-  void waitWhenBlockedBlockedMethod(int id) {
+  void waitWhenBlockedMethod(int id) {
     int left = id, right = (id+numPhils-1)%numPhils;
     switch(phils[id].state()) {
       case hasNone:
@@ -462,7 +461,7 @@ public:
         forfeitWhenBlockedMethod(i);
         break;
       case waitWhenBlocked:
-        waitWhenBlockedBlockedMethod(i);
+        waitWhenBlockedMethod(i);
         break;
       case nFrameRelease:
         nFrameReleaseMethod(i);
