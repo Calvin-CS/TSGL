@@ -91,6 +91,7 @@ BINARIES= \
 	bin/testNewtonPendulum \
 	bin/testPhilosophers \
 	bin/testPong \
+	bin/testProducerConsumer \
 	bin/testProgressBar \
 	bin/testProjectiles \
 	bin/testScreenshot \
