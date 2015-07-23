@@ -155,15 +155,6 @@ private:
   #endif
     void         textureShaders(bool state);                            // Turn textures on or off
     static bool  testFilledDraw(Canvas& can);                           // Unit test for drawing shapes and determining if fill works
-    //Theory why it doesn't work:
-    //Different graphics cards; Nvidia vs. ATI.
-    //It works for Patrick's machine, which is has an Nvidia.
-    //It doesn't work for the Ulab machines, which has an ATI.
-    //The only way to prove this theory is to wait until the new
-    //lab machines come in which have Nvidia graphics cards.
-    //If they work, then hooray!
-    //If not, our theory is wrong and its something totally different.
-    static bool testPerimeter(Canvas& can);                             // Unit tester for drawing shapes and determining if the shape is still drawn correctly but not filled
     static bool testLine(Canvas& can);                                  // Unit tester for lines
     static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods
     static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
