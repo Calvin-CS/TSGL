@@ -4,11 +4,7 @@
 
 #include "Nova.h"
 
-Nova::Nova(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {
-  myThreads = threads;
-  myDepth = depth;
-  myRedraw = true;
-}
+Nova::Nova(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
 void Nova::draw(Cart& can) {
   const long double R = 1.0l;

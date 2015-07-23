@@ -35,8 +35,15 @@ protected:
   int myThreads;
   unsigned int myDepth;
   bool myRedraw;
-public:
 
+  /*!
+   * \brief Shades the fractal using Manhattan distances
+   * \details This function may be called after the Mandelbrot has finished rendering to do some
+   *   post-procecssing using the distances from non-escaped pixels to their nearest escaped pixels,
+   *   using the average of their Manhattan distances.
+   */
+  void manhattanShading(CartesianCanvas& can);
+public:
   /*!
    * \brief Explicitly construct a Mandelbrot object.
    * \details Explicit constructor for the Mandelbrot class.
@@ -70,14 +77,6 @@ public:
    * \note Cart is a typedef for CartesianCanvas.
    */
   virtual void draw(Cart& can);
-
-  /*!
-   * \brief Shades the fractal using Manhattan distances
-   * \details This function may be called after the Mandelbrot has finished rendering to do some
-   *   post-procecssing using the distances from non-escaped pixels to their nearest escaped pixels,
-   *   using the average of their Manhattan distances.
-   */
-  void manhattanShading(CartesianCanvas& can);
 };
 
 #endif /* MANDELBROT_H_ */

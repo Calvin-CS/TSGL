@@ -74,9 +74,9 @@ using namespace tsgl;
  * \param depth The number of iterations to go to in order to draw the Mandelbrot set.
  */
 void mandelbrotFunction(Cart& can, unsigned threads, unsigned depth) {
-    Mandelbrot m1(threads,depth);  //Make the object
-    m1.bindings(can); //Bind the buttons
-    m1.draw(can);  //Draw the Mandelbrot object onto the Canvas
+  Mandelbrot m(threads,depth);  //Make the object
+  m.bindings(can);              //Bind the buttons
+  m.draw(can);                  //Draw the Mandelbrot object onto the Canvas
 }
 
 /*!
@@ -89,9 +89,9 @@ void mandelbrotFunction(Cart& can, unsigned threads, unsigned depth) {
  * \see mandelbrotFunction(), GradientMandelbrot class.
  */
 void gradientMandelbrotFunction(Cart& can, unsigned threads, unsigned depth) {
-  GradientMandelbrot m1(threads,depth);  //Create the GradientMandelbrot
-  m1.bindings(can);  //Bind the mouse wheel
-  m1.draw(can);  //Draw it
+  GradientMandelbrot m(threads,depth);  //Create the GradientMandelbrot
+  m.bindings(can);                      //Bind the buttons
+  m.draw(can);                          //Draw it
 }
 
 /*!
@@ -104,8 +104,8 @@ void gradientMandelbrotFunction(Cart& can, unsigned threads, unsigned depth) {
  * \param depth The number of iterations to go to in order to draw the Buddhabrot set.
  */
 void buddhabrotFunction(Cart& can, unsigned threads, unsigned depth) {
-  Buddhabrot m1(threads, depth);  //Create the Buddhabrot object
-  m1.draw(can);  //Draw it
+  Buddhabrot b(threads, depth);  //Create the Buddhabrot object
+  b.draw(can);                   //Draw it
 }
 
 /*!
@@ -157,11 +157,18 @@ void buddhabrotFunction(Cart& can, unsigned threads, unsigned depth) {
  * \param depth The number of iterations to go to in order to draw the Julia object.
  */
 void juliaFunction(Cart& can, unsigned threads, unsigned depth) {
-    Julia j(threads,depth);  //Create the Julia object
-    j.bindings(can);         //Bind the buttons
-    j.draw(can);             //Draw it
+  Julia j(threads,depth);  //Create the Julia object
+  j.bindings(can);         //Bind the buttons
+  j.draw(can);             //Draw it
 }
 
+/*!
+ * \brief Draws a Nova fractal (Newton fractal) on a CartesianCanvas.
+ * \param can Reference to the CartesianCanvas being drawn to.
+ * \param threads Reference to the number of threads to use.
+ * \param depth The number of iterations to go to in order to draw the Gradient Mandelbrot set.
+ * \see mandelbrotFunction(), Nova class.
+ */
 void novaFunction(Cart& can, unsigned threads, unsigned depth) {
     Nova n(threads,depth);  //Create the Nova object
     n.bindings(can);        //Bind the buttons
@@ -171,43 +178,43 @@ void novaFunction(Cart& can, unsigned threads, unsigned depth) {
 //Takes command line arguments for the width and height of the screen
 //as well as the number of threads to use and the number of iterations to draw the Mandelbrot set
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
-    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
-    int w2 = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();  //Julia
-    int h2 = (argc > 2) ? atoi(argv[2]) : 0.75*w;  //Julia
-    int x = Canvas::getDisplayWidth() - w - 64;
-    if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
-      w = 1200;
-      w2 = 1.2 * Canvas::getDisplayHeight();
-      h = 900;                  //If not, set the width and height to a default value
-      h2 = 0.75 * w2;
-    }
-    unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
-    if (t == 0)
-      t = omp_get_num_procs();
-    unsigned d = (argc > 4) ? atoi(argv[4]) : MAX_COLOR; //Normal Mandelbrot
-    unsigned d2 = (argc > 4) ? atoi(argv[4]) : 32;  //Gradient Mandelbrot & Nova
-    unsigned d3 = (argc > 4) ? atoi(argv[4]) : 1000; //Buddhabrot & Julia
-    //Normal Mandelbrot
-    std::cout << "Normal Mandelbrot" << std::endl;
-    Cart c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
-    c1.run(mandelbrotFunction,t,d);
-    //Gradient Mandelbrot
-    std::cout << "Gradient Mandelbrot" << std::endl;
-    Cart c2(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
-    c2.run(gradientMandelbrotFunction,t,d2);
-    std::cout << "Buddhabrot" << std::endl;
-    //Buddhabrot
-    Cart c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
-    c3.setBackgroundColor(BLACK);
-    c3.run(buddhabrotFunction,t,d3);
-    //Julia
-    std::cout << "Julia set" << std::endl;
-    Cart c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
-    c4.run(juliaFunction,t,d3);
-    //Nova
-    std::cout << "Nova" << std::endl;
-    Cart c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", FRAME / 2);
-    c5.zoom(-0.361883,-0.217078,0.1f);
-    c5.run(novaFunction,t,d2);
+  int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+  int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
+  int w2 = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();  //Julia
+  int h2 = (argc > 2) ? atoi(argv[2]) : 0.75*w;  //Julia
+  int x = Canvas::getDisplayWidth() - w - 64;
+  if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
+    w = 1200;
+    w2 = 1.2 * Canvas::getDisplayHeight();
+    h = 900;                  //If not, set the width and height to a default value
+    h2 = 0.75 * w2;
+  }
+  unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
+  if (t == 0)
+    t = omp_get_num_procs();
+  unsigned d = (argc > 4) ? atoi(argv[4]) : MAX_COLOR; //Normal Mandelbrot
+  unsigned d2 = (argc > 4) ? atoi(argv[4]) : 32;  //Gradient Mandelbrot & Nova
+  unsigned d3 = (argc > 4) ? atoi(argv[4]) : 1000; //Buddhabrot & Julia
+  //Normal Mandelbrot
+  std::cout << "Normal Mandelbrot" << std::endl;
+  Cart c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
+  c1.run(mandelbrotFunction,t,d);
+  //Gradient Mandelbrot
+  std::cout << "Gradient Mandelbrot" << std::endl;
+  Cart c2(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
+  c2.run(gradientMandelbrotFunction,t,d2);
+  std::cout << "Buddhabrot" << std::endl;
+  //Buddhabrot
+  Cart c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
+  c3.setBackgroundColor(BLACK);
+  c3.run(buddhabrotFunction,t,d3);
+  //Julia
+  std::cout << "Julia set" << std::endl;
+  Cart c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
+  c4.run(juliaFunction,t,d3);
+  //Nova
+  std::cout << "Nova" << std::endl;
+  Cart c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", FRAME / 2);
+  c5.zoom(-0.361883,-0.217078,0.1f);
+  c5.run(novaFunction,t,d2);
 }

@@ -9,9 +9,6 @@
 #endif
 
 Buddhabrot::Buddhabrot(unsigned threads, unsigned depth = 1000) : Mandelbrot(threads, depth) {
-  myThreads = threads;
-  myDepth = depth;
-  myRedraw = true;
   counter = nullptr;
   cww = cwh = 0;
 }

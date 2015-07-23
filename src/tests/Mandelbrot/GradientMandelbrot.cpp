@@ -4,11 +4,7 @@
 
 #include "GradientMandelbrot.h"
 
-GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {
-  myThreads = threads;
-  myDepth = depth;
-  myRedraw = true;
-}
+GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
 void GradientMandelbrot::draw(Cart& can) {
   while (myRedraw) {

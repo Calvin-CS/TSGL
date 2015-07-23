@@ -129,11 +129,13 @@ public:
 class Table {
 private:
   int tabX, tabY, numPhils;
-  Canvas *myCan;
+  PhilMethod myMethod;
+  std::string methodString;
+  Canvas *myCan, *myCan2;
   Philosopher *phils;
   Fork *forks;
 public:
-  Table(Canvas& can, int p) {
+  Table(Canvas& can, int p, PhilMethod m) {
     numPhils = p;
     myCan = &can;
     tabX = can.getWindowWidth()/2;
@@ -144,9 +146,45 @@ public:
       phils[i].setId(i,numPhils);
       forks[i].id = i;
     }
+    myMethod = m;
+    switch(myMethod) {
+      case forfeitWhenBlocked:
+        methodString = "forfeit when blocked";
+        break;
+      case waitWhenBlocked:
+        methodString = "wait when blocked";
+        break;
+      case nFrameRelease:
+        methodString = "release on nth frame";
+        break;
+      case resourceHierarchy:
+        methodString = "hierarchical resources";
+        break;
+      case oddEven:
+        methodString = "odd-even check";
+        break;
+      default:
+        break;
+    }
+
+    myCan2 = new Canvas(0,0,300,300,"Legend");
+    myCan2->start();
+    myCan2->drawText("Method:",16,32,32,BLACK);
+    myCan2->drawText("\"" + methodString + "\"",32,64,24,BLACK);
+    myCan2->drawText("Legend:",16,96,24,BLACK);
+    myCan2->drawText("Red: Hungry",32,128,24,RED);
+    myCan2->drawText("Orange: Has Right Fork",32,160,24,ORANGE);
+    myCan2->drawText("Yellow: Has Left Fork",32,192,24,YELLOW);
+    myCan2->drawText("Green: Eating",32,224,24,GREEN);
+    myCan2->drawText("Blue: Thinking",32,256,24,BLUE);
   }
 
   ~Table() {
+    if (myCan2->getIsOpen())
+      myCan2->stop();
+    else
+      myCan2->wait();
+    delete myCan2;
     delete [] phils;
     delete [] forks;
   }
@@ -450,13 +488,13 @@ public:
     }
   }
 
-  void checkStep(PhilMethod p) {
+  void checkStep() {
     int i = omp_get_thread_num();
     if (phils[i].state() == isFull) {
       phils[i].eat();
       return;
     }
-    switch(p) {
+    switch(myMethod) {
       case forfeitWhenBlocked:
         forfeitWhenBlockedMethod(i);
         break;
@@ -538,17 +576,18 @@ public:
 };
 
 void philosopherFunction(Canvas& can,int philosophers) {
-  Table t(can,philosophers);
+  //Uncomment exactly one of the below constructors to select a resolution method
+//  Table t(can,philosophers,waitWhenBlocked);    //Deadlock
+//  Table t(can,philosophers,forfeitWhenBlocked); //Livelock (when synchronized)
+//  Table t(can,philosophers,nFrameRelease);      //No locking; mostly fair for N philosophers, N >= 5
+//  Table t(can,philosophers,resourceHierarchy);  //No locking; mostly fair for N philosophers, N >= 2
+  Table t(can,philosophers,oddEven);            //No locking; perfectly fair for N philosophers, N >= 2
+
   can.sleep();
   #pragma omp parallel num_threads(philosophers)
   {
     while(can.getIsOpen()) {
-//      t.checkStep(waitWhenBlocked);     //Deadlock
-//      t.checkStep(forfeitWhenBlocked);  //Livelock (when synchronized)
-//      t.checkStep(nFrameRelease);       //No locking; mostly fair for N philosophers, N >= 5
-//      t.checkStep(resourceHierarchy);   //No locking; mostly fair for N philosophers, N >= 2
-      t.checkStep(oddEven);             //No locking; perfectly fair for N philosophers, N >= 2
-
+      t.checkStep();
       can.pauseDrawing();
 //      #pragma omp barrier               //Barrier for optional synchronization
       t.actStep();
