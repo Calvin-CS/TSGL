@@ -10,16 +10,9 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\tests\SeaUrchin\SeaUrchin.cpp" />
-    <ClCompile Include="..\src\tests\testSeaUrchin.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\tests\SeaUrchin\SeaUrchin.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{9B53EED3-25C7-440B-8BFA-B1F6037D6600}</ProjectGuid>
-    <RootNamespace>testSeaUrchin</RootNamespace>
+    <ProjectGuid>{176FC6A6-9007-4B65-AB33-F8A6114D534B}</ProjectGuid>
+    <RootNamespace>testBlurImage</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -44,7 +37,6 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\testProperties.props" />
     <Import Project="..\testProperties.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -73,6 +65,9 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\tests\testBlurImage.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

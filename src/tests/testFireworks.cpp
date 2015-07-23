@@ -10,6 +10,8 @@ using namespace tsgl;
 
 const float HFLOAT = 6.0f/255.0f;
 
+namespace tsgl {
+
 class Dot {
 private:
   bool dead;
@@ -111,7 +113,7 @@ public:
   inline void relocate() {
     myRad = 20 + rand() % 180;
     myAngle = ((rand() % 32000) / 32000.0f) * 2.0f*PI;
-    while (onBlackPixel()) {
+    while (outOfBounds() || onBlackPixel()) {
       myX = rand() % myCan->getWindowWidth();
       myY = rand() % myCan->getWindowHeight();
     }
@@ -137,8 +139,14 @@ public:
   }
 };
 
+}
+
+#ifdef _WIN32
+  #define Arc tsgl::Arc
+#endif
+
 void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
-  Arc* arcs[numFireworks];
+  Arc** arcs = new Arc*[numFireworks];
   for (int i = 0; i < numFireworks; arcs[i++] = new Arc(can))
     arcs[i] = new Arc(can);
   ColorFloat col = can.getBackgroundColor();
@@ -160,6 +168,7 @@ void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
     }
   }
   for (int i = 0; i < numFireworks; delete arcs[i++]);
+  delete [] arcs;
 }
 
 int main(int argc, char* argv[]) {

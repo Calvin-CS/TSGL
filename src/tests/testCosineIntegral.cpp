@@ -59,8 +59,8 @@ void cosineIntegralFunction(Cart& can, int numberOfThreads) {
 
 #pragma omp parallel num_threads(threads)
   {
-    int nthreads = omp_get_num_threads();
-    long double offset = 3*PI / nthreads;
+    threads = omp_get_num_threads();
+    long double offset = 3*PI / threads;
     long double start = -1.5*PI + omp_get_thread_num() * offset;
     long double stop = start + offset;
     for (long double i = start; i < stop; i += pw) {

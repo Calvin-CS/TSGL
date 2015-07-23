@@ -2,7 +2,7 @@
  * SeaUrchin.cpp
  */
 
-#include <src/tests/SeaUrchin/SeaUrchin.h>
+#include "SeaUrchin.h"
 
 SeaUrchin::SeaUrchin(Canvas& can, int threadId) {
   myOldX = myOldY = 50;

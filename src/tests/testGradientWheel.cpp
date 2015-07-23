@@ -27,6 +27,7 @@ void gradientWheelFunction(Canvas& can, int threads) {
               ARCLENGTH = 2 * PI / NUM_COLORS;     // Gap between wedges
   #pragma omp parallel num_threads(threads)
   {
+    threads = omp_get_num_threads();               // Actual number of threads
     int tid = omp_get_thread_num();                // Thread ID
     int delta = (NUM_COLORS / threads);            // Distance between threads to compute
     float shading = 1 - (float)tid / threads;      // Shading based on thread ID

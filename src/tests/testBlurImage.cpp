@@ -17,6 +17,8 @@ int depthtest(int xmin, int ymin, int xmax, int ymax) {
 }
 
 bool blur(Canvas& can, int xmin, int ymin, int xmax, int ymax, int&numdrawn, int depth) {
+  if (xmin > xmax || ymin > ymax)
+	  return false;
   if (depth > 0) {
     int xmid = (xmin+xmax)/2, ymid = (ymin+ymax)/2;
     blur(can,xmin,  ymin,  xmid,ymid,numdrawn, depth-1);
@@ -40,6 +42,7 @@ void blurImageFunction(Canvas& can, std::string fpath, int threads) {
   can.sleepFor(0.5f);
   #pragma omp parallel num_threads (side*side) //Make sure the actual number of threads is a square
   {
+	side=sqrt(omp_get_num_threads());  //Verify we actually have a workable number of threads
     int tid = omp_get_thread_num();
     int ndrawn = 0, xblock = cww/side, yblock = cwh/side;
     int xmin = (tid%side)*xblock, ymin = (tid/side)*yblock;

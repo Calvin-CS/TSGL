@@ -73,7 +73,7 @@ void auraFunction(Canvas& can, int segs) {
     for (int i = 0; i < segs; drawn[i++] = false);
     for (int i = 0; i < segs; ++i) {
       int next = -1;
-      float bdist = 9999;
+      float bdist = 999999;
       //Draw the triangles closest to the mouse first (lazy depth test)
       for (int j = 0; j < segs; ++j) {
         if (drawn[j])
@@ -84,8 +84,10 @@ void auraFunction(Canvas& can, int segs) {
           next = j;
         }
       }
-      can.drawTriangle(mx,my,x1[next],y1[next],x2[next],y2[next],cf[next],true);
-      drawn[next] = true;
+	  if (next >= 0) {
+		can.drawTriangle(mx,my,x1[next],y1[next],x2[next],y2[next],cf[next],true);
+		drawn[next] = true;
+	  }
     }
     can.resumeDrawing();
     can.sleep();
