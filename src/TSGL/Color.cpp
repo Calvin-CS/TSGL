@@ -162,7 +162,11 @@ bool ColorFloat::operator!=(ColorFloat& c2) {
 }
 
 ColorFloat ColorFloat::operator*(float f) {
-    return ColorFloat((*this).R*f,(*this).G*f,(*this).B*f,(*this).A);
+    float newR = (*this).R*f; clamp(newR,0,1);
+    float newG = (*this).G*f; clamp(newG,0,1);
+    float newB = (*this).B*f; clamp(newB,0,1);
+    float newA = (*this).A;
+    return ColorFloat(newR,newG,newB,newA);
 }
 
 ColorInt::ColorInt() {

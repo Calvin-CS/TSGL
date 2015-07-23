@@ -89,7 +89,6 @@ BINARIES= \
 	bin/testMouse \
 	bin/testMultiCanvas \
 	bin/testNewtonPendulum \
-	bin/testNova \
 	bin/testPhilosophers \
 	bin/testPong \
 	bin/testProgressBar \
@@ -144,7 +143,8 @@ bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
 	build/tests/Mandelbrot/GradientMandelbrot.o \
 	build/tests/Mandelbrot/Buddhabrot.o \
-	build/tests/Mandelbrot/Julia.o
+	build/tests/Mandelbrot/Julia.o \
+	build/tests/Mandelbrot/Nova.o
 
 #General compilation recipes for test binaries (appended to earlier dependencies)
 bin/test%: build/tests/test%.o lib/libtsgl.a

@@ -10,6 +10,7 @@
 #include "Mandelbrot/Mandelbrot.h"
 #include "Mandelbrot/GradientMandelbrot.h"
 #include "Mandelbrot/Julia.h"
+#include "Mandelbrot/Nova.h"
 
 using namespace tsgl;
 
@@ -157,8 +158,14 @@ void buddhabrotFunction(Cart& can, unsigned threads, unsigned depth) {
  */
 void juliaFunction(Cart& can, unsigned threads, unsigned depth) {
     Julia j(threads,depth);  //Create the Julia object
-    j.bindings(can);  //Bind the buttons
-    j.draw(can);  //Draw it
+    j.bindings(can);         //Bind the buttons
+    j.draw(can);             //Draw it
+}
+
+void novaFunction(Cart& can, unsigned threads, unsigned depth) {
+    Nova n(threads,depth);  //Create the Nova object
+    n.bindings(can);        //Bind the buttons
+    n.draw(can);            //Draw it
 }
 
 //Takes command line arguments for the width and height of the screen
@@ -179,7 +186,7 @@ int main(int argc, char* argv[]) {
     if (t == 0)
       t = omp_get_num_procs();
     unsigned d = (argc > 4) ? atoi(argv[4]) : MAX_COLOR; //Normal Mandelbrot
-    unsigned d2 = (argc > 4) ? atoi(argv[4]) : 32;  //Gradient Mandelbrot
+    unsigned d2 = (argc > 4) ? atoi(argv[4]) : 32;  //Gradient Mandelbrot & Nova
     unsigned d3 = (argc > 4) ? atoi(argv[4]) : 1000; //Buddhabrot & Julia
     //Normal Mandelbrot
     std::cout << "Normal Mandelbrot" << std::endl;
@@ -195,7 +202,12 @@ int main(int argc, char* argv[]) {
     c3.setBackgroundColor(BLACK);
     c3.run(buddhabrotFunction,t,d3);
     //Julia
-    std::cout << "Julia set (similar to a Mandelbrot set)" << std::endl;
+    std::cout << "Julia set" << std::endl;
     Cart c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
     c4.run(juliaFunction,t,d3);
+    //Nova
+    std::cout << "Nova" << std::endl;
+    Cart c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", FRAME / 2);
+    c5.zoom(-0.361883,-0.217078,0.1f);
+    c5.run(novaFunction,t,d2);
 }

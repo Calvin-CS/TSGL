@@ -72,12 +72,12 @@ public:
   virtual void draw(Cart& can);
 
   /*!
-   * \brief Redraw the Mandelbrot object.
-   * \details Sets a boolean flag that determines if we should redraw the Mandelbrot object or not.
-   *    \param newValue A boolean indicating whether or not we should redraw.
-   * \note Can be inherited by children classes who extend the Mandelbrot class.
+   * \brief Shades the fractal using Manhattan distances
+   * \details This function may be called after the Mandelbrot has finished rendering to do some
+   *   post-procecssing using the distances from non-escaped pixels to their nearest escaped pixels,
+   *   using the average of their Manhattan distances.
    */
-  virtual void setRedraw(bool newValue);
+  void manhattanShading(CartesianCanvas& can);
 };
 
 #endif /* MANDELBROT_H_ */

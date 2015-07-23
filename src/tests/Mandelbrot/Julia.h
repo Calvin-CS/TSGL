@@ -69,13 +69,6 @@ public:
    * \note Cart is a typedef for a CartesianCanvas object.
    */
   virtual void draw(Cart& can);
-
-  /*!
-   * \brief Redraw the Julia object.
-   * \details Sets a boolean flag that determines whether or not the Julia object should be redrawn to the CartesianCanvas.
-   * \param newValue A boolean indicating whether or not we should redraw the Julia object.
-   */
-  virtual void setRedraw(bool newValue);
 };
 
 #endif /* JULIA_H_ */
