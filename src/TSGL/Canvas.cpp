@@ -53,7 +53,6 @@ std::mutex Canvas::glfwMutex;
 GLFWvidmode const* Canvas::monInfo;
 unsigned Canvas::openCanvases = 0;
 
-//Negative timerLength
 Canvas::Canvas(double timerLength) {
     init(-1, -1, -1, -1, -1, "", timerLength);
 }
@@ -250,8 +249,6 @@ void Canvas::draw() {
     }
 }
 
-//Negative radii?
-//Invalid color?
 void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
     float delta = 2.0f / sides * 3.1415926585f;
     if (filled) {
@@ -274,7 +271,6 @@ void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloa
     }
 }
 
-//Negative size?
 void Canvas::drawColoredPolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
         ColoredPolygon* p = new ColoredPolygon(size);
@@ -292,7 +288,6 @@ void Canvas::drawColoredPolygon(int size, int xverts[], int yverts[], ColorFloat
     }
 }
 
-//Negative size?
 void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
         ConcavePolygon* p = new ConcavePolygon(size);
@@ -310,7 +305,6 @@ void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat
     }
 }
 
-//Negative size?
 void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
         ConvexPolygon* p = new ConvexPolygon(size);
@@ -328,7 +322,6 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
     }
 }
 
-//Invalid width and/or height?
 void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
     drawShape(im);                                        // Push it onto our drawing buffer
@@ -960,8 +953,6 @@ void* Canvas::startDrawing(void* cPtr) {
     Canvas* c = (Canvas*)cPtr;
     c->initGl();
     c->draw();
-    //glfwDestroyWindow(c->window);  //Now handled in handleIO() when appropriae
-    //c->glDestroy();
     c->isFinished = true;
     pthread_exit(NULL);
 }
@@ -1049,7 +1040,6 @@ void Canvas::runTests() {
   c1.setBackgroundColor(WHITE);
   c1.start();
   tsglAssert(testFilledDraw(c1), "Unit test for filled draw failed!");
-//  tsglAssert(testPerimeter(c1), "Unit test for non filled draw failed!");
   tsglAssert(testLine(c1), "Unit test for line failed!");
   tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
   tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
@@ -1132,147 +1122,6 @@ bool Canvas::testFilledDraw(Canvas& can) {
     TsglErr("This many passed for testFilledDraw(): ");
     std::cerr << " " << passed << std::endl;
     TsglErr("This many failed for testFilledDraw(): ");
-    std::cerr << " " << failed << std::endl;
-    return false;
-  }
-}
-
-bool Canvas::testPerimeter(Canvas& can) {
-  int passed = 0;  //Passed tests
-  int failed = 0;  //Failed tests
-  can.drawRectangle(200, 350, 300, 400, BLACK, false);   //Test 1
-  can.drawCircle(250, 250, 50, 32, BLACK, false);  //Test 2
-  can.drawTriangle(50, 80, 150, 80, 50, 150, BLACK, false);  //Test 3
-  can.sleepFor(1);
-  ColorInt black(0, 0, 0);
-
-  //Test 1: Rectangle
-  //Four corners make a rectangle, so check the corners, then perimeter.
-  //Interesting...it appears as if though sometimes the exact coordinate works and sometimes I have to either subtract 1 from one of them or add 1.
-  //Not sure if that's a bug, or if i'm missing something.
-  //Rectangle should look like this:
-  //  (200, 350)-------------------------------(300, 350)
-  //            |                             |
-  //            |                             |
-  //            |                             |
-  //            |                             |
-  //            |                             |
-  //            |                             |
-  //            |                             |
-  //            |                             |
-  //  (200, 400)-------------------------------(300, 400)
-  // The call: can.drawRectangle(200, 350, 300, 400, BLACK, false);
-  if(can.getPoint(200, 350) == black && can.getPoint(200, 400) == black && can.getPoint(300, 350) == black && can.getPoint(300, 400) == black) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, Four corners for testPerimeter() failed!");
-  }
-
-  //Left to right, top
-  int topCount = 0;
-  for(int i = 200; i <= 300; i++) {
-    if(can.getPoint(i, 350) == black) {
-      topCount++;
-    }
-  }
-
-  //Results of Left to right top
-  if(topCount == 101) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, Left to right, top for testPerimeter() failed!");
-  }
-
-  //Top to bottom, left
-  int leftCount = 0;
-  for(int j = 350; j <= 400; j++) {
-    if(can.getPoint(200, j) == black) {
-      leftCount++;
-    }
-  }
-
-  //Results of Top to bottom, left
-  if(leftCount == 51) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, Top to bottom, left for testPerimeter() failed!");
-  }
-
-  //Left to right, bottom
-  int bottomCount = 0;
-  for(int k = 200; k <= 300; k++) {
-    if(can.getPoint(k, 400) == black) {
-      bottomCount++;
-    }
-  }
-
-  //Results of Left to right, bottom
-  if(bottomCount == 101) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, Left to right, bottom for testPerimeter() failed!");
-  }
-
-  //Top to bottom, right
-  int rightCount = 0;
-  for(int l = 350; l <= 400; l++) {
-    if(can.getPoint(300, l) == black) {
-      rightCount++;
-    }
-  }
-
-  //Results of Top to bottom, right
-  if(rightCount == 51) {
-   passed++;
-  } else {
-   failed++;
-   TsglErr("Test 1, Top to bottom, right for testPerimeter() failed!");
-  }
-
-  //Test 2: Circle
-  //Check the leftmost, rightmost, top, and bottom coordinates.
-  //They should all be the same color
-  if(can.getPoint(250, 200) == black && can.getPoint(250, 300) == black && can.getPoint(200, 250) == black && can.getPoint(300, 250) == black) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 2 for testPerimeter() failed!");
-  }
-
-  //Test 3: Triangle
-  //Check the vertices, and a point in from their line segments
-  //NOTE: The vertices themselves aren't necessarily drawn, as the points taper off due to the sharp
-  //  angles of the triangle (Unless we are dealing with a right triangle).
-  //Vertices
-  if(can.getPoint(50, 80) == black && can.getPoint(150, 80) == black && can.getPoint(50, 150) == black) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 3 for testPerimeter() failed!");
-  }
-
-  //Point from line segment (Test 3, part 2)
-  if(can.getPoint(50, 109) == black && can.getPoint(100, 80) == black && can.getPoint(100, 115) == black) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 3, part 2 for testPerimeter() failed!");
-  }
-
-  //Results:
-  if(passed == 8 && failed == 0) {
-  //  can.clear();
-    TsglDebug("Unit test for drawing non-filled shapes passed!");
-    return true;
-  } else {
-  //  can.clear();
-    TsglErr("This many passed for testPerimeter(): ");
-    std::cerr << " " << passed << std::endl;
-    TsglErr("This many failed for testPerimeter(): ");
     std::cerr << " " << failed << std::endl;
     return false;
   }
