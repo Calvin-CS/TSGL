@@ -12,7 +12,7 @@ using namespace tsgl;
 /*! \brief Enum for valid states for the Dining Philosophers
  */
 enum PhilState {
-  hasNone, nasRight, hasLeft, hasBoth, isFull
+  hasNone, hasRight, hasLeft, hasBoth, isFull
 };
 
 /*! \brief Enum for valid actions for the Dining Philosophers
@@ -32,7 +32,10 @@ enum PhilMethod {
  * \brief Small struct for the forks in the Dining Philosophers' problem
  */
 struct Fork {
-  int user = -1, id = 0;
+  int user, id;
+  Fork() {
+    user = -1; id = 0;
+  }
   void draw(Canvas& can, int x, int y, ColorFloat c) {
     can.drawCircle(x,y,16,32,c,true);
   }
@@ -60,7 +63,7 @@ public:
     ColorFloat c;
     switch(myState) {
       case hasNone:  c=RED;    break;
-      case nasRight: c=ORANGE; break;
+      case hasRight: c=ORANGE; break;
       case hasLeft:  c=YELLOW; break;
       case hasBoth:  c=GREEN;  break;
       case isFull:   c=BLUE;   break;
@@ -73,7 +76,7 @@ public:
     if (f.id == myLeft) {
       if (myState == hasNone)
         myState = hasLeft;
-      else if (myState == nasRight)
+      else if (myState == hasRight)
         myState = hasBoth;
       else
         return false;
@@ -82,7 +85,7 @@ public:
     }
     if (f.id == myRight) {
       if (myState == hasNone)
-        myState = nasRight;
+        myState = hasRight;
       else if (myState == hasLeft)
         myState = hasBoth;
       else
@@ -96,7 +99,7 @@ public:
     if (f.user != id)
       return false;
     if (myState != isFull)
-      myState = (myState == ((f.id == myLeft) ? hasLeft : nasRight)) ? hasNone : isFull;
+      myState = (myState == ((f.id == myLeft) ? hasLeft : hasRight)) ? hasNone : isFull;
     f.user = -1;
     return true;
   }
@@ -148,6 +151,32 @@ public:
     delete [] forks;
   }
 
+  /*!
+   * \brief Method for determining which fork a Philosopher should get.
+   * \details
+   * - Store the id numbers for the left and the right Philsopher's state.
+   * - Switch for the state of a Philosopher:
+   *   - Philosopher has no fork:
+   *     - If the right fork is free, try to get that fork.
+   *     - Else, if the left fork is free, try to get that fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has right fork:
+   *     - If the left fork is free, try to get that fork.
+   *     - Else, release the right fork.
+   *     .
+   *   - Philosopher has the left fork:
+   *     - If the right fork is free, try to get that fork.
+   *     - Else, release the left fork.
+   *     .
+   *   - Philosopher has both forks:
+   *     - Release both of them.
+   *     .
+   *   .
+   * .
+   * \param id The id number of the current Philosopher.
+   * \note This is an example of Deadlock amongst threads.
+   */
   void forfeitWhenBlockedMethod(int id) {
     int left = id, right = (id+numPhils-1)%numPhils;
     switch(phils[id].state()) {
@@ -159,7 +188,7 @@ public:
         else
           phils[id].setAction(doNothing);
         break;
-      case nasRight:
+      case hasRight:
         if (forks[left].user == -1)
           phils[id].setAction(tryLeft);
         else
@@ -179,6 +208,32 @@ public:
     }
   }
 
+  /*!
+   * \brief Method for determining which fork a Philosopher should get.
+   * \details
+   * - Store the states of the left and right Philosophers.
+   * - Switch for the state of the current Philosopher:
+   *   - Philosopher has no forks:
+   *     - If the right fork is free, try to get that fork.
+   *     - Else if the left fork is free, try to get that fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has right fork:
+   *     - If the left fork is free, try to get that fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has the left fork:
+   *     - If the right fork is free, try to get that fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has both forks:
+   *     - Release both of them.
+   *     .
+   *   .
+   * .
+   * \param id The id number of the current Philosopher.
+   * \note This is an example of Livelock amongst threads.
+   */
   void waitWhenBlockedBlockedMethod(int id) {
     int left = id, right = (id+numPhils-1)%numPhils;
     switch(phils[id].state()) {
@@ -190,7 +245,7 @@ public:
         else
           phils[id].setAction(doNothing);
         break;
-      case nasRight:
+      case hasRight:
         if (forks[left].user == -1)
           phils[id].setAction(tryLeft);
         else
@@ -210,6 +265,35 @@ public:
     }
   }
 
+  /*!
+   * \brief Method for determining which fork a Philosopher should get.
+   * \details
+   * - Store the states of the left and right Philosophers.
+   * - Switch statement for the current Philosopher:
+   *   - Philosopher has no forks:
+   *     - If the right fork is free, try to get that fork.
+   *     - Else, if the left fork is free, try to get that fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has right fork:
+   *     - If the left fork is free, try to get that fork.
+   *     - Else, if the id of the current Philosopher is equal to the frame number of the Canvas
+   *       modulo the number of Philosophers+1, then release the right fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has the left fork:
+   *     - If the right fork is free, try and get that fork.
+   *     - Else, if the id of the current Philosopher is equal to the frame number of the Canvas
+   *       modulo the number of Philosophers+1, then release the left fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has both forks:
+   *     - Release both of them.
+   *     .
+   *   .
+   * .
+   * \param id The id number of the current Philosopher.
+   */
   void nFrameReleaseMethod(int id) {
     int left = id, right = (id+numPhils-1)%numPhils;
     switch(phils[id].state()) {
@@ -221,7 +305,7 @@ public:
         else
           phils[id].setAction(doNothing);
         break;
-      case nasRight:
+      case hasRight:
         if (forks[left].user == -1)
           phils[id].setAction(tryLeft);
         else {
@@ -249,6 +333,34 @@ public:
     }
   }
 
+  /*!
+   * \brief Method for determining which fork a Philosopher should get.
+   * \details
+   * - Store the states for the left and right Philosophers.
+   * - Switch statement for the state of the current Philosopher.
+   *   - Philosopher has no forks:
+   *     - If the right Philosopher's id is less than the left Philsopher's id:
+   *       - If the right fork is free, try to get that fork.
+   *       - Else, do nothing.
+   *       .
+   *     - Else, if the left fork is free then try and get that fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has the right fork:
+   *     - If the left fork is free, try and get that fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has the left fork:
+   *     - If the right fork is free, try and get that fork.
+   *     - Else, do nothing.
+   *     .
+   *   - Philosopher has both forks:
+   *     - Release both of them.
+   *     .
+   *   .
+   * .
+   * \param id The id number of the current Philosopher.
+   */
   void hieararchyMethod(int id) {
     int left = id, right = (id+numPhils-1)%numPhils;
     switch(phils[id].state()) {
@@ -265,7 +377,7 @@ public:
             phils[id].setAction(doNothing);
         }
         break;
-      case nasRight:
+      case hasRight:
         if (forks[left].user == -1)
           phils[id].setAction(tryLeft);
         else {
@@ -286,6 +398,30 @@ public:
     }
   }
 
+  /*!
+   * \brief Method for determining which fork a Philosopher should get.
+   * \details
+   * - Switch statement for the current Philosopher:
+   *   - Philosopher has no forks:
+   *     - If the Philosopher's id is even
+   *   - Philosopher has right fork (odd id):
+   *     - If the Philsopher's id modulo 2 is equal to the Canvas' current frame number
+   *       modulo 2, then try and get the left fork.
+   *     - Else, release the right fork.
+   *     .
+   *   - Philosopher has left fork (even id):
+   *     - If the Philsopher's id modulo 2 is equal to the Canvas' current frame number
+   *       modulo 2, then try and get the right fork.
+   *     - Else, release the left fork.
+   *     .
+   *   - Philosopher has both forks:
+   *     - Release both of them.
+   *     .
+   *   .
+   * .
+   * \param id The id number of the current Philosopher.
+   * \note This method is the one that works best.
+   */
   void oddEvenMethod(int id) {
     switch(phils[id].state()) {
       case hasNone:
@@ -294,7 +430,7 @@ public:
         else
           phils[id].setAction(doNothing);
         break;
-      case nasRight:
+      case hasRight:
         if ((id % 2) == (myCan->getFrameNumber() % 2))
           phils[id].setAction(tryLeft);
         else {
