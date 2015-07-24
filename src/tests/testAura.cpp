@@ -17,6 +17,9 @@ inline void scatter(float& f, float max) {
   f += max*am;
 }
 
+/*!
+ *
+ */
 void auraFunction(Canvas& can, int segs) {
   const float SR2 = sqrt(2);
   const int CW = can.getWindowWidth(), CH = can.getWindowHeight();

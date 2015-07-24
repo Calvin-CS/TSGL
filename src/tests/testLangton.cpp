@@ -176,14 +176,17 @@ int main(int argc, char* argv[]) {
     Canvas c1(-1, -1, w, h, "Langton's Ant w/Alpha (enter to pause)");
     c1.setBackgroundColor(BLACK);
     c1.run(alphaLangtonFunction);
+
     //Regular Langton
     std::cout << "Regular Langton's Ant" << std::endl;
     Canvas c2(-1, -1, w, h, "Langton's Ant");
     c2.run(langtonFunction);
+
     //Colony Langton
     std::cout << "Multiple Langton's Ants" << std::endl;
     Canvas c3(-1, -1, w, h, "4x Langton's Ants");
     c3.run(langtonColonyFunction);
+
     //Colorful Langton
     std::cout << "Dynamically Colored Langton's Ants" << std::endl;
     Canvas c4(-1, -1, w, h, "Colorful Langton's Ants");

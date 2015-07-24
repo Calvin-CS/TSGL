@@ -199,19 +199,23 @@ int main(int argc, char* argv[]) {
   std::cout << "Normal Mandelbrot" << std::endl;
   Cart c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
   c1.run(mandelbrotFunction,t,d);
+
   //Gradient Mandelbrot
   std::cout << "Gradient Mandelbrot" << std::endl;
   Cart c2(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
   c2.run(gradientMandelbrotFunction,t,d2);
   std::cout << "Buddhabrot" << std::endl;
+
   //Buddhabrot
   Cart c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
   c3.setBackgroundColor(BLACK);
   c3.run(buddhabrotFunction,t,d3);
+
   //Julia
   std::cout << "Julia set" << std::endl;
   Cart c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
   c4.run(juliaFunction,t,d3);
+
   //Nova
   std::cout << "Nova" << std::endl;
   Cart c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", FRAME / 2);
