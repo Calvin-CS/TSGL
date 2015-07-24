@@ -117,8 +117,13 @@ docs: docs/html/index.html
 
 tutorial: tutorial/docs/html/index.html
 
+cleanall: clean cleandocs
+
 clean:
-	$(RM) -r bin/* build/* docs/html/* lib/* tutorial/docs/html/* *~ *# *.tmp
+	$(RM) -r bin/* build/* lib/* tutorial/docs/html/* *~ *# *.tmp
+
+cleandocs:
+	$(RM) -r docs/html/*
 
 # -include build/*.d
 
