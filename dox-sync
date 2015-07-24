@@ -1,0 +1,14 @@
+#!/bin/bash
+#Synchonizes Doxygen on master branch with gh-pages branch
+
+git checkout master
+make clean
+make docs
+rm -rf _docs
+mv docs _docs
+git checkout gh-pages
+git rm -rf docs/
+rm -rf docs
+mv _docs docs
+git add docs
+
