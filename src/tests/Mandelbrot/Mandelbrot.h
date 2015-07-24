@@ -31,6 +31,7 @@ typedef std::complex<Decimal> complex;
 class Mandelbrot {
 private:
   Decimal myFirstX, myFirstY, mySecondX, mySecondY;
+
 protected:
   int myThreads;
   unsigned int myDepth;
@@ -43,7 +44,9 @@ protected:
    *   using the average of their Manhattan distances.
    */
   void manhattanShading(CartesianCanvas& can);
+
 public:
+
   /*!
    * \brief Explicitly construct a Mandelbrot object.
    * \details Explicit constructor for the Mandelbrot class.

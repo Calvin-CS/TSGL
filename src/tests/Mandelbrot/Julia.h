@@ -19,6 +19,7 @@ using namespace tsgl;
  */
 class Julia : public Mandelbrot {
 public:
+
   /*!
    * \brief Explicitly constructs a Julia object.
    * \details Explicit constructor for the Julia class.

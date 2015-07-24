@@ -33,6 +33,7 @@ private:
 public:
     int width, height, size;
     Canvas* can;
+
     /*!
      * \brief Explicitly constructs a LifeFarm object.
      * \details Explicit constructor for the LifeFarm class.

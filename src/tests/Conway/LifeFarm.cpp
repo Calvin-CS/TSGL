@@ -168,7 +168,7 @@ void LifeFarm::moveAnts() {
 void LifeFarm::moveAntsOld() {
   //Compute this frame's color
   const int P1 = 7, P2 = 11, P3 = 17;
-//  std::cout << ++framecount << std::endl;
+ // std::cout << ++framecount << std::endl;
   int r = (framecount*P1/50 % 255);
   if (r < 128)  r = 255 - r;
   int g = (framecount*P2/50 % 255);
@@ -204,7 +204,6 @@ void LifeFarm::moveAntsOld() {
       ++neighbors[row][xp];
       ++neighbors[yp][xp];
     }
-//  }
 
   //Reset the end of the list for the next iteration
   listend = 0;

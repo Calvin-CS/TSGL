@@ -24,6 +24,7 @@ private:
   int **counter;
   int cww, cwh;
 public:
+
   /*!
    * \brief Explicitly construct a Buddhabrot object.
    * \details Explicit constructor for the Buddhabrot class.

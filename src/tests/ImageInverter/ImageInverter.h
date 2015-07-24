@@ -27,6 +27,7 @@ private:
   void sleep(unsigned seconds) { Sleep(seconds * 1000); }
   #endif
 protected:
+
   /* invertImage inverts the image using a given number of threads
    * @param: numThreads, the number of threads to use
    *           when inverting the image (default 1).
@@ -41,7 +42,9 @@ protected:
    * Postcondition: myCanvas1 and myCanvas2 have been closed.
    */
   virtual void stop();
+
 public:
+
   /* explicit constructor
    * @param fileName, a string.
    * @param width, an unsigned.

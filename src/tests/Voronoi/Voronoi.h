@@ -14,6 +14,12 @@
 
 using namespace tsgl;
 
+/*!
+ * \class Voronoi
+ * \brief A Voronoi diagram.
+ * \details Creates a Voronoi diagram to be drawn onto a Canvas.
+ * \see http://en.wikipedia.org/wiki/Voronoi_diagram.
+ */
 class Voronoi {
 protected:
   static const int MY_POINTS = 100 * 4;
@@ -23,8 +29,27 @@ protected:
   ColorFloat myColor[MY_POINTS];                 // And for an array of colors
   ColorFloat myTC, myRC, myLC, myBC, myXC, myYC; // Color for the top, right, left, bottom, x-average, and y-average
 public:
+
+  /*!
+   * \brief Explicitly construct a Voronoi object.
+   * \details Explicit constructor for a Voronoi object.
+   * \param can Reference to the Canvas to draw to.
+   * \return The constructed Voronoi object.
+   */
   Voronoi(Canvas& can);
+
+  /*!
+   * \brief Draw the Voronoi object.
+   * \details Actually draws the Voronoi object onto the Canvas.
+   * \param can Reference to the Canvas to draw to.
+   */
   void draw(Canvas& can);
+
+  /*!
+   * \brief Destroy a Voronoi object.
+   * \details Destructor for a Voronoi object.
+   * \return The memory allocated to a Voronoi object.
+   */
   virtual ~Voronoi();
 };
 

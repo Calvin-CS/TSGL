@@ -33,6 +33,7 @@ public:
     int myX, myY, myRed, myGreen, myBlue, myAlpha, myDir;
     AntFarm* myFarm;
 public:
+
     /*!
      * \brief Explicitly constructs a LangtonAnt object.
      * \details Explicit constructor for the LangtonAnt class.
