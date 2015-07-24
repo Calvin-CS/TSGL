@@ -111,7 +111,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  <div class="center">
   <img src="classtsgl_1_1_canvas.png" usemap="#tsgl::Canvas_map" alt=""/>
   <map id="tsgl::Canvas_map" name="tsgl::Canvas_map">
-<area href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. " alt="tsgl::CartesianCanvas" shape="rect" coords="0,56,134,80"/>
+<area href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. " alt="tsgl::CartesianCanvas" shape="rect" coords="0,56,134,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -141,9 +141,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2162c16f6aeaee01f8e29696f5818c03"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a2162c16f6aeaee01f8e29696f5818c03">drawCircle</a> (int x, int y, int radius, int sides, <a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a> color=BLACK, bool filled=true)</td></tr>
 <tr class="memdesc:a2162c16f6aeaee01f8e29696f5818c03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a circle.  <a href="#a2162c16f6aeaee01f8e29696f5818c03">More...</a><br /></td></tr>
 <tr class="separator:a2162c16f6aeaee01f8e29696f5818c03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2165615afc3cebfe38e4313c25bd17b9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a2165615afc3cebfe38e4313c25bd17b9">drawColoredPolygon</a> (int size, int xverts[], int yverts[], <a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a> color[], bool filled=true)</td></tr>
-<tr class="memdesc:a2165615afc3cebfe38e4313c25bd17b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws an arbitrary polygon with colored vertices.  <a href="#a2165615afc3cebfe38e4313c25bd17b9">More...</a><br /></td></tr>
-<tr class="separator:a2165615afc3cebfe38e4313c25bd17b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad98cb8db661ef24279b61c4c11fd29ea"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#ad98cb8db661ef24279b61c4c11fd29ea">drawConcavePolygon</a> (int size, int xverts[], int yverts[], <a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a> color[], bool filled=true)</td></tr>
 <tr class="memdesc:ad98cb8db661ef24279b61c4c11fd29ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a concave polygon with colored vertices.  <a href="#ad98cb8db661ef24279b61c4c11fd29ea">More...</a><br /></td></tr>
 <tr class="separator:ad98cb8db661ef24279b61c4c11fd29ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,6 +174,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8abc9ed7d3c55c5d701009040c65000e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a8abc9ed7d3c55c5d701009040c65000e">drawTriangle</a> (int x1, int y1, int x2, int y2, int x3, int y3, <a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a> color=BLACK, bool filled=true)</td></tr>
 <tr class="memdesc:a8abc9ed7d3c55c5d701009040c65000e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a triangle.  <a href="#a8abc9ed7d3c55c5d701009040c65000e">More...</a><br /></td></tr>
 <tr class="separator:a8abc9ed7d3c55c5d701009040c65000e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f570c258a8900178190ec15ac074a57"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a8f570c258a8900178190ec15ac074a57">drawTriangleStrip</a> (int size, int xverts[], int yverts[], <a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a> color[], bool filled=true)</td></tr>
+<tr class="memdesc:a8f570c258a8900178190ec15ac074a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws an arbitrary triangle strip with colored vertices.  <a href="#a8f570c258a8900178190ec15ac074a57">More...</a><br /></td></tr>
+<tr class="separator:a8f570c258a8900178190ec15ac074a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b39e50888d61e88527a66ac0f6ac880"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a2b39e50888d61e88527a66ac0f6ac880">getBackgroundColor</a> ()</td></tr>
 <tr class="memdesc:a2b39e50888d61e88527a66ac0f6ac880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accessor for the current background color.  <a href="#a2b39e50888d61e88527a66ac0f6ac880">More...</a><br /></td></tr>
 <tr class="separator:a2b39e50888d61e88527a66ac0f6ac880"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,13 +234,36 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a47436daa39473ddb4044bac7b3b27151"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a47436daa39473ddb4044bac7b3b27151">recordForNumFrames</a> (unsigned int num_frames)</td></tr>
 <tr class="memdesc:a47436daa39473ddb4044bac7b3b27151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Records the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> for a specified number of frames.  <a href="#a47436daa39473ddb4044bac7b3b27151">More...</a><br /></td></tr>
 <tr class="separator:a47436daa39473ddb4044bac7b3b27151"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada6403439b583910d27e497148da5f2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada6403439b583910d27e497148da5f2e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#ada6403439b583910d27e497148da5f2e">reset</a> ()</td></tr>
-<tr class="memdesc:ada6403439b583910d27e497148da5f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the internal drawing timer of a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> instance. <br /></td></tr>
+<tr class="memitem:ada6403439b583910d27e497148da5f2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#ada6403439b583910d27e497148da5f2e">reset</a> ()</td></tr>
+<tr class="memdesc:ada6403439b583910d27e497148da5f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the internal drawing timer of a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> instance.  <a href="#ada6403439b583910d27e497148da5f2e">More...</a><br /></td></tr>
 <tr class="separator:ada6403439b583910d27e497148da5f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56bf3c6e4eb7b06015d1c115aaa143f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a56bf3c6e4eb7b06015d1c115aaa143f8">resumeDrawing</a> ()</td></tr>
 <tr class="memdesc:a56bf3c6e4eb7b06015d1c115aaa143f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resumes the rendering thread of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>.  <a href="#a56bf3c6e4eb7b06015d1c115aaa143f8">More...</a><br /></td></tr>
 <tr class="separator:a56bf3c6e4eb7b06015d1c115aaa143f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f3f00d6c380a662a239077456045502"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502">run</a> (void(*myFunction)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;))</td></tr>
+<tr class="memdesc:a5f3f00d6c380a662a239077456045502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>, run a function on it, and wait for the user to close it.  <a href="#a5f3f00d6c380a662a239077456045502">More...</a><br /></td></tr>
+<tr class="separator:a5f3f00d6c380a662a239077456045502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62ec8be88bea1905cdb6855138ef3cb1"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a62ec8be88bea1905cdb6855138ef3cb1">run</a> (void(*myFunction)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, int), int i)</td></tr>
+<tr class="memdesc:a62ec8be88bea1905cdb6855138ef3cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a>  <a href="#a62ec8be88bea1905cdb6855138ef3cb1">More...</a><br /></td></tr>
+<tr class="separator:a62ec8be88bea1905cdb6855138ef3cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67b341ead1fde0a692281d2b1f67be1e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a67b341ead1fde0a692281d2b1f67be1e">run</a> (void(*myFunction)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, unsigned), unsigned u)</td></tr>
+<tr class="memdesc:a67b341ead1fde0a692281d2b1f67be1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a>  <a href="#a67b341ead1fde0a692281d2b1f67be1e">More...</a><br /></td></tr>
+<tr class="separator:a67b341ead1fde0a692281d2b1f67be1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a768c10737f9590a25d8e66dcc7137d9b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a768c10737f9590a25d8e66dcc7137d9b">run</a> (void(*myFunction)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, int, int), int i1, int i2)</td></tr>
+<tr class="memdesc:a768c10737f9590a25d8e66dcc7137d9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a>  <a href="#a768c10737f9590a25d8e66dcc7137d9b">More...</a><br /></td></tr>
+<tr class="separator:a768c10737f9590a25d8e66dcc7137d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab146e6cf9f7f19a047c20c02a0eb30f9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#ab146e6cf9f7f19a047c20c02a0eb30f9">run</a> (void(*myFunction)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, unsigned, unsigned), unsigned u1, unsigned u2)</td></tr>
+<tr class="memdesc:ab146e6cf9f7f19a047c20c02a0eb30f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a>  <a href="#ab146e6cf9f7f19a047c20c02a0eb30f9">More...</a><br /></td></tr>
+<tr class="separator:ab146e6cf9f7f19a047c20c02a0eb30f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2eeece8d4c4453ec7b4b53e209004559"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#a2eeece8d4c4453ec7b4b53e209004559">run</a> (void(*myFunction)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, std::string), std::string s)</td></tr>
+<tr class="memdesc:a2eeece8d4c4453ec7b4b53e209004559"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a>  <a href="#a2eeece8d4c4453ec7b4b53e209004559">More...</a><br /></td></tr>
+<tr class="separator:a2eeece8d4c4453ec7b4b53e209004559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac507bbbf60328de2fc99f93cd37d04ec"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#ac507bbbf60328de2fc99f93cd37d04ec">run</a> (void(*myFunction)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, int, std::string), int i, std::string s)</td></tr>
+<tr class="memdesc:ac507bbbf60328de2fc99f93cd37d04ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a>  <a href="#ac507bbbf60328de2fc99f93cd37d04ec">More...</a><br /></td></tr>
+<tr class="separator:ac507bbbf60328de2fc99f93cd37d04ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafed71cba89b059629647e77ba23ff2b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#aafed71cba89b059629647e77ba23ff2b">run</a> (void(*myFunction)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, std::string, int), std::string s, int i)</td></tr>
+<tr class="memdesc:aafed71cba89b059629647e77ba23ff2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a>  <a href="#aafed71cba89b059629647e77ba23ff2b">More...</a><br /></td></tr>
+<tr class="separator:aafed71cba89b059629647e77ba23ff2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb668fe42e2fe7f269b255152df959d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtsgl_1_1_canvas.html#abb668fe42e2fe7f269b255152df959d8">setBackgroundColor</a> (<a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a> color)</td></tr>
 <tr class="memdesc:abb668fe42e2fe7f269b255152df959d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutator for the background color.  <a href="#abb668fe42e2fe7f269b255152df959d8">More...</a><br /></td></tr>
 <tr class="separator:abb668fe42e2fe7f269b255152df959d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -300,10 +323,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A GL window with numerous built-in, thread-safe drawing operations. </p>
 <p><a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> provides an easy-to-set-up, easy-to-use class for drawing various shapes.</p>
-<p>Using stb, <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> also supports the drawing of images.</p>
+<p>Using STB, <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> also supports the drawing of images.</p>
 <p>On top of being easy to use, <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> is also thread-safe, so any number of images may be drawn at once. </p><dl class="section note"><dt>Note</dt><dd><b>OS X:</b> Due to the way OS X handles I/O, either <a class="el" href="classtsgl_1_1_canvas.html#a2604fa056d4541f918ccf447eda1f3cf" title="Sleeps the calling thread to sync with the Canvas. ">sleep()</a> or <a class="el" href="classtsgl_1_1_canvas.html#aa499851e5e4b97bb99ca4fb3d633c17e" title="Manually handles keyboard/mouse I/O. ">handleIO()</a> must be manually called whenever the user wants to handle any input/output events (keyboard/mouse presses). Whenever a window is created using OpenGL, OS X requires the main thread to handle I/O calls. </dd>
 <dd>
 <b>OS X:</b> OS X also uses p_thread instead of std::thread for threading. </dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd><b>Linux:</b> X forwarding does not work properly with TSGL. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ac7e73a23238b067d0b91f73f3af53623"></a>
 <div class="memitem">
@@ -602,72 +626,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 </dl>
 
 <p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a64e128195cbcf9b60dbe478d6f489d67">tsgl::CartesianCanvas::drawCircle()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2165615afc3cebfe38e4313c25bd17b9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tsgl::Canvas::drawColoredPolygon </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>xverts</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>yverts</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a>&#160;</td>
-          <td class="paramname"><em>color</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>filled</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Draws an arbitrary polygon with colored vertices. </p>
-<p>This function draws a <a class="el" href="classtsgl_1_1_colored_polygon.html" title="Draw an arbitrary polygon with colored vertices. ">ColoredPolygon</a> with the given vertex data, specified as a triangle strip. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size</td><td>The number of vertices in the polygon. </td></tr>
-    <tr><td class="paramname">xverts</td><td>An array of x positions of the vertices. </td></tr>
-    <tr><td class="paramname">yverts</td><td>An array of y positions of the vertices. </td></tr>
-    <tr><td class="paramname">color</td><td>An array of colors for the vertices. </td></tr>
-    <tr><td class="paramname">filled</td><td>Whether the colored polygon should be filled (true) or not (false) (set to true by default). </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a169f867f6b0d0706dca96a1f4fcc0172">tsgl::CartesianCanvas::drawColoredPolygon()</a>.</p>
 
 </div>
 </div>
@@ -986,7 +944,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>Draws a single pixel, specified in row,column format. </p>
 <p>This function draws a pixel at the given screen coordinates with the given color. </p><dl class="section note"><dt>Note</dt><dd>(0,0) signifies the <b>top-left</b> of the screen when working with a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> object. </dd>
 <dd>
-(0,0) signifies the <b>bottom-left</b> of the screen when working with a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a> object. </dd></dl>
+(0,0) signifies the <b>bottom-left</b> of the screen when working with a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a> object. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">row</td><td>The row (y-position) of the pixel. </td></tr>
@@ -1040,7 +998,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>Draws a single pixel, specified in x,y format. </p>
 <p>This function draws a pixel at the given Cartesian coordinates with the given color. </p><dl class="section note"><dt>Note</dt><dd>(0,0) signifies the <b>left-top</b> of the screen when working with a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> object. </dd>
 <dd>
-(0,0) signifies the <b>left-bottom</b> of the screen when working with a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a> object. </dd></dl>
+(0,0) signifies the <b>left-bottom</b> of the screen when working with a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a> object. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>The x position of the point. </td></tr>
@@ -1084,7 +1042,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>There is no equivalent function for <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a>. If you'd like to draw a <a class="el" href="classtsgl_1_1_progress_bar.html" title="Draws and updates a progress bar. ">ProgressBar</a> on a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a>, you can still use this function, but you must use absolute <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> coordinates rather than the scaled <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a> coordinates. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>There is no equivalent function for <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a>. If you'd like to draw a <a class="el" href="classtsgl_1_1_progress_bar.html" title="Draws and updates a progress bar. ">ProgressBar</a> on a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a>, you can still use this function, but you must use absolute <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> coordinates rather than the scaled <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a> coordinates. </dd></dl>
 
 </div>
 </div>
@@ -1156,7 +1114,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Bug:</a></b></dt><dd>The bottom-right pixel of a non-filled rectangle may not get drawn on some machines. </dd></dl>
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>The bottom-right pixel of a non-filled rectangle may not get drawn on some machines. </dd></dl>
 
 <p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a5e88e7d751e24ae78d158f1d8e9faf5e">tsgl::CartesianCanvas::drawRectangle()</a>, <a class="el" href="classtsgl_1_1_visual_task_queue.html#a1cd23a5361c0209ac950db6afcd68a19">tsgl::VisualTaskQueue::reset()</a>, <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>, and <a class="el" href="classtsgl_1_1_visual_task_queue.html#a2fc5733a57213a6eee116408738851fc">tsgl::VisualTaskQueue::update()</a>.</p>
 
@@ -1381,6 +1339,72 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a8f570c258a8900178190ec15ac074a57"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::drawTriangleStrip </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>xverts</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>yverts</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a>&#160;</td>
+          <td class="paramname"><em>color</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>filled</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Draws an arbitrary triangle strip with colored vertices. </p>
+<p>This function draws a <a class="el" href="classtsgl_1_1_triangle_strip.html" title="Draw an arbitrary triangle strip with colored vertices. ">TriangleStrip</a> with the given vertex data, specified as a triangle strip. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">size</td><td>The number of vertices in the polygon. </td></tr>
+    <tr><td class="paramname">xverts</td><td>An array of x positions of the vertices. </td></tr>
+    <tr><td class="paramname">yverts</td><td>An array of y positions of the vertices. </td></tr>
+    <tr><td class="paramname">color</td><td>An array of colors for the vertices. </td></tr>
+    <tr><td class="paramname">filled</td><td>Whether the triangle strip should be filled (true) or not (false). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a924f6148489c634ec4d47970e498a26a">tsgl::CartesianCanvas::drawTriangleStrip()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2b39e50888d61e88527a66ac0f6ac880"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1422,8 +1446,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 
 <p>Accessor for the height of the user's primary monitor. </p>
 <dl class="section return"><dt>Returns</dt><dd>The height of the user's primary monitor. </dd></dl>
-
-<p>Referenced by <a class="el" href="classtsgl_1_1_canvas.html#ac7e73a23238b067d0b91f73f3af53623">Canvas()</a>.</p>
 
 </div>
 </div>
@@ -1573,7 +1595,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>Gets the color of the pixel drawn on the current <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> at the given screen coordinates, specified in row,column format. </p>
 <dl class="section note"><dt>Note</dt><dd>(0,0) signifies the <b>top-left</b> of the screen when working with a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> object. </dd>
 <dd>
-(0,0) signifies the <b>bottom-left</b> of the screen when working with a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a>. </dd>
+(0,0) signifies the <b>bottom-left</b> of the screen when working with a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a>. </dd>
 <dd>
 <a class="el" href="classtsgl_1_1_canvas.html#a1f54dba4b09d248e2611f3409353c2c6" title="Gets the color of the pixel drawn on the current Canvas at the given screen coordinates, specified in row,column format. ">getPixel()</a> will return only what is currently drawn the screen. Any object waiting to be drawn will not affect what is returned. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1614,7 +1636,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>Gets the color of the pixel drawn on the current <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> at the given screen coordinates, specified in x,y format. </p>
 <dl class="section note"><dt>Note</dt><dd>(0,0) signifies the <b>left-top</b> of the screen when working with a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> object. </dd>
 <dd>
-(0,0) signifies the <b>left-bottom</b> of the screen when working with a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a>. </dd>
+(0,0) signifies the <b>left-bottom</b> of the screen when working with a <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a>. </dd>
 <dd>
 <a class="el" href="classtsgl_1_1_canvas.html#aa31883b3c9b09006cf82b270ad7a0a9f" title="Gets the color of the pixel drawn on the current Canvas at the given screen coordinates, specified in x,y format. ">getPoint()</a> will return only what is currently drawn the screen. Any object waiting to be drawn will not affect what is returned. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -1665,6 +1687,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>Accessor for the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>'s currently drawn image. </p>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the RGB pixel buffer for the current <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>The array starts in the bottom left corner of the image, and is in row-major ordering. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd><b>This function returns a pointer directly to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>' screen buffer. This function may be removed in future versions of TSGL. Please use <a class="el" href="classtsgl_1_1_canvas.html#a1f54dba4b09d248e2611f3409353c2c6" title="Gets the color of the pixel drawn on the current Canvas at the given screen coordinates, specified in row,column format. ">getPixel()</a> or <a class="el" href="classtsgl_1_1_canvas.html#aa31883b3c9b09006cf82b270ad7a0a9f" title="Gets the color of the pixel drawn on the current Canvas at the given screen coordinates, specified in x,y format. ">getPoint()</a> get individual pixels. </b></dd></dl>
 
 </div>
 </div>
@@ -1854,6 +1877,24 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ada6403439b583910d27e497148da5f2e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resets the internal drawing timer of a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> instance. </p>
+<p>This function resets the starting time of the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>' draw timer to the current time. </p>
+
+</div>
+</div>
 <a class="anchor" id="a56bf3c6e4eb7b06015d1c115aaa143f8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1873,6 +1914,367 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#abe021ab5148cc1327523689bced0f35a" title="Pauses the rendering thread of the Canvas. ">pauseDrawing()</a> </dd></dl>
 
 <p>Referenced by <a class="el" href="classtsgl_1_1_spectrogram.html#aef15257f0daa13a57d99cd621d402bd5">tsgl::Spectrogram::draw()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5f3f00d6c380a662a239077456045502"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::run </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;)&#160;</td>
+          <td class="paramname"><em>myFunction</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Start the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>, run a function on it, and wait for the user to close it. </p>
+<p>This function binds another function to the current <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>, waits until that function is complete, and waits for the user to close the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. This function effectively calls <a class="el" href="classtsgl_1_1_canvas.html#a654315f9b08a9b3b072eebf4b4d8ae89" title="Opens the Canvas. ">start()</a>, <code>myFunction</code>(), and <a class="el" href="classtsgl_1_1_canvas.html#a39e69fd4d1ad8cf0e22ecea12f1ddf08" title="Waits for the user to close the Canvas. ">wait()</a> in sequence. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">myFunction</td><td>The function to run on the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. Must take exactly one parameter of type <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>&amp;, which is a reference to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to render to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a62ec8be88bea1905cdb6855138ef3cb1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::run </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, int)&#160;</td>
+          <td class="paramname"><em>myFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">myFunction</td><td>The function to run on the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. Must take exactly one parameter of type <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>&amp;, which is a reference to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to render to. </td></tr>
+    <tr><td class="paramname">i</td><td>An integer argument to myFunction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a67b341ead1fde0a692281d2b1f67be1e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::run </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, unsigned)&#160;</td>
+          <td class="paramname"><em>myFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>u</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">myFunction</td><td>The function to run on the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. Must take exactly one parameter of type <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>&amp;, which is a reference to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to render to. </td></tr>
+    <tr><td class="paramname">u</td><td>An unsigned integer argument to myFunction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a768c10737f9590a25d8e66dcc7137d9b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::run </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, int, int)&#160;</td>
+          <td class="paramname"><em>myFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">myFunction</td><td>The function to run on the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. Must take exactly one parameter of type <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>&amp;, which is a reference to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to render to. </td></tr>
+    <tr><td class="paramname">i1</td><td>An integer argument to myFunction </td></tr>
+    <tr><td class="paramname">i2</td><td>An integer argument to myFunction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ab146e6cf9f7f19a047c20c02a0eb30f9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::run </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, unsigned, unsigned)&#160;</td>
+          <td class="paramname"><em>myFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>u1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>u2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">myFunction</td><td>The function to run on the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. Must take exactly one parameter of type <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>&amp;, which is a reference to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to render to. </td></tr>
+    <tr><td class="paramname">u1</td><td>An unsigned integer argument to myFunction </td></tr>
+    <tr><td class="paramname">u2</td><td>An unsigned integer argument to myFunction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2eeece8d4c4453ec7b4b53e209004559"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::run </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, std::string)&#160;</td>
+          <td class="paramname"><em>myFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">myFunction</td><td>The function to run on the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. Must take exactly one parameter of type <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>&amp;, which is a reference to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to render to. </td></tr>
+    <tr><td class="paramname">s</td><td>A string argument to myFunction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac507bbbf60328de2fc99f93cd37d04ec"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::run </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, int, std::string)&#160;</td>
+          <td class="paramname"><em>myFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">myFunction</td><td>The function to run on the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. Must take exactly one parameter of type <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>&amp;, which is a reference to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to render to. </td></tr>
+    <tr><td class="paramname">i</td><td>An integer argument to myFunction </td></tr>
+    <tr><td class="paramname">s</td><td>A string argument to myFunction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aafed71cba89b059629647e77ba23ff2b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tsgl::Canvas::run </td>
+          <td>(</td>
+          <td class="paramtype">void(*)(<a class="el" href="classtsgl_1_1_canvas.html">Canvas</a> &amp;, std::string, int)&#160;</td>
+          <td class="paramname"><em>myFunction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Overload for <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502" title="Start the Canvas, run a function on it, and wait for the user to close it. ">run()</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">myFunction</td><td>The function to run on the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>. Must take exactly one parameter of type <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a>&amp;, which is a reference to the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to render to. </td></tr>
+    <tr><td class="paramname">s</td><td>A string argument to myFunction </td></tr>
+    <tr><td class="paramname">i</td><td>An integer argument to myFunction </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -2018,7 +2420,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>This function opens a GL window and tells the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to start rendering. </p><dl class="section return"><dt>Returns</dt><dd>0 if start is successful, -1 if the canvas has already started. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#a39e69fd4d1ad8cf0e22ecea12f1ddf08" title="Waits for the user to close the Canvas. ">wait()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c" title="Begins the process of closing the Canvas. ">stop()</a>, <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a> </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a3365d92635f650cca2eda69812bef60b">runTests()</a>, <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>, <a class="el" href="classtsgl_1_1_spectrogram.html#a806d3244b086b9ed2c982b7178eb5139">tsgl::Spectrogram::Spectrogram()</a>, and <a class="el" href="classtsgl_1_1_visual_task_queue.html#ad82aabf35ec367b2b0c5894999f5e76e">tsgl::VisualTaskQueue::VisualTaskQueue()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a63a948af53582b713957b872a765dcdb">tsgl::CartesianCanvas::run()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502">run()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a3365d92635f650cca2eda69812bef60b">runTests()</a>, <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7153e63b78fc257f162410c3e55e13dc">tsgl::VisualTaskQueue::showLegend()</a>, <a class="el" href="classtsgl_1_1_spectrogram.html#a806d3244b086b9ed2c982b7178eb5139">tsgl::Spectrogram::Spectrogram()</a>, and <a class="el" href="classtsgl_1_1_visual_task_queue.html#ad82aabf35ec367b2b0c5894999f5e76e">tsgl::VisualTaskQueue::VisualTaskQueue()</a>.</p>
 
 </div>
 </div>
@@ -2075,7 +2477,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 
 <p>Takes a screenshot. </p>
 <p>This function saves a screenshot of the current <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> to the working directory.</p>
-<p>Images are saved as ImageXXXXXX.png, where XXXXXX is the current frame number. </p><dl class="bug"><dt><b><a class="el" href="bug.html#_bug000002">Bug:</a></b></dt><dd>Multiple calls to this function in rapid succession render the FPS counter inaccurate. </dd></dl>
+<p>Images are saved as ImageXXXXXX.png, where XXXXXX is the current frame number. </p><dl class="bug"><dt><b><a class="el" href="bug.html#_bug000003">Bug:</a></b></dt><dd>Multiple calls to this function in rapid succession render the FPS counter inaccurate. </dd></dl>
 
 </div>
 </div>
@@ -2096,7 +2498,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 <p>This function blocks the calling thread until the user closes the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or until <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a> is called. This function has no effect if the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> has not started. </p><dl class="section return"><dt>Returns</dt><dd>0 if exit is successful, -1 if the <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> has not started yet. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classtsgl_1_1_canvas.html#a654315f9b08a9b3b072eebf4b4d8ae89" title="Opens the Canvas. ">start()</a>, end(), <a class="el" href="classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938" title="Closes the Canvas window. ">close()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c" title="Begins the process of closing the Canvas. ">stop()</a>. </dd></dl>
 
-<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>, <a class="el" href="classtsgl_1_1_spectrogram.html#a9e6eb0489ee0fb9f96b2a5202868a1c2">tsgl::Spectrogram::finish()</a>, <a class="el" href="classtsgl_1_1_integral_viewer.html#a213d814ac293686ecd06c45344fa242f">tsgl::IntegralViewer::rectangleEvaluate()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c">stop()</a>, and <a class="el" href="classtsgl_1_1_integral_viewer.html#a485bd58c87267460baf013cdf786eae7">tsgl::IntegralViewer::trapezoidEvaluate()</a>.</p>
+<p>Referenced by <a class="el" href="classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79">tsgl::VisualTaskQueue::close()</a>, <a class="el" href="classtsgl_1_1_spectrogram.html#a9e6eb0489ee0fb9f96b2a5202868a1c2">tsgl::Spectrogram::finish()</a>, <a class="el" href="classtsgl_1_1_integral_viewer.html#a213d814ac293686ecd06c45344fa242f">tsgl::IntegralViewer::rectangleEvaluate()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#a63a948af53582b713957b872a765dcdb">tsgl::CartesianCanvas::run()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a5f3f00d6c380a662a239077456045502">run()</a>, <a class="el" href="classtsgl_1_1_cartesian_canvas.html#ae40d704629167ff70303a3c55ee3bb43">tsgl::CartesianCanvas::runTests()</a>, <a class="el" href="classtsgl_1_1_canvas.html#a46cd37a9f2a146e57b4e0273faf6485c">stop()</a>, and <a class="el" href="classtsgl_1_1_integral_viewer.html#a485bd58c87267460baf013cdf786eae7">tsgl::IntegralViewer::trapezoidEvaluate()</a>.</p>
 
 </div>
 </div>
@@ -2107,7 +2509,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>atiCard</b></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 15 2015 13:52:23 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 24 2015 13:34:15 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

@@ -128,6 +128,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af83865a1b76eb8c0a5e0fe4bc34fab2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtsgl_1_1_color_int.html#af83865a1b76eb8c0a5e0fe4bc34fab2d">operator!=</a> (<a class="el" href="structtsgl_1_1_color_int.html">ColorInt</a> &amp;c2)</td></tr>
 <tr class="memdesc:af83865a1b76eb8c0a5e0fe4bc34fab2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if two ColorInts are <em>NOT</em> equivalent.  <a href="#af83865a1b76eb8c0a5e0fe4bc34fab2d">More...</a><br /></td></tr>
 <tr class="separator:af83865a1b76eb8c0a5e0fe4bc34fab2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6dbbe3d7d1653e16eadc1843a6c3be1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structtsgl_1_1_color_int.html">ColorInt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtsgl_1_1_color_int.html#aa6dbbe3d7d1653e16eadc1843a6c3be1">operator*</a> (float f)</td></tr>
+<tr class="memdesc:aa6dbbe3d7d1653e16eadc1843a6c3be1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies the values of a <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a> by a float.  <a href="#aa6dbbe3d7d1653e16eadc1843a6c3be1">More...</a><br /></td></tr>
+<tr class="separator:aa6dbbe3d7d1653e16eadc1843a6c3be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -172,6 +175,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>A</b></td></tr>
 <p>Default <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a> constructor method. </p>
 <p>This is the default constructor for the <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a> struct. </p><dl class="section note"><dt>Note</dt><dd>R, G, B, and A are all set to 255 by default. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a> struct with default R, G, B, and A values. </dd></dl>
+
+<p>Referenced by <a class="el" href="structtsgl_1_1_color_int.html#aa6dbbe3d7d1653e16eadc1843a6c3be1">operator*()</a>.</p>
 
 </div>
 </div>
@@ -344,6 +349,32 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>A</b></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aa6dbbe3d7d1653e16eadc1843a6c3be1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structtsgl_1_1_color_int.html">ColorInt</a> tsgl::ColorInt::operator* </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>f</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Multiplies the values of a <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a> by a float. </p>
+<p>This operator multiplies each of the components of a <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a> by amount <code>f</code>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Amount to multiply each component by </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a> constructed as <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a>(orig.R*f, orig.G*f, orig.b*f, orig.A*f) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Individual channels are clamped between 0 and MAX_COLOR. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a7d6282c79f42d4ba9a70c4475b8170c2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -377,7 +408,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>A</b></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 15 2015 13:52:23 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 24 2015 13:34:15 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

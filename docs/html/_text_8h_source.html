@@ -87,46 +87,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Text.h extends Shape and provides a class for drawing a string of text to the Canvas.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Authors: Patrick Crain, Mark Vander Stel</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Last Modified: Mark Vander Stel, 7/11/2014</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef TEXT_H_</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define TEXT_H_</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef TEXT_H_</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define TEXT_H_</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;Shape.h&quot;</span>          <span class="comment">// For extending our Shape object</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;TextureHandler.h&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;Shape.h&quot;</span>          <span class="comment">// For extending our Shape object</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;TextureHandler.h&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacetsgl.html">tsgl</a> {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classtsgl_1_1_text.html">   22</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtsgl_1_1_text.html">Text</a> : <span class="keyword">public</span> <a class="code" href="classtsgl_1_1_shape.html">Shape</a> {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="structtsgl_1_1_color_float.html">ColorFloat</a> myColor;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> myFontSize;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="classtsgl_1_1_texture_handler.html">TextureHandler</a>* myLoader;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    std::wstring myString;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">int</span> myX, myY;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classtsgl_1_1_text.html#ad1a6a77a4762f4420527457a7a5c24e7">Text</a>(std::wstring text, <a class="code" href="classtsgl_1_1_texture_handler.html">TextureHandler</a> &amp;loader, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> fontsize, <span class="keyword">const</span> <a class="code" href="structtsgl_1_1_color_float.html">ColorFloat</a> &amp;color);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtsgl_1_1_text.html#a9dc47e4af682abfdab74e37b71f9fbde">draw</a>();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;};</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacetsgl.html">tsgl</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classtsgl_1_1_text.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtsgl_1_1_text.html">Text</a> : <span class="keyword">public</span> <a class="code" href="classtsgl_1_1_shape.html">Shape</a> {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="structtsgl_1_1_color_float.html">ColorFloat</a> myColor;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> myFontSize;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classtsgl_1_1_texture_handler.html">TextureHandler</a>* myLoader;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    std::wstring myString;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">int</span> myX, myY;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="classtsgl_1_1_text.html#ad1a6a77a4762f4420527457a7a5c24e7">Text</a>(std::wstring text, <a class="code" href="classtsgl_1_1_texture_handler.html">TextureHandler</a> &amp;loader, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> fontsize, <span class="keyword">const</span> <a class="code" href="structtsgl_1_1_color_float.html">ColorFloat</a> &amp;color);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtsgl_1_1_text.html#a9dc47e4af682abfdab74e37b71f9fbde">draw</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;};</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TEXT_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TEXT_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="namespacetsgl_html"><div class="ttname"><a href="namespacetsgl.html">tsgl</a></div><div class="ttdef"><b>Definition:</b> Array.h:10</div></div>
-<div class="ttc" id="classtsgl_1_1_texture_handler_html"><div class="ttname"><a href="classtsgl_1_1_texture_handler.html">tsgl::TextureHandler</a></div><div class="ttdoc">Handles saving, loading, and rendering of images and textures. </div><div class="ttdef"><b>Definition:</b> TextureHandler.h:46</div></div>
-<div class="ttc" id="classtsgl_1_1_text_html_ad1a6a77a4762f4420527457a7a5c24e7"><div class="ttname"><a href="classtsgl_1_1_text.html#ad1a6a77a4762f4420527457a7a5c24e7">tsgl::Text::Text</a></div><div class="ttdeci">Text(std::wstring text, TextureHandler &amp;loader, int x, int y, unsigned int fontsize, const ColorFloat &amp;color)</div><div class="ttdoc">Explicitly constructs a new Text instance. </div><div class="ttdef"><b>Definition:</b> Text.cpp:13</div></div>
-<div class="ttc" id="classtsgl_1_1_text_html_a9dc47e4af682abfdab74e37b71f9fbde"><div class="ttname"><a href="classtsgl_1_1_text.html#a9dc47e4af682abfdab74e37b71f9fbde">tsgl::Text::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdoc">Draw the Text. </div><div class="ttdef"><b>Definition:</b> Text.cpp:23</div></div>
-<div class="ttc" id="classtsgl_1_1_shape_html"><div class="ttname"><a href="classtsgl_1_1_shape.html">tsgl::Shape</a></div><div class="ttdoc">A class for drawing shapes onto a Canvas or CartesianCanvas. </div><div class="ttdef"><b>Definition:</b> Shape.h:37</div></div>
-<div class="ttc" id="structtsgl_1_1_color_float_html"><div class="ttname"><a href="structtsgl_1_1_color_float.html">tsgl::ColorFloat</a></div><div class="ttdoc">Floating point RGBA color struct. </div><div class="ttdef"><b>Definition:</b> Color.h:33</div></div>
-<div class="ttc" id="classtsgl_1_1_text_html"><div class="ttname"><a href="classtsgl_1_1_text.html">tsgl::Text</a></div><div class="ttdoc">Draw a string of text. </div><div class="ttdef"><b>Definition:</b> Text.h:22</div></div>
+<div class="ttc" id="classtsgl_1_1_texture_handler_html"><div class="ttname"><a href="classtsgl_1_1_texture_handler.html">tsgl::TextureHandler</a></div><div class="ttdoc">Handles saving, loading, and rendering of images and textures. </div><div class="ttdef"><b>Definition:</b> TextureHandler.h:43</div></div>
+<div class="ttc" id="classtsgl_1_1_text_html_ad1a6a77a4762f4420527457a7a5c24e7"><div class="ttname"><a href="classtsgl_1_1_text.html#ad1a6a77a4762f4420527457a7a5c24e7">tsgl::Text::Text</a></div><div class="ttdeci">Text(std::wstring text, TextureHandler &amp;loader, int x, int y, unsigned int fontsize, const ColorFloat &amp;color)</div><div class="ttdoc">Explicitly constructs a new Text instance. </div><div class="ttdef"><b>Definition:</b> Text.cpp:6</div></div>
+<div class="ttc" id="classtsgl_1_1_text_html_a9dc47e4af682abfdab74e37b71f9fbde"><div class="ttname"><a href="classtsgl_1_1_text.html#a9dc47e4af682abfdab74e37b71f9fbde">tsgl::Text::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdoc">Draw the Text. </div><div class="ttdef"><b>Definition:</b> Text.cpp:16</div></div>
+<div class="ttc" id="classtsgl_1_1_shape_html"><div class="ttname"><a href="classtsgl_1_1_shape.html">tsgl::Shape</a></div><div class="ttdoc">A class for drawing shapes onto a Canvas or CartesianCanvas. </div><div class="ttdef"><b>Definition:</b> Shape.h:34</div></div>
+<div class="ttc" id="structtsgl_1_1_color_float_html"><div class="ttname"><a href="structtsgl_1_1_color_float.html">tsgl::ColorFloat</a></div><div class="ttdoc">Floating point RGBA color struct. </div><div class="ttdef"><b>Definition:</b> Color.h:30</div></div>
+<div class="ttc" id="classtsgl_1_1_text_html"><div class="ttname"><a href="classtsgl_1_1_text.html">tsgl::Text</a></div><div class="ttdoc">Draw a string of text. </div><div class="ttdef"><b>Definition:</b> Text.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 15 2015 13:52:23 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 24 2015 13:34:15 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

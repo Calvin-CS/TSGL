@@ -2,7 +2,7 @@
 \label{classtsgl_1_1_cartesian_canvas}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
 
 
-\hyperlink{classtsgl_1_1_canvas}{Canvas} extended for graphic support.  
+\hyperlink{classtsgl_1_1_canvas}{Canvas} extended with Cartesian drawing operations.  
 
 
 
@@ -26,8 +26,6 @@ void \hyperlink{classtsgl_1_1_cartesian_canvas_a1b08e3c0d692603fd2bf56e38eb19907
 \begin{DoxyCompactList}\small\item\em Draws axes on the Cartesian \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a64e128195cbcf9b60dbe478d6f489d67}{draw\+Circle} (Decimal x, Decimal y, Decimal radius, int sides, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
 \begin{DoxyCompactList}\small\item\em Draws a circle. \end{DoxyCompactList}\item 
-void \hyperlink{classtsgl_1_1_cartesian_canvas_a169f867f6b0d0706dca96a1f4fcc0172}{draw\+Colored\+Polygon} (int size, Decimal xverts\mbox{[}$\,$\mbox{]}, Decimal yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
-\begin{DoxyCompactList}\small\item\em Draws an arbitrary polygon with colored vertices. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a7f84b79ab6fd77277c5c71fce7d0ec6a}{draw\+Concave\+Polygon} (int size, Decimal xverts\mbox{[}$\,$\mbox{]}, Decimal yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
 \begin{DoxyCompactList}\small\item\em Draws a Concave polygon with colored vertices. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_abefc7f373711cdff2477d0665b37212f}{draw\+Convex\+Polygon} (int size, Decimal xverts\mbox{[}$\,$\mbox{]}, Decimal yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
@@ -54,6 +52,8 @@ void \hyperlink{classtsgl_1_1_cartesian_canvas_addacb4d3637bf2674e2a992a0c165160
 \begin{DoxyCompactList}\small\item\em Draw a string of text. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a67c225592f9416de476943bb93309cd1}{draw\+Triangle} (Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+C\+K, bool filled=true)
 \begin{DoxyCompactList}\small\item\em Draw a triangle. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a924f6148489c634ec4d47970e498a26a}{draw\+Triangle\+Strip} (int size, Decimal xverts\mbox{[}$\,$\mbox{]}, Decimal yverts\mbox{[}$\,$\mbox{]}, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool filled=true)
+\begin{DoxyCompactList}\small\item\em Draws an arbitrary triangle strip with colored vertices. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a736935074bb6d90bcc0c7af2edd8a4aa}{get\+Cartesian\+Coordinates} (int screen\+X, int screen\+Y, Decimal \&cart\+X, Decimal \&cart\+Y)
 \begin{DoxyCompactList}\small\item\em Translates Cartesian coordinates into window coordinates. \end{DoxyCompactList}\item 
 Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a66657636eaf20ff465898d3f932063ce}{get\+Cart\+Height} ()
@@ -76,8 +76,22 @@ void \hyperlink{classtsgl_1_1_cartesian_canvas_a8fea34cfcee9bc577c1e1ab6d28a8185
 \begin{DoxyCompactList}\small\item\em Translates window coordinates into Cartesian coordinates. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_ac833a44fe7367f6411292707de37beef}{recompute\+Dimensions} (Decimal x\+Min, Decimal y\+Min, Decimal x\+Max, Decimal y\+Max)
 \begin{DoxyCompactList}\small\item\em Recomputes the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s bounds. \end{DoxyCompactList}\item 
-void \hyperlink{classtsgl_1_1_cartesian_canvas_a735ebb290eb1be110b3f7bb033018a21}{reset} ()
-\begin{DoxyCompactList}\small\item\em Resets the internal drawing timer of a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} object. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&))
+\begin{DoxyCompactList}\small\item\em Start the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, run a function on it, and wait for the user to close it. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a4d50613e241cab83878aa4438f3db67e}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int), int i)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_ab18eee19a5a0c7011c4442b64d05f6cc}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, unsigned), unsigned u)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_aae4be78e02055eed3e6e85bb39411f21}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int, int), int i1, int i2)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a3351ccc624bb154dc910cafd9effe3cd}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, unsigned, unsigned), unsigned u1, unsigned u2)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a7d76ab9f68d8ce7f76b6be20305a5e95}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, std\+::string), std\+::string s)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_ab0bce76883df5ae48e368a7b7835aefd}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int, std\+::string), int i, std\+::string s)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_abf52fc46a6fdca1410db6feb3c67a3cd}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, std\+::string, int), std\+::string s, int i)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a3ae99570b9a5f68f4ccf31593867edb0}{sleep} ()
 \begin{DoxyCompactList}\small\item\em Sleeps the internal drawing timer of a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} object. \end{DoxyCompactList}\item 
 void \hyperlink{classtsgl_1_1_cartesian_canvas_a69a378f61868c4c880889c33ec33c992}{zoom} (Decimal x, Decimal y, Decimal scale)
@@ -94,9 +108,12 @@ void \hyperlink{classtsgl_1_1_cartesian_canvas_adb1e999087c0ec7e4405d8ebd3ca9760
 
 
 \subsection{Detailed Description}
-\hyperlink{classtsgl_1_1_canvas}{Canvas} extended for graphic support. 
+\hyperlink{classtsgl_1_1_canvas}{Canvas} extended with Cartesian drawing operations. 
 
-\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} provides a \hyperlink{classtsgl_1_1_canvas}{Canvas} with a Cartesian coordinate system for ease of plotting. 
+\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} provides a \hyperlink{classtsgl_1_1_canvas}{Canvas} with a Cartesian coordinate system for ease of plotting. \begin{DoxyNote}{Note}
+While on a regular \hyperlink{classtsgl_1_1_canvas}{Canvas}, pixels higher on the screen have a lower y-\/value, {\bfseries on a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, pixels higher on the screen have a higher y-\/value.} 
+\end{DoxyNote}
+
 
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classtsgl_1_1_cartesian_canvas_a4438f368eae3def6a70e0faa15d28daa}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!Cartesian\+Canvas@{Cartesian\+Canvas}}
@@ -225,37 +242,6 @@ This function draws a circle with the given center, radius, resolution (number o
 \end{DoxyParams}
 \begin{DoxyNote}{Note}
 Identical to \hyperlink{classtsgl_1_1_canvas_a2162c16f6aeaee01f8e29696f5818c03}{Canvas\+::draw\+Circle()}. 
-\end{DoxyNote}
-\hypertarget{classtsgl_1_1_cartesian_canvas_a169f867f6b0d0706dca96a1f4fcc0172}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Colored\+Polygon@{draw\+Colored\+Polygon}}
-\index{draw\+Colored\+Polygon@{draw\+Colored\+Polygon}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
-\subsubsection[{draw\+Colored\+Polygon}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::draw\+Colored\+Polygon (
-\begin{DoxyParamCaption}
-\item[{int}]{size, }
-\item[{Decimal}]{xverts\mbox{[}$\,$\mbox{]}, }
-\item[{Decimal}]{yverts\mbox{[}$\,$\mbox{]}, }
-\item[{{\bf Color\+Float}}]{color\mbox{[}$\,$\mbox{]}, }
-\item[{bool}]{filled = {\ttfamily true}}
-\end{DoxyParamCaption}
-)}\label{classtsgl_1_1_cartesian_canvas_a169f867f6b0d0706dca96a1f4fcc0172}
-
-
-Draws an arbitrary polygon with colored vertices. 
-
-This function draws a \hyperlink{classtsgl_1_1_colored_polygon}{Colored\+Polygon} with the given vertex data, specified as a triangle strip. 
-\begin{DoxyParams}{Parameters}
-{\em size} & The number of vertices in the polygon. \\
-\hline
-{\em xverts} & An array of x positions of the vertices. \\
-\hline
-{\em yverts} & An array of y positions of the vertices. \\
-\hline
-{\em color} & An array of colors for the vertices. \\
-\hline
-{\em filled} & Whether the colored polygon should be filled (true) or not (false) (set to true by default). \\
-\hline
-\end{DoxyParams}
-\begin{DoxyNote}{Note}
-Identical to \hyperlink{classtsgl_1_1_canvas_a2165615afc3cebfe38e4313c25bd17b9}{Canvas\+::draw\+Colored\+Polygon()}. 
 \end{DoxyNote}
 \hypertarget{classtsgl_1_1_cartesian_canvas_a7f84b79ab6fd77277c5c71fce7d0ec6a}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Concave\+Polygon@{draw\+Concave\+Polygon}}
 \index{draw\+Concave\+Polygon@{draw\+Concave\+Polygon}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
@@ -690,6 +676,37 @@ This function draws a \hyperlink{classtsgl_1_1_triangle}{Triangle} with the give
 \begin{DoxyNote}{Note}
 Identical to \hyperlink{classtsgl_1_1_canvas_a8abc9ed7d3c55c5d701009040c65000e}{Canvas\+::draw\+Triangle()}. 
 \end{DoxyNote}
+\hypertarget{classtsgl_1_1_cartesian_canvas_a924f6148489c634ec4d47970e498a26a}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!draw\+Triangle\+Strip@{draw\+Triangle\+Strip}}
+\index{draw\+Triangle\+Strip@{draw\+Triangle\+Strip}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{draw\+Triangle\+Strip}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::draw\+Triangle\+Strip (
+\begin{DoxyParamCaption}
+\item[{int}]{size, }
+\item[{Decimal}]{xverts\mbox{[}$\,$\mbox{]}, }
+\item[{Decimal}]{yverts\mbox{[}$\,$\mbox{]}, }
+\item[{{\bf Color\+Float}}]{color\mbox{[}$\,$\mbox{]}, }
+\item[{bool}]{filled = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_a924f6148489c634ec4d47970e498a26a}
+
+
+Draws an arbitrary triangle strip with colored vertices. 
+
+This function draws a \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} with the given vertex data, specified as a triangle strip. 
+\begin{DoxyParams}{Parameters}
+{\em size} & The number of vertices in the polygon. \\
+\hline
+{\em xverts} & An array of x positions of the vertices. \\
+\hline
+{\em yverts} & An array of y positions of the vertices. \\
+\hline
+{\em color} & An array of colors for the vertices. \\
+\hline
+{\em filled} & Whether the triangle strip should be filled (true) or not (false) (set to true by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Identical to \hyperlink{classtsgl_1_1_canvas_a8f570c258a8900178190ec15ac074a57}{Canvas\+::draw\+Triangle\+Strip()}. 
+\end{DoxyNote}
 \hypertarget{classtsgl_1_1_cartesian_canvas_a736935074bb6d90bcc0c7af2edd8a4aa}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+Cartesian\+Coordinates@{get\+Cartesian\+Coordinates}}
 \index{get\+Cartesian\+Coordinates@{get\+Cartesian\+Coordinates}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
 \subsubsection[{get\+Cartesian\+Coordinates}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates (
@@ -854,7 +871,7 @@ Translates window coordinates into Cartesian coordinates.
 \end{DoxyParams}
 
 
-Referenced by draw\+Circle(), draw\+Colored\+Polygon(), draw\+Concave\+Polygon(), draw\+Convex\+Polygon(), draw\+Function(), draw\+Image(), draw\+Line(), draw\+Partial\+Function(), draw\+Point(), draw\+Rectangle(), draw\+Text(), and draw\+Triangle().
+Referenced by draw\+Circle(), draw\+Concave\+Polygon(), draw\+Convex\+Polygon(), draw\+Function(), draw\+Image(), draw\+Line(), draw\+Partial\+Function(), draw\+Point(), draw\+Rectangle(), draw\+Text(), draw\+Triangle(), and draw\+Triangle\+Strip().
 
 \hypertarget{classtsgl_1_1_cartesian_canvas_ac833a44fe7367f6411292707de37beef}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!recompute\+Dimensions@{recompute\+Dimensions}}
 \index{recompute\+Dimensions@{recompute\+Dimensions}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
@@ -885,22 +902,167 @@ This function recomputes the size variables of \hyperlink{classtsgl_1_1_cartesia
 
 Referenced by Cartesian\+Canvas(), and zoom().
 
-\hypertarget{classtsgl_1_1_cartesian_canvas_a735ebb290eb1be110b3f7bb033018a21}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!reset@{reset}}
-\index{reset@{reset}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
-\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::reset (
+\hypertarget{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::run (
 \begin{DoxyParamCaption}
-{}
+\item[{void($\ast$)({\bf Cartesian\+Canvas} \&)}]{my\+Function}
 \end{DoxyParamCaption}
-)}\label{classtsgl_1_1_cartesian_canvas_a735ebb290eb1be110b3f7bb033018a21}
+)}\label{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}
 
 
-Resets the internal drawing timer of a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} object. 
+Start the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, run a function on it, and wait for the user to close it. 
 
-\begin{DoxyNote}{Note}
-Can be thought of as a wrapper function for a \hyperlink{classtsgl_1_1_timer}{Timer} function call. 
+This function binds another function to the current \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, waits until that function is complete, and waits for the user to close the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. This function effectively calls \hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, {\ttfamily my\+Function}(), and \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} in sequence. 
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_cartesian_canvas_a4d50613e241cab83878aa4438f3db67e}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::run (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)({\bf Cartesian\+Canvas} \&, int)}]{my\+Function, }
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_a4d50613e241cab83878aa4438f3db67e}
 
-Identical to \hyperlink{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}{Canvas\+::reset()}. 
-\end{DoxyNote}
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_cartesian_canvas_ab18eee19a5a0c7011c4442b64d05f6cc}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::run (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)({\bf Cartesian\+Canvas} \&, unsigned)}]{my\+Function, }
+\item[{unsigned}]{u}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_ab18eee19a5a0c7011c4442b64d05f6cc}
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em u} & An unsigned integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_cartesian_canvas_aae4be78e02055eed3e6e85bb39411f21}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::run (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)({\bf Cartesian\+Canvas} \&, int, int)}]{my\+Function, }
+\item[{int}]{i1, }
+\item[{int}]{i2}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_aae4be78e02055eed3e6e85bb39411f21}
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em i1} & An integer argument to my\+Function \\
+\hline
+{\em i2} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_cartesian_canvas_a3351ccc624bb154dc910cafd9effe3cd}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::run (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)({\bf Cartesian\+Canvas} \&, unsigned, unsigned)}]{my\+Function, }
+\item[{unsigned}]{u1, }
+\item[{unsigned}]{u2}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_a3351ccc624bb154dc910cafd9effe3cd}
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em u1} & An unsigned integer argument to my\+Function \\
+\hline
+{\em u2} & An unsigned integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_cartesian_canvas_a7d76ab9f68d8ce7f76b6be20305a5e95}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::run (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)({\bf Cartesian\+Canvas} \&, std\+::string)}]{my\+Function, }
+\item[{std\+::string}]{s}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_a7d76ab9f68d8ce7f76b6be20305a5e95}
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_cartesian_canvas_ab0bce76883df5ae48e368a7b7835aefd}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::run (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)({\bf Cartesian\+Canvas} \&, int, std\+::string)}]{my\+Function, }
+\item[{int}]{i, }
+\item[{std\+::string}]{s}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_ab0bce76883df5ae48e368a7b7835aefd}
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\hypertarget{classtsgl_1_1_cartesian_canvas_abf52fc46a6fdca1410db6feb3c67a3cd}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::run (
+\begin{DoxyParamCaption}
+\item[{void($\ast$)({\bf Cartesian\+Canvas} \&, std\+::string, int)}]{my\+Function, }
+\item[{std\+::string}]{s, }
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_cartesian_canvas_abf52fc46a6fdca1410db6feb3c67a3cd}
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
 \hypertarget{classtsgl_1_1_cartesian_canvas_a3ae99570b9a5f68f4ccf31593867edb0}{}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!sleep@{sleep}}
 \index{sleep@{sleep}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
 \subsubsection[{sleep}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Cartesian\+Canvas\+::sleep (

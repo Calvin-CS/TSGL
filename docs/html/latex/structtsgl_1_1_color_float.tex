@@ -22,6 +22,8 @@ std\+::string \hyperlink{structtsgl_1_1_color_float_a1048e8773d65fa1554bc8782e76
 \begin{DoxyCompactList}\small\item\em Returns a string representation of the \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. \end{DoxyCompactList}\item 
 \hyperlink{structtsgl_1_1_color_float_a4d74b061239eed7eb351422c18e33a37}{operator Color\+H\+S\+V} ()
 \begin{DoxyCompactList}\small\item\em Implicit conversion from \hyperlink{structtsgl_1_1_color_float}{Color\+Float} to \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_float_a4ef5398fd1ee469dd9b1b43c9ce5c00d}{operator Color\+Int} ()
+\begin{DoxyCompactList}\small\item\em Implicit conversion from \hyperlink{structtsgl_1_1_color_float}{Color\+Float} to \hyperlink{structtsgl_1_1_color_int}{Color\+Int}. \end{DoxyCompactList}\item 
 \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \hyperlink{structtsgl_1_1_color_float_a09d7cc47ac3d0e23ef7339ccf33111a5}{operator$\ast$} (float f)
 \begin{DoxyCompactList}\small\item\em Multiplies the values of a \hyperlink{structtsgl_1_1_color_float}{Color\+Float} by a float. \end{DoxyCompactList}\item 
 bool \hyperlink{structtsgl_1_1_color_float_ac29ecf4a36624050af433d691e65651c}{operator==} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&c2)
@@ -167,7 +169,18 @@ A string representation of the \hyperlink{structtsgl_1_1_color_float}{Color\+Flo
 
 Implicit conversion from \hyperlink{structtsgl_1_1_color_float}{Color\+Float} to \hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}. 
 
-This defines the implicit conversion operator from a floating point color type (\hyperlink{structtsgl_1_1_color_float}{Color\+Float}) to an H\+S\+V color type (\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}). \hypertarget{structtsgl_1_1_color_float_afd92fcf8743d931cfbcf405209c923fc}{}\index{tsgl\+::\+Color\+Float@{tsgl\+::\+Color\+Float}!operator"!=@{operator"!=}}
+This defines the implicit conversion operator from a floating point color type (\hyperlink{structtsgl_1_1_color_float}{Color\+Float}) to an H\+S\+V color type (\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+S\+V}). \hypertarget{structtsgl_1_1_color_float_a4ef5398fd1ee469dd9b1b43c9ce5c00d}{}\index{tsgl\+::\+Color\+Float@{tsgl\+::\+Color\+Float}!operator Color\+Int@{operator Color\+Int}}
+\index{operator Color\+Int@{operator Color\+Int}!tsgl\+::\+Color\+Float@{tsgl\+::\+Color\+Float}}
+\subsubsection[{operator Color\+Int}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+Float\+::operator {\bf Color\+Int} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_float_a4ef5398fd1ee469dd9b1b43c9ce5c00d}
+
+
+Implicit conversion from \hyperlink{structtsgl_1_1_color_float}{Color\+Float} to \hyperlink{structtsgl_1_1_color_int}{Color\+Int}. 
+
+This defines the implicit conversion operator from a floating point color type (\hyperlink{structtsgl_1_1_color_float}{Color\+Float}) to an integer color type (\hyperlink{structtsgl_1_1_color_int}{Color\+Int}). \hypertarget{structtsgl_1_1_color_float_afd92fcf8743d931cfbcf405209c923fc}{}\index{tsgl\+::\+Color\+Float@{tsgl\+::\+Color\+Float}!operator"!=@{operator"!=}}
 \index{operator"!=@{operator"!=}!tsgl\+::\+Color\+Float@{tsgl\+::\+Color\+Float}}
 \subsubsection[{operator"!=}]{\setlength{\rightskip}{0pt plus 5cm}bool tsgl\+::\+Color\+Float\+::operator!= (
 \begin{DoxyParamCaption}
@@ -208,6 +221,9 @@ This operator multiplies each of the components of a \hyperlink{structtsgl_1_1_c
 \begin{DoxyReturn}{Returns}
 A new \hyperlink{structtsgl_1_1_color_float}{Color\+Float} constructed as \hyperlink{structtsgl_1_1_color_float}{Color\+Float}(orig.\+R$\ast$f, orig.\+G$\ast$f, orig.\+b$\ast$f, orig.\+A$\ast$f) 
 \end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Individual channels are clamped between 0 and 1. 
+\end{DoxyNote}
 \hypertarget{structtsgl_1_1_color_float_ac29ecf4a36624050af433d691e65651c}{}\index{tsgl\+::\+Color\+Float@{tsgl\+::\+Color\+Float}!operator==@{operator==}}
 \index{operator==@{operator==}!tsgl\+::\+Color\+Float@{tsgl\+::\+Color\+Float}}
 \subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool tsgl\+::\+Color\+Float\+::operator== (

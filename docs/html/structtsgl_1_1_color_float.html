@@ -119,6 +119,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4d74b061239eed7eb351422c18e33a37"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtsgl_1_1_color_float.html#a4d74b061239eed7eb351422c18e33a37">operator ColorHSV</a> ()</td></tr>
 <tr class="memdesc:a4d74b061239eed7eb351422c18e33a37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion from <a class="el" href="structtsgl_1_1_color_float.html" title="Floating point RGBA color struct. ">ColorFloat</a> to <a class="el" href="structtsgl_1_1_color_h_s_v.html" title="Floating point HSVA color struct. ">ColorHSV</a>.  <a href="#a4d74b061239eed7eb351422c18e33a37">More...</a><br /></td></tr>
 <tr class="separator:a4d74b061239eed7eb351422c18e33a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ef5398fd1ee469dd9b1b43c9ce5c00d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtsgl_1_1_color_float.html#a4ef5398fd1ee469dd9b1b43c9ce5c00d">operator ColorInt</a> ()</td></tr>
+<tr class="memdesc:a4ef5398fd1ee469dd9b1b43c9ce5c00d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit conversion from <a class="el" href="structtsgl_1_1_color_float.html" title="Floating point RGBA color struct. ">ColorFloat</a> to <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a>.  <a href="#a4ef5398fd1ee469dd9b1b43c9ce5c00d">More...</a><br /></td></tr>
+<tr class="separator:a4ef5398fd1ee469dd9b1b43c9ce5c00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09d7cc47ac3d0e23ef7339ccf33111a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structtsgl_1_1_color_float.html">ColorFloat</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtsgl_1_1_color_float.html#a09d7cc47ac3d0e23ef7339ccf33111a5">operator*</a> (float f)</td></tr>
 <tr class="memdesc:a09d7cc47ac3d0e23ef7339ccf33111a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies the values of a <a class="el" href="structtsgl_1_1_color_float.html" title="Floating point RGBA color struct. ">ColorFloat</a> by a float.  <a href="#a09d7cc47ac3d0e23ef7339ccf33111a5">More...</a><br /></td></tr>
 <tr class="separator:a09d7cc47ac3d0e23ef7339ccf33111a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -302,6 +305,24 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>A</b></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a4ef5398fd1ee469dd9b1b43c9ce5c00d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tsgl::ColorFloat::operator <a class="el" href="structtsgl_1_1_color_int.html">ColorInt</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Implicit conversion from <a class="el" href="structtsgl_1_1_color_float.html" title="Floating point RGBA color struct. ">ColorFloat</a> to <a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a>. </p>
+<p>This defines the implicit conversion operator from a floating point color type (<a class="el" href="structtsgl_1_1_color_float.html" title="Floating point RGBA color struct. ">ColorFloat</a>) to an integer color type (<a class="el" href="structtsgl_1_1_color_int.html" title="Integer RGBA color struct. ">ColorInt</a>). </p>
+
+</div>
+</div>
 <a class="anchor" id="afd92fcf8743d931cfbcf405209c923fc"></a>
 <div class="memitem">
 <div class="memproto">
@@ -350,6 +371,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>A</b></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A new <a class="el" href="structtsgl_1_1_color_float.html" title="Floating point RGBA color struct. ">ColorFloat</a> constructed as <a class="el" href="structtsgl_1_1_color_float.html" title="Floating point RGBA color struct. ">ColorFloat</a>(orig.R*f, orig.G*f, orig.b*f, orig.A*f) </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Individual channels are clamped between 0 and 1. </dd></dl>
 
 </div>
 </div>
@@ -386,7 +408,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>A</b></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 15 2015 13:52:23 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 24 2015 13:34:15 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

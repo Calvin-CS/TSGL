@@ -27,7 +27,9 @@ std\+::string \hyperlink{structtsgl_1_1_color_int_af2d134cd71ac7b14eccedca5bde62
 bool \hyperlink{structtsgl_1_1_color_int_a7d6282c79f42d4ba9a70c4475b8170c2}{operator==} (\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \&c2)
 \begin{DoxyCompactList}\small\item\em Determines if two Color\+Ints are equivalent. \end{DoxyCompactList}\item 
 bool \hyperlink{structtsgl_1_1_color_int_af83865a1b76eb8c0a5e0fe4bc34fab2d}{operator!=} (\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \&c2)
-\begin{DoxyCompactList}\small\item\em Determines if two Color\+Ints are {\itshape N\+O\+T} equivalent. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Determines if two Color\+Ints are {\itshape N\+O\+T} equivalent. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_int}{Color\+Int} \hyperlink{structtsgl_1_1_color_int_aa6dbbe3d7d1653e16eadc1843a6c3be1}{operator$\ast$} (float f)
+\begin{DoxyCompactList}\small\item\em Multiplies the values of a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} by a float. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -79,6 +81,10 @@ R, G, B, and A are all set to 255 by default.
 \begin{DoxyReturn}{Returns}
 A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} struct with default R, G, B, and A values. 
 \end{DoxyReturn}
+
+
+Referenced by operator$\ast$().
+
 \hypertarget{structtsgl_1_1_color_int_a64b15a8e4e8fb79c13f59da83107a2ea}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!Color\+Int@{Color\+Int}}
 \index{Color\+Int@{Color\+Int}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
 \subsubsection[{Color\+Int}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Color\+Int\+::\+Color\+Int (
@@ -196,6 +202,28 @@ This function relies on ($\ast$this), which is a dereferenced pointer to the fir
 \begin{DoxyReturn}{Returns}
 true if the two Color\+Ints are not equivalent, false if otherwise. 
 \end{DoxyReturn}
+\hypertarget{structtsgl_1_1_color_int_aa6dbbe3d7d1653e16eadc1843a6c3be1}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
+\subsubsection[{operator$\ast$}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Color\+Int} tsgl\+::\+Color\+Int\+::operator$\ast$ (
+\begin{DoxyParamCaption}
+\item[{float}]{f}
+\end{DoxyParamCaption}
+)}\label{structtsgl_1_1_color_int_aa6dbbe3d7d1653e16eadc1843a6c3be1}
+
+
+Multiplies the values of a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} by a float. 
+
+This operator multiplies each of the components of a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} by amount {\ttfamily f}. 
+\begin{DoxyParams}{Parameters}
+{\em f} & Amount to multiply each component by \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{structtsgl_1_1_color_int}{Color\+Int} constructed as \hyperlink{structtsgl_1_1_color_int}{Color\+Int}(orig.\+R$\ast$f, orig.\+G$\ast$f, orig.\+b$\ast$f, orig.\+A$\ast$f) 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Individual channels are clamped between 0 and M\+A\+X\+\_\+\+C\+O\+L\+O\+R. 
+\end{DoxyNote}
 \hypertarget{structtsgl_1_1_color_int_a7d6282c79f42d4ba9a70c4475b8170c2}{}\index{tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}!operator==@{operator==}}
 \index{operator==@{operator==}!tsgl\+::\+Color\+Int@{tsgl\+::\+Color\+Int}}
 \subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool tsgl\+::\+Color\+Int\+::operator== (

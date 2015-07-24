@@ -8,8 +8,6 @@ var searchData=
   ['ceilingfunction',['CeilingFunction',['../classtsgl_1_1_ceiling_function.html',1,'tsgl']]],
   ['clear',['clear',['../classtsgl_1_1_array.html#acc5f5148a71c7f606be6cc337116bad6',1,'tsgl::Array::clear()'],['../classtsgl_1_1_canvas.html#abe209d60de2c9b2259ab0588c4e30cef',1,'tsgl::Canvas::clear()']]],
   ['close',['close',['../classtsgl_1_1_canvas.html#afaa1250b1da6b48b9c170a0655191938',1,'tsgl::Canvas::close()'],['../classtsgl_1_1_visual_task_queue.html#a7340d211424a9f947152fed22cce4d79',1,'tsgl::VisualTaskQueue::close()']]],
-  ['coloredpolygon',['ColoredPolygon',['../classtsgl_1_1_colored_polygon.html',1,'tsgl']]],
-  ['coloredpolygon',['ColoredPolygon',['../classtsgl_1_1_colored_polygon.html#a027216c5958ce1974d3ef6429ce479c7',1,'tsgl::ColoredPolygon']]],
   ['colorfloat',['ColorFloat',['../structtsgl_1_1_color_float.html',1,'tsgl']]],
   ['colorfloat',['ColorFloat',['../structtsgl_1_1_color_float.html#a22e82c71a0feedbb7b3e3a7a73b80e30',1,'tsgl::ColorFloat::ColorFloat()'],['../structtsgl_1_1_color_float.html#a134643b43f1d8acaed32095f04942140',1,'tsgl::ColorFloat::ColorFloat(float v, float a=1.0f)'],['../structtsgl_1_1_color_float.html#a6c46a2073d9e208aa3f07cc04565a489',1,'tsgl::ColorFloat::ColorFloat(float r, float g, float b, float a=1.0f)']]],
   ['colorhsv',['ColorHSV',['../structtsgl_1_1_color_h_s_v.html#a36b4390ed6aba9f00ac9559ccca74f8a',1,'tsgl::ColorHSV::ColorHSV()'],['../structtsgl_1_1_color_h_s_v.html#a9ff97b9a0434ab700883b24c3738645d',1,'tsgl::ColorHSV::ColorHSV(float h, float s, float v, float a=1.0f)']]],
@@ -18,9 +16,10 @@ var searchData=
   ['colorint',['ColorInt',['../structtsgl_1_1_color_int.html',1,'tsgl']]],
   ['colors',['Colors',['../classtsgl_1_1_colors.html',1,'tsgl']]],
   ['commonlogfunction',['CommonLogFunction',['../classtsgl_1_1_common_log_function.html',1,'tsgl']]],
-  ['concavepolygon',['ConcavePolygon',['../classtsgl_1_1_concave_polygon.html#a1bb43589a1a992f14111e6a7157f0d7a',1,'tsgl::ConcavePolygon']]],
   ['concavepolygon',['ConcavePolygon',['../classtsgl_1_1_concave_polygon.html',1,'tsgl']]],
-  ['convexpolygon',['ConvexPolygon',['../classtsgl_1_1_convex_polygon.html#ae9d826f3b3155fe84016e6efbcbd2b64',1,'tsgl::ConvexPolygon']]],
+  ['concavepolygon',['ConcavePolygon',['../classtsgl_1_1_concave_polygon.html#a1bb43589a1a992f14111e6a7157f0d7a',1,'tsgl::ConcavePolygon']]],
   ['convexpolygon',['ConvexPolygon',['../classtsgl_1_1_convex_polygon.html',1,'tsgl']]],
-  ['cosinefunction',['CosineFunction',['../classtsgl_1_1_cosine_function.html',1,'tsgl']]]
+  ['convexpolygon',['ConvexPolygon',['../classtsgl_1_1_convex_polygon.html#ae9d826f3b3155fe84016e6efbcbd2b64',1,'tsgl::ConvexPolygon']]],
+  ['cosinefunction',['CosineFunction',['../classtsgl_1_1_cosine_function.html',1,'tsgl']]],
+  ['colors',['Colors',['../md__home_pretzel_workspace_tsgl__t_s_g_l_docs-src_tutorials_colors.html',1,'']]]
 ];

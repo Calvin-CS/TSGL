@@ -1,0 +1,77 @@
+So, now that you know how to create a Canvas and draw text, let\textquotesingle{}s get to the real fun stuff.
+
+T\+S\+G\+L has a wide assortment of shapes. Rectangles, triangles, concave and convex polygons are just some of the shapes that you can draw. Each shape has its own class that inherits from a generalized Shape class. To add, the Canvas class has draw methods that will create and draw a corresponding shape on a Canvas object as well as shapes that do not have classes of their own (circles, for example).
+
+This means that you do not have to create a shape object and then draw it on the Canvas; the draw methods built into the Canvas class take care of that for you and draw the shape accordingly.
+
+Let\textquotesingle{}s look at some examples. Create a file named shapes.\+cpp, and place this code inside of it\+:
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <tsgl.h>}
+\textcolor{keyword}{using namespace }\hyperlink{namespacetsgl}{tsgl};
+
+\textcolor{keywordtype}{int} main() \{
+  \hyperlink{classtsgl_1_1_canvas}{Canvas} c(0, 0, 500, 600, \textcolor{stringliteral}{"Shapes!"}, FRAME);
+  c.start();
+  c.drawCircle(250, 300, 50, 32, BLACK, \textcolor{keyword}{false});
+  c.wait();
+\}
+\end{DoxyCode}
+
+
+Compile and run it. A window should appear with a circle drawn in the center. The c.\+draw\+Circle() method takes as parameters the x and y-\/coordinates for the center of the circle, the radius, the resolution of the circle (32 or 64. 64 makes it look nicer and smoother), the color, and a boolean which determines if the circle should be filled or not.
+
+Rectangles are drawn in a similar fashion\+:
+
+
+\begin{DoxyCode}
+c.drawRectangle(50, 100, 100, 200, BLACK, \textcolor{keyword}{true});
+\end{DoxyCode}
+
+
+The method takes in the coordinates for the top left corner of the rectangle and the bottom right corner of the rectangle and draws it onto the Canvas in black. Since the boolean value for filling the shape is set to {\ttfamily true} the rectangle drawn on the Canvas will be filled black.
+
+How about a triangle? Well\+:
+
+
+\begin{DoxyCode}
+c.drawTriangle(150, 100, 250, 200, 150, 300, RED, \textcolor{keyword}{false});
+\end{DoxyCode}
+
+
+The method takes in the coordinates for the three points of the triangle\+: (150, 100), (250, 200), and (150, 300). It then draws the triangle in red without filling it.
+
+In essence, whenever you draw a shape, the first few parameters are for the x and y-\/coordinates of the points of the shape and the last two are for the color and whether or not it should be filled.
+
+Putting all of this code together\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <tsgl.h>}
+\textcolor{keyword}{using namespace }\hyperlink{namespacetsgl}{tsgl};
+
+\textcolor{keywordtype}{int} main() \{
+  \hyperlink{classtsgl_1_1_canvas}{Canvas} c(0, 0, 500, 600, \textcolor{stringliteral}{"Shapes!"}, FRAME);
+  c.start();
+  c.drawCircle(250, 300, 50, 32, BLACK, \textcolor{keyword}{false});
+  c.drawRectangle(50, 100, 100, 200, BLACK, \textcolor{keyword}{true});
+  c.drawTriangle(150, 100, 250, 200, 150, 300, RED, \textcolor{keyword}{false});
+  c.wait();
+\}
+\end{DoxyCode}
+
+
+Compile and run it. A circle, red triangle, and black rectangle should appear on a gray screen.
+
+You can also draw regular lines\+:
+
+
+\begin{DoxyCode}
+c.drawLine(10, 20, 30, 40, BLACK);
+\end{DoxyCode}
+
+
+The method takes in the first x and y-\/coordinate for a points and the x and y-\/coordinate for a second point and draws a black line from the first to the second point.
+
+Check out the documentation for the Canvas class in the \char`\"{}\+Doxygen\char`\"{} page to learn more about its various shape drawing methods. You can also look at the various classes for the shapes to learn more about how the shapes are actually drawn onto the Canvas.
+
+That concludes shapes! To learn more about colors, check out \char`\"{}\+Tutorials\+: Colors\char`\"{}. If you want to see mathematical functions being graphed on a Cartesian coordinate system, check out \char`\"{}\+Tutorials\+: Functions\char`\"{}. 

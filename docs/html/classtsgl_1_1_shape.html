@@ -97,7 +97,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 
-<p>A class for drawing shapes onto a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a>.  
+<p>A class for drawing shapes onto a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a>.  
  <a href="classtsgl_1_1_shape.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_shape_8h_source.html">Shape.h</a>&gt;</code></p>
@@ -109,15 +109,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
  <div class="center">
   <img src="classtsgl_1_1_shape.png" usemap="#tsgl::Shape_map" alt=""/>
   <map id="tsgl::Shape_map" name="tsgl::Shape_map">
-<area href="classtsgl_1_1_colored_polygon.html" title="Draw an arbitrary polygon with colored vertices. " alt="tsgl::ColoredPolygon" shape="rect" coords="144,56,278,80"/>
-<area href="classtsgl_1_1_concave_polygon.html" title="Draw an arbitrary Concave polygon with colored vertices. " alt="tsgl::ConcavePolygon" shape="rect" coords="144,112,278,136"/>
-<area href="classtsgl_1_1_convex_polygon.html" title="Draw an arbitrary Convex polygon with colored vertices. " alt="tsgl::ConvexPolygon" shape="rect" coords="144,168,278,192"/>
-<area href="classtsgl_1_1_image.html" title="Draw an image to the Canvas. " alt="tsgl::Image" shape="rect" coords="144,224,278,248"/>
-<area href="classtsgl_1_1_line.html" title="Draw a simple line. " alt="tsgl::Line" shape="rect" coords="144,280,278,304"/>
-<area href="classtsgl_1_1_polyline.html" title="Draw multiple lines chained together. " alt="tsgl::Polyline" shape="rect" coords="144,336,278,360"/>
-<area href="classtsgl_1_1_rectangle.html" title="Draw a simple Rectangle. " alt="tsgl::Rectangle" shape="rect" coords="144,392,278,416"/>
-<area href="classtsgl_1_1_text.html" title="Draw a string of text. " alt="tsgl::Text" shape="rect" coords="144,448,278,472"/>
-<area href="classtsgl_1_1_triangle.html" title="Draw a simple Triangle. " alt="tsgl::Triangle" shape="rect" coords="144,504,278,528"/>
+<area href="classtsgl_1_1_concave_polygon.html" title="Draw an arbitrary Concave polygon with colored vertices. " alt="tsgl::ConcavePolygon" shape="rect" coords="144,56,278,80"/>
+<area href="classtsgl_1_1_convex_polygon.html" title="Draw an arbitrary Convex polygon with colored vertices. " alt="tsgl::ConvexPolygon" shape="rect" coords="144,112,278,136"/>
+<area href="classtsgl_1_1_image.html" title="Draw an image to the Canvas. " alt="tsgl::Image" shape="rect" coords="144,168,278,192"/>
+<area href="classtsgl_1_1_line.html" title="Draw a simple line. " alt="tsgl::Line" shape="rect" coords="144,224,278,248"/>
+<area href="classtsgl_1_1_polyline.html" title="Draw multiple lines chained together. " alt="tsgl::Polyline" shape="rect" coords="144,280,278,304"/>
+<area href="classtsgl_1_1_rectangle.html" title="Draw a simple Rectangle. " alt="tsgl::Rectangle" shape="rect" coords="144,336,278,360"/>
+<area href="classtsgl_1_1_text.html" title="Draw a string of text. " alt="tsgl::Text" shape="rect" coords="144,392,278,416"/>
+<area href="classtsgl_1_1_triangle.html" title="Draw a simple Triangle. " alt="tsgl::Triangle" shape="rect" coords="144,448,278,472"/>
+<area href="classtsgl_1_1_triangle_strip.html" title="Draw an arbitrary triangle strip with colored vertices. " alt="tsgl::TriangleStrip" shape="rect" coords="144,504,278,528"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -144,9 +144,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isTextured</b></td></
 <tr class="separator:a9d5cd6d6a0596a30dbce44eb2d00c583"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A class for drawing shapes onto a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a>. </p>
+<div class="textblock"><p>A class for drawing shapes onto a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a>. </p>
 <dl class="section warning"><dt>Warning</dt><dd><b><em>Though extending this class must be allowed due to the way the code is set up, attempting to do so could potentially mess up the internal GL calls the library uses. Proceed with great caution.</em></b></dd></dl>
-<p><a class="el" href="classtsgl_1_1_shape.html" title="A class for drawing shapes onto a Canvas or CartesianCanvas. ">Shape</a> provides a base class for drawing shapes to a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended for graphic support. ">CartesianCanvas</a>. </p><dl class="section note"><dt>Note</dt><dd><a class="el" href="classtsgl_1_1_shape.html" title="A class for drawing shapes onto a Canvas or CartesianCanvas. ">Shape</a> is abstract, and must be extended by the user.</dd></dl>
+<p><a class="el" href="classtsgl_1_1_shape.html" title="A class for drawing shapes onto a Canvas or CartesianCanvas. ">Shape</a> provides a base class for drawing shapes to a <a class="el" href="classtsgl_1_1_canvas.html" title="A GL window with numerous built-in, thread-safe drawing operations. ">Canvas</a> or <a class="el" href="classtsgl_1_1_cartesian_canvas.html" title="Canvas extended with Cartesian drawing operations. ">CartesianCanvas</a>. </p><dl class="section note"><dt>Note</dt><dd><a class="el" href="classtsgl_1_1_shape.html" title="A class for drawing shapes onto a Canvas or CartesianCanvas. ">Shape</a> is abstract, and must be extended by the user.</dd></dl>
 <p>All <a class="el" href="classtsgl_1_1_shape.html" title="A class for drawing shapes onto a Canvas or CartesianCanvas. ">Shape</a> subclasses must override the <a class="el" href="classtsgl_1_1_shape.html#af78b1627b97d621824ce86db214e2402" title="Actually draws the Shape to the Canvas. ">draw()</a> method. Though theoretically any GL calls can be used here, something like the following should be used: <code> glBufferData(GL_ARRAY_BUFFER, numberofvertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW); glDrawArrays(drawingmode, 0, numberofvertices); </code></p>
 <p><code>vertices</code> should be an array of floating point values in TSGL's vertex format. One vertex consists of 6 floating point values, signifying x,y,red,green,blue,and alpha components respectively. E.g., to draw a triangle, you would need 3 vertices = 18 floats -&gt; vertices should be an array of length 18.</p>
 <p><code>numberofvertices</code> should be the actual integer number of vertices to be drawn (e.g., <em>3</em> for a triangle).</p>
@@ -218,7 +218,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isTextured</b></td></
 </li>
 </ul>
 
-<p>Implemented in <a class="el" href="classtsgl_1_1_concave_polygon.html#a06d759932483ae2b54bb807db20cbc4a">tsgl::ConcavePolygon</a>, <a class="el" href="classtsgl_1_1_colored_polygon.html#a6b93c1fa689dbee7592faeda0cf13933">tsgl::ColoredPolygon</a>, <a class="el" href="classtsgl_1_1_convex_polygon.html#add4d4971a5d22385eebbfe771af916b5">tsgl::ConvexPolygon</a>, <a class="el" href="classtsgl_1_1_polyline.html#ac6de5e2817824d9427d02d3e7be37f47">tsgl::Polyline</a>, <a class="el" href="classtsgl_1_1_image.html#a85732de312b98dd5ce5a9cc319bbf8c5">tsgl::Image</a>, <a class="el" href="classtsgl_1_1_text.html#a9dc47e4af682abfdab74e37b71f9fbde">tsgl::Text</a>, <a class="el" href="classtsgl_1_1_triangle.html#a83b30f9f7c800146fa900d32a58fa0c7">tsgl::Triangle</a>, <a class="el" href="classtsgl_1_1_line.html#ae7eccbbf5230a4c68139560d810af415">tsgl::Line</a>, and <a class="el" href="classtsgl_1_1_rectangle.html#addad1e65bc50d3669e6350aa32249c7f">tsgl::Rectangle</a>.</p>
+<p>Implemented in <a class="el" href="classtsgl_1_1_concave_polygon.html#a06d759932483ae2b54bb807db20cbc4a">tsgl::ConcavePolygon</a>, <a class="el" href="classtsgl_1_1_convex_polygon.html#add4d4971a5d22385eebbfe771af916b5">tsgl::ConvexPolygon</a>, <a class="el" href="classtsgl_1_1_triangle_strip.html#a7a984063f85c8b6ab61bd6e989d38920">tsgl::TriangleStrip</a>, <a class="el" href="classtsgl_1_1_polyline.html#ac6de5e2817824d9427d02d3e7be37f47">tsgl::Polyline</a>, <a class="el" href="classtsgl_1_1_image.html#a85732de312b98dd5ce5a9cc319bbf8c5">tsgl::Image</a>, <a class="el" href="classtsgl_1_1_text.html#a9dc47e4af682abfdab74e37b71f9fbde">tsgl::Text</a>, <a class="el" href="classtsgl_1_1_triangle.html#a83b30f9f7c800146fa900d32a58fa0c7">tsgl::Triangle</a>, <a class="el" href="classtsgl_1_1_line.html#ae7eccbbf5230a4c68139560d810af415">tsgl::Line</a>, and <a class="el" href="classtsgl_1_1_rectangle.html#addad1e65bc50d3669e6350aa32249c7f">tsgl::Rectangle</a>.</p>
 
 </div>
 </div>
@@ -254,7 +254,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isTextured</b></td></
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 15 2015 13:52:25 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 24 2015 13:34:17 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

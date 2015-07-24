@@ -87,54 +87,52 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * Image.h extends Shape and provides a class for drawing an image to a Canvas.</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Last Modified: Patrick Crain, 7/9/2014</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef IMAGE_H_</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define IMAGE_H_</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef IMAGE_H_</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define IMAGE_H_</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Shape.h&quot;</span>           <span class="comment">// For extending our Shape object</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;TextureHandler.h&quot;</span>  <span class="comment">// For loading images</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;TsglAssert.h&quot;</span>      <span class="comment">// For unit testing purposes</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacetsgl.html">tsgl</a> {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classtsgl_1_1_image.html">   31</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtsgl_1_1_image.html">Image</a> : <span class="keyword">public</span> <a class="code" href="classtsgl_1_1_shape.html">Shape</a> {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">int</span> myWidth, myHeight;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">float</span> vertices[32];</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    std::string myFile;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    GLtexture myTexture;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classtsgl_1_1_texture_handler.html">TextureHandler</a>* myLoader;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="classtsgl_1_1_image.html#a497894a4dbfa46d1e3aefd7dbe086cc3">Image</a>(std::string filename, <a class="code" href="classtsgl_1_1_texture_handler.html">TextureHandler</a> &amp;loader, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">float</span> alpha);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtsgl_1_1_image.html#a85732de312b98dd5ce5a9cc319bbf8c5">draw</a>();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classtsgl_1_1_image.html#afa939262dcf32c9a504efe30a8de5c58">   64</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classtsgl_1_1_image.html#afa939262dcf32c9a504efe30a8de5c58">getHeight</a>() { <span class="keywordflow">return</span> myHeight; }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="classtsgl_1_1_image.html#af01d5f815b91f20fd441f9bcec671d79">   70</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classtsgl_1_1_image.html#af01d5f815b91f20fd441f9bcec671d79">getWidth</a>() { <span class="keywordflow">return</span> myWidth; }</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Shape.h&quot;</span>           <span class="comment">// For extending our Shape object</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;TextureHandler.h&quot;</span>  <span class="comment">// For loading images</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;TsglAssert.h&quot;</span>      <span class="comment">// For unit testing purposes</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacetsgl.html">tsgl</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classtsgl_1_1_image.html">   28</a></span>&#160;<span class="keyword">class </span><a class="code" href="classtsgl_1_1_image.html">Image</a> : <span class="keyword">public</span> <a class="code" href="classtsgl_1_1_shape.html">Shape</a> {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">int</span> myWidth, myHeight;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keywordtype">float</span> vertices[32];</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    std::string myFile;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    GLtexture myTexture;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classtsgl_1_1_texture_handler.html">TextureHandler</a>* myLoader;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <a class="code" href="classtsgl_1_1_image.html#a497894a4dbfa46d1e3aefd7dbe086cc3">Image</a>(std::string filename, <a class="code" href="classtsgl_1_1_texture_handler.html">TextureHandler</a> &amp;loader, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height, <span class="keywordtype">float</span> alpha);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classtsgl_1_1_image.html#a85732de312b98dd5ce5a9cc319bbf8c5">draw</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classtsgl_1_1_image.html#afa939262dcf32c9a504efe30a8de5c58">   62</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classtsgl_1_1_image.html#afa939262dcf32c9a504efe30a8de5c58">getHeight</a>() { <span class="keywordflow">return</span> myHeight; }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classtsgl_1_1_image.html#af01d5f815b91f20fd441f9bcec671d79">   68</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classtsgl_1_1_image.html#af01d5f815b91f20fd441f9bcec671d79">getWidth</a>() { <span class="keywordflow">return</span> myWidth; }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* IMAGE_H_ */</span><span class="preprocessor"></span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* IMAGE_H_ */</span><span class="preprocessor"></span></div>
 <div class="ttc" id="namespacetsgl_html"><div class="ttname"><a href="namespacetsgl.html">tsgl</a></div><div class="ttdef"><b>Definition:</b> Array.h:10</div></div>
-<div class="ttc" id="classtsgl_1_1_texture_handler_html"><div class="ttname"><a href="classtsgl_1_1_texture_handler.html">tsgl::TextureHandler</a></div><div class="ttdoc">Handles saving, loading, and rendering of images and textures. </div><div class="ttdef"><b>Definition:</b> TextureHandler.h:46</div></div>
-<div class="ttc" id="classtsgl_1_1_image_html_afa939262dcf32c9a504efe30a8de5c58"><div class="ttname"><a href="classtsgl_1_1_image.html#afa939262dcf32c9a504efe30a8de5c58">tsgl::Image::getHeight</a></div><div class="ttdeci">int getHeight()</div><div class="ttdoc">Accessor for the image&#39;s height. </div><div class="ttdef"><b>Definition:</b> Image.h:64</div></div>
-<div class="ttc" id="classtsgl_1_1_image_html_a497894a4dbfa46d1e3aefd7dbe086cc3"><div class="ttname"><a href="classtsgl_1_1_image.html#a497894a4dbfa46d1e3aefd7dbe086cc3">tsgl::Image::Image</a></div><div class="ttdeci">Image(std::string filename, TextureHandler &amp;loader, int x, int y, int width, int height, float alpha)</div><div class="ttdoc">Explicitly constructs a new Image. </div><div class="ttdef"><b>Definition:</b> Image.cpp:12</div></div>
-<div class="ttc" id="classtsgl_1_1_shape_html"><div class="ttname"><a href="classtsgl_1_1_shape.html">tsgl::Shape</a></div><div class="ttdoc">A class for drawing shapes onto a Canvas or CartesianCanvas. </div><div class="ttdef"><b>Definition:</b> Shape.h:37</div></div>
-<div class="ttc" id="classtsgl_1_1_image_html"><div class="ttname"><a href="classtsgl_1_1_image.html">tsgl::Image</a></div><div class="ttdoc">Draw an image to the Canvas. </div><div class="ttdef"><b>Definition:</b> Image.h:31</div></div>
-<div class="ttc" id="classtsgl_1_1_image_html_af01d5f815b91f20fd441f9bcec671d79"><div class="ttname"><a href="classtsgl_1_1_image.html#af01d5f815b91f20fd441f9bcec671d79">tsgl::Image::getWidth</a></div><div class="ttdeci">int getWidth()</div><div class="ttdoc">Accessor for the image&#39;s width. </div><div class="ttdef"><b>Definition:</b> Image.h:70</div></div>
-<div class="ttc" id="classtsgl_1_1_image_html_a85732de312b98dd5ce5a9cc319bbf8c5"><div class="ttname"><a href="classtsgl_1_1_image.html#a85732de312b98dd5ce5a9cc319bbf8c5">tsgl::Image::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdoc">Draw the Image. </div><div class="ttdef"><b>Definition:</b> Image.cpp:38</div></div>
+<div class="ttc" id="classtsgl_1_1_texture_handler_html"><div class="ttname"><a href="classtsgl_1_1_texture_handler.html">tsgl::TextureHandler</a></div><div class="ttdoc">Handles saving, loading, and rendering of images and textures. </div><div class="ttdef"><b>Definition:</b> TextureHandler.h:43</div></div>
+<div class="ttc" id="classtsgl_1_1_image_html_afa939262dcf32c9a504efe30a8de5c58"><div class="ttname"><a href="classtsgl_1_1_image.html#afa939262dcf32c9a504efe30a8de5c58">tsgl::Image::getHeight</a></div><div class="ttdeci">int getHeight()</div><div class="ttdoc">Accessor for the image&#39;s height. </div><div class="ttdef"><b>Definition:</b> Image.h:62</div></div>
+<div class="ttc" id="classtsgl_1_1_image_html_a497894a4dbfa46d1e3aefd7dbe086cc3"><div class="ttname"><a href="classtsgl_1_1_image.html#a497894a4dbfa46d1e3aefd7dbe086cc3">tsgl::Image::Image</a></div><div class="ttdeci">Image(std::string filename, TextureHandler &amp;loader, int x, int y, int width, int height, float alpha)</div><div class="ttdoc">Explicitly constructs a new Image. </div><div class="ttdef"><b>Definition:</b> Image.cpp:5</div></div>
+<div class="ttc" id="classtsgl_1_1_shape_html"><div class="ttname"><a href="classtsgl_1_1_shape.html">tsgl::Shape</a></div><div class="ttdoc">A class for drawing shapes onto a Canvas or CartesianCanvas. </div><div class="ttdef"><b>Definition:</b> Shape.h:34</div></div>
+<div class="ttc" id="classtsgl_1_1_image_html"><div class="ttname"><a href="classtsgl_1_1_image.html">tsgl::Image</a></div><div class="ttdoc">Draw an image to the Canvas. </div><div class="ttdef"><b>Definition:</b> Image.h:28</div></div>
+<div class="ttc" id="classtsgl_1_1_image_html_af01d5f815b91f20fd441f9bcec671d79"><div class="ttname"><a href="classtsgl_1_1_image.html#af01d5f815b91f20fd441f9bcec671d79">tsgl::Image::getWidth</a></div><div class="ttdeci">int getWidth()</div><div class="ttdoc">Accessor for the image&#39;s width. </div><div class="ttdef"><b>Definition:</b> Image.h:68</div></div>
+<div class="ttc" id="classtsgl_1_1_image_html_a85732de312b98dd5ce5a9cc319bbf8c5"><div class="ttname"><a href="classtsgl_1_1_image.html#a85732de312b98dd5ce5a9cc319bbf8c5">tsgl::Image::draw</a></div><div class="ttdeci">void draw()</div><div class="ttdoc">Draw the Image. </div><div class="ttdef"><b>Definition:</b> Image.cpp:32</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 15 2015 13:52:23 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 24 2015 13:34:15 for TSGL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>
