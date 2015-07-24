@@ -63,8 +63,11 @@ echo "Installing GLEW..."
 sudo port install glew
 echo "Installing Freetype2..."
 sudo port install freetype
-echo "Installing GCC 4.9...this may take a while, please be patient..."
-sudo port install gcc49
+gver=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
+if [ $gver -lt 490 ]; then
+  echo "Installing GCC 4.9...this may take a while, please be patient..."
+  sudo port install gcc49
+fi
 echo "Switiching default compiler to mp-gcc49"
 sudo port select --set gcc mp-gcc49
 echo "Fixing missing symlinks"
