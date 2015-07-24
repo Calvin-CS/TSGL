@@ -60,6 +60,7 @@ LFLAGS=-Llib/ \
 DEPFLAGS=-MMD -MP
 
 BINARIES= \
+  bin/test_specs \
 	bin/testAlphaRectangle \
 	bin/testAura \
 	bin/testBallroom \
