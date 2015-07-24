@@ -483,7 +483,7 @@ double Canvas::getTime() {
     return drawTimer->getTime();
 }
 
-double Canvas::getTimeSinceBetweenSleeps() const {
+double Canvas::getTimeBetweenSleeps() const {
     return drawTimer->getTimeBetweenSleeps();
 }
 

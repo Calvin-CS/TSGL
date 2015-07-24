@@ -87,7 +87,6 @@ BINARIES= \
 	bin/testLineFan \
 	bin/testMandelbrot \
 	bin/testMouse \
-	bin/testMultiCanvas \
 	bin/testNewtonPendulum \
 	bin/testPhilosophers \
 	bin/testPong \
