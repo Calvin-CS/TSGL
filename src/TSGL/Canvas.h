@@ -163,6 +163,7 @@ protected:
     bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
+
     /*!
      * \brief Default Canvas constructor method.
      * \details This is the default constructor for the Canvas class.

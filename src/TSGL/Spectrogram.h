@@ -38,6 +38,7 @@ private:
   SpectrogramDrawmode myDrawMode;
   Canvas* can;
 public:
+
   /*!
    * \brief Explicit Spectrogram constructor method.
    * \details This is the explicit constructor for the Spectrogram class.

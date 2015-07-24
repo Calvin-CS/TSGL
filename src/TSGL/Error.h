@@ -39,6 +39,7 @@ template < typename T > std::string to_string( const T& n ) {
  *   \param message The message to print to the console
  */
 void TsglErr(std::string message);
+
 /*!
  * \brief Prints a debug message to the console
  * \details This method prints the string <code>message</code> to the

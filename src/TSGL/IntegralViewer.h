@@ -35,6 +35,7 @@ private:
   void setupCanvas(CartesianCanvas*& can, const std::string& label = "", double delay = 0.0);
 
 public:
+
   /*!
    * \brief Default IntegralViewer constructor method.
    * \details This is the default constructor for the IntegralViewer class.

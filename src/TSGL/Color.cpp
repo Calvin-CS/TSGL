@@ -315,7 +315,6 @@ ColorFloat Colors::blend(ColorFloat c1, ColorFloat c2, float bias) {
 }
 
 ColorFloat Colors::highContrastColor(unsigned int index, int offset) {
-//    return DISTINCT_ARRAY_DATA[(section+start)%64];
     const unsigned int PRIME1 = 61, PRIME2 = 71;
     float hue = ((offset + PRIME1 * index) % 255) / 255.0f;
     float sat = (255 - (index-offset + PRIME2 * (index-offset)) % 80) / 255.0f;

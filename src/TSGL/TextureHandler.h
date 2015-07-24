@@ -66,6 +66,7 @@ class TextureHandler {
     static bool testLoadFont(TextureHandler& test);
 
  public:
+
     /*!
      * \brief Default TextureHandler constructor method.
      * \details This is the default constructor for theTextureHandler Canvas class.

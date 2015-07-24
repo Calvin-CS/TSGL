@@ -28,6 +28,7 @@ class ColoredPolygon : public Shape {
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
  public:
+
     /*!
      * \brief Explicitly construct a new ColoredPolygon.
      * \details Explicit constructor for a ColoredPolygon object.

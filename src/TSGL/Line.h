@@ -17,6 +17,7 @@ class Line : public Shape {
  private:
     float vertices[12];
  public:
+
     /*!
      * \brief Explicitly constructs a new Line.
      * \details This is the constructor for the Line class.

@@ -29,6 +29,7 @@ private:
     static bool testRecomputeDimensions(CartesianCanvas& can);          // Unit test for recomputeDimensions()
     static bool testDraw(CartesianCanvas& can);                         // Unit test for drawing
 public:
+
     /*!
      * \brief Default CartesianCanvas constructor method.
      * \details This is the default constructor for the CartesianCanvas class.

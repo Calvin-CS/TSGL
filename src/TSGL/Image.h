@@ -33,6 +33,7 @@ class Image : public Shape {
     GLtexture myTexture;
     TextureHandler* myLoader;
  public:
+
     /*!
      * \brief Explicitly constructs a new Image.
      * \details This is the explicit constructor for the Image class.

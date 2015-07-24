@@ -39,6 +39,7 @@ private:
   Canvas *vcan, *lcan;
   int rowLength, blockSize, totalElements;
 public:
+
   /*!
    * \brief Default VisualTaskQueue constructor method.
    * \details This is the default constructor for the VisualTaskQueue class.

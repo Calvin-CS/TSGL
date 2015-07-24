@@ -32,8 +32,6 @@ void IntegralViewer::drawLabels(CartesianCanvas*& can) {
 
   bool blorigin = (myStartX == 0 && myStartY == 0);
   bool tlorigin = (myStartX == 0 && myStopY == 0);
-//  bool brorigin = (myStopX == 0 && myStartY == 0);
-//  bool trorigin = (myStopX == 0 && myStopY == 0);
 
   can->drawText(to_string(myStartX), myStartX, myStartY-yoff, FSIZE);
   can->drawText(to_string(myStopX), myStopX, myStartY-yoff, FSIZE);

@@ -24,6 +24,7 @@ class Text : public Shape {
     std::wstring myString;
     int myX, myY;
  public:
+
     /*!
      * \brief Explicitly constructs a new Text instance.
      * \details This is the constructor for the Text class.

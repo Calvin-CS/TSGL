@@ -17,6 +17,7 @@ class Triangle : public Shape {
  private:
     float vertices[18];
  public:
+
     /*!
      * \brief Explicitly constructs a new Triangle.
      * \details This is the constructor for the Triangle class.

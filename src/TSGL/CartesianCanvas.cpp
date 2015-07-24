@@ -323,7 +323,6 @@ void CartesianCanvas::runTests() {
   c2.setBackgroundColor(WHITE);
   c2.start();
   tsglAssert(testDraw(c2), "Unit test for drawing functions failed!");
-//  c2.stop();
   c2.wait();
 
   TsglDebug("Unit tests for CartesianCanvas complete.");
@@ -417,38 +416,6 @@ bool CartesianCanvas::testDraw(CartesianCanvas& can) {
     return false;
   }
 }
-
-//bool CartesianCanvas::testAxes(CartesianCanvas& can) {
-//   int passed = 0;
-//   int failed = 0;
-//   can.drawAxes(0, 0, 10, 10);
-// //  can.sleep();
-//   ColorInt black(0, 0, 0);
-//   if(can.getPixel(0, 0) == black && can.getPixel(0, 10) == black) {
-//     passed++;
-//   } else {
-//     failed++;
-//     TsglErr("Test 1, distance between axes for testAxes() failed!");
-//   }
-//
-////   while(can.getIsOpen()) {
-////     std::cout << can.getMouseX() << " " << can.getMouseY() << std::endl;
-////   }
-////   for(unsigned i = 0; i < can.getWindowWidth(); i++) {
-////     std::cout << can.getPixel(460, i).AsString() << std::endl;
-////   }
-//
-//   if(passed == 1 && failed == 0) {
-//     TsglDebug("Unit test for drawing axes passed!");
-//     return true;
-//   } else {
-//     TsglErr("This many tests passed for testAxes(): ");
-//     std::cout << " " << passed << std::endl;
-//     TsglErr("This many tests failed for testAxes(): ");
-//     std::cout << " " << failed << std::endl;
-//     return false;
-//   }
-//}
 
 bool CartesianCanvas::testZoom(CartesianCanvas& can) {
     int passed = 0;

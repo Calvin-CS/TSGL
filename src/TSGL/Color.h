@@ -243,6 +243,9 @@ struct ColorHSV {
     std::string asString();
 };
 
+/*!
+ * \brief The various ColorFloat constants used throughout TSGL.
+ */
 const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),
                  DARKGRAY = ColorFloat(0.5f, 0.5f, 0.5f, 1.0f),
                  GRAY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f),
@@ -264,6 +267,7 @@ const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),
  */
 class Colors {
  public:
+
     /*!
      * \brief Returns an HSVA color with a hue dependent on the number of sections.
      * \details This function returns a ColorFloat whose hue is calculated from the provided section number and
@@ -330,7 +334,6 @@ class Colors {
     ~Colors();
     Colors(const Colors&);
     Colors& operator=(const Colors&);
-//    static ColorFloat DISTINCT_ARRAY[64];
     static const ColorFloat* DISTINCT_ARRAY;
 };
 

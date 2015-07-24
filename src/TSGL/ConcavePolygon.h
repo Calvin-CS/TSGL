@@ -37,6 +37,7 @@ class ConcavePolygon : public Shape {
     static bool testPointITriangle(); // Unit test for pointInTriangle()
 
  public:
+
     /*!
      * \brief Explicitly constructs a new ConcavePolygon.
      * \details Explicit constructor for a ConcavePolygon object.

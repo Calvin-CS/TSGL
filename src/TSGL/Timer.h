@@ -31,6 +31,7 @@ class Timer {
     std::mutex sleep_;
     double time_between_sleeps;
  public:
+
     /*!
      * \brief Default Timer constructor method.
      * \details This is the default constructor for the Timer class.

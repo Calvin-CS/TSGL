@@ -18,6 +18,7 @@ namespace tsgl {
  */
 class Function {
  public:
+
     /*!
      * \brief Constructs a new Function.
      * \details This is the default constructor for the Function class.
@@ -46,6 +47,7 @@ class Function {
  */
 class PowerFunction : public Function {
  public:
+
     /*!
      * \brief Constructs a new PowerFunction.
      *      \param a The power to which the input is raised.
@@ -71,6 +73,7 @@ class PowerFunction : public Function {
  */
 class SquareRootFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of SquareRootFunction.
      * \return The square root of *x*.
@@ -85,6 +88,7 @@ class SquareRootFunction : public Function {
  */
 class SineFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of SineFunction.
      * \return The sine of *x*.
@@ -99,6 +103,7 @@ class SineFunction : public Function {
  */
 class CosineFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of CosineFunction.
      * \return The cosine of *x*.
@@ -113,6 +118,7 @@ class CosineFunction : public Function {
  */
 class TangentFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of TangentFunction.
      * \return The tangent of *x*.
@@ -127,6 +133,7 @@ class TangentFunction : public Function {
  */
 class AbsoluteFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of AbsoluteFunction.
      * \return The absolute value of *x*.
@@ -141,6 +148,7 @@ class AbsoluteFunction : public Function {
  */
 class ExponentialFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of ExponentialFunction.
      * \return *e* raised to the power of *x*.
@@ -155,6 +163,7 @@ class ExponentialFunction : public Function {
  */
 class NaturalLogFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of NaturalLogFunction.
      * \return The natural log of *x*.
@@ -169,6 +178,7 @@ class NaturalLogFunction : public Function {
  */
 class CommonLogFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of CommonLogFunction.
      * \return The base 10 log of *x*.
@@ -183,6 +193,7 @@ class CommonLogFunction : public Function {
  */
 class CeilingFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of CeilingFunction.
      * \return The smallest integer greater than or equal to *x*.
@@ -197,6 +208,7 @@ class CeilingFunction : public Function {
  */
 class FloorFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of FloorFunction.
      * \return The largest integer less than or equal to *x*.
@@ -211,6 +223,7 @@ class FloorFunction : public Function {
  */
 class RoundFunction : public Function {
  public:
+
     /*!
      * \brief Method to determine the value of RoundFunction.
      * \return The closest integer to *x*.

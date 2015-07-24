@@ -30,6 +30,7 @@ class ConvexPolygon : public Shape {
 
     static bool testAddVertex();  // Unit test for addVertex()
  public:
+
     /*!
      * \brief Explicitly constructs a new ConvexPolygon.
      * \details Explicit constructor for a Convex Polygon object.

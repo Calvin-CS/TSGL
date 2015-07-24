@@ -17,6 +17,7 @@ class Rectangle : public Shape {
  private:
     float vertices[24];
  public:
+
     /*!
      * \brief Explicitly constructs a Rectangle.
      * \details This is the constructor for the Rectangle class.
