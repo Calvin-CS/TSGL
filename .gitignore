@@ -30,6 +30,9 @@ tsgl-note
 _*
 *~
 
+#Don't ignore our main page!
+!_mainpage.dox
+
 # Bitmaps
 Image*.bmp
 

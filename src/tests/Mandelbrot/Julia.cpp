@@ -48,7 +48,7 @@ void Julia::draw(Cart& can) {
         if (myRedraw) break;
       }
     }
-    manhattanShading(can);
+//    manhattanShading(can);
     std::cout << can.getTime() << std::endl;
     while (can.getIsOpen() && !myRedraw) {
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class

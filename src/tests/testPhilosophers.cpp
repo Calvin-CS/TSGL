@@ -602,6 +602,6 @@ void philosopherFunction(Canvas& can,int philosophers) {
 int main(int argc, char* argv[]) {
     int nphil = (argc > 1) ? atoi(argv[1]) : 5;
     int speed = (argc > 2) ? atoi(argv[2]) : 10;
-    Canvas c(-1, -1, -1, -1, "Philosophers",1.0f/speed);
+    Canvas c(-1, -1, -1, -1, "Dining Philosophers",1.0f/speed);
     c.run(philosopherFunction,nphil);
 }
