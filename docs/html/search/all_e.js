@@ -1,6 +1,7 @@
 var searchData=
 [
   ['shapes',['Shapes',['../md__home_pretzel_workspace_tsgl__t_s_g_l_docs-src_tutorials_shapes.html',1,'']]],
+  ['shapes',['Shapes',['../md__home_pretzel_workspace_tsgl__t_s_g_l_docs-wiki_tutorials__tutorial---_shapes.html',1,'']]],
   ['saveimagetofile',['saveImageToFile',['../classtsgl_1_1_texture_handler.html#a29dc4554f9ba181abb5ed9fa45cc186f',1,'tsgl::TextureHandler']]],
   ['setbackgroundcolor',['setBackgroundColor',['../classtsgl_1_1_canvas.html#abb668fe42e2fe7f269b255152df959d8',1,'tsgl::Canvas']]],
   ['setfont',['setFont',['../classtsgl_1_1_canvas.html#a692edf8e37c7714cdf2a58ea530c63e9',1,'tsgl::Canvas']]],
