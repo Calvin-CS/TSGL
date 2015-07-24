@@ -5,7 +5,7 @@
 #ifndef SRC_TSGL_ERROR_H_
 #define SRC_TSGL_ERROR_H_
 
-#define TSGL_DEBUG
+//#define TSGL_DEBUG
 
 #include <string>
 #include <sstream>

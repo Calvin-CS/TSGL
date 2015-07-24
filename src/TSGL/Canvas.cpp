@@ -250,12 +250,12 @@ void Canvas::draw() {
 }
 
 void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
-    float delta = 2.0f / sides * 3.1415926585f;
+    float delta = 2.0f / sides * PI;
     if (filled) {
         ConvexPolygon *s = new ConvexPolygon(sides);
         for (int i = 0; i < sides; ++i)
-          s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
-          drawShape(s);
+            s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
+        drawShape(s);
     } else {
         float oldX = 0, oldY = 0, newX = 0, newY = 0;
         Polyline *p = new Polyline(sides+1);
@@ -268,23 +268,6 @@ void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloa
         }
         p->addNextVertex(newX, newY,color);
         drawShape(p);
-    }
-}
-
-void Canvas::drawColoredPolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
-    if (filled) {
-        ColoredPolygon* p = new ColoredPolygon(size);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawShape(p);  // Push it onto our drawing buffer
-    }
-    else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-            p->addNextVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawShape(p);  // Push it onto our drawing buffer
     }
 }
 
@@ -383,7 +366,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
 
 void Canvas::drawShape(Shape* s) {
 	if (!started) {
-	  TsglErr("No drawing before Canvas is started! Ignoring draw request.");
+	  TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
 	  return;
 	}
 	while (!readyToDraw)
@@ -416,6 +399,23 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
         p->addNextVertex(x3,y3,color);
         p->addNextVertex(x1,y1,color);
         drawShape(p);
+    }
+}
+
+void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
+    if (filled) {
+        TriangleStrip* p = new TriangleStrip(size);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(xverts[i], yverts[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(size);
+        for (int i = 0; i < size; i++) {
+            p->addNextVertex(xverts[i], yverts[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
     }
 }
 
@@ -483,7 +483,7 @@ double Canvas::getTime() {
     return drawTimer->getTime();
 }
 
-double Canvas::getTimeBetweenSleeps() const {
+double Canvas::getTimeSinceBetweenSleeps() const {
     return drawTimer->getTimeBetweenSleeps();
 }
 

@@ -15,7 +15,7 @@
 
 namespace tsgl {
 
-struct ColorFloat;
+struct ColorFloat;  //Forward declarations
 struct ColorInt;
 struct ColorHSV;
 
@@ -79,11 +79,19 @@ struct ColorFloat {
     operator ColorHSV();
 
     /*!
+     * \brief Implicit conversion from ColorFloat to ColorInt.
+     * \details This defines the implicit conversion operator from a floating point color type (ColorFloat) to an
+     *   integer color type (ColorInt).
+     */
+    operator ColorInt();
+
+    /*!
      * \brief Multiplies the values of a ColorFloat by a float
      * \details This operator multiplies each of the components of a ColorFloat
      *   by amount <code>f</code>.
      * \param f Amount to multiply each component by
      * \returns A new ColorFloat constructed as ColorFloat(orig.R*f, orig.G*f, orig.b*f, orig.A*f)
+     * \note Individual channels are clamped between 0 and 1.
      */
     ColorFloat operator*(float f);
 
@@ -193,6 +201,16 @@ struct ColorInt {
      * \returns true if the two ColorInts are not equivalent, false if otherwise.
      */
     bool operator!=(ColorInt& c2);
+
+    /*!
+     * \brief Multiplies the values of a ColorInt by a float
+     * \details This operator multiplies each of the components of a ColorInt
+     *   by amount <code>f</code>.
+     * \param f Amount to multiply each component by
+     * \returns A new ColorInt constructed as ColorInt(orig.R*f, orig.G*f, orig.b*f, orig.A*f)
+     * \note Individual channels are clamped between 0 and MAX_COLOR.
+     */
+    ColorInt operator*(float f);
 };
 
 /*!
@@ -229,9 +247,16 @@ struct ColorHSV {
     ColorHSV(float h, float s, float v, float a = 1.0f);
 
     /*!
+     * \brief Implicit conversion from ColorHSV to ColorInt.
+     * \details This defines the implicit conversion operator from an HSV color type (ColorHSV) to an integer
+     *   color type (ColorInt).
+     */
+    operator ColorInt();
+
+    /*!
      * \brief Implicit conversion from ColorHSV to ColorFloat.
-     * \details This defines the implicit conversion operator from an HSV color type (ColorHSV) to an RGB
-     *  color type (ColorFloat).
+     * \details This defines the implicit conversion operator from an HSV color type (ColorHSV) to a floating
+     *   point color type (ColorFloat).
      */
     operator ColorFloat();
 

@@ -15,13 +15,15 @@ typedef Decimal (*functionPointer)(Decimal x);
 
 /*!
  * \class CartesianCanvas
- * \brief Canvas extended for graphic support.
+ * \brief Canvas extended with Cartesian drawing operations.
  * \details CartesianCanvas provides a Canvas with a Cartesian coordinate system for ease of plotting.
+ * \note While on a regular Canvas, pixels higher on the screen have a lower y-value, <b>on a CartesianCanvas,
+ *   pixels higher on the screen have a higher y-value.</b>
  */
 class CartesianCanvas : public Canvas {
 private:
-    Decimal cartWidth,                                                  // maxX-minX
-            cartHeight;                                                 // maxY-minY
+    Decimal cartWidth;                                                  // maxX-minX
+    Decimal cartHeight;                                                 // maxY-minY
     Decimal minX, maxX, minY, maxY;                                     // Bounding Cartesian coordinates for the window
     Decimal pixelWidth, pixelHeight;                                    // cartWidth/window.w(), cartHeight/window.h()
 
@@ -88,20 +90,6 @@ public:
      * \note Identical to Canvas::drawCircle().
      */
     void drawCircle(Decimal x, Decimal y, Decimal radius, int sides, ColorFloat color = BLACK, bool filled = true);
-
-    /*!
-     * \brief Draws an arbitrary polygon with colored vertices.
-     * \details This function draws a ColoredPolygon with the given vertex data, specified as
-     *   a triangle strip.
-     *   \param size The number of vertices in the polygon.
-     *   \param xverts An array of x positions of the vertices.
-     *   \param yverts An array of y positions of the vertices.
-     *   \param color An array of colors for the vertices.
-     *   \param filled Whether the colored polygon should be filled (true) or not (false)
-     *     (set to true by default).
-     * \note Identical to Canvas::drawColoredPolygon().
-     */
-    void drawColoredPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draws a Concave polygon with colored vertices.
@@ -281,13 +269,27 @@ public:
                       bool filled = true);
 
     /*!
+     * \brief Draws an arbitrary triangle strip with colored vertices.
+     * \details This function draws a TriangleStrip with the given vertex data, specified as
+     *   a triangle strip.
+     *   \param size The number of vertices in the polygon.
+     *   \param xverts An array of x positions of the vertices.
+     *   \param yverts An array of y positions of the vertices.
+     *   \param color An array of colors for the vertices.
+     *   \param filled Whether the triangle strip should be filled (true) or not (false)
+     *     (set to true by default).
+     * \note Identical to Canvas::drawTriangleStrip().
+     */
+    void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
+
+    /*!
      * \brief Translates Cartesian coordinates into window coordinates.
      * \details getCartesianCoordinates() takes a pair of on-screen coordinates and translates them to Cartesian
      *  coordinates.
-     *      \param screenX The window's x coordinate.
-     *      \param screenY The window's y coordinate.
-     *      \param cartX A reference variable to be filled with screenX's Cartesian position.
-     *      \param cartY A reference variable to be filled with screenY's Cartesian position.
+     *    \param screenX The window's x coordinate.
+     *    \param screenY The window's y coordinate.
+     *    \param cartX A reference variable to be filled with screenX's Cartesian position.
+     *    \param cartY A reference variable to be filled with screenY's Cartesian position.
      */
     void getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY);
 
@@ -359,12 +361,6 @@ public:
      *   \param xMax A real number corresponding to the new top edge of the CartesianCanvas.
      */
     void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
-    /*!
-      * \brief Resets the internal drawing timer of a CartesianCanvas object.
-      * \note Can be thought of as a wrapper function for a Timer function call.
-      * \note Identical to Canvas::reset().
-      */
-    void reset();
 
     /*!
      * \brief Start the CartesianCanvas, run a function on it, and wait for the user to close it

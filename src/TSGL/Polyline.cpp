@@ -4,7 +4,7 @@ namespace tsgl {
 
 Polyline::Polyline(int numVertices) {
     if (numVertices < 2)
-      TsglErr("Cannot have a line with fewer than 2 vertices.");
+      TsglDebug("Cannot have a line with fewer than 2 vertices.");
     length = numVertices;
     size = length * 6;
     current = 0;
@@ -18,7 +18,7 @@ Polyline::~Polyline() {
 
 void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
     if (init)  {
-      TsglErr("Cannot add anymore vertices.");
+      TsglDebug("Cannot add anymore vertices.");
       return;
     }
     vertices[current] = x;
@@ -33,7 +33,7 @@ void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
 
 void Polyline::draw() {
     if (!init || length < 2) {
-      TsglErr("Cannot draw uninitialized Polyline.");
+      TsglDebug("Cannot draw uninitialized Polyline.");
       return;
     }
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);

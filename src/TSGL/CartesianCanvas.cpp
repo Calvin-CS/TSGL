@@ -47,19 +47,6 @@ void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int sides
     Canvas::drawCircle(actualX, actualY, actualR, sides, color, filled);
 }
 
-void CartesianCanvas::drawColoredPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
-    int* int_x = new int[size];
-    int* int_y = new int[size];
-
-    for (int i = 0; i < size; i++) {
-        getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-    }
-    Canvas::drawColoredPolygon(size, int_x, int_y, color, filled);
-
-    delete int_x;
-    delete int_y;
-}
-
 void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
     int* int_x = new int[size];
     int* int_y = new int[size];
@@ -207,6 +194,19 @@ void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y
     Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, color, filled);
 }
 
+void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
+    int* int_x = new int[size];
+    int* int_y = new int[size];
+
+    for (int i = 0; i < size; i++) {
+        getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
+    }
+    Canvas::drawTriangleStrip(size, int_x, int_y, color, filled);
+
+    delete int_x;
+    delete int_y;
+}
+
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
     cartX = (screenX * cartWidth) / getWindowWidth() + minX;
     cartY = minY - (screenY - getWindowHeight()) * cartHeight / getWindowHeight();
@@ -261,10 +261,6 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     cartHeight = maxY - minY;
     pixelWidth = cartWidth / (getWindowWidth() - 1);
     pixelHeight = cartHeight / (getWindowHeight() - 1);  //Minor hacky fix
-}
-
-void CartesianCanvas::reset() {
-    Canvas::reset();
 }
 
 void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&) ) {

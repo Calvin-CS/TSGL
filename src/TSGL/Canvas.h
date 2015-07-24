@@ -10,7 +10,7 @@
 
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
-#include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
+#include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads
@@ -49,13 +49,13 @@ namespace tsgl {
 /*! \class Canvas
  *  \brief A GL window with numerous built-in, thread-safe drawing operations.
  *  \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
- *  \details Using stb, Canvas also supports the drawing of images.
+ *  \details Using STB, Canvas also supports the drawing of images.
  *  \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
  *  \note <b>OS X:</b> Due to the way OS X handles I/O, either sleep() or handleIO() must be manually called
  *       whenever the user wants to handle any input/output events (keyboard/mouse presses). Whenever a window is
  *       created using OpenGL, OS X requires the main thread to handle I/O calls.
  *  \note <b>OS X:</b> OS X also uses p_thread instead of std::thread for threading.
- *  \note If you try to do anything with X Forwarding and TSGL, it won't work.
+ *  \bug <b>Linux:</b> X forwarding does not work properly with TSGL.
  */
 class Canvas {
 private:
@@ -246,19 +246,6 @@ public:
     virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true);
 
     /*!
-     * \brief Draws an arbitrary polygon with colored vertices.
-     * \details This function draws a ColoredPolygon with the given vertex data, specified as
-     *   a triangle strip.
-     *   \param size The number of vertices in the polygon.
-     *   \param xverts An array of x positions of the vertices.
-     *   \param yverts An array of y positions of the vertices.
-     *   \param color An array of colors for the vertices.
-     *   \param filled Whether the colored polygon should be filled (true) or not (false)
-     *     (set to true by default).
-     */
-    virtual void drawColoredPolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
-
-    /*!
      * \brief Draws a concave polygon with colored vertices.
      * \details This function draws a ConcavePolygon with the given vertex data, specified as the
      *   outer perimeter of the polygon.
@@ -404,6 +391,18 @@ public:
                               bool filled = true);
 
     /*!
+     * \brief Draws an arbitrary triangle strip with colored vertices.
+     * \details This function draws a TriangleStrip with the given vertex data, specified as
+     *   a triangle strip.
+     *   \param size The number of vertices in the polygon.
+     *   \param xverts An array of x positions of the vertices.
+     *   \param yverts An array of y positions of the vertices.
+     *   \param color An array of colors for the vertices.
+     *   \param filled Whether the triangle strip should be filled (true) or not (false).
+     */
+    virtual void drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
+
+    /*!
      * \brief Accessor for the current background color.
      * \return The color that the Canvas clears to when clear() is called.
      */
@@ -491,6 +490,9 @@ public:
      * \brief Accessor for the Canvas's currently drawn image.
      * \return A pointer to the RGB pixel buffer for the current Canvas.
      * \note The array starts in the bottom left corner of the image, and is in row-major ordering.
+     * \deprecated <b>This function returns a pointer directly to the Canvas' screen buffer. This
+     *   function may be removed in future versions of TSGL. Please use getPixel() or getPoint()
+     *   get individual pixels.
      */
     uint8_t* getScreenBuffer();
 
@@ -562,6 +564,8 @@ public:
 
     /*!
      * \brief Resets the internal drawing timer of a Canvas instance.
+     * \details This function resets the starting time of the Canvas' draw timer
+     *   to the current time.
      */
     void reset();
 

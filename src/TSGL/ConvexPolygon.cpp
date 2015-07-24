@@ -4,7 +4,7 @@ namespace tsgl {
 
 ConvexPolygon::ConvexPolygon(int numVertices) {
     if (numVertices < 3)
-      TsglErr("Cannot have a polygon with fewer than 3 vertices.");
+      TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
     length = numVertices;
     size = length * 6;
     current = 0;
