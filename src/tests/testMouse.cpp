@@ -71,7 +71,7 @@ void mouseFunction(Canvas& can, int threads) {
       mouseDown = false;
   });
 
-  while (can.getIsOpen()) {
+  while (can.isOpen()) {
     if (mouseDown) {
       color[1] = color[2];
       color[2] = Colors::randomColor(1.0f);

@@ -30,7 +30,7 @@ using namespace tsgl;
  */
 void lineFanFunction(Canvas& can, int t) {
     const double ARC = 7.11;  //(Arbitrary) spacing between arcs of the fan
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         #pragma omp parallel num_threads(t)
         {
             can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class

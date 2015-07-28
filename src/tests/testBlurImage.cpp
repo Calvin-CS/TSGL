@@ -49,7 +49,7 @@ void blurImageFunction(Canvas& can, std::string fpath, int threads) {
     int xmax = xmin+xblock; clamp(xmax,0,cww-1);
     int ymax = ymin+yblock; clamp(ymax,0,cwh-1);
     int depth = depthtest(xmin, ymin, xmin+xblock, ymin+yblock);
-    for (bool d = false; !d && can.getIsOpen(); d = blur(can, xmin, ymin, xmax, ymax, ndrawn, depth--));
+    for (bool d = false; !d && can.isOpen(); d = blur(can, xmin, ymin, xmax, ymax, ndrawn, depth--));
   }
 }
 

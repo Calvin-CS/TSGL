@@ -46,7 +46,7 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
         else
           can.drawPoint(i, j, ColorInt(i % NUM_COLORS, j % NUM_COLORS, (i * j) % NUM_COLORS));
       }
-      if (!can.getIsOpen()) break;
+      if (!can.isOpen()) break;
       can.sleep();
     }
   }

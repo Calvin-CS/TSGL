@@ -445,7 +445,7 @@ int Canvas::getFrameNumber() {
     return frameCounter;
 }
 
-bool Canvas::getIsOpen() {
+bool Canvas::isOpen() {
     return !isFinished;
 }
 
@@ -1237,7 +1237,7 @@ bool Canvas::testAccessors(Canvas& can) {
     }
 
     //Test 4: Window open?
-    if(can.getIsOpen() == true) {
+    if(can.isOpen() == true) {
       passed++;
     } else {
       failed++;

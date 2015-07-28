@@ -95,11 +95,11 @@ void VisualTaskQueue::reset() {
 }
 
 void VisualTaskQueue::close() {
-  if (lcan->getIsOpen())
+  if (lcan->isOpen())
     lcan->close();
   lcan->wait();
   if (showingLegend) {
-    if (vcan->getIsOpen())
+    if (vcan->isOpen())
       vcan->close();
     vcan->wait();
   }

@@ -18,7 +18,7 @@ Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
 
 void Pong::draw(Canvas& can) {
   // While the window has not been closed....
-  while (can.getIsOpen()) {
+  while (can.isOpen()) {
     can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     // Move the ball
     pongBall->move();

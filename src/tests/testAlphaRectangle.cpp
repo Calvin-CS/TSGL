@@ -25,7 +25,7 @@ using namespace tsgl;
 void alphaRectangleFunction(Canvas& can) {
     const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
     int a, b, c, d;
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep();
         a = rand() % WW; b = rand() % WH;
         c = rand() % WW; d = rand() % WH;

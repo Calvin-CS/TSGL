@@ -61,7 +61,7 @@ void conwayFunction(Canvas& can) {
       mouseDown = false;
     });
 
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
       can.sleep();
       if(!paused) {
         can.clear();

@@ -79,12 +79,12 @@ void Buddhabrot::draw(Cart& can) {
           std::cout << (100*cycles)/MAXITS << "%" << std::endl;
           can.handleIO();
         }
-        if (myRedraw || !can.getIsOpen())
+        if (myRedraw || !can.isOpen())
           break;
       }
     delete [] znums;
     }
-    if (!can.getIsOpen())
+    if (!can.isOpen())
       return;
     int maxIts = 0;
     for (int i = 0; i < cwh; ++i)
@@ -100,7 +100,7 @@ void Buddhabrot::draw(Cart& can) {
           can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j) * normalize);
         }
     }
-    while (can.getIsOpen() && !myRedraw)
+    while (can.isOpen() && !myRedraw)
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
   }
 }

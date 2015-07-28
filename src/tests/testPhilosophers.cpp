@@ -180,7 +180,7 @@ public:
   }
 
   ~Table() {
-    if (myCan2->getIsOpen())
+    if (myCan2->isOpen())
       myCan2->stop();
     else
       myCan2->wait();
@@ -586,7 +586,7 @@ void philosopherFunction(Canvas& can,int philosophers) {
   can.sleep();
   #pragma omp parallel num_threads(philosophers)
   {
-    while(can.getIsOpen()) {
+    while(can.isOpen()) {
       t.checkStep();
       can.pauseDrawing();
 //      #pragma omp barrier               //Barrier for optional synchronization

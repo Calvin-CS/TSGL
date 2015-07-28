@@ -48,7 +48,7 @@ void colorWheelFunction(Canvas& can, int threads) {
         int tid = omp_get_thread_num();
         int delta = tid * NUM_COLORS / threads;           // Distance between threads to compute
         shading = 1 - (float) tid / threads;
-        while (can.getIsOpen()) {
+        while (can.isOpen()) {
             can.sleep();
             int start = (NUM_COLORS - (can.getReps() % NUM_COLORS) + delta) % NUM_COLORS;
             x2 = CW + RADIUS * sin(GRADIENT * start);

@@ -89,7 +89,7 @@ void forestFireFunction(Canvas& can) {
             can.drawPoint(WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH));
         }
     }
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep();
         int l = fires.size();
         for (int i = 0; i < l; i++) {

@@ -33,7 +33,7 @@ void gradientWheelFunction(Canvas& can, int threads) {
     float shading = 1 - (float)tid / threads;      // Shading based on thread ID
     ColorFloat color[3];                           // RGB color to build
     int start, end, xx[3], yy[3];                  // Setup the arrays of values for vertices
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
       can.sleep();
       start = (NUM_COLORS - (can.getReps() % NUM_COLORS) + tid*delta) % NUM_COLORS; // Starting hue of the segment
       end = ((start+delta) % NUM_COLORS);

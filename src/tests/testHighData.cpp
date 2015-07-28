@@ -32,7 +32,7 @@ void highData(Canvas& can, unsigned threads) {
     unsigned bstart = tid*(width/nthreads);
     unsigned bend = (tid==nthreads) ? width-1 : bstart + width/nthreads;
     ColorHSV tcol= Colors::highContrastColor(tid);
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
       tcol.H = HVAL * ((can.getReps() + offset) % MAX_COLOR);
       for (unsigned i = bstart; i <= bend; i++)
         for (unsigned int j = 0; j < height; j++)

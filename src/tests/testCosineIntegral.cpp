@@ -64,7 +64,7 @@ void cosineIntegralFunction(Cart& can, int numberOfThreads) {
     long double start = -1.5*PI + omp_get_thread_num() * offset;
     long double stop = start + offset;
     for (long double i = start; i < stop; i += pw) {
-      if (!can.getIsOpen()) break;
+      if (!can.isOpen()) break;
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
       can.drawLine(i, 0, i, function1.valueAt(i), Colors::highContrastColor(omp_get_thread_num()));
     }

@@ -53,7 +53,7 @@ void spectrogramFunction(Canvas& can, std::string fname) {
       int start = tid * blockSize;
       int end = (tid == (nthreads-1)) ? cwh : (tid+1) * blockSize;
       for (int j = start; j < end; ++j) {
-        if (can.getIsOpen()) {
+        if (can.isOpen()) {
           can.sleep();
           for (int i = 0; i < cww; ++i) {
             ColorHSV hsv = can.getPoint(i,j);

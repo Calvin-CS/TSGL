@@ -58,7 +58,7 @@ void alphaLangtonFunction(Canvas& can) {
         can.clear();
     });
 
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
       if (!paused) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
@@ -89,7 +89,7 @@ void langtonFunction(Canvas& can) {
               WH = can.getWindowHeight();   // Window height
     AntFarm farm(WW,WH,4,&can);
     farm.addAnt(WW / 2,WH / 2,MAX_COLOR,0,0,0);
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
           farm.moveAnts();
@@ -119,7 +119,7 @@ void langtonColonyFunction(Canvas& can) {
     farm.addAnt(WW / 2,WH / 2 + R,MAX_COLOR,0,MAX_COLOR,3);
     farm.setShading(true);
 
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
@@ -147,7 +147,7 @@ void langtonRainbowFunction(Canvas& can) {
     for (int j = 0; j < 4; j++)
       farm.ants[j]->setAlpha(64);
 
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int j = 0; j < 4; j++)
           farm.ants[j]->changeColor(ColorHSV((can.getFrameNumber() + 3 * j) % 12 / 2.0f, 1.0f, 1.0f, .25f));

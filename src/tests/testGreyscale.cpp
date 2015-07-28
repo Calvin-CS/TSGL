@@ -63,7 +63,7 @@ void greyScaleFunction(Canvas& can, int numberOfThreads) {
         int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
         can.drawPoint(x, y, ColorInt(gray, gray, gray));
       }
-      if (! can.getIsOpen()) break;
+      if (! can.isOpen()) break;
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
     }
     for (unsigned int i = 0; i < thickness; i++) {

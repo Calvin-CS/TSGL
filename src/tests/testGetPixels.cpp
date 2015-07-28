@@ -42,7 +42,7 @@ void getPixelsFunction(Canvas& can, int threads) {
   {
     unsigned blocksize = (double)height / omp_get_num_threads();
     unsigned row = blocksize * omp_get_thread_num();
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
       for (unsigned y = row; y < row + blocksize; y++) {
         for (unsigned x = 0; x < width; x++) {

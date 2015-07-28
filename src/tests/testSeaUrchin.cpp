@@ -46,7 +46,7 @@ void seaUrchinFunction(Canvas& can, int threads) {
   #pragma omp parallel num_threads(threads)
   {
     SeaUrchin s(can, omp_get_thread_num());   //A thread gets a Sea Urchin
-    while(can.getIsOpen()) {   //Draw loop
+    while(can.isOpen()) {   //Draw loop
       can.sleep();
       can.clear();
       s.draw(can);  //And draws it

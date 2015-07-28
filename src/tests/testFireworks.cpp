@@ -204,7 +204,7 @@ void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
     const int CWW = can.getWindowWidth(), CWH = can.getWindowHeight();
     int tid = omp_get_thread_num();
     int nthreads = omp_get_num_threads();
-    while(can.getIsOpen()) {
+    while(can.isOpen()) {
       for (int n = 0; n < speed; ++n) {
         for (int i = tid; i < numFireworks; i += nthreads)
           arcs[i]->step();

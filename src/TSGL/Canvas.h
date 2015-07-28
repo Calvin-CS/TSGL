@@ -437,7 +437,7 @@ public:
      * \brief Accessor for window's closed status.
      * \return Whether the window is still open (that is, the user has not closed it).
      */
-    bool getIsOpen();
+    bool isOpen();
 
     /*!
      * \brief Accessor for the mouse's x-position.

@@ -118,7 +118,7 @@ void Mandelbrot::draw(Cart& can) {
       pb.update(blockheight*tid);
       pCan.drawProgress(&pb);
       long double startrow = blocksize * tid + can.getMinY();
-      for(unsigned int k = 0; k <= blockheight && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+      for(unsigned int k = 0; k <= blockheight && can.isOpen(); k++) {  // As long as we aren't trying to render off of the screen...
         pb.update(k+(CH*tid)/nthreads);
         //Messy, but effective
 //        pCan.drawRectangle(XBRD,YBRD,pCan.getWindowWidth()-XBRD,pCan.getWindowHeight()-YBRD,pCan.getBackgroundColor(),true);
@@ -148,11 +148,11 @@ void Mandelbrot::draw(Cart& can) {
     }
 //    shadeCanvas(can);  Optional shading
     std::cout << can.getTime() << std::endl;
-    while (can.getIsOpen() && !myRedraw) {
+    while (can.isOpen() && !myRedraw) {
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }
   }
-  if (pCan.getIsOpen())
+  if (pCan.isOpen())
     pCan.close();
   pCan.wait();  //Close our progress bar if we're done
 }

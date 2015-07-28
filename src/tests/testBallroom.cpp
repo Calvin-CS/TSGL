@@ -283,7 +283,7 @@ void ballroomFunction(Canvas& can) {
         b.toggleAttract();
     });
 
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         b.step(&can);
     }

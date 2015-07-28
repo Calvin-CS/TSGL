@@ -43,7 +43,7 @@ void auraFunction(Canvas& can, int segs) {
     cf[i].A = 0.01f;
   }
 
-  while(can.getIsOpen()) {
+  while(can.isOpen()) {
     //Update mouse coordinates
     scatter(mangle,0.02f);
     scatter(mdist,2.0f);

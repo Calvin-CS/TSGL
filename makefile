@@ -101,6 +101,7 @@ BINARIES= \
 	bin/testText \
 	bin/testTextCart \
 	bin/testTextTwo \
+	bin/testTutorial \
 	bin/testUnits \
 	bin/testVoronoi \
 

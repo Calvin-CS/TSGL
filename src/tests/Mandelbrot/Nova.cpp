@@ -16,7 +16,7 @@ void Nova::draw(Cart& can) {
       double blockstart = can.getCartHeight() / nthreads;
       unsigned int iterations;
       double smooth;
-      for (unsigned int k = 0; k <= (can.getWindowHeight() / nthreads) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+      for (unsigned int k = 0; k <= (can.getWindowHeight() / nthreads) && can.isOpen(); k++) {  // As long as we aren't trying to render off of the screen...
         long double row = blockstart * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
         for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex c(col, row);
@@ -47,7 +47,7 @@ void Nova::draw(Cart& can) {
       }
     }
     manhattanShading(can);
-    while (can.getIsOpen() && !myRedraw)
+    while (can.isOpen() && !myRedraw)
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
   }
 }
