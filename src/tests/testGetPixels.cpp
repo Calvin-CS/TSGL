@@ -48,7 +48,7 @@ void getPixelsFunction(Canvas& can) {
     {
         unsigned int blocksize = (double)height / omp_get_num_threads();
         unsigned int row = blocksize * omp_get_thread_num();
-        while (can.getIsOpen()) {
+        while (can.isOpen()) {
 //            uint8_t* buffer_offset = buffer + row * width * 3;
             for (unsigned int y = row; y < row + blocksize; y++) {
                 for (unsigned int x = 0; x < width; x++) {

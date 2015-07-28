@@ -48,7 +48,7 @@ void seaUrchinFunction(Canvas& can) {
   ColorInt random(randomColorR, randomColorG, randomColorB);
   ColorInt random2(randomColorB, randomColorR, randomColorG);
   float delta = 2.0f / 32 * 3.1415926585f;   //Makes them spin
-  while(can.getIsOpen()) {   //Draw loop
+  while(can.isOpen()) {   //Draw loop
     can.sleep();
     oldX = oldY = can.getWindowWidth() / 2;
     //First sea urchin

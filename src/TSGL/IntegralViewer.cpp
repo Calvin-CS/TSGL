@@ -16,9 +16,9 @@ IntegralViewer::IntegralViewer(functionPointer f, int width, int height, Decimal
 }
 
 IntegralViewer::~IntegralViewer() {
-  if (myRecCanvas->getIsOpen())
+  if (myRecCanvas->isOpen())
     myRecCanvas->stop();
-  if (myTrapCanvas->getIsOpen())
+  if (myTrapCanvas->isOpen())
     myTrapCanvas->stop();
   std::this_thread::sleep_for(std::chrono::milliseconds(20));
   delete myRecCanvas;
@@ -72,7 +72,7 @@ long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
 
     #pragma omp for
     for (long long i = 0; i < numRectangles; ++i) {
-      if (!myRecCanvas->getIsOpen()) continue;
+      if (!myRecCanvas->isOpen()) continue;
       myRecCanvas->sleep();
       xLo = myStartX + i * recWidth;
       xMid = xLo + halfRecWidth;
@@ -102,7 +102,7 @@ long double IntegralViewer::trapezoidEvaluate(long long numTrapezoids) {
 
     #pragma omp for
     for (long long i = 0; i < numTrapezoids; ++i) {
-      if (!myTrapCanvas->getIsOpen()) continue;
+      if (!myTrapCanvas->isOpen()) continue;
       leftX = myStartX + i * trapWidth;
       rightX = leftX + trapWidth;
       leftY = (*myF)(leftX);

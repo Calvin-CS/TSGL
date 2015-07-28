@@ -27,7 +27,7 @@ void highData(Canvas& can) {
     unsigned int reps,
                  width = can.getWindowWidth(),
                  height = can.getWindowHeight();
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         reps = can.getReps();  //Added a getReps() function to Canvas that gets the internal timer's reps
         float blue = (reps % 255) / 255.0f;
         for (unsigned int i = 0; i < width; i++) {

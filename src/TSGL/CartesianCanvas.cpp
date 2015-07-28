@@ -91,7 +91,7 @@ void CartesianCanvas::drawFunction(const Function &function, float sleepTime, Co
     bool first = true;
     Decimal lastX, lastY, y;
     for (Decimal x = minX; x < maxX; x += pixelWidth) {
-        if (!getIsOpen()) break;
+        if (!isOpen()) break;
         y = function.valueAt(x);
         if (!first)
           drawLine(lastX,lastY,x,y,color);
@@ -140,7 +140,7 @@ void CartesianCanvas::drawPartialFunction(functionPointer &function, Decimal min
     bool first = true;
     Decimal lastX, lastY, y;
     for (Decimal x = min; x < max; x += pixelWidth) {
-        if (!getIsOpen()) break;
+        if (!isOpen()) break;
         y = (function)(x);
         if (!first)
           drawLine(lastX,lastY,x,y,color);

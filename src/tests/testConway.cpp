@@ -38,7 +38,7 @@ void conwayFunction(Canvas& can) {
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
       can.recordForNumFrames(1);  //Screenshot
     });
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         can.clear();
         for (int i = 0; i < IPF; i++)

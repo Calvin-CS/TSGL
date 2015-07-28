@@ -32,7 +32,7 @@ typedef CartesianCanvas Cart;
 void screenShotFunction(Canvas& can) {
     int xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
     can.recordForNumFrames(FPS * 30);
-    while (can.getIsOpen()) {  // Checks to see if the window has been closed
+    while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();
         xOld = xMid;
         yOld = yMid;

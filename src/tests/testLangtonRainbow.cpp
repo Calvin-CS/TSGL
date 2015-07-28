@@ -32,7 +32,7 @@ void langtonRainbowFunction(Canvas& can) {
     for (int j = 0; j < 4; j++)
       farm.ants[j]->setAlpha(64);
 
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int j = 0; j < 4; j++)
           farm.ants[j]->changeColor(ColorHSV((can.getFrameNumber() + 3 * j) % 12 / 2.0f, 1.0f, 1.0f, .25f));

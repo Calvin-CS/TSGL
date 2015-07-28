@@ -60,7 +60,7 @@ void concavePolygonFunction(Canvas& can) {
     std::cout << i << ":" << x[i] << "," << y[i] << std::endl;
   }
 
-  while (can.getIsOpen()) {  // Checks to see if the window has been closed
+  while (can.isOpen()) {  // Checks to see if the window has been closed
     can.sleep();
 //    for (unsigned i = 0; i < PSIZE; ++i)
 //      color[i] = Colors::randomColor(1.0f);

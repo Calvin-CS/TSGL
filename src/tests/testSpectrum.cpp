@@ -44,7 +44,7 @@ void spectrumFunction(Canvas& can, int & numberOfThreads) {
         } else {
             nthreads = numberOfThreads;  //Else, use the argument as the number of threads
         }
-        while (can.getIsOpen()) {
+        while (can.isOpen()) {
             can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
             for (int i = omp_get_thread_num(); i < NUM_COLORS; i += nthreads)
                 for (int j = 0; j < NUM_COLORS; j++)

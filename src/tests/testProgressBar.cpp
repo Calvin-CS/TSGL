@@ -30,7 +30,7 @@ void progressBarFunction(Canvas& can) {
     const int X = 100, Y = X, W = can.getWindowWidth()-X*2, H = 20, MIN = 0, MAX = 1000, SEGS = 8;
     ProgressBar pb(X,Y,W,H,MIN,MAX,SEGS);
     int progress = 0;
-    while (can.getIsOpen()) {  // Checks to see if the window has been closed
+    while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
         ++progress;
         for (unsigned i = 0; i < SEGS; ++i)

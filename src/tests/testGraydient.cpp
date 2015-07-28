@@ -29,7 +29,7 @@ void graydientFunction(Canvas& can, int & numberOfThreads) {
   #pragma omp parallel num_threads(numberOfThreads)
   {
     for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i += omp_get_num_threads()) {
-      if (!can.getIsOpen()) break;
+      if (!can.isOpen()) break;
       for (int j = 0; j < can.getWindowHeight(); j++) {
         int color = i * MAX_COLOR / 2 / can.getWindowWidth() + j * MAX_COLOR / 2 / can.getWindowHeight();
         can.drawPoint(i, j, ColorInt(color, color, color));

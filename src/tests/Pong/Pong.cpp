@@ -14,7 +14,7 @@ void Pong::draw(Canvas& can) {
   leftPaddle->bindings(can, -1);  // W & S keys
   rightPaddle->bindings(can, 1);  // Up and Down arrow keys
   // While the window has not been closed....
-  while (can.getIsOpen()) {
+  while (can.isOpen()) {
     can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     // Move the ball
     pongBall->move();

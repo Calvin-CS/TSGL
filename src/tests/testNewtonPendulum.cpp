@@ -49,7 +49,7 @@ void newtonPendulumFunction(Canvas& can) {
   //Computation
   float rightPos = 0, leftPos = 0;               //Initial positions of the edge balls
   float leftMoving = 0, rightMoving = TOPSPEED;  //Right goes first, left stays stationary
-  while(can.getIsOpen()) {
+  while(can.isOpen()) {
     can.sleep();
 
     //Drawing conditional for right ball motion

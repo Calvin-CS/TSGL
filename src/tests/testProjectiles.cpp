@@ -65,7 +65,7 @@ void projectileFunction(Canvas& can) {
   });
 
   //Draw loop
-  while(can.getIsOpen()) {
+  while(can.isOpen()) {
     can.sleep();
     can.pauseDrawing();
     can.clear();

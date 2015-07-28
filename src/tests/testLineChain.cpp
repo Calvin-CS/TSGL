@@ -52,7 +52,7 @@ void lineChainFunction(Canvas& can, int t) {
     int xOld, yOld, xNew = CWW*2, yNew = CWH;
     float next = (ARC*TID)/NTHREADS, s = next;
     ColorFloat c = Colors::highContrastColor(TID);
-    while (can.getIsOpen()) {  // Checks to see if the window has been closed
+    while (can.isOpen()) {  // Checks to see if the window has been closed
       can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
       for (int i = 0; i < IPF; ++i) {
         next += ARC; s += SPIN;

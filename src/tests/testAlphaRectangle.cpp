@@ -27,7 +27,7 @@ void alphaRectangleFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the center of the window
               WINDOW_H = can.getWindowHeight();
     int a, b, c, d;
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         a = rand() % WINDOW_W;
         b = rand() % WINDOW_H;

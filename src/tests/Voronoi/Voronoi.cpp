@@ -47,7 +47,7 @@ void Voronoi::draw(Canvas& can) {
       }
       myKValue[i * can.getWindowHeight() + j] = myBestK;
       can.drawPoint(i, j, myColor[myBestK]);      // Draw the point with the closest control's color
-      if (!can.getIsOpen()) break;
+      if (!can.isOpen()) break;
     }
   }
 }

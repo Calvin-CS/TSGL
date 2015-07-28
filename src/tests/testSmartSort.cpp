@@ -128,7 +128,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
     #pragma omp parallel num_threads(threads)
     {
         int tid = omp_get_thread_num();
-        while (can.getIsOpen()) {
+        while (can.isOpen()) {
             can.sleep();
             if (sd[tid]->state == S_WAIT) {  //Merge waiting threads
               if ((tid % sd[tid]->size) > 0)

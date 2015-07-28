@@ -36,7 +36,7 @@ void gradientWheelFunction(Canvas& can) {
     ColorFloat color[3];                         // RGB color to build
     int xx[3], yy[3];                       // Setup the arrays of values for vertices
     int start;
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
       start = (NUM_COLORS - can.getReps() % NUM_COLORS + delta*tid) % NUM_COLORS;  // shapes by the location and frame
 

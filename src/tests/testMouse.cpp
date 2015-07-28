@@ -57,7 +57,7 @@ void mouseFunction(Canvas& can) {
         can.drawConvexPolygon(index, x, y, color, true);  //new, convex polygon
         mouseDown = false;
     });
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         if (mouseDown) {
             can.drawLine(lastX, lastY, can.getMouseX(), can.getMouseY());
             x[index] = lastX = can.getMouseX();

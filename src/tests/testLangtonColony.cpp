@@ -35,7 +35,7 @@ void langtonColonyFunction(Canvas& can) {
     farm.addAnt(WW / 2,WH / 2 + R,MAX_COLOR,0,MAX_COLOR,3);
     farm.setShading(true);
 
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();

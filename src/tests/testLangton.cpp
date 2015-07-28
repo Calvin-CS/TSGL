@@ -32,7 +32,7 @@ void langtonFunction(Canvas& can) {
               WH = can.getWindowHeight();   // Window height
     AntFarm farm(WW,WH,4,&can);
     farm.addAnt(WW / 2,WH / 2,MAX_COLOR,0,0,0);
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
           farm.moveAnts();

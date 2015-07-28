@@ -31,7 +31,7 @@ void novaFunction(CartesianCanvas& can, unsigned int & numberOfThreads) {
     double BLOCKSTART = (can.getMaxY() - can.getMinY()) / nthreads;
     unsigned int iterations;
     double smooth;
-    for (int k = 0; k <= (can.getWindowHeight() / nthreads) && can.getIsOpen(); k++) {  // As long as we aren't trying to render off of the screen...
+    for (int k = 0; k <= (can.getWindowHeight() / nthreads) && can.isOpen(); k++) {  // As long as we aren't trying to render off of the screen...
       long double row = BLOCKSTART * tid + can.getMinY() + can.getPixelHeight() * k;
       for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
         complex c(col, row);

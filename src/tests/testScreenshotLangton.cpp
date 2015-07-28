@@ -39,7 +39,7 @@ void screenshotLangtonFunction(Canvas& can) {
         can.clear();
     });
 
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         if (!paused) {
           can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
           for (int j = 0; j < 4; j++)

@@ -46,7 +46,7 @@ void dumbSortFunction(Canvas& can) {
     for (int i = 0; i < SIZE; i++)
         numbers[i] = rand() % (can.getWindowHeight() - 40);
     can.setBackgroundColor(GRAY);
-    while (can.getIsOpen()) {
+    while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         if (min >= max) return;  // We are done sorting
 
