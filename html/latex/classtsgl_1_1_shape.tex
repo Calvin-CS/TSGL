@@ -1,0 +1,129 @@
+\hypertarget{classtsgl_1_1_shape}{}\section{tsgl\+:\+:Shape Class Reference}
+\label{classtsgl_1_1_shape}\index{tsgl\+::\+Shape@{tsgl\+::\+Shape}}
+
+
+A class for drawing shapes onto a \hyperlink{classtsgl_1_1_canvas}{Canvas} or \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}.  
+
+
+
+
+{\ttfamily \#include $<$Shape.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Shape\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=10.000000cm]{classtsgl_1_1_shape}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_shape_ad283a47aa40bf80dcd308cc581c9e2dd}{Shape} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{classtsgl_1_1_shape}{Shape}. \end{DoxyCompactList}\item 
+\hypertarget{classtsgl_1_1_shape_aa9bfac883a0748471600fe9752e85948}{}virtual \hyperlink{classtsgl_1_1_shape_aa9bfac883a0748471600fe9752e85948}{$\sim$\+Shape} ()\label{classtsgl_1_1_shape_aa9bfac883a0748471600fe9752e85948}
+
+\begin{DoxyCompactList}\small\item\em Destructor for the \hyperlink{classtsgl_1_1_shape}{Shape}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_shape_af78b1627b97d621824ce86db214e2402}{draw} ()=0
+\begin{DoxyCompactList}\small\item\em Actually draws the \hyperlink{classtsgl_1_1_shape}{Shape} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+bool \hyperlink{classtsgl_1_1_shape_aadd0ea81f714328bdf9483851a8b86ad}{get\+Is\+Textured} ()
+\begin{DoxyCompactList}\small\item\em Accessor for {\ttfamily is\+Textured}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtsgl_1_1_shape_a9d5cd6d6a0596a30dbce44eb2d00c583}{}bool {\bfseries is\+Textured}\label{classtsgl_1_1_shape_a9d5cd6d6a0596a30dbce44eb2d00c583}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A class for drawing shapes onto a \hyperlink{classtsgl_1_1_canvas}{Canvas} or \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+
+\begin{DoxyWarning}{Warning}
+{\bfseries {\itshape Though extending this class must be allowed due to the way the code is set up, attempting to do so could potentially mess up the internal G\+L calls the library uses. Proceed with great caution.}}
+\end{DoxyWarning}
+\hyperlink{classtsgl_1_1_shape}{Shape} provides a base class for drawing shapes to a \hyperlink{classtsgl_1_1_canvas}{Canvas} or \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. \begin{DoxyNote}{Note}
+\hyperlink{classtsgl_1_1_shape}{Shape} is abstract, and must be extended by the user.
+\end{DoxyNote}
+All \hyperlink{classtsgl_1_1_shape}{Shape} subclasses must override the \hyperlink{classtsgl_1_1_shape_af78b1627b97d621824ce86db214e2402}{draw()} method. Though theoretically any G\+L calls can be used here, something like the following should be used\+: {\ttfamily  gl\+Buffer\+Data(\+G\+L\+\_\+\+A\+R\+R\+A\+Y\+\_\+\+B\+U\+F\+F\+E\+R, numberofvertices $\ast$ 6 $\ast$ sizeof(float), vertices, G\+L\+\_\+\+D\+Y\+N\+A\+M\+I\+C\+\_\+\+D\+R\+A\+W); gl\+Draw\+Arrays(drawingmode, 0, numberofvertices); }
+
+{\ttfamily vertices} should be an array of floating point values in T\+S\+G\+L\textquotesingle{}s vertex format. One vertex consists of 6 floating point values, signifying x,y,red,green,blue,and alpha components respectively. E.\+g., to draw a triangle, you would need 3 vertices = 18 floats -\/$>$ vertices should be an array of length 18.
+
+{\ttfamily numberofvertices} should be the actual integer number of vertices to be drawn (e.\+g., {\itshape 3} for a triangle).
+
+{\ttfamily drawingmode} should be one of G\+L\textquotesingle{}s primitive drawing modes. See \href{https://www.opengl.org/sdk/docs/man2/xhtml/glBegin.xml}{\tt https\+://www.\+opengl.\+org/sdk/docs/man2/xhtml/gl\+Begin.\+xml} for further information.
+
+Theoretically, you could potentially extend the \hyperlink{classtsgl_1_1_shape}{Shape} class so that you can create another \hyperlink{classtsgl_1_1_shape}{Shape} class that suits your needs.
+
+However, this is not recommended for normal use of the T\+S\+G\+L library. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtsgl_1_1_shape_ad283a47aa40bf80dcd308cc581c9e2dd}{}\index{tsgl\+::\+Shape@{tsgl\+::\+Shape}!Shape@{Shape}}
+\index{Shape@{Shape}!tsgl\+::\+Shape@{tsgl\+::\+Shape}}
+\subsubsection[{Shape}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Shape\+::\+Shape (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtsgl_1_1_shape_ad283a47aa40bf80dcd308cc581c9e2dd}
+
+
+Constructs a new \hyperlink{classtsgl_1_1_shape}{Shape}. 
+
+Whether the shape is textured or not. If extending \hyperlink{classtsgl_1_1_shape}{Shape}, {\bfseries  you {\itshape must} leave this at false (unless you are working with an image). }
+
+
+\begin{DoxyItemize}
+\item Usually {\ttfamily vertices} is filled with floating point values that represent the vertices of the shape to be drawn.
+\item You may define other items in the constructor that pertain to the attributes of the subclass that is extending \hyperlink{classtsgl_1_1_shape}{Shape}.
+\item At a minimum, you {\itshape M\+U\+S\+T} fill an array of floating point values that pertain to the vertices of the shape. \begin{DoxyWarning}{Warning}
+{\bfseries You {\itshape must} inherit the parent\textquotesingle{}s constructor if you are extending \hyperlink{classtsgl_1_1_shape}{Shape}.} 
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Refer to the \hyperlink{classtsgl_1_1_shape}{Shape} class description for more details. 
+\end{DoxyNote}
+
+\end{DoxyItemize}
+
+\subsection{Member Function Documentation}
+\hypertarget{classtsgl_1_1_shape_af78b1627b97d621824ce86db214e2402}{}\index{tsgl\+::\+Shape@{tsgl\+::\+Shape}!draw@{draw}}
+\index{draw@{draw}!tsgl\+::\+Shape@{tsgl\+::\+Shape}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}virtual void tsgl\+::\+Shape\+::draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}\label{classtsgl_1_1_shape_af78b1627b97d621824ce86db214e2402}
+
+
+Actually draws the \hyperlink{classtsgl_1_1_shape}{Shape} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This method renders the shape to the \hyperlink{classtsgl_1_1_canvas}{Canvas}.
+\begin{DoxyItemize}
+\item When you extend the \hyperlink{classtsgl_1_1_shape}{Shape} class, you {\itshape M\+U\+S\+T} provide a definition for this method.
+\item The definition must follow this format\+: {\ttfamily  gl\+Buffer\+Data(drawing\+Mode, number\+Of\+Vertices $\ast$ 6 $\ast$ sizeof(float), vertices, G\+L\+\_\+\+D\+Y\+N\+A\+M\+I\+C\+\_\+\+D\+R\+A\+W); gl\+Draw\+Arrays(drawing\+Mode, 0, number\+Of\+Vertices); }
+\item Really bad things could potentially happen if you do not follow this format. These two statements {\itshape M\+U\+S\+T} be in the \hyperlink{classtsgl_1_1_shape_af78b1627b97d621824ce86db214e2402}{draw()} method of the subclass that extends the \hyperlink{classtsgl_1_1_shape}{Shape} class.
+\item You can add other statements in the subclass \begin{DoxyNote}{Note}
+Please refer to the class description for more information and warnings about overriding this method. 
+\end{DoxyNote}
+
+\end{DoxyItemize}
+
+Implemented in \hyperlink{classtsgl_1_1_concave_polygon_a06d759932483ae2b54bb807db20cbc4a}{tsgl\+::\+Concave\+Polygon}, \hyperlink{classtsgl_1_1_convex_polygon_add4d4971a5d22385eebbfe771af916b5}{tsgl\+::\+Convex\+Polygon}, \hyperlink{classtsgl_1_1_triangle_strip_a7a984063f85c8b6ab61bd6e989d38920}{tsgl\+::\+Triangle\+Strip}, \hyperlink{classtsgl_1_1_polyline_ac6de5e2817824d9427d02d3e7be37f47}{tsgl\+::\+Polyline}, \hyperlink{classtsgl_1_1_image_a85732de312b98dd5ce5a9cc319bbf8c5}{tsgl\+::\+Image}, \hyperlink{classtsgl_1_1_text_a9dc47e4af682abfdab74e37b71f9fbde}{tsgl\+::\+Text}, \hyperlink{classtsgl_1_1_triangle_a83b30f9f7c800146fa900d32a58fa0c7}{tsgl\+::\+Triangle}, \hyperlink{classtsgl_1_1_line_ae7eccbbf5230a4c68139560d810af415}{tsgl\+::\+Line}, and \hyperlink{classtsgl_1_1_rectangle_addad1e65bc50d3669e6350aa32249c7f}{tsgl\+::\+Rectangle}.
+
+\hypertarget{classtsgl_1_1_shape_aadd0ea81f714328bdf9483851a8b86ad}{}\index{tsgl\+::\+Shape@{tsgl\+::\+Shape}!get\+Is\+Textured@{get\+Is\+Textured}}
+\index{get\+Is\+Textured@{get\+Is\+Textured}!tsgl\+::\+Shape@{tsgl\+::\+Shape}}
+\subsubsection[{get\+Is\+Textured}]{\setlength{\rightskip}{0pt plus 5cm}bool tsgl\+::\+Shape\+::get\+Is\+Textured (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtsgl_1_1_shape_aadd0ea81f714328bdf9483851a8b86ad}
+
+
+Accessor for {\ttfamily is\+Textured}. 
+
+\begin{DoxyReturn}{Returns}
+Whether the shape is a textured primitive or not. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Shape.\+h\end{DoxyCompactItemize}

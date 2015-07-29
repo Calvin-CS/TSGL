@@ -1,0 +1,137 @@
+\hypertarget{classtsgl_1_1_image}{}\section{tsgl\+:\+:Image Class Reference}
+\label{classtsgl_1_1_image}\index{tsgl\+::\+Image@{tsgl\+::\+Image}}
+
+
+Draw an image to the \hyperlink{classtsgl_1_1_canvas}{Canvas}.  
+
+
+
+
+{\ttfamily \#include $<$Image.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Image\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_image}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_image_a497894a4dbfa46d1e3aefd7dbe086cc3}{Image} (std\+::string filename, \hyperlink{classtsgl_1_1_texture_handler}{Texture\+Handler} \&loader, int x, int y, int width, int height, float alpha)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_image}{Image}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_image_a85732de312b98dd5ce5a9cc319bbf8c5}{draw} ()
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{classtsgl_1_1_image}{Image}. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_image_afa939262dcf32c9a504efe30a8de5c58}{get\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the image\textquotesingle{}s height. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_image_af01d5f815b91f20fd441f9bcec671d79}{get\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the image\textquotesingle{}s width. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw an image to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+\hyperlink{classtsgl_1_1_image}{Image} is a class which provides a simple interface for loading and drawing images. The \hyperlink{classtsgl_1_1_image}{Image} class currently supports files in the .png, .bmp, and .jpg formats. \begin{DoxyNote}{Note}
+For the time being, there is no way to measure the size of an image once it\textquotesingle{}s loaded. Therefore, the width and height must be specified manually, and stretching may occur if the input dimensions don\textquotesingle{}t match the images actual dimensions. 
+
+Additionally, an Image\+Loader must be passed as an argument. This Image\+Loader is automatically constructed with the \hyperlink{classtsgl_1_1_canvas}{Canvas} as the private {\itshape loader} variable. At the moment, there is no way to extend \hyperlink{classtsgl_1_1_canvas_ae94a586629d20b7fabcb402d1c654628}{Canvas\+::draw\+Image()} function due to this privatization. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Aside from an error message output to stderr, \hyperlink{classtsgl_1_1_image}{Image} gives no indication if an image failed to load. 
+\end{DoxyWarning}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classtsgl_1_1_image_a497894a4dbfa46d1e3aefd7dbe086cc3}{}\index{tsgl\+::\+Image@{tsgl\+::\+Image}!Image@{Image}}
+\index{Image@{Image}!tsgl\+::\+Image@{tsgl\+::\+Image}}
+\subsubsection[{Image}]{\setlength{\rightskip}{0pt plus 5cm}tsgl\+::\+Image\+::\+Image (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{filename, }
+\item[{{\bf Texture\+Handler} \&}]{loader, }
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{width, }
+\item[{int}]{height, }
+\item[{float}]{alpha}
+\end{DoxyParamCaption}
+)}\label{classtsgl_1_1_image_a497894a4dbfa46d1e3aefd7dbe086cc3}
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_image}{Image}. 
+
+This is the explicit constructor for the \hyperlink{classtsgl_1_1_image}{Image} class. 
+\begin{DoxyParams}{Parameters}
+{\em filename} & The filename of the image to load. \\
+\hline
+{\em loader} & A reference pointer to the \hyperlink{classtsgl_1_1_texture_handler}{Texture\+Handler} with which to load the image. \\
+\hline
+{\em x} & The x coordinate of the left of the \hyperlink{classtsgl_1_1_image}{Image}. \\
+\hline
+{\em y} & The y coordinate of the top of the \hyperlink{classtsgl_1_1_image}{Image}. \\
+\hline
+{\em width} & The width of the \hyperlink{classtsgl_1_1_image}{Image}. \\
+\hline
+{\em height} & The height of the \hyperlink{classtsgl_1_1_image}{Image}. \\
+\hline
+{\em alhpa} & The alpha of the \hyperlink{classtsgl_1_1_image}{Image}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_image}{Image} is drawn with the specified coordinates, dimensions, and transparency. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+{\bfseries I\+M\+P\+O\+R\+T\+A\+N\+T}\+: In \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, {\itshape y} specifies the bottom, not the top, of the image. 
+\end{DoxyNote}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classtsgl_1_1_image_a85732de312b98dd5ce5a9cc319bbf8c5}{}\index{tsgl\+::\+Image@{tsgl\+::\+Image}!draw@{draw}}
+\index{draw@{draw}!tsgl\+::\+Image@{tsgl\+::\+Image}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void tsgl\+::\+Image\+::draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\label{classtsgl_1_1_image_a85732de312b98dd5ce5a9cc319bbf8c5}
+
+
+Draw the \hyperlink{classtsgl_1_1_image}{Image}. 
+
+This function actually draws the \hyperlink{classtsgl_1_1_image}{Image} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+Implements \hyperlink{classtsgl_1_1_shape_af78b1627b97d621824ce86db214e2402}{tsgl\+::\+Shape}.
+
+\hypertarget{classtsgl_1_1_image_afa939262dcf32c9a504efe30a8de5c58}{}\index{tsgl\+::\+Image@{tsgl\+::\+Image}!get\+Height@{get\+Height}}
+\index{get\+Height@{get\+Height}!tsgl\+::\+Image@{tsgl\+::\+Image}}
+\subsubsection[{get\+Height}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Image\+::get\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtsgl_1_1_image_afa939262dcf32c9a504efe30a8de5c58}
+
+
+Accessor for the image\textquotesingle{}s height. 
+
+\begin{DoxyReturn}{Returns}
+The height of the \hyperlink{classtsgl_1_1_image}{Image}. 
+\end{DoxyReturn}
+\hypertarget{classtsgl_1_1_image_af01d5f815b91f20fd441f9bcec671d79}{}\index{tsgl\+::\+Image@{tsgl\+::\+Image}!get\+Width@{get\+Width}}
+\index{get\+Width@{get\+Width}!tsgl\+::\+Image@{tsgl\+::\+Image}}
+\subsubsection[{get\+Width}]{\setlength{\rightskip}{0pt plus 5cm}int tsgl\+::\+Image\+::get\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classtsgl_1_1_image_af01d5f815b91f20fd441f9bcec671d79}
+
+
+Accessor for the image\textquotesingle{}s width. 
+
+\begin{DoxyReturn}{Returns}
+The width of the \hyperlink{classtsgl_1_1_image}{Image}. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Image.\+h\item 
+Image.\+cpp\end{DoxyCompactItemize}
