@@ -13,7 +13,7 @@ CartesianCanvas::CartesianCanvas(int x, int y, int width, int height, Decimal xM
     recomputeDimensions(xMin, yMin, xMax, yMax);
 }
 
-void CartesianCanvas::drawAxes(Decimal originX, Decimal originY, Decimal spacingX = 0, Decimal spacingY = 0) {
+void CartesianCanvas::drawAxes(Decimal originX, Decimal originY, Decimal spacingX, Decimal spacingY) {
     drawLine(maxX, originY, minX, originY);  // Make the two axes
     drawLine(originX, maxY, originX, minY);
 
