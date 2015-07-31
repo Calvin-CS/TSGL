@@ -51,37 +51,6 @@ inline void rotate(float cx, float cy, int& xx, int& yy, float rot) {
  * .
  * \param can Reference to the Canvas being drawn to.
  */
-<<<<<<< HEAD
-void mouseFunction(Canvas& can) {
-    bool mouseDown = false;
-    int x[10000];
-    int y[10000];
-    ColorFloat color[10000];
-    unsigned int index = 0;
-    int lastX, lastY;
-    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-        can.clear();
-    });
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &lastX, &lastY, &index, &x, &y, &color]() {
-        x[0] = lastX = can.getMouseX();
-        y[0] = lastY = can.getMouseY();
-        color[0] = Colors::randomColor(1.0f);
-        index = 1;
-        mouseDown = true;
-    });
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown, &can, &index, &x, &y, &color]() {
-        can.drawConcavePolygon(index, x, y, color, true);
-        can.drawConvexPolygon(index, x, y, color, true);  //new, convex polygon
-        mouseDown = false;
-    });
-    while (can.isOpen()) {
-        if (mouseDown) {
-            can.drawLine(lastX, lastY, can.getMouseX(), can.getMouseY());
-            x[index] = lastX = can.getMouseX();
-            y[index] = lastY = can.getMouseY();
-            color[index] = Colors::randomColor(1.0f);
-            index++;
-=======
 void mouseFunction(Canvas& can, int threads) {
   const int CX = can.getWindowWidth() / 2, CY = can.getWindowHeight() / 2;
   int x[3], y[3], index = 0;
@@ -118,7 +87,6 @@ void mouseFunction(Canvas& can, int threads) {
             rotate(CX,CY,myx[i],myy[i],tdelta);
           }
           can.drawConvexPolygon(3,myx,myy,color,true);
->>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
         }
     }
     can.sleep();

@@ -283,10 +283,8 @@ void ballroomFunction(Canvas& can) {
         b.toggleAttract();
     });
 
-<<<<<<< HEAD
 //    ColorFloat clearcolor = ColorInt(0,0,0,16);
-=======
->>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
+
     while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         b.step(&can);

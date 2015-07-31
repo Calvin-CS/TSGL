@@ -22,21 +22,6 @@ using namespace tsgl;
  * .
  * \param can Reference to the Canvas being drawn to.
  */
-<<<<<<< HEAD
-void highData(Canvas& can) {
-    unsigned int reps,
-                 width = can.getWindowWidth(),
-                 height = can.getWindowHeight();
-    while (can.isOpen()) {
-        reps = can.getReps();  //Added a getReps() function to Canvas that gets the internal timer's reps
-        float blue = (reps % 255) / 255.0f;
-        for (unsigned int i = 0; i < width; i++) {
-            for (unsigned int j = 0; j < height; j++) {
-                can.drawPoint(i, j, ColorFloat(1.0f, 1.0f, blue, 1.0f));
-            }
-        }
-        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-=======
 void highData(Canvas& can, unsigned threads) {
   const float HVAL = 6.0f/255.0f;  // For converting integer hues to floating point values
   const unsigned int width = can.getWindowWidth(), height = can.getWindowHeight();
@@ -53,7 +38,6 @@ void highData(Canvas& can, unsigned threads) {
         for (unsigned int j = 0; j < height; j++)
           can.drawPoint(i, j, tcol);
       can.handleIO();
->>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
     }
   }
 }

@@ -26,17 +26,9 @@ void alphaRectangleFunction(Canvas& can) {
     const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
     int a, b, c, d;
     while (can.isOpen()) {
-<<<<<<< HEAD
-        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-        a = rand() % WINDOW_W;
-        b = rand() % WINDOW_H;
-        c = rand() % WINDOW_W;
-        d = rand() % WINDOW_H;
-=======
         can.sleep();
         a = rand() % WW; b = rand() % WH;
         c = rand() % WW; d = rand() % WH;
->>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
         can.drawRectangle(a, b, c, d, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16));
     }
 }

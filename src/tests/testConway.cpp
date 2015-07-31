@@ -54,10 +54,7 @@ void conwayFunction(Canvas& can) {
       paused = !paused;
       can.recordForNumFrames(1);  //Screenshot
     });
-<<<<<<< HEAD
-    while (can.isOpen()) {
-        can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-=======
+
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown]() {
       mouseDown = true;
     });
@@ -68,7 +65,6 @@ void conwayFunction(Canvas& can) {
     while (can.isOpen()) {
       can.sleep();
       if(!paused) {
->>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
         can.clear();
         for (int i = 0; i < IPF; i++) {
           if(mouseDown) {

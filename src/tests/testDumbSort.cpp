@@ -46,53 +46,6 @@ void dumbSortFunction(Canvas& can) {
         numbers[i] = rand() % (can.getWindowHeight() - 40);
     can.setBackgroundColor(GRAY);
     while (can.isOpen()) {
-<<<<<<< HEAD
-        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-        if (min >= max) return;  // We are done sorting
-
-        for (int i = 0; i < IPF; i++) {
-            if (goingUp) {
-                if (numbers[pos] > numbers[pos + 1]) {
-                    temp = numbers[pos];
-                    numbers[pos] = numbers[pos + 1];
-                    numbers[pos + 1] = temp;
-                    lastSwap = pos;
-                }
-                if (pos >= max) {
-                    pos = max;
-                    max = (lastSwap < max) ? lastSwap : max - 1;
-                    goingUp = !goingUp;
-                } else
-                    pos++;
-            } else {
-                if (numbers[pos] < numbers[pos - 1]) {
-                    temp = numbers[pos];
-                    numbers[pos] = numbers[pos - 1];
-                    numbers[pos - 1] = temp;
-                    lastSwap = pos;
-                }
-                if (pos <= min) {
-                    pos = min;
-                    min = (lastSwap > min) ? lastSwap : min + 1;
-                    goingUp = !goingUp;
-                } else
-                    pos--;
-            }
-        }
-
-        int start = 50, width = 1, height;
-        int cwh = can.getWindowHeight() - 20;
-        ColorFloat color;
-        can.pauseDrawing(); //Tell the Canvas to stop updating the screen temporarily
-        can.clear();
-        for (int i = 0; i < SIZE; i++, start += width * 2) {
-            height = numbers[i];
-            if (i == pos)
-                color = ColorInt(MAX_COLOR, MAX_COLOR, 0);
-            else
-                color = ColorInt(MAX_COLOR, 0, 0);
-            can.drawRectangle(start, cwh - height, start + width, cwh, color);
-=======
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
       if (min >= max) return;  // We are done sorting
       for (int i = 0; i < IPF; i++) {
@@ -122,7 +75,6 @@ void dumbSortFunction(Canvas& can) {
             goingUp = !goingUp;
           } else
             pos--;
->>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
         }
       }
       int start = 50, width = 1, height;

@@ -27,18 +27,6 @@ void gradientWheelFunction(Canvas& can, int threads) {
               ARCLENGTH = 2 * PI / NUM_COLORS;     // Gap between wedges
   #pragma omp parallel num_threads(threads)
   {
-<<<<<<< HEAD
-    int nthreads = omp_get_num_threads();
-    int tid = omp_get_thread_num();         // Thread ID
-    int delta = NUM_COLORS / nthreads;           // Distance between threads to compute
-    float shading = 1 - (float) tid / nthreads;  // Shading based on thread ID
-    ColorFloat color[3];                         // RGB color to build
-    int xx[3], yy[3];                       // Setup the arrays of values for vertices
-    int start;
-    while (can.isOpen()) {
-      can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-      start = (NUM_COLORS - can.getReps() % NUM_COLORS + delta*tid) % NUM_COLORS;  // shapes by the location and frame
-=======
     threads = omp_get_num_threads();               // Actual number of threads
     int tid = omp_get_thread_num();                // Thread ID
     int delta = (NUM_COLORS / threads);            // Distance between threads to compute
@@ -49,8 +37,6 @@ void gradientWheelFunction(Canvas& can, int threads) {
       can.sleep();
       start = (NUM_COLORS - (can.getReps() % NUM_COLORS) + tid*delta) % NUM_COLORS; // Starting hue of the segment
       end = ((start+delta) % NUM_COLORS);
->>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
-
       color[0] = ColorHSV(start / (float)NUM_COLORS * 6, 0.0f, shading, 1.0f);
       color[1] = ColorHSV(start / (float)NUM_COLORS * 6, 1.0f, shading, 1.0f);
       color[2] = ColorHSV(end   / (float)NUM_COLORS * 6, 1.0f, shading, 1.0f);
