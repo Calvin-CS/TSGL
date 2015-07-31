@@ -1,10 +1,3 @@
-/*
- * Color.cpp contains the code for creating colors on a Canvas.
- *
- *  Created on: Jul 22, 2014
- *      Author: mbv26
- */
-
 #include "Color.h"
 
 //Workaround for VS not defining NAN (
@@ -95,7 +88,7 @@ ColorFloat::ColorFloat() {
 
 ColorFloat::ColorFloat(float v, float a) {
     if (clamp(v,0,1))
-      TsglErr("Out of range parameter specified for ColorFloat");
+      TsglDebug("Out of range parameter specified for ColorFloat");
     R = v; G = v; B = v; A = a;
 }
 
@@ -106,7 +99,7 @@ ColorFloat::ColorFloat(float r, float g, float b, float a) {
     oor |= clamp(b,0,1);
     oor |= clamp(a,0,1);
     if (oor)
-      TsglErr("Out of range parameter specified for ColorFloat");
+      TsglDebug("Out of range parameter specified for ColorFloat");
     R = r; G = g; B = b; A = a;
 }
 
@@ -152,6 +145,10 @@ ColorFloat::operator ColorHSV() {
     return out;
 }
 
+ColorFloat::operator ColorInt() {
+    return ColorInt(R*MAX_COLOR,G*MAX_COLOR,B*MAX_COLOR,A*MAX_COLOR);
+}
+
 bool ColorFloat::operator==(ColorFloat& c2) {
     if((*this).R == c2.R && (*this).G == c2.G && (*this).B == c2.B) {
       return true;
@@ -169,7 +166,11 @@ bool ColorFloat::operator!=(ColorFloat& c2) {
 }
 
 ColorFloat ColorFloat::operator*(float f) {
-    return ColorFloat((*this).R*f,(*this).G*f,(*this).B*f,(*this).A);
+    float newR = (*this).R*f; clamp(newR,0,1);
+    float newG = (*this).G*f; clamp(newG,0,1);
+    float newB = (*this).B*f; clamp(newB,0,1);
+    float newA = (*this).A;
+    return ColorFloat(newR,newG,newB,newA);
 }
 
 ColorInt::ColorInt() {
@@ -178,7 +179,7 @@ ColorInt::ColorInt() {
 
 ColorInt::ColorInt(int v, int a) {
     if (clamp(v,0,255))
-      TsglErr("Out of range parameter specified for ColorFloat");
+      TsglDebug("Out of range parameter specified for ColorFloat");
     R = v; G = v; B = v; A = a;
 }
 
@@ -189,7 +190,7 @@ ColorInt::ColorInt(int r, int g, int b, int a) {
     oor |= clamp(b,0,255);
     oor |= clamp(a,0,255);
     if (oor)
-      TsglErr("Out of range parameter specified for ColorInt");
+      TsglDebug("Out of range parameter specified for ColorInt");
     R = r; G = g; B = b; A = a;
 }
 
@@ -223,6 +224,14 @@ bool ColorInt::operator!=(ColorInt& c2) {
     }
 }
 
+ColorInt ColorInt::operator*(float f) {
+    float newR = (*this).R*f; clamp(newR,0,MAX_COLOR);
+    float newG = (*this).G*f; clamp(newG,0,MAX_COLOR);
+    float newB = (*this).B*f; clamp(newB,0,MAX_COLOR);
+    float newA = (*this).A;
+    return ColorInt(newR,newG,newB,newA);
+}
+
 ColorHSV::ColorHSV() {
     H = 0.0f;
     S = V = A = 1.0f;
@@ -235,7 +244,7 @@ ColorHSV::ColorHSV(float h, float s, float v, float a) {
     oor |= clamp(v,0,1);
     oor |= clamp(a,0,1);
     if (oor)
-      TsglErr("Out of range parameter specified for ColorHSV");
+      TsglDebug("Out of range parameter specified for ColorHSV");
     H = h; S = s; V = v; A = a;
 }
 
@@ -251,7 +260,7 @@ ColorHSV::operator ColorFloat() {
     color.A = A;
 
     if (clamp(H,0,6))
-      TsglErr("Hue must be between 0 and 6 inclusive");
+      TsglDebug("Hue must be between 0 and 6 inclusive");
     int i = floor(H);
     f = H - i;                // Decimal part of h
     if (!(i & 1)) f = 1 - f;  // if i is even
@@ -293,9 +302,13 @@ ColorHSV::operator ColorFloat() {
     }
 }
 
+ColorHSV::operator ColorInt() {
+  return (ColorInt)((ColorFloat)(*this));
+}
+
 ColorFloat Colors::divideIntoChromaticSections(unsigned int totalSections, unsigned int index, float value, float alpha) {
     if (clamp(value,0,1) || clamp(alpha,0,1))
-      TsglErr("Values must be between 0 and 1 inclusive");
+      TsglDebug("Values must be between 0 and 1 inclusive");
     return ColorHSV(6.0f / totalSections * index, 1.0f, value, alpha);
 }
 
@@ -305,20 +318,19 @@ ColorFloat Colors::divideIntoChromaticSections(unsigned int totalSections, unsig
 
 ColorFloat Colors::randomColor(float alpha) {
     if (clamp(alpha,0,1))
-        TsglErr("Alpha must be between 0 and 1 inclusive");
+      TsglDebug("Alpha must be between 0 and 1 inclusive");
     if (alpha == 0.0f) alpha = rand() % 255 / 255.0f;
     return ColorFloat(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
 }
 
-ColorFloat Colors::blendedColor(ColorFloat c1, ColorFloat c2, float bias) {
+ColorFloat Colors::blend(ColorFloat c1, ColorFloat c2, float bias) {
     if (clamp(bias,0,1))
-        TsglErr("Bias must be between 0 and 1 inclusive");
+      TsglDebug("Bias must be between 0 and 1 inclusive");
     return ColorFloat(c2.R * bias + c1.R * (1 - bias), c2.G * bias + c1.G * (1 - bias),
                       c2.B * bias + c1.B * (1 - bias), c2.A * bias + c1.A * (1 - bias));
 }
 
 ColorFloat Colors::highContrastColor(unsigned int index, int offset) {
-//    return DISTINCT_ARRAY_DATA[(section+start)%64];
     const unsigned int PRIME1 = 61, PRIME2 = 71;
     float hue = ((offset + PRIME1 * index) % 255) / 255.0f;
     float sat = (255 - (index-offset + PRIME2 * (index-offset)) % 80) / 255.0f;

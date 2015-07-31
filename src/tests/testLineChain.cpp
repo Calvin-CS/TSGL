@@ -1,8 +1,7 @@
 /*
  * testLineChain.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testLineChain <width> <height> <numThreads>
  */
 
 #include <tsgl.h>
@@ -79,9 +78,7 @@ int main(int argc, char* argv[]) {
     unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
     if (t == 0)
       t = omp_get_num_procs();
-    Canvas c2(-1, -1, w, h, "Spirograph", FRAME);
-    c2.setBackgroundColor(BLACK);
-    c2.start();
-    lineChainFunction(c2,t);
-    c2.wait();
+    Canvas c(-1, -1, w, h, "Spirograph");
+    c.setBackgroundColor(BLACK);
+    c.run(lineChainFunction,t);
 }

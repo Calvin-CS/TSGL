@@ -1,15 +1,12 @@
 /*
- * testFunction.cpp tests the ability of a CartesianCanvas to draw mathematical functions.
+ * testFunction.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testFunction <width> <height>
  */
 
 #include <tsgl.h>
 
 using namespace tsgl;
-
-typedef CartesianCanvas Cart;
 
 /*!
  * \brief Draws the outputs of some functions using CartesianCanvas.
@@ -34,7 +31,7 @@ void functionFunction(CartesianCanvas& can) {
 
     class myFunction : public Function {
      public:
-        virtual long double valueAt(long double x) const {
+        long double valueAt(long double x) const {
             return 5 * pow(x, 4) + 2 * pow(x, 3) + x + 15;
         }
     };
@@ -49,9 +46,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 1000;             //If not, set the width and height to a default value
-    Cart c11(-1, -1, w, h, -5,-5,5,50, "Function Plotting");
-    c11.setBackgroundColor(WHITE);
-    c11.start();
-    functionFunction(c11);
-    c11.wait();
+    Cart c(-1, -1, w, h, -5,-5,5,50, "Function Plotting");
+    c.setBackgroundColor(WHITE);
+    c.run(functionFunction);
 }

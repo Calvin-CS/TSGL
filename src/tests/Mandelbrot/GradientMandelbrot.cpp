@@ -1,21 +1,14 @@
 /*
  * GradientMandelbrot.cpp
- *
- *  Created on: May 28, 2015
- *      Author: Chris Dilley
  */
 
 #include "GradientMandelbrot.h"
 
-GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {
-  myThreads = threads;
-  myDepth = depth;
-  myRedraw = true;
-}
+GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
 void GradientMandelbrot::draw(Cart& can) {
   while (myRedraw) {
-    setRedraw(false);
+    myRedraw = false;
     #pragma omp parallel num_threads(myThreads)
     {
       unsigned int nthreads = omp_get_num_threads();
@@ -47,10 +40,4 @@ void GradientMandelbrot::draw(Cart& can) {
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
   }
 }
-
-void GradientMandelbrot::setRedraw(bool newValue) {
-    myRedraw = newValue;
-}
-
-
 

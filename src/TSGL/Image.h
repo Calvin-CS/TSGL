@@ -1,8 +1,5 @@
 /*
  * Image.h extends Shape and provides a class for drawing an image to a Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Patrick Crain, 7/9/2014
  */
 
 #ifndef IMAGE_H_
@@ -36,6 +33,7 @@ class Image : public Shape {
     GLtexture myTexture;
     TextureHandler* myLoader;
  public:
+
     /*!
      * \brief Explicitly constructs a new Image.
      * \details This is the explicit constructor for the Image class.

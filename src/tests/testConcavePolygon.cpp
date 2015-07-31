@@ -1,8 +1,7 @@
 /*
  * testConcavePolygon.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testConcavePolygon <width> <height>
  */
 
 #include <tsgl.h>
@@ -12,7 +11,7 @@ using namespace tsgl;
 
 /**
  * \brief Draw Concave polygons, which have one or more interior angles > 180
- * ( see http://www.mathopenref.com/polygonconcave.html ).
+ * \note See http://www.mathopenref.com/polygonconcave.html
  * \details
  * - Initialize a constant \b PSIZE.
  * - Have four arrays of integers \b x, \b y, \b xx, and \b yy and set them to have size \b PSIZE.
@@ -75,9 +74,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;              //If not, set the width and height to a default value
-    Canvas c33(-1, -1, w, h, "Concave Polygons", FRAME);
-    c33.setBackgroundColor(WHITE);
-    c33.start();
-    concavePolygonFunction(c33);
-    c33.wait();
+    Canvas c(-1, -1, w, h, "Concave Polygons");
+    c.setBackgroundColor(WHITE);
+    c.run(concavePolygonFunction);
 }

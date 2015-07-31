@@ -1,8 +1,7 @@
 /*
  * testCosineIntegral.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testCosineIntegral <width> <height> <numThreads>
  */
 
 #include <complex>
@@ -13,8 +12,6 @@
 #include "Util.h"  //Constants
 
 using namespace tsgl;
-
-typedef CartesianCanvas Cart;
 
 /*!
  * \brief Draws the area under a predefined function (the integral) using CartesianCanvas
@@ -42,7 +39,7 @@ typedef CartesianCanvas Cart;
  * \param can Reference to the CartesianCanvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.
  */
-void cosineIntegralFunction(Cart& can, int & numberOfThreads) {
+void cosineIntegralFunction(Cart& can, int numberOfThreads) {
   int threads = numberOfThreads;
   if (threads <= 0) {
     threads = 1;
@@ -62,8 +59,8 @@ void cosineIntegralFunction(Cart& can, int & numberOfThreads) {
 
 #pragma omp parallel num_threads(threads)
   {
-    int nthreads = omp_get_num_threads();
-    long double offset = 3*PI / nthreads;
+    threads = omp_get_num_threads();
+    long double offset = 3*PI / threads;
     long double start = -1.5*PI + omp_get_thread_num() * offset;
     long double stop = start + offset;
     for (long double i = start; i < stop; i += pw) {
@@ -81,10 +78,8 @@ int main(int argc, char* argv[]) {
   int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-  Cart c12(-1, -1, w, h, -5,-1.5,5,1.5, "Cosine Integral", FRAME / 2);
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads to use
-  c12.setBackgroundColor(WHITE);
-  c12.start();
-  cosineIntegralFunction(c12, t);   //Pass the argument
-  c12.wait();
+  Cart c(-1, -1, w, h, -5,-1.5,5,1.5, "Cosine Integral", FRAME / 2);
+  c.setBackgroundColor(WHITE);
+  c.run(cosineIntegralFunction,t);
 }

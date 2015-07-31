@@ -1,12 +1,12 @@
 /*
  * testSmartSort.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testSmartSort <numElements> <numThreads>
  */
 
 #include <tsgl.h>
 #include <omp.h>
+
 using namespace tsgl;
 
 const int MARGIN = 8;    // Border for drawing
@@ -31,6 +31,8 @@ struct sortData {
   int size;
 
   sortData(int* arr, int f, int l, ColorFloat c) {
+    fi = hi = li = 0;        //Initialize indices
+    left = right = 0;        //Initialize bounds
     color = c;               //Set the color
     a = arr;                 //Get a pointer to the array we'll be sorting
     first = f;               //Set the first element we need to worry about
@@ -100,7 +102,7 @@ struct sortData {
 };
 
 /*!
- * \brief Visualization of the mergesort algorithm.
+ * \brief Visualization of the bottom-up mergesort algorithm.
  * \details Utilizes the sortData struct and sorts a number of items using the mergesort algorithm.
  * \details Uses lines to represent the items being sorted.
  * \details At the start, the items being sorted are all divided.
@@ -160,9 +162,9 @@ void smartSortFunction(Canvas& can, int threads, int size) {
                     else if (i < sd[tid]->left)
                       color = sd[tid]->color;
                     else if (i >= sd[tid]->fi && i <= sd[tid]->li)
-                      color = Colors::blendedColor(sd[tid]->color, WHITE, 0.5f);
+                      color = Colors::blend(sd[tid]->color, WHITE, 0.5f);
                     else
-                      color = Colors::blendedColor(sd[tid]->color, BLACK, 0.5f);
+                      color = Colors::blend(sd[tid]->color, BLACK, 0.5f);
                   }
                   can.drawLine(start, cwh - height, start, cwh, color);
               }
@@ -187,9 +189,7 @@ int main(int argc, char* argv[]) {
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(-1, -1, w, h, "Merge Sort", FRAME);
+    Canvas c(-1, -1, w, h, "Bottom-up Merge Sort");
     c.setBackgroundColor(BLACK);
-    c.start();
-    smartSortFunction(c,threads, s);   //Pass it as an argument
-    c.wait();
+    c.run(smartSortFunction, threads, s);
 }

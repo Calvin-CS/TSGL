@@ -1,7 +1,5 @@
 /*
  * ProgressBar.h extends Shape and provides a class for drawing a progress bar to a Canvas.
- *
- * Authors: Patrick Crain
  */
 
 #ifndef PROGRESSBAR_H
@@ -26,6 +24,7 @@ class ProgressBar {
    float min, max;
    int xx, yy, myWidth, myHeight, segs;
  public:
+
     /*!
      * \brief Explicit ProgressBar constructor method.
      * \details This is the explicit constructor for the ProgressBar class.
@@ -39,6 +38,7 @@ class ProgressBar {
      * \return A new ProgressBar with the specified coordinates, maximum dimensions, value range, and segments.
      */
     ProgressBar(int x, int y, int width, int height, float minValue, float maxValue, unsigned numSegments);
+
     /*!
      * \brief ProgressBar destructor method.
      * \details This is the destructor for the ProgressBar class.

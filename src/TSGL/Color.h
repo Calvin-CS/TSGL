@@ -1,8 +1,5 @@
 /*
  * Color.h provides color types and methods of converting between them and generating them.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Patrick Crain, 7/30/2014
  */
 
 #ifndef COLOR_H_
@@ -18,7 +15,7 @@
 
 namespace tsgl {
 
-struct ColorFloat;
+struct ColorFloat;  //Forward declarations
 struct ColorInt;
 struct ColorHSV;
 
@@ -82,11 +79,19 @@ struct ColorFloat {
     operator ColorHSV();
 
     /*!
+     * \brief Implicit conversion from ColorFloat to ColorInt.
+     * \details This defines the implicit conversion operator from a floating point color type (ColorFloat) to an
+     *   integer color type (ColorInt).
+     */
+    operator ColorInt();
+
+    /*!
      * \brief Multiplies the values of a ColorFloat by a float
      * \details This operator multiplies each of the components of a ColorFloat
      *   by amount <code>f</code>.
      * \param f Amount to multiply each component by
      * \returns A new ColorFloat constructed as ColorFloat(orig.R*f, orig.G*f, orig.b*f, orig.A*f)
+     * \note Individual channels are clamped between 0 and 1.
      */
     ColorFloat operator*(float f);
 
@@ -196,6 +201,16 @@ struct ColorInt {
      * \returns true if the two ColorInts are not equivalent, false if otherwise.
      */
     bool operator!=(ColorInt& c2);
+
+    /*!
+     * \brief Multiplies the values of a ColorInt by a float
+     * \details This operator multiplies each of the components of a ColorInt
+     *   by amount <code>f</code>.
+     * \param f Amount to multiply each component by
+     * \returns A new ColorInt constructed as ColorInt(orig.R*f, orig.G*f, orig.b*f, orig.A*f)
+     * \note Individual channels are clamped between 0 and MAX_COLOR.
+     */
+    ColorInt operator*(float f);
 };
 
 /*!
@@ -232,9 +247,16 @@ struct ColorHSV {
     ColorHSV(float h, float s, float v, float a = 1.0f);
 
     /*!
+     * \brief Implicit conversion from ColorHSV to ColorInt.
+     * \details This defines the implicit conversion operator from an HSV color type (ColorHSV) to an integer
+     *   color type (ColorInt).
+     */
+    operator ColorInt();
+
+    /*!
      * \brief Implicit conversion from ColorHSV to ColorFloat.
-     * \details This defines the implicit conversion operator from an HSV color type (ColorHSV) to an RGB
-     *  color type (ColorFloat).
+     * \details This defines the implicit conversion operator from an HSV color type (ColorHSV) to a floating
+     *   point color type (ColorFloat).
      */
     operator ColorFloat();
 
@@ -246,12 +268,15 @@ struct ColorHSV {
     std::string asString();
 };
 
+/*!
+ * \brief The various ColorFloat constants used throughout TSGL.
+ */
 const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),
                  DARKGRAY = ColorFloat(0.5f, 0.5f, 0.5f, 1.0f),
                  GRAY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f),
                  WHITE = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f),
                  RED = ColorFloat(1.0f, 0.0f, 0.0f, 1.0f),
-                 ORANGE = ColorFloat(1.0f, 0.75f, 0.5f, 1.0f),
+                 ORANGE = ColorFloat(1.0f, 0.65f, 0.0f, 1.0f),
                  YELLOW = ColorFloat(1.0f, 1.0f, 0.0f, 1.0f),
                  GREEN = ColorFloat(0.0f, 1.0f, 0.0f, 1.0f),
                  BLUE = ColorFloat(0.0f, 0.0f, 1.0f, 1.0f),
@@ -267,6 +292,7 @@ const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),
  */
 class Colors {
  public:
+
     /*!
      * \brief Returns an HSVA color with a hue dependent on the number of sections.
      * \details This function returns a ColorFloat whose hue is calculated from the provided section number and
@@ -316,7 +342,7 @@ class Colors {
      *   an error message is given.
      * \return A ColorFloat linearly interpolated between c1 and c2 using the given bias as a weight.
      */
-    static ColorFloat blendedColor(ColorFloat c1, ColorFloat c2, float bias);
+    static ColorFloat blend(ColorFloat c1, ColorFloat c2, float bias = 0.5f);
 
     /*!
      * \brief Returns an HSV color with high contrast.
@@ -333,7 +359,6 @@ class Colors {
     ~Colors();
     Colors(const Colors&);
     Colors& operator=(const Colors&);
-//    static ColorFloat DISTINCT_ARRAY[64];
     static const ColorFloat* DISTINCT_ARRAY;
 };
 

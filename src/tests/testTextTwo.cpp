@@ -1,8 +1,7 @@
- /*
+/*
  * testTextTwo.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testTextTwo <width> <height>
  */
 
 #include <tsgl.h>
@@ -10,8 +9,8 @@
 using namespace tsgl;
 
 /**
- * \brief Tests to see if text is still drawn if a font is specified (just to make sure the error handling for when one is not specified didn't break anything).
- * \details Same as textFunction, but without the setFont line deleted.
+ * \brief Tests to see if text is still drawn if a font is not specified.
+ * \details Same as textFunction, but with the setFont line deleted.
  * \param can Reference to the Canvas being drawn to.
  */
 void textFunctionTwo(Canvas& can) {
@@ -19,7 +18,6 @@ void textFunctionTwo(Canvas& can) {
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
-    can.setFont("../assets/freefont/FreeMono.ttf");  //This line has been deleted in testText
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
     can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
@@ -29,10 +27,15 @@ void textFunctionTwo(Canvas& can) {
     can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
 }
 
-int main() {
-    int w = 1.2f*Canvas::getDisplayHeight();
-    Canvas c24(-1, -1, w, 0.75f*w, "More Text on a Canvas");
-    c24.start();
-    textFunctionTwo(c24);
-    c24.wait();
+//Takes command-line arguments for the width and height of the screen
+int main(int argc, char * argv[]) {
+    //Width and height
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2f*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w;
+    if(w <= 0 || h <= 0) { //Check the validity of the width and height
+      w = 1.2f*Canvas::getDisplayHeight();
+      h = 0.75f*w;
+    }
+    Canvas c(-1, -1, w, h, "More Text on a Canvas");
+    c.run(textFunctionTwo);
 }

@@ -1,8 +1,5 @@
 /*
  * Text.h extends Shape and provides a class for drawing a string of text to the Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 7/11/2014
  */
 
 #ifndef TEXT_H_
@@ -27,6 +24,7 @@ class Text : public Shape {
     std::wstring myString;
     int myX, myY;
  public:
+
     /*!
      * \brief Explicitly constructs a new Text instance.
      * \details This is the constructor for the Text class.

@@ -1,9 +1,5 @@
 /*
- * Polyline.h extends Shape and provides a class for drawing a Polyline
- *     with colored vertices to a Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Mark Vander Stel, 7/3/2014
+ * Polyline.h extends Shape and provides a class for drawing a Polyline with colored vertices to a Canvas.
  */
 
 #ifndef POLYLINE_H_
@@ -30,6 +26,7 @@ class Polyline : public Shape {
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
  public:
+
     /*!
      * \brief Explicitly constructs a new Polyline.
      * \details Explicit constructor for a new Polyline object.

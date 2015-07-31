@@ -1,8 +1,7 @@
 /*
  * testGetPixels.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testGetPixels <numThreads>
  */
 
 #include <omp.h>
@@ -35,6 +34,7 @@ using namespace tsgl;
  *
  * \param can Reference to the Canvas being drawn to.
  */
+<<<<<<< HEAD
 void getPixelsFunction(Canvas& can) {
     const int THREADS = 2;
     unsigned int width = can.getWindowWidth(),
@@ -57,14 +57,30 @@ void getPixelsFunction(Canvas& can) {
                 }
             }
             can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+=======
+void getPixelsFunction(Canvas& can, int threads) {
+  unsigned width = can.getWindowWidth(), height = can.getWindowHeight();
+  can.drawImage("../assets/pics/test.png", 0, 0, width, height);
+  can.sleepFor(0.5f);
+  #pragma omp parallel num_threads(threads)
+  {
+    unsigned blocksize = (double)height / omp_get_num_threads();
+    unsigned row = blocksize * omp_get_thread_num();
+    while (can.isOpen()) {
+      can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+      for (unsigned y = row; y < row + blocksize; y++) {
+        for (unsigned x = 0; x < width; x++) {
+          ColorInt c = can.getPoint(x,y);
+          can.drawPoint(x, y, ColorInt((1+c.R) % NUM_COLORS, (1+c.G) % NUM_COLORS, (1+c.B) % NUM_COLORS));
+>>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
         }
+      }
     }
+  }
 }
 
-int main() {
-    Canvas c28(-1, -1, 800, 600, "Pixel Shifter", .01);
-    c28.setBackgroundColor(GRAY);
-    c28.start();
-    getPixelsFunction(c28);
-    c28.wait();
+int main(int argc, char* argv[]) {
+  int t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();
+  Canvas c(-1, -1, 800, 600, "Pixel Shifter", .01);
+  c.run(getPixelsFunction,t);
 }

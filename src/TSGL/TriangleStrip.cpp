@@ -1,17 +1,10 @@
-/*
- * ColoredPolygon.cpp
- *
- *  Created on: Aug 1, 2014
- *      Author: mbv26
- */
-
-#include "ColoredPolygon.h"
+#include <TriangleStrip.h>
 
 namespace tsgl {
 
-ColoredPolygon::ColoredPolygon(int numVertices) {
+TriangleStrip::TriangleStrip(int numVertices) {
     if (numVertices < 3)
-      TsglErr("Cannot have a polygon with fewer than 3 vertices.");
+      TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
     length = numVertices;
     size = length * 6;
     current = 0;
@@ -19,11 +12,11 @@ ColoredPolygon::ColoredPolygon(int numVertices) {
     init = false;
 }
 
-ColoredPolygon::~ColoredPolygon() {
+TriangleStrip::~TriangleStrip() {
     delete[] vertices;
 }
 
-void ColoredPolygon::addVertex(int x, int y, const ColorFloat &color) {
+void TriangleStrip::addVertex(int x, int y, const ColorFloat &color) {
     if (init) {
       TsglDebug("Cannot add anymore vertices.");
       return;
@@ -38,7 +31,7 @@ void ColoredPolygon::addVertex(int x, int y, const ColorFloat &color) {
     if (current == size) init = true;
 }
 
-void ColoredPolygon::draw() {
+void TriangleStrip::draw() {
     if (!init) {
       TsglDebug("Cannot draw yet.");
       return;

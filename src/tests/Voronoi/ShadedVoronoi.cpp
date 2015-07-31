@@ -1,3 +1,7 @@
+/*
+ * ShadedVoronoi.cpp
+ */
+
 #include "ShadedVoronoi.h"
 
 using namespace tsgl;
@@ -22,9 +26,9 @@ ShadedVoronoi::ShadedVoronoi(Canvas& can) : Voronoi(can) {
   for (int i = 0; i < MY_POINTS; i++) {                   // For each control point...
     float xx = (float) myX[i] / WW;                       // Calculate an value from 0:1 based on x coord
     float yy = (float) myY[i] / WH;                       // Do the same for y
-    myXC = Colors::blendedColor(myLC, myRC, xx);          // Interpolate between the left and right colors
-    myYC = Colors::blendedColor(myTC, myBC, yy);          // Do the same for top and bottom
-    myColor[i] = Colors::blendedColor(myXC, myYC, 0.5f);  // Complete the 4-way interpolation
+    myXC = Colors::blend(myLC, myRC, xx);          // Interpolate between the left and right colors
+    myYC = Colors::blend(myTC, myBC, yy);          // Do the same for top and bottom
+    myColor[i] = Colors::blend(myXC, myYC, 0.5f);  // Complete the 4-way interpolation
   }
 }
 

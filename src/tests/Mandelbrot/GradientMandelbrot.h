@@ -1,8 +1,5 @@
 /*
  * GradientMandelbrot.h
- *
- *  Created on: May 28, 2015
- *      Author: Chris Dilley
  */
 
 #ifndef GRADIENTMANDELBROT_H_
@@ -40,15 +37,6 @@ public:
    * \note Cart is a typedef for a CartesianCanvas object.
    */
   void draw(Cart& can);
-
-  /*!
-   * \brief Redraw the GradientMandelbrot.
-   * \details Sets a boolean flag to true or false if we have to redraw the
-   * GradientMandelbrot onto the CartesianCanvas.
-   *    \param newValue A boolean indicating whether or not we should redraw the GradientMandelbrot.
-   * \note This method overrides the Mandelbrot class' setRedraw() method.
-   */
-  void setRedraw(bool newValue);
 };
 
 #endif /* GRADIENTMANDELBROT_H_ */

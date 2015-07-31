@@ -1,8 +1,5 @@
 /*
  * Spectrogram.h
- *
- *  Created on: Jun 26, 2015
- *      Author: pretzel
  */
 
 #ifndef SRC_TSGL_SPECTROGRAM_H_
@@ -41,6 +38,7 @@ private:
   SpectrogramDrawmode myDrawMode;
   Canvas* can;
 public:
+
   /*!
    * \brief Explicit Spectrogram constructor method.
    * \details This is the explicit constructor for the Spectrogram class.

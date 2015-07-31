@@ -1,8 +1,5 @@
 /*
  * Timer.h provides a simple timer for sleeping and keeping track of iterations.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Mark Vander Stel, 7/8/2014
  */
 
 #ifndef TIMER_H_
@@ -34,6 +31,7 @@ class Timer {
     std::mutex sleep_;
     double time_between_sleeps;
  public:
+
     /*!
      * \brief Default Timer constructor method.
      * \details This is the default constructor for the Timer class.

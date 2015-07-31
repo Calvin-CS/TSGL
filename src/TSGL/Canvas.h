@@ -10,7 +10,7 @@
 
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
-#include "ColoredPolygon.h" // Our own class for drawing polygons with colored vertices
+#include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads
@@ -49,12 +49,13 @@ namespace tsgl {
 /*! \class Canvas
  *  \brief A GL window with numerous built-in, thread-safe drawing operations.
  *  \details Canvas provides an easy-to-set-up, easy-to-use class for drawing various shapes.
- *  \details Using stb, Canvas also supports the drawing of images.
+ *  \details Using STB, Canvas also supports the drawing of images.
  *  \details On top of being easy to use, Canvas is also thread-safe, so any number of images may be drawn at once.
  *  \note <b>OS X:</b> Due to the way OS X handles I/O, either sleep() or handleIO() must be manually called
  *       whenever the user wants to handle any input/output events (keyboard/mouse presses). Whenever a window is
  *       created using OpenGL, OS X requires the main thread to handle I/O calls.
  *  \note <b>OS X:</b> OS X also uses p_thread instead of std::thread for threading.
+ *  \bug <b>Linux:</b> X forwarding does not work properly with TSGL.
  */
 class Canvas {
 private:
@@ -154,15 +155,6 @@ private:
   #endif
     void         textureShaders(bool state);                            // Turn textures on or off
     static bool  testFilledDraw(Canvas& can);                           // Unit test for drawing shapes and determining if fill works
-    //Theory why it doesn't work:
-    //Different graphics cards; Nvidia vs. ATI.
-    //It works for Patrick's machine, which is has an Nvidia.
-    //It doesn't work for the Ulab machines, which has an ATI.
-    //The only way to prove this theory is to wait until the new
-    //lab machines come in which have Nvidia graphics cards.
-    //If they work, then hooray!
-    //If not, our theory is wrong and its something totally different.
-    static bool testPerimeter(Canvas& can);                             // Unit tester for drawing shapes and determining if the shape is still drawn correctly but not filled
     static bool testLine(Canvas& can);                                  // Unit tester for lines
     static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods
     static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
@@ -171,6 +163,7 @@ protected:
     bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
     void        drawShape(Shape* s);                                    // Draw a shape type
 public:
+
     /*!
      * \brief Default Canvas constructor method.
      * \details This is the default constructor for the Canvas class.
@@ -251,19 +244,6 @@ public:
      *     (set to true by default).
      */
     virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true);
-
-    /*!
-     * \brief Draws an arbitrary polygon with colored vertices.
-     * \details This function draws a ColoredPolygon with the given vertex data, specified as
-     *   a triangle strip.
-     *   \param size The number of vertices in the polygon.
-     *   \param xverts An array of x positions of the vertices.
-     *   \param yverts An array of y positions of the vertices.
-     *   \param color An array of colors for the vertices.
-     *   \param filled Whether the colored polygon should be filled (true) or not (false)
-     *     (set to true by default).
-     */
-    virtual void drawColoredPolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draws a concave polygon with colored vertices.
@@ -411,6 +391,18 @@ public:
                               bool filled = true);
 
     /*!
+     * \brief Draws an arbitrary triangle strip with colored vertices.
+     * \details This function draws a TriangleStrip with the given vertex data, specified as
+     *   a triangle strip.
+     *   \param size The number of vertices in the polygon.
+     *   \param xverts An array of x positions of the vertices.
+     *   \param yverts An array of y positions of the vertices.
+     *   \param color An array of colors for the vertices.
+     *   \param filled Whether the triangle strip should be filled (true) or not (false).
+     */
+    virtual void drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
+
+    /*!
      * \brief Accessor for the current background color.
      * \return The color that the Canvas clears to when clear() is called.
      */
@@ -498,6 +490,9 @@ public:
      * \brief Accessor for the Canvas's currently drawn image.
      * \return A pointer to the RGB pixel buffer for the current Canvas.
      * \note The array starts in the bottom left corner of the image, and is in row-major ordering.
+     * \deprecated <b>This function returns a pointer directly to the Canvas' screen buffer. This
+     *   function may be removed in future versions of TSGL. Please use getPixel() or getPoint()
+     *   get individual pixels.
      */
     uint8_t* getScreenBuffer();
 
@@ -569,6 +564,8 @@ public:
 
     /*!
      * \brief Resets the internal drawing timer of a Canvas instance.
+     * \details This function resets the starting time of the Canvas' draw timer
+     *   to the current time.
      */
     void reset();
 
@@ -583,6 +580,76 @@ public:
      * \see pauseDrawing()
      */
     void resumeDrawing();
+
+    /*!
+     * \brief Start the Canvas, run a function on it, and wait for the user to close it
+     * \details This function binds another function to the current Canvas, waits until that function is
+     *   complete, and waits for the user to close the Canvas.  This function effectively calls start(),
+     *   <code>myFunction</code>(), and wait() in sequence.
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     */
+    virtual void run(void (*myFunction)(Canvas&));
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param i An integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, int), int i);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param u An unsigned integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, unsigned), unsigned u);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param i1 An integer argument to myFunction
+     * \param i2 An integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, int, int), int i1, int i2);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param u1 An unsigned integer argument to myFunction
+     * \param u2 An unsigned integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, unsigned, unsigned), unsigned u1, unsigned u2);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param s A string argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, std::string),std::string s);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param i An integer argument to myFunction
+     * \param s A string argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, int, std::string), int i, std::string s);
+
+    /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param s A string argument to myFunction
+     * \param i An integer argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, std::string, int), std::string s, int i);
 
     /*!
      * \brief Mutator for the background color.

@@ -15,13 +15,15 @@ if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   curl -L -O "http://xquartz.macosforge.org/downloads/SL/$VER_XQ.dmg"
   open -W "$VER_XQ.dmg"
   echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
+  echo "Please enter to continue once XQuartz has finished installing."
+  read
 fi
 
 #Install Xcode command line tools (will do nothing if already installed)
 if [ ! -e "/Library/Developer/CommandLineTools" ]; then
   cmd="xcode-select --install"
   $cmd # Fix for vim syntax highlighting bugginess
-  echo "Please select \"Install\" from the confirmation window that appears."
+  echo "Please select \"Install\" from the confirmation window that appears, and Agree to the license terms."
   echo "Press enter to continue once Xcode command line tools has finished installing"
   read
 fi
@@ -61,8 +63,11 @@ echo "Installing GLEW..."
 sudo port install glew
 echo "Installing Freetype2..."
 sudo port install freetype
-echo "Installing GCC 4.9...this may take a while, please be patient..."
-sudo port install gcc49
+gver=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
+if [ $gver -lt 490 ]; then
+  echo "Installing GCC 4.9...this may take a while, please be patient..."
+  sudo port install gcc49
+fi
 echo "Switiching default compiler to mp-gcc49"
 sudo port select --set gcc mp-gcc49
 echo "Fixing missing symlinks"
@@ -75,11 +80,11 @@ fi
 if [ -e /usr/lib/libstdc++.dylib ]; then
   sudo mv /usr/lib/libstdc++.dylib /usr/lib/libstdc++.dylib-old
 fi
-if [ -e /usr/bin/gcc_tsglbak ]; then
+if [ ! -e /usr/bin/gcc_tsglbak ]; then
   sudo mv /usr/bin/gcc /usr/bin/gcc_tsglbak
   sudo ln -s /opt/local/bin/gcc-mp-4.9 /usr/bin/gcc
 fi
-if [ -e /usr/bin/g++_tsglbak ]; then
+if [ ! -e /usr/bin/g++_tsglbak ]; then
   sudo mv /usr/bin/g++ /usr/bin/g++_tsglbak
   sudo ln -s /opt/local/bin/g++-mp-4.9 /usr/bin/g++
 fi
@@ -90,4 +95,5 @@ git clone https://github.com/Calvin-CS/TSGL
 cd TSGL
 make -j$(nproc) debug
 
+echo
 echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."

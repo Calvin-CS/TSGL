@@ -1,3 +1,9 @@
+/*
+ * testBallroom.cpp
+ *
+ * Usage: ./testBallroom <width> <height>
+ */
+
 #include <list>
 #include <cmath>
 #include <tsgl.h>
@@ -10,15 +16,13 @@ struct Vector2 {
    x = y = 0;
  }
  Vector2(float xx,float yy) {
-   x = xx;
-   y = yy;
+   x = xx; y = yy;
  }
  Vector2 operator+(const Vector2 &o) {
    return Vector2(x+o.x,y+o.y);
  }
  Vector2& operator+=(const Vector2 &o) {
-   x += o.x;
-   y += o.y;
+   x += o.x; y += o.y;
    return (*this);
  }
  Vector2 operator-(const Vector2 &o) {
@@ -28,16 +32,14 @@ struct Vector2 {
    return Vector2(-x,-y);
  }
  Vector2& operator-=(const Vector2 &o) {
-   x -= o.x;
-   y -= o.y;
+   x -= o.x; y -= o.y;
    return (*this);
  }
  Vector2 operator*(const float f) {
    return Vector2(x*f,y*f);
  }
  Vector2& operator*=(const float f) {
-   x *= f;
-   y *= f;
+   x *= f; y *= f;
    return (*this);
  }
  float dot(const Vector2 &o) const {
@@ -174,7 +176,6 @@ public:
   BallRoom(int w, int h) {
     width = w;
     height = h;
-//    friction = 1.00f;
     friction = 0.99f;
     gravity = 0.1f;
     attract = true;
@@ -209,10 +210,10 @@ public:
   void step(Canvas* c) {
     int mx = c->getMouseX(), my = c->getMouseY();
     Vector2 mvec(mx,my);
-//    if (attract)
-//      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
-//    else
-//      c->drawCircle(mx,my,25,32,ColorFloat(0.5f,1.0f,1.0f,0.5f));
+    if (attract)
+      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
+    else
+      c->drawCircle(mx,my,25,32,ColorFloat(0.5f,1.0f,1.0f,0.5f));
     for (it = balls.begin(); it != balls.end(); ++it) {
       BouncingBall *b = (*it);
 
@@ -252,9 +253,9 @@ public:
  * - It is drawn in this way:
  * - Get the window width and height for convenience of use.
  * - Create the area for the balls based off of the window width and height.
- * - For 0 to 100:
- *   - Set the speed of a ball to 5.0f.
- *   - Calculate its direction.
+ * - For each ball:
+ *   - Set its speed to 5.
+ *   - Randomize its initial direction.
  *   - Add it to the area created with the calculated speed and direction as well as with a random color.
  *   .
  * - Bind the left mouse button so that when you click the screen the attraction of the balls will change.
@@ -282,10 +283,12 @@ void ballroomFunction(Canvas& can) {
         b.toggleAttract();
     });
 
+<<<<<<< HEAD
 //    ColorFloat clearcolor = ColorInt(0,0,0,16);
+=======
+>>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
     while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-//        can.drawRectangle(0,0,WW,WH,clearcolor,true);
         b.step(&can);
     }
 }
@@ -296,9 +299,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;            //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "The Ballroom", FRAME);
+    Canvas c(-1, -1, w, h, "The Ballroom");
     c.setBackgroundColor(BLACK);
-    c.start();
-    ballroomFunction(c);
-    c.wait();
+    c.run(ballroomFunction);
 }

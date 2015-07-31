@@ -1,15 +1,12 @@
 /*
  * testScreenshot.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testScreenshot <width> <height>
  */
 
 #include <tsgl.h>
 
 using namespace tsgl;
-
-typedef CartesianCanvas Cart;
 
 /*!
  * \brief Draws a bunch of triangles and outputs each frame to an image.
@@ -29,7 +26,7 @@ typedef CartesianCanvas Cart;
  * are by default written to the \i frames/ directory.
  * \param can Reference to the Canvas being drawn to.
  */
-void screenShotFunction(Canvas& can) {
+void screenShotFunction(Cart& can) {
     int xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
     can.recordForNumFrames(FPS * 30);
     while (can.isOpen()) {  // Checks to see if the window has been closed
@@ -44,9 +41,14 @@ void screenShotFunction(Canvas& can) {
     }
 }
 
-int main() {
-    Cart c29(-1, -1, 800, 600, 0, 0, 800, 600,"Screenshot Test", FRAME);
-    c29.start();
-    screenShotFunction(c29);
-    c29.wait();
+//Takes command-line arguments for the width and height of the screen
+int main(int argc, char * argv[]) {
+    int w = (argc > 1) ? atoi(argv[1]) : 800; //Width and height
+    int h = (argc > 2) ? atoi(argv[2]) : 600;
+    if(w <= 0 || h <= 0) { //Check validity of width and height
+      w = 800;
+      h = 600;
+    }
+    Cart c(-1, -1, w, h, 0, 0, 800, 600,"Screenshot Test");
+    c.run(screenShotFunction);
 }

@@ -1,8 +1,7 @@
 /*
- * testGreyscale.cpp
+ * testGreyScale.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testGreyScale <width> <height> <numThreads>
  */
 
 #include <omp.h>
@@ -45,32 +44,21 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.
  */
-void greyScaleFunction(Canvas& can, int & numberOfThreads) {
-  int threads = 0;
-  if (numberOfThreads < 0) {
-    numberOfThreads *= -1;
-    threads = numberOfThreads;
-  } else if(numberOfThreads > 30) {
-    threads = 30;
-  } else {
-    threads = numberOfThreads;
-  }
-  const unsigned int thickness = 3;
-  const unsigned ww = can.getWindowWidth(),
-                 wh = can.getWindowHeight();
-  can.drawImage("../assets/pics/colorful_cars.jpg", 0, 0, ww, wh);
-  Timer::threadSleepFor(.25);
-  uint8_t* buffer = can.getScreenBuffer();
-
-#pragma omp parallel num_threads(threads)
+void greyScaleFunction(Canvas& can, int numberOfThreads) {
+  int threads = numberOfThreads;
+  clamp(threads,1,30);
+  const unsigned thickness = 3;
+  const unsigned WW = can.getWindowWidth(),WH = can.getWindowHeight();
+  can.drawImage("../assets/pics/colorful_cars.jpg", 0, 0, WW, WH);
+  can.sleepFor(0.25f);
+  #pragma omp parallel num_threads(threads)
   {
     int nthreads = omp_get_num_threads();
-    unsigned int blocksize = wh / nthreads;
+    unsigned int blocksize = WH / nthreads;
     unsigned int row = blocksize * omp_get_thread_num();
     ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
-
     for (unsigned int y = row; y < row + blocksize; y++) {
-      for (unsigned int x = 0; x < ww; x++) {
+      for (unsigned int x = 0; x < WW; x++) {
 		    ColorInt pixelColor = can.getPoint(x, y);
         int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
         can.drawPoint(x, y, ColorInt(gray, gray, gray));
@@ -79,7 +67,7 @@ void greyScaleFunction(Canvas& can, int & numberOfThreads) {
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
     }
     for (unsigned int i = 0; i < thickness; i++) {
-      can.drawRectangle(i, row + i, ww - 1 - i, row + blocksize - i, color, false);
+      can.drawRectangle(i, row + i, WW - 1 - i, row + blocksize - i, color, false);
     }
   }
 }
@@ -91,10 +79,7 @@ int main(int argc, char* argv[]) {
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;              //If not, set the width and height to a default value
-  Canvas c31(-1, -1, w, h, "Image Greyscaling", FRAME * 2);
+  Canvas c(-1, -1, w, h, "Image Greyscaling");
   int numberOfThreads = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();   //Number of threads
-  c31.setBackgroundColor(GRAY);
-  c31.start();
-  greyScaleFunction(c31, numberOfThreads);  //Pass it as an argument
-  c31.wait();
+  c.run(greyScaleFunction,numberOfThreads);
 }

@@ -66,12 +66,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\tests\Mandelbrot\Buddhabrot.cpp" />
     <ClCompile Include="..\src\tests\Mandelbrot\GradientMandelbrot.cpp" />
+    <ClCompile Include="..\src\tests\Mandelbrot\Julia.cpp" />
     <ClCompile Include="..\src\tests\Mandelbrot\Mandelbrot.cpp" />
     <ClCompile Include="..\src\tests\testMandelbrot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\tests\Mandelbrot\Buddhabrot.h" />
     <ClInclude Include="..\src\tests\Mandelbrot\GradientMandelbrot.h" />
+    <ClInclude Include="..\src\tests\Mandelbrot\Julia.h" />
     <ClInclude Include="..\src\tests\Mandelbrot\Mandelbrot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

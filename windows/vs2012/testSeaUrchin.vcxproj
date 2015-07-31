@@ -11,7 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\tests\SeaUrchin\SeaUrchin.cpp" />
     <ClCompile Include="..\src\tests\testSeaUrchin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\tests\SeaUrchin\SeaUrchin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9B53EED3-25C7-440B-8BFA-B1F6037D6600}</ProjectGuid>

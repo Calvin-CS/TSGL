@@ -1,8 +1,7 @@
 /*
  * testImage.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testImage <width> <height>
  */
 
 #include <tsgl.h>
@@ -23,18 +22,19 @@ void imageFunction(Canvas& can) {
     can.drawImage("../assets/pics/ship.bmp", ww, 0, ww, hh);
     can.drawImage("../assets/pics/shiprgb.bmp", ww*2, 0, ww, hh);
     can.drawImage("../assets/pics/sky_main.jpg", 0, hh, ww, hh);
-    can.drawImage("../assets/pics/Captain-falcon.png", ww, hh, ww, hh);
-    can.drawImage("../assets/pics/mini.jpg", ww*2, hh, ww, hh);
+    can.drawImage("../assets/pics/colorfulKeyboard.jpg", ww, hh, ww, hh);
+    can.drawImage("../assets/pics/cow.jpg", ww*2, hh, ww, hh);
 
-    can.drawImage("../assets/pics/bestpicture.png", ww/2, 0, ww*2, hh*2, 0.25f);    //ALPHA
+    can.drawImage("../assets/pics/background.jpg", ww/2, 0, ww*2, hh*2, 0.25f); //Overlay
 }
 
-int main() {
-    int w = 1.2*Canvas::getDisplayHeight();
-    int h = 0.5*w;
-    Canvas c21(-1, -1, w, h ,"Images");
-    c21.setBackgroundColor(GRAY);
-    c21.start();
-    imageFunction(c21);
-    c21.wait();
+//Takes command-line arguments for the width and height of the screen
+int main(int argc, char * argv[]) {
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : 0.5*w;
+    if(w <= 0 || h <= 0) { //Check width and height validity
+      w = 1.2*Canvas::getDisplayHeight(); h = 0.5*w;
+    }
+    Canvas c(-1, -1, w, h ,"Images");
+    c.run(imageFunction);
 }

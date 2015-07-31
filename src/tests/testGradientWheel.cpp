@@ -1,8 +1,7 @@
 /*
  * testGradientWheel.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testGradientWheel <width> <height> <numThreads>
  */
 
 #include <omp.h>
@@ -21,14 +20,14 @@ using namespace tsgl;
  *   x coordinates, y coordinates, and color.
  * \param can Reference to the Canvas being drawn to.
  */
-void gradientWheelFunction(Canvas& can) {
-  const int THREADS = 256,                          // Number of threads to compute with
-      WINDOW_CW = can.getWindowWidth() / 2,   // Center of the screen
-      WINDOW_CH = can.getWindowHeight() / 2;
-  const float RADIUS = (WINDOW_CH < WINDOW_CW ? WINDOW_CH : WINDOW_CW) * .95,  // Radius of wheel
-      ARCLENGTH = 2 * PI / NUM_COLORS;                                    // Gap between wedges
-#pragma omp parallel num_threads(THREADS)
+void gradientWheelFunction(Canvas& can, int threads) {
+  const int CW = can.getWindowWidth() / 2,         // Half the window's width
+            CH = can.getWindowHeight() / 2;        // Half the window's height
+  const float RADIUS = (CH < CW ? CH : CW) * .95,  // Radius of wheel
+              ARCLENGTH = 2 * PI / NUM_COLORS;     // Gap between wedges
+  #pragma omp parallel num_threads(threads)
   {
+<<<<<<< HEAD
     int nthreads = omp_get_num_threads();
     int tid = omp_get_thread_num();         // Thread ID
     int delta = NUM_COLORS / nthreads;           // Distance between threads to compute
@@ -39,19 +38,30 @@ void gradientWheelFunction(Canvas& can) {
     while (can.isOpen()) {
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
       start = (NUM_COLORS - can.getReps() % NUM_COLORS + delta*tid) % NUM_COLORS;  // shapes by the location and frame
+=======
+    threads = omp_get_num_threads();               // Actual number of threads
+    int tid = omp_get_thread_num();                // Thread ID
+    int delta = (NUM_COLORS / threads);            // Distance between threads to compute
+    float shading = 1 - (float)tid / threads;      // Shading based on thread ID
+    ColorFloat color[3];                           // RGB color to build
+    int start, end, xx[3], yy[3];                  // Setup the arrays of values for vertices
+    while (can.isOpen()) {
+      can.sleep();
+      start = (NUM_COLORS - (can.getReps() % NUM_COLORS) + tid*delta) % NUM_COLORS; // Starting hue of the segment
+      end = ((start+delta) % NUM_COLORS);
+>>>>>>> 537c46ba6c9b4aff4c592277352ca791cf994e5a
 
-      color[0] = ColorHSV(start /                         (float) NUM_COLORS * 6, 0.0f, shading, 1.0f);
-      color[1] = ColorHSV(start /                         (float) NUM_COLORS * 6, 1.0f, shading, 1.0f);
-      color[2] = ColorHSV(( (start+delta) % NUM_COLORS) / (float) NUM_COLORS * 6, 1.0f, shading, 1.0f);
+      color[0] = ColorHSV(start / (float)NUM_COLORS * 6, 0.0f, shading, 1.0f);
+      color[1] = ColorHSV(start / (float)NUM_COLORS * 6, 1.0f, shading, 1.0f);
+      color[2] = ColorHSV(end   / (float)NUM_COLORS * 6, 1.0f, shading, 1.0f);
 
-      xx[0] = WINDOW_CW;                                            // Set first vertex to center of screen
-      yy[0] = WINDOW_CH;
-      xx[1] = WINDOW_CW + RADIUS * sin(ARCLENGTH * start);          // Add the next two vertices to around the circle
-      yy[1] = WINDOW_CH + RADIUS * cos(ARCLENGTH * start);
-      xx[2] = WINDOW_CW + RADIUS * sin(ARCLENGTH * (start + 1));
-      yy[2] = WINDOW_CH + RADIUS * cos(ARCLENGTH * (start + 1));
+      xx[0] = CW; yy[0] = CH;                           // Set first vertex to center of screen
+      xx[1] = CW + RADIUS * sin(ARCLENGTH * start);     // Add the next two vertices around the circle
+      yy[1] = CH + RADIUS * cos(ARCLENGTH * start);
+      xx[2] = CW + RADIUS * sin(ARCLENGTH * (start + 1));
+      yy[2] = CH + RADIUS * cos(ARCLENGTH * (start + 1));
 
-      can.drawColoredPolygon(3, xx, yy, color);
+      can.drawTriangleStrip(3, xx, yy, color);
     }
   }
 }
@@ -60,11 +70,10 @@ void gradientWheelFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
-  if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-    w = h = 960;              //If not, set the width and height to a default value
-  Canvas c13(-1, -1, w, h, "Gradient Color Wheel", FRAME);
-  c13.setBackgroundColor(BLACK);
-  c13.start();
-  gradientWheelFunction(c13);
-  c13.wait();
+  if (w <= 0 || h <= 0)     // Checked the passed width and height if they are valid
+    w = h = 960;            // If not, set the width and height to a default value
+  int t = (argc > 3) ? atoi(argv[3]) : 256;
+  Canvas c(-1, -1, w, h, "Gradient Color Wheel");
+  c.setBackgroundColor(BLACK);
+  c.run(gradientWheelFunction,t);
 }

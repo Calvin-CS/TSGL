@@ -1,10 +1,3 @@
-/*
- * Text.cpp extends Shape and provides a class for drawing a string of text to the Canvas
- *
- * Authors: Patrick Crain, Mark Vander Stel
- * Last Modified: Mark Vander Stel, 7/11/2014
- */
-
 #include "Text.h"
 #include "iostream"
 

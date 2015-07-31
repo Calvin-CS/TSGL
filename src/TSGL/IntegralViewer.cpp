@@ -1,6 +1,6 @@
 #include "IntegralViewer.h"
 
-using namespace tsgl;
+namespace tsgl {
 
 IntegralViewer::IntegralViewer(functionPointer f, int width, int height, Decimal startX, Decimal stopX, Decimal startY, Decimal stopY, std::string fname) {
   myF = f;
@@ -32,8 +32,6 @@ void IntegralViewer::drawLabels(CartesianCanvas*& can) {
 
   bool blorigin = (myStartX == 0 && myStartY == 0);
   bool tlorigin = (myStartX == 0 && myStopY == 0);
-//  bool brorigin = (myStopX == 0 && myStartY == 0);
-//  bool trorigin = (myStopX == 0 && myStopY == 0);
 
   can->drawText(to_string(myStartX), myStartX, myStartY-yoff, FSIZE);
   can->drawText(to_string(myStopX), myStopX, myStartY-yoff, FSIZE);
@@ -66,7 +64,7 @@ long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
               halfRecWidth = recWidth / 2.0;
   #pragma omp parallel reduction(+:result)
   {
-    long double xLo = 0.0, xMid = 0.0, y = 0.0;
+    Decimal xLo = 0.0, xMid = 0.0, y = 0.0;
     ColorFloat tcol = Colors::highContrastColor(omp_get_thread_num());
     tcol.A = 0.7f;
 
@@ -94,8 +92,8 @@ long double IntegralViewer::trapezoidEvaluate(long long numTrapezoids) {
               halfTrapWidth = trapWidth / 2.0;
   #pragma omp parallel reduction(+:result)
   {
-    long double leftX = 0.0, rightX = 0.0, leftY = 0.0, rightY = 0.0;
-    long double xValues[4] = {0.0}, yValues[4] = {0.0};
+    Decimal leftX = 0.0, rightX = 0.0, leftY = 0.0, rightY = 0.0;
+    Decimal xValues[4] = {0.0}, yValues[4] = {0.0};
     ColorFloat tcol = Colors::highContrastColor(omp_get_thread_num());
     tcol.A = 0.7;
     ColorFloat colorValues[4] = {tcol, tcol, tcol, tcol};
@@ -122,3 +120,4 @@ long double IntegralViewer::trapezoidEvaluate(long long numTrapezoids) {
   return result;
 }
 
+}

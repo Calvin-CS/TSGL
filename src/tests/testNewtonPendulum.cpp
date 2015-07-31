@@ -1,8 +1,7 @@
 /*
  * testNewtonPendulum.cpp
  *
- *  Created on: May 29, 2015
- *      Authors: Chris Dilley, Patrick Crain
+ * Usage: ./testNewtonPendulum <width> <height> <numBalls>
  */
 
 #include "tsgl.h"
@@ -13,7 +12,7 @@ using namespace tsgl;
 /*!
  * \brief Simulates Newton's Cradle (or Newton's Pendulum as some call it) ( see http://s.hswstatic.com/gif/newtons-cradle-1.jpg ).
  * \details Simulates Newton's Pendulum in the following way:
- * - User variables store the sizes of each ball, the number of balls, and the radius of each ball.
+ * - User variables store the sizes of each ball, the number of balls (command-line argument), and the radius of each ball.
  *   They also store the acceleration, top speed, and the amount to inverse the direction of the swing of the balls.
  * - Automatic variables store the window width and height, the center of the window, the line length, and the offset of each ball.
  * - Initial positions of the edge balls are determined.
@@ -28,11 +27,12 @@ using namespace tsgl;
  *  .
  * .
  * \param can Reference to the Canvas to draw on.
+ * \param numberOfBalls The number of balls to use in the function.
  */
-void newtonPendulumFunction(Canvas& can) {
+void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
   //User variables
   const int   SIDES = 128,      //Sizes for each circle
-              BALLS = 7,        //Keep this odd
+              BALLS = numberOfBalls, //Keep this odd
               RADIUS = 20;      //Radius of circles
   const float ACCEL = 0.5f,     //Acceleration of balls
               TOPSPEED = 9.0f, //Starting speed of balls
@@ -92,10 +92,24 @@ void newtonPendulumFunction(Canvas& can) {
   }
 }
 
-int main() {
-  Canvas c1(-1, -1, 600, 400, "Newton's Pendulum"); //THIS MUST STAY EXACTLY THE SAME
-  c1.setBackgroundColor(WHITE);
-  c1.start();
-  newtonPendulumFunction(c1);
-  c1.wait();
+//Takes command line arguments for the width and height of the screen
+//as well as for the number of balls
+int main(int argc, char * argv[]) {
+  //Width and height
+  int w = (argc > 1) ? atoi(argv[1]) : 1.2 * Canvas::getDisplayHeight();
+  int h = (argc > 2) ? atoi(argv[2]) : 0.75 * w;
+  int numberOfBalls = atoi(argv[3]);  //Number of balls
+  if(w <= 0 || h <= 0) {
+    w = 1200;
+    h = 900;
+  }
+  //Determine if the number of balls is valid
+  if(numberOfBalls <= 0) {  //If negative, set it to 7
+    numberOfBalls = 7;
+  } else if(numberOfBalls % 2 == 0) { //If even, add 1
+    numberOfBalls++;
+  }
+  Canvas c(-1, -1, w, h, "Newton's Pendulum");
+  c.setBackgroundColor(WHITE);
+  c.run(newtonPendulumFunction,numberOfBalls);
 }

@@ -1,18 +1,22 @@
+/*
+ * Pong.cpp
+ */
+
 #include "Pong.h"
 
 using namespace tsgl;
 
-Pong::Pong(Canvas& can) {
+Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
+  leftPaddle = new Paddle(can, paddleSpeed);  // Create the Paddle objects and the Ball object
+  rightPaddle = new Paddle(can, paddleSpeed);
   srand(time(NULL));
-  leftPaddle = new Paddle(can);  // Create the Paddle objects and the Ball object
-  rightPaddle = new Paddle(can);
-  pongBall = new Ball(can);
-}
-
-void Pong::draw(Canvas& can) {
   //Bind the buttons
   leftPaddle->bindings(can, -1);  // W & S keys
   rightPaddle->bindings(can, 1);  // Up and Down arrow keys
+  pongBall = new Ball(can, ballSpeed);
+}
+
+void Pong::draw(Canvas& can) {
   // While the window has not been closed....
   while (can.isOpen()) {
     can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class

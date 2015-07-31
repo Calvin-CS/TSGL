@@ -1,8 +1,5 @@
 /*
  * Triangle.h extends Shape and provides a class for drawing a three-sided polygon to a Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Mark Vander Stel, 7/3/2014
  */
 
 #ifndef TRIANGLE_H_
@@ -20,6 +17,7 @@ class Triangle : public Shape {
  private:
     float vertices[18];
  public:
+
     /*!
      * \brief Explicitly constructs a new Triangle.
      * \details This is the constructor for the Triangle class.

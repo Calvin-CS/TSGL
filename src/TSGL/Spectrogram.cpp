@@ -124,7 +124,7 @@ void Spectrogram::draw(float ratio) {
       break;
     case VERTICAL:
       can->pauseDrawing();
-//      can->clear();
+    //  can->clear();
       for (int k = 0; k < MAX_COLOR; ++k)
         can->drawLine(k,myHeight,k,myHeight-(ratio*myHeight*count[k])/localmax,ColorHSV((6.0f*k)/MAX_COLOR,1.0f,1.0f));
       can->resumeDrawing();

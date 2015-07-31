@@ -1,3 +1,7 @@
+/*
+ * VisualTaskQueue.h provides a visual reprsentation of a generic parallel task queue
+ */
+
 #ifndef VISUALTASKQUEUE_H_
 #define VISUALTASKQUEUE_H_
 
@@ -10,7 +14,7 @@ namespace tsgl {
 
 /*! \brief Enum for states of elements in the VisualTaskQueue
  *  \details VQState is an enum for the valid states of an element in the VisualTaskQueue.
- *  \details <code>RUNNING</code> specifies an element is currently being worked on by a thread.
+ *  \details <code>RUNNING</code> specifies an element is currently being worked on by some thread.
  *  \details <code>FINISHED</code> specifies an element has been completed by some thread
  */
 enum VQState {
@@ -35,6 +39,7 @@ private:
   Canvas *vcan, *lcan;
   int rowLength, blockSize, totalElements;
 public:
+
   /*!
    * \brief Default VisualTaskQueue constructor method.
    * \details This is the default constructor for the VisualTaskQueue class.

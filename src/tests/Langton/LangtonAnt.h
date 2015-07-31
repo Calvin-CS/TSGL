@@ -1,8 +1,5 @@
 /*
- * LangtonAnt.h contains the class that creates a Langton's Ant that is used for the testLangton functions.
- *
- *  Created on: May 27, 2015
- *      Author: Patrick Crain
+ * LangtonAnt.h
  */
 
 #ifndef LANGTONANT_H_
@@ -36,6 +33,7 @@ public:
     int myX, myY, myRed, myGreen, myBlue, myAlpha, myDir;
     AntFarm* myFarm;
 public:
+
     /*!
      * \brief Explicitly constructs a LangtonAnt object.
      * \details Explicit constructor for the LangtonAnt class.

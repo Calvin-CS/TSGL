@@ -1,14 +1,13 @@
 /*
  * Ball.h
- *
- *  Created on: Jul 14, 2015
- *      Author: cpd5
  */
 
 #ifndef BALL_H_
 #define BALL_H_
 
 #include <tsgl.h>
+
+using namespace tsgl;
 
 /*!
  * class Ball
@@ -27,9 +26,10 @@ class Ball {
    * \brief Explicitly construct the Ball object.
    * \details Explicit constructor for the Ball object.
    * \param can Reference to the Canvas that will have the Ball object.
+   * \param speed Reference to the speed of the Ball object.
    * \return The constructed Ball object.
    */
-  Ball(Canvas& can);
+  Ball(Canvas& can, int & speed);
 
   /*!
    * \brief Draw the Ball object.

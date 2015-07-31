@@ -1,4 +1,8 @@
-/* testSpectrogram.cpp */
+/*
+ * testSpectrogram.cpp
+ *
+ * Usage: ./testSpectrogram <imagePath>
+ */
 
 #include <omp.h>
 
@@ -11,9 +15,29 @@ using namespace tsgl;
  * - The window width and height are stored for ease of use.
  * - The image is drawn onto the Canvas.
  * - A Spectrogram object is created which will display the spectrogram.
+ * - Sleep the Canvas for 1/10th of a second.
+ * - Have a counter that keeps track of the number of pixels that we have checked (for their color).
  * - A parallel block is created and the process is forked.
  * - The thread id and the actual number of threads spawned are stored.
- * -
+ * - Start and stopping points for the thread are calculated and stored.
+ * - For the starting point to the ending point of rendering:
+ *   - If the Canvas is open:
+ *      - Sleep the internal timer until the next draw cycle.
+ *      - For 0 to the width of the Canvas:
+ *        - Get a hue color based off of the current pixel.
+ *        - Check for a weird case where we can end up with a NaN error (Not a Number).
+ *        - Draw the point onto the Canvas.
+ *        .
+ *      - Update the number of pixels checked in an parallel atomic block (to avoid conflicts).
+ *      - Draw the results on the Spectrogram object.
+ *     .
+ *   .
+ * - Have the Canvas sleep for: FRAME seconds.
+ * - Draw the chosen image onto the Canvas.
+ * - Close the Spectrogram object.
+ * .
+ * \param can Reference to the Canvas object to draw to.
+ * \param fname The name of the file to get the image from.
  */
 void spectrogramFunction(Canvas& can, std::string fname) {
     const int cww = can.getWindowWidth(), cwh = can.getWindowHeight();
@@ -55,7 +79,5 @@ int main(int argc, char* argv[]) {
     int w, h;
     TextureHandler::getDimensions(fname,w,h);
     Canvas c(-1, Canvas::getDisplayHeight()-h, w, h ,"Spectrogram");
-    c.start();
-    spectrogramFunction(c,fname);
-    c.wait();
+    c.run(spectrogramFunction, fname);
 }

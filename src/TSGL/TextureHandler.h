@@ -1,8 +1,5 @@
 /*
  * TextureHandler.h provides an interface for loading a variety of image formats and fonts into GL textures.
- *
- * Author: Patrick Crain
- * Last Modified: Patrick Crain, 7/9/2014
  */
 
 #ifndef TEXTURELOADER_H_
@@ -69,6 +66,7 @@ class TextureHandler {
     static bool testLoadFont(TextureHandler& test);
 
  public:
+
     /*!
      * \brief Default TextureHandler constructor method.
      * \details This is the default constructor for theTextureHandler Canvas class.

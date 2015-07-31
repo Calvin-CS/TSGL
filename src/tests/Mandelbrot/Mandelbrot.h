@@ -1,8 +1,5 @@
 /*
- * Mandelbrot.cpp
- *
- *  Created on: May 28, 2015
- *      Author: Chris Dilley
+ * Mandelbrot.h
  */
 
 #ifndef MANDELBROT_H_
@@ -19,16 +16,10 @@
 using namespace tsgl;
 
 /*!
- * \var Cart
- * \brief Typedef for CartesianCanvas.
- */
-typedef CartesianCanvas Cart;
-
-/*!
  * \var complex
- * \brief Typedef for std::complex<long double>.
+ * \brief Typedef for std::complex<Decimal>.
  */
-typedef std::complex<long double> complex;
+typedef std::complex<Decimal> complex;
 
 /*!
  * \class Mandelbrot
@@ -40,10 +31,20 @@ typedef std::complex<long double> complex;
 class Mandelbrot {
 private:
   Decimal myFirstX, myFirstY, mySecondX, mySecondY;
+
 protected:
   int myThreads;
   unsigned int myDepth;
   bool myRedraw;
+
+  /*!
+   * \brief Shades the fractal using Manhattan distances
+   * \details This function may be called after the Mandelbrot has finished rendering to do some
+   *   post-procecssing using the distances from non-escaped pixels to their nearest escaped pixels,
+   *   using the average of their Manhattan distances.
+   */
+  void manhattanShading(CartesianCanvas& can);
+
 public:
 
   /*!
@@ -79,14 +80,6 @@ public:
    * \note Cart is a typedef for CartesianCanvas.
    */
   virtual void draw(Cart& can);
-
-  /*!
-   * \brief Redraw the Mandelbrot object.
-   * \details Sets a boolean flag that determines if we should redraw the Mandelbrot object or not.
-   *    \param newValue A boolean indicating whether or not we should redraw.
-   * \note Can be inherited by children classes who extend the Mandelbrot class.
-   */
-  virtual void setRedraw(bool newValue);
 };
 
 #endif /* MANDELBROT_H_ */

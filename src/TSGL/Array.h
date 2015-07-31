@@ -144,7 +144,6 @@ class Array {
             (first_ + 1) == capacity_ ? first_ = 0 : first_++;  // Increment first
         } else
             size_++;                                            // Otherwise, we added an item
-
         return myArray[last_] = item;                           // Actually add the item
     }
 };

@@ -1,6 +1,5 @@
 /*
- * Keynums.h provides an enumeration that maps keys and the mouse buttons to
- *   GLFW's integer definitions of the keys.
+ * Keynums.h provides an enumeration that maps keys and the mouse buttons to GLFW's integer definitions of the keys.
  */
 
 #ifndef KEYNUMS_H_

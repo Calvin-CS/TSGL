@@ -10,18 +10,9 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\tests\Mandelbrot\Buddhabrot.cpp" />
-    <ClCompile Include="..\src\tests\Mandelbrot\Mandelbrot.cpp" />
-    <ClCompile Include="..\src\tests\testBuddhabrot.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\tests\Mandelbrot\Buddhabrot.h" />
-    <ClInclude Include="..\src\tests\Mandelbrot\Mandelbrot.h" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CCE05DC5-CD32-4576-BDE6-0FE19604684C}</ProjectGuid>
-    <RootNamespace>testBuddhaBrot</RootNamespace>
+    <ProjectGuid>{AD6A5374-298B-49FA-9885-D2BF535F3B7D}</ProjectGuid>
+    <RootNamespace>testPhilosophers</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -46,7 +37,6 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\testProperties.props" />
     <Import Project="..\testProperties.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -75,6 +65,9 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\tests\testPhilosophers.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

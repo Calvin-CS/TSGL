@@ -1,16 +1,14 @@
 /*
  * Buddhabrot.cpp
- *
- *  Created on: June 18, 2015
- *      Author: Patrick Crain
  */
 
 #include "Buddhabrot.h"
 
+#ifdef _WIN32 //Windows doesn't like numbers higher than RAND_MAX (32767)
+  #define rand() (rand() | rand() << 16)
+#endif
+
 Buddhabrot::Buddhabrot(unsigned threads, unsigned depth = 1000) : Mandelbrot(threads, depth) {
-	myThreads = threads;
-  myDepth = depth;
-	myRedraw = true;
   counter = nullptr;
   cww = cwh = 0;
 }
@@ -42,13 +40,13 @@ void Buddhabrot::draw(Cart& can) {
     #pragma omp parallel num_threads(myThreads)
     {
       unsigned tid = omp_get_thread_num(), threads = omp_get_num_threads();
-      Decimal offset = cMiny+(cph*cwh*tid)/threads;
-      const float wscale = (cpw*cww)/(float)RPREC;
-      const float hscale = (cph*cwh/threads)/(float)RPREC;
+      Decimal offset = cMiny+(cph*cwh*tid)/(Decimal)threads;
+      const Decimal wscale = (cpw*cww)/(Decimal)RPREC;
+      const Decimal hscale = (cph*cwh/threads)/(Decimal)RPREC;
       ColorFloat tc = Colors::highContrastColor(tid);
       ColorFloat tcolor(tc.R,tc.G,tc.B,0.1f);
       complex* znums = new complex[myDepth];
-      long double col, row;
+      Decimal col, row;
       for (unsigned long i = tid; i < MAXITS; i+= threads) {
         if (myRedraw) break;
         col = cMinx+wscale*(rand() % RPREC);    //Between cMinx and cMaxx
@@ -99,7 +97,7 @@ void Buddhabrot::draw(Cart& can) {
       for (int i = omp_get_thread_num(); i < cwh; i += omp_get_num_threads())
         for (int j = 0; j < cww; ++j) {
           float normalize = sqrt((float)counter[i][j]/maxIts);
-          can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j)*normalize);
+          can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j) * normalize);
         }
     }
     while (can.isOpen() && !myRedraw)

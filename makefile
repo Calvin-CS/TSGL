@@ -60,10 +60,11 @@ LFLAGS=-Llib/ \
 DEPFLAGS=-MMD -MP
 
 BINARIES= \
-	bin/testAlphaLangton \
+  bin/test_specs \
 	bin/testAlphaRectangle \
+	bin/testAura \
 	bin/testBallroom \
-	bin/testBuddhabrot \
+	bin/testBlurImage \
 	bin/testCalcPi \
 	bin/testColorPoints \
 	bin/testColorWheel \
@@ -71,10 +72,10 @@ BINARIES= \
 	bin/testConway \
 	bin/testCosineIntegral \
 	bin/testDumbSort \
+	bin/testFireworks \
 	bin/testForestFire \
 	bin/testFunction \
 	bin/testGetPixels \
-	bin/testGradientMandelbrot \
 	bin/testGradientWheel \
 	bin/testGraydient \
 	bin/testGreyscale \
@@ -82,31 +83,25 @@ BINARIES= \
 	bin/testImage \
 	bin/testImageCart \
 	bin/testInverter \
-	bin/testJulia \
 	bin/testLangton \
-	bin/testLangtonColony \
-	bin/testLangtonRainbow \
 	bin/testLineChain \
 	bin/testLineFan \
 	bin/testMandelbrot \
-	bin/testMaster \
 	bin/testMouse \
-	bin/testMultiCanvas \
 	bin/testNewtonPendulum \
-	bin/testNova \
+	bin/testPhilosophers \
 	bin/testPong \
 	bin/testProgressBar \
 	bin/testProjectiles \
 	bin/testScreenshot \
-	bin/testScreenshotLangton \
 	bin/testSeaUrchin \
-	bin/testShadedVoronoi \
 	bin/testSmartSort \
 	bin/testSpectrogram \
 	bin/testSpectrum \
 	bin/testText \
 	bin/testTextCart \
 	bin/testTextTwo \
+	bin/testTutorial \
 	bin/testUnits \
 	bin/testVoronoi \
 
@@ -124,8 +119,13 @@ docs: docs/html/index.html
 
 tutorial: tutorial/docs/html/index.html
 
+cleanall: clean cleandocs
+
 clean:
-	$(RM) -r bin/* build/* docs/html/* lib/* tutorial/docs/html/* *~ *# *.tmp
+	$(RM) -r bin/* build/* lib/* tutorial/docs/html/* *~ *# *.tmp
+
+cleandocs:
+	$(RM) -r docs/html/*
 
 # -include build/*.d
 
@@ -140,29 +140,17 @@ lib/libtsgl.a: ${OBJS}
 	@touch build/build
 
 #List additional dependencies for test binaries
-
-#Langtons
-LANGTON_DEPS=build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
-bin/testAlphaLangton: ${LANGTON_DEPS}
-bin/testLangtonColony: ${LANGTON_DEPS}
-bin/testLangtonRainbow: ${LANGTON_DEPS}
-bin/testScreenshotLangton: ${LANGTON_DEPS}
-bin/testLangton: ${LANGTON_DEPS}
-
-#Voronois
-bin/testVoronoi: build/tests/Voronoi/Voronoi.o
-bin/testShadedVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
-
-#Fractals
-bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o
-bin/testJulia: build/tests/Mandelbrot/Julia.o
-bin/testGradientMandelbrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/GradientMandelbrot.o
-bin/testBuddhabrot: build/tests/Mandelbrot/Mandelbrot.o build/tests/Mandelbrot/Buddhabrot.o
-
-#Other
+bin/testLangton: build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
+bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 bin/testConway: build/tests/Conway/LifeFarm.o
 bin/testInverter: build/tests/ImageInverter/ImageInverter.o
 bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
+bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
+bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
+	build/tests/Mandelbrot/GradientMandelbrot.o \
+	build/tests/Mandelbrot/Buddhabrot.o \
+	build/tests/Mandelbrot/Julia.o \
+	build/tests/Mandelbrot/Nova.o
 
 #General compilation recipes for test binaries (appended to earlier dependencies)
 bin/test%: build/tests/test%.o lib/libtsgl.a
@@ -182,7 +170,7 @@ docs/html/index.html: ${HEADERS} doxyfile
 	@echo 'Generating Doxygen'
 	@doxygen doxyfile
 
-tutorial/docs/html/index.html: ${HEADERS} tutDoxyfile
+tutorial/docs/html/index.html: ${HEADERS} tutDoxyFile
 	@echo 'Generating Doxygen'
 	mkdir -p tutorial/docs
 	doxygen tutDoxyFile

@@ -1,17 +1,10 @@
-/*
- * ConcavePolygon.cpp
- *
- *  Created on: May 26, 2015
- *      Author: pac3
- */
-
 #include "ConcavePolygon.h"
 
 namespace tsgl {
 
 ConcavePolygon::ConcavePolygon(int numVertices) {
   if (numVertices < 3)
-    TsglErr("Cannot have a polygon with fewer than 3 vertices.");
+    TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
   length = numVertices+1;
   size = length * 6;
   tsize = 0;

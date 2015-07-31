@@ -13,7 +13,7 @@ CartesianCanvas::CartesianCanvas(int x, int y, int width, int height, Decimal xM
     recomputeDimensions(xMin, yMin, xMax, yMax);
 }
 
-void CartesianCanvas::drawAxes(Decimal originX, Decimal originY, Decimal spacingX = 0, Decimal spacingY = 0) {
+void CartesianCanvas::drawAxes(Decimal originX, Decimal originY, Decimal spacingX, Decimal spacingY) {
     drawLine(maxX, originY, minX, originY);  // Make the two axes
     drawLine(originX, maxY, originX, minY);
 
@@ -45,19 +45,6 @@ void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int sides
     getScreenCoordinates(x+radius,y,actualR,actualY);
     actualR -= actualX;
     Canvas::drawCircle(actualX, actualY, actualR, sides, color, filled);
-}
-
-void CartesianCanvas::drawColoredPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
-    int* int_x = new int[size];
-    int* int_y = new int[size];
-
-    for (int i = 0; i < size; i++) {
-        getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-    }
-    Canvas::drawColoredPolygon(size, int_x, int_y, color, filled);
-
-    delete int_x;
-    delete int_y;
 }
 
 void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
@@ -172,7 +159,10 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
-    Canvas::drawPoint(actualX, actualY, color);
+    if (atiCard)
+      Canvas::drawPoint(actualX, actualY-1, color);
+    else
+      Canvas::drawPoint(actualX, actualY, color);
 }
 
 void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color, bool filled) {
@@ -202,6 +192,19 @@ void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y
     getScreenCoordinates(x2, y2, actualX2, actualY2);
     getScreenCoordinates(x3, y3, actualX3, actualY3);
     Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, color, filled);
+}
+
+void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
+    int* int_x = new int[size];
+    int* int_y = new int[size];
+
+    for (int i = 0; i < size; i++) {
+        getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
+    }
+    Canvas::drawTriangleStrip(size, int_x, int_y, color, filled);
+
+    delete int_x;
+    delete int_y;
 }
 
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
@@ -244,9 +247,9 @@ Decimal CartesianCanvas::getMinY() {
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
     screenX = round((cartX - minX) / pixelWidth);
     if (atiCard)
-      screenY = getWindowHeight() - round((cartY - minY) / pixelHeight);
+      screenY = getWindowHeight() - round((cartY - minY) / pixelHeight + pixelHeight*0.5f);
     else
-      screenY = getWindowHeight() - 1 - round((cartY - minY) / pixelHeight);
+      screenY = getWindowHeight() - 1 - round((cartY - minY) / pixelHeight + pixelHeight*0.5f);
 }
 
 void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax) {
@@ -260,8 +263,29 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     pixelHeight = cartHeight / (getWindowHeight() - 1);  //Minor hacky fix
 }
 
-void CartesianCanvas::reset() {
-    Canvas::reset();
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&) ) {
+  start(); myFunction(*this); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, int), int i) {
+  start(); myFunction(*this, i); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, unsigned), unsigned u) {
+  start(); myFunction(*this, u); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, int, int), int i1, int i2) {
+  start(); myFunction(*this, i1, i2); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, unsigned, unsigned), unsigned u1, unsigned u2) {
+  start(); myFunction(*this, u1, u2); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, std::string),std::string s) {
+  start(); myFunction(*this, s); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, int, std::string), int i, std::string s) {
+  start(); myFunction(*this, i, s); wait();
+}
+void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, std::string, int), std::string s, int i) {
+  start(); myFunction(*this, s, i); wait();
 }
 
 void CartesianCanvas::sleep() {
@@ -295,7 +319,6 @@ void CartesianCanvas::runTests() {
   c2.setBackgroundColor(WHITE);
   c2.start();
   tsglAssert(testDraw(c2), "Unit test for drawing functions failed!");
-//  c2.stop();
   c2.wait();
 
   TsglDebug("Unit tests for CartesianCanvas complete.");
@@ -389,38 +412,6 @@ bool CartesianCanvas::testDraw(CartesianCanvas& can) {
     return false;
   }
 }
-
-//bool CartesianCanvas::testAxes(CartesianCanvas& can) {
-//   int passed = 0;
-//   int failed = 0;
-//   can.drawAxes(0, 0, 10, 10);
-// //  can.sleep();
-//   ColorInt black(0, 0, 0);
-//   if(can.getPixel(0, 0) == black && can.getPixel(0, 10) == black) {
-//     passed++;
-//   } else {
-//     failed++;
-//     TsglErr("Test 1, distance between axes for testAxes() failed!");
-//   }
-//
-////   while(can.getIsOpen()) {
-////     std::cout << can.getMouseX() << " " << can.getMouseY() << std::endl;
-////   }
-////   for(unsigned i = 0; i < can.getWindowWidth(); i++) {
-////     std::cout << can.getPixel(460, i).AsString() << std::endl;
-////   }
-//
-//   if(passed == 1 && failed == 0) {
-//     TsglDebug("Unit test for drawing axes passed!");
-//     return true;
-//   } else {
-//     TsglErr("This many tests passed for testAxes(): ");
-//     std::cout << " " << passed << std::endl;
-//     TsglErr("This many tests failed for testAxes(): ");
-//     std::cout << " " << failed << std::endl;
-//     return false;
-//   }
-//}
 
 bool CartesianCanvas::testZoom(CartesianCanvas& can) {
     int passed = 0;

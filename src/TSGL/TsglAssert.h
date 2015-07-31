@@ -1,8 +1,5 @@
 /*
  * TsglAssert.h is for unit testing purposes.
- *
- *  Created on: Jun 4, 2015
- *      Authors: Chris Dilley, Patrick Crain.
  */
 
 #ifndef SRC_TSGL_TSGLASSERT_H_

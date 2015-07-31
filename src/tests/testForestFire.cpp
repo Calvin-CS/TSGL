@@ -1,8 +1,7 @@
 /*
  * testForestFire.cpp
  *
- *  Created on: May 27, 2015
- *      Author: cpd5
+ * Usage: ./testForestFire <width> <height>
  */
 
 #include <tsgl.h>
@@ -137,9 +136,6 @@ int main(int argc, char* argv[]) {
       w = 1200;
       h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c20(-1, -1, w, h, "Forest Fire", FRAME);
-    c20.setBackgroundColor(GRAY);
-    c20.start();
-    forestFireFunction(c20);
-    c20.wait();
+    Canvas c(-1, -1, w, h, "Forest Fire");
+    c.run(forestFireFunction);
 }

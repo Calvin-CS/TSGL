@@ -1,8 +1,5 @@
 /*
  * Buddhabrot.h
- *
- *  Created on: June 18, 2015
- *      Author: Patrick Crain
  */
 
 #ifndef BUDDHABROT_H_
@@ -27,6 +24,7 @@ private:
   int **counter;
   int cww, cwh;
 public:
+
   /*!
    * \brief Explicitly construct a Buddhabrot object.
    * \details Explicit constructor for the Buddhabrot class.

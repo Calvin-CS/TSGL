@@ -1,3 +1,7 @@
+/*
+ * Mandelbrot.cpp
+ */
+
 #include "Mandelbrot.h"
 
 Mandelbrot::Mandelbrot(unsigned threads, unsigned depth) {
@@ -5,6 +9,56 @@ Mandelbrot::Mandelbrot(unsigned threads, unsigned depth) {
     myDepth = depth;
     myFirstX = myFirstY = mySecondX = mySecondY = 0.0;
     myRedraw = true;
+}
+
+void Mandelbrot::manhattanShading(CartesianCanvas& can) {
+  int** canPoints = new int*[can.getWindowHeight()];
+  for (int i = 0; i < can.getWindowHeight(); ++i) {
+    canPoints[i] = new int[can.getWindowWidth()];
+    for (int j = 0; j < can.getWindowWidth(); ++j) {
+      ColorInt c = can.getPoint(j,i);
+      canPoints[i][j] = ((c.R == c.G) && (c.G == c.B) && (c.B == 0)) ? 0 : -1;
+    }
+  }
+  bool done = false;
+  int loop, cwh = can.getWindowHeight(), cww = can.getWindowWidth();
+  for (loop = 0; !done; ++loop) {
+    done = true;
+    #pragma omp parallel for
+    for (int i = 0; i < cwh; ++i) {
+      for (int j = 0; j < cww; ++j) {
+        if (canPoints[i][j] != loop)
+          continue;
+        if (i > 0 && canPoints[i-1][j] == -1)
+          canPoints[i-1][j] = loop+1, done = false;
+        if (j > 0 && canPoints[i][j-1] == -1)
+          canPoints[i][j-1] = loop+1, done = false;
+        if (i < cwh-1 && canPoints[i+1][j] == -1)
+          canPoints[i+1][j] = loop+1, done = false;
+        if (j < cww-1 && canPoints[i][j+1] == -1)
+          canPoints[i][j+1] = loop+1, done = false;
+      }
+    }
+  }
+
+  int sum = 0;
+  for (int i = 0; i < cwh; ++i)
+    for (int j = 0; j < cww; ++j)
+      sum += canPoints[i][j];
+  float avg = (((float)sum)/cww)/cwh;
+
+  #pragma omp parallel for
+  for (int i = 0; i < cwh; ++i) {
+    for (int j = 0; j < cww; ++j) {
+      float mult = sqrt(avg*((float)canPoints[i][j])/loop);
+      ColorFloat c = can.getPoint(j,i);
+      can.Canvas::drawPoint(j,i,c*mult);
+    }
+  }
+
+  for (int i = 0; i < can.getWindowHeight(); ++i)
+    delete [] canPoints[i];
+  delete [] canPoints;
 }
 
 void Mandelbrot::bindings(Cart& can) {
@@ -51,7 +105,7 @@ void Mandelbrot::draw(Cart& can) {
     0,CH - (CH % myThreads),myThreads   //Make the max PB value a multiple of myThreads
   );
   while(myRedraw) {
-    setRedraw(false);
+    myRedraw = false;
     can.reset();
     #pragma omp parallel num_threads(myThreads)
     {
@@ -84,7 +138,7 @@ void Mandelbrot::draw(Cart& can) {
             can.drawPoint(col, row, BLACK);
           } else { // Otherwise, draw it with color based on how long it took
             float mult = iterations/(float)myDepth;
-            can.drawPoint(col, row, Colors::blendedColor(tcolor,WHITE,0.25f+0.5f*mult)*mult);
+            can.drawPoint(col, row, Colors::blend(tcolor,WHITE,0.25f+0.5f*mult)*mult);
           }
           if (myRedraw) break;
         }
@@ -92,6 +146,7 @@ void Mandelbrot::draw(Cart& can) {
         if (myRedraw) break;
       }
     }
+//    shadeCanvas(can);  Optional shading
     std::cout << can.getTime() << std::endl;
     while (can.isOpen() && !myRedraw) {
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
@@ -100,9 +155,4 @@ void Mandelbrot::draw(Cart& can) {
   if (pCan.isOpen())
     pCan.close();
   pCan.wait();  //Close our progress bar if we're done
-}
-
-  //mutator
-void Mandelbrot::setRedraw(bool newValue) {
-  myRedraw = newValue;
 }

@@ -1,8 +1,5 @@
 /*
  * ImageInverter.h declares the ImageInverter class.
- *
- *  Created on: Nov 25, 2014
- *      Author: adams
  */
 
 #ifndef IMAGEINVERTER_H_
@@ -23,13 +20,14 @@ class ImageInverter {
 private:
   Canvas myCanvas1;
   Canvas myCanvas2;
-  unsigned myWidth;
-  unsigned myHeight;
+  int myWidth;
+  int myHeight;
   std::string   myFileName;
   #ifdef _WIN32
   void sleep(unsigned seconds) { Sleep(seconds * 1000); }
   #endif
 protected:
+
   /* invertImage inverts the image using a given number of threads
    * @param: numThreads, the number of threads to use
    *           when inverting the image (default 1).
@@ -44,7 +42,9 @@ protected:
    * Postcondition: myCanvas1 and myCanvas2 have been closed.
    */
   virtual void stop();
+
 public:
+
   /* explicit constructor
    * @param fileName, a string.
    * @param width, an unsigned.

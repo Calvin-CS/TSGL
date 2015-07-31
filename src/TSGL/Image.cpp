@@ -1,16 +1,10 @@
-/*
- * Image.cpp
- *
- *  Created on: Jul 8, 2014
- *      Author: pretzel
- */
-
 #include "Image.h"
 
 namespace tsgl {
 
 Image::Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha) {
     isTextured = true;  // Let the Canvas know we're a textured object
+    myTexture = 0;      // Fix no texture initialization warning
     myWidth = width; myHeight = height;
     if (myWidth <= 0 || myHeight <= 0) {
       TextureHandler::getDimensions(filename,myWidth,myHeight);

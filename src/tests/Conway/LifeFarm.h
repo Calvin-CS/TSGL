@@ -1,8 +1,5 @@
 /*
  * LifeFarm.h
- *
- *  Created on: May 28, 2015
- *      Author: pretzel
  */
 
 #ifndef ANTFARM_H_
@@ -36,6 +33,7 @@ private:
 public:
     int width, height, size;
     Canvas* can;
+
     /*!
      * \brief Explicitly constructs a LifeFarm object.
      * \details Explicit constructor for the LifeFarm class.

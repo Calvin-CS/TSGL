@@ -1,8 +1,7 @@
 /*
  * testProjectiles.cpp
  *
- *  Created on: Jun 2, 2015
- *      Author: Chris Dilley
+ * Usage: ./testProjectiles <width> <height>
  */
 
 #include "tsgl.h"
@@ -104,9 +103,7 @@ void projectileFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
-  Canvas c1(-1, -1, w, h, "Click the Target!", FRAME);    //Can change the size of the window
-  c1.setBackgroundColor(BLACK);
-  c1.start();
-  projectileFunction(c1);
-  c1.wait();
+  Canvas c(-1, -1, w, h, "Click the Target!");    //Can change the size of the window
+  c.setBackgroundColor(BLACK);
+  c.run(projectileFunction);
 }

@@ -1,10 +1,7 @@
 /*
  * testCalcPi.cpp
  *
- *  Created on: Apr 23, 2015
- *  Authors: Joel Adams and Patrick Crain, at Calvin College
- *
- *  Usage: ./testCalcPi [numIntervals] [numThreads]
+ * Usage: ./testCalcPi <numIntervals> <numThreads>
  */
 
 #include <stdio.h>              // printf(), ...
@@ -13,24 +10,42 @@
 #include <omp.h>                // OpenMP functions
 #include <tsgl.h>               // IntegralViewer
 
+using namespace tsgl;
+
 /*!
- * \brief Compute a Unit circle.
- * \details
+ * \brief Compute a y-coordinate.
+ * \details Takes in an x-coordinate and calculates its corresponding y-coordinate.
+ * The IntegralViewer class then plots that point.
+ * \param x The x-coordinate to calculate the y-coordinate for.
+ * \return The calculated y-coordinate for the passed x value.
+ * \see IntegralViewer class.
  */
-inline Decimal unitCircleFunction(long double x) {
+inline Decimal unitCircleFunction(Decimal x) {
   return (abs(x) < 1.0L) ? sqrt( 1.0L - (x*x) ) : 0.0L;
 }
 
 /*!
- *
+ * \brief Computes the Cosine value for an x-coordinate.
+ * \param x The x value to calculate the Cosine value for.
+ * \return The Cosine value for the passed x value.
  */
-inline Decimal sineFunction(long double x) {
+inline Decimal sineFunction(Decimal x) {
   return cos(8*x);
-  Decimal d = cos(8*x);
-  return d > 0 ? d : -d;
 }
 
-//Main method
+/*!
+ * \brief testCalcPi's main method.
+ * \details Everything that is needed in order to run testCalcPi is in this main method.
+ * - Handle command-line arguments that were passed. If more than 2 were passed, print an error message and
+ *   exit the process.
+ * - Now, check and see if any command-line arguments were passed at all. If not, set default values
+ *   for the number of intervals and the number of threads to use.
+ * - Setup the IntegralViewer object; set the number of threads to use and create the IntergralViewer
+ *   object with the information given and calculated.
+ * - Evaluate the integral of the unit circle function using rectangles, then evaluate it using trapezoids.
+ * - Now evaluate the Cosine function integral using rectangles and trapezoids.
+ * .
+ */
 int main(int argc, char** argv) {
   //Handle command line
   if (argc > 3) {

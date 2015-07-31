@@ -67,9 +67,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\tests\testVoronoi.cpp" />
+    <ClCompile Include="..\src\tests\Voronoi\ShadedVoronoi.cpp" />
     <ClCompile Include="..\src\tests\Voronoi\Voronoi.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\tests\Voronoi\ShadedVoronoi.h" />
     <ClInclude Include="..\src\tests\Voronoi\Voronoi.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

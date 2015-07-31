@@ -1,8 +1,5 @@
 /*
  * ConcavePolygon.h extends Shape and provides a class for drawing a Concave polygon to a Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Patrick Crain, 7/20/2014
  */
 
 #ifndef CONCAVEPOLYGON_H_
@@ -40,6 +37,7 @@ class ConcavePolygon : public Shape {
     static bool testPointITriangle(); // Unit test for pointInTriangle()
 
  public:
+
     /*!
      * \brief Explicitly constructs a new ConcavePolygon.
      * \details Explicit constructor for a ConcavePolygon object.

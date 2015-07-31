@@ -76,7 +76,7 @@ void VisualTaskQueue::update(int index, VQState state) {
   vcan->drawRectangle(
     border+x*(blockSize+space),border+y*(blockSize+space),
     border+x*(blockSize+space)+blockSize,border+y*(blockSize+space)+blockSize,
-    Colors::blendedColor(
+    Colors::blend(
       Colors::highContrastColor(omp_get_thread_num()),(state == RUNNING) ? BLACK : WHITE,0.5f
     ),true
   );

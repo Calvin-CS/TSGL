@@ -1,8 +1,5 @@
 /*
  * Rectangle.h extends Shape and provides a class for drawing a rectangle to a Canvas.
- *
- * Authors: Patrick Crain, Mark Vander Stel, Chris Dilley.
- * Last Modified: Mark Vander Stel, 7/3/2014
  */
 
 #ifndef RECTANGLE_H_
@@ -20,6 +17,7 @@ class Rectangle : public Shape {
  private:
     float vertices[24];
  public:
+
     /*!
      * \brief Explicitly constructs a Rectangle.
      * \details This is the constructor for the Rectangle class.
