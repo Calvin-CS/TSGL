@@ -1,6 +1,7 @@
 Easy Automatic Installation (Requires Visual Studio 2012):
   Run tsgl-setup.exe, installing to this directory (which should be the default location)
   Open tsgl.sln in Visual Studio 2012
+  Right click on tsgl -> Build
   Right click on solution -> Build Solution
   Done! Right click on any of the test projects -> Debug -> Start New Instance to get started!
 

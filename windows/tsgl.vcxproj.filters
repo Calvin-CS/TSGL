@@ -24,9 +24,6 @@
     <ClCompile Include="src\tsgl\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\tsgl\ColoredPolygon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\tsgl\ConcavePolygon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,9 +54,6 @@
     <ClCompile Include="src\tsgl\Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TSGL\VisualQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\TSGL\ProgressBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,6 +69,9 @@
     <ClCompile Include="src\TSGL\VisualTaskQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\TSGL\TriangleStrip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\tsgl\Array.h">
@@ -87,9 +84,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tsgl\Color.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tsgl\ColoredPolygon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tsgl\ConcavePolygon.h">
@@ -132,9 +126,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tsgl\tsgl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TSGL\VisualQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\TSGL\TsglAssert.h">

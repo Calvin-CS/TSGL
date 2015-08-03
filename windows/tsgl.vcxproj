@@ -86,7 +86,6 @@ copy "$(SolutionDir)lib\zlib1.dll" "$(SolutionDir)Debug\zlib1.dll";
     <ClCompile Include="src\tsgl\Canvas.cpp" />
     <ClCompile Include="src\tsgl\CartesianCanvas.cpp" />
     <ClCompile Include="src\tsgl\Color.cpp" />
-    <ClCompile Include="src\tsgl\ColoredPolygon.cpp" />
     <ClCompile Include="src\tsgl\ConcavePolygon.cpp" />
     <ClCompile Include="src\tsgl\ConvexPolygon.cpp" />
     <ClCompile Include="src\TSGL\Error.cpp" />
@@ -101,6 +100,7 @@ copy "$(SolutionDir)lib\zlib1.dll" "$(SolutionDir)Debug\zlib1.dll";
     <ClCompile Include="src\tsgl\TextureHandler.cpp" />
     <ClCompile Include="src\tsgl\Timer.cpp" />
     <ClCompile Include="src\tsgl\Triangle.cpp" />
+    <ClCompile Include="src\TSGL\TriangleStrip.cpp" />
     <ClCompile Include="src\TSGL\VisualTaskQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -108,7 +108,6 @@ copy "$(SolutionDir)lib\zlib1.dll" "$(SolutionDir)Debug\zlib1.dll";
     <ClInclude Include="src\tsgl\Canvas.h" />
     <ClInclude Include="src\tsgl\CartesianCanvas.h" />
     <ClInclude Include="src\tsgl\Color.h" />
-    <ClInclude Include="src\tsgl\ColoredPolygon.h" />
     <ClInclude Include="src\tsgl\ConcavePolygon.h" />
     <ClInclude Include="src\tsgl\ConvexPolygon.h" />
     <ClInclude Include="src\TSGL\Error.h" />
