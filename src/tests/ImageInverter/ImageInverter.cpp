@@ -18,36 +18,37 @@ ImageInverter::ImageInverter(const std::string& fileName, unsigned width, unsign
 }
 
 void ImageInverter::run(unsigned numThreads) {
-  // sleep(1);
   invertImage(numThreads);
   stop();
 }
 
 void ImageInverter::invertImage(unsigned numThreads) {
-  int inverse = 0;
   ColorInt pixelColor;
   #pragma omp parallel for num_threads(numThreads)
   for (int row = 0; row < myHeight; row++) {
+    myCanvas1.sleep();
+/*
     if (! (myCanvas1.isOpen() && myCanvas2.isOpen()) ) {
       #ifndef _WIN32
       row = myHeight; //Exit out (not allowed on Windows)
-	  #endif
+      #endif
       continue;
     }
-    for (unsigned col = 0; col < myWidth; col++) {
+*/
+    for (int col = 0; col < myWidth; col++) {
       pixelColor = myCanvas1.getPixel(row, col);
-      inverse = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
-      myCanvas2.drawPixel(row, col, ColorInt(inverse,inverse,inverse) );
+      int invertedR = 255 - pixelColor.R;
+      int invertedG = 255 - pixelColor.G;
+      int invertedB = 255 - pixelColor.B;
+      myCanvas2.drawPixel(row, col, ColorInt(invertedR,invertedG,invertedB) );
     }
-	myCanvas1.sleepFor(FRAME);
   }
 }
 
 void ImageInverter::stop() {
-  myCanvas1.wait();
   myCanvas2.wait();
+  myCanvas1.wait();
 }
-
 
 ImageInverter::~ImageInverter() {
 //  delete myCanvas1;
