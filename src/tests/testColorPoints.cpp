@@ -35,14 +35,13 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
 #pragma omp parallel num_threads(numberOfThreads)
   {
     int nthreads = omp_get_num_threads();  //Actual number of threads to use
-    int myPart = can.getWindowHeight() / nthreads;
+    int myPart = can.getWindowHeight() / nthreads + 1;
     int myStart = myPart * omp_get_thread_num();
-    for (int j = myStart; j < myStart + myPart; j++) {
-      for (int i = 0; i < can.getWindowWidth(); i++) {
+    for (int i = myStart; i < myStart + myPart; i++) {
+      for (int j = 0; j < can.getWindowWidth(); j++) {
         int id = omp_get_thread_num();
-        ColorFloat color = Colors::highContrastColor(id);
         if (i % 2 == 0)
-          can.drawPoint(i, j, color);
+          can.drawPoint(i, j, BLACK);
         else
           can.drawPoint(i, j, ColorInt(i % NUM_COLORS, j % NUM_COLORS, (i * j) % NUM_COLORS));
       }
