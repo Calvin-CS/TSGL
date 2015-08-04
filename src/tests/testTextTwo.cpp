@@ -31,7 +31,7 @@ void textFunctionTwo(Canvas& can) {
 int main(int argc, char * argv[]) {
     //Width and height
     int w = (argc > 1) ? atoi(argv[1]) : 1.2f*Canvas::getDisplayHeight();
-    int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w;
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w - 300.0f;
     if(w <= 0 || h <= 0) { //Check the validity of the width and height
       w = 1.2f*Canvas::getDisplayHeight();
       h = 0.75f*w;

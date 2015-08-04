@@ -16,13 +16,13 @@ using namespace tsgl;
  */
 void textCartFunction(Cart& can, std::string font) {
     can.setFont(font);
-    can.drawText(L"A long time ago, in a galaxy far, far away.", .05, .8, 32, BLACK);
-    can.drawText(L"Something extraordinary happened.", .05, .6, 32, BLACK);
-    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", .05, .4, 32, BLACK);
-    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", .05, .3,
+    can.drawText(L"A long time ago, in a galaxy far, far away.", 1, 2, 32, BLACK);
+    can.drawText(L"Something extraordinary happened.", 1, 1.9, 32, BLACK);
+    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 1, 1.8, 32, BLACK);
+    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", 1, 1.7,
                  32, BLACK);
-    can.drawText(L"Of *what* exactly that extraordinary event was.", .05, .2, 32, BLACK);
-    can.drawText(L"And to that I say...oh well.", .05, .1, 32, BLACK);
+    can.drawText(L"Of *what* exactly that extraordinary event was.", 1, 1.6, 32, BLACK);
+    can.drawText(L"And to that I say...oh well.", 1, 1.5, 32, BLACK);
 }
 
 //Takes command-line arguments for the width and height of the screen
@@ -30,7 +30,7 @@ void textCartFunction(Cart& can, std::string font) {
 int main(int argc, char * argv[]) {
     //Width and height
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
-    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
+    int h = (argc > 2) ? atoi(argv[2]) : 0.75*w - 200.0f;
     std::string font = argv[3]; //Font
     if(w <= 0 || h <= 0) {  //Check validity of width and height
       w = 1.2 * Canvas::getDisplayHeight();
