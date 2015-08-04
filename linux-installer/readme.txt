@@ -17,6 +17,7 @@ find one or more of these libraries, please see below for links on where you can
 LDFLAGS="$LDFLAGS -L/the/library/path/that/has/the/library", replacing /the/library/path/that/has/the/library with the library path then hit ENTER. 
 (To determine where your libraries are, type "ldconfig -p | grep LIBRARY_NAME" where LIBRARY_NAME is GLEW, glfw, GL, or freetype.).
 
++ The configure script is more of a installer.sh script. It does the first two steps in the Linux installation process; configure and make, but not make install.
 ---------------------------
 STEPS
 ---------------------------
