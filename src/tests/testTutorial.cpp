@@ -2,51 +2,23 @@
 using namespace tsgl;
 
 int main() {
-  Canvas c(0, 0, 500, 500, "I/O Example");
+  Canvas c(0, 0, 500, 600, "Animation Loop Example", FRAME / 2);
   c.start();
-  //This variable is in the scope of the Lambda function.
-  //It can be passed in.
-  bool switch1 = false;
-
-  //Bind the left mouse button so that when it's pressed
-  //the boolean switch is set to true.
-  c.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS,
-                    [&switch1]() {
-                          switch1 = true;
-                    }
-                );
-
-  //Bind the left mouse button again so that when it's released
-  //the boolean switch is set to false.
-  c.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE,
-                    [&switch1]() {
-                          switch1 = false;
-                    }
-                );
-
-  //Bind the spacebar so that when it's pressed
-  //the Canvas is cleared.
-  //(Yes, you can also pass in the Canvas as
-  //a parameter to the Lambda function).
-  //ANY variable that is in the scope of the
-  //Lambda function can be passed as a parameter.
-  c.bindToButton(TSGL_SPACE, TSGL_PRESS,
-                    [&c]() {
-                      c.clear();
-                    }
-                );
-
+  //Store the x and y-coordinate values in variables outside of the loop
+  int x = 250, y = 300;
   //Drawing loop
   while(c.isOpen()) {
     c.sleep();
-    int x = c.getMouseX(), y = c.getMouseY();  //Store the x and y-coordinates of the mouse
-    c.setFont("assets/freefont/FreeMono.ttf");
-    if(switch1) {
-      c.drawText("YES", 270, 270, 30, GREEN);
-      c.drawCircle(x, y, 20, 32, BLACK, true);
-    } else {
-      c.drawText("NO", 250, 250, 30, RED);
+    //Check to see if we are off screen
+    if (x >= c.getWindowWidth()) {
+       x = 250; //If so, reset the x-coordinate
     }
+    //Let's draw a circle!
+    //Pass the x and y coordinates
+    c.drawCircle(x, y, 50, 32);
+    //And change the x-coordinate once the circle has been drawn
+    x += 5;
+    c.clear(); //New statement
   }
   c.wait();
 }

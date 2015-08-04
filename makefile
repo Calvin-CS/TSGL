@@ -1,6 +1,8 @@
 AR=ar
 CC=g++
 RM=rm -f
+INSTALL=/usr/bin/install
+PREFIX=/usr/local
 
 SRC_PATH=src/TSGL/
 TESTS_PATH=src/tests/
@@ -111,7 +113,7 @@ debug: dif tsgl tests
 
 dif: build/build
 
-tsgl: lib/libtsgl.a
+tsgl: lib/libtsgl.a lib/libtsgl.so
 
 tests: ${BINARIES}
 
@@ -129,10 +131,24 @@ cleandocs:
 
 # -include build/*.d
 
+install:
+	test -d $(PREFIX) || mkdir $(PREFIX)
+	test -d $(PREFIX)/lib || mkdir $(PREFIX)
+	test -d $(PREFIX)/include || mkdir $(PREFIX)
+	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
+	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
+	cp -r src/TSGL $(PREFIX)/include
+
+
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
 	@echo 'Files that changed:'
 	@echo $(patsubst src/%,%,$?)
 
+lib/libtsgl.so: ${OBJS}
+	@echo 'Building $(patsubst lib/%,%,$@)'
+	$(CC) -shared -o $@ $?
+	@touch build/build
+	
 lib/libtsgl.a: ${OBJS}
 	@echo 'Building $(patsubst lib/%,%,$@)'
 	mkdir -p lib
@@ -162,7 +178,7 @@ bin/test%: build/tests/test%.o lib/libtsgl.a
 build/%.o: src/%.cpp
 	mkdir -p ${@D}
 	@echo 'Building $(patsubst src/tests/%,%,$<)'
-	$(CC) -c $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
+	$(CC) -c -fpic $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
 
 #Doxygen stuff
 docs/html/index.html: ${HEADERS} doxyfile
