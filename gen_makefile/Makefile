@@ -60,7 +60,7 @@ $(TARGET): $(OBJS)
 	@echo -e '\nCompiling...'
 	$(CC) $(CXXFLAGS) $< 
 
-#Indirect dependicies (Multiple file/classes only)
+#Indirect dependencies (Multiple file/classes only)
 $(TARGET).o:
 
 #Clean command
