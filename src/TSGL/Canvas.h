@@ -373,7 +373,7 @@ public:
      * \note Identical to the drawText(std::string, ...) aside from the first parameter.
      * \see drawText(std::string s, int x, int y, unsigned size, ColorFloat color = BLACK)
      */
-    virtual void drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color);
+    virtual void drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color = BLACK);
 
     /*!
      * \brief Draws a triangle.
