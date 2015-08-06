@@ -1,36 +1,40 @@
-CC=g++
+TARGET = main
+OBJS = $(TARGET).o
 
-TARGET=shapes
-FILE=shapes.cpp
-OBJECT=shapes.o
+CC = g++
+RM = rm -f
 
-ifeq ($(UNAME), Linux)
-	OS_LFLAGS :=
-	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
-	OS_GLFW := glfw
-	OS_GL := -lGL
-endif
+CXXFLAGS=-c -O3 -g3 \
+    -Wall -Wextra -pedantic-errors \
+    -D__GXX_EXPERIMENTAL_CXX0X__ \
+    -I/usr/local/include/TSGL/ \
+    -I/usr/local/include/ \
+    -I/opt/AMDAPP/include/ \
+    -I/usr/local/include/freetype2/ \
+    -std=c++0x -fopenmp
 
-ifeq ($(UNAME), Darwin)
-	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
-	OS_LDIRS :=
-	OS_GLFW := glfw3
-	OS_GL :=
-endif
+LFLAGS=-o $(TARGET) \
+    -L/usr/local/lib/TSGL/ \
+    -L/opt/AMDAPP/lib/x86_64/ \
+    -ltsgl -lfreetype \
+    -Wl,-rpath=/usr/local/lib/ \
+    -lGLEW -lglfw \
+    -lX11 -lGL -lXrandr \
+    -fopenmp
 
-LFLAGS=-Llib/ \
-	-L/opt/local/lib/ \
-	-L/usr/lib/ \
-	-L/usr/local/lib/ \
-	-L/usr/X11/lib/ \
-	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
-	-lX11 ${OS_GL} -lXrandr -fopenmp \
-	${OS_LDIRS} ${OS_LFLAGS}
+.SUFFIXES: .cpp .o
 
-$(TARGET): $(OBJECT)
-		   $(CC) -o $@ $(OBJECT) $(LFLAGS)
+all: $(TARGET)
 
-$(OBJECT): $(FILE)
-           $(CC) -c -o $@ $(FILE) 
+$(TARGET): $(OBJS)
+	@echo -e '\nLinking...'
+	$(CC) $(OBJS) $(LFLAGS)
 
- 
+.cpp.o:
+	@echo -e '\nCompiling...'
+	$(CC) $(CXXFLAGS) $< 
+
+$(TARGET).o:
+
+clean:
+	$(RM) $(TARGET) $(OBJS) 
