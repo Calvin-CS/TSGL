@@ -18,6 +18,8 @@ LDFLAGS="$LDFLAGS -L/the/library/path/that/has/the/library", replacing /the/libr
 (To determine where your libraries are, type "ldconfig -p | grep LIBRARY_NAME" where LIBRARY_NAME is GLEW, glfw, GL, or freetype.).
 
 + The configure script is more of a installer.sh script. It does the first two steps in the Linux installation process; configure and make, but not make install.
+
++ Move the created TSGL folder into /usr/local/include after the installation process.
 ---------------------------
 STEPS
 ---------------------------
