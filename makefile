@@ -113,7 +113,13 @@ debug: dif tsgl tests
 
 dif: build/build
 
+ifeq ($(UNAME), Linux)  
 tsgl: lib/libtsgl.a lib/libtsgl.so
+endif
+
+ifeq ($(UNAME), Darwin)
+tsgl: lib/libtsgl.a
+endif
 
 tests: ${BINARIES}
 
@@ -143,12 +149,13 @@ install:
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
 	@echo 'Files that changed:'
 	@echo $(patsubst src/%,%,$?)
-
+ifeq ($(UNAME), Linux)
 lib/libtsgl.so: ${OBJS}
 	@echo 'Building $(patsubst lib/%,%,$@)'
 	$(CC) -shared -o $@ $?
 	@touch build/build
-	
+endif
+
 lib/libtsgl.a: ${OBJS}
 	@echo 'Building $(patsubst lib/%,%,$@)'
 	mkdir -p lib
