@@ -22,7 +22,7 @@ endif
 
 #Mac
 ifeq ($(UNAME), Darwin)
-	TSGL_LOCATION := -I/usr/local/include/TSGL/src/TSGL/
+	TSGL_LOCATION := -I/usr/local/include/TSGL/
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_INCLUDE := -I/opt/local/include/freetype2/
 	OS_LDIRS := -L/opt/local/lib/ 
