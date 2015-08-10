@@ -100,7 +100,7 @@ make -j$(nproc) debug
 
 cd ..
 
-cp -r TSGL /usr/local/lib/
+cp -r TSGL/lib /usr/local/lib/
 
 cp -r TSGL /usr/local/include/
 
