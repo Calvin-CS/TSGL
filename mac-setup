@@ -9,6 +9,9 @@ has () {
   (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
 }
 
+#Needed for some bugs that occurred when we couldn't have permissions to these directory paths
+sudo chmod -R 777 /usr/local/Cellar /usr/local /Library/Caches/Homebrew/Formula /usr/local/lib
+
 #Print X11 warning
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   echo "Installing X11"
@@ -95,5 +98,13 @@ git clone https://github.com/Calvin-CS/TSGL
 cd TSGL
 make -j$(nproc) debug
 
+cd ..
+
+cp -r TSGL /usr/local/lib/
+
+cp -r TSGL /usr/local/include/
+
 echo
 echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
+
+sudo chmod -R 755 /usr/local/Cellar /usr/local /Library/Caches/Homebrew/Formula /usr/local/lib
