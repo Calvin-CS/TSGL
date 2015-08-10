@@ -102,7 +102,7 @@ cd ..
 
 cp -r TSGL/lib /usr/local/lib/
 
-cp -r TSGL /usr/local/include/
+cp -r TSGL/src/TSGL /usr/local/include/
 
 echo
 echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
