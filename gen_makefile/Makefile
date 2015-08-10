@@ -43,7 +43,7 @@ CXXFLAGS=-c -O3 -g3 \
 
 #Linking flags
 LFLAGS=-o $(TARGET) \
-    -L/usr/local/lib/TSGL/ \
+    -L/usr/local/lib/ \
     -L/opt/X11/lib \
     -ltsgl -lfreetype \
     -lGLEW -l${OS_GLFW} \
