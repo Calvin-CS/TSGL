@@ -1,7 +1,6 @@
 #!/bin/bash
 #Uninstall script for TSGL on Mac
 
-
 #Clean out TSGL source code
 make clean
 
