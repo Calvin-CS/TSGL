@@ -104,16 +104,22 @@ ifeq($(OS),Darwin) # Assume Mac OS X
   NPROCS:=$(shell system_profiler | awk '/Number Of CPUs/{print $4}{next;}')
 endif
 
+#Make TSGL
+echo "Making TSGL..."
 make $(NPROCS) debug
 
-#Move the necessary files needed
-cp lib/* /usr/local/lib/
+#Move the necessary lib files needed
+cp -R lib/* /usr/local/lib/
 
+#Create the TSGL directory
 mkdir /usr/local/include/TSGL
 
-cp src/TSGL/*.h /usr/local/include/TSGL
+#Move the .h files to their destination
+cp -R src/TSGL/*.h /usr/local/include/TSGL
 
 echo
-echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
 
+#Reset permissions back to normal
 sudo chmod -R 755 /usr/local/Cellar /usr/local /Library/Caches/Homebrew/Formula /usr/local/lib
+
+echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
