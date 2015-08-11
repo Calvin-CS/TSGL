@@ -2816,17 +2816,11 @@ else
 $as_echo "$as_me: All libraries present. Begin installation..." >&6;}
 fi
 
-cd ..
-
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir lib bin
 
 #Make the executables
 make debug
 
-#Back out twice and done.
-cd ..
-cd ..
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Installation complete!" >&5
-$as_echo "$as_me: Installation complete!" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Installation complete! Execute runtests to check if everything installed correctly!" >&5
+$as_echo "$as_me: Installation complete! Execute runtests to check if everything installed correctly!" >&6;}
