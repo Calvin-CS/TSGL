@@ -93,20 +93,9 @@ if [ ! -e /usr/bin/g++_tsglbak ]; then
   sudo ln -s /opt/local/bin/g++-mp-4.9 /usr/bin/g++
 fi
 
-#http://stackoverflow.com/questions/2527496/how-can-i-write-a-makefile-to-auto-detect-and-parallelize-the-build-with-gnu-mak
-NPROCS:=1
-OS:=$(shell uname -s)
-
-ifeq($(OS),Linux)
-  NPROCS:=$(shell grep -c ^processor /proc/cpuinfo)
-endif
-ifeq($(OS),Darwin) # Assume Mac OS X
-  NPROCS:=$(shell system_profiler | awk '/Number Of CPUs/{print $4}{next;}')
-endif
-
 #Make TSGL
 echo "Making TSGL..."
-make $(NPROCS) debug
+make -j debug
 
 #Move the necessary lib files needed
 cp -R lib/* /usr/local/lib/
