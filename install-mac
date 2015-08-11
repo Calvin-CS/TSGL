@@ -35,10 +35,6 @@ if [ ! -e "/Library/Developer/CommandLineTools" ]; then
   read
 fi
 
-#Make and cd into a workspace
-mkdir workspace
-cd workspace
-
 #Install brew
 if [ $(has brew) = 0 ]; then
   echo "Installing Homebrew..."
@@ -74,9 +70,10 @@ gver=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
 if [ $gver -lt 490 ]; then
   echo "Installing GCC 4.9...this may take a while, please be patient..."
   sudo port install gcc49
+  echo "Switching default compiler to mp-gcc49"
+  sudo port select --set gcc mp-gcc49
 fi
-echo "Switiching default compiler to mp-gcc49"
-sudo port select --set gcc mp-gcc49
+
 echo "Fixing missing symlinks"
 if [ ! -e /usr/X11/lib/libX11.dylib ]; then
   sudo ln -s /usr/X11/lib/libX11.6.dylib /usr/X11/lib/libX11.dylib
@@ -96,11 +93,6 @@ if [ ! -e /usr/bin/g++_tsglbak ]; then
   sudo ln -s /opt/local/bin/g++-mp-4.9 /usr/bin/g++
 fi
 
-#Clone and make TSGL
-echo "Making TSGL"
-git clone https://github.com/Calvin-CS/TSGL
-cd TSGL
-
 #http://stackoverflow.com/questions/2527496/how-can-i-write-a-makefile-to-auto-detect-and-parallelize-the-build-with-gnu-mak
 NPROCS:=1
 OS:=$(shell uname -s)
@@ -114,14 +106,12 @@ endif
 
 make $(NPROCS) debug
 
-cd ..
-
 #Move the necessary files needed
-cp -r TSGL/lib/ /usr/local/lib/
+cp -r lib/* /usr/local/lib/
 
 mkdir /usr/local/include/TSGL
 
-cp -r TSGL/src/TSGL/*.h /usr/local/include/TSGL
+cp -r src/TSGL/*.h /usr/local/include/TSGL
 
 echo
 echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
