@@ -12,6 +12,10 @@ has () {
 #Needed for some bugs that occurred when we couldn't have permissions to these directory paths
 sudo chmod -R 777 /usr/local/Cellar /usr/local /Library/Caches/Homebrew/Formula /usr/local/lib
 
+#Remove any broken symlinks
+sudo rm -f /usr/local/lib/libtsgl.* 
+sudo rm -rf /usr/local/include/TSGL
+
 #Print X11 warning
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   echo "Installing X11"
@@ -96,13 +100,28 @@ fi
 echo "Making TSGL"
 git clone https://github.com/Calvin-CS/TSGL
 cd TSGL
-make -j$(nproc) debug
+
+#http://stackoverflow.com/questions/2527496/how-can-i-write-a-makefile-to-auto-detect-and-parallelize-the-build-with-gnu-mak
+NPROCS:=1
+OS:=$(shell uname -s)
+
+ifeq($(OS),Linux)
+  NPROCS:=$(shell grep -c ^processor /proc/cpuinfo)
+endif
+ifeq($(OS),Darwin) # Assume Mac OS X
+  NPROCS:=$(shell system_profiler | awk '/Number Of CPUs/{print $4}{next;}')
+endif
+
+make $(NPROCS) debug
 
 cd ..
 
+#Move the necessary files needed
 cp -r TSGL/lib/ /usr/local/lib/
 
-cp -r TSGL/src/TSGL /usr/local/include/
+mkdir /usr/local/include/TSGL
+
+cp -r TSGL/src/TSGL/*.h /usr/local/include/TSGL
 
 echo
 echo "Installation complete! Navigate into $(pwd) and run \"./runtests\" to verify everything is working."
