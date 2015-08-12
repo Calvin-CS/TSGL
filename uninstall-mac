@@ -16,6 +16,9 @@ rm -rf /usr/local/include/TSGL
 #Take out the TSGL lib files
 rm /usr/local/lib/libtsgl.*
 
+#Take out the Mac-ports stuff from the TSGL folder
+rm -rf MacPorts-*
+
 #Restore permissions back to their normal status
 sudo chmod -R 755 /usr/local/include/ /usr/local/lib/
 
