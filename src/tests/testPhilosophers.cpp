@@ -583,7 +583,6 @@ void philosopherFunction(Canvas& can,int philosophers) {
 //  Table t(can,philosophers,resourceHierarchy);  //No locking; mostly fair for N philosophers, N >= 2
   Table t(can,philosophers,oddEven);            //No locking; perfectly fair for N philosophers, N >= 2
 
-  can.sleep();
   #pragma omp parallel num_threads(philosophers)
   {
     while(can.isOpen()) {
