@@ -13,26 +13,18 @@ To find out if you have these libraries already installed, you can either: searc
 libglfw, libfreetype, and/or libGL), or pipe it to grep (type "ldconfig -p | grep LIBRARY_NAME" where LIBRARY_NAME is GLEW, glfw, GL, or freetype). If you cannot 
 find one or more of these libraries, please see below for links on where you can find and download them.)
  
-+ If any of these libraries were installed in a different place besides their default destination, when you type ./configure in step 3 be sure to hit SPACE and type: 
++ If any of these libraries were installed in a different place besides their default destination, when you type ./install-linux in step 1 be sure to hit SPACE and type: 
 LDFLAGS="$LDFLAGS -L/the/library/path/that/has/the/library", replacing /the/library/path/that/has/the/library with the library path then hit ENTER. 
 (To determine where your libraries are, type "ldconfig -p | grep LIBRARY_NAME" where LIBRARY_NAME is GLEW, glfw, GL, or freetype.).
-
-+ The configure script is more of a installer.sh script. It does the first two steps in the Linux installation process; configure and make, but not make install.
-
-+ Move the created TSGL folder into /usr/local/include after the installation process.
 ---------------------------
 STEPS
 ---------------------------
 
-1). The very first thing you should do is place the "configure" script wherever you want to have TSGL installed.
-(Example: empty folder in your home directory named "TSGL").
-
-2). Next, open up a terminal and cd into the folder that contains the "configure" script.
-
-3). Finally, type ./configure in the terminal and hit enter. The TSGL library should now be installed and should take a few minutes to install. 
+1). The very first thing you should do is execute the "install-linux". Do so from a terminal (./install-linux).
+The TSGL library should now be installed and should take a few minutes to install. 
 (Please be patient as the library is being built as it takes a few minutes to build!)
 
-4). Once steps 1-3 have been completed, cd into workspace, then cd into TSGL. Type ./runtests in the terminal and hit enter. You should see a window pop up with an animation. 
+2). Once the installation is complete, execute the "runtests" script (./runtests). 
 Hit the ESC key to go through each test, where upon hitting the ESC key the current window should close and a new one should open with another animation. 
 If you have gone through all of the tests without any trouble, then congratulations! TSGL has been successfully installed on your Linux computer!
 
