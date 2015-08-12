@@ -27,7 +27,6 @@ set run=start /d ".\Debug\" /wait ""
 %run% testMandelbrot.exe 1200 900 8 255          
 %run% testMouse.exe 900 900 5
 %run% testNewtonPendulum.exe 900 400 11
-%run% testNova.exe 1200 900 4
 %run% testPhilosophers.exe 5 10                    
 %run% testPong.exe 7 4
 %run% testProjectiles.exe 400 400                
