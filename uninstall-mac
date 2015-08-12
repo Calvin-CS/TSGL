@@ -20,5 +20,5 @@ rm /usr/local/lib/libtsgl.*
 sudo chmod -R 755 /usr/local/include/ /usr/local/lib/
 
 #Tell user we're done uninstalling things
-echo "Uninstall complete!
+echo "Uninstall complete!"
 
