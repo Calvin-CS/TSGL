@@ -14,17 +14,6 @@ Creating a new project in the same solution as TSGL:
   You're all set up! Just "#include <tsgl.h>" at the top of all files using TSGL's functions.
 
 
-Creating a new project in a separate solution from TSGL:
-  Click on the View Menu -> Property Manager
-  In the Property Manager Pane, navigate to tsgl -> Debug |Win 32 -> testProperties
-  Right click on testProperties -> Properties, and navigate to User Macros
-  Verify that the TSGL directories are pointing to the appropriate directories, and, if not, change them accordingly:
-    TsglDllDir should point to your earlier lib directory
-    TsglExternalLibDir should also point to your earlier lib directory
-    TsglIncludeDir should point to your earlier include directory
-  Follow the steps under "Creating a new project in the same solution as TSGL"
-
-
 Manual Installation:
   Install the Windows 32 version of CMake from the official website if it's not already installed
   Clone the repository from https://github.com/Calvin-CS/TSGL into a convenient place; e.g. "workspace/tsgl"
