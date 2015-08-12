@@ -24,11 +24,11 @@ The main goal of this library is to provide a thread-safe graphics library for 2
 ------------
 Installation help
 ------------
-Windows - https://www.youtube.com/watch?v=b1IdC_bSxRQ&feature=youtu.be
+Windows - https://www.youtube.com/watch?v=v38PuL1Khhk&feature=youtu.be
 
 Linux - https://www.youtube.com/watch?v=547CmVftA1g
 
-Mac - https://www.youtube.com/watch?v=QlVh_MAstyg
+Mac - https://www.youtube.com/watch?v=aODkF5sDS3w
 
 ------------
 Dependencies
