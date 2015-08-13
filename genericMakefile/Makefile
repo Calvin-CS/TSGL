@@ -61,12 +61,13 @@ all: $(TARGET)
 
 #Linking
 $(TARGET): $(OBJS)
-	@echo 'Linking...'
+	@echo "\nLinking..."
 	$(CC) $(OBJS) $(LFLAGS)
-
+	@echo
+	
 #Compiling
 .cpp.o:
-	@echo 'Compiling...\n'
+	@echo "\nCompiling..."
 	$(CC) $(CXXFLAGS) $< 
 
 #Indirect dependencies (Multiple file/classes only)
