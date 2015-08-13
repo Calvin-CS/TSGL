@@ -3,7 +3,7 @@ TSGL
 
 Thread Safe Graphics Library
 
-You can generate Doxygen locally using 'make docs', or view the [latest Doxygen documentation here](http://calvin-cs.github.io/TSGL/html/index.html).
+You can generate Doxygen locally using 'make docs', or view the [TSGL API here](http://calvin-cs.github.io/TSGL/html/index.html).
 
 ------------
 Description
@@ -24,11 +24,11 @@ The main goal of this library is to provide a thread-safe graphics library for 2
 ------------
 Installation help
 ------------
-Windows - https://www.youtube.com/watch?v=v38PuL1Khhk&feature=youtu.be
-
 Linux - https://www.youtube.com/watch?v=547CmVftA1g
 
 Mac - https://www.youtube.com/watch?v=aODkF5sDS3w
+
+Windows - https://www.youtube.com/watch?v=v38PuL1Khhk
 
 ------------
 Dependencies
@@ -38,4 +38,4 @@ TSGL needs these libraries in order to function properly: GLEW, glfw, GL, freety
 ------------
 Tutorials
 ------------
-Want to learn how to utilize the TSGL library? Check out the wiki pages for some tutorials!
+Want to learn how to utilize the TSGL library? Check out the [[wiki]](https://github.com/Calvin-CS/TSGL/wiki) pages for some tutorials!
