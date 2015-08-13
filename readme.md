@@ -38,4 +38,4 @@ TSGL needs these libraries in order to function properly: GLEW, glfw, GL, freety
 ------------
 Tutorials
 ------------
-Want to learn how to utilize the TSGL library? Check out the [[wiki]](https://github.com/Calvin-CS/TSGL/wiki) pages for some tutorials!
+Want to learn how to utilize the TSGL library? Check out the [wiki](https://github.com/Calvin-CS/TSGL/wiki) pages for some tutorials!
