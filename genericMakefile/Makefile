@@ -40,8 +40,10 @@ CXXFLAGS=-c -O3 -g3 \
     -I/opt/AMDAPP/include/ \
     ${OS_INCLUDE} \
     -std=c++0x -fopenmp \
-    -Wno-unused-function \
     
+#Supress warnings
+-Wno-unused-function
+
 #Linking flags
 LFLAGS=-o $(TARGET) \
     -L/usr/local/lib/ \
