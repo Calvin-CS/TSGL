@@ -40,9 +40,7 @@ CXXFLAGS=-c -O3 -g3 \
     -I/opt/AMDAPP/include/ \
     ${OS_INCLUDE} \
     -std=c++0x -fopenmp \
-    
-#Supress warnings
--Wno-unused-function
+    -Wno-unused-function #Supress warnings
 
 #Linking flags
 LFLAGS=-o $(TARGET) \
@@ -63,12 +61,12 @@ all: $(TARGET)
 
 #Linking
 $(TARGET): $(OBJS)
-	@echo -e '\nLinking...'
+	@echo 'Linking...'
 	$(CC) $(OBJS) $(LFLAGS)
 
 #Compiling
 .cpp.o:
-	@echo -e '\nCompiling...'
+	@echo 'Compiling...\n'
 	$(CC) $(CXXFLAGS) $< 
 
 #Indirect dependencies (Multiple file/classes only)
