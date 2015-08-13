@@ -111,4 +111,5 @@ echo
 #Reset permissions back to normal
 sudo chmod -R 755 /usr/local/Cellar /usr/local /Library/Caches/Homebrew/Formula /usr/local/lib
 
-echo "Installation complete! Run \"./runtests\" to verify everything is working."
+echo "Installation complete!"
+echo "Run \"./runtests\" to verify everything is working."
