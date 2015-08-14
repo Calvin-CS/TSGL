@@ -26,7 +26,7 @@ Installation help
 ------------
 Linux - https://www.youtube.com/watch?v=547CmVftA1g
 
-Mac - https://www.youtube.com/watch?v=aODkF5sDS3w
+Mac - https://www.youtube.com/watch?v=qIHrAAxdnmQ
 
 Windows - https://www.youtube.com/watch?v=v38PuL1Khhk
 
