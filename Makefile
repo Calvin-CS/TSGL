@@ -55,9 +55,10 @@ LFLAGS=-Llib/ \
 	-L/usr/lib/ \
 	-L/usr/local/lib/ \
 	-L/usr/X11/lib/ \
+	${OS_LDIRS} \
 	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
 	-lX11 ${OS_GL} -lXrandr -fopenmp \
-	${OS_LDIRS} ${OS_LFLAGS}
+	${OS_LFLAGS} 
 
 DEPFLAGS=-MMD -MP
 
@@ -149,6 +150,7 @@ install:
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
 	@echo 'Files that changed:'
 	@echo $(patsubst src/%,%,$?)
+	
 ifeq ($(UNAME), Linux)
 lib/libtsgl.so: ${OBJS}
 	@echo 'Building $(patsubst lib/%,%,$@)'
