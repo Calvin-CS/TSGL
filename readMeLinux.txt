@@ -24,7 +24,7 @@ PRE-INSTALL STEPS
 
 3). Next, download the freetype library (see the "MISSING LIBRARIES?" section for a link to the download page).
 
-4). Unzip and cd into the downloaded freetype folder.
+4). cd into your Downloads folder; Unzip and cd into the downloaded freetype folder. (Open up the file explorer, go into Downloads, right click on freetype-2.6.tar.bz2, click "Extract Here" and cd from a terminal into the extracted folder).
 
 5). Type "./configure" and hit enter.
 
@@ -34,8 +34,7 @@ PRE-INSTALL STEPS
 
 8). Type "make install" and hit enter.
 
-9). Now, type "sudo apt-get install build-essential devscripts libtool checkinstall cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev
-libglu1-mesa-dev git libglew-dev doxygen" (yes, the whole thing) and hit enter.
+9). Now, type "sudo apt-get install build-essential devscripts libtool checkinstall cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen" (yes, the whole thing) and hit enter.
 
 10). Go into your Downloads folder and type "git clone https://github.com/glfw/glfw.git" and hit enter.
 
