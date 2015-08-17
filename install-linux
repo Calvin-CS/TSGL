@@ -2816,11 +2816,17 @@ else
 $as_echo "$as_me: All libraries present. Begin installation..." >&6;}
 fi
 
+sudo -s
+
+apt-get install libglfw-dev
+
+apt-get remove libglfw-dev
+
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir lib bin
 
 #Make the library
-sudo make
+make
 
 #Install it
 make install
