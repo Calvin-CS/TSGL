@@ -2818,9 +2818,9 @@ fi
 
 sudo -s
 
-apt-get install libglfw-dev
+apt-get --yes --force-yes install libglfw-dev
 
-apt-get remove libglfw-dev
+apt-get --yes --force-yes remove libglfw-dev
 
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir lib bin
