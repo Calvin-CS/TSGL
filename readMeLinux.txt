@@ -7,20 +7,51 @@ The installation process is very fast and should only take but a few minutes.
 --------------------------
 NOTES (PLEASE READ FIRST!)
 --------------------------
-+ You should have the following libraries already installed: GLEW, freetype, glfw, and GL. If you have one or more of these libraries missing, please download them before
-proceeding. (To check whether you have them on most Unix systems open a terminal and type "ldconfig -p". A list of the currently installed libraries should show up.
-To find out if you have these libraries already installed, you can either: search for them manually in the list (scroll up the list until you see the names libGLEW,
-libglfw, libfreetype, and/or libGL), or pipe it to grep (type "ldconfig -p | grep LIBRARY_NAME" where LIBRARY_NAME is GLEW, glfw, GL, or freetype). If you cannot 
-find one or more of these libraries, please see below for links on where you can find and download them.)
- 
-+ If any of these libraries were installed in a different place besides their default destination, when you type ./install-linux in step 1 be sure to hit SPACE and type: 
-LDFLAGS="$LDFLAGS -L/the/library/path/that/has/the/library", replacing /the/library/path/that/has/the/library with the library path then hit ENTER. 
-(To determine where your libraries are, type "ldconfig -p | grep LIBRARY_NAME" where LIBRARY_NAME is GLEW, glfw, GL, or freetype.).
++ You should have the following libraries already installed: GLEW, freetype, glfw, and GL. 
+
++ Follow the pre-installation steps to make sure that you have them installed.
+
 ---------------------------
-STEPS
+PRE-INSTALL STEPS
 ---------------------------
 
-1). The very first thing you should do is execute the "install-linux". Do so from a terminal (./install-linux).
+(If prompted, enter 'y' for y/n questions)
+
+1). Open up a terminal.
+
+2). Make sure you have g++ installed. (Type "sudo apt-get install g++" to be sure).
+
+3). Next, download the freetype library (see the "MISSING LIBRARIES?" section for a link to the download page).
+
+4). Unzip and cd into the downloaded freetype folder.
+
+5). Type "./configure" and hit enter.
+
+6). Type "make" and hit enter.
+
+7). Type "sudo -s" and hit enter.
+
+8). Type "make install" and hit enter.
+
+9). Now, type "sudo apt-get install build-essential devscripts libtool checkinstall cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev
+libglu1-mesa-dev git libglew-dev doxygen" (yes, the whole thing) and hit enter.
+
+10). Go into your Downloads folder and type "git clone https://github.com/glfw/glfw.git" and hit enter.
+
+11). cd into the glfw folder, and type "cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON" and hit enter.
+
+12). Type "make" and hit enter.
+
+13). Type "make install" and hit enter. 
+
+14). Done.
+
+---------------------------
+INSTALL STEPS
+---------------------------
+
+1). The very first thing you should do is execute the "install-linux". Do so from a terminal (./install-linux). The libraries should be found (if not, see "PRE-INSTALL STEPS").
+
 The TSGL library should now be installed and should take a few minutes to install. 
 (Please be patient as the library is being built as it takes a few minutes to build!)
 

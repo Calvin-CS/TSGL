@@ -2819,8 +2819,11 @@ fi
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir lib bin
 
-#Make the executables
-make debug
+#Make the library
+make
+
+#Install it
+make install
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: Installation complete! Execute runtests to check if everything installed correctly!" >&5
 $as_echo "$as_me: Installation complete! Execute runtests to check if everything installed correctly!" >&6;}
