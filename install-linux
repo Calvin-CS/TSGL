@@ -2837,7 +2837,7 @@ sudo make install
 sudo rm -rf /usr/local/include/TSGL/*.cpp
 
 #Take out the config.log file that is made when you run the install script
-sudo rm config.log
+sudo rm -f config.log
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: Installation complete! Execute runtests to check if everything installed correctly!" >&5
 $as_echo "$as_me: Installation complete! Execute runtests to check if everything installed correctly!" >&6;}
