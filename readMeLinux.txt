@@ -9,7 +9,7 @@ NOTES (PLEASE READ FIRST!)
 --------------------------
 + You should have the following libraries already installed: GLEW, freetype, glfw, and GL. 
 
-+ Follow the pre-installation steps to make sure that you have them installed.
++ Follow the pre-installation steps first, then proceed to the installation.
 
 + To un-install TSGL, simply run the "uninstall-linux" script from a terminal.
 
