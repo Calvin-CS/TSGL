@@ -5,15 +5,27 @@ run() {
   $@
 }
 
-cd bin
+cd TSGL-master/bin
 
-run ./testAura 1000 1000 8
-run ./testCalcPi 100 4
-run ./testColorPoints 400 400 4
-run ./testColorWheel 640 640 8
-run ./testCosineIntegral 640 480 32
-run ./testGradientWheel 640 640 256
-run ./testGraydient 400 400 4
-run ./testMouse 900 900 5
+#run ./testAura 1000 1000 8
+run ./testSeaUrchin 1
+run ./testSeaUrchin 4
 run ./testSeaUrchin 16
-run ./testVoronoi 500 500 16
+run ./testBallroom 640 640
+run ./testCalcPi 10 
+run ./testCalcPi 100
+run ./testCalcPi 100 4
+run ./testCalcPi 100 8
+run ./testCosineIntegral 640 480 32
+run ./testLineChain 800 800 1
+run ./testLineChain 800 800 2
+run ./testLineChain 800 800 8
+run ./testInverter 1
+run ./testInverter 8
+run ./testGreyscale 640 480 8
+run ./testSmartSort 512 
+run ./testMouse 900 900 1
+run ./testMouse 900 900 2
+run ./testMouse 900 900 8
+run ./testMandelbrot 1200 900 16 255
+#run ./testPhilosophers 5 1
