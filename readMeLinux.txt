@@ -47,7 +47,8 @@ The TSGL library should now be installed and should take a few minutes to instal
 
 2). Once the installation is complete, execute the "runtests" script (./runtests). 
 Hit the ESC key to go through each test, where upon hitting the ESC key the current window should close and a new one should open with another animation. 
-If you have gone through all of the tests without any trouble, then congratulations! TSGL has been successfully installed on your Linux computer!
+
+Congratulations! TSGL has been successfully installed on your Linux computer!
 
 ----------------------------
 MISSING LIBRARIES?
