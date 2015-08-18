@@ -14,10 +14,16 @@
 ## M4sh Initialization. ##
 ## -------------------- ##
 
-echo "\nGetting GLFW, GLEW...\n"
+echo "\nGetting GLFW, GLEW, other dependencies...\n"
 
-#Get the necessary dependencies needed for glfw as well as for Doxygen and git...
+#Get the necessary dependencies needed for glfw as well as for Doxygen and git
 sudo apt-get install --yes --force-yes build-essential devscripts libtool checkinstall cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
+
+#Get g++ version 5 on the machine
+sudo apt-get install --yes --force-yes g++-5
+
+#Make a symlink to g++-5
+ln -s /usr/bin/g++-5 /usr/bin/g++
 
 #Back out of TSGL-zip file
 cd ..
@@ -38,7 +44,7 @@ sudo make install
 
 cd ..
 
-echo "\nGLFW and GLEW installed! \n"
+echo "\nDependencies installed! \n"
 
 # Be more Bourne compatible
 DUALCASE=1; export DUALCASE # for MKS sh
