@@ -30,13 +30,13 @@ PRE-INSTALL STEPS
 
 6). Type "make install" and hit enter.
 
-7). Done.
+7). Type "exit".
 
 ---------------------------
 INSTALL STEPS
 ---------------------------
 
-1). The very first thing you should do is execute the "install-linux". Do so from a terminal (./install-linux). The libraries should be found (if not, see "PRE-INSTALL STEPS").
+1). The very first thing you should do is execute the "install-linux" in the TSGL-master folder. Do so from a terminal (./install-linux). The libraries should be found (if not, see "PRE-INSTALL STEPS").
 
 The TSGL library should now be installed and should take a few minutes to install. 
 (Please be patient as the library is being built as it takes a few minutes to build!)
