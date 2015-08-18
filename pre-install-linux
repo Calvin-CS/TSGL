@@ -24,4 +24,4 @@ sudo make install
 
 cd ..
 
-echo "\nGLFW and GLEW installed! You need freetype, see next step of PRE-INSTALL STEPS.\n"
+echo "\nGLFW and GLEW installed! \n"
