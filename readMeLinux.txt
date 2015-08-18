@@ -11,6 +11,8 @@ NOTES (PLEASE READ FIRST!)
 
 + Follow the pre-installation steps to make sure that you have them installed.
 
++ To un-install TSGL, simply run the "uninstall-linux" script from a terminal.
+
 ---------------------------
 PRE-INSTALL STEPS
 ---------------------------
