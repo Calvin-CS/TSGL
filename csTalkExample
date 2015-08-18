@@ -6,3 +6,14 @@ run() {
 }
 
 cd bin
+
+run ./testAura 1000 1000 8
+run ./testCalcPi 100 4
+run ./testColorPoints 400 400 4
+run ./testColorWheel 640 640 8
+run ./testCosineIntegral 640 480 32
+run ./testGradientWheel 640 640 256
+run ./testGraydient 400 400 4
+run ./testMouse 900 900 5
+run ./testSeaUrchin 16
+run ./testSpectrum 8
