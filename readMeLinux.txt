@@ -34,6 +34,8 @@ PRE-INSTALL STEPS
 
 9). Done.
 
+(***NOTE:*** You only have to run the "pre-install-linux" script ONCE. You don't have to again if you uninstall TSGL and want to re-install it.)
+
 ---------------------------
 INSTALL STEPS
 ---------------------------
