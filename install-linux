@@ -2816,9 +2816,13 @@ else
 $as_echo "$as_me: All libraries present. Begin installation..." >&6;}
 fi
 
+#A weird bug occurs whenever I install ONLY glfw. I have to install and uninstall libglfw-dev in order for it to work.
 sudo apt-get --yes --force-yes install libglfw-dev
-
 sudo apt-get --yes --force-yes remove libglfw-dev
+
+#Clean install = Remove the TSGL folder and lib files if they already exist
+sudo rm -rf /usr/local/include/TSGL
+sudo rm -rf /usr/local/lib/libtsgl.*
 
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir lib bin
