@@ -2829,5 +2829,8 @@ make
 #Install it
 sudo make install
 
+#Take out the .cpp files from the TSGL library package folder
+sudo rm -rf /usr/local/include/TSGL/*.cpp
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: Installation complete! Execute runtests to check if everything installed correctly!" >&5
 $as_echo "$as_me: Installation complete! Execute runtests to check if everything installed correctly!" >&6;}
