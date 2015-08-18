@@ -17,7 +17,7 @@ ifeq ($(UNAME), Linux)
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/ 
 	OS_GLFW := glfw
 	OS_GL := -lGL
-	OS_EXTRA_INCLUDE := -Wl,-rpath=/usr/local/lib/
+	OS_EXTRA_LINK := -Wl,-rpath=/usr/local/lib/
 endif
 
 #Mac
@@ -28,7 +28,7 @@ ifeq ($(UNAME), Darwin)
 	OS_LDIRS := -L/opt/local/lib/ 
 	OS_GLFW := glfw3
 	OS_GL :=
-	OS_EXTRA_INCLUDE :=
+	OS_EXTRA_LINK :=
 endif
 
 #Compiler flags
@@ -46,13 +46,13 @@ CXXFLAGS=-c -O3 -g3 \
 LFLAGS=-o $(TARGET) \
     -L/usr/local/lib/ \
     -L/opt/X11/lib \
+    ${OS_LDIRS} \
+    ${OS_EXTRA_LINK} \
     -ltsgl -lfreetype \
     -lGLEW -l${OS_GLFW} \
     -lX11 ${OS_GL} -lXrandr \
-    ${OS_EXTRA_INCLUDE} \
     -fopenmp \
     ${OS_LFLAGS} \
-    ${OS_LDIRS} \
 
 .SUFFIXES: .cpp .o
 
