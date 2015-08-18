@@ -16,4 +16,4 @@ run ./testGradientWheel 640 640 256
 run ./testGraydient 400 400 4
 run ./testMouse 900 900 5
 run ./testSeaUrchin 16
-run ./testSpectrum 8
+run ./testVoronoi 500 500 16
