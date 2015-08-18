@@ -23,7 +23,7 @@ cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
 #Make and install
 make
 
-make install
+sudo make install
 
 cd ..
 
