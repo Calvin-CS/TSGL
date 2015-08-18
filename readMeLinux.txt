@@ -14,9 +14,7 @@ NOTES (PLEASE READ FIRST!)
 ---------------------------
 PRE-INSTALL STEPS
 ---------------------------
-(***NOTE:*** You must have sudo permissions in order to download and install the dependencies needed. Type "sudo -s" to see. If you are prompted for your password, enter it and you should be good to go!)
-
-(If prompted, enter 'y' for y/n questions)
+(***NOTE:*** You must have sudo permissions in order to download and install the dependencies needed).
 
 1). Open up a terminal.
 
