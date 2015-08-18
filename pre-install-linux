@@ -1,0 +1,28 @@
+#!/bin/sh
+
+echo "\nGetting GLFW, GLEW...\n"
+
+#Get the necessary dependencies needed for glfw as well as for Doxygen and git...
+sudo apt-get install --yes --force-yes build-essential devscripts libtool checkinstall cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
+
+cd ..
+
+#Get the glfw library
+git clone https://github.com/glfw/glfw.git || exit 1
+
+#go into it
+cd glfw
+
+#cmake command
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
+
+make
+
+make install
+
+cd ..
+
+echo "\nGLFW and GLEW installed! You need freetype, see next step of PRE-INSTALL STEPS.\n"
+
+
+
