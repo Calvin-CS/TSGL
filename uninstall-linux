@@ -1,5 +1,8 @@
 #!/bin/sh
 
+#make clean
+sudo make clean
+
 #Take out the lib and bin folders
 sudo rm -rf bin lib
 
