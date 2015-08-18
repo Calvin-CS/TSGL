@@ -1,5 +1,7 @@
 Easy Automatic Installation (Requires Visual Studio 2012):
-  Run tsgl-setup.exe, installing to this directory (which should be the default location)
+  Run install-windows.exe, installing to this directory (which should be the default location)
+  ***WINDOWS 10 ONLY***: If you run into a problem during the installation process, click "Retry" and it should continue as    normal.
+  ***WINDOWS 10 ONLY***: Click "More Info" when you get a blue window popping up saying that Windows protected your PC. Click   "I understand and want to run anyway".
   Open tsgl.sln in Visual Studio 2012
   Right click on tsgl -> Build
   Right click on solution -> Build Solution
