@@ -18,25 +18,19 @@ PRE-INSTALL STEPS
 ---------------------------
 (***NOTE:*** You must have sudo permissions in order to download and install the dependencies needed).
 
-1). Open up a terminal.
+1). Download the freetype library (see the "MISSING LIBRARIES?" section for a link to the download page).
 
-2). Run the "pre-install-linux" script ("./pre-install-linux"). 
+2). Open up a terminal, cd into your Downloads folder; Unzip and cd into the downloaded freetype folder. (Open up the file explorer, go into Downloads, right click on freetype-2.6.tar.bz2, click "Extract Here" and cd from a terminal into the extracted folder).
 
-3). Next, download the freetype library (see the "MISSING LIBRARIES?" section for a link to the download page).
+3). Type "./configure" and hit enter.
 
-4). cd into your Downloads folder; Unzip and cd into the downloaded freetype folder. (Open up the file explorer, go into Downloads, right click on freetype-2.6.tar.bz2, click "Extract Here" and cd from a terminal into the extracted folder).
+4). Type "make" and hit enter.
 
-5). Type "./configure" and hit enter.
+5). Type "sudo -s" and hit enter.
 
-6). Type "make" and hit enter.
+6). Type "make install" and hit enter.
 
-7). Type "sudo -s" and hit enter.
-
-8). Type "make install" and hit enter.
-
-9). Done.
-
-(***NOTE:*** You only have to run the "pre-install-linux" script ONCE. You don't have to again if you uninstall TSGL and want to re-install it.)
+7). Done.
 
 ---------------------------
 INSTALL STEPS
