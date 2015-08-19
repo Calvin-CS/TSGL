@@ -24,7 +24,7 @@ The main goal of this library is to provide a thread-safe graphics library for 2
 ------------
 Installation help
 ------------
-Linux - https://www.youtube.com/watch?v=547CmVftA1g
+Linux -
 
 Mac - https://www.youtube.com/watch?v=qIHrAAxdnmQ
 
