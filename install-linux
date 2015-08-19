@@ -2786,36 +2786,24 @@ if test $freetype == 0
 then
     { $as_echo "$as_me:${as_lineno-$LINENO}: Freetype library not found. Install this library before proceeding." >&5
 $as_echo "$as_me: Freetype library not found. Install this library before proceeding." >&6;} #freetype
-    { $as_echo "$as_me:${as_lineno-$LINENO}: Exiting installation..." >&5
-$as_echo "$as_me: Exiting installation..." >&6;}
-    exit 1
 elif test $glfw == 0
 then
     { $as_echo "$as_me:${as_lineno-$LINENO}: glfw library not found. Install this library before proceeding." >&5
-$as_echo "$as_me: glfw library not found. Install this library before proceeding." >&6;}  #glfw
-    { $as_echo "$as_me:${as_lineno-$LINENO}: Exiting installation..." >&5
-$as_echo "$as_me: Exiting installation..." >&6;}
-    exit 1
+$as_echo "$as_me: glfw library not found." >&6;}  #glfw
 elif test $GL == 0
 then
     { $as_echo "$as_me:${as_lineno-$LINENO}: GL library not found. Install this library before proceeding." >&5
-$as_echo "$as_me: GL library not found. Install this library before proceeding." >&6;}  #GL
-    { $as_echo "$as_me:${as_lineno-$LINENO}: Exiting installation..." >&5
-$as_echo "$as_me: Exiting installation..." >&6;}
-    exit 1
+$as_echo "$as_me: GL library not found." >&6;}  #GL
 elif test $GLEW == 0
 then
     { $as_echo "$as_me:${as_lineno-$LINENO}: GLEW library not found. Install this library before proceeding." >&5
-$as_echo "$as_me: GLEW library not found. Install this library before proceeding." >&6;} #GLEW
-    { $as_echo "$as_me:${as_lineno-$LINENO}: Exiting installation..." >&5
-$as_echo "$as_me: Exiting installation..." >&6;}
-    exit 1
+$as_echo "$as_me: GLEW library not found." >&6;} #GLEW
 else
-    { $as_echo "$as_me:${as_lineno-$LINENO}: All libraries present. Begin installation..." >&5
-$as_echo "$as_me: All libraries present. Begin installation..." >&6;}
+    { $as_echo "$as_me:${as_lineno-$LINENO}: All libraries present." >&5
+$as_echo "$as_me: All libraries present." >&6;}
 fi
 
-echo "\nGetting GLFW, GLEW, other dependencies...\n"
+echo "\nGetting dependencies...\n"
 
 #Get the necessary dependencies needed for glfw as well as for Doxygen and git
 sudo apt-get install --yes --force-yes build-essential devscripts libtool checkinstall cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
