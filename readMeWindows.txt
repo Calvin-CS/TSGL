@@ -3,6 +3,7 @@ Easy Automatic Installation (Requires Visual Studio 2012):
   ***WINDOWS 10 ONLY***: If you run into a problem during the installation process, click "Retry" and it should continue as normal.
   ***WINDOWS 10 ONLY***: Click "More Info" when you get a blue window popping up saying that Windows protected your PC. Click "I understand and want to run anyway" and then "Run anyway". Afterwards, click "Yes" in the window that pops up. 
   Open tsgl.sln in Visual Studio 2012
+  ***NOTE!*** If you are trying to open TSGL in Visual Studio 2013, uncheck testBallroom, testSeaUrchin, and testSmartSort when you have to update the projects. After the tests have been updated, right click on each of those three tests individually and click "Properties". In "Platform Toolset", change "Visual Studio 2012 (v110)" to "Visual Studio 2013 (v120)".  
   Right click on tsgl -> Build
   Right click on solution -> Build Solution
   Done! Right click on any of the test projects -> Debug -> Start New Instance to get started!
