@@ -74,11 +74,12 @@ void ShadedVoronoi::draw(Canvas& can) {
       can.drawPoint(i, j, ColorFloat(0, 0, 0, shading));  // Draw the point with the closest control's color
     }
   }
-
 }
 
 ShadedVoronoi::~ShadedVoronoi() {
   delete [] myKValue2;
   myKValue2 = NULL;
+  delete [] myX;
+  delete [] myY;
 }
 

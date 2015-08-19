@@ -17,6 +17,7 @@ Buddhabrot::~Buddhabrot() {
   for (int i = 0; i < cwh; ++i)
     delete [] counter[i];
   delete[] counter;
+  counter = nullptr;
 }
 
 void Buddhabrot::draw(Cart& can) {
@@ -83,6 +84,7 @@ void Buddhabrot::draw(Cart& can) {
           break;
       }
     delete [] znums;
+    znums = NULL;
     }
     if (!can.isOpen())
       return;

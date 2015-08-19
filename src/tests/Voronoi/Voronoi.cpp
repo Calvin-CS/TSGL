@@ -61,5 +61,6 @@ Voronoi::~Voronoi() {
   delete [] myY;
   delete [] myKValue;
   myX = myY = myKValue = NULL;
+  delete [] myColor;
 }
 

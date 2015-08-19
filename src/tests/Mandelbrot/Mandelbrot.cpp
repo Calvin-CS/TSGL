@@ -59,6 +59,7 @@ void Mandelbrot::manhattanShading(CartesianCanvas& can) {
   for (int i = 0; i < can.getWindowHeight(); ++i)
     delete [] canPoints[i];
   delete [] canPoints;
+  canPoints = NULL;
 }
 
 void Mandelbrot::bindings(Cart& can) {
