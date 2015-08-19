@@ -79,7 +79,5 @@ void ShadedVoronoi::draw(Canvas& can) {
 ShadedVoronoi::~ShadedVoronoi() {
   delete [] myKValue2;
   myKValue2 = NULL;
-  delete [] myX;
-  delete [] myY;
 }
 
