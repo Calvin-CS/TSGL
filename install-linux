@@ -2809,7 +2809,7 @@ echo
 echo "Getting dependencies (or updating if all found)..."
 
 #Get the necessary dependencies needed for glfw as well as for Doxygen and git
-sudo apt-get install --yes --force-yes build-essential devscripts libtool checkinstall cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
+sudo apt-get install --yes --force-yes build-essential devscripts libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
 
 #Get g++ version 5 on the machine
 sudo apt-get remove --yes g++
