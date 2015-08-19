@@ -20,10 +20,13 @@ echo "\nGetting GLFW, GLEW, other dependencies...\n"
 sudo apt-get install --yes --force-yes build-essential devscripts libtool checkinstall cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
 
 #Get g++ version 5 on the machine
+sudo apt-get remove --yes g++
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get update
 sudo apt-get install --yes --force-yes g++-5
 
-#Make a symlink to g++-5
-ln -s /usr/bin/g++-5 /usr/bin/g++
+#Make a symlink to g++-5 so we can use it
+sudo ln -s /usr/bin/g++-5 /usr/bin/g++
 
 #Back out of TSGL-zip file
 cd ..
