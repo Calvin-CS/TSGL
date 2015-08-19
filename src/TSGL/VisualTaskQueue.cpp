@@ -56,7 +56,7 @@ void VisualTaskQueue::showLegend(int threads) {
     lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
 	std::cout << lcan->getWindowWidth();
     lcan->start();
-    lcan->drawText("Legend:",TEXTW/2,TEXTW,TEXTW,BLACK);
+    lcan->drawText("Threads:",TEXTW/2,TEXTW,TEXTW,BLACK);
     int xx = xStart, yy = yStart;
     for (int i = 0; i < threads; ++i) {
       lcan->drawRectangle(xx,yy,xx+blockSize,yy+blockSize,Colors::highContrastColor(i));
