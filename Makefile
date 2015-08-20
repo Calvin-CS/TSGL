@@ -133,9 +133,6 @@ cleanall: clean cleandocs
 clean:
 	$(RM) -r bin/* build/* lib/* tutorial/docs/html/* *~ *# *.tmp
 
-cleandocs:
-	$(RM) -r docs/html/*
-
 # -include build/*.d
 
 install:
