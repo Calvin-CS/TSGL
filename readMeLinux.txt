@@ -5,7 +5,7 @@ Hello, and thank you for downloading the TSGL Linux Package.
 The installation process is very fast and should only take but a few minutes.
 
 --------------------------
-NOTES (PLEASE READ FIRST!)
+NOTES (PLEASE READ FIRST!!)
 --------------------------
 + You should have the following libraries already installed: GLEW, freetype, glfw, and GL. 
 
