@@ -15,4 +15,8 @@
     Then, follow the steps from the main TSGL root directory in the "FAQS"
     on how to update Doxygen.
 
+***NOTE*** It is recommended that you first update the docs-wiki folder
+           (git pull origin master) before you update the docs folder
+           (git pull origin gh-pages). 
+
  

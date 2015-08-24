@@ -39,3 +39,8 @@ TSGL needs these libraries in order to function properly: GLEW, glfw, GL, freety
 Tutorials
 ------------
 Want to learn how to utilize the TSGL library? Check out the [wiki](https://github.com/Calvin-CS/TSGL/wiki) pages for some tutorials!
+
+------------
+docs and docs-wiki
+------------
+docs and docs-wiki are both submodules located inside of the TSGL root directory. docs contains the documentation for TSGL classes and docs-wiki contains the wiki pages. See the READMEMISC.txt file for information on how to initialize and update these submodules in your local git repository. 
