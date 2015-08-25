@@ -11,7 +11,6 @@ UNAME := $(shell uname)
 
 #Linux
 ifeq ($(UNAME), Linux)
-	TSGL_LOCATION := -I/usr/local/include/TSGL/
 	OS_LFLAGS :=
 	OS_INCLUDE := -I/usr/local/include/freetype2/
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/ 
@@ -22,7 +21,6 @@ endif
 
 #Mac
 ifeq ($(UNAME), Darwin)
-	TSGL_LOCATION := -I/usr/local/include/TSGL/
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_INCLUDE := -I/opt/local/include/freetype2/
 	OS_LDIRS := -L/opt/local/lib/ 
@@ -35,7 +33,7 @@ endif
 CXXFLAGS=-c -O3 -g3 \
     -Wall -Wextra -pedantic-errors \
     -D__GXX_EXPERIMENTAL_CXX0X__ \
-    ${TSGL_LOCATION} \
+    -I/usr/local/include/TSGL/ \
     -I/usr/local/include/ \
     -I/opt/AMDAPP/include/ \
     ${OS_INCLUDE} \
