@@ -30,6 +30,7 @@
 
 #include "Error.h"
 #include "TsglAssert.h"     // For unit testing purposes
+#include "Util.h"           // For testing for the existence of files
 
 typedef GLuint GLtexture;
 

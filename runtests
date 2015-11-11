@@ -5,8 +5,10 @@ run () {
   $@
 }
 
-cd bin
+export LD_LIBRARY_PATH=../lib       #Make sure we load the TSGL library
+cd bin                              #CD into our binary directory
 
+run ./testCalcPi 100 4                                             #Segments, Threads
 run ./testAlphaRectangle 640 480                                   #Width, Height
 run ./testAura 1200 900 8                                          #Width, Height, Segments
 run ./testBallroom 640 640                                         #Width, Height

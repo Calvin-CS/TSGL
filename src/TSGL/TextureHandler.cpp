@@ -41,6 +41,46 @@ namespace tsgl {
 #pragma GCC diagnostic pop
   #endif
 
+ //List of default fonts to check for
+#ifndef DEFAULTFONTS
+#define DEFAULTFONTS
+#ifdef _WIN32
+    const char* DEFAULTFONTPATHS[] = {
+        "../assets/freefont/FreeSerif.ttf",
+        "./assets/freefont/FreeSerif.ttf",
+        "./FreeSerif.ttf",
+        "C:\\Windows\\Fonts\\ARIALUNI.ttf".
+        "C:\\Windows\\Fonts\\ARIAL.ttf",
+        "C:\\Windows\\Fonts\\COUR.ttf",
+        "C:\\Windows\\Fonts\\COURI.ttf"
+    };
+#endif
+#ifdef __APPLE__
+    const char* DEFAULTFONTPATHS[] = {
+        "../assets/freefont/FreeSerif.ttf",
+        "./assets/freefont/FreeSerif.ttf",
+        "./FreeSerif.ttf",
+        "/Library/Fonts/Arial.ttf",
+        "/Library/Fonts/Courier New.ttf",
+        "/Library/Fonts/Georgia.ttf",
+        "/opt/X11/share/fonts/TTF/VeraSe.ttf",
+    };
+#endif
+#ifdef __linux__
+    const char* DEFAULTFONTPATHS[] = {
+        "../assets/freefont/FreeSerif.ttf",
+        "./assets/freefont/FreeSerif.ttf",
+        "./FreeSerif.ttf",
+        "/usr/share/fonts/dejavu/DejaVuSerif.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf",
+        "/usr/share/fonts/TTF/DejaVuSerif.ttf",
+        "/usr/share/fonts/TTF/arial.ttf",
+        "/usr/share/fonts/TTF/cour.ttf",
+        "/usr/share/fonts/TTF/couri.ttf"
+    };
+#endif
+#endif
+
 #define GL_GLEXT_PROTOTYPES
 
 TextureHandler::TextureHandler() {
@@ -91,9 +131,20 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 
 bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
     const wchar_t* string = text.c_str();
-    if(fontFace == nullptr) {   //new, no font is set, load up a default one
-      TsglDebug("No Font set! Now loading from ../assets/freefont/FreeSerif.ttf....");    //NEW
-      loadFont("../assets/freefont/FreeSerif.ttf");    //NEW
+    if(fontFace == nullptr) {   //If no font is set, load up a default one
+      bool found = false;
+      for (int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
+          if (fileExists(DEFAULTFONTPATHS[i])) {
+              TsglDebug("No Font set! Now loading from " + std::string(DEFAULTFONTPATHS[i]));    //NEW
+              loadFont(DEFAULTFONTPATHS[i]);
+              found = true;
+              break;
+          }
+      }
+      if (!found) {
+          TsglErr("No suitable fonts found...exiting");    //NEW
+          exit(44);
+      }
     }
     FT_GlyphSlot glyph = fontFace->glyph;
     FT_UInt current_glyph_index, previous_glyph_index = 0;

@@ -44,6 +44,7 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
 	-I/usr/include/freetype2  \
+	-I/usr/include/freetype2/freetype  \
 	-I/usr/local/include/freetype2  \
 	-I./ \
   -std=c++0x -fopenmp \

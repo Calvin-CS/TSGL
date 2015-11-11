@@ -98,6 +98,21 @@ inline void wrap(int& i, int max) {
   i = (i < 0) ? (i + max*ceil((-(float)i)/max)) : i % max;
 }
 
+/*!
+ * \brief Test if a file with the give name exists
+ * \details This function tests if the file with the given name exists, returning
+ *  true for files that exist, and false for directories and files that don't exist
+ * \param name The name of the file to test for
+ */
+inline bool fileExists (const std::string& name) {
+    if (FILE *file = fopen(name.c_str(), "r")) {
+        fclose(file);
+        return true;
+    } else {
+        return false;
+    }
+}
+
 }
 
 #endif /* SRC_TSGL_UTIL_H_ */
