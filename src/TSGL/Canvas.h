@@ -5,8 +5,10 @@
 #ifndef CANVAS_H_
 #define CANVAS_H_
 
-// Link statically with GLEW
-#define GLEW_STATIC
+// Link statically with GLEW on Windows
+#ifdef _WIN32
+  #define GLEW_STATIC
+#endif
 
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
