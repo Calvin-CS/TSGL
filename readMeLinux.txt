@@ -36,10 +36,13 @@ PRE-INSTALL STEPS
 INSTALL STEPS
 ---------------------------
 
-1). The very first thing you should do is execute the "install-linux" in the TSGL-master folder. Do so from a terminal (./install-linux). The libraries should be found (if not, see "PRE-INSTALL STEPS").
+1). The very first thing you should do is execute the "install-linux.sh" script in the TSGL-master folder. Do so from a terminal (./install-linux.sh). The libraries should be found (if not, see "PRE-INSTALL STEPS").
 
 The TSGL library should now be installed and should take a few minutes to install. 
 (Please be patient as the library is being built as it takes a few minutes to build!)
+
+If you have g++-4.8 or earlier installed, then the script will ask whether you would like g++-4.9 installed instead.
+(If you already have g++-4.9 installed, then the script will skip this step).
 
 2). Once the installation is complete, execute the "runtests" script (./runtests). 
 Hit the ESC key to go through each test, where upon hitting the ESC key the current window should close and a new one should open with another animation. 

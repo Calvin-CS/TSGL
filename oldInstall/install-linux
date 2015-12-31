@@ -2811,14 +2811,7 @@ echo "Getting dependencies (or updating if all found)..."
 #Get the necessary dependencies needed for glfw as well as for Doxygen and git
 sudo apt-get install --yes --force-yes build-essential devscripts libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
 
-#Get g++ version 5 on the machine
-sudo apt-get remove --yes g++
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-sudo apt-get update
-sudo apt-get install --yes --force-yes g++-5
-
-#Make a symlink to g++-5 so we can use it
-sudo ln -s /usr/bin/g++-5 /usr/bin/g++
+echo 
 
 #Get the glfw library
 git clone https://github.com/glfw/glfw.git || exit 1
@@ -2839,7 +2832,129 @@ cd ..
 #Take it out 
 sudo rm -rf glfw
 
-echo "\nDependencies installed! \n"
+#Check for g++-4.9
+g49=0
+g48=0
+g47=0
+g46=0
+glate=0
+
+echo "Checking for g++..."
+
+echo
+
+#Check the version
+g++ --version > version.txt
+
+g++-4.9 --version | grep 4.9.* > version4.9.txt
+
+g++-4.8 --version | grep 4.8.* > version4.8.txt
+
+g++-4.7 --version | grep 4.7.* > version4.7.txt
+
+g++-4.6 --version | grep 4.6.* > version4.6.txt
+
+echo
+
+#Check if any of the files were empty (or exist)...
+if [ -e version4.9.txt ]
+then
+	if [ -s version4.9.txt ]
+	then
+	echo "g++-4.9 found."
+	g49=1
+	echo
+	fi
+else
+echo "g++-4.9 not found. Checking for 4.8..."
+echo	
+fi
+
+if [ -e version4.8.txt ]
+then
+	if [ -s version4.8.txt ]
+	then	
+	echo "g++-4.8 found."
+	g48=1
+	echo
+	fi
+else 
+echo "g++-4.8 not found. Checking for 4.7..."
+echo
+fi
+
+if [ -e version4.7.txt ]
+then		
+	if [ -s version4.7.txt ]
+	then
+	echo "g++-4.7 found."
+	g47=1
+	echo
+	fi	
+else
+echo "g++-4.7 not found. Checking for 4.6..."
+echo
+fi
+	
+if [ -e version4.6.txt ]
+then
+
+	if [ -s version4.6.txt ]
+	then
+	echo "g++-4.6 found."
+	g46=1
+	echo
+	fi
+else
+echo "g++-4.6 not found. Checking for later versions..."
+echo
+fi
+
+if [ -e version.txt ]
+then
+	if [ -s version.txt ]
+	then
+	echo "g++ found."
+	glate=1
+	echo
+	fi	
+else
+echo "Symlink not found."
+fi
+
+if test $g49 == 0 
+then
+	if test $g48 == 1 || $g47 == 1
+	then
+	echo "HA"
+	echo
+	else
+	if test $g46 == 1 || $glate == 1
+	then
+	echo "HA"
+	echo
+	fi
+	fi
+fi
+
+rm version*
+
+while true; do
+	read -t 10 -p "Install? (y/n)" yn
+	case $yn in
+		[Yy]* ) echo "Installing!....(Not really, but it works!)"; 
+			echo;
+			echo "Still working!";
+			break;;
+		[Nn]* ) echo "Fine...EAT IT."; exit 1;;
+	esac
+done 
+
+echo
+
+echo "Dependencies installed!"
+
+echo
 
 #Clean install = Remove the TSGL folder and lib files if they already exist
 sudo rm -rf /usr/local/include/TSGL

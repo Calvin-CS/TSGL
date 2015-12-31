@@ -37,6 +37,7 @@ CXXFLAGS=-c -O3 -g3 \
     -I/usr/local/include/ \
     -I/opt/AMDAPP/include/ \
     ${OS_INCLUDE} \
+	-I/usr/include/freetype2/freetype  \
     -std=c++0x -fopenmp \
     -Wno-unused-function #Supress warnings
 
