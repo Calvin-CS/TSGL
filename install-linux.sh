@@ -109,8 +109,8 @@ sudo apt-get install --yes --force-yes build-essential devscripts libtool cmake 
 echo 
 
 #Get the glfw library
-if [ "$glfw" -eq 0 ] 
-then 
+if test $glfw == 0
+then
 	git clone https://github.com/glfw/glfw.git || exit 1
 	#go into it
 	cd glfw
