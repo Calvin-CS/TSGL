@@ -35,7 +35,7 @@ then
 	#Checking for dependencies now...
 	#If the text file contains the name of the library that we are looking 
 	#for, then it must be installed. 
-	if [ grep libglfw.so glfw.txt ]
+	if grep "libglfw.so" glfw.txt > holder.txt
 	then
 	#Which means, it's not missing. 
 	glfw=1
@@ -48,30 +48,30 @@ fi
 #GL
 if [ -e opengl.txt ]
 then
-	if [ grep libGL.so opengl.txt ]
+	if grep "libGL.so" opengl.txt > holder.txt
 	then
-	GL=1
-	echo
+		GL=1
+		echo
 	fi	
 fi
 
 #freetype
 if [ -e freetype.txt ]
 then
-	if [ grep libfreetype.so freetype.txt ]
+	if grep "libfreetype.so" freetype.txt > holder.txt
 	then
-	freetype=1
-	echo
+		freetype=1
+		echo
 	fi	
 fi
 
 #GLEW
 if [ -e glew.txt ]
 then
-	if [ grep libGLEW.so glew.txt ]
+	if grep "libGLEW.so" glew.txt > holder.txt
 	then
-	GLEW=1
-	echo
+		GLEW=1
+		echo
 	fi	
 fi
 
@@ -81,6 +81,7 @@ rm glfw.txt
 rm glew.txt
 rm opengl.txt
 rm freetype.txt
+rm holder.txt
 
 #Now, determine if any of the dependencies are missing.
 if test $glfw == 0
@@ -108,23 +109,25 @@ sudo apt-get install --yes --force-yes build-essential devscripts libtool cmake 
 echo 
 
 #Get the glfw library
-git clone https://github.com/glfw/glfw.git || exit 1
+if [ "$glfw" -eq 0 ] 
+then 
+	git clone https://github.com/glfw/glfw.git || exit 1
+	#go into it
+	cd glfw
 
-#go into it
-cd glfw
+	#cmake command
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
 
-#cmake command
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
+	#Make and install
+	make
 
-#Make and install
-make
+	sudo make install
 
-sudo make install
+	cd ..
 
-cd ..
-
-#Take it out 
-sudo rm -rf glfw
+	#Take it out 
+	sudo rm -rf glfw
+fi
 
 #Check for g++-4.9
 g49=0
