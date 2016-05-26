@@ -17,10 +17,10 @@ freetype=0  #Freetype
 GLEW=0  #And GLEW
 
 #To do so, use the ldconfig command and pipe it to grep with the following keywords:
-sudo ldconfig -p | grep glfw > glfw.txt   #'glfw'
-sudo ldconfig -p | grep GL > opengl.txt  #'GL'
-sudo ldconfig -p | grep freetype > freetype.txt  #'freetype'
-sudo ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
+ldconfig -p | grep glfw > glfw.txt   #'glfw'
+ldconfig -p | grep GL > opengl.txt  #'GL'
+ldconfig -p | grep freetype > freetype.txt  #'freetype'
+ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
 
 #Based off of the piping above, if any of the keywords were found, then the corresponding text files will have 
 #information about the libraries currently installed. 
@@ -32,17 +32,15 @@ sudo ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
 #If the text file exists, then that just means the check went through with no problems.
 if [ -e glfw.txt ]
 then
-	#Now, if the text file has something in it, then the library is installed. 
-	if [ -s glfw.txt ]
+	#Checking for dependencies now...
+	#If the text file contains the name of the library that we are looking 
+	#for, then it must be installed. 
+	if [ grep libglfw.so glfw.txt ]
 	then
 	#Which means, it's not missing. 
 	glfw=1
 	echo
 	fi
-else
-#If the file has not been made, then something went wrong with the check.
-echo "glfw not found!"
-echo	
 fi
 
 #Continue to do that for the next three libraries
@@ -50,40 +48,31 @@ fi
 #GL
 if [ -e opengl.txt ]
 then
-	if [ -s opengl.txt ]
+	if [ grep libGL.so opengl.txt ]
 	then
 	GL=1
 	echo
-	fi
-else
-echo "OpenGL not found!"
-echo	
+	fi	
 fi
 
 #freetype
 if [ -e freetype.txt ]
 then
-	if [ -s freetype.txt ]
+	if [ grep libfreetype.so freetype.txt ]
 	then
 	freetype=1
 	echo
-	fi
-else
-echo "freetype not found!"
-echo	
+	fi	
 fi
 
 #GLEW
 if [ -e glew.txt ]
 then
-	if [ -s glew.txt ]
+	if [ grep libGLEW.so glew.txt ]
 	then
 	GLEW=1
 	echo
-	fi
-else
-echo "GLEW not found!"
-echo	
+	fi	
 fi
 
 #Alright, we're done checking. 
