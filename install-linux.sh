@@ -109,8 +109,8 @@ sudo apt-get install --yes --force-yes build-essential devscripts libtool cmake 
 echo 
 
 #Get the glfw library
-if [ "$glfw" -eq 0 ] 
-then 
+if test $glfw == 0
+then
 	git clone https://github.com/glfw/glfw.git || exit 1
 	#go into it
 	cd glfw
@@ -236,7 +236,7 @@ then
 		#If so, then prompt the user.
 		#Adapted from: http://stackoverflow.com/questions/226703/how-do-i-prompt-for-input-in-a-linux-shell-script
 		#Get the choice from the user.
-		echo "Would you like to install g++-4.9?"		
+		echo "Would you like to install g++-4.9? (Enter 1 for Yes or 2 for No)"		
 		select choice in "Yes" "No"; do		
 		case $choice in
 			Yes ) #Yes, so...
@@ -257,7 +257,7 @@ then
 	then
 		#If so, same as above. Prompt the user, get the choice.
 		#Adapted from: http://stackoverflow.com/questions/226703/how-do-i-prompt-for-input-in-a-linux-shell-script
-		echo "Would you like to install g++-4.9?"		
+		echo "Would you like to install g++-4.9? (Enter 1 for Yes or 2 for No)"		
 		select choice in "Yes" "No"; do		
 		case $choice in
 			Yes ) #Yes, so.. 
