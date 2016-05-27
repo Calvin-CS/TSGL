@@ -89,11 +89,11 @@ then
 	echo "glfw not found!" #Even if it's not installed, it will be with the install script.
 elif test $GL == 0
 then
-	echo "GL not found! Please see the missing dependencies section on how to install this library."
+	echo "GL not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
 	exit 1 
 elif test $freetype == 0
 then
-	echo "Freetype not found! Please see the missing dependencies section on how to install this library."
+	echo "Freetype not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
 	exit 1
 elif test $GLEW == 0
 then
