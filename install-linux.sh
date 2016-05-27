@@ -25,7 +25,7 @@ ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
 #Based off of the piping above, if any of the keywords were found, then the corresponding text files will have 
 #information about the libraries currently installed. 
 #If they aren't found, then the text files will be blank.
-#If that is the case, then the library should'nt be on the machine. (A missing dependency).
+#If that is the case, then the library shouldn't be on the machine. (A missing dependency).
 
 #Check the text files to see if there are any missing libraries.
 
