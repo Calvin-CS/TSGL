@@ -1,8 +1,10 @@
 #!/bin/bash
-
+#
 # install-linux.sh is the installation script for TSGL on Linux.
+# Last updated: 05/27/26
+# 
 # -SUBJECT TO CHANGE-
-#####
+################################################################
 
 echo "Installing TSGL..."
 echo
@@ -37,9 +39,9 @@ then
 	#for, then it must be installed. 
 	if grep "libglfw.so" glfw.txt > holder.txt
 	then
-	#Which means, it's not missing. 
-	glfw=1
-	echo
+		#Which means, it's not missing. 
+		glfw=1
+		echo
 	fi
 fi
 
@@ -86,7 +88,7 @@ rm holder.txt
 #Now, determine if any of the dependencies are missing.
 if test $glfw == 0
 then
-	echo "glfw not found!" #Even if it's not installed, it will be with the install script.
+	echo "glfw not found! (Will be resolved shortly)" #Even if it's not installed, it will be with the install script.
 elif test $GL == 0
 then
 	echo "GL not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
@@ -97,7 +99,7 @@ then
 	exit 1
 elif test $GLEW == 0
 then
-	echo "GLEW not found!"  #Same with GLEW
+	echo "GLEW not found! (Will be resolved shortly)"  #Same with GLEW
 fi
 
 #Alright, now get glfw and GLEW (freetype can be gained through the wiki as well as OpenGL).
@@ -111,6 +113,7 @@ echo
 #Get the glfw library
 if test $glfw == 0
 then
+	echo "Resolving missing glfw dependency..."
 	git clone https://github.com/glfw/glfw.git || exit 1
 	#go into it
 	cd glfw
@@ -143,72 +146,81 @@ echo
 #Check the version (Same as the check for the libraries above, but with g++ --version)
 g++ --version > version.txt
 
-g++-4.9 --version | grep 4.9.* > version4.9.txt
+g++-4.9 --version > version4.9.txt
 
-g++-4.8 --version | grep 4.8.* > version4.8.txt
+g++-4.8 --version > version4.8.txt
 
-g++-4.7 --version | grep 4.7.* > version4.7.txt
+g++-4.7 --version > version4.7.txt
 
-g++-4.6 --version | grep 4.6.* > version4.6.txt
+g++-4.6 --version > version4.6.txt
 
 echo
 
 #Check if any of the files were empty (or exist)...
+#(Same as library check above)
+
 #g++-4.9
 if [ -e version4.9.txt ]
 then
-	if [ -s version4.9.txt ]
+	if grep 4.9.* version4.9.txt > holder.txt
 	then
-	echo "g++-4.9 found."
-	g49=1
-	echo
+		echo "g++-4.9 found."
+		g49=1
+		echo
+	else 
+		echo "g++ version 4.9 not found. Checking for version 4.8..."
 	fi
 else
-echo "g++-4.9 not found. Checking for 4.8..."
-echo	
+	echo "g++-4.9 not found. Checking for g++-4.8..."
+	echo	
 fi
 
 #g++-4.8
 if [ -e version4.8.txt ]
 then
-	if [ -s version4.8.txt ]
+	if grep 4.8.* version4.8.txt > holder.txt
 	then	
-	echo "g++-4.8 found."
-	g48=1
-	echo
+		echo "g++-4.8 found."
+		g48=1
+		echo
+	else 
+		echo "g++ version 4.8 not found. Checking for version 4.7..."
 	fi
 else 
-echo "g++-4.8 not found. Checking for 4.7..."
-echo
+	echo "g++-4.8 not found. Checking for g++-4.7..."
+	echo
 fi
 
 #g++-4.7
 if [ -e version4.7.txt ]
 then		
-	if [ -s version4.7.txt ]
+	if grep 4.7.* version4.7.txt > holder.txt
 	then
-	echo "g++-4.7 found."
-	g47=1
-	echo
+		echo "g++-4.7 found."
+		g47=1
+		echo
+	else
+		echo "g++ version 4.7 not found. Checking for version 4.6..."
 	fi	
 else
-echo "g++-4.7 not found. Checking for 4.6..."
-echo
+	echo "g++-4.7 not found. Checking for g++-4.6..."
+	echo
 fi
 
 #g++-4.6
 if [ -e version4.6.txt ]
 then
-
-	if [ -s version4.6.txt ]
+	if grep 4.6.* version4.6.txt > holder.txt
 	then
-	echo "g++-4.6 found."
-	g46=1
-	echo
+		echo "g++-4.6 found."
+		g46=1
+		echo
+	else 
+		echo "g++ version 4.6 not found. Checking for later versions..."
 	fi
 else
-echo "g++-4.6 not found. Checking for later versions..."
-echo
+	echo "g++-4.6 not found. Checking for later versions..."
+	echo
 fi
 
 #Earlier versions of g++ than 4.6
@@ -216,12 +228,14 @@ if [ -e version.txt ]
 then
 	if [ -s version.txt ]
 	then
-	echo "g++ found."
-	glate=1
-	echo
+		echo "g++ found."
+		glate=1
+		echo
+	else
+		echo "g++ not found! Please install g++!"
 	fi	
 else
-echo "Symlink not found."
+	echo "g++ not found! Please install g++!"
 fi
 
 #Take out the version check files
@@ -280,6 +294,10 @@ fi
 echo "Dependencies installed!"
 
 echo 
+
+echo "Begin installation...."
+
+echo
 
 #Clean install = Remove the TSGL folder and lib files if they already exist
 sudo rm -rf /usr/local/include/TSGL
