@@ -94,6 +94,7 @@ BINARIES= \
 	bin/testMouse \
 	bin/testNewtonPendulum \
 	bin/testPhilosophers \
+	bin/testProducerConsumer \
 	bin/testPong \
 	bin/testProgressBar \
 	bin/testProjectiles \
@@ -171,6 +172,9 @@ bin/testConway: build/tests/Conway/LifeFarm.o
 bin/testInverter: build/tests/ImageInverter/ImageInverter.o
 bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
 bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
+bin/testProducerConsumer: build/tests/ProducerConsumer/Producer.o \
+	build/tests/ProducerConsumer/Consumer.o \
+	build/tests/ProducerConsumer/Thread.o
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
 	build/tests/Mandelbrot/GradientMandelbrot.o \
 	build/tests/Mandelbrot/Buddhabrot.o \

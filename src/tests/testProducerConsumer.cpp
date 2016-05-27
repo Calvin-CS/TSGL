@@ -12,8 +12,8 @@
  */
 
 #include <stdlib.h>
-#include "Producer.h"
-#include "Consumer.h"
+#include "ProducerConsumer/Producer.h"
+#include "ProducerConsumer/Consumer.h"
 
 /**
  * display() method draws the color data that is currently in the shared buffer.
