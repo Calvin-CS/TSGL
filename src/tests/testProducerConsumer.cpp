@@ -1,14 +1,14 @@
 /**
- * proCon.cpp contains the code that shows the visualization for the Producer-Consumer problem using TSGL and pthreads.
+ * testProducerConsumer.cpp contains the code that shows the visualization for the Producer-Consumer problem using TSGL and pthreads.
  * It utilizes a custom Queue class to make the shared buffer.
  * Producer and Consumer classes have been made in order to make the Producers and Consumers
  * A Thread class has been made in order to have an encapsulated pthread (which the Producer and Consumer class both inherit from).
- * Usage: ./proCon [numberOfProducers] [numberOfConsumers]
+ * Usage: ./testProducerConsumer [numberOfProducers] [numberOfConsumers]
  * (For the best results, use an equal number of Producers and Consumers).
  * (NOTE: The process may hang upon closure of the Canvas window. This tends to happen less often with an equal number
  *        of Producers and Consumers, so be warned!)
  * (Update NOTE: The Canvases may be blank at startup sometimes. If this happens, kill the process in the terminal (using ^C), and 
- *	 	         rerun proCon.) 
+ *	 	         rerun testProducerConsumer.) 
  */
 
 #include <stdlib.h>
