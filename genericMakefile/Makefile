@@ -35,15 +35,18 @@ CXXFLAGS=-c -O3 -g3 \
     -D__GXX_EXPERIMENTAL_CXX0X__ \
     -I/usr/local/include/TSGL/ \
     -I/usr/local/include/ \
+	-I/usr/include/TSGL \
     -I/opt/AMDAPP/include/ \
     ${OS_INCLUDE} \
 	-I/usr/include/freetype2/freetype  \
+	-I/usr/include/freetype2/ \
     -std=c++0x -fopenmp \
     -Wno-unused-function #Supress warnings
 
 #Linking flags
 LFLAGS=-o $(TARGET) \
     -L/usr/local/lib/ \
+	-L/usr/lib/ \
     -L/opt/X11/lib \
     ${OS_LDIRS} \
     ${OS_EXTRA_LINK} \
