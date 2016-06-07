@@ -49,7 +49,7 @@ namespace tsgl {
         "../assets/freefont/FreeSerif.ttf",
         "./assets/freefont/FreeSerif.ttf",
         "./FreeSerif.ttf",
-        "C:\\Windows\\Fonts\\ARIALUNI.ttf".
+        "C:\\Windows\\Fonts\\ARIALUNI.ttf",
         "C:\\Windows\\Fonts\\ARIAL.ttf",
         "C:\\Windows\\Fonts\\COUR.ttf",
         "C:\\Windows\\Fonts\\COURI.ttf"
