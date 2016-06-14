@@ -105,12 +105,27 @@ inline void wrap(int& i, int max) {
  * \param name The name of the file to test for
  */
 inline bool fileExists (const std::string& name) {
-    if (FILE *file = fopen(name.c_str(), "r")) {
-        fclose(file);
-        return true;
-    } else {
-        return false;
-    }
+  #ifdef _WIN32  //To handle the fopen issue in Windows...
+		FILE * file;
+		//https://msdn.microsoft.com/en-us/library/z5hh6ee9.aspx
+		//Use fopen_s() instead of fopen() in Windows
+		if (fopen_s(&file, name.c_str(), "r")) {
+			fclose(file);
+			return true;
+		}
+		else {
+			return false;
+		}
+	#else
+	  //Use the normal fopen()
+		if (FILE *file = fopen(name.c_str(), "r")) {
+			fclose(file);
+			return true;
+		}
+		else {
+			return false;
+	  }
+	#endif
 }
 
 }
