@@ -77,4 +77,4 @@ $(TARGET).o:
 
 #Clean command
 clean:
-	$(RM) $(TARGET) $(OBJS) 
+	$(RM) $(TARGET) $(OBJS) *~
