@@ -15,11 +15,11 @@ echo "g++ installed."
 
 sudo yum install libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel mesa-libGLU-devel libXmu-devel libXi-devel libGL-devel 
 
-wget www.cmake.org/files/v3.0/cmake-3.0.0.tar.gz
+wget https://cmake.org/files/v3.2/cmake-3.2.3.tar.gz
 
-tar zxf cmake-3.0.0.tar.gz 
+tar zxf cmake-3.2.3.tar.gz 
 
-cd cmake-3.0.0
+cd cmake-3.2.3
 
 ./bootstrap --prefix=/usr
 
