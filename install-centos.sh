@@ -13,7 +13,7 @@ echo "g++ installed."
 
 #echo "Checking for cmake 3.0 or greater..."
 
-sudo yum install libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel mesa-libGLU-devel libXmu-devel libXi-devel libGL-devel 
+sudo yum install libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel mesa-libGLU-devel libXmu-devel libXi-devel libGL-devel glew-devel
 
 wget https://cmake.org/files/v3.2/cmake-3.2.3.tar.gz
 
@@ -26,6 +26,9 @@ cd cmake-3.2.3
 make
 
 sudo make install
+
+cd ../
+rm -rf cmake-*
 
 echo "Cmake installed."
 
@@ -55,7 +58,7 @@ echo "Installing freetype..."
 
 wget downloads.sourceforge.net/project/freetype/freetype2/2.6.3/freetype-2.6.3.tar.bz2
 
-tar vxj freetype-2.6.3.tar.bz2
+tar vxfj freetype-2.6.3.tar.bz2
 
 cd freetype-2.6.3
 
@@ -84,6 +87,9 @@ cd ../
 
 sudo rm -rf freetype2/
 
+cd $workingDir
+rm -rf freetype*
+
 echo "Freetype installed."
 
 #Make a symlink to GL.so file
@@ -100,7 +106,7 @@ cd $workingDir
 sudo rm -rf /usr/local/include/TSGL
 sudo rm -rf /usr/local/lib/libtsgl.*
 
-mkdir lib bin
+mkdir -p lib bin
 
 make 
 
