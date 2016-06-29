@@ -7,7 +7,7 @@
 [Setup]
 
 #define MyAppName "TSGL"
-#define MyAppVerName "TSGL 1.0"
+#define MyAppVerName "TSGL 1.1.2"
 #define MyAppPublisher "Calvin College"
 #define MyAppURL "cs.calvin.edu"
 
