@@ -21,7 +21,7 @@ using namespace tsgl;
  * \see IntegralViewer class.
  */
 inline Decimal unitCircleFunction(Decimal x) {
-  return (abs(x) < 1.0L) ? sqrt( 1.0L - (x*x) ) : 0.0L;
+  return (fabs(x) < 1.0L) ? sqrt( 1.0L - (x*x) ) : 0.0L;
 }
 
 /*!

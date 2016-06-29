@@ -1,12 +1,12 @@
 #!/bin/bash
-# TSGL install script for CentOS 7. 
+# TSGL install script for Fedora. 
 # Last modified: 06/29/16.
 #####################################
 
+echo "Begin installation..."
+
 #This determines whether or not we need to make a symlink
 glSymlink=0
-
-echo "Begin installation..."
 
 #Store the working directory
 #(So that we can come back to the TSGL directory easily)
@@ -84,9 +84,9 @@ else
 	fi 
 fi
 
-#Step 2: Build cmake from source 
+#Step 2: Install Cmake (because Cmake is up to 3.5.2).
 
-#First, get the dependencies for cmake
+#First, Get dependencies.
 sudo yum install libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel mesa-libGLU-devel libXmu-devel libXi-devel libGL-devel glew-devel
 
 #Now, check the version.
@@ -104,25 +104,9 @@ if [ -z "$cmakeVersNum" ]
 then
 	echo "Cmake not installed!"
 	echo "Installing Cmake..."
-
-	#Install from source.
-	wget https://cmake.org/files/v3.2/cmake-3.2.3.tar.gz
 	
-	#Untar the file, go in it, and make it.
-	tar zxf cmake-3.2.3.tar.gz 
+	sudo yum install cmake
 
-	cd cmake-3.2.3
-
-	./bootstrap --prefix=/usr
-
-	make
-
-	sudo make install
-	
-	#Clean up.
-	cd ../
-	rm -rf cmake-*
-	
 	#Update versioning info.
 	cmakeVersCheck=$(cmake --version)
 
@@ -146,26 +130,10 @@ else
 		select choice in "Yes" "No"; do		
 		case $choice in
 			Yes ) #Yes, so...
-				echo "Installing Cmake 3.2.3...."
-				#Get the tar file.
-				wget https://cmake.org/files/v3.2/cmake-3.2.3.tar.gz
+				echo "Installing Cmake..." 
 
-				#Untar and unzip it.
-				tar zxf cmake-3.2.3.tar.gz 
-			
-				cd cmake-3.2.3
-				
-				./bootstrap --prefix=/usr
-				
-				#Make and install it.
-				make
-
-				sudo make install
-
-				#Clean up.
-				cd ../
-				rm -rf cmake-*
-				
+				sudo yum install cmake 
+	
 				#Update the version info.
 				cmakeVersCheck=$(cmake --version)
 
@@ -207,20 +175,19 @@ then
 	echo "Your version of GL is: $GLVersNum."
 	echo "You need at least OpenGL version 3.2 or greater."
 	echo "Please update your drivers in order to continue."
-	echo "If you have an Nvidia graphics card, you can follow this tutorial"
+	echo "If you have an Nvidia graphics card, you can follow this online tutorial"
+	echo "in order to update your binary drivers:" 
 	echo
-	echo "in order to update your binary drivers: http://www.dedoimedo.com/computers/centos-7-nvidia.html"
+	echo "http://www.if-not-true-then-false.com/2015/fedora-nvidia-guide/"
 	echo
-	echo "AMD users, here is a possible online tutorial: "
+	echo "AMD users, here is a possible solution: "
 	echo
-	echo "https://www.centos.org/forums/viewtopic.php?f=48&t=47494#p202381"
+	echo "https://bluehatrecord.wordpress.com/2015/09/17/installing-the-proprietary-amd-catalyst-15-9-fglrx-15-201-driver-on-fedora-22-with-linux-kernel-4-1-6/"
 	echo 
 	echo "Abort."
-	
 	exit 1
 else
 	echo "OpenGL version is sufficient to continue."
-	#Check if they updated their drivers manually (Nvidia)
 	echo "Did you update your graphics card drivers before installing TSGL? (1 = Yes, 2 = No)"
 	select choice in "Yes" "No"; do		
 		case $choice in
@@ -233,7 +200,6 @@ else
 			echo "Thanks for telling me!" break;;
 		esac
 	done 
-
 fi
 
 #Step 3: Build GLFW from source
@@ -273,23 +239,6 @@ make
 
 sudo make install
 
-#Copy over files so TSGL can find most recent freetype files
-cd /usr/local/include/
-
-sudo cp -r freetype2/ ../../include/freetype2/
-
-cd ../../include/freetype2/freetype2/freetype/
-
-sudo cp -r * ../../freetype/
-
-cd ../../freetype2/
-
-sudo cp ft2build.h ../
-
-cd ../
-
-sudo rm -rf freetype2/
-
 #Go back to the TSGL directory
 cd $workingDir
 rm -rf freetype*
@@ -297,9 +246,12 @@ rm -rf freetype*
 echo "Freetype installed."
 
 #Make a symlink to GL.so file (so it can be found...)
+#(Apparently, after updating the drivers, TSGL CANNOT find -lGL).
+#(After doing a bit of research, I found that it's because of a broken symlink...)
+#Check if we even need to do a symlink first!
 if [ $glSymlink == 1 ]
 then
-	sudo ln -s /usr/lib64/libGL.so.1 /usr/local/lib/libGl.so
+	sudo ln -sfn /usr/lib64/libGL.so.1 /usr/lib64/libGL.so
 fi
 
 #Edit the LD_LIBRARY_PATH variable
