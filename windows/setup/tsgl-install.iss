@@ -1,5 +1,5 @@
 #define MyAppName "TSGL"
-#define MyAppVerName "TSGL 1.0"
+#define MyAppVerName "TSGL 1.1.2"
 #define MyAppPublisher "Calvin College"
 #define MyAppURL "cs.calvin.edu"
 
@@ -245,8 +245,12 @@ begin
     ProgPage.SetProgress(99, 100);
     Del('unzip.exe');
     Del('7za.exe');
+    //Altered for VS2015
+    Del('install-windowsVS2015');
     DelDir('cmake');
     DelDir('windows');
+    //Altered for VS2015
+    DelDir('winVS2015');
   end;
   finally
     ProgPage.Hide;
