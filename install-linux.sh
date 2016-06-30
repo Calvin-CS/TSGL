@@ -251,6 +251,43 @@ else
 	fi 
 fi
 
+echo 
+#Determine the OpenGL version (has to be 3.2 or higher)
+#(Use glxinfo, available in the mesa-utils package)
+sudo apt-get install mesa-utils
+
+echo 
+echo "Checking OpenGL version (must be 3.0 or higher)..."
+
+GLVersInfo=$(glxinfo | grep OpenGL)
+
+#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
+#Get a string containing the version number.
+GLVersString=$(echo "$GLVersInfo" | grep "OpenGL version string: ")
+
+#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
+#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
+#Get the version number from the version string.
+GLVersNum=$(echo "$GLVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+
+#http://tldp.org/LDP/abs/html/comparison-ops.html
+#Check if the version is less than the threshold
+if [ "$GLVersNum" \< "3.0" ]
+then
+	echo "Your version of GL is: $GLVersNum."
+	echo "You need at least OpenGL version 3.0 or greater."
+	echo "Please update your drivers in order to continue."
+	echo "Try the following command to update your drivers:"
+	echo
+	echo "sudo ubuntu-drivers autoinstall"
+	echo  
+	echo "Abort."
+	exit 1
+else
+	echo "OpenGL version is sufficient to continue."
+fi
+
+echo
 
 #Dependencies were installed! (GLEW and glfw, as well as g++)
 echo "All dependencies resolved!"
