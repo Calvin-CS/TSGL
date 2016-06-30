@@ -92,6 +92,7 @@ then
 elif [ $GL == 0 ]
 then
 	echo "GL not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
+	echo "(You may also have to update your drivers!)"
 	exit 1 
 elif [ $freetype == 0 ]
 then
