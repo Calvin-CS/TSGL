@@ -1,6 +1,8 @@
 #!/bin/bash
 # TSGL install script for Fedora. 
 # Last modified: 06/29/16.
+#
+# -SUBJECT TO CHANGE-
 #####################################
 
 echo "Begin installation..."

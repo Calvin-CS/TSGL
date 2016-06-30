@@ -37,7 +37,7 @@ then
 	#Checking for dependencies now...
 	#If the text file contains the name of the library that we are looking 
 	#for, then it must be installed. 
-	if grep "libglfw.so" glfw.txt > holder.txt
+	if grep "libglfw.so.3" glfw.txt > holder.txt
 	then
 		#Which means, it's not missing. 
 		glfw=1
@@ -86,39 +86,39 @@ rm freetype.txt
 rm holder.txt
 
 #Now, determine if any of the dependencies are missing.
-if test $glfw == 0
+if [ $glfw == 0 ]
 then
 	echo "glfw not found! (Will be resolved shortly)" #Even if it's not installed, it will be with the install script.
-elif test $GL == 0
+elif [ $GL == 0 ]
 then
 	echo "GL not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
 	exit 1 
-elif test $freetype == 0
+elif [ $freetype == 0 ]
 then
 	echo "Freetype not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
 	exit 1
-elif test $GLEW == 0
+elif [ $GLEW == 0 ]
 then
 	echo "GLEW not found! (Will be resolved shortly)"  #Same with GLEW
 fi
 
 #Alright, now get glfw and GLEW (freetype can be gained through the wiki as well as OpenGL).
-echo "Getting dependencies (or updating if all found)..."
+echo "Getting other dependencies (or updating if all found)..."
 
-#Get the necessary dependencies needed for glfw as well as for Doxygen and git
-sudo apt-get install --yes --force-yes build-essential devscripts libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
+#Get the necessary header files as well as doxygen, git
+sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen 
 
 echo 
 
 #Get the glfw library
-if test $glfw == 0
+if [ $glfw == 0 ]
 then
 	echo "Resolving missing glfw dependency..."
 	git clone https://github.com/glfw/glfw.git || exit 1
-	#go into it
+	
 	cd glfw
 
-	#cmake command
+	#Build shared lib from source
 	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
 
 	#Make and install
@@ -128,187 +128,144 @@ then
 
 	cd ..
 
-	#Take it out 
 	sudo rm -rf glfw
 fi
-
-#Check for g++-4.9
-g49=0
-g48=0
-g47=0
-g46=0
-glate=0
 
 echo "Checking for g++..."
 
 echo
 
-#Check the version (Same as the check for the libraries above, but with g++ --version)
-g++ --version > version.txt
+gVersCheck=$(g++ --version)
 
-g++-4.9 --version > version4.9.txt
+#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
+#Get a string containing the version number.
+gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
 
-g++-4.8 --version > version4.8.txt
+#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
+#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
+#Get the version number from the version string.
+gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
-g++-4.7 --version > version4.7.txt
-
-g++-4.6 --version > version4.6.txt
-
-echo
-
-#Check if any of the files were empty (or exist)...
-#(Same as library check above)
-
-#g++-4.9
-if [ -e version4.9.txt ]
+#http://tldp.org/LDP/abs/html/comparison-ops.html
+#Check if the version number is null...
+if [ -z "$gVersNum" ]
 then
-	if grep 4.9.* version4.9.txt > holder.txt
-	then
-		echo "g++-4.9 found."
-		g49=1
-		echo
-	else 
-		echo "g++ version 4.9 not found. Checking for version 4.8..."
-	fi
+	#Yep. g++ is NOT installed.
+	echo "g++ not installed!"
+	echo "Installing  g++..."
+	sudo apt-get install g++
+	
+	#Update versioning info
+	gVersCheck=$(g++ --version)
+
+	gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
+
+	#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
+	#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
+	gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+
 else
-	echo "g++-4.9 not found. Checking for g++-4.8..."
-	echo	
-fi
 
-#g++-4.8
-if [ -e version4.8.txt ]
-then
-	if grep 4.8.* version4.8.txt > holder.txt
-	then	
-		echo "g++-4.8 found."
-		g48=1
-		echo
-	else 
-		echo "g++ version 4.8 not found. Checking for version 4.7..."
-	fi
-else 
-	echo "g++-4.8 not found. Checking for g++-4.7..."
-	echo
-fi
+	echo "g++ already installed."
 
-#g++-4.7
-if [ -e version4.7.txt ]
-then		
-	if grep 4.7.* version4.7.txt > holder.txt
+	#No. Check the version.
+	if [ "$gVersNum" \< "4.8" ]
 	then
-		echo "g++-4.7 found."
-		g47=1
-		echo
-	else
-		echo "g++ version 4.7 not found. Checking for version 4.6..."
-	fi	
-else
-	echo "g++-4.7 not found. Checking for g++-4.6..."
-	echo
-fi
-
-#g++-4.6
-if [ -e version4.6.txt ]
-then
-	if grep 4.6.* version4.6.txt > holder.txt
-	then
-		echo "g++-4.6 found."
-		g46=1
-		echo
-	else 
-		echo "g++ version 4.6 not found. Checking for later versions..."
-	fi
-else
-	echo "g++-4.6 not found. Checking for later versions..."
-	echo
-fi
-
-#Earlier versions of g++ than 4.6
-if [ -e version.txt ]
-then
-	if [ -s version.txt ]
-	then
-		echo "g++ found."
-		glate=1
-		echo
-	else
-		echo "g++ not found! Please install g++!"
-	fi	
-else
-	echo "g++ not found! Please install g++!"
-fi
-
-#Take out the version check files
-rm version*
-
-#If g++-4.9 isn't found...
-if test $g49 == 0 
-then
-	#Check whether g++-4.8 or g++4.7 were found.
-	if test $g48 == 1 || $g47 == 1
-	then
-		#If so, then prompt the user.
+		echo "The version of g++ is: $gVersNum."
+		echo "You need at least g++ 4.8 or greater in order to continue."
+		echo "I can install a greater version of g++ for you."
+		echo "Would you like me to do that? (1 = Yes, 2 = No)"
 		#Adapted from: http://stackoverflow.com/questions/226703/how-do-i-prompt-for-input-in-a-linux-shell-script
 		#Get the choice from the user.
-		echo "Would you like to install g++-4.9? (Enter 1 for Yes or 2 for No)"		
 		select choice in "Yes" "No"; do		
 		case $choice in
 			Yes ) #Yes, so...
+				echo "Installing a greater version of g++ (4.9)..."
+
 				#Get g++-4.9 on the machine
 				sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
 				sudo apt-get update;
 				sudo apt-get install --yes --force-yes g++-4.9;		
 				sudo unlink /usr/bin/g++;   #Take out any symlink made before...	
 				sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;
+				
+				#Update version info
+				gVersCheck=$(g++ --version)
+
+				#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
+				gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
+
+				#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
+				#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
+				gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+
 				break;;
 			No ) #No, use the current version		
-				echo "Proceeding with the current g++ version."; break;;
-		esac
-	done 
-	echo
-	#Check whether g++-4.6 or earlier were found if neither g++-4.8 nor g++-4.7 were found.
-	elif test $g46 == 1 || $glate == 1
-	then
-		#If so, same as above. Prompt the user, get the choice.
-		#Adapted from: http://stackoverflow.com/questions/226703/how-do-i-prompt-for-input-in-a-linux-shell-script
-		echo "Would you like to install g++-4.9? (Enter 1 for Yes or 2 for No)"		
-		select choice in "Yes" "No"; do		
-		case $choice in
-			Yes ) #Yes, so.. 
-				#Get g++-4.9 on the machine
-				sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
-				sudo apt-get update;
-				sudo apt-get install --yes --force-yes g++-4.9;
-				sudo unlink /usr/bin/g++;  #Take out any symlink made before...
-				sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;  #Create a new one to g++-4.9
-				break;;
-			No ) #No, use the current version
-				echo "Proceeding with the current g++ version."; break;;
-		esac
-	done 	
-	echo
-	fi
+				echo "Cannot continue without g++ 4.8 or greater."
+				echo "Abort."
+				exit 1
+			esac
+		done
+
+	else
+		#Version number is okay
+		echo "g++ version is sufficient to continue."
+
+		#Check if version number is NOT 4.9
+		if [ "$gVersNum" \< "4.9" ]
+		then
+			echo "You have $gVersNum installed."
+			echo "Would you like me to install g++-4.9? (1 = Yes, 2 = No)"		
+			select choice in "Yes" "No"; do		
+				case $choice in
+					Yes ) #Yes, so...
+
+						echo "Installing g++-4.9..."
+
+						#Get g++-4.9 on the machine
+						sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
+						sudo apt-get update;
+						sudo apt-get install --yes --force-yes g++-4.9;		
+						sudo unlink /usr/bin/g++;   #Take out any symlink made before...	
+						sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;
+						
+						#Update version info
+						gVersCheck=$(g++ --version)
+						
+						#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
+						gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
+	
+						#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
+						#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
+						gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+
+						break;;
+					No ) #No, use the current version		
+						echo "Proceeding with $gVersNum."; 
+						break;;
+				esac
+			done 
+		fi
+
+	fi 
 fi
 
+
 #Dependencies were installed! (GLEW and glfw, as well as g++)
-echo "Dependencies installed!"
+echo "All dependencies resolved!"
 
 echo 
 
-echo "Begin installation...."
+echo "Begin installation of TSGL..."
 
 echo
 
-#Clean install = Remove the TSGL folder and lib files if they already exist
+#Clean install = remove the TSGL folder and lib files if they already exist
 sudo rm -rf /usr/local/include/TSGL
 sudo rm -rf /usr/local/lib/libtsgl.*
 
-#A weird bug occurs whenever I install ONLY glfw. I have to install and uninstall libglfw-dev in order for it to work.
-sudo apt-get --yes --force-yes install libglfw-dev
-sudo apt-get --yes --force-yes remove libglfw-dev
-
 #Create the following directories (Since they aren't included in github but are needed)
-mkdir lib bin
+mkdir -p lib bin
 
 #Make the library
 make
@@ -318,9 +275,6 @@ sudo make install
 
 #Take out the .cpp files from the TSGL library package folder
 sudo rm -rf /usr/local/include/TSGL/*.cpp
-
-#Take out the config.log file that is made when you run the install script
-sudo rm -f config.log
 
 #Final step (.so file won't be found unless I do this...)
 sudo ldconfig

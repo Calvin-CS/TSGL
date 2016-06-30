@@ -1,6 +1,8 @@
 #!/bin/bash
 # TSGL install script for CentOS 7. 
 # Last modified: 06/29/16.
+#
+# -SUBJECT TO CHANGE-
 #####################################
 
 #This determines whether or not we need to make a symlink
