@@ -7,129 +7,40 @@
 ################################################################
 
 echo "Installing TSGL..."
-echo
 
-echo "Checking for necessary dependencies..."
-echo
-
-#Check for the following libraries: 
-glfw=0   #glfw
-GL=0  #OpenGL
-freetype=0  #Freetype
-GLEW=0  #And GLEW
-
-#To do so, use the ldconfig command and pipe it to grep with the following keywords:
-ldconfig -p | grep glfw > glfw.txt   #'glfw'
-ldconfig -p | grep GL > opengl.txt  #'GL'
-ldconfig -p | grep freetype > freetype.txt  #'freetype'
-ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
-
-#Based off of the piping above, if any of the keywords were found, then the corresponding text files will have 
-#information about the libraries currently installed. 
-#If they aren't found, then the text files will be blank.
-#If that is the case, then the library shouldn't be on the machine. (A missing dependency).
-
-#Check the text files to see if there are any missing libraries.
-
-#If the text file exists, then that just means the check went through with no problems.
-if [ -e glfw.txt ]
-then
-	#Checking for dependencies now...
-	#If the text file contains the name of the library that we are looking 
-	#for, then it must be installed. 
-	if grep "libglfw.so.3" glfw.txt > holder.txt
-	then
-		#Which means, it's not missing. 
-		glfw=1
-		echo
-	fi
-fi
-
-#Continue to do that for the next three libraries
-
-#GL
-if [ -e opengl.txt ]
-then
-	if grep "libGL.so" opengl.txt > holder.txt
-	then
-		GL=1
-		echo
-	fi	
-fi
-
-#freetype
-if [ -e freetype.txt ]
-then
-	if grep "libfreetype.so" freetype.txt > holder.txt
-	then
-		freetype=1
-		echo
-	fi	
-fi
-
-#GLEW
-if [ -e glew.txt ]
-then
-	if grep "libGLEW.so" glew.txt > holder.txt
-	then
-		GLEW=1
-		echo
-	fi	
-fi
-
-#Alright, we're done checking. 
-#Clean up the text files, we no longer need them.
-rm glfw.txt
-rm glew.txt
-rm opengl.txt
-rm freetype.txt
-rm holder.txt
-
-#Now, determine if any of the dependencies are missing.
-if [ $glfw == 0 ]
-then
-	echo "glfw not found! (Will be resolved shortly)" #Even if it's not installed, it will be with the install script.
-elif [ $GL == 0 ]
-then
-	echo "GL not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
-	echo "(You may also have to update your drivers!)"
-	exit 1 
-elif [ $freetype == 0 ]
-then
-	echo "Freetype not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
-	exit 1
-elif [ $GLEW == 0 ]
-then
-	echo "GLEW not found! (Will be resolved shortly)"  #Same with GLEW
-fi
-
-#Alright, now get glfw and GLEW (freetype can be gained through the wiki as well as OpenGL).
-echo "Getting other dependencies (or updating if all found)..."
-
-#Get the necessary header files as well as doxygen, git
-sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen 
+#Determine the OpenGL version (has to be 3.2 or higher)
+#(Use glxinfo, available in the mesa-utils package)
+sudo apt-get install mesa-utils
 
 echo 
+echo "Checking OpenGL version (must be 3.0 or higher)..."
 
-#Get the glfw library
-if [ $glfw == 0 ]
+GLVersInfo=$(glxinfo | grep OpenGL)
+
+#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
+#Get a string containing the version number.
+GLVersString=$(echo "$GLVersInfo" | grep "OpenGL version string: ")
+
+#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
+#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
+#Get the version number from the version string.
+GLVersNum=$(echo "$GLVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+
+#http://tldp.org/LDP/abs/html/comparison-ops.html
+#Check if the version is less than the threshold
+if [ "$GLVersNum" \< "3.0" ]
 then
-	echo "Resolving missing glfw dependency..."
-	git clone https://github.com/glfw/glfw.git || exit 1
-	
-	cd glfw
-
-	#Build shared lib from source
-	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
-
-	#Make and install
-	make
-
-	sudo make install
-
-	cd ..
-
-	sudo rm -rf glfw
+	echo "Your version of GL is: $GLVersNum."
+	echo "You need at least OpenGL version 3.0 or greater."
+	echo "Please update your drivers in order to continue."
+	echo "Try the following command to update your drivers:"
+	echo
+	echo "sudo ubuntu-drivers autoinstall"
+	echo  
+	echo "Abort."
+	exit 1
+else
+	echo "OpenGL version is sufficient to continue."
 fi
 
 echo "Checking for g++..."
@@ -252,40 +163,157 @@ else
 fi
 
 echo 
-#Determine the OpenGL version (has to be 3.2 or higher)
-#(Use glxinfo, available in the mesa-utils package)
-sudo apt-get install mesa-utils
+
+echo "Checking for necessary dependencies..."
+echo
+
+#Check for the following libraries: 
+glfw=0   #glfw
+GL=0  #OpenGL
+freetype=0  #Freetype
+GLEW=0  #And GLEW
+
+#To do so, use the ldconfig command and pipe it to grep with the following keywords:
+ldconfig -p | grep glfw > glfw.txt   #'glfw'
+ldconfig -p | grep GL > opengl.txt  #'GL'
+ldconfig -p | grep freetype > freetype.txt  #'freetype'
+ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
+
+#Based off of the piping above, if any of the keywords were found, then the corresponding text files will have 
+#information about the libraries currently installed. 
+#If they aren't found, then the text files will be blank.
+#If that is the case, then the library shouldn't be on the machine. (A missing dependency).
+
+#Check the text files to see if there are any missing libraries.
+
+#If the text file exists, then that just means the check went through with no problems.
+if [ -e glfw.txt ]
+then
+	#Checking for dependencies now...
+	#If the text file contains the name of the library that we are looking 
+	#for, then it must be installed. 
+	if grep "libglfw.so.3" glfw.txt > holder.txt
+	then
+		#Which means, it's not missing. 
+		glfw=1
+		echo
+	fi
+fi
+
+#Continue to do that for the next three libraries
+
+#GL
+if [ -e opengl.txt ]
+then
+	if grep "libGL.so" opengl.txt > holder.txt
+	then
+		GL=1
+		echo
+	fi	
+fi
+
+#freetype
+if [ -e freetype.txt ]
+then
+	if grep "libfreetype.so" freetype.txt > holder.txt
+	then
+		freetype=1
+		echo
+	fi	
+fi
+
+#GLEW
+if [ -e glew.txt ]
+then
+	if grep "libGLEW.so" glew.txt > holder.txt
+	then
+		GLEW=1
+		echo
+	fi	
+fi
+
+#Alright, we're done checking. 
+#Clean up the text files, we no longer need them.
+rm glfw.txt
+rm glew.txt
+rm opengl.txt
+rm freetype.txt
+rm holder.txt
+
+#Now, determine if any of the dependencies are missing.
+if [ $glfw == 0 ]
+then
+	echo "glfw not found! (Will be resolved shortly)" #Even if it's not installed, it will be with the install script.
+elif [ $GL == 0 ]
+then
+	echo "GL not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
+	echo "(You may also have to update your drivers!)"
+	exit 1 
+elif [ $freetype == 0 ]
+then
+	echo "Freetype not found! (Will be resolved shortly)."
+	exit 1
+elif [ $GLEW == 0 ]
+then
+	echo "GLEW not found! (Will be resolved shortly)"  #Same with GLEW
+fi
+
+#Alright, now get glfw and GLEW (freetype can be gained through the wiki as well as OpenGL).
+echo "Getting other dependencies (or updating if all found)..."
+
+#Get the necessary header files as well as doxygen, git
+sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen 
 
 echo 
-echo "Checking OpenGL version (must be 3.0 or higher)..."
 
-GLVersInfo=$(glxinfo | grep OpenGL)
-
-#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
-#Get a string containing the version number.
-GLVersString=$(echo "$GLVersInfo" | grep "OpenGL version string: ")
-
-#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-#Get the version number from the version string.
-GLVersNum=$(echo "$GLVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-
-#http://tldp.org/LDP/abs/html/comparison-ops.html
-#Check if the version is less than the threshold
-if [ "$GLVersNum" \< "3.0" ]
+#Get the glfw library
+if [ $glfw == 0 ]
 then
-	echo "Your version of GL is: $GLVersNum."
-	echo "You need at least OpenGL version 3.0 or greater."
-	echo "Please update your drivers in order to continue."
-	echo "Try the following command to update your drivers:"
-	echo
-	echo "sudo ubuntu-drivers autoinstall"
-	echo  
-	echo "Abort."
-	exit 1
-else
-	echo "OpenGL version is sufficient to continue."
+	echo "Resolving missing glfw dependency..."
+	git clone https://github.com/glfw/glfw.git || exit 1
+	
+	cd glfw
+
+	#Build shared lib from source
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
+
+	#Make and install
+	make
+
+	sudo make install
+
+	cd ..
+
+	sudo rm -rf glfw
 fi
+
+#Check if we have to install freetype from source...
+if [ $freetype == 0 ]
+then
+
+	echo "Resolving missing freetype dependency..."
+	
+	#We do, so get the freetype source
+	wget downloads.sourceforge.net/project/freetype/freetype2/2.6.3/freetype-2.6.3.tar.bz2
+
+	#Untar and unzip, configure, make, and install. 
+	tar vxfj freetype-2.6.3.tar.bz2
+
+	cd freetype-2.6.3
+
+	./configure
+
+	make 
+
+	sudo make install
+	
+	cd ../
+	
+	#Remove the freetype folders from the TSGL folder
+	rm -rf freetype*
+fi
+
+echo 
 
 echo
 

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+sudo make clean
+
+sudo rm -rf bin lib
+
+sudo rm -rf /usr/local/include/TSGL
+sudo rm /usr/local/lib/libtsgl.*
+
+#Remove the symlink made by install-centos
+sudo unlink /usr/local/lib/libGl.so

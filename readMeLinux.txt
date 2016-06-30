@@ -1,56 +1,69 @@
-TSGL INSTALLATION INSTRUCTIONS (Last updated: 05/27/16)
-----------------------------------------------------------------------------------------------------------
-Hello, and thank you for downloading the TSGL Linux Package.
+-----------------------------------------------------------
+| TSGL INSTALLATION INSTRUCTIONS (Last updated: 06/30/16) |
+-----------------------------------------------------------
+Hello, and thank you for downloading TSGL.
 
 The installation process is very fast and should only take but a few minutes.
 
---------------------------
-NOTES (PLEASE READ FIRST!!)
---------------------------
-+ You should have the following libraries already installed: GLEW, freetype, glfw, and GL. 
+This process affects the following Linux distributions: Ubuntu, Fedora, CentOS 7.
 
-+ Follow the pre-installation steps first, then proceed to the installation.
+Make sure that you are installing TSGL on one of those operating systems during this process!
 
-+ To un-install TSGL, simply run the "uninstall-linux" script from a terminal.
+-------------------------------
+| NOTES (PLEASE READ FIRST!!) |
+-------------------------------
++ TSGL has many dependencies, but the four main ones are: GLEW, glfw, freetype, and GL.
+  The installer scripts will attempt to resolve missing dependencies, such as GLEW, glfw, and freetype.
+  However, if you have a version of OpenGL that is less than 3.2, the installer scripts will alert you and direct you 
+  to online tutorials/commands that will help you to update your version. 
 
----------------------------
-PRE-INSTALL STEPS
----------------------------
-(***NOTE:*** You must have sudo permissions in order to download and install the dependencies needed).
++ Make sure that you follow the correct section! (e.g "Ubuntu Installation" for Ubuntu OSs, "Fedora Installation" for Fedora, etc.)
 
-1). Download the Freetype library (see the "MISSING LIBRARIES?" section for a link to the download page).
++ To un-install TSGL, simply run the "uninstall-*" script from a terminal, replacing "*" with whatever OS you are working in (Fedora, Ubuntu, or CentOS 7).
 
-2). Open up a terminal, cd into your Downloads folder; Unzip and cd into the downloaded freetype folder. (Open up the file explorer, go into Downloads, right click on freetype-2.6.tar.bz2, click "Extract Here" and cd from a terminal into the extracted folder).
++ You *MUST* have sudo permissions on the computer that you are using!
 
-3). Type "./configure" and hit enter.
++ You should have g++ installed on your machine. If not, the installer scripts should resolve the missing dependency and install it for you.
+  The g++ version *MUST* be 4.8, and if it is not, the installer will alert you and ask if you would like to update the version.
+  
+-----------------------
+| Ubuntu Installation |
+-----------------------
 
-4). Type "make" and hit enter.
+1). Open up a terminal, and cd into the TSGL-master folder (or TSGL folder if cloned). 
+2). Execute the "install-ubuntu.sh" script from the folder.
+    
+	The first step of the script is to determine the OpenGL version.
 
-5). Type "sudo -s" and hit enter.
+	The installer proceeds if the OpenGL is sufficient (>= 3.2). 
+	It will alert you if it is NOT sufficient, and will abort.
+	
+	With a sufficient version of OpenGL, the installer proceeds to check the g++ version.
 
-6). Type "make install" and hit enter.
+	If it is missing, will be installed. However, if you already have g++-4.8 installed, the installer will also ask if you would like to install g++-4.9.
 
-7). Type "exit".
+    With a sufficient version of g++, the installer then proceeds to check which of the four main dependencies are already installed on your machine.
+	If GLEW, GLFW, and/or freetype are not found, the installer will attempt to resolve the missing dependency.
 
----------------------------
-INSTALL STEPS
----------------------------
+	Afterwards, additional dependencies (development header files, Cmake, doxygen...) are installed.
+	
+	After that, missing dependencies are resolved (GLFW, GLEW, and/or freetype).
 
-(UPDATE: As of 05/27/16, the install script now resolves missing dependencies. Specifically, if you do not have GLFW and/or GLEW, the install script will download them 
- and install them for you automatically.)
+	Once all dependencies are resolved and installed, TSGL is built.
+	
+	The library takes a few minutes to build, so please be patient!
+	
+	After the library has been built, it is installed. 
 
-1). The very first thing you should do is execute the "install-linux.sh" script in the TSGL-master folder. Do so from a terminal (./install-linux.sh). The libraries should be found (if not, see "PRE-INSTALL STEPS" and "MISSING LIBRARIES?" sections).
+	That concludes the installation process! 
 
-The TSGL library should now be installed and should take a few minutes to install. 
-(Please be patient as the library is being built as it takes a few minutes to build!)
+-----------------------
+| Fedora Installation |
+-----------------------
 
-If you have g++-4.8 or earlier installed, then the script will ask whether you would like g++-4.9 installed instead.
-(If you already have g++-4.9 installed, then the script will skip this step).
-
-2). Once the installation is complete, execute the "runtests" script (./runtests). 
-Hit the ESC key to go through each test, where upon hitting the ESC key the current window should close and a new one should open with another animation. 
-
-Congratulations! TSGL has been successfully installed on your Linux computer!
+------------------------
+| CentOS 7 Installation |
+------------------------
 
 ----------------------------
 MISSING LIBRARIES?
@@ -63,3 +76,13 @@ freetype: http://www.freetype.org/download.html
 GL: See GLEW link.
 
 (These links are also availible on our "Library Versions" wiki page on GitHub)
+
+------------------
+| RECENT UPDATES |
+------------------
+06/30/16: Renamed the install-linux.sh script to install-ubuntu.sh, updated installation documentation, created uninstall scripts for Fedora and CentOS 7.
+	      Renamed uninstall-linux to uninstall-ubuntu.
+06/29/16: Created a Fedora installer (install-fedora). (Developed on Fedora 24).
+06/22/16 - 06/27/16: Created a CentOS 7 installer (install-centos). (CentOS 7).
+05/27/16: install-linux.sh now resolves missing GLFW and GLEW dependencies. 
+
