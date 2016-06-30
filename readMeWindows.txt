@@ -1,55 +1,76 @@
-Last updated: 06/29/16.
+-----------------------------------------------------------------------
+| TSGL INSTALLATION INSTRUCTIONS FOR WINDOWS (Last updated: 06/30/16) |
+-----------------------------------------------------------------------
 
-***NOTE*** 
-Should you ever run into a situation which says "Download failed", always click "Retry".
+Hello, and thank you for downloading TSGL!
 
-Easy Automatic Installation (Visual Studio 2012):
+The installation process is very fast and should only take but a few minutes.
+
+This process affects the following Windows versions: Windows 7, 8, 10.
+
+Make sure that you are installing TSGL on one of those operating systems during this process!
+
+-------------------------------
+| NOTES (PLEASE READ FIRST!!) |
+-------------------------------
+
+* Should you ever run into a situation which says "Download failed", always click "Retry".
+
+* For both Visual Studio 2012 & 2015, we used the Windows 8.1 SDK.
+  This does NOT mean that the TSGL solutions will not work in Windows 10, this just means that we used the 
+  Windows 8.1 SDK which ships with both versions. 
+  For this reason, you may have to install the Windows 8.1 SDK.
+ 
+  In fact, you will need these tools (which can be installed by running Visual Studio's setup program):
+  Programming Languages -> Visual C++
+  Windows 8.1 -> Tools and Windows SDKs 
+
+* The Visual Studio solutions work with the Windows 10 SDK, but this does not ship with the Visual Studio versions.
+  You may install the Windows 10 SDK, and then set the "Target Platform Version" Property in each of the project properties for each solution 
+  in order to use the Windows 10 SDK. However, as of summer 2016, we will use the Windows 8.1 SDK until the Windows 10 SDK ships with Visual Studio.
+
+* If, for whatever reason, Visual Studio wants to install missing components, do so. 
+  (This may occur if you have not installed the Windows 8.1 SDK, or the Visual C++ tools).
+  (When you open the solution, Visual Studio may tell you that the solution needs missing components.
+   These are the Windows 8.1 SDK and Visual C++ tools.)
+
+-------------------------------
+| Easy Automatic Installation |
+-------------------------------
+(Visual Studio 2015)
+  Run install-windowsVS2015.exe, installing to this directory (which should be the default location).
+  ***WINDOWS 10*** Click "More Info" when Windows 10 prevents you from running the installer, and click "Run anyway" or something to that effect.
+  Wait for the installer to finish, then open tsgl.sln in Visual Studio 2015.
+  A pop-up box should appear. Uncheck the box that says "Ask me for every project" or something to that effect.
+  Make sure that the Debug configuration is set to x86.
+     * There should be a box somewhere in the Visual Studio toolbar that says "Debug".
+     * Make sure that the number next to that box says "x86".
+  Right click on tsgl -> Build.
+  Right click on "Solution 'tsgl'" -> Build Solution.
+  Done! Right click on any of the test projects -> Debug -> Start new instance to get started.
+
+ (Visual Studio 2012):
   Run install-windows.exe, installing to this directory (which should be the default location)
   ***WINDOWS 10 ONLY***: Click "More Info" when you get a blue window popping up saying that Windows protected your PC. Click "I understand and want to run anyway" and then "Run anyway". Afterwards, click "Yes" in the window that pops up. 
   Open tsgl.sln in Visual Studio 2012
+  ***VISUAL STUDIO 2013 USERS!*** If you are trying to open TSGL in Visual Studio 2013, do so, but uncheck testBallroom, testSeaUrchin, and testSmartSort when you have to update the projects. After the tests have been updated, right click on each of those three tests individually and click "Properties". In "Platform Toolset", change "Visual Studio 2012 (v110)" to "Visual Studio 2013 (v120)". If any other projects fail to work, make sure that "Platform Toolset" is set to "Visual Studio 2013 (V120)"!  
   Right click on tsgl -> Build
   Right click on solution -> Build Solution
   Done! Right click on any of the test projects -> Debug -> Start New Instance to get started!
 
-Easy Automatic Installation (Visual Studio 2013)
-COMING SOON
-***NOTE!*** If you are trying to open TSGL in Visual Studio 2013, uncheck testBallroom, testSeaUrchin, and testSmartSort when you have to update the projects. After the tests have been updated, right click on each of those three tests individually and click "Properties". In "Platform Toolset", change "Visual Studio 2012 (v110)" to "Visual Studio 2013 (v120)".  
-
-Easy Automatic Installation
-(Visual Studio 2015)
-  Run install-windowsVS2015.exe, installing to this directory (which should be the default location).
-  Click "More Info" when Windows 10 prevents you from running the installer, and click "Run anyway" or something to that effect.
-  Wait for the installer to finish, then open tsgl.sln in Visual Studio 2015.
-  A pop-up box should appear. Uncheck the box that says "Ask me for every project" or something to that effect.
-  Make sure that the Debug configuration is set to x86.
-     * There should be a box somewhere in the Visual Studio toolbar that says "Debug".
-     * Make sure that the number next to that box says "x86".
-  Right click on tsgl -> Build.
-  Right click on "Solution 'tsgl'" -> Build Solution.
-  Done! Right click on any of the test projects -> Debug -> Start new instance to get started.
-  
-(Visual Studio 2015 & Windows 10)
-  Run install-windowsVS2015.exe, installing to this directory (which should be the default location).
-  Click "More Info" when Windows 10 prevents you from running the installer, and click "Run anyway" or something to that effect.
-  Wait for the installer to finish, then open tsgl.sln in Visual Studio 2015.
-  A pop-up box should appear. Uncheck the box that says "Ask me for every project" or something to that effect.
-  Make sure that the Debug configuration is set to x86.
-     * There should be a box somewhere in the Visual Studio toolbar that says "Debug".
-     * Make sure that the number next to that box says "x86".
-  Right click on tsgl -> Build.
-  Right click on "Solution 'tsgl'" -> Build Solution.
-  Done! Right click on any of the test projects -> Debug -> Start new instance to get started.
-
-
-Creating a new project in the same solution as TSGL:
+-------------------------------------------------------
+| Creating a new project in the same solution as TSGL |
+-------------------------------------------------------
   Right click on "Solution 'tsgl'" -> Add -> New Project, and create an Empty Project with the name of your choice
   Right click on your project -> Project Dependencies, and check "tsgl"
   On the Property Manager, right click on your project -> Add Existing Property Sheet
     Navigate to tsgl's root folder and import testProperties.props
   You're all set up! Just "#include <tsgl.h>" at the top of all files using TSGL's functions.
 
-
-Manual Installation:
+-----------------------
+| Manual Installation |
+-----------------------
+  (NOTE: This has not been updated for Visual Studio 2015. Proceed with caution if using Visual Studio 2015!)
   Install the Windows 32 version of CMake from the official website if it's not already installed
   Clone the repository from https://github.com/Calvin-CS/TSGL into a convenient place; e.g. "workspace/tsgl"
   Create a folder in a convenient place for includes; e.g. "workspace/tsgl/include"

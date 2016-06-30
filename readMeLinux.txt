@@ -1,6 +1,6 @@
------------------------------------------------------------
-| TSGL INSTALLATION INSTRUCTIONS (Last updated: 06/30/16) |
------------------------------------------------------------
+---------------------------------------------------------------------
+| TSGL INSTALLATION INSTRUCTIONS FOR LINUX (Last updated: 06/30/16) |
+---------------------------------------------------------------------
 Hello, and thank you for downloading TSGL.
 
 The installation process is very fast and should only take but a few minutes.
