@@ -65,9 +65,9 @@ Make sure that you are installing TSGL on one of those operating systems during 
 | CentOS 7 Installation |
 ------------------------
 
-----------------------------
-MISSING LIBRARIES?
-----------------------------
+----------------------
+| MISSING LIBRARIES? |
+----------------------
 Missing some of the necessary libraries? Don't fret! Here are some links to follow so you can download them:
 
 GLEW: http://glew.sourceforge.net/

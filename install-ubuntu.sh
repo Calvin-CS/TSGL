@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # install-linux.sh is the installation script for TSGL on Linux.
-# Last updated: 05/27/26
+# Last updated: 06/30/26
 # 
 # -SUBJECT TO CHANGE-
 ################################################################
