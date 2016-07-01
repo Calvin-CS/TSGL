@@ -89,7 +89,7 @@ fi
 #Step 2: Install Cmake (because Cmake is up to 3.5.2).
 
 #First, Get dependencies.
-sudo yum install libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel mesa-libGLU-devel libXmu-devel libXi-devel libGL-devel glew-devel
+sudo yum install libX11-devel libXrandr-devel libXinerama-devel libXcursor-devel mesa-libGLU-devel libXmu-devel libXi-devel libGL-devel glew-devel freetype-devel doxygen 
 
 #Now, check the version.
 cmakeVersCheck=$(cmake --version)
@@ -180,12 +180,13 @@ then
 	echo "If you have an Nvidia graphics card, you can follow this online tutorial"
 	echo "in order to update your binary drivers:" 
 	echo
-	echo "http://www.if-not-true-then-false.com/2015/fedora-nvidia-guide/"
+	echo "http://rpmfusion.org/Howto/nVidia"
 	echo
 	echo "AMD users, here is a possible solution: "
 	echo
 	echo "https://bluehatrecord.wordpress.com/2015/09/17/installing-the-proprietary-amd-catalyst-15-9-fglrx-15-201-driver-on-fedora-22-with-linux-kernel-4-1-6/"
 	echo 
+	echo "We apologize for any inconvienence."
 	echo "Abort."
 	exit 1
 else
