@@ -15,6 +15,8 @@ sudo apt-get install mesa-utils
 echo 
 echo "Checking OpenGL version (must be 3.0 or higher)..."
 
+sudo apt-get install mesa-utils
+
 GLVersInfo=$(glxinfo | grep OpenGL)
 
 #http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
