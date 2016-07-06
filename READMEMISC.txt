@@ -30,4 +30,5 @@ Last updated: 07/06/2016.
            (git pull origin master) before you update the docs folder
            (git pull origin gh-pages). 
 
- 
+***NOTE*** You may see docs show up as having modified content even after commiting and uploading your changes to the master branch.
+		   cd into docs, and type 'git checkout . '. This should fix the issue.
