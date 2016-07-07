@@ -33,29 +33,32 @@ Make sure that you are installing TSGL on one of those operating systems during 
 1). Open up a terminal, and cd into the TSGL-master folder (or TSGL folder if cloned). 
 2). Execute the "install-ubuntu.sh" script from the folder.
     
-	The first step of the script is to determine the OpenGL version.
+    The first step of the script is to determine the OpenGL version.
+    
+    The installer proceeds if the OpenGL is sufficient (>= 3.2). 
+    
+    It will alert you if it is NOT sufficient, and will abort.
+    
+    With a sufficient version of OpenGL, the installer proceeds to check the g++ version.
+    If it is missing, it will be installed. 
+    
+    However, if you already have g++-4.8 installed, the installer will also ask if you would like to install g++-4.9.
 
-	The installer proceeds if the OpenGL is sufficient (>= 3.2). 
-	It will alert you if it is NOT sufficient, and will abort.
-	
-	With a sufficient version of OpenGL, the installer proceeds to check the g++ version.
-
-	If it is missing, will be installed. However, if you already have g++-4.8 installed, the installer will also ask if you would like to install g++-4.9.
-
-    With a sufficient version of g++, the installer then proceeds to check which of the four main dependencies are already installed on your machine.
-	If GLEW, GLFW, and/or freetype are not found, the installer will attempt to resolve the missing dependency.
-
-	Afterwards, additional dependencies (development header files, Cmake, doxygen...) are installed.
-	
-	After that, missing dependencies are resolved (GLFW, GLEW, and/or freetype).
-
-	Once all dependencies are resolved and installed, TSGL is built.
-	
-	The library takes a few minutes to build, so please be patient!
-	
-	After the library has been built, it is installed. 
-
-	That concludes the installation process! 
+    With a sufficient version of g++, the installer then proceeds to check which of the four main dependencies are alredy installed on your machine.
+    
+    If GLEW, GLFW, and/or freetype are not found, the installer will attempt to resolve the missing dependency.
+    
+    Afterwards, additional dependencies (development header files, Cmake, doxygen...) are installed.
+    
+    After that, missing dependencies are resolved (GLFW, GLEW, and/or freetype). 
+    
+    Once all dependencies are resolved and installed, TSGL is built.
+    
+    The library takes a few minutes to build, so please be patient!
+    
+    After the library has been built, it is installed. 
+    
+    That concludes the installation process! 
 
 -----------------------
 | Fedora Installation |
