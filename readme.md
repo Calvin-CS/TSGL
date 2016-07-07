@@ -24,7 +24,7 @@ The main goal of this library is to provide a thread-safe graphics library for 2
 --------------
 Installation
 --------------
-To install TSGL, please see our installing TSGL page(https://github.com/Calvin-CS/TSGL/wiki/Installing-TSGL).
+To install TSGL, please see our [installing TSGL page](https://github.com/Calvin-CS/TSGL/wiki/Installing-TSGL).
 
 ------------
 Tutorials
