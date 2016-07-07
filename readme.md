@@ -21,19 +21,10 @@ Goals
 ------------
 The main goal of this library is to provide a thread-safe graphics library for 2D graphics. Other goals include: Helping beginning programming students learn about the complex process of parallelization by giving them hands-on tools to use in order to learn about parallelization without having them to worry about the problems associated with parallelization such as race conditions, mutexes, and more. It also helps educators teach programming students about parallelization through simple visualizations.
 
-------------
-Installation help
-------------
-Linux - https://www.youtube.com/watch?v=htPo-tFSOdE
-
-Mac - https://www.youtube.com/watch?v=qIHrAAxdnmQ
-
-Windows - https://www.youtube.com/watch?v=v38PuL1Khhk
-
-------------
-Dependencies
-------------
-TSGL needs these libraries in order to function properly: GLEW, glfw, GL, freetype and stb. The stb library comes bundled with the TSGL source code, but the other four are not. For platform-specific dependencies, please see the "Installation help" section and then choose the video that shows the installtion of TSGL on the platform.
+--------------
+Installation
+--------------
+To install TSGL, please see our installing TSGL page(https://github.com/Calvin-CS/TSGL/wiki/Installing-TSGL).
 
 ------------
 Tutorials
