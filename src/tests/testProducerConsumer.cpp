@@ -12,6 +12,7 @@
  */
 
 #include <stdlib.h>
+#include <unistd.h>
 #include "ProducerConsumer/Producer.h"
 #include "ProducerConsumer/Consumer.h"
 
@@ -25,8 +26,8 @@ void display(Canvas & can, int centerX, Queue<ColorInt> & sharedBuffer) {
 	int y = 50;	
 	for(int i = 0; i < sharedBuffer.getCount(); i++) {
 		ColorFloat color = Colors::highContrastColor(sharedBuffer.getPthreadIds()[i]);  //Use the color based off of the stored pthread ids
-		can.drawRectangle(centerX+20, y+20, centerX-20, y-20, sharedBuffer.getArray()[i], true);  //Get the array of the shared buffer and draw the colored circle
-		can.drawRectangle(centerX+25, y+25, centerX - 25, y - 25, color, false); //Draw a Rectangle around the circle.
+		can.drawRectangle(centerX+20, y+20, centerX-20, y-20, sharedBuffer.getArray()[i], true);  //Get the array of the shared buffer and draw the colored rectangle
+		can.drawRectangle(centerX+25, y+25, centerX - 25, y - 25, color, false); //Draw a Rectangle around the colored rectangle
 		y += 50;
 	}
 }
@@ -117,7 +118,7 @@ int main(int argc, char * argv[]) {
 				for(int n = 0; n < numConsumers; n++) {  //Draw the Consumers onto the Canvas
 					con[n].draw(queueDisplay, WINDOW_WIDTH);
 				}
-
+			
 				display(queueDisplay, centerX, sharedBuffer);   //Show changes
 	 	
 			}
@@ -140,10 +141,13 @@ int main(int argc, char * argv[]) {
 	delete [] con;
 	pro = NULL;
 	con = NULL;
+
+	//Hanging process may have something to do with this....
 	queueDisplay.wait();
 	if(legendDisplay.isOpen()) {  //Close up the Legend Canvas if it's still open, else call wait().
 		legendDisplay.stop();
 	} else {
 		legendDisplay.wait();
-	}	
+	}
+	return 0;
 }

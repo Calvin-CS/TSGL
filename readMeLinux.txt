@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------
-| TSGL INSTALLATION INSTRUCTIONS FOR LINUX (Last updated: 06/30/16) |
+| TSGL INSTALLATION INSTRUCTIONS FOR LINUX (Last updated: 07/08/16) |
 ---------------------------------------------------------------------
 Hello, and thank you for downloading TSGL.
 
@@ -40,6 +40,9 @@ Make sure that you are installing TSGL on one of those operating systems during 
     It will alert you if it is NOT sufficient, and will abort.
     
     With a sufficient version of OpenGL, the installer proceeds to check the g++ version.
+	
+	It *MUST* be at least 4.8 or greater in order to take advantage of C++-11 features.
+
     If it is missing, it will be installed. 
     
     However, if you already have g++-4.8 installed, the installer will also ask if you would like to install g++-4.9.
@@ -63,11 +66,114 @@ Make sure that you are installing TSGL on one of those operating systems during 
 -----------------------
 | Fedora Installation |
 -----------------------
+1). Open up a terminal, and cd into the TSGL-master folder (or TSGL if cloned).
+
+2). Execute the "install-fedora.sh" script from the folder.
+	
+	The first step is to determine the g++ version.
+
+	It *MUST* be at least 4.8 or greater in order to take advantage of C++-11 features.
+	
+	If it is missing, it will be installed. 
+    
+    However, if you already have g++ installed, and the version is less than 4.8, the installer will ask if you would like to install g++-4.8.
+	
+	If you agree to do so, the installer will upgrade your g++ version. If not, the installer will abort.
+
+	After the g++ version is sufficient, extra dependencies are installed for GLFW and TSGL.
+	
+	Then, the cmake version is determined.
+
+	Cmake is used to compile GLFW from source, and it needs to be at least 2.8.11. 
+	
+	If it is not installed, the installer will install it.
+	
+	If it is installed, but the version is less than 2.8.11, the installer will ask if you would like to install a greater version.
+	
+	If you agree, the installer will proceed to install a greater version of Cmake.
+	
+	If not, the installer aborts. 
+	
+	After the cmake version is sufficient, the installer proceeds if the OpenGL is sufficient (>= 3.2). 
+    
+	It will alert you if it is NOT sufficient, and will abort.
+	
+	If, however, you have a sufficient version of OpenGL, the installer will ask if you have updated your graphics drivers. 
+	
+	Enter yes if you have, as a symlink is needed in order to determine the correct libGL.so file on your machine. 
+
+	If not, you may say no. 
+	
+	If, however, TSGL fails to work after installation, re-run the install script and enter yes in order for the symlink to be made.
+
+	After the OpenGL version is sufficient, GLFW is compiled from source and installed.
+	
+	FreeType is then compiled from source and installed.
+	
+	When all dependencies have been resolved, TSGL is compiled.
+	
+	It takes a few minutes to compile the entire library, so please be patient!
+
+	Once the library has been built, it is installed on your machine.
+	
+	That conclude the installation process!
+	
 
 ------------------------
 | CentOS 7 Installation |
 ------------------------
+1). Open up a terminal, and cd into the TSGL-master folder (TSGL folder if cloned).
 
+2). Execute the "install-centos" script from the folder.
+	
+	The first step is to determine the g++ version.
+
+	It *MUST* be at least 4.8 or greater in order to take advantage of C++-11 features.
+
+	If it is missing, it will be installed. 
+    
+    However, if you already have g++ installed, and the version is less than 4.8, the installer will ask if you would like to install g++-4.8.
+	
+	If you agree to do so, the installer will upgrade your g++ version. If not, the installer will abort.
+
+	After the g++ version is sufficient, extra dependencies are installed for GLFW and TSGL.
+
+	Then, the cmake version is determined.
+
+	Cmake is used to compile GLFW from source, and it needs to be at least 2.8.11. 
+	
+	If it is not installed, the installer will compile it from source and install it.
+	
+	If it is, but the version is less than 2.8.11, the installer will ask if you would like a greater version installed.
+	
+	If you say yes, the installer will proceed to install a greater version.
+	
+	If not, the installer will abort.
+
+	After the cmake version is sufficient, the installer proceeds if the OpenGL is sufficient (>= 3.2). 
+    
+	It will alert you if it is NOT sufficient, and will abort.
+	
+	If, however, you have a sufficient version of OpenGL, the installer will ask if you have updated your graphics drivers. 
+	
+	Enter yes if you have, as a symlink is needed in order to determine the correct libGL.so file on your machine. 
+
+	If not, you may say no. 
+	
+	If, however, TSGL fails to work after installation, re-run the install script and enter yes in order for the symlink to be made.
+
+	After the OpenGL version is sufficient, GLFW is compiled from source and installed.
+	
+	FreeType is then compiled from source and installed.
+	
+	When all dependencies have been resolved, TSGL is compiled.
+	
+	It takes a few minutes to compile the entire library, so please be patient!
+
+	Once the library has been built, it is installed on your machine.
+	
+	That conclude the installation process!
+	
 ----------------------
 | MISSING LIBRARIES? |
 ----------------------
@@ -83,6 +189,7 @@ GL: See GLEW link.
 ------------------
 | RECENT UPDATES |
 ------------------
+07/08/2016: Added Fedora documentation, CentOS documentation.
 06/30/16: Renamed the install-linux.sh script to install-ubuntu.sh, updated installation documentation, created uninstall scripts for Fedora and CentOS 7.
 	      Renamed uninstall-linux to uninstall-ubuntu.
 06/29/16: Created a Fedora installer (install-fedora). (Developed on Fedora 24).

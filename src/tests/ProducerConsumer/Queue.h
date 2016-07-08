@@ -116,7 +116,7 @@ void Queue<Item>::append(Item it, int proId) {
  */
 template<class Item>
 Item Queue<Item>::remove() {
-	ColorInt white(255, 255, 255);	
+//	ColorInt white(0, 0, 0);	
 	pthread_mutex_lock( &myMutex );  //Lock the mutex
 	Item temp;  //Item to be removed from Queue
 	if(!myCan->isOpen()) { //If the Canvas is not open, wake up all of the sleeping threads
@@ -128,7 +128,7 @@ Item Queue<Item>::remove() {
 		pthread_cond_wait(&notEmpty, &myMutex);  //The Queue is empty, please wait until it is not empty
 	} 
 	temp = myArray[myFirst];
-	myArray[myFirst] = white;	
+//	myArray[myFirst] = white;	
 	myFirst = (myFirst + 1) % mySize;
 	myCount--;    
 	pthread_cond_signal(&notFull);  //Signal that the Queue is not full
