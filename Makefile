@@ -110,6 +110,7 @@ BINARIES= \
 	bin/testUnits \
 	bin/testVoronoi \
 
+#Use make tsgl to make only the library files
 all: dif tsgl tests docs tutorial
 
 debug: dif tsgl tests
