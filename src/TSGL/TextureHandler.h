@@ -17,9 +17,9 @@
   #include <GL/glut.h>
   #include <freetype/freetype.h>
   #include <freetype/ftglyph.h>
-#else
-  #include <freetype.h>
-  #include <ftglyph.h>
+//#else
+//  #include <freetype.h>
+//  #include <ftglyph.h>
 #endif
 
 #include <GLFW/glfw3.h>  // For GL functions
