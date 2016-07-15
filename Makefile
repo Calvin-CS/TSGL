@@ -40,6 +40,7 @@ CXXFLAGS=-O3 -g3 \
 	-I/usr/local/include/ \
 	-I/opt/AMDAPP/include/ \
 	-I/opt/local/include/freetype2 \
+	-I/opt/local/include/freetype2/freetype \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
