@@ -117,6 +117,7 @@ debug: dif tsgl tests
 
 dif: build/build
 
+#This may change!
 ifeq ($(UNAME), Linux)  
 tsgl: lib/libtsgl.a lib/libtsgl.so
 endif
