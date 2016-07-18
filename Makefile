@@ -117,7 +117,7 @@ debug: dif tsgl tests
 
 dif: build/build
 
-#This may change!
+#This may change (for the Mac installer)!
 ifeq ($(UNAME), Linux)  
 tsgl: lib/libtsgl.a lib/libtsgl.so
 endif
