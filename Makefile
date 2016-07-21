@@ -38,24 +38,22 @@ CXXFLAGS=-O3 -g3 \
 	-I${SRC_PATH}/ \
 	-I/usr/include/ \
 	-I/usr/local/include/ \
+	-I/usr/local/include/freetype2 \
+	-I/usr/local/include/freetype2/freetype \
 	-I/opt/AMDAPP/include/ \
-	-I/opt/local/include/freetype2 \
-	-I/opt/local/include/freetype2/freetype \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
 	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
 	-I/usr/include/freetype2  \
 	-I/usr/include/freetype2/freetype  \
-	-I/usr/local/include/freetype2  \
 	-I./ \
   -std=c++0x -fopenmp \
   ${NOWARN} -fpermissive
   # -pedantic-errors
 
 LFLAGS=-Llib/ \
-	-L/opt/local/lib/ \
-	-L/usr/lib/ \
-	-L/usr/local/lib/ \
+	-L/usr/local/lib \
+	-L/usr/lib \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
 	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
