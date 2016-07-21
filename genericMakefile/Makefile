@@ -13,7 +13,8 @@ UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 	OS_LFLAGS :=
 	OS_INCLUDE :=
-	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/ 
+	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
+	OS_EXTRA_LIB := -L/usr/lib 
 	OS_GLFW := glfw
 	OS_GL := -lGL
 	OS_EXTRA_LINK := -Wl,-rpath=/usr/local/lib/
@@ -24,6 +25,7 @@ ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_INCLUDE := 
 	OS_LDIRS := 
+	OS_EXTRA_LIB := 
 	OS_GLFW := glfw3
 	OS_GL :=
 	OS_EXTRA_LINK :=
@@ -48,7 +50,7 @@ CXXFLAGS=-c -O3 -g3 \
 #Linking flags
 LFLAGS=-o $(TARGET) \
     -L/usr/local/lib/ \
-	-L/usr/lib/ \
+	${OS_EXTRA_LIB} \
     -L/opt/X11/lib \
     ${OS_LDIRS} \
     ${OS_EXTRA_LINK} \
