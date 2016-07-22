@@ -118,13 +118,7 @@ debug: dif tsgl tests
 dif: build/build
 
 #This may change (for the Mac installer)!
-ifeq ($(UNAME), Linux)  
 tsgl: lib/libtsgl.a lib/libtsgl.so
-endif
-
-ifeq ($(UNAME), Darwin)
-tsgl: lib/libtsgl.a
-endif
 
 tests: ${BINARIES}
 
@@ -150,15 +144,21 @@ install:
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
 
-
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
 	@echo 'Files that changed:'
 	@echo $(patsubst src/%,%,$?)
-	
+
 ifeq ($(UNAME), Linux)
 lib/libtsgl.so: ${OBJS}
 	@echo 'Building $(patsubst lib/%,%,$@)'
 	$(CC) -shared -o $@ $?
+	@touch build/build
+endif
+
+ifeq ($(UNAME), Darwin)
+lib/libtsgl.so: ${OBJS}
+	@echo 'Building $(pathsubst lib/%,%,$@)'
+	$(CC) -shared -undefined suppress -flat_namespace -o $@ $?
 	@touch build/build
 endif
 
