@@ -1,0 +1,20 @@
+#!/bin/sh
+
+versInfo=$(glxinfo | grep OpenGL)
+
+#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
+check="OpenGL version string: " 
+versString=$(echo "$versInfo" | grep "$check")
+
+#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
+#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
+versNum=$(echo "$versString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+
+#http://tldp.org/LDP/abs/html/comparison-ops.html
+#Use a threshold and pray that versions above the threshold that we haven't tested on work!
+if [[ "$versNum" < "3.2" ]]
+then
+	exit 1
+fi
+
+

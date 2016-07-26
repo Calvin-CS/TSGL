@@ -1,0 +1,4 @@
+lib/libtsgl.a usr/lib
+lib/libtsgl.so usr/lib
+src/TSGL/*.h usr/include/TSGL
+genericMakefile/Makefile home/GENERIC_MAKEFILE/

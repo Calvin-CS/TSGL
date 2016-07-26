@@ -1,0 +1,15 @@
+Source: tsgl
+Maintainer: Chris Dilley <codemonkey941@gmail.com>
+Section: libs
+Priority: optional
+Standards-Version: 3.9.5
+Build-Depends: debhelper (>= 9), glfw, doxygen, libglew-dev, libfreetype6-dev, libfreetype6, libxrandr-dev, libxi-dev, 
+	x11proto-xf86vidmode-dev, libglu1-mesa-dev
+
+Package: tsgl
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, glfw, libfreetype6, libfreetype6-dev, libglew-dev, libxrandr-dev, doxygen, devscripts, build-essential 
+Description: A Thread-Safe Graphics Library.
+
+
+
