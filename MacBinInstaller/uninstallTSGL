@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sudo rm -rf /usr/local/include/TSGL
+
+sudo rm /usr/local/lib/libtsgl.a
+
+sudo rm -rf $HOME/GENERIC_MAKEFILE
