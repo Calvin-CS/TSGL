@@ -12,7 +12,7 @@ versNum=$(echo "$versString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
 #http://tldp.org/LDP/abs/html/comparison-ops.html
 #Use a threshold and pray that versions above the threshold that we haven't tested on work!
-if [[ "$versNum" < "3.2" ]]
+if [[ "$versNum" \< "3.0" ]]
 then
 	exit 1
 fi
