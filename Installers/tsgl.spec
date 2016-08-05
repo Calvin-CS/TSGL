@@ -54,10 +54,8 @@ exit 0
 
 #This is the postuninstall step. 
 #Remove the symlink created in the postinstall step.
-#Also, remove the GENERIC_MAKEFILE directory.
 %postun
 unlink /usr/lib64/libGL.so
-rm -rf /home/GENERIC_MAKEFILE
 exit 0
 
 #These files belong to the tsgl package.
@@ -66,7 +64,6 @@ exit 0
 %license license
 /usr/lib64/*
 /usr/include/*
-/home/GENERIC_MAKEFILE/*
 
 #https://docs.fedoraproject.org/en-US/Fedora_Draft_Documentation/0.1/html/Packagers_Guide/sect-Packagers_Guide-Creating_a_Basic_Spec_File.html
 # * date Packager's Name <packager's-email> version-revision
