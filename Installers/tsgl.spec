@@ -21,19 +21,6 @@ Requires: glfwTSGL, freetype, glew
 %description
 A Thread-Safe Graphics Library which draws 2D graphics in parallel.
 
-#This is the preinstall step.
-#Check the OpenGL version.
-%pre
-if [ $1 -gt 1 ] ; then
-	GLVersInfo=$(glxinfo | grep OpenGL)
-	GLVersString=$(echo "$GLVersInfo" | grep "Open GL version string: ")
-	GLVersNum=$(echo "GLVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-	if [ "$GLVersNum" \< "3.2" ] ; then
-		exit 1
-	fi
-	exit 0
-fi
-
 #This is the preparation step.
 #Simply use the setup macro. 
 %prep
@@ -52,11 +39,11 @@ make
 %install
 mkdir -p $RPM_BUILD_ROOT/usr/lib64
 mkdir -p $RPM_BUILD_ROOT/usr/include/TSGL
-mkdir -p $RPM_BUILD_ROOT/home/GENERIC_MAKEFILE
+mkdir -p $RPM_BUILD_ROOT/usr/include/TSGL_GENERIC_MAKEFILE
 
 install -m 0644 lib/libtsgl.a $RPM_BUILD_ROOT/usr/lib64/ 
 install -m 0755 lib/libtsgl.so $RPM_BUILD_ROOT/usr/lib64/
-install -m 0777 genericMakefile/Makefile $RPM_BUILD_ROOT/home/GENERIC_MAKEFILE/
+install -m 0777 genericMakefile/Makefile $RPM_BUILD_ROOT/usr/include/TSGL_GENERIC_MAKEFILE/
 install -t $RPM_BUILD_ROOT/usr/include/TSGL src/TSGL/*.h
 
 #This is the postinstall step.
