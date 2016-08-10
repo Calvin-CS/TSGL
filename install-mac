@@ -1,20 +1,16 @@
 #!/bin/bash
 # Easy install script for TSGL on OS X
+# Last updated: 08/10/16
+#
+# -SUBJECT TO CHANGE-
+###############################
 
 VER_XQ="XQuartz-2.7.7"
-VER_MP="MacPorts-2.3.3"
 
 #Function for checking command availability
 has () {
   (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
 }
-
-#Needed for some bugs that occurred when we couldn't have permissions to these directory paths
-sudo chmod -R 777 /usr/local/Cellar /usr/local /Library/Caches/Homebrew/Formula /usr/local/lib
-
-#Remove any broken symlinks
-sudo rm -f /usr/local/lib/libtsgl.* 
-sudo rm -rf /usr/local/include/TSGL
 
 #Print X11 warning
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
@@ -39,77 +35,96 @@ fi
 if [ $(has brew) = 0 ]; then
   echo "Installing Homebrew..."
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  export PATH=/usr/local/bin:$PATH
 else
   echo "Homebrew detected."
+  export PATH=/usr/local/bin:$PATH
 fi
+
+echo
+echo "Using Homebrew to install dependencies..."
+echo
+
+brew update
+
+brew tap homebrew/versions
 
 #Install glfw3 (will do nothing if already installed)
 echo "Installing GLFW..."
-brew install homebrew/versions/glfw3
+brew install glfw3
 
-#Install port
-if [ $(has port) = 0 ]; then
-  echo "Installing Macports..."
-  curl -O "https://distfiles.macports.org/MacPorts/$VER_MP.tar.bz2"
-  tar xf "$VER_MP.tar.bz2"
-  cd "$VER_MP/"
-  ./configure
-  make
-  sudo make install
-  cd ..
-else
-  echo "Macports detected."
-fi
-
-#Get port packages
+#GLEW
 echo "Installing GLEW..."
-sudo port install glew
+brew install glew
+
+#Freetype
 echo "Installing Freetype2..."
-sudo port install freetype
-gver=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
-if [ $gver -lt 490 ]; then
-  echo "Installing GCC 4.9...this may take a while, please be patient..."
-  sudo port install gcc49
-  echo "Switching default compiler to mp-gcc49"
-  sudo port select --set gcc mp-gcc49
+brew install freetype
+
+#Doxygen
+echo "Installing Doxygen..."
+brew install doxygen
+
+#g++
+gVers=$(g++ -v 2>&1)
+gVeres=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
+
+echo "$gVers" | grep "clang" > check.txt
+
+version=490
+
+#First, check if we need to move an existing g++ compiler
+if [ -e /usr/local/bin/g++ ] && [ ! -e /usr/local/Cellar/gcc49 ];
+then
+	sudo mv /usr/local/bin/g++ /usr/local/bin/g++old
+	sudo mv /usr/local/bin/gcc /usr/local/bin/gccold
+
 fi
 
-echo "Fixing missing symlinks"
+#Now check if we need to install gcc49
+if grep --quiet clang check.txt; then
+	echo "Installing g++...this may take a while!"
+	brew install gcc49 --without-multilib --without-fortran
+	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+elif [ "$gVeres" -lt "$version" ]; then
+	echo "Installing g++...this may take a while!"
+	brew install gcc49 --without-multilib --without-fortran
+	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+else
+	echo "Installing g++...this may take a while!"
+	brew install gcc49 --without-multilib --without-fortran
+	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+fi
+
+#Symlinks
+echo "Fixing missing symlinks..."
 if [ ! -e /usr/X11/lib/libX11.dylib ]; then
   sudo ln -s /usr/X11/lib/libX11.6.dylib /usr/X11/lib/libX11.dylib
 fi
+
 if [ ! -e /usr/X11/lib/libXrandr.dylib ]; then
   sudo ln -s /usr/X11/lib/libXrandr.2.dylib /usr/X11/lib/libXrandr.dylib
 fi
-if [ -e /usr/lib/libstdc++.dylib ]; then
-  sudo mv /usr/lib/libstdc++.dylib /usr/lib/libstdc++.dylib-old
-fi
-if [ ! -e /usr/bin/gcc_tsglbak ]; then
-  sudo mv /usr/bin/gcc /usr/bin/gcc_tsglbak
-  sudo ln -s /opt/local/bin/gcc-mp-4.9 /usr/bin/gcc
-fi
-if [ ! -e /usr/bin/g++_tsglbak ]; then
-  sudo mv /usr/bin/g++ /usr/bin/g++_tsglbak
-  sudo ln -s /opt/local/bin/g++-mp-4.9 /usr/bin/g++
-fi
 
-#Make TSGL
-echo "Making TSGL..."
-make -j debug
+#Remove any broken symlinks before installing
+sudo rm -f /usr/local/lib/libtsgl.* 
+sudo rm -rf /usr/local/include/TSGL
 
-#Move the necessary lib files needed
-cp -R lib/* /usr/local/lib/
-
-#Create the TSGL directory
-mkdir /usr/local/include/TSGL
-
-#Move the .h files to their destination
-cp -R src/TSGL/*.h /usr/local/include/TSGL
-
+#Build TSGL and install
+echo "Building TSGL..."
 echo
 
-#Reset permissions back to normal
-sudo chmod -R 755 /usr/local/Cellar /usr/local /Library/Caches/Homebrew/Formula /usr/local/lib
+make
+
+echo "Installing..."
+echo
+
+sudo make install
+
+echo
 
 echo "Installation complete!"
 echo "Run \"./runtests\" to verify everything is working."

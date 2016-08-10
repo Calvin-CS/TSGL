@@ -7,20 +7,22 @@ make clean
 #Remove the bin and lib folders
 rm -rf bin lib
 
-#Get permissions to access certain directory paths
-sudo chmod -R 777 /usr/local/include/ /usr/local/lib/
-
 #Take out the TSGL header files
 rm -rf /usr/local/include/TSGL
 
 #Take out the TSGL lib files
 rm /usr/local/lib/libtsgl.*
 
-#Take out the Mac-ports stuff from the TSGL folder
-rm -rf MacPorts-*
+#Check if we need to move the old g++ compiler back into place
+if [ -e /usr/local/bin/g++old ];
+then
+	sudo unlink /usr/local/bin/g++
+	sudo unlink /usr/local/bin/gcc
 
-#Restore permissions back to their normal status
-sudo chmod -R 755 /usr/local/include/ /usr/local/lib/
+	sudo mv /usr/local/bin/g++old /usr/local/bin/g++
+	sudo mv /usr/local/bin/gccold /usr/local/bin/gcc
+
+fi
 
 #Tell user we're done uninstalling things
 echo "Uninstall complete!"
