@@ -1,0 +1,67 @@
+################################################################################
+# Automatically-generated file. Do not edit!
+################################################################################
+
+-include ../makefile.init
+
+RM := rm -rf
+
+# All of the sources participating in the build are defined here
+-include sources.mk
+-include src/TSGL/subdir.mk
+-include src/subdir.mk
+-include build/tests/Voronoi/subdir.mk
+-include build/tests/SeaUrchin/subdir.mk
+-include build/tests/ProducerConsumer/subdir.mk
+-include build/tests/Pong/subdir.mk
+-include build/tests/Mandelbrot/subdir.mk
+-include build/tests/Langton/subdir.mk
+-include build/tests/ImageInverter/subdir.mk
+-include build/tests/Conway/subdir.mk
+-include build/tests/subdir.mk
+-include build/TSGL/subdir.mk
+-include subdir.mk
+-include objects.mk
+
+ifneq ($(MAKECMDGOALS),clean)
+ifneq ($(strip $(CC_DEPS)),)
+-include $(CC_DEPS)
+endif
+ifneq ($(strip $(C++_DEPS)),)
+-include $(C++_DEPS)
+endif
+ifneq ($(strip $(C_UPPER_DEPS)),)
+-include $(C_UPPER_DEPS)
+endif
+ifneq ($(strip $(CXX_DEPS)),)
+-include $(CXX_DEPS)
+endif
+ifneq ($(strip $(CPP_DEPS)),)
+-include $(CPP_DEPS)
+endif
+endif
+
+-include ../makefile.defs
+
+# Add inputs and outputs from these tool invocations to the build variables 
+
+# All Target
+all: tsgltest
+
+# Tool invocations
+tsgltest: $(OBJS) $(USER_OBJS)
+	@echo 'Building target: $@'
+	@echo 'Invoking: GCC C++ Linker'
+	g++ -Llib/ -L/usr/local/lib -L/usr/lib -L/usr/X11/lib/ -L/opt/AMDAPP/lib/x86_64/ -fopenmp -o "tsgltest" $(OBJS) $(USER_OBJS) $(LIBS)
+	@echo 'Finished building target: $@'
+	@echo ' '
+
+# Other Targets
+clean:
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(C_UPPER_DEPS)$(CXX_DEPS)$(OBJS)$(CPP_DEPS) tsgltest
+	-@echo ' '
+
+.PHONY: all clean dependents
+.SECONDARY:
+
+-include ../makefile.targets
