@@ -35,6 +35,9 @@ class Line : public Shape {
      * \details This function actually draws the Line to the Canvas.
      */
     void draw();
+
+    //TODO: comment this
+    float* getVerticesPointerForRenderer();
 };
 
 }

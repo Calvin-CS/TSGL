@@ -75,6 +75,9 @@ class Shape {
      */
     virtual void draw() = 0;  // Abstract method for actually drawing the shape
 
+    //TODO: comment this
+    virtual float* getVerticesPointerForRenderer() = 0;
+
     /*!
      * \brief Accessor for <code>isTextured</code>.
      * \return Whether the shape is a textured primitive or not.
