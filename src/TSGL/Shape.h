@@ -34,6 +34,7 @@ namespace tsgl {
 class Shape {
  protected:
     bool isTextured; /*! Whether the shape is textured or not. If extending Shape, <B> you *must* leave this at false (unless you are working with an image). </B> */
+    int renderLayer; // The depth index to control the drawing order of the shapes
  public:
 
     /*!
@@ -45,7 +46,13 @@ class Shape {
      * \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Shape.</b>
      * \note Refer to the Shape class description for more details.
      */
-    Shape() { isTextured = false; }
+    Shape() {
+      isTextured = false;
+      renderLayer = -1;   // -1 is the uninitialized layer value for the shape.
+                          // If it is not set in the object before adding to the
+                          // canvas, the canvas sets the layer value to the canvas'
+                          // current drawing layer
+    }
 
     /*!
      * \brief Destructor for the Shape.
@@ -73,6 +80,9 @@ class Shape {
      * \return Whether the shape is a textured primitive or not.
      */
     bool getIsTextured() { return isTextured; }
+
+    void setLayer(int n) { if (n>=0) renderLayer = n; }  //TODO: make this validate layer numbers and return an error if not ok
+    int getLayer() { return renderLayer; }
 };
 
 }

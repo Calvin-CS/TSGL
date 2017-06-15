@@ -1,4 +1,4 @@
-#include <TriangleStrip.h>
+#include "TriangleStrip.h"
 
 namespace tsgl {
 

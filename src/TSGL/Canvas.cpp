@@ -98,9 +98,81 @@ void Canvas::close() {
     TsglDebug("Window closed successfully.");
 }
 
+
+// bool comparator(Shape * a, Shape * b) {
+//   return (a->getLayer() > b->getLayer());  // true if A's layer is higher than B's layer
+// }
+
+void Canvas::add(Shape * shapePtr) {
+
+  //TODO: make this check for duplicates
+  //TODO: make this thread safe!
+
+  // Set the default current layer if layer not explicitly set
+  if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
+
+  objectBuffer.push_back(shapePtr);
+
+  std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Shape * a, Shape * b)->bool {
+    return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
+  });
+
+
+  // std::cout << shapePtr <<std::endl;
+  // printf("%s\n", "Pushed shape onto buffer.");
+  // print(objectBuffer);
+
+}
+
+void Canvas::remove(Shape * shapePtr) {
+
+  //TODO: make this thread safe!
+
+  // objectBuffer.push(shapePtr);
+  objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
+  // objectBuffer.erase(std::find(objectBuffer.begin(), objectBuffer.end(), *shapePtr));
+  // printf("%s\n", "Removed shape from buffer.");
+  // print(objectBuffer);
+
+}
+
+void Canvas::clearObjectBuffer() {
+  objectBuffer.clear();
+}
+
+void Canvas::printBuffer() {
+
+  // std::cout << "Printing array:" << std::endl << std::endl;
+  printf("Printing %d elements in buffer:\n\n", objectBuffer.size());
+
+  for(std::vector<Shape *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
+    std::cout << *it << std::endl;
+  }
+
+}
+
+void Canvas::pushObjectsToVertexBuffer() {
+
+  bufferMutex.lock();
+
+  // Take objects from the object buffer and push them onto the vertex buffer
+  for(std::vector<Shape *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
+    // std::cout << *it << std::endl;
+    // printf("%s\n", "..");
+    (*it)->draw();
+  }
+
+  bufferMutex.unlock();
+
+}
+
 void Canvas::draw() {
+
+    // printf("%s\n", "DRAW()");
+
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
+
 
     // Get actual framebuffer size and adjust scaling accordingly
     int fbw, fbh;
@@ -121,6 +193,9 @@ void Canvas::draw() {
 
     // Start the drawing loop
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
+
+      // printf("Frame count: %d\n", frameCounter);
+
         drawTimer->sleep(true);
 
         syncMutex.lock();
@@ -150,7 +225,10 @@ void Canvas::draw() {
         if (loopAround || pos != posLast)
           nothingDrawn = false;
 
-        if (!nothingDrawn) {
+        // if (!nothingDrawn) {
+        if (true) {               // Always draw each frame
+
+          // printf("%s\n", "Drawing stuff!");
 
           if (hasEXTFramebuffer)
             glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
@@ -162,6 +240,9 @@ void Canvas::draw() {
 
           if (toClear) glClear(GL_COLOR_BUFFER_BIT);
           toClear = false;
+
+          glClear(GL_COLOR_BUFFER_BIT);
+          pushObjectsToVertexBuffer();
 
           unsigned int size = myShapes->size();
           for (unsigned int i = 0; i < size; i++) {
@@ -346,6 +427,7 @@ void Canvas::drawProgress(ProgressBar* p) {
     }
 }
 
+//TODO: remove this when the OOP transition is complete
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
     if (filled) {
         if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
@@ -543,6 +625,8 @@ void Canvas::handleIO() {
 
 void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
     ++openCanvases;
+
+    objectBuffer.clear();   // Clears the object buffer, just for peace-of-mind
 
     if (ww == -1)
       ww = 1.2*Canvas::getDisplayHeight();

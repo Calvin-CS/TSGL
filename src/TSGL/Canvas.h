@@ -31,6 +31,7 @@
 #include <mutex>            // Needed for locking the Canvas for thread-safety
 #include <sstream>          // For string building
 #include <string>           // For window titles
+#include <algorithm>
 #ifdef __APPLE__
   #include <pthread.h>
 #else
@@ -64,6 +65,9 @@ private:
     typedef GLFWvidmode const*                      displayInfo;
     typedef std::function<void(double, double)>     doubleFunction;
     typedef std::function<void()>                   voidFunction;
+
+    std::vector<Shape *> objectBuffer;                                  // Holds a list of pointers to objects drawn each frame
+    int currentNewShapeLayerDefault = 0;                                // Layer value set for objects that haven't received an explicit layer designation (default 0)
 
     float           aspect;                                             // Aspect ratio used for setting up the window
     ColorFloat      bgcolor;                                            // Color of the Canvas' clearRectangle
@@ -231,6 +235,33 @@ public:
      * \see start(), stop(), wait()
      */
     void close();
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// NEW OOP STUFF
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+    void add(Shape * shapePtr);
+    void remove(Shape * shapePtr);
+    void clearObjectBuffer();
+    void printBuffer();
+    void pushObjectsToVertexBuffer();
+
+    // Layer stuff
+    int getDefaultLayer() {return currentNewShapeLayerDefault;}
+    void setDefaultLayer(int n) {
+      if (n >= 0) currentNewShapeLayerDefault = n;
+      else return;
+      //TODO: make this throw an error if layer is invalid (< 0)
+    }
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
     /*!
      * \brief Draws a circle.

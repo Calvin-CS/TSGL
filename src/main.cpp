@@ -68,8 +68,8 @@ void alphaRectangleFunction(Canvas& can) {
 
         // Remove old rectangles if there are more than 40 of them
         if (myQueue.size() >= 40) {
-          can.remove(myQueue.front());  // stop rendering the rectangle each frame
-          delete myQueue.front(); // free memory
+          // can.remove(myQueue.front());  // stop rendering the rectangle each frame
+          // delete myQueue.front(); // free memory
           myQueue.pop(); // remove the rectangle object from the queue
         }
     }
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;            //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "Fancy Rectangles");
+    Canvas c(-1, -1, w, h, "Super Cool Rectangles That Can Be Layered and Removed and Stuff");
     // c.setShowFPS(true);
     c.setBackgroundColor(BLACK);
     c.run(alphaRectangleFunction);

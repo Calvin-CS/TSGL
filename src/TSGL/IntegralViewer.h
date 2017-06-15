@@ -7,7 +7,7 @@
 
 #include <string>
 #include <omp.h>
-#include <tsgl.h>
+#include "tsgl.h"
 #include <sstream>
 #include "Util.h"  //Decimal typedef
 

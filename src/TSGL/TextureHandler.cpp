@@ -5,9 +5,9 @@ namespace tsgl {
   //The instructions for the stb library say to define it exactly once in a .c or .cpp file (NOT a .h file)
   #ifndef STB_DEFINE
     #define STB_IMAGE_WRITE_IMPLEMENTATION
-    #include "stb/stb_image_write.h"
+    #include "../stb/stb_image_write.h"
     #define STB_IMAGE_IMPLEMENTATION
-    #include "stb/stb_image.h"
+    #include "../stb/stb_image.h"
     #define STB_DEFINE
 //It may look truly awful....but its an easy way to turn off warnings
 //solely for stb.h. Sorry :'(
@@ -29,7 +29,7 @@ namespace tsgl {
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-result"
-  #include "stb/stb.h"
+  #include "../stb/stb.h"
 #pragma GCC diagnostic pop
 #pragma GCC diagnostic pop
 #pragma GCC diagnostic pop

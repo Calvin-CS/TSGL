@@ -6,6 +6,8 @@
 bin/
 build/
 lib/
+Debug/
+Debug_pi/
 
 # Ignore recorded pictures
 frames/
@@ -41,3 +43,4 @@ Image*.bmp
 
 # Eclipse stuff
 .metadata
+/Debug/

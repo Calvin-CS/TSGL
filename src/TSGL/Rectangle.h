@@ -28,13 +28,15 @@ class Rectangle : public Shape {
      *   \param color The color of the Rectangle.
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
-    Rectangle(int x, int y, int width, int height, const ColorFloat &color);
+    Rectangle(int x, int y, int width, int height, const ColorFloat &color, bool filled = false);
 
     /*!
      * \brief Draw the Rectangle.
      * \details This function actually draws the Rectangle to the Canvas.
      */
     void draw();
+
+    float* getVerticesPointerForRenderer();
 };
 
 }
