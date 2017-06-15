@@ -28,7 +28,7 @@ class Rectangle : public Shape {
      *   \param color The color of the Rectangle.
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
-    Rectangle(int x, int y, int width, int height, const ColorFloat &color, bool filled = false);
+    Rectangle(int x, int y, int width, int height, const ColorFloat &color, bool filled = true);
 
     /*!
      * \brief Draw the Rectangle.
@@ -36,6 +36,7 @@ class Rectangle : public Shape {
      */
     void draw();
 
+    //TODO: comment this, implement
     float* getVerticesPointerForRenderer();
 };
 

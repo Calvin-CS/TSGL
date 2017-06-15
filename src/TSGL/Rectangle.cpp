@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Rectangle::Rectangle(int x, int y, int width, int height, const ColorFloat &color, bool filled = false) {
+Rectangle::Rectangle(int x, int y, int width, int height, const ColorFloat &color, bool filled = true) {
     vertices[0] = x;
     vertices[1] = y;
     vertices[6] = x + width;
@@ -17,8 +17,10 @@ Rectangle::Rectangle(int x, int y, int width, int height, const ColorFloat &colo
     vertices[5] = vertices[11] = vertices[17] = vertices[23] = color.A;
 }
 
-float* getVerticesPointerForRenderer() {
+float* Rectangle::getVerticesPointerForRenderer() {
   //TODO: return a pointer to an array of vertices that is formatted correctly for the new renderer
+  float* temp = new float[1];
+  return temp;
 }
 
 
