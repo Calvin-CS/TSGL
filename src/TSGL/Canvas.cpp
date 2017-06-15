@@ -330,176 +330,7 @@ void Canvas::draw() {
     }
 }
 
-void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
-    float delta = 2.0f / sides * PI;
-    if (filled) {
-        ConvexPolygon *s = new ConvexPolygon(sides);
-        for (int i = 0; i < sides; ++i)
-            s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
-        drawShape(s);
-    } else {
-        float oldX = 0, oldY = 0, newX = 0, newY = 0;
-        Polyline *p = new Polyline(sides+1);
-        for (int i = 0; i <= sides; ++i) {
-            oldX = newX; oldY = newY;
-            newX = xverts+radius*cos(i*delta);
-            newY = yverts+radius*sin(i*delta);
-            if (i > 0)
-                p->addNextVertex(oldX, oldY,color);
-        }
-        p->addNextVertex(newX, newY,color);
-        drawShape(p);
-    }
-}
 
-void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
-    if (filled) {
-        ConcavePolygon* p = new ConcavePolygon(size);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawShape(p);  // Push it onto our drawing buffer
-    }
-    else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-            p->addNextVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawShape(p);  // Push it onto our drawing buffer
-    }
-}
-
-void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
-    if (filled) {
-        ConvexPolygon* p = new ConvexPolygon(size);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(x[i], y[i], color[i]);
-        }
-        drawShape(p);  // Push it onto our drawing buffer
-    }
-    else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-            p->addNextVertex(x[i], y[i], color[i]);
-        }
-        drawShape(p);  // Push it onto our drawing buffer
-    }
-}
-
-void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
-    Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
-    drawShape(im);                                        // Push it onto our drawing buffer
-}
-
-void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
-    Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
-    drawShape(l);                               // Push it onto our drawing buffer
-}
-
-inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
-    drawPoint(col, row, color);
-}
-
-void Canvas::drawPoint(int x, int y, ColorFloat color) {
-    pointArrayMutex.lock();
-    if (pointBufferPosition >= myShapes->capacity()) {
-        loopAround = true;
-        pointBufferPosition = 0;
-    }
-    int tempPos = pointBufferPosition * 6;
-    pointBufferPosition++;
-
-    float atioff = atiCard ? 0.5f : 0.0f;
-    vertexData[tempPos] = x;
-    vertexData[tempPos + 1] = y+atioff;
-    vertexData[tempPos + 2] = color.R;
-    vertexData[tempPos + 3] = color.G;
-    vertexData[tempPos + 4] = color.B;
-    vertexData[tempPos + 5] = color.A;
-    pointArrayMutex.unlock();
-}
-
-void Canvas::drawProgress(ProgressBar* p) {
-    for (int i = 0; i < p->getSegs(); ++i) {
-      drawText(to_string(i),p->getSegX(i)+8,p->getSegY()-8,32,BLACK);
-      drawShape(p->getRect(i));
-      drawShape(p->getBorder(i));
-    }
-}
-
-//TODO: remove this when the OOP transition is complete
-void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
-    if (filled) {
-        if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-        if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-        Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-        drawShape(rec);                                     // Push it onto our drawing buffer
-    }
-    else {
-        Polyline* p = new Polyline(5);
-        p->addNextVertex(x1, y1, color);
-        p->addNextVertex(x1, y2, color);
-        p->addNextVertex(x2, y2, color);
-        p->addNextVertex(x2, y1, color);
-        p->addNextVertex(x1, y1, color);
-        drawShape(p);
-    }
-}
-
-void Canvas::drawShape(Shape* s) {
-	if (!started) {
-	  TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
-	  return;
-	}
-	while (!readyToDraw)
-	  sleep();
-    bufferMutex.lock();
-    myBuffer->push(s);  // Push it onto our drawing buffer
-    bufferMutex.unlock();
-}
-
-void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
-    std::wstring wsTmp(text.begin(), text.end());
-    std::wstring ws = wsTmp;
-    drawText(ws, x, y, size, color);
-}
-
-void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
-    Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-    drawShape(t);                                // Push it onto our drawing buffer
-}
-
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
-    if (filled) {
-        Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-        drawShape(t);                                               // Push it onto our drawing buffer
-    }
-    else {
-        Polyline* p = new Polyline(4);
-        p->addNextVertex(x1,y1,color);
-        p->addNextVertex(x2,y2,color);
-        p->addNextVertex(x3,y3,color);
-        p->addNextVertex(x1,y1,color);
-        drawShape(p);
-    }
-}
-
-void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
-    if (filled) {
-        TriangleStrip* p = new TriangleStrip(size);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawShape(p);  // Push it onto our drawing buffer
-    }
-    else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-            p->addNextVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawShape(p);  // Push it onto our drawing buffer
-    }
-}
 
 void Canvas::errorCallback(int error, const char* string) {
     fprintf(stderr, "%i: %s\n", error, string);
@@ -740,7 +571,6 @@ void Canvas::initGlew() {
     const GLubyte* gfxVendor = glGetString(GL_VENDOR);
     std::string gfx(gfxVendor, gfxVendor + strlen((char*)gfxVendor));
     atiCard = (gfx.find("ATI") != std::string::npos);
-//    #define DEBUG
     #ifdef DEBUG
         printf("Vendor:         %s %s\n", gfx.c_str(), glGetString(GL_RENDERER));
         printf("OpenGL version: %s\n", glGetString(GL_VERSION));
@@ -1000,8 +830,8 @@ void Canvas::setupCamera() {
     // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
     float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
       -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f, 1 };
-//    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
-//      -(winWidth-1) / 2.0f, (winHeight+0.5f) / 2.0f, -(winHeight-0.5f) / 2.0f, 1 };
+    //    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
+    //      -(winWidth-1) / 2.0f, (winHeight+0.5f) / 2.0f, -(winHeight-0.5f) / 2.0f, 1 };
     glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 
     // Set up camera zooming
@@ -1021,10 +851,10 @@ void Canvas::sleep() {
 }
 
 void Canvas::sleepFor(float seconds) {
-#ifdef __APPLE__
-    handleIO();
-#endif
-    std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
+    #ifdef __APPLE__
+      handleIO();
+    #endif
+      std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
 }
 
 int Canvas::start() {
@@ -1122,6 +952,287 @@ int Canvas::wait() {
   #endif
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//     TODO: These will need to be rewritten when we change to the OOP API
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
+    float delta = 2.0f / sides * PI;
+    if (filled) {
+        ConvexPolygon *s = new ConvexPolygon(sides);
+        for (int i = 0; i < sides; ++i)
+            s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
+        drawShape(s);
+    } else {
+        float oldX = 0, oldY = 0, newX = 0, newY = 0;
+        Polyline *p = new Polyline(sides+1);
+        for (int i = 0; i <= sides; ++i) {
+            oldX = newX; oldY = newY;
+            newX = xverts+radius*cos(i*delta);
+            newY = yverts+radius*sin(i*delta);
+            if (i > 0)
+                p->addNextVertex(oldX, oldY,color);
+        }
+        p->addNextVertex(newX, newY,color);
+        drawShape(p);
+    }
+}
+
+void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
+    if (filled) {
+        ConcavePolygon* p = new ConcavePolygon(size);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(xverts[i], yverts[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(size);
+        for (int i = 0; i < size; i++) {
+            p->addNextVertex(xverts[i], yverts[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+}
+
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+    if (filled) {
+        ConvexPolygon* p = new ConvexPolygon(size);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(x[i], y[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(size);
+        for (int i = 0; i < size; i++) {
+            p->addNextVertex(x[i], y[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+}
+
+void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
+    Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
+    drawShape(im);                                        // Push it onto our drawing buffer
+}
+
+void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
+    Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
+    drawShape(l);                               // Push it onto our drawing buffer
+}
+
+inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
+    drawPoint(col, row, color);
+}
+
+void Canvas::drawPoint(int x, int y, ColorFloat color) {
+    pointArrayMutex.lock();
+    if (pointBufferPosition >= myShapes->capacity()) {
+        loopAround = true;
+        pointBufferPosition = 0;
+    }
+    int tempPos = pointBufferPosition * 6;
+    pointBufferPosition++;
+
+    float atioff = atiCard ? 0.5f : 0.0f;
+    vertexData[tempPos] = x;
+    vertexData[tempPos + 1] = y+atioff;
+    vertexData[tempPos + 2] = color.R;
+    vertexData[tempPos + 3] = color.G;
+    vertexData[tempPos + 4] = color.B;
+    vertexData[tempPos + 5] = color.A;
+    pointArrayMutex.unlock();
+}
+
+void Canvas::drawProgress(ProgressBar* p) {
+    for (int i = 0; i < p->getSegs(); ++i) {
+      drawText(to_string(i),p->getSegX(i)+8,p->getSegY()-8,32,BLACK);
+      drawShape(p->getRect(i));
+      drawShape(p->getBorder(i));
+    }
+}
+
+//TODO: maye works with the new backend
+void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
+    if (filled) {
+        if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+        if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+        Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
+        this->add(rec);                                     // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(5);
+        p->addNextVertex(x1, y1, color);
+        p->addNextVertex(x1, y2, color);
+        p->addNextVertex(x2, y2, color);
+        p->addNextVertex(x2, y1, color);
+        p->addNextVertex(x1, y1, color);
+        this->add(p);
+    }
+}
+
+void Canvas::drawShape(Shape* s) {
+	if (!started) {
+	  TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
+	  return;
+	}
+	while (!readyToDraw)
+	  sleep();
+    bufferMutex.lock();
+    myBuffer->push(s);  // Push it onto our drawing buffer
+    bufferMutex.unlock();
+}
+
+void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
+    std::wstring wsTmp(text.begin(), text.end());
+    std::wstring ws = wsTmp;
+    drawText(ws, x, y, size, color);
+}
+
+void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
+    Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
+    drawShape(t);                                // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
+    if (filled) {
+        Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
+        drawShape(t);                                               // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(4);
+        p->addNextVertex(x1,y1,color);
+        p->addNextVertex(x2,y2,color);
+        p->addNextVertex(x3,y3,color);
+        p->addNextVertex(x1,y1,color);
+        drawShape(p);
+    }
+}
+
+void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
+    if (filled) {
+        TriangleStrip* p = new TriangleStrip(size);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(xverts[i], yverts[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+    else {
+        Polyline* p = new Polyline(size);
+        for (int i = 0; i < size; i++) {
+            p->addNextVertex(xverts[i], yverts[i], color[i]);
+        }
+        drawShape(p);  // Push it onto our drawing buffer
+    }
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//       End the old API stuff
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //-----------------Unit testing-------------------------------------------------------
 void Canvas::runTests() {
