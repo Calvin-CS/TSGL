@@ -37,6 +37,9 @@ class Triangle : public Shape {
      * \details This function actually draws the Triangle to the Canvas.
      */
     void draw();
+
+    //TODO: comment this, implement
+    float* getVerticesPointerForRenderer();
 };
 
 }

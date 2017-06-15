@@ -66,6 +66,9 @@ class ConvexPolygon : public Shape {
      */
     void draw();
 
+    //TODO: comment this, implement
+    float* getVerticesPointerForRenderer();
+
     /*!
      * \brief Runs the Unit tests.
      * \details Runs the Unit tests for the ConvexPolygon class. addVertex() is tested.

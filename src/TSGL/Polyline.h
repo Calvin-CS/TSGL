@@ -62,6 +62,9 @@ class Polyline : public Shape {
      *   if the above condition is met (vertex buffer = not full).
      */
     void draw();
+
+    //TODO: comment this, implement
+    float* getVerticesPointerForRenderer();
 };
 
 }

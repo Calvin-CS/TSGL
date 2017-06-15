@@ -40,4 +40,10 @@ void TriangleStrip::draw() {
     glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 }
 
+float* TriangleStrip::getVerticesPointerForRenderer() {
+  //TODO: return a pointer to an array of vertices that is formatted correctly for the new renderer
+  float* temp = new float[1];
+  return temp;
+}
+
 }

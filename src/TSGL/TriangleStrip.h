@@ -64,6 +64,9 @@ class TriangleStrip : public Shape {
      * \note Implemented inherited abstract method from Shape class.
      */
     void draw();
+
+    //TODO: comment this, implement
+    float* getVerticesPointerForRenderer();
 };
 
 }
