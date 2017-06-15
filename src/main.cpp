@@ -68,8 +68,8 @@ void alphaRectangleFunction(Canvas& can) {
 
         // Remove old rectangles if there are more than 40 of them
         if (myQueue.size() >= 40) {
-          // can.remove(myQueue.front());  // stop rendering the rectangle each frame
-          // delete myQueue.front(); // free memory
+          can.remove(myQueue.front());  // stop rendering the rectangle each frame
+          delete myQueue.front(); // free memory
           myQueue.pop(); // remove the rectangle object from the queue
         }
     }
