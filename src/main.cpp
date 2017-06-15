@@ -30,6 +30,7 @@ using namespace tsgl;
 //        return rec;
 //       //  drawShape(rec);                                     // Push it onto our drawing buffer
 // }
+
 void alphaRectangleFunction(Canvas& can) {
     const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
     int a, b, c, d;

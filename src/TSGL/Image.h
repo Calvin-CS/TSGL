@@ -55,6 +55,9 @@ class Image : public Shape {
      */
     void draw();
 
+    //TODO: comment this, implement
+    float* getVerticesPointerForRenderer();
+
     /*!
      * \brief Accessor for the image's height.
      * \return The height of the Image.
