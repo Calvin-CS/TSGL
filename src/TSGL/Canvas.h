@@ -72,13 +72,15 @@ private:
     float           aspect;                                             // Aspect ratio used for setting up the window
     ColorFloat      bgcolor;                                            // Color of the Canvas' clearRectangle
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
+    std::mutex      objectMutex;                                        // Mutex for locking the objectBuffer so that only one thread can add/remove objects at a time
+    //TODO do we have too many mutexes?  Probably.
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     unsigned        bufferSize;                                         // Size of the screen buffer
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
-    bool            hasEXTFramebuffer;                                  // Whether or not the hard supports EXT FBOs
+    bool            hasEXTFramebuffer;                                  // Whether or not the hardware supports EXT FBOs
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
@@ -114,7 +116,6 @@ private:
                     textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
-    bool            toClear;                                            // Flag for clearing the canvas
     GLint           uniModel,                                           // Model perspective of the camera
                     uniView,                                            // View perspective of the camera
                     uniProj;                                            // Projection of the camera
@@ -246,7 +247,7 @@ public:
 
     void add(Shape * shapePtr);
     void remove(Shape * shapePtr);
-    void clearObjectBuffer();
+    void clearObjectBuffer(bool shouldFreeMemory = false);
     void printBuffer();
     void pushObjectsToVertexBuffer();
 
