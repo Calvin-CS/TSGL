@@ -1015,7 +1015,7 @@ void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloa
         ConvexPolygon *s = new ConvexPolygon(sides);
         for (int i = 0; i < sides; ++i)
             s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
-        drawShape(s);
+        this->add(s);
     } else {
         float oldX = 0, oldY = 0, newX = 0, newY = 0;
         Polyline *p = new Polyline(sides+1);
@@ -1027,7 +1027,7 @@ void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloa
                 p->addNextVertex(oldX, oldY,color);
         }
         p->addNextVertex(newX, newY,color);
-        drawShape(p);
+        this->add(p);
     }
 }
 
@@ -1037,14 +1037,14 @@ void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        this->add(p);  // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
             p->addNextVertex(xverts[i], yverts[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        this->add(p);  // Push it onto our drawing buffer
     }
 }
 
@@ -1054,29 +1054,29 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
         for (int i = 0; i < size; i++) {
             p->addVertex(x[i], y[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        this->add(p);  // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
             p->addNextVertex(x[i], y[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        this->add(p);  // Push it onto our drawing buffer
     }
 }
 
 void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
-    drawShape(im);                                        // Push it onto our drawing buffer
+    this->add(im);                                        // Push it onto our drawing buffer
 }
 
 void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
-    drawShape(l);                               // Push it onto our drawing buffer
+    this->add(l);                               // Push it onto our drawing buffer
 }
 
 inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
-    drawPoint(col, row, color);
+    drawPoint(col, row, color); //TODO: update with new api
 }
 
 void Canvas::drawPoint(int x, int y, ColorFloat color) {
@@ -1098,11 +1098,12 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     pointArrayMutex.unlock();
 }
 
+//TODO: change to just add the ProgressBar as one item (rather than rect and border)
 void Canvas::drawProgress(ProgressBar* p) {
     for (int i = 0; i < p->getSegs(); ++i) {
       drawText(to_string(i),p->getSegX(i)+8,p->getSegY()-8,32,BLACK);
-      drawShape(p->getRect(i));
-      drawShape(p->getBorder(i));
+      this->add(p->getRect(i));
+      this->add(p->getBorder(i));
     }
 }
 
@@ -1145,13 +1146,13 @@ void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat 
 
 void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
     Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-    drawShape(t);                                // Push it onto our drawing buffer
+    this->add(t);                                // Push it onto our drawing buffer
 }
 
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
     if (filled) {
         Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-        drawShape(t);                                               // Push it onto our drawing buffer
+        this->add(t);                                               // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(4);
@@ -1159,7 +1160,7 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
         p->addNextVertex(x2,y2,color);
         p->addNextVertex(x3,y3,color);
         p->addNextVertex(x1,y1,color);
-        drawShape(p);
+        this->add(p);
     }
 }
 
@@ -1169,14 +1170,14 @@ void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat 
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        this->add(p);  // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
             p->addNextVertex(xverts[i], yverts[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        this->add(p);  // Push it onto our drawing buffer
     }
 }
 
