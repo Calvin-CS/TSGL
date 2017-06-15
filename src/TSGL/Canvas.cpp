@@ -1106,13 +1106,13 @@ void Canvas::drawProgress(ProgressBar* p) {
     }
 }
 
-//TODO: remove this when the OOP transition is complete
+//TODO: maye works with the new backend
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
     if (filled) {
         if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
         if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
         Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-        drawShape(rec);                                     // Push it onto our drawing buffer
+        this->add(rec);                                     // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(5);
@@ -1121,7 +1121,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         p->addNextVertex(x2, y2, color);
         p->addNextVertex(x2, y1, color);
         p->addNextVertex(x1, y1, color);
-        drawShape(p);
+        this->add(p);
     }
 }
 

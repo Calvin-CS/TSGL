@@ -36,6 +36,16 @@ void alphaRectangleFunction(Canvas& can) {
     int a, b, c, d;
     // int counter = 0;
 
+    //  Add a traingle to the test page
+    Triangle* testTri = new Triangle(100, 100, 200, 100, 50, 150, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
+    testTri->setLayer(5);
+    can.add(testTri);
+
+    // Testing old rectangle api
+    can.setDefaultLayer(7);
+    can.drawRectangle(200, 200, 250, 250, PURPLE);
+    can.setDefaultLayer(0);
+
     // Add the red and white rects over the top
     Rectangle* topRedRect = new Rectangle(500, 500, 50, 50, ColorInt(1*MAX_COLOR, 0*MAX_COLOR, 0*MAX_COLOR, 255));
     Rectangle* topWhiteRect = new Rectangle(540, 540, 50, 50, ColorInt(1*MAX_COLOR, 1*MAX_COLOR, 1*MAX_COLOR, 255));
