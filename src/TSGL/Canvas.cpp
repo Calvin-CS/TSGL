@@ -92,6 +92,7 @@ void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods
 
 void Canvas::clear() {
     //TODO this works with the new version now, but it could probably be cleaned up a bit
+    //TODO move this to the section for backwards compatibility?
     this->clearObjectBuffer();
 }
 
@@ -106,7 +107,7 @@ void Canvas::close() {
 void Canvas::add(Shape * shapePtr) {
 
   //TODO: make this check for duplicates
-  //TODO: make this thread safe! (check that it is now)
+  //TODO: check that this is properly thread safe now
 
   // Set the default current layer if layer not explicitly set
   if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);

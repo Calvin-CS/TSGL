@@ -7,6 +7,7 @@ CPP_SRCS += \
 ../src/TSGL/Arrow.cpp \
 ../src/TSGL/Canvas.cpp \
 ../src/TSGL/CartesianCanvas.cpp \
+../src/TSGL/Circle.cpp \
 ../src/TSGL/Color.cpp \
 ../src/TSGL/ConcavePolygon.cpp \
 ../src/TSGL/ConvexPolygon.cpp \
@@ -29,6 +30,7 @@ OBJS += \
 ./src/TSGL/Arrow.o \
 ./src/TSGL/Canvas.o \
 ./src/TSGL/CartesianCanvas.o \
+./src/TSGL/Circle.o \
 ./src/TSGL/Color.o \
 ./src/TSGL/ConcavePolygon.o \
 ./src/TSGL/ConvexPolygon.o \
@@ -51,6 +53,7 @@ CPP_DEPS += \
 ./src/TSGL/Arrow.d \
 ./src/TSGL/Canvas.d \
 ./src/TSGL/CartesianCanvas.d \
+./src/TSGL/Circle.d \
 ./src/TSGL/Color.d \
 ./src/TSGL/ConcavePolygon.d \
 ./src/TSGL/ConvexPolygon.d \
