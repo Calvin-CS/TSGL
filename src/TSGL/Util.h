@@ -5,6 +5,7 @@
 #ifndef SRC_TSGL_UTIL_H_
 #define SRC_TSGL_UTIL_H_
 
+#include <string>
 #include <cmath>  //To determine M_PI and is also used for math operations
 
 namespace tsgl {
