@@ -24,4 +24,8 @@ float* Line::getVerticesPointerForRenderer() {
   return temp;
 }
 
+Line::~Line() {
+  return;
+}
+
 }

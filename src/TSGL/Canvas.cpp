@@ -68,6 +68,7 @@ Canvas::~Canvas() {
     delete drawTimer;
     delete[] vertexData;
     delete [] screenBuffer;
+    //TODO: make this also delete the object buffer?
     if (--openCanvases == 0) {
         glfwIsReady = false;
         glfwTerminate();  // Terminate GLFW
@@ -90,7 +91,8 @@ void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods
 }
 
 void Canvas::clear() {
-    toClear = true;
+    //TODO this works with the new version now, but it could probably be cleaned up a bit
+    this->clearObjectBuffer();
 }
 
 void Canvas::close() {
@@ -99,44 +101,37 @@ void Canvas::close() {
 }
 
 
-// bool comparator(Shape * a, Shape * b) {
-//   return (a->getLayer() > b->getLayer());  // true if A's layer is higher than B's layer
-// }
+
 
 void Canvas::add(Shape * shapePtr) {
 
   //TODO: make this check for duplicates
-  //TODO: make this thread safe!
+  //TODO: make this thread safe! (check that it is now)
 
   // Set the default current layer if layer not explicitly set
   if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
 
+  objectMutex.lock();
   objectBuffer.push_back(shapePtr);
-
   std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Shape * a, Shape * b)->bool {
     return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
   });
-
-
-  // std::cout << shapePtr <<std::endl;
-  // printf("%s\n", "Pushed shape onto buffer.");
-  // print(objectBuffer);
+  objectMutex.unlock();
 
 }
 
 void Canvas::remove(Shape * shapePtr) {
 
-  //TODO: make this thread safe!
+  //TODO: make this thread safe! (check that it is now)
 
-  // objectBuffer.push(shapePtr);
+  objectMutex.lock();
   objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
-  // objectBuffer.erase(std::find(objectBuffer.begin(), objectBuffer.end(), *shapePtr));
-  // printf("%s\n", "Removed shape from buffer.");
-  // print(objectBuffer);
+  objectMutex.unlock();
 
 }
 
-void Canvas::clearObjectBuffer() {
+void Canvas::clearObjectBuffer(bool shouldFreeMemory = false) {
+  //TODO: make this free memory when the user requests it!
   objectBuffer.clear();
 }
 
@@ -152,183 +147,207 @@ void Canvas::printBuffer() {
 }
 
 void Canvas::pushObjectsToVertexBuffer() {
+  // Locks the GL buffer mutex, then makes GL calls using the draw() method from each object
 
-  bufferMutex.lock();
-
+  objectMutex.lock();
+  // bufferMutex.lock();
   // Take objects from the object buffer and push them onto the vertex buffer
   for(std::vector<Shape *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
-    // std::cout << *it << std::endl;
-    // printf("%s\n", "..");
     (*it)->draw();
+    //TODO this function will eventually make the GL calls itself, not the objects
   }
-
-  bufferMutex.unlock();
-
+  // bufferMutex.unlock();
+  objectMutex.unlock();
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+//TODO: this will be rewritten to redo the renderer when that become a thing
 void Canvas::draw() {
 
-    // printf("%s\n", "DRAW()");
-
-    // Reset the window
-    glfwSetWindowShouldClose(window, GL_FALSE);
+  // Reset the window close flag, so that the window stays open for this frame
+  glfwSetWindowShouldClose(window, GL_FALSE);
 
 
-    // Get actual framebuffer size and adjust scaling accordingly
-    int fbw, fbh;
-    glfwGetFramebufferSize(window, &fbw, &fbh);
-    int scaling = round((1.0f*fbw)/winWidth);
+  // Get actual framebuffer size and adjust scaling accordingly
+  int fbw, fbh;
+  glfwGetFramebufferSize(window, &fbw, &fbh);
+  int scaling = round((1.0f*fbw)/winWidth);
 
-    if (hasStereo)
-      Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
+  // Stereoscopic rendering
+  if (hasStereo)
+  Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
+  else
+  Canvas::setDrawBuffer(hasBackbuffer ? GL_LEFT : GL_FRONT_LEFT);
+
+
+  // Clear the screen and set the background color for the window
+  setBackgroundColor(bgcolor);
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  // Swap the screen buffer
+  glfwSwapBuffers(window);
+
+  // We're ready to draw to the screen now!
+  readyToDraw = true;
+  bool nothingDrawn = false;  //Always draw the first frame
+
+
+
+  // This loop continues in the render thread for the life of the program,
+  // and continually redraws the screen based on the objects that are
+  // in the objectBuffer.
+  for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
+
+    drawTimer->sleep(true);
+
+    syncMutex.lock();
+
+    #ifdef __APPLE__
+    windowMutex.lock();
+    #endif
+    glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
+
+    // FPS indicator
+    realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
+    if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
+    std::cout.flush();
+
+
+    //TODO what does this even do?
+    int pos = pointBufferPosition;
+    int posLast = pointLastPosition;
+    pointLastPosition = pos;
+
+    //TODO what is this for?
+    if (loopAround || pos != posLast)
+    nothingDrawn = false;
+
+
+    // NOTE: used to be the Draw loop
+
+    if (hasEXTFramebuffer)
+    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
     else
-      Canvas::setDrawBuffer(hasBackbuffer ? GL_LEFT : GL_FRONT_LEFT);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+    glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+    glViewport(0,0,winWidth,winHeight);
 
 
-    setBackgroundColor(bgcolor); //Set our initial clear / background color
+    // New method for dumping vertices from the objectBuffer into the GL buffer
     glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(window);
-    readyToDraw = true;
-    bool nothingDrawn = false;  //Always draw the first frame
+    pushObjectsToVertexBuffer();
 
-    // Start the drawing loop
-    for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
-
-      // printf("Frame count: %d\n", frameCounter);
-
-        drawTimer->sleep(true);
-
-        syncMutex.lock();
-
-      #ifdef __APPLE__
-        windowMutex.lock();
-      #endif
-        glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
-
-        realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
-        if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
-        std::cout.flush();
-
-        bufferMutex.lock();  // Time to flush our buffer
-        if (myBuffer->size() > 0) {     // But only if there is anything to flush
-          nothingDrawn = false;
-          for (unsigned int i = 0; i < myBuffer->size(); i++)
-            myShapes->push((*myBuffer)[i]);
-          myBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
-        }
-        bufferMutex.unlock();
-
-        int pos = pointBufferPosition;
-        int posLast = pointLastPosition;
-        pointLastPosition = pos;
-
-        if (loopAround || pos != posLast)
-          nothingDrawn = false;
-
-        // if (!nothingDrawn) {
-        if (true) {               // Always draw each frame
-
-          // printf("%s\n", "Drawing stuff!");
-
-          if (hasEXTFramebuffer)
-            glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-          else
-            glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-          glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-          glViewport(0,0,winWidth,winHeight);
-
-          if (toClear) glClear(GL_COLOR_BUFFER_BIT);
-          toClear = false;
-
-          glClear(GL_COLOR_BUFFER_BIT);
-          pushObjectsToVertexBuffer();
-
-          unsigned int size = myShapes->size();
-          for (unsigned int i = 0; i < size; i++) {
-            Shape* s = (*myShapes)[i];
-            if (!s->getIsTextured()) {
-              s->draw();  // Iterate through our queue until we've made it to the end
-            } else {
-              textureShaders(true);
-              s->draw();
-              textureShaders(false);
-            }
-          }
-
-          if (loopAround) {
-            nothingDrawn = false;
-            int toend = myShapes->capacity() - posLast;
-            glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
-                   &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, toend);
-            posLast = 0;
-            loopAround = false;
-          }
-          int pbsize = pos - posLast;
-          if (pbsize > 0) {
-            nothingDrawn = false;
-            glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, pbsize);
-          }
-        }
-
-        // Reset drawn status for the next frame
-        nothingDrawn = true;
-
-        // Update our screenBuffer copy with the screen
-        glViewport(0,0,winWidth*scaling,winHeight*scaling);
-        myShapes->clear();                           // Clear our buffer of shapes to be drawn
-
-        if (hasEXTFramebuffer)
-          glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-        else
-          glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-        glReadBuffer(GL_COLOR_ATTACHMENT0);
-
-        glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-        if (toRecord > 0) {
-          screenShot();
-          --toRecord;
-        }
-
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
-        glDrawBuffer(drawBuffer);
-
+    unsigned int size = myShapes->size();
+    for (unsigned int i = 0; i < size; i++) {
+      Shape* s = (*myShapes)[i];
+      if (!s->getIsTextured()) {
+        s->draw();  // Iterate through our queue until we've made it to the end
+      } else {
         textureShaders(true);
-        const float vertices[32] = {
-          0,       0,        1,1,1,1,0,1,
-          winWidth,0,        1,1,1,1,1,1,
-          0,       winHeight,1,1,1,1,0,0,
-          winWidth,winHeight,1,1,1,1,1,0
-        };
-        glBindTexture(GL_TEXTURE_2D,renderedTexture);
-        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-        glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-        glFlush();                                   // Flush buffer data to the actual draw buffer
-        glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
-
+        s->draw();
         textureShaders(false);
-
-      #ifndef __APPLE__
-        glfwPollEvents();                            // Handle any I/O
-      #endif
-        glfwGetCursorPos(window, &mouseX, &mouseY);
-        glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
-      #ifdef __APPLE__
-        windowMutex.unlock();
-      #endif
-
-        syncMutex.unlock();
-
-        if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
+      }
     }
+
+    if (loopAround) {
+      nothingDrawn = false;
+      int toend = myShapes->capacity() - posLast;
+      glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
+      &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+      glDrawArrays(GL_POINTS, 0, toend);
+      posLast = 0;
+      loopAround = false;
+    }
+    int pbsize = pos - posLast;
+    if (pbsize > 0) {
+      nothingDrawn = false;
+      glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+      glDrawArrays(GL_POINTS, 0, pbsize);
+    }
+
+    // Reset drawn status for the next frame
+    nothingDrawn = true;
+
+    // Update our screenBuffer copy with the screen
+    glViewport(0,0,winWidth*scaling,winHeight*scaling);
+    myShapes->clear();                           // Clear our buffer of shapes to be drawn
+
+    if (hasEXTFramebuffer)
+    glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+    else
+    glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+    glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+    glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+    if (toRecord > 0) {
+      screenShot();
+      --toRecord;
+    }
+
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
+    glDrawBuffer(drawBuffer);
+
+    textureShaders(true);
+    const float vertices[32] = {
+      0,       0,        1,1,1,1,0,1,
+      winWidth,0,        1,1,1,1,1,1,
+      0,       winHeight,1,1,1,1,0,0,
+      winWidth,winHeight,1,1,1,1,1,0
+    };
+    glBindTexture(GL_TEXTURE_2D,renderedTexture);
+    glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+    glFlush();                                   // Flush buffer data to the actual draw buffer
+    glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
+
+    textureShaders(false);
+
+    #ifndef __APPLE__
+    glfwPollEvents();                            // Handle any I/O
+    #endif
+    glfwGetCursorPos(window, &mouseX, &mouseY);
+    glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
+    #ifdef __APPLE__
+    windowMutex.unlock();
+    #endif
+
+    syncMutex.unlock();
+
+    if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -486,7 +505,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
       screenBuffer[i] = 0;
     }
 
-    toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet
     monitorX = xx;
     monitorY = yy;

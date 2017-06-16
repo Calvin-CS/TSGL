@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/TSGL/Arrow.cpp \
 ../src/TSGL/Canvas.cpp \
 ../src/TSGL/CartesianCanvas.cpp \
 ../src/TSGL/Color.cpp \
@@ -25,6 +26,7 @@ CPP_SRCS += \
 ../src/TSGL/VisualTaskQueue.cpp 
 
 OBJS += \
+./src/TSGL/Arrow.o \
 ./src/TSGL/Canvas.o \
 ./src/TSGL/CartesianCanvas.o \
 ./src/TSGL/Color.o \
@@ -46,6 +48,7 @@ OBJS += \
 ./src/TSGL/VisualTaskQueue.o 
 
 CPP_DEPS += \
+./src/TSGL/Arrow.d \
 ./src/TSGL/Canvas.d \
 ./src/TSGL/CartesianCanvas.d \
 ./src/TSGL/Color.d \
