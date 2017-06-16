@@ -7,7 +7,7 @@ namespace tsgl {
     isDoubleArrow = doubleArrow;
     arrowHead = makeArrowHead(x2, y2, x2-x1, y2-y1, color);
     if( isDoubleArrow )
-    arrowHead2 = makeArrowHead(x1, y1, x1-x2, y1-y2, color);
+      arrowHead2 = makeArrowHead(x1, y1, x1-x2, y1-y2, color);
   }
 
   /*!

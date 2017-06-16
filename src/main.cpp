@@ -61,6 +61,9 @@ void alphaRectangleFunction(Canvas& can) {
     can.add(greenArrow);
     can.add(blueArrow);
 
+    Circle* c1 = new Circle(300, 500, 50, 20);
+    can.add(c1);
+
     // Add a blue rectangle at the bottom
     Rectangle* botBlueRect = new Rectangle(300, 300, 120, 50, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
     botBlueRect->setLayer(0);

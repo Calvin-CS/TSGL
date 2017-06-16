@@ -11,14 +11,15 @@
 #endif
 
 #include "Array.h"          // Our own array for buffering drawing operations
+#include "Arrow.h"          // Our own class for drawing arrows
 #include "Color.h"          // Our own interface for converting color types
+#include "Circle.h"         // Our own class for drawing circles
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
-#include "Arrow.h"          // Our own class for drawing arrows
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
