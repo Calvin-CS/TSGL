@@ -57,7 +57,7 @@ class Shape {
     /*!
      * \brief Destructor for the Shape.
      */
-    virtual ~Shape() {}
+    virtual ~Shape() {};
 
     /*!
      * \brief Actually draws the Shape to the Canvas.

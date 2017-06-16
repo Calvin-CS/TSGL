@@ -90,9 +90,9 @@ void alphaRectangleFunction(Canvas& can) {
           // delete myQueue.front(); // free memory
           // myQueue.pop(); // remove the rectangle object from the queue
 
-          can.clear();
+          // can.clear();
           // myQueue.clear();
-          std::queue<Rectangle*>().swap(myQueue);
+          // std::queue<Rectangle*>().swap(myQueue);
 
         }
     }

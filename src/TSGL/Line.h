@@ -38,6 +38,8 @@ class Line : public Shape {
 
     //TODO: comment this
     float* getVerticesPointerForRenderer();
+
+    ~Line();
 };
 
 }

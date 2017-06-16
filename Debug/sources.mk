@@ -22,15 +22,6 @@ CPP_DEPS :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 build/TSGL \
-build/tests/Conway \
-build/tests/ImageInverter \
-build/tests/Langton \
-build/tests/Mandelbrot \
-build/tests/Pong \
-build/tests/ProducerConsumer \
-build/tests/SeaUrchin \
-build/tests/Voronoi \
-build/tests \
 src/TSGL \
 src \
 
