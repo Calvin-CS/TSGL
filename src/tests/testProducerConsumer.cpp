@@ -10,7 +10,8 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "tsgl.h"
+#include "../../TSGL/tsgl.h"
+#include "ProducerConsumer/PCThread.h"
 #include "ProducerConsumer/Producer.h"
 #include "ProducerConsumer/Consumer.h"
 using namespace tsgl;
@@ -61,7 +62,8 @@ int main(int argc, char * argv[]) {
 
 	}
 
-	Circle outerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK, false);
+	Rectangle r(20, 20, 100, 100, GREEN);
+//	Circle outerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK, false);
 	//queueDisplay.add(&outerQueue);
 	queueDisplay.drawCircle(centerX, centerY, OUTERRAD, CAPACITY, BLACK, false);
 

@@ -61,7 +61,7 @@ void alphaRectangleFunction(Canvas& can) {
     can.add(greenArrow);
     can.add(blueArrow);
 
-    Circle* c1 = new Circle(300, 500, 50, 20);
+    Circle* c1 = new Circle(300, 500, 50, 100, PURPLE, false);
     can.add(c1);
 
     // Add a blue rectangle at the bottom

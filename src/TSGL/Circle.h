@@ -6,6 +6,8 @@
 #define CIRCLE_H_
 
 #include "Shape.h"  // For extending our Shape object
+#include "ConvexPolygon.h"
+#include "Polyline.h"
 
 namespace tsgl {
 
