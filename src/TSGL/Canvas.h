@@ -16,6 +16,7 @@
 #include "Circle.h"         // Our own class for drawing circles
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
+#include "Circle.h" // Our own class for concave polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
@@ -266,6 +267,52 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//NOTE: we're keeing these here to be backwards compaitble with the old version
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+
+
     /*!
      * \brief Draws a circle.
      * \details This function draws a circle with the given center, radius, resolution
@@ -437,6 +484,44 @@ public:
      *   \param filled Whether the triangle strip should be filled (true) or not (false).
      */
     virtual void drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    //     //TODO move ^ to another location?
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*!
      * \brief Accessor for the current background color.

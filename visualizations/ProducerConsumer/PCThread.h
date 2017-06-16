@@ -9,9 +9,9 @@
 //#include <tsgl.h>
 #include "Thread.h"
 #include "Queue.h"
-#include "../../TSGL/tsgl.h"
-#include "../../TSGL/Canvas.h"
-#include "../../TSGL/Line.h"
+#include <tsgl.h>
+#include <Canvas.h>
+#include <Line.h>
 using namespace tsgl;
 
 /**

@@ -1,5 +1,5 @@
 /**
- * testProducerConsumer.cpp contains the code that shows the visualization for the Producer-Consumer problem using TSGL and pthreads.
+ * main.cpp contains the code that shows the visualization for the Producer-Consumer problem using TSGL and pthreads.
  * It utilizes a custom Queue class to make the shared buffer.
  * Producer and Consumer classes have been made in order to make the Producers and Consumers
  * A Thread class has been made in order to have an encapsulated pthread (which the Producer and Consumer class both inherit from).
@@ -10,10 +10,10 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "../../TSGL/tsgl.h"
-#include "ProducerConsumer/PCThread.h"
-#include "ProducerConsumer/Producer.h"
-#include "ProducerConsumer/Consumer.h"
+#include <tsgl.h>
+#include "PCThread.h"
+#include "Producer.h"
+#include "Consumer.h"
 using namespace tsgl;
 
 

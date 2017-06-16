@@ -3,7 +3,7 @@
  * Adapted from: http://jrdodds.blogs.com/blog/2006/06/encapsulating_a.html
  *				 https://slworkthings.wordpress.com/2009/11/10/a-pthread-wrapper-class-part-1/
  *				 https://cppcodetips.wordpress.com/2013/12/05/pthread-c-wrapper/
- *				 http://peter.bourgon.org/blog/2010/10/27/who-needs-boost-a-simple-pthreads-wrapper.html 
+ *				 http://peter.bourgon.org/blog/2010/10/27/who-needs-boost-a-simple-pthreads-wrapper.html
  *				 Practical Guide To Pthread Programming in C++ By Swaminathan Bhaskar (pdf)
  */
 #ifndef THREAD_H_
@@ -14,7 +14,7 @@
 
 /**
  * The Thread class encapsulates the details of creating a pthread.
- * It is abstract; cannot be instantiated. 
+ * It is abstract; cannot be instantiated.
  */
 class Thread {
 public:
@@ -24,7 +24,7 @@ public:
 	void start();  //Create the pthread and run the corresponding method
 	virtual void run() = 0;  //Needs to be defined by the inheriting subclass
 	void join();   //Join at the end
-	
+
 protected:
 	static void* threadFunction(void* obj); //The function that the pthread will run
 
