@@ -38,7 +38,8 @@ void Producer::produce() {
 		draw();
 		float itAngle = (i*2*PI + PI)/8; // angle of item
 		myCan->sleep();
-		myCan->drawCircle(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, myColor, true); // draw the item as a circle
+		Circle item(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, myColor, true); // draw the item as a circle
+		myCan.add(&item);
 		buffer->appendUnlock();
 	}
 }

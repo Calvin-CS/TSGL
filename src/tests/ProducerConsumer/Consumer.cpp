@@ -35,7 +35,8 @@ void Consumer::consume() {
 		draw(); // draw the color just found
 		// white out the location in drawn buffer
 		float itAngle = (i*2*PI + PI)/8; // angle of item
-		myCan->drawCircle(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, ColorFloat(255, 255, 255), true); // draw the item as a circle
+		Circle item(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, ColorFloat(255, 255, 255), true); // draw the item as a circle
+		myCan.add(&item);
 		buffer->removeUnlock();
 	}
 }

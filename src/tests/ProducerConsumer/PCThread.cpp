@@ -33,9 +33,11 @@ PCThread::PCThread(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & ca
  */
 void PCThread::draw() {
 	myCan->sleep();
-	myCan->drawCircle(myX, myY, 20, 32, myColor);
+	Circle myCircle(myX, myY, 20, 32, myColor);
+	myCan.add(&myCircle);
 	int textSize = 20;
 	if( count > 99 ) textSize = 15;
 	if( count > 999) textSize = 10;
-	myCan->drawText( to_string(count), myX-15, myY+5, textSize, BLACK);
+	Text myText( to_string(count), myX-15, myY+5, textSize, BLACK);
+	myCan.add(&myText);
 }
