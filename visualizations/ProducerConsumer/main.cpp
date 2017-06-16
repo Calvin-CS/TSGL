@@ -55,24 +55,27 @@ int main(int argc, char * argv[]) {
 	//Prepare the display with background items
 	int centerY = queueDisplay.getWindowHeight()/2;
 	int centerX = queueDisplay.getWindowWidth()/2;
-//	Line * queueLines = new Line[CAPACITY];
+	Line * queueLines = new Line[CAPACITY];
 	for(int i = 0; i < CAPACITY; i++) {
 		float langle = (i*2*PI)/CAPACITY; // line angle
-		//queueLines[i] = Line(-INNERRAD*sin(langle)+centerX, INNERRAD*cos(langle)+centerY, -OUTERRAD*sin(langle)+centerX, OUTERRAD*cos(langle)+centerY, BLACK);
+		queueLines[i] = Line(-INNERRAD*sin(langle)+centerX, INNERRAD*cos(langle)+centerY, -OUTERRAD*sin(langle)+centerX, OUTERRAD*cos(langle)+centerY, BLACK);
 
 	}
 
 	Rectangle r(20, 20, 100, 100, GREEN);
-//	Circle outerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK, false);
-	//queueDisplay.add(&outerQueue);
-	queueDisplay.drawCircle(centerX, centerY, OUTERRAD, CAPACITY, BLACK, false);
+	Circle outerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK, false);
+	queueDisplay.add(&outerQueue);
 
-	queueDisplay.drawText("Numbers indicate counts", WINDOW_WIDTH-260, WINDOW_HEIGHT-50, 20, BLACK);
-	queueDisplay.drawText("of produced/consumed", WINDOW_WIDTH-235, WINDOW_HEIGHT-30, 20, BLACK);
+	Text note1("Numbers indicate counts", WINDOW_WIDTH-260, WINDOW_HEIGHT-50, 20, BLACK);
+	Text note2("of produced/consumed", WINDOW_WIDTH-235, WINDOW_HEIGHT-30, 20, BLACK);
+	queueDisplay.add(&note1);
+	queueDisplay.add(&note2);
 
 	// Label Readers and Writers
-	queueDisplay.drawText("Producers", 20, 20, 20, BLACK);
-	queueDisplay.drawText("Consumers", WINDOW_HEIGHT-20, 20, 20, BLACK);
+	Text proText("Producers", 20, 20, 20, BLACK);
+	Text conText("Consumers", WINDOW_HEIGHT-20, 20, 20, BLACK);
+	queueDisplay.add(&proText);
+	queueDisplay.add(&conText);
 
 	//Fill the arrays of Producers and Consumers with Producer and Consumer objects
 	for(int i = 0; i < numProducers; i++) {
