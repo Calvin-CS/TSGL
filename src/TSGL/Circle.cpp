@@ -3,6 +3,7 @@
 namespace tsgl {
 
 Circle::Circle(int x, int y, int radius, int sides, ColorFloat color, bool filled) {
+    myColor = color;
     float delta = 2.0f / sides * PI;
     if (filled) {
         ConvexPolygon * cp = new ConvexPolygon(sides);

@@ -18,6 +18,7 @@ namespace tsgl {
 class Circle : public Shape {
  private:
     Shape * s;
+    ColorFloat myColor;
  public:
 
     /*!
@@ -43,6 +44,12 @@ class Circle : public Shape {
 
     //TODO: comment this
     float* getVerticesPointerForRenderer();
+
+    /**
+     * \brief Returns color of Circle
+     * \return: a ColorFloat representing the color of the circle
+     */
+    ColorFloat getColor() { return myColor; }
 
     ~Circle();
 };

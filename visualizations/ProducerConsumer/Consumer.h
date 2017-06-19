@@ -18,10 +18,11 @@ using namespace tsgl;
 class Consumer : public PCThread {
 public:
 	Consumer(); //Default constructor
-	Consumer(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & can);  //Explicit constructor
+	Consumer(Queue<Circle*> & sharedBuffer, unsigned long id, Canvas & can);  //Explicit constructor
 	void consume(); //Consume method
 	void run();	//Inheirted from Thread class; function that the pthread should run.
 private:
+	void removeItem(); //Helps consume() by removing an item from all its locations
 };
 
 #endif /* CONSUMER_H_ */

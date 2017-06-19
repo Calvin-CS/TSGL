@@ -6,6 +6,7 @@
  */
 Producer::Producer() : PCThread() {
 	myFirst = mySecond = myThird = 0;
+
 }
 
 /**
@@ -15,7 +16,7 @@ Producer::Producer() : PCThread() {
  * @param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue producing object into the Queue.
  * @return: The constructed Producer object.
  */
-Producer::Producer(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
+Producer::Producer(Queue<Circle*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myFirst = mySecond = myThird  = 0;
 	myX = 50; //Set the x-coordinate to 50
 	draw();
@@ -33,13 +34,13 @@ void Producer::produce() {
 		myColor = ColorInt(myFirst, mySecond, myThird);
 		buffer->appendLock();
 		int i = buffer->getLastIndex();
-		buffer->append(myColor, getId());  //Append something and pass your id along too
 		count++;
 		draw();
 		float itAngle = (i*2*PI + PI)/8; // angle of item
 		myCan->sleep();
-		Circle item(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, myColor, true); // draw the item as a circle
-		myCan.add(&item);
+		Circle * item = new Circle(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, myColor, true); // draw the item as a circle
+		myCan->add(item);
+		buffer->append(item, getId());  //Append something and pass your id along too
 		buffer->appendUnlock();
 	}
 }

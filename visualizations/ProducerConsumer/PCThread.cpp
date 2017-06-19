@@ -19,7 +19,7 @@ PCThread::PCThread() : Thread() {
  * \param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming objects from the Queue.
  * \return: The constructed PCThread object.
  */
-PCThread::PCThread(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & can) : Thread(id) {
+PCThread::PCThread(Queue<Circle*> & sharedBuffer, unsigned long id, Canvas & can) : Thread(id) {
 	count = 0;
 	myColor = ColorInt(0,0,0);
 	buffer = &sharedBuffer;	//Get the handle to the Queue
@@ -33,11 +33,11 @@ PCThread::PCThread(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & ca
  */
 void PCThread::draw() {
 	myCan->sleep();
-	Circle myCircle(myX, myY, 20, 32, myColor);
-	myCan.add(&myCircle);
+	myCircle = new Circle(myX, myY, 20, 32, myColor);
+	myCan->add(myCircle);
 	int textSize = 20;
 	if( count > 99 ) textSize = 15;
 	if( count > 999) textSize = 10;
-	Text myText( to_string(count), myX-15, myY+5, textSize, BLACK);
-	myCan.add(&myText);
+	myCan->drawText( to_string(count), myX-15, myY+5, textSize, BLACK);
+	//myCan->add(&myText); TODO: fix
 }

@@ -13,7 +13,7 @@ Consumer::Consumer() : PCThread() { }
  * @param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming object from the Queue.
  * @return: The constructed Consumer object.
  */
-Consumer::Consumer(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
+Consumer::Consumer(Queue<Circle*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = can.getWindowWidth() - 50;
 	draw();
 }
@@ -28,17 +28,20 @@ void Consumer::consume() {
 
 		buffer->removeLock();
 
-		int i = buffer->getFirstIndex();
-		myColor = buffer->remove();  //Take out data from the Queue and consume it
-		myCan->sleep();
+		removeItem();
+
 		count++;
 		draw(); // draw the color just found
 		// white out the location in drawn buffer
-		float itAngle = (i*2*PI + PI)/8; // angle of item
-		Circle item(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, ColorFloat(255, 255, 255), true); // draw the item as a circle
-		myCan.add(&item);
 		buffer->removeUnlock();
 	}
+}
+
+void Consumer::removeItem() {
+	Circle * item = buffer->remove();	//Take out data from the Queue and consume it
+	myCan->remove(item); 							//Remove the same item from the Canvas
+	myColor = item->getColor(); 			//Store the color
+	delete item; 											//Delete the unused pointer to avoid memory leaks
 }
 
 /**
