@@ -5,7 +5,8 @@
 #ifndef KEYNUMS_H_
 #define KEYNUMS_H_
 
-#include <GL/glew.h>
+// #include <GL/glew.h>
+#include "../glad/glad.h"      // New loader for GL function calls TODO: fix the path here
 #include <GLFW/glfw3.h>
 
 namespace tsgl {

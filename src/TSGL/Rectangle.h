@@ -36,6 +36,8 @@ class Rectangle : public Shape {
      */
     void draw();
 
+    void render();
+
     //TODO: comment this, implement
     float* getVerticesPointerForRenderer();
 };

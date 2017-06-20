@@ -5,7 +5,8 @@
 #ifndef SHAPE_H_
 #define SHAPE_H_
 
-#include <GL/glew.h>    // Needed for GL function calls
+// #include <GL/glew.h>    // Needed for GL function calls
+#include "../glad/glad.h"      // New loader for GL function calls TODO: fix the path here
 #include "Color.h"      // Needed for color type
 
 namespace tsgl {
@@ -35,6 +36,7 @@ class Shape {
  protected:
     bool isTextured; /*! Whether the shape is textured or not. If extending Shape, <B> you *must* leave this at false (unless you are working with an image). </B> */
     int renderLayer; // The depth index to control the drawing order of the shapes
+    ColorFloat shapeColor;
  public:
 
     /*!
@@ -74,6 +76,7 @@ class Shape {
      * \note Please refer to the class description for more information and warnings about overriding this method.
      */
     virtual void draw() = 0;  // Abstract method for actually drawing the shape
+    virtual void render() {return;}
 
     //TODO: comment this
     // virtual float* getVerticesPointerForRenderer() = 0;

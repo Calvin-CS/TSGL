@@ -41,7 +41,8 @@
   #include <thread>           // For spawning rendering in a different thread
 #endif
 
-#include <GL/glew.h>        // Needed for GL function calls
+// #include <GL/glew.h>        // Needed for GL function calls
+#include "../glad/glad.h"      // New loader for GL function calls TODO: fix the path here
 #include <GLFW/glfw3.h>     // For window creation and management
 
 #ifdef _WIN32
@@ -149,6 +150,7 @@ private:
                    double timerLength);                                 // Method for initializing the canvas
     void         initGl();                                              // Initializes the GL things specific to the Canvas
     void         initGlew();                                            // Initialized the GLEW things specific to the Canvas
+    void         initGLAD();                                            // Initialize the GL pipeline, that kinda stuff TODO
     static void  initGlfw();                                            // Initalizes GLFW for all future canvases.
     void         initWindow();                                          // Initalizes the window specific to the Canvas
     static void  keyCallback(GLFWwindow* window, int key,
