@@ -104,4 +104,43 @@ bool ConvexPolygon::testAddVertex() {
     }
 }
 
+void ConvexPolygon::setColor(ColorFloat c) {
+  for(int i = 2; i < size; i+=6) { //Set Red values
+    vertices[i] = c.R;
+  }
+  for(int i = 3; i < size; i+=6) { //Set Green values
+    vertices[i] = c.G;
+  }
+  for(int i = 4; i < size; i+=6) { //Set Blue values
+    vertices[i] = c.B;
+  }
+  for(int i = 5; i < size; i+=6) { //Set Alpha values
+    vertices[i] = c.A;
+  }
+}
+
+// void ConvexPolygon::findCenter() {
+//   int minX = maxX = vertices[0];
+//   int minY = maxY = vertices[1];
+//
+//   //Find min and max X
+//   for(int i = 0; i < length; i++) {
+//     if( vertices[i*6] < minX )
+//       minX = vertices[i*6];
+//     else if( vertices[i*6] > maxX )
+//       maxX = vertices[i*6];
+//   }
+//
+//   //Find min and max Y
+//   for(int i = 0; i < length; i++) {
+//     if( vertices[i*6+1] < minY )
+//       minY = vertices[i*6+1];
+//     else if( vertices[i*6+1] > maxY )
+//       maxY = vertices[i*6+1];
+//   }
+//
+//   centerX = (minX+maxX)/2;
+//   centerY = (minY+maxY)/2;
+// }
+
 }

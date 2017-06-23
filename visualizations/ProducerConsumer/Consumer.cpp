@@ -13,41 +13,42 @@ Consumer::Consumer() : PCThread() { }
  * @param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming object from the Queue.
  * @return: The constructed Consumer object.
  */
-Consumer::Consumer(Queue<Circle*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
+Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = can.getWindowWidth() - 50;
-	draw();
+	myCircle->setLocation(myX, myY);
+	myCan->add(myCircle);
 }
 
-/**
- * consume() method takes something from the buffer and consumes it.
- */
-void Consumer::consume() {
-	while(myCan->isOpen()) { //While the Canvas is still open...
-		//TODO: make random generator make more sense
-		sleep( (rand()%10+3)/10 ); //Wait for random time
-
-		buffer->removeLock();
-
-		removeItem();
-
-		count++;
-		draw(); // draw the color just found
-		// white out the location in drawn buffer
-		buffer->removeUnlock();
-	}
+//TODO: comment
+void Consumer::showArrow(Star * c) {
+	//arrow going from the star to this
+	Arrow arrow(c->getX(), c->getY(), myX-30, myY);
+	myCan->add(&arrow);
+	myCan->sleepFor(0.5);
+	while( paused ) {}
+	myCan->remove(&arrow);
 }
 
-void Consumer::removeItem() {
-	Circle * item = buffer->remove();	//Take out data from the Queue and consume it
+//TODO: comment
+void Consumer::lock() {
+	buffer->removeLock();
+	while( paused ) {}
+}
+
+//TODO: comment
+void Consumer::act() {
+	Star * item = buffer->remove();	//Take out data from the Queue and consume it
+	showArrow(item);
+	while( paused ) {}
 	myCan->remove(item); 							//Remove the same item from the Canvas
-	myColor = item->getColor(); 			//Store the color
+	while( paused ) {}
+	myCircle->setColor( item->getColor() );
 	delete item; 											//Delete the unused pointer to avoid memory leaks
+	count++;
 }
 
-/**
- * run() method is the implemented abstract method inherited from the Thread class.
- * Calls the consume() method.
- */
-void Consumer::run() {
-	consume();
+//TODO: comment
+void Consumer::unlock() {
+	buffer->removeUnlock();
+	while( paused ) {}
 }

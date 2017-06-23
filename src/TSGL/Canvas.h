@@ -17,6 +17,7 @@
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
 #include "Circle.h" // Our own class for concave polygons with colored vertices
+#include "HollowCircle.h" //Our own class for hollow circles
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
@@ -24,6 +25,7 @@
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
+#include "Star.h"           //Our own class for drawing stars
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles

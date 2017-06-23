@@ -139,7 +139,7 @@ void Canvas::clearObjectBuffer(bool shouldFreeMemory = false) {
 void Canvas::printBuffer() {
 
   // std::cout << "Printing array:" << std::endl << std::endl;
-  printf("Printing %d elements in buffer:\n\n", objectBuffer.size());
+  printf("Printing %ld elements in buffer:\n\n", objectBuffer.size());
 
   for(std::vector<Shape *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
     std::cout << *it << std::endl;

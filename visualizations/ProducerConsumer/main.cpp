@@ -5,7 +5,7 @@
  * A Thread class has been made in order to have an encapsulated pthread (which the Producer and Consumer class both inherit from).
  * Usage: ./ProducerConsumer [numberOfProducers] [numberOfConsumers]
  * (Update NOTE: The Canvases may be blank at startup sometimes. If this happens, kill the process in the terminal (using ^C), and
- *	 	         rerun testProducerConsumer.)
+ *	 	         rerun ProducerConsumer.)
  */
 
 #include <stdlib.h>
@@ -23,7 +23,7 @@ const int OUTERRAD = 150; // radius of the outercircle
 const int CAPACITY = 8;
 const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 500, MAX_DATA = 8; //Size of Canvas and limit on amount of data to be stored in Queue
 Canvas queueDisplay(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Producer-Consumer", FRAME * 13);  //Canvas to draw on
-Queue<Circle*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored data)
+Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored data)
 
 //Main method
 int main(int argc, char * argv[]) {
@@ -52,6 +52,10 @@ int main(int argc, char * argv[]) {
 
 	queueDisplay.setBackgroundColor(WHITE);
 
+	queueDisplay.bindToButton(TSGL_SPACE, TSGL_PRESS, []() { // toggle pause when spacebar is pressed
+		PCThread::paused = !PCThread::paused;
+	});
+
 	//Prepare the display with background items
 	int centerY = queueDisplay.getWindowHeight()/2;
 	int centerX = queueDisplay.getWindowWidth()/2;
@@ -62,20 +66,20 @@ int main(int argc, char * argv[]) {
 		queueDisplay.add(queueLines[i]);
 	}
 
-	Circle outerQueue(centerX, centerY, OUTERRAD, CAPACITY, BLACK, false);
+	HollowCircle outerQueue(centerX, centerY, OUTERRAD, CAPACITY, BLACK);
 	queueDisplay.add(&outerQueue);
-	Circle innerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK, false);
+	HollowCircle innerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK);
 	queueDisplay.add(&innerQueue);
 
 	//TODO: fix text
-	queueDisplay.drawText("Numbers indicate counts", WINDOW_WIDTH-260, WINDOW_HEIGHT-50, 20, BLACK);
-	queueDisplay.drawText("of produced/consumed", WINDOW_WIDTH-235, WINDOW_HEIGHT-30, 20, BLACK);
+	// queueDisplay.drawText("Numbers indicate counts", WINDOW_WIDTH-260, WINDOW_HEIGHT-50, 20, BLACK);
+	// queueDisplay.drawText("of produced/consumed", WINDOW_WIDTH-235, WINDOW_HEIGHT-30, 20, BLACK);
 	//queueDisplay.add(&note1);
 	//queueDisplay.add(&note2);
 
 	// Label Readers and Writers
-	queueDisplay.drawText("Producers", 20, 20, 20, BLACK);
-	queueDisplay.drawText("Consumers", WINDOW_HEIGHT-20, 20, 20, BLACK);
+	// queueDisplay.drawText("Producers", 20, 20, 20, BLACK);
+	// queueDisplay.drawText("Consumers", WINDOW_HEIGHT-20, 20, 20, BLACK);
 	//queueDisplay.add(&proText);
 	//queueDisplay.add(&conText);
 

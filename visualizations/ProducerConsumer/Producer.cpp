@@ -4,10 +4,7 @@
  * Default-constructor for the Producer class.
  * @return: The constructed Producer object.
  */
-Producer::Producer() : PCThread() {
-	myFirst = mySecond = myThird = 0;
-
-}
+Producer::Producer() : PCThread() { }
 
 /**
  * Explicit-constructor for the Producer class.
@@ -16,39 +13,54 @@ Producer::Producer() : PCThread() {
  * @param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue producing object into the Queue.
  * @return: The constructed Producer object.
  */
-Producer::Producer(Queue<Circle*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
-	myFirst = mySecond = myThird  = 0;
+Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = 50; //Set the x-coordinate to 50
-	draw();
+	myCircle->setLocation(myX, myY);
+	myCan->add(myCircle);
 }
 
-/**
- * produce() method generates a random color and attempts to append it to the shared buffer.
- */
-void Producer::produce() {
-	while (myCan->isOpen()) {  //While the Canvas is still open...
-		sleep( (rand()%10+3)/10 );
-		myFirst = rand() % 255;  //Generate your data and try to stick it in the Queue
-		mySecond = rand() % 255;
-		myThird = rand() % 255;
-		myColor = ColorInt(myFirst, mySecond, myThird);
-		buffer->appendLock();
-		int i = buffer->getLastIndex();
-		count++;
-		draw();
-		float itAngle = (i*2*PI + PI)/8; // angle of item
-		myCan->sleep();
-		Circle * item = new Circle(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, myColor, true); // draw the item as a circle
-		myCan->add(item);
-		buffer->append(item, getId());  //Append something and pass your id along too
-		buffer->appendUnlock();
-	}
+//TODO: comment
+void Producer::showArrow(Star * c) {
+	//arrow going from the star to this
+	Arrow arrow(myX+30, myY, c->getX(), c->getY());
+	myCan->add(&arrow);
+	myCan->sleepFor(0.5);
+	while( paused ) {}
+	myCan->remove(&arrow);
 }
 
-/**
- * run() method is the implemented abstract method inherited from the Thread class.
- * Calls the produce() method.
- */
-void Producer::run() {
-	produce();
+//TODO: comment
+ColorInt Producer::randColor() {
+	int red = rand() % 255;
+	int green = rand() % 255;
+	int blue = rand() % 255;
+	return ColorInt(red, green, blue);
+}
+
+//TODO: comment
+void Producer::lock() {
+	buffer->appendLock();
+	while( paused ) {}
+}
+
+//TODO: comment
+void Producer::act() {
+	int i = buffer->getLastIndex();
+	count++;
+	while( paused ) {}
+	ColorInt newColor = randColor();
+	myCircle->setColor( newColor );
+	float itAngle = (i*2*PI + PI)/8; // angle of item
+	myCan->sleep();
+	Star * item = new Star(100*cos(itAngle)+(myCan->getWindowWidth()/2), 100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 5, myCircle->getColor(), false); // draw the item as a star
+	while( paused ) {}
+	myCan->add(item);
+	buffer->append(item, getId());  //Append something and pass your id along too
+	showArrow(item);
+}
+
+//TODO: comment
+void Producer::unlock() {
+	buffer->appendUnlock(); //TODO: change name of method
+	while( paused ) {}
 }

@@ -18,12 +18,14 @@ using namespace tsgl;
 class Producer : public PCThread {
 public:
 	Producer(); //Default constructor
-	Producer(Queue<Circle*> & sharedBuffer, unsigned long id, Canvas & can);  //Size of data to generate	and id of pthread
-	void produce(); //Generate color data
-	void run();  //Implementation of run() method for pthread
+	Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can);  //Size of data to generate	and id of pthread
+	void lock();
+	void act();
+	void unlock();
 
 private:
-	int myFirst, mySecond, myThird; //Ints for the ColorInt to use in generating a random color
+	void showArrow(Star * c);
+	ColorInt randColor();
 };
 
 #endif /* PRODUCER_H_ */

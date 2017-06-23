@@ -1,11 +1,11 @@
 /*
- * Circle.h extends Shape and provides a class for drawing a circle to a Canvas.
+ * Circle.h extends ConvexPolygon and provides a class for drawing a circle to a Canvas.
  */
 
 #ifndef CIRCLE_H_
 #define CIRCLE_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "Shape.h"  // For extending our ConvexPolygon object
 #include "ConvexPolygon.h"
 #include "Polyline.h"
 
@@ -13,12 +13,11 @@ namespace tsgl {
 
 /*! \class Circle
  *  \brief Draw a circle.
- *  \details Circle is a class for holding Shape data for a circle.
+ *  \details Circle is a class for holding ConvexPolygon data for a circle.
  */
-class Circle : public Shape {
+class Circle : public ConvexPolygon {
  private:
-    Shape * s;
-    ColorFloat myColor;
+    int myX, myY, myRadius, mySides;
  public:
 
     /*!
@@ -34,24 +33,26 @@ class Circle : public Shape {
      *   \param filled Whether the circle should be filled
      *     (set to true by default).
      */
-    Circle(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true);
+    Circle(int x, int y, int radius, int sides, ColorFloat color = BLACK);
 
-    /*!
-     * \brief Draw the Line.
-     * \details This function actually draws the Line to the Canvas.
-     */
-    void draw();
-
-    //TODO: comment this
-    float* getVerticesPointerForRenderer();
+    //TODO: change or comment or something
+    int getX() { return myX; }
+    int getY() { return myY; }
 
     /**
-     * \brief Returns color of Circle
-     * \return: a ColorFloat representing the color of the circle
+     * \brief Moves Circle to different coordinates
+     * \details Sets the Circle's center to different x and y
+     *  \param x The x coordinate of the circle's center.
+     *  \param y The y coordinate of the circle's center.
      */
-    ColorFloat getColor() { return myColor; }
+    void setLocation(int x, int y);
 
-    ~Circle();
+    // /**
+    //  * \brief Changes the Circle's color
+    //  * \details Sets the Circle's color to a new color.
+    //  *  \param color The new ColorFloat of the circle.
+    //  */
+    // void setColor(ColorFloat color);
 };
 
 }

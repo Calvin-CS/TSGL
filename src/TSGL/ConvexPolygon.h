@@ -21,12 +21,16 @@ namespace tsgl {
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
 class ConvexPolygon : public Shape {
- private:
+protected:
     bool init;          // Whether the vertex has been initialized completely
     float* vertices;    // Buffer for vertex data
     int size,           // Number of floating point numbers in vertices
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
+ // protected:
+ //    float centerX,
+ //          centerY;
+ //    virtual void findCenter(); //TODO: comment or improve
 
     static bool testAddVertex();  // Unit test for addVertex()
  public:
@@ -74,6 +78,12 @@ class ConvexPolygon : public Shape {
      * \details Runs the Unit tests for the ConvexPolygon class. addVertex() is tested.
      */
     static void runTests();
+    //
+    // //TODO: comment and implement
+    // virtual int getX();
+    // virtual int getY();
+    virtual ColorFloat getColor() { return ColorFloat(vertices[2], vertices[3], vertices[4], vertices[5]); }
+    virtual void setColor(ColorFloat c);
 };
 
 }
