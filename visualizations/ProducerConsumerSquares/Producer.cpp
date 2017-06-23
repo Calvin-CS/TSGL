@@ -4,10 +4,7 @@
  * Default-constructor for the Producer class.
  * @return: The constructed Producer object.
  */
-Producer::Producer() : PCThread() {
-	myFirst = mySecond = myThird = 0;
-
-}
+Producer::Producer() : PCThread() { }
 
 /**
  * Explicit-constructor for the Producer class.
@@ -17,33 +14,10 @@ Producer::Producer() : PCThread() {
  * @return: The constructed Producer object.
  */
 Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
-	myFirst = mySecond = myThird  = 0;
 	myX = 50; //Set the x-coordinate to 50
-	myCircle->setLocation(myX, myY);
-	myCan->add(myCircle);
-}
-
-/**
- * produce() method generates a random color and attempts to append it to the shared buffer.
- */
-void Producer::produce() {
-	while (myCan->isOpen()) {  //While the Canvas is still open...
-		sleep( (rand()%10+3)/10 );
-		while( paused ) {}
-		buffer->appendLock();
-		int i = buffer->getLastIndex();
-		count++;
-		while( paused ) {}
-		myCircle->setColor( randColor() );
-		float itAngle = (i*2*PI + PI)/8; // angle of item
-		myCan->sleep();
-		Star * item = new Star(100*cos(itAngle)+(myCan->getWindowWidth()/2), 100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 5, myCircle->getColor(), false); // draw the item as a star
-		while( paused ) {}
-		myCan->add(item);
-		buffer->append(item, getId());  //Append something and pass your id along too
-		showArrow(item);
-		buffer->appendUnlock();
-	}
+	myShape = new Circle(myX, myY, 20, 32, ColorInt(0, 0, 0));
+	myShape->setCenter(myX, myY);
+	myCan->add(myShape);
 }
 
 //TODO: comment
@@ -64,11 +38,30 @@ ColorInt Producer::randColor() {
 	return ColorInt(red, green, blue);
 }
 
+//TODO: comment
+void Producer::lock() {
+	buffer->appendLock();
+	while( paused ) {}
+}
 
-/**
- * run() method is the implemented abstract method inherited from the Thread class.
- * Calls the produce() method.
- */
-void Producer::run() {
-	produce();
+//TODO: comment
+void Producer::act() {
+	int i = buffer->getLastIndex();
+	count++;
+	while( paused ) {}
+	ColorInt newColor = randColor();
+	myShape->setColor( newColor );
+	float itAngle = (i*2*PI + PI)/8; // angle of item
+	myCan->sleep();
+	Star * item = new Star(100*cos(itAngle)+(myCan->getWindowWidth()/2), 100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 5, myShape->getColor(), false); // draw the item as a star
+	while( paused ) {}
+	myCan->add(item);
+	buffer->append(item, getId());  //Append something and pass your id along too
+	showArrow(item);
+}
+
+//TODO: comment
+void Producer::unlock() {
+	buffer->appendUnlock(); //TODO: change name of method
+	while( paused ) {}
 }

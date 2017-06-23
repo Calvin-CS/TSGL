@@ -1,24 +1,22 @@
 /*
- * Star.h extends Shape and provides a class for drawing a star to a Canvas.
+ * Star.h extends ConcavePolygon and provides a class for drawing a star to a Canvas.
  */
 
 #ifndef STAR_H_
 #define STAR_H_
 
-#include "Shape.h"  // For extending our Shape object
 #include "ConcavePolygon.h"
 
 namespace tsgl {
 
 /*! \class Star
  *  \brief Draw a star
- *  \details Star is a class for holding other Shape data to draw a star
+ *  \details Star extends ConcavePolygon
  */
-class Star : public Shape {
+class Star : public ConcavePolygon {
 private:
   int myX, myY, myRadius, myPoints;
   ColorFloat myColor;
-  ConcavePolygon * s;
 public:
 
       /*!
@@ -31,21 +29,14 @@ public:
        *   \param points The number of points to use in the star.
        *   \param color The color of the star
        *     (set to BLACK by default).
+       *   \param ninja The ninja setting of the star, making the star points twisted differently if true
+       *     (set to false by default).
        */
-      Star(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = true);
-
-      /*!
-       * \brief Draw the Star.
-       * \details This function actually draws the Star to the Canvas.
-       */
-      void draw();
+      Star(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = false);
 
       int getX() { return myX; }
       int getY() { return myY; }
       ColorFloat getColor() { return myColor; }
-
-      //TODO: comment this
-      float* getVerticesPointerForRenderer();
 
 };
 

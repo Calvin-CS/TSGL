@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
 	Writer * writers = new Writer[numWriters]; //Array of Writers
 
 	//Draw labels
-	Rectangle dataRec(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY, true); // draw data area
+	Rectangle dataRec(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY); // draw data area
 	can.add(&dataRec);
 	// can.drawText(lockString, 50, WINDOW_HEIGHT-50, 20, BLACK);
 	// can.drawText("Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);

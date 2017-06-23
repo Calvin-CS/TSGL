@@ -38,7 +38,7 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 
 //TODO: comment and improve
 void PCThread::wait() {
-	myCan->sleepFor( (rand()%10+3)/10 );
+	myCan->sleepFor( (rand()%10+3.0)/10.0 );
 	while( paused ) {}
 }
 

@@ -15,7 +15,7 @@ Reader::Reader() : RWThread() { }
  */
 Reader::Reader(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can) : RWThread(sharedMonitor, id, can) {
 	myX = can.getWindowWidth()-50;
-	myCircle->setLocation(myX, myY);
+	myCircle->setCenter(myX, myY);
 	myCan->add( myCircle );
 }
 
@@ -28,24 +28,24 @@ void Reader::read() {
 		while( paused ) {}
 
 		//Request data access
-		myCircle->setLocation(myX-75, myY); //Move towards data
+		myCircle->setCenter(myX-75, myY); //Move towards data
 		data->startRead();  //Lock data for reading
 		myCan->sleepFor(RWThread::access_wait);
 		while( paused ) {}
-		myCircle->setLocation(myX-130, myY); //Move inside data
+		myCircle->setCenter(myX-130, myY); //Move inside data
 
 		//Read
 		Rectangle * rec = data->read(rand()%data->getItemCount()); //Get the color
 		myCircle->setColor( rec->getColor() );
 
 		//Draw and erase the arrow
-		int endX = rec->getX()+(RWThread::width/2), endY = rec->getY()+RWThread::width/2; //Calculate center coordinates of the item
+		int endX = rec->getX(), endY = rec->getY(); //Calculate center coordinates of the item
 		drawArrow(endX, endY);
 
 		//Release lock
 		count++; 			//Finished another read
 		while( paused ) {}
-		myCircle->setLocation(myX, myY); 	//Return to home location
+		myCircle->setCenter(myX, myY); 	//Return to home location
 		data->endRead(); 	//Unlock the data
 
 		myCan->sleepFor( (rand()%RWThread::WAIT_RANGE+RWThread::WAIT_MIN)/10.0 ); //Wait for a random time

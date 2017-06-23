@@ -1,11 +1,11 @@
 /*
- * ConvexPolygon.h extends Shape and provides a class for drawing a Convex polygon.
+ * ConvexPolygon.h extends Polygon and provides a class for drawing a Convex polygon.
  */
 
 #ifndef CONVEXPOLYGON_H_
 #define CONVEXPOLYGON_H_
 
-#include "Shape.h"       // For extending our Shape object
+#include "Polygon.h"       // For extending our Polygon object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -20,20 +20,8 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
-class ConvexPolygon : public Shape {
-protected:
-    bool init;          // Whether the vertex has been initialized completely
-    float* vertices;    // Buffer for vertex data
-    int size,           // Number of floating point numbers in vertices
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 6)
- // protected:
- //    float centerX,
- //          centerY;
- //    virtual void findCenter(); //TODO: comment or improve
-
-    static bool testAddVertex();  // Unit test for addVertex()
- public:
+class ConvexPolygon : public Polygon {
+public:
 
     /*!
      * \brief Explicitly constructs a new ConvexPolygon.
@@ -45,45 +33,12 @@ protected:
     ConvexPolygon(int numVertices);
 
     /*!
-     * \brief Destroys a ConvexPolygon object.
-     * \details Destructor for a ConvexPolygon.
-     * \details Frees up memory that was allocated to a ConvexPolygon object.
-     */
-    ~ConvexPolygon();
-
-    /*!
-     * \brief Adds another vertex to a ConvexPolygon.
-     * \details This function initializes the next vertex in the Polyline and adds it to a ConvexPolygon buffer.
-     *   \param x The x position of the vertex.
-     *   \param y The y position of the vertex.
-     *   \param color The reference variable of the color of the vertex.
-     * \note This function does nothing if the vertex buffer is already full.
-     * \note A message is given indicating when the vertex buffer is full.
-     */
-    void addVertex(int x, int y, const ColorFloat &color);
-
-    /*!
      * \brief Draw the ConvexPolygon.
      * \details This function actually draws the ConvexPolygon to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
      * \note A message is given indicating that the ConvexPolygon is *NOT* ready to be drawn yet (vertex buffer = not full).
      */
-    void draw();
-
-    //TODO: comment this, implement
-    float* getVerticesPointerForRenderer();
-
-    /*!
-     * \brief Runs the Unit tests.
-     * \details Runs the Unit tests for the ConvexPolygon class. addVertex() is tested.
-     */
-    static void runTests();
-    //
-    // //TODO: comment and implement
-    // virtual int getX();
-    // virtual int getY();
-    virtual ColorFloat getColor() { return ColorFloat(vertices[2], vertices[3], vertices[4], vertices[5]); }
-    virtual void setColor(ColorFloat c);
+    virtual void draw();
 };
 
 }

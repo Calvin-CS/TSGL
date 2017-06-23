@@ -66,9 +66,9 @@ int main(int argc, char * argv[]) {
 		queueDisplay.add(queueLines[i]);
 	}
 
-	HollowCircle outerQueue(centerX, centerY, OUTERRAD, CAPACITY, BLACK);
+	UnfilledCircle outerQueue(centerX, centerY, OUTERRAD, CAPACITY, BLACK);
 	queueDisplay.add(&outerQueue);
-	HollowCircle innerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK);
+	UnfilledCircle innerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK);
 	queueDisplay.add(&innerQueue);
 
 	//TODO: fix text

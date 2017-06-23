@@ -2,34 +2,7 @@
 
 namespace tsgl {
 
-TriangleStrip::TriangleStrip(int numVertices) {
-    if (numVertices < 3)
-      TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
-    length = numVertices;
-    size = length * 6;
-    current = 0;
-    vertices = new float[size];
-    init = false;
-}
-
-TriangleStrip::~TriangleStrip() {
-    delete[] vertices;
-}
-
-void TriangleStrip::addVertex(int x, int y, const ColorFloat &color) {
-    if (init) {
-      TsglDebug("Cannot add anymore vertices.");
-      return;
-    }
-    vertices[current] = x;
-    vertices[current + 1] = y;
-    vertices[current + 2] = color.R;
-    vertices[current + 3] = color.G;
-    vertices[current + 4] = color.B;
-    vertices[current + 5] = color.A;
-    current += 6;
-    if (current == size) init = true;
-}
+TriangleStrip::TriangleStrip(int numVertices) : ConvexPolygon(numVertices) { }
 
 void TriangleStrip::draw() {
     if (!init) {
@@ -38,12 +11,6 @@ void TriangleStrip::draw() {
     }
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
-}
-
-float* TriangleStrip::getVerticesPointerForRenderer() {
-  //TODO: return a pointer to an array of vertices that is formatted correctly for the new renderer
-  float* temp = new float[1];
-  return temp;
 }
 
 }

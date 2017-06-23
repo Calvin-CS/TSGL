@@ -131,7 +131,7 @@ void Canvas::remove(Shape * shapePtr) {
 
 }
 
-void Canvas::clearObjectBuffer(bool shouldFreeMemory = false) {
+void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
   //TODO: make this free memory when the user requests it!
   objectBuffer.clear();
 }

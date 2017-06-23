@@ -16,7 +16,7 @@ Writer::Writer() : RWThread() {
  */
 Writer::Writer(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can) : RWThread(sharedMonitor, id, can) {
 	myX = 50; //Set the x-coordinate to 50
-	myCircle->setLocation(myX, myY);
+	myCircle->setCenter(myX, myY);
 	myCan->add( myCircle );
 }
 
@@ -29,14 +29,14 @@ void Writer::write() {
 		while( paused ) {}
 
 		//Request data access
-		myCircle->setLocation(myX+75, myY);  //Move in toward data
+		myCircle->setCenter(myX+75, myY);  //Move in toward data
 		data->startWrite(); //Lock data for writing
 		myCan->sleepFor(RWThread::access_wait);
 
 		//Create and write
 		int id = randIndex();
 		while( paused ) {}
-		myCircle->setLocation(myX+130, myY); //Move inside data
+		myCircle->setCenter(myX+130, myY); //Move inside data
 		Rectangle * rec;
 		if( id < data->getItemCount() ) { //Change the color of an item
 			rec = data->read(id);
@@ -49,13 +49,13 @@ void Writer::write() {
 		myCircle->setColor( rec->getColor() );
 
 		//Draw an arrow down to the item
-		int endX = rec->getX()+(RWThread::width/2), endY = rec->getY()+RWThread::width/2;
+		int endX = rec->getX(), endY = rec->getY();
 		drawArrow(endX, endY);
 
 		//Release lock
 		count++; 			//Finished another write
 		while( paused ) {}
-		myCircle->setLocation(myX, myY); 	//Return to home location
+		myCircle->setCenter(myX, myY); 	//Return to home location
 		data->endWrite(); 	//Unlock the data for writing
 
 		myCan->sleepFor( (rand()%RWThread::WAIT_RANGE+RWThread::WAIT_MIN)/10.0 ); //Wait for a random time

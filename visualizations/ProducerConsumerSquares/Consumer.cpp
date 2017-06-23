@@ -15,37 +15,9 @@ Consumer::Consumer() : PCThread() { }
  */
 Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = can.getWindowWidth() - 50;
-	myCircle->setLocation(myX, myY);
-	myCan->add(myCircle);
-}
-
-/**
- * consume() method takes something from the buffer and consumes it.
- */
-void Consumer::consume() {
-	while(myCan->isOpen()) { //While the Canvas is still open...
-		//TODO: make random generator make more sense
-		sleep( (rand()%10+3)/10 ); //Wait for random time
-		while( paused ) {}
-
-		buffer->removeLock(); //TODO: change the name of this lock
-
-		removeItem();
-
-		count++;
-		buffer->removeUnlock();
-	}
-}
-
-//TODO: comment
-void Consumer::removeItem() {
-	Star * item = buffer->remove();	//Take out data from the Queue and consume it
-	showArrow(item);
-	while( paused ) {}
-	myCan->remove(item); 							//Remove the same item from the Canvas
-	while( paused ) {}
-	myCircle->setColor( item->getColor() );
-	delete item; 											//Delete the unused pointer to avoid memory leaks
+	myShape = new Rectangle(myX, myY, 40, 40, ColorInt(0, 0, 0));
+	myShape->setCenter(myX, myY);
+	myCan->add(myShape);
 }
 
 //TODO: comment
@@ -58,10 +30,26 @@ void Consumer::showArrow(Star * c) {
 	myCan->remove(&arrow);
 }
 
-/**
- * run() method is the implemented abstract method inherited from the Thread class.
- * Calls the consume() method.
- */
-void Consumer::run() {
-	consume();
+//TODO: comment
+void Consumer::lock() {
+	buffer->removeLock();
+	while( paused ) {}
+}
+
+//TODO: comment
+void Consumer::act() {
+	Star * item = buffer->remove();	//Take out data from the Queue and consume it
+	showArrow(item);
+	while( paused ) {}
+	myCan->remove(item); 							//Remove the same item from the Canvas
+	while( paused ) {}
+	myShape->setColor( item->getColor() );
+	delete item; 											//Delete the unused pointer to avoid memory leaks
+	count++;
+}
+
+//TODO: comment
+void Consumer::unlock() {
+	buffer->removeUnlock();
+	while( paused ) {}
 }

@@ -19,8 +19,10 @@ class Consumer : public PCThread {
 public:
 	Consumer(); //Default constructor
 	Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can);  //Explicit constructor
-	void consume(); //Consume method
-	void run();	//Inheirted from Thread class; function that the pthread should run.
+	void lock();
+	void act();
+	void unlock();
+
 private:
 	void removeItem(); //Helps consume() by removing an item from all its locations
 	void showArrow(Star * c); //Draws the arrow to show item being read

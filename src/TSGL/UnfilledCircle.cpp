@@ -1,8 +1,8 @@
-#include "HollowCircle.h"
+#include "UnfilledCircle.h"
 
 namespace tsgl {
 
-HollowCircle::HollowCircle(int x, int y, int radius, int sides, ColorFloat color) : Polyline(sides+1) {
+UnfilledCircle::UnfilledCircle(int x, int y, int radius, int sides, ColorFloat color) : Polyline(sides+1) {
   myX = x, myY = y;
   myRadius = radius;
   mySides = sides;

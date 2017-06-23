@@ -1,11 +1,11 @@
 /*
- * ConcavePolygon.h extends Shape and provides a class for drawing a Concave polygon to a Canvas.
+ * ConcavePolygon.h extends Polygon and provides a class for drawing a Concave polygon to a Canvas.
  */
 
 #ifndef CONCAVEPOLYGON_H_
 #define CONCAVEPOLYGON_H_
 
-#include "Shape.h"       // For extending our Shape object
+#include "Polygon.h"       // For extending our Polygon object
 #include "TsglAssert.h"  // For unit testing purposes
 #include <queue>         // std::queue
 #include <iostream>      // DEBUGGING
@@ -22,7 +22,7 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
-class ConcavePolygon : public Shape {
+class ConcavePolygon : public Polygon {
  private:
     bool init;          // Whether the vertex has been initialized completely
     bool dirty;         // Whether the new vertex buffer is dirty
