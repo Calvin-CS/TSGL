@@ -16,51 +16,8 @@ Writer::Writer() : RWThread() {
  */
 Writer::Writer(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can) : RWThread(sharedMonitor, id, can) {
 	myX = 50; //Set the x-coordinate to 50
-	myCircle->setCenter(myX, myY);
+	myCircle->setLocation(myX, myY);
 	myCan->add( myCircle );
-}
-
-/**
- * \brief write() method generates random colors and adds them in the shared data while the Canvas is open.
- */
-void Writer::write() {
-	while (myCan->isOpen()) {  //While the Canvas is still open...
-
-		while( paused ) {}
-
-		//Request data access
-		myCircle->setCenter(myX+75, myY);  //Move in toward data
-		data->startWrite(); //Lock data for writing
-		myCan->sleepFor(RWThread::access_wait);
-
-		//Create and write
-		int id = randIndex();
-		while( paused ) {}
-		myCircle->setCenter(myX+130, myY); //Move inside data
-		Rectangle * rec;
-		if( id < data->getItemCount() ) { //Change the color of an item
-			rec = data->read(id);
-			rec->setColor(randColor());
-		} else { //Create a new item
-			rec = makeRec(id); //Make random color at random index
-			data->write(rec, id);  // Write the item to the data
-			myCan->add(rec);
-		}
-		myCircle->setColor( rec->getColor() );
-
-		//Draw an arrow down to the item
-		int endX = rec->getX(), endY = rec->getY();
-		drawArrow(endX, endY);
-
-		//Release lock
-		count++; 			//Finished another write
-		while( paused ) {}
-		myCircle->setCenter(myX, myY); 	//Return to home location
-		data->endWrite(); 	//Unlock the data for writing
-
-		myCan->sleepFor( (rand()%RWThread::WAIT_RANGE+RWThread::WAIT_MIN)/10.0 ); //Wait for a random time
-
-	}
 }
 
 /**
@@ -107,10 +64,39 @@ Rectangle * Writer::makeRec(int index) {
 	return new Rectangle(x, y, RWThread::width, RWThread::width, randColor());
 }
 
-/**
- * \brief run() method is the implemented abstract method inherited from the RWThread class.
- * \details Calls the write() method.
- */
-void Writer::run() {
-	write();
+//TODO: comment
+void Writer::lock() {
+	myCircle->setLocation(myX+75, myY);  //Move in toward data
+	data->startWrite(); //Lock data for writing
+	myCan->sleepFor(RWThread::access_wait);
+}
+
+//TODO: comment
+void Writer::act() {
+	while( paused ) {}
+	int id = randIndex();
+	myCircle->setLocation(myX+130, myY); //Move inside data
+	Rectangle * rec;
+	if( id < data->getItemCount() ) { //Change the color of an item
+		rec = data->read(id);
+		rec->setColor(randColor());
+	} else { //Create a new item
+		rec = makeRec(id); //Make random color at random index
+		data->write(rec, id);  // Write the item to the data
+		myCan->add(rec);
+	}
+	myCircle->setColor( rec->getColor() );
+
+	//Draw an arrow down to the item
+	int endX = rec->getX()+(RWThread::width/2), endY = rec->getY()+RWThread::width/2;
+	drawArrow(endX, endY);
+}
+
+//TODO: comment
+void Writer::unlock() {
+	//Release lock
+	count++; 			//Finished another write
+	while( paused ) {}
+	myCircle->setLocation(myX, myY); 	//Return to home location
+	data->endWrite(); 	//Unlock the data for writing
 }

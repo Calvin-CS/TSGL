@@ -23,9 +23,9 @@ const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 800, MARGIN = 45; //Size of Canvas
 int main(int argc, char* argv[]) {
 
 	//Number of readers is the first argument or defaults to 4
-	int numReaders  = ( (argc > 1) && (atoi(argv[1]) > 0) && (atoi(argv[1]) <= 12) ) ? atoi(argv[1]) : 4;
+	int numReaders  = ( (argc > 1) && (atoi(argv[1]) > 0) && (atoi(argv[1]) <= 8) ) ? atoi(argv[1]) : 4;
 	//Number of writers is the second argument or defaults to 4
-	int numWriters = ( (argc > 2) && (atoi(argv[2]) > 0) && (atoi(argv[2]) <= 12) ) ? atoi(argv[2]) : 4;
+	int numWriters = ( (argc > 2) && (atoi(argv[2]) > 0) && (atoi(argv[2]) <= 8) ) ? atoi(argv[2]) : 4;
 
 	//Start Reader-Writer visualization
 	Canvas can(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Reader-Writer", 1.0f/2);  //Canvas to draw on
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
 	Writer * writers = new Writer[numWriters]; //Array of Writers
 
 	//Draw labels
-	Rectangle dataRec(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY); // draw data area
+	Rectangle dataRec(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY, true); // draw data area
 	can.add(&dataRec);
 	// can.drawText(lockString, 50, WINDOW_HEIGHT-50, 20, BLACK);
 	// can.drawText("Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);
@@ -72,8 +72,8 @@ int main(int argc, char* argv[]) {
 	if( argc > 4 && *argv[4] == 's' ) { //Set for starved possibility
 		if( *argv[3] == 'r' ) { //Readers mostly starve Writers
 			RWThread::WAIT_MIN = 2;
-			RWThread::WAIT_RANGE = 30;
-			RWThread::access_wait *= 10.0;
+			RWThread::WAIT_RANGE = 25;
+			RWThread::access_wait *= 5.0;
 		} else { //Writers starve Readers
 			RWThread::WAIT_MIN = 2;
 			RWThread::WAIT_RANGE = 10;

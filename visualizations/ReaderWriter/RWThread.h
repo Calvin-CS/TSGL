@@ -21,7 +21,11 @@ class RWThread : public Thread {
 public:
 	RWThread(); //Default constructor
 	RWThread(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can);  //Explicit constructor
-	virtual void run() = 0;	//Must be implemented by subclass
+	void run();
+	void wait();
+	virtual void lock() = 0; //Must be implemented by subclass
+	virtual void act() = 0; //Must be implemented by subclass
+	virtual void unlock() = 0; //Must be implemented by subclass
 	static const int width, dataX, dataY, dataHeight, dataWidth; //constants for display
 	static int WAIT_MIN, WAIT_RANGE;
 	static float access_wait;

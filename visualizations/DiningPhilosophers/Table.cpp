@@ -446,30 +446,30 @@ void Table::drawStep() {
   const float CLOSE = 0.175f;
   const float BASEDIST = RAD+64;
 
-  if( myCircle == NULL ) {
+  if( !myCircle ) { //If Table not already created
     myCircle = new Circle(tabX,tabY,RAD-48,RAD,DARKGRAY);
     myCan->add(myCircle);
   }
-  int i = omp_get_thread_num();
-    float pangle = (i*2*PI)/numPhils;
-    ColorFloat fcolor = BLACK;
-    float fangle = (i+0.5f)*ARC;
+  int i = omp_get_thread_num(); //Get index of calling Philosopher
+    float pangle = (i*2*PI)/numPhils; //Philosopher angle
+    ColorFloat fcolor = BLACK; //Fork color
+    float fangle = (i+0.5f)*ARC; //Fork angle
 
-    phils[i].draw(*myCan,tabX+RAD*cos(pangle),tabY+RAD*sin(pangle));
-    if( phils[i].state() == isFull ) { //Draw the next meal
+    phils[i].draw(*myCan,tabX+RAD*cos(pangle),tabY+RAD*sin(pangle)); //Draw Philosopher
+    if( phils[i].state() == isFull ) { //Draw the next meal if philosopher eating
         float angle = pangle+(phils[i].getMeals()/10)*2*PI/RAD, dist = BASEDIST+8*(phils[i].getMeals()%10);
         Circle * meal = new Circle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
-        myCan->add(meal);
+        phils[i].addMeal(*myCan, meal);
     }
-    if (forks[i].user == i) {
+    if (forks[i].user == i) { //Fork at this index belongs to this
       fangle = i*ARC + CLOSE;
       fcolor = (phils[i].state() == hasBoth) ? GREEN : PURPLE;
     }
-    else if((forks[i].user == (i+1)%numPhils)) {
+    else if((forks[i].user == (i+1)%numPhils)) { //Fork at this index belongs to neighbor
       fangle = ((i+1)*ARC) - CLOSE;
       fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? GREEN : ORANGE;
     } else {
-      FORK_RAD = 170; //If unheld, Fork goes on table
+      FORK_RAD = 170; //If unheld, Fork goes in to table
     }
-    forks[i].draw(*myCan,tabX+FORK_RAD*cos(fangle),tabY+FORK_RAD*sin(fangle),fangle,fcolor);
+    forks[i].draw(*myCan,tabX+FORK_RAD*cos(fangle),tabY+FORK_RAD*sin(fangle),fangle,fcolor); //Draw fork
 }

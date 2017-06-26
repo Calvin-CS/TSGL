@@ -22,8 +22,9 @@ class Reader : public RWThread {
 public:
 	Reader(); //Default constructor
 	Reader(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can); //Explicit constructor
-	void read(); //Read method
-	void run();  //Inheirted from RWThread class; function that the pthread should run.
+	void lock();
+	void act();
+	void unlock();
 private:
 	void drawArrow(int x, int y);
 };

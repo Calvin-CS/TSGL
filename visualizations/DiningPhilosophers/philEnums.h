@@ -1,3 +1,6 @@
+#ifndef PHIL_ENUM_H_
+#define PHIL_ENUM_H_
+
 /*! \brief Enum for valid states for the Dining Philosophers
 */
 enum PhilState {
@@ -15,3 +18,5 @@ enum PhilAction {
 enum PhilMethod {
   forfeitWhenBlocked, waitWhenBlocked, nFrameRelease, resourceHierarchy, oddEven
 };
+
+#endif /* PHIL_ENUM_H_ */

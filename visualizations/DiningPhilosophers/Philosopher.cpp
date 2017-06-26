@@ -1,11 +1,20 @@
 #include "Philosopher.h"
 
 Philosopher::Philosopher() {
-  setId(0,1); meals = 0; myState = hasNone; myAction = doNothing; myCircle = NULL;
+  setId(0,1);
+  meals = 0;
+  myState = hasNone;
+  myAction = doNothing;
+  myCircle = NULL;
 }
+
 Philosopher::~Philosopher() {
   delete myCircle;
+  for(unsigned i = 0; i < mealShapes.size(); i++) {
+    delete mealShapes[i];
+  }
 }
+
 void Philosopher::draw(Canvas& can, int x, int y) {
   const int SIZE = 32;
   ColorFloat c;
@@ -24,6 +33,18 @@ void Philosopher::draw(Canvas& can, int x, int y) {
   myCircle = new Circle(x,y,SIZE,SIZE,c);
   can.add(myCircle);
 }
+
+void Philosopher::eat() {
+  ++meals;
+  myState = thinking;
+  myAction = doNothing;
+}
+
+void Philosopher::addMeal(Canvas& can, Circle * c) {
+  can.add(c);
+  mealShapes.push_back(c);
+}
+
 bool Philosopher::acquire(Fork& f) {
   if (f.user >= 0)
     return false;
@@ -49,6 +70,7 @@ bool Philosopher::acquire(Fork& f) {
   }
   return false;
 }
+
 bool Philosopher::release(Fork& f) {
   if (f.user != id)
     return false;
@@ -57,8 +79,9 @@ bool Philosopher::release(Fork& f) {
   f.user = -1;
   return true;
 }
+
 void Philosopher::think() {
-  if(rand()%3 == 0) {
+  if(rand()%3 == 0) { // 1/3 probability to go to hungry state
     setState(hasNone);
     setAction(doNothing);
   }

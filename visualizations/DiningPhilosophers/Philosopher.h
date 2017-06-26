@@ -10,8 +10,9 @@
 #define PHILOSOPHER_H_
 
 #include <tsgl.h>
+#include <vector>
 #include "Fork.h"
-#include "enums.h" //TODO: make cleaner, move enums?
+#include "philEnums.h"
 
 using namespace tsgl;
 
@@ -21,6 +22,7 @@ private:
   PhilAction myAction;
   int id, myLeft, myRight, meals;
   Circle * myCircle;
+  std::vector<Circle*> mealShapes;
 public:
   Philosopher();
   ~Philosopher();
@@ -29,7 +31,8 @@ public:
   bool release(Fork& f);
   void think();
   int getMeals() { return meals; }
-  void eat() { ++meals; myState = thinking; myAction = doNothing; }
+  void eat();
+  void addMeal(Canvas& can, Circle * c);
   PhilState state() { return myState; }
   void setState(PhilState p) { myState = p; }
   PhilAction action() { return myAction; }

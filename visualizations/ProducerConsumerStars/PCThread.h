@@ -33,6 +33,7 @@ protected:
 	Queue<Star*> * buffer; //Handle to the current buffer
 	Canvas * myCan;  //Handle to the Canvas
 	ConvexPolygon * myShape;
+	Star * myItem; //Handle to item Produced/Consumed
 };
 
 #endif /* PCTHREAD_H_ */

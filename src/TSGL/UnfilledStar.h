@@ -1,25 +1,25 @@
 /*
- * Star.h extends ConcavePolygon and provides a class for drawing a star to a Canvas.
+ * UnfilledStar.h extends Polyline and provides a class for drawing a star to a Canvas.
  */
 
-#ifndef STAR_H_
-#define STAR_H_
+#ifndef UNFILLED_STAR_H_
+#define UNFILLED_STAR_H_
 
-#include "ConcavePolygon.h"
+#include "Polyline.h"
 
 namespace tsgl {
 
-/*! \class Star
+/*! \class UnfilledStar
  *  \brief Draw a star
- *  \details Star extends ConcavePolygon
+ *  \details UnfilledStar extends Polyline
  */
-class Star : public ConcavePolygon {
+class UnfilledStar : public Polyline {
 private:
   int myRadius, myPoints;
 public:
 
       /*!
-       * \brief Explicitly constructs a new Star.
+       * \brief Explicitly constructs a new UnfilledStar.
        * \details This function draws a star with the given center,
        *   radius, points, and color.
        *   \param x The x coordinate of the star's center.
@@ -31,7 +31,7 @@ public:
        *   \param ninja The ninja setting of the star, making the star points twisted differently if true
        *     (set to false by default).
        */
-      Star(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = false);
+      UnfilledStar(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = false);
 
       // int getX() { return myX; }
       // int getY() { return myY; }
@@ -41,4 +41,4 @@ public:
 
 }
 
-#endif /* STAR_H_ */
+#endif /* UNFILLED_STAR_H_ */

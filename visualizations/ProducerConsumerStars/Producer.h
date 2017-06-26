@@ -25,6 +25,7 @@ public:
 
 private:
 	void showArrow(Star * c);
+	Star* nextItem();
 	ColorInt randColor();
 };
 

@@ -10,6 +10,7 @@ PCThread::PCThread() : Thread() {
 	buffer = NULL;
 	myCan = NULL;
 	myShape = NULL;
+	myItem = NULL;
 	count = 0;
 	myX = myY = 0;
 }
@@ -27,6 +28,7 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myCan = &can;			//Get the handle to the Canvas
 	myY = 50 * (id + 1);
 	myX = 0; //Set in subclass constructor
+	myItem = NULL;
 }
 
 	// int textSize = 20;
@@ -37,7 +39,7 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 
 //TODO: comment and improve
 void PCThread::wait() {
-	myCan->sleepFor( (rand()%10+3.0)/10.0 );
+	myCan->sleepFor( (rand()%10+3.0)/5.0 );
 	while( paused ) {}
 }
 

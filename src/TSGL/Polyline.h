@@ -19,7 +19,7 @@ namespace tsgl {
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
 class Polyline : public Shape {
- private:
+protected:
     bool init;          // Whether the Polyline has been initialized completely
     float* vertices;    // Buffer for vertex data
     int size,           // Number of floating point numbers in vertices

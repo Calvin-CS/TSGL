@@ -16,7 +16,7 @@ ConcavePolygon::ConcavePolygon(int numVertices) : Polygon(numVertices) {
 }
 
 ConcavePolygon::~ConcavePolygon() {
-  delete[] vertices;
+  //vertices deleted in Polygon
   delete[] tarray;
 }
 
@@ -171,6 +171,16 @@ float* ConcavePolygon::getVerticesPointerForRenderer() {
   //TODO: return a pointer to an array of vertices that is formatted correctly for the new renderer
   float* temp = new float[1];
   return temp;
+}
+
+void ConcavePolygon::setColor(ColorFloat c) {
+  dirty = true;
+  Polygon::setColor(c);
+}
+
+void ConcavePolygon::setCenter(int x, int y) {
+  dirty = true;
+  Polygon::setCenter(x, y);
 }
 
 //----------------------------------------------Unit testing------------------------------

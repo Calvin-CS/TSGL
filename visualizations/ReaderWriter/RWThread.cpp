@@ -37,10 +37,23 @@ RWThread::RWThread(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canv
 	count = 0;
 	data = &sharedMonitor;	//Get the handle to the Monitor
 	myCan = &can;						//Get the handle to the Canvas
-	myY = 50 * (id + 1) + 40;
+	myY = 50 * (id + 1) + 60;
 	myX = 0; //Set in subclass constructor
 	myCircle = new Circle(myX, myY, 20, 32, BLACK); //Move based on new x in subclass
 	myCircle->setLayer(2);
 	//myText = new Text( count, ...);
 	//Text should go on layer 3, between Circle (2) and Arrow (5)
+}
+
+void RWThread::run() {
+	while( myCan->isOpen() ) {
+		lock();
+		act();
+		unlock();
+		wait();
+	}
+}
+
+void RWThread::wait() {
+	myCan->sleepFor( (rand()%RWThread::WAIT_RANGE+RWThread::WAIT_MIN)/10.0 ); //Wait for a random time
 }

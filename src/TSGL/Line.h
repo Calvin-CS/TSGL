@@ -1,11 +1,11 @@
 /*
- * Line.h extends Shape and provides a class for drawing a single line to a Canvas.
+ * Line.h extends Polyline and provides a class for drawing a single line to a Canvas.
  */
 
 #ifndef LINE_H_
 #define LINE_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "Polyline.h"  // For extending our Polyline object
 
 namespace tsgl {
 
@@ -13,9 +13,7 @@ namespace tsgl {
  *  \brief Draw a simple line.
  *  \details Line is a class for holding vertex data for a simple line.
  */
-class Line : public Shape {
- private:
-    float vertices[12];
+class Line : public Polyline {
  public:
 
     /*!
@@ -30,16 +28,6 @@ class Line : public Shape {
      */
     Line(int x1, int y1, int x2, int y2, const ColorFloat &color);
 
-    /*!
-     * \brief Draw the Line.
-     * \details This function actually draws the Line to the Canvas.
-     */
-    void draw();
-
-    //TODO: comment this
-    float* getVerticesPointerForRenderer();
-
-    ~Line();
 };
 
 }

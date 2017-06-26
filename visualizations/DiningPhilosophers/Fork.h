@@ -3,6 +3,9 @@
  * \brief Small struct for the forks in the Dining Philosophers' problem
  */
 
+#ifndef FORK_H_
+#define FORK_H_
+
 #include <tsgl.h>
 using namespace tsgl;
 
@@ -44,7 +47,7 @@ struct Fork {
         // without this line, the forks are perpendicular to philosophers
 
     for(int i = 0; i < POINTS; ++i) {
-      double a =  xs[i]*cos(angle) - ys[i]*sin(angle);
+      double a =  xs[i]*cos(angle) - ys[i]*sin(angle); // rotate fork
       double b =  xs[i]*sin(angle) + ys[i]*cos(angle);
       xs[i] = a+x; // transpose fork to be around table
       ys[i] = b+y;
@@ -61,3 +64,5 @@ struct Fork {
     can.add(myShape);
   }
 };
+
+#endif /* FORK_H_ */

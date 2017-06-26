@@ -16,6 +16,8 @@
 
 #include <tsgl.h>
 #include "Philosopher.h"
+#include "Fork.h"
+#include "philEnums.h"
 using namespace tsgl;
 
 class Table {

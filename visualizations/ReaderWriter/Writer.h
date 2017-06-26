@@ -23,8 +23,9 @@ class Writer : public RWThread {
 public:
 	Writer(); //Default constructor
 	Writer(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can); //Explicit constructor
-	void write(); //Generate color data
-	void run();   //Implementation of run() method for pthread
+	void lock();
+	void act();
+	void unlock();
 private:
 	ColorInt randColor();
 	int randIndex();

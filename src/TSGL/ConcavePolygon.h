@@ -24,14 +24,9 @@ namespace tsgl {
  */
 class ConcavePolygon : public Polygon {
  private:
-    bool init;          // Whether the vertex has been initialized completely
     bool dirty;         // Whether the new vertex buffer is dirty
-    float* vertices;    // Buffer for vertex data
     float* tarray;      // Buffer for recomputed vertex data
-    int size,           // Number of floating point numbers in vertices
-        tsize,          // Number of floating point numbers in tarray
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 6)
+    int tsize;          // Number of floating point numbers in tarray
 
     static bool testIntersects();     // Unit test for intersects()
     static bool testPointITriangle(); // Unit test for pointInTriangle()
@@ -109,6 +104,19 @@ class ConcavePolygon : public Polygon {
 
     //TODO: comment this, implement
     float* getVerticesPointerForRenderer();
+
+    /**
+     * \brief Sets the ConcavePolygon to a new color
+     * \param c The new ColorFloat.
+     */
+    virtual void setColor(ColorFloat c);
+
+    /**
+     * \brief Moves the ConcavePolygon to new coordinates
+     * \param x The new center x coordinate.
+     * \param y The new center y coordinate.
+     */
+    virtual void setCenter(int x, int y);
 
     /*!
      * \brief Runs the Unit tests.

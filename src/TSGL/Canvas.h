@@ -26,10 +26,13 @@
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
+#include "UnfilledRectangle.h" //Our own class for drawing unfilled rectangles
 #include "Star.h"           //Our own class for drawing stars
+#include "UnfilledStar.h" //Our own class for drawing unfilled stars
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
+#include "UnfilledTriangle.h" //Our own class for drawing unfilled triangles
 #include "Util.h"           // Needed constants and has cmath for performing math operations
 
 #include <functional>       // For callback upon key presses

@@ -14,7 +14,7 @@
  *  'f' for forfeitWhenBlocked, which results in Livelock
  *  'n' for nFrameRelease, which does not lock and is mostly fair for N philosophers, N >= 5
  *  'r' for resourceHierarchy, which does not lock and is mostly fair for N philosophers, N >= 2
- *  'o' for oddEven, which does not lock and is perfectly fair for N philosophers, N >= 2 (default)
+ *  'o' for oddEven, which does not lock and is perfectly fair for N philosophers, N >= 2 (also default)
  */
 
 #include <omp.h>
@@ -66,7 +66,7 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM) {
 		  if (!paused) {
       		t.checkStep();
       		can.pauseDrawing();
-        if(method == forfeitWhenBlocked || method == waitWhenBlocked) {
+        if(method == forfeitWhenBlocked || method == waitWhenBlocked) { //Synchronize to see Livelock and Deadlock
         #pragma omp barrier               //Barrier for optional synchronization
         }
       		t.actStep();
@@ -80,9 +80,9 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM) {
 }
 
 int main(int argc, char* argv[]) {
-    int  nphil = (argc > 1) ? atoi(argv[1]) : 5;
-    int  speed = (argc > 2) ? atoi(argv[2]) : 10;
-    std::string resM  = (argc > 3) ? argv[3] : "o";
+    int  nphil = (argc > 1) ? atoi(argv[1]) : 5;  //Number of philosophers defaults to 5
+    int  speed = (argc > 2) ? atoi(argv[2]) : 5; //Speed defaults to 5
+    std::string resM  = (argc > 3) ? argv[3] : "o"; //ResolutionMethod defaults to oddEven
     Canvas c(-1, -1, -1, -1, "Dining Philosophers",1.0f/speed);
     c.setBackgroundColor(WHITE);
     c.run(philosopherFunction,nphil,resM);

@@ -20,7 +20,10 @@ Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myCan->add(myShape);
 }
 
-//TODO: comment
+/**
+ * showArrow draws an arrow from the Star to the Consumer
+ * @param: c, a Star pointer for the location of the Arrow
+ */
 void Consumer::showArrow(Star * c) {
 	//arrow going from the star to this
 	Arrow arrow(c->getX(), c->getY(), myX-30, myY);
@@ -30,26 +33,37 @@ void Consumer::showArrow(Star * c) {
 	myCan->remove(&arrow);
 }
 
-//TODO: comment
+/**
+ * locks the Queue for consumption
+ */
 void Consumer::lock() {
-	buffer->removeLock();
+	//Show waiting status
+	myShape->setColor( BLACK );
+	if( myItem ) {
+		myCan->remove( myItem );
+		delete myItem;
+	}
+
+	buffer->consumerLock(); //Request lock
 	while( paused ) {}
 }
 
-//TODO: comment
+/**
+ * act goes through the process of consuming an item from Queue
+ */
 void Consumer::act() {
-	Star * item = buffer->remove();	//Take out data from the Queue and consume it
-	showArrow(item);
+	myItem = buffer->remove();	//Take out data from the Queue and consume it
+	showArrow(myItem); //Show Arrow from item to Consumer
 	while( paused ) {}
-	myCan->remove(item); 							//Remove the same item from the Canvas
-	while( paused ) {}
-	myShape->setColor( item->getColor() );
-	delete item; 											//Delete the unused pointer to avoid memory leaks
+	myItem->setCenter(myX-50, myY); //Move item next to Consumer
+	myShape->setColor( myItem->getColor() ); //Change Consumer color to Item color
 	count++;
 }
 
-//TODO: comment
+/**
+ * unlocks the Queue after consuming an item
+ */
 void Consumer::unlock() {
-	buffer->removeUnlock();
+	buffer->consumerUnlock();
 	while( paused ) {}
 }

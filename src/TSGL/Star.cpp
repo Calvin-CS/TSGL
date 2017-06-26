@@ -4,10 +4,8 @@ namespace tsgl {
 
 Star::Star(int x, int y, int radius, int points, ColorFloat color, bool ninja) : ConcavePolygon(points*2) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
-  myX = x, myY = y;
   myRadius = radius;
   myPoints = points;
-  myColor = color;
   float delta = 2.0f / points * PI;
   for(int i = 0; i < points; ++i) {
     addVertex(x+(radius/2)*cos(i*delta), y+(radius/2)*sin(i*delta),color);

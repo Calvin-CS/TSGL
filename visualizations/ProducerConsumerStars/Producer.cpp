@@ -16,11 +16,13 @@ Producer::Producer() : PCThread() { }
 Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = 50; //Set the x-coordinate to 50
 	myShape = new Circle(myX, myY, 20, 32, ColorInt(0, 0, 0));
-	myShape->setCenter(myX, myY);
 	myCan->add(myShape);
 }
 
-//TODO: comment
+/**
+ * showArrow draws an arrow from the Producer to a Star
+ * @param: c, a Star pointer for the location of the Arrow
+ */
 void Producer::showArrow(Star * c) {
 	//arrow going from the star to this
 	Arrow arrow(myX+30, myY, c->getX(), c->getY());
@@ -30,7 +32,9 @@ void Producer::showArrow(Star * c) {
 	myCan->remove(&arrow);
 }
 
-//TODO: comment
+/**
+ * randColor generates a new random ColorInt
+ */
 ColorInt Producer::randColor() {
 	int red = rand() % 255;
 	int green = rand() % 255;
@@ -38,30 +42,46 @@ ColorInt Producer::randColor() {
 	return ColorInt(red, green, blue);
 }
 
-//TODO: comment
+/**
+ * nextItem generates a new Star with a random color
+ */
+Star* Producer::nextItem() {
+	return new Star(myX+50, myY, 20, 5, randColor() );
+}
+
+/**
+ * locks the Queue for production
+ */
 void Producer::lock() {
-	buffer->appendLock();
+	myItem = nextItem();
+	myCan->add( myItem );
+	myShape->setColor( myItem->getColor() );
+	buffer->producerLock();
 	while( paused ) {}
 }
 
-//TODO: comment
+/**
+ * act goes through the process of adding a produced item to Queue
+ */
 void Producer::act() {
-	int i = buffer->getLastIndex();
-	count++;
 	while( paused ) {}
-	ColorInt newColor = randColor();
-	myShape->setColor( newColor );
-	float itAngle = (i*2*PI + PI)/8; // angle of item
 	myCan->sleep();
-	Star * item = new Star(100*cos(itAngle)+(myCan->getWindowWidth()/2), 100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 5, myShape->getColor(), false); // draw the item as a star
-	while( paused ) {}
-	myCan->add(item);
-	buffer->append(item, getId());  //Append something and pass your id along too
-	showArrow(item);
+	int i = buffer->getLastIndex();
+	float itAngle = (i*2*PI + PI)/8; // angle of item
+	buffer->append(myItem, getId());  //Append something and pass your id along too
+
+	//Show Item added to Queue
+	myItem->setCenter(100*cos(itAngle)+(myCan->getWindowWidth()/2), 100*sin(itAngle)+(myCan->getWindowHeight()/2));
+	myShape->setColor( ColorInt(0, 0, 0) );
+	showArrow(myItem);
+
+	count++;
 }
 
-//TODO: comment
+/**
+ * unlocks the Queue after production
+ */
 void Producer::unlock() {
-	buffer->appendUnlock(); //TODO: change name of method
+	buffer->producerUnlock(); //TODO: change name of method
 	while( paused ) {}
 }
