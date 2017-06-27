@@ -75,7 +75,7 @@ private:
     typedef std::function<void(double, double)>     doubleFunction;
     typedef std::function<void()>                   voidFunction;
 
-    std::vector<Shape *> objectBuffer;                                  // Holds a list of pointers to objects drawn each frame
+    std::vector<Drawable *> objectBuffer;                                  // Holds a list of pointers to objects drawn each frame
     int currentNewShapeLayerDefault = 0;                                // Layer value set for objects that haven't received an explicit layer designation (default 0)
 
     float           aspect;                                             // Aspect ratio used for setting up the window
@@ -97,8 +97,8 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
-    Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
+    Array<Drawable*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
+    Array<Drawable*> * myShapes;                                           // Our buffer of shapes to draw
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
@@ -177,7 +177,7 @@ private:
 
 protected:
     bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
-    void        drawShape(Shape* s);                                    // Draw a shape type
+    void        drawShape(Drawable* s);                                    // Draw a shape type
 public:
 
     /*!
@@ -254,8 +254,8 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-    void add(Shape * shapePtr);
-    void remove(Shape * shapePtr);
+    void add(Drawable * shapePtr);
+    void remove(Drawable * shapePtr);
     void clearObjectBuffer(bool shouldFreeMemory = false);
     void printBuffer();
     void pushObjectsToVertexBuffer();

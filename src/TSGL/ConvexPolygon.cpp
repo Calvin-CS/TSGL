@@ -2,7 +2,9 @@
 
 namespace tsgl {
 
-ConvexPolygon::ConvexPolygon(int numVertices) : Polygon(numVertices) { }
+ConvexPolygon::ConvexPolygon(int numVertices) : Polygon(numVertices) {
+  // outline = new Polyline(numVertices+1);
+}
 
 void ConvexPolygon::draw() {
     if (!init) {
@@ -11,6 +13,8 @@ void ConvexPolygon::draw() {
     }
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_FAN, 0, length);
+
+    drawOutline();
 }
 
 

@@ -1,11 +1,11 @@
 /*
- * Text.h extends Shape and provides a class for drawing a string of text to the Canvas.
+ * Text.h extends Drawable and provides a class for drawing a string of text to the Canvas.
  */
 
 #ifndef TEXT_H_
 #define TEXT_H_
 
-#include "Shape.h"          // For extending our Shape object
+#include "Drawable.h"          // For extending our Drawable object
 #include "TextureHandler.h"
 
 namespace tsgl {
@@ -16,7 +16,7 @@ namespace tsgl {
  *  \note Text is aligned by the upper-left corner.
  *  \note Fonts supported by FreeType are also supported.
  */
-class Text : public Shape {
+class Text : public Drawable {
  private:
     ColorFloat myColor;
     unsigned int myFontSize;

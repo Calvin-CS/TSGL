@@ -88,10 +88,11 @@ class ConcavePolygon : public Polygon {
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
      *      \param color The reference variable of the color of the vertex.
+     *      \param outlineColor The reference variable of the color the the vertex's outline.
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating that the vertex buffer is full.
      */
-    void addVertex(int x, int y, const ColorFloat &color);
+    void addVertex(int x, int y, const ColorFloat &color, ColorFloat outlineColor = BLACK);
 
     /*!
      * \brief Draw the ConcavePolygon.

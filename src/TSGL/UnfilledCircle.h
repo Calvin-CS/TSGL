@@ -5,8 +5,7 @@
 #ifndef UNFILLEDCIRCLE_H_
 #define UNFILLEDCIRCLE_H_
 
-#include "Shape.h"  // For extending our Polyline object
-#include "Polyline.h"
+#include "Polyline.h" // For extending our Polyline object
 
 namespace tsgl {
 

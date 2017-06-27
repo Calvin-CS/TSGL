@@ -22,7 +22,7 @@ public:
 	PCThread(); //Default constructor
 	PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can);  //Explicit constructor
 	virtual void run();	//Must be implemented by subclass
-	void wait();
+	virtual void wait();
 	virtual void lock() = 0; //Must be implemented by subclass
 	virtual void act() = 0; //Must be implemented by subclass
 	virtual void unlock() = 0; //Must be implemented by subclass

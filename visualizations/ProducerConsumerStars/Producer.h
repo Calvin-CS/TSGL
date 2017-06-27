@@ -19,6 +19,7 @@ class Producer : public PCThread {
 public:
 	Producer(); //Default constructor
 	Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can);  //Size of data to generate	and id of pthread
+	void wait();
 	void lock();
 	void act();
 	void unlock();

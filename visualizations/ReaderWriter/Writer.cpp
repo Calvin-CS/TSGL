@@ -16,7 +16,7 @@ Writer::Writer() : RWThread() {
  */
 Writer::Writer(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can) : RWThread(sharedMonitor, id, can) {
 	myX = 50; //Set the x-coordinate to 50
-	myCircle->setLocation(myX, myY);
+	myCircle->setCenter(myX, myY);
 	myCan->add( myCircle );
 }
 
@@ -66,7 +66,7 @@ Rectangle * Writer::makeRec(int index) {
 
 //TODO: comment
 void Writer::lock() {
-	myCircle->setLocation(myX+75, myY);  //Move in toward data
+	myCircle->setCenter(myX+75, myY);  //Move in toward data
 	data->startWrite(); //Lock data for writing
 	myCan->sleepFor(RWThread::access_wait);
 }
@@ -75,7 +75,7 @@ void Writer::lock() {
 void Writer::act() {
 	while( paused ) {}
 	int id = randIndex();
-	myCircle->setLocation(myX+130, myY); //Move inside data
+	myCircle->setCenter(myX+130, myY); //Move inside data
 	Rectangle * rec;
 	if( id < data->getItemCount() ) { //Change the color of an item
 		rec = data->read(id);
@@ -88,8 +88,7 @@ void Writer::act() {
 	myCircle->setColor( rec->getColor() );
 
 	//Draw an arrow down to the item
-	int endX = rec->getX()+(RWThread::width/2), endY = rec->getY()+RWThread::width/2;
-	drawArrow(endX, endY);
+	drawArrow(rec->getX(), rec->getY());
 }
 
 //TODO: comment
@@ -97,6 +96,6 @@ void Writer::unlock() {
 	//Release lock
 	count++; 			//Finished another write
 	while( paused ) {}
-	myCircle->setLocation(myX, myY); 	//Return to home location
+	myCircle->setCenter(myX, myY); 	//Return to home location
 	data->endWrite(); 	//Unlock the data for writing
 }

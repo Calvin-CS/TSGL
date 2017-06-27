@@ -28,7 +28,7 @@ class Triangle : public ConvexPolygon {
      *      \param color The color of the Triangle.
      * \return A new Triangle with the specified vertices and color.
      */
-    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color);
+    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color, ColorFloat outlineColor = BLACK);
 };
 
 }

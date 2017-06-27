@@ -13,9 +13,9 @@ UnfilledCircle::UnfilledCircle(int x, int y, int radius, int sides, ColorFloat c
       newX = x+radius*cos(i*delta);
       newY = y+radius*sin(i*delta);
       if (i > 0)
-          addNextVertex(oldX, oldY,color);
+          addVertex(oldX, oldY,color);
   }
-  addNextVertex(newX, newY,color);
+  addVertex(newX, newY,color);
 }
 
 }

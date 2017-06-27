@@ -1,11 +1,12 @@
 /*
- * Polygon.h extends Shape and provides a class for drawing a Convex polygon.
+ * Polygon.h extends Shape and provides a class for drawing a polygon.
  */
 
 #ifndef POLYGON_H_
 #define POLYGON_H_
 
 #include "Shape.h"       // For extending our Shape object
+#include "Polyline.h"    // For outline
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -22,12 +23,7 @@ namespace tsgl {
  */
 class Polygon : public Shape {
 protected:
-    bool init;          // Whether the vertex has been initialized completely
-    float* vertices;    // Buffer for vertex data
-    int size,           // Number of floating point numbers in vertices
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 6)
-
+  Polyline * outline;
     static bool testAddVertex();  // Unit test for addVertex()
  public:
 
@@ -41,30 +37,30 @@ protected:
     Polygon(int numVertices);
 
     /*!
-     * \brief Destroys a Polygon object.
-     * \details Destructor for a Polygon.
-     * \details Frees up memory that was allocated to a Polygon object.
-     */
-    virtual ~Polygon();
-
-    /*!
-     * \brief Adds another vertex to a Polygon.
-     * \details This function initializes the next vertex in the Polyline and adds it to a Polygon buffer.
-     *   \param x The x position of the vertex.
-     *   \param y The y position of the vertex.
-     *   \param color The reference variable of the color of the vertex.
-     * \note This function does nothing if the vertex buffer is already full.
-     * \note A message is given indicating when the vertex buffer is full.
-     */
-    virtual void addVertex(int x, int y, const ColorFloat &color);
-
-    /*!
      * \brief Draw the Polygon.
      * \details This function actually draws the Polygon to the Canvas.
      * \note This function does nothing if the vertex buffer is not yet full.
      * \note A message is given indicating that the Polygon is *NOT* ready to be drawn yet (vertex buffer = not full).
      */
     virtual void draw();
+
+    /*!
+     * \brief Adds another vertex to a Polygon.
+     * \details This function initializes the next vertex in the Polygon and adds it to a Shape buffer.
+     *   \param x The x position of the vertex.
+     *   \param y The y position of the vertex.
+     *   \param color The reference variable of the color of the vertex.
+     *   \param outlineColor The reference variables of the color of the vertex's outline.
+     * \note This function does nothing if the vertex buffer is already full.
+     * \note A message is given indicating when the vertex buffer is full.
+     */
+    virtual void addVertex(int x, int y, const ColorFloat& color, const ColorFloat& outlineColor = BLACK);
+
+    /**
+     * \brief Draws the Outline of the Polygon
+     * TODO: comment, maybe make protected
+     */
+    virtual void drawOutline();
 
     //TODO: comment this, implement
     virtual float* getVerticesPointerForRenderer();
@@ -82,29 +78,11 @@ protected:
     virtual ColorFloat getColor() { return ColorFloat(vertices[2], vertices[3], vertices[4], vertices[5]); }
 
     /**
-     * \brief Sets the Polygon to a new color
-     * \param c The new ColorFloat.
-     */
-    virtual void setColor(ColorFloat c);
-
-    /**
      * \brief Moves the Polygon to new coordinates
      * \param x The new center x coordinate.
      * \param y The new center y coordinate.
      */
     virtual void setCenter(int x, int y);
-
-    /**
-     * \brief Returns the x coordinate of the Polygon
-     * \return An int, the center x coordinate
-     */
-    virtual int getX();
-
-    /**
-     * \brief Returns the y coordinate of the Polygon
-     * \return An int, the center y coordinate
-     */
-    virtual int getY();
 };
 
 }

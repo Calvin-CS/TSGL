@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Polygon::Polygon(int numVertices) {
+Polygon::Polygon(int numVertices) : Shape(numVertices) {
     if (numVertices < 3)
       TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
     length = numVertices;
@@ -10,25 +10,7 @@ Polygon::Polygon(int numVertices) {
     current = 0;
     vertices = new float[size];
     init = false;
-}
-
-Polygon::~Polygon() {
-    delete[] vertices;
-}
-
-void Polygon::addVertex(int x, int y, const ColorFloat &color) {
-    if (init) {
-      TsglDebug("Cannot add anymore vertices.");
-      return;
-    }
-    vertices[current] = x;
-    vertices[current + 1] = y;
-    vertices[current + 2] = color.R;
-    vertices[current + 3] = color.G;
-    vertices[current + 4] = color.B;
-    vertices[current + 5] = color.A;
-    current += 6;
-    if (current == size) init = true;
+    outline = new Polyline(numVertices+1);
 }
 
 void Polygon::draw() {
@@ -38,6 +20,23 @@ void Polygon::draw() {
     }
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_FAN, 0, length);
+}
+
+void Polygon::setCenter(int x, int y) {
+  Shape::setCenter(x, y);
+  outline->setCenter(x, y);
+}
+
+void Polygon::drawOutline() {
+  outline->draw();
+}
+
+void Polygon::addVertex(int x, int y, const ColorFloat& color, const ColorFloat& outlineColor) {
+  Shape::addVertex(x, y, color);
+  outline->addVertex(x, y, outlineColor);
+  if( init ) {
+    outline->addVertex(vertices[0], vertices[1], outlineColor );
+  }
 }
 
 float* Polygon::getVerticesPointerForRenderer() {
@@ -103,61 +102,5 @@ bool Polygon::testAddVertex() {
       return false;
     }
 }
-
-void Polygon::setColor(ColorFloat c) {
-  for(int i = 2; i < size; i+=6) { //Set Red values
-    vertices[i] = c.R;
-  }
-  for(int i = 3; i < size; i+=6) { //Set Green values
-    vertices[i] = c.G;
-  }
-  for(int i = 4; i < size; i+=6) { //Set Blue values
-    vertices[i] = c.B;
-  }
-  for(int i = 5; i < size; i+=6) { //Set Alpha values
-    vertices[i] = c.A;
-  }
-}
-
-void Polygon::setCenter(int x, int y) {
-  int deltaX = x - getX(); //Change for x
-  int deltaY = y - getY(); //Change for y
-
-  for(int i = 0; i < length; i++) {
-    vertices[i*6]     += deltaX; //Transpose x
-    vertices[(i*6)+1] += deltaY; //Transpose y
-  }
-}
-
-int Polygon::getX() {
-  float minX, maxX;
-  minX = maxX = vertices[0];
-
-  //Find min and max X
-  for(int i = 0; i < length; i++) {
-    if( vertices[i*6] < minX )
-      minX = vertices[i*6];
-    else if( vertices[i*6] > maxX )
-      maxX = vertices[i*6];
-  }
-
-  return (minX+maxX)/2;
-}
-
-int Polygon::getY() {
-  float minY, maxY;
-  minY = maxY = vertices[1];
-
-  //Find min and max X
-  for(int i = 0; i < length; i++) {
-    if( vertices[i*6+1] < minY )
-      minY = vertices[i*6+1];
-    else if( vertices[i*6+1] > maxY )
-      maxY = vertices[i*6+1];
-  }
-
-  return (minY+maxY)/2;
-}
-
 
 }

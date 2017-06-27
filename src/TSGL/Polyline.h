@@ -19,13 +19,7 @@ namespace tsgl {
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
 class Polyline : public Shape {
-protected:
-    bool init;          // Whether the Polyline has been initialized completely
-    float* vertices;    // Buffer for vertex data
-    int size,           // Number of floating point numbers in vertices
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 6)
- public:
+public:
 
     /*!
      * \brief Explicitly constructs a new Polyline.
@@ -35,24 +29,6 @@ protected:
      * \return A new Polyline with a buffer for storing the specified numbered of vertices.
      */
     Polyline(int numVertices);
-
-    /*!
-     * \brief Destroys a Polyline object.
-     * \details Destructor for a Polyline object.
-     * \details Frees up memory allocated to a Polyline object.
-     */
-    ~Polyline();
-
-    /*!
-     * \brief Adds another vertex to a Polyline.
-     * \details This function initializes the next vertex in a Polyline and adds it to the Polyline's buffer.
-     *   \param x The x position of the vertex.
-     *   \param y The y position of the vertex.
-     *   \param color The reference variable to the color of the vertex (set to BLACK by default).
-     * \note This function does nothing if the vertex buffer is already full.
-     * \note A message is given indicating when the vertex buffer is full.
-     */
-    void addNextVertex(int x, int y, const ColorFloat &color = BLACK);
 
     /*!
      * \brief Draw the Polyline.
@@ -65,6 +41,12 @@ protected:
 
     //TODO: comment this, implement
     float* getVerticesPointerForRenderer();
+
+    /**
+     * \brief Gets the current color of the Polyline
+     * \return The ColorFloat of the Polyline.
+     */
+    virtual ColorFloat getColor() { return ColorFloat(vertices[2], vertices[3], vertices[4], vertices[5]); }
 };
 
 }

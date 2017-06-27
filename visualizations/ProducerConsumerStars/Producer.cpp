@@ -49,13 +49,18 @@ Star* Producer::nextItem() {
 	return new Star(myX+50, myY, 20, 5, randColor() );
 }
 
+void Producer::wait() {
+	myItem = nextItem();
+	myShape->setColor( myItem->getColor() );
+	PCThread::wait();
+}
+
 /**
  * locks the Queue for production
  */
 void Producer::lock() {
-	myItem = nextItem();
 	myCan->add( myItem );
-	myShape->setColor( myItem->getColor() );
+	myShape->setColor( ColorInt(0, 0, 0) );
 	buffer->producerLock();
 	while( paused ) {}
 }
@@ -72,7 +77,6 @@ void Producer::act() {
 
 	//Show Item added to Queue
 	myItem->setCenter(100*cos(itAngle)+(myCan->getWindowWidth()/2), 100*sin(itAngle)+(myCan->getWindowHeight()/2));
-	myShape->setColor( ColorInt(0, 0, 0) );
 	showArrow(myItem);
 
 	count++;
