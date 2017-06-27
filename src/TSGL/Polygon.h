@@ -24,6 +24,7 @@ namespace tsgl {
 class Polygon : public Shape {
 protected:
   Polyline * outline;
+  bool outlineOn;
     static bool testAddVertex();  // Unit test for addVertex()
  public:
 
@@ -83,6 +84,12 @@ protected:
      * \param y The new center y coordinate.
      */
     virtual void setCenter(int x, int y);
+
+    /**
+     * \brief Changes the outline setting
+     * \param outlineSetting A bool determining whether the outline is drawn.
+     */
+    void setOutline(bool outlineSetting) { outlineOn = outlineSetting; }
 };
 
 }

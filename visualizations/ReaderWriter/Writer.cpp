@@ -9,12 +9,12 @@ Writer::Writer() : RWThread() {
 
 /**
  * \brief Explicit-constructor for the Writer class.
- * \param sharedMonitor, a reference to the RWMonitor object that is shared between the Reader and Writer.
+ * \param sharedDatabase, a reference to the RWDatabase object that is shared between the Reader and Writer.
  * \param id, an unsigned long that will be passed to the Thread() constructor that will act as the id for the Thread object.
  * \param can, a handle to the Canvas that will be drawn on.
  * \return: The constructed Writer object.
  */
-Writer::Writer(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can) : RWThread(sharedMonitor, id, can) {
+Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : RWThread(sharedDatabase, id, can) {
 	myX = 50; //Set the x-coordinate to 50
 	myCircle->setCenter(myX, myY);
 	myCan->add( myCircle );

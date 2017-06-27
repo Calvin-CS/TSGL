@@ -1,38 +1,38 @@
 /**
- * WMonitor.h provides the monitor for the Reader-Writer visualization that gives preference to the Writers.
- * This class is a subclass of RWMonitor and implements its locking and unlocking virtual methods.
+ * WDatabase.h provides the monitor for the Reader-Writer visualization that gives preference to the Writers.
+ * This class is a subclass of RWDatabase and implements its locking and unlocking virtual methods.
  */
 
 #ifndef WMONITOR_H_
 #define WMONITOR_H_
 
 #include <pthread.h>
-#include "RWMonitor.h"
+#include "RWDatabase.h"
 
 template<class Item>
 
 /**
- * \class WMonitor
+ * \class WDatabase
  * \brief A monitor giving priority to Writers in the visualization.
- * \details Inheritance: RWMonitor class.
+ * \details Inheritance: RWDatabase class.
  * \details Implements the locking and unlocking methods of a monitor.
  */
-class WMonitor : public RWMonitor<Item> {
+class WDatabase : public RWDatabase<Item> {
 public:
-	WMonitor() : RWMonitor<Item>() {};			//Default  constructor
-	WMonitor(int max) : RWMonitor<Item>(max) {};	//Explicit constructor
-	void startRead();	//Inherited from RWMonitor class
-	void endRead();		//Inherited from RWMonitor class
-	void startWrite();//Inherited from RWMonitor class
-	void endWrite();	//Inherited from RWMonitor class
+	WDatabase() : RWDatabase<Item>() {};			//Default  constructor
+	WDatabase(int max) : RWDatabase<Item>(max) {};	//Explicit constructor
+	void startRead();	//Inherited from RWDatabase class
+	void endRead();		//Inherited from RWDatabase class
+	void startWrite();//Inherited from RWDatabase class
+	void endWrite();	//Inherited from RWDatabase class
 };
 
 /**
- * \brief startRead() implements the abstract method in RWMonitor
+ * \brief startRead() implements the abstract method in RWDatabase
  * \details Grants the calling thread access for reading, giving priority to writers
  */
 template<class Item>
-void WMonitor<Item>::startRead() {
+void WDatabase<Item>::startRead() {
 	pthread_mutex_lock( &this->lock );
 	++this->waitingReaders;
 	while( this->getItemCount() == 0 ) { //Wait for okToRead while vector is empty
@@ -47,11 +47,11 @@ void WMonitor<Item>::startRead() {
 }
 
 /**
- * \brief endRead() implements the abstract method in RWMonitor
+ * \brief endRead() implements the abstract method in RWDatabase
  * \details Releases the calling thread's read lock
  */
 template<class Item>
-void WMonitor<Item>::endRead() {
+void WDatabase<Item>::endRead() {
 	pthread_mutex_lock( &this->lock );
 	--this->activeReaders;
 	if( this->activeReaders == 0 && this->waitingWriters > 0 ) {
@@ -61,11 +61,11 @@ void WMonitor<Item>::endRead() {
 }
 
 /**
- * \brief startWrite() implements the abstract method in RWMonitor
+ * \brief startWrite() implements the abstract method in RWDatabase
  * \details Grants the calling thread acces for writing, giving priority to writers
  */
 template<class Item>
-void WMonitor<Item>::startWrite() {
+void WDatabase<Item>::startWrite() {
 	pthread_mutex_lock( &this->lock );
 	while( this->activeWriters > 0 || this->activeReaders > 0) { //Wait for anyone already in data
 		++this->waitingWriters;
@@ -77,11 +77,11 @@ void WMonitor<Item>::startWrite() {
 }
 
 /**
- * \brief endWrite() implements the abstract method in RWMonitor
+ * \brief endWrite() implements the abstract method in RWDatabase
  * \details Releases the calling thread's write lock
  */
 template<class Item>
-void WMonitor<Item>::endWrite() {
+void WDatabase<Item>::endWrite() {
 	pthread_mutex_lock( &this->lock );
 	--this->activeWriters;
 	if( this->waitingWriters > 0 ) { //Alert waiting Writer

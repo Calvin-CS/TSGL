@@ -61,6 +61,7 @@ struct Fork {
     for(int i = 0; i < POINTS; i++) {
       myShape->addVertex(xs[i], ys[i], c);
     }
+    myShape->setOutline(false);
     can.add(myShape);
   }
 };

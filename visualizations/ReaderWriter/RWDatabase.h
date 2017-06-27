@@ -1,5 +1,5 @@
 /**
- * RWMonitor.h provides a RWMonitor class for the Reader-Writer visualization.
+ * RWDatabase.h provides a RWDatabase class for the Reader-Writer visualization.
  * This class provides a superclass for the monitors with Reader or Writer preference, which are used by the threads.
  */
 
@@ -14,15 +14,15 @@ using namespace std;
 template<class Item>
 
 /**
- * \class RWMonitor
+ * \class RWDatabase
  * \brief An abstract monitor protecting a vector of data
- * \details Monitor has its locks and a vector
+ * \details Database has its locks and a vector
  * \details Locking methods must be implemented in subclass, giving priority to different types of threads.
  */
-class RWMonitor {
+class RWDatabase {
 public:
-	RWMonitor();					//Default constructor
-	RWMonitor(int max);				//Explicit constructor
+	RWDatabase();					//Default constructor
+	RWDatabase(int max);				//Explicit constructor
 	virtual void startRead() = 0;	//Must be defined by subclass
 	virtual void endRead() = 0;		//Must be defined by subclass
 	virtual void startWrite() = 0;	//Must be defined by subclass
@@ -41,11 +41,11 @@ protected:
 };
 
 /**
- * \brief Default constructor for the RWMonitor class
- * \return: The constructed RWMonitor object.
+ * \brief Default constructor for the RWDatabase class
+ * \return: The constructed RWDatabase object.
  */
 template<class Item>
-RWMonitor<Item>::RWMonitor() {
+RWDatabase<Item>::RWDatabase() {
 	vec = vector<Item>();
 	activeWriters = activeReaders = waitingWriters = waitingReaders = maxCapacity = 0;
 	lock = PTHREAD_MUTEX_INITIALIZER;
@@ -54,12 +54,12 @@ RWMonitor<Item>::RWMonitor() {
 }
 
 /**
- * \brief Explicit constructor for the RWMonitor class
+ * \brief Explicit constructor for the RWDatabase class
  * \param max, an int describing the maximum size of the contained vector
- * \return: The constructed RWMonitor object.
+ * \return: The constructed RWDatabase object.
  */
 template<class Item>
-RWMonitor<Item>::RWMonitor(int max) {
+RWDatabase<Item>::RWDatabase(int max) {
 	vec = vector<Item>();
 	activeWriters = activeReaders = waitingWriters = waitingReaders = 0;
 	lock = PTHREAD_MUTEX_INITIALIZER;
@@ -73,7 +73,7 @@ RWMonitor<Item>::RWMonitor(int max) {
  * \param index, an index in the vector to access a piece of data
  */
 template<class Item>
-Item RWMonitor<Item>::read(int index) {
+Item RWDatabase<Item>::read(int index) {
 	return vec[index];
 }
 
@@ -83,7 +83,7 @@ Item RWMonitor<Item>::read(int index) {
  * \param index, the index to add the Item it
  */
 template<class Item>
-void RWMonitor<Item>::write(Item it, unsigned index) {
+void RWDatabase<Item>::write(Item it, unsigned index) {
 	if( index >= vec.size() ) {
 		if( index > maxCapacity )
 			throw range_error("Item added beyond max capacity");

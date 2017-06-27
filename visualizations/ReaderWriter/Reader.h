@@ -6,8 +6,8 @@
 
 #include <omp.h>
 #include <tsgl.h>
-#include "RWMonitor.h"
-#include "WMonitor.h"
+#include "RWDatabase.h"
+#include "WDatabase.h"
 #include "RWThread.h"
 #include "Thread.h"
 using namespace tsgl;
@@ -21,7 +21,7 @@ using namespace tsgl;
 class Reader : public RWThread {
 public:
 	Reader(); //Default constructor
-	Reader(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can); //Explicit constructor
+	Reader(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can); //Explicit constructor
 	void lock();
 	void act();
 	void unlock();

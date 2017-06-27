@@ -8,12 +8,12 @@ Reader::Reader() : RWThread() { }
 
 /**
  * \brief Explicit-constructor for the Reader class.
- * \param: sharedData, a reference to the RWMonitor object that is shared between the Reader and Writer.
+ * \param: sharedData, a reference to the RWDatabase object that is shared between the Reader and Writer.
  * \param: id, an unsigned long that will be passed to the Thread() constructor that will act as the id for the Thread object.
  * \param: can, a handle to the Canvas that will be drawn on.
  * \return: The constructed Reader object.
  */
-Reader::Reader(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can) : RWThread(sharedMonitor, id, can) {
+Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : RWThread(sharedDatabase, id, can) {
 	myX = can.getWindowWidth()-50;
 	myCircle->setCenter(myX, myY);
 	myCan->add( myCircle );

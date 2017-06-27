@@ -12,9 +12,9 @@
 #include <cassert> // assert
 #include "Reader.h"
 #include "Writer.h"
-#include "RWMonitor.h"
-#include "WMonitor.h"
-#include "RMonitor.h"
+#include "RWDatabase.h"
+#include "WDatabase.h"
+#include "RDatabase.h"
 using namespace tsgl;
 
 //Constants
@@ -35,14 +35,14 @@ int main(int argc, char* argv[]) {
 	can.setBackgroundColor(WHITE);
 
 	//Create monitor
-	RWMonitor<Rectangle*> * monitor;
+	RWDatabase<Rectangle*> * monitor;
 	string lockString; //String description of lock style
 	int maxItems = floor(RWThread::dataWidth / RWThread::width) * floor(RWThread::dataHeight / RWThread::width);
-	if( argc > 3 && *argv[3] == 'r' ) { //Create Reader preference Monitor
-		monitor = new RMonitor<Rectangle*>(maxItems);
+	if( argc > 3 && *argv[3] == 'r' ) { //Create Reader preference Database
+		monitor = new RDatabase<Rectangle*>(maxItems);
 		lockString = "Reader priority";
-	} else {							//Create Writer preference Monitor
-		monitor = new WMonitor<Rectangle*>(maxItems);
+	} else {							//Create Writer preference Database
+		monitor = new WDatabase<Rectangle*>(maxItems);
 		lockString = "Writer priority";
 	}
 

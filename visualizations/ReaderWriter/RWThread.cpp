@@ -24,18 +24,18 @@ RWThread::RWThread() : Thread() {
 
 /**
  * \brief Explicit-constructor for the RWThread class.
- * \param: sharedMonitor, a reference to the RWMonitor object that is shared between the Reader and Writer.
+ * \param: sharedDatabase, a reference to the RWDatabase object that is shared between the Reader and Writer.
  * \param: id, an unsigned long that will be passed to the Thread() constructor that will act as the id for the Thread object.
  * \param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming object from the Queue.
  * \return: The constructed RWThread object.
  */
-RWThread::RWThread(RWMonitor<Rectangle*> & sharedMonitor, unsigned long id, Canvas & can) : Thread(id) {
+RWThread::RWThread(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : Thread(id) {
 	//Update static variables
 	threadCount++;
 	access_wait = 1.0/threadCount;
 
 	count = 0;
-	data = &sharedMonitor;	//Get the handle to the Monitor
+	data = &sharedDatabase;	//Get the handle to the Database
 	myCan = &can;						//Get the handle to the Canvas
 	myY = 50 * (id + 1) + 60;
 	myX = 0; //Set in subclass constructor

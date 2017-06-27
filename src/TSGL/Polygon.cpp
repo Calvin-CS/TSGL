@@ -11,6 +11,7 @@ Polygon::Polygon(int numVertices) : Shape(numVertices) {
     vertices = new float[size];
     init = false;
     outline = new Polyline(numVertices+1);
+    outlineOn = true;
 }
 
 void Polygon::draw() {
@@ -28,7 +29,8 @@ void Polygon::setCenter(int x, int y) {
 }
 
 void Polygon::drawOutline() {
-  outline->draw();
+  if( outlineOn )
+    outline->draw();
 }
 
 void Polygon::addVertex(int x, int y, const ColorFloat& color, const ColorFloat& outlineColor) {
