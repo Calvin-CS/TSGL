@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <tsgl.h>
+#include <exception> //for try-catch debugging
 #include "PCThread.h"
 #include "Producer.h"
 #include "Consumer.h"
@@ -22,8 +23,42 @@ const int INNERRAD = 75;  // radius of the inner circle
 const int OUTERRAD = 150; // radius of the outercircle
 const int CAPACITY = 8;
 const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 500, MAX_DATA = 8; //Size of Canvas and limit on amount of data to be stored in Queue
-Canvas queueDisplay(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Producer-Consumer", FRAME * 13);  //Canvas to draw on
+Canvas queueDisplay(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Producer-Consumer", FRAME );  //Canvas to draw on
 Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored data)
+Canvas legendDisplay(0, WINDOW_HEIGHT+40, WINDOW_WIDTH, 200, "Producer-Consumer Legend", FRAME );
+
+
+/**
+ * displayLegend helps the main method by controlling the legendDisplay
+ */
+void displayLegend() {
+	//Setup Canvas
+	legendDisplay.start();
+	legendDisplay.setBackgroundColor(WHITE);
+
+	int colorChanger = 0; //Counting int to control random bright colors
+	Circle waitingCircle(50, 60, 20, 32, BLACK);
+	Circle thinkingCircle(50, 130, 20, 32, BLACK);
+	Rectangle waitingSquare(WINDOW_WIDTH-70, 40, 40, 40, BLACK);
+	Rectangle thinkingSquare(WINDOW_WIDTH-70, 110, 40, 40, BLACK);
+	legendDisplay.add( &waitingCircle );
+	legendDisplay.add( &thinkingCircle );
+	legendDisplay.add( &waitingSquare );
+	legendDisplay.add( &thinkingSquare );
+
+	//TODO: add text
+	while( legendDisplay.isOpen() ) {
+		waitingCircle.setColor( Colors::highContrastColor(colorChanger) );
+		waitingSquare.setColor( Colors::highContrastColor(colorChanger) );
+			legendDisplay.sleepFor(1.0);
+		colorChanger++;
+		if( !queueDisplay.isOpen() )
+			legendDisplay.stop(); //Closes and waits for Canvas
+	}
+
+	queueDisplay.wait();
+	// pthread_exit(0);
+}
 
 //Main method
 int main(int argc, char * argv[]) {
@@ -49,7 +84,6 @@ int main(int argc, char * argv[]) {
 
 	//Fire up the visualization
   queueDisplay.start();
-
 	queueDisplay.setBackgroundColor(WHITE);
 
 	queueDisplay.bindToButton(TSGL_SPACE, TSGL_PRESS, []() { // toggle pause when spacebar is pressed
@@ -102,18 +136,33 @@ int main(int argc, char * argv[]) {
 		sleep(0.3);
 	}
 
-	queueDisplay.wait(); // wait until queueDisplay is closed
+	//Legend shapes
+	//TODO:Add text labeling both circles
+	// pthread_t legendThread;
+	// pthread_create(&legendThread, NULL, displayLegend, NULL);
+	//
+	// //Wait for user to exit main Canvas
+	// // queueDisplay.wait();
+	// //Join the thread controlling legend
+	// std::cout << pthread_join(legendThread, NULL) << std::endl;
+
+	displayLegend();
 
 	//Now join them
-	for(int o = 0; o < numProducers; o++) {	//Join the pthreads for the Producers
-		pro[o].join();
+	for(int p = 0; p < numProducers; p++) {	//Join the pthreads for the Producers
+		pro[p].join();
 	}
 
-	for(int p = 0; p < numConsumers; p++) {   //Join the pthreads for the Consumers
-		con[p].join();
+	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
+		con[c].join();
 	}
 
-	//Cleanup the Canvas and free up memory
+
+	while( !sharedBuffer.isEmpty() ) {
+		Star * tempPtr = sharedBuffer.remove();
+		delete tempPtr;
+	}
+
 	delete [] pro;
 	delete [] con;
 	pro = NULL;

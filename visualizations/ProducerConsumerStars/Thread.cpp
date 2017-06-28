@@ -18,8 +18,8 @@ Thread::Thread(unsigned long id) {
 }
 
 /**
- * threadFunction() is the function that the pthread should run as soon as it is created. 
- * @param: obj, a void* that will be statically casted into a Thread object. 
+ * threadFunction() is the function that the pthread should run as soon as it is created.
+ * @param: obj, a void* that will be statically casted into a Thread object.
  *              It will run the run() function, which will be defined by the inheriting subclass.
  ^ @return: NULL.
  */

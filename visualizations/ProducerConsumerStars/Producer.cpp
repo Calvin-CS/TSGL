@@ -20,19 +20,6 @@ Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 }
 
 /**
- * showArrow draws an arrow from the Producer to a Star
- * @param: c, a Star pointer for the location of the Arrow
- */
-void Producer::showArrow(Star * c) {
-	//arrow going from the star to this
-	Arrow arrow(myX+30, myY, c->getX(), c->getY());
-	myCan->add(&arrow);
-	myCan->sleepFor(0.5);
-	while( paused ) {}
-	myCan->remove(&arrow);
-}
-
-/**
  * randColor generates a new random ColorInt
  */
 ColorInt Producer::randColor() {
@@ -46,7 +33,7 @@ ColorInt Producer::randColor() {
  * nextItem generates a new Star with a random color
  */
 Star* Producer::nextItem() {
-	return new Star(myX+50, myY, 20, 5, randColor() );
+	return new Star(myX+50, myY, 20, 8, randColor(), true );
 }
 
 void Producer::wait() {
@@ -60,8 +47,9 @@ void Producer::wait() {
  */
 void Producer::lock() {
 	myCan->add( myItem );
-	myShape->setColor( ColorInt(0, 0, 0) );
+	myShape->setColor( BLACK );
 	buffer->producerLock();
+	myShape->setColor( WHITE );
 	while( paused ) {}
 }
 
@@ -72,12 +60,12 @@ void Producer::act() {
 	while( paused ) {}
 	myCan->sleep();
 	int i = buffer->getLastIndex();
-	float itAngle = (i*2*PI + PI)/8; // angle of item
 	buffer->append(myItem, getId());  //Append something and pass your id along too
 
 	//Show Item added to Queue
-	myItem->setCenter(100*cos(itAngle)+(myCan->getWindowWidth()/2), 100*sin(itAngle)+(myCan->getWindowHeight()/2));
-	showArrow(myItem);
+	float itAngle = (i*2*PI + PI)/8; // angle of item
+	int endX = 100*cos(itAngle)+(myCan->getWindowWidth()/2), endY = 100*sin(itAngle)+(myCan->getWindowHeight()/2);
+	animateItem(endX, endY);
 
 	count++;
 }

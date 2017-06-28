@@ -51,3 +51,22 @@ void PCThread::run() {
 		unlock();
 	}
 }
+
+void PCThread::animateItem(int endX, int endY) {
+	const int steps = 20;
+	const float timeInterval = 0.7;
+	int startX = myItem->getX(), startY = myItem->getY();
+
+	Arrow arrow(startX, startY, endX, endY);
+	myCan->add(&arrow);
+
+	float deltaX = (endX - startX) / float(steps); //Change in x each step
+	float deltaY = (endY - startY) / float(steps); //Change in y each step
+
+	for(int i = 0; i <= steps; i++) {
+		myItem->setCenter( round( startX+ i*deltaX ), round(startY+i*deltaY));
+		myCan->sleepFor( timeInterval / steps );
+	}
+
+	myCan->remove(&arrow);
+}

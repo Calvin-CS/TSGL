@@ -45,6 +45,7 @@ void Consumer::lock() {
 	}
 
 	buffer->consumerLock(); //Request lock
+	myShape->setColor( WHITE );
 	while( paused ) {}
 }
 
@@ -53,9 +54,9 @@ void Consumer::lock() {
  */
 void Consumer::act() {
 	myItem = buffer->remove();	//Take out data from the Queue and consume it
-	showArrow(myItem); //Show Arrow from item to Consumer
+	int endX = myShape->getX()-50, endY = myShape->getY();
+	animateItem(endX, endY);
 	while( paused ) {}
-	myItem->setCenter(myX-50, myY); //Move item next to Consumer
 	myShape->setColor( myItem->getColor() ); //Change Consumer color to Item color
 	count++;
 }

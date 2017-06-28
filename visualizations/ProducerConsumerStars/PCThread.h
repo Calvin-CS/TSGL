@@ -28,6 +28,7 @@ public:
 	virtual void unlock() = 0; //Must be implemented by subclass
 	static std::atomic<bool> paused;
 protected:
+	void animateItem(int endX, int endY);
 	int myX, myY; //Center coordinates for the PCThread
 	int count; //Number of colors processed (produced or consumed)
 	Queue<Star*> * buffer; //Handle to the current buffer
