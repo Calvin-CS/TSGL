@@ -11,50 +11,48 @@ namespace tsgl {
     }
   }
 
-  // Shader sources
-  static const GLchar* vertexSource =
-  "#version 150 core\n"
-  "in vec2 position;"
-  "in vec4 color;"
-  "out vec4 Color;"
-  "uniform mat4 model;"
-  "uniform mat4 view;"
-  "uniform mat4 proj;"
-  "void main() {"
-  "   Color = color;"
-  "   gl_Position = proj * view * model * vec4(position, 0.0, 1.0);"
-  "}";
-  static const GLchar* fragmentSource =
-  "#version 150\n"
-  "in vec4 Color;"
-  "out vec4 outColor;"
-  "void main() {"
-  "    outColor = vec4(Color);"
-  "}";
-  static const GLchar* textureVertexSource =
-  "#version 150 core\n"
-  "in vec2 position;"
-  "in vec4 color;"
-  "in vec2 texcoord;"
-  "out vec4 Color;"
-  "out vec2 Texcoord;"
-  "uniform mat4 model;"
-  "uniform mat4 view;"
-  "uniform mat4 proj;"
-  "void main() {"
-  "   Texcoord = texcoord;"
-  "   Color = color;"
-  "   gl_Position = proj * view * model * vec4(position, 0.0, 1.0);"
-  "}";
-  static const GLchar* textureFragmentSource =
-  "#version 150\n"
-  "in vec4 Color;"
-  "in vec2 Texcoord;"
-  "out vec4 outColor;"
-  "uniform sampler2D tex;"
-  "void main() {"
-  "    outColor = texture(tex, Texcoord) * vec4(Color);"
-  "}";
+
+  // Shader Source Text TODO: make these into separate files
+
+  // const char *vertexShaderSource =
+  // "#version 120\n"
+  // "attribute vec2 position;"
+  // "void main(void) {"
+  // "  gl_Position = vec4(position, 0.0, 1.0);"
+  // "}";
+  //
+  // const char *fragmentShaderSource =
+  // "#version 120\n"
+  // "void main(void) {"
+  // "  gl_FragColor[0] = .5;"
+  // "  gl_FragColor[1] = 0.0;"
+  // "  gl_FragColor[2] = 1.0;"
+  // "}";
+
+
+  //TODO move this somewhere better
+  char* filetobuf(char *file)
+  {
+    FILE *fptr;
+    long length;
+    char *buf;
+
+    fptr = fopen(file, "r"); /* Open file for reading */
+    if (!fptr) { /* Return NULL on failure */
+      fprintf(stderr, "%s\n", "Unable to open file for reading!");
+      return NULL;
+    }
+    fseek(fptr, 0, SEEK_END); /* Seek to the end of the file */
+    length = ftell(fptr); /* Find out how many bytes into the file we are */
+    buf = (char*)malloc(length + 1); /* Allocate a buffer for the entire length of the file plus a null terminator */
+    fseek(fptr, 0, SEEK_SET); /* Go back to the beginning of the file */
+    fread(buf, length, 1, fptr); /* Read the contents of the file in to the buffer */
+    fclose(fptr); /* Close the file */
+    buf[length] = 0; /* Null terminator */
+
+    return buf; /* Return the buffer */
+  }
+
 
   int Canvas::drawBuffer = GL_FRONT_LEFT;
   bool Canvas::glfwIsReady = false;
@@ -170,6 +168,130 @@ namespace tsgl {
     objectMutex.unlock();
   }
 
+  float data[] = {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 0.0};
+
+  static const GLfloat g_vertex_buffer_data[] = {
+    -1.0f, -1.0f, 0.0f,
+    1.0f, -1.0f, 0.0f,
+    0.0f,  1.0f, 0.0f,
+  };
+
+  void Canvas::newInit() {
+    printf("%s\n", "Initting stuff.");
+    //
+    initShaders();
+    //
+    //
+    // //Create a new VBO and use the variable id to store the VBO id
+    // glGenBuffers(1, &triangleVBO);
+    //
+    // //Make the new VBO active
+    // glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+    //
+    // //Upload vertex data to the video device
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+
+    //
+    //
+    // glGenVertexArrays(1, &VertexArrayID);
+    // glBindVertexArray(VertexArrayID);
+
+
+
+
+
+
+
+
+  }
+
+  GLfloat gQuadVertices[] = {
+    0.0f,0.0f,
+    0.0f,.5f,
+    -.5f,.5f,
+    -.5f, 0.0f,
+    0.2f,0.2f,
+    0.2f,.7f,
+    -.3f,.7f,
+    -.3f, 0.2f
+  };
+
+
+  void Canvas::newDraw() {
+    printf("%s\n", "Drawing stuff.");
+
+    glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
+
+    // Reset the window close flag, so that the window stays open for this frame
+    glfwSetWindowShouldClose(window, GL_FALSE);
+
+    // setupCamera();  //Camera transformations
+
+    // Count number of frames
+    int counter = 0;
+
+    while (!glfwWindowShouldClose(window)) {
+
+      // glUseProgram(shaderProgram);
+
+      //Enable vertex arrays
+      glEnableClientState( GL_VERTEX_ARRAY );
+
+      //Set vertex data
+      glVertexPointer( 2, GL_FLOAT, 0, gQuadVertices );
+      //Draw quad using vertex data
+      glDrawArrays( GL_TRIANGLES, 0, 8 );
+
+      //Disable vertex arrays
+      glDisableClientState( GL_VERTEX_ARRAY );
+
+
+
+      // /* Clear background with BLACK colour */
+      // glClear(GL_COLOR_BUFFER_BIT);
+      //
+      //
+      // //Make the new VBO active. Repeat here incase changed since initialisation
+      // glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
+      //
+      // //Draw Triangle from VBO - do each time window, view point or data changes
+      // //Establish its 3 coordinates per vertex with zero stride in this array; necessary here
+      // glVertexPointer(3, GL_FLOAT, 0, NULL);
+      //
+      // //Establish array contains vertices (not normals, colours, texture coords etc)
+      // glEnableClientState(GL_VERTEX_ARRAY);
+      //
+      // //Actually draw the triangle, giving the number of vertices provided
+      // glDrawArrays(GL_TRIANGLES, 0, (sizeof(data) / 3) / sizeof(GLfloat));
+
+      // glFlush();
+
+
+
+      // // glColor4f( 0.f, 0.f, 1.f, 1.0f );
+      // glBegin( GL_QUADS );
+      // glVertex2f( 0.0f, 0.0f );
+      // glVertex2f(  .1f, 0.0f );
+      // glVertex2f(  .1f,  .1f );
+      // glVertex2f( 0.0f,  .1f );
+      // glEnd();
+
+
+      glfwSwapBuffers(window);
+      glfwPollEvents();
+
+
+      counter++;
+      // printf("Frame %d finished.\n", counter);
+
+      if (counter==300) {
+        printf("Frame 300 at %f.\n", glfwGetTime());
+      }
+    }
+
+    printf("OpenGL Error code: %d\n", glGetError());
+
+  }
 
 
 
@@ -206,7 +328,7 @@ namespace tsgl {
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Swap the screen buffer
-    glfwSwapBuffers(window);
+    // glfwSwapBuffers(window);
 
     // We're ready to draw to the screen now!
     readyToDraw = true;
@@ -221,12 +343,88 @@ namespace tsgl {
 
     setupCamera();
 
-    // Create and bind our Vertex Buffer Object
-        glGenBuffers(1, &vertexBuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    printf("%s\n", "Wazzup dawg?");
+
+
+
+
+
+
+
+
+
+
+
+    GLuint attribute_coord2d;
+    // glUseProgram(shaderProgram);
+
+    GLfloat triangle_vertices[] = {
+      0.0,  0.8,
+      -0.8, -0.8,
+      0.8, -0.8,
+    };
+    /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
+    glVertexAttribPointer(
+      attribute_coord2d, // attribute
+      2,                 // number of elements per vertex, here (x,y)
+      GL_FLOAT,          // the type of each element
+      GL_FALSE,          // take our values as-is
+      0,                 // no extra data between each position
+      triangle_vertices  // pointer to the C array
+    );
+    glfwSwapInterval(1);
+    // glClearColor(1.0, 1.0, 1.0, 1.0);
+    // glEnableVertexAttribArray(attribute_coord2d);
+
+    int nbFrames;
+    double lastTime;
+
+    float f = 0.0;
 
     while (!glfwWindowShouldClose(window))
     {
+
+      // Measure speed
+      double currentTime = glfwGetTime();
+      nbFrames++;
+      if ( currentTime - lastTime >= 1.0 ){ // If last prinf() was more than 1 sec ago
+        // printf and reset timer
+        printf("%f ms/frame with %d objects.\n", 1000.0/double(nbFrames), objectBuffer.size());
+        //  printf("%f ms/frame with objects.\n", 1000.0/double(nbFrames));
+        nbFrames = 0;
+        lastTime += 1.0;
+      }
+
+
+      glClear(GL_COLOR_BUFFER_BIT);
+
+      /* Push each element in buffer_vertices to the vertex shader */
+      // glDrawArrays(GL_TRIANGLES, 0, 3);
+
+      // glDisableVertexAttribArray(attribute_coord2d);
+
+      // // Render quad
+      // glColor4f( 1.f, 1.f, 0.f, 1.0f );
+      // // glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+      // // glClear(GL_COLOR_BUFFER_BIT);
+      //  glBegin( GL_QUADS );
+      //      glVertex2f( 0.0f+f, 0.0f+f );
+      //      glVertex2f(  100.0f+f, 0.0f+f );
+      //      glVertex2f(  100.0f+f,  100.0f+f );
+      //      glVertex2f( 0.0f+f,  100.0f+f );
+      //  glEnd();
+      // //  glFinish();
+      //
+      //  f = f+.01;
+
+      pushObjectsToVertexBuffer();
+
+
+
+
+      glfwSwapBuffers(window);
+      glfwPollEvents();
+
 
       // printf("%s\n", "YO!");
 
@@ -235,17 +433,7 @@ namespace tsgl {
       // testA->render();
 
 
-      // //Render quad
-      // glColor3f( 1.f, 1.f, 0.f );
-      //   // glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-      //   // glClear(GL_COLOR_BUFFER_BIT);
-      //    glBegin( GL_QUADS );
-      //        glVertex2f( 10.0f, 10.0f );
-      //        glVertex2f(  100.0f, 10.0f );
-      //        glVertex2f(  100.0f,  100.0f );
-      //        glVertex2f( 10.0f,  100.0f );
-      //    glEnd();
-      //    glFinish();
+
 
 
       // glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
@@ -254,16 +442,10 @@ namespace tsgl {
 
 
       // New method for dumping vertices from the objectBuffer into the GL buffer
-      glClear(GL_COLOR_BUFFER_BIT);
-      die_on_gl_error("before push");
-      pushObjectsToVertexBuffer();
-      die_on_gl_error("after push");
-
-
-
-      glfwSwapBuffers(window);
-      glfwPollEvents();
-
+      // glClear(GL_COLOR_BUFFER_BIT);
+      // die_on_gl_error("before push");
+      // pushObjectsToVertexBuffer();
+      // die_on_gl_error("after push");
     }
 
 
@@ -592,8 +774,9 @@ namespace tsgl {
     initGlfw();
     #ifndef _WIN32
     initWindow();
-    // initGlew();
     initGLAD();
+    // initShaders();
+    newInit();
     glfwMakeContextCurrent(NULL);   // Reset the context
     #endif
   }
@@ -601,8 +784,9 @@ namespace tsgl {
   void Canvas::initGl() {
     #ifdef _WIN32
     initWindow();
-    // initGlew();
     initGLAD();
+    // initShaders();
+    newInit();
     #else
     glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
     glfwSetWindowUserPointer(window, this);
@@ -631,185 +815,144 @@ namespace tsgl {
     glfwMakeContextCurrent(NULL);   // Reset the context
   }
 
-  // void Canvas::initGlew() {
-  //     // Enable Experimental GLEW to Render Properly
-  //     glewExperimental = GL_TRUE;
-  //     GLenum err = glewInit();
-  //     if (GLEW_OK != err) {
-  //         // Problem: glewInit failed, something is seriously wrong.
-  //         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
-  //         exit(102);
-  //     }
-  //
-  //     hasEXTFramebuffer = false;
-  //
-  //     GLint n, i;
-  //     glGetIntegerv(GL_NUM_EXTENSIONS, &n);
-  //     for (i = 0; i < n; i++) {
-  //       std::string s = reinterpret_cast< char const * >(glGetStringi(GL_EXTENSIONS, i));
-  //       if (s == "GL_EXT_framebuffer_object") {
-  //         hasEXTFramebuffer = true;
-  //         break;
-  //       }
-  //     }
-  //     const GLubyte* gfxVendor = glGetString(GL_VENDOR);
-  //     std::string gfx(gfxVendor, gfxVendor + strlen((char*)gfxVendor));
-  //     atiCard = (gfx.find("ATI") != std::string::npos);
-  //     #ifdef DEBUG
-  //         printf("Vendor:         %s %s\n", gfx.c_str(), glGetString(GL_RENDERER));
-  //         printf("OpenGL version: %s\n", glGetString(GL_VERSION));
-  //         printf("GLFW version:   %s\n", glfwGetVersionString());
-  //         printf("GL Extension: ");
-  //         for (i = 0; i < n; i++)
-  //           printf("%s, ", glGetStringi(GL_EXTENSIONS, i));
-  //         if (hasEXTFramebuffer)
-  //           TsglDebug("EXT Framebuffer available");
-  //     #endif
-  //
-  //     GLint status;
-  //
-  //     // Create and bind our Vertex Array Object
-  //     glGenVertexArrays(1, &vertexArray);
-  //     glBindVertexArray(vertexArray);
-  //
-  //     // Create and bind our Vertex Buffer Object
-  //     glGenBuffers(1, &vertexBuffer);
-  //     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-  //
-  //     // Create / compile vertex shader
-  //     shaderVertex = glCreateShader(GL_VERTEX_SHADER);
-  //     glShaderSource(shaderVertex, 1, &vertexSource, NULL);
-  //     glCompileShader(shaderVertex);
-  //     glGetShaderiv(shaderVertex, GL_COMPILE_STATUS, &status);
-  //
-  //     // Create / compile fragment shader
-  //     shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
-  //     glShaderSource(shaderFragment, 1, &fragmentSource, NULL);
-  //     glCompileShader(shaderFragment);
-  //     glGetShaderiv(shaderFragment, GL_COMPILE_STATUS, &status);
-  //
-  //     // Attach both shaders to a shader program, link the program
-  //     shaderProgram = glCreateProgram();
-  //     glAttachShader(shaderProgram, shaderVertex);
-  //     glAttachShader(shaderProgram, shaderFragment);
-  //     glBindFragDataLocation(shaderProgram, 0, "outColor");
-  //
-  //     // Specify the layout of the vertex data in our standard shader
-  //     glLinkProgram(shaderProgram);
-  //
-  //     // Create / compile textured vertex shader
-  //     textureShaderVertex = glCreateShader(GL_VERTEX_SHADER);
-  //     glShaderSource(textureShaderVertex, 1, &textureVertexSource, NULL);
-  //     glCompileShader(textureShaderVertex);
-  //     glGetShaderiv(textureShaderVertex, GL_COMPILE_STATUS, &status);
-  //
-  //     // Create / compile textured fragment shader
-  //     textureShaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
-  //     glShaderSource(textureShaderFragment, 1, &textureFragmentSource, NULL);
-  //     glCompileShader(textureShaderFragment);
-  //     glGetShaderiv(textureShaderFragment, GL_COMPILE_STATUS, &status);
-  //
-  //     // Attach both shaders to another shader program, link the program
-  //     textureShaderProgram = glCreateProgram();
-  //     glAttachShader(textureShaderProgram, textureShaderVertex);
-  //     glAttachShader(textureShaderProgram, textureShaderFragment);
-  //     glBindFragDataLocation(textureShaderProgram, 0, "outColor");
-  //
-  //     // Specify the layout of the vertex data in our textured shader
-  //     glLinkProgram(textureShaderProgram);
-  //     textureShaders(false);
-  //
-  //     /****** NEW ******/
-  //     // Create a framebuffer
-  //     frameBuffer = 0;
-  //     glGenFramebuffersEXT(1, &frameBuffer);
-  //     if (hasEXTFramebuffer)
-  //       glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBuffer);
-  //     else
-  //       glBindFramebuffer(GL_FRAMEBUFFER_EXT, frameBuffer);
-  //     // The texture we're going to render to
-  //     glGenTextures(1, &renderedTexture);
-  //     // "Bind" the newly created texture : all future texture functions will modify this texture
-  //     glBindTexture(GL_TEXTURE_2D, renderedTexture);
-  //     // Give an empty image to OpenGL ( the last "0" )
-  //     // Note: Using RGBA here creates a texture with alpha, which causes weird redrawing problems
-  //     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, winWidth+1, winHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
-  //     // Poor filtering. Needed !
-  //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-  //     // Set "renderedTexture" as our colour attachement #0
-  //     glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D,renderedTexture, 0);
-  //     // Set the list of draw buffers.
-  //     GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-  //     glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
-  //     // Always check that our framebuffer is ok
-  //     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-  //       TsglErr("FRAMEBUFFER CREATION FAILED");
-  //
-  //     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  // }
+  void Canvas::initShaders() {
+    GLint Vsuccess = 0;
+    GLint Fsuccess = 0;
+
+    /* Read our shaders into the appropriate buffers */
+    vertexSource = filetobuf("../src/TSGL/Shaders/vertexSource.txt");
+    fragmentSource = filetobuf("../src/TSGL/Shaders/fragmentSource.txt");
+
+    /* Assign our handles a "name" to new shader objects */
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+    /* Associate the source code buffers with each handle */
+    glShaderSource(vertexShader, 1, (const GLchar**)&vertexSource, 0);
+    glShaderSource(fragmentShader, 1, (const GLchar**)&fragmentSource, 0);
+
+    /* Free the temporary allocated memory */
+    free(vertexSource);
+    free(fragmentSource);
+
+    /* Compile our shader objects */
+    glCompileShader(vertexShader);
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &Vsuccess);
+    glCompileShader(fragmentShader);
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &Fsuccess);
+
+
+    /* Assign our program handle a "name" */
+    shaderProgram = glCreateProgram();
+
+    /* Attach our shaders to our program */
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+
+    /* Bind attribute index 0 (shaderAttribute) to in_Position*/
+    /* "in_Position" will represent "data" array's contents in the vertex shader */
+    glBindAttribLocation(shaderProgram, shaderAttribute, "in_Position");
+
+    /* Link shader program*/
+    glLinkProgram(shaderProgram);
+
+
+    printf("Vertex shader compile status: %d\n", Vsuccess);
+    if (Vsuccess == GL_FALSE) {
+      GLint logSize = 10240;
+      GLint logLength = 0;
+      glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logSize);
+      GLchar shaderlog[logSize];
+      glGetShaderInfoLog(vertexShader, logSize, logLength, shaderlog);
+      printf("Vertex shader log:\n\n%s\n\n", shaderlog);
+    }
+    printf("Fragment shader compile status: %d\n", Fsuccess);
+    if (Fsuccess == GL_FALSE) {
+      GLint logSize = 10240;
+      GLint logLength = 0;
+      glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &logSize);
+      GLchar shaderlog[logSize];
+      glGetShaderInfoLog(fragmentShader, logSize, logLength, shaderlog);
+      printf("Fragment shader log:\n\n%s\n\n", shaderlog);
+    }
+
+
+  }
 
   void Canvas::initGLAD() {
+    // Initialize the GLAD GL function loader
     if(!gladLoadGL()) {
       printf("Something went wrong loading GLAD!\n");
       exit(-1);
     }
+    // TODO: this is here for debug purposes, pull out eventually?
     printf("OpenGL version: %d.%d\n", GLVersion.major, GLVersion.minor);
   }
 
   void Canvas::initGlfw() {
+    // Inititalize the GLFW library.
     if (!glfwIsReady) {
-      glfwInit();  // Initialize GLFW
+      glfwInit();
       monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
       glfwIsReady = true;
     }
   }
 
   void Canvas::initWindow() {
+
+    // Set the error callback for GLFW, ie. when an error happens, call this function!
     glfwSetErrorCallback(errorCallback);
 
-    // Create a Window and the Context
-    // #ifdef __arm__                                                    // Tentative fix for the Raspberry Pi
-    //   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);                  // Set target GL major version to 2
-    //   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);                  // Set target GL minor version to 2.0
-    //   glfwWindowHint(GLFW_CLIENT_API,GLFW_OPENGL_ES_API);             // Pi uses OpenGL ES
-    // #else
+    // Ask for a specific version of OpenGL - 2.1.  Usually GLFW will just give
+    // a newer one, and thus never functions will work.  But we're targeting 2.1,
+    //so we need that as a min.  It's up to the programmer to not use anything
+    // that is not supported on 2.1!
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);                  // Set target GL major version to 3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);                  // Set target GL minor version to 3.2
-    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
-    //   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
-    // #endif
+
+    // Pass some other options to GLFW
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
 
-    glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
-    window = glfwCreateWindow(winWidth, winHeight, winTitle.c_str(), NULL, NULL);  // Windowed
-    //   window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
+    // GLFW must be done with making a window before we start making another one
+    // This mutex ensures that only one window is created at a time
+    // Note that it is fine to have multiple windows, just create them one after the other!
+    glfwMutex.lock();
+    window = glfwCreateWindow(winWidth, winHeight, winTitle.c_str(), NULL, NULL);
+
+    // Check that the window was properly created
     if (!window) {
       fprintf(stderr, "GLFW window creation failed. Was the library correctly initialized?\n");
       exit(100);
     }
+
+    // Release the window mutex so that we can create other windows
     glfwMutex.unlock();
 
+
+    // Check that we were able to get information about the user's monitor
     if (!monInfo) {
       fprintf(stderr, "GLFW failed to return monitor information. Was the library correctly initialized?\n");
       exit(101);
     }
+
+    // Store information about the monitor, set GLFW's window position
     if (monitorX == -1)
     monitorX = (monInfo->width - winWidth) / 2;
     if (monitorY == -1)
     monitorY = (monInfo->height - winHeight) / 2;
     glfwSetWindowPos(window, monitorX, monitorY);
 
+
+    // Finish initting the GLFW window, make it current, set up cursor stuff
     glfwMakeContextCurrent(window);
     glfwShowWindow(window);                 // Show the window
     glfwSetWindowUserPointer(window, this);
 
+    // Set up TSGL to handle user IO
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
@@ -945,668 +1088,672 @@ namespace tsgl {
     glMatrixMode( GL_MODELVIEW );
     glLoadIdentity();
 
-    }
-
-    void Canvas::sleep() {
-      #ifdef __APPLE__
-      handleIO();
-      #endif
-      drawTimer->sleep(false);
-    }
-
-    void Canvas::sleepFor(float seconds) {
-      #ifdef __APPLE__
-      handleIO();
-      #endif
-      std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
-    }
-
-    int Canvas::start() {
-      if (started) return -1;
-      started = true;
-      #ifdef __APPLE__
-      pthread_create(&renderThread,NULL,startDrawing,(void*)this);
-      #else
-      renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
-      #endif
-      return 0;
-    }
-
-    #ifdef __APPLE__
-    void* Canvas::startDrawing(void* cPtr) {
-      Canvas* c = (Canvas*)cPtr;
-      c->initGl();
-      c->draw();
-      c->isFinished = true;
-      pthread_exit(NULL);
-    }
-    #else
-    void Canvas::startDrawing(Canvas *c) {
-      c->initGl();
-      c->draw();
-      c->isFinished = true;
-      glfwDestroyWindow(c->window);
-      c->glDestroy();
-    }
-    #endif
-
-    void Canvas::stop() {
-      close();
-      wait();
-    }
-
-    void Canvas::stopRecording() {
-      toRecord = 0;
-    }
-
-    void Canvas::takeScreenShot() {
-      if (toRecord == 0) toRecord = 1;
-    }
-
-    void Canvas::textureShaders(bool on) {
-      GLint program;
-      if (!on) {
-        program = shaderProgram;
-
-        // Relocate the shader attributes
-        GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-        glEnableVertexAttribArray(posAttrib);
-        glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
-        GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-        glEnableVertexAttribArray(colAttrib);
-        glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (2 * sizeof(float)));
-
-      } else {
-        program = textureShaderProgram;
-
-        // Relocate the shader attributes
-        GLint texturePosAttrib = glGetAttribLocation(textureShaderProgram, "position");
-        glEnableVertexAttribArray(texturePosAttrib);
-        glVertexAttribPointer(texturePosAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
-        GLint textureColAttrib = glGetAttribLocation(textureShaderProgram, "color");
-        glEnableVertexAttribArray(textureColAttrib);
-        glVertexAttribPointer(textureColAttrib, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-        (void*) (2 * sizeof(float)));
-        GLint textureTexAttrib = glGetAttribLocation(textureShaderProgram, "texcoord");
-        glEnableVertexAttribArray(textureTexAttrib);
-        glVertexAttribPointer(textureTexAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-        (void*) (6 * sizeof(float)));
-      }
-
-      // Reallocate the shader program for use
-      glUseProgram(program);
-
-      // Recompute the camera matrices
-      uniModel = glGetUniformLocation(program, "model");
-      uniView = glGetUniformLocation(program, "view");
-      uniProj = glGetUniformLocation(program, "proj");
-
-      // Update the camera
-      setupCamera();
-    }
-
-    int Canvas::wait() {
-      if (!started) return -1;  // If we haven't even started yet, return error code -1
-      #ifdef __APPLE__
-      while(!isFinished)
-      sleepFor(0.1f);
-      pthread_join(renderThread, NULL);
-      #else
-      renderThread.join();
-      #endif
-      return 0;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-    //     TODO: These will need to be rewritten when we change to the OOP API
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
-
-    void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
-      float delta = 2.0f / sides * PI;
-      if (filled) {
-        ConvexPolygon *s = new ConvexPolygon(sides);
-        for (int i = 0; i < sides; ++i)
-        s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
-        this->add(s);
-      } else {
-        float oldX = 0, oldY = 0, newX = 0, newY = 0;
-        Polyline *p = new Polyline(sides+1);
-        for (int i = 0; i <= sides; ++i) {
-          oldX = newX; oldY = newY;
-          newX = xverts+radius*cos(i*delta);
-          newY = yverts+radius*sin(i*delta);
-          if (i > 0)
-          p->addNextVertex(oldX, oldY,color);
-        }
-        p->addNextVertex(newX, newY,color);
-        this->add(p);
-      }
-    }
-
-    void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
-      if (filled) {
-        ConcavePolygon* p = new ConcavePolygon(size);
-        for (int i = 0; i < size; i++) {
-          p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
-      }
-      else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-          p->addNextVertex(xverts[i], yverts[i], color[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
-      }
-    }
-
-    void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
-      if (filled) {
-        ConvexPolygon* p = new ConvexPolygon(size);
-        for (int i = 0; i < size; i++) {
-          p->addVertex(x[i], y[i], color[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
-      }
-      else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-          p->addNextVertex(x[i], y[i], color[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
-      }
-    }
-
-    void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
-      Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
-      this->add(im);                                        // Push it onto our drawing buffer
-    }
-
-    void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
-      Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
-      this->add(l);                               // Push it onto our drawing buffer
-    }
-
-    inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
-      drawPoint(col, row, color); //TODO: update with new api
-    }
-
-    void Canvas::drawPoint(int x, int y, ColorFloat color) {
-      pointArrayMutex.lock();
-      if (pointBufferPosition >= myShapes->capacity()) {
-        loopAround = true;
-        pointBufferPosition = 0;
-      }
-      int tempPos = pointBufferPosition * 6;
-      pointBufferPosition++;
-
-      float atioff = atiCard ? 0.5f : 0.0f;
-      vertexData[tempPos] = x;
-      vertexData[tempPos + 1] = y+atioff;
-      vertexData[tempPos + 2] = color.R;
-      vertexData[tempPos + 3] = color.G;
-      vertexData[tempPos + 4] = color.B;
-      vertexData[tempPos + 5] = color.A;
-      pointArrayMutex.unlock();
-    }
-
-    //TODO: change to just add the ProgressBar as one item (rather than rect and border)
-    void Canvas::drawProgress(ProgressBar* p) {
-      for (int i = 0; i < p->getSegs(); ++i) {
-        drawText(to_string(i),p->getSegX(i)+8,p->getSegY()-8,32,BLACK);
-        this->add(p->getRect(i));
-        this->add(p->getBorder(i));
-      }
-    }
-
-    //TODO: maye works with the new backend
-    void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
-      if (filled) {
-        if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-        if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-        Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-        this->add(rec);                                     // Push it onto our drawing buffer
-      }
-      else {
-        Polyline* p = new Polyline(5);
-        p->addNextVertex(x1, y1, color);
-        p->addNextVertex(x1, y2, color);
-        p->addNextVertex(x2, y2, color);
-        p->addNextVertex(x2, y1, color);
-        p->addNextVertex(x1, y1, color);
-        this->add(p);
-      }
-    }
-
-    void Canvas::drawShape(Shape* s) {
-      if (!started) {
-        TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
-        return;
-      }
-      while (!readyToDraw)
-      sleep();
-      bufferMutex.lock();
-      myBuffer->push(s);  // Push it onto our drawing buffer
-      bufferMutex.unlock();
-    }
-
-    void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
-      std::wstring wsTmp(text.begin(), text.end());
-      std::wstring ws = wsTmp;
-      drawText(ws, x, y, size, color);
-    }
-
-    void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
-      Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-      this->add(t);                                // Push it onto our drawing buffer
-    }
-
-    void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
-      if (filled) {
-        Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-        this->add(t);                                               // Push it onto our drawing buffer
-      }
-      else {
-        Polyline* p = new Polyline(4);
-        p->addNextVertex(x1,y1,color);
-        p->addNextVertex(x2,y2,color);
-        p->addNextVertex(x3,y3,color);
-        p->addNextVertex(x1,y1,color);
-        this->add(p);
-      }
-    }
-
-    void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
-      if (filled) {
-        TriangleStrip* p = new TriangleStrip(size);
-        for (int i = 0; i < size; i++) {
-          p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
-      }
-      else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-          p->addNextVertex(xverts[i], yverts[i], color[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
-      }
-    }
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-    //       End the old API stuff
-    ////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //-----------------Unit testing-------------------------------------------------------
-    void Canvas::runTests() {
-      TsglDebug("Testing Canvas class...");
-      Canvas c1(0, 0, 500, 500, "", FRAME);
-      c1.setBackgroundColor(WHITE);
-      c1.start();
-      tsglAssert(testFilledDraw(c1), "Unit test for filled draw failed!");
-      tsglAssert(testLine(c1), "Unit test for line failed!");
-      tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
-      tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
-      c1.stop();
-      TsglDebug("Unit tests for Canvas complete.");
-      std::cout << std::endl;
-    }
-
-    //Similar format is used for the remaining unit tests
-    bool Canvas::testFilledDraw(Canvas& can) {
-      int passed = 0;   //Passed tests
-      int failed = 0;   //Failed tests
-      ColorInt red(255, 0, 0);   //Fill color
-      can.drawCircle(250, 250, 50, 32, red, true);  //Draw filled shape
-      can.sleepFor(1);
-
-      //Test 1: Get middle pixel and see if its red.
-      if(can.getPixel(250, 250) == red) {
-        passed++;
-      } else {
-        failed++;
-        TsglErr("Test 1, middle pixel for testFilledDraw() failed!");
-      }
-
-      //Test 2: Get leftmost and rightmost pixel of the circle
-      //Have to add or subtract 1 from the y so that you can get the correct pixel (center radius is 1. No 0 radius).
-      if(can.getPixel(250, 201) == red && can.getPixel(250, 299) == red) {
-        passed++;
-      } else {
-        failed++;
-        TsglErr("Test 2, leftmost and rightmost pixel for testFilledDraw() failed!");
-      }
-
-      //Test 3: Outside pixels shouldn't equal inside pixels
-      int test = 0;
-      //Single pixel....
-      if(can.getPixel(1, 1) != red) {
-        //Multiple pixels....
-        for(int i = 201; i <= 299; i++) {
-          if(can.getPixel(1, i) != red) {
-            test++;
-          }
-        }
-        //Results of multiple pixels...
-        if(test == 99) {
-          passed++;
-        } else {
-          failed++;
-          TsglErr("Test 3, outside != inside, Multiple pixels for testFilledDraw() failed!");
-        }
-      } else {
-        failed++;
-        TsglErr("Test 3, outside != inside, Single pixel for testFilledDraw() failed!");
-      }
-
-      //Test 4: A LOT of the pixels on the inside should be red
-      int count = 0;
-      for(int i = 201; i <= 299; i++) {
-        if(can.getPixel(250, i) == red) {
-          count++;
-        }
-      }
-
-      //Now check the count, should be 99
-      if(count == 99) {
-        passed++;
-      } else {
-        failed++;
-        std::cout << "Count: " << count << std::endl;
-        TsglErr("Test 4, multiple pixels for testFilledDraw() failed!");
-      }
-
-      //Determine if we passed all four tests or not, Results:
-      if(passed == 4 && failed == 0) {
-        can.clear();
-        TsglDebug("Unit test for drawing filled shapes passed!");
-        return true;
-      } else {
-        can.clear();
-        TsglErr("This many passed for testFilledDraw(): ");
-        std::cerr << " " << passed << std::endl;
-        TsglErr("This many failed for testFilledDraw(): ");
-        std::cerr << " " << failed << std::endl;
-        return false;
-      }
-    }
-
-    bool Canvas::testLine(Canvas & can) {
-      int passed = 0;
-      int failed = 0;
-      can.drawLine(0, 0, 250, 250, BLACK);  //Diagonal line
-      can.drawLine(253, 253, 400, 253);  //Straight line
-      can.sleepFor(1);
-      ColorInt black(0, 0, 0);
-      //Test 1: Near the ending endpoint? (Diagonal)
-      if(can.getPoint(249, 249) == black) {
-        passed++;
-      } else {
-        failed++;
-        TsglErr("Test 1, Near the ending endpoint? for testLine() failed!");
-      }
-
-      //Test 2: Somewhere in the middle? (Diagonal)
-      if(can.getPoint(155, 155) == black) {
-        passed++;
-      } else {
-        failed++;
-        TsglErr("Test 2, Somewhere in the middle? for testLine() failed!");
-      }
-
-      //Test 3: Near the starting endpoint? (Diagonal)
-      if(can.getPoint(15, 15) == black) {
-        passed++;
-      } else {
-        failed++;
-        TsglErr("Test 3, Near the starting endpoint? for testLine() failed!");
-      }
-
-      //Test 4: An entire line? (Straight)
-      int count = 0;
-      for(int i = 253; i <= 399; i++) {
-        if(can.getPoint(i, 253) == black) {
-          count++;
-        }
-      }
-
-      //Check the results of the Straight line test
-      if(count == 147) {
-        passed++;
-      } else {
-        failed++;
-        TsglErr("Test 4, An entire line? (Straight) for testLine() failed!");
-      }
-
-      //Results:
-      if(passed == 4 && failed == 0) {
-        can.clear();
-        TsglDebug("Unit test for line passed!");
-        return true;
-      } else {
-        can.clear();
-        TsglErr("This many passed testLine(): ");
-        std::cerr << " " << passed << std::endl;
-        TsglErr("This many failed for testLine(): ");
-        std::cerr << " " << failed << std::endl;
-        return false;
-      }
-    }
-
-    bool Canvas::testAccessors(Canvas& can) {
-      int passed = 0;
-      int failed = 0;
-      ColorFloat white = WHITE;  //Have to set these to new variables so that I can compare them
-      ColorFloat black = BLACK;
-
-      //Test 1: Background color
-      if(can.getBackgroundColor() == white) {
-        can.setBackgroundColor(BLACK);
-        if(can.getBackgroundColor() == black) {
-          passed++;
-        } else {
-          failed++;
-          TsglErr("Test 1, Background color for testAccessors() failed!");
-        }
-      }
-
-      //Test 2: Window width/height
-      //width
-      if(can.getWindowWidth() == 500) {
-        //height
-        if(can.getWindowHeight() == 500) {
-          passed++;
-        } else {
-          failed++;
-          TsglErr("Test 2 for testAccessors() failed! (height)");
-        }
-      } else {
-        failed++;
-        TsglErr("Test 2 for testAccessors() failed! (width)");
-      }
-
-      //Test 3: Window x/y
-      //x
-      if(can.getWindowX() == 0) {
-        //y
-        if(can.getWindowY() == 0) {
-          passed++;
-        } else {
-          failed++;
-          TsglErr("Test 3 for testAccessors() failed! (y)");
-        }
-      } else {
-        failed++;
-        TsglErr("Test 3 for testAccessors() failed! (x)");
-      }
-
-      //Test 4: Window open?
-      if(can.isOpen() == true) {
-        passed++;
-      } else {
-        failed++;
-        TsglErr("Test 4, Window open? for testAccessors() failed!");
-      }
-
-      //Results:
-      if(passed == 4 && failed == 0) {
-        can.clear();
-        TsglDebug("Unit test for accessors/mutators passed!");
-        return true;
-      } else {
-        can.clear();
-        TsglErr("This many passed for testAccessors(): ");
-        std::cerr << " " << passed << std::endl;
-        TsglErr("This many failed for testAccessors(): ");
-        std::cerr << " " << failed << std::endl;
-        return false;
-      }
-    }
-
-    bool Canvas::testDrawImage(Canvas& can) {
-      can.drawImage("../assets/pics/ff0000.png", 0, 0, 200, 200);
-      can.sleepFor(1);
-      int passed = 0;
-      int failed = 0;
-      ColorInt red(255, 0, 0);
-      //Test 1: Single pixel
-      if(can.getPoint(1, 1) == red) {
-        passed++;
-      } else {
-        failed++;
-        TsglErr("Test 1, Single pixel for testDrawImage() failed!");
-      }
-
-      //Test 2: Multiple pixels
-      int count = 0;
-      for(int i = 0; i < 200; i++) {
-        if(can.getPoint(1, i) == red) {
-          count++;
-        }
-      }
-
-      //Results of Test 2:
-      if(count == 200) {
-        passed++;
-      } else {
-        failed++;
-        std::cout << "Count: " << count << std::endl;
-        TsglErr("Test 2, Multiple pixels for testDrawImage() failed!");
-      }
-
-      //Results of entire Unit test:s
-      if(passed == 2 && failed == 0) {
-        TsglDebug("Unit test for drawing images passed!");
-        return true;
-      } else {
-        TsglErr("This many passed for testDrawImage(): ");
-        std::cerr << " " << passed << std::endl;
-        TsglErr("This many failed for testDrawImage(): ");
-        std::cerr << " " << failed << std::endl;
-        return false;
-      }
-    }
-    //------------End Unit testing--------------------------------------------------------
   }
+
+  void Canvas::sleep() {
+    #ifdef __APPLE__
+    handleIO();
+    #endif
+    drawTimer->sleep(false);
+  }
+
+  void Canvas::sleepFor(float seconds) {
+    #ifdef __APPLE__
+    handleIO();
+    #endif
+    std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
+  }
+
+  int Canvas::start() {
+    if (started) return -1;
+    started = true;
+    #ifdef __APPLE__
+    pthread_create(&renderThread,NULL,startDrawing,(void*)this);
+    #else
+    renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
+    #endif
+    return 0;
+  }
+
+  #ifdef __APPLE__
+  void* Canvas::startDrawing(void* cPtr) {
+    Canvas* c = (Canvas*)cPtr;
+    c->initGl();
+    // c->draw();
+    c->newDraw();
+    c->isFinished = true;
+    pthread_exit(NULL);
+  }
+  #else
+  void Canvas::startDrawing(Canvas *c) {
+    c->initGl();
+    // c->draw();
+    c->newDraw();
+    c->isFinished = true;
+    glfwDestroyWindow(c->window);
+    c->glDestroy();
+  }
+  #endif
+
+  void Canvas::stop() {
+    close();
+    wait();
+  }
+
+  void Canvas::stopRecording() {
+    toRecord = 0;
+  }
+
+  void Canvas::takeScreenShot() {
+    if (toRecord == 0) toRecord = 1;
+  }
+
+  void Canvas::textureShaders(bool on) {
+    GLint program;
+    if (!on) {
+      program = shaderProgram;
+
+      // Relocate the shader attributes
+      GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+      glEnableVertexAttribArray(posAttrib);
+      glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
+      GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
+      glEnableVertexAttribArray(colAttrib);
+      glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (2 * sizeof(float)));
+
+    } else {
+      program = textureShaderProgram;
+
+      // Relocate the shader attributes
+      GLint texturePosAttrib = glGetAttribLocation(textureShaderProgram, "position");
+      glEnableVertexAttribArray(texturePosAttrib);
+      glVertexAttribPointer(texturePosAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
+      GLint textureColAttrib = glGetAttribLocation(textureShaderProgram, "color");
+      glEnableVertexAttribArray(textureColAttrib);
+      glVertexAttribPointer(textureColAttrib, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+      (void*) (2 * sizeof(float)));
+      GLint textureTexAttrib = glGetAttribLocation(textureShaderProgram, "texcoord");
+      glEnableVertexAttribArray(textureTexAttrib);
+      glVertexAttribPointer(textureTexAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
+      (void*) (6 * sizeof(float)));
+    }
+
+    // Reallocate the shader program for use
+    glUseProgram(program);
+
+
+    //TODO remove this, no longer needed (get all instances)
+    // // Recompute the camera matrices
+    // uniModel = glGetUniformLocation(program, "model");
+    // uniView = glGetUniformLocation(program, "view");
+    // uniProj = glGetUniformLocation(program, "proj");
+
+    // Update the camera
+    // setupCamera();
+  }
+
+  int Canvas::wait() {
+    if (!started) return -1;  // If we haven't even started yet, return error code -1
+    #ifdef __APPLE__
+    while(!isFinished)
+    sleepFor(0.1f);
+    pthread_join(renderThread, NULL);
+    #else
+    renderThread.join();
+    #endif
+    return 0;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+  //     TODO: These will need to be rewritten when we change to the OOP API
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
+
+  void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
+    float delta = 2.0f / sides * PI;
+    if (filled) {
+      ConvexPolygon *s = new ConvexPolygon(sides);
+      for (int i = 0; i < sides; ++i)
+      s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
+      this->add(s);
+    } else {
+      float oldX = 0, oldY = 0, newX = 0, newY = 0;
+      Polyline *p = new Polyline(sides+1);
+      for (int i = 0; i <= sides; ++i) {
+        oldX = newX; oldY = newY;
+        newX = xverts+radius*cos(i*delta);
+        newY = yverts+radius*sin(i*delta);
+        if (i > 0)
+        p->addNextVertex(oldX, oldY,color);
+      }
+      p->addNextVertex(newX, newY,color);
+      this->add(p);
+    }
+  }
+
+  void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
+    if (filled) {
+      ConcavePolygon* p = new ConcavePolygon(size);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(xverts[i], yverts[i], color[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
+    }
+    else {
+      Polyline* p = new Polyline(size);
+      for (int i = 0; i < size; i++) {
+        p->addNextVertex(xverts[i], yverts[i], color[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
+    }
+  }
+
+  void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+    if (filled) {
+      ConvexPolygon* p = new ConvexPolygon(size);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(x[i], y[i], color[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
+    }
+    else {
+      Polyline* p = new Polyline(size);
+      for (int i = 0; i < size; i++) {
+        p->addNextVertex(x[i], y[i], color[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
+    }
+  }
+
+  void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
+    Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
+    this->add(im);                                        // Push it onto our drawing buffer
+  }
+
+  void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
+    Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
+    this->add(l);                               // Push it onto our drawing buffer
+  }
+
+  inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
+    drawPoint(col, row, color); //TODO: update with new api
+  }
+
+  void Canvas::drawPoint(int x, int y, ColorFloat color) {
+    pointArrayMutex.lock();
+    if (pointBufferPosition >= myShapes->capacity()) {
+      loopAround = true;
+      pointBufferPosition = 0;
+    }
+    int tempPos = pointBufferPosition * 6;
+    pointBufferPosition++;
+
+    float atioff = atiCard ? 0.5f : 0.0f;
+    vertexData[tempPos] = x;
+    vertexData[tempPos + 1] = y+atioff;
+    vertexData[tempPos + 2] = color.R;
+    vertexData[tempPos + 3] = color.G;
+    vertexData[tempPos + 4] = color.B;
+    vertexData[tempPos + 5] = color.A;
+    pointArrayMutex.unlock();
+  }
+
+  //TODO: change to just add the ProgressBar as one item (rather than rect and border)
+  void Canvas::drawProgress(ProgressBar* p) {
+    for (int i = 0; i < p->getSegs(); ++i) {
+      drawText(to_string(i),p->getSegX(i)+8,p->getSegY()-8,32,BLACK);
+      this->add(p->getRect(i));
+      this->add(p->getBorder(i));
+    }
+  }
+
+  //TODO: maye works with the new backend
+  void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
+    if (filled) {
+      if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+      if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+      Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
+      this->add(rec);                                     // Push it onto our drawing buffer
+    }
+    else {
+      Polyline* p = new Polyline(5);
+      p->addNextVertex(x1, y1, color);
+      p->addNextVertex(x1, y2, color);
+      p->addNextVertex(x2, y2, color);
+      p->addNextVertex(x2, y1, color);
+      p->addNextVertex(x1, y1, color);
+      this->add(p);
+    }
+  }
+
+  void Canvas::drawShape(Shape* s) {
+    if (!started) {
+      TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
+      return;
+    }
+    while (!readyToDraw)
+    sleep();
+    bufferMutex.lock();
+    myBuffer->push(s);  // Push it onto our drawing buffer
+    bufferMutex.unlock();
+  }
+
+  void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
+    std::wstring wsTmp(text.begin(), text.end());
+    std::wstring ws = wsTmp;
+    drawText(ws, x, y, size, color);
+  }
+
+  void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
+    Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
+    this->add(t);                                // Push it onto our drawing buffer
+  }
+
+  void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
+    if (filled) {
+      Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
+      this->add(t);                                               // Push it onto our drawing buffer
+    }
+    else {
+      Polyline* p = new Polyline(4);
+      p->addNextVertex(x1,y1,color);
+      p->addNextVertex(x2,y2,color);
+      p->addNextVertex(x3,y3,color);
+      p->addNextVertex(x1,y1,color);
+      this->add(p);
+    }
+  }
+
+  void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
+    if (filled) {
+      TriangleStrip* p = new TriangleStrip(size);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(xverts[i], yverts[i], color[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
+    }
+    else {
+      Polyline* p = new Polyline(size);
+      for (int i = 0; i < size; i++) {
+        p->addNextVertex(xverts[i], yverts[i], color[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
+    }
+  }
+
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+  //       End the old API stuff
+  ////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //-----------------Unit testing-------------------------------------------------------
+  void Canvas::runTests() {
+    TsglDebug("Testing Canvas class...");
+    Canvas c1(0, 0, 500, 500, "", FRAME);
+    c1.setBackgroundColor(WHITE);
+    c1.start();
+    tsglAssert(testFilledDraw(c1), "Unit test for filled draw failed!");
+    tsglAssert(testLine(c1), "Unit test for line failed!");
+    tsglAssert(testAccessors(c1), "Unit test for accessors failed!");
+    tsglAssert(testDrawImage(c1), "Unit test for drawing images failed!");
+    c1.stop();
+    TsglDebug("Unit tests for Canvas complete.");
+    std::cout << std::endl;
+  }
+
+  //Similar format is used for the remaining unit tests
+  bool Canvas::testFilledDraw(Canvas& can) {
+    int passed = 0;   //Passed tests
+    int failed = 0;   //Failed tests
+    ColorInt red(255, 0, 0);   //Fill color
+    can.drawCircle(250, 250, 50, 32, red, true);  //Draw filled shape
+    can.sleepFor(1);
+
+    //Test 1: Get middle pixel and see if its red.
+    if(can.getPixel(250, 250) == red) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 1, middle pixel for testFilledDraw() failed!");
+    }
+
+    //Test 2: Get leftmost and rightmost pixel of the circle
+    //Have to add or subtract 1 from the y so that you can get the correct pixel (center radius is 1. No 0 radius).
+    if(can.getPixel(250, 201) == red && can.getPixel(250, 299) == red) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 2, leftmost and rightmost pixel for testFilledDraw() failed!");
+    }
+
+    //Test 3: Outside pixels shouldn't equal inside pixels
+    int test = 0;
+    //Single pixel....
+    if(can.getPixel(1, 1) != red) {
+      //Multiple pixels....
+      for(int i = 201; i <= 299; i++) {
+        if(can.getPixel(1, i) != red) {
+          test++;
+        }
+      }
+      //Results of multiple pixels...
+      if(test == 99) {
+        passed++;
+      } else {
+        failed++;
+        TsglErr("Test 3, outside != inside, Multiple pixels for testFilledDraw() failed!");
+      }
+    } else {
+      failed++;
+      TsglErr("Test 3, outside != inside, Single pixel for testFilledDraw() failed!");
+    }
+
+    //Test 4: A LOT of the pixels on the inside should be red
+    int count = 0;
+    for(int i = 201; i <= 299; i++) {
+      if(can.getPixel(250, i) == red) {
+        count++;
+      }
+    }
+
+    //Now check the count, should be 99
+    if(count == 99) {
+      passed++;
+    } else {
+      failed++;
+      std::cout << "Count: " << count << std::endl;
+      TsglErr("Test 4, multiple pixels for testFilledDraw() failed!");
+    }
+
+    //Determine if we passed all four tests or not, Results:
+    if(passed == 4 && failed == 0) {
+      can.clear();
+      TsglDebug("Unit test for drawing filled shapes passed!");
+      return true;
+    } else {
+      can.clear();
+      TsglErr("This many passed for testFilledDraw(): ");
+      std::cerr << " " << passed << std::endl;
+      TsglErr("This many failed for testFilledDraw(): ");
+      std::cerr << " " << failed << std::endl;
+      return false;
+    }
+  }
+
+  bool Canvas::testLine(Canvas & can) {
+    int passed = 0;
+    int failed = 0;
+    can.drawLine(0, 0, 250, 250, BLACK);  //Diagonal line
+    can.drawLine(253, 253, 400, 253);  //Straight line
+    can.sleepFor(1);
+    ColorInt black(0, 0, 0);
+    //Test 1: Near the ending endpoint? (Diagonal)
+    if(can.getPoint(249, 249) == black) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 1, Near the ending endpoint? for testLine() failed!");
+    }
+
+    //Test 2: Somewhere in the middle? (Diagonal)
+    if(can.getPoint(155, 155) == black) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 2, Somewhere in the middle? for testLine() failed!");
+    }
+
+    //Test 3: Near the starting endpoint? (Diagonal)
+    if(can.getPoint(15, 15) == black) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 3, Near the starting endpoint? for testLine() failed!");
+    }
+
+    //Test 4: An entire line? (Straight)
+    int count = 0;
+    for(int i = 253; i <= 399; i++) {
+      if(can.getPoint(i, 253) == black) {
+        count++;
+      }
+    }
+
+    //Check the results of the Straight line test
+    if(count == 147) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 4, An entire line? (Straight) for testLine() failed!");
+    }
+
+    //Results:
+    if(passed == 4 && failed == 0) {
+      can.clear();
+      TsglDebug("Unit test for line passed!");
+      return true;
+    } else {
+      can.clear();
+      TsglErr("This many passed testLine(): ");
+      std::cerr << " " << passed << std::endl;
+      TsglErr("This many failed for testLine(): ");
+      std::cerr << " " << failed << std::endl;
+      return false;
+    }
+  }
+
+  bool Canvas::testAccessors(Canvas& can) {
+    int passed = 0;
+    int failed = 0;
+    ColorFloat white = WHITE;  //Have to set these to new variables so that I can compare them
+    ColorFloat black = BLACK;
+
+    //Test 1: Background color
+    if(can.getBackgroundColor() == white) {
+      can.setBackgroundColor(BLACK);
+      if(can.getBackgroundColor() == black) {
+        passed++;
+      } else {
+        failed++;
+        TsglErr("Test 1, Background color for testAccessors() failed!");
+      }
+    }
+
+    //Test 2: Window width/height
+    //width
+    if(can.getWindowWidth() == 500) {
+      //height
+      if(can.getWindowHeight() == 500) {
+        passed++;
+      } else {
+        failed++;
+        TsglErr("Test 2 for testAccessors() failed! (height)");
+      }
+    } else {
+      failed++;
+      TsglErr("Test 2 for testAccessors() failed! (width)");
+    }
+
+    //Test 3: Window x/y
+    //x
+    if(can.getWindowX() == 0) {
+      //y
+      if(can.getWindowY() == 0) {
+        passed++;
+      } else {
+        failed++;
+        TsglErr("Test 3 for testAccessors() failed! (y)");
+      }
+    } else {
+      failed++;
+      TsglErr("Test 3 for testAccessors() failed! (x)");
+    }
+
+    //Test 4: Window open?
+    if(can.isOpen() == true) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 4, Window open? for testAccessors() failed!");
+    }
+
+    //Results:
+    if(passed == 4 && failed == 0) {
+      can.clear();
+      TsglDebug("Unit test for accessors/mutators passed!");
+      return true;
+    } else {
+      can.clear();
+      TsglErr("This many passed for testAccessors(): ");
+      std::cerr << " " << passed << std::endl;
+      TsglErr("This many failed for testAccessors(): ");
+      std::cerr << " " << failed << std::endl;
+      return false;
+    }
+  }
+
+  bool Canvas::testDrawImage(Canvas& can) {
+    can.drawImage("../assets/pics/ff0000.png", 0, 0, 200, 200);
+    can.sleepFor(1);
+    int passed = 0;
+    int failed = 0;
+    ColorInt red(255, 0, 0);
+    //Test 1: Single pixel
+    if(can.getPoint(1, 1) == red) {
+      passed++;
+    } else {
+      failed++;
+      TsglErr("Test 1, Single pixel for testDrawImage() failed!");
+    }
+
+    //Test 2: Multiple pixels
+    int count = 0;
+    for(int i = 0; i < 200; i++) {
+      if(can.getPoint(1, i) == red) {
+        count++;
+      }
+    }
+
+    //Results of Test 2:
+    if(count == 200) {
+      passed++;
+    } else {
+      failed++;
+      std::cout << "Count: " << count << std::endl;
+      TsglErr("Test 2, Multiple pixels for testDrawImage() failed!");
+    }
+
+    //Results of entire Unit test:s
+    if(passed == 2 && failed == 0) {
+      TsglDebug("Unit test for drawing images passed!");
+      return true;
+    } else {
+      TsglErr("This many passed for testDrawImage(): ");
+      std::cerr << " " << passed << std::endl;
+      TsglErr("This many failed for testDrawImage(): ");
+      std::cerr << " " << failed << std::endl;
+      return false;
+    }
+  }
+  //------------End Unit testing--------------------------------------------------------
+}

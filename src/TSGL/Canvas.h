@@ -120,9 +120,9 @@ private:
                     textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
-    GLint           uniModel,                                           // Model perspective of the camera
-                    uniView,                                            // View perspective of the camera
-                    uniProj;                                            // Projection of the camera
+    // GLint           uniModel,                                           // Model perspective of the camera
+    //                 uniView,                                            // View perspective of the camera
+    //                 uniProj;                                            // Projection of the camera
     GLtexture       vertexArray,                                        // Address of GL's array buffer object
                     vertexBuffer;                                       // Address of GL's vertex buffer object
     float*          vertexData;                                         // The allPoints array
@@ -143,13 +143,15 @@ private:
     static void  buttonCallback(GLFWwindow* window, int key,
                    int action, int mods);                               // GLFW callback for mouse buttons
     void         draw();                                                // Draw loop for the Canvas
+    void         newInit();                                             //TODO: this is just temporary to try stuff
+    void         newDraw();                                             //TODO: this is just temporary to try stuff
     static void  errorCallback(int error, const char* string);          // Display where an error is coming from
     void         glDestroy();                                           // Destroys the GL and GLFW things that are specific for this canvas
     void         init(int xx,int yy,int ww,int hh,
                    unsigned int b, std::string title,
                    double timerLength);                                 // Method for initializing the canvas
     void         initGl();                                              // Initializes the GL things specific to the Canvas
-    void         initGlew();                                            // Initialized the GLEW things specific to the Canvas
+    void         initShaders();                                         // Initialize shaders, framebuffers, the works TODO
     void         initGLAD();                                            // Initialize the GL pipeline, that kinda stuff TODO
     static void  initGlfw();                                            // Initalizes GLFW for all future canvases.
     void         initWindow();                                          // Initalizes the window specific to the Canvas
@@ -277,8 +279,21 @@ public:
 
 
 
+//TODO: remove this stuff, just for trying things!
+float data[9] = {1.0, 0.0, 1.0, 0.0, 0.0, -1.0, -1.0, 0.0, 1.0};
+GLuint triangleVBO;
 
+/* This is a handle to the shader program */
+// GLuint shaderProgram;
 
+/* These pointers will receive the contents of our shader source code files */
+GLchar *vertexSource, *fragmentSource;
+
+/* These are handles used to reference the shaders */
+GLuint vertexShader, fragmentShader;
+const unsigned int shaderAttribute = 0;
+
+GLuint VertexArrayID;
 
 
 

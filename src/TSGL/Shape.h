@@ -37,6 +37,7 @@ class Shape {
     bool isTextured; /*! Whether the shape is textured or not. If extending Shape, <B> you *must* leave this at false (unless you are working with an image). </B> */
     int renderLayer; // The depth index to control the drawing order of the shapes
     ColorFloat shapeColor;
+    GLenum geometryType = GL_TRIANGLES;
  public:
 
     /*!
@@ -77,6 +78,7 @@ class Shape {
      */
     virtual void draw() = 0;  // Abstract method for actually drawing the shape
     virtual void render() {return;}
+    GLenum getGeometryType() {return geometryType;}
 
     //TODO: comment this
     // virtual float* getVerticesPointerForRenderer() = 0;
