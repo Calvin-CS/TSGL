@@ -10,8 +10,7 @@
 #include "Thread.h"
 #include "Queue.h"
 #include <tsgl.h>
-#include <Canvas.h>
-#include <Line.h>
+#include <atomic>
 using namespace tsgl;
 
 /**
@@ -21,15 +20,21 @@ using namespace tsgl;
 class PCThread : public Thread {
 public:
 	PCThread(); //Default constructor
-	PCThread(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & can);  //Explicit constructor
-	void draw(); //Draw the PCThread and its count
-	virtual void run() = 0;	//Must be implemented by subclass
+	PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can);  //Explicit constructor
+	virtual void run();	//Must be implemented by subclass
+	virtual void wait();
+	virtual void lock() = 0; //Must be implemented by subclass
+	virtual void act() = 0; //Must be implemented by subclass
+	virtual void unlock() = 0; //Must be implemented by subclass
+	static std::atomic<bool> paused;
 protected:
+	void animateItem(int endX, int endY);
 	int myX, myY; //Center coordinates for the PCThread
 	int count; //Number of colors processed (produced or consumed)
-	ColorInt myColor;  //Color data obtained from or added to the shared buffer
-	Queue<ColorInt> * buffer; //Handle to the current buffer
+	Queue<Star*> * buffer; //Handle to the current buffer
 	Canvas * myCan;  //Handle to the Canvas
+	ConvexPolygon * myShape;
+	Star * myItem; //Handle to item Produced/Consumed
 };
 
 #endif /* PCTHREAD_H_ */

@@ -1,5 +1,5 @@
 /*
- * Image.h extends Shape and provides a class for drawing an image to a Canvas.
+ * Image.h extends Drawable and provides a class for drawing an image to a Canvas.
  */
 
 #ifndef IMAGE_H_
@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "Shape.h"           // For extending our Shape object
+#include "Drawable.h"           // For extending our Drawable object
 #include "TextureHandler.h"  // For loading images
 #include "TsglAssert.h"      // For unit testing purposes
 
@@ -25,7 +25,7 @@ namespace tsgl {
  *   extend Canvas::drawImage() function due to this privatization.
  *  \warning Aside from an error message output to stderr, Image gives no indication if an image failed to load.
  */
-class Image : public Shape {
+class Image : public Drawable {
  private:
     int myWidth, myHeight;
     float vertices[32];

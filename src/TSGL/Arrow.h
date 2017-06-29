@@ -33,7 +33,7 @@ namespace tsgl {
     *      \param doubleArrow Determines whether Arrow has two heads.
     * \return A new Arrow with the specified endpoints and color.
     */
-    Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color, bool doubleArrow = false);
+    Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK, bool doubleArrow = false);
 
     void draw();
 

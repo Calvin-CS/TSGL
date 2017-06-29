@@ -1,11 +1,11 @@
 /*
- * ConcavePolygon.h extends Shape and provides a class for drawing a Concave polygon to a Canvas.
+ * ConcavePolygon.h extends Polygon and provides a class for drawing a Concave polygon to a Canvas.
  */
 
 #ifndef CONCAVEPOLYGON_H_
 #define CONCAVEPOLYGON_H_
 
-#include "Shape.h"       // For extending our Shape object
+#include "Polygon.h"       // For extending our Polygon object
 #include "TsglAssert.h"  // For unit testing purposes
 #include <queue>         // std::queue
 #include <iostream>      // DEBUGGING
@@ -22,16 +22,11 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
-class ConcavePolygon : public Shape {
+class ConcavePolygon : public Polygon {
  private:
-    bool init;          // Whether the vertex has been initialized completely
     bool dirty;         // Whether the new vertex buffer is dirty
-    float* vertices;    // Buffer for vertex data
     float* tarray;      // Buffer for recomputed vertex data
-    int size,           // Number of floating point numbers in vertices
-        tsize,          // Number of floating point numbers in tarray
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 6)
+    int tsize;          // Number of floating point numbers in tarray
 
     static bool testIntersects();     // Unit test for intersects()
     static bool testPointITriangle(); // Unit test for pointInTriangle()
@@ -93,10 +88,11 @@ class ConcavePolygon : public Shape {
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
      *      \param color The reference variable of the color of the vertex.
+     *      \param outlineColor The reference variable of the color the the vertex's outline.
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating that the vertex buffer is full.
      */
-    void addVertex(int x, int y, const ColorFloat &color);
+    void addVertex(int x, int y, const ColorFloat &color, ColorFloat outlineColor = BLACK);
 
     /*!
      * \brief Draw the ConcavePolygon.
@@ -109,6 +105,19 @@ class ConcavePolygon : public Shape {
 
     //TODO: comment this, implement
     float* getVerticesPointerForRenderer();
+
+    /**
+     * \brief Sets the ConcavePolygon to a new color
+     * \param c The new ColorFloat.
+     */
+    virtual void setColor(ColorFloat c);
+
+    /**
+     * \brief Moves the ConcavePolygon to new coordinates
+     * \param x The new center x coordinate.
+     * \param y The new center y coordinate.
+     */
+    virtual void setCenter(int x, int y);
 
     /*!
      * \brief Runs the Unit tests.

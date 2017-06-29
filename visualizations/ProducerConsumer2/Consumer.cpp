@@ -13,8 +13,9 @@ Consumer::Consumer() : PCThread() { }
  * @param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming object from the Queue.
  * @return: The constructed Consumer object.
  */
-Consumer::Consumer(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
+Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = can.getWindowWidth() - 50;
+	myShape = new Rectangle(myX-20, myY-20, 40, 40, myColor);
 	draw();
 }
 
@@ -25,20 +26,44 @@ void Consumer::consume() {
 	while(myCan->isOpen()) { //While the Canvas is still open...
 		//TODO: make random generator make more sense
 		sleep( (rand()%10+3)/10 ); //Wait for random time
+		while( paused ) { }
 
 		buffer->removeLock();
+		while( paused ) { }
 
-		int i = buffer->getFirstIndex();
-		myColor = buffer->remove();  //Take out data from the Queue and consume it
-		myCan->sleep();
+		removeItem();
+		while( paused ) { }
+
 		count++;
-		draw(); // draw the color just found
+
+		//update the color
+		myCan->remove(myShape);
+		delete myShape;
+		myShape = new Rectangle(myX-20, myY-20, 40, 40, myColor); //TODO: change to set color, but can't do that until the Shape class has .setColor
+		draw(); // draw the color just found TODO: this should update the color and text, nothing else
+		while( paused ) { }
 		// white out the location in drawn buffer
-		float itAngle = (i*2*PI + PI)/8; // angle of item
-		Circle item(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, ColorFloat(255, 255, 255), true); // draw the item as a circle
-		myCan.add(&item);
 		buffer->removeUnlock();
 	}
+}
+
+//TODO: comment
+void Consumer::removeItem() {
+	Star * item = buffer->remove();	//Take out data from the Queue and consume it
+	showArrow(item);
+	myCan->remove(item); 							//Remove the same item from the Canvas
+	myColor = item->getColor(); 			//Store the color
+	delete item; 											//Delete the unused pointer to avoid memory leaks
+}
+
+//TODO: comment
+void Consumer::showArrow(Star * c) {
+	//arrow going from the star to us
+	Arrow arrow(c->getX(), c->getY(), myX-30, myY);
+	myCan->add(&arrow);
+	myCan->sleepFor(0.5);
+	while( paused ) { }
+	myCan->remove(&arrow);
 }
 
 /**

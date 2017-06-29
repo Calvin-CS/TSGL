@@ -15,15 +15,22 @@ CPP_SRCS += \
 ../src/TSGL/Image.cpp \
 ../src/TSGL/IntegralViewer.cpp \
 ../src/TSGL/Line.cpp \
+../src/TSGL/Polygon.cpp \
 ../src/TSGL/Polyline.cpp \
 ../src/TSGL/ProgressBar.cpp \
 ../src/TSGL/Rectangle.cpp \
+../src/TSGL/Shape.cpp \
 ../src/TSGL/Spectrogram.cpp \
+../src/TSGL/Star.cpp \
 ../src/TSGL/Text.cpp \
 ../src/TSGL/TextureHandler.cpp \
 ../src/TSGL/Timer.cpp \
 ../src/TSGL/Triangle.cpp \
 ../src/TSGL/TriangleStrip.cpp \
+../src/TSGL/UnfilledCircle.cpp \
+../src/TSGL/UnfilledRectangle.cpp \
+../src/TSGL/UnfilledStar.cpp \
+../src/TSGL/UnfilledTriangle.cpp \
 ../src/TSGL/VisualTaskQueue.cpp 
 
 OBJS += \
@@ -38,15 +45,22 @@ OBJS += \
 ./src/TSGL/Image.o \
 ./src/TSGL/IntegralViewer.o \
 ./src/TSGL/Line.o \
+./src/TSGL/Polygon.o \
 ./src/TSGL/Polyline.o \
 ./src/TSGL/ProgressBar.o \
 ./src/TSGL/Rectangle.o \
+./src/TSGL/Shape.o \
 ./src/TSGL/Spectrogram.o \
+./src/TSGL/Star.o \
 ./src/TSGL/Text.o \
 ./src/TSGL/TextureHandler.o \
 ./src/TSGL/Timer.o \
 ./src/TSGL/Triangle.o \
 ./src/TSGL/TriangleStrip.o \
+./src/TSGL/UnfilledCircle.o \
+./src/TSGL/UnfilledRectangle.o \
+./src/TSGL/UnfilledStar.o \
+./src/TSGL/UnfilledTriangle.o \
 ./src/TSGL/VisualTaskQueue.o 
 
 CPP_DEPS += \
@@ -61,15 +75,22 @@ CPP_DEPS += \
 ./src/TSGL/Image.d \
 ./src/TSGL/IntegralViewer.d \
 ./src/TSGL/Line.d \
+./src/TSGL/Polygon.d \
 ./src/TSGL/Polyline.d \
 ./src/TSGL/ProgressBar.d \
 ./src/TSGL/Rectangle.d \
+./src/TSGL/Shape.d \
 ./src/TSGL/Spectrogram.d \
+./src/TSGL/Star.d \
 ./src/TSGL/Text.d \
 ./src/TSGL/TextureHandler.d \
 ./src/TSGL/Timer.d \
 ./src/TSGL/Triangle.d \
 ./src/TSGL/TriangleStrip.d \
+./src/TSGL/UnfilledCircle.d \
+./src/TSGL/UnfilledRectangle.d \
+./src/TSGL/UnfilledStar.d \
+./src/TSGL/UnfilledTriangle.d \
 ./src/TSGL/VisualTaskQueue.d 
 
 

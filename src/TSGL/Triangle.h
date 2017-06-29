@@ -1,11 +1,11 @@
 /*
- * Triangle.h extends Shape and provides a class for drawing a three-sided polygon to a Canvas.
+ * Triangle.h extends ConvexPolygon and provides a class for drawing a three-sided polygon to a Canvas.
  */
 
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "ConvexPolygon.h"  // For extending our ConvexPolygon object
 
 namespace tsgl {
 
@@ -13,9 +13,7 @@ namespace tsgl {
  *  \brief Draw a simple Triangle.
  *  \details Triangle is a class for holding vertex data for a simple triangle.
  */
-class Triangle : public Shape {
- private:
-    float vertices[18];
+class Triangle : public ConvexPolygon {
  public:
 
     /*!
@@ -30,16 +28,7 @@ class Triangle : public Shape {
      *      \param color The color of the Triangle.
      * \return A new Triangle with the specified vertices and color.
      */
-    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color);
-
-    /*!
-     * \brief Draw the Triangle.
-     * \details This function actually draws the Triangle to the Canvas.
-     */
-    void draw();
-
-    //TODO: comment this, implement
-    float* getVerticesPointerForRenderer();
+    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color, ColorFloat outlineColor = BLACK);
 };
 
 }

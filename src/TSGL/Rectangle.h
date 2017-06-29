@@ -1,11 +1,11 @@
 /*
- * Rectangle.h extends Shape and provides a class for drawing a rectangle to a Canvas.
+ * Rectangle.h extends ConvexPolygon and provides a class for drawing a rectangle to a Canvas.
  */
 
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "ConvexPolygon.h"  // For extending our ConvexPolygon object
 
 namespace tsgl {
 
@@ -13,9 +13,7 @@ namespace tsgl {
  *  \brief Draw a simple Rectangle.
  *  \details Rectangle is a class for holding vertex data for a simple rectangle.
  */
-class Rectangle : public Shape {
- private:
-    float vertices[24];
+class Rectangle : public ConvexPolygon {
  public:
 
     /*!
@@ -26,20 +24,10 @@ class Rectangle : public Shape {
      *   \param width The width of the Rectangle.
      *   \param height The height of the Rectangle.
      *   \param color The color of the Rectangle.
+     *   \param outlineColor The color of the Rectangle's outline (defaults to BLACK).
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
-    Rectangle(int x, int y, int width, int height, const ColorFloat &color, bool filled = true);
-
-    /*!
-     * \brief Draw the Rectangle.
-     * \details This function actually draws the Rectangle to the Canvas.
-     */
-    void draw();
-
-    void render();
-
-    //TODO: comment this, implement
-    float* getVerticesPointerForRenderer();
+    Rectangle(int x, int y, int width, int height, const ColorFloat &color, const ColorFloat &outlineColor = BLACK);
 };
 
 }

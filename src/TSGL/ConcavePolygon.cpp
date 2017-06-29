@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-ConcavePolygon::ConcavePolygon(int numVertices) {
+ConcavePolygon::ConcavePolygon(int numVertices) : Polygon(numVertices) {
   if (numVertices < 3)
     TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
   length = numVertices+1;
@@ -16,31 +16,20 @@ ConcavePolygon::ConcavePolygon(int numVertices) {
 }
 
 ConcavePolygon::~ConcavePolygon() {
-  delete[] vertices;
+  //vertices deleted in Polygon
   delete[] tarray;
 }
 
-void ConcavePolygon::addVertex(int x, int y, const ColorFloat &color) {
+void ConcavePolygon::addVertex(int x, int y, const ColorFloat &color, ColorFloat outlineColor) {
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
     return;
   }
-  vertices[current] = x;
-  vertices[current + 1] = y;
-  vertices[current + 2] = color.R;
-  vertices[current + 3] = color.G;
-  vertices[current + 4] = color.B;
-  vertices[current + 5] = color.A;
-  current += 6;
+  Polygon::addVertex(x, y, color, outlineColor);
   dirty = true;
 
   if (current == size-6) {
-    vertices[current] = vertices[0];
-    vertices[current + 1] = vertices[1];
-    vertices[current + 2] = vertices[2];
-    vertices[current + 3] = vertices[3];
-    vertices[current + 4] = vertices[4];
-    vertices[current + 5] = vertices[5];
+    Polygon::addVertex( vertices[0], vertices[1], getColor(), outlineColor );
     init = true;
   }
 }
@@ -156,21 +145,23 @@ void ConcavePolygon::draw() {
   glBufferData(GL_ARRAY_BUFFER, tsize * sizeof(float), tarray, GL_DYNAMIC_DRAW);
   glDrawArrays(GL_TRIANGLES, 0, tsize / 6);
 
-  //Debug Outline
-  //    for (int i = 0; i < size; i += 6) {
-  //      vertices[i+2] = 1.0f;
-  //      vertices[i+3] = 1.0f;
-  //      vertices[i+4] = 1.0f;
-  //      vertices[i+5] = 1.0f;
-  //    }
-  //    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-  //    glDrawArrays(GL_LINE_STRIP, 0, length);
+  drawOutline();
 }
 
 float* ConcavePolygon::getVerticesPointerForRenderer() {
   //TODO: return a pointer to an array of vertices that is formatted correctly for the new renderer
   float* temp = new float[1];
   return temp;
+}
+
+void ConcavePolygon::setColor(ColorFloat c) {
+  dirty = true;
+  Polygon::setColor(c);
+}
+
+void ConcavePolygon::setCenter(int x, int y) {
+  dirty = true;
+  Polygon::setCenter(x, y);
 }
 
 //----------------------------------------------Unit testing------------------------------

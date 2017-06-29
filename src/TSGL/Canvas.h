@@ -10,6 +10,9 @@
   #define GLEW_STATIC
 #endif
 
+#include "../glad/glad.h"      // New loader for GL function calls TODO: fix the path here
+
+
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
@@ -17,16 +20,22 @@
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
 #include "Circle.h" // Our own class for concave polygons with colored vertices
+#include "UnfilledCircle.h" //Our own class for unfilled circles
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
 #include "Arrow.h"          // Our own class for drawing arrows
+#include "Polygon.h"        // Our own class for drawing polygons
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
+#include "UnfilledRectangle.h" //Our own class for drawing unfilled rectangles
+#include "Star.h"           //Our own class for drawing stars
+#include "UnfilledStar.h" //Our own class for drawing unfilled stars
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
+#include "UnfilledTriangle.h" //Our own class for drawing unfilled triangles
 #include "Util.h"           // Needed constants and has cmath for performing math operations
 
 #include <functional>       // For callback upon key presses
@@ -42,7 +51,6 @@
 #endif
 
 // #include <GL/glew.h>        // Needed for GL function calls
-#include "../glad/glad.h"      // New loader for GL function calls TODO: fix the path here
 #include <GLFW/glfw3.h>     // For window creation and management
 
 #ifdef _WIN32
@@ -70,7 +78,7 @@ private:
     typedef std::function<void(double, double)>     doubleFunction;
     typedef std::function<void()>                   voidFunction;
 
-    std::vector<Shape *> objectBuffer;                                  // Holds a list of pointers to objects drawn each frame
+    std::vector<Drawable *> objectBuffer;                                  // Holds a list of pointers to objects drawn each frame
     int currentNewShapeLayerDefault = 0;                                // Layer value set for objects that haven't received an explicit layer designation (default 0)
 
     float           aspect;                                             // Aspect ratio used for setting up the window
@@ -92,8 +100,8 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    Array<Shape*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
-    Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
+    Array<Drawable*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
+    Array<Drawable*> * myShapes;                                           // Our buffer of shapes to draw
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
@@ -175,7 +183,7 @@ private:
 
 protected:
     bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
-    void        drawShape(Shape* s);                                    // Draw a shape type
+    void        drawShape(Drawable* s);                                    // Draw a shape type
 public:
 
     /*!
@@ -252,8 +260,8 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-    void add(Shape * shapePtr);
-    void remove(Shape * shapePtr);
+    void add(Drawable * shapePtr);
+    void remove(Drawable * shapePtr);
     void clearObjectBuffer(bool shouldFreeMemory = false);
     void printBuffer();
     void pushObjectsToVertexBuffer();

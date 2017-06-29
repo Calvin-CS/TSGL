@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-  Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color, bool doubleArrow = false)
+  Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color, bool doubleArrow)
   : Line(x1, y1, x2, y2, color) {
     isDoubleArrow = doubleArrow;
     arrowHead = makeArrowHead(x2, y2, x2-x1, y2-y1, color);

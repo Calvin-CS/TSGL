@@ -6,6 +6,7 @@
  */
 Producer::Producer() : PCThread() {
 	myFirst = mySecond = myThird = 0;
+
 }
 
 /**
@@ -15,9 +16,10 @@ Producer::Producer() : PCThread() {
  * @param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue producing object into the Queue.
  * @return: The constructed Producer object.
  */
-Producer::Producer(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
+Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myFirst = mySecond = myThird  = 0;
 	myX = 50; //Set the x-coordinate to 50
+	myShape = new Circle(myX, myY, 20, 32, myColor);
 	draw();
 }
 
@@ -27,21 +29,49 @@ Producer::Producer(Queue<ColorInt> & sharedBuffer, unsigned long id, Canvas & ca
 void Producer::produce() {
 	while (myCan->isOpen()) {  //While the Canvas is still open...
 		sleep( (rand()%10+3)/10 );
-		myFirst = rand() % 255;  //Generate your data and try to stick it in the Queue
-		mySecond = rand() % 255;
-		myThird = rand() % 255;
-		myColor = ColorInt(myFirst, mySecond, myThird);
+		while( paused ) { }
+		myColor = randColor();
 		buffer->appendLock();
 		int i = buffer->getLastIndex();
-		buffer->append(myColor, getId());  //Append something and pass your id along too
 		count++;
 		draw();
+		while( paused ) { }
 		float itAngle = (i*2*PI + PI)/8; // angle of item
 		myCan->sleep();
-		Circle item(100*cos(itAngle)+(myCan->getWindowWidth()/2), -100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 50, myColor, true); // draw the item as a circle
-		myCan.add(&item);
+		Star * item = new Star(100*cos(itAngle)+(myCan->getWindowWidth()/2), 100*sin(itAngle)+(myCan->getWindowHeight()/2), 20, 5, myColor, false); // draw the item as a star
+		myCan->add(item);
+		while( paused ) { }
+
+		//update our Circle's color TODO: fix when the text is back or we make this better, needs to be cleaner
+		//TODO: mainly waiting for all Shapes to have change color methods
+		myCan->remove(myShape);
+		while( paused ) { }
+		delete myShape;
+		myShape = new Circle(myX, myY, 20, 32, myColor);
+		myCan->add(myShape);
+
+		buffer->append(item, getId());  //Append something and pass your id along too
+		showArrow(item);
 		buffer->appendUnlock();
 	}
+}
+
+//TODO: comment
+void Producer::showArrow(Star * c) {
+	//arrow going from the star to us
+	Arrow arrow(myX+30, myY, c->getX(), c->getY());
+	myCan->add(&arrow);
+	myCan->sleepFor(0.5);
+	while( paused ) { }
+	myCan->remove(&arrow);
+}
+
+//TODO: comment
+ColorInt Producer::randColor() {
+	int red = rand() % 255;
+	int green = rand() % 255;
+	int blue = rand() % 255;
+	return ColorInt(red, green, blue);
 }
 
 /**

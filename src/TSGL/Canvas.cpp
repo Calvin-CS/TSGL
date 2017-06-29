@@ -111,7 +111,7 @@ namespace tsgl {
 
 
 
-  void Canvas::add(Shape * shapePtr) {
+  void Canvas::add(Drawable * shapePtr) {
 
     //TODO: make this check for duplicates
     //TODO: check that this is properly thread safe now
@@ -121,14 +121,14 @@ namespace tsgl {
 
     objectMutex.lock();
     objectBuffer.push_back(shapePtr);
-    std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Shape * a, Shape * b)->bool {
+    std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
       return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
     });
     objectMutex.unlock();
 
   }
 
-  void Canvas::remove(Shape * shapePtr) {
+  void Canvas::remove(Drawable * shapePtr) {
 
     //TODO: make this thread safe! (check that it is now)
 
@@ -146,12 +146,11 @@ namespace tsgl {
   void Canvas::printBuffer() {
 
     // std::cout << "Printing array:" << std::endl << std::endl;
-    printf("Printing %d elements in buffer:\n\n", objectBuffer.size());
+    printf("Printing %ld elements in buffer:\n\n", objectBuffer.size());
 
-    for(std::vector<Shape *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
+    for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
       std::cout << *it << std::endl;
     }
-
   }
 
   void Canvas::pushObjectsToVertexBuffer() {
@@ -160,8 +159,8 @@ namespace tsgl {
     objectMutex.lock();
     // bufferMutex.lock();
     // Take objects from the object buffer and push them onto the vertex buffer
-    for(std::vector<Shape *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
-      (*it)->render();
+    for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
+      (*it)->draw();
       //TODO this function will eventually make the GL calls itself, not the objects
     }
     // bufferMutex.unlock();
@@ -754,8 +753,8 @@ namespace tsgl {
     started = false;                  // We haven't started the window yet
     monitorX = xx;
     monitorY = yy;
-    myShapes = new Array<Shape*>(b);  // Initialize myShapes
-    myBuffer = new Array<Shape*>(b);
+    myShapes = new Array<Drawable*>(b);  // Initialize myShapes
+    myBuffer = new Array<Drawable*>(b);
     vertexData = new float[6 * b];    // Buffer for vertexes for points
     showFPS = false;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering
@@ -1275,9 +1274,9 @@ namespace tsgl {
         newX = xverts+radius*cos(i*delta);
         newY = yverts+radius*sin(i*delta);
         if (i > 0)
-        p->addNextVertex(oldX, oldY,color);
+        p->addVertex(oldX, oldY,color);
       }
-      p->addNextVertex(newX, newY,color);
+      p->addVertex(newX, newY,color);
       this->add(p);
     }
   }
@@ -1293,7 +1292,7 @@ namespace tsgl {
     else {
       Polyline* p = new Polyline(size);
       for (int i = 0; i < size; i++) {
-        p->addNextVertex(xverts[i], yverts[i], color[i]);
+        p->addVertex(xverts[i], yverts[i], color[i]);
       }
       this->add(p);  // Push it onto our drawing buffer
     }
@@ -1310,7 +1309,7 @@ namespace tsgl {
     else {
       Polyline* p = new Polyline(size);
       for (int i = 0; i < size; i++) {
-        p->addNextVertex(x[i], y[i], color[i]);
+        p->addVertex(x[i], y[i], color[i]);
       }
       this->add(p);  // Push it onto our drawing buffer
     }
@@ -1368,16 +1367,16 @@ namespace tsgl {
     }
     else {
       Polyline* p = new Polyline(5);
-      p->addNextVertex(x1, y1, color);
-      p->addNextVertex(x1, y2, color);
-      p->addNextVertex(x2, y2, color);
-      p->addNextVertex(x2, y1, color);
-      p->addNextVertex(x1, y1, color);
+      p->addVertex(x1, y1, color);
+      p->addVertex(x1, y2, color);
+      p->addVertex(x2, y2, color);
+      p->addVertex(x2, y1, color);
+      p->addVertex(x1, y1, color);
       this->add(p);
     }
   }
 
-  void Canvas::drawShape(Shape* s) {
+  void Canvas::drawShape(Drawable* s) {
     if (!started) {
       TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
       return;
@@ -1407,10 +1406,10 @@ namespace tsgl {
     }
     else {
       Polyline* p = new Polyline(4);
-      p->addNextVertex(x1,y1,color);
-      p->addNextVertex(x2,y2,color);
-      p->addNextVertex(x3,y3,color);
-      p->addNextVertex(x1,y1,color);
+      p->addVertex(x1,y1,color);
+      p->addVertex(x2,y2,color);
+      p->addVertex(x3,y3,color);
+      p->addVertex(x1,y1,color);
       this->add(p);
     }
   }
@@ -1426,7 +1425,7 @@ namespace tsgl {
     else {
       Polyline* p = new Polyline(size);
       for (int i = 0; i < size; i++) {
-        p->addNextVertex(xverts[i], yverts[i], color[i]);
+        p->addVertex(xverts[i], yverts[i], color[i]);
       }
       this->add(p);  // Push it onto our drawing buffer
     }
