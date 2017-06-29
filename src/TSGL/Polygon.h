@@ -90,6 +90,28 @@ protected:
      * \param outlineSetting A bool determining whether the outline is drawn.
      */
     void setOutline(bool outlineSetting) { outlineOn = outlineSetting; }
+
+    /**
+    * \brief Rotates the Polygon by an angle
+    * \details Rotates clockwise around the center of the shape
+    * \param angle Angle to rotate by, in radians
+    */
+    virtual void rotate(float angle);
+
+    // /**
+    //  * \brief Rotates the Polygon by angle around a point
+    //  * \details Rotates clockwise around (x, y) by angle
+    //  * \param angle Angle to rotate by, in radians
+    //  * \param x The x coordinate to rotate around
+    //  * \param y The y coordinate to rotate around
+    //  */
+    // virtual void rotateAround(float angle, float x, float y);
+
+    /**
+     * \brief Rotates the Polygon by angle around (0, 0)
+     * \param angle Angle to rotate by, in radians
+     */
+    virtual void rotateAroundOrigin(float angle);
 };
 
 }

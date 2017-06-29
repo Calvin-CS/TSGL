@@ -61,9 +61,9 @@ void Shape::setColor(ColorFloat c) {
   }
 }
 
-void Shape::setCenter(int x, int y) {
-  int deltaX = x - getX(); //Change for x
-  int deltaY = y - getY(); //Change for y
+void Shape::setCenter(float x, float y) {
+  float deltaX = x - getX(); //Change for x
+  float deltaY = y - getY(); //Change for y
 
   for(int i = 0; i < length; i++) {
     vertices[i*6]     += deltaX; //Transpose x
@@ -71,7 +71,7 @@ void Shape::setCenter(int x, int y) {
   }
 }
 
-int Shape::getX() {
+float Shape::getX() {
   float minX, maxX;
   minX = maxX = vertices[0];
 
@@ -86,7 +86,7 @@ int Shape::getX() {
   return (minX+maxX)/2;
 }
 
-int Shape::getY() {
+float Shape::getY() {
   float minY, maxY;
   minY = maxY = vertices[1];
 
@@ -101,5 +101,33 @@ int Shape::getY() {
   return (minY+maxY)/2;
 }
 
+void Shape::rotate(float angle) {
+  float centerX = getX(), centerY = getY();
+
+  Shape::setCenter(0, 0); //Transpose to center for rotation
+
+  Shape::rotateAroundOrigin(angle);
+
+  Shape::setCenter(centerX, centerY); //Return to original location
+}
+
+// void Shape::rotateAround(float angle, float x, float y) { //Needs to be tested
+//   float centerX = getX(), centerY = getY();
+//
+//   Shape::setCenter(centerX-x, centerY-y); //Transpose for origin to be (x, y)
+//
+//   Shape::rotateAroundOrigin(angle);
+//
+//   Shape::setCenter(centerX, centerY); //Return to original location
+// }
+
+void Shape::rotateAroundOrigin(float angle) {
+  for(int i = 0; i < current; i+=6) {
+    float x = vertices[i];
+    float y = vertices[i+1];
+    vertices[i]   = x*cos(angle)-y*sin(angle); //New x
+    vertices[i+1] = x*sin(angle)+y*cos(angle); //New y
+  }
+}
 
 }

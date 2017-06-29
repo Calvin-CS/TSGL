@@ -75,9 +75,6 @@ class Drawable {
      */
     virtual void draw() = 0;  // Abstract method for actually drawing
 
-    //TODO: comment this
-    // virtual float* getVerticesPointerForRenderer() = 0;
-
     /*!
      * \brief Accessor for <code>isTextured</code>.
      * \return Whether the drawable is a textured primitive or not.

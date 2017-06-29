@@ -23,7 +23,8 @@ namespace tsgl {
 class Shape : public Drawable {
 protected:
     bool init;          // Whether the vertex has been initialized completely
-    float* vertices;    // Buffer for vertex data
+    GLfloat* vertices;    // Buffer for vertex data
+    ColorFloat color;
     int size,           // Number of floating point numbers in vertices
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
@@ -65,9 +66,6 @@ protected:
      */
     virtual void draw();
 
-    //TODO: comment this, implement
-    virtual float* getVerticesPointerForRenderer();
-
     /**
      * \brief Gets the current color of the Shape
      * \return The ColorFloat of the Shape.
@@ -85,19 +83,41 @@ protected:
      * \param x The new center x coordinate.
      * \param y The new center y coordinate.
      */
-    virtual void setCenter(int x, int y);
+    virtual void setCenter(float x, float y);
 
     /**
      * \brief Returns the x coordinate of the Shape
      * \return An int, the center x coordinate
      */
-    virtual int getX();
+    virtual float getX();
 
     /**
      * \brief Returns the y coordinate of the Shape
      * \return An int, the center y coordinate
      */
-    virtual int getY();
+    virtual float getY();
+
+    /**
+     * \brief Rotates the Shape by an angle
+     * \details Rotates clockwise around the center of the shape
+     * \param angle Angle to rotate by, in radians
+     */
+    virtual void rotate(float angle);
+
+    // /**
+    //  * \brief Rotates the Shape by angle around a point
+    //  * \details Rotates clockwise around (x, y) by angle
+    //  * \param angle Angle to rotate by, in radians
+    //  * \param x The x coordinate to rotate around
+    //  * \param y The y coordinate to rotate around
+    //  */
+    // virtual void rotateAround(float angle, float x, float y);
+
+    /**
+     * \brief Rotates the Shape by angle around (0, 0)
+     * \param angle Angle to rotate by, in radians
+     */
+    virtual void rotateAroundOrigin(float angle);
 };
 
 }

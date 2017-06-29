@@ -25,7 +25,7 @@ const int CAPACITY = 8;
 const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 500, MAX_DATA = 8; //Size of Canvas and limit on amount of data to be stored in Queue
 Canvas queueDisplay(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Producer-Consumer", FRAME );  //Canvas to draw on
 Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored data)
-Canvas legendDisplay(0, WINDOW_HEIGHT+40, WINDOW_WIDTH, 200, "Producer-Consumer Legend", FRAME );
+Canvas legendDisplay(0, WINDOW_HEIGHT+40, WINDOW_WIDTH, 240, "Producer-Consumer Legend", FRAME );
 
 
 /**
@@ -37,14 +37,18 @@ void displayLegend() {
 	legendDisplay.setBackgroundColor(WHITE);
 
 	int colorChanger = 0; //Counting int to control random bright colors
-	Circle waitingCircle(50, 60, 20, 32, BLACK);
-	Circle thinkingCircle(50, 130, 20, 32, BLACK);
+	Circle waitingCircle(50, 60, 20, 32, BLACK); //waiting for lock
+	Circle thinkingCircle(50, 120, 20, 32, BLACK); //waiting, not seeking lock
+	Circle lockCircle(50, 180, 20, 32, WHITE); //has lock
 	Rectangle waitingSquare(WINDOW_WIDTH-70, 40, 40, 40, BLACK);
-	Rectangle thinkingSquare(WINDOW_WIDTH-70, 110, 40, 40, BLACK);
+	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100, 40, 40, BLACK);
+	Rectangle lockSquare(WINDOW_WIDTH-70, 160, 40, 40, WHITE);
 	legendDisplay.add( &waitingCircle );
 	legendDisplay.add( &thinkingCircle );
+	legendDisplay.add( &lockCircle );
 	legendDisplay.add( &waitingSquare );
 	legendDisplay.add( &thinkingSquare );
+	legendDisplay.add( &lockSquare );
 
 	//TODO: add text
 	while( legendDisplay.isOpen() ) {
