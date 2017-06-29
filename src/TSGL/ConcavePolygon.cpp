@@ -2,16 +2,11 @@
 
 namespace tsgl {
 
-ConcavePolygon::ConcavePolygon(int numVertices) : Polygon(numVertices) {
+ConcavePolygon::ConcavePolygon(int numVertices, const ColorFloat& c, const ColorFloat& outlineC) : Polygon(numVertices+1, c, outlineC) {
   if (numVertices < 3)
     TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
-  length = numVertices+1;
-  size = length * 6;
   tsize = 0;
-  current = 0;
   tarray = nullptr;
-  vertices = new float[size];
-  init = false;
   dirty = false;
 }
 
@@ -20,16 +15,16 @@ ConcavePolygon::~ConcavePolygon() {
   delete[] tarray;
 }
 
-void ConcavePolygon::addVertex(int x, int y, const ColorFloat &color, ColorFloat outlineColor) {
+void ConcavePolygon::addVertex(int x, int y) {
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
     return;
   }
-  Polygon::addVertex(x, y, color, outlineColor);
+  Polygon::addVertex(x, y);
   dirty = true;
 
-  if (current == size-6) {
-    Polygon::addVertex( vertices[0], vertices[1], getColor(), outlineColor );
+  if (current == size-2) {
+    Polygon::addVertex( vertices[0], vertices[1]);
     init = true;
   }
 }
@@ -56,32 +51,27 @@ bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, fl
   return ((b1 == b2) && (b2 == b3));
 }
 
-void ConcavePolygon::draw() {
-  if (!init) {
-    TsglDebug("Cannot draw yet.");
-    return;
-  }
-
+void ConcavePolygon::cleanup() {
   if (dirty) {
     dirty = false;
     std::queue<float> newvertices;
 
     bool clockwise = (
         (
-            (vertices[6]-vertices[0]) * (vertices[13]-vertices[7]) -
-            (vertices[7]-vertices[1]) * (vertices[12]-vertices[6])
+            (vertices[2]-vertices[0]) * (vertices[13]-vertices[7]) -
+            (vertices[7]-vertices[1]) * (vertices[12]-vertices[2])
         ) < 0.0);
 
-    for (int i = 0; i < size-12; i += 6) {
+    for (int i = 0; i < size-4; i += 2) {
       float x1 = vertices[i], y1 = vertices[i+1];
-      for (int j = i+6; j < size-6; j += 6) {
+      for (int j = i+2; j < size-2; j += 2) {
         float x2 = vertices[j], y2 = vertices[j+1];
-        for (int k = j+6; k < size; k += 6) {
+        for (int k = j+2; k < size; k += 2) {
           float x3 = vertices[k], y3 = vertices[k+1];
 
           bool open = true;
-          for (int n = 0; n < size-6; n += 6) {
-            float x4 = vertices[n], y4 = vertices[n+1], x5 = vertices[n+6],y5 = vertices[n+7];
+          for (int n = 0; n < size-2; n += 2) {
+            float x4 = vertices[n], y4 = vertices[n+1], x5 = vertices[n+2],y5 = vertices[n+7];
             if (pointInTriangle(x4,y4,x1,y1,x2,y2,x3,y3) || pointInTriangle(x5,y5,x1,y1,x2,y2,x3,y3)) {
               open = false; break;
             }
@@ -113,22 +103,10 @@ void ConcavePolygon::draw() {
 
               newvertices.push(x1);
               newvertices.push(y1);
-              newvertices.push(vertices[i+2]);
-              newvertices.push(vertices[i+3]);
-              newvertices.push(vertices[i+4]);
-              newvertices.push(vertices[i+5]);
               newvertices.push(x2);
               newvertices.push(y2);
-              newvertices.push(vertices[j+2]);
-              newvertices.push(vertices[j+3]);
-              newvertices.push(vertices[j+4]);
-              newvertices.push(vertices[j+5]);
               newvertices.push(x3);
               newvertices.push(y3);
-              newvertices.push(vertices[k+2]);
-              newvertices.push(vertices[k+3]);
-              newvertices.push(vertices[k+4]);
-              newvertices.push(vertices[k+5]);
         }
       }
     }
@@ -141,17 +119,6 @@ void ConcavePolygon::draw() {
     }
 
   }
-
-  glBufferData(GL_ARRAY_BUFFER, tsize * sizeof(float), tarray, GL_DYNAMIC_DRAW);
-  glDrawArrays(GL_TRIANGLES, 0, tsize / 6);
-
-  drawOutline();
-}
-
-float* ConcavePolygon::getVerticesPointerForRenderer() {
-  //TODO: return a pointer to an array of vertices that is formatted correctly for the new renderer
-  float* temp = new float[1];
-  return temp;
 }
 
 void ConcavePolygon::setColor(ColorFloat c) {
@@ -176,7 +143,7 @@ void ConcavePolygon::runTests() {
 bool ConcavePolygon::testIntersects() {
   int passed = 0;
   int failed = 0;
-  ConcavePolygon c1(10);
+  ConcavePolygon c1(10, BLACK, BLACK);
 
   //Test 1: Intersecting lines
   float x1, y1, x2, y2, x3, y3, x4, y4 = 0.0;
@@ -233,7 +200,7 @@ bool ConcavePolygon::testIntersects() {
 bool ConcavePolygon::testPointITriangle() {
     int passed = 0;
     int failed = 0;
-    ConcavePolygon c2(10);
+    ConcavePolygon c2(10, BLACK, BLACK);
     //Test 1: Point is in the triangle
     float px, py, x1, y1, x2, y2, x3, y3 = 0.0;
 

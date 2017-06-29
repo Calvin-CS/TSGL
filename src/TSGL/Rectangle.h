@@ -33,10 +33,10 @@ class Rectangle : public ConvexPolygon {
     Rectangle(int x, int y, int width, int height, const ColorFloat &color, const ColorFloat &outlineColor = BLACK);
 
 
-    GLfloat* getPointerToVerticesArray() {return testVerts;}
-    int getNumberOfVertices() { return 4; }
-    GLenum getGeometryType() { return GL_QUADS; }
-    ColorFloat* getObjectColor() { return &testColor; }
+    // GLfloat* getPointerToVerticesArray() {return testVerts;}
+    // int getNumberOfVertices() { return 4; }
+    // GLenum getGeometryType() { return GL_QUADS; }
+    // ColorFloat* getObjectColor() { return &testColor; }
 
 };
 

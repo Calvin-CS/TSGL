@@ -91,11 +91,11 @@ void CartesianCanvas::drawFunction(const Function &function, float sleepTime, Co
   } else {
     int screenX = 0, screenY = 0;
     int size = (maxX - minX) / pixelWidth;
-    Polyline *p = new Polyline(size);
+    Polyline *p = new Polyline(size, color);
     Decimal x = minX;
     for (int i = 0; i < size; ++i) {
         getScreenCoordinates(x, function.valueAt(x), screenX, screenY);
-        p->addVertex(screenX, screenY, color);
+        p->addVertex(screenX, screenY);
         x += pixelWidth;
     }
     drawShape(p);
@@ -140,11 +140,11 @@ void CartesianCanvas::drawPartialFunction(functionPointer &function, Decimal min
   } else {
     int screenX = 0, screenY = 0;
     int size = 1 + ceil((max - min) / pixelWidth);
-    Polyline *p = new Polyline(size);
+    Polyline *p = new Polyline(size, color);
     Decimal x = min;
     for (int i = 0; i < size; ++i) {
         getScreenCoordinates(x, (function)(x), screenX, screenY);
-        p->addVertex(screenX, screenY, color);
+        p->addVertex(screenX, screenY);
         x += pixelWidth;
     }
     drawShape(p);

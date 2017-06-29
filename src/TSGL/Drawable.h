@@ -74,10 +74,7 @@ class Drawable {
      *  - You can add other statements in the subclass
      * \note Please refer to the class description for more information and warnings about overriding this method.
      */
-    virtual void draw() = 0;  // Abstract method for actually drawing
-
-    //TODO: comment this
-    // virtual float* getVerticesPointerForRenderer() = 0;
+    virtual void draw() {}  // Abstract method for actually drawing
 
     /*!
      * \brief Accessor for <code>isTextured</code>.

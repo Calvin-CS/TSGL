@@ -221,7 +221,7 @@ namespace tsgl {
       objectMutex.lock();
 
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
-        Rectangle* rc = *it;
+        Shape* rc = *it;
         glVertexPointer(
           2,  // how many points per vertex (for us, that's x and y)
           GL_FLOAT, // the type of data being passed
@@ -1240,56 +1240,59 @@ namespace tsgl {
   void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
     float delta = 2.0f / sides * PI;
     if (filled) {
-      ConvexPolygon *s = new ConvexPolygon(sides);
-      for (int i = 0; i < sides; ++i)
-      s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
-      this->add(s);
+        ConvexPolygon *s = new ConvexPolygon(sides,color,BLACK);
+        s->setOutline(false);
+        for (int i = 0; i < sides; ++i)
+            s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta));
+        this->add(s);
     } else {
-      float oldX = 0, oldY = 0, newX = 0, newY = 0;
-      Polyline *p = new Polyline(sides+1);
-      for (int i = 0; i <= sides; ++i) {
-        oldX = newX; oldY = newY;
-        newX = xverts+radius*cos(i*delta);
-        newY = yverts+radius*sin(i*delta);
-        if (i > 0)
-        p->addVertex(oldX, oldY,color);
-      }
-      p->addVertex(newX, newY,color);
-      this->add(p);
+        float oldX = 0, oldY = 0, newX = 0, newY = 0;
+        Polyline *p = new Polyline(sides+1,color);
+        for (int i = 0; i <= sides; ++i) {
+            oldX = newX; oldY = newY;
+            newX = xverts+radius*cos(i*delta);
+            newY = yverts+radius*sin(i*delta);
+            if (i > 0)
+                p->addVertex(oldX, oldY);
+        }
+        p->addVertex(newX, newY);
+        this->add(p);
     }
   }
 
   void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
-      ConcavePolygon* p = new ConcavePolygon(size);
-      for (int i = 0; i < size; i++) {
-        p->addVertex(xverts[i], yverts[i], color[i]);
-      }
-      this->add(p);  // Push it onto our drawing buffer
+        ConcavePolygon* p = new ConcavePolygon(size, color[0], BLACK);
+        p->setOutline(false);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(xverts[i], yverts[i]);
+        }
+        this->add(p);  // Push it onto our drawing buffer
     }
     else {
-      Polyline* p = new Polyline(size);
-      for (int i = 0; i < size; i++) {
-        p->addVertex(xverts[i], yverts[i], color[i]);
-      }
-      this->add(p);  // Push it onto our drawing buffer
+        Polyline* p = new Polyline(size, color[0]);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(xverts[i], yverts[i]);
+        }
+        this->add(p);  // Push it onto our drawing buffer
     }
   }
 
   void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
-      ConvexPolygon* p = new ConvexPolygon(size);
-      for (int i = 0; i < size; i++) {
-        p->addVertex(x[i], y[i], color[i]);
-      }
-      this->add(p);  // Push it onto our drawing buffer
+        ConvexPolygon* p = new ConvexPolygon(size, color[0], BLACK);
+        p->setOutline(false);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(x[i], y[i]);
+        }
+        this->add(p);  // Push it onto our drawing buffer
     }
     else {
-      Polyline* p = new Polyline(size);
-      for (int i = 0; i < size; i++) {
-        p->addVertex(x[i], y[i], color[i]);
-      }
-      this->add(p);  // Push it onto our drawing buffer
+        Polyline* p = new Polyline(size, color[0]);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(x[i], y[i]);
+        }
+        this->add(p);  // Push it onto our drawing buffer
     }
   }
 
@@ -1335,22 +1338,18 @@ namespace tsgl {
     }
   }
 
-  //TODO: maye works with the new backend
-  void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
+//TODO: maye works with the new backend
+void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
+  if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+  if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
     if (filled) {
-      if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-      if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-      Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-      this->add(rec);                                     // Push it onto our drawing buffer
+        Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
+        rec->setOutline(false);
+        this->add(rec);                                     // Push it onto our drawing buffer
     }
     else {
-      Polyline* p = new Polyline(5);
-      p->addVertex(x1, y1, color);
-      p->addVertex(x1, y2, color);
-      p->addVertex(x2, y2, color);
-      p->addVertex(x2, y1, color);
-      p->addVertex(x1, y1, color);
-      this->add(p);
+        UnfilledRectangle* rec = new UnfilledRectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
+        this->add(rec);                                     // Push it onto our drawing buffer
     }
   }
 
@@ -1379,33 +1378,34 @@ namespace tsgl {
 
   void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
     if (filled) {
-      Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-      this->add(t);                                               // Push it onto our drawing buffer
+        Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
+        t->setOutline(false);
+        this->add(t);                                               // Push it onto our drawing buffer
     }
     else {
-      Polyline* p = new Polyline(4);
-      p->addVertex(x1,y1,color);
-      p->addVertex(x2,y2,color);
-      p->addVertex(x3,y3,color);
-      p->addVertex(x1,y1,color);
-      this->add(p);
-    }
-  }
+      Polyline* p = new Polyline(4,color);
+      p->addVertex(x1,y1);
+      p->addVertex(x2,y2);
+      p->addVertex(x3,y3);
+      p->addVertex(x1,y1);
+      this->add(p);    }
+}
 
   void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
-      TriangleStrip* p = new TriangleStrip(size);
-      for (int i = 0; i < size; i++) {
-        p->addVertex(xverts[i], yverts[i], color[i]);
-      }
-      this->add(p);  // Push it onto our drawing buffer
+        TriangleStrip* p = new TriangleStrip(size, color[0], BLACK);
+        p->setOutline(false);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(xverts[i], yverts[i]);
+        }
+        this->add(p);  // Push it onto our drawing buffer
     }
     else {
-      Polyline* p = new Polyline(size);
-      for (int i = 0; i < size; i++) {
-        p->addVertex(xverts[i], yverts[i], color[i]);
-      }
-      this->add(p);  // Push it onto our drawing buffer
+        Polyline* p = new Polyline(size, color[0]);
+        for (int i = 0; i < size; i++) {
+            p->addVertex(xverts[i], yverts[i]);
+        }
+        this->add(p);  // Push it onto our drawing buffer
     }
   }
 

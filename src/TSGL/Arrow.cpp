@@ -31,14 +31,11 @@ namespace tsgl {
     return t;
   }
 
-  void Arrow::draw() {
-    Line::draw();
-    arrowHead->draw();
-    if (isDoubleArrow) arrowHead2->draw();
-  }
-
   Arrow::~Arrow() {
-    //TODO make this delete the arrowhead reference stuff
+    delete arrowHead;
+    delete arrowHead2;
+    arrowHead = NULL;
+    arrowHead2 = NULL;
     return;
   }
 

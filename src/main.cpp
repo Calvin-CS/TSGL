@@ -36,38 +36,38 @@ void alphaRectangleFunction(Canvas& can) {
     int a, b, c, d;
     // int counter = 0;
 
-    // //  Add a traingle to the test page
-    // Triangle* testTri = new Triangle(100, 100, 200, 100, 50, 150, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
-    // testTri->setLayer(5);
-    // can.add(testTri);
-    //
-    // // Testing old rectangle api
-    // can.setDefaultLayer(7);
-    // can.drawRectangle(200, 200, 250, 250, PURPLE);
-    // can.setDefaultLayer(0);
-    //
-    // // Add the red and white rects over the top
-    // Rectangle* topRedRect = new Rectangle(500, 500, 50, 50, ColorInt(1*MAX_COLOR, 0*MAX_COLOR, 0*MAX_COLOR, 255));
-    // Rectangle* topWhiteRect = new Rectangle(540, 540, 50, 50, ColorInt(1*MAX_COLOR, 1*MAX_COLOR, 1*MAX_COLOR, 255));
-    // topRedRect->setLayer(2);
-    // topWhiteRect->setLayer(3);
-    // can.add(topRedRect);
-    // can.add(topWhiteRect);
-    //
-    // // Test the arrows
-    // can.setDefaultLayer(5);
-    // Arrow* greenArrow = new Arrow(600, 600, 560, 500, GREEN);
-    // Arrow* blueArrow  = new Arrow(500, 600, 540, 250, BLUE, true);
-    // can.add(greenArrow);
-    // can.add(blueArrow);
-    //
-    // Circle* c1 = new Circle(300, 500, 50, 100, PURPLE, false);
-    // can.add(c1);
-    //
-    // // Add a blue rectangle at the bottom
-    // Rectangle* botBlueRect = new Rectangle(300, 300, 120, 50, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
-    // botBlueRect->setLayer(0);
-    // can.add(botBlueRect);
+    //  Add a traingle to the test page
+    Triangle* testTri = new Triangle(100, 100, 200, 100, 50, 150, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
+    testTri->setLayer(5);
+    can.add(testTri);
+
+    // Testing old rectangle api
+    can.setDefaultLayer(7);
+    can.drawRectangle(200, 200, 250, 250, PURPLE);
+    can.setDefaultLayer(0);
+
+    // Add the red and white rects over the top
+    Rectangle* topRedRect = new Rectangle(500, 500, 50, 50, ColorInt(1*MAX_COLOR, 0*MAX_COLOR, 0*MAX_COLOR, 255));
+    Rectangle* topWhiteRect = new Rectangle(540, 540, 50, 50, ColorInt(1*MAX_COLOR, 1*MAX_COLOR, 1*MAX_COLOR, 255));
+    topRedRect->setLayer(2);
+    topWhiteRect->setLayer(3);
+    can.add(topRedRect);
+    can.add(topWhiteRect);
+
+    // Test the arrows
+    can.setDefaultLayer(5);
+    Arrow* greenArrow = new Arrow(600, 600, 560, 500, GREEN);
+    Arrow* blueArrow  = new Arrow(500, 600, 540, 250, BLUE, true);
+    can.add(greenArrow);
+    can.add(blueArrow);
+
+    Circle* c1 = new Circle(300, 500, 50, 100, PURPLE, false);
+    can.add(c1);
+
+    // Add a blue rectangle at the bottom
+    Rectangle* botBlueRect = new Rectangle(300, 300, 120, 50, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
+    botBlueRect->setLayer(0);
+    can.add(botBlueRect);
 
     // Queue to hold the last few rects
     std::queue<Rectangle *> myQueue;

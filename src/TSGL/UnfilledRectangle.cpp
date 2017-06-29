@@ -2,12 +2,12 @@
 
 namespace tsgl {
 
-UnfilledRectangle::UnfilledRectangle(int x, int y, int width, int height, const ColorFloat &color) : Polyline(5) {
-  addVertex(x, y, color);
-  addVertex(x+width, y, color);
-  addVertex(x+width, y+height, color);
-  addVertex(x, y+height, color);
-  addVertex(x, y, color);
+UnfilledRectangle::UnfilledRectangle(int x, int y, int width, int height, const ColorFloat &color) : Polyline(5, color) {
+  addVertex(x, y);
+  addVertex(x+width, y);
+  addVertex(x+width, y+height);
+  addVertex(x, y+height);
+  addVertex(x, y);
 }
 
 }

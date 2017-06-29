@@ -11,14 +11,12 @@ using namespace tsgl;
 
 struct Fork {
   int user, id;
+  double myAngle;
   ConcavePolygon * myShape;
   Fork() {
-    user = -1; id = 0; myShape = NULL;
-  }
-  ~Fork() {
-    delete myShape;
-  }
-  void draw(Canvas& can, int x, int y, double angle, ColorFloat c) {
+    user = -1; id = 0;
+
+    //Create visual Fork
     const int POINTS = 20; // number of vertices in polygon
     const int HEIGHT = 42; // 42 is preferred
     const int WIDTH = 12;  // 12 is preferred
@@ -30,39 +28,39 @@ struct Fork {
 
     // create the fork points from the scale arrays
     for(int i = 0; i < POINTS; ++i) {
-		  // scale the fork
+      // scale the fork
       xs[i] = WIDTH  * xscale[i];
-		  ys[i] = HEIGHT * yscale[i];
+      ys[i] = HEIGHT * yscale[i];
       xs[i] = xs[i]/100;
       ys[i] = ys[i]/100;
-
-      // move so (0, 0) is center, not top left corner
-      xs[i] -= WIDTH/2;
-      ys[i] -= HEIGHT/2;
     }
 
-    // rotate fork around 0,0 by angle
+    //Add vertices
+    myShape = new ConcavePolygon(POINTS, BLACK, BLACK);
+    for(int i = 0; i < POINTS; i++) {
+      myShape->addVertex(xs[i], ys[i]);
+    }
+    //myShape->setOutline(false);
+  }
+
+  ~Fork() {
+    delete myShape;
+  }
+
+  void draw(Canvas& can, int x, int y, double angle, ColorFloat c) {
     angle -= PI/2; // rotate by PI/2 radians or 90 degrees for fork next to philosopher
       // if adding PI/2, then the forks point out, if subtracting PI/2 the forks point in to table
         // without this line, the forks are perpendicular to philosophers
 
-    for(int i = 0; i < POINTS; ++i) {
-      double a =  xs[i]*cos(angle) - ys[i]*sin(angle); // rotate fork
-      double b =  xs[i]*sin(angle) + ys[i]*cos(angle);
-      xs[i] = a+x; // transpose fork to be around table
-      ys[i] = b+y;
-    }
+    myShape->setColor(c);
+    myShape->setCenter(x, y);
 
-    if( myShape != NULL ) {
-      can.remove(myShape);
-      delete myShape;
-    }
-    myShape = new ConcavePolygon(POINTS);
-    for(int i = 0; i < POINTS; i++) {
-      myShape->addVertex(xs[i], ys[i], c);
-    }
-    myShape->setOutline(false);
+    myShape->rotate(-myAngle); //Undo rotation from last draw
+    myShape->rotate(angle);
+
     can.add(myShape);
+
+    myAngle = angle; //Save current angle
   }
 };
 

@@ -33,10 +33,6 @@ public:
        */
       UnfilledStar(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = false);
 
-      // int getX() { return myX; }
-      // int getY() { return myY; }
-      // ColorFloat getColor() { return myColor; }
-
 };
 
 }

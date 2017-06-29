@@ -43,9 +43,6 @@ class Text : public Drawable {
      * \details This function actually draws the Text to the Canvas.
      */
     void draw();
-
-    //TODO: comment this, implement
-    float* getVerticesPointerForRenderer();
 };
 
 }

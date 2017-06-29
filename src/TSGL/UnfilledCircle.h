@@ -16,7 +16,6 @@ namespace tsgl {
 class UnfilledCircle : public Polyline {
  private:
     int myX, myY, myRadius, mySides;
-    bool isFilled;
  public:
 
     /*!

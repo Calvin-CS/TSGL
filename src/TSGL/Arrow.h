@@ -35,14 +35,6 @@ namespace tsgl {
     */
     Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK, bool doubleArrow = false);
 
-    void draw();
-
-    /*!
-    * \brief Draw the Arrow.
-    * \details This function actually draws the Arrow to the Canvas.
-    */
-    // void draw();
-
     ~Arrow();
 
   };
