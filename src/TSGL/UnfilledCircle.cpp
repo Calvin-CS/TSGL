@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-UnfilledCircle::UnfilledCircle(int x, int y, int radius, int sides, ColorFloat color) : Polyline(sides+1) {
+UnfilledCircle::UnfilledCircle(int x, int y, int radius, int sides, ColorFloat color) : Polyline(sides+1, color) {
   myX = x, myY = y;
   myRadius = radius;
   mySides = sides;
@@ -13,9 +13,9 @@ UnfilledCircle::UnfilledCircle(int x, int y, int radius, int sides, ColorFloat c
       newX = x+radius*cos(i*delta);
       newY = y+radius*sin(i*delta);
       if (i > 0)
-          addVertex(oldX, oldY,color);
+          addVertex(oldX, oldY);
   }
-  addVertex(newX, newY,color);
+  addVertex(newX, newY);
 }
 
 }

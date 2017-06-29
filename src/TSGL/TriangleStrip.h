@@ -27,19 +27,16 @@ class TriangleStrip : public ConvexPolygon {
      * \brief Explicitly construct a new TriangleStrip.
      * \details Explicit constructor for a TriangleStrip object.
      *   \param numVertices The number of vertices the complete TriangleStrip will have.
+     *   \param color The color of the TriangleStrip.
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new TriangleStrip with a buffer for storing the specified numbered of vertices.
      */
-    TriangleStrip(int numVertices);
+    TriangleStrip(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor);
 
-    /*!
-     * \brief Draw the TriangleStrip.
-     * \details This function actually draws the TriangleStrip to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message will be given to show if the TriangleStrip is *NOT* ready to be drawn (vertex buffer = not full).
-     * \note Implemented inherited abstract method from ConvexPolygon class.
+    /**
+     * \brief Returns the geometry type for drawing
      */
-    void draw();
+    virtual std::string getGeometryType() { return "GL_TRIANGLE_STRIP"; }
 };
 
 }

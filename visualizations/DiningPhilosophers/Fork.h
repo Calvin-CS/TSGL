@@ -36,9 +36,9 @@ struct Fork {
     }
 
     //Add vertices
-    myShape = new ConcavePolygon(POINTS);
+    myShape = new ConcavePolygon(POINTS, BLACK, BLACK);
     for(int i = 0; i < POINTS; i++) {
-      myShape->addVertex(xs[i], ys[i], BLACK);
+      myShape->addVertex(xs[i], ys[i]);
     }
     //myShape->setOutline(false);
   }

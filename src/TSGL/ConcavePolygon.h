@@ -37,10 +37,12 @@ class ConcavePolygon : public Polygon {
      * \brief Explicitly constructs a new ConcavePolygon.
      * \details Explicit constructor for a ConcavePolygon object.
      *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+     *   \param color The reference variable of the color of the Polygon.
+     *   \param outlineColor The reference variables of the color of the Polygon's outline.
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
-    ConcavePolygon(int numVertices);
+    ConcavePolygon(int numVertices, const ColorFloat& c, const ColorFloat& outlineC);
 
     /*!
      * \brief Destroys a ConcavePolygon object.
@@ -87,24 +89,15 @@ class ConcavePolygon : public Polygon {
      * \details This function initializes the next vertex in the Polyline and adds it to a ConcavePolygon buffer.
      *      \param x The x position of the vertex.
      *      \param y The y position of the vertex.
-     *      \param color The reference variable of the color of the vertex.
-     *      \param outlineColor The reference variable of the color the the vertex's outline.
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating that the vertex buffer is full.
      */
-    void addVertex(int x, int y, const ColorFloat &color, ColorFloat outlineColor = BLACK);
+    void addVertex(int x, int y);
 
-    /*!
-     * \brief Draw the ConcavePolygon.
-     * \details This function actually draws the ConcavePolygon to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message is given indicating that the ConcavePolygon is *NOT* ready to be drawn yet (vertex buffer = not full).
-     * \warning This is an order of n-cubed operation, and is thus <b>VERY SLOW</b>.
+    /**
+     * \brief Returns the geometry type for drawing
      */
-    void draw();
-
-    //TODO: comment this, implement
-    float* getVerticesPointerForRenderer();
+    virtual std::string getGeometryType() { return "GL_TRIANGLES"; }
 
     /**
      * \brief Sets the ConcavePolygon to a new color
@@ -118,6 +111,11 @@ class ConcavePolygon : public Polygon {
      * \param y The new center y coordinate.
      */
     virtual void setCenter(int x, int y);
+
+    /**
+     * \brief Cleans the vertices for drawing
+     */
+    void cleanup();
 
     /*!
      * \brief Runs the Unit tests.

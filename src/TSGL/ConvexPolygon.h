@@ -27,18 +27,11 @@ public:
      * \brief Explicitly constructs a new ConvexPolygon.
      * \details Explicit constructor for a Convex Polygon object.
      *   \param numVertices the number of vertices the complete ConvexPolygon will have.
+     *   \param color The color of the Polygon.
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
-    ConvexPolygon(int numVertices);
-
-    /*!
-     * \brief Draw the ConvexPolygon.
-     * \details This function actually draws the ConvexPolygon to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message is given indicating that the ConvexPolygon is *NOT* ready to be drawn yet (vertex buffer = not full).
-     */
-    virtual void draw();
+    ConvexPolygon(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor);
 };
 
 }

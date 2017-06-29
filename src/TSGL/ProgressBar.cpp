@@ -37,12 +37,12 @@ Rectangle* ProgressBar::getRect(int index) {
 
 Polyline* ProgressBar::getBorder(int index) {
   int y2 = yy+myHeight;
-  Polyline* p = new Polyline(5);
-    p->addVertex(startX[index],yy,BLACK);
-    p->addVertex(startX[index]+myWidth/segs,yy,BLACK);
-    p->addVertex(startX[index]+myWidth/segs,y2,BLACK);
-    p->addVertex(startX[index],y2,BLACK);
-    p->addVertex(startX[index],yy,BLACK);
+  Polyline* p = new Polyline(5, BLACK);
+    p->addVertex(startX[index],yy);
+    p->addVertex(startX[index]+myWidth/segs,yy);
+    p->addVertex(startX[index]+myWidth/segs,y2);
+    p->addVertex(startX[index],y2);
+    p->addVertex(startX[index],yy);
   return p;
 }
 

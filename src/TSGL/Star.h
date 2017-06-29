@@ -32,7 +32,7 @@ public:
        *     (set to false by default).
        *   \param outlineColor The color of the star's outline (set to BLACK by default).
        */
-      Star(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = false, ColorFloat outlineColor = BLACK);
+      Star(int x, int y, int radius, int points, ColorFloat color = BLACK, ColorFloat outlineColor = BLACK, bool ninja = false);
 
 };
 

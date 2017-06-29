@@ -25,25 +25,18 @@ class Polygon : public Shape {
 protected:
   Polyline * outline;
   bool outlineOn;
-    static bool testAddVertex();  // Unit test for addVertex()
- public:
+public:
 
     /*!
      * \brief Explicitly constructs a new Polygon.
      * \details Explicit constructor for a Convex Polygon object.
      *   \param numVertices the number of vertices the complete Polygon will have.
+     *   \param c The color of the Polygon.
+     *   \param outlineC The color of the Polygon's outline.
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new Polygon with a buffer for storing the specified numbered of vertices.
      */
-    Polygon(int numVertices);
-
-    /*!
-     * \brief Draw the Polygon.
-     * \details This function actually draws the Polygon to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message is given indicating that the Polygon is *NOT* ready to be drawn yet (vertex buffer = not full).
-     */
-    virtual void draw();
+    Polygon(int numVertices, const ColorFloat& c, const ColorFloat& outlineColor);
 
     /*!
      * \brief Adds another vertex to a Polygon.
@@ -55,7 +48,7 @@ protected:
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating when the vertex buffer is full.
      */
-    virtual void addVertex(int x, int y, const ColorFloat& color, const ColorFloat& outlineColor = BLACK);
+    virtual void addVertex(int x, int y);
 
     /**
      * \brief Draws the Outline of the Polygon
@@ -63,20 +56,11 @@ protected:
      */
     virtual void drawOutline();
 
-    //TODO: comment this, implement
-    virtual float* getVerticesPointerForRenderer();
-
     /*!
      * \brief Runs the Unit tests.
      * \details Runs the Unit tests for the Polygon class. addVertex() is tested.
      */
     static void runTests();
-
-    /**
-     * \brief Gets the current color of the Polygon
-     * \return The ColorFloat of the Polygon.
-     */
-    virtual ColorFloat getColor() { return ColorFloat(vertices[2], vertices[3], vertices[4], vertices[5]); }
 
     /**
      * \brief Moves the Polygon to new coordinates
