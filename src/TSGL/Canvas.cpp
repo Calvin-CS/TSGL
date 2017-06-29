@@ -155,6 +155,7 @@ namespace tsgl {
 
   void Canvas::pushObjectsToVertexBuffer() {
     // Locks the GL buffer mutex, then makes GL calls using the draw() method from each object
+    //TODO put mutex on changing attributes in objects to avoid weirdnesses
 
     objectMutex.lock();
     // bufferMutex.lock();
@@ -177,42 +178,17 @@ namespace tsgl {
 
   void Canvas::newInit() {
     printf("%s\n", "Initting stuff.");
-    //
-    initShaders();
-    //
-    //
-    // //Create a new VBO and use the variable id to store the VBO id
-    // glGenBuffers(1, &triangleVBO);
-    //
-    // //Make the new VBO active
-    // glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-    //
-    // //Upload vertex data to the video device
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
 
-    //
-    //
-    // glGenVertexArrays(1, &VertexArrayID);
-    // glBindVertexArray(VertexArrayID);
-
-
-
-
-
-
-
+    // initShaders();
+    //TODO: add shader support here.  Is the Raspi even capable of this???
 
   }
 
   GLfloat gQuadVertices[] = {
+    100.0f,100.0f,
+    0.0f,100.0f,
     0.0f,0.0f,
-    0.0f,.5f,
-    -.5f,.5f,
-    -.5f, 0.0f,
-    0.2f,0.2f,
-    0.2f,.7f,
-    -.3f,.7f,
-    -.3f, 0.2f
+    100.0f, 0.0f
   };
 
 
@@ -224,70 +200,72 @@ namespace tsgl {
     // Reset the window close flag, so that the window stays open for this frame
     glfwSetWindowShouldClose(window, GL_FALSE);
 
-    // setupCamera();  //Camera transformations
+    setupCamera();  //Camera transformations
 
     // Count number of frames
     int counter = 0;
-
+    float lastTime = 0;
     while (!glfwWindowShouldClose(window)) {
 
-      // glUseProgram(shaderProgram);
+      // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
 
-      //Enable vertex arrays
+      // Clear the canvas
+      glClear(GL_COLOR_BUFFER_BIT);
+
+      // Enable vertex arrays
       glEnableClientState( GL_VERTEX_ARRAY );
 
-      //Set vertex data
-      glVertexPointer( 2, GL_FLOAT, 0, gQuadVertices );
-      //Draw quad using vertex data
-      glDrawArrays( GL_TRIANGLES, 0, 8 );
 
-      //Disable vertex arrays
+
+      // Iterate through objects, render them
+      objectMutex.lock();
+
+      for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
+        Rectangle* rc = *it;
+        glVertexPointer(
+          2,  // how many points per vertex (for us, that's x and y)
+          GL_FLOAT, // the type of data being passed
+          0, // byte offset between vertices
+          rc->getPointerToVerticesArray()  // pointer to the array of vertices
+        );
+        glColor4f(
+          rc->getObjectColor()->R,
+          rc->getObjectColor()->G,
+          rc->getObjectColor()->B,
+          rc->getObjectColor()->A
+        );
+        glDrawArrays(
+          rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
+          0, // The starting index of the array
+          rc->getNumberOfVertices() // The number of vertices from the object
+        );
+      }
+      objectMutex.unlock();
+
+
+
+
+
+      // Disable vertex arrays
       glDisableClientState( GL_VERTEX_ARRAY );
 
 
-
-      // /* Clear background with BLACK colour */
-      // glClear(GL_COLOR_BUFFER_BIT);
-      //
-      //
-      // //Make the new VBO active. Repeat here incase changed since initialisation
-      // glBindBuffer(GL_ARRAY_BUFFER, triangleVBO);
-      //
-      // //Draw Triangle from VBO - do each time window, view point or data changes
-      // //Establish its 3 coordinates per vertex with zero stride in this array; necessary here
-      // glVertexPointer(3, GL_FLOAT, 0, NULL);
-      //
-      // //Establish array contains vertices (not normals, colours, texture coords etc)
-      // glEnableClientState(GL_VERTEX_ARRAY);
-      //
-      // //Actually draw the triangle, giving the number of vertices provided
-      // glDrawArrays(GL_TRIANGLES, 0, (sizeof(data) / 3) / sizeof(GLfloat));
-
-      // glFlush();
-
-
-
-      // // glColor4f( 0.f, 0.f, 1.f, 1.0f );
-      // glBegin( GL_QUADS );
-      // glVertex2f( 0.0f, 0.0f );
-      // glVertex2f(  .1f, 0.0f );
-      // glVertex2f(  .1f,  .1f );
-      // glVertex2f( 0.0f,  .1f );
-      // glEnd();
-
-
+      // Swap the buffer and handle IO
       glfwSwapBuffers(window);
       glfwPollEvents();
 
 
+      // Framerate debug stuff
       counter++;
       // printf("Frame %d finished.\n", counter);
-
-      if (counter==300) {
-        printf("Frame 300 at %f.\n", glfwGetTime());
+      if (counter==100) {
+        printf("Did 100 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 100/(glfwGetTime()-lastTime));
+        counter = 0;
+        lastTime = glfwGetTime();
       }
     }
 
+    // Print any OpenGL errors, if there are any
     printf("OpenGL Error code: %d\n", glGetError());
 
   }

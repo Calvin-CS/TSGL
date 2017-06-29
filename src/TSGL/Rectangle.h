@@ -16,6 +16,9 @@ namespace tsgl {
 class Rectangle : public ConvexPolygon {
  public:
 
+   GLfloat testVerts[8] = {0};
+   ColorFloat testColor;
+
     /*!
      * \brief Explicitly constructs a Rectangle.
      * \details This is the constructor for the Rectangle class.
@@ -28,6 +31,13 @@ class Rectangle : public ConvexPolygon {
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
     Rectangle(int x, int y, int width, int height, const ColorFloat &color, const ColorFloat &outlineColor = BLACK);
+
+
+    GLfloat* getPointerToVerticesArray() {return testVerts;}
+    int getNumberOfVertices() { return 4; }
+    GLenum getGeometryType() { return GL_QUADS; }
+    ColorFloat* getObjectColor() { return &testColor; }
+
 };
 
 }
