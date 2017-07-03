@@ -31,7 +31,7 @@ public:
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
-    ConvexPolygon(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor);
+    ConvexPolygon(int numVertices, const ColorFloat& color);
 };
 
 }

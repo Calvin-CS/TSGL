@@ -1,25 +1,22 @@
 /*!
-* Arrow.h extends Line and provides a class for drawing an arrow to a Canvas.
+* Arrow.h extends ConcavePolygon and provides a class for drawing an arrow to a Canvas.
 */
 
 #ifndef ARROW_H_
 #define ARROW_H_
 
-#include "Line.h"
-#include "Triangle.h"
+#include "ConcavePolygon.h"
 
 namespace tsgl {
   /*!
   * \class Arrow
   * \brief draw an arrow.
-  * \details Arrow extends Line and includes an arrow head (triangle).
+  * \details Arrow extends ConcavePolygon and includes an arrow head (triangle).
   */
-  class Arrow : public Line {
+  class Arrow : public ConcavePolygon {
   private:
-    Triangle * arrowHead;   // Triangle of first arrow head
-    Triangle * arrowHead2;  // Triangle of second arrow head
-    bool isDoubleArrow = false;
-    Triangle* makeArrowHead(float x, float y, float deltaX, float deltaY, const ColorFloat &color);
+    bool isDoubleArrow;
+    void makeArrowHead(float x, float y, float deltaX, float deltaY);
 
   public:
     /*!
@@ -34,8 +31,6 @@ namespace tsgl {
     * \return A new Arrow with the specified endpoints and color.
     */
     Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK, bool doubleArrow = false);
-
-    ~Arrow();
 
   };
 

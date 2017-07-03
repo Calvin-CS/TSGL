@@ -26,10 +26,8 @@ namespace tsgl {
     *   \param sides The number of sides to use in the circle.
     *   \param color The color of the circle
     *     (set to BLACK by default).
-    *   \param outlineCOlor The color of the circle's outline
-    *     (set to BLACK by default).
     */
-    Circle(int x, int y, int radius, int sides, ColorFloat color = BLACK, ColorFloat outlineColor = BLACK);
+    Circle(int x, int y, int radius, int sides, ColorFloat color = BLACK);
 
   };
 

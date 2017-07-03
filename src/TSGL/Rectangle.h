@@ -27,10 +27,9 @@ class Rectangle : public ConvexPolygon {
      *   \param width The width of the Rectangle.
      *   \param height The height of the Rectangle.
      *   \param color The color of the Rectangle.
-     *   \param outlineColor The color of the Rectangle's outline (defaults to BLACK).
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
-    Rectangle(int x, int y, int width, int height, const ColorFloat &color, const ColorFloat &outlineColor = BLACK);
+    Rectangle(int x, int y, int width, int height, const ColorFloat &color);
 
 
     // GLfloat* getPointerToVerticesArray() {return testVerts;}

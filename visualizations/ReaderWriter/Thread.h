@@ -15,7 +15,7 @@
 /**
  * \class Thread
  * \brief The Thread class encapsulates the details of creating a pthread.
- * \details It is abstract; cannot be instantiated. 
+ * \details It is abstract; cannot be instantiated.
  */
 class Thread {
 public:

@@ -1248,8 +1248,7 @@ namespace tsgl {
   void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
     float delta = 2.0f / sides * PI;
     if (filled) {
-        ConvexPolygon *s = new ConvexPolygon(sides,color,BLACK);
-        s->setOutline(false);
+        ConvexPolygon *s = new ConvexPolygon(sides,color);
         for (int i = 0; i < sides; ++i)
             s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta));
         this->add(s);
@@ -1270,8 +1269,7 @@ namespace tsgl {
 
   void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
-        ConcavePolygon* p = new ConcavePolygon(size, color[0], BLACK);
-        p->setOutline(false);
+        ConcavePolygon* p = new ConcavePolygon(size, color[0]);
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i]);
         }
@@ -1288,8 +1286,7 @@ namespace tsgl {
 
   void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
-        ConvexPolygon* p = new ConvexPolygon(size, color[0], BLACK);
-        p->setOutline(false);
+        ConvexPolygon* p = new ConvexPolygon(size, color[0]);
         for (int i = 0; i < size; i++) {
             p->addVertex(x[i], y[i]);
         }
@@ -1352,7 +1349,6 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
     if (filled) {
         Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-        rec->setOutline(false);
         this->add(rec);                                     // Push it onto our drawing buffer
     }
     else {
@@ -1387,7 +1383,6 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
     if (filled) {
         Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-        t->setOutline(false);
         this->add(t);                                               // Push it onto our drawing buffer
     }
     else {
@@ -1401,8 +1396,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
 
   void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
-        TriangleStrip* p = new TriangleStrip(size, color[0], BLACK);
-        p->setOutline(false);
+        TriangleStrip* p = new TriangleStrip(size, color[0]);
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i]);
         }
