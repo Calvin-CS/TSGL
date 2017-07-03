@@ -15,6 +15,12 @@ ConcavePolygon::~ConcavePolygon() {
   delete[] tarray;
 }
 
+GLfloat* ConcavePolygon::getPointerToVerticesArray() {
+  if( dirty )
+    cleanup();
+  return tarray;
+}
+
 void ConcavePolygon::addVertex(int x, int y) {
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
@@ -26,6 +32,7 @@ void ConcavePolygon::addVertex(int x, int y) {
   if (current == size-2) {
     Polygon::addVertex( vertices[0], vertices[1]);
     init = true;
+    cleanup();
   }
 }
 
@@ -58,8 +65,8 @@ void ConcavePolygon::cleanup() {
 
     bool clockwise = (
         (
-            (vertices[2]-vertices[0]) * (vertices[13]-vertices[7]) -
-            (vertices[7]-vertices[1]) * (vertices[12]-vertices[2])
+            (vertices[2]-vertices[0]) * (vertices[5]-vertices[3]) -
+            (vertices[3]-vertices[1]) * (vertices[4]-vertices[2])
         ) < 0.0);
 
     for (int i = 0; i < size-4; i += 2) {
@@ -71,7 +78,7 @@ void ConcavePolygon::cleanup() {
 
           bool open = true;
           for (int n = 0; n < size-2; n += 2) {
-            float x4 = vertices[n], y4 = vertices[n+1], x5 = vertices[n+2],y5 = vertices[n+7];
+            float x4 = vertices[n], y4 = vertices[n+1], x5 = vertices[n+2],y5 = vertices[n+3];
             if (pointInTriangle(x4,y4,x1,y1,x2,y2,x3,y3) || pointInTriangle(x5,y5,x1,y1,x2,y2,x3,y3)) {
               open = false; break;
             }
@@ -111,24 +118,32 @@ void ConcavePolygon::cleanup() {
       }
     }
 
+    //TODO: fix locking
+    // objectMutex.lock();
     tsize = newvertices.size();
+    delete tarray;
     tarray = new float[tsize];
-    for (int i = 0; i < tsize; ++i) {
+    for (int i = 0; i < tsize; i++) {
       tarray[i] = newvertices.front();
       newvertices.pop();
     }
-
+    // objectMutex.unlock();
   }
-}
-
-void ConcavePolygon::setColor(ColorFloat c) {
-  dirty = true;
-  Polygon::setColor(c);
 }
 
 void ConcavePolygon::setCenter(int x, int y) {
   dirty = true;
   Polygon::setCenter(x, y);
+}
+
+void ConcavePolygon::rotate(float angle) {
+  dirty = true;
+  Polygon::rotate(angle);
+}
+
+void ConcavePolygon::rotateAround(float angle, float x, float y) {
+  dirty = true;
+  Polygon::rotateAround(angle, x, y);
 }
 
 //----------------------------------------------Unit testing------------------------------

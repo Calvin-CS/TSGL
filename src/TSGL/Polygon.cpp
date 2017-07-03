@@ -29,14 +29,9 @@ void Polygon::rotate(float angle) {
   outline->rotate(angle);
 }
 
-// void Polygon::rotateAround(float angle, float x, float y) {
-//   Shape::rotateAround(angle, x, y);
-//   outline->rotateAround(angle, x, y);
-// }
-
-void Polygon::rotateAroundOrigin(float angle) {
-  Shape::rotateAroundOrigin(angle);
-  outline->rotateAroundOrigin(angle);
+void Polygon::rotateAround(float angle, float x, float y) {
+  Shape::rotateAround(angle, x, y);
+  outline->rotateAround(angle, x, y);
 }
 
 }

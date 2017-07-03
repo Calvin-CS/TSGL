@@ -51,6 +51,23 @@ class ConcavePolygon : public Polygon {
      */
     ~ConcavePolygon();
 
+
+    /**
+     * \brief Returns a pointer to the vertices array for renderer
+     * \details Vertices specifies x and y coordinates for the ConcavePolygon
+     * \return Pointer to vertices
+     */
+    virtual GLfloat* getPointerToVerticesArray();
+
+    /**
+     * \brief Returns the number of vertices in the Shape for renderer
+     * \return An int specifying the number of vertices
+     */
+    virtual int getNumberOfVertices() {
+      if( dirty ) {
+        cleanup(); }
+      return tsize/2; }
+
     /*!
      * \brief Determines if two lines intersect.
      * \details Simulates two lines inside of a ConcavePolygon object and determines whether
@@ -100,17 +117,27 @@ class ConcavePolygon : public Polygon {
     virtual GLenum getGeometryType() { return GL_TRIANGLES; }
 
     /**
-     * \brief Sets the ConcavePolygon to a new color
-     * \param c The new ColorFloat.
-     */
-    virtual void setColor(ColorFloat c);
-
-    /**
      * \brief Moves the ConcavePolygon to new coordinates
      * \param x The new center x coordinate.
      * \param y The new center y coordinate.
      */
     virtual void setCenter(int x, int y);
+
+    /**
+     * \brief Rotates the ConcavePolygon by an angle
+     * \details Rotates clockwise around the center of the shape
+     * \param angle Angle to rotate by, in radians
+     */
+    virtual void rotate(float angle);
+
+    /**
+     * \brief Rotates the Polygon by angle around a point
+     * \details Rotates clockwise around (x, y) by angle
+     * \param angle Angle to rotate by, in radians
+     * \param x The x coordinate to rotate around
+     * \param y The y coordinate to rotate around
+     */
+    virtual void rotateAround(float angle, float x, float y);
 
     /**
      * \brief Cleans the vertices for drawing

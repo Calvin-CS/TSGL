@@ -11,6 +11,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   for (int i = 0; i < numPhils; ++i) {
     phils[i].setId(i,numPhils);
     forks[i].id = i;
+    forks[i].setCanvas(&can);
   }
   myMethod = m;
   switch(myMethod) {
@@ -471,5 +472,5 @@ void Table::drawStep() {
     } else {
       FORK_RAD = 170; //If unheld, Fork goes in to table
     }
-    forks[i].draw(*myCan,tabX+FORK_RAD*cos(fangle),tabY+FORK_RAD*sin(fangle),fangle,fcolor); //Draw fork
+    forks[i].draw(tabX+FORK_RAD*cos(fangle),tabY+FORK_RAD*sin(fangle),fangle,fcolor); //Draw fork
 }
