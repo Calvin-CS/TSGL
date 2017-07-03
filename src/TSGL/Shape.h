@@ -54,13 +54,13 @@ protected:
      * \details Vertices specifies x and y coordinates for the Shape
      * \return Pointer to vertices
      */
-    GLfloat* getPointerToVerticesArray();
+    virtual GLfloat* getPointerToVerticesArray();
 
     /**
      * \brief Returns the number of vertices in the Shape for renderer
      * \return An int specifying the number of vertices
      */
-    int getNumberOfVertices() { return length; }
+    virtual int getNumberOfVertices() { return length; }
 
     /**
      * \brief Returns the geometry type for drawing
@@ -122,20 +122,14 @@ protected:
      */
     virtual void rotate(float angle);
 
-    // /**
-    //  * \brief Rotates the Shape by angle around a point
-    //  * \details Rotates clockwise around (x, y) by angle
-    //  * \param angle Angle to rotate by, in radians
-    //  * \param x The x coordinate to rotate around
-    //  * \param y The y coordinate to rotate around
-    //  */
-    // virtual void rotateAround(float angle, float x, float y);
-
     /**
-     * \brief Rotates the Shape by angle around (0, 0)
+     * \brief Rotates the Shape by angle around a point
+     * \details Rotates clockwise around (x, y) by angle
      * \param angle Angle to rotate by, in radians
+     * \param x The x coordinate to rotate around
+     * \param y The y coordinate to rotate around
      */
-    virtual void rotateAroundOrigin(float angle);
+    virtual void rotateAround(float angle, float x, float y);
 };
 
 }

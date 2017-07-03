@@ -77,31 +77,15 @@ float Shape::getY() {
 }
 
 void Shape::rotate(float angle) {
-  float centerX = getX(), centerY = getY();
-
-  Shape::setCenter(0, 0); //Transpose to center for rotation
-
-  Shape::rotateAroundOrigin(angle);
-
-  Shape::setCenter(centerX, centerY); //Return to original location
+  rotateAround( angle, getX(), getY() );
 }
 
-// void Shape::rotateAround(float angle, float x, float y) { //Needs to be tested
-//   float centerX = getX(), centerY = getY();
-//
-//   Shape::setCenter(centerX-x, centerY-y); //Transpose for origin to be (x, y)
-//
-//   Shape::rotateAroundOrigin(angle);
-//
-//   Shape::setCenter(centerX, centerY); //Return to original location
-// }
-
-void Shape::rotateAroundOrigin(float angle) {
+void Shape::rotateAround(float angle, float x, float y) { //Needs to be tested
   for(int i = 0; i < current; i+=2) {
-    float x = vertices[i];
-    float y = vertices[i+1];
-    vertices[i]   = x*cos(angle)-y*sin(angle); //New x
-    vertices[i+1] = x*sin(angle)+y*cos(angle); //New y
+    float myX = vertices[i] - x;
+    float myY = vertices[i+1] - y;
+    vertices[i]   = myX*cos(angle)-myY*sin(angle) + x; //New x
+    vertices[i+1] = myX*sin(angle)+myY*cos(angle) + y; //New y
   }
 }
 

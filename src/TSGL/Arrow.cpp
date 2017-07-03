@@ -33,10 +33,10 @@ namespace tsgl {
 
   Arrow::~Arrow() {
     delete arrowHead;
-    delete arrowHead2;
+    if( isDoubleArrow )
+      delete arrowHead2;
     arrowHead = NULL;
     arrowHead2 = NULL;
-    return;
   }
 
 }

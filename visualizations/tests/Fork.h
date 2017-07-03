@@ -12,7 +12,6 @@ using namespace tsgl;
 struct Fork {
   int user, id;
   double myAngle;
-  Canvas* can;
   ConcavePolygon * myShape;
   Fork() {
     user = -1; id = 0;
@@ -41,7 +40,6 @@ struct Fork {
     for(int i = 0; i < POINTS; i++) {
       myShape->addVertex(xs[i], ys[i]);
     }
-    myShape->setLayer(5);
     //myShape->setOutline(false);
   }
 
@@ -49,18 +47,18 @@ struct Fork {
     delete myShape;
   }
 
-  void setCanvas( Canvas* can ) {
-    can->add(myShape);
-  }
-
-  void draw(int x, int y, double angle, ColorFloat c) {
+  void draw(Canvas& can, int x, int y, double angle, ColorFloat c) {
     angle -= PI/2; // rotate by PI/2 radians or 90 degrees for fork next to philosopher
       // if adding PI/2, then the forks point out, if subtracting PI/2 the forks point in to table
         // without this line, the forks are perpendicular to philosophers
 
     myShape->setColor(c);
-    myShape->rotate(angle-myAngle); //Undo rotation from last draw and set new rotation
     myShape->setCenter(x, y);
+
+    myShape->rotate(-myAngle); //Undo rotation from last draw
+    myShape->rotate(angle);
+
+    can.add(myShape);
 
     myAngle = angle; //Save current angle
   }
