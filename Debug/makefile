@@ -43,7 +43,7 @@ all: tsgltest
 tsgltest: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -Llib/ -L/usr/local/lib -L/usr/lib -L/usr/X11/lib/ -L/opt/AMDAPP/lib/x86_64/ -fopenmp -o "tsgltest" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -Llib/ -L"/home/christiaan/workspace/TSGL/src/glad" -L/usr/local/lib -L/usr/lib -L/usr/X11/lib/ -L/opt/AMDAPP/lib/x86_64/ -fopenmp -o "tsgltest" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

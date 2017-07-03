@@ -220,25 +220,32 @@ namespace tsgl {
       // Iterate through objects, render them
       objectMutex.lock();
 
+      // printf("%s\n", "WAZZUP?????");
+
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
-        Shape* rc = *it;
-        glVertexPointer(
-          2,  // how many points per vertex (for us, that's x and y)
-          GL_FLOAT, // the type of data being passed
-          0, // byte offset between vertices
-          rc->getPointerToVerticesArray()  // pointer to the array of vertices
-        );
-        glColor4f(
-          rc->getObjectColor()->R,
-          rc->getObjectColor()->G,
-          rc->getObjectColor()->B,
-          rc->getObjectColor()->A
-        );
-        glDrawArrays(
-          rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
-          0, // The starting index of the array
-          rc->getNumberOfVertices() // The number of vertices from the object
-        );
+        try {
+          Shape* rc = *it;
+          glVertexPointer(
+            2,  // how many points per vertex (for us, that's x and y)
+            GL_FLOAT, // the type of data being passed
+            0, // byte offset between vertices
+            rc->getPointerToVerticesArray()  // pointer to the array of vertices
+          );
+          glColor4f(
+            rc->getObjectColor()->R,
+            rc->getObjectColor()->G,
+            rc->getObjectColor()->B,
+            rc->getObjectColor()->A
+          );
+          glDrawArrays(
+            rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
+            0, // The starting index of the array
+            rc->getNumberOfVertices() // The number of vertices from the object
+          );
+        }
+        catch (std::exception& e) {
+          std::cerr << "Caught an exception!!!" << e.what() << std::endl;
+        }
       }
       objectMutex.unlock();
 
@@ -256,6 +263,7 @@ namespace tsgl {
 
 
       // Framerate debug stuff
+      frameCounter++;
       counter++;
       // printf("Frame %d finished.\n", counter);
       if (counter==100) {

@@ -12,7 +12,7 @@
 #include FT_GLYPH_H
 
 // #include <GL/glew.h>     // Needed for GL function calls
-#include "../glad/glad.h"      // New loader for GL function calls TODO: fix the path here
+#include <glad/glad.h>      // New loader for GL function calls TODO: fix the path here
 
 #ifdef _WIN32
   #include <GL/glut.h>

@@ -10,7 +10,7 @@
   #define GLEW_STATIC
 #endif
 
-#include "../glad/glad.h"      // New loader for GL function calls TODO: fix the path here
+#include "glad/glad.h"      // New loader for GL function calls TODO: fix the path here
 
 
 #include "Array.h"          // Our own array for buffering drawing operations
