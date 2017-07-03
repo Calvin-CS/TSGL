@@ -15,7 +15,7 @@ struct Fork {
   Canvas* can;
   ConcavePolygon * myShape;
   Fork() {
-    user = -1; id = 0; hasCanvas = false;
+    user = -1; id = 0;
 
     //Create visual Fork
     const int POINTS = 20; // number of vertices in polygon

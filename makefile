@@ -1,5 +1,3 @@
-TARGET = "libtester"
-
 #Directories
 SRCDIR = src
 TSGLSRCDIR = src/TSGL
@@ -7,29 +5,34 @@ VISPRJDIR = visualizations
 BINDIR = bin
 BLDDIR = build
 
-#Files
-# HEADERS := $(wildcard $(HDRDIR)*.h)
+#Header Files
+HEADERS := $(wildcard $(SRCDIR)/*.h) $(wildcard $(TSGLSRCDIR)/*.h)
 # TODO depend on headers!!!
 
 #Library Files
 TSGLSRC := $(wildcard $(TSGLSRCDIR)/*.cpp)
 TSGLOBJ := $(addprefix build/, $(TSGLSRC:.cpp=.o))
+TSGLDEP := $(TSGLOBJ:.o=.d)
 
 #Tester Program Files
 PRGMSRC := $(wildcard $(SRCDIR)/*.cpp)
 PRGMOBJ := $(addprefix build/, $(PRGMSRC:.cpp=.o))
+PRGMDEP := $(PRGMOBJ:.o=.d)
 
 #Reader/Writer Program Files
 RWSRC := $(wildcard $(VISPRJDIR)/ReaderWriter/*.cpp) $(SRCDIR)/glad.cpp
 RWOBJ := $(addprefix build/, $(RWSRC:.cpp=.o))
+RWDEP := $(RWOBJ:.o=.d)
 
 #Dining Philosophers Program Files
 DPHSRC := $(wildcard $(VISPRJDIR)/DiningPhilosophers/*.cpp) $(SRCDIR)/glad.cpp
 DPHOBJ := $(addprefix build/, $(DPHSRC:.cpp=.o))
+DPHDEP := $(DPHOBJ:.o=.d)
 
 #Producer/Consumer Program Files
 PCSRC := $(wildcard $(VISPRJDIR)/ProducerConsumer/*.cpp) $(SRCDIR)/glad.cpp
 PCOBJ := $(addprefix build/, $(PCSRC:.cpp=.o))
+PCDEP := $(PCOBJ:.o=.d)
 
 
 
@@ -79,40 +82,58 @@ CFLAGS = \
 all: tester ReaderWriter DiningPhilosophers ProducerConsumer
 
 #Test Program
-tester: $(PRGMOBJ) $(TSGLOBJ)
+tester: $(PRGMOBJ) $(TSGLOBJ) $(HEADERS)
 	@echo ""
-	@echo "//////////////////// Building Tester Program ////////////////////"
+	@tput setaf 3;
+	@echo "//////////////////// Linking Tester Program ////////////////////"
+	@tput sgr0;
 	@echo ""
 	$(CC) $(PRGMOBJ) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
 
 #Reader Writer
 ReaderWriter: $(RWOBJ) $(TSGLOBJ)
 	@echo ""
-	@echo "//////////////////// Building Reader/Writer Visualization ////////////////////"
+	@tput setaf 3;
+	@echo "//////////////////// Linking Reader/Writer Visualization ////////////////////"
+	@tput sgr0;
 	@echo ""
 	$(CC) $(RWOBJ) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
 
 #Dining Philosophers
 DiningPhilosophers: $(DPHOBJ) $(TSGLOBJ)
 	@echo ""
-	@echo "//////////////////// Building Dining Philosophers Visualization ////////////////////"
+	@tput setaf 3;
+	@echo "//////////////////// Linking Dining Philosophers Visualization ////////////////////"
+	@tput sgr0;
 	@echo ""
 	$(CC) $(DPHOBJ) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
 
 #Producer Consumer
 ProducerConsumer: $(PCOBJ) $(TSGLOBJ)
 	@echo ""
-	@echo "//////////////////// Building Producer/Consumer Visualization ////////////////////"
+	@tput setaf 3;
+	@echo "//////////////////// Linking Producer/Consumer Visualization ////////////////////"
+	@tput sgr0;
 	@echo ""
 	$(CC) $(PCOBJ) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
 
 
+# Include header dependencies
+-include $(TSGLDEP)
+-include $(PRGMDEP)
+-include $(RWDEP)
+-include $(DPHDEP)
+-include $(PCDEP)
 
 #Building rule for cpp to o
 $(BLDDIR)/%.o: %.cpp
-	@echo "//////////////////// Building $@ ////////////////////"
+	@echo ""
+	@tput setaf 3;
+	@echo "+++++++++++++++++++ Building $@ +++++++++++++++++++"
+	@tput sgr0;
+	@echo ""
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o,%.d,$@) $< -o $@
 
 # $(EXECUTABLE): $(OBJECTS)
 # 	echo "--------------Linking Files--------------"
