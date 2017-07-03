@@ -12,10 +12,9 @@ using namespace tsgl;
 struct Fork {
   int user, id;
   double myAngle;
-  bool hasCanvas;
   ConcavePolygon * myShape;
   Fork() {
-    user = -1; id = 0; hasCanvas = false;
+    user = -1; id = 0;
 
     //Create visual Fork
     const int POINTS = 20; // number of vertices in polygon
@@ -54,14 +53,12 @@ struct Fork {
         // without this line, the forks are perpendicular to philosophers
 
     myShape->setColor(c);
-    myShape->rotate(-myAngle); //Undo rotation from last draw
     myShape->setCenter(x, y);
+
+    myShape->rotate(-myAngle); //Undo rotation from last draw
     myShape->rotate(angle);
 
-    if( !hasCanvas ) {
-      can.add(myShape);
-      hasCanvas = true;
-    }
+    can.add(myShape);
 
     myAngle = angle; //Save current angle
   }
