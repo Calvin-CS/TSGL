@@ -62,7 +62,7 @@ protected:
     /**
      * \brief Returns the geometry type for drawing.
      */
-    virtual GLenum getGeometryType() { return GL_TRIANGLE_FAN; }
+    virtual GLenum getGeometryType() = 0;
 
     /*!
      * \brief Adds another vertex to a Shape.

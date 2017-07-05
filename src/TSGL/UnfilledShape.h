@@ -19,12 +19,12 @@ class UnfilledShape : public Polyline {
     /*!
      * \brief Explicitly constructs a UnfilledShape.
      * \details This is the constructor for the UnfilledShape class.
-     * \details UnfilledShape is very similar to Polyline, but draws vertices in a line loop rather than simply segments.
+     * \details UnfilledShape is quite similar to Polyline, but draws vertices in a line loop rather than simply segments.
      *   \param vertices The number of vertices in the unfilled shape.
-     *   \param color The color of the Rectangle.
+     *   \param color The color of the Rectangle. (Defaults to BLACK).
      * \return A new UnfilledShape with the specified top left corner, dimensions, and color.
      */
-    UnfilledShape(int vertices, const ColorFloat &color);
+    UnfilledShape(int vertices, const ColorFloat &color = BLACK);
 
     /**
      * \brief Returns the geometry type for drawing

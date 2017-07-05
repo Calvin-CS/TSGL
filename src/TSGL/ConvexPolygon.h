@@ -32,6 +32,11 @@ public:
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
     ConvexPolygon(int numVertices, const ColorFloat& color);
+
+    /**
+     * \brief Returns the geometry type for drawing.
+     */
+    virtual GLenum getGeometryType() { return GL_TRIANGLE_FAN; };
 };
 
 }

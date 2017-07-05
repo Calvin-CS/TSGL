@@ -26,8 +26,7 @@ public:
        *   \param y The y coordinate of the star's center.
        *   \param radius The radius of the star in pixels.
        *   \param points The number of points to use in the star.
-       *   \param color The color of the star
-       *     (set to BLACK by default).
+       *   \param color The color of the star (set to BLACK by default).
        *   \param ninja The ninja setting of the star, making the star points spin differently if true
        *     (set to false by default).
        *   \param outlineColor The color of the star's outline (set to BLACK by default).

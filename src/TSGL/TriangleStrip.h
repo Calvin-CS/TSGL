@@ -27,11 +27,11 @@ class TriangleStrip : public ConvexPolygon {
      * \brief Explicitly construct a new TriangleStrip.
      * \details Explicit constructor for a TriangleStrip object.
      *   \param numVertices The number of vertices the complete TriangleStrip will have.
-     *   \param color The color of the TriangleStrip.
+     *   \param color The color of the TriangleStrip. (Defaults to BLACK.)
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new TriangleStrip with a buffer for storing the specified numbered of vertices.
      */
-    TriangleStrip(int numVertices, const ColorFloat& color);
+    TriangleStrip(int numVertices, const ColorFloat& color = BLACK);
 
     /**
      * \brief Returns the geometry type for drawing

@@ -25,10 +25,10 @@ class UnfilledTriangle : public UnfilledShape {
      *      \param y2 The y coordinate of the second endpoint.
      *      \param x3 The x coordinate of the third endpoint.
      *      \param y3 The y coordinate of the third endpoint.
-     *      \param color The color of the UnfilledTriangle.
+     *      \param color The color of the UnfilledTriangle. (Defaults to BLACK).
      * \return A new UnfilledTriangle with the specified vertices and color.
      */
-    UnfilledTriangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color);
+    UnfilledTriangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color = BLACK);
 };
 
 }

@@ -1,5 +1,5 @@
 /*
- * UnfilledStar.h extends UnfilledShape and provides a class for drawing a star to a Canvas.
+ * UnfilledStar.h extends UnfilledShape and provides a class for drawing an unfilled star to a Canvas.
  */
 
 #ifndef UNFILLED_STAR_H_
@@ -25,7 +25,7 @@ public:
        *   \param x The x coordinate of the star's center.
        *   \param y The y coordinate of the star's center.
        *   \param radius The radius of the star in pixels.
-       *   \param points The number of points to use in the star.
+       *   \param points The number of points on the star.
        *   \param color The color of the star
        *     (set to BLACK by default).
        *   \param ninja The ninja setting of the star, making the star points twisted differently if true

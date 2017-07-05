@@ -23,10 +23,10 @@ class UnfilledRectangle : public UnfilledShape {
      *   \param y The y coordinate of the Rectangle's top edge.
      *   \param width The width of the Rectangle.
      *   \param height The height of the Rectangle.
-     *   \param color The color of the Rectangle.
+     *   \param color The color of the Rectangle. (Defaults to BLACK.)
      * \return A new UnfilledRectangle with the specified top left corner, dimensions, and color.
      */
-    UnfilledRectangle(int x, int y, int width, int height, const ColorFloat &color);
+    UnfilledRectangle(int x, int y, int width, int height, const ColorFloat &color = BLACK);
 };
 
 }
