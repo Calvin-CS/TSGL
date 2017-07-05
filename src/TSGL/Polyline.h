@@ -32,7 +32,7 @@ public:
     Polyline(int numVertices, const ColorFloat& c);
 
     /**
-     * \brief Returns the geometry type for drawing
+     * \brief Returns the geometry type for drawing.
      */
     virtual GLenum getGeometryType() { return GL_LINE_STRIP; }
 };

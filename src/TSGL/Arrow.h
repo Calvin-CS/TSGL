@@ -11,7 +11,7 @@ namespace tsgl {
   /*!
   * \class Arrow
   * \brief draw an arrow.
-  * \details Arrow extends ConcavePolygon and includes an arrow head (triangle).
+  * \details Arrow extends ConcavePolygon and draws an arrow from one point to another.
   */
   class Arrow : public ConcavePolygon {
   private:
@@ -26,8 +26,8 @@ namespace tsgl {
     *      \param y1 The y coordinate of the first endpoint.
     *      \param x2 The x coordinate of the second endpoint.
     *      \param y2 The y coordinate of the second endpoint.
-    *      \param color The reference variable to the color of the Arrow.
-    *      \param doubleArrow Determines whether Arrow has two heads.
+    *      \param color The reference variable to the color of the Arrow. Defaults to BLACK.
+    *      \param doubleArrow Determines whether Arrow has two heads. Defaults to false.
     * \return A new Arrow with the specified endpoints and color.
     */
     Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK, bool doubleArrow = false);

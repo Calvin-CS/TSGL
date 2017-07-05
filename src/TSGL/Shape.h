@@ -27,9 +27,6 @@ protected:
     int size,           // Number of floating point numbers in vertices
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 2)
-    // ColorFloat shapeColor;
-    // GLenum geometryType = GL_TRIANGLES;
-    //TODO above two lines for testing purposes.  Remove eventually
  public:
 
     /*!
@@ -50,84 +47,83 @@ protected:
     virtual ~Shape();
 
     /**
-     * \brief Returns a pointer to the vertices array for renderer
-     * \details Vertices specifies x and y coordinates for the Shape
-     * \return Pointer to vertices
+     * \brief Returns a pointer to the vertices array for renderer.
+     * \details Vertices specifies x and y coordinates for the Shape.
+     * \return Pointer to vertices.
      */
     virtual GLfloat* getPointerToVerticesArray();
 
     /**
-     * \brief Returns the number of vertices in the Shape for renderer
-     * \return An int specifying the number of vertices
+     * \brief Returns the number of vertices in the Shape for renderer.
+     * \return An int specifying the number of vertices.
      */
     virtual int getNumberOfVertices() { return length; }
 
     /**
-     * \brief Returns the geometry type for drawing
+     * \brief Returns the geometry type for drawing.
      */
     virtual GLenum getGeometryType() { return GL_TRIANGLE_FAN; }
 
     /*!
      * \brief Adds another vertex to a Shape.
-     * \details This function initializes the next vertex in the Polyline and adds it to a Shape buffer.
+     * \details This function initializes the next vertex in the Shape.
      *   \param x The x position of the vertex.
      *   \param y The y position of the vertex.
-     *   \param color The reference variable of the color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating when the vertex buffer is full.
      */
     virtual void addVertex(int x, int y);
 
     /**
-     * \brief Gets the current color of the Shape
+     * \brief Gets the current color of the Shape.
      * \return The ColorFloat of the Shape.
      */
     virtual ColorFloat getColor() { return color; }
 
     /**
-     * \brief Gets pointer to the color of the Shape for renderer
+     * \brief Gets pointer to the color of the Shape for renderer.
      * \return Pointer to ColorFloat of Shape
      */
     ColorFloat* getObjectColor() { return &color; }
 
     /**
-     * \brief Sets the Shape to a new color
+     * \brief Sets the Shape to a new color.
      * \param c The new ColorFloat.
      */
     virtual void setColor(const ColorFloat& c);
 
     /**
-     * \brief Moves the Shape to new coordinates
+     * \brief Moves the Shape to new coordinates.
      * \param x The new center x coordinate.
      * \param y The new center y coordinate.
      */
     virtual void setCenter(float x, float y);
 
     /**
-     * \brief Returns the x coordinate of the Shape
-     * \return An int, the center x coordinate
+     * \brief Returns the x coordinate of the Shape.
+     * \return A float, the center x coordinate.
      */
     virtual float getX();
 
     /**
-     * \brief Returns the y coordinate of the Shape
-     * \return An int, the center y coordinate
+     * \brief Returns the y coordinate of the Shape.
+     * \return A float, the center y coordinate.
      */
     virtual float getY();
 
     /**
-     * \brief Rotates the Shape by an angle
-     * \details Rotates clockwise around the center of the shape
-     * \param angle Angle to rotate by, in radians
+     * \brief Rotates the Shape by an angle.
+     * \details Rotates clockwise around the center of the shape.
+     * \param angle Angle to rotate by, in radians.
      */
     virtual void rotate(float angle);
 
     /**
-     * \brief Rotates the Shape by angle around a point
-     * \details Rotates clockwise around (x, y) by angle
-     * \param angle Angle to rotate by, in radians
-     * \param x The x coordinate to rotate around
-     * \param y The y coordinate to rotate around
+     * \brief Rotates the Shape by angle around a point.
+     * \details Rotates clockwise around (x, y) by angle.
+     * \param angle Angle to rotate by, in radians.
+     * \param x The x coordinate to rotate around.
+     * \param y The y coordinate to rotate around.
      */
     virtual void rotateAround(float angle, float x, float y);
 };

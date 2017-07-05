@@ -25,7 +25,7 @@ public:
 
     /*!
      * \brief Explicitly constructs a new ConvexPolygon.
-     * \details Explicit constructor for a Convex Polygon object.
+     * \details Explicit constructor for a ConvexPolygon object.
      *   \param numVertices the number of vertices the complete ConvexPolygon will have.
      *   \param color The color of the Polygon.
      * \warning An invariant is held where if v is less than 3 then an error message is given.

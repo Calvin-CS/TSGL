@@ -1,19 +1,19 @@
 /*
- * UnfilledStar.h extends Polyline and provides a class for drawing a star to a Canvas.
+ * UnfilledStar.h extends UnfilledShape and provides a class for drawing a star to a Canvas.
  */
 
 #ifndef UNFILLED_STAR_H_
 #define UNFILLED_STAR_H_
 
-#include "Polyline.h"
+#include "UnfilledShape.h"
 
 namespace tsgl {
 
 /*! \class UnfilledStar
  *  \brief Draw a star
- *  \details UnfilledStar extends Polyline
+ *  \details UnfilledStar extends UnfilledShape
  */
-class UnfilledStar : public Polyline {
+class UnfilledStar : public UnfilledShape {
 private:
   int myRadius, myPoints;
 public:

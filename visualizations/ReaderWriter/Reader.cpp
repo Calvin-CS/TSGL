@@ -16,7 +16,6 @@ Reader::Reader() : RWThread() { }
 Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : RWThread(sharedDatabase, id, can) {
 	myX = can.getWindowWidth()-50;
 	myCircle->setCenter(myX, myY);
-	myCan->add( myCircle );
 }
 
 /**
@@ -25,7 +24,7 @@ Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas
  * \details Includes a half second pause
  */
 void Reader::drawArrow(int x, int y) {
-	Arrow arrow(myX-150, myY, x, y);
+	Arrow arrow(myX-150, myY, x, y, BLACK, false);
 	arrow.setLayer(5);
 	myCan->add(&arrow);
 	myCan->sleepFor(0.5);

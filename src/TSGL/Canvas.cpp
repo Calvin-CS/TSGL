@@ -1248,22 +1248,11 @@ namespace tsgl {
   void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
     float delta = 2.0f / sides * PI;
     if (filled) {
-        ConvexPolygon *s = new ConvexPolygon(sides,color);
-        for (int i = 0; i < sides; ++i)
-            s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta));
-        this->add(s);
+      Circle *c = new Circle(xverts, yverts, radius, sides, color);
+      this->add(c);
     } else {
-        float oldX = 0, oldY = 0, newX = 0, newY = 0;
-        Polyline *p = new Polyline(sides+1,color);
-        for (int i = 0; i <= sides; ++i) {
-            oldX = newX; oldY = newY;
-            newX = xverts+radius*cos(i*delta);
-            newY = yverts+radius*sin(i*delta);
-            if (i > 0)
-                p->addVertex(oldX, oldY);
-        }
-        p->addVertex(newX, newY);
-        this->add(p);
+      UnfilledCircle *c = new UnfilledCircle(xverts, yverts, radius, sides, color);
+      this->add(c);
     }
   }
 
@@ -1386,12 +1375,9 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         this->add(t);                                               // Push it onto our drawing buffer
     }
     else {
-      Polyline* p = new Polyline(4,color);
-      p->addVertex(x1,y1);
-      p->addVertex(x2,y2);
-      p->addVertex(x3,y3);
-      p->addVertex(x1,y1);
-      this->add(p);    }
+      UnfilledTriangle* t = new UnfilledTriangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
+      this->add(t);                                               // Push it onto our drawing buffer
+    }
 }
 
   void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {

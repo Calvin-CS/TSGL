@@ -17,7 +17,6 @@ Writer::Writer() : RWThread() {
 Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : RWThread(sharedDatabase, id, can) {
 	myX = 50; //Set the x-coordinate to 50
 	myCircle->setCenter(myX, myY);
-	myCan->add( myCircle );
 }
 
 /**

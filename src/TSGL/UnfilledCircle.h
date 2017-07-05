@@ -1,19 +1,19 @@
 /*
- * UnfilledCircle.h extends Polyline and provides a class for drawing a circle to a Canvas.
+ * UnfilledCircle.h extends UnfilledShape and provides a class for drawing a circle to a Canvas.
  */
 
-#ifndef UNFILLEDCIRCLE_H_
-#define UNFILLEDCIRCLE_H_
+#ifndef UNFILLED_CIRCLE_H_
+#define UNFILLED_CIRCLE_H_
 
-#include "Polyline.h" // For extending our Polyline object
+#include "UnfilledShape.h" // For extending our UnfilledShape object
 
 namespace tsgl {
 
 /*! \class UnfilledCircle
  *  \brief Draw a UnfilledCircle.
- *  \details UnfilledCircle is a class for holding Polyline data for a UnfilledCircle.
+ *  \details UnfilledCircle is a class for holding UnfilledShape data for a UnfilledCircle.
  */
-class UnfilledCircle : public Polyline {
+class UnfilledCircle : public UnfilledShape {
  private:
     int myX, myY, myRadius, mySides;
  public:
@@ -36,4 +36,4 @@ class UnfilledCircle : public Polyline {
 
 }
 
-#endif /* UNFILLEDCIRCLE_H_ */
+#endif /* UNFILLED_CIRCLE_H_ */

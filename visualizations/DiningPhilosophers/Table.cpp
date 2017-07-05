@@ -34,9 +34,9 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
       break;
   }
 
-  // myCan2 = new Canvas(0,0,350,300,"Legend");
-  // myCan2->setBackgroundColor(WHITE);
-  // myCan2->start();
+  myCan2 = new Canvas(0,0,350,300,"Legend");
+  myCan2->setBackgroundColor(WHITE);
+  myCan2->start();
   // myCan2->drawText("Method:",16,32,32,BLACK);
   // myCan2->drawText("\"" + methodString + "\"",32,64,24,BLACK);
   // myCan2->drawText("Legend:",16,96,24,BLACK);
@@ -46,15 +46,15 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   // myCan2->drawText("Green: Eating",32,224,24,GREEN);
   // myCan2->drawText("Blue: Thinking",32,256,24,BLUE);
   // myCan2->drawText("Meals eaten",57,288,24,BROWN);
-  // myCan2->drawCircle(41,279,3,8,BROWN);
+  myCan2->drawCircle(41,279,3,8,BROWN);
 }
 
 Table::~Table() {
-  // if (myCan2->isOpen())
-  //   myCan2->stop();
-  // else
-  //   myCan2->wait();
-  // delete myCan2;
+  if (myCan2->isOpen())
+    myCan2->stop();
+  else
+    myCan2->wait();
+  delete myCan2;
   delete myCircle;
   delete [] phils;
   delete [] forks;
