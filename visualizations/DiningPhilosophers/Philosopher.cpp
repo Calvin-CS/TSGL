@@ -2,21 +2,33 @@
 
 Philosopher::Philosopher() {
   setId(0,1);
-  meals = 0;
   myState = hasNone;
   myAction = doNothing;
   myCircle = NULL;
 }
 
 Philosopher::~Philosopher() {
-  delete myCircle;
-  for(unsigned i = 0; i < mealShapes.size(); i++) {
-    delete mealShapes[i];
+  delete myCircle; myCircle = NULL;
+  for(unsigned i = 0; i < meals.size(); i++) {
+    delete meals[i];
   }
 }
 
+/**
+ * Adds Philosopher to Canvas or refreshes its color.
+ */
 void Philosopher::draw(Canvas& can, int x, int y) {
   const int SIZE = 32;
+  if( myCircle == NULL ) {
+    myCircle = new Circle(x,y,SIZE,SIZE,RED);
+    can.add(myCircle);
+  }
+}
+
+/**
+ * Updates the Philosopher's color based on its state
+ */
+void Philosopher::refreshColor() {
   ColorFloat c;
   switch(myState) {
     case hasNone:  c=RED;    break;
@@ -26,25 +38,20 @@ void Philosopher::draw(Canvas& can, int x, int y) {
     case isFull:   c=BLUE;   break;
     case thinking: c=BLUE;   break;
   }
-  if( myCircle != NULL ) {
-    can.remove(myCircle);
-    delete myCircle;
-  }
-  myCircle = new Circle(x,y,SIZE,SIZE,c);
-  can.add(myCircle);
+  myCircle->setColor(c);
 }
 
-void Philosopher::eat() {
-  ++meals;
-  myState = thinking;
-  myAction = doNothing;
-}
-
+/**
+ * Adds a meal representation to meals and the Canvas
+ */
 void Philosopher::addMeal(Canvas& can, Circle * c) {
   can.add(c);
-  mealShapes.push_back(c);
+  meals.push_back(c);
 }
 
+/**
+ * Picks up a fork specified by its reference
+ */
 bool Philosopher::acquire(Fork& f) {
   if (f.user >= 0)
     return false;
@@ -71,6 +78,9 @@ bool Philosopher::acquire(Fork& f) {
   return false;
 }
 
+/**
+ * Releases a fork specified by its reference
+ */
 bool Philosopher::release(Fork& f) {
   if (f.user != id)
     return false;
@@ -80,6 +90,9 @@ bool Philosopher::release(Fork& f) {
   return true;
 }
 
+/**
+ * Thinks and switches to hungry state if a random number is a multiple of 3.
+ */
 void Philosopher::think() {
   if(rand()%3 == 0) { // 1/3 probability to go to hungry state
     setState(hasNone);

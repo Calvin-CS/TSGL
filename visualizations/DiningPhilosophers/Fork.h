@@ -1,6 +1,6 @@
 /*!
  * \struct Fork
- * \brief Small struct for the forks in the Dining Philosophers' problem
+ * \brief Struct for the forks in the Dining Philosophers' problem
  */
 
 #ifndef FORK_H_
@@ -10,17 +10,19 @@
 using namespace tsgl;
 
 struct Fork {
+
   int user, id;
   double myAngle;
   Canvas* can;
   ConcavePolygon * myShape;
+
+  //Constructor
   Fork() {
     user = -1; id = 0;
 
-    //Create visual Fork
     const int POINTS = 20; // number of vertices in polygon
-    const int HEIGHT = 42; // 42 is preferred
-    const int WIDTH = 12;  // 12 is preferred
+    const int HEIGHT = 42; // 42 is preferred, but can be changed
+    const int WIDTH = 12;  // 12 is preferred, but can be changed
     int xs[POINTS], ys[POINTS];
 
     // scales (out of 100) for the dimensions of the fork
@@ -44,14 +46,21 @@ struct Fork {
     myShape->setLayer(5);
   }
 
+  //Destructor
   ~Fork() {
     delete myShape;
   }
 
+  /**
+   * Add Fork to the Canvas
+   */
   void setCanvas( Canvas* can ) {
     can->add(myShape);
   }
 
+  /**
+   * Update visible shape of Fork
+   */
   void draw(int x, int y, double angle, ColorFloat c) {
     angle -= PI/2; // rotate by PI/2 radians or 90 degrees for fork next to philosopher
       // if adding PI/2, then the forks point out, if subtracting PI/2 the forks point in to table
@@ -63,6 +72,7 @@ struct Fork {
 
     myAngle = angle; //Save current angle
   }
+
 };
 
 #endif /* FORK_H_ */

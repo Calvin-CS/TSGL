@@ -20,25 +20,29 @@ class Philosopher {
 private:
   PhilState myState;
   PhilAction myAction;
-  int id, myLeft, myRight, meals;
+  int id, myLeft, myRight;
   Circle * myCircle;
-  std::vector<Circle*> mealShapes;
+  std::vector<Circle*> meals;
 public:
   Philosopher();
   ~Philosopher();
   void draw(Canvas& can, int x, int y);
+  void refreshColor();
   bool acquire(Fork& f);
   bool release(Fork& f);
   void think();
-  int getMeals() { return meals; }
-  void eat();
+  void eat() { myState = thinking; myAction = doNothing;}
   void addMeal(Canvas& can, Circle * c);
-  PhilState state() { return myState; }
-  void setState(PhilState p) { myState = p; }
-  PhilAction action() { return myAction; }
+  void setState(PhilState s) { myState = s; }
   void setAction(PhilAction a) { myAction = a; }
-  int getId() { return id; }
   void setId(int i, int nphil) {id = myLeft = i; myRight = (id+nphil-1)%nphil; }
+
+  //Accessors
+  int getMeals() { return meals.size(); }
+  PhilState state() { return myState; }
+  PhilAction action() { return myAction; }
+  int getId() { return id; }
+  bool hasCircle() { return myCircle; }
 };
 
 #endif /* PHILOSOPHER_H_ */

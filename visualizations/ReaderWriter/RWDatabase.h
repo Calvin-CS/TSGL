@@ -15,7 +15,7 @@ template<class Item>
 
 /**
  * \class RWDatabase
- * \brief An abstract monitor protecting a vector of data
+ * \brief An abstract database protecting a vector of data
  * \details Database has its locks and a vector
  * \details Locking methods must be implemented in subclass, giving priority to different types of threads.
  */

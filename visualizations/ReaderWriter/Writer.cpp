@@ -4,8 +4,7 @@
  * \brief Default-constructor for the Writer class.
  * \return: The constructed Writer object.
  */
-Writer::Writer() : RWThread() {
-}
+Writer::Writer() : RWThread() { }
 
 /**
  * \brief Explicit-constructor for the Writer class.
