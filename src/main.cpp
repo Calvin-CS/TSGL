@@ -69,6 +69,9 @@ void alphaRectangleFunction(Canvas& can) {
     botBlueRect->setLayer(0);
     can.add(botBlueRect);
 
+    // // Test the text
+    // Text* myText = new Text();
+
     // Queue to hold the last few rects
     std::queue<Rectangle *> myQueue;
 

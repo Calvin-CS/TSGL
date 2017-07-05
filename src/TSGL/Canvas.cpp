@@ -179,7 +179,7 @@ namespace tsgl {
   void Canvas::newInit() {
     printf("%s\n", "Initting stuff.");
 
-    // initShaders();
+    initShaders();
     //TODO: add shader support here.  Is the Raspi even capable of this???
 
   }
@@ -202,6 +202,9 @@ namespace tsgl {
 
     setupCamera();  //Camera transformations
 
+    // Test the text
+    Text* myText = new Text();
+
     // Count number of frames
     int counter = 0;
     float lastTime = 0;
@@ -219,6 +222,8 @@ namespace tsgl {
 
       // Iterate through objects, render them
       objectMutex.lock();
+
+      myText->testRender();
 
       // printf("%s\n", "WAZZUP?????");
 
@@ -266,8 +271,8 @@ namespace tsgl {
       frameCounter++;
       counter++;
       // printf("Frame %d finished.\n", counter);
-      if (counter==100) {
-        printf("Did 100 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 100/(glfwGetTime()-lastTime));
+      if (counter==1000) {
+        printf("Did 1000 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 1000/(glfwGetTime()-lastTime));
         counter = 0;
         lastTime = glfwGetTime();
       }
@@ -805,8 +810,8 @@ namespace tsgl {
     GLint Fsuccess = 0;
 
     /* Read our shaders into the appropriate buffers */
-    vertexSource = filetobuf("../src/TSGL/Shaders/vertexSource.txt");
-    fragmentSource = filetobuf("../src/TSGL/Shaders/fragmentSource.txt");
+    vertexSource = filetobuf("src/TSGL/Shaders/vertexSource.txt");
+    fragmentSource = filetobuf("src/TSGL/Shaders/fragmentSource.txt");
 
     /* Assign our handles a "name" to new shader objects */
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
