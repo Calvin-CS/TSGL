@@ -82,7 +82,7 @@ public:
 
   /*!
    * \brief Evaluate an integral using the trapezoid method.
-   *   \param numRectangles The number of trapezoids to use for the integration.
+   *   \param numTrapezoids The number of trapezoids to use for the integration.
    * \return The area under the curve represented by the IntegralViewer's function, evaluated using
    *   the trapezoid method.
    */
@@ -92,4 +92,3 @@ public:
 }
 
 #endif /* INTEGRALVIEWER_H_ */
-

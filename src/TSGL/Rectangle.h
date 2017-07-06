@@ -16,9 +16,6 @@ namespace tsgl {
 class Rectangle : public ConvexPolygon {
  public:
 
-   GLfloat testVerts[8] = {0};
-   ColorFloat testColor;
-
     /*!
      * \brief Explicitly constructs a Rectangle.
      * \details This is the constructor for the Rectangle class.

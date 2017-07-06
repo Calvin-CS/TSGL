@@ -10,23 +10,26 @@
 
 namespace tsgl {
 
-/*! \class Shape
- *  \brief Draw an arbitrary shape with colored vertices.
- *  \details Shape is a class for holding vertex data for a triangle strip with colored vertices.
- *  \details Vertices are drawn in triangle strip format, where the first three vertices make up the first triangle,
- *   the next vertex plus the previous two make up the second triangle, and so on.
- *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
- *  \note The addVertex() method must be called the same number of times as specified in the constructor.
- *  \note Calling addVertex() after all vertices have been added will do nothing.
- */
+  /*! \class Shape
+   *  \brief A class for drawing shapes onto a Canvas or CartesianCanvas.
+   *  \details Shape provides a base class for drawing shapes to a Canvas or CartesianCanvas.
+   *  \note Shape is abstract, and must be extended.
+   *  \details All Shape subclasses must override the getGeometryType() method. Something like the following should be used:
+   *  \details <code>vertices</code> should be an array of floating point values in TSGL's vertex format.
+   *  One vertex consists of 2 floating point values, signifying x and y components respectively.
+   *  E.g., to draw a triangle, you would need 3 vertices = 6 floats -> vertices should be an array of length 6.
+   *  \details <code>numVertices</code> should be the actual integer number of vertices to be drawn (e.g., *3* for a triangle).
+   *  \details <code>drawingmode</code> should be one of GL's primitive drawing modes.
+   *  See https://www.opengl.org/sdk/docs/man2/xhtml/glBegin.xml for further information.
+   */
 class Shape : public Drawable {
 protected:
-    bool init;          // Whether the vertex has been initialized completely
-    GLfloat* vertices;    // Buffer for vertex data
-    ColorFloat color;
-    int size,           // Number of floating point numbers in vertices
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 2)
+    bool init; ///< Whether the vertex has been initialized completely
+    GLfloat* vertices; ///< Buffer of x, y coordinates
+    ColorFloat color; ///< Color of the Shape
+    int size,           ///< Number of floating point numbers in vertices
+        current,        ///< Current number of floating point numbers in vertices
+        length;         ///< Number of vertices in vertices (size / 2)
  public:
 
     /*!
@@ -34,7 +37,7 @@ protected:
      * \details Explicit constructor for a Convex Shape object.
      *   \param numVertices the number of vertices the complete Shape will have.
      *   \param c The color of the Shape.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
+     * \warning An invariant is held where if numVertices is less than 2 then an error message is given.
      * \return A new Shape with a buffer for storing the specified numbered of vertices.
      */
     Shape(int numVertices, const ColorFloat& c);

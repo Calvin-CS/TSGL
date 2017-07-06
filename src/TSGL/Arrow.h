@@ -15,8 +15,7 @@ namespace tsgl {
   */
   class Arrow : public ConcavePolygon {
   private:
-    bool isDoubleArrow;
-    void makeArrowHead(float x, float y, float deltaX, float deltaY);
+    void makeArrowHead(float x, float y, float deltaX, float deltaY); // Helps constructor by calculating the Arrow Head's coordinates
 
   public:
     /*!
@@ -26,8 +25,8 @@ namespace tsgl {
     *      \param y1 The y coordinate of the first endpoint.
     *      \param x2 The x coordinate of the second endpoint.
     *      \param y2 The y coordinate of the second endpoint.
-    *      \param color The reference variable to the color of the Arrow. Defaults to BLACK.
-    *      \param doubleArrow Determines whether Arrow has two heads. Defaults to false.
+    *      \param color The reference variable to the color of the Arrow. (Defaults to BLACK.)
+    *      \param doubleArrow Determines whether Arrow has two heads. (Defaults to false.)
     * \return A new Arrow with the specified endpoints and color.
     */
     Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK, bool doubleArrow = false);

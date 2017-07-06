@@ -4,10 +4,9 @@ namespace tsgl {
 
   Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color, bool doubleArrow) : ConcavePolygon( (doubleArrow)? 10 : 7, color) {
 
-    isDoubleArrow = doubleArrow;
     makeArrowHead(x2, y2, x2-x1, y2-y1);
 
-    if( isDoubleArrow ) {
+    if( doubleArrow ) {
       makeArrowHead(x1, y1, x1-x2, y1-y2);
     } else {
       int a, b; //Offsets for vertices

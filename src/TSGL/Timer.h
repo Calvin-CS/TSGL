@@ -49,7 +49,7 @@ class Timer {
 
     /*!
      * \brief Gets the number of repetitions since starting the timer.
-     * \return The number of times the <code>period</period> has elapsed since the Timer has been started.
+     * \return The number of times the <code>period</code> has elapsed since the Timer has been started.
      */
     unsigned int getReps() const;
 

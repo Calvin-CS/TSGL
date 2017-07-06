@@ -16,12 +16,12 @@ class CartesianCanvas;  //Forward declaration for typedef
 #ifdef _WIN32
 const double PI = 3.14159265358979323846;
 #else
-const double PI = M_PI;
+const double PI = M_PI; ///< Value of pi
 #endif
-const double RAD = PI / 180;     // One radian in degrees
+const double RAD = PI / 180;     ///< One radian in degrees
 
-const int FPS = 60;                // Frames per second
-const float FRAME = 1.0f/FPS;      // Number of seconds between frames
+const int FPS = 60;                ///< Frames per second
+const float FRAME = 1.0f/FPS;      ///< Number of seconds between frames
 
 /*!
  * \var typedef long double Decimal
@@ -29,9 +29,10 @@ const float FRAME = 1.0f/FPS;      // Number of seconds between frames
  * \note Used by: CartesianCanvas, Function, and IntegralViewer.
  */
 typedef long double Decimal;  // Define the variable type to use for coordinates
-typedef CartesianCanvas Cart; // Shorter name for CartesianCanvas
+typedef CartesianCanvas Cart; ///< Shorter name for CartesianCanvas
 
-const int NUM_COLORS = 256, MAX_COLOR = 255;
+const int NUM_COLORS = 256, // TODO: what?
+          MAX_COLOR = 255;  ///< Maximum value of a ColorInt component
 
 /*!
  * \brief Clamp a floating point number between two values

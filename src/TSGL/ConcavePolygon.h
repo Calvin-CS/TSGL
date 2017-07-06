@@ -20,7 +20,7 @@ namespace tsgl {
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
  *  \note The addVertex() method must be called the same number of times as specified in the constructor.
  *  \note Calling addVertex() after all vertices have been added will do nothing.
- *  \note Calling draw() before all vertices have been added will do nothing.
+ *  \note Adding to a Canvas before all vertices have been added will do nothing.
  */
 class ConcavePolygon : public Polygon {
  private:
@@ -39,7 +39,7 @@ class ConcavePolygon : public Polygon {
      * \details Explicit constructor for a ConcavePolygon object.
      *   \param numVertices The number of vertices the complete ConcavePolygon will have.
      *   \param color The reference variable of the color of the Polygon.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
+     * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
      * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
     ConcavePolygon(int numVertices, const ColorFloat& color);

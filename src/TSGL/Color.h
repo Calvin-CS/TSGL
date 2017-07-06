@@ -29,7 +29,10 @@ struct ColorHSV;
  */
 struct ColorFloat {
  public:
-    float R, G, B, A;
+    float R, ///< Red component, between 0 and 1 inclusive.
+          G, ///< Green component, between 0 and 1 inclusive.
+          B, ///< Blue component, between 0 and 1 inclusive.
+          A; ///< Alpha component, between 0 and 1 inclusive.
 
     /*!
      * \brief Default ColorFloat constructor method.
@@ -126,7 +129,10 @@ struct ColorFloat {
  */
 struct ColorInt {
  public:
-    int R, G, B, A;
+    int R, ///< Red component, between 0 and 255 inclusive.
+        G, ///< Green component, between 0 and 255 inclusive.
+        B, ///< Blue component, between 0 and 255 inclusive.
+        A; ///< Alpha component, between 0 and 255 inclusive.
 
     /*!
      * \brief Default ColorInt constructor method.
@@ -223,7 +229,10 @@ struct ColorInt {
  */
 struct ColorHSV {
  public:
-    float H, S, V, A;
+    float H, ///< Hue component, between 0 and 6 inclusive.
+          S, ///< Saturation component, between 0 and 1 inclusive.
+          V, ///< Value component, between 0 and 1 inclusive.
+          A; ///< Alpha component, between 0 and 1 inclusive.
 
     /*!
      * \brief Constructs a ColorHSV struct.
@@ -271,20 +280,20 @@ struct ColorHSV {
 /*!
  * \brief The various ColorFloat constants used throughout TSGL.
  */
-const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),
-                 DARKGRAY = ColorFloat(0.5f, 0.5f, 0.5f, 1.0f),
-                 GRAY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f),
-                 WHITE = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f),
-                 RED = ColorFloat(1.0f, 0.0f, 0.0f, 1.0f),
-                 ORANGE = ColorFloat(1.0f, 0.65f, 0.0f, 1.0f),
-                 YELLOW = ColorFloat(1.0f, 1.0f, 0.0f, 1.0f),
-                 GREEN = ColorFloat(0.0f, 1.0f, 0.0f, 1.0f),
-                 BLUE = ColorFloat(0.0f, 0.0f, 1.0f, 1.0f),
-                 PURPLE = ColorFloat(0.75f, 0.0f, 0.75f, 1.0f),
-                 MAGENTA = ColorFloat(1.0f, 0.0f, 1.0f, 1.0f),
-                 LIME = ColorFloat(0.5f, 1.0f, 0.5f, 1.0f),
-                 CYAN = ColorFloat(0.0f, 1.0f, 1.0f, 1.0f),
-                 BROWN = ColorFloat(0.5f, 0.3f, 0.0f, 1.0f);
+const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),    ///< Constant value for black
+                 DARKGRAY = ColorFloat(0.5f, 0.5f, 0.5f, 1.0f), ///< Constant value for dark gray
+                 GRAY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f),  ///< Constant value for gray
+                 WHITE = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f),    ///< Constant value for white
+                 RED = ColorFloat(1.0f, 0.0f, 0.0f, 1.0f),      ///< Constant value for red
+                 ORANGE = ColorFloat(1.0f, 0.65f, 0.0f, 1.0f),  ///< Constant value for orange
+                 YELLOW = ColorFloat(1.0f, 1.0f, 0.0f, 1.0f),   ///< Constant value for yellow
+                 GREEN = ColorFloat(0.0f, 1.0f, 0.0f, 1.0f),    ///< Constant value for green
+                 BLUE = ColorFloat(0.0f, 0.0f, 1.0f, 1.0f),     ///< Constant value for blue
+                 PURPLE = ColorFloat(0.75f, 0.0f, 0.75f, 1.0f), ///< Constant value for purple
+                 MAGENTA = ColorFloat(1.0f, 0.0f, 1.0f, 1.0f),  ///< Constant value for magenta
+                 LIME = ColorFloat(0.5f, 1.0f, 0.5f, 1.0f),     ///< Constant value for lime
+                 CYAN = ColorFloat(0.0f, 1.0f, 1.0f, 1.0f),     ///< Constant value for cyan
+                 BROWN = ColorFloat(0.5f, 0.3f, 0.0f, 1.0f);    ///< Constant value for brown
 
 /*!
  * \brief Color utility class.

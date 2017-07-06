@@ -115,6 +115,7 @@ namespace tsgl {
 
     //TODO: make this check for duplicates
     //TODO: check that this is properly thread safe now
+    //TODO: check that the shapes will change layer if layer is changed after addition.
 
     // Set the default current layer if layer not explicitly set
     if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
@@ -151,21 +152,6 @@ namespace tsgl {
     for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
       std::cout << *it << std::endl;
     }
-  }
-
-  void Canvas::pushObjectsToVertexBuffer() {
-    // Locks the GL buffer mutex, then makes GL calls using the draw() method from each object
-    //TODO put mutex on changing attributes in objects to avoid weirdnesses
-
-    objectMutex.lock();
-    // bufferMutex.lock();
-    // Take objects from the object buffer and push them onto the vertex buffer
-    for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
-      (*it)->draw();
-      //TODO this function will eventually make the GL calls itself, not the objects
-    }
-    // bufferMutex.unlock();
-    objectMutex.unlock();
   }
 
   float data[] = {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 0.0};
@@ -402,7 +388,7 @@ namespace tsgl {
       //
       //  f = f+.01;
 
-      pushObjectsToVertexBuffer();
+      //pushObjectsToVertexBuffer();
 
 
 
@@ -1364,7 +1350,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
     drawText(ws, x, y, size, color);
   }
 
-  void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
+  void Canvas::drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color) {
     Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
     this->add(t);                                // Push it onto our drawing buffer
   }

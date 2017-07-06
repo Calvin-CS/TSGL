@@ -2,6 +2,6 @@
 
 namespace tsgl {
 
-Polyline::Polyline(int numVertices, const ColorFloat& c) : Shape(numVertices, c) { }
+Polyline::Polyline(int numVertices, const ColorFloat& color) : Shape(numVertices, color) { }
 
 }

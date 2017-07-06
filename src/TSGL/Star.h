@@ -29,7 +29,6 @@ public:
        *   \param color The color of the star (set to BLACK by default).
        *   \param ninja The ninja setting of the star, making the star points spin differently if true
        *     (set to false by default).
-       *   \param outlineColor The color of the star's outline (set to BLACK by default).
        */
       Star(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = false);
 
