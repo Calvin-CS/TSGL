@@ -154,18 +154,7 @@ namespace tsgl {
   }
 
   void Canvas::pushObjectsToVertexBuffer() {
-    // Locks the GL buffer mutex, then makes GL calls using the draw() method from each object
-    //TODO put mutex on changing attributes in objects to avoid weirdnesses
 
-    objectMutex.lock();
-    // bufferMutex.lock();
-    // Take objects from the object buffer and push them onto the vertex buffer
-    for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
-      (*it)->draw();
-      //TODO this function will eventually make the GL calls itself, not the objects
-    }
-    // bufferMutex.unlock();
-    objectMutex.unlock();
   }
 
   float data[] = {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 0.0};
@@ -210,6 +199,7 @@ namespace tsgl {
     float lastTime = 0;
     while (!glfwWindowShouldClose(window)) {
 
+      // glDrawBuffer(GL_BACK);
       // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
 
       // Clear the canvas
@@ -218,12 +208,8 @@ namespace tsgl {
       // Enable vertex arrays
       glEnableClientState( GL_VERTEX_ARRAY );
 
-
-
       // Iterate through objects, render them
       objectMutex.lock();
-
-      myText->testRender();
 
       // printf("%s\n", "WAZZUP?????");
 
@@ -252,6 +238,16 @@ namespace tsgl {
           std::cerr << "Caught an exception!!!" << e.what() << std::endl;
         }
       }
+
+      // glBegin(GL_QUADS);
+      //   glVertex2f(0.0, 0.0);
+      //   glVertex2f(0.0, .5);
+      //   glVertex2f(.5, .5);
+      //   glVertex2f(.5, 0.0);
+      // glEnd();
+
+      // myText->testRender();  //TODO delete me
+
       objectMutex.unlock();
 
 
@@ -263,6 +259,7 @@ namespace tsgl {
 
 
       // Swap the buffer and handle IO
+      // glFinish();
       glfwSwapBuffers(window);
       glfwPollEvents();
 
@@ -271,8 +268,8 @@ namespace tsgl {
       frameCounter++;
       counter++;
       // printf("Frame %d finished.\n", counter);
-      if (counter==1000) {
-        printf("Did 1000 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 1000/(glfwGetTime()-lastTime));
+      if (counter==60) {
+        printf("Did 60 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 60/(glfwGetTime()-lastTime));
         counter = 0;
         lastTime = glfwGetTime();
       }
@@ -903,7 +900,7 @@ namespace tsgl {
     // Pass some other options to GLFW
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
 

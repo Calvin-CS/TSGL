@@ -36,7 +36,7 @@ namespace tsgl {
       // Current char from the FT lib
       slot = face->glyph;
 
-      for ( n = 0; n < num_chars; n++ )
+      for ( n = 7; n < num_chars; n++ )
       {
 
         error = FT_Load_Char( face, text[n], FT_LOAD_RENDER );
@@ -50,13 +50,41 @@ namespace tsgl {
         printf("Bitmap width: %d\n", slot->bitmap.width);
         printf("Bitmap rows: %d\n", slot->bitmap.rows);
 
-        int i = 0;
-        int j = 0;
-        for (i = 0; i < 99999999999999999999999999; i++) {
-          printf("%d ", slot->bitmap.buffer[n]);
-        }
+        // int i = 0;
+        // int j = 0;
+        // for (i = 0; i < slot->bitmap.rows*slot->bitmap.width; i++) {
+        //   printf("%d ", slot->bitmap.buffer[n]);
+        // }
 
-        exit(1);
+        // exit(1);
+
+        // glBitmap(slot->bitmap.width, slot->bitmap.rows, 0, 0,
+        //   0,0, slot->bitmap.buffer
+        // );
+
+
+        glTexImage2D(	GL_TEXTURE_2D,
+                     	0,
+                     	GL_RGBA, /* internal color number */
+                     	slot->bitmap.width,
+                     	slot->bitmap.rows,
+                     	0,
+                     	GL_R8,
+                     	GL_UNSIGNED_BYTE,
+                     	slot->bitmap.buffer);
+
+        glEnable(GL_TEXTURE_2D);
+        glColor4f(1.0,1.0,0.0,.3);
+        glBegin(GL_QUADS);
+          glVertex2f(10.0, 10.0);
+          glVertex2f(10.0, 30.0);
+          glVertex2f(50.0, 30.0);
+          glVertex2f(50.0, 10.0);
+        glEnd();
+
+        glDisable(GL_TEXTURE_2D);
+
+        break;
     }
 
   }
