@@ -26,7 +26,7 @@ class Text : public Drawable {
 
     const char*         filename = "assets/freefont/FreeSans.ttf";
     // char*         filename;
-    const char*         text = "Wazzup world?";
+    const char*         text = "This is a test, dude!";
     // char*         text;
 
     double angle;
