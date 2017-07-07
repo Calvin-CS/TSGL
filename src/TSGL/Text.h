@@ -24,7 +24,7 @@ class Text : public Drawable {
     FT_Vector     pen;                    /* untransformed origin  */
     FT_Error      error;
 
-    const char*         filename = "assets/freefont/FreeMono.ttf";
+    const char*         filename = "assets/freefont/FreeSans.ttf";
     // char*         filename;
     const char*         text = "Wazzup world?";
     // char*         text;
@@ -34,6 +34,8 @@ class Text : public Drawable {
     int n, num_chars;
 
     void error_check(int num = -1);
+
+    GLuint texID = 0;
 
  public:
 

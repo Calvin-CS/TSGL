@@ -246,7 +246,7 @@ namespace tsgl {
       //   glVertex2f(.5, 0.0);
       // glEnd();
 
-      // myText->testRender();  //TODO delete me
+      myText->testRender();  //TODO delete me
 
       objectMutex.unlock();
 
