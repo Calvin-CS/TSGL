@@ -19,6 +19,8 @@ namespace tsgl {
       addVertex(x1+a, y1+b);
     }
 
+    hasOutline = false;
+
   }
 
   /*!

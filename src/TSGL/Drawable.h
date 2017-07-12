@@ -26,6 +26,8 @@ namespace tsgl {
     bool discreteRender; /*! TODO Whether the shape is textured or not. If extending Drawable, <B> you *must* leave this at false (unless you are working with an image). </B> */
     int renderLayer; // The depth index to control the drawing order of the shapes
 
+    bool hasOutline = false; ///< Whether the shape has an outline. If not implementing methods to get vertices and other information for an outline, this <B>must</B> remain false.
+
   public:
 
     /*!
@@ -51,6 +53,7 @@ namespace tsgl {
     virtual ~Drawable() {};
 
     /*!
+<<<<<<< HEAD
     * \brief Accessor for <code>isTextured</code>.
     * \return Whether the drawable is a textured primitive or not.
     */
@@ -66,6 +69,12 @@ namespace tsgl {
       attribMutex.unlock();
       return retVal;
     }
+
+    /*!
+     * \brief Accessor for <code>hasOutline</code>.
+     * \return Whether the drawable also has an outline.
+     */
+    bool getHasOutline() { return hasOutline; }
 
     /**
     * \brief Sets the layer of the Drawable.

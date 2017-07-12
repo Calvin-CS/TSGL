@@ -26,9 +26,10 @@ class Triangle : public ConvexPolygon {
      *      \param x3 The x coordinate of the third endpoint.
      *      \param y3 The y coordinate of the third endpoint.
      *      \param color The color of the Triangle. (Defaults to BLACK.)
+     *      \param outlineColor The color of the Triangle's outline. (Defaults to BLACK.)
      * \return A new Triangle with the specified vertices and color.
      */
-    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color = BLACK);
+    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color = BLACK, const ColorFloat& outlineColor = BLACK);
 };
 
 }

@@ -22,6 +22,8 @@ namespace tsgl {
  *  \note Adding to a Canvas before all vertices have been added will do nothing.
  */
 class Polygon : public Shape {
+protected:
+  ColorFloat outlineColor; ///< Color of the Polygon's outline.
 public:
 
     /*!
@@ -29,10 +31,46 @@ public:
      * \details Explicit constructor for a Convex Polygon object.
      *   \param numVertices the number of vertices the complete Polygon will have.
      *   \param c The color of the Polygon.
+     *   \param outlineC The color of the Polygon's outline.
      * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
      * \return A new Polygon with a buffer for storing the specified numbered of vertices.
      */
-    Polygon(int numVertices, const ColorFloat& c);
+    Polygon(int numVertices, const ColorFloat& c, const ColorFloat& outlineC = BLACK);
+
+    /**
+     * \brief Returns a pointer to the vertices array for rendering the outline.
+     * \details Vertices specifies x and y coordinates for the Shape.
+     * \return Pointer to vertices.
+     */
+    virtual GLfloat* getPointerToOutlineVerticesArray() { return vertices; }
+
+    /**
+     * \brief Returns the geometry type for drawing the outline.
+     */
+    virtual GLenum getOutlineGeometryType() { return GL_LINE_LOOP; }
+
+    /**
+     * \brief Returns the number of vertices in the Polygon's outline for renderer.
+     * \return An int specifying the number of vertices in outline.
+     */
+    virtual int getOutlineNumberOfVertices() { return length; }
+
+    /**
+     * \brief Returns the color of the Polygon's outline.
+     * \return Pointer to color of the outline.
+     */
+    virtual ColorFloat* getOutlineColor() { return &outlineColor; }
+
+    /**
+     * \brief Sets the color of the Polygon's outline.
+     */
+    virtual void setOutlineColor(const ColorFloat& newColor) { outlineColor = newColor; }
+
+    /**
+     * \brief Sets whether the Polygon shows an outline.
+     */
+    virtual void setHasOutline(bool outline) { hasOutline = outline; }
+
 };
 
 }

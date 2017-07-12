@@ -18,10 +18,6 @@ Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myShape = new Rectangle(myX, myY, 40, 40, ColorInt(0, 0, 0));
 	myShape->setCenter(myX, myY);
 	myCan->add(myShape);
-	myOutline = new UnfilledRectangle(myX, myY, 40, 40, ColorInt(0, 0, 0));
-	myOutline->setCenter(myX, myY);
-	myCan->add(myOutline);
-
 }
 
 /**

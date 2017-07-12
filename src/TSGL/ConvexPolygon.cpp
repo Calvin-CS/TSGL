@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-ConvexPolygon::ConvexPolygon(int numVertices, const ColorFloat& color) : Polygon(numVertices, color) { }
+ConvexPolygon::ConvexPolygon(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor) : Polygon(numVertices, color, outlineColor) { }
 
 //Testing methods
 void ConvexPolygon::runTests() {

@@ -39,7 +39,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myCan2->setBackgroundColor(WHITE);
   myCan2->start();
   Text * methodText = new Text("Method:",16,32,6,BLACK);
-  Text * methodText2 = new Text("\"" + methodString + "\"",32,64,6,BLACK);
+  Text * methodText2 = new Text(methodString,32,64,6,BLACK);
   Text * legendText = new Text("Legend:",16,96,6,BLACK);
   Text * redText = new Text("Red: Hungry",32,128,6,RED);
   Text * orangeText = new Text("Orange: Has Right Fork",32,160,6,ORANGE);
@@ -50,7 +50,8 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myCan2->add( methodText ); myCan2->add( methodText2 ); myCan2->add( legendText );
   myCan2->add( redText ); myCan2->add( orangeText ); myCan2->add( purpleText );
   myCan2->add( greenText ); myCan2->add( blueText ); myCan2->add( mealsText );
-  myCan2->drawCircle(41,279,3,8,BROWN);
+
+  Circle * mealExample = new Circle(41,279,3,8,BROWN); myCan2->add( mealExample );
 }
 
 Table::~Table() {
