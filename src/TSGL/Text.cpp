@@ -75,11 +75,11 @@ namespace tsgl {
 
       // Check to see if the character is just a space
       if (text[n] == ' ') {
-        printf("Found the space!\n");
+        // printf("Found the space!\n");
         char_obj->isSpace = true;
       }
       else { // Not a space, an actual character
-        printf("Found a char!\t%c\n", text[n]);
+        // printf("Found a char!\t%c\n", text[n]);
 
         // Load the character from the font face into the slot
         error = FT_Load_Char( face, text[n], FT_LOAD_RENDER );
@@ -95,6 +95,8 @@ namespace tsgl {
         // Save the width, height, and bearing into the struct
         char_obj->width = slot->bitmap.width;
         char_obj->height = slot->bitmap.rows;
+        char_obj->advance_x = slot->advance.x /64;
+        char_obj->advance_y = slot->advance.y /64;
         char_obj->bearing = slot->metrics.horiBearingY /64;
 
         // Update maxBearing
@@ -158,6 +160,7 @@ namespace tsgl {
 
     //TODO replace with something better
     float cursor_x = 0.0;
+    float cursor_y = 0.0;
 
     FT_UInt previous = 0;
 
@@ -188,16 +191,20 @@ namespace tsgl {
 
 
         int x = base_x + cursor_x;
-        int y = base_y - ((*it)->bearing);
+        int y = base_y + cursor_y - ((*it)->bearing);
 
-        if (useKerning && previous) {
+        if (useKerning && FT_HAS_KERNING(face) && previous) {
           FT_Vector delta;
           FT_UInt glyph_index = FT_Get_Char_Index( face, (*it)->character );
           FT_Get_Kerning(face, previous, glyph_index, FT_KERNING_DEFAULT, &delta);
-          cursor_x += delta.x;
-          // printf("%s\n", "Kerning used!");
+          cursor_x += (delta.x >> 6);
+          //TODO kerning values always return 0?  WHY?????
+          // printf("Current index: %d  Previous index: %d\n", glyph_index, previous);
+          // printf("Kerning flag: %d\n", FT_HAS_KERNING(face));
+          // printf("Kerning used! %f\n", (delta.y >> 6));
         }
         previous = FT_Get_Char_Index( face, (*it)->character );
+        // cursor_x += 2;
 
         glBegin(GL_QUADS);
         glTexCoord2f( 0.f, 0.f ); glVertex2f(x,                 y);
@@ -210,8 +217,25 @@ namespace tsgl {
         // glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
 
-        cursor_x += (*it)->width;
+        cursor_x += (*it)->advance_x;
+        cursor_y += (*it)->advance_y;
       }
     }
+
+    //TODO add kernign to the calculation
+    int Text::getStringWidth() {
+      int totalW = 0;
+      for(std::vector<character_object*>::iterator it = char_vec.begin(); it != char_vec.end(); ++it) {
+        // printf("Advance_X: %d\n", (*it)->advance_x);
+        if ((*it)->isSpace) {
+          totalW += space_size;
+        }
+        else {
+          totalW += (*it)->advance_x;  //TODO returns huge value sometimes???
+        }
+      }
+      return totalW;
+    }
+
     void Text::draw() { }
   }

@@ -144,7 +144,7 @@ namespace tsgl {
     //TODO: check that this frees memory when the user requests it
     if( shouldFreeMemory ) {
       for(unsigned i = 0; i < objectBuffer.size(); i++) {
-        delete objectBuffer[i];
+        delete objectBuffer[i]; //TODO fix this, causes to crash
       }
     }
     objectBuffer.clear();
