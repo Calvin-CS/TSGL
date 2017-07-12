@@ -34,7 +34,8 @@ namespace tsgl {
  */
 class Drawable {
  protected:
-    bool isTextured; /*! Whether the shape is textured or not. If extending Drawable, <B> you *must* leave this at false (unless you are working with an image). </B> */
+    bool isTextured = false; //TODO remove this
+    bool discreteRender; /*! TODO Whether the shape is textured or not. If extending Drawable, <B> you *must* leave this at false (unless you are working with an image). </B> */
     int renderLayer; // The depth index to control the drawing order of the shapes
  public:
 
@@ -48,7 +49,7 @@ class Drawable {
      * \note Refer to the Drawable class description for more details.
      */
     Drawable() {
-      isTextured = false;
+      discreteRender = false;
       renderLayer = -1;   // -1 is the uninitialized layer value for the shape.
                           // If it is not set in the object before adding to the
                           // canvas, the canvas sets the layer value to the canvas'
@@ -81,6 +82,7 @@ class Drawable {
      * \return Whether the drawable is a textured primitive or not.
      */
     bool getIsTextured() { return isTextured; }
+    bool getIsDiscreteRendered() { return discreteRender; }
 
     void setLayer(int n) { if (n>=0) renderLayer = n; }  //TODO: make this validate layer numbers and return an error if not ok
     int getLayer() { return renderLayer; }

@@ -191,9 +191,6 @@ namespace tsgl {
 
     setupCamera();  //Camera transformations
 
-    // Test the text
-    Text* myText = new Text();
-
     // Count number of frames
     int counter = 0;
     float lastTime = 0;
@@ -215,38 +212,37 @@ namespace tsgl {
 
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
         try {
-          Shape* rc = *it;
-          glVertexPointer(
-            2,  // how many points per vertex (for us, that's x and y)
-            GL_FLOAT, // the type of data being passed
-            0, // byte offset between vertices
-            rc->getPointerToVerticesArray()  // pointer to the array of vertices
-          );
-          glColor4f(
-            rc->getObjectColor()->R,
-            rc->getObjectColor()->G,
-            rc->getObjectColor()->B,
-            rc->getObjectColor()->A
-          );
-          glDrawArrays(
-            rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
-            0, // The starting index of the array
-            rc->getNumberOfVertices() // The number of vertices from the object
-          );
+          if ((*it)->getIsDiscreteRendered()) {
+            Text* rc = *it; //TODO too hackey?
+            rc->render();
+          }
+          else {
+            Shape* rc = *it; //TODO too hackey?
+            glVertexPointer(
+              2,  // how many points per vertex (for us, that's x and y)
+              GL_FLOAT, // the type of data being passed
+              0, // byte offset between vertices
+              rc->getPointerToVerticesArray()  // pointer to the array of vertices
+            );
+            glColor4f(
+              rc->getObjectColor()->R,
+              rc->getObjectColor()->G,
+              rc->getObjectColor()->B,
+              rc->getObjectColor()->A
+            );
+            glDrawArrays(
+              rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
+              0, // The starting index of the array
+              rc->getNumberOfVertices() // The number of vertices from the object
+            );
+          }
+
         }
         catch (std::exception& e) {
           std::cerr << "Caught an exception!!!" << e.what() << std::endl;
         }
       }
 
-      // glBegin(GL_QUADS);
-      //   glVertex2f(0.0, 0.0);
-      //   glVertex2f(0.0, .5);
-      //   glVertex2f(.5, .5);
-      //   glVertex2f(.5, 0.0);
-      // glEnd();
-
-      myText->testRender();  //TODO delete me
 
       objectMutex.unlock();
 
@@ -1376,14 +1372,14 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   }
 
   void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
-    std::wstring wsTmp(text.begin(), text.end());
-    std::wstring ws = wsTmp;
-    drawText(ws, x, y, size, color);
+    // std::wstring wsTmp(text.begin(), text.end());
+    // std::wstring ws = wsTmp;
+    // drawText(ws, x, y, size, color);
   }
 
   void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
-    Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-    this->add(t);                                // Push it onto our drawing buffer
+    // Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
+    // this->add(t);                                // Push it onto our drawing buffer
   }
 
   void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {

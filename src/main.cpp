@@ -70,7 +70,8 @@ void alphaRectangleFunction(Canvas& can) {
     can.add(botBlueRect);
 
     // // Test the text
-    // Text* myText = new Text();
+    Text* myText = new Text("Still Testing", 200, 200, 6, WHITE);
+    can.add(myText);
 
     // Queue to hold the last few rects
     std::queue<Rectangle *> myQueue;

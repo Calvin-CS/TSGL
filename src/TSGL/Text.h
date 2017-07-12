@@ -5,6 +5,7 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
+#include <vector>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 //TODO move the includes up in the stack so they can be used by the canvas??
@@ -24,25 +25,44 @@ class Text : public Drawable {
     FT_Vector     pen;                    /* untransformed origin  */
     FT_Error      error;
 
-    const char*         filename = "assets/freefont/FreeSans.ttf";
-    // char*         filename;
-    const char*         text = "This is a test, dude!";
-    // char*         text;
+    int base_x;
+    int base_y;
+
+    ColorFloat color;
+    unsigned int fontsize;
+    int space_size;
+
+    bool useKerning = true;
+
+    struct character_object {
+      char character;
+      bool isSpace = false;
+      int width;
+      int height;
+      int bearing;
+      unsigned long int buffer_len;
+      char* bitmap_buffer;
+    };
+
+    std::vector<character_object*> char_vec; // Hold pointers to the buffers for the character objects
+
+    int maxBearing;
+
+    const char*         filename;
+    const char*         text;
 
     double angle;
     int target_height;
     int n, num_chars;
-
-    void error_check(int num = -1);
 
     GLuint texID = 0;
 
  public:
 
 
-    Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int fontsize, const ColorFloat &color);
-    Text();
-    void testRender();
+    Text(std::string t, int x, int y, unsigned int font_size, const ColorFloat &c, std::string fname = "assets/freefont/FreeSans.ttf");
+    void Text::generateTextBitmaps();
+    void render();
 
     void draw();
 };
