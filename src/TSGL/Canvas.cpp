@@ -218,8 +218,7 @@ namespace tsgl {
           if ((*it)->getIsDiscreteRendered()) {
             Text* rc = *it; //TODO too hackey?
             rc->render();
-          }
-          else {
+          } else {
             Shape* rc = *it; //TODO too hackey?
             glVertexPointer(
               2,  // how many points per vertex (for us, that's x and y)
@@ -238,6 +237,26 @@ namespace tsgl {
               0, // The starting index of the array
               rc->getNumberOfVertices() // The number of vertices from the object
             );
+            if( (*it)->getHasOutline() ) {
+              Polygon* poly = *it; //TODO too hackey?
+              glVertexPointer(
+                2,  // how many points per vertex (for us, that's x and y)
+                GL_FLOAT, // the type of data being passed
+                0, // byte offset between vertices
+                poly->getPointerToOutlineVerticesArray()  // pointer to the array of vertices
+              );
+              glColor4f(
+                poly->getOutlineColor()->R,
+                poly->getOutlineColor()->G,
+                poly->getOutlineColor()->B,
+                poly->getOutlineColor()->A
+              );
+              glDrawArrays(
+                poly->getOutlineGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
+                0, // The starting index of the array
+                poly->getOutlineNumberOfVertices() // The number of vertices from the object
+              );
+            }
           }
 
         }
@@ -310,7 +329,6 @@ namespace tsgl {
 
 
     // Clear the screen and set the background color for the window
-    setBackgroundColor(bgcolor);
     glClear(GL_COLOR_BUFFER_BIT);
 
     // Swap the screen buffer
@@ -1251,6 +1269,7 @@ namespace tsgl {
     float delta = 2.0f / sides * PI;
     if (filled) {
       Circle *c = new Circle(xverts, yverts, radius, sides, color);
+      c->setHasOutline(false);
       this->add(c);
     } else {
       UnfilledCircle *c = new UnfilledCircle(xverts, yverts, radius, sides, color);
@@ -1264,6 +1283,7 @@ namespace tsgl {
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i]);
         }
+        p->setHasOutline(false);
         this->add(p);  // Push it onto our drawing buffer
     }
     else {
@@ -1281,6 +1301,7 @@ namespace tsgl {
         for (int i = 0; i < size; i++) {
             p->addVertex(x[i], y[i]);
         }
+        p->setHasOutline(false);
         this->add(p);  // Push it onto our drawing buffer
     }
     else {
@@ -1340,6 +1361,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
     if (filled) {
         Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
+        rec->setHasOutline(false);
         this->add(rec);                                     // Push it onto our drawing buffer
     }
     else {
@@ -1374,6 +1396,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
     if (filled) {
         Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
+        t->setHasOutline(false);
         this->add(t);                                               // Push it onto our drawing buffer
     }
     else {

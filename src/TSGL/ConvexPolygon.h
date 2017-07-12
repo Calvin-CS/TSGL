@@ -30,10 +30,11 @@ public:
      * \details Explicit constructor for a ConvexPolygon object.
      *   \param numVertices the number of vertices the complete ConvexPolygon will have.
      *   \param color The color of the Polygon.
+     *   \param outlineColor The color of the Polygon's outline.
      * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
-    ConvexPolygon(int numVertices, const ColorFloat& color);
+    ConvexPolygon(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor = BLACK);
 
     /**
      * \brief Returns the geometry type for drawing.

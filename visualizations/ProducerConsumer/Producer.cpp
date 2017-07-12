@@ -17,8 +17,6 @@ Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myX = 50; //Set the x-coordinate to 50
 	myShape = new Circle(myX, myY, 20, 32, ColorInt(0, 0, 0));
 	myCan->add(myShape);
-	myOutline = new UnfilledCircle(myX, myY, 20, 32, ColorInt(0, 0, 0));
-	myCan->add(myOutline);
 }
 
 /**

@@ -10,7 +10,6 @@ PCThread::PCThread() : Thread() {
 	buffer = NULL;
 	myCan = NULL;
 	myShape = NULL;
-	myOutline = NULL;
 	myItem = NULL;
 	count = 0;
 	myX = myY = 0;

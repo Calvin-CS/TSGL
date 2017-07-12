@@ -18,9 +18,11 @@ namespace tsgl {
  */
 class Drawable {
  protected:
-    bool isTextured = false; //TODO remove this
-    bool discreteRender; /*! TODO Whether the shape is textured or not. If extending Drawable, <B> you *must* leave this at false (unless you are working with an image). </B> */
-    int renderLayer; // The depth index to control the drawing order of the shapes
+    bool isTextured = false; ///< Whether the shape is textured or not. If extending Drawable, <B> you *must* leave this at false (unless you are working with an image). </B>
+    //TODO remove this
+    bool discreteRender; ///< Whether the shape renders itself or not.
+    bool hasOutline = false; ///< Whether the shape has an outline. If not implementing methods to get vertices and other information for an outline, this <B>must</B> remain false.
+    int renderLayer; ///< The depth index to control the drawing order of the shapes
  public:
 
     /*!
@@ -48,6 +50,17 @@ class Drawable {
      * \return Whether the drawable is a textured primitive or not.
      */
     bool getIsTextured() { return isTextured; }
+
+    /*!
+     * \brief Accessor for <code>hasOutline</code>.
+     * \return Whether the drawable also has an outline.
+     */
+    bool getHasOutline() { return hasOutline; }
+
+    /*!
+    * \brief Accessor for <code>discreteRender</code>.
+    * \return Whether the drawable renders itself.
+    */
     bool getIsDiscreteRendered() { return discreteRender; }
 
     /**

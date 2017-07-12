@@ -39,10 +39,11 @@ class ConcavePolygon : public Polygon {
      * \details Explicit constructor for a ConcavePolygon object.
      *   \param numVertices The number of vertices the complete ConcavePolygon will have.
      *   \param color The reference variable of the color of the Polygon.
+     *   \param outlineColor The reference variable of the color of the Polygon's outline.
      * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
      * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
-    ConcavePolygon(int numVertices, const ColorFloat& color);
+    ConcavePolygon(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor = BLACK);
 
     /*!
      * \brief Destroys a ConcavePolygon object.
