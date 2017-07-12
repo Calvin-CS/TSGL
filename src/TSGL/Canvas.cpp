@@ -100,7 +100,8 @@ namespace tsgl {
   void Canvas::clear() {
     //TODO this works with the new version now, but it could probably be cleaned up a bit
     //TODO move this to the section for backwards compatibility?
-    this->clearObjectBuffer();
+    this->clearObjectBuffer(true); //Clears the items from the buffer and deletes all pointers
+    //TODO: decide whether this should also delete all items
   }
 
   void Canvas::close() {
@@ -140,7 +141,12 @@ namespace tsgl {
   }
 
   void Canvas::clearObjectBuffer(bool shouldFreeMemory = false) {
-    //TODO: make this free memory when the user requests it!
+    //TODO: check that this frees memory when the user requests it
+    if( shouldFreeMemory ) {
+      for(unsigned i = 0; i < objectBuffer.size(); i++) {
+        delete objectBuffer[i];
+      }
+    }
     objectBuffer.clear();
   }
 
@@ -599,6 +605,7 @@ namespace tsgl {
   }
 
   int Canvas::getMouseX() {
+    //TODO: add setting the mouseX and mouseY back in
     return mouseX;
   }
 

@@ -21,6 +21,8 @@ namespace tsgl {
  *  \note Adding to a Canvas before all vertices have been added will do nothing.
  */
 class ConvexPolygon : public Polygon {
+private:
+   static bool testAddVertex(); // Unit test for addVertex()
 public:
 
     /*!
@@ -37,6 +39,13 @@ public:
      * \brief Returns the geometry type for drawing.
      */
     virtual GLenum getGeometryType() { return GL_TRIANGLE_FAN; };
+
+
+    /*!
+     * \brief Runs the Unit tests.
+     * \details Runs the Unit tests for the ConvexPolygon class. addVertex() is tested.
+     */
+     static void runTests();
 };
 
 }
