@@ -66,6 +66,8 @@ class Text : public Drawable {
     void Text::generateTextBitmaps();
     void render();
 
+    int getStringWidth();
+
     void draw();
 };
 

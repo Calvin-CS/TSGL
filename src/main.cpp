@@ -34,10 +34,10 @@ void alphaRectangleFunction(Canvas& can) {
     testTri->setLayer(5);
     can.add(testTri);
 
-    // Testing old rectangle api
-    can.setDefaultLayer(7);
-    can.drawRectangle(200, 200, 250, 250, PURPLE);
-    can.setDefaultLayer(0);
+    // // Testing old rectangle api
+    // can.setDefaultLayer(7);
+    // can.drawRectangle(200, 200, 250, 250, PURPLE);
+    // can.setDefaultLayer(0);
 
     // Add the red and white rects over the top
     Rectangle* topRedRect = new Rectangle(500, 500, 50, 50, ColorInt(1*MAX_COLOR, 0*MAX_COLOR, 0*MAX_COLOR, 255));
@@ -63,8 +63,9 @@ void alphaRectangleFunction(Canvas& can) {
     can.add(botBlueRect);
 
     // // Test the text
-    Text* myText = new Text("Still Testing", 200, 200, 6, WHITE);
+    Text* myText = new Text("Testing some more stuff", 200, 200, 6, WHITE);
     can.add(myText);
+    printf("Text is %d pixels long.\n", myText->getStringWidth());
 
     // Queue to hold the last few rects
     std::queue<Rectangle *> myQueue;

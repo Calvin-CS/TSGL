@@ -221,5 +221,21 @@ namespace tsgl {
         cursor_y += (*it)->advance_y;
       }
     }
+
+    //TODO add kernign to the calculation
+    int Text::getStringWidth() {
+      int totalW = 0;
+      for(std::vector<character_object*>::iterator it = char_vec.begin(); it != char_vec.end(); ++it) {
+        // printf("Advance_X: %d\n", (*it)->advance_x);
+        if ((*it)->isSpace) {
+          totalW += space_size;
+        }
+        else {
+          totalW += (*it)->advance_x;  //TODO returns huge value sometimes???
+        }
+      }
+      return totalW;
+    }
+
     void Text::draw() { }
   }
