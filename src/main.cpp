@@ -1,39 +1,112 @@
 #include <tsgl.h>
 using namespace tsgl;
 
-int main() {
-  Canvas c(0, 0, 500, 500, "I/O Example");
-  c.start();
-  c.setBackgroundColor(WHITE);
-  //This variable is in the scope of the Lambda function.
-  //It can be passed in.
-  bool leftMouseButtonPressed = false;
+/*!
+ * \brief Draws semi-transparent rectangles on a Canvas.
+ * \details
+ * - Store the Canvas' width and height in variables for easy reuse.
+ * - Set up the internal timer of the Canvas to expire once every \b FRAME / 10 seconds.
+ * - While the Canvas is open:
+ *   - Sleep the internal timer until the Canvas is ready to draw.
+ *   - Select a random position on the Canvas for a corner of a rectangle.
+ *   - Draw a rectangle stretching from the specified corner to another corner on the Canvas,
+ *     with a random color and a transparency of 16 (~0.06).
+ *   .
+ * .
+ * \param can Reference to the Canvas being drawn to.
+ */
 
-  //Bind the left mouse button so that when it's pressed
-  //the boolean is set to true.
-  c.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS,
-                    [&leftMouseButtonPressed]() {
-                          leftMouseButtonPressed = true;
-                    }
-                );
+// Rectangle* drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color) {
+//        if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+//        if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+//        Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
+//        return rec;
+//       //  drawShape(rec);                                     // Push it onto our drawing buffer
+// }
 
-  //Bind the left mouse button again so that when it's released
-  //the boolean is set to false.
-  c.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE,
-                    [&leftMouseButtonPressed]() {
-                          leftMouseButtonPressed = false;
-                    }
-                );
+void alphaRectangleFunction(Canvas& can) {
+    const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
+    int a, b, c, d;
+    // int counter = 0;
 
-  //Drawing loop
-  while(c.isOpen()) {
-    c.sleep();
-    if(leftMouseButtonPressed) {
-      c.drawRectangle(250, 250, 40, 30, GREEN);
-    } else {
-      c.drawRectangle(250, 250, 40, 30, RED);
+    //  Add a traingle to the test page
+    Triangle* testTri = new Triangle(100, 100, 200, 100, 50, 150, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
+    testTri->setLayer(5);
+    can.add(testTri);
+
+    // Testing old rectangle api
+    can.setDefaultLayer(7);
+    can.drawRectangle(200, 200, 250, 250, PURPLE);
+    can.setDefaultLayer(0);
+
+    // Add the red and white rects over the top
+    Rectangle* topRedRect = new Rectangle(500, 500, 50, 50, ColorInt(1*MAX_COLOR, 0*MAX_COLOR, 0*MAX_COLOR, 255));
+    Rectangle* topWhiteRect = new Rectangle(540, 540, 50, 50, ColorInt(1*MAX_COLOR, 1*MAX_COLOR, 1*MAX_COLOR, 255));
+    topRedRect->setLayer(2);
+    topWhiteRect->setLayer(3);
+    can.add(topRedRect);
+    can.add(topWhiteRect);
+
+    // Test the arrows
+    can.setDefaultLayer(5);
+    Arrow* greenArrow = new Arrow(600, 600, 560, 500, GREEN);
+    Arrow* blueArrow  = new Arrow(500, 600, 540, 250, BLUE, true);
+    can.add(greenArrow);
+    can.add(blueArrow);
+
+    // Circle* c1 = new Circle(300, 500, 50, 100, PURPLE, false);
+    // can.add(c1);
+
+    // Add a blue rectangle at the bottom
+    Rectangle* botBlueRect = new Rectangle(300, 300, 120, 50, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
+    botBlueRect->setLayer(0);
+    can.add(botBlueRect);
+
+    // // Test the text
+    Text* myText = new Text("Still Testing", 200, 200, 6, WHITE);
+    can.add(myText);
+
+    // Queue to hold the last few rects
+    std::queue<Rectangle *> myQueue;
+
+    can.setDefaultLayer(1);
+    while (can.isOpen()) {
+        can.sleep();
+
+        // Some random widths and heights
+        a = rand() % WW; b = rand() % WH;
+        c = rand() % WW; d = rand() % WH;
+
+        // Make the new rectangle and get the pointer
+        Rectangle* myRectangle = new Rectangle(a, b, abs(a-c), abs(b-d), ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 50));
+
+        // Push the rectangle onto the queue and onto the canvas so it can render
+        myQueue.push(myRectangle);
+        can.add(myRectangle);
+
+        // Remove old rectangles if there are more than 40 of them
+        if (myQueue.size() >= 50) {
+          can.remove(myQueue.front());  // stop rendering the rectangle each frame
+          delete myQueue.front(); // free memory
+          myQueue.pop(); // remove the rectangle object from the queue
+
+          // can.clear();
+          // myQueue.clear();
+          // std::queue<Rectangle*>().swap(myQueue);
+
+        }
     }
-    c.clear();
-  }
-  c.wait();
+}
+
+//Takes command-line arguments for the width and height of the screen
+int main(int argc, char* argv[]) {
+    int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
+    int h = (argc > 2) ? atoi(argv[2]) : w;
+    // if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
+    w = h = 700;            //If not, set the width and height to a default value
+    Canvas c(-1, -1, w, h, "Cool Rectangles");
+    //TODO: why are we not able to set the width and height here? bug?
+    // c.setShowFPS(true);
+    c.setBackgroundColor(BLACK);
+    c.run(alphaRectangleFunction);
 }

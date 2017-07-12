@@ -171,7 +171,7 @@ namespace tsgl {
   void Canvas::newInit() {
     printf("%s\n", "Initting stuff.");
 
-    // initShaders();
+    initShaders();
     //TODO: add shader support here.  Is the Raspi even capable of this???
 
   }
@@ -199,6 +199,7 @@ namespace tsgl {
     float lastTime = 0;
     while (!glfwWindowShouldClose(window)) {
 
+      // glDrawBuffer(GL_BACK);
       // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
 
       // Clear the canvas
@@ -207,8 +208,6 @@ namespace tsgl {
       // Enable vertex arrays
       glEnableClientState( GL_VERTEX_ARRAY );
 
-
-
       // Iterate through objects, render them
       objectMutex.lock();
 
@@ -216,29 +215,38 @@ namespace tsgl {
 
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
         try {
-          Shape* rc = *it;
-          glVertexPointer(
-            2,  // how many points per vertex (for us, that's x and y)
-            GL_FLOAT, // the type of data being passed
-            0, // byte offset between vertices
-            rc->getPointerToVerticesArray()  // pointer to the array of vertices
-          );
-          glColor4f(
-            rc->getObjectColor()->R,
-            rc->getObjectColor()->G,
-            rc->getObjectColor()->B,
-            rc->getObjectColor()->A
-          );
-          glDrawArrays(
-            rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
-            0, // The starting index of the array
-            rc->getNumberOfVertices() // The number of vertices from the object
-          );
+          if ((*it)->getIsDiscreteRendered()) {
+            Text* rc = *it; //TODO too hackey?
+            rc->render();
+          }
+          else {
+            Shape* rc = *it; //TODO too hackey?
+            glVertexPointer(
+              2,  // how many points per vertex (for us, that's x and y)
+              GL_FLOAT, // the type of data being passed
+              0, // byte offset between vertices
+              rc->getPointerToVerticesArray()  // pointer to the array of vertices
+            );
+            glColor4f(
+              rc->getObjectColor()->R,
+              rc->getObjectColor()->G,
+              rc->getObjectColor()->B,
+              rc->getObjectColor()->A
+            );
+            glDrawArrays(
+              rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
+              0, // The starting index of the array
+              rc->getNumberOfVertices() // The number of vertices from the object
+            );
+          }
+
         }
         catch (std::exception& e) {
           std::cerr << "Caught an exception!!!" << e.what() << std::endl;
         }
       }
+
+
       objectMutex.unlock();
 
 
@@ -250,6 +258,7 @@ namespace tsgl {
 
 
       // Swap the buffer and handle IO
+      // glFinish();
       glfwSwapBuffers(window);
       glfwPollEvents();
 
@@ -258,8 +267,8 @@ namespace tsgl {
       frameCounter++;
       counter++;
       // printf("Frame %d finished.\n", counter);
-      if (counter==100) {
-        printf("Did 100 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 100/(glfwGetTime()-lastTime));
+      if (counter==60) {
+        printf("Did 60 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 60/(glfwGetTime()-lastTime));
         counter = 0;
         lastTime = glfwGetTime();
       }
@@ -798,8 +807,8 @@ namespace tsgl {
     GLint Fsuccess = 0;
 
     /* Read our shaders into the appropriate buffers */
-    vertexSource = filetobuf("../src/TSGL/Shaders/vertexSource.txt");
-    fragmentSource = filetobuf("../src/TSGL/Shaders/fragmentSource.txt");
+    vertexSource = filetobuf("src/TSGL/Shaders/vertexSource.txt");
+    fragmentSource = filetobuf("src/TSGL/Shaders/fragmentSource.txt");
 
     /* Assign our handles a "name" to new shader objects */
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -891,7 +900,7 @@ namespace tsgl {
     // Pass some other options to GLFW
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);                    // Disable the back buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
 
@@ -1352,14 +1361,14 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   }
 
   void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
-    std::wstring wsTmp(text.begin(), text.end());
-    std::wstring ws = wsTmp;
-    drawText(ws, x, y, size, color);
+    // std::wstring wsTmp(text.begin(), text.end());
+    // std::wstring ws = wsTmp;
+    // drawText(ws, x, y, size, color);
   }
 
-  void Canvas::drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color) {
-    Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-    this->add(t);                                // Push it onto our drawing buffer
+  void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
+    // Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
+    // this->add(t);                                // Push it onto our drawing buffer
   }
 
   void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {

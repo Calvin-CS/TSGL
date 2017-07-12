@@ -5,43 +5,65 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
+#include <vector>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+//TODO move the includes up in the stack so they can be used by the canvas??
+
 #include "Drawable.h"          // For extending our Drawable object
 #include "TextureHandler.h"
 
 namespace tsgl {
 
-/*! \class Text
- *  \brief Draw a string of text.
- *  \details Text is a class for holding the data necessary for rendering a string of text.
- *  \note Text is aligned by the upper-left corner.
- *  \note Fonts supported by FreeType are also supported.
- */
 class Text : public Drawable {
  private:
-    ColorFloat myColor;
-    unsigned int myFontSize;
-    TextureHandler* myLoader;
-    std::wstring myString;
-    int myX, myY;
+
+    FT_Library    library;
+    FT_Face       face;
+
+    FT_GlyphSlot  slot;
+    FT_Vector     pen;                    /* untransformed origin  */
+    FT_Error      error;
+
+    int base_x;
+    int base_y;
+
+    ColorFloat color;
+    unsigned int fontsize;
+    int space_size;
+
+    bool useKerning = true;
+
+    struct character_object {
+      char character;
+      bool isSpace = false;
+      int width;
+      int height;
+      int bearing;
+      unsigned long int buffer_len;
+      char* bitmap_buffer;
+    };
+
+    std::vector<character_object*> char_vec; // Hold pointers to the buffers for the character objects
+
+    int maxBearing;
+
+    const char*         filename;
+    const char*         text;
+
+    double angle;
+    int target_height;
+    int n, num_chars;
+
+    GLuint texID = 0;
+
  public:
 
-    /*!
-     * \brief Explicitly constructs a new Text instance.
-     * \details This is the constructor for the Text class.
-     *      \param text The string to draw.
-     *      \param loader A reference pointer to the TextureHandler with which to load the font.
-     *      \param x The x coordinate.
-     *      \param y The y coordinate.
-     *      \param fontsize The size of the text in pixels.
-     *      \param color A reference to the ColorFloat to use.
-     * \return A new Text instance with the specified string, position, and color.
-     */
-    Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int fontsize, const ColorFloat &color);
 
-    /*!
-     * \brief Draw the Text.
-     * \details This function actually draws the Text to the Canvas.
-     */
+    Text(std::string t, int x, int y, unsigned int font_size, const ColorFloat &c, std::string fname = "assets/freefont/FreeSans.ttf");
+    void Text::generateTextBitmaps();
+    void render();
+
     void draw();
 };
 
