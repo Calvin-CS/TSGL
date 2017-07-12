@@ -13,7 +13,7 @@ template<class Item>
 
 /**
  * \class RDatabase
- * \brief A monitor giving priority to Readers.
+ * \brief A database with lock giving priority to Readers.
  * \details Inheritance: RWDatabase class.
  * \details Implements the locking and unlocking methods of a monitor.
  */

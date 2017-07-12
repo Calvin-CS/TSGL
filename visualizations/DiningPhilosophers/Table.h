@@ -24,8 +24,7 @@ class Table {
 private:
   int tabX, tabY, numPhils;
   PhilMethod myMethod;
-  std::string methodString;
-  Canvas *myCan;// *myCan2;
+  Canvas *myCan, *myCan2;
   Philosopher *phils;
   Fork *forks;
   Circle *myCircle;

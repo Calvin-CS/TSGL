@@ -26,13 +26,11 @@ public:
        *   \param y The y coordinate of the star's center.
        *   \param radius The radius of the star in pixels.
        *   \param points The number of points to use in the star.
-       *   \param color The color of the star
-       *     (set to BLACK by default).
-       *   \param ninja The ninja setting of the star, making the star points spun differently if true
+       *   \param color The color of the star (set to BLACK by default).
+       *   \param ninja The ninja setting of the star, making the star points spin differently if true
        *     (set to false by default).
-       *   \param outlineColor The color of the star's outline (set to BLACK by default).
        */
-      Star(int x, int y, int radius, int points, ColorFloat color = BLACK, ColorFloat outlineColor = BLACK, bool ninja = false);
+      Star(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = false);
 
 };
 

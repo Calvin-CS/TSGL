@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-ConcavePolygon::ConcavePolygon(int numVertices, const ColorFloat& c, const ColorFloat& outlineC) : Polygon(numVertices+1, c, outlineC) {
+ConcavePolygon::ConcavePolygon(int numVertices, const ColorFloat& color) : Polygon(numVertices+1, color) {
   if (numVertices < 3)
     TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
   tsize = 0;
@@ -31,8 +31,6 @@ void ConcavePolygon::addVertex(int x, int y) {
 
   if (current == size-2) {
     Polygon::addVertex( vertices[0], vertices[1]);
-    init = true;
-    cleanup();
   }
 }
 
@@ -158,7 +156,7 @@ void ConcavePolygon::runTests() {
 bool ConcavePolygon::testIntersects() {
   int passed = 0;
   int failed = 0;
-  ConcavePolygon c1(10, BLACK, BLACK);
+  ConcavePolygon c1(10, BLACK);
 
   //Test 1: Intersecting lines
   float x1, y1, x2, y2, x3, y3, x4, y4 = 0.0;
@@ -215,7 +213,7 @@ bool ConcavePolygon::testIntersects() {
 bool ConcavePolygon::testPointITriangle() {
     int passed = 0;
     int failed = 0;
-    ConcavePolygon c2(10, BLACK, BLACK);
+    ConcavePolygon c2(10, BLACK);
     //Test 1: Point is in the triangle
     float px, py, x1, y1, x2, y2, x3, y3 = 0.0;
 

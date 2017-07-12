@@ -43,7 +43,7 @@ class Image : public Drawable {
      *   \param y The y coordinate of the top of the Image.
      *   \param width The width of the Image.
      *   \param height The height of the Image.
-     *   \param alhpa The alpha of the Image.
+     *   \param alpha The alpha of the Image.
      * \return A new Image is drawn with the specified coordinates, dimensions, and transparency.
      * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
      */

@@ -1,19 +1,19 @@
 /*
- * UnfilledStar.h extends Polyline and provides a class for drawing a star to a Canvas.
+ * UnfilledStar.h extends UnfilledShape and provides a class for drawing an unfilled star to a Canvas.
  */
 
 #ifndef UNFILLED_STAR_H_
 #define UNFILLED_STAR_H_
 
-#include "Polyline.h"
+#include "UnfilledShape.h"
 
 namespace tsgl {
 
 /*! \class UnfilledStar
  *  \brief Draw a star
- *  \details UnfilledStar extends Polyline
+ *  \details UnfilledStar extends UnfilledShape
  */
-class UnfilledStar : public Polyline {
+class UnfilledStar : public UnfilledShape {
 private:
   int myRadius, myPoints;
 public:
@@ -25,7 +25,7 @@ public:
        *   \param x The x coordinate of the star's center.
        *   \param y The y coordinate of the star's center.
        *   \param radius The radius of the star in pixels.
-       *   \param points The number of points to use in the star.
+       *   \param points The number of points on the star.
        *   \param color The color of the star
        *     (set to BLACK by default).
        *   \param ninja The ninja setting of the star, making the star points twisted differently if true

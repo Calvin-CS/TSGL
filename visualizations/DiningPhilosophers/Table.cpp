@@ -14,6 +14,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     forks[i].setCanvas(&can);
   }
   myMethod = m;
+  std::string methodString;
   switch(myMethod) {
     case forfeitWhenBlocked:
       methodString = "forfeit when blocked";
@@ -34,9 +35,9 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
       break;
   }
 
-  // myCan2 = new Canvas(0,0,350,300,"Legend");
-  // myCan2->setBackgroundColor(WHITE);
-  // myCan2->start();
+  myCan2 = new Canvas(0,0,350,300,"Legend");
+  myCan2->setBackgroundColor(WHITE);
+  myCan2->start();
   // myCan2->drawText("Method:",16,32,32,BLACK);
   // myCan2->drawText("\"" + methodString + "\"",32,64,24,BLACK);
   // myCan2->drawText("Legend:",16,96,24,BLACK);
@@ -46,15 +47,15 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   // myCan2->drawText("Green: Eating",32,224,24,GREEN);
   // myCan2->drawText("Blue: Thinking",32,256,24,BLUE);
   // myCan2->drawText("Meals eaten",57,288,24,BROWN);
-  // myCan2->drawCircle(41,279,3,8,BROWN);
+  myCan2->drawCircle(41,279,3,8,BROWN);
 }
 
 Table::~Table() {
-  // if (myCan2->isOpen())
-  //   myCan2->stop();
-  // else
-  //   myCan2->wait();
-  // delete myCan2;
+  if (myCan2->isOpen())
+    myCan2->stop();
+  else
+    myCan2->wait();
+  delete myCan2;
   delete myCircle;
   delete [] phils;
   delete [] forks;
@@ -447,30 +448,33 @@ void Table::drawStep() {
   const float CLOSE = 0.175f;
   const float BASEDIST = RAD+64;
 
+  int i = omp_get_thread_num(); //Get index of calling Philosopher
+  float pangle = (i*2*PI)/numPhils; //Philosopher angle
+  ColorFloat fcolor = BLACK; //Fork color
+  float fangle = (i+0.5f)*ARC; //Fork angle
+
   if( !myCircle ) { //If Table not already created
     myCircle = new Circle(tabX,tabY,RAD-48,RAD,DARKGRAY);
     myCan->add(myCircle);
   }
-  int i = omp_get_thread_num(); //Get index of calling Philosopher
-    float pangle = (i*2*PI)/numPhils; //Philosopher angle
-    ColorFloat fcolor = BLACK; //Fork color
-    float fangle = (i+0.5f)*ARC; //Fork angle
-
+  if( !phils[i].hasCircle() ) //If Philosopher drawn for first time
     phils[i].draw(*myCan,tabX+RAD*cos(pangle),tabY+RAD*sin(pangle)); //Draw Philosopher
-    if( phils[i].state() == isFull ) { //Draw the next meal if philosopher eating
-        float angle = pangle+(phils[i].getMeals()/10)*2*PI/RAD, dist = BASEDIST+8*(phils[i].getMeals()%10);
-        Circle * meal = new Circle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
-        phils[i].addMeal(*myCan, meal);
-    }
-    if (forks[i].user == i) { //Fork at this index belongs to this
-      fangle = i*ARC + CLOSE;
-      fcolor = (phils[i].state() == hasBoth) ? GREEN : PURPLE;
-    }
-    else if((forks[i].user == (i+1)%numPhils)) { //Fork at this index belongs to neighbor
-      fangle = ((i+1)*ARC) - CLOSE;
-      fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? GREEN : ORANGE;
-    } else {
-      FORK_RAD = 170; //If unheld, Fork goes in to table
-    }
-    forks[i].draw(tabX+FORK_RAD*cos(fangle),tabY+FORK_RAD*sin(fangle),fangle,fcolor); //Draw fork
+
+  phils[i].refreshColor(); //Update the color of philosopher
+  if( phils[i].state() == isFull ) { //Draw the next meal if philosopher eating
+      float angle = pangle+(phils[i].getMeals()/10)*2*PI/RAD, dist = BASEDIST+8*(phils[i].getMeals()%10);
+      Circle * meal = new Circle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
+      phils[i].addMeal(*myCan, meal);
+  }
+  if (forks[i].user == i) { //Fork at this index belongs to this
+    fangle = i*ARC + CLOSE;
+    fcolor = (phils[i].state() == hasBoth) ? GREEN : PURPLE;
+  }
+  else if((forks[i].user == (i+1)%numPhils)) { //Fork at this index belongs to neighbor
+    fangle = ((i+1)*ARC) - CLOSE;
+    fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? GREEN : ORANGE;
+  } else {
+    FORK_RAD = 170; //If unheld, Fork goes in to table
+  }
+  forks[i].draw(tabX+FORK_RAD*cos(fangle),tabY+FORK_RAD*sin(fangle),fangle,fcolor); //Draw fork
 }

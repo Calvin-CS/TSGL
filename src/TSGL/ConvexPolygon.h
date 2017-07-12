@@ -18,20 +18,34 @@ namespace tsgl {
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
  *  \note The addVertex() method must be called the same number of times as specified in the constructor.
  *  \note Calling addVertex() after all vertices have been added will do nothing.
- *  \note Calling draw() before all vertices have been added will do nothing.
+ *  \note Adding to a Canvas before all vertices have been added will do nothing.
  */
 class ConvexPolygon : public Polygon {
+private:
+   static bool testAddVertex(); // Unit test for addVertex()
 public:
 
     /*!
      * \brief Explicitly constructs a new ConvexPolygon.
-     * \details Explicit constructor for a Convex Polygon object.
+     * \details Explicit constructor for a ConvexPolygon object.
      *   \param numVertices the number of vertices the complete ConvexPolygon will have.
      *   \param color The color of the Polygon.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
+     * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
-    ConvexPolygon(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor);
+    ConvexPolygon(int numVertices, const ColorFloat& color);
+
+    /**
+     * \brief Returns the geometry type for drawing.
+     */
+    virtual GLenum getGeometryType() { return GL_TRIANGLE_FAN; };
+
+
+    /*!
+     * \brief Runs the Unit tests.
+     * \details Runs the Unit tests for the ConvexPolygon class. addVertex() is tested.
+     */
+     static void runTests();
 };
 
 }

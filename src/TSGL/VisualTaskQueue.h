@@ -47,7 +47,7 @@ public:
    *     the actual number of elements may result in some unused, empty rectangle. Setting this to lower than
    *     the actual number of elements may result in some rectangles being drawn off the VisualTaskQueue Canvas.
    *   \param sideLength The side length in pixels of the task rectangles to be drawn on the VisualTaskQueue Canvas.
-   *   \param aspec The approximate aspect ratio of height/width for the VisualTaskQueue Canvas.
+   *   \param aspect The approximate aspect ratio of height/width for the VisualTaskQueue Canvas.
    *   \param spacing The space in pixels between the rectangles representing elements in the VisualTaskQueue.
    *   \param borderLength The space in pixels between the outer VisualTaskQueue rectangles and the border of the
    *     VisualTaskQueue Canvas.

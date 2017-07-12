@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 
 	//Check if using starved version
 	//Starves Readers if there are at least 3 Writers
-	//Starves Writers if
+	//Nearly starves Writers with 3 or more Readers
 	if( argc > 4 && *argv[4] == 's' ) { //Set for starved possibility
 		if( *argv[3] == 'r' ) { //Readers mostly starve Writers
 			RWThread::WAIT_MIN = 2;

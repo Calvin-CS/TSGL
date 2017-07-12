@@ -41,6 +41,7 @@ RWThread::RWThread(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Ca
 	myX = 0; //Set in subclass constructor
 	myCircle = new Circle(myX, myY, 20, 32, BLACK); //Move based on new x in subclass
 	myCircle->setLayer(2);
+	myCan->add(myCircle);
 	//myText = new Text( count, ...);
 	//Text should go on layer 3, between Circle (2) and Arrow (5)
 }

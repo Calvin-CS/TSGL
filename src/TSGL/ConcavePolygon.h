@@ -20,13 +20,14 @@ namespace tsgl {
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
  *  \note The addVertex() method must be called the same number of times as specified in the constructor.
  *  \note Calling addVertex() after all vertices have been added will do nothing.
- *  \note Calling draw() before all vertices have been added will do nothing.
+ *  \note Adding to a Canvas before all vertices have been added will do nothing.
  */
 class ConcavePolygon : public Polygon {
  private:
     bool dirty;         // Whether the new vertex buffer is dirty
     float* tarray;      // Buffer for recomputed vertex data
     int tsize;          // Number of floating point numbers in tarray
+    void cleanup();     // Prepares the vertices for drawing
 
     static bool testIntersects();     // Unit test for intersects()
     static bool testPointITriangle(); // Unit test for pointInTriangle()
@@ -38,11 +39,10 @@ class ConcavePolygon : public Polygon {
      * \details Explicit constructor for a ConcavePolygon object.
      *   \param numVertices The number of vertices the complete ConcavePolygon will have.
      *   \param color The reference variable of the color of the Polygon.
-     *   \param outlineColor The reference variables of the color of the Polygon's outline.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
+     * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
      * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
-    ConcavePolygon(int numVertices, const ColorFloat& c, const ColorFloat& outlineC);
+    ConcavePolygon(int numVertices, const ColorFloat& color);
 
     /*!
      * \brief Destroys a ConcavePolygon object.
@@ -53,15 +53,15 @@ class ConcavePolygon : public Polygon {
 
 
     /**
-     * \brief Returns a pointer to the vertices array for renderer
-     * \details Vertices specifies x and y coordinates for the ConcavePolygon
-     * \return Pointer to vertices
+     * \brief Returns a pointer to the vertices array for renderer.
+     * \details Vertices specifies x and y coordinates for the ConcavePolygon.
+     * \return Pointer to vertices.
      */
     virtual GLfloat* getPointerToVerticesArray();
 
     /**
-     * \brief Returns the number of vertices in the Shape for renderer
-     * \return An int specifying the number of vertices
+     * \brief Returns the number of vertices in the Shape for renderer.
+     * \return An int specifying the number of vertices.
      */
     virtual int getNumberOfVertices() {
       if( dirty ) {
@@ -112,37 +112,32 @@ class ConcavePolygon : public Polygon {
     void addVertex(int x, int y);
 
     /**
-     * \brief Returns the geometry type for drawing
+     * \brief Returns the geometry type for drawing.
      */
     virtual GLenum getGeometryType() { return GL_TRIANGLES; }
 
     /**
-     * \brief Moves the ConcavePolygon to new coordinates
+     * \brief Moves the ConcavePolygon to new coordinates.
      * \param x The new center x coordinate.
      * \param y The new center y coordinate.
      */
     virtual void setCenter(int x, int y);
 
     /**
-     * \brief Rotates the ConcavePolygon by an angle
-     * \details Rotates clockwise around the center of the shape
-     * \param angle Angle to rotate by, in radians
+     * \brief Rotates the ConcavePolygon by an angle.
+     * \details Rotates clockwise around the center of the shape.
+     * \param angle Angle to rotate by, in radians.
      */
     virtual void rotate(float angle);
 
     /**
-     * \brief Rotates the Polygon by angle around a point
-     * \details Rotates clockwise around (x, y) by angle
-     * \param angle Angle to rotate by, in radians
-     * \param x The x coordinate to rotate around
-     * \param y The y coordinate to rotate around
+     * \brief Rotates the Polygon by angle around a point.
+     * \details Rotates clockwise around (x, y) by angle.
+     * \param angle Angle to rotate by, in radians.
+     * \param x The x coordinate to rotate around.
+     * \param y The y coordinate to rotate around.
      */
     virtual void rotateAround(float angle, float x, float y);
-
-    /**
-     * \brief Cleans the vertices for drawing
-     */
-    void cleanup();
 
     /*!
      * \brief Runs the Unit tests.

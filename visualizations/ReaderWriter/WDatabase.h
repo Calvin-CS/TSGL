@@ -13,7 +13,7 @@ template<class Item>
 
 /**
  * \class WDatabase
- * \brief A monitor giving priority to Writers in the visualization.
+ * \brief A database with lock giving priority to Writers in the visualization.
  * \details Inheritance: RWDatabase class.
  * \details Implements the locking and unlocking methods of a monitor.
  */

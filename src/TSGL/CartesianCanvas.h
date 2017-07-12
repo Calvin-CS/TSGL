@@ -55,7 +55,7 @@ public:
      *   \param yMin The Cartesian coordinates of the CartesianCanvas's bottom bound.
      *   \param xMax The Cartesian coordinates of the CartesianCanvas's right bound.
      *   \param yMax The Cartesian coordinates of the CartesianCanvas's top bound.
-     *   \param title The title of the window.
+     *   \param t The title of the window.
      *   \param timerLength The minimum number of seconds between draw cycles for the Canvas.
      *     A value less than or equal to 0 sets it to automatic.
      * \return A new CartesianCanvas with the specified position, dimensions, scaling, title,
@@ -101,7 +101,7 @@ public:
      *   \param color An array of colors for the said vertices.
      *   \param filled Whether the Concave polygon should be filled in or not
      *     (set to true by default).
-     * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
+     * \warning <b>This function is significantly slower than drawConvexPolygon().</b> It is not recommended
      *   that you draw Convex polygons with this function.
      * \note Identical to Canvas::drawConcavePolygon().
      * \see drawConvexPolygon().
@@ -148,7 +148,7 @@ public:
     /*!
      * \brief Draws an image.
      * \details This function draws an Image with the given coordinates and dimensions.
-     *   \param function The name of the file to load the image from.
+     *   \param filename The name of the file to load the image from.
      *   \param x The x coordinate of the Image's left edge.
      *   \param y The y coordinate of the Image's top edge.
      *   \param w The width of the Image.
@@ -231,7 +231,7 @@ public:
     /*!
      * \brief Draw a string of text.
      * \details This function draws a given string of Text at the given coordinates with the given color.
-     *   \paramtexts The string to draw.
+     *   \param text The string to draw.
      *   \param x The x coordinate of the text's left bound.
      *   \param y The y coordinate of the text's left bound.
      *   \param size The size of the text in pixels.
@@ -356,9 +356,9 @@ public:
      * \brief Recomputes the CartesianCanvas's bounds.
      * \details This function recomputes the size variables of CartesianCanvas according to new bounds.
      *   \param xMin A real number corresponding to the new left edge of the CartesianCanvas.
-     *   \param YMin A real number corresponding to the new bottom edge of the CartesianCanvas.
+     *   \param yMin A real number corresponding to the new bottom edge of the CartesianCanvas.
      *   \param xMax A real number corresponding to the new right edge of the CartesianCanvas.
-     *   \param xMax A real number corresponding to the new top edge of the CartesianCanvas.
+     *   \param yMax A real number corresponding to the new top edge of the CartesianCanvas.
      */
     void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
 

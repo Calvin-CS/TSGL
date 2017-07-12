@@ -10,6 +10,7 @@ PCThread::PCThread() : Thread() {
 	buffer = NULL;
 	myCan = NULL;
 	myShape = NULL;
+	myOutline = NULL;
 	myItem = NULL;
 	count = 0;
 	myX = myY = 0;
@@ -57,7 +58,7 @@ void PCThread::animateItem(int endX, int endY) {
 	const float timeInterval = 0.7;
 	int startX = myItem->getX(), startY = myItem->getY();
 
-	Arrow arrow(startX, startY, endX, endY);
+	Arrow arrow(startX, startY, endX, endY, BLACK, false);
 	myCan->add(&arrow);
 
 	float deltaX = (endX - startX) / float(steps); //Change in x each step
@@ -66,6 +67,7 @@ void PCThread::animateItem(int endX, int endY) {
 	for(int i = 0; i <= steps; i++) {
 		myItem->setCenter( round( startX+ i*deltaX ), round(startY+i*deltaY));
 		myCan->sleepFor( timeInterval / steps );
+		while( paused ) {}
 	}
 
 	myCan->remove(&arrow);

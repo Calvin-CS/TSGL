@@ -18,11 +18,11 @@ namespace tsgl {
 enum Key {
 // Printable keys
     TSGL_SPACE          = GLFW_KEY_SPACE,
-    TSGL_APOSTROPHE     = GLFW_KEY_APOSTROPHE,  /*! ' */
-    TSGL_COMMA          = GLFW_KEY_COMMA,       /*! , */
-    TSGL_MINUS          = GLFW_KEY_MINUS,       /*! - */
-    TSGL_PERIOD         = GLFW_KEY_PERIOD,      /*! . */
-    TSGL_SLASH          = GLFW_KEY_SLASH,       /*! / */
+    TSGL_APOSTROPHE     = GLFW_KEY_APOSTROPHE,  /**< ' */
+    TSGL_COMMA          = GLFW_KEY_COMMA,       /**< , */
+    TSGL_MINUS          = GLFW_KEY_MINUS,       /**< \- */
+    TSGL_PERIOD         = GLFW_KEY_PERIOD,      /**< \. */ //TODO: fix so it shouws period instead of bullet point
+    TSGL_SLASH          = GLFW_KEY_SLASH,       /**< / */
     TSGL_0              = GLFW_KEY_0,
     TSGL_1              = GLFW_KEY_1,
     TSGL_2              = GLFW_KEY_2,
@@ -33,8 +33,8 @@ enum Key {
     TSGL_7              = GLFW_KEY_7,
     TSGL_8              = GLFW_KEY_8,
     TSGL_9              = GLFW_KEY_9,
-    TSGL_SEMICOLON      = GLFW_KEY_SEMICOLON,   /*! ; */
-    TSGL_EQUAL          = GLFW_KEY_EQUAL,       /*! = */
+    TSGL_SEMICOLON      = GLFW_KEY_SEMICOLON,   /**< ; */
+    TSGL_EQUAL          = GLFW_KEY_EQUAL,       /**< = */
     TSGL_A              = GLFW_KEY_A,
     TSGL_B              = GLFW_KEY_B,
     TSGL_C              = GLFW_KEY_C,
@@ -61,12 +61,12 @@ enum Key {
     TSGL_X              = GLFW_KEY_X,
     TSGL_Y              = GLFW_KEY_Y,
     TSGL_Z              = GLFW_KEY_Z,
-    TSGL_LEFT_BRACKET   = GLFW_KEY_LEFT_BRACKET,    /*! [ */
-    TSGL_BACKSLASH      = GLFW_KEY_BACKSLASH,       /*! \ */
-    TSGL_RIGHT_BRACKET  = GLFW_KEY_RIGHT_BRACKET,   /*! ] */
-    TSGL_GRAVE_ACCENT   = GLFW_KEY_GRAVE_ACCENT,    /*! ` */
-    TSGL_WORLD_1        = GLFW_KEY_WORLD_1,         /*! non-US #1 */
-    TSGL_WORLD_2        = GLFW_KEY_WORLD_2,         /*! non-US #2 */
+    TSGL_LEFT_BRACKET   = GLFW_KEY_LEFT_BRACKET,    /**< [ */
+    TSGL_BACKSLASH      = GLFW_KEY_BACKSLASH,       /**< \ */
+    TSGL_RIGHT_BRACKET  = GLFW_KEY_RIGHT_BRACKET,   /**< ] */
+    TSGL_GRAVE_ACCENT   = GLFW_KEY_GRAVE_ACCENT,    /**< ` */
+    TSGL_WORLD_1        = GLFW_KEY_WORLD_1,         /**< non-US #1 */
+    TSGL_WORLD_2        = GLFW_KEY_WORLD_2,         /**< non-US #2 */
 
 // Function keys
 // TSGL_KEY_ESCAPE is bound to close window

@@ -182,8 +182,8 @@ private:
     static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
 
 protected:
-    bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
-    void        drawShape(Drawable* s);                                    // Draw a shape type
+    bool        atiCard;                                                ///< Whether the vendor of the graphics card is ATI
+    void        drawShape(Drawable* s);                                 ///< Draw a shape type
 public:
 
     /*!
@@ -260,14 +260,51 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * \brief Adds a Drawable to the Canvas.
+     * \details If the Drawable's layer has not been set, it will default to <code>currentNewShapeLayerDefault</code>,
+     * which can be set through <code>setDefaultLayer()</code>.
+     *    \param shapePtr Pointer to the Drawable to add to this Canvas.
+     */
     void add(Drawable * shapePtr);
-    void remove(Drawable * shapePtr);
-    void clearObjectBuffer(bool shouldFreeMemory = false);
-    void printBuffer();
-    void pushObjectsToVertexBuffer();
 
-    // Layer stuff
+    /**
+     * \brief Removes a Drawable from the Canvas.
+     * \details Removes shapePtr from the Canvas's drawing buffer.
+     *    \param shapePtr Pointer to the Drawable to remove from this Canvas.
+     * \warning The Drawable being deleted or going out of scope before remove() is called will cause a segmentation fault.
+     * \warning If shapePtr is not in the drawing buffer, behavior is undefined.
+     */
+    void remove(Drawable * shapePtr);
+
+    /**
+     * \brief Removes all Drawables from the Canvas.
+     * \details Clears all Drawables from the drawing buffer.
+     *    \param shouldFreeMemory Whether the pointers will be deleted as well as removed and free their memory. (Defaults to false.)
+     * \warning Setting shouldFreeMemory to true will cause a segmentation fault if the user continues to access the pointer to a
+     *  Drawable that has been added to the Canvas.
+     * \warning Setting shouldFreeMemory to false will leak memory from any objects created in Canvas draw methods.
+     */
+    void clearObjectBuffer(bool shouldFreeMemory = false);
+
+    /**
+     * \brief Prints the number of and pointers to items in the drawing buffer.
+     */
+    void printBuffer();
+
+    // Layering
+    /**
+     * \brief Accessor for <code>currentNewShapeLayerDefault</code>.
+     * \return The default layer for Drawables added to this Canvas.
+     * New Drawables will be set to this layer only if their layer has not been previously specified.
+     */
     int getDefaultLayer() {return currentNewShapeLayerDefault;}
+
+    /**
+     * \brief Sets the default layer.
+     * \details Sets <code>currentNewShapeLayerDefault</code> to n if n >= 0.
+     *    \param n The new default layer.
+     */
     void setDefaultLayer(int n) {
       if (n >= 0) currentNewShapeLayerDefault = n;
       else return;
@@ -363,7 +400,7 @@ GLuint VertexArrayID;
      *   \param color An array of colors for the said vertices.
      *   \param filled Whether the Concave polygon should be filled in or not
      *     (set to true by default).
-     * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
+     * \warning <b>This function is significantly slower than drawConvexPolygon().</b> It is not recommended
      *   that you draw convex polygons with this function.
      * \see drawConvexPolygon().
      */

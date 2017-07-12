@@ -23,10 +23,10 @@ class Line : public Polyline {
      *      \param y1 The y coordinate of the first endpoint.
      *      \param x2 The x coordinate of the second endpoint.
      *      \param y2 The y coordinate of the second endpoint.
-     *      \param color The reference variable to the color of the Line.
+     *      \param color The reference variable to the color of the Line. (Defaults to BLACK.)
      * \return A new Line with the specified endpoints and color.
      */
-    Line(int x1, int y1, int x2, int y2, const ColorFloat &color);
+    Line(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK);
 
 };
 

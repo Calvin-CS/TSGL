@@ -10,26 +10,26 @@
 
 namespace tsgl {
 
-/*! \class Shape
- *  \brief Draw an arbitrary shape with colored vertices.
- *  \details Shape is a class for holding vertex data for a triangle strip with colored vertices.
- *  \details Vertices are drawn in triangle strip format, where the first three vertices make up the first triangle,
- *   the next vertex plus the previous two make up the second triangle, and so on.
- *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
- *  \note The addVertex() method must be called the same number of times as specified in the constructor.
- *  \note Calling addVertex() after all vertices have been added will do nothing.
- */
+  /*! \class Shape
+   *  \brief A class for drawing shapes onto a Canvas or CartesianCanvas.
+   *  \details Shape provides a base class for drawing shapes to a Canvas or CartesianCanvas.
+   *  \note Shape is abstract, and must be extended.
+   *  \details All Shape subclasses must override the getGeometryType() method. Something like the following should be used:
+   *  \details <code>vertices</code> should be an array of floating point values in TSGL's vertex format.
+   *  One vertex consists of 2 floating point values, signifying x and y components respectively.
+   *  E.g., to draw a triangle, you would need 3 vertices = 6 floats -> vertices should be an array of length 6.
+   *  \details <code>numVertices</code> should be the actual integer number of vertices to be drawn (e.g., *3* for a triangle).
+   *  \details <code>drawingmode</code> should be one of GL's primitive drawing modes.
+   *  See https://www.opengl.org/sdk/docs/man2/xhtml/glBegin.xml for further information.
+   */
 class Shape : public Drawable {
 protected:
-    bool init;          // Whether the vertex has been initialized completely
-    GLfloat* vertices;    // Buffer for vertex data
-    ColorFloat color;
-    int size,           // Number of floating point numbers in vertices
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 2)
-    // ColorFloat shapeColor;
-    // GLenum geometryType = GL_TRIANGLES;
-    //TODO above two lines for testing purposes.  Remove eventually
+    bool init; ///< Whether the vertex has been initialized completely
+    GLfloat* vertices; ///< Buffer of x, y coordinates
+    ColorFloat color; ///< Color of the Shape
+    int size,           ///< Number of floating point numbers in vertices
+        current,        ///< Current number of floating point numbers in vertices
+        length;         ///< Number of vertices in vertices (size / 2)
  public:
 
     /*!
@@ -37,7 +37,7 @@ protected:
      * \details Explicit constructor for a Convex Shape object.
      *   \param numVertices the number of vertices the complete Shape will have.
      *   \param c The color of the Shape.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
+     * \warning An invariant is held where if numVertices is less than 2 then an error message is given.
      * \return A new Shape with a buffer for storing the specified numbered of vertices.
      */
     Shape(int numVertices, const ColorFloat& c);
@@ -50,84 +50,83 @@ protected:
     virtual ~Shape();
 
     /**
-     * \brief Returns a pointer to the vertices array for renderer
-     * \details Vertices specifies x and y coordinates for the Shape
-     * \return Pointer to vertices
+     * \brief Returns a pointer to the vertices array for renderer.
+     * \details Vertices specifies x and y coordinates for the Shape.
+     * \return Pointer to vertices.
      */
     virtual GLfloat* getPointerToVerticesArray();
 
     /**
-     * \brief Returns the number of vertices in the Shape for renderer
-     * \return An int specifying the number of vertices
+     * \brief Returns the number of vertices in the Shape for renderer.
+     * \return An int specifying the number of vertices.
      */
     virtual int getNumberOfVertices() { return length; }
 
     /**
-     * \brief Returns the geometry type for drawing
+     * \brief Returns the geometry type for drawing.
      */
-    virtual GLenum getGeometryType() { return GL_TRIANGLE_FAN; }
+    virtual GLenum getGeometryType() = 0;
 
     /*!
      * \brief Adds another vertex to a Shape.
-     * \details This function initializes the next vertex in the Polyline and adds it to a Shape buffer.
+     * \details This function initializes the next vertex in the Shape.
      *   \param x The x position of the vertex.
      *   \param y The y position of the vertex.
-     *   \param color The reference variable of the color of the vertex.
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating when the vertex buffer is full.
      */
     virtual void addVertex(int x, int y);
 
     /**
-     * \brief Gets the current color of the Shape
+     * \brief Gets the current color of the Shape.
      * \return The ColorFloat of the Shape.
      */
     virtual ColorFloat getColor() { return color; }
 
     /**
-     * \brief Gets pointer to the color of the Shape for renderer
+     * \brief Gets pointer to the color of the Shape for renderer.
      * \return Pointer to ColorFloat of Shape
      */
     ColorFloat* getObjectColor() { return &color; }
 
     /**
-     * \brief Sets the Shape to a new color
+     * \brief Sets the Shape to a new color.
      * \param c The new ColorFloat.
      */
     virtual void setColor(const ColorFloat& c);
 
     /**
-     * \brief Moves the Shape to new coordinates
+     * \brief Moves the Shape to new coordinates.
      * \param x The new center x coordinate.
      * \param y The new center y coordinate.
      */
     virtual void setCenter(float x, float y);
 
     /**
-     * \brief Returns the x coordinate of the Shape
-     * \return An int, the center x coordinate
+     * \brief Returns the x coordinate of the Shape.
+     * \return A float, the center x coordinate.
      */
     virtual float getX();
 
     /**
-     * \brief Returns the y coordinate of the Shape
-     * \return An int, the center y coordinate
+     * \brief Returns the y coordinate of the Shape.
+     * \return A float, the center y coordinate.
      */
     virtual float getY();
 
     /**
-     * \brief Rotates the Shape by an angle
-     * \details Rotates clockwise around the center of the shape
-     * \param angle Angle to rotate by, in radians
+     * \brief Rotates the Shape by an angle.
+     * \details Rotates clockwise around the center of the shape.
+     * \param angle Angle to rotate by, in radians.
      */
     virtual void rotate(float angle);
 
     /**
-     * \brief Rotates the Shape by angle around a point
-     * \details Rotates clockwise around (x, y) by angle
-     * \param angle Angle to rotate by, in radians
-     * \param x The x coordinate to rotate around
-     * \param y The y coordinate to rotate around
+     * \brief Rotates the Shape by angle around a point.
+     * \details Rotates clockwise around (x, y) by angle.
+     * \param angle Angle to rotate by, in radians.
+     * \param x The x coordinate to rotate around.
+     * \param y The y coordinate to rotate around.
      */
     virtual void rotateAround(float angle, float x, float y);
 };

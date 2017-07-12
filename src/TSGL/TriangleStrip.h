@@ -18,7 +18,7 @@ namespace tsgl {
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
  *  \note The addVertex() method must be called the same number of times as specified in the constructor.
  *  \note Calling addVertex() after all vertices have been added will do nothing.
- *  \note Calling draw() before all vertices have been added will do nothing.
+ *  \note Adding to a Canvas before all vertices have been added will do nothing.
  */
 class TriangleStrip : public ConvexPolygon {
  public:
@@ -27,11 +27,11 @@ class TriangleStrip : public ConvexPolygon {
      * \brief Explicitly construct a new TriangleStrip.
      * \details Explicit constructor for a TriangleStrip object.
      *   \param numVertices The number of vertices the complete TriangleStrip will have.
-     *   \param color The color of the TriangleStrip.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
+     *   \param color The color of the TriangleStrip. (Defaults to BLACK.)
+     * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
      * \return A new TriangleStrip with a buffer for storing the specified numbered of vertices.
      */
-    TriangleStrip(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor);
+    TriangleStrip(int numVertices, const ColorFloat& color = BLACK);
 
     /**
      * \brief Returns the geometry type for drawing
