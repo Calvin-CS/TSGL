@@ -49,20 +49,23 @@ void displayLegend() {
 	UnfilledRectangle rOutline1(WINDOW_WIDTH-70, 40, 40, 40, BLACK);
 	UnfilledRectangle rOutline2(WINDOW_WIDTH-70, 100, 40, 40, BLACK);
 	UnfilledRectangle rOutline3(WINDOW_WIDTH-70, 160, 40, 40, BLACK);
-	legendDisplay.add( &waitingCircle );
-	legendDisplay.add( &thinkingCircle );
-	legendDisplay.add( &lockCircle );
-	legendDisplay.add( &waitingSquare );
-	legendDisplay.add( &thinkingSquare );
-	legendDisplay.add( &lockSquare );
-	legendDisplay.add( &cOutline1 );
-	legendDisplay.add( &cOutline2 );
-	legendDisplay.add( &cOutline3 );
-	legendDisplay.add( &rOutline1 );
-	legendDisplay.add( &rOutline2 );
-	legendDisplay.add( &rOutline3 );
+	legendDisplay.add( &waitingCircle ); 	legendDisplay.add( &thinkingCircle );
+	legendDisplay.add( &lockCircle ); 		legendDisplay.add( &waitingSquare );
+	legendDisplay.add( &thinkingSquare );	legendDisplay.add( &lockSquare );
+	legendDisplay.add( &cOutline1 ); 			legendDisplay.add( &cOutline2 );
+	legendDisplay.add( &cOutline3 ); 			legendDisplay.add( &rOutline1 );
+	legendDisplay.add( &rOutline2 ); 			legendDisplay.add( &rOutline3 );
 
-	//TODO: add text
+	//Text labels
+	Text colorText("thinking",100,70,6,BLACK);
+	Text blackText("waiting for lock",100,130,6,BLACK);
+	Text whiteText("holding lock",100,190,6,BLACK);
+	legendDisplay.add( &colorText ); legendDisplay.add( &blackText ); legendDisplay.add( &whiteText );
+	Text colorText2("thinking",350,70,6,BLACK);
+	Text blackText2("waiting for lock",350,130,6,BLACK);
+	Text whiteText2("holding lock",350,190,6,BLACK);
+	legendDisplay.add( &colorText2 ); legendDisplay.add( &blackText2 ); legendDisplay.add( &whiteText2 );
+
 	while( legendDisplay.isOpen() ) {
 		waitingCircle.setColor( Colors::highContrastColor(colorChanger) );
 		waitingSquare.setColor( Colors::highContrastColor(colorChanger) );
@@ -122,16 +125,16 @@ int main(int argc, char * argv[]) {
 	queueDisplay.add(&innerQueue);
 
 	//TODO: fix text
-	// queueDisplay.drawText("Numbers indicate counts", WINDOW_WIDTH-260, WINDOW_HEIGHT-50, 20, BLACK);
-	// queueDisplay.drawText("of produced/consumed", WINDOW_WIDTH-235, WINDOW_HEIGHT-30, 20, BLACK);
-	//queueDisplay.add(&note1);
-	//queueDisplay.add(&note2);
+	Text note1("Numbers indicate counts", WINDOW_WIDTH-230, WINDOW_HEIGHT-50, 5, BLACK);
+	Text note2("of produced/consumed", WINDOW_WIDTH-205, WINDOW_HEIGHT-30, 5, BLACK);
+	queueDisplay.add(&note1);
+	queueDisplay.add(&note2);
 
 	// Label Readers and Writers
-	// queueDisplay.drawText("Producers", 20, 20, 20, BLACK);
-	// queueDisplay.drawText("Consumers", WINDOW_HEIGHT-20, 20, 20, BLACK);
-	//queueDisplay.add(&proText);
-	//queueDisplay.add(&conText);
+	Text proText("Producers", 30, 20, 5, BLACK);
+	Text conText("Consumers", WINDOW_WIDTH-120, 20, 5, BLACK);
+	queueDisplay.add(&proText);
+	queueDisplay.add(&conText);
 
 	//Fill the arrays of Producers and Consumers with Producer and Consumer objects
 	for(int i = 0; i < numProducers; i++) {

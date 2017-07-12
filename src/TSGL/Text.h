@@ -39,6 +39,8 @@ class Text : public Drawable {
       bool isSpace = false;
       int width;
       int height;
+      int advance_x;
+      int advance_y;
       int bearing;
       unsigned long int buffer_len;
       char* bitmap_buffer;

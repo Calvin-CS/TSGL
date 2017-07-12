@@ -38,15 +38,18 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myCan2 = new Canvas(0,0,350,300,"Legend");
   myCan2->setBackgroundColor(WHITE);
   myCan2->start();
-  // myCan2->drawText("Method:",16,32,32,BLACK);
-  // myCan2->drawText("\"" + methodString + "\"",32,64,24,BLACK);
-  // myCan2->drawText("Legend:",16,96,24,BLACK);
-  // myCan2->drawText("Red: Hungry",32,128,24,RED);
-  // myCan2->drawText("Orange: Has Right Fork",32,160,24,ORANGE);
-  // myCan2->drawText("Purple: Has Left Fork",32,192,24,PURPLE);
-  // myCan2->drawText("Green: Eating",32,224,24,GREEN);
-  // myCan2->drawText("Blue: Thinking",32,256,24,BLUE);
-  // myCan2->drawText("Meals eaten",57,288,24,BROWN);
+  Text * methodText = new Text("Method:",16,32,6,BLACK);
+  Text * methodText2 = new Text("\"" + methodString + "\"",32,64,6,BLACK);
+  Text * legendText = new Text("Legend:",16,96,6,BLACK);
+  Text * redText = new Text("Red: Hungry",32,128,6,RED);
+  Text * orangeText = new Text("Orange: Has Right Fork",32,160,6,ORANGE);
+  Text * purpleText = new Text("Purple: Has Left Fork",32,192,6,PURPLE);
+  Text * greenText = new Text("Green: Eating",32,224,6,GREEN);
+  Text * blueText = new Text("Blue: Thinking",32,256,6,BLUE);
+  Text * mealsText = new Text("Meals eaten",57,288,6,BROWN);
+  myCan2->add( methodText ); myCan2->add( methodText2 ); myCan2->add( legendText );
+  myCan2->add( redText ); myCan2->add( orangeText ); myCan2->add( purpleText );
+  myCan2->add( greenText ); myCan2->add( blueText ); myCan2->add( mealsText );
   myCan2->drawCircle(41,279,3,8,BROWN);
 }
 
