@@ -15,7 +15,10 @@ namespace tsgl {
   */
   class Arrow : public ConcavePolygon {
   private:
+    int headX, headY, tailX, tailY;
+    bool isDoubleArrow;
     void makeArrowHead(float x, float y, float deltaX, float deltaY); // Helps constructor by calculating the Arrow Head's coordinates
+    void generateVertices();
 
   public:
     /*!
@@ -30,6 +33,9 @@ namespace tsgl {
     * \return A new Arrow with the specified endpoints and color.
     */
     Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK, bool doubleArrow = false);
+
+    void moveHead(int x, int y);
+    void moveTail(int x, int y); //TODO: comment
 
   };
 

@@ -222,6 +222,18 @@ namespace tsgl {
       }
     }
 
+    std::string Text::getString() { return text; }
+
+    int Text::getX() { return base_x; }
+
+    int Text::getY() { return base_y; }
+
+    unsigned int Text::getFontSize() { return fontsize; }
+
+    ColorFloat Text::getColor() { return color; }
+
+    std::string Text::getFontFile() { return filename; }
+
     //TODO add kernign to the calculation
     int Text::getStringWidth() {
       int totalW = 0;

@@ -42,7 +42,7 @@ public:
      * \details Vertices specifies x and y coordinates for the Shape.
      * \return Pointer to vertices.
      */
-    virtual GLfloat* getPointerToOutlineVerticesArray() { return vertices; }
+    virtual GLfloat* getPointerToOutlineVerticesArray();
 
     /**
      * \brief Returns the geometry type for drawing the outline.
@@ -53,23 +53,23 @@ public:
      * \brief Returns the number of vertices in the Polygon's outline for renderer.
      * \return An int specifying the number of vertices in outline.
      */
-    virtual int getOutlineNumberOfVertices() { return length; }
+    virtual int getOutlineNumberOfVertices();
 
     /**
      * \brief Returns the color of the Polygon's outline.
      * \return Pointer to color of the outline.
      */
-    virtual ColorFloat* getOutlineColor() { return &outlineColor; }
+    virtual ColorFloat* getOutlineColor();
 
     /**
      * \brief Sets the color of the Polygon's outline.
      */
-    virtual void setOutlineColor(const ColorFloat& newColor) { outlineColor = newColor; }
+    virtual void setOutlineColor(const ColorFloat& newColor);
 
     /**
      * \brief Sets whether the Polygon shows an outline.
      */
-    virtual void setHasOutline(bool outline) { hasOutline = outline; }
+    void setHasOutline(bool outline);
 
 };
 

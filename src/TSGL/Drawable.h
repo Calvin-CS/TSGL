@@ -18,10 +18,8 @@ namespace tsgl {
   *  \note Drawable is abstract and must be extended.
   */
   class Drawable {
-  private:
-    std::mutex      attribMutex;  // Protects the attributes of the Drawable from being accessed while simultaneously being changed
-
   protected:
+    std::mutex      attribMutex;  ///< Protects the attributes of the Drawable from being accessed while simultaneously being changed
     bool isTextured = false; //TODO remove this
     bool discreteRender; /*! TODO Whether the shape is textured or not. If extending Drawable, <B> you *must* leave this at false (unless you are working with an image). </B> */
     int renderLayer; // The depth index to control the drawing order of the shapes

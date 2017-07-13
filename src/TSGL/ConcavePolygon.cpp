@@ -3,34 +3,55 @@
 namespace tsgl {
 
 ConcavePolygon::ConcavePolygon(int numVertices, const ColorFloat& color, const ColorFloat& outlineColor) : Polygon(numVertices+1, color, outlineColor) {
+  attribMutex.lock();
   if (numVertices < 3)
     TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
   tsize = 0;
   tarray = nullptr;
   dirty = false;
+  attribMutex.unlock();
 }
 
 ConcavePolygon::~ConcavePolygon() {
   //vertices deleted in Polygon
+  attribMutex.lock();
   delete[] tarray;
+  attribMutex.unlock();
 }
 
 GLfloat* ConcavePolygon::getPointerToVerticesArray() {
+  attribMutex.lock();
   if( dirty )
     cleanup();
+  GLfloat* result = tarray;
+  attribMutex.unlock();
   return tarray;
 }
 
+int ConcavePolygon::getNumberOfVertices() {
+  attribMutex.lock();
+  if( dirty ) {
+    cleanup(); }
+  int numVertices = tsize/2;
+  attribMutex.unlock();
+  return numVertices;
+}
+
 void ConcavePolygon::addVertex(int x, int y) {
+  attribMutex.lock();
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
     return;
   }
+  attribMutex.unlock();
   Polygon::addVertex(x, y);
+  attribMutex.lock();
   dirty = true;
-
   if (current == size-2) {
+    attribMutex.unlock();
     Polygon::addVertex( vertices[0], vertices[1]);
+  } else { //TODO: fix this locking, very messy
+    attribMutex.unlock();
   }
 }
 
@@ -116,8 +137,7 @@ void ConcavePolygon::cleanup() {
       }
     }
 
-    //TODO: fix locking
-    // objectMutex.lock();
+    //TODO: fix locking. Also, this does't get locked because it is called within spaces where the attribMutex is locked
     tsize = newvertices.size();
     delete tarray;
     tarray = new float[tsize];
@@ -125,22 +145,27 @@ void ConcavePolygon::cleanup() {
       tarray[i] = newvertices.front();
       newvertices.pop();
     }
-    // objectMutex.unlock();
   }
 }
 
 void ConcavePolygon::setCenter(int x, int y) {
+  attribMutex.lock();
   dirty = true;
+  attribMutex.unlock();
   Polygon::setCenter(x, y);
 }
 
 void ConcavePolygon::rotate(float angle) {
+  attribMutex.lock();
   dirty = true;
+  attribMutex.unlock();
   Polygon::rotate(angle);
 }
 
 void ConcavePolygon::rotateAround(float angle, float x, float y) {
+  attribMutex.lock();
   dirty = true;
+  attribMutex.unlock();
   Polygon::rotateAround(angle, x, y);
 }
 

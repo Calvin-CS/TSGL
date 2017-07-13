@@ -39,7 +39,7 @@ public:
     /**
      * \brief Returns the geometry type for drawing.
      */
-    virtual GLenum getGeometryType() { return GL_TRIANGLE_FAN; };
+    virtual GLenum getGeometryType() { return GL_TRIANGLE_FAN; }
 
 
     /*!

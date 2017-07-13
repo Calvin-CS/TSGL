@@ -24,6 +24,8 @@ namespace tsgl {
    */
 class Shape : public Drawable {
 protected:
+    float calcX(); ///< Calculates the Shape's center x coordinate. For use only where the thread has already locked the Shape's mutex.
+    float calcY(); ///< Calculates the Shape's center y coordinate. For use only where the thread has already locked the Shape's mutex.
     bool init; ///< Whether the vertex has been initialized completely
     GLfloat* vertices; ///< Buffer of x, y coordinates
     ColorFloat color; ///< Color of the Shape
@@ -60,7 +62,7 @@ protected:
      * \brief Returns the number of vertices in the Shape for renderer.
      * \return An int specifying the number of vertices.
      */
-    virtual int getNumberOfVertices() { return length; }
+    virtual int getNumberOfVertices();
 
     /**
      * \brief Returns the geometry type for drawing.
@@ -81,13 +83,13 @@ protected:
      * \brief Accessor for the current color of the Shape.
      * \return The ColorFloat of the Shape.
      */
-    virtual ColorFloat getColor() { return color; }
+    virtual ColorFloat getColor();
 
     /**
      * \brief Accessor for the pointer to the color of the Shape for renderer.
      * \return Pointer to ColorFloat of Shape
      */
-    ColorFloat* getObjectColor() { return &color; }
+    ColorFloat* getObjectColor();
 
     /**
      * \brief Sets the Shape to a new color.

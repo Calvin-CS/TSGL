@@ -17,7 +17,6 @@ Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myX = can.getWindowWidth() - 50;
 	myShape = new Rectangle(myX, myY, 40, 40, ColorInt(0, 0, 0));
 	myShape->setCenter(myX, myY);
-	// myCountLabel->setLocation(myX-10, myY+5);
 	myCountLabel->setCenter(myX, myY);
 	myCan->add(myShape);
 }
@@ -64,6 +63,11 @@ void Consumer::act() {
 	myShape->setColor( myItem->getColor() ); //Change Consumer color to Item color
 	myCountLabel->setColor(BLACK);
 	count++; myCountLabel->setString( to_string(count) );
+	if(count == 10) myCountLabel->setCenter(myX, myY);
+	if(count == 100) {
+		myCountLabel->setFontSize(4);
+		myCountLabel->setCenter(myX, myY);
+	}
 }
 
 /**

@@ -3,27 +3,47 @@
 namespace tsgl {
 
   Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color, bool doubleArrow) : ConcavePolygon( (doubleArrow)? 10 : 7, color) {
-
     attribMutex.lock();
+    hasOutline = false;
+    headX = x2; headY = y2;
+    tailX = x1; tailY = y1;
+    isDoubleArrow = doubleArrow;
+    attribMutex.unlock();
+    generateVertices();
+  }
 
-    makeArrowHead(x2, y2, x2-x1, y2-y1);
+  void Arrow::generateVertices() {
+    //TODO: figure out locking for this since we are adding vertices, which uses the lock
+    makeArrowHead(headX, headY, headX-tailX, headY-tailY);
 
-    if( doubleArrow ) {
-      makeArrowHead(x1, y1, x1-x2, y1-y2);
+    if( isDoubleArrow ) {
+      makeArrowHead(tailX, tailY, tailX-headX, tailY-headY);
     } else {
       int a, b; //Offsets for vertices
-      if( y1 < y2 ) a = 1;
+      if( tailY < headY ) a = 1;
       else a = -1;
-      if( x1 > x2 ) b = 1;
+      if( tailX > headX ) b = 1;
       else b = -1;
 
-      addVertex(x1-a, y1-b);
-      addVertex(x1+a, y1+b);
+      addVertex(tailX-a, tailY-b);
+      addVertex(tailX+a, tailY+b);
     }
+  }
 
-    hasOutline = false;
-
+  void Arrow::moveHead(int x, int y) { //TODO: test
+    attribMutex.lock();
+    current = 0; init = false;
+    headX = x; headY = y;
     attribMutex.unlock();
+    generateVertices();
+  }
+
+  void Arrow::moveTail(int x, int y) { //TODO: test
+    attribMutex.lock();
+    current = 0; init = false;
+    tailX = x; tailY = y;
+    attribMutex.unlock();
+    generateVertices();
   }
 
   /*!

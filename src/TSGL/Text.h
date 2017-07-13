@@ -79,37 +79,37 @@ class Text : public Drawable {
      * \brief Accessor for the string displayed by the Text
      * \return The text string.
      */
-    std::string getString() { return text; }
+    std::string getString();
 
     /**
      * \brief Accessor for the x coordinate.
      * \return The base x coordinate.
      */
-    int getX() { return base_x; }
+    int getX();
 
     /**
      * \brief Accessor for the y coordinate.
      * \return The base y coordinate.
      */
-    int getY() { return base_y; }
+    int getY();
 
     /**
      * \brief Accessor for the font size.
      * \return The int value of the font size.
      */
-    unsigned int getFontSize() { return fontsize; }
+    unsigned int getFontSize();
 
     /**
      * \brief Accessor for the Text color.
      * \return The ColorFloat the Text is drawn with.
      */
-    ColorFloat getColor() { return color; }
+    ColorFloat getColor();
 
     /**
      * \brief Accessor for the path to the font file.
      * \return A string showing the path to font used.
      */
-    std::string getFontFile() { return filename; }
+    std::string getFontFile();
 
     /**
      * \brief Accessor for the width of the displayed string.
