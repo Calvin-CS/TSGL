@@ -1,10 +1,11 @@
 #include "Writer.h"
+Text * Writer::dataLabel = NULL;
 
 /**
  * \brief Default-constructor for the Writer class.
  * \return: The constructed Writer object.
  */
-Writer::Writer() : RWThread() { }
+Writer::Writer() : RWThread() { dataLabel = NULL; }
 
 /**
  * \brief Explicit-constructor for the Writer class.
@@ -17,6 +18,11 @@ Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas
 	myX = 50; //Set the x-coordinate to 50
 	myCircle->setCenter(myX, myY);
 	myCountLabel->setCenter(myX, myY);
+	if( !dataLabel ) {
+		dataLabel = new Text("0/300", RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 6, BLACK);
+		myCan->add( dataLabel );
+		dataLabel->setLayer(3);
+	}
 }
 
 /**
@@ -85,6 +91,7 @@ void Writer::act() {
 		rec = makeRec(id); //Make random color at random index
 		data->write(rec, id);  // Write the item to the data
 		myCan->add(rec);
+		dataLabel->setString( to_string( data->getItemCount() ) + "/" + to_string( data->getMaxCapacity() ) );
 	}
 	myCircle->setColor( rec->getColor() );
 

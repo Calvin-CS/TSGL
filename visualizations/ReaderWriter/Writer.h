@@ -31,6 +31,7 @@ private:
 	int randIndex();
 	void drawArrow(int x, int y);
 	Rectangle * makeRec(int index);
+	static Text * dataLabel;
 };
 
 #endif /* WRITER_H_ */
