@@ -36,6 +36,7 @@ protected:
 	RWDatabase<Rectangle*> * data; //Handle to the current monitor
 	Canvas * myCan;  //Handle to the Canvas
 	Circle * myCircle; //Circle representing the Thread
+	Text * myCountLabel; //Text label for number processed
 
 	//Static values
 	static int threadCount;

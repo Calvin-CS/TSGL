@@ -50,10 +50,12 @@ namespace tsgl {
     * \details Destructor for a Drawable.
     * \details Frees up memory that was allocated to a Drawable object.
     */
-    virtual ~Drawable() {};
+    virtual ~Drawable() {
+      attribMutex.lock(); //TODO: decide if we need this. Is it necessary so the item isn't destroyed when another thread is using?
+      attribMutex.unlock();
+    };
 
     /*!
-<<<<<<< HEAD
     * \brief Accessor for <code>isTextured</code>.
     * \return Whether the drawable is a textured primitive or not.
     */
@@ -63,6 +65,11 @@ namespace tsgl {
       attribMutex.unlock();
       return retVal;
     }
+
+    /*!
+     * \brief Accessor for <code>discreteRender</code>.
+     * \return Whether the Drawable should be discretely rendered.
+     */
     bool getIsDiscreteRendered() {
       attribMutex.lock();
       bool retVal = discreteRender;
@@ -72,9 +79,14 @@ namespace tsgl {
 
     /*!
      * \brief Accessor for <code>hasOutline</code>.
-     * \return Whether the drawable also has an outline.
+     * \return Whether the Drawable also has an outline.
      */
-    bool getHasOutline() { return hasOutline; }
+    bool getHasOutline() {
+      attribMutex.lock();
+      bool outline = hasOutline;
+      attribMutex.unlock();
+      return outline;
+    }
 
     /**
     * \brief Sets the layer of the Drawable.

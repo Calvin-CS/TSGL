@@ -78,13 +78,13 @@ protected:
     virtual void addVertex(int x, int y);
 
     /**
-     * \brief Gets the current color of the Shape.
+     * \brief Accessor for the current color of the Shape.
      * \return The ColorFloat of the Shape.
      */
     virtual ColorFloat getColor() { return color; }
 
     /**
-     * \brief Gets pointer to the color of the Shape for renderer.
+     * \brief Accessor for the pointer to the color of the Shape for renderer.
      * \return Pointer to ColorFloat of Shape
      */
     ColorFloat* getObjectColor() { return &color; }

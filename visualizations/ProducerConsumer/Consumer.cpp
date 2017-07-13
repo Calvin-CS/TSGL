@@ -17,6 +17,8 @@ Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myX = can.getWindowWidth() - 50;
 	myShape = new Rectangle(myX, myY, 40, 40, ColorInt(0, 0, 0));
 	myShape->setCenter(myX, myY);
+	// myCountLabel->setLocation(myX-10, myY+5);
+	myCountLabel->setCenter(myX, myY);
 	myCan->add(myShape);
 }
 
@@ -39,6 +41,7 @@ void Consumer::showArrow(Star * c) {
 void Consumer::lock() {
 	//Show waiting status
 	myShape->setColor( BLACK );
+	myCountLabel->setColor(WHITE);
 	if( myItem ) {
 		myCan->remove( myItem );
 		delete myItem;
@@ -46,6 +49,7 @@ void Consumer::lock() {
 
 	buffer->consumerLock(); //Request lock
 	myShape->setColor( WHITE );
+	myCountLabel->setColor(BLACK);
 	while( paused ) {}
 }
 
@@ -58,7 +62,8 @@ void Consumer::act() {
 	animateItem(endX, endY);
 	while( paused ) {}
 	myShape->setColor( myItem->getColor() ); //Change Consumer color to Item color
-	count++;
+	myCountLabel->setColor(BLACK);
+	count++; myCountLabel->setString( to_string(count) );
 }
 
 /**

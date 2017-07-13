@@ -35,6 +35,7 @@ protected:
 	Canvas * myCan;  //Handle to the Canvas
 	ConvexPolygon * myShape;
 	Star * myItem; //Handle to item Produced/Consumed
+	Text * myCountLabel; //Text label for number Produced/Consumed
 };
 
 #endif /* PCTHREAD_H_ */

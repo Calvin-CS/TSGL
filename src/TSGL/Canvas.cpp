@@ -1047,6 +1047,7 @@ namespace tsgl {
   void Canvas::setBackgroundColor(ColorFloat color) {
     bgcolor = color;
     if (window != nullptr) {
+      float a = color.A;
       glfwMakeContextCurrent(window);
       glClearColor(color.R,color.G,color.B,color.A);
       glfwMakeContextCurrent(NULL);
@@ -1117,6 +1118,7 @@ namespace tsgl {
     #else
     renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
     #endif
+    setBackgroundColor(WHITE); //TODO: determine the best place for this
     return 0;
   }
 

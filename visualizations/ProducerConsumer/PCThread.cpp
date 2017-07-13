@@ -11,6 +11,7 @@ PCThread::PCThread() : Thread() {
 	myCan = NULL;
 	myShape = NULL;
 	myItem = NULL;
+	myCountLabel = NULL;
 	count = 0;
 	myX = myY = 0;
 }
@@ -29,13 +30,10 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myY = 50 * (id + 1);
 	myX = 0; //Set in subclass constructor
 	myItem = NULL;
+	myCountLabel = new Text( to_string(count), myX, myY+5, 5, WHITE);
+	myCountLabel->setLayer(3);
+	myCan->add( myCountLabel );
 }
-
-	// int textSize = 20;
-	// if( count > 99 ) textSize = 15;
-	// if( count > 999) textSize = 10;
-	// myCan->drawText( to_string(count), myX-15, myY+5, textSize, BLACK);
-	// myCan->add(&myText); TODO: fix
 
 //TODO: comment and improve
 void PCThread::wait() {

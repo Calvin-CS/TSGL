@@ -4,6 +4,8 @@ namespace tsgl {
 
   Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color, bool doubleArrow) : ConcavePolygon( (doubleArrow)? 10 : 7, color) {
 
+    attribMutex.lock();
+
     makeArrowHead(x2, y2, x2-x1, y2-y1);
 
     if( doubleArrow ) {
@@ -21,6 +23,7 @@ namespace tsgl {
 
     hasOutline = false;
 
+    attribMutex.unlock();
   }
 
   /*!

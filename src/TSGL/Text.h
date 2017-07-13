@@ -61,14 +61,113 @@ class Text : public Drawable {
 
  public:
 
-
+   /**
+    * \brief Explicitly construcucts a new Text object
+    * \details This creates a new Text item.
+    *   \param t The string to display.
+    *   \param x The x coordinate of the base of the Text.
+    *   \param y The y coordinate of the base of the Text.
+    *   \param font_size The size of the Text's font.
+    *   \param fname The location of the font's file. (Defaults to FreeSans.)
+    */
     Text(std::string t, int x, int y, unsigned int font_size, const ColorFloat &c, std::string fname = "assets/freefont/FreeSans.ttf");
-    void Text::generateTextBitmaps();
+    void generateTextBitmaps();
     void render();
 
+    //Getters
+    /**
+     * \brief Accessor for the string displayed by the Text
+     * \return The text string.
+     */
+    std::string getString() { return text; }
+
+    /**
+     * \brief Accessor for the x coordinate.
+     * \return The base x coordinate.
+     */
+    int getX() { return base_x; }
+
+    /**
+     * \brief Accessor for the y coordinate.
+     * \return The base y coordinate.
+     */
+    int getY() { return base_y; }
+
+    /**
+     * \brief Accessor for the font size.
+     * \return The int value of the font size.
+     */
+    unsigned int getFontSize() { return fontsize; }
+
+    /**
+     * \brief Accessor for the Text color.
+     * \return The ColorFloat the Text is drawn with.
+     */
+    ColorFloat getColor() { return color; }
+
+    /**
+     * \brief Accessor for the path to the font file.
+     * \return A string showing the path to font used.
+     */
+    std::string getFontFile() { return filename; }
+
+    /**
+     * \brief Accessor for the width of the displayed string.
+     * \return The int width of the text, in pixels.
+     */
     int getStringWidth();
 
-    void draw();
+    /**
+     * \brief Accessor for the height of the displayed string.
+     * \return The int height of the text, in pixels.
+     */
+    int getStringHeight();
+
+    //Setters
+    /**
+     * \brief Sets the text to a new string.
+     * \details Takes a new string and updates the visible text.
+     *    \param t The new text to display.
+     */
+    void setString(std::string t);
+
+    /**
+     * \brief Moves the text to a new location.
+     * \details Displays the text at different x, y coordinates for its base.
+     *    \param x The new x coordinate for the left side of the text.
+     *    \param y The new y coordinate for the bottom of the text.
+     */
+    void setLocation(int x, int y);
+
+    /**
+     * \brief Centers the text at a new location.
+     * \details Displays the text at different x, y coordinates for its center.
+     *    \param x The new x coordinate for the center of the text.
+     *    \param y The new y coordinate for the center of the text.
+     */
+    void setCenter(int x, int y);
+
+    /**
+     * \brief Changes the font size.
+     * \details Updates the size of the Text's font.
+     *    \param font_size The new size for the font.
+     */
+    void setFontSize(unsigned int font_size);
+
+    /**
+     * \brief Changes the Text's color.
+     * \details Sets the Text to a new color.
+     *    \param c The reference to the Text's new ColorFloat.
+     */
+    void setColor(const ColorFloat &c);
+
+    /**
+     * \brief Changes the Text's font.
+     * \details Regenerates the font with a new font.
+     *    \param fname Path to the ttf file for the new font.
+     */
+    void setFontFile(std::string fname); //TODO: test
+
 };
 
 }

@@ -16,6 +16,7 @@ Writer::Writer() : RWThread() { }
 Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : RWThread(sharedDatabase, id, can) {
 	myX = 50; //Set the x-coordinate to 50
 	myCircle->setCenter(myX, myY);
+	myCountLabel->setCenter(myX, myY);
 }
 
 /**
@@ -65,6 +66,7 @@ Rectangle * Writer::makeRec(int index) {
 //TODO: comment
 void Writer::lock() {
 	myCircle->setCenter(myX+75, myY);  //Move in toward data
+	myCountLabel->setCenter(myX+75, myY);
 	data->startWrite(); //Lock data for writing
 	myCan->sleepFor(RWThread::access_wait);
 }
@@ -74,6 +76,7 @@ void Writer::act() {
 	while( paused ) {}
 	int id = randIndex();
 	myCircle->setCenter(myX+130, myY); //Move inside data
+	myCountLabel->setCenter(myX+130, myY);
 	Rectangle * rec;
 	if( id < data->getItemCount() ) { //Change the color of an item
 		rec = data->read(id);
@@ -92,8 +95,9 @@ void Writer::act() {
 //TODO: comment
 void Writer::unlock() {
 	//Release lock
-	count++; 			//Finished another write
+	count++; myCountLabel->setString( to_string(count) ); //Finished another write
 	while( paused ) {}
 	myCircle->setCenter(myX, myY); 	//Return to home location
+	myCountLabel->setCenter(myX, myY);
 	data->endWrite(); 	//Unlock the data for writing
 }
