@@ -151,13 +151,22 @@ namespace tsgl {
   }
 
   void Canvas::printBuffer() {
-
     // std::cout << "Printing array:" << std::endl << std::endl;
     printf("Printing %ld elements in buffer:\n\n", objectBuffer.size());
 
     for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
       std::cout << *it << std::endl;
     }
+  }
+
+  int Canvas::getDefaultLayer() {
+    return currentNewShapeLayerDefault;
+  }
+
+  void Canvas::setDefaultLayer(int n) {
+    if (n >= 0) currentNewShapeLayerDefault = n;
+    else return;
+    //TODO: make this throw an error if layer is invalid (< 0)
   }
 
   float data[] = {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 0.0};
@@ -212,6 +221,7 @@ namespace tsgl {
       objectMutex.lock();
 
       // printf("%s\n", "WAZZUP?????");
+      glfwGetCursorPos(window, &mouseX, &mouseY); //TODO: decide if this is the right place
 
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
         try {

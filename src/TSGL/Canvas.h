@@ -117,7 +117,6 @@ private:
     GLtexture       shaderFragment,                                     // Address of the fragment shader
                     shaderProgram,                                      // Addres of the shader program to send to the GPU
                     shaderVertex;                                       // Address of the vertex shader
-    std::mutex      shapesMutex;                                        // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
     std::mutex      syncMutex;                                          // Mutex for syncing the rendering thread with a computational thread
@@ -298,18 +297,14 @@ public:
      * \return The default layer for Drawables added to this Canvas.
      * New Drawables will be set to this layer only if their layer has not been previously specified.
      */
-    int getDefaultLayer() {return currentNewShapeLayerDefault;}
+    int getDefaultLayer();
 
     /**
      * \brief Sets the default layer.
      * \details Sets <code>currentNewShapeLayerDefault</code> to n if n >= 0.
      *    \param n The new default layer.
      */
-    void setDefaultLayer(int n) {
-      if (n >= 0) currentNewShapeLayerDefault = n;
-      else return;
-      //TODO: make this throw an error if layer is invalid (< 0)
-    }
+    void setDefaultLayer(int n);
 
 
 ////////////////////////////////////////////////////////////////////////////////
