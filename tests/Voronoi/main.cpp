@@ -6,8 +6,8 @@
 
 /* testVoronoi.cpp contains multiple functions that display a Voronoi diagram in similar fashions. */
 
-#include "Voronoi/Voronoi.h"
-#include "Voronoi/ShadedVoronoi.h"
+#include "Voronoi.h"
+#include "ShadedVoronoi.h"
 
 using namespace tsgl;
 

@@ -6,11 +6,11 @@
 
 /*testMandelbrot.cpp contains multiple functions that display a Mandelbrot set in similar fashions (and one that displays a Julia set). */
 
-#include "Mandelbrot/Buddhabrot.h"
-#include "Mandelbrot/Mandelbrot.h"
-#include "Mandelbrot/GradientMandelbrot.h"
-#include "Mandelbrot/Julia.h"
-#include "Mandelbrot/Nova.h"
+#include "Buddhabrot.h"
+#include "Mandelbrot.h"
+#include "GradientMandelbrot.h"
+#include "Julia.h"
+#include "Nova.h"
 
 using namespace tsgl;
 

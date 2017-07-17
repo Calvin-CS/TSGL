@@ -7,7 +7,7 @@
 #include "tsgl.h"
 #include <omp.h>
 
-#include "SeaUrchin/SeaUrchin.h"
+#include "SeaUrchin.h"
 
 using namespace tsgl;
 
@@ -62,4 +62,3 @@ int main(int argc, char * argv[]) {
   c.setBackgroundColor(BLACK);
   c.run(seaUrchinFunction, nthreads);
 }
-

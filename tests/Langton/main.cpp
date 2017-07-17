@@ -7,7 +7,7 @@
 #include <omp.h>
 #include <tsgl.h>
 
-#include "Langton/AntFarm.h"
+#include "AntFarm.h"
 
 using namespace tsgl;
 
