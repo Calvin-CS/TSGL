@@ -1,10 +1,11 @@
 #include "Writer.h"
+Text * Writer::dataLabel = NULL;
 
 /**
  * \brief Default-constructor for the Writer class.
  * \return: The constructed Writer object.
  */
-Writer::Writer() : RWThread() { }
+Writer::Writer() : RWThread() { dataLabel = NULL; }
 
 /**
  * \brief Explicit-constructor for the Writer class.
@@ -16,6 +17,12 @@ Writer::Writer() : RWThread() { }
 Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : RWThread(sharedDatabase, id, can) {
 	myX = 50; //Set the x-coordinate to 50
 	myCircle->setCenter(myX, myY);
+	myCountLabel->setCenter(myX, myY);
+	if( !dataLabel ) {
+		dataLabel = new Text("0/300", RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 6, BLACK);
+		myCan->add( dataLabel );
+		dataLabel->setLayer(3);
+	}
 }
 
 /**
@@ -65,6 +72,7 @@ Rectangle * Writer::makeRec(int index) {
 //TODO: comment
 void Writer::lock() {
 	myCircle->setCenter(myX+75, myY);  //Move in toward data
+	myCountLabel->setCenter(myX+75, myY);
 	data->startWrite(); //Lock data for writing
 	myCan->sleepFor(RWThread::access_wait);
 }
@@ -74,6 +82,7 @@ void Writer::act() {
 	while( paused ) {}
 	int id = randIndex();
 	myCircle->setCenter(myX+130, myY); //Move inside data
+	myCountLabel->setCenter(myX+130, myY);
 	Rectangle * rec;
 	if( id < data->getItemCount() ) { //Change the color of an item
 		rec = data->read(id);
@@ -82,6 +91,7 @@ void Writer::act() {
 		rec = makeRec(id); //Make random color at random index
 		data->write(rec, id);  // Write the item to the data
 		myCan->add(rec);
+		dataLabel->setString( to_string( data->getItemCount() ) + "/" + to_string( data->getMaxCapacity() ) );
 	}
 	myCircle->setColor( rec->getColor() );
 
@@ -92,8 +102,9 @@ void Writer::act() {
 //TODO: comment
 void Writer::unlock() {
 	//Release lock
-	count++; 			//Finished another write
+	count++; myCountLabel->setString( to_string(count) ); //Finished another write
 	while( paused ) {}
 	myCircle->setCenter(myX, myY); 	//Return to home location
+	myCountLabel->setCenter(myX, myY);
 	data->endWrite(); 	//Unlock the data for writing
 }

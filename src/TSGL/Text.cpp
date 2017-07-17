@@ -222,6 +222,18 @@ namespace tsgl {
       }
     }
 
+    std::string Text::getString() { return text; }
+
+    int Text::getX() { return base_x; }
+
+    int Text::getY() { return base_y; }
+
+    unsigned int Text::getFontSize() { return fontsize; }
+
+    ColorFloat Text::getColor() { return color; }
+
+    std::string Text::getFontFile() { return filename; }
+
     //TODO add kernign to the calculation
     int Text::getStringWidth() {
       int totalW = 0;
@@ -237,5 +249,65 @@ namespace tsgl {
       return totalW;
     }
 
-    void Text::draw() { }
+    int Text::getStringHeight() { //TODO: check that this makes sense/is best, probably change
+      int max_height = 0;
+      for(std::vector<character_object*>::iterator it = char_vec.begin(); it != char_vec.end(); ++it) {
+        if( (*it)->height > max_height ) {
+          max_height = (*it)->height;
+        }
+      }
+      return max_height;
+    }
+
+    void Text::setString(std::string t) {
+      // Convert from the param c++ style string to a c style string for freetype
+      text = t.c_str();
+
+      // Calculate the number of characters in the text string
+      num_chars     = strlen( text );
+
+      generateTextBitmaps();
+    }
+
+    void Text::setLocation(int x, int y) {
+      // X and Y coords for the text baseline
+      base_x = x;
+      base_y = y;
+    }
+
+    void Text::setCenter(int x, int y) {
+      base_x = x - getStringWidth()/2;
+      base_y = y + getStringHeight()/2;
+    }
+
+    void Text::setFontSize(unsigned int font_size) {
+      fontsize = font_size;
+
+      // Set the character size
+      error = FT_Set_Char_Size( face, 0, font_size*64, 300, 300 );
+      if (error) {
+        fprintf(stderr, "Error while setting the FreeType font size!\n");
+        exit(-1);
+      }
+      generateTextBitmaps();
+    }
+
+    void Text::setColor(const ColorFloat &c) {
+      color = c;
+    }
+
+    void Text::setFontFile(std::string fname) {
+      // Set the font's file name
+      filename = fname.c_str();
+
+      // Load/create a new font face from a TTF font file
+      error = FT_New_Face( library, filename, 0, &face );
+      if (error) {
+        fprintf(stderr, "Error while loading a font!\n");
+        exit(-1);
+      }
+
+      generateTextBitmaps();
+    }
+
   }

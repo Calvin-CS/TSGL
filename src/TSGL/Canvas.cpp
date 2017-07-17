@@ -30,7 +30,9 @@ namespace tsgl {
     delete myShapes;
     delete myBuffer;
     delete drawTimer;
+    pointArrayMutex.lock();
     delete[] vertexData;
+    pointArrayMutex.unlock();
     delete [] screenBuffer;
     //TODO: make this also delete the object buffer?
     if (--openCanvases == 0) {
@@ -108,13 +110,22 @@ namespace tsgl {
   }
 
   void Canvas::printBuffer() {
-
     // std::cout << "Printing array:" << std::endl << std::endl;
     printf("Printing %ld elements in buffer:\n\n", objectBuffer.size());
 
     for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
       std::cout << *it << std::endl;
     }
+  }
+
+  int Canvas::getDefaultLayer() {
+    return currentNewShapeLayerDefault;
+  }
+
+  void Canvas::setDefaultLayer(int n) {
+    if (n >= 0) currentNewShapeLayerDefault = n;
+    else return;
+    //TODO: make this throw an error if layer is invalid (< 0)
   }
 
   float data[] = {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 0.0};
@@ -165,6 +176,8 @@ namespace tsgl {
       objectMutex.lock();
 
       // printf("%s\n", "WAZZUP?????");
+      glfwGetCursorPos(window, &mouseX, &mouseY); //TODO: decide if this is the right place. This does keep it within the lock, which is good.
+      //TODO: also lock the accessors for this so we can't be reading them as they change here. Might want to use a less vital mutex though so we don't hold up drawing so much
 
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
         try {
@@ -222,6 +235,32 @@ namespace tsgl {
       objectMutex.unlock();
 
 
+      // Draw the points
+      pointArrayMutex.lock();
+      int pos = pointBufferPosition;
+      int posLast = pointLastPosition;
+      pointLastPosition = pos;
+      int pbsize = pos - posLast;
+      if (loopAround) {
+        int toend = myShapes->capacity() - posLast;
+        glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
+        &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+        glDrawArrays(GL_POINTS, 0, toend);
+        posLast = 0;
+        loopAround = false;
+      }
+      // std::cout << "pbsize: " << pbsize << std::endl;
+      if (pbsize > 0) {
+        glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+        // glVertexPointer(
+        //   6,  // how many points per vertex (for us, that's x and y, then the color)
+        //   GL_FLOAT, // the type of data being passed
+        //   0, // byte offset between vertices
+        //   &vertexData[posLast * 6]  // pointer to the array of vertices
+        // );
+        glDrawArrays(GL_POINTS, 0, pbsize); //TODO: make work
+      }
+      pointArrayMutex.unlock();
 
 
 
@@ -714,7 +753,9 @@ namespace tsgl {
     monitorY = yy;
     myShapes = new Array<Drawable*>(b);  // Initialize myShapes
     myBuffer = new Array<Drawable*>(b);
+    pointArrayMutex.lock();
     vertexData = new float[6 * b];    // Buffer for vertexes for points
+    pointArrayMutex.unlock();
     showFPS = false;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering
     pointBufferPosition = pointLastPosition = 0;
@@ -934,6 +975,7 @@ namespace tsgl {
   void Canvas::setBackgroundColor(ColorFloat color) {
     bgcolor = color;
     if (window != nullptr) {
+      float a = color.A;
       glfwMakeContextCurrent(window);
       glClearColor(color.R,color.G,color.B,color.A);
       glfwMakeContextCurrent(NULL);

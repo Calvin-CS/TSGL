@@ -64,10 +64,7 @@ class ConcavePolygon : public Polygon {
      * \brief Returns the number of vertices in the Shape for renderer.
      * \return An int specifying the number of vertices.
      */
-    virtual int getNumberOfVertices() {
-      if( dirty ) {
-        cleanup(); }
-      return tsize/2; }
+    virtual int getNumberOfVertices();
 
     /*!
      * \brief Determines if two lines intersect.

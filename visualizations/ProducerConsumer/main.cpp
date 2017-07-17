@@ -34,7 +34,7 @@ Canvas legendDisplay(0, WINDOW_HEIGHT+40, WINDOW_WIDTH, 240, "Producer-Consumer 
 void displayLegend() {
 	//Setup Canvas
 	legendDisplay.start();
-	legendDisplay.setBackgroundColor(WHITE);
+	// legendDisplay.setBackgroundColor(WHITE);
 
 	int colorChanger = 0; //Counting int to control random bright colors
 	Circle waitingCircle(50, 60, 20, 32, BLACK); //waiting for lock
@@ -103,7 +103,7 @@ int main(int argc, char * argv[]) {
 
 	//Fire up the visualization
   queueDisplay.start();
-	queueDisplay.setBackgroundColor(WHITE);
+	// queueDisplay.setBackgroundColor(WHITE);
 
 	queueDisplay.bindToButton(TSGL_SPACE, TSGL_PRESS, []() { // toggle pause when spacebar is pressed
 		PCThread::paused = !PCThread::paused;

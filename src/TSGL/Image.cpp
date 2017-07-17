@@ -2,7 +2,8 @@
 
 namespace tsgl {
 
-Image::Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha) {
+  Image::Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha) {
+    attribMutex.lock();
     isTextured = true;  // Let the Canvas know we're a textured object
     myTexture = 0;      // Fix no texture initialization warning
     myWidth = width; myHeight = height;
@@ -27,9 +28,11 @@ Image::Image(std::string filename, TextureHandler &loader, int x, int y, int wid
     vertices[14] = 1.0f, vertices[15] = 0.0f;   // Texture coords of top right
     vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
-}
+    attribMutex.unlock();
+  }
 
-void Image::draw() {
+  void Image::draw() {
+    attribMutex.lock();
     unsigned int w, h;
     myLoader->loadPicture(myFile, w, h, myTexture);
 
@@ -40,6 +43,21 @@ void Image::draw() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-}
+    attribMutex.unlock();
+  }
+
+  int Image::getHeight() {
+    attribMutex.lock();
+    int height = myHeight;
+    attribMutex.unlock();
+    return height;
+  }
+
+  int Image::getWidth() {
+    attribMutex.lock();
+    int height = myHeight;
+    attribMutex.unlock();
+    return height;
+  }
 
 }
