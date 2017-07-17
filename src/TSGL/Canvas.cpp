@@ -282,32 +282,33 @@ namespace tsgl {
       objectMutex.unlock();
 
 
+
       // Draw the points
-      pointArrayMutex.lock();
-      int pos = pointBufferPosition;
-      int posLast = pointLastPosition;
-      pointLastPosition = pos;
-      int pbsize = pos - posLast;
-      if (loopAround) {
-        int toend = myShapes->capacity() - posLast;
-        glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
-        &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_POINTS, 0, toend);
-        posLast = 0;
-        loopAround = false;
-      }
-      std::cout << "pbsize: " << pbsize << std::endl;
-      if (pbsize > 0) {
-        glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-        // glVertexPointer(
-        //   6,  // how many points per vertex (for us, that's x and y, then the color)
-        //   GL_FLOAT, // the type of data being passed
-        //   0, // byte offset between vertices
-        //   &vertexData[posLast * 6]  // pointer to the array of vertices
-        // );
-        glDrawArrays(GL_POINTS, 0, pbsize); //TODO: make work
-      }
-      pointArrayMutex.unlock();
+      // pointArrayMutex.lock();
+      // int pos = pointBufferPosition;
+      // int posLast = pointLastPosition;
+      // pointLastPosition = pos;
+      // int pbsize = pos - posLast;
+      // if (loopAround) {
+      //   int toend = myShapes->capacity() - posLast;
+      //   glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
+      //   &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+      //   glDrawArrays(GL_POINTS, 0, toend);
+      //   posLast = 0;
+      //   loopAround = false;
+      // }
+      // std::cout << "pbsize: " << pbsize << std::endl;
+      // if (pbsize > 0) {
+      //   glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+      //   // glVertexPointer(
+      //   //   6,  // how many points per vertex (for us, that's x and y, then the color)
+      //   //   GL_FLOAT, // the type of data being passed
+      //   //   0, // byte offset between vertices
+      //   //   &vertexData[posLast * 6]  // pointer to the array of vertices
+      //   // );
+      //   glDrawArrays(GL_POINTS, 0, pbsize); //TODO: make work
+      // }
+      // pointArrayMutex.unlock();
 
 
 
@@ -1371,22 +1372,8 @@ namespace tsgl {
   }
 
   void Canvas::drawPoint(int x, int y, ColorFloat color) {
-    pointArrayMutex.lock();
-    if (pointBufferPosition >= myShapes->capacity()) {
-      loopAround = true;
-      pointBufferPosition = 0;
-    }
-    int tempPos = pointBufferPosition * 6;
-    pointBufferPosition++;
-
-    float atioff = atiCard ? 0.5f : 0.0f;
-    vertexData[tempPos] = x;
-    vertexData[tempPos + 1] = y+atioff;
-    vertexData[tempPos + 2] = color.R;
-    vertexData[tempPos + 3] = color.G;
-    vertexData[tempPos + 4] = color.B;
-    vertexData[tempPos + 5] = color.A;
-    pointArrayMutex.unlock();
+    Point* p = new Point(x, y, color);
+    this->add(p);
   }
 
   //TODO: change to just add the ProgressBar as one item (rather than rect and border)

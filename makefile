@@ -2,8 +2,10 @@
 SRCDIR = src
 TSGLSRCDIR = src/TSGL
 VISPRJDIR = visualizations
+TESTDIR = tests
 BINDIR = bin
 BLDDIR = build
+GLAD = $(SRCDIR)/glad.o
 
 #Header Files
 HEADERS := $(wildcard $(SRCDIR)/*.h) $(wildcard $(TSGLSRCDIR)/*.h)
@@ -34,6 +36,11 @@ PCSRC := $(wildcard $(VISPRJDIR)/ProducerConsumer/*.cpp) $(SRCDIR)/glad.cpp
 PCOBJ := $(addprefix build/, $(PCSRC:.cpp=.o))
 PCDEP := $(PCOBJ:.o=.d)
 
+#Tests
+TESTMAINS := $(wildcard $(TESTDIR)/*.cpp)
+TESTSRC := $(wildcard $(TESTDIR)/*.cpp) $(SRCDIR)/glad.cpp
+TESTOBJ := $(addprefix build/, $(TESTSRC:.cpp=.o))
+TESTDEP := $(TESTOBJ:.o=.d)
 
 
 
@@ -47,7 +54,7 @@ RM = rm -f
 #Linker flags
 LFLAGS = \
 	-Llib/ \
-	-L"/home/christiaan/workspace/TSGL/src/glad" \
+	-L"/home/erk24/workspace/TSGL/src/glad" \
 	-L/usr/local/lib \
 	-L/usr/lib \
 	-L/usr/X11/lib/ \
@@ -79,7 +86,7 @@ CFLAGS = \
 
 
 
-all: tester ReaderWriter DiningPhilosophers ProducerConsumer
+all: tester ReaderWriter DiningPhilosophers ProducerConsumer $(TESTMAINS:.cpp=)
 
 #Test Program
 tester: $(PRGMOBJ) $(TSGLOBJ) $(HEADERS)
@@ -117,6 +124,15 @@ ProducerConsumer: $(PCOBJ) $(TSGLOBJ)
 	@echo ""
 	$(CC) $(PCOBJ) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
 
+#Tests
+$(TESTMAINS:.cpp=): $(TESTOBJ) $(TSGLOBJ)
+	@echo ""
+	@tput setaf 3;
+	@echo "//////////////////// Linking Test $@ ////////////////////"
+	@tput sgr0;
+	@echo ""
+	$(CC) build/$@.o $(GLAD) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
+
 
 # Include header dependencies
 -include $(TSGLDEP)
@@ -124,6 +140,7 @@ ProducerConsumer: $(PCOBJ) $(TSGLOBJ)
 -include $(RWDEP)
 -include $(DPHDEP)
 -include $(PCDEP)
+-include $(TESTDEP)
 
 #Building rule for cpp to o
 $(BLDDIR)/%.o: %.cpp
