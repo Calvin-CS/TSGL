@@ -25,6 +25,7 @@
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
 #include "Arrow.h"          // Our own class for drawing arrows
+#include "Point.h"          // Our own class for drawig points
 #include "Polygon.h"        // Our own class for drawing polygons
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "ProgressBar.h"    // Our own class for drawing progress bars

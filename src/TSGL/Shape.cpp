@@ -4,8 +4,8 @@ namespace tsgl {
 
   Shape::Shape(int numVertices, const ColorFloat& c) {
     attribMutex.lock();
-    if (numVertices < 2) {
-      TsglDebug("Cannot have a shape with fewer than 2 vertices."); }
+    if (numVertices < 1) {
+      TsglDebug("Cannot have a shape without a vertex."); }
     length = numVertices;
     size = length * 2;
     current = 0;

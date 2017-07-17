@@ -26,7 +26,7 @@ public:
      * \details Explicit constructor for a new Polyline object.
      *   \param numVertices The number of vertices the complete Polyline will have.
      *   \param color The reference variable of the color of the Polyline. (Defaults to BLACK).
-     * \warning An invariant is held where if numVertices is less than 2 then an error message is given.
+     * \warning An invariant is held where if numVertices is less than 1 then an error message is given.
      * \return A new Polyline with a buffer for storing the specified numbered of vertices.
      */
     Polyline(int numVertices, const ColorFloat& color = BLACK);
