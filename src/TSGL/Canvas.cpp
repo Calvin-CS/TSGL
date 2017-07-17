@@ -2,20 +2,17 @@
 
 namespace tsgl {
 
-  inline void die_on_gl_error(const char* location) {
-    GLenum error = GL_NO_ERROR;
-    error = glGetError();
-    if (GL_NO_ERROR != error) {
-      printf("GL Error %x encountered in %s.\n", error, location);
-      exit(1);
-    }
-  }
-
+  // Setup vars
   int Canvas::drawBuffer = GL_FRONT_LEFT;
   bool Canvas::glfwIsReady = false;
   std::mutex Canvas::glfwMutex;
   GLFWvidmode const* Canvas::monInfo;
   unsigned Canvas::openCanvases = 0;
+
+
+  ///////////////////////////////////////////////
+  // Initialization and Destructor
+  ///////////////////////////////////////////////
 
   Canvas::Canvas(double timerLength) {
     init(-1, -1, -1, -1, -1, "", timerLength);
@@ -23,697 +20,6 @@ namespace tsgl {
 
   Canvas::Canvas(int x, int y, int width, int height, std::string title, double timerLength) {
     init(x, y, width, height, width*height*2, title, timerLength);
-  }
-
-  Canvas::~Canvas() {
-    // Free our pointer memory
-    delete myShapes;
-    delete myBuffer;
-    delete drawTimer;
-    pointArrayMutex.lock();
-    delete[] vertexData;
-    pointArrayMutex.unlock();
-    delete [] screenBuffer;
-    //TODO: make this also delete the object buffer?
-    if (--openCanvases == 0) {
-      glfwIsReady = false;
-      glfwTerminate();  // Terminate GLFW
-    }
-  }
-
-  void Canvas::bindToButton(Key button, Action action, voidFunction function) {
-    boundKeys[button + action * (GLFW_KEY_LAST + 1)] = function;
-  }
-
-  void Canvas::bindToScroll(std::function<void(double, double)> function) {
-    scrollFunction = function;
-  }
-
-  void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
-    if (action == GLFW_REPEAT) return;
-    Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
-    int index = button + action * (GLFW_KEY_LAST + 1);
-    if (&(can->boundKeys[index]) != nullptr) if (can->boundKeys[index]) can->boundKeys[index]();
-  }
-
-  void Canvas::clear() {
-    //TODO this works with the new version now, but it could probably be cleaned up a bit
-    //TODO move this to the section for backwards compatibility?
-    this->clearObjectBuffer(true); //Clears the items from the buffer and deletes all pointers
-    //TODO: decide whether this should also delete all items
-  }
-
-  void Canvas::close() {
-    glfwSetWindowShouldClose(window, GL_TRUE);
-    TsglDebug("Window closed successfully.");
-  }
-
-
-
-
-  void Canvas::add(Drawable * shapePtr) {
-
-    //TODO: make this check for duplicates
-    //TODO: check that this is properly thread safe now
-    //TODO: check that the shapes will change layer if layer is changed after addition.
-
-    // Set the default current layer if layer not explicitly set
-    if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
-
-    objectMutex.lock();
-    objectBuffer.push_back(shapePtr);
-    std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
-      return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
-    });
-    objectMutex.unlock();
-
-  }
-
-  void Canvas::remove(Drawable * shapePtr) {
-
-    //TODO: make this thread safe! (check that it is now)
-
-    objectMutex.lock();
-    objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
-    objectMutex.unlock();
-
-  }
-
-  void Canvas::clearObjectBuffer(bool shouldFreeMemory = false) {
-    //TODO: check that this frees memory when the user requests it
-    if( shouldFreeMemory ) {
-      for(unsigned i = 0; i < objectBuffer.size(); i++) {
-        delete objectBuffer[i]; //TODO fix this, causes to crash
-      }
-    }
-    objectBuffer.clear();
-  }
-
-  void Canvas::printBuffer() {
-    // std::cout << "Printing array:" << std::endl << std::endl;
-    printf("Printing %ld elements in buffer:\n\n", objectBuffer.size());
-
-    for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
-      std::cout << *it << std::endl;
-    }
-  }
-
-  int Canvas::getDefaultLayer() {
-    return currentNewShapeLayerDefault;
-  }
-
-  void Canvas::setDefaultLayer(int n) {
-    if (n >= 0) currentNewShapeLayerDefault = n;
-    else return;
-    //TODO: make this throw an error if layer is invalid (< 0)
-  }
-
-  float data[] = {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, -1.0, 0.0, 0.0};
-
-  static const GLfloat g_vertex_buffer_data[] = {
-    -1.0f, -1.0f, 0.0f,
-    1.0f, -1.0f, 0.0f,
-    0.0f,  1.0f, 0.0f,
-  };
-
-  void Canvas::newInit() {
-    printf("%s\n", "Initting stuff.");
-  }
-
-  GLfloat gQuadVertices[] = {
-    100.0f,100.0f,
-    0.0f,100.0f,
-    0.0f,0.0f,
-    100.0f, 0.0f
-  };
-
-
-  void Canvas::newDraw() {
-    printf("%s\n", "Drawing stuff.");
-
-    glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
-
-    // Reset the window close flag, so that the window stays open for this frame
-    glfwSetWindowShouldClose(window, GL_FALSE);
-
-    setupCamera();  //Camera transformations
-
-    // Count number of frames
-    int counter = 0;
-    float lastTime = 0;
-    while (!glfwWindowShouldClose(window)) {
-
-      // glDrawBuffer(GL_BACK);
-      // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
-
-      // Clear the canvas
-      glClear(GL_COLOR_BUFFER_BIT);
-
-      // Enable vertex arrays
-      glEnableClientState( GL_VERTEX_ARRAY );
-
-      // Iterate through objects, render them
-      objectMutex.lock();
-
-      // printf("%s\n", "WAZZUP?????");
-      glfwGetCursorPos(window, &mouseX, &mouseY); //TODO: decide if this is the right place. This does keep it within the lock, which is good.
-      //TODO: also lock the accessors for this so we can't be reading them as they change here. Might want to use a less vital mutex though so we don't hold up drawing so much
-
-      for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
-        try {
-          if ((*it)->getIsDiscreteRendered()) {
-            Text* rc = *it; //TODO too hackey?
-            rc->render();
-          } else {
-            Shape* rc = *it; //TODO too hackey?
-            glVertexPointer(
-              2,  // how many points per vertex (for us, that's x and y)
-              GL_FLOAT, // the type of data being passed
-              0, // byte offset between vertices
-              rc->getPointerToVerticesArray()  // pointer to the array of vertices
-            );
-            glColor4f(
-              rc->getObjectColor()->R,
-              rc->getObjectColor()->G,
-              rc->getObjectColor()->B,
-              rc->getObjectColor()->A
-            );
-            glDrawArrays(
-              rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
-              0, // The starting index of the array
-              rc->getNumberOfVertices() // The number of vertices from the object
-            );
-            if( (*it)->getHasOutline() ) {
-              Polygon* poly = *it; //TODO too hackey?
-              glVertexPointer(
-                2,  // how many points per vertex (for us, that's x and y)
-                GL_FLOAT, // the type of data being passed
-                0, // byte offset between vertices
-                poly->getPointerToOutlineVerticesArray()  // pointer to the array of vertices
-              );
-              glColor4f(
-                poly->getOutlineColor()->R,
-                poly->getOutlineColor()->G,
-                poly->getOutlineColor()->B,
-                poly->getOutlineColor()->A
-              );
-              glDrawArrays(
-                poly->getOutlineGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
-                0, // The starting index of the array
-                poly->getOutlineNumberOfVertices() // The number of vertices from the object
-              );
-            }
-          }
-
-        }
-        catch (std::exception& e) {
-          std::cerr << "Caught an exception!!!" << e.what() << std::endl;
-        }
-      }
-
-
-      objectMutex.unlock();
-
-
-      // Draw the points
-      pointArrayMutex.lock();
-      int pos = pointBufferPosition;
-      int posLast = pointLastPosition;
-      pointLastPosition = pos;
-      int pbsize = pos - posLast;
-      if (loopAround) {
-        int toend = myShapes->capacity() - posLast;
-        glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
-        &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_POINTS, 0, toend);
-        posLast = 0;
-        loopAround = false;
-      }
-      // std::cout << "pbsize: " << pbsize << std::endl;
-      if (pbsize > 0) {
-        glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-        // glVertexPointer(
-        //   6,  // how many points per vertex (for us, that's x and y, then the color)
-        //   GL_FLOAT, // the type of data being passed
-        //   0, // byte offset between vertices
-        //   &vertexData[posLast * 6]  // pointer to the array of vertices
-        // );
-        glDrawArrays(GL_POINTS, 0, pbsize); //TODO: make work
-      }
-      pointArrayMutex.unlock();
-
-
-
-      // Disable vertex arrays
-      glDisableClientState( GL_VERTEX_ARRAY );
-
-
-      // Swap the buffer and handle IO
-      // glFinish();
-      glfwSwapBuffers(window);
-      glfwPollEvents();
-
-
-      // Framerate debug stuff
-      frameCounter++;
-      counter++;
-      // printf("Frame %d finished.\n", counter);
-      if (counter==60) {
-        printf("Did 60 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 60/(glfwGetTime()-lastTime));
-        counter = 0;
-        lastTime = glfwGetTime();
-      }
-    }
-
-    // Print any OpenGL errors, if there are any
-    printf("OpenGL Error code: %d\n", glGetError());
-
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-  //TODO: this will be rewritten to redo the renderer when that become a thing
-  void Canvas::draw() {
-
-    // Reset the window close flag, so that the window stays open for this frame
-    glfwSetWindowShouldClose(window, GL_FALSE);
-
-
-    // Get actual framebuffer size and adjust scaling accordingly
-    int fbw, fbh;
-    glfwGetFramebufferSize(window, &fbw, &fbh);
-    int scaling = round((1.0f*fbw)/winWidth);
-
-    // // Stereoscopic rendering
-    // if (hasStereo)
-    // Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
-    // else
-    // Canvas::setDrawBuffer(hasBackbuffer ? GL_LEFT : GL_FRONT_LEFT);
-
-
-    // Clear the screen and set the background color for the window
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // Swap the screen buffer
-    // glfwSwapBuffers(window);
-
-    // We're ready to draw to the screen now!
-    readyToDraw = true;
-    bool nothingDrawn = false;  //Always draw the first frame
-
-    glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
-    // glViewport(0,0,1,1);
-    // glOrtho(-10,10,-10,10,-10,10);
-    // glFrontFace(GL_CW);
-
-    die_on_gl_error("Draw code");
-
-    setupCamera();
-
-    printf("%s\n", "Wazzup dawg?");
-
-
-
-
-
-
-
-
-
-
-
-    GLuint attribute_coord2d;
-    // glUseProgram(shaderProgram);
-
-    GLfloat triangle_vertices[] = {
-      0.0,  0.8,
-      -0.8, -0.8,
-      0.8, -0.8,
-    };
-    /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
-    glVertexAttribPointer(
-      attribute_coord2d, // attribute
-      2,                 // number of elements per vertex, here (x,y)
-      GL_FLOAT,          // the type of each element
-      GL_FALSE,          // take our values as-is
-      0,                 // no extra data between each position
-      triangle_vertices  // pointer to the C array
-    );
-    glfwSwapInterval(1);
-    // glClearColor(1.0, 1.0, 1.0, 1.0);
-    // glEnableVertexAttribArray(attribute_coord2d);
-
-    int nbFrames;
-    double lastTime;
-
-    float f = 0.0;
-
-    while (!glfwWindowShouldClose(window))
-    {
-
-      // Measure speed
-      double currentTime = glfwGetTime();
-      nbFrames++;
-      if ( currentTime - lastTime >= 1.0 ){ // If last prinf() was more than 1 sec ago
-        // printf and reset timer
-        printf("%f ms/frame with %d objects.\n", 1000.0/double(nbFrames), objectBuffer.size());
-        //  printf("%f ms/frame with objects.\n", 1000.0/double(nbFrames));
-        nbFrames = 0;
-        lastTime += 1.0;
-      }
-
-
-      glClear(GL_COLOR_BUFFER_BIT);
-
-      /* Push each element in buffer_vertices to the vertex shader */
-      // glDrawArrays(GL_TRIANGLES, 0, 3);
-
-      // glDisableVertexAttribArray(attribute_coord2d);
-
-      // // Render quad
-      // glColor4f( 1.f, 1.f, 0.f, 1.0f );
-      // // glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-      // // glClear(GL_COLOR_BUFFER_BIT);
-      //  glBegin( GL_QUADS );
-      //      glVertex2f( 0.0f+f, 0.0f+f );
-      //      glVertex2f(  100.0f+f, 0.0f+f );
-      //      glVertex2f(  100.0f+f,  100.0f+f );
-      //      glVertex2f( 0.0f+f,  100.0f+f );
-      //  glEnd();
-      // //  glFinish();
-      //
-      //  f = f+.01;
-
-      //pushObjectsToVertexBuffer();
-
-
-
-
-      glfwSwapBuffers(window);
-      glfwPollEvents();
-
-
-      // printf("%s\n", "YO!");
-
-
-      // Rectangle *testA = new Rectangle(10, 10, 50, 50, WHITE);
-      // testA->render();
-
-
-
-
-
-      // glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-      // glClear(1);
-      // usleep(1000);
-
-
-      // New method for dumping vertices from the objectBuffer into the GL buffer
-      // glClear(GL_COLOR_BUFFER_BIT);
-      // die_on_gl_error("before push");
-      // pushObjectsToVertexBuffer();
-      // die_on_gl_error("after push");
-    }
-
-
-
-    // This loop continues in the render thread for the life of the program,
-    // and continually redraws the screen based on the objects that are
-    // in the objectBuffer.
-    // for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
-    //
-    //   drawTimer->sleep(true);
-    //
-    //   syncMutex.lock();
-    //
-    //   #ifdef __APPLE__
-    //   windowMutex.lock();
-    //   #endif
-    //   glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
-    //
-    //   // FPS indicator
-    //   realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
-    //   if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
-    //   std::cout.flush();
-    //
-    //
-    //   //TODO what does this even do?
-    //   int pos = pointBufferPosition;
-    //   int posLast = pointLastPosition;
-    //   pointLastPosition = pos;
-    //
-    //   //TODO what is this for?
-    //   if (loopAround || pos != posLast)
-    //   nothingDrawn = false;
-    //
-    //
-    //   // NOTE: used to be the Draw loop
-    //
-    //   if (hasEXTFramebuffer)
-    //   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-    //   else
-    //   glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-    //   glDrawBuffer(GL_COLOR_ATTACHMENT0);
-    //
-    //   glViewport(0,0,winWidth,winHeight);
-    //
-    //
-    //   // New method for dumping vertices from the objectBuffer into the GL buffer
-    //   glClear(GL_COLOR_BUFFER_BIT);
-    //   pushObjectsToVertexBuffer();
-    //
-    //   unsigned int size = myShapes->size();
-    //   for (unsigned int i = 0; i < size; i++) {
-    //     Shape* s = (*myShapes)[i];
-    //     if (!s->getIsTextured()) {
-    //       s->draw();  // Iterate through our queue until we've made it to the end
-    //     } else {
-    //       textureShaders(true);
-    //       s->draw();
-    //       textureShaders(false);
-    //     }
-    //   }
-    //
-    //   if (loopAround) {
-    //     nothingDrawn = false;
-    //     int toend = myShapes->capacity() - posLast;
-    //     glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
-    //     &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-    //     glDrawArrays(GL_POINTS, 0, toend);
-    //     posLast = 0;
-    //     loopAround = false;
-    //   }
-    //   int pbsize = pos - posLast;
-    //   if (pbsize > 0) {
-    //     nothingDrawn = false;
-    //     glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-    //     glDrawArrays(GL_POINTS, 0, pbsize);
-    //   }
-    //
-    //   // Reset drawn status for the next frame
-    //   nothingDrawn = true;
-    //
-    //   // Update our screenBuffer copy with the screen
-    //   glViewport(0,0,winWidth*scaling,winHeight*scaling);
-    //   myShapes->clear();                           // Clear our buffer of shapes to be drawn
-    //
-    //   if (hasEXTFramebuffer)
-    //   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-    //   else
-    //   glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-    //   glReadBuffer(GL_COLOR_ATTACHMENT0);
-    //
-    //   glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-    //   if (toRecord > 0) {
-    //     screenShot();
-    //     --toRecord;
-    //   }
-    //
-    //   glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
-    //   glDrawBuffer(drawBuffer);
-    //
-    //   textureShaders(true);
-    //   const float vertices[32] = {
-    //     0,       0,        1,1,1,1,0,1,
-    //     winWidth,0,        1,1,1,1,1,1,
-    //     0,       winHeight,1,1,1,1,0,0,
-    //     winWidth,winHeight,1,1,1,1,1,0
-    //   };
-    //   glBindTexture(GL_TEXTURE_2D,renderedTexture);
-    //   glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-    //   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-    //   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-    //   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    //   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-    //   glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
-    //   glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-    //   glFlush();                                   // Flush buffer data to the actual draw buffer
-    //   glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
-    //
-    //   textureShaders(false);
-    //
-    //   #ifndef __APPLE__
-    //   glfwPollEvents();                            // Handle any I/O
-    //   #endif
-    //   glfwGetCursorPos(window, &mouseX, &mouseY);
-    //   glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
-    //   #ifdef __APPLE__
-    //   windowMutex.unlock();
-    //   #endif
-    //
-    //   syncMutex.unlock();
-    //
-    //   if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
-    // }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  void Canvas::errorCallback(int error, const char* string) {
-    fprintf(stderr, "%i: %s\n", error, string);
-  }
-
-  ColorFloat Canvas::getBackgroundColor() {
-    return bgcolor;
-  }
-
-  int Canvas::getDisplayHeight() {
-    initGlfw();
-    return monInfo->height;
-  }
-
-  int Canvas::getDisplayWidth() {
-    initGlfw();
-    return monInfo->width;
-  }
-
-  float Canvas::getFPS() {
-    return realFPS;
-  }
-
-  int Canvas::getFrameNumber() {
-    return frameCounter;
-  }
-
-  bool Canvas::isOpen() {
-    return !isFinished;
-  }
-
-  int Canvas::getMouseX() {
-    //TODO: add setting the mouseX and mouseY back in
-    return mouseX;
-  }
-
-  int Canvas::getMouseY() {
-    return mouseY;
-  }
-
-  ColorInt Canvas::getPixel(int row, int col) {
-    return getPoint(col,row);
-  }
-
-  ColorInt Canvas::getPoint(int x, int y) {
-    int yy;
-    //if (atiCard)
-    //  yy = (winHeight) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
-    //else
-    yy = (winHeight-1) - y;
-    int off = 3 * (yy * winWidthPadded + x);
-    return ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
-  }
-
-  unsigned int Canvas::getReps() const {
-    return drawTimer->getReps();
-  }
-
-  uint8_t* Canvas::getScreenBuffer() {
-    return screenBuffer;
-  }
-
-  double Canvas::getTime() {
-    return drawTimer->getTime();
-  }
-
-  double Canvas::getTimeBetweenSleeps() const {
-    return drawTimer->getTimeBetweenSleeps();
-  }
-
-  int Canvas::getWindowHeight() {
-    return winHeight;
-  }
-
-  int Canvas::getWindowWidth() {
-    return winWidth;
-  }
-
-  int Canvas::getWindowX() {
-    return monitorX;
-  }
-
-  int Canvas::getWindowY() {
-    return monitorY;
-  }
-
-  void Canvas::glDestroy() {
-    // Free up our resources
-    glDetachShader(shaderProgram, shaderFragment);
-    glDetachShader(shaderProgram, shaderVertex);
-    glDeleteShader(shaderFragment);
-    glDeleteShader(shaderVertex);
-    glDeleteProgram(shaderProgram);
-    glDetachShader(textureShaderProgram, textureShaderFragment);
-    glDetachShader(textureShaderProgram, textureShaderVertex);
-    glDeleteShader(textureShaderFragment);
-    glDeleteShader(textureShaderVertex);
-    glDeleteProgram(textureShaderProgram);
-    glDeleteBuffers(1, &vertexBuffer);
-    glDeleteVertexArrays(1, &vertexArray);
-  }
-
-  //Workaround for OS X
-  void Canvas::handleIO() {
-    #ifdef __APPLE__
-    if (isFinished)
-    return;
-    if (pthread_main_np() == 0)
-    return;  //If we're not the main thread, we can't call this
-    windowMutex.lock();
-    glfwMakeContextCurrent(window);
-    glfwPollEvents();
-    glfwMakeContextCurrent(NULL);
-    windowMutex.unlock();
-    if (toClose && !windowClosed) {
-      windowClosed = true;
-      while (!isFinished)
-      sleepFor(0.1f);
-      glfwDestroyWindow(window);  //We have to do this on the main thread for OS X
-      glDestroy();
-    }
-    #endif
   }
 
   void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
@@ -751,11 +57,6 @@ namespace tsgl {
     started = false;                  // We haven't started the window yet
     monitorX = xx;
     monitorY = yy;
-    myShapes = new Array<Drawable*>(b);  // Initialize myShapes
-    myBuffer = new Array<Drawable*>(b);
-    pointArrayMutex.lock();
-    vertexData = new float[6 * b];    // Buffer for vertexes for points
-    pointArrayMutex.unlock();
     showFPS = false;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering
     pointBufferPosition = pointLastPosition = 0;
@@ -774,16 +75,36 @@ namespace tsgl {
     #ifndef _WIN32
     initWindow();
     initGLAD();
-    newInit();
     glfwMakeContextCurrent(NULL);   // Reset the context
     #endif
+  }
+
+  void Canvas::close() {
+    glfwSetWindowShouldClose(window, GL_TRUE);
+    TsglDebug("Window closed successfully.");
+  }
+
+  void Canvas::stop() {
+    close();
+    wait();
+  }
+
+  Canvas::~Canvas() {
+    // Free our pointer memory
+    delete drawTimer;
+    delete[] vertexData;
+    delete [] screenBuffer;
+    //TODO: make this also delete the object buffer?
+    if (--openCanvases == 0) {
+      glfwIsReady = false;
+      glfwTerminate();  // Terminate GLFW
+    }
   }
 
   void Canvas::initGl() {
     #ifdef _WIN32
     initWindow();
     initGLAD();
-    newInit();
     #else
     glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
     glfwSetWindowUserPointer(window, this);
@@ -891,8 +212,367 @@ namespace tsgl {
     glfwSetScrollCallback(window, scrollCallback);
   }
 
+  void Canvas::setupCamera() {
+    // Set up camera positioning
+    // Initialize Projection Matrix
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+    glOrtho( 0.0, winWidth, winHeight, 0.0, 1.0, -1.0 );
+
+    // Initialize Modelview Matrix
+    glMatrixMode( GL_MODELVIEW );
+    glLoadIdentity();
+
+  }
+
+
+  ///////////////////////////////////////////////
+  // I/O Handling
+  ///////////////////////////////////////////////
+
+  void Canvas::bindToButton(Key button, Action action, voidFunction function) {
+    boundKeys[button + action * (GLFW_KEY_LAST + 1)] = function;
+  }
+
+  void Canvas::bindToScroll(std::function<void(double, double)> function) {
+    scrollFunction = function;
+  }
+
+  void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods) {
+    if (action == GLFW_REPEAT) return;
+    Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
+    int index = button + action * (GLFW_KEY_LAST + 1);
+    if (&(can->boundKeys[index]) != nullptr) if (can->boundKeys[index]) can->boundKeys[index]();
+  }
+
+  int Canvas::getMouseX() {
+    //TODO: add setting the mouseX and mouseY back in
+    return mouseX;
+  }
+
+  int Canvas::getMouseY() {
+    return mouseY;
+  }
+
+  void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
+    Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
+    if (can->scrollFunction) can->scrollFunction(xpos, ypos);
+  }
+
+  //Workaround for OS X
+  void Canvas::handleIO() {
+    #ifdef __APPLE__
+    if (isFinished)
+    return;
+    if (pthread_main_np() == 0)
+    return;  //If we're not the main thread, we can't call this
+    windowMutex.lock();
+    glfwMakeContextCurrent(window);
+    glfwPollEvents();
+    glfwMakeContextCurrent(NULL);
+    windowMutex.unlock();
+    if (toClose && !windowClosed) {
+      windowClosed = true;
+      while (!isFinished)
+      sleepFor(0.1f);
+      glfwDestroyWindow(window);  //We have to do this on the main thread for OS X
+    }
+    #endif
+  }
+
   void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     buttonCallback(window, key, action, mods);
+  }
+
+  ///////////////////////////////////////////////
+  // Object Interface
+  ///////////////////////////////////////////////
+
+  void Canvas::add(Drawable * shapePtr) {
+
+    //TODO: make this check for duplicates
+    //TODO: check that this is properly thread safe now
+    //TODO: check that the shapes will change layer if layer is changed after addition.
+
+    // Set the default current layer if layer not explicitly set
+    if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
+
+    objectMutex.lock();
+    objectBuffer.push_back(shapePtr);
+    std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
+      return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
+    });
+    objectMutex.unlock();
+
+  }
+
+  void Canvas::remove(Drawable * shapePtr) {
+
+    //TODO: make this thread safe! (check that it is now)
+
+    objectMutex.lock();
+    objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
+    objectMutex.unlock();
+
+  }
+
+  void Canvas::clearObjectBuffer(bool shouldFreeMemory = false) {
+    //TODO: check that this frees memory when the user requests it
+    if( shouldFreeMemory ) {
+      for(unsigned i = 0; i < objectBuffer.size(); i++) {
+        delete objectBuffer[i]; //TODO fix this, causes to crash
+      }
+    }
+    objectBuffer.clear();
+  }
+
+  void Canvas::clear() {
+    //TODO this works with the new version now, but it could probably be cleaned up a bit
+    //TODO move this to the section for backwards compatibility?
+    this->clearObjectBuffer(true); //Clears the items from the buffer and deletes all pointers
+    //TODO: decide whether this should also delete all items
+  }
+
+  void Canvas::printBuffer() {
+    // std::cout << "Printing array:" << std::endl << std::endl;
+    printf("Printing %ld elements in buffer:\n\n", objectBuffer.size());
+
+    for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
+      std::cout << *it << std::endl;
+    }
+  }
+
+  int Canvas::getDefaultLayer() {
+    return currentNewShapeLayerDefault;
+  }
+
+  void Canvas::setDefaultLayer(int n) {
+    if (n >= 0) currentNewShapeLayerDefault = n;
+    else return;
+    //TODO: make this throw an error if layer is invalid (< 0)
+  }
+
+
+  ///////////////////////////////////////////////
+  // Canvas Attribute Getters/Setters
+  ///////////////////////////////////////////////
+  ColorFloat Canvas::getBackgroundColor() {
+    return bgcolor;
+  }
+
+  int Canvas::getDisplayHeight() {
+    initGlfw();
+    return monInfo->height;
+  }
+
+  int Canvas::getDisplayWidth() {
+    initGlfw();
+    return monInfo->width;
+  }
+
+  float Canvas::getFPS() {
+    return realFPS;
+  }
+
+  int Canvas::getFrameNumber() {
+    return frameCounter;
+  }
+
+  bool Canvas::isOpen() {
+    return !isFinished;
+  }
+
+  ColorInt Canvas::getPixel(int row, int col) {
+    return getPoint(col,row);
+  }
+
+  ColorInt Canvas::getPoint(int x, int y) {
+    int yy;
+    yy = (winHeight-1) - y;
+    int off = 3 * (yy * winWidthPadded + x);
+    return ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
+  }
+
+  unsigned int Canvas::getReps() const {
+    return drawTimer->getReps();
+  }
+
+  uint8_t* Canvas::getScreenBuffer() {
+    return screenBuffer;
+  }
+
+  double Canvas::getTime() {
+    return drawTimer->getTime();
+  }
+
+  double Canvas::getTimeBetweenSleeps() const {
+    return drawTimer->getTimeBetweenSleeps();
+  }
+
+  int Canvas::getWindowHeight() {
+    return winHeight;
+  }
+
+  int Canvas::getWindowWidth() {
+    return winWidth;
+  }
+
+  int Canvas::getWindowX() {
+    return monitorX;
+  }
+
+  int Canvas::getWindowY() {
+    return monitorY;
+  }
+  void Canvas::setBackgroundColor(ColorFloat color) {
+    bgcolor = color;
+    if (window != nullptr) {
+      float a = color.A;
+      glfwMakeContextCurrent(window);
+      glClearColor(color.R,color.G,color.B,color.A);
+      glfwMakeContextCurrent(NULL);
+    }
+  }
+  void Canvas::setFont(std::string filename) {
+    loader.loadFont(filename);
+  }
+  void Canvas::setShowFPS(bool b) {
+    showFPS = b;
+  }
+  void Canvas::setDrawBuffer(int buffer) {
+    Canvas::drawBuffer = buffer;
+  }
+  void Canvas::reset() {
+    drawTimer->reset();
+  }
+
+
+  ///////////////////////////////////////////////
+  // Drawing Loop
+  ///////////////////////////////////////////////
+
+  void Canvas::draw() {
+    printf("%s\n", "Drawing stuff.");
+
+    glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
+
+    // Reset the window close flag, so that the window stays open for this frame
+    glfwSetWindowShouldClose(window, GL_FALSE);
+
+    setupCamera();  //Camera transformations
+
+    // Count number of frames
+    int counter = 0;
+    float lastTime = 0;
+    while (!glfwWindowShouldClose(window)) {
+
+      // glDrawBuffer(GL_BACK);
+      // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
+
+      // Clear the canvas
+      glClear(GL_COLOR_BUFFER_BIT);
+
+      // Enable vertex arrays
+      glEnableClientState( GL_VERTEX_ARRAY );
+
+      // Iterate through objects, render them
+      objectMutex.lock();
+
+      // printf("%s\n", "WAZZUP?????");
+      glfwGetCursorPos(window, &mouseX, &mouseY); //TODO: decide if this is the right place. This does keep it within the lock, which is good.
+      //TODO: also lock the accessors for this so we can't be reading them as they change here. Might want to use a less vital mutex though so we don't hold up drawing so much
+
+      for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
+        try {
+          if ((*it)->getIsDiscreteRendered()) {
+            Text* rc = *it; //TODO too hackey?
+            rc->render();
+          } else {
+            Shape* rc = *it; //TODO too hackey?
+            glVertexPointer(
+              2,  // how many points per vertex (for us, that's x and y)
+              GL_FLOAT, // the type of data being passed
+              0, // byte offset between vertices
+              rc->getPointerToVerticesArray()  // pointer to the array of vertices
+            );
+            glColor4f(
+              rc->getObjectColor()->R,
+              rc->getObjectColor()->G,
+              rc->getObjectColor()->B,
+              rc->getObjectColor()->A
+            );
+            glDrawArrays(
+              rc->getGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
+              0, // The starting index of the array
+              rc->getNumberOfVertices() // The number of vertices from the object
+            );
+            if( (*it)->getHasOutline() ) {
+              Polygon* poly = *it; //TODO too hackey?
+              glVertexPointer(
+                2,  // how many points per vertex (for us, that's x and y)
+                GL_FLOAT, // the type of data being passed
+                0, // byte offset between vertices
+                poly->getPointerToOutlineVerticesArray()  // pointer to the array of vertices
+              );
+              glColor4f(
+                poly->getOutlineColor()->R,
+                poly->getOutlineColor()->G,
+                poly->getOutlineColor()->B,
+                poly->getOutlineColor()->A
+              );
+              glDrawArrays(
+                poly->getOutlineGeometryType(), // The type of geometry from the object (eg. GL_TRIANGLES)
+                0, // The starting index of the array
+                poly->getOutlineNumberOfVertices() // The number of vertices from the object
+              );
+            }
+          }
+
+        }
+        catch (std::exception& e) {
+          std::cerr << "Caught an exception!!!" << e.what() << std::endl;
+        }
+      }
+
+
+      objectMutex.unlock();
+
+
+      // Disable vertex arrays
+      glDisableClientState( GL_VERTEX_ARRAY );
+
+
+      // Swap the buffer and handle IO
+      // glFinish();
+      glfwSwapBuffers(window);
+      glfwPollEvents();
+
+
+      // Framerate debug stuff
+      frameCounter++;
+      counter++;
+      // printf("Frame %d finished.\n", counter);
+      if (counter==60) {
+        printf("Did 60 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 60/(glfwGetTime()-lastTime));
+        counter = 0;
+        lastTime = glfwGetTime();
+      }
+    }
+
+    // Print any OpenGL errors, if there are any
+    printf("OpenGL Error code: %d\n", glGetError());
+
+  }
+
+  int Canvas::start() {
+    if (started) return -1;
+    started = true;
+    #ifdef __APPLE__
+    pthread_create(&renderThread,NULL,startDrawing,(void*)this);
+    #else
+    renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
+    #endif
+    return 0;
   }
 
   void Canvas::pauseDrawing() {
@@ -907,14 +587,6 @@ namespace tsgl {
         ++syncMutexLocked;
       }
     }
-  }
-
-  void Canvas::recordForNumFrames(unsigned int num_frames) {
-    toRecord = num_frames;
-  }
-
-  void Canvas::reset() {
-    drawTimer->reset();
   }
 
   void Canvas::resumeDrawing() {
@@ -934,6 +606,68 @@ namespace tsgl {
     while (syncMutexOwner != -1)
     sleepFor(FRAME/2);
   }
+
+  void Canvas::sleep() {
+    #ifdef __APPLE__
+    handleIO();
+    #endif
+    drawTimer->sleep(false);
+  }
+
+  void Canvas::sleepFor(float seconds) {
+    #ifdef __APPLE__
+    handleIO();
+    #endif
+    std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
+  }
+
+
+  ///////////////////////////////////////////////
+  // Utility Functions
+  ///////////////////////////////////////////////
+
+  void Canvas::errorCallback(int error, const char* string) {
+    fprintf(stderr, "%i: %s\n", error, string);
+  }
+  inline void die_on_gl_error(const char* location) {
+    GLenum error = GL_NO_ERROR;
+    error = glGetError();
+    if (GL_NO_ERROR != error) {
+      printf("GL Error %x encountered in %s.\n", error, location);
+      exit(1);
+    }
+  }
+
+
+  ///////////////////////////////////////////////
+  // Canvas Recording Functions
+  ///////////////////////////////////////////////
+
+  void Canvas::recordForNumFrames(unsigned int num_frames) {
+    toRecord = num_frames;
+  }
+
+  void Canvas::screenShot() {
+    char filename[25];
+    sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
+
+    loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
+  }
+
+  void Canvas::takeScreenShot() {
+    if (toRecord == 0) toRecord = 1;
+  }
+
+  void Canvas::stopRecording() {
+    toRecord = 0;
+  }
+
+
+
+///////===================
+
+
+
 
   void Canvas::run(void (*myFunction)(Canvas&) ) {
     start(); myFunction(*this); wait();
@@ -960,171 +694,33 @@ namespace tsgl {
     start(); myFunction(*this, s, i); wait();
   }
 
-  void Canvas::screenShot() {
-    char filename[25];
-    sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
 
-    loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
-  }
 
-  void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
-    Canvas* can = reinterpret_cast<Canvas*>(glfwGetWindowUserPointer(window));
-    if (can->scrollFunction) can->scrollFunction(xpos, ypos);
-  }
 
-  void Canvas::setBackgroundColor(ColorFloat color) {
-    bgcolor = color;
-    if (window != nullptr) {
-      float a = color.A;
-      glfwMakeContextCurrent(window);
-      glClearColor(color.R,color.G,color.B,color.A);
-      glfwMakeContextCurrent(NULL);
-    }
-  }
 
-  void Canvas::setDrawBuffer(int buffer) {
-    Canvas::drawBuffer = buffer;
-  }
 
-  void Canvas::setFont(std::string filename) {
-    loader.loadFont(filename);
-  }
 
-  void Canvas::setShowFPS(bool b) {
-    showFPS = b;
-  }
 
-  void Canvas::setupCamera() {
-    // // Set up camera positioning
-    // // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
-    // float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
-    //   -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f, 1 };
-    //   //    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
-    //   //      -(winWidth-1) / 2.0f, (winHeight+0.5f) / 2.0f, -(winHeight-0.5f) / 2.0f, 1 };
-    //   glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
-    //
-    //   // Set up camera zooming
-    //   float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
-    //   glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
-    //
-    //   // Set up camera transformation
-    //   float modelF[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-    //   glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
-    //
-    //   die_on_gl_error("Camera setup function");
 
-    //Initialize Projection Matrix
-    glMatrixMode( GL_PROJECTION );
-    glLoadIdentity();
-    glOrtho( 0.0, winWidth, winHeight, 0.0, 1.0, -1.0 );
-
-    //Initialize Modelview Matrix
-    glMatrixMode( GL_MODELVIEW );
-    glLoadIdentity();
-
-  }
-
-  void Canvas::sleep() {
-    #ifdef __APPLE__
-    handleIO();
-    #endif
-    drawTimer->sleep(false);
-  }
-
-  void Canvas::sleepFor(float seconds) {
-    #ifdef __APPLE__
-    handleIO();
-    #endif
-    std::this_thread::sleep_for(std::chrono::nanoseconds((long long) (seconds * 1000000000)));
-  }
-
-  int Canvas::start() {
-    if (started) return -1;
-    started = true;
-    #ifdef __APPLE__
-    pthread_create(&renderThread,NULL,startDrawing,(void*)this);
-    #else
-    renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
-    #endif
-    return 0;
-  }
 
   #ifdef __APPLE__
   void* Canvas::startDrawing(void* cPtr) {
     Canvas* c = (Canvas*)cPtr;
     c->initGl();
-    // c->draw();
-    c->newDraw();
+    c->draw();
     c->isFinished = true;
     pthread_exit(NULL);
   }
   #else
   void Canvas::startDrawing(Canvas *c) {
     c->initGl();
-    // c->draw();
-    c->newDraw();
+    c->draw();
     c->isFinished = true;
     glfwDestroyWindow(c->window);
-    c->glDestroy();
   }
   #endif
 
-  void Canvas::stop() {
-    close();
-    wait();
-  }
 
-  void Canvas::stopRecording() {
-    toRecord = 0;
-  }
-
-  void Canvas::takeScreenShot() {
-    if (toRecord == 0) toRecord = 1;
-  }
-
-  void Canvas::textureShaders(bool on) {
-    GLint program;
-    if (!on) {
-      program = shaderProgram;
-
-      // Relocate the shader attributes
-      GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-      glEnableVertexAttribArray(posAttrib);
-      glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
-      GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-      glEnableVertexAttribArray(colAttrib);
-      glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (2 * sizeof(float)));
-
-    } else {
-      program = textureShaderProgram;
-
-      // Relocate the shader attributes
-      GLint texturePosAttrib = glGetAttribLocation(textureShaderProgram, "position");
-      glEnableVertexAttribArray(texturePosAttrib);
-      glVertexAttribPointer(texturePosAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
-      GLint textureColAttrib = glGetAttribLocation(textureShaderProgram, "color");
-      glEnableVertexAttribArray(textureColAttrib);
-      glVertexAttribPointer(textureColAttrib, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-      (void*) (2 * sizeof(float)));
-      GLint textureTexAttrib = glGetAttribLocation(textureShaderProgram, "texcoord");
-      glEnableVertexAttribArray(textureTexAttrib);
-      glVertexAttribPointer(textureTexAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-      (void*) (6 * sizeof(float)));
-    }
-
-    // Reallocate the shader program for use
-    glUseProgram(program);
-
-
-    //TODO remove this, no longer needed (get all instances)
-    // // Recompute the camera matrices
-    // uniModel = glGetUniformLocation(program, "model");
-    // uniView = glGetUniformLocation(program, "view");
-    // uniProj = glGetUniformLocation(program, "proj");
-
-    // Update the camera
-    // setupCamera();
-  }
 
   int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
@@ -1257,22 +853,7 @@ namespace tsgl {
   }
 
   void Canvas::drawPoint(int x, int y, ColorFloat color) {
-    pointArrayMutex.lock();
-    if (pointBufferPosition >= myShapes->capacity()) {
-      loopAround = true;
-      pointBufferPosition = 0;
-    }
-    int tempPos = pointBufferPosition * 6;
-    pointBufferPosition++;
-
-    float atioff = atiCard ? 0.5f : 0.0f;
-    vertexData[tempPos] = x;
-    vertexData[tempPos + 1] = y+atioff;
-    vertexData[tempPos + 2] = color.R;
-    vertexData[tempPos + 3] = color.G;
-    vertexData[tempPos + 4] = color.B;
-    vertexData[tempPos + 5] = color.A;
-    pointArrayMutex.unlock();
+    //TODO implement this
   }
 
   //TODO: change to just add the ProgressBar as one item (rather than rect and border)
@@ -1297,18 +878,6 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         UnfilledRectangle* rec = new UnfilledRectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
         this->add(rec);                                     // Push it onto our drawing buffer
     }
-  }
-
-  void Canvas::drawShape(Drawable* s) {
-    if (!started) {
-      TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
-      return;
-    }
-    while (!readyToDraw)
-    sleep();
-    bufferMutex.lock();
-    myBuffer->push(s);  // Push it onto our drawing buffer
-    bufferMutex.unlock();
   }
 
   void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {

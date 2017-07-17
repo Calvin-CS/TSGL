@@ -98,7 +98,7 @@ void CartesianCanvas::drawFunction(const Function &function, float sleepTime, Co
         p->addVertex(screenX, screenY);
         x += pixelWidth;
     }
-    drawShape(p);
+    // drawShape(p);
   }
 }
 
@@ -147,7 +147,7 @@ void CartesianCanvas::drawPartialFunction(functionPointer &function, Decimal min
         p->addVertex(screenX, screenY);
         x += pixelWidth;
     }
-    drawShape(p);
+    // drawShape(p);
   }
 }
 

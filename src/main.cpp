@@ -80,6 +80,7 @@ void alphaRectangleFunction(Canvas& can) {
 
         // Make the new rectangle and get the pointer
         Rectangle* myRectangle = new Rectangle(a, b, abs(a-c), abs(b-d), ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 50));
+        myRectangle->setHasOutline(false);
 
         // Push the rectangle onto the queue and onto the canvas so it can render
         myQueue.push(myRectangle);

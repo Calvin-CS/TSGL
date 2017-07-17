@@ -13,7 +13,7 @@
 #include "glad/glad.h"      // New loader for GL function calls TODO: fix the path here
 
 
-#include "Array.h"          // Our own array for buffering drawing operations
+// #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "Circle.h"         // Our own class for drawing circles
@@ -101,8 +101,8 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    Array<Drawable*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
-    Array<Drawable*> * myShapes;                                           // Our buffer of shapes to draw
+    // Array<Drawable*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
+    // Array<Drawable*> * myShapes;                                           // Our buffer of shapes to draw
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
@@ -151,10 +151,7 @@ private:
     static void  buttonCallback(GLFWwindow* window, int key,
                    int action, int mods);                               // GLFW callback for mouse buttons
     void         draw();                                                // Draw loop for the Canvas
-    void         newInit();                                             //TODO: this is just temporary to try stuff
-    void         newDraw();                                             //TODO: this is just temporary to try stuff
     static void  errorCallback(int error, const char* string);          // Display where an error is coming from
-    void         glDestroy();                                           // Destroys the GL and GLFW things that are specific for this canvas
     void         init(int xx,int yy,int ww,int hh,
                    unsigned int b, std::string title,
                    double timerLength);                                 // Method for initializing the canvas
@@ -181,9 +178,6 @@ private:
     static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods
     static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
 
-protected:
-    bool        atiCard;                                                ///< Whether the vendor of the graphics card is ATI
-    void        drawShape(Drawable* s);                                 ///< Draw a shape type
 public:
 
     /*!
