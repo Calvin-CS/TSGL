@@ -11,49 +11,6 @@ namespace tsgl {
     }
   }
 
-
-  // Shader Source Text TODO: make these into separate files
-
-  // const char *vertexShaderSource =
-  // "#version 120\n"
-  // "attribute vec2 position;"
-  // "void main(void) {"
-  // "  gl_Position = vec4(position, 0.0, 1.0);"
-  // "}";
-  //
-  // const char *fragmentShaderSource =
-  // "#version 120\n"
-  // "void main(void) {"
-  // "  gl_FragColor[0] = .5;"
-  // "  gl_FragColor[1] = 0.0;"
-  // "  gl_FragColor[2] = 1.0;"
-  // "}";
-
-
-  //TODO move this somewhere better
-  char* filetobuf(char *file)
-  {
-    FILE *fptr;
-    long length;
-    char *buf;
-
-    fptr = fopen(file, "r"); /* Open file for reading */
-    if (!fptr) { /* Return NULL on failure */
-      fprintf(stderr, "%s\n", "Unable to open file for reading!");
-      return NULL;
-    }
-    fseek(fptr, 0, SEEK_END); /* Seek to the end of the file */
-    length = ftell(fptr); /* Find out how many bytes into the file we are */
-    buf = (char*)malloc(length + 1); /* Allocate a buffer for the entire length of the file plus a null terminator */
-    fseek(fptr, 0, SEEK_SET); /* Go back to the beginning of the file */
-    fread(buf, length, 1, fptr); /* Read the contents of the file in to the buffer */
-    fclose(fptr); /* Close the file */
-    buf[length] = 0; /* Null terminator */
-
-    return buf; /* Return the buffer */
-  }
-
-
   int Canvas::drawBuffer = GL_FRONT_LEFT;
   bool Canvas::glfwIsReady = false;
   std::mutex Canvas::glfwMutex;
@@ -170,10 +127,6 @@ namespace tsgl {
 
   void Canvas::newInit() {
     printf("%s\n", "Initting stuff.");
-
-    initShaders();
-    //TODO: add shader support here.  Is the Raspi even capable of this???
-
   }
 
   GLfloat gQuadVertices[] = {
@@ -780,7 +733,6 @@ namespace tsgl {
     #ifndef _WIN32
     initWindow();
     initGLAD();
-    // initShaders();
     newInit();
     glfwMakeContextCurrent(NULL);   // Reset the context
     #endif
@@ -790,7 +742,6 @@ namespace tsgl {
     #ifdef _WIN32
     initWindow();
     initGLAD();
-    // initShaders();
     newInit();
     #else
     glfwMakeContextCurrent(window);         // We're drawing to window as soon as it's created
@@ -818,70 +769,6 @@ namespace tsgl {
     hasBackbuffer = ((int)dbuff[0] > 0);
 
     glfwMakeContextCurrent(NULL);   // Reset the context
-  }
-
-  void Canvas::initShaders() {
-    GLint Vsuccess = 0;
-    GLint Fsuccess = 0;
-
-    /* Read our shaders into the appropriate buffers */
-    vertexSource = filetobuf("src/TSGL/Shaders/vertexSource.txt");
-    fragmentSource = filetobuf("src/TSGL/Shaders/fragmentSource.txt");
-
-    /* Assign our handles a "name" to new shader objects */
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-    /* Associate the source code buffers with each handle */
-    glShaderSource(vertexShader, 1, (const GLchar**)&vertexSource, 0);
-    glShaderSource(fragmentShader, 1, (const GLchar**)&fragmentSource, 0);
-
-    /* Free the temporary allocated memory */
-    free(vertexSource);
-    free(fragmentSource);
-
-    /* Compile our shader objects */
-    glCompileShader(vertexShader);
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &Vsuccess);
-    glCompileShader(fragmentShader);
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &Fsuccess);
-
-
-    /* Assign our program handle a "name" */
-    shaderProgram = glCreateProgram();
-
-    /* Attach our shaders to our program */
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-
-    /* Bind attribute index 0 (shaderAttribute) to in_Position*/
-    /* "in_Position" will represent "data" array's contents in the vertex shader */
-    glBindAttribLocation(shaderProgram, shaderAttribute, "in_Position");
-
-    /* Link shader program*/
-    glLinkProgram(shaderProgram);
-
-
-    printf("Vertex shader compile status: %d\n", Vsuccess);
-    if (Vsuccess == GL_FALSE) {
-      GLint logSize = 10240;
-      GLint logLength = 0;
-      glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logSize);
-      GLchar shaderlog[logSize];
-      glGetShaderInfoLog(vertexShader, logSize, logLength, shaderlog);
-      printf("Vertex shader log:\n\n%s\n\n", shaderlog);
-    }
-    printf("Fragment shader compile status: %d\n", Fsuccess);
-    if (Fsuccess == GL_FALSE) {
-      GLint logSize = 10240;
-      GLint logLength = 0;
-      glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &logSize);
-      GLchar shaderlog[logSize];
-      glGetShaderInfoLog(fragmentShader, logSize, logLength, shaderlog);
-      printf("Fragment shader log:\n\n%s\n\n", shaderlog);
-    }
-
-
   }
 
   void Canvas::initGLAD() {
@@ -1324,7 +1211,7 @@ namespace tsgl {
   }
 
   inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
-    drawPoint(col, row, color); //TODO: update with new api
+    // int(col, row, color); //TODO: update with new api
   }
 
   void Canvas::drawPoint(int x, int y, ColorFloat color) {
