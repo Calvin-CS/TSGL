@@ -1,13 +1,21 @@
 /*
- * testMouse.cpp
+ * testAura.cpp
  *
- * Usage: ./testMouse <width> <height> <numThreads>
+ * Usage: ./testAura <width> <height> <numThreads>
  */
+//TODO: write lots of comments
 
 #include <tsgl.h>
 
 using namespace tsgl;
 
+/** \brief Calculates the distance between two sets of float coordinates.
+  * \details Finds the distance between (x1, y1) and (x2, y2).
+  *   \param x1 First x coordidinate.
+  *   \param y1 First y coordinate.
+  *   \param x2 Second x coordinate.
+  *   \param y2 Second y coordinate.
+  */
 inline float dist(float x1, float y1, float x2, float y2) {
   return sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
 }
@@ -17,9 +25,11 @@ inline void scatter(float& f, float max) {
   f += max*am;
 }
 
-/*!
- *
- */
+/** \brief Runs the Aura example
+  * \details
+  *   \param can The Canvas to display the aura.
+  *   \param segs The
+  */
 void auraFunction(Canvas& can, int segs) {
   const float SR2 = sqrt(2);
   const int CW = can.getWindowWidth(), CH = can.getWindowHeight();

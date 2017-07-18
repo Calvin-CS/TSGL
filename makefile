@@ -36,19 +36,14 @@ PCSRC := $(wildcard $(VISPRJDIR)/ProducerConsumer/*.cpp) $(SRCDIR)/glad.cpp
 PCOBJ := $(addprefix build/, $(PCSRC:.cpp=.o))
 PCDEP := $(PCOBJ:.o=.d)
 
-# #Tests subfolders
-# TESTFOLDERS := $(notdir $(shell find $(TESTDIR)/ -maxdepth 1 -type d))
+#Tests subfolders
+TESTFOLDERS := $(notdir $(shell find $(TESTDIR)/ -maxdepth 1 -type d))
 
 #Tests
 TESTMAINS := $(wildcard $(TESTDIR)/*.cpp)
 TESTSRC := $(wildcard $(TESTDIR)/*.cpp) $(SRCDIR)/glad.cpp
 TESTOBJ := $(addprefix build/, $(TESTSRC:.cpp=.o))
 TESTDEP := $(TESTOBJ:.o=.d)
-# TESTMAINS2 := $(wildcard $(TESTDIR)/*/main.cpp)
-# #TEST2SRC := $(addprefix $(TESTDIR)/, $(wildcard Langton/*.cpp)) $(SRCDIR)/glad.cpp
-# TEST2SRC := $(wildcard tests/$@/*.cpp)
-# TEST2OBJ := $(wildcard tests/$@/*.cpp:.cpp=.o)
-# TEST2DEP := $(TEST2OBJ:.o=.d)
 
 
 
@@ -94,8 +89,7 @@ CFLAGS = \
 
 
 
-all: tester ReaderWriter DiningPhilosophers ProducerConsumer $(TESTMAINS:.cpp=)
-# all: tester ReaderWriter DiningPhilosophers ProducerConsumer $(TESTFOLDERS)
+all: tester ReaderWriter DiningPhilosophers ProducerConsumer $(TESTMAINS:.cpp=) $(TESTFOLDERS)
 
 #Test Program
 tester: $(PRGMOBJ) $(TSGLOBJ) $(HEADERS)
@@ -133,16 +127,14 @@ ProducerConsumer: $(PCOBJ) $(TSGLOBJ)
 	@echo ""
 	$(CC) $(PCOBJ) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
 
-# #Tests in multiple folders
-# $(TESTFOLDERS): $(addsuffix .o, $(basename $(wildcard $(TESTDIR)/$@/*.cpp))) $(TSGLOBJ)
-# 	@echo $(addsuffix .o $(basename $(wildcard $(TESTDIR)/$@/*.cpp)))
-# 	@echo $(addprefix build/,$(addsuffix .o, $(basename $(wildcard $(TESTDIR)/$@/*.cpp))))
-# 	@echo ""
-# 	@tput setaf 3;
-# 	@echo "//////////////////// Linking Test in Folder $@ ////////////////////"
-# 	@tput sgr0;
-# 	@echo ""
-# 	$(CC) $(wildcard tests/$@/*.cpp:.cpp=.o) $(SRCDIR)/glad.cpp) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
+#Tests with multiple files
+$(TESTFOLDERS): $(TSGLOBJ)
+	@echo ""
+	@tput setaf 3;
+	@echo "//////////////////// Linking $@ Example ////////////////////"
+	@tput sgr0;
+	@echo ""
+	cd tests/$@ && make
 
 #Tests
 $(TESTMAINS:.cpp=): $(TESTOBJ) $(TSGLOBJ)

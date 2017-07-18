@@ -77,7 +77,8 @@ public:
   ColorFloat color;
   int rad;
   bool bounced;
-  BouncingBall(int x, int y, int r, int w, int h, ColorFloat c) {
+  Circle * circle;
+  BouncingBall(int x, int y, int r, int w, int h, ColorFloat c, Canvas * can) {
     pos = Vector2(x,y);
     vel = Vector2(0,0);
     acc = Vector2(0,0);
@@ -87,8 +88,10 @@ public:
     rh = h;
     color = c;
     bounced = false;
+    circle = new Circle(x,y,r,16,c);
+    can->add(circle);
   }
-  BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorFloat c) {
+  BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorFloat c, Canvas * can) {
     pos = Vector2(x,y);
     vel = Vector2(vx,vy);
     acc = Vector2(0,0.1f);
@@ -99,6 +102,8 @@ public:
     rh = h;
     color = c;
     bounced = false;
+    circle = new Circle(x,y,r,16,c);
+    can->add(circle);
   }
   void calcSpeed() {
     mySpeed = vel.length();
@@ -136,6 +141,7 @@ public:
     }
     calcSpeed();
     calcDir();
+    circle->setCenter(pos.x, pos.y);
   }
   void setRoomSize(int w, int h) {
     rw = w;
@@ -159,6 +165,7 @@ public:
     o->calcSpeed();
     o->calcDir();
     bounced = true;
+    circle->setCenter(pos.x, pos.y);
   }
   bool collides(BouncingBall *o) {
     return ((pos-o->pos).length() <= (rad+o->rad));
@@ -172,26 +179,30 @@ private:
   bool attract;
   std::list<BouncingBall*> balls;
   std::list<BouncingBall*>::const_iterator it, jt;
+  Circle * mouseCircle;
 public:
-  BallRoom(int w, int h) {
+  BallRoom(int w, int h, Canvas * can) {
     width = w;
     height = h;
     friction = 0.99f;
     gravity = 0.1f;
     attract = true;
+    mouseCircle = new Circle(0,0,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
+    can->add(mouseCircle);
   }
   ~BallRoom() {
     while (!balls.empty()) {
       BouncingBall* b = balls.front();
       balls.pop_front();
       delete b;
+      delete mouseCircle;
     }
   }
-  void addBall(int x, int y, int r,  ColorFloat c = WHITE) {
-    addBall(x,y,0,0,r,c);
+  void addBall(int x, int y, int r, Canvas * can, ColorFloat c = WHITE) {
+    addBall(x,y,0,0,r,can,c);
   }
-  void addBall(int x, int y, int vx, int vy, int r, ColorFloat c = WHITE) {
-    BouncingBall* b = new BouncingBall(x,y,vx,vy,r,width,height,c);
+  void addBall(int x, int y, int vx, int vy, int r, Canvas * can, ColorFloat c = WHITE) {
+    BouncingBall* b = new BouncingBall(x,y,vx,vy,r,width,height,c,can);
     const int MAXFAIL = 1000;
     int fails = 0;
     for (it = balls.begin(); it != balls.end(); ++it) {
@@ -210,10 +221,12 @@ public:
   void step(Canvas* c) {
     int mx = c->getMouseX(), my = c->getMouseY();
     Vector2 mvec(mx,my);
-    if (attract)
-      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
-    else
-      c->drawCircle(mx,my,25,32,ColorFloat(0.5f,1.0f,1.0f,0.5f));
+    mouseCircle->setCenter(mx, my);
+    if (attract) {
+      mouseCircle->setColor( ColorFloat(1.0f,0.5f,0.5f,0.5f) );
+    } else {
+      mouseCircle->setColor( ColorFloat(0.5f,1.0f,1.0f,0.5f) );
+    }
     for (it = balls.begin(); it != balls.end(); ++it) {
       BouncingBall *b = (*it);
 
@@ -234,13 +247,6 @@ public:
           break;
       }
     }
-    c->pauseDrawing();
-    c->clear();
-    for (it = balls.begin(); it != balls.end(); ++it) {
-      BouncingBall *b = (*it);
-      c->drawCircle(b->pos.x,b->pos.y,b->rad,16,b->color);
-    }
-    c->resumeDrawing();
   }
   inline void toggleAttract() {
     attract ^= true;
@@ -271,12 +277,12 @@ public:
 void ballroomFunction(Canvas& can) {
     const int WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
-    BallRoom b(WW,WH);
+    BallRoom b(WW,WH,&can);
     for (int i = 0; i < 100; ++ i) {
       float speed = 5.0f;
       float dir = 2 * 3.14159f * (rand() % 100) / 100.0f;
       b.addBall(25 + rand() % (WW-50),25 + rand() % (WH-50),speed*cos(dir),speed*sin(dir),10,
-        ColorInt(64 + rand() % 192,64 + rand() % 192,64 + rand() % 192,255));
+        &can,ColorInt(64 + rand() % 192,64 + rand() % 192,64 + rand() % 192,255));
     }
 
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&b]() {

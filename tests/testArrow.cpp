@@ -19,16 +19,8 @@ int main() {
 	Arrow * a7 = new Arrow(200, 200, 250, 250, MAGENTA);
 	Arrow * a8 = new Arrow(200, 200, 150, 250, MAGENTA);
 	Arrow * a9 = new Arrow(200, 200, 150, 150, MAGENTA);
-  c.add( a0 );
-  c.add( a1 );
-  c.add( a2 );
-  c.add( a3 );
-  c.add( a4 );
-  c.add( a5 );
-  c.add( a6 );
-  c.add( a7 );
-  c.add( a8 );
-  c.add( a9 );
+  c.add( a0 ); c.add( a1 ); c.add( a2 ); c.add( a3 ); c.add( a4 );
+  c.add( a5 ); c.add( a6 ); c.add( a7 ); c.add( a8 ); c.add( a9 );
 
 	// draw Lines outlining a square centered at 300, 300
 	for(int i = 250; i <= 350; i+= 10) {
