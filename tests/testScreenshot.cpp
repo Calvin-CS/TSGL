@@ -37,7 +37,8 @@ void screenShotFunction(Cart& can) {
         yMid = yNew;
         xNew = rand() % can.getWindowWidth();
         yNew = rand() % can.getWindowHeight();
-        can.drawTriangle(xOld, yOld, xMid, yMid, xNew, yNew, Colors::randomColor(), true);
+        Triangle * tri = new Triangle(xOld, yOld, xMid, yMid, xNew, yNew, Colors::randomColor());
+        can.add(tri);
     }
 }
 

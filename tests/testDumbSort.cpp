@@ -44,7 +44,16 @@ void dumbSortFunction(Canvas& can) {
     bool goingUp = true;
     for (int i = 0; i < SIZE; i++)
         numbers[i] = rand() % (can.getWindowHeight() - 40);
+
     can.setBackgroundColor(GRAY);
+
+    //Lines
+    std::vector<Line*> lines(SIZE, NULL);
+    for(int i = 0; i < SIZE; i++) {
+      lines[i] =  new Line(0, 0, 0, 0, BLACK);
+      can.add(lines[i]);
+    }
+
     while (can.isOpen()) {
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
       if (min >= max) return;  // We are done sorting
@@ -77,18 +86,20 @@ void dumbSortFunction(Canvas& can) {
             pos--;
         }
       }
-      int start = 50, width = 1, height;
+      int start = 50, height;
       int cwh = can.getWindowHeight() - 20;
       ColorFloat color;
-      can.pauseDrawing(); //Tell the Canvas to stop updating the screen temporarily
-      can.clear();
-      for (int i = 0; i < SIZE; i++, start += width * 2) {
+      for (int i = 0; i < SIZE; i++, start += 2) {
         height = numbers[i];
         color = ColorInt(MAX_COLOR, (i == pos) ? MAX_COLOR : 0, 0);
-        can.drawRectangle(start, cwh - height, start + width, cwh, color);
+        lines[i]->setFirstEnd(start, cwh-height);
+        lines[i]->setSecondEnd(start, cwh);
+        lines[i]->setColor(color);
       }
-      can.resumeDrawing(); //Tell the Canvas it can resume drawing
     }
+
+    for(int i = 0; i < SIZE; i++)
+      delete lines[i];
 }
 
 //Takes in command line arguments for the window width and height

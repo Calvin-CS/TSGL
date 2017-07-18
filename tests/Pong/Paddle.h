@@ -33,7 +33,7 @@ public:
    * \param speed Reference to the speed of the Paddle object.
    * \return The constructed Paddle object.
    */
-  Paddle(Canvas& can, int & speed);
+  Paddle(Canvas& can, int & speed, int side);
 
   /*!
    * \brief Binds the buttons.
@@ -42,14 +42,6 @@ public:
    * \param side The side that the Paddle object is on (left = -1 and the W and S keys are bound, right = 1 and the Up and Down arrow keys are bound).
    */
   void bindings(Canvas& can, int side);
-
-  /*!
-   * \brief Draw the Paddle object.
-   * \details Actually draws the Paddle object onto the Canvas.
-   * \param can Reference to the Canvas to draw on.
-   * \param side The side that the Paddle object is drawn to on the Canvas (left = -1, right = 1).
-   */
-  void draw(Canvas& can, int side);
 
   /*!
    * \brief Increments the Paddle object's score in the game of Pong.
@@ -84,6 +76,7 @@ private:
   int myPoints;  //Score
   int mySpeed;  //Speed
   float myY; //y-coordinate for Paddle
+  Rectangle* myRect;
 };
 
 #endif /* PADDLE_H_ */

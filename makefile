@@ -129,11 +129,6 @@ ProducerConsumer: $(PCOBJ) $(TSGLOBJ)
 
 #Tests with multiple files
 $(TESTFOLDERS): $(TSGLOBJ)
-	@echo ""
-	@tput setaf 3;
-	@echo "//////////////////// Linking $@ Example ////////////////////"
-	@tput sgr0;
-	@echo ""
 	cd tests/$@ && make
 
 #Tests

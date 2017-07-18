@@ -30,6 +30,7 @@ using namespace tsgl;
  */
 void progressBarFunction(Canvas& can) {
     const int X = 100, Y = X, W = can.getWindowWidth()-X*2, H = 20, MIN = 0, MAX = 1000, SEGS = 8;
+    can.setBackgroundColor(WHITE);
     ProgressBar pb(X,Y,W,H,MIN,MAX,SEGS);
     int progress = 0;
     while (can.isOpen()) {  // Checks to see if the window has been closed

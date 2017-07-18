@@ -5,6 +5,7 @@
  */
 
 #include <tsgl.h>
+#include <vector>
 #include <omp.h>
 
 using namespace tsgl;
@@ -111,7 +112,7 @@ struct sortData {
  * \details Once all items have been sorted and merged, the animation stops and all lines are colored white.
  */
 void smartSortFunction(Canvas& can, int threads, int size) {
-  const int IPF = 1;      // Iterations per frame
+    const int IPF = 1;      // Iterations per frame
     int* numbers = new int[size];       // Array to store the data
     for (int i = 0; i < size; i++)
       numbers[i] = rand() % (can.getWindowHeight() - MARGIN);
@@ -127,6 +128,14 @@ void smartSortFunction(Canvas& can, int threads, int size) {
       if (i < ex-1) l += (bs + 1);
       else          l += bs;
     }
+
+    //Lines
+    std::vector<Line*> lines(size, NULL);
+    for(int i = 0; i < size; i++) {
+      lines[i] =  new Line(0, 0, 0, 0, BLACK);
+      can.add(lines[i]);
+    }
+
     #pragma omp parallel num_threads(threads)
     {
         int tid = omp_get_thread_num();
@@ -150,8 +159,6 @@ void smartSortFunction(Canvas& can, int threads, int size) {
             int cwh = can.getWindowHeight() - MARGIN/2;
             ColorFloat color;
             if (sd[tid]->state != S_HIDE) {
-              //Draw a black rectangle over our portion of the screen to cover up the old drawing
-              can.drawRectangle(start,0,start + sd[tid]->last - sd[tid]->first,cwh,can.getBackgroundColor());
               for (int i = sd[tid]->first; i < sd[tid]->last; ++i, ++start) {
                   height = numbers[i];
                   if (sd[tid]->state == S_WAIT || sd[tid]->state == S_DONE)
@@ -166,7 +173,11 @@ void smartSortFunction(Canvas& can, int threads, int size) {
                     else
                       color = Colors::blend(sd[tid]->color, BLACK, 0.5f);
                   }
-                  can.drawLine(start, cwh - height, start, cwh, color);
+
+                  lines[i]->setFirstEnd(start, cwh-height);
+                  lines[i]->setSecondEnd(start, cwh);
+                  lines[i]->setColor(color);
+
               }
             }
             can.resumeDrawing();  //Tell the Canvas it can resume updating
@@ -175,7 +186,11 @@ void smartSortFunction(Canvas& can, int threads, int size) {
     for (int i = 0; i < threads; ++i)
       delete sd[i];
     delete [] sd;
-  delete [] numbers;
+
+    for(int i = 0; i < size; i++)
+      delete lines[i];
+
+    delete [] numbers;
 }
 
 //Takes in command line arguments for the window width and height
@@ -189,7 +204,6 @@ int main(int argc, char* argv[]) {
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(-1, -1, w, h, "Bottom-up Merge Sort");
-    c.setBackgroundColor(BLACK);
+    Canvas c(-1, -1, w, h, "Bottom-up Merge Sort"); //Defaults to BLACK background
     c.run(smartSortFunction, threads, s);
 }

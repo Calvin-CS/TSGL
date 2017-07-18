@@ -72,9 +72,6 @@ $(TARGET): $(OBJ) $(TSGLOBJ)
 
 #Building rule for cpp to o
 $(BLDDIR)/%.o: %.cpp
-	@echo $(SRC)
-	@echo $(OBJ)
-	@echo $(HEADERS)
 	@echo ""
 	@tput setaf 3;
 	@echo "+++++++++++++++++++ Building $@ +++++++++++++++++++"

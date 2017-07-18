@@ -570,21 +570,21 @@ namespace tsgl {
     //   // Reset drawn status for the next frame
     //   nothingDrawn = true;
     //
-    //   // Update our screenBuffer copy with the screen
-    //   glViewport(0,0,winWidth*scaling,winHeight*scaling);
-    //   myShapes->clear();                           // Clear our buffer of shapes to be drawn
-    //
-    //   if (hasEXTFramebuffer)
-    //   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-    //   else
-    //   glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-    //   glReadBuffer(GL_COLOR_ATTACHMENT0);
-    //
-    //   glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-    //   if (toRecord > 0) {
-    //     screenShot();
-    //     --toRecord;
-    //   }
+      // Update our screenBuffer copy with the screen
+      glViewport(0,0,winWidth*scaling,winHeight*scaling);
+      myShapes->clear();                           // Clear our buffer of shapes to be drawn
+
+      if (hasEXTFramebuffer)
+      glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+      else
+      glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+      glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+      glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+      if (toRecord > 0) {
+        screenShot();
+        --toRecord;
+      }
     //
     //   glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
     //   glDrawBuffer(drawBuffer);
@@ -686,10 +686,10 @@ namespace tsgl {
 
   ColorInt Canvas::getPoint(int x, int y) {
     int yy;
-    //if (atiCard)
-    //  yy = (winHeight) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
-    //else
-    yy = (winHeight-1) - y;
+    if (atiCard)
+      yy = (winHeight) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
+    else
+      yy = (winHeight-1) - y;
     int off = 3 * (yy * winWidthPadded + x);
     return ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
   }
@@ -1160,7 +1160,6 @@ namespace tsgl {
     #else
     renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
     #endif
-    setBackgroundColor(WHITE); //TODO: determine the best place for this
     return 0;
   }
 
@@ -1413,14 +1412,12 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   }
 
   void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
-    // std::wstring wsTmp(text.begin(), text.end());
-    // std::wstring ws = wsTmp;
-    // drawText(ws, x, y, size, color);
+    Text* t = new Text(text, x, y, size, color);  // Creates the Point with the specified coordinates and color
+    this->add(t);                                // Push it onto our drawing buffer
   }
 
   void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
-    // Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-    // this->add(t);                                // Push it onto our drawing buffer
+    drawText( to_string("text"), x, y, size, color); //TODO: add conversion from std::wstring to std::string
   }
 
   void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
@@ -1428,8 +1425,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
         t->setHasOutline(false);
         this->add(t);                                               // Push it onto our drawing buffer
-    }
-    else {
+    } else {
       UnfilledTriangle* t = new UnfilledTriangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
       this->add(t);                                               // Push it onto our drawing buffer
     }
@@ -1442,8 +1438,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
             p->addVertex(xverts[i], yverts[i]);
         }
         this->add(p);  // Push it onto our drawing buffer
-    }
-    else {
+    } else {
         Polyline* p = new Polyline(size, color[0]);
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i]);

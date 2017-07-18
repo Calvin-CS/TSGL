@@ -32,13 +32,6 @@ class Ball {
   Ball(Canvas& can, int & speed);
 
   /*!
-   * \brief Draw the Ball object.
-   * \details Actually draws the Ball object onto the Canvas.
-   * \param can Reference to the Canvas object to draw to.
-   */
-  void draw(Canvas& can);
-
-  /*!
    * \brief Accessor for the Ball object's current x-coordinate.
    * \return myX The x-coordinate of the Ball object.
    */
@@ -73,9 +66,15 @@ class Ball {
    */
   void reset(Canvas& can);
 
+  /*!
+   * \brief Destroys the Ball object.
+   */
+  virtual ~Ball() { delete myCircle; }
+
 private:
   float myX, myY, myXX, myYY, mySpeed, myDir;
   float randfloat(int divisor = 10000);
+  Circle* myCircle;
 };
 
 #endif /* BALL_H_ */

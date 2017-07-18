@@ -15,14 +15,16 @@ using namespace tsgl;
  * \param font The font of the text.
  */
 void textCartFunction(Cart& can, std::string font) {
-    can.setFont(font);
-    can.drawText(L"A long time ago, in a galaxy far, far away.", 1, 2, 32, BLACK);
-    can.drawText(L"Something extraordinary happened.", 1, 1.9, 32, BLACK);
-    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 1, 1.8, 32, BLACK);
-    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", 1, 1.7,
-                 32, BLACK);
-    can.drawText(L"Of *what* exactly that extraordinary event was.", 1, 1.6, 32, BLACK);
-    can.drawText(L"And to that I say...oh well.", 1, 1.5, 32, BLACK);
+    can.setBackgroundColor(WHITE);
+
+    Text * t0 = new Text("A long time ago, in a galaxy far, far away.", 1, 2, 8, BLACK);
+    Text * t1 = new Text("Something extraordinary happened.", 1, 1.9, 8, BLACK);
+    Text * t2 = new Text("Something far more extraordinary than anything mankind has ever seen.", 1, 1.8, 8, BLACK);
+    Text * t3 = new Text("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 1, 1.7,
+                 8, BLACK);
+    Text * t4 = new Text("Of *what* exactly that extraordinary event was.", 1, 1.6, 8, BLACK);
+    Text * t5 = new Text("And to that I say...oh well.", 1, 1.5, 8, BLACK);
+    can.add(t0); can.add(t1); can.add(t2); can.add(t3); can.add(t4); can.add(t5);
 }
 
 //Takes command-line arguments for the width and height of the screen
