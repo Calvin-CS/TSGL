@@ -36,15 +36,27 @@ PCDEP := $(PCOBJ:.o=.d)
 
 
 
+# OS Check
+UNAME := $(shell uname)
+
 
 
 # Commands
+ifeq ($(UNAME), Linux)
 CC = g++
 RM = rm -f
+endif
+
+ifeq ($(UNAME), Darwin)
+CC = g++-7
+RM = rm -f
+endif
 
 
 
 #Linker flags
+# Linux
+ifeq ($(UNAME), Linux)
 LFLAGS = \
 	-Llib/ \
 	-L"/home/christiaan/workspace/TSGL/src/glad" \
@@ -53,12 +65,23 @@ LFLAGS = \
 	-L/usr/X11/lib/ \
 	-L/opt/AMDAPP/lib/x86_64/ \
 	-fopenmp -lfreetype -ldl -lm -lGLEW -lglfw -lX11 -lGL -lXrandr
+endif
+
+
+# MacOS
+ifeq ($(UNAME), Darwin)
+LFLAGS = \
+	-Llib/ -L/usr/local/lib  -L/usr/X11/lib/ \
+	-lfreetype -lGLEW -lglfw -lX11  -lXrandr -fopenmp \
+	-framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
+endif
 
 #Compiler flags
 CFLAGS = \
 	-std=c++0x \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-I/usr/local/include/Cellar/glfw3/3.1.1/include/ \
+	-Iinclude/ \
 	-Isrc/ \
 	-Isrc/TSGL/ \
 	-I/usr/include/ \

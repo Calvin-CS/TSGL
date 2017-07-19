@@ -466,7 +466,7 @@ namespace tsgl {
     float lastTime = 0;
     while (!glfwWindowShouldClose(window)) {
 
-      // glDrawBuffer(GL_BACK);
+      glDrawBuffer(GL_BACK);
       // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
 
       // Clear the canvas
@@ -545,7 +545,10 @@ namespace tsgl {
       // Swap the buffer and handle IO
       // glFinish();
       glfwSwapBuffers(window);
+
+      #ifndef __APPLE__
       glfwPollEvents();
+      #endif
 
 
       // Framerate debug stuff
@@ -567,11 +570,9 @@ namespace tsgl {
   int Canvas::start() {
     if (started) return -1;
     started = true;
-    #ifdef __APPLE__
-    pthread_create(&renderThread,NULL,startDrawing,(void*)this);
-    #else
+
     renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
-    #endif
+
     return 0;
   }
 
@@ -703,34 +704,25 @@ namespace tsgl {
 
 
 
-  #ifdef __APPLE__
-  void* Canvas::startDrawing(void* cPtr) {
-    Canvas* c = (Canvas*)cPtr;
-    c->initGl();
-    c->draw();
-    c->isFinished = true;
-    pthread_exit(NULL);
-  }
-  #else
+
   void Canvas::startDrawing(Canvas *c) {
     c->initGl();
     c->draw();
     c->isFinished = true;
     glfwDestroyWindow(c->window);
   }
-  #endif
 
 
 
   int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
-    #ifdef __APPLE__
-    while(!isFinished)
-    sleepFor(0.1f);
-    pthread_join(renderThread, NULL);
-    #else
+    // #ifdef __APPLE__
+    // while(!isFinished)
+    // sleepFor(0.1f);
+    // pthread_join(renderThread, NULL);
+    // #else
     renderThread.join();
-    #endif
+    // #endif
     return 0;
   }
 

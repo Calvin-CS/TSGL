@@ -159,10 +159,7 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
-    if (atiCard)
-      Canvas::drawPoint(actualX, actualY-1, color);
-    else
-      Canvas::drawPoint(actualX, actualY, color);
+    Canvas::drawPoint(actualX, actualY, color);
 }
 
 void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color, bool filled) {
@@ -246,10 +243,7 @@ Decimal CartesianCanvas::getMinY() {
 
 void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY) {
     screenX = round((cartX - minX) / pixelWidth);
-    if (atiCard)
-      screenY = getWindowHeight() - round((cartY - minY) / pixelHeight + pixelHeight*0.5f);
-    else
-      screenY = getWindowHeight() - 1 - round((cartY - minY) / pixelHeight + pixelHeight*0.5f);
+    screenY = getWindowHeight() - 1 - round((cartY - minY) / pixelHeight + pixelHeight*0.5f);
 }
 
 void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax) {
