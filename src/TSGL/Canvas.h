@@ -45,11 +45,11 @@
 #include <sstream>          // For string building
 #include <string>           // For window titles
 #include <algorithm>
-#ifdef __APPLE__
-  #include <pthread.h>
-#else
+// #ifdef __APPLE__
+//   #include <pthread.h>
+// #else
   #include <thread>           // For spawning rendering in a different thread
-#endif
+// #endif
 
 // #include <GL/glew.h>        // Needed for GL function calls
 #include <GLFW/glfw3.h>     // For window creation and management
@@ -108,11 +108,11 @@ private:
 	bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
     int             realFPS;                                            // Actual FPS of drawing
     GLuint          renderedTexture;                                    // Texture to which we render to every frame
-  #ifdef __APPLE__
-    pthread_t     renderThread;                                         // Thread dedicated to rendering the Canvas
-  #else
+  // #ifdef __APPLE__
+  //   pthread_t     renderThread;                                         // Thread dedicated to rendering the Canvas
+  // #else
     std::thread   renderThread;                                         // Thread dedicated to rendering the Canvas
-  #endif
+  // #endif
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
     GLtexture       shaderFragment,                                     // Address of the fragment shader
@@ -170,11 +170,11 @@ private:
                    double ypos);                                        // GLFW callback for scrolling
     static void  setDrawBuffer(int buffer);                             // Sets the buffer used for drawing
     void         setupCamera();                                         // Setup the 2D camera for smooth rendering
-  #ifdef __APPLE__
-    static void* startDrawing(void* cPtr);
-  #else
+  // #ifdef __APPLE__
+  //   static void* startDrawing(void* cPtr);
+  // #else
     static void  startDrawing(Canvas *c);                               // Static method that is called by the render thread
-  #endif
+  // #endif
     void         textureShaders(bool state);                            // Turn textures on or off
     static bool  testFilledDraw(Canvas& can);                           // Unit test for drawing shapes and determining if fill works
     static bool testLine(Canvas& can);                                  // Unit tester for lines
