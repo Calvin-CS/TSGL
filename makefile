@@ -39,26 +39,34 @@ PCDEP := $(PCOBJ:.o=.d)
 
 
 # Commands
-CC = g++
+CC = g++-7
 RM = rm -f
 
 
 
 #Linker flags
+# Linux
+# LFLAGS = \
+# 	-Llib/ \
+# 	-L"/home/christiaan/workspace/TSGL/src/glad" \
+# 	-L/usr/local/lib \
+# 	-L/usr/lib \
+# 	-L/usr/X11/lib/ \
+# 	-L/opt/AMDAPP/lib/x86_64/ \
+# 	-fopenmp -lfreetype -ldl -lm -lGLEW -lglfw -lX11 -lGL -lXrandr
+
+# MacOS
 LFLAGS = \
-	-Llib/ \
-	-L"/home/christiaan/workspace/TSGL/src/glad" \
-	-L/usr/local/lib \
-	-L/usr/lib \
-	-L/usr/X11/lib/ \
-	-L/opt/AMDAPP/lib/x86_64/ \
-	-fopenmp -lfreetype -ldl -lm -lGLEW -lglfw -lX11 -lGL -lXrandr
+	-Llib/ -L/usr/local/lib  -L/usr/X11/lib/ \
+	-lfreetype -lGLEW -lglfw -lX11  -lXrandr -fopenmp \
+	-framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 
 #Compiler flags
 CFLAGS = \
 	-std=c++0x \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-I/usr/local/include/Cellar/glfw3/3.1.1/include/ \
+	-Iinclude/ \
 	-Isrc/ \
 	-Isrc/TSGL/ \
 	-I/usr/include/ \

@@ -149,7 +149,7 @@ namespace tsgl {
 
 
   void Canvas::newDraw() {
-    printf("%s\n", "Drawing stuff.");
+    printf("%s\n", "TSGL: Draw loop started.");
 
     glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
 
@@ -163,7 +163,7 @@ namespace tsgl {
     float lastTime = 0;
     while (!glfwWindowShouldClose(window)) {
 
-      // glDrawBuffer(GL_BACK);
+      glDrawBuffer(GL_BACK);
       // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
 
       // Clear the canvas
@@ -176,7 +176,7 @@ namespace tsgl {
       objectMutex.lock();
 
       // printf("%s\n", "WAZZUP?????");
-      glfwGetCursorPos(window, &mouseX, &mouseY); //TODO: decide if this is the right place. This does keep it within the lock, which is good.
+      // glfwGetCursorPos(window, &mouseX, &mouseY); //TODO: decide if this is the right place. This does keep it within the lock, which is good.
       //TODO: also lock the accessors for this so we can't be reading them as they change here. Might want to use a less vital mutex though so we don't hold up drawing so much
 
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
@@ -231,7 +231,6 @@ namespace tsgl {
         }
       }
 
-
       objectMutex.unlock();
 
 
@@ -263,7 +262,6 @@ namespace tsgl {
       pointArrayMutex.unlock();
 
 
-
       // Disable vertex arrays
       glDisableClientState( GL_VERTEX_ARRAY );
 
@@ -271,8 +269,10 @@ namespace tsgl {
       // Swap the buffer and handle IO
       // glFinish();
       glfwSwapBuffers(window);
-      glfwPollEvents();
 
+      #ifndef __APPLE__
+      glfwPollEvents();
+      #endif
 
       // Framerate debug stuff
       frameCounter++;
@@ -1041,33 +1041,21 @@ namespace tsgl {
   int Canvas::start() {
     if (started) return -1;
     started = true;
-    #ifdef __APPLE__
-    pthread_create(&renderThread,NULL,startDrawing,(void*)this);
-    #else
+    // #ifdef __APPLE__
+    // pthread_create(&renderThread,NULL,startDrawing,(void*)this);
+    // #else
     renderThread = std::thread(Canvas::startDrawing, this);  // Spawn the rendering thread
-    #endif
+    // #endif
     return 0;
   }
 
-  #ifdef __APPLE__
-  void* Canvas::startDrawing(void* cPtr) {
-    Canvas* c = (Canvas*)cPtr;
-    c->initGl();
-    // c->draw();
-    c->newDraw();
-    c->isFinished = true;
-    pthread_exit(NULL);
-  }
-  #else
   void Canvas::startDrawing(Canvas *c) {
     c->initGl();
-    // c->draw();
     c->newDraw();
     c->isFinished = true;
     glfwDestroyWindow(c->window);
     c->glDestroy();
   }
-  #endif
 
   void Canvas::stop() {
     close();
@@ -1128,13 +1116,13 @@ namespace tsgl {
 
   int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
-    #ifdef __APPLE__
-    while(!isFinished)
-    sleepFor(0.1f);
-    pthread_join(renderThread, NULL);
-    #else
+    // #ifdef __APPLE__
+    // while(!isFinished)
+    // sleepFor(0.1f);
+    // pthread_join(renderThread, NULL);
+    // #else
     renderThread.join();
-    #endif
+    // #endif
     return 0;
   }
 
