@@ -43,7 +43,7 @@ class Text : public Drawable {
       int texheight;
       int advance_x;
       int advance_y;
-      int bearing;
+      double bearing;
       unsigned long int buffer_len;
       char* bitmap_buffer;
     };

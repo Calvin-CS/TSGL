@@ -99,7 +99,9 @@ namespace tsgl {
         char_obj->texheight = slot->bitmap.rows;
         char_obj->advance_x = slot->advance.x /64 /2;
         char_obj->advance_y = slot->advance.y /64 /2;
-        char_obj->bearing = slot->metrics.horiBearingY /64 /2;
+        char_obj->bearing = (double)slot->metrics.horiBearingY /64.0 /2.0;
+
+        // printf("Bearing: %f\n", char_obj->bearing);
 
         // Update maxBearing
         if (char_obj->bearing > maxBearing) maxBearing = char_obj->bearing;

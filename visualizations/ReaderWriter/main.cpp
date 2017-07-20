@@ -22,6 +22,8 @@ const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 800, MARGIN = 45; //Size of Canvas
 
 int main(int argc, char* argv[]) {
 
+	printf("Debug: %d\n", 1);
+
 	//Number of readers is the first argument or defaults to 4
 	int numReaders  = ( (argc > 1) && (atoi(argv[1]) > 0) && (atoi(argv[1]) <= 8) ) ? atoi(argv[1]) : 4;
 	//Number of writers is the second argument or defaults to 4
@@ -96,6 +98,7 @@ int main(int argc, char* argv[]) {
 		readers[i].start();
 		sleep(0.1);
 	}
+
 
 	can.wait(); //Wait for the main Canvas to be closed
 

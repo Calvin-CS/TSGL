@@ -454,6 +454,13 @@ namespace tsgl {
   ///////////////////////////////////////////////
 
   void Canvas::draw() {
+
+    bool debugRectIsRed = false;
+    printf("Note: Canvas is drawing a flashing square in the corner to test whether it remains active during a crash.\n");
+    Rectangle* debugRect = new Rectangle(0, 0, 10, 10, BLACK, BLACK);
+    debugRect->setLayer(100);
+    add(debugRect);
+
     printf("%s\n", "Drawing stuff.");
 
     glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
@@ -469,6 +476,15 @@ namespace tsgl {
     int counter = 0;
     float lastTime = 0;
     while (!glfwWindowShouldClose(window)) {
+
+      if (debugRectIsRed) {
+        debugRect->setColor(BLACK);
+        debugRectIsRed = false;
+      }
+      else {
+        debugRect->setColor(RED);
+        debugRectIsRed = true;
+      }
 
       glDrawBuffer(GL_BACK);
       // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
@@ -720,13 +736,11 @@ namespace tsgl {
 
   int Canvas::wait() {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
-    // #ifdef __APPLE__
-    // while(!isFinished)
-    // sleepFor(0.1f);
-    // pthread_join(renderThread, NULL);
-    // #else
+    #ifdef __APPLE__
+    while(!isFinished)
+      sleepFor(0.1f);
+    #endif
     renderThread.join();
-    // #endif
     return 0;
   }
 
