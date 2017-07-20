@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Point::Point(int x, int y, const ColorFloat& color) : Shape(1, color) {
+Point::Point(float x, float y, const ColorFloat& color) : Shape(1, color) {
   addVertex(x, y);
 }
 

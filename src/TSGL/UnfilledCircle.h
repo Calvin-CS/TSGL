@@ -15,7 +15,8 @@ namespace tsgl {
  */
 class UnfilledCircle : public UnfilledShape {
  private:
-    int myX, myY, myRadius, mySides;
+    float myX, myY, myRadius;
+    int mySides;
  public:
 
     /*!
@@ -28,7 +29,7 @@ class UnfilledCircle : public UnfilledShape {
      *   \param sides The number of sides to use in the circle.
      *   \param color The color of the circle (set to BLACK by default).
      */
-    UnfilledCircle(int x, int y, int radius, int sides, ColorFloat color = BLACK);
+    UnfilledCircle(float x, float y, float radius, int sides, ColorFloat color = BLACK);
 };
 
 }

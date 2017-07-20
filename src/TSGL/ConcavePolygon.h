@@ -107,7 +107,7 @@ class ConcavePolygon : public Polygon {
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating that the vertex buffer is full.
      */
-    void addVertex(int x, int y);
+    void addVertex(float x, float y);
 
     /**
      * \brief Returns the geometry type for drawing.
@@ -119,7 +119,7 @@ class ConcavePolygon : public Polygon {
      * \param x The new center x coordinate.
      * \param y The new center y coordinate.
      */
-    virtual void setCenter(int x, int y);
+    virtual void setCenter(float x, float y);
 
     /**
      * \brief Rotates the ConcavePolygon by an angle.

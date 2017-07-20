@@ -29,7 +29,7 @@ class Triangle : public ConvexPolygon {
      *      \param outlineColor The color of the Triangle's outline. (Defaults to BLACK.)
      * \return A new Triangle with the specified vertices and color.
      */
-    Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color = BLACK, const ColorFloat& outlineColor = BLACK);
+    Triangle(float x1, float y1, float x2, float y2, float x3, float y3, const ColorFloat &color = BLACK, const ColorFloat& outlineColor = BLACK);
 };
 
 }

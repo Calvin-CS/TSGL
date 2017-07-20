@@ -77,7 +77,7 @@ protected:
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating when the vertex buffer is full.
      */
-    virtual void addVertex(int x, int y);
+    virtual void addVertex(float x, float y);
 
     /**
      * \brief Accessor for the current color of the Shape.

@@ -55,35 +55,34 @@ void lineChainFunction(Canvas& can, int t) {
     const float NTHREADS = omp_get_num_threads();
     const float FADERATE = (NTHREADS < 200) ? 1.0f*NTHREADS/200 : 1;
     const int TID = omp_get_thread_num();
-    int xNew = CWW*2, yNew = CWH;
+    int xOld, yOld, xNew = CWW*2, yNew = CWH;
     float next = (ARC*TID)/NTHREADS, s = next;
     ColorFloat c = Colors::highContrastColor(TID);
     std::queue<Polyline*> myLines;
     while (can.isOpen()) {  // Checks to see if the window has been closed
       can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
       while(paused && can.isOpen()) {}
-      Polyline* newLine = new UnfilledShape(IPF*2,c);
-      for (int i = 0; i < IPF*2; ++i) {
-        next += ARC; s += SPIN;
-        float size = cos(s);
-        xNew = CWW + CWW*size*cos(next);
-        yNew = CWH + CWH*size*sin(next);
-        newLine->addVertex(xNew, yNew);
-      }
 
+      next += ARC; s += SPIN;
+      xOld = xNew; yOld = yNew;
+      float size = cos(s);
+      xNew = CWW + CWW*size*cos(next);
+      yNew = CWH + CWH*size*sin(next);
+      Line* newLine = new Line(xOld, yOld, xNew, yNew, c);
       //Add the line to our Queue and Canvas
       can.add(newLine);
       myLines.push(newLine);
 
+
       //Delete oldest line
       //TODO: fade less old lines
-      if(myLines.size() > 10) {
+      if(myLines.size() > 30) {
         Polyline* oldLine = myLines.front();
         myLines.pop();
         can.remove(oldLine);
         delete oldLine;
       }
-      #pragma omp barrier
+      //#pragma omp barrier
     }
 
     //After Canvas is closed...

@@ -27,7 +27,7 @@ namespace tsgl {
     *   \param color The color of the circle (set to BLACK by default).
     *   \param outlineColor The color of the circle's outline (set to BLACK by default).
     */
-    Circle(int x, int y, int radius, int sides, const ColorFloat& color = BLACK, const ColorFloat& outlineColor = BLACK);
+    Circle(float x, float y, float radius, int sides, const ColorFloat& color = BLACK, const ColorFloat& outlineColor = BLACK);
 
   };
 

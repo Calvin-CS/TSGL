@@ -35,7 +35,7 @@ namespace tsgl {
     return l;
   }
 
-  void Shape::addVertex(int x, int y) {
+  void Shape::addVertex(float x, float y) {
     attribMutex.lock();
     if (init) {
       TsglDebug("Cannot add anymore vertices.");

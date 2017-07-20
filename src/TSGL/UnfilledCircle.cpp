@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-UnfilledCircle::UnfilledCircle(int x, int y, int radius, int sides, ColorFloat color) : UnfilledShape(sides, color) {
+UnfilledCircle::UnfilledCircle(float x, float y, float radius, int sides, ColorFloat color) : UnfilledShape(sides, color) {
   attribMutex.lock();
   myX = x, myY = y;
   myRadius = radius;

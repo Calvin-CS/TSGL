@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-  Rectangle::Rectangle(int x, int y, int width, int height, const ColorFloat &color, const ColorFloat& outlineColor) : ConvexPolygon(4, color, outlineColor) {
+  Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat &color, const ColorFloat& outlineColor) : ConvexPolygon(4, color, outlineColor) {
     addVertex(x, y);
     addVertex(x+width, y);
     addVertex(x+width, y+height);

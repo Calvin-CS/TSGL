@@ -28,7 +28,7 @@ class UnfilledTriangle : public UnfilledShape {
      *      \param color The color of the UnfilledTriangle. (Defaults to BLACK).
      * \return A new UnfilledTriangle with the specified vertices and color.
      */
-    UnfilledTriangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color = BLACK);
+    UnfilledTriangle(float x1, float y1, float x2, float y2, float x3, float y3, const ColorFloat &color = BLACK);
 };
 
 }

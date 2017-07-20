@@ -27,7 +27,7 @@ public:
      *   \param color The reference variable of the color of the Point. (Defaults to BLACK).
      * \return A new Point with x and y coordiantes.
      */
-    Point(int x, int y, const ColorFloat& color = BLACK);
+    Point(float x, float y, const ColorFloat& color = BLACK);
 
     /**
      * \brief Returns the geometry type for drawing.

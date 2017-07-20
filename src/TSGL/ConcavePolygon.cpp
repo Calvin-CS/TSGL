@@ -37,7 +37,7 @@ int ConcavePolygon::getNumberOfVertices() {
   return numVertices;
 }
 
-void ConcavePolygon::addVertex(int x, int y) {
+void ConcavePolygon::addVertex(float x, float y) {
   attribMutex.lock();
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
@@ -148,7 +148,7 @@ void ConcavePolygon::cleanup() {
   }
 }
 
-void ConcavePolygon::setCenter(int x, int y) {
+void ConcavePolygon::setCenter(float x, float y) {
   attribMutex.lock();
   dirty = true;
   attribMutex.unlock();
