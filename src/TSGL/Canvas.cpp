@@ -456,6 +456,8 @@ namespace tsgl {
 
     glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
 
+    glfwSwapInterval(1);  // Enable VSYNC
+
     // Reset the window close flag, so that the window stays open for this frame
     glfwSetWindowShouldClose(window, GL_FALSE);
 
