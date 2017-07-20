@@ -42,6 +42,7 @@ void dumbSortFunction(Canvas& can) {
     int numbers[SIZE];      // Array to store the data
     int pos = 0, temp, min = 1, max = SIZE - 2, lastSwap = 0;
     bool goingUp = true;
+    srand(time(NULL)); // seed the random number generator
     for (int i = 0; i < SIZE; i++)
         numbers[i] = rand() % (can.getWindowHeight() - 40);
 

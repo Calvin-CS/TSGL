@@ -28,17 +28,33 @@ using namespace tsgl;
  */
 void screenShotFunction(Cart& can) {
     int xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
+    srand(time(NULL)); // seed the random number generator
     can.recordForNumFrames(FPS * 30);
+    std::queue<Triangle*> myQueue;
     while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();
-        xOld = xMid;
-        yOld = yMid;
-        xMid = xNew;
-        yMid = yNew;
-        xNew = rand() % can.getWindowWidth();
-        yNew = rand() % can.getWindowHeight();
+        //Choose coordinates for a new Triangle
+        xOld = xMid; yOld = yMid;
+        xMid = xNew; yMid = yNew;
+        xNew = rand() % can.getWindowWidth(); yNew = rand() % can.getWindowHeight();
+
+        //Add the new Triangle
         Triangle * tri = new Triangle(xOld, yOld, xMid, yMid, xNew, yNew, Colors::randomColor());
         can.add(tri);
+        myQueue.push(tri);
+
+        //Limit the number of Triangles
+        if (myQueue.size() >= 100) {
+          can.remove(myQueue.front());  // stop rendering the rectangle each frame
+          delete myQueue.front(); // free memory
+          myQueue.pop(); // remove the rectangle object from the queue
+        }
+    }
+
+    //Delete all pointers from Queue
+    while(myQueue.size() > 0) {
+      delete myQueue.front(); // free memory
+      myQueue.pop(); // remove the shape objects from the queue
     }
 }
 

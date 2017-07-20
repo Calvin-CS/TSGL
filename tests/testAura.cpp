@@ -1,7 +1,7 @@
 /*
  * testAura.cpp
  *
- * Usage: ./testAura <width> <height> <numThreads>
+ * Usage: ./testAura <width> <height> <numSegments>
  */
 //TODO: write lots of comments
 
@@ -28,7 +28,7 @@ inline void scatter(float& f, float max) {
 /** \brief Runs the Aura example
   * \details
   *   \param can The Canvas to display the aura.
-  *   \param segs The
+  *   \param segs The number of segments to include.
   */
 void auraFunction(Canvas& can, int segs) {
   const float SR2 = sqrt(2);
@@ -38,6 +38,8 @@ void auraFunction(Canvas& can, int segs) {
   const float HUEDELTA = 0.01f;
   const float OFF = (2*PI/segs);
   const float START = PI/2;
+
+  can.setBackgroundColor(WHITE);
 
   int mx, my;
   ColorHSV   *cf = new ColorHSV[segs];
@@ -52,6 +54,8 @@ void auraFunction(Canvas& can, int segs) {
     cf[i] = Colors::highContrastColor(i);
     cf[i].A = 0.01f;
   }
+
+  srand(time(NULL)); // seed the random number generator
 
   while(can.isOpen()) {
     //Update mouse coordinates
@@ -82,7 +86,6 @@ void auraFunction(Canvas& can, int segs) {
     }
 
     //Draw the triangles
-    can.pauseDrawing();
     for (int i = 0; i < segs; drawn[i++] = false);
     for (int i = 0; i < segs; ++i) {
       int next = -1;
@@ -97,12 +100,13 @@ void auraFunction(Canvas& can, int segs) {
           next = j;
         }
       }
-	  if (next >= 0) {
-		can.drawTriangle(mx,my,x1[next],y1[next],x2[next],y2[next],cf[next],true);
-		drawn[next] = true;
-	  }
+	    if (next >= 0) {
+		    Triangle* t = new Triangle(mx,my,x1[next],y1[next],x2[next],y2[next],cf[next]);
+        t->setHasOutline(false);
+        can.add(t);
+		    drawn[next] = true;
+	    }
     }
-    can.resumeDrawing();
     can.sleep();
   }
 
@@ -115,8 +119,8 @@ void auraFunction(Canvas& can, int segs) {
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : -1;
   int h = (argc > 2) ? atoi(argv[2]) : w;
-  int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs()*2;
+  int s = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs()*2;
   Canvas c(-1, -1, w, h, "Aura");
   c.setBackgroundColor(BLACK);
-  c.run(auraFunction,t);
+  c.run(auraFunction,s);
 }

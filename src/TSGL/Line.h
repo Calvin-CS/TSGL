@@ -44,6 +44,13 @@ class Line : public Polyline {
       */
     void setSecondEnd(int x, int y);
 
+    /**
+     * \brief Calculates the length of the line.
+     * \details Finds the distance between the two ends of the line.
+     * \return Length of the Line.
+     */
+    float getLength();
+
 };
 
 }

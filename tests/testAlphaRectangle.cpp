@@ -26,6 +26,8 @@ void alphaRectangleFunction(Canvas& can) {
     const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
     int a, b, c, d;
 
+    srand(time(NULL)); // seed the random number generator
+
     // Queue to hold the last few rects
     std::queue<Rectangle *> myQueue;
 
@@ -47,9 +49,16 @@ void alphaRectangleFunction(Canvas& can) {
         if (myQueue.size() >= 50) {
           can.remove(myQueue.front());  // stop rendering the rectangle each frame
           delete myQueue.front(); // free memory
-          myQueue.pop(); // remove the rectangle object from the queue
+          myQueue.pop(); // remove the rectangle objects from the queue
         }
     }
+
+    //Delete all pointers from Queue
+    while(myQueue.size() > 0) {
+      delete myQueue.front(); // free memory
+      myQueue.pop(); // remove the shape objects from the queue
+    }
+
 }
 
 //Takes command-line arguments for the width and height of the screen

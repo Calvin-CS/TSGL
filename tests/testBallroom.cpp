@@ -72,12 +72,13 @@ class BouncingBall {
 private:
   float mySpeed, myDir;
   int rw, rh;
+  Circle * circle;
+  Canvas * can;
 public:
   Vector2 pos, vel, acc;
   ColorFloat color;
   int rad;
   bool bounced;
-  Circle * circle;
   BouncingBall(int x, int y, int r, int w, int h, ColorFloat c, Canvas * can) {
     pos = Vector2(x,y);
     vel = Vector2(0,0);
@@ -91,7 +92,7 @@ public:
     circle = new Circle(x,y,r,16,c);
     can->add(circle);
   }
-  BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorFloat c, Canvas * can) {
+  BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorFloat c, Canvas * canvas) {
     pos = Vector2(x,y);
     vel = Vector2(vx,vy);
     acc = Vector2(0,0.1f);
@@ -102,8 +103,13 @@ public:
     rh = h;
     color = c;
     bounced = false;
+    can = canvas;
     circle = new Circle(x,y,r,16,c);
     can->add(circle);
+  }
+  ~BouncingBall() {
+    can->remove(circle);
+    delete circle;
   }
   void calcSpeed() {
     mySpeed = vel.length();
@@ -180,13 +186,15 @@ private:
   std::list<BouncingBall*> balls;
   std::list<BouncingBall*>::const_iterator it, jt;
   Circle * mouseCircle;
+  Canvas * can;
 public:
-  BallRoom(int w, int h, Canvas * can) {
+  BallRoom(int w, int h, Canvas * canvas) {
     width = w;
     height = h;
     friction = 0.99f;
     gravity = 0.1f;
     attract = true;
+    can = canvas;
     mouseCircle = new Circle(0,0,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
     can->add(mouseCircle);
   }
@@ -195,13 +203,14 @@ public:
       BouncingBall* b = balls.front();
       balls.pop_front();
       delete b;
-      delete mouseCircle;
     }
+    can->remove(mouseCircle);
+    delete mouseCircle;
   }
-  void addBall(int x, int y, int r, Canvas * can, ColorFloat c = WHITE) {
-    addBall(x,y,0,0,r,can,c);
+  void addBall(int x, int y, int r, ColorFloat c = WHITE) {
+    addBall(x,y,0,0,r,c);
   }
-  void addBall(int x, int y, int vx, int vy, int r, Canvas * can, ColorFloat c = WHITE) {
+  void addBall(int x, int y, int vx, int vy, int r, ColorFloat c = WHITE) {
     BouncingBall* b = new BouncingBall(x,y,vx,vy,r,width,height,c,can);
     const int MAXFAIL = 1000;
     int fails = 0;
@@ -278,11 +287,12 @@ void ballroomFunction(Canvas& can) {
     const int WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
     BallRoom b(WW,WH,&can);
+    srand(time(NULL)); // seed the random number generator
     for (int i = 0; i < 100; ++ i) {
       float speed = 5.0f;
       float dir = 2 * 3.14159f * (rand() % 100) / 100.0f;
       b.addBall(25 + rand() % (WW-50),25 + rand() % (WH-50),speed*cos(dir),speed*sin(dir),10,
-        &can,ColorInt(64 + rand() % 192,64 + rand() % 192,64 + rand() % 192,255));
+        ColorInt(64 + rand() % 192,64 + rand() % 192,64 + rand() % 192,255));
     }
 
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&b]() {

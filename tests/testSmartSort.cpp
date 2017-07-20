@@ -114,6 +114,7 @@ struct sortData {
 void smartSortFunction(Canvas& can, int threads, int size) {
     const int IPF = 1;      // Iterations per frame
     int* numbers = new int[size];       // Array to store the data
+    srand(time(NULL)); // seed the random number generator
     for (int i = 0; i < size; i++)
       numbers[i] = rand() % (can.getWindowHeight() - MARGIN);
 
@@ -129,7 +130,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
       else          l += bs;
     }
 
-    //Lines
+    //Create Lines
     std::vector<Line*> lines(size, NULL);
     for(int i = 0; i < size; i++) {
       lines[i] =  new Line(0, 0, 0, 0, BLACK);
@@ -154,7 +155,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
             }
             for (int i = 0; i < IPF; i++)
               sd[tid]->sortStep();
-            can.pauseDrawing();  //Tell the Canvas to stop updating the screen temporarily
+            // can.pauseDrawing();  //Tell the Canvas to stop updating the screen temporarily
             int start = MARGIN/2 + sd[tid]->first, height;
             int cwh = can.getWindowHeight() - MARGIN/2;
             ColorFloat color;
@@ -180,7 +181,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
 
               }
             }
-            can.resumeDrawing();  //Tell the Canvas it can resume updating
+            // can.resumeDrawing();  //Tell the Canvas it can resume updating
         }
     }
     for (int i = 0; i < threads; ++i)

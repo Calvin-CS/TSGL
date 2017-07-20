@@ -63,17 +63,27 @@ void projectileFunction(Canvas& can) {
     }
   });
 
+  //Create circles of target and add to Canvas
+  Circle * blueCircle = new Circle(targetX, targetY, 50, 32, blueTarget);   //Outer circle
+  Circle * redCircle = new Circle(targetX, targetY, 30, 32, redTarget);  //Middle
+  Circle * yellowCircle = new Circle(targetX, targetY, 10, 32, yellowTarget); //Inner
+  can.add(blueCircle); can.add(redCircle); can.add(yellowCircle);
+
   //Draw loop
   while(can.isOpen()) {
     can.sleep();
-    can.pauseDrawing();
-    can.clear();
+
     targetX += coordinateChangerX;  //Horizontal movement
     targetY -= coordinateChangerY; //Vertical movement
-    can.drawCircle(targetX, targetY, 50, 32, blueTarget, true);   //Outer circle
-    can.drawCircle(targetX, targetY, 30, 32, redTarget, true);  //Middle
-    can.drawCircle(targetX, targetY, 10, 32, yellowTarget, true); //Inner
-    can.resumeDrawing();
+
+    blueCircle->setCenter(targetX, targetY);
+    redCircle->setCenter(targetX, targetY);
+    yellowCircle->setCenter(targetX, targetY);
+
+    if(numberOfTargets == 0) {   //End game
+      std::cout << "Your score: " << score << std::endl;
+      can.stop();
+    }
     if(targetX >= centerX) { //If it hits the middle of the screen, invert the vertical direction
       coordinateChangerY = -1;
     }
@@ -92,11 +102,9 @@ void projectileFunction(Canvas& can) {
       coordinateChangerX = 6;
     }
 
-    if(numberOfTargets == 0) {   //End game
-      std::cout << "Your score: " << score << std::endl;
-      return;
-    }
   }
+
+  delete redCircle, blueCircle, yellowCircle; //free memory from Circle pointers
 }
 
 //Takes command-line arguments for the width and height
@@ -104,6 +112,5 @@ int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
   Canvas c(-1, -1, w, h, "Click the Target!");    //Can change the size of the window
-  c.setBackgroundColor(BLACK);
   c.run(projectileFunction);
 }

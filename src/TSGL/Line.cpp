@@ -21,4 +21,11 @@ void Line::setSecondEnd(int x, int y) {
   attribMutex.unlock();
 }
 
+float Line::getLength() {
+  attribMutex.lock();
+  float length = sqrt((vertices[0]-vertices[2])*(vertices[0]-vertices[2])+(vertices[1]-vertices[3])*(vertices[1]-vertices[3]));
+  attribMutex.unlock();
+  return length;
+}
+
 }
