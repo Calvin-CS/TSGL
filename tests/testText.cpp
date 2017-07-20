@@ -32,7 +32,7 @@ void textFunction(Canvas& can) {
     Text * t5 = new Text("And to that I say...oh well.", 16, 550, 8, WHITE);
     can.add( t0 ); can.add( t1 ); can.add( t2 ); can.add( t3 ); can.add( t4 ); can.add( t5 );
 
-    while( can.isOpen() ) { can.sleep(); } //Wait until Canvas is closed...
+    can.wait(); //Wait until Canvas is closed...
     //Then free memory from Text pointers
     delete t0; delete t1; delete t2;
     delete t3; delete t4; delete t5;

@@ -30,7 +30,7 @@ class ConcavePolygon : public Polygon {
     void cleanup();     // Prepares the vertices for drawing
 
     static bool testIntersects();     // Unit test for intersects()
-    static bool testPointITriangle(); // Unit test for pointInTriangle()
+    static bool testPointInTriangle(); // Unit test for pointInTriangle()
 
  public:
 

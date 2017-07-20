@@ -284,7 +284,7 @@ void Table::nFrameReleaseMethod(int id) {
  * .
  * \param id The id number of the current Philosopher.
  */
-void Table::hieararchyMethod(int id) {
+void Table::hierarchyMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -400,7 +400,7 @@ void Table::checkStep() {
       nFrameReleaseMethod(i);
       break;
     case resourceHierarchy:
-      hieararchyMethod(i);
+      hierarchyMethod(i);
       break;
     case oddEven:
       oddEvenMethod(i);

@@ -5,6 +5,7 @@
  */
 
 #include <tsgl.h>
+#include <queue>
 
 using namespace tsgl;
 
@@ -43,27 +44,52 @@ void lineChainFunction(Canvas& can, int t) {
   const int IPF = 3;
   const int CWW = can.getWindowWidth() / 2, CWH = can.getWindowHeight() / 2;
   const float ARC = 2.3f, SPIN = 0.01f;
+
+  bool paused = false; // Flag that determines whether the animation is paused
+  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&paused]() { // toggle pause when spacebar is pressed
+		paused = !paused;
+	});
+
   #pragma omp parallel num_threads(t)
   {
     const float NTHREADS = omp_get_num_threads();
     const float FADERATE = (NTHREADS < 200) ? 1.0f*NTHREADS/200 : 1;
     const int TID = omp_get_thread_num();
-    int xOld, yOld, xNew = CWW*2, yNew = CWH;
+    int xNew = CWW*2, yNew = CWH;
     float next = (ARC*TID)/NTHREADS, s = next;
     ColorFloat c = Colors::highContrastColor(TID);
+    std::queue<Polyline*> myLines;
     while (can.isOpen()) {  // Checks to see if the window has been closed
       can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
-      for (int i = 0; i < IPF; ++i) {
+      while(paused && can.isOpen()) {}
+      Polyline* newLine = new UnfilledShape(IPF*2,c);
+      for (int i = 0; i < IPF*2; ++i) {
         next += ARC; s += SPIN;
-        xOld = xNew; yOld = yNew;
         float size = cos(s);
         xNew = CWW + CWW*size*cos(next);
         yNew = CWH + CWH*size*sin(next);
-        can.drawLine(xOld, yOld, xNew, yNew, c);
+        newLine->addVertex(xNew, yNew);
       }
-      if (TID == 0)
-        can.drawRectangle(0,0,CWW*2,CWH*2,ColorFloat(0,0,0,FADERATE));
+
+      //Add the line to our Queue and Canvas
+      can.add(newLine);
+      myLines.push(newLine);
+
+      //Delete oldest line
+      //TODO: fade less old lines
+      if(myLines.size() > 10) {
+        Polyline* oldLine = myLines.front();
+        myLines.pop();
+        can.remove(oldLine);
+        delete oldLine;
+      }
       #pragma omp barrier
+    }
+
+    //After Canvas is closed...
+    while(myLines.size() > 0) { //Delete pointers to lines in Queue
+      delete myLines.front();
+      myLines.pop();
     }
   }
 }
@@ -81,4 +107,5 @@ int main(int argc, char* argv[]) {
     Canvas c(-1, -1, w, h, "Spirograph");
     c.setBackgroundColor(BLACK);
     c.run(lineChainFunction,t);
+    std::cout << "Done!" << std::endl;
 }

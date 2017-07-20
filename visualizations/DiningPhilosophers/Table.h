@@ -35,7 +35,7 @@ public:
   void forfeitWhenBlockedMethod(int id);
   void waitWhenBlockedMethod(int id);
   void nFrameReleaseMethod(int id);
-  void hieararchyMethod(int id);
+  void hierarchyMethod(int id);
   void oddEvenMethod(int id);
 
   void checkStep();
