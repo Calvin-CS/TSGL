@@ -7,13 +7,16 @@
 using namespace tsgl;
 
 Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
-  leftPaddle = new Paddle(can, paddleSpeed);  // Create the Paddle objects and the Ball object
-  rightPaddle = new Paddle(can, paddleSpeed);
+  leftPaddle = new Paddle(can, paddleSpeed, -1);  // Create the Paddle objects and the Ball object
+  rightPaddle = new Paddle(can, paddleSpeed, 1);
   srand(time(NULL));
   //Bind the buttons
   leftPaddle->bindings(can, -1);  // W & S keys
   rightPaddle->bindings(can, 1);  // Up and Down arrow keys
   pongBall = new Ball(can, ballSpeed);
+  leftScore = new Text("0", can.getWindowWidth() / 2-64, 20, 8, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
+  rightScore = new Text("0", can.getWindowWidth()/2+64, 20, 8, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
+  can.add(leftScore); can.add(rightScore);
 }
 
 void Pong::draw(Canvas& can) {
@@ -30,29 +33,17 @@ void Pong::draw(Canvas& can) {
       rightPaddle->increment();
       pongBall->reset(can);
     } else if (pongBall->getY() > can.getWindowHeight() - 8 || pongBall->getY() < 8) pongBall->invert(0); //Invert the ball's y-coordinate changer
-    // Handle ball paddle collisions
-    if (pongBall->getX() < 32 && pongBall->getX() > 0 && pongBall->getY() > leftPaddle->getY() - 8 && pongBall->getY() < leftPaddle->getY() + 72) {
+    // Handle ball paddle collisions TODO: correct these so ball bounces off any part of paddle.
+    if (pongBall->getX() < 16 && pongBall->getX() > -16 && pongBall->getY() > leftPaddle->getY() - 8 && pongBall->getY() < leftPaddle->getY() + 72) {
       pongBall->invert(1);
-    } else if (pongBall->getX() > can.getWindowWidth() - 32 && pongBall->getX() < can.getWindowWidth() && pongBall->getY() > rightPaddle->getY() - 8 &&  pongBall->getY() < rightPaddle->getY() + 72) {
+    } else if (pongBall->getX() > can.getWindowWidth() - 16 && pongBall->getX() < can.getWindowWidth() + 16 && pongBall->getY() > rightPaddle->getY() - 8 &&  pongBall->getY() < rightPaddle->getY() + 72) {
       pongBall->invert(1);
     }
     // Move the paddles if necessary
     leftPaddle->move();
     rightPaddle->move();
-    can.clear();
-    // Draw the paddles and ball
-    leftPaddle->draw(can, -1);
-    rightPaddle->draw(can, 1);
-    pongBall->draw(can);
-    // Draw Scores
-    int cww = can.getWindowWidth() / 2;
-    for (int i = 0; i < leftPaddle->getPoints(); i++) {
-      int x = cww - 64 - 4 * i;
-      can.drawRectangle(x, 16, x+2, 24, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
-    }
-    for (int i = 0; i < rightPaddle->getPoints(); i++) {
-      int x = cww + 64 + 4 * i;
-      can.drawRectangle(x, 16, x + 2, 24, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
-    }
+    // Update Scores
+    leftScore->setString( to_string(leftPaddle->getPoints()));
+    rightScore->setString( to_string(rightPaddle->getPoints()));
   }
 }

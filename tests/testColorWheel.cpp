@@ -6,6 +6,7 @@
 
 #include <omp.h>
 #include <tsgl.h>
+#include <vector>
 #include "Util.h"  //Constants
 
 using namespace tsgl;
@@ -42,21 +43,34 @@ void colorWheelFunction(Canvas& can, int threads) {
               CH = can.getWindowHeight() / 2;         // Half the window's height
     const float RADIUS = (CH < CW ? CH : CW) * .95,   // Radius of wheel
                 GRADIENT = 2 * PI / NUM_COLORS;       // Gap between wedges
+
+    std::vector<Triangle*> segs(NUM_COLORS);
+    float x2, x3, y2, y3;
+    for(int i = 0; i < NUM_COLORS; i++) {
+        int s = (NUM_COLORS - i) % NUM_COLORS;
+        x2 = CW + RADIUS * sin(GRADIENT * s);
+        y2 = CH + RADIUS * cos(GRADIENT * s);
+        x3 = CW + RADIUS * sin(GRADIENT * (s + 1));
+        y3 = CH + RADIUS * cos(GRADIENT * (s + 1));
+        Triangle* t = new Triangle(CW, CH, x2, y2, x3, y3, BLACK);
+        t->setHasOutline(false);
+        segs[i] = t;
+        can.add(t);
+    }
+
     #pragma omp parallel num_threads(threads)
     {
         float x2, x3, y2, y3, shading;
         int tid = omp_get_thread_num();
         int delta = tid * NUM_COLORS / threads;           // Distance between threads to compute
         shading = 1 - (float) tid / threads;
+        int counter = 0;
         while (can.isOpen()) {
             can.sleep();
-            int start = (NUM_COLORS - (can.getReps() % NUM_COLORS) + delta) % NUM_COLORS;
-            x2 = CW + RADIUS * sin(GRADIENT * start);
-            y2 = CH + RADIUS * cos(GRADIENT * start);
-            x3 = CW + RADIUS * sin(GRADIENT * (start + 1));
-            y3 = CH + RADIUS * cos(GRADIENT * (start + 1));
-            can.drawTriangle(CW, CH, x2, y2, x3, y3,
-                             ColorHSV(start * 6.0f / NUM_COLORS, 1.0f, shading));
+            #pragma omp barrier               //Barrier for synchronization
+            int start = (NUM_COLORS - (counter % NUM_COLORS) + delta) % NUM_COLORS;
+            segs[start]->setColor(ColorHSV(start * 6.0f / NUM_COLORS, 1.0f, shading));
+            counter++;
         }
     }
 }

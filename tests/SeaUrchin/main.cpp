@@ -7,7 +7,7 @@
 #include "tsgl.h"
 #include <omp.h>
 
-#include "SeaUrchin/SeaUrchin.h"
+#include "SeaUrchin.h"
 
 using namespace tsgl;
 
@@ -43,13 +43,13 @@ using namespace tsgl;
  * \see testLineFan, SeaUrchin class.
  */
 void seaUrchinFunction(Canvas& can, int threads) {
+  can.setBackgroundColor(WHITE);
   #pragma omp parallel num_threads(threads)
   {
     SeaUrchin s(can, omp_get_thread_num());   //A thread gets a Sea Urchin
     while(can.isOpen()) {   //Draw loop
-      can.sleep();
-      can.clear();
-      s.draw(can);  //And draws it
+      can.sleep();  //Wait for a moment
+      s.move(can);  //And move the Sea Urchin
     }
   }
   std::cout << "YOU KILLED MY SEA URCHINS! :'(" << std::endl;
@@ -59,7 +59,5 @@ int main(int argc, char * argv[]) {
   int nthreads = (argc > 1) ? atoi(argv[1]) : 16;  //Number of threads
   clamp(nthreads,1,16);                            //Max number of threads is 16
   Canvas c(-1, -1, 885, 230, "Sea Urchins!", FRAME * 2);
-  c.setBackgroundColor(BLACK);
   c.run(seaUrchinFunction, nthreads);
 }
-

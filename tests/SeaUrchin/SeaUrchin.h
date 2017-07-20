@@ -6,6 +6,7 @@
 #define SEAURCHIN_H_
 
 #include <tsgl.h>
+#include <vector>
 
 using namespace tsgl;
 
@@ -25,7 +26,7 @@ public:
 
   /*!
    * \brief Explicitly construct a SeaUrchin object.
-   * \details Explicit constructor for a SeaUrchin object.
+   * \details Explicit constructor for a SeaUrchin object and adds it to the Canvas.
    * \param can Reference to the Canvas to draw to.
    * \param threadId The id of the thread that is currently creating a SeaUrchin object.
    * \return The constructed SeaUrchin object.
@@ -33,23 +34,23 @@ public:
   SeaUrchin(Canvas& can, int threadId);  //Default constructor
 
   /*!
-   * \brief Draw the SeaUrchin.
-   * \details Actually draws the SeaUrchin object onto the Canvas.
-   * \param can Reference to the Canvas object to draw to.
+   * \brief Move the SeaUrchin.
+   * \details Moves the SeaUrchin by moving its lines.
+   * \param can Reference to the Canvas object drawn to. (Used to coordinate timing.)
    */
-  void draw(Canvas& can);
+  void move(Canvas& can);
 
   /*!
    * \brief Destroy a SeaUrchin.
    * \details Destructor for a SeaUrchin object.
-   * \note This function does absolutely nothing.
    */
   virtual ~SeaUrchin();
 
 private:
-  static const int MY_SPOKES = 8;
-  int myOldX, myOldY, myNewX, myNewY;
-  ColorFloat myColor;
+  static const int MY_SPOKES = 8; //Number of spokes for all SeaUrchins
+  int myOldX, myOldY, myNewX, myNewY; //Coordinates for the spokes
+  ColorFloat myColor; //Color of SeaUrchin
+  std::vector<Line*> lines; //Lines on Canvas for SeaUrchin
 };
 
 #endif /* SEAURCHIN_H_ */

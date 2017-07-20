@@ -4,7 +4,7 @@
  * Usage: ./testPong <ballSpeed> <paddleSpeed>
  */
 
-#include "Pong/Pong.h"
+#include "Pong.h"
 
 using namespace tsgl;
 

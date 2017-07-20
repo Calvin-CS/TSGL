@@ -68,6 +68,7 @@ class Text : public Drawable {
     *   \param x The x coordinate of the base of the Text.
     *   \param y The y coordinate of the base of the Text.
     *   \param font_size The size of the Text's font.
+    *   \param c Reference of the color for the Text.
     *   \param fname The location of the font's file. (Defaults to FreeSans.)
     */
     Text(std::string t, int x, int y, unsigned int font_size, const ColorFloat &c, std::string fname = "assets/freefont/FreeSans.ttf");

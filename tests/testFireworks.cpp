@@ -22,12 +22,12 @@ public:
   /*!
    * \brief
    * \details
-   * \param
-   * \param
-   * \param
-   * \param
-   * \param
-   * \param
+   * \param can Reference to the Canvas the Dot draw on.
+   * \param x The x coordinate of the Dot.
+   * \param y The y coordinate of the Dot.
+   * \param s Speed of the Dot.
+   * \param d Direction of Dot.
+   * \param f Friction of Dot.
    * \return
    */
   Dot(Canvas& can, float x, float y, float s, float d, float f) {
@@ -61,9 +61,9 @@ public:
   /*!
    * \brief
    * \details
-   * \param
-   * \param
-   * \param
+   * \param can Reference to Canvas the Firework draws on.
+   * \param x The x coordinate of the Firework.
+   * \param y The y coordinate of teh Firework.
    * \return
    */
   Firework(Canvas& can, int x, int y) {

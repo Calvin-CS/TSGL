@@ -5,7 +5,7 @@
  */
 
 #include <tsgl.h>
-#include "Conway/LifeFarm.h"
+#include "LifeFarm.h"
 
 using namespace tsgl;
 

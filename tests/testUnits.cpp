@@ -1,10 +1,8 @@
 /*
- * testUnits.cpp
+ * testUnits.cpp runs the unit tests for the TSGL library.
  *
  * Usage: ./testUnits
  */
-
-/* testUnits.cpp runs the unit tests for the TSGL library. */
 
 #include "tsgl.h"
 

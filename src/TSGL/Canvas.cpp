@@ -847,7 +847,8 @@ namespace tsgl {
   }
 
   void Canvas::drawPoint(int x, int y, ColorFloat color) {
-    //TODO implement this
+    Point* p = new Point(x, y, color);
+    this->add(p);  //TODO test thread safety
   }
 
   //TODO: change to just add the ProgressBar as one item (rather than rect and border)
@@ -875,14 +876,12 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   }
 
   void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
-    // std::wstring wsTmp(text.begin(), text.end());
-    // std::wstring ws = wsTmp;
-    // drawText(ws, x, y, size, color);
+    Text* t = new Text(text, x, y, size, color);  // Creates the Point with the specified coordinates and color
+    this->add(t);                                // Push it onto our drawing buffer
   }
 
   void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
-    // Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-    // this->add(t);                                // Push it onto our drawing buffer
+    drawText( to_string("text"), x, y, size, color); //TODO: add conversion from std::wstring to std::string
   }
 
   void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
@@ -890,8 +889,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
         t->setHasOutline(false);
         this->add(t);                                               // Push it onto our drawing buffer
-    }
-    else {
+    } else {
       UnfilledTriangle* t = new UnfilledTriangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
       this->add(t);                                               // Push it onto our drawing buffer
     }
@@ -904,8 +902,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
             p->addVertex(xverts[i], yverts[i]);
         }
         this->add(p);  // Push it onto our drawing buffer
-    }
-    else {
+    } else {
         Polyline* p = new Polyline(size, color[0]);
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i]);

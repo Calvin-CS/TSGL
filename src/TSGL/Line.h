@@ -28,6 +28,29 @@ class Line : public Polyline {
      */
     Line(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK);
 
+    /**
+      * \brief Moves one end of the Line.
+      * \details Moves the end of the line originally specified by (x1, y1).
+      *   \param x The new x coordinate.
+      *   \param y The new y coordinate.
+      */
+    void setFirstEnd(int x, int y);
+
+    /**
+      * \brief Moves one end of the Line.
+      * \details Moves the end of the line originally specified by (x2, y2).
+      *   \param x The new x coordinate.
+      *   \param y The new y coordinate.
+      */
+    void setSecondEnd(int x, int y);
+
+    /**
+     * \brief Calculates the length of the line.
+     * \details Finds the distance between the two ends of the line.
+     * \return Length of the Line.
+     */
+    float getLength();
+
 };
 
 }
