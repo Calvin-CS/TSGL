@@ -19,25 +19,49 @@ SRC := $(wildcard *.cpp)
 OBJ := $(addprefix $(BLDDIR)/, $(SRC:.cpp=.o))
 DEP := $(OBJ:.o=.d)
 
+# OS Check
+UNAME := $(shell uname)
+
+
+
 # Commands
+ifeq ($(UNAME), Linux)
 CC = g++
 RM = rm -f
+endif
+
+ifeq ($(UNAME), Darwin)
+CC = g++-7
+RM = rm -f
+endif
 
 #Linker flags
+# Linux
+ifeq ($(UNAME), Linux)
 LFLAGS = \
 	-Llib/ \
-	-L"/home/erk24/workspace/TSGL/src/glad" \
 	-L/usr/local/lib \
 	-L/usr/lib \
 	-L/usr/X11/lib/ \
 	-L/opt/AMDAPP/lib/x86_64/ \
 	-fopenmp -lfreetype -ldl -lm -lGLEW -lglfw -lX11 -lGL -lXrandr
+endif
+
+
+# MacOS
+ifeq ($(UNAME), Darwin)
+LFLAGS = \
+	-Llib/ -L/usr/local/lib  -L/usr/X11/lib/ \
+	-lfreetype -lGLEW -lglfw -lX11  -lXrandr -fopenmp \
+	-framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
+endif
 
 #Compiler flags
 CFLAGS = \
 	-std=c++0x \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-I/usr/local/include/Cellar/glfw3/3.1.1/include/ \
+	-I../../include/ \
 	-I../../src/ \
 	-I../../src/TSGL/ \
 	-I/usr/include/ \

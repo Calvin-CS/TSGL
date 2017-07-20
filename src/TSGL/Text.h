@@ -39,6 +39,8 @@ class Text : public Drawable {
       bool isSpace = false;
       int width;
       int height;
+      int texwidth;
+      int texheight;
       int advance_x;
       int advance_y;
       int bearing;

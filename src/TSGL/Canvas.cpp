@@ -25,6 +25,8 @@ namespace tsgl {
   void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
     ++openCanvases;
 
+    // printf("Canvas height, width %d, %d\n", ww, hh);
+
     objectBuffer.clear();   // Clears the object buffer, just for peace-of-mind
 
     if (ww == -1)

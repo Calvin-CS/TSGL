@@ -40,7 +40,7 @@ namespace tsgl {
     }
 
     // Set the character size
-    error = FT_Set_Char_Size( face, 0, font_size*64, 300, 300 );
+    error = FT_Set_Char_Size( face, 0, font_size*64*2, 300, 300 );
     if (error) {
       fprintf(stderr, "Error while setting the FreeType font size!\n");
       exit(-1);
@@ -93,11 +93,13 @@ namespace tsgl {
         char_obj->character = text[n];
 
         // Save the width, height, and bearing into the struct
-        char_obj->width = slot->bitmap.width;
-        char_obj->height = slot->bitmap.rows;
-        char_obj->advance_x = slot->advance.x /64;
-        char_obj->advance_y = slot->advance.y /64;
-        char_obj->bearing = slot->metrics.horiBearingY /64;
+        char_obj->width = slot->bitmap.width/2;
+        char_obj->texwidth = slot->bitmap.width;
+        char_obj->height = slot->bitmap.rows/2;
+        char_obj->texheight = slot->bitmap.rows;
+        char_obj->advance_x = slot->advance.x /64 /2;
+        char_obj->advance_y = slot->advance.y /64 /2;
+        char_obj->bearing = slot->metrics.horiBearingY /64 /2;
 
         // Update maxBearing
         if (char_obj->bearing > maxBearing) maxBearing = char_obj->bearing;
@@ -113,7 +115,7 @@ namespace tsgl {
         // char_obj->bitmap_buffer = newBuffer;
 
         // Create new buffer object
-        size_t bufSize = char_obj->width*char_obj->height;
+        size_t bufSize = char_obj->texwidth*char_obj->texheight;
         char* newBuffer = new char[bufSize *4];
 
         int i,j = 0;
@@ -182,8 +184,8 @@ namespace tsgl {
       glTexImage2D(	GL_TEXTURE_2D,
         0,
         4, /* internal color number */
-        (*it)->width,
-        (*it)->height,
+        (*it)->texwidth,
+        (*it)->texheight,
         0,
         GL_RGBA,
         GL_UNSIGNED_BYTE,

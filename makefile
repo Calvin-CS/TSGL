@@ -5,43 +5,42 @@ VISPRJDIR = visualizations
 TESTDIR = tests
 BINDIR = bin
 BLDDIR = build
-GLAD = $(SRCDIR)/glad.o
 
 #Header Files
 HEADERS := $(wildcard $(SRCDIR)/*.h) $(wildcard $(TSGLSRCDIR)/*.h)
 # TODO depend on headers!!!
 
 #Library Files
-TSGLSRC := $(wildcard $(TSGLSRCDIR)/*.cpp)
+TSGLSRC := $(wildcard $(TSGLSRCDIR)/*.cpp)  $(SRCDIR)/glad.cpp
 TSGLOBJ := $(addprefix build/, $(TSGLSRC:.cpp=.o))
 TSGLDEP := $(TSGLOBJ:.o=.d)
 
 #Tester Program Files
-PRGMSRC := $(wildcard $(SRCDIR)/*.cpp)
+PRGMSRC := $(wildcard $(SRCDIR)/main.cpp)
 PRGMOBJ := $(addprefix build/, $(PRGMSRC:.cpp=.o))
 PRGMDEP := $(PRGMOBJ:.o=.d)
 
 #Reader/Writer Program Files
-RWSRC := $(wildcard $(VISPRJDIR)/ReaderWriter/*.cpp) $(SRCDIR)/glad.cpp
+RWSRC := $(wildcard $(VISPRJDIR)/ReaderWriter/*.cpp)
 RWOBJ := $(addprefix build/, $(RWSRC:.cpp=.o))
 RWDEP := $(RWOBJ:.o=.d)
 
 #Dining Philosophers Program Files
-DPHSRC := $(wildcard $(VISPRJDIR)/DiningPhilosophers/*.cpp) $(SRCDIR)/glad.cpp
+DPHSRC := $(wildcard $(VISPRJDIR)/DiningPhilosophers/*.cpp)
 DPHOBJ := $(addprefix build/, $(DPHSRC:.cpp=.o))
 DPHDEP := $(DPHOBJ:.o=.d)
 
 #Producer/Consumer Program Files
-PCSRC := $(wildcard $(VISPRJDIR)/ProducerConsumer/*.cpp) $(SRCDIR)/glad.cpp
+PCSRC := $(wildcard $(VISPRJDIR)/ProducerConsumer/*.cpp)
 PCOBJ := $(addprefix build/, $(PCSRC:.cpp=.o))
 PCDEP := $(PCOBJ:.o=.d)
 
 #Tests subfolders
-TESTFOLDERS := $(notdir $(shell find $(TESTDIR)/ -maxdepth 1 -type d))
+# TESTFOLDERS := $(notdir $(shell find $(TESTDIR)/ -maxdepth 1 -type d))
 
 #Tests
-TESTMAINS := $(wildcard $(TESTDIR)/*.cpp)
-TESTSRC := $(wildcard $(TESTDIR)/*.cpp) $(SRCDIR)/glad.cpp
+TESTPRGMS := $(basename $(notdir $(wildcard $(TESTDIR)/*.cpp)))
+TESTSRC := $(wildcard $(TESTDIR)/*.cpp)
 TESTOBJ := $(addprefix build/, $(TESTSRC:.cpp=.o))
 TESTDEP := $(TESTOBJ:.o=.d)
 
@@ -69,7 +68,6 @@ endif
 ifeq ($(UNAME), Linux)
 LFLAGS = \
 	-Llib/ \
-	-L"/home/erk24/workspace/TSGL/src/glad" \
 	-L/usr/local/lib \
 	-L/usr/lib \
 	-L/usr/X11/lib/ \
@@ -112,7 +110,7 @@ CFLAGS = \
 
 
 
-all: tester ReaderWriter DiningPhilosophers ProducerConsumer $(TESTMAINS:.cpp=) $(TESTFOLDERS)
+all: tester ReaderWriter DiningPhilosophers ProducerConsumer
 
 #Test Program
 tester: $(PRGMOBJ) $(TSGLOBJ) $(HEADERS)
@@ -150,18 +148,21 @@ ProducerConsumer: $(PCOBJ) $(TSGLOBJ)
 	@echo ""
 	$(CC) $(PCOBJ) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
 
-#Tests with multiple files
-$(TESTFOLDERS): $(TSGLOBJ)
-	cd tests/$@ && make
 
-#Tests
-$(TESTMAINS:.cpp=): $(TESTOBJ) $(TSGLOBJ)
+
+#Build all single-file tests
+sftests: $(TSGLOBJ) $(TESTPRGMS)
+
+#Single-file test programs
+$(TESTPRGMS): %: $(BLDDIR)/tests/%.o $(TSGLOBJ)
 	@echo ""
 	@tput setaf 3;
-	@echo "//////////////////// Linking Test $@ ////////////////////"
+	@echo "//////////////////// Linking Test Program: $(@) ////////////////////"
 	@tput sgr0;
 	@echo ""
-	$(CC) build/$@.o $(GLAD) $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
+	$(CC) $(BLDDIR)/tests/$(@).o $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
+
+
 
 
 # Include header dependencies
@@ -171,7 +172,6 @@ $(TESTMAINS:.cpp=): $(TESTOBJ) $(TSGLOBJ)
 -include $(DPHDEP)
 -include $(PCDEP)
 -include $(TESTDEP)
-# -include $(TEST2DEP)
 
 #Building rule for cpp to o
 $(BLDDIR)/%.o: %.cpp
@@ -182,6 +182,7 @@ $(BLDDIR)/%.o: %.cpp
 	@echo ""
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -MMD -MF $(patsubst %.o,%.d,$@) $< -o $@
+
 
 # $(EXECUTABLE): $(OBJECTS)
 # 	echo "--------------Linking Files--------------"
