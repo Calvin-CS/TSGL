@@ -19,7 +19,7 @@ namespace tsgl {
     /*!
     * \brief Explicitly constructs a new RegularPolygon.
     * \details This function draws a regular polygon with the given center, radius, resolution
-    *   (number of sides), color, and fill status.
+    *   (number of sides), and color.
     *   \param x The x coordinate of the regular polygon's center.
     *   \param y The y coordinate of the regular polygon's center.
     *   \param radius The radius of the regular polygon in pixels.
