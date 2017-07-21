@@ -22,7 +22,7 @@ private:
   PhilAction myAction;
   int id, myLeft, myRight;
   Circle * myCircle;
-  std::vector<Circle*> meals;
+  std::vector<RegularPolygon*> meals;
 public:
   Philosopher();
   ~Philosopher();

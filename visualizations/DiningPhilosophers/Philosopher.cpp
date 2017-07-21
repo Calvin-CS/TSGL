@@ -20,7 +20,7 @@ Philosopher::~Philosopher() {
 void Philosopher::draw(Canvas& can, int x, int y) {
   const int SIZE = 32;
   if( myCircle == NULL ) {
-    myCircle = new Circle(x,y,SIZE,SIZE,RED);
+    myCircle = new Circle(x,y,SIZE,RED);
     can.add(myCircle);
   }
 }

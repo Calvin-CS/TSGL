@@ -52,37 +52,46 @@ void lineChainFunction(Canvas& can, int t) {
 
   #pragma omp parallel num_threads(t)
   {
-    const float NTHREADS = omp_get_num_threads();
-    const float FADERATE = (NTHREADS < 200) ? 1.0f*NTHREADS/200 : 1;
+    const float NTHREADS = omp_get_num_threads(); //Number of actual threads
+    const float FADERATE = (NTHREADS < 100) ? 1.0f*NTHREADS/100 : 1;
     const int TID = omp_get_thread_num();
-    int xOld, yOld, xNew = CWW*2, yNew = CWH;
+    int xOld, yOld, xNew = CWW*2, yNew = CWH, layer = TID;
     float next = (ARC*TID)/NTHREADS, s = next;
-    ColorFloat c = Colors::highContrastColor(TID);
-    std::queue<Polyline*> myLines;
+    ColorFloat c = Colors::highContrastColor(TID); //High contrast color for this thread
+
+    //Create and add Rectangle for fading lines
+    Rectangle* myRect = new Rectangle(0, 0, can.getWindowWidth(), can.getWindowHeight(), ColorFloat(0, 0, 0, FADERATE));
+    can.add(myRect);
+
+    std::queue<Polyline*> myLines; //Queue for storing line pointers
     while (can.isOpen()) {  // Checks to see if the window has been closed
       can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
       while(paused && can.isOpen()) {}
 
+      //Make the next line
       next += ARC; s += SPIN;
       xOld = xNew; yOld = yNew;
       float size = cos(s);
       xNew = CWW + CWW*size*cos(next);
       yNew = CWH + CWH*size*sin(next);
       Line* newLine = new Line(xOld, yOld, xNew, yNew, c);
+      newLine->setLayer(layer);
+      layer++;
       //Add the line to our Queue and Canvas
       can.add(newLine);
       myLines.push(newLine);
 
+      myRect->setLayer(layer-2*t); //Creates illusion of lines fading
+
 
       //Delete oldest line
-      //TODO: fade less old lines
-      if(myLines.size() > 30) {
+      if(myLines.size() > 60) {
         Polyline* oldLine = myLines.front();
         myLines.pop();
         can.remove(oldLine);
         delete oldLine;
       }
-      //#pragma omp barrier
+      #pragma omp barrier //Synchronizes all threads
     }
 
     //After Canvas is closed...
@@ -90,6 +99,7 @@ void lineChainFunction(Canvas& can, int t) {
       delete myLines.front();
       myLines.pop();
     }
+    delete myRect; //Delete thread's Rectangle
   }
 }
 

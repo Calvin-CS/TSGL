@@ -25,13 +25,10 @@ using namespace tsgl;
  *     - If we're going down and the element below us is less than us, swap.
  *     - Move in the current direction, inverting our direction if we've reached the minimum / maximum.
  *     .
- *   - Pause the animation.
- *   - Clear the Canvas.
  *   - From 0 to \b SIZE:
  *     - Get the height of each element in the integer array.
- *     - Draw it as a yellow rectangle if it's the currently-computed member; draw it red otherwise.
+ *     - Draw it as a yellow line if it's the currently-computed member; draw it red otherwise.
  *     .
- *   - Resume the animation.
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
@@ -41,6 +38,7 @@ void dumbSortFunction(Canvas& can) {
               IPF = 50;           // Iterations per frame
     int numbers[SIZE];      // Array to store the data
     int pos = 0, temp, min = 1, max = SIZE - 2, lastSwap = 0;
+    int cwh = can.getWindowHeight() - 20;
     bool goingUp = true;
     srand(time(NULL)); // seed the random number generator
     for (int i = 0; i < SIZE; i++)
@@ -51,7 +49,8 @@ void dumbSortFunction(Canvas& can) {
     //Lines
     std::vector<Line*> lines(SIZE, NULL);
     for(int i = 0; i < SIZE; i++) {
-      lines[i] =  new Line(0, 0, 0, 0, BLACK);
+      int height = numbers[i];
+      lines[i] =  new Line(2*i+50, cwh-height, 2*i+50, cwh, RED);
       can.add(lines[i]);
     }
 
@@ -87,10 +86,12 @@ void dumbSortFunction(Canvas& can) {
             pos--;
         }
       }
+
+      //Update visuals of all lines
       int start = 50, height;
-      int cwh = can.getWindowHeight() - 20;
       ColorFloat color;
-      for (int i = 0; i < SIZE; i++, start += 2) {
+      for (int i = 0; i < SIZE; i++) {
+        start = 2*i+50;
         height = numbers[i];
         color = ColorInt(MAX_COLOR, (i == pos) ? MAX_COLOR : 0, 0);
         lines[i]->setFirstEnd(start, cwh-height);

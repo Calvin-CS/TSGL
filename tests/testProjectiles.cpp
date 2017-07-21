@@ -19,11 +19,12 @@ using namespace tsgl;
  * - Get the colors for the target (outer, middle, and bulls-eye center).
  * - Bind the mouse so that when one clicks and hits the target in the middle then
  *   the score counter goes up.
+ * - Create the target's circles.
  * - While the Canvas is still open:
  *    - Sleep the internal timer of the Canvas until the next drawing loop is ready to be drawn.
  *    - Increment the target's x-coordinate by the coordinate changer.
  *    - Move the target up vertically by coordinate changer for its y-coordinate.
- *    - Draw the actual target.
+ *    - Move the target's circles.
  *    - If the target hits the middle of the screen:
  *     - Invert the y change so that the target moves downward.
  *     .
@@ -53,10 +54,8 @@ void projectileFunction(Canvas& can) {
   int numberOfTargets = 10;   //Number of targets
   bool hit = false;  //Determine if the target has been hit
   int score = 0;   //Score
-  ColorInt blueTarget(0, 0, 255);
-  ColorInt redTarget(255, 0, 0);   //Color for targets
-  ColorInt yellowTarget(255, 255, 0);
-  //binding to left mouse button
+
+  //When left mouse button clicked, check if target is hit
   can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&hit, &can, &targetX, &targetY]() {
     if((can.getMouseX() <= targetX && can.getMouseY() <= targetY) || can.getMouseY() == targetY) {
       hit = true;  //We hit the target
@@ -64,9 +63,11 @@ void projectileFunction(Canvas& can) {
   });
 
   //Create circles of target and add to Canvas
-  Circle * blueCircle = new Circle(targetX, targetY, 50, 32, blueTarget);   //Outer circle
-  Circle * redCircle = new Circle(targetX, targetY, 30, 32, redTarget);  //Middle
-  Circle * yellowCircle = new Circle(targetX, targetY, 10, 32, yellowTarget); //Inner
+  Circle * blueCircle = new Circle(targetX, targetY, 50, BLUE);   //Outer circle
+  Circle * redCircle = new Circle(targetX, targetY, 30, RED);  //Middle
+  Circle * yellowCircle = new Circle(targetX, targetY, 10, YELLOW); //Inner
+  blueCircle->setHasOutline(false); redCircle->setHasOutline(false); yellowCircle->setHasOutline(false);
+  blueCircle->setLayer(1); redCircle->setLayer(2); yellowCircle->setLayer(3);
   can.add(blueCircle); can.add(redCircle); can.add(yellowCircle);
 
   //Draw loop
@@ -76,6 +77,7 @@ void projectileFunction(Canvas& can) {
     targetX += coordinateChangerX;  //Horizontal movement
     targetY -= coordinateChangerY; //Vertical movement
 
+    //Move each circle to the target's location
     blueCircle->setCenter(targetX, targetY);
     redCircle->setCenter(targetX, targetY);
     yellowCircle->setCenter(targetX, targetY);
@@ -104,7 +106,7 @@ void projectileFunction(Canvas& can) {
 
   }
 
-  delete redCircle, blueCircle, yellowCircle; //free memory from Circle pointers
+  delete redCircle, blueCircle, yellowCircle; //Free memory from Circle pointers
 }
 
 //Takes command-line arguments for the width and height

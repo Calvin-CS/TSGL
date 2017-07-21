@@ -155,7 +155,6 @@ void smartSortFunction(Canvas& can, int threads, int size) {
             }
             for (int i = 0; i < IPF; i++)
               sd[tid]->sortStep();
-            // can.pauseDrawing();  //Tell the Canvas to stop updating the screen temporarily
             int start = MARGIN/2 + sd[tid]->first, height;
             int cwh = can.getWindowHeight() - MARGIN/2;
             ColorFloat color;
@@ -181,7 +180,6 @@ void smartSortFunction(Canvas& can, int threads, int size) {
 
               }
             }
-            // can.resumeDrawing();  //Tell the Canvas it can resume updating
         }
     }
     for (int i = 0; i < threads; ++i)

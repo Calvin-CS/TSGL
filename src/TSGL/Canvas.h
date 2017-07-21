@@ -17,10 +17,12 @@
 #include "Color.h"          // Our own interface for converting color types
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "Circle.h"         // Our own class for drawing circles
+#include "RegularPolygon.h" //Our own class for drawing regular polygons
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
 #include "Circle.h" // Our own class for concave polygons with colored vertices
 #include "UnfilledCircle.h" //Our own class for unfilled circles
+#include "UnfilledRegularPolygon.h" //Our own class for unfilled regular polygons
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines

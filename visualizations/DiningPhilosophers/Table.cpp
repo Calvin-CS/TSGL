@@ -51,7 +51,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myCan2->add( redText ); myCan2->add( orangeText ); myCan2->add( purpleText );
   myCan2->add( greenText ); myCan2->add( blueText ); myCan2->add( mealsText );
 
-  Circle * mealExample = new Circle(41,279,3,8,BROWN); myCan2->add( mealExample );
+  RegularPolygon * mealExample = new RegularPolygon(41,279,3,8,BROWN); myCan2->add( mealExample ); //TODO: delete in destructor?
 }
 
 Table::~Table() {
@@ -458,7 +458,7 @@ void Table::drawStep() {
   float fangle = (i+0.5f)*ARC; //Fork angle
 
   if( !myCircle ) { //If Table not already created
-    myCircle = new Circle(tabX,tabY,RAD-48,RAD,DARKGRAY);
+    myCircle = new Circle(tabX,tabY,RAD-48,DARKGRAY);
     myCan->add(myCircle);
   }
   if( !phils[i].hasCircle() ) //If Philosopher drawn for first time
@@ -467,7 +467,7 @@ void Table::drawStep() {
   phils[i].refreshColor(); //Update the color of philosopher
   if( phils[i].state() == isFull ) { //Draw the next meal if philosopher eating
       float angle = pangle+(phils[i].getMeals()/10)*2*PI/RAD, dist = BASEDIST+8*(phils[i].getMeals()%10);
-      Circle * meal = new Circle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
+      RegularPolygon * meal = new RegularPolygon(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
       phils[i].addMeal(*myCan, meal);
   }
   if (forks[i].user == i) { //Fork at this index belongs to this

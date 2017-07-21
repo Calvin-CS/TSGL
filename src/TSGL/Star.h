@@ -15,7 +15,7 @@ namespace tsgl {
  */
 class Star : public ConcavePolygon {
 private:
-  float myRadius,
+  float myRadius;
   int myPoints;
 public:
 

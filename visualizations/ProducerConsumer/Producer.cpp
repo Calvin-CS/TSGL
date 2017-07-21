@@ -15,7 +15,7 @@ Producer::Producer() : PCThread() { }
  */
 Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = 50; //Set the x-coordinate to 50
-	myShape = new Circle(myX, myY, 20, 100, ColorInt(0, 0, 0));
+	myShape = new Circle(myX, myY, 20, ColorInt(0, 0, 0));
 	// myCountLabel->setLocation(myX-10, myY+5);
 	myCountLabel->setCenter(myX, myY);
 	myCan->add(myShape);

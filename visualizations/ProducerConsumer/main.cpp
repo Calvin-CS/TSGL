@@ -40,21 +40,12 @@ void displayLegend() {
 	Circle waitingCircle(50, 60, 20, 32, BLACK); //waiting for lock
 	Circle thinkingCircle(50, 120, 20, 32, BLACK); //waiting, not seeking lock
 	Circle lockCircle(50, 180, 20, 32, WHITE); //has lock
-	UnfilledCircle cOutline1(50, 60, 20, 32, BLACK);
-	UnfilledCircle cOutline2(50, 120, 20, 32, BLACK);
-	UnfilledCircle cOutline3(50, 180, 20, 32, BLACK);
 	Rectangle waitingSquare(WINDOW_WIDTH-70, 40, 40, 40, BLACK);
 	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100, 40, 40, BLACK);
 	Rectangle lockSquare(WINDOW_WIDTH-70, 160, 40, 40, WHITE);
-	UnfilledRectangle rOutline1(WINDOW_WIDTH-70, 40, 40, 40, BLACK);
-	UnfilledRectangle rOutline2(WINDOW_WIDTH-70, 100, 40, 40, BLACK);
-	UnfilledRectangle rOutline3(WINDOW_WIDTH-70, 160, 40, 40, BLACK);
 	legendDisplay.add( &waitingCircle ); 	legendDisplay.add( &thinkingCircle );
 	legendDisplay.add( &lockCircle ); 		legendDisplay.add( &waitingSquare );
 	legendDisplay.add( &thinkingSquare );	legendDisplay.add( &lockSquare );
-	legendDisplay.add( &cOutline1 ); 			legendDisplay.add( &cOutline2 );
-	legendDisplay.add( &cOutline3 ); 			legendDisplay.add( &rOutline1 );
-	legendDisplay.add( &rOutline2 ); 			legendDisplay.add( &rOutline3 );
 
 	//Text labels
 	Text colorText("thinking",100,70,6,BLACK);
@@ -119,9 +110,9 @@ int main(int argc, char * argv[]) {
 		queueDisplay.add(queueLines[i]);
 	}
 
-	UnfilledCircle outerQueue(centerX, centerY, OUTERRAD, CAPACITY, BLACK);
+	UnfilledRegularPolygon outerQueue(centerX, centerY, OUTERRAD, CAPACITY, BLACK);
 	queueDisplay.add(&outerQueue);
-	UnfilledCircle innerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK);
+	UnfilledRegularPolygon innerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK);
 	queueDisplay.add(&innerQueue);
 
 	//TODO: fix text

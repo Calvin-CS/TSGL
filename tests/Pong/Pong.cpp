@@ -34,9 +34,17 @@ void Pong::draw(Canvas& can) {
       pongBall->reset(can);
     } else if (pongBall->getY() > can.getWindowHeight() - 8 || pongBall->getY() < 8) pongBall->invert(0); //Invert the ball's y-coordinate changer
     // Handle ball paddle collisions TODO: correct these so ball bounces off any part of paddle.
-    if (pongBall->getX() < 16 && pongBall->getX() > -16 && pongBall->getY() > leftPaddle->getY() - 8 && pongBall->getY() < leftPaddle->getY() + 72) {
+    if (pongBall->getX() < 32 &&
+        pongBall->getX() > -16 &&
+        pongBall->getY() > leftPaddle->getY() &&
+        pongBall->getY() < leftPaddle->getY() + 64)
+    {
       pongBall->invert(1);
-    } else if (pongBall->getX() > can.getWindowWidth() - 16 && pongBall->getX() < can.getWindowWidth() + 16 && pongBall->getY() > rightPaddle->getY() - 8 &&  pongBall->getY() < rightPaddle->getY() + 72) {
+    } else if (pongBall->getX() > can.getWindowWidth() - 32 &&
+        pongBall->getX() < can.getWindowWidth() + 16 &&
+        pongBall->getY() > rightPaddle->getY() &&
+        pongBall->getY() < rightPaddle->getY() + 64)
+    {
       pongBall->invert(1);
     }
     // Move the paddles if necessary
@@ -46,4 +54,10 @@ void Pong::draw(Canvas& can) {
     leftScore->setString( to_string(leftPaddle->getPoints()));
     rightScore->setString( to_string(rightPaddle->getPoints()));
   }
+}
+
+Pong::~Pong() {
+  delete pongBall;
+  delete leftPaddle, rightPaddle;
+  delete leftScore, rightScore;
 }
