@@ -18,6 +18,8 @@ namespace tsgl {
 class Text : public Drawable {
  private:
 
+    float scaleFactor = 1.0;
+
     FT_Library    library;
     FT_Face       face;
 
@@ -43,7 +45,7 @@ class Text : public Drawable {
       int texheight;
       int advance_x;
       int advance_y;
-      double bearing;
+      float bearing;
       unsigned long int buffer_len;
       char* bitmap_buffer;
     };

@@ -40,7 +40,7 @@ namespace tsgl {
     }
 
     // Set the character size
-    error = FT_Set_Char_Size( face, 0, font_size*64*2, 300, 300 );
+    error = FT_Set_Char_Size( face, 0, font_size*64*scaleFactor, 300, 300 );
     if (error) {
       fprintf(stderr, "Error while setting the FreeType font size!\n");
       exit(-1);
@@ -93,15 +93,15 @@ namespace tsgl {
         char_obj->character = text[n];
 
         // Save the width, height, and bearing into the struct
-        char_obj->width = slot->bitmap.width/2;
+        char_obj->width = slot->bitmap.width/scaleFactor;
         char_obj->texwidth = slot->bitmap.width;
-        char_obj->height = slot->bitmap.rows/2;
+        char_obj->height = slot->bitmap.rows/scaleFactor;
         char_obj->texheight = slot->bitmap.rows;
-        char_obj->advance_x = slot->advance.x /64 /2;
-        char_obj->advance_y = slot->advance.y /64 /2;
-        char_obj->bearing = (double)slot->metrics.horiBearingY /64.0 /2.0;
+        char_obj->advance_x = slot->advance.x /64 /scaleFactor;
+        char_obj->advance_y = slot->advance.y /64 /scaleFactor;
+        char_obj->bearing = (float)slot->metrics.horiBearingY /64.0 /scaleFactor;
 
-        // printf("Bearing: %f\n", char_obj->bearing);
+        printf("Bearing: %f\n", char_obj->bearing);
 
         // Update maxBearing
         if (char_obj->bearing > maxBearing) maxBearing = char_obj->bearing;
@@ -195,7 +195,9 @@ namespace tsgl {
 
 
         int x = base_x + cursor_x;
+        // float y = (float)base_y + (float)cursor_y - (float)((*it)->bearing);
         int y = base_y + cursor_y - ((*it)->bearing);
+        // int y = base_y + cursor_y;
 
         if (useKerning && FT_HAS_KERNING(face) && previous) {
           FT_Vector delta;

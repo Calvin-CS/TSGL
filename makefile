@@ -110,7 +110,7 @@ CFLAGS = \
 
 
 
-all: tester ReaderWriter DiningPhilosophers ProducerConsumer
+all: tester ReaderWriter DiningPhilosophers ProducerConsumer sftests
 
 #Test Program
 tester: $(PRGMOBJ) $(TSGLOBJ) $(HEADERS)

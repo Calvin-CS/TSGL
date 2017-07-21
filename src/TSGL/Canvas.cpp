@@ -455,11 +455,11 @@ namespace tsgl {
 
   void Canvas::draw() {
 
-    bool debugRectIsRed = false;
-    printf("Note: Canvas is drawing a flashing square in the corner to test whether it remains active during a crash.\n");
-    Rectangle* debugRect = new Rectangle(0, 0, 10, 10, BLACK, BLACK);
-    debugRect->setLayer(100);
-    add(debugRect);
+    // bool debugRectIsRed = false;
+    // printf("Note: Canvas is drawing a flashing square in the corner to test whether it remains active during a crash.\n");
+    // Rectangle* debugRect = new Rectangle(0, 0, 10, 10, BLACK, BLACK);
+    // debugRect->setLayer(100);
+    // add(debugRect);
 
     printf("%s\n", "Drawing stuff.");
 
@@ -475,16 +475,11 @@ namespace tsgl {
     // Count number of frames
     int counter = 0;
     float lastTime = 0;
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window) && !isFinished) {
 
-      if (debugRectIsRed) {
-        debugRect->setColor(BLACK);
-        debugRectIsRed = false;
-      }
-      else {
-        debugRect->setColor(RED);
-        debugRectIsRed = true;
-      }
+      #ifdef __APPLE__
+      windowMutex.lock();
+      #endif
 
       glDrawBuffer(GL_BACK);
       // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
@@ -580,6 +575,10 @@ namespace tsgl {
         counter = 0;
         lastTime = glfwGetTime();
       }
+
+      #ifdef __APPLE__
+      windowMutex.unlock();
+      #endif
     }
 
     // Print any OpenGL errors, if there are any
@@ -729,7 +728,9 @@ namespace tsgl {
     c->initGl();
     c->draw();
     c->isFinished = true;
+    #ifndef __APPLE__
     glfwDestroyWindow(c->window);
+    #endif
   }
 
 
