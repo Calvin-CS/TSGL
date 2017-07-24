@@ -1,11 +1,11 @@
 /*
-* Circle.h extends RegularPolygon and provides a class for drawing a circle to a Canvas.
+* Circle.h extends Ellipse and provides a class for drawing a circle to a Canvas.
 */
 
 #ifndef CIRCLE_H_
 #define CIRCLE_H_
 
-#include "RegularPolygon.h" // For extending our RegularPolygon object
+#include "Ellipse.h" // For extending our Ellipse object
 
 namespace tsgl {
 
@@ -13,7 +13,7 @@ namespace tsgl {
   *  \brief Draw a circle.
   *  \details Circle is a class for holding Shape data for a circle.
   */
-  class Circle : public RegularPolygon {
+  class Circle : public Ellipse {
   public:
 
     /*!

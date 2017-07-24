@@ -23,6 +23,7 @@
 #include "Circle.h" // Our own class for concave polygons with colored vertices
 #include "UnfilledCircle.h" //Our own class for unfilled circles
 #include "Ellipse.h"        //Our own class for drawing ellipses
+#include "UnfilledEllipse.h" //Our own class for unfilled ellipses
 #include "UnfilledRegularPolygon.h" //Our own class for unfilled regular polygons
 #include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses

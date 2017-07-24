@@ -44,9 +44,9 @@ void Philosopher::refreshColor() {
 /**
  * Adds a meal representation to meals and the Canvas
  */
-void Philosopher::addMeal(Canvas& can, Circle * c) {
-  can.add(c);
-  meals.push_back(c);
+void Philosopher::addMeal(Canvas& can, RegularPolygon * shape) {
+  can.add(shape);
+  meals.push_back(shape);
 }
 
 /**

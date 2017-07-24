@@ -32,7 +32,7 @@ public:
   bool release(Fork& f);
   void think();
   void eat() { myState = thinking; myAction = doNothing;}
-  void addMeal(Canvas& can, Circle * c);
+  void addMeal(Canvas& can, RegularPolygon * shape);
   void setState(PhilState s) { myState = s; }
   void setAction(PhilAction a) { myAction = a; }
   void setId(int i, int nphil) {id = myLeft = i; myRight = (id+nphil-1)%nphil; }

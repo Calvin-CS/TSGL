@@ -1,19 +1,19 @@
 /*
- * UnfilledCircle.h extends UnfilledRegularPolygon and provides a class for drawing a circle to a Canvas.
+ * UnfilledCircle.h extends UnfilledEllipse and provides a class for drawing a circle to a Canvas.
  */
 
 #ifndef UNFILLED_CIRCLE_H_
 #define UNFILLED_CIRCLE_H_
 
-#include "UnfilledRegularPolygon.h" // For extending our UnfilledRegularPolygon object
+#include "UnfilledEllipse.h" // For extending our UnfilledEllipse object
 
 namespace tsgl {
 
 /*! \class UnfilledCircle
  *  \brief Draw a UnfilledCircle.
- *  \details UnfilledCircle is a class for holding UnfilledRegularPolygon data for a UnfilledCircle.
+ *  \details UnfilledCircle is a class for holding UnfilledEllipse data for a UnfilledCircle.
  */
-class UnfilledCircle : public UnfilledRegularPolygon {
+class UnfilledCircle : public UnfilledEllipse {
 public:
 
     /*!

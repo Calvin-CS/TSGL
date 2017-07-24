@@ -68,6 +68,5 @@ int main(int argc, char * argv[]) {
       paddleSpeed = PADDLE_DEFAULT_SPEED;
     }
     Canvas c(-1,-1,w,h,"Tennis for Two");
-    c.setBackgroundColor(BLACK);
     c.run(pongFunction,ballSpeed, paddleSpeed);
 }

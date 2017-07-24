@@ -22,37 +22,36 @@ Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
 void Pong::draw(Canvas& can) {
   // While the window has not been closed....
   while (can.isOpen()) {
-    can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
+    can.sleep(); // timer in the Canvas class
     // Move the ball
     pongBall->move();
     // Handle ball boundary collisions
     if (pongBall->getX() > can.getWindowWidth() + 8) {
       leftPaddle->increment();   // Increment the points
+      leftScore->setString( to_string(leftPaddle->getPoints()));
       pongBall->reset(can);   // Reset the ball's position
     } else if (pongBall->getX() < -8) {
       rightPaddle->increment();
+      rightScore->setString( to_string(rightPaddle->getPoints()));
       pongBall->reset(can);
     } else if (pongBall->getY() > can.getWindowHeight() - 8 || pongBall->getY() < 8) pongBall->invert(0); //Invert the ball's y-coordinate changer
     // Handle ball paddle collisions TODO: correct these so ball bounces off any part of paddle.
     if (pongBall->getX() < 32 &&
         pongBall->getX() > -16 &&
-        pongBall->getY() > leftPaddle->getY() &&
-        pongBall->getY() < leftPaddle->getY() + 64)
+        pongBall->getY() > leftPaddle->getY() - 32&&
+        pongBall->getY() < leftPaddle->getY() + 32)
     {
       pongBall->invert(1);
     } else if (pongBall->getX() > can.getWindowWidth() - 32 &&
         pongBall->getX() < can.getWindowWidth() + 16 &&
-        pongBall->getY() > rightPaddle->getY() &&
-        pongBall->getY() < rightPaddle->getY() + 64)
+        pongBall->getY() > rightPaddle->getY() - 32 &&
+        pongBall->getY() < rightPaddle->getY() + 32)
     {
       pongBall->invert(1);
     }
     // Move the paddles if necessary
     leftPaddle->move();
     rightPaddle->move();
-    // Update Scores
-    leftScore->setString( to_string(leftPaddle->getPoints()));
-    rightScore->setString( to_string(rightPaddle->getPoints()));
   }
 }
 

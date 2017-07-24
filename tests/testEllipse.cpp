@@ -15,7 +15,7 @@ using namespace tsgl;
  */
 void lineFanFunction(Canvas& can, int numEllipses) {
   can.setBackgroundColor(WHITE);
-  int width = can.getWindowWidth(), height = can.getDisplayHeight();
+  int width = can.getWindowWidth(), height = can.getWindowHeight();
   std::vector<Ellipse*> circles;
 
   for(int i = numEllipses; i > 0; i--) {

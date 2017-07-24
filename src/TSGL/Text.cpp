@@ -6,6 +6,8 @@ namespace tsgl {
 
   Text::Text(std::string t, int x, int y, unsigned int font_size, const ColorFloat &c, std::string fname = "assets/freefont/FreeSans.ttf") {
 
+    attribMutex.lock();
+
     discreteRender = true;
 
     // Convert from the param c++ style string to a c style string for freetype
@@ -50,6 +52,8 @@ namespace tsgl {
     glGenTextures(1, &texID);
 
     generateTextBitmaps();
+
+    attribMutex.unlock();
   }
 
 
@@ -152,6 +156,8 @@ namespace tsgl {
 
   void Text::render() {
 
+    attribMutex.lock();
+
     // Bind the texture as the currently active texture
     glBindTexture(GL_TEXTURE_2D, texID);
 
@@ -220,22 +226,54 @@ namespace tsgl {
         cursor_x += (*it)->advance_x;
         cursor_y += (*it)->advance_y;
       }
+
+      attribMutex.unlock();
     }
 
-    std::string Text::getString() { return text; }
+    std::string Text::getString() {
+      attribMutex.lock();
+      std::string result = text;
+      attribMutex.unlock();
+      return result;
+    }
 
-    int Text::getX() { return base_x; }
+    int Text::getX() {
+      attribMutex.lock();
+      int x = base_x;
+      attribMutex.unlock();
+      return base_x;
+    }
 
-    int Text::getY() { return base_y; }
+    int Text::getY() {
+      attribMutex.lock();
+      int y = base_y;
+      attribMutex.unlock();
+      return y; }
 
-    unsigned int Text::getFontSize() { return fontsize; }
+    unsigned int Text::getFontSize() {
+      attribMutex.lock();
+      int size = fontsize;
+      attribMutex.unlock();
+      return size;
+    }
 
-    ColorFloat Text::getColor() { return color; }
+    ColorFloat Text::getColor() {
+      attribMutex.lock();
+      ColorFloat c = color;
+      attribMutex.unlock();
+      return c;
+    }
 
-    std::string Text::getFontFile() { return filename; }
+    std::string Text::getFontFile() {
+      attribMutex.lock();
+      std::string name = filename;
+      attribMutex.unlock();
+      return name;
+    }
 
     //TODO add kernign to the calculation
     int Text::getStringWidth() {
+      attribMutex.lock();
       int totalW = 0;
       for(std::vector<character_object*>::iterator it = char_vec.begin(); it != char_vec.end(); ++it) {
         // printf("Advance_X: %d\n", (*it)->advance_x);
@@ -246,20 +284,24 @@ namespace tsgl {
           totalW += (*it)->advance_x;  //TODO returns huge value sometimes???
         }
       }
+      attribMutex.unlock();
       return totalW;
     }
 
     int Text::getStringHeight() { //TODO: check that this makes sense/is best, probably change
+      attribMutex.lock();
       int max_height = 0;
       for(std::vector<character_object*>::iterator it = char_vec.begin(); it != char_vec.end(); ++it) {
         if( (*it)->height > max_height ) {
           max_height = (*it)->height;
         }
       }
+      attribMutex.unlock();
       return max_height;
     }
 
     void Text::setString(std::string t) {
+      attribMutex.lock();
       // Convert from the param c++ style string to a c style string for freetype
       text = t.c_str();
 
@@ -267,20 +309,26 @@ namespace tsgl {
       num_chars     = strlen( text );
 
       generateTextBitmaps();
+      attribMutex.unlock();
     }
 
     void Text::setLocation(int x, int y) {
+      attribMutex.lock();
       // X and Y coords for the text baseline
       base_x = x;
       base_y = y;
+      attribMutex.unlock();
     }
 
     void Text::setCenter(int x, int y) {
+      attribMutex.lock();
       base_x = x - getStringWidth()/2;
       base_y = y + getStringHeight()/2;
+      attribMutex.unlock();
     }
 
     void Text::setFontSize(unsigned int font_size) {
+      attribMutex.lock();
       fontsize = font_size;
 
       // Set the character size
@@ -290,13 +338,17 @@ namespace tsgl {
         exit(-1);
       }
       generateTextBitmaps();
+      attribMutex.unlock();
     }
 
     void Text::setColor(const ColorFloat &c) {
+      attribMutex.lock();
       color = c;
+      attribMutex.unlock();
     }
 
     void Text::setFontFile(std::string fname) {
+      attribMutex.lock();
       // Set the font's file name
       filename = fname.c_str();
 
@@ -308,6 +360,7 @@ namespace tsgl {
       }
 
       generateTextBitmaps();
+      attribMutex.unlock();
     }
 
   }
