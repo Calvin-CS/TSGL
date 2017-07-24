@@ -550,6 +550,30 @@ namespace tsgl {
       }
 
 
+      //TEST REMOVE ME
+      int testPointArr[1000000*2];
+
+      int ti, tr, tc = 0;
+      for (ti = 0; ti<1000000*2; ti+=2) {
+        testPointArr[ti] = tc;
+        tc = ti%1000;
+        testPointArr[ti+1] = ti%1000;
+
+      }
+
+      glVertexPointer(
+        2,  // how many points per vertex (for us, that's x and y)
+        GL_INT, // the type of data being passed
+        0, // byte offset between vertices
+        &testPointArr
+      );
+      glDrawArrays(
+        GL_POINTS,
+        0, // The starting index of the array
+        1000000/2
+      );
+
+
       objectMutex.unlock();
 
 
@@ -684,7 +708,7 @@ namespace tsgl {
 
 
 
-///////===================
+  ///////===================
 
 
 
@@ -739,7 +763,7 @@ namespace tsgl {
     if (!started) return -1;  // If we haven't even started yet, return error code -1
     #ifdef __APPLE__
     while(!isFinished)
-      sleepFor(0.1f);
+    sleepFor(0.1f);
     #endif
     renderThread.join();
     return 0;
@@ -815,37 +839,37 @@ namespace tsgl {
 
   void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
-        ConcavePolygon* p = new ConcavePolygon(size, color[0]);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i]);
-        }
-        p->setHasOutline(false);
-        this->add(p);  // Push it onto our drawing buffer
+      ConcavePolygon* p = new ConcavePolygon(size, color[0]);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(xverts[i], yverts[i]);
+      }
+      p->setHasOutline(false);
+      this->add(p);  // Push it onto our drawing buffer
     }
     else {
-        Polyline* p = new Polyline(size, color[0]);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
+      Polyline* p = new Polyline(size, color[0]);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(xverts[i], yverts[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
     }
   }
 
   void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {
-        ConvexPolygon* p = new ConvexPolygon(size, color[0]);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(x[i], y[i]);
-        }
-        p->setHasOutline(false);
-        this->add(p);  // Push it onto our drawing buffer
+      ConvexPolygon* p = new ConvexPolygon(size, color[0]);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(x[i], y[i]);
+      }
+      p->setHasOutline(false);
+      this->add(p);  // Push it onto our drawing buffer
     }
     else {
-        Polyline* p = new Polyline(size, color[0]);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(x[i], y[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
+      Polyline* p = new Polyline(size, color[0]);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(x[i], y[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
     }
   }
 
@@ -877,18 +901,18 @@ namespace tsgl {
     }
   }
 
-//TODO: maye works with the new backend
-void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
-  if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-  if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+  //TODO: maye works with the new backend
+  void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
+    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
     if (filled) {
-        Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-        rec->setHasOutline(false);
-        this->add(rec);                                     // Push it onto our drawing buffer
+      Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
+      rec->setHasOutline(false);
+      this->add(rec);                                     // Push it onto our drawing buffer
     }
     else {
-        UnfilledRectangle* rec = new UnfilledRectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-        this->add(rec);                                     // Push it onto our drawing buffer
+      UnfilledRectangle* rec = new UnfilledRectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
+      this->add(rec);                                     // Push it onto our drawing buffer
     }
   }
 
@@ -903,28 +927,28 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
 
   void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
     if (filled) {
-        Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-        t->setHasOutline(false);
-        this->add(t);                                               // Push it onto our drawing buffer
+      Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
+      t->setHasOutline(false);
+      this->add(t);                                               // Push it onto our drawing buffer
     } else {
       UnfilledTriangle* t = new UnfilledTriangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
       this->add(t);                                               // Push it onto our drawing buffer
     }
-}
+  }
 
   void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
-        TriangleStrip* p = new TriangleStrip(size, color[0]);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
+      TriangleStrip* p = new TriangleStrip(size, color[0]);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(xverts[i], yverts[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
     } else {
-        Polyline* p = new Polyline(size, color[0]);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i]);
-        }
-        this->add(p);  // Push it onto our drawing buffer
+      Polyline* p = new Polyline(size, color[0]);
+      for (int i = 0; i < size; i++) {
+        p->addVertex(xverts[i], yverts[i]);
+      }
+      this->add(p);  // Push it onto our drawing buffer
     }
   }
 
