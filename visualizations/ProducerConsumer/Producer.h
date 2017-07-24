@@ -25,7 +25,6 @@ public:
 	void unlock();
 
 private:
-	void showArrow(Star * c);
 	Star* nextItem();
 	ColorInt randColor();
 };

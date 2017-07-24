@@ -18,7 +18,7 @@ namespace tsgl {
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
  *  \note The addVertex() method must be called the same number of times as specified in the constructor.
  *  \note Calling addVertex() after all vertices have been added will do nothing.
- *  \note Adding to a Canvas before all vertices have been added will do nothing.
+
  */
 class TriangleStrip : public ConvexPolygon {
  public:

@@ -3,6 +3,7 @@
 Table::Table(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
+  counter = 0;
   tabX = can.getWindowWidth()/2;
   tabY = can.getWindowHeight()/2;
   myCircle = NULL;
@@ -22,8 +23,8 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     case waitWhenBlocked:
       methodString = "wait when blocked";
       break;
-    case nFrameRelease:
-      methodString = "release on nth frame";
+    case nCountRelease:
+      methodString = "release on nth count";
       break;
     case resourceHierarchy:
       methodString = "hierarchical resources";
@@ -197,13 +198,13 @@ void Table::waitWhenBlockedMethod(int id) {
  *     .
  *   - Philosopher has right fork:
  *     - If the left fork is free, try to get that fork.
- *     - Else, if the id of the current Philosopher is equal to the frame number of the Canvas
+ *     - Else, if the id of the current Philosopher is equal to the counter
  *       modulo the number of Philosophers+1, then release the right fork.
  *     - Else, do nothing.
  *     .
  *   - Philosopher has the left fork:
  *     - If the right fork is free, try and get that fork.
- *     - Else, if the id of the current Philosopher is equal to the frame number of the Canvas
+ *     - Else, if the id of the current Philosopher is equal to the counter
  *       modulo the number of Philosophers+1, then release the left fork.
  *     - Else, do nothing.
  *     .
@@ -214,7 +215,7 @@ void Table::waitWhenBlockedMethod(int id) {
  * .
  * \param id The id number of the current Philosopher.
  */
-void Table::nFrameReleaseMethod(int id) {
+void Table::nCountReleaseMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -229,7 +230,7 @@ void Table::nFrameReleaseMethod(int id) {
       if (forks[left].user == -1)
         phils[id].setAction(tryLeft);
       else {
-        if (id == (myCan->getFrameNumber() % numPhils+1))
+        if (id == (counter % numPhils+1))
           phils[id].setAction(releaseRight);
         else
           phils[id].setAction(doNothing);
@@ -239,7 +240,7 @@ void Table::nFrameReleaseMethod(int id) {
       if (forks[right].user == -1)
         phils[id].setAction(tryRight);
       else {
-        if (id == (myCan->getFrameNumber() % numPhils+1))
+        if (id == (counter % numPhils+1))
           phils[id].setAction(releaseLeft);
         else
           phils[id].setAction(doNothing);
@@ -331,12 +332,12 @@ void Table::hierarchyMethod(int id) {
  *   - Philosopher has no forks:
  *     - If the Philosopher's id is even
  *   - Philosopher has right fork (odd id):
- *     - If the Philsopher's id modulo 2 is equal to the Canvas' current frame number
+ *     - If the Philsopher's id modulo 2 is equal to the current counter
  *       modulo 2, then try and get the left fork.
  *     - Else, release the right fork.
  *     .
  *   - Philosopher has left fork (even id):
- *     - If the Philsopher's id modulo 2 is equal to the Canvas' current frame number
+ *     - If the Philsopher's id modulo 2 is equal to the current counter
  *       modulo 2, then try and get the right fork.
  *     - Else, release the left fork.
  *     .
@@ -351,20 +352,20 @@ void Table::hierarchyMethod(int id) {
 void Table::oddEvenMethod(int id) {
   switch(phils[id].state()) {
     case hasNone:
-      if ((id % 2) == (myCan->getFrameNumber() % 2))
+      if ((id % 2) == (counter % 2))
         phils[id].setAction(tryBoth);
       else
         phils[id].setAction(doNothing);
       break;
     case hasRight:
-      if ((id % 2) == (myCan->getFrameNumber() % 2))
+      if ((id % 2) == (counter % 2))
         phils[id].setAction(tryLeft);
       else {
         phils[id].setAction(releaseRight);
       }
       break;
     case hasLeft:
-      if ((id % 2) == (myCan->getFrameNumber() % 2))
+      if ((id % 2) == (counter % 2))
         phils[id].setAction(tryRight);
       else
         phils[id].setAction(releaseLeft);
@@ -396,8 +397,8 @@ void Table::checkStep() {
     case waitWhenBlocked:
       waitWhenBlockedMethod(i);
       break;
-    case nFrameRelease:
-      nFrameReleaseMethod(i);
+    case nCountRelease:
+      nCountReleaseMethod(i);
       break;
     case resourceHierarchy:
       hierarchyMethod(i);
@@ -408,6 +409,7 @@ void Table::checkStep() {
     default:
       break;
   }
+  counter++; //Tracks number of steps for some resolution methods
 }
 
 /*!

@@ -38,6 +38,9 @@ Star* Producer::nextItem() {
 	return new Star(myX+50, myY, 20, 5, randColor(), false );
 }
 
+/**
+ * wait takes some time to find the next color
+ */
 void Producer::wait() {
 	myItem = nextItem();
 	myShape->setColor( myItem->getColor() );

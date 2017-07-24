@@ -138,7 +138,7 @@ class Text : public Drawable {
      *    \param x The new x coordinate for the left side of the text.
      *    \param y The new y coordinate for the bottom of the text.
      */
-    void setLocation(int x, int y);
+    void setBaseline(int x, int y);
 
     /**
      * \brief Centers the text at a new location.

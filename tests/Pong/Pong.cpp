@@ -57,6 +57,8 @@ void Pong::draw(Canvas& can) {
 
 Pong::~Pong() {
   delete pongBall;
-  delete leftPaddle, rightPaddle;
-  delete leftScore, rightScore;
+  delete leftPaddle;
+  delete rightPaddle;
+  delete leftScore;
+  delete rightScore;
 }

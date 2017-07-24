@@ -241,14 +241,15 @@ namespace tsgl {
       attribMutex.lock();
       int x = base_x;
       attribMutex.unlock();
-      return base_x;
+      return x;
     }
 
     int Text::getY() {
       attribMutex.lock();
       int y = base_y;
       attribMutex.unlock();
-      return y; }
+      return y;
+    }
 
     unsigned int Text::getFontSize() {
       attribMutex.lock();
@@ -312,7 +313,7 @@ namespace tsgl {
       attribMutex.unlock();
     }
 
-    void Text::setLocation(int x, int y) {
+    void Text::setBaseline(int x, int y) {
       attribMutex.lock();
       // X and Y coords for the text baseline
       base_x = x;
@@ -321,10 +322,9 @@ namespace tsgl {
     }
 
     void Text::setCenter(int x, int y) {
-      attribMutex.lock();
-      base_x = x - getStringWidth()/2;
-      base_y = y + getStringHeight()/2;
-      attribMutex.unlock();
+      int newX = x - getStringWidth()/2;
+      int newY = y + getStringHeight()/2;
+      setBaseline( newX, newY);
     }
 
     void Text::setFontSize(unsigned int font_size) {

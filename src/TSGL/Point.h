@@ -14,7 +14,6 @@ namespace tsgl {
  *  \details Point is a class for holding vertex data for multiple lines whose endpoints are connected.
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual
  *   Line instances.
- *  \note Adding to a Canvas before all vertices have been added will do nothing.
  */
 class Point : public Shape {
 public:

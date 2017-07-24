@@ -22,7 +22,7 @@ using namespace tsgl;
 
 class Table {
 private:
-  int tabX, tabY, numPhils;
+  int tabX, tabY, numPhils, counter;
   PhilMethod myMethod;
   Canvas *myCan, *myCan2;
   Philosopher *phils;
@@ -34,7 +34,7 @@ public:
 
   void forfeitWhenBlockedMethod(int id);
   void waitWhenBlockedMethod(int id);
-  void nFrameReleaseMethod(int id);
+  void nCountReleaseMethod(int id);
   void hierarchyMethod(int id);
   void oddEvenMethod(int id);
 
