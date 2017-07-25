@@ -137,7 +137,7 @@ private:
     //                 uniProj;                                            // Projection of the camera
     GLtexture       vertexArray,                                        // Address of GL's array buffer object
                     vertexBuffer;                                       // Address of GL's vertex buffer object
-    float*          vertexData;                                         // The allPoints array
+    // float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     bool            windowClosed;                                       // Whether we've closed the Canvas' window or not
     std::mutex      windowMutex;                                        // (OS X) Mutex for handling window contexts

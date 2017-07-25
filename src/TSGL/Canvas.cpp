@@ -94,7 +94,7 @@ namespace tsgl {
   Canvas::~Canvas() {
     // Free our pointer memory
     delete drawTimer;
-    delete[] vertexData;
+    // delete[] vertexData;  // TODO does this cause E's segfaults? Also not necessarily.
     delete [] screenBuffer;
     //TODO: make this also delete the object buffer?
     if (--openCanvases == 0) {
@@ -500,10 +500,10 @@ namespace tsgl {
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
         try {
           if ((*it)->getIsDiscreteRendered()) {
-            DiscreteDrawable* rc = *it; //TODO too hackey?
+            DiscreteDrawable* rc = *it;
             rc->render();
           } else {
-            Shape* rc = *it; //TODO too hackey?
+            Shape* rc = *it;
             glVertexPointer(
               2,  // how many points per vertex (for us, that's x and y)
               GL_FLOAT, // the type of data being passed

@@ -46,8 +46,8 @@ void alphaRectangleFunction(Canvas& can) {
     pl->addPoint(100,100);
 
     int plcounter = 0;
-    for (plcounter = 0; plcounter<400000; plcounter++) {
-      pl->addPoint(plcounter%600,floor(plcounter/600));
+    for (plcounter = 0; plcounter<10000; plcounter++) {
+      pl->addPoint(plcounter%600,floor(plcounter/600)+10);
       // printf("Point (%f, %f)\n", (float)plcounter, floor(plcounter/400));
     }
 
@@ -75,7 +75,7 @@ void alphaRectangleFunction(Canvas& can) {
     can.add(botBlueRect);
 
     // // Test the text
-    Text* myText = new Text("Testing some more stuff", 200, 200, 6, WHITE);
+    Text* myText = new Text("Testing some more stuff", 200, 200, 26, WHITE);
     can.add(myText);
     printf("Text is %d pixels long.\n", myText->getStringWidth());
 
