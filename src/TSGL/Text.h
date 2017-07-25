@@ -18,6 +18,8 @@ namespace tsgl {
 class Text : public Drawable {
  private:
 
+    float scaleFactor = 1.0;
+
     FT_Library    library;
     FT_Face       face;
 
@@ -39,9 +41,11 @@ class Text : public Drawable {
       bool isSpace = false;
       int width;
       int height;
+      int texwidth;
+      int texheight;
       int advance_x;
       int advance_y;
-      int bearing;
+      float bearing;
       unsigned long int buffer_len;
       char* bitmap_buffer;
     };
@@ -138,7 +142,7 @@ class Text : public Drawable {
      *    \param x The new x coordinate for the left side of the text.
      *    \param y The new y coordinate for the bottom of the text.
      */
-    void setBaseline(int x, int y);
+    void setLocation(int x, int y);
 
     /**
      * \brief Centers the text at a new location.

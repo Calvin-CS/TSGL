@@ -24,13 +24,13 @@ PCThread::PCThread() : Thread() {
  * \return: The constructed PCThread object.
  */
 PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : Thread(id) {
-	count = 0;
+	count = 99;
 	buffer = &sharedBuffer;	//Get the handle to the Queue
 	myCan = &can;			//Get the handle to the Canvas
 	myY = 50 * (id + 1);
 	myX = 0; //Set in subclass constructor
 	myItem = NULL;
-	myCountLabel = new Text( to_string(count), myX, myY+5, 5, WHITE);
+	myCountLabel = new Text( to_string(count), myX, myY+5, 24, WHITE);
 	myCountLabel->setLayer(3);
 	myCan->add( myCountLabel );
 }

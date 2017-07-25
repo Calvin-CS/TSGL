@@ -6,8 +6,6 @@ namespace tsgl {
 
   Text::Text(std::string t, int x, int y, unsigned int font_size, const ColorFloat &c, std::string fname = "assets/freefont/FreeSans.ttf") {
 
-    attribMutex.lock();
-
     discreteRender = true;
 
     // Convert from the param c++ style string to a c style string for freetype
@@ -42,7 +40,7 @@ namespace tsgl {
     }
 
     // Set the character size
-    error = FT_Set_Char_Size( face, 0, font_size*64, 300, 300 );
+    error = FT_Set_Char_Size( face, 0, font_size*16*scaleFactor, 300, 300 );
     if (error) {
       fprintf(stderr, "Error while setting the FreeType font size!\n");
       exit(-1);
@@ -52,8 +50,6 @@ namespace tsgl {
     glGenTextures(1, &texID);
 
     generateTextBitmaps();
-
-    attribMutex.unlock();
   }
 
 
@@ -97,11 +93,15 @@ namespace tsgl {
         char_obj->character = text[n];
 
         // Save the width, height, and bearing into the struct
-        char_obj->width = slot->bitmap.width;
-        char_obj->height = slot->bitmap.rows;
-        char_obj->advance_x = slot->advance.x /64;
-        char_obj->advance_y = slot->advance.y /64;
-        char_obj->bearing = slot->metrics.horiBearingY /64;
+        char_obj->width = slot->bitmap.width/scaleFactor;
+        char_obj->texwidth = slot->bitmap.width;
+        char_obj->height = slot->bitmap.rows/scaleFactor;
+        char_obj->texheight = slot->bitmap.rows;
+        char_obj->advance_x = slot->advance.x /64 /scaleFactor;
+        char_obj->advance_y = slot->advance.y /64 /scaleFactor;
+        char_obj->bearing = (float)slot->metrics.horiBearingY /64.0 /scaleFactor;
+
+        printf("Bearing: %f\n", char_obj->bearing);
 
         // Update maxBearing
         if (char_obj->bearing > maxBearing) maxBearing = char_obj->bearing;
@@ -117,7 +117,7 @@ namespace tsgl {
         // char_obj->bitmap_buffer = newBuffer;
 
         // Create new buffer object
-        size_t bufSize = char_obj->width*char_obj->height;
+        size_t bufSize = char_obj->texwidth*char_obj->texheight;
         char* newBuffer = new char[bufSize *4];
 
         int i,j = 0;
@@ -156,8 +156,6 @@ namespace tsgl {
 
   void Text::render() {
 
-    attribMutex.lock();
-
     // Bind the texture as the currently active texture
     glBindTexture(GL_TEXTURE_2D, texID);
 
@@ -188,8 +186,8 @@ namespace tsgl {
       glTexImage2D(	GL_TEXTURE_2D,
         0,
         4, /* internal color number */
-        (*it)->width,
-        (*it)->height,
+        (*it)->texwidth,
+        (*it)->texheight,
         0,
         GL_RGBA,
         GL_UNSIGNED_BYTE,
@@ -197,7 +195,9 @@ namespace tsgl {
 
 
         int x = base_x + cursor_x;
+        // float y = (float)base_y + (float)cursor_y - (float)((*it)->bearing);
         int y = base_y + cursor_y - ((*it)->bearing);
+        // int y = base_y + cursor_y;
 
         if (useKerning && FT_HAS_KERNING(face) && previous) {
           FT_Vector delta;
@@ -226,55 +226,22 @@ namespace tsgl {
         cursor_x += (*it)->advance_x;
         cursor_y += (*it)->advance_y;
       }
-
-      attribMutex.unlock();
     }
 
-    std::string Text::getString() {
-      attribMutex.lock();
-      std::string result = text;
-      attribMutex.unlock();
-      return result;
-    }
+    std::string Text::getString() { return text; }
 
-    int Text::getX() {
-      attribMutex.lock();
-      int x = base_x;
-      attribMutex.unlock();
-      return x;
-    }
+    int Text::getX() { return base_x; }
 
-    int Text::getY() {
-      attribMutex.lock();
-      int y = base_y;
-      attribMutex.unlock();
-      return y;
-    }
+    int Text::getY() { return base_y; }
 
-    unsigned int Text::getFontSize() {
-      attribMutex.lock();
-      int size = fontsize;
-      attribMutex.unlock();
-      return size;
-    }
+    unsigned int Text::getFontSize() { return fontsize; }
 
-    ColorFloat Text::getColor() {
-      attribMutex.lock();
-      ColorFloat c = color;
-      attribMutex.unlock();
-      return c;
-    }
+    ColorFloat Text::getColor() { return color; }
 
-    std::string Text::getFontFile() {
-      attribMutex.lock();
-      std::string name = filename;
-      attribMutex.unlock();
-      return name;
-    }
+    std::string Text::getFontFile() { return filename; }
 
     //TODO add kernign to the calculation
     int Text::getStringWidth() {
-      attribMutex.lock();
       int totalW = 0;
       for(std::vector<character_object*>::iterator it = char_vec.begin(); it != char_vec.end(); ++it) {
         // printf("Advance_X: %d\n", (*it)->advance_x);
@@ -285,24 +252,20 @@ namespace tsgl {
           totalW += (*it)->advance_x;  //TODO returns huge value sometimes???
         }
       }
-      attribMutex.unlock();
       return totalW;
     }
 
     int Text::getStringHeight() { //TODO: check that this makes sense/is best, probably change
-      attribMutex.lock();
       int max_height = 0;
       for(std::vector<character_object*>::iterator it = char_vec.begin(); it != char_vec.end(); ++it) {
         if( (*it)->height > max_height ) {
           max_height = (*it)->height;
         }
       }
-      attribMutex.unlock();
       return max_height;
     }
 
     void Text::setString(std::string t) {
-      attribMutex.lock();
       // Convert from the param c++ style string to a c style string for freetype
       text = t.c_str();
 
@@ -310,45 +273,36 @@ namespace tsgl {
       num_chars     = strlen( text );
 
       generateTextBitmaps();
-      attribMutex.unlock();
     }
 
-    void Text::setBaseline(int x, int y) {
-      attribMutex.lock();
+    void Text::setLocation(int x, int y) {
       // X and Y coords for the text baseline
       base_x = x;
       base_y = y;
-      attribMutex.unlock();
     }
 
     void Text::setCenter(int x, int y) {
-      int newX = x - getStringWidth()/2;
-      int newY = y + getStringHeight()/2;
-      setBaseline( newX, newY);
+      base_x = x - getStringWidth()/2;
+      base_y = y + getStringHeight()/2;
     }
 
     void Text::setFontSize(unsigned int font_size) {
-      attribMutex.lock();
       fontsize = font_size;
 
       // Set the character size
-      error = FT_Set_Char_Size( face, 0, font_size*64, 300, 300 );
+      error = FT_Set_Char_Size( face, 0, font_size*16, 300, 300 );
       if (error) {
         fprintf(stderr, "Error while setting the FreeType font size!\n");
         exit(-1);
       }
       generateTextBitmaps();
-      attribMutex.unlock();
     }
 
     void Text::setColor(const ColorFloat &c) {
-      attribMutex.lock();
       color = c;
-      attribMutex.unlock();
     }
 
     void Text::setFontFile(std::string fname) {
-      attribMutex.lock();
       // Set the font's file name
       filename = fname.c_str();
 
@@ -360,7 +314,6 @@ namespace tsgl {
       }
 
       generateTextBitmaps();
-      attribMutex.unlock();
     }
 
   }

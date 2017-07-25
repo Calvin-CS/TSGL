@@ -78,7 +78,7 @@ void Producer::act() {
 	count++; myCountLabel->setString( to_string(count) );
 	if(count == 10) myCountLabel->setCenter(myX, myY);
 	if(count == 100) {
-		myCountLabel->setFontSize(4);
+		myCountLabel->setFontSize(20);
 		myCountLabel->setCenter(myX, myY);
 	}
 }

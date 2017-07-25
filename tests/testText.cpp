@@ -24,12 +24,12 @@ void textFunction(Canvas& can) {
 
     can.setBackgroundColor(WHITE);
 
-    Text * t0 = new Text("A long time ago, in a galaxy far, far away.", 16, 50, 8, BLACK);
-    Text * t1 = new Text("Something extraordinary happened.", 16, 150, 8, RED);
-    Text * t2 = new Text("Something far more extraordinary than anything mankind has ever seen.", 16, 250, 8, GREEN);
-    Text * t3 = new Text("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350, 8, BLUE);
-    Text * t4 = new Text("Of *what* exactly that extraordinary event was.", 16, 450, 8, GRAY);
-    Text * t5 = new Text("And to that I say...oh well.", 16, 550, 8, WHITE);
+    Text * t0 = new Text("A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
+    Text * t1 = new Text("Something extraordinary happened.", 16, 150, 32, RED);
+    Text * t2 = new Text("Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
+    Text * t3 = new Text("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350, 32, BLUE);
+    Text * t4 = new Text("Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
+    Text * t5 = new Text("And to that I say...oh well.", 16, 550, 32, WHITE);
     can.add( t0 ); can.add( t1 ); can.add( t2 ); can.add( t3 ); can.add( t4 ); can.add( t5 );
 
     can.wait(); //Wait until Canvas is closed...
