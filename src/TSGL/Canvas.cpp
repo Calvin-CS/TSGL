@@ -169,7 +169,9 @@ namespace tsgl {
     // Pass some other options to GLFW
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);                    // Disable the back buffer
+    // if( isRaster ) { glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE); }
+    // else { glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE); }
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_TRUE);
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
 
@@ -481,11 +483,11 @@ namespace tsgl {
       windowMutex.lock();
       #endif
 
-      glDrawBuffer(GL_BACK);
-      // glUseProgram(shaderProgram);   // TODO enable this when we've got shader support
+      if( !isRaster ) { glDrawBuffer(GL_BACK); }
+      else { glDrawBuffer(GL_FRONT_AND_BACK); }
 
       // Clear the canvas
-      glClear(GL_COLOR_BUFFER_BIT);
+      if( !isRaster ) glClear(GL_COLOR_BUFFER_BIT);
 
       // Enable vertex arrays
       glEnableClientState( GL_VERTEX_ARRAY );
@@ -498,6 +500,7 @@ namespace tsgl {
       //TODO: also lock the accessors for this so we can't be reading them as they change here. Might want to use a less vital mutex though so we don't hold up drawing so much
 
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
+        // if( isRaster && (*it)->getIsRendered() ) continue;
         try {
           if ((*it)->getIsDiscreteRendered()) {
             DiscreteDrawable* rc = *it;
@@ -542,37 +545,15 @@ namespace tsgl {
               );
             }
           }
-
         }
         catch (std::exception& e) {
           std::cerr << "Caught an exception!!!" << e.what() << std::endl;
         }
       }
 
-
-      // //TEST REMOVE ME
-      // int testPointArr[100*2];
-      //
-      // int ti, tr, tc = 0;
-      // for (ti = 0; ti<1000000*2; ti+=2) {
-      //   testPointArr[ti] = tc;
-      //   tc = ti%1000;
-      //   testPointArr[ti+1] = ti%1000;
-      //
-      // }
-      //
-      // glVertexPointer(
-      //   2,  // how many points per vertex (for us, that's x and y)
-      //   GL_INT, // the type of data being passed
-      //   0, // byte offset between vertices
-      //   &testPointArr
-      // );
-      // glDrawArrays(
-      //   GL_POINTS,
-      //   0, // The starting index of the array
-      //   1000000/2
-      // );
-
+      if( isRaster ) {
+        objectBuffer.clear();
+      }
 
       objectMutex.unlock();
 

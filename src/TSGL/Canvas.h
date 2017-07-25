@@ -181,7 +181,8 @@ private:
     static bool testLine(Canvas& can);                                  // Unit tester for lines
     static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods
     static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
-
+protected:
+  bool            isRaster = false;                                   ///< Whether is a RasterCanvas or not.
 public:
 
     /*!
