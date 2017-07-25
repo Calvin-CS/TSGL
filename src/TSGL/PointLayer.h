@@ -13,11 +13,12 @@
 namespace tsgl {
 
   //TODO document this
-class PointLayer : public Drawable {
+class PointLayer : public DiscreteDrawable {
 protected:
     std::vector<GLfloat> pointVertices;
     ColorFloat color; ///< Color of the points
     int numPoints = 0;  // The number of points on the layer
+    unsigned maxPoints = 0;
  public:
 
     PointLayer(const ColorFloat& c);
@@ -32,11 +33,19 @@ protected:
 
     void addPoint(GLfloat x, GLfloat y);
 
+    void clearPoints();
+
+    void render();
+
     ColorFloat getColor() { return color; };
 
     ColorFloat* getObjectColor() { return &color; };
 
     void setColor(const ColorFloat& c);
+
+    void setMaxPoints(unsigned num) {
+      maxPoints = num;
+    }
 };
 
 }

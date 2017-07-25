@@ -26,6 +26,7 @@
 #include "Line.h"           // Our own class for drawing straight lines
 #include "Arrow.h"          // Our own class for drawing arrows
 #include "Point.h"          // Our own class for drawig points
+#include "PointLayer.h"     // Class that adds a layer for drawing raster points
 #include "Polygon.h"        // Our own class for drawing polygons
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "ProgressBar.h"    // Our own class for drawing progress bars

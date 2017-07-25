@@ -39,6 +39,18 @@ void alphaRectangleFunction(Canvas& can) {
     // can.drawRectangle(200, 200, 250, 250, PURPLE);
     // can.setDefaultLayer(0);
 
+    // Test the points
+    PointLayer* pl = new PointLayer(PURPLE);
+    can.add(pl);
+    pl->setLayer(100);
+    pl->addPoint(100,100);
+
+    int plcounter = 0;
+    for (plcounter = 0; plcounter<400000; plcounter++) {
+      pl->addPoint(plcounter%600,floor(plcounter/600));
+      // printf("Point (%f, %f)\n", (float)plcounter, floor(plcounter/400));
+    }
+
     // Add the red and white rects over the top
     Rectangle* topRedRect = new Rectangle(500, 500, 50, 50, ColorInt(1*MAX_COLOR, 0*MAX_COLOR, 0*MAX_COLOR, 255));
     Rectangle* topWhiteRect = new Rectangle(540, 540, 50, 50, ColorInt(1*MAX_COLOR, 1*MAX_COLOR, 1*MAX_COLOR, 255));

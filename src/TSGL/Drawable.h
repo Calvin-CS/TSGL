@@ -109,6 +109,11 @@ namespace tsgl {
     }
   };
 
+  class DiscreteDrawable : public Drawable {
+  public:
+    virtual void render() = 0;
+  };
+
 }
 
 #endif /* DRAWABLE_H_ */

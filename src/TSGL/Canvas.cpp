@@ -500,7 +500,7 @@ namespace tsgl {
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
         try {
           if ((*it)->getIsDiscreteRendered()) {
-            Text* rc = *it; //TODO too hackey?
+            DiscreteDrawable* rc = *it; //TODO too hackey?
             rc->render();
           } else {
             Shape* rc = *it; //TODO too hackey?
@@ -550,28 +550,28 @@ namespace tsgl {
       }
 
 
-      //TEST REMOVE ME
-      int testPointArr[1000000*2];
-
-      int ti, tr, tc = 0;
-      for (ti = 0; ti<1000000*2; ti+=2) {
-        testPointArr[ti] = tc;
-        tc = ti%1000;
-        testPointArr[ti+1] = ti%1000;
-
-      }
-
-      glVertexPointer(
-        2,  // how many points per vertex (for us, that's x and y)
-        GL_INT, // the type of data being passed
-        0, // byte offset between vertices
-        &testPointArr
-      );
-      glDrawArrays(
-        GL_POINTS,
-        0, // The starting index of the array
-        1000000/2
-      );
+      // //TEST REMOVE ME
+      // int testPointArr[100*2];
+      //
+      // int ti, tr, tc = 0;
+      // for (ti = 0; ti<1000000*2; ti+=2) {
+      //   testPointArr[ti] = tc;
+      //   tc = ti%1000;
+      //   testPointArr[ti+1] = ti%1000;
+      //
+      // }
+      //
+      // glVertexPointer(
+      //   2,  // how many points per vertex (for us, that's x and y)
+      //   GL_INT, // the type of data being passed
+      //   0, // byte offset between vertices
+      //   &testPointArr
+      // );
+      // glDrawArrays(
+      //   GL_POINTS,
+      //   0, // The starting index of the array
+      //   1000000/2
+      // );
 
 
       objectMutex.unlock();
