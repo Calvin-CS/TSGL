@@ -94,7 +94,6 @@ namespace tsgl {
   Canvas::~Canvas() {
     // Free our pointer memory
     delete drawTimer;
-    delete[] vertexData;
     delete [] screenBuffer;
     //TODO: make this also delete the object buffer?
     if (--openCanvases == 0) {
