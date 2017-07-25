@@ -26,7 +26,7 @@ void lineFanFunction(Canvas& can, int numCircles) {
 
   can.wait();
 
-  for(int i = 0; i < circles.size(); i++) {
+  for(unsigned i = 0; i < circles.size(); i++) {
     delete circles[i];
   }
 }

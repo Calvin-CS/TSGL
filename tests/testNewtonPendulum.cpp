@@ -95,8 +95,9 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
     rightCircle->setCenter(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
   }
 
-  delete leftLine, leftCircle, rightLine, rightCircle;
-  for(int i = 0; i < stationaryShapes.size(); i++) {
+  delete leftLine; delete leftCircle;
+  delete rightLine; delete rightCircle;
+  for(unsigned i = 0; i < stationaryShapes.size(); i++) {
     delete stationaryShapes[i];
   }
 }

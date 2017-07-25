@@ -57,7 +57,7 @@ void lineFanFunction(Canvas& can, int t) {
     }
 
     //Delete pointers after Canvas is closed
-    for(int i = 0; i < lines.size(); i++) {
+    for(unsigned i = 0; i < lines.size(); i++) {
       delete lines[i];
     }
   }
