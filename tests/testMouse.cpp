@@ -5,31 +5,16 @@
  */
 
 #include <tsgl.h>
+#include <queue>
+#include <mutex>
 
 using namespace tsgl;
-
-inline float dist(float x1, float y1, float x2, float y2) {
-  return sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
-}
-
-inline float angle(float x1, float y1, float x2, float y2) {
-  return atan2(y1 - y2, x1 - x2);
-}
-
-inline void rotate(float cx, float cy, int& xx, int& yy, float rot) {
-  float scale = cy/cx;
-  float stretchy = cy + yy/scale - cx;
-  float mydist = dist(xx,stretchy,cx,cy);
-  float newang = angle(xx,stretchy,cx,cy)+rot;
-  xx = cx + mydist*cos(newang);
-  yy = cy + mydist*sin(newang)*scale;
-}
 
 /*!
  * \brief Tiny little painting function for drawing with the mouse.
  * \details
  * - Initialize and unset a flag for whether the mouse is pressed.
- * - Allocate some large arrays for x,y coordinates and colors.
+ * - Allocate some arrays for x,y coordinates and a ColorFloat for the colors.
  * - Set an array index variable to 0.
  * - Declare variables for last x and y coordinates.
  * - Bind the spacebar on-press event to clearing the Canvas.
@@ -41,8 +26,7 @@ inline void rotate(float cx, float cy, int& xx, int& yy, float rot) {
  * - Set up the internal timer of the Canvas to expire every \b FRAME seconds.
  * - While the Canvas is open:
  *   - If the mouse is down:
- *     - Draw a line from the mouse's last coordinates to the current ones.
- *     - Set the coordinates at position \b index to the mouse's current position.
+ *     - Add a triangle with coordiantes at the first moue click, recent position, and current location, for each thread.
  *     - Set the corresponding color randomly.
  *     - Increment the index.
  *     .
@@ -55,42 +39,62 @@ void mouseFunction(Canvas& can, int threads) {
   const int CX = can.getWindowWidth() / 2, CY = can.getWindowHeight() / 2;
   int x[3], y[3], index = 0;
   bool mouseDown = false;
-  ColorFloat color[3];
+  ColorFloat color;
+  std::queue<Shape*> shapes; //Stores shapes for clearing
+  std::mutex queueLock; //Protects the shape queue all threads use
 
-  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-      can.clear();
+  //Clear Canvas when spacebar pressed
+  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can,&shapes,&queueLock]() {
+    queueLock.lock();
+    while(shapes.size() > 0) { //Empty the shape queue
+      ConvexPolygon* oldShape = shapes.front();
+      shapes.pop();
+      can.remove(oldShape);
+      delete oldShape;
+    }
+    queueLock.unlock();
   });
+
+  //Start new shape drawing when left mouse button pressed
   can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &index, &x, &y, &color]() {
       x[0] = can.getMouseX();
       y[0] = can.getMouseY();
-      color[0] = Colors::randomColor(1.0f);
+      color = Colors::randomColor(1.0f);
       index = 0;
       mouseDown = true;
   });
+
+  //Stop drawing when left mouse button released
   can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown, &can, &index, &x, &y, &color]() {
       mouseDown = false;
   });
 
   while (can.isOpen()) {
     if (mouseDown) {
-      color[1] = color[2];
-      color[2] = Colors::randomColor(1.0f);
       x[1] = x[2]; y[1] = y[2];
       x[2] = can.getMouseX(); y[2] = can.getMouseY();
       if (++index > 2)
+      color = Colors::randomColor();
         #pragma omp parallel num_threads (threads)
         {
           float tdelta = (2*PI*omp_get_thread_num())/omp_get_num_threads();
-          int myx[3], myy[3];
-          for (int i = 0; i < 3; ++i) {
-            myx[i] = x[i]; myy[i] = y[i];
-            rotate(CX,CY,myx[i],myy[i],tdelta);
-          }
-          can.drawConvexPolygon(3,myx,myy,color,true);
+          Polygon* newShape = new Triangle(x[0],y[0],x[1],y[1],x[2],y[1],color);
+          newShape->setHasOutline(false);
+          newShape->rotateAround(tdelta,CX,CY);
+          queueLock.lock(); shapes.push(newShape); queueLock.unlock();
+          can.add(newShape);
         }
     }
     can.sleep();
   }
+
+  //Delete shape pointers after Canvas is closed
+  queueLock.lock();
+  while(shapes.size()>0) {
+    delete shapes.front();
+    shapes.pop();
+  }
+  queueLock.unlock();
 }
 
 int main(int argc, char* argv[]) {

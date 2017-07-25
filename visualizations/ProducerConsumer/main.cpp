@@ -37,33 +37,24 @@ void displayLegend() {
 	legendDisplay.setBackgroundColor(WHITE);
 
 	int colorChanger = 0; //Counting int to control random bright colors
-	Circle waitingCircle(50, 60, 20, 32, BLACK); //waiting for lock
-	Circle thinkingCircle(50, 120, 20, 32, BLACK); //waiting, not seeking lock
-	Circle lockCircle(50, 180, 20, 32, WHITE); //has lock
-	UnfilledCircle cOutline1(50, 60, 20, 32, BLACK);
-	UnfilledCircle cOutline2(50, 120, 20, 32, BLACK);
-	UnfilledCircle cOutline3(50, 180, 20, 32, BLACK);
+	Circle waitingCircle(50, 60, 20, BLACK); //waiting for lock
+	Circle thinkingCircle(50, 120, 20, BLACK); //waiting, not seeking lock
+	Circle lockCircle(50, 180, 20, WHITE); //has lock
 	Rectangle waitingSquare(WINDOW_WIDTH-70, 40, 40, 40, BLACK);
 	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100, 40, 40, BLACK);
 	Rectangle lockSquare(WINDOW_WIDTH-70, 160, 40, 40, WHITE);
-	UnfilledRectangle rOutline1(WINDOW_WIDTH-70, 40, 40, 40, BLACK);
-	UnfilledRectangle rOutline2(WINDOW_WIDTH-70, 100, 40, 40, BLACK);
-	UnfilledRectangle rOutline3(WINDOW_WIDTH-70, 160, 40, 40, BLACK);
 	legendDisplay.add( &waitingCircle ); 	legendDisplay.add( &thinkingCircle );
 	legendDisplay.add( &lockCircle ); 		legendDisplay.add( &waitingSquare );
 	legendDisplay.add( &thinkingSquare );	legendDisplay.add( &lockSquare );
-	legendDisplay.add( &cOutline1 ); 			legendDisplay.add( &cOutline2 );
-	legendDisplay.add( &cOutline3 ); 			legendDisplay.add( &rOutline1 );
-	legendDisplay.add( &rOutline2 ); 			legendDisplay.add( &rOutline3 );
 
 	//Text labels
-	Text colorText("thinking",100,70,6,BLACK);
-	Text blackText("waiting for lock",100,130,6,BLACK);
-	Text whiteText("holding lock",100,190,6,BLACK);
+	Text colorText("thinking",100,70,24,BLACK);
+	Text blackText("waiting for lock",100,130,24,BLACK);
+	Text whiteText("holding lock",100,190,24,BLACK);
 	legendDisplay.add( &colorText ); legendDisplay.add( &blackText ); legendDisplay.add( &whiteText );
-	Text colorText2("thinking",350,70,6,BLACK);
-	Text blackText2("waiting for lock",350,130,6,BLACK);
-	Text whiteText2("holding lock",350,190,6,BLACK);
+	Text colorText2("thinking",350,70,24,BLACK);
+	Text blackText2("waiting for lock",350,130,24,BLACK);
+	Text whiteText2("holding lock",350,190,24,BLACK);
 	legendDisplay.add( &colorText2 ); legendDisplay.add( &blackText2 ); legendDisplay.add( &whiteText2 );
 
 	while( legendDisplay.isOpen() ) {
@@ -119,20 +110,20 @@ int main(int argc, char * argv[]) {
 		queueDisplay.add(queueLines[i]);
 	}
 
-	UnfilledCircle outerQueue(centerX, centerY, OUTERRAD, CAPACITY, BLACK);
+	UnfilledRegularPolygon outerQueue(centerX, centerY, OUTERRAD, CAPACITY, BLACK);
 	queueDisplay.add(&outerQueue);
-	UnfilledCircle innerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK);
+	UnfilledRegularPolygon innerQueue(centerX, centerY, INNERRAD, CAPACITY, BLACK);
 	queueDisplay.add(&innerQueue);
 
-	//TODO: fix text
-	Text note1("Numbers indicate counts", WINDOW_WIDTH-230, WINDOW_HEIGHT-50, 5, BLACK);
-	Text note2("of produced/consumed", WINDOW_WIDTH-205, WINDOW_HEIGHT-30, 5, BLACK);
+	//Add notes to bottom of main Canvas
+	Text note1("Numbers indicate counts", WINDOW_WIDTH-230, WINDOW_HEIGHT-50, 18, BLACK);
+	Text note2("of produced/consumed", WINDOW_WIDTH-205, WINDOW_HEIGHT-30, 18, BLACK);
 	queueDisplay.add(&note1);
 	queueDisplay.add(&note2);
 
 	// Label Readers and Writers
-	Text proText("Producers", 30, 20, 5, BLACK);
-	Text conText("Consumers", WINDOW_WIDTH-120, 20, 5, BLACK);
+	Text proText("Producers", 30, 20, 24, BLACK);
+	Text conText("Consumers", WINDOW_WIDTH-120, 20, 24, BLACK);
 	queueDisplay.add(&proText);
 	queueDisplay.add(&conText);
 
@@ -154,16 +145,6 @@ int main(int argc, char * argv[]) {
 		con[l].start();
 		sleep(0.3);
 	}
-
-	//Legend shapes
-	//TODO:Add text labeling both circles
-	// pthread_t legendThread;
-	// pthread_create(&legendThread, NULL, displayLegend, NULL);
-	//
-	// //Wait for user to exit main Canvas
-	// // queueDisplay.wait();
-	// //Join the thread controlling legend
-	// std::cout << pthread_join(legendThread, NULL) << std::endl;
 
 	displayLegend();
 

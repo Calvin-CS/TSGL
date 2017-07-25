@@ -3,6 +3,7 @@
 Table::Table(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
+  counter = 0;
   tabX = can.getWindowWidth()/2;
   tabY = can.getWindowHeight()/2;
   myCircle = NULL;
@@ -22,8 +23,8 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     case waitWhenBlocked:
       methodString = "wait when blocked";
       break;
-    case nFrameRelease:
-      methodString = "release on nth frame";
+    case nCountRelease:
+      methodString = "release on nth count";
       break;
     case resourceHierarchy:
       methodString = "hierarchical resources";
@@ -38,20 +39,20 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myCan2 = new Canvas(0,0,350,300,"Legend");
   myCan2->setBackgroundColor(WHITE);
   myCan2->start();
-  Text * methodText = new Text("Method:",16,32,6,BLACK);
-  Text * methodText2 = new Text(methodString,32,64,6,BLACK);
-  Text * legendText = new Text("Legend:",16,96,6,BLACK);
-  Text * redText = new Text("Red: Hungry",32,128,6,RED);
-  Text * orangeText = new Text("Orange: Has Right Fork",32,160,6,ORANGE);
-  Text * purpleText = new Text("Purple: Has Left Fork",32,192,6,PURPLE);
-  Text * greenText = new Text("Green: Eating",32,224,6,GREEN);
-  Text * blueText = new Text("Blue: Thinking",32,256,6,BLUE);
-  Text * mealsText = new Text("Meals eaten",57,288,6,BROWN);
+  Text * methodText = new Text("Method:",16,32,24,BLACK);
+  Text * methodText2 = new Text(methodString,32,64,24,BLACK);
+  Text * legendText = new Text("Legend:",16,96,24,BLACK);
+  Text * redText = new Text("Red: Hungry",32,128,24,RED);
+  Text * orangeText = new Text("Orange: Has Right Fork",32,160,24,ORANGE);
+  Text * purpleText = new Text("Purple: Has Left Fork",32,192,24,PURPLE);
+  Text * greenText = new Text("Green: Eating",32,224,24,GREEN);
+  Text * blueText = new Text("Blue: Thinking",32,256,24,BLUE);
+  Text * mealsText = new Text("Meals eaten",57,288,24,BROWN);
   myCan2->add( methodText ); myCan2->add( methodText2 ); myCan2->add( legendText );
   myCan2->add( redText ); myCan2->add( orangeText ); myCan2->add( purpleText );
   myCan2->add( greenText ); myCan2->add( blueText ); myCan2->add( mealsText );
 
-  Circle * mealExample = new Circle(41,279,3,8,BROWN); myCan2->add( mealExample );
+  RegularPolygon * mealExample = new RegularPolygon(41,279,3,8,BROWN); myCan2->add( mealExample ); //TODO: delete in destructor?
 }
 
 Table::~Table() {
@@ -197,13 +198,13 @@ void Table::waitWhenBlockedMethod(int id) {
  *     .
  *   - Philosopher has right fork:
  *     - If the left fork is free, try to get that fork.
- *     - Else, if the id of the current Philosopher is equal to the frame number of the Canvas
+ *     - Else, if the id of the current Philosopher is equal to the counter
  *       modulo the number of Philosophers+1, then release the right fork.
  *     - Else, do nothing.
  *     .
  *   - Philosopher has the left fork:
  *     - If the right fork is free, try and get that fork.
- *     - Else, if the id of the current Philosopher is equal to the frame number of the Canvas
+ *     - Else, if the id of the current Philosopher is equal to the counter
  *       modulo the number of Philosophers+1, then release the left fork.
  *     - Else, do nothing.
  *     .
@@ -214,7 +215,7 @@ void Table::waitWhenBlockedMethod(int id) {
  * .
  * \param id The id number of the current Philosopher.
  */
-void Table::nFrameReleaseMethod(int id) {
+void Table::nCountReleaseMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -229,7 +230,7 @@ void Table::nFrameReleaseMethod(int id) {
       if (forks[left].user == -1)
         phils[id].setAction(tryLeft);
       else {
-        if (id == (myCan->getFrameNumber() % numPhils+1))
+        if (id == (counter % numPhils+1))
           phils[id].setAction(releaseRight);
         else
           phils[id].setAction(doNothing);
@@ -239,7 +240,7 @@ void Table::nFrameReleaseMethod(int id) {
       if (forks[right].user == -1)
         phils[id].setAction(tryRight);
       else {
-        if (id == (myCan->getFrameNumber() % numPhils+1))
+        if (id == (counter % numPhils+1))
           phils[id].setAction(releaseLeft);
         else
           phils[id].setAction(doNothing);
@@ -284,7 +285,7 @@ void Table::nFrameReleaseMethod(int id) {
  * .
  * \param id The id number of the current Philosopher.
  */
-void Table::hieararchyMethod(int id) {
+void Table::hierarchyMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -331,12 +332,12 @@ void Table::hieararchyMethod(int id) {
  *   - Philosopher has no forks:
  *     - If the Philosopher's id is even
  *   - Philosopher has right fork (odd id):
- *     - If the Philsopher's id modulo 2 is equal to the Canvas' current frame number
+ *     - If the Philsopher's id modulo 2 is equal to the current counter
  *       modulo 2, then try and get the left fork.
  *     - Else, release the right fork.
  *     .
  *   - Philosopher has left fork (even id):
- *     - If the Philsopher's id modulo 2 is equal to the Canvas' current frame number
+ *     - If the Philsopher's id modulo 2 is equal to the current counter
  *       modulo 2, then try and get the right fork.
  *     - Else, release the left fork.
  *     .
@@ -351,20 +352,20 @@ void Table::hieararchyMethod(int id) {
 void Table::oddEvenMethod(int id) {
   switch(phils[id].state()) {
     case hasNone:
-      if ((id % 2) == (myCan->getFrameNumber() % 2))
+      if ((id % 2) == (counter % 2))
         phils[id].setAction(tryBoth);
       else
         phils[id].setAction(doNothing);
       break;
     case hasRight:
-      if ((id % 2) == (myCan->getFrameNumber() % 2))
+      if ((id % 2) == (counter % 2))
         phils[id].setAction(tryLeft);
       else {
         phils[id].setAction(releaseRight);
       }
       break;
     case hasLeft:
-      if ((id % 2) == (myCan->getFrameNumber() % 2))
+      if ((id % 2) == (counter % 2))
         phils[id].setAction(tryRight);
       else
         phils[id].setAction(releaseLeft);
@@ -396,11 +397,11 @@ void Table::checkStep() {
     case waitWhenBlocked:
       waitWhenBlockedMethod(i);
       break;
-    case nFrameRelease:
-      nFrameReleaseMethod(i);
+    case nCountRelease:
+      nCountReleaseMethod(i);
       break;
     case resourceHierarchy:
-      hieararchyMethod(i);
+      hierarchyMethod(i);
       break;
     case oddEven:
       oddEvenMethod(i);
@@ -408,6 +409,7 @@ void Table::checkStep() {
     default:
       break;
   }
+  counter++; //Tracks number of steps for some resolution methods
 }
 
 /*!
@@ -458,7 +460,7 @@ void Table::drawStep() {
   float fangle = (i+0.5f)*ARC; //Fork angle
 
   if( !myCircle ) { //If Table not already created
-    myCircle = new Circle(tabX,tabY,RAD-48,RAD,DARKGRAY);
+    myCircle = new Circle(tabX,tabY,RAD-48,DARKGRAY);
     myCan->add(myCircle);
   }
   if( !phils[i].hasCircle() ) //If Philosopher drawn for first time
@@ -467,7 +469,7 @@ void Table::drawStep() {
   phils[i].refreshColor(); //Update the color of philosopher
   if( phils[i].state() == isFull ) { //Draw the next meal if philosopher eating
       float angle = pangle+(phils[i].getMeals()/10)*2*PI/RAD, dist = BASEDIST+8*(phils[i].getMeals()%10);
-      Circle * meal = new Circle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
+      RegularPolygon * meal = new RegularPolygon(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
       phils[i].addMeal(*myCan, meal);
   }
   if (forks[i].user == i) { //Fork at this index belongs to this

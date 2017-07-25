@@ -20,7 +20,6 @@ namespace tsgl {
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual Triangle instances.
  *  \note The addVertex() method must be called the same number of times as specified in the constructor.
  *  \note Calling addVertex() after all vertices have been added will do nothing.
- *  \note Adding to a Canvas before all vertices have been added will do nothing.
  */
 class ConcavePolygon : public Polygon {
  private:
@@ -30,7 +29,7 @@ class ConcavePolygon : public Polygon {
     void cleanup();     // Prepares the vertices for drawing
 
     static bool testIntersects();     // Unit test for intersects()
-    static bool testPointITriangle(); // Unit test for pointInTriangle()
+    static bool testPointInTriangle(); // Unit test for pointInTriangle()
 
  public:
 
@@ -107,7 +106,7 @@ class ConcavePolygon : public Polygon {
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating that the vertex buffer is full.
      */
-    void addVertex(int x, int y);
+    void addVertex(float x, float y);
 
     /**
      * \brief Returns the geometry type for drawing.
@@ -119,7 +118,7 @@ class ConcavePolygon : public Polygon {
      * \param x The new center x coordinate.
      * \param y The new center y coordinate.
      */
-    virtual void setCenter(int x, int y);
+    virtual void setCenter(float x, float y);
 
     /**
      * \brief Rotates the ConcavePolygon by an angle.

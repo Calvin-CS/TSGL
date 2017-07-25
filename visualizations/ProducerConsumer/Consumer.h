@@ -22,10 +22,6 @@ public:
 	void lock();
 	void act();
 	void unlock();
-
-private:
-	void removeItem(); //Helps consume() by removing an item from all its locations
-	void showArrow(Star * c); //Draws the arrow to show item being read
 };
 
 #endif /* CONSUMER_H_ */

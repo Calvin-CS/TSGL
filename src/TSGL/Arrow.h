@@ -32,10 +32,23 @@ namespace tsgl {
     *      \param doubleArrow Determines whether Arrow has two heads. (Defaults to false.)
     * \return A new Arrow with the specified endpoints and color.
     */
-    Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK, bool doubleArrow = false);
+    Arrow(float x1, float y1, float x2, float y2, const ColorFloat &color = BLACK, bool doubleArrow = false);
 
-    void moveHead(int x, int y);
-    void moveTail(int x, int y); //TODO: comment
+    /**
+     * \brief Moves the head of the Arrow.
+     * \details Changes the coordinates of the first point in the Arrow to a new x and y.
+     *    \param x The new x coordinate of the head.
+     *    \param y The new y coordinate of the head.
+     */
+    void moveHead(float x, float y);
+
+    /**
+     * \brief Moves the tail of the Arrow.
+     * \details Changes the coordinates of the second point in the Arrow to a new x and y.
+     *    \param x The new x coordinate of the tail.
+     *    \param y The new y coordinate of the tail.
+     */
+    void moveTail(float x, float y); //TODO: comment
 
   };
 

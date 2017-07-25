@@ -26,7 +26,7 @@ class Line : public Polyline {
      *      \param color The reference variable to the color of the Line. (Defaults to BLACK.)
      * \return A new Line with the specified endpoints and color.
      */
-    Line(int x1, int y1, int x2, int y2, const ColorFloat &color = BLACK);
+    Line(float x1, float y1, float x2, float y2, const ColorFloat &color = BLACK);
 
     /**
       * \brief Moves one end of the Line.
@@ -34,7 +34,7 @@ class Line : public Polyline {
       *   \param x The new x coordinate.
       *   \param y The new y coordinate.
       */
-    void setFirstEnd(int x, int y);
+    void setFirstEnd(float x, float y);
 
     /**
       * \brief Moves one end of the Line.
@@ -42,7 +42,7 @@ class Line : public Polyline {
       *   \param x The new x coordinate.
       *   \param y The new y coordinate.
       */
-    void setSecondEnd(int x, int y);
+    void setSecondEnd(float x, float y);
 
     /**
      * \brief Calculates the length of the line.

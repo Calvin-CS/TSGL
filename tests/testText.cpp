@@ -34,7 +34,7 @@ void textFunction(Canvas& can) {
     Text * t7 = new Text("to think they can change the world, are the ones who do.", 16, 750, 8, PURPLE);
     can.add( t0 ); can.add( t1 ); can.add( t2 ); can.add( t3 ); can.add( t4 ); can.add( t5 ); can.add( t6 ); can.add( t7 );
 
-    while( can.isOpen() ) { can.sleep(); } //Wait until Canvas is closed...
+    can.wait(); //Wait until Canvas is closed...
     //Then free memory from Text pointers
     delete t0; delete t1; delete t2;
     delete t3; delete t4; delete t5;

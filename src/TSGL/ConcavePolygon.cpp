@@ -37,7 +37,7 @@ int ConcavePolygon::getNumberOfVertices() {
   return numVertices;
 }
 
-void ConcavePolygon::addVertex(int x, int y) {
+void ConcavePolygon::addVertex(float x, float y) {
   attribMutex.lock();
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
@@ -148,7 +148,7 @@ void ConcavePolygon::cleanup() {
   }
 }
 
-void ConcavePolygon::setCenter(int x, int y) {
+void ConcavePolygon::setCenter(float x, float y) {
   attribMutex.lock();
   dirty = true;
   attribMutex.unlock();
@@ -173,7 +173,7 @@ void ConcavePolygon::rotateAround(float angle, float x, float y) {
 void ConcavePolygon::runTests() {
   TsglDebug("Testing ConcavePolygon class....");
   tsglAssert(testIntersects(), "Unit test for intersecting lines failed!");
-  tsglAssert(testPointITriangle(), "Unit test for pointInTriangle() failed!");
+  tsglAssert(testPointInTriangle(), "Unit test for pointInTriangle() failed!");
   TsglDebug("Unit tests for ConcavePolygon complete.");
   std::cout << std::endl;
 }
@@ -235,7 +235,7 @@ bool ConcavePolygon::testIntersects() {
   }
 }
 
-bool ConcavePolygon::testPointITriangle() {
+bool ConcavePolygon::testPointInTriangle() {
     int passed = 0;
     int failed = 0;
     ConcavePolygon c2(10, BLACK);
@@ -257,7 +257,7 @@ bool ConcavePolygon::testPointITriangle() {
       passed++;
     } else {
       failed++;
-      TsglErr("Test 1, Point = in triangle for testPointITriangle() failed!");
+      TsglErr("Test 1, Point = in triangle for testPointInTriangle() failed!");
     }
 
     //Test 2: Point not in triangle
@@ -269,7 +269,7 @@ bool ConcavePolygon::testPointITriangle() {
     //Point should NOT be in triangle, so it should return false
     if(c2.pointInTriangle(px, py, x1, y1, x2, y2, x3, y3)) {
       failed++;
-      TsglErr("Test 2, Point = NOT in triangle for testPointITriangle() failed!");
+      TsglErr("Test 2, Point = NOT in triangle for testPointInTriangle() failed!");
     } else {
       passed++;
     }
@@ -279,9 +279,9 @@ bool ConcavePolygon::testPointITriangle() {
       TsglDebug("Unit test for point in triangle passed!");
       return true;
     } else {
-      TsglErr("This many passed for testPointITriangle(): ");
+      TsglErr("This many passed for testPointInTriangle(): ");
       std::cout << " " << passed << std::endl;
-      TsglErr("This many failed for testPointITriangle(): ");
+      TsglErr("This many failed for testPointInTriangle(): ");
       std::cout << " " << failed << std::endl;
       return false;
     }

@@ -10,64 +10,66 @@
 
 using namespace tsgl;
 
-struct Vector2 {
- float x,y;
- Vector2() {
-   x = y = 0;
- }
- Vector2(float xx,float yy) {
-   x = xx; y = yy;
- }
- Vector2 operator+(const Vector2 &o) {
-   return Vector2(x+o.x,y+o.y);
- }
- Vector2& operator+=(const Vector2 &o) {
-   x += o.x; y += o.y;
-   return (*this);
- }
- Vector2 operator-(const Vector2 &o) {
-   return Vector2(x-o.x,y-o.y);
- }
- Vector2 operator-() {
-   return Vector2(-x,-y);
- }
- Vector2& operator-=(const Vector2 &o) {
-   x -= o.x; y -= o.y;
-   return (*this);
- }
- Vector2 operator*(const float f) {
-   return Vector2(x*f,y*f);
- }
- Vector2& operator*=(const float f) {
-   x *= f; y *= f;
-   return (*this);
- }
- float dot(const Vector2 &o) const {
-   return x*o.x + y*o.y;
- }
- float length() const {
-   return sqrt(x*x+y*y);
- }
- float angle() const {
-   return atan2(y,x);
- }
- float angle(const Vector2 &o) {
-   return acos(angle(o));
- }
- float cosangle(const Vector2 &o) {
-   return dot(o)/( length() * o.length() );
- }
+//Vector struct for the movement of BouncingBalls
+struct Vector {
+  float x,y;
+  Vector() {
+    x = y = 0;
+  }
+  Vector(float xx,float yy) {
+    x = xx; y = yy;
+  }
+  Vector operator+(const Vector &o) {
+    return Vector(x+o.x,y+o.y);
+  }
+  Vector& operator+=(const Vector &o) {
+    x += o.x; y += o.y;
+    return (*this);
+  }
+  Vector operator-(const Vector &o) {
+    return Vector(x-o.x,y-o.y);
+  }
+  Vector operator-() {
+    return Vector(-x,-y);
+  }
+  Vector& operator-=(const Vector &o) {
+    x -= o.x; y -= o.y;
+    return (*this);
+  }
+  Vector operator*(const float f) {
+    return Vector(x*f,y*f);
+  }
+  Vector& operator*=(const float f) {
+    x *= f; y *= f;
+    return (*this);
+  }
+  float dot(const Vector &o) const {
+    return x*o.x + y*o.y;
+  }
+  float length() const {
+    return sqrt(x*x+y*y);
+  }
+  float angle() const {
+    return atan2(y,x);
+  }
+  float angle(const Vector &o) {
+    return acos(angle(o));
+  }
+  float cosangle(const Vector &o) {
+    return dot(o)/( length() * o.length() );
+  }
 };
-Vector2 operator+(const Vector2 &v1, const Vector2 &v2) {
-    return Vector2(v1.x+v2.x,v1.y+v2.y);
+Vector operator+(const Vector &v1, const Vector &v2) {
+  return Vector(v1.x+v2.x,v1.y+v2.y);
 }
-Vector2 operator-(const Vector2 &v1, const Vector2 &v2) {
-    return Vector2(v1.x-v2.x,v1.y-v2.y);
+Vector operator-(const Vector &v1, const Vector &v2) {
+  return Vector(v1.x-v2.x,v1.y-v2.y);
 }
-Vector2 operator*(const Vector2 &v, const float f) {
-    return Vector2(v.x*f,v.y*f);
+Vector operator*(const Vector &v, const float f) {
+  return Vector(v.x*f,v.y*f);
 }
 
+//BouncingBall class for adding to the BallRoom
 class BouncingBall {
 private:
   float mySpeed, myDir;
@@ -75,27 +77,27 @@ private:
   Circle * circle;
   Canvas * can;
 public:
-  Vector2 pos, vel, acc;
+  Vector pos, vel, acc;
   ColorFloat color;
   int rad;
   bool bounced;
   BouncingBall(int x, int y, int r, int w, int h, ColorFloat c, Canvas * can) {
-    pos = Vector2(x,y);
-    vel = Vector2(0,0);
-    acc = Vector2(0,0);
+    pos = Vector(x,y);
+    vel = Vector(0,0);
+    acc = Vector(0,0);
     mySpeed = myDir = 0;
     rad = r;
     rw = w;
     rh = h;
     color = c;
     bounced = false;
-    circle = new Circle(x,y,r,16,c);
+    circle = new Circle(x,y,r,c);
     can->add(circle);
   }
   BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorFloat c, Canvas * canvas) {
-    pos = Vector2(x,y);
-    vel = Vector2(vx,vy);
-    acc = Vector2(0,0.1f);
+    pos = Vector(x,y);
+    vel = Vector(vx,vy);
+    acc = Vector(0,0.1f);
     calcSpeed();
     calcDir();
     rad = r;
@@ -104,7 +106,7 @@ public:
     color = c;
     bounced = false;
     can = canvas;
-    circle = new Circle(x,y,r,16,c);
+    circle = new Circle(x,y,r,c);
     can->add(circle);
   }
   ~BouncingBall() {
@@ -156,13 +158,13 @@ public:
   void bounce(BouncingBall *o) {
     if (bounced)
       return;
-    Vector2 dist = pos-o->pos;
+    Vector dist = pos-o->pos;
     float radii = rad+o->rad;
     if (dist.length() > radii)
       return;
-    Vector2 vdelta = vel-o->vel;
+    Vector vdelta = vel-o->vel;
     pos -= vel;
-    Vector2 pdelta = pos-o->pos;
+    Vector pdelta = pos-o->pos;
     float ps = pdelta.length()*pdelta.length();
     vel -= pdelta*(vdelta.dot(pdelta)/ps);
     o->vel += pdelta*((-vdelta).dot(-pdelta)/ps);
@@ -178,6 +180,7 @@ public:
   }
 };
 
+//BallRoom class manages all balls on the screen and their motions
 class BallRoom {
 private:
   int width, height;
@@ -195,7 +198,7 @@ public:
     gravity = 0.1f;
     attract = true;
     can = canvas;
-    mouseCircle = new Circle(0,0,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f));
+    mouseCircle = new Circle(0,0,25,ColorFloat(1.0f,0.5f,0.5f,0.5f));
     can->add(mouseCircle);
   }
   ~BallRoom() {
@@ -229,7 +232,7 @@ public:
   }
   void step(Canvas* c) {
     int mx = c->getMouseX(), my = c->getMouseY();
-    Vector2 mvec(mx,my);
+    Vector mvec(mx,my);
     mouseCircle->setCenter(mx, my);
     if (attract) {
       mouseCircle->setColor( ColorFloat(1.0f,0.5f,0.5f,0.5f) );
@@ -244,7 +247,7 @@ public:
         mdir = (mvec - b->pos).angle();
       else
         mdir = (b->pos-mvec).angle();
-      b->acc = Vector2(cos(mdir),sin(mdir))*gravity;
+      b->acc = Vector(cos(mdir),sin(mdir))*gravity;
       b->vel *= friction;
 
       b->step();
@@ -299,8 +302,6 @@ void ballroomFunction(Canvas& can) {
         b.toggleAttract();
     });
 
-//    ColorFloat clearcolor = ColorInt(0,0,0,16);
-
     while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         b.step(&can);
@@ -314,6 +315,5 @@ int main(int argc, char* argv[]) {
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;            //If not, set the width and height to a default value
     Canvas c(-1, -1, w, h, "The Ballroom");
-    c.setBackgroundColor(BLACK);
     c.run(ballroomFunction);
 }

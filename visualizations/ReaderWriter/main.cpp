@@ -54,11 +54,11 @@ int main(int argc, char* argv[]) {
 	//Draw labels
 	Rectangle dataRec(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY); // draw data area
 	can.add(&dataRec);
-	Text lockText(lockString, 50, WINDOW_HEIGHT-50, 5, BLACK);
-	Text numText("Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 5, BLACK);
-	Text numText2("counts of reads/writes", WINDOW_WIDTH-225, WINDOW_HEIGHT-30, 5, BLACK);
-	Text writeText("Writers", 20, 20, 5, BLACK);
-	Text readText("Readers", WINDOW_WIDTH-150, 20, 5, BLACK);
+	Text lockText(lockString, 50, WINDOW_HEIGHT-50, 24, BLACK);
+	Text numText("Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);
+	Text numText2("counts of reads/writes", WINDOW_WIDTH-225, WINDOW_HEIGHT-30, 20, BLACK);
+	Text writeText("Writers", 20, 20, 24, BLACK);
+	Text readText("Readers", WINDOW_WIDTH-150, 20, 24, BLACK);
 	can.add( &lockText ); can.add( &numText ); can.add( &numText2 ); can.add( &writeText ); can.add( &readText );
 
 	//Fill the Reader and Writer arrays with their objects

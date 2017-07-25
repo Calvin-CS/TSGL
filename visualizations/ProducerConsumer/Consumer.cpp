@@ -22,19 +22,6 @@ Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 }
 
 /**
- * showArrow draws an arrow from the Star to the Consumer
- * @param: c, a Star pointer for the location of the Arrow
- */
-void Consumer::showArrow(Star * c) {
-	//arrow going from the Star to this
-	Arrow arrow(c->getX(), c->getY(), myX-30, myY);
-	myCan->add(&arrow);
-	myCan->sleepFor(0.5);
-	while( paused ) {}
-	myCan->remove(&arrow);
-}
-
-/**
  * locks the Queue for consumption
  */
 void Consumer::lock() {
@@ -65,7 +52,7 @@ void Consumer::act() {
 	count++; myCountLabel->setString( to_string(count) );
 	if(count == 10) myCountLabel->setCenter(myX, myY);
 	if(count == 100) {
-		myCountLabel->setFontSize(4);
+		myCountLabel->setFontSize(20);
 		myCountLabel->setCenter(myX, myY);
 	}
 }

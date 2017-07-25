@@ -5,6 +5,7 @@
  */
 
 #include <tsgl.h>
+#include <queue>
 
 using namespace tsgl;
 
@@ -43,28 +44,62 @@ void lineChainFunction(Canvas& can, int t) {
   const int IPF = 3;
   const int CWW = can.getWindowWidth() / 2, CWH = can.getWindowHeight() / 2;
   const float ARC = 2.3f, SPIN = 0.01f;
+
+  bool paused = false; // Flag that determines whether the animation is paused
+  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&paused]() { // toggle pause when spacebar is pressed
+		paused = !paused;
+	});
+
   #pragma omp parallel num_threads(t)
   {
-    const float NTHREADS = omp_get_num_threads();
-    const float FADERATE = (NTHREADS < 200) ? 1.0f*NTHREADS/200 : 1;
+    const float NTHREADS = omp_get_num_threads(); //Number of actual threads
+    const float FADERATE = (NTHREADS < 100) ? 1.0f*NTHREADS/100 : 1;
     const int TID = omp_get_thread_num();
-    int xOld, yOld, xNew = CWW*2, yNew = CWH;
+    int xOld, yOld, xNew = CWW*2, yNew = CWH, layer = TID;
     float next = (ARC*TID)/NTHREADS, s = next;
-    ColorFloat c = Colors::highContrastColor(TID);
+    ColorFloat c = Colors::highContrastColor(TID); //High contrast color for this thread
+
+    //Create and add Rectangle for fading lines
+    Rectangle* myRect = new Rectangle(0, 0, can.getWindowWidth(), can.getWindowHeight(), ColorFloat(0, 0, 0, FADERATE));
+    can.add(myRect);
+
+    std::queue<Polyline*> myLines; //Queue for storing line pointers
     while (can.isOpen()) {  // Checks to see if the window has been closed
       can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
-      for (int i = 0; i < IPF; ++i) {
-        next += ARC; s += SPIN;
-        xOld = xNew; yOld = yNew;
-        float size = cos(s);
-        xNew = CWW + CWW*size*cos(next);
-        yNew = CWH + CWH*size*sin(next);
-        can.drawLine(xOld, yOld, xNew, yNew, c);
+      while(paused && can.isOpen()) {}
+
+      //Make the next line
+      next += ARC; s += SPIN;
+      xOld = xNew; yOld = yNew;
+      float size = cos(s);
+      xNew = CWW + CWW*size*cos(next);
+      yNew = CWH + CWH*size*sin(next);
+      Line* newLine = new Line(xOld, yOld, xNew, yNew, c);
+      newLine->setLayer(layer);
+      layer++;
+      //Add the line to our Queue and Canvas
+      can.add(newLine);
+      myLines.push(newLine);
+
+      myRect->setLayer(layer-2*t); //Creates illusion of lines fading
+
+
+      //Delete oldest line
+      if(myLines.size() > 60) {
+        Polyline* oldLine = myLines.front();
+        myLines.pop();
+        can.remove(oldLine);
+        delete oldLine;
       }
-      if (TID == 0)
-        can.drawRectangle(0,0,CWW*2,CWH*2,ColorFloat(0,0,0,FADERATE));
-      #pragma omp barrier
+      #pragma omp barrier //Synchronizes all threads
     }
+
+    //After Canvas is closed...
+    while(myLines.size() > 0) { //Delete pointers to lines in Queue
+      delete myLines.front();
+      myLines.pop();
+    }
+    delete myRect; //Delete thread's Rectangle
   }
 }
 
@@ -81,4 +116,5 @@ int main(int argc, char* argv[]) {
     Canvas c(-1, -1, w, h, "Spirograph");
     c.setBackgroundColor(BLACK);
     c.run(lineChainFunction,t);
+    std::cout << "Done!" << std::endl;
 }

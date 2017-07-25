@@ -31,9 +31,6 @@ void concavePolygonFunction(Canvas& can) {
 
   int x[PSIZE], xx[PSIZE];
   int y[PSIZE], yy[PSIZE];
-  ColorFloat color[PSIZE];
-  for (unsigned i = 0; i < PSIZE; ++i)
-    color[i] = Colors::randomColor(1.0f);
 
   x[0] = 100; y[0] = 100;
   x[1] = 200; y[1] = 100;
@@ -48,6 +45,7 @@ void concavePolygonFunction(Canvas& can) {
   x[10] = 100; y[10] = 400;
   x[11] = 100; y[11] = 100;
 
+
   for (int i = 0; i < PSIZE; ++i) {
     if (i % 2 == 0) {
       xx[i] = 600 + 150 * sin((1.0f*i)/(PSIZE) * PI * 2);
@@ -59,13 +57,19 @@ void concavePolygonFunction(Canvas& can) {
     std::cout << i << ":" << x[i] << "," << y[i] << std::endl;
   }
 
-  while (can.isOpen()) {  // Checks to see if the window has been closed
-    can.sleep();
-//    for (unsigned i = 0; i < PSIZE; ++i)
-//      color[i] = Colors::randomColor(1.0f);
-    can.drawConcavePolygon(PSIZE, x, y, color, true);
-    can.drawConcavePolygon(PSIZE, xx, yy, color, true);
+  ConcavePolygon* polygon1 = new ConcavePolygon(PSIZE, Colors::randomColor());
+  ConcavePolygon* polygon2 = new ConcavePolygon(PSIZE, Colors::randomColor());
+  polygon1->setHasOutline(false); polygon2->setHasOutline(true);
+  for(int i = 0; i < PSIZE; i++) {
+    polygon1->addVertex(x[i], y[i]);
+    polygon2->addVertex(xx[i], yy[i]);
   }
+  can.add(polygon1); can.add(polygon2);
+
+  can.wait(); //Waits for user to close the window
+
+  delete polygon1;
+  delete polygon2;
 }
 
 //Takes command-line arguments for the width and height of the screen

@@ -12,7 +12,7 @@
  * for <resolutionMethodChar> enter:
  *  'w' for waitWhenBlocked, which results in Deadlock
  *  'f' for forfeitWhenBlocked, which results in Livelock
- *  'n' for nFrameRelease, which does not lock and is mostly fair for N philosophers, N >= 5
+ *  'n' for nCountRelease, which does not lock and is mostly fair for N philosophers, N >= 5
  *  'r' for resourceHierarchy, which does not lock and is mostly fair for N philosophers, N >= 2
  *  'o' for oddEven, which does not lock and is perfectly fair for N philosophers, N >= 2 (also default)
  */
@@ -38,7 +38,7 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM) {
       method = forfeitWhenBlocked; //Livelock (when synchronized)
       break;
     case 'n':
-      method = nFrameRelease;      //No locking; mostly fair for N philosophers, N >= 5
+      method = nCountRelease;      //No locking; mostly fair for N philosophers, N >= 5
       break;
     case 'r':
       method = resourceHierarchy;  //No locking; mostly fair for N philosophers, N >= 2
@@ -64,15 +64,15 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM) {
   {
     while(can.isOpen()) {
 		  if (!paused) {
-      		t.checkStep();
-      		can.pauseDrawing();
+      	t.checkStep();
+      	can.pauseDrawing();
         if(method == forfeitWhenBlocked || method == waitWhenBlocked) { //Synchronize to see Livelock and Deadlock
         #pragma omp barrier               //Barrier for optional synchronization
         }
-      		t.actStep();
-          can.sleep(); // ensures each fork is only drawn once per frame
-          t.drawStep();
-          can.resumeDrawing();
+      	t.actStep();
+        can.sleep(); // ensures each fork is only drawn once per frame
+        t.drawStep();
+        can.resumeDrawing();
 		  }
       can.sleep();
     }

@@ -15,7 +15,8 @@ namespace tsgl {
  */
 class Star : public ConcavePolygon {
 private:
-  int myRadius, myPoints;
+  float myRadius;
+  int myPoints;
 public:
 
       /*!
@@ -31,7 +32,7 @@ public:
        *   \param ninja The ninja setting of the star, making the star points spin differently if true
        *     (set to false by default).
        */
-      Star(int x, int y, int radius, int points, ColorFloat color = BLACK, const ColorFloat& outlineColor = BLACK, bool ninja = false);
+      Star(float x, float y, float radius, int points, ColorFloat color = BLACK, const ColorFloat& outlineColor = BLACK, bool ninja = false);
 
 };
 

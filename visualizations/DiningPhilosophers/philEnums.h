@@ -16,7 +16,7 @@ enum PhilAction {
 /*! \brief Enum for resource collision resolution methods for the Dining Philosophers' problem
 */
 enum PhilMethod {
-  forfeitWhenBlocked, waitWhenBlocked, nFrameRelease, resourceHierarchy, oddEven
+  forfeitWhenBlocked, waitWhenBlocked, nCountRelease, resourceHierarchy, oddEven
 };
 
 #endif /* PHIL_ENUM_H_ */

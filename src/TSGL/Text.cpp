@@ -40,7 +40,7 @@ namespace tsgl {
     }
 
     // Set the character size
-    error = FT_Set_Char_Size( face, 0, font_size*64*scaleFactor, 300, 300 );
+    error = FT_Set_Char_Size( face, 0, font_size*16*scaleFactor, 300, 300 );
     if (error) {
       fprintf(stderr, "Error while setting the FreeType font size!\n");
       exit(-1);
@@ -290,7 +290,7 @@ namespace tsgl {
       fontsize = font_size;
 
       // Set the character size
-      error = FT_Set_Char_Size( face, 0, font_size*64, 300, 300 );
+      error = FT_Set_Char_Size( face, 0, font_size*16, 300, 300 );
       if (error) {
         fprintf(stderr, "Error while setting the FreeType font size!\n");
         exit(-1);

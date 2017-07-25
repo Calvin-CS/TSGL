@@ -4,6 +4,7 @@
 
 #include "PointLayer.h"
 
+//TODO appears transparent on retina displays because of GL_POINT_SIZE
 namespace tsgl {
 
   PointLayer::PointLayer(const ColorFloat& c) {

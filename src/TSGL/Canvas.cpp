@@ -828,11 +828,11 @@ namespace tsgl {
   void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
     float delta = 2.0f / sides * PI;
     if (filled) {
-      Circle *c = new Circle(xverts, yverts, radius, sides, color);
+      RegularPolygon *c = new RegularPolygon(xverts, yverts, radius, sides, color);
       c->setHasOutline(false);
       this->add(c);
     } else {
-      UnfilledCircle *c = new UnfilledCircle(xverts, yverts, radius, sides, color);
+      UnfilledRegularPolygon *c = new UnfilledRegularPolygon(xverts, yverts, radius, sides, color);
       this->add(c);
     }
   }
@@ -888,8 +888,9 @@ namespace tsgl {
   }
 
   void Canvas::drawPoint(int x, int y, ColorFloat color) {
-    Point* p = new Point(x, y, color);
-    this->add(p);  //TODO test thread safety
+    //TODO convert to point layer
+    // Point* p = new Point(x, y, color);
+    // this->add(p);  //TODO test thread safety
   }
 
   //TODO: change to just add the ProgressBar as one item (rather than rect and border)

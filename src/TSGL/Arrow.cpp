@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-  Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color, bool doubleArrow) : ConcavePolygon( (doubleArrow)? 10 : 7, color) {
+  Arrow::Arrow(float x1, float y1, float x2, float y2, const ColorFloat &color, bool doubleArrow) : ConcavePolygon( (doubleArrow)? 10 : 7, color) {
     attribMutex.lock();
     hasOutline = false;
     headX = x2; headY = y2;
@@ -30,7 +30,7 @@ namespace tsgl {
     }
   }
 
-  void Arrow::moveHead(int x, int y) { //TODO: test
+  void Arrow::moveHead(float x, float y) {
     attribMutex.lock();
     current = 0; init = false;
     headX = x; headY = y;
@@ -38,7 +38,7 @@ namespace tsgl {
     generateVertices();
   }
 
-  void Arrow::moveTail(int x, int y) { //TODO: test
+  void Arrow::moveTail(float x, float y) {
     attribMutex.lock();
     current = 0; init = false;
     tailX = x; tailY = y;

@@ -26,7 +26,7 @@ class UnfilledRectangle : public UnfilledShape {
      *   \param color The color of the UnfilledRectangle. (Defaults to BLACK.)
      * \return A new UnfilledRectangle with the specified top left corner, dimensions, and color.
      */
-    UnfilledRectangle(int x, int y, int width, int height, const ColorFloat &color = BLACK);
+    UnfilledRectangle(float x, float y, float width, float height, const ColorFloat &color = BLACK);
 };
 
 }

@@ -51,12 +51,7 @@ public:
   /**
    * \brief Destroys the Pong game object.
    */
-  ~Pong() {
-    delete leftPaddle;
-    delete rightPaddle;
-    delete leftScore;
-    delete rightScore;
-  }
+  ~Pong();
 
 private:
   Paddle *leftPaddle, *rightPaddle;

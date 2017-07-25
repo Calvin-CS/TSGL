@@ -13,7 +13,7 @@ Ball::Ball(Canvas& can, int & speed) {
     myXX = mySpeed * cos(myDir);
     myYY = mySpeed * sin(myDir);
   } while(myXX > -4 && myXX < 4);
-  myCircle = new Circle(myX, myY, 8, 16, WHITE);
+  myCircle = new Circle(myX, myY, 8, WHITE);
   can.add(myCircle);
 }
 

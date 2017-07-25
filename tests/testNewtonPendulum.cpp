@@ -6,6 +6,7 @@
 
 #include "tsgl.h"
 #include "Util.h"
+#include <vector>
 
 using namespace tsgl;
 
@@ -20,10 +21,7 @@ using namespace tsgl;
  * - While the Canvas has not been closed:
  *  - The Canvas' internal timer is put to sleep until the next drawing loop.
  *  - Conditionals determine the left and right ball motion.
- *  - The animation loop is paused.
- *  - The Canvas is cleared.
- *  - The stationary balls and lines are drawn first, followed by the moving balls and lines.
- *  - The animation is resumed.
+ *  - The moving balls' and lines' locations are set.
  *  .
  * .
  * \param can Reference to the Canvas to draw on.
@@ -31,8 +29,7 @@ using namespace tsgl;
  */
 void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
   //User variables
-  const int   SIDES = 128,      //Sizes for each circle
-              BALLS = numberOfBalls, //Keep this odd
+  const int   BALLS = numberOfBalls, //Keep this odd
               RADIUS = 20;      //Radius of circles
   const float ACCEL = 0.5f,     //Acceleration of balls
               TOPSPEED = 9.0f, //Starting speed of balls
@@ -45,6 +42,21 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
               CY = WINDOW_H / 2;
   const float LINELEN = CY,
               OFFSET = RADIUS*(BALLS-1);
+
+  //Draw stationary lines and balls
+  std::vector<Shape*> stationaryShapes;
+  for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
+    Line* l = new Line(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN);
+    Circle* c = new Circle(CX + RADIUS*2*i, CY, RADIUS, GRAY, WHITE);
+    can.add(l); can.add(c);
+  }
+
+  //Add moving Shapes
+  Circle* leftCircle  = new Circle(CX - OFFSET, LINELEN, RADIUS, GRAY, WHITE);
+  Circle* rightCircle = new Circle(CX + OFFSET, LINELEN, RADIUS, GRAY, WHITE);
+  Line* leftLine  = new Line(CX - OFFSET, 0, CX - OFFSET, LINELEN);
+  Line* rightLine = new Line(CX + OFFSET, 0, CX + OFFSET, LINELEN);
+  can.add(rightLine); can.add(leftLine); can.add(leftCircle); can.add(rightCircle);
 
   //Computation
   float rightPos = 0, leftPos = 0;               //Initial positions of the edge balls
@@ -74,21 +86,19 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
       }
     }
 
-    can.pauseDrawing();
-    can.clear();
-    //Draw stationary lines and balls
-    for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
-      can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN);
-      can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, SIDES, GRAY, true);
-    }
-    //Draw moving lines and balls!
+    //Move the lines and balls!
     //Left
-    can.drawLine(CX - OFFSET, 0, CX - OFFSET + LINELEN*sin(leftPos/AMP), LINELEN*cos(leftPos/AMP));
-    can.drawCircle(CX - OFFSET + LINELEN*sin(leftPos/AMP),  LINELEN*cos(leftPos/AMP), RADIUS, SIDES, GRAY, true);
+    leftLine->setSecondEnd(CX - OFFSET + LINELEN*sin(leftPos/AMP), LINELEN*cos(leftPos/AMP));
+    leftCircle->setCenter(CX - OFFSET + LINELEN*sin(leftPos/AMP),  LINELEN*cos(leftPos/AMP));
     //Right
-    can.drawLine(CX + OFFSET, 0, CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
-    can.drawCircle(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP), RADIUS, SIDES, GRAY, true);
-    can.resumeDrawing();
+    rightLine->setSecondEnd(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
+    rightCircle->setCenter(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
+  }
+
+  delete leftLine; delete leftCircle;
+  delete rightLine; delete rightCircle;
+  for(unsigned i = 0; i < stationaryShapes.size(); i++) {
+    delete stationaryShapes[i];
   }
 }
 

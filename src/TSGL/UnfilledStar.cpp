@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-UnfilledStar::UnfilledStar(int x, int y, int radius, int points, ColorFloat color, bool ninja) : UnfilledShape(points*2, color) {
+UnfilledStar::UnfilledStar(float x, float y, float radius, int points, ColorFloat color, bool ninja) : UnfilledShape(points*2, color) {
   attribMutex.lock();
   myRadius = radius;
   myPoints = points;

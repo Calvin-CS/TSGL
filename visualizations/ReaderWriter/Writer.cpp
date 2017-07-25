@@ -19,7 +19,7 @@ Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas
 	myCircle->setCenter(myX, myY);
 	myCountLabel->setCenter(myX, myY);
 	if( !dataLabel ) {
-		dataLabel = new Text("0/300", RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 6, BLACK);
+		dataLabel = new Text("0/300", RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 24, BLACK);
 		myCan->add( dataLabel );
 		dataLabel->setLayer(3);
 	}

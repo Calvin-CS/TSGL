@@ -15,7 +15,7 @@ Producer::Producer() : PCThread() { }
  */
 Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = 50; //Set the x-coordinate to 50
-	myShape = new Circle(myX, myY, 20, 32, ColorInt(0, 0, 0));
+	myShape = new Circle(myX, myY, 20, ColorInt(0, 0, 0));
 	// myCountLabel->setLocation(myX-10, myY+5);
 	myCountLabel->setCenter(myX, myY);
 	myCan->add(myShape);
@@ -38,6 +38,9 @@ Star* Producer::nextItem() {
 	return new Star(myX+50, myY, 20, 5, randColor(), false );
 }
 
+/**
+ * wait takes some time to find the next color
+ */
 void Producer::wait() {
 	myItem = nextItem();
 	myShape->setColor( myItem->getColor() );
@@ -75,7 +78,7 @@ void Producer::act() {
 	count++; myCountLabel->setString( to_string(count) );
 	if(count == 10) myCountLabel->setCenter(myX, myY);
 	if(count == 100) {
-		myCountLabel->setFontSize(4);
+		myCountLabel->setFontSize(20);
 		myCountLabel->setCenter(myX, myY);
 	}
 }

@@ -15,7 +15,8 @@ namespace tsgl {
  */
 class UnfilledStar : public UnfilledShape {
 private:
-  int myRadius, myPoints;
+  float myRadius;
+  int myPoints;
 public:
 
       /*!
@@ -31,7 +32,7 @@ public:
        *   \param ninja The ninja setting of the star, making the star points twisted differently if true
        *     (set to false by default).
        */
-      UnfilledStar(int x, int y, int radius, int points, ColorFloat color = BLACK, bool ninja = false);
+      UnfilledStar(float x, float y, float radius, int points, ColorFloat color = BLACK, bool ninja = false);
 
 };
 
