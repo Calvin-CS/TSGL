@@ -101,7 +101,7 @@ namespace tsgl {
         char_obj->advance_y = slot->advance.y /64 /scaleFactor;
         char_obj->bearing = (float)slot->metrics.horiBearingY /64.0 /scaleFactor;
 
-        printf("Bearing: %f\n", char_obj->bearing);
+        // printf("Bearing: %f\n", char_obj->bearing);
 
         // Update maxBearing
         if (char_obj->bearing > maxBearing) maxBearing = char_obj->bearing;
@@ -161,6 +161,9 @@ namespace tsgl {
 
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
     //TODO replace with something better
     float cursor_x = 0.0;

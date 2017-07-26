@@ -24,14 +24,16 @@ void textFunction(Canvas& can) {
 
     can.setBackgroundColor(WHITE);
 
-    Text * t0 = new Text("Here's to the crazy ones. The misfits. The rebels. The troublemakers.", 16, 50, 8, BLACK);
-    Text * t1 = new Text("The round pegs in the square holes. The ones who see things differently.", 16, 150, 8, RED);
-    Text * t2 = new Text("They're not fond of rules. And they have no respect for the status quo.", 16, 250, 8, GREEN);
-    Text * t3 = new Text("You can quote them, disagree with them, glorify or vilify them.", 16, 350, 8, BLUE);
-    Text * t4 = new Text("About the only thing you can't do is ignore them. Because they change things.", 16, 450, 8, GRAY);
-    Text * t5 = new Text("They push the human race forward. And while some may see them as the crazy ones,", 16, 550, 8, WHITE);
-    Text * t6 = new Text("we see genius. Because the people who are crazy enough", 16, 650, 8, WHITE);
-    Text * t7 = new Text("to think they can change the world, are the ones who do.", 16, 750, 8, PURPLE);
+    int FONT_SIZE = 26;
+
+    Text * t0 = new Text("Here's to the crazy ones. The misfits. The rebels. The troublemakers.", 16, 50, FONT_SIZE, BLACK);
+    Text * t1 = new Text("The round pegs in the square holes. The ones who see things differently.", 16, 150, FONT_SIZE, RED);
+    Text * t2 = new Text("They're not fond of rules. And they have no respect for the status quo.", 16, 250, FONT_SIZE, GREEN);
+    Text * t3 = new Text("You can quote them, disagree with them, glorify or vilify them.", 16, 350, FONT_SIZE, BLUE);
+    Text * t4 = new Text("About the only thing you can't do is ignore them. Because they change things.", 16, 450, FONT_SIZE, GRAY);
+    Text * t5 = new Text("They push the human race forward. And while some may see them as the crazy ones,", 16, 550, FONT_SIZE, WHITE);
+    Text * t6 = new Text("we see genius. Because the people who are crazy enough", 16, 650, FONT_SIZE, WHITE);
+    Text * t7 = new Text("to think they can change the world, are the ones who do.", 16, 750, FONT_SIZE, PURPLE);
     can.add( t0 ); can.add( t1 ); can.add( t2 ); can.add( t3 ); can.add( t4 ); can.add( t5 ); can.add( t6 ); can.add( t7 );
 
     can.wait(); //Wait until Canvas is closed...

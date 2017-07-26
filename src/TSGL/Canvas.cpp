@@ -141,8 +141,9 @@ namespace tsgl {
       printf("Something went wrong loading GLAD!\n");
       exit(-1);
     }
-    // TODO: this is here for debug purposes, pull out eventually?
+    #ifdef __DEBUG__
     printf("OpenGL version: %d.%d\n", GLVersion.major, GLVersion.minor);
+    #endif
   }
 
   void Canvas::initGlfw() {
@@ -463,7 +464,7 @@ namespace tsgl {
     // debugRect->setLayer(100);
     // add(debugRect);
 
-    printf("%s\n", "Drawing stuff.");
+    // printf("%s\n", "Drawing stuff.");
 
     glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
 
@@ -576,7 +577,9 @@ namespace tsgl {
       counter++;
       // printf("Frame %d finished.\n", counter);
       if (counter==60) {
+        #ifdef __DEBUG__
         printf("Did 60 frames in %f seconds: %f FPS.\n", (glfwGetTime()-lastTime), 60/(glfwGetTime()-lastTime));
+        #endif
         counter = 0;
         lastTime = glfwGetTime();
       }
@@ -586,8 +589,11 @@ namespace tsgl {
       #endif
     }
 
+
     // Print any OpenGL errors, if there are any
-    printf("OpenGL Error code: %d\n", glGetError());
+    int glError = glGetError();
+    if (glError) printf("OpenGL Error code: %d\n", glError);
+
 
   }
 

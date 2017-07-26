@@ -77,7 +77,7 @@ void alphaRectangleFunction(Canvas& can) {
     // // Test the text
     Text* myText = new Text("Testing some more stuff", 200, 200, 26, WHITE);
     can.add(myText);
-    printf("Text is %d pixels long.\n", myText->getStringWidth());
+    // printf("Text is %d pixels long.\n", myText->getStringWidth());
 
     // Queue to hold the last few rects
     std::queue<Rectangle *> myQueue;

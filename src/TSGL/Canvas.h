@@ -2,6 +2,8 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the TSGL library.
  */
 
+// #define __DEBUG__
+
 #ifndef CANVAS_H_
 #define CANVAS_H_
 

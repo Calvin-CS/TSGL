@@ -105,7 +105,7 @@ CFLAGS = \
 	-I./ \
 	-I../include/TSGL/ \
 	-O0 -g3 -Wall -Wextra -c -fmessage-length=0 -fopenmp \
-	-Wno-unused-parameter -Wno-unused-function -Wno-narrowing -fpermissive -fPIC
+	-Wno-unused-parameter -Wno-unused-function -Wno-narrowing -fpermissive -fPIC -pthread
 
 
 
