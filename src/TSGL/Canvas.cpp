@@ -746,7 +746,7 @@ namespace tsgl {
 
 
 
-  int Canvas::wait() {
+  int Canvas::wait() { //TODO: segfault (want to be able to call a second time and have it wait but not give error)
     if (!started) return -1;  // If we haven't even started yet, return error code -1
     #ifdef __APPLE__
     while(!isFinished)
