@@ -24,7 +24,7 @@ PCThread::PCThread() : Thread() {
  * \return: The constructed PCThread object.
  */
 PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : Thread(id) {
-	count = 99;
+	count = 0;
 	buffer = &sharedBuffer;	//Get the handle to the Queue
 	myCan = &can;			//Get the handle to the Canvas
 	myY = 50 * (id + 1);
