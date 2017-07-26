@@ -24,7 +24,7 @@ using namespace tsgl;
 //       //  drawShape(rec);                                     // Push it onto our drawing buffer
 // }
 
-void alphaRectangleFunction(Canvas& can) {
+void alphaRectangleFunction(RasterCanvas& can) {
     const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
     int a, b, c, d;
     // int counter = 0;
@@ -69,10 +69,10 @@ void alphaRectangleFunction(Canvas& can) {
     // Circle* c1 = new Circle(300, 500, 50, 100, PURPLE, false);
     // can.add(c1);
 
-    // Add a blue rectangle at the bottom
-    Rectangle* botBlueRect = new Rectangle(300, 300, 120, 50, ColorInt(0*MAX_COLOR, 0*MAX_COLOR, 1*MAX_COLOR, 255));
-    botBlueRect->setLayer(0);
-    can.add(botBlueRect);
+    // // Add a blue rectangle at the bottom
+    // Rectangle* botBlueRect = new Rectangle(0, 0, 1000, 1000, ColorInt(0*MAX_COLOR, 1*MAX_COLOR, 1*MAX_COLOR, 255));
+    // botBlueRect->setLayer(0);
+    // can.add(botBlueRect);
 
     // // Test the text
     Text* myText = new Text("Testing some more stuff", 200, 200, 26, WHITE);
@@ -96,7 +96,7 @@ void alphaRectangleFunction(Canvas& can) {
 
         // Push the rectangle onto the queue and onto the canvas so it can render
         myQueue.push(myRectangle);
-        can.add(myRectangle);
+        // can.add(myRectangle);
 
         // Remove old rectangles if there are more than 40 of them
         if (myQueue.size() >= 50) {
@@ -109,6 +109,13 @@ void alphaRectangleFunction(Canvas& can) {
           // std::queue<Rectangle*>().swap(myQueue);
 
         }
+
+        // Test get pixel value
+        // ColorInt pixTest = can.getPixel(300,300);
+        // printf("R: %d G: %d B: %d A: %d \n", pixTest.R,pixTest.G,pixTest.B,pixTest.A);
+
+        int i = 0;
+        for (i=0; i<4000; i++) can.drawPoint((float)(rand()%400), (float)(rand()%400), BLUE, 2.0);
     }
 }
 

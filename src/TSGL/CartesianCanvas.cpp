@@ -297,230 +297,230 @@ void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
     zoom((x2 + x1) / 2, (y2 + y1) / 2, scale);
 }
 
-//-----------------------Unit testing-------------------------------------------------
-void CartesianCanvas::runTests() {
-  TsglDebug("Testing CartesianCanvas class...");
-  CartesianCanvas c1(0.0f);
-  c1.setBackgroundColor(WHITE);
-  c1.start();
-
-  std::this_thread::sleep_for(std::chrono::seconds(1));
-  tsglAssert(testZoom(c1), "Unit test for zoom() functions failed!");
-  tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed!");
-  c1.stop();
-
-  CartesianCanvas c2(-1, -1, 800, 600, -1, -1, 3, 2,"");
-  c2.setBackgroundColor(WHITE);
-  c2.start();
-  tsglAssert(testDraw(c2), "Unit test for drawing functions failed!");
-  c2.wait();
-
-  TsglDebug("Unit tests for CartesianCanvas complete.");
-}
-
-bool CartesianCanvas::testDraw(CartesianCanvas& can) {
-  int passed = 0;
-  int failed = 0;
-
-  float pw = can.getPixelWidth();
-  float ph = can.getPixelHeight();
-
-  //Test 1: Physical to Cartesian point mapping
-  can.drawPoint(-1.0f,-1.0f,BLACK); //outer bottomleft
-  can.drawPoint(3.0f,-1.0f,BLACK);  //outer bottomright
-  can.drawPoint(-1.0f,2.0f,BLACK);  //outer topleft
-  can.drawPoint(3.0f,2.0f,BLACK);   //outer topright
-  can.drawPoint(0.0f,0.0f,BLACK);   //1/4 over, 1/3 down (origin)
-
-  can.drawPoint(-1.0f+pw,-1.0f+ph,BLACK); //inner bottomleft
-  can.drawPoint(3.0f-pw,-1.0f+ph,BLACK);  //inner bottomright
-  can.drawPoint(-1.0f+pw,2.0f-ph,BLACK);  //inner topleft
-  can.drawPoint(3.0f-pw,2.0f-ph,BLACK);   //inner topright
-  can.sleepFor(1.0f);
-
-  if(can.getPoint(200,399).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, origin pixel for testDraw() failed!");
-  }
-  if(can.getPoint(0,0).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, outer topleft pixel for testDraw() failed!");
-  }
-  if(can.getPoint(799,0).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, outer topright pixel for testDraw() failed!");
-  }
-  if(can.getPoint(0,599).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, outer bottomleft pixel for testDraw() failed!");
-  }
-  if(can.getPoint(799,599).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, outer bottomright pixel for testDraw() failed!");
-  }
-
-  if(can.getPoint(1,1).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, inner topleft pixel for testDraw() failed!");
-  }
-  if(can.getPoint(798,1).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, inner topright pixel for testDraw() failed!");
-  }
-  if(can.getPoint(1,598).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, inner bottomleft pixel for testDraw() failed!");
-  }
-  if(can.getPoint(798,598).R == 0) {
-    passed++;
-  } else {
-    failed++;
-    TsglErr("Test 1, inner bottomright pixel for testDraw() failed!");
-  }
-
-  //Results:
-  if(failed == 0) {
-    TsglDebug("Unit test for drawing passed!");
-    return true;
-  } else {
-    TsglErr("This many passed for testDraw(): ");
-    std::cout << " " << passed << std::endl;
-    TsglErr("This many failed for testDraw(): ");
-    std::cout << " " << failed << std::endl;
-    return false;
-  }
-}
-
-bool CartesianCanvas::testZoom(CartesianCanvas& can) {
-    int passed = 0;
-    int failed = 0;
-    //Test 1: Zooming out
-    //Had to use round() because there was a floating-point error that
-    //propagated to the rest of the tests after the first two
-    can.zoom(0, 0, 1.5);
-    if(round(can.getCartWidth()) == 1200 && round(can.getCartHeight()) == 900) {
-      passed++;
-    } else {
-      failed++;
-      TsglErr("Test 1, Zooming out for testZoom() failed!");
-    }
-
-    //Test 2: Zooming in
-    can.zoom(0, 0, .5);
-    if(round(can.getCartWidth()) == 600 && round(can.getCartHeight()) == 450) {
-      passed++;
-    } else {
-      failed++;
-      TsglErr("Test 2, Zooming in for testZoom() failed!");
-    }
-
-    //Test 3: Zooming out/in on a different point
-
-    //Zooming out....
-    can.zoom(10, 10, 1.2);
-    if(round(can.getCartWidth()) == 720 && round(can.getCartHeight()) == 540) {
-      passed++;
-    } else {
-      failed++;
-      TsglErr("Test 3, Zooming out on a different point for testZoom() failed!");
-    }
-
-    //Zooming in....
-    can.zoom(15, 20, .9);
-    if(round(can.getCartWidth()) == 648 && round(can.getCartHeight()) == 486) {
-      passed++;
-    } else {
-      failed++;
-      TsglErr("Test 3, Zooming in on a different point for testZoom() failed!");
-    }
-
-    //Results:
-    if(passed == 4 && failed == 0) {
-      TsglDebug("Unit test for zooming in & out passed!");
-      return true;
-    } else {
-      TsglErr("This many passed for testZoom(): ");
-      std::cout << " " << passed << std::endl;
-      TsglErr("This many failed for testZoom(): ");
-      std::cout << " " << failed << std::endl;
-      return false;
-    }
-}
-
-bool CartesianCanvas::testRecomputeDimensions(CartesianCanvas& can) {
-   int passed = 0;
-   int failed = 0;
-   Decimal xMin, xMax;
-   Decimal yMin, yMax;
-   //Test 1: Positive values only (with 0.0)
-   xMin = 0.0;
-   xMax = 500.0;
-   yMin = 0.0;
-   yMax = 500.0;
-   can.recomputeDimensions(xMin, yMin, xMax, yMax);
-   if(can.getCartWidth() == 500.0 && can.getCartHeight() == 500.0) {
-     passed++;
-   } else {
-     failed++;
-     TsglErr("Test 1, Positive values only for testRecomputeDimensions() failed!");
-   }
-
-   //Test 2: Negative values included
-   xMin = xMax = yMin = yMax = 0.0;
-   xMin = -300.0;
-   xMax = 900.0;
-   yMin = -500.0;
-   yMax = 1000.0;
-   can.recomputeDimensions(xMin, yMin, xMax, yMax);
-
-   if(can.getCartWidth() == 1200.0 && can.getCartHeight() == 1500.0) {
-     passed++;
-   } else {
-     failed++;
-     TsglErr("Test 2, Negative values for testRecomputeDimensions() failed!");
-   }
-
-   //Test 3: Same as Test 2, but negative values are max
-   xMin = xMax = yMin = yMax = 0.0;
-   xMin = -900.0;
-   xMax = -100.0;
-   yMin = -800.0;
-   yMax = -50.0;
-   can.recomputeDimensions(xMin, yMin, xMax, yMax);
-
-   if(can.getCartWidth() == 800.0 && can.getCartHeight() == 750.0) {
-     passed++;
-   } else {
-     failed++;
-     TsglErr("Test 3, Max negative values for testRecomputeDimensions() failed!");
-   }
-
-   if(passed == 3 && failed == 0) {
-     TsglDebug("Unit test for recomputing dimensions passed!");
-     return true;
-   } else {
-     TsglErr("This many tests passed for testRecomputeDimensions(): ");
-     std::cout << " " << passed << std::endl;
-     TsglErr("This many tests failed for testRecomputeDimensions(): ");
-     std::cout << " " << failed << std::endl;
-     return false;
-   }
-}
-//-----------------End Unit testing----------------------------------------------------
+// //-----------------------Unit testing-------------------------------------------------
+// void CartesianCanvas::runTests() {
+//   TsglDebug("Testing CartesianCanvas class...");
+//   CartesianCanvas c1(0.0f);
+//   c1.setBackgroundColor(WHITE);
+//   c1.start();
+//
+//   std::this_thread::sleep_for(std::chrono::seconds(1));
+//   tsglAssert(testZoom(c1), "Unit test for zoom() functions failed!");
+//   tsglAssert(testRecomputeDimensions(c1), "Unit test for recomputing dimensions failed!");
+//   c1.stop();
+//
+//   CartesianCanvas c2(-1, -1, 800, 600, -1, -1, 3, 2,"");
+//   c2.setBackgroundColor(WHITE);
+//   c2.start();
+//   tsglAssert(testDraw(c2), "Unit test for drawing functions failed!");
+//   c2.wait();
+//
+//   TsglDebug("Unit tests for CartesianCanvas complete.");
+// }
+//
+// bool CartesianCanvas::testDraw(CartesianCanvas& can) {
+//   int passed = 0;
+//   int failed = 0;
+//
+//   float pw = can.getPixelWidth();
+//   float ph = can.getPixelHeight();
+//
+//   //Test 1: Physical to Cartesian point mapping
+//   can.drawPoint(-1.0f,-1.0f,BLACK); //outer bottomleft
+//   can.drawPoint(3.0f,-1.0f,BLACK);  //outer bottomright
+//   can.drawPoint(-1.0f,2.0f,BLACK);  //outer topleft
+//   can.drawPoint(3.0f,2.0f,BLACK);   //outer topright
+//   can.drawPoint(0.0f,0.0f,BLACK);   //1/4 over, 1/3 down (origin)
+//
+//   can.drawPoint(-1.0f+pw,-1.0f+ph,BLACK); //inner bottomleft
+//   can.drawPoint(3.0f-pw,-1.0f+ph,BLACK);  //inner bottomright
+//   can.drawPoint(-1.0f+pw,2.0f-ph,BLACK);  //inner topleft
+//   can.drawPoint(3.0f-pw,2.0f-ph,BLACK);   //inner topright
+//   can.sleepFor(1.0f);
+//
+//   if(can.getPoint(200,399).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, origin pixel for testDraw() failed!");
+//   }
+//   if(can.getPoint(0,0).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, outer topleft pixel for testDraw() failed!");
+//   }
+//   if(can.getPoint(799,0).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, outer topright pixel for testDraw() failed!");
+//   }
+//   if(can.getPoint(0,599).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, outer bottomleft pixel for testDraw() failed!");
+//   }
+//   if(can.getPoint(799,599).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, outer bottomright pixel for testDraw() failed!");
+//   }
+//
+//   if(can.getPoint(1,1).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, inner topleft pixel for testDraw() failed!");
+//   }
+//   if(can.getPoint(798,1).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, inner topright pixel for testDraw() failed!");
+//   }
+//   if(can.getPoint(1,598).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, inner bottomleft pixel for testDraw() failed!");
+//   }
+//   if(can.getPoint(798,598).R == 0) {
+//     passed++;
+//   } else {
+//     failed++;
+//     TsglErr("Test 1, inner bottomright pixel for testDraw() failed!");
+//   }
+//
+//   //Results:
+//   if(failed == 0) {
+//     TsglDebug("Unit test for drawing passed!");
+//     return true;
+//   } else {
+//     TsglErr("This many passed for testDraw(): ");
+//     std::cout << " " << passed << std::endl;
+//     TsglErr("This many failed for testDraw(): ");
+//     std::cout << " " << failed << std::endl;
+//     return false;
+//   }
+// }
+//
+// bool CartesianCanvas::testZoom(CartesianCanvas& can) {
+//     int passed = 0;
+//     int failed = 0;
+//     //Test 1: Zooming out
+//     //Had to use round() because there was a floating-point error that
+//     //propagated to the rest of the tests after the first two
+//     can.zoom(0, 0, 1.5);
+//     if(round(can.getCartWidth()) == 1200 && round(can.getCartHeight()) == 900) {
+//       passed++;
+//     } else {
+//       failed++;
+//       TsglErr("Test 1, Zooming out for testZoom() failed!");
+//     }
+//
+//     //Test 2: Zooming in
+//     can.zoom(0, 0, .5);
+//     if(round(can.getCartWidth()) == 600 && round(can.getCartHeight()) == 450) {
+//       passed++;
+//     } else {
+//       failed++;
+//       TsglErr("Test 2, Zooming in for testZoom() failed!");
+//     }
+//
+//     //Test 3: Zooming out/in on a different point
+//
+//     //Zooming out....
+//     can.zoom(10, 10, 1.2);
+//     if(round(can.getCartWidth()) == 720 && round(can.getCartHeight()) == 540) {
+//       passed++;
+//     } else {
+//       failed++;
+//       TsglErr("Test 3, Zooming out on a different point for testZoom() failed!");
+//     }
+//
+//     //Zooming in....
+//     can.zoom(15, 20, .9);
+//     if(round(can.getCartWidth()) == 648 && round(can.getCartHeight()) == 486) {
+//       passed++;
+//     } else {
+//       failed++;
+//       TsglErr("Test 3, Zooming in on a different point for testZoom() failed!");
+//     }
+//
+//     //Results:
+//     if(passed == 4 && failed == 0) {
+//       TsglDebug("Unit test for zooming in & out passed!");
+//       return true;
+//     } else {
+//       TsglErr("This many passed for testZoom(): ");
+//       std::cout << " " << passed << std::endl;
+//       TsglErr("This many failed for testZoom(): ");
+//       std::cout << " " << failed << std::endl;
+//       return false;
+//     }
+// }
+//
+// bool CartesianCanvas::testRecomputeDimensions(CartesianCanvas& can) {
+//    int passed = 0;
+//    int failed = 0;
+//    Decimal xMin, xMax;
+//    Decimal yMin, yMax;
+//    //Test 1: Positive values only (with 0.0)
+//    xMin = 0.0;
+//    xMax = 500.0;
+//    yMin = 0.0;
+//    yMax = 500.0;
+//    can.recomputeDimensions(xMin, yMin, xMax, yMax);
+//    if(can.getCartWidth() == 500.0 && can.getCartHeight() == 500.0) {
+//      passed++;
+//    } else {
+//      failed++;
+//      TsglErr("Test 1, Positive values only for testRecomputeDimensions() failed!");
+//    }
+//
+//    //Test 2: Negative values included
+//    xMin = xMax = yMin = yMax = 0.0;
+//    xMin = -300.0;
+//    xMax = 900.0;
+//    yMin = -500.0;
+//    yMax = 1000.0;
+//    can.recomputeDimensions(xMin, yMin, xMax, yMax);
+//
+//    if(can.getCartWidth() == 1200.0 && can.getCartHeight() == 1500.0) {
+//      passed++;
+//    } else {
+//      failed++;
+//      TsglErr("Test 2, Negative values for testRecomputeDimensions() failed!");
+//    }
+//
+//    //Test 3: Same as Test 2, but negative values are max
+//    xMin = xMax = yMin = yMax = 0.0;
+//    xMin = -900.0;
+//    xMax = -100.0;
+//    yMin = -800.0;
+//    yMax = -50.0;
+//    can.recomputeDimensions(xMin, yMin, xMax, yMax);
+//
+//    if(can.getCartWidth() == 800.0 && can.getCartHeight() == 750.0) {
+//      passed++;
+//    } else {
+//      failed++;
+//      TsglErr("Test 3, Max negative values for testRecomputeDimensions() failed!");
+//    }
+//
+//    if(passed == 3 && failed == 0) {
+//      TsglDebug("Unit test for recomputing dimensions passed!");
+//      return true;
+//    } else {
+//      TsglErr("This many tests passed for testRecomputeDimensions(): ");
+//      std::cout << " " << passed << std::endl;
+//      TsglErr("This many tests failed for testRecomputeDimensions(): ");
+//      std::cout << " " << failed << std::endl;
+//      return false;
+//    }
+// }
+// //-----------------End Unit testing----------------------------------------------------
 }

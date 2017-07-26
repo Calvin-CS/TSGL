@@ -10,6 +10,8 @@
 namespace tsgl {
 
   class RasterCanvas : public Canvas {
+  // private:
+    // std::vector<int> v;
   public:
 
     /*!
@@ -40,6 +42,21 @@ namespace tsgl {
     RasterCanvas(int x, int y, int width, int height, std::string title, double timerLength = 0.0f) : Canvas(x,y,width,height,title,timerLength) {
       isRaster = true;
     };
+
+    /*!
+     * \brief Gets the color of the pixel drawn on the current Canvas at the given screen coordinates,
+     *   specified in row,column format.
+     * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
+     * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas.
+     * \note getPixel() will return only what is currently drawn the screen. Any object waiting to be drawn
+     *  will not affect what is returned.
+     *      \param row The row (y-position) of the pixel to grab.
+     *      \param col The column (x-position) of the pixel to grab.
+     * \return A ColorInt containing the color of the pixel at (col,row).
+     */
+    ColorInt getPixel(int row, int col);
+
+    void drawPoint(float x, float y, ColorInt &c, float pointSize = 1.0);
 
   };
 }

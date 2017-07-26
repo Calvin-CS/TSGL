@@ -2,7 +2,7 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the TSGL library.
  */
 
-// #define __DEBUG__
+#define __DEBUG__
 
 #ifndef CANVAS_H_
 #define CANVAS_H_
@@ -93,7 +93,7 @@ private:
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      objectMutex;                                        // Mutex for locking the objectBuffer so that only one thread can add/remove objects at a time
     //TODO do we have too many mutexes?  Probably.
-    std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
+    std::mutex      renderMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     unsigned        bufferSize;                                         // Size of the screen buffer
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
@@ -107,10 +107,6 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    // Array<Drawable*> * myBuffer;                                           // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
-    // Array<Drawable*> * myShapes;                                           // Our buffer of shapes to draw
-    std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
-    unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
     int             realFPS;                                            // Actual FPS of drawing
     GLuint          renderedTexture;                                    // Texture to which we render to every frame
@@ -139,7 +135,6 @@ private:
     //                 uniProj;                                            // Projection of the camera
     GLtexture       vertexArray,                                        // Address of GL's array buffer object
                     vertexBuffer;                                       // Address of GL's vertex buffer object
-    // float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     bool            windowClosed;                                       // Whether we've closed the Canvas' window or not
     std::mutex      windowMutex;                                        // (OS X) Mutex for handling window contexts
@@ -185,6 +180,17 @@ private:
     static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
 protected:
   bool            isRaster = false;                                   ///< Whether is a RasterCanvas or not.
+  std::mutex rasterPointMutex;                                        // Mutex that guards the raster point vec
+  struct rasterPointStruct {
+    float x;
+    float y;
+    float size;
+    int R;
+    int G;
+    int B;
+    int A;
+  };
+  std::vector<rasterPointStruct> rasPointVec;                           // Vector to hold raster points waiting to be drawn
 public:
 
     /*!
@@ -632,32 +638,6 @@ GLuint VertexArrayID;
     int getMouseY();
 
     /*!
-     * \brief Gets the color of the pixel drawn on the current Canvas at the given screen coordinates,
-     *   specified in row,column format.
-     * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
-     * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas.
-     * \note getPixel() will return only what is currently drawn the screen. Any object waiting to be drawn
-     *  will not affect what is returned.
-     *      \param row The row (y-position) of the pixel to grab.
-     *      \param col The column (x-position) of the pixel to grab.
-     * \return A ColorInt containing the color of the pixel at (col,row).
-     */
-    ColorInt getPixel(int row, int col);
-
-    /*!
-     * \brief Gets the color of the pixel drawn on the current Canvas at the given screen coordinates,
-     *   specified in x,y format.
-     * \note (0,0) signifies the <b>left-top</b> of the screen when working with a Canvas object.
-     * \note (0,0) signifies the <b>left-bottom</b> of the screen when working with a CartesianCanvas.
-     * \note getPoint() will return only what is currently drawn the screen. Any object waiting to be drawn
-     *  will not affect what is returned.
-     *      \param x The x position of the pixel to grab.
-     *      \param y The y position of the pixel to grab.
-     * \return A ColorInt containing the color of the pixel at (x, y).
-     */
-    ColorInt getPoint(int x, int y);
-
-    /*!
      * \brief Accessor for the number of theoretical draw cycles that have elapsed
      * \details This function returns the time elapsed since the Canvas has been opened divided
      *   by the drawTimer's period.
@@ -914,6 +894,35 @@ GLuint VertexArrayID;
      * \brief Runs unit tests for the Canvas.
      */
     static void runTests();
+
+
+
+    //TODO remove these two below
+    /*!
+     * \brief Gets the color of the pixel drawn on the current Canvas at the given screen coordinates,
+     *   specified in row,column format.
+     * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
+     * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas.
+     * \note getPixel() will return only what is currently drawn the screen. Any object waiting to be drawn
+     *  will not affect what is returned.
+     *      \param row The row (y-position) of the pixel to grab.
+     *      \param col The column (x-position) of the pixel to grab.
+     * \return A ColorInt containing the color of the pixel at (col,row).
+     */
+    ColorInt getPixel(int row, int col);
+
+    /*!
+     * \brief Gets the color of the pixel drawn on the current Canvas at the given screen coordinates,
+     *   specified in x,y format.
+     * \note (0,0) signifies the <b>left-top</b> of the screen when working with a Canvas object.
+     * \note (0,0) signifies the <b>left-bottom</b> of the screen when working with a CartesianCanvas.
+     * \note getPoint() will return only what is currently drawn the screen. Any object waiting to be drawn
+     *  will not affect what is returned.
+     *      \param x The x position of the pixel to grab.
+     *      \param y The y position of the pixel to grab.
+     * \return A ColorInt containing the color of the pixel at (x, y).
+     */
+    ColorInt getPoint(int x, int y);
 };
 
 }
