@@ -44,7 +44,7 @@ void forestFireFunction(Canvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
               WINDOW_H = can.getWindowHeight();
     const float LIFE = 10,
-                STRENGTH = 0.03,
+                STRENGTH = 0.06,
                 MAXDIST = sqrt(WINDOW_W * WINDOW_W + WINDOW_H * WINDOW_H) / 2;
     srand(time(NULL));  // Seed the random number generator
     bool* onFire = new bool[WINDOW_W * WINDOW_H]();
@@ -57,10 +57,11 @@ void forestFireFunction(Canvas& can) {
             float tdist = (MAXDIST - sqrt(xi * xi + yi * yi)) / MAXDIST;
             float f = 0.01 + (i * j % 100) / 100.0 * randfloat(100) / 2 * tdist;
             flammability[i * WINDOW_H + j] = f;
-            can.drawPoint(i, j, ColorFloat(0.0f, f, 0.0f, 1.0f));
         }
     }
     //"Lakes"
+    PointLayer lakes(ColorFloat(0.0f, 0.0f, 1.0f, 0.75f));
+    can.add(&lakes);
     for (int reps = 0; reps < 32; reps++) {
         int x = rand() % WINDOW_W;
         int y = rand() % WINDOW_H;
@@ -71,7 +72,7 @@ void forestFireFunction(Canvas& can) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 flammability[(x + i) * WINDOW_H + (y + j)] = 0.01;
-                can.drawPoint(x + i, y + j, ColorFloat(0.0f, 0.0f, 1.0f, 0.25f));
+                lakes.addPoint(x + i, y + j);
             }
         }
     }
@@ -82,11 +83,13 @@ void forestFireFunction(Canvas& can) {
         float strength;
     };
     std::queue<firePoint> fires;
+    PointLayer firePoints(ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH*10));
+    can.add(&firePoints);
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
             firePoint fire = { WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, LIFE, STRENGTH };
             fires.push(fire);
-            can.drawPoint(WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH));
+            firePoints.addPoint(WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j);
         }
     }
     while (can.isOpen()) {
@@ -101,26 +104,26 @@ void forestFireFunction(Canvas& can) {
                 firePoint fire = { f.x - 1, f.y, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell - WINDOW_H] = true;
-                can.drawPoint(f.x - 1, f.y, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
+                firePoints.addPoint(f.x - 1, f.y);
             }
             if (f.x < WINDOW_W - 1 && !onFire[myCell + WINDOW_H]
                 && randfloat() < flammability[myCell + WINDOW_H]) {
                 firePoint fire = { f.x + 1, f.y, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell + WINDOW_H] = true;
-                can.drawPoint(f.x + 1, f.y, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
+                firePoints.addPoint(f.x + 1, f.y);
             }
             if (f.y > 0 && !onFire[myCell - 1] && randfloat() < flammability[myCell - 1]) {
                 firePoint fire = { f.x, f.y - 1, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell - 1] = true;
-                can.drawPoint(f.x, f.y - 1, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
+                firePoints.addPoint(f.x, f.y - 1);
             }
             if (f.y < WINDOW_H && !onFire[myCell + 1] && randfloat() < flammability[myCell + 1]) {
                 firePoint fire = { f.x, f.y + 1, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell + 1] = true;
-                can.drawPoint(f.x, f.y + 1, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
+                firePoints.addPoint(f.x, f.y + 1);
             }
         }
     }
@@ -137,5 +140,6 @@ int main(int argc, char* argv[]) {
       h = 900;                  //If not, set the width and height to a default value
     }
     Canvas c(-1, -1, w, h, "Forest Fire");
+    c.setBackgroundColor(ColorInt(0,50,0));
     c.run(forestFireFunction);
 }
