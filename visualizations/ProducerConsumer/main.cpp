@@ -115,14 +115,12 @@ int main(int argc, char * argv[]) {
 	queueDisplay.add(&innerQueue);
 
 	//Add notes to bottom of main Canvas
-	Text note1("Numbers indicate counts", WINDOW_WIDTH-230, WINDOW_HEIGHT-50, 18, BLACK);
-	Text note2("of produced/consumed", WINDOW_WIDTH-205, WINDOW_HEIGHT-30, 18, BLACK);
+	Text note1("*Numbers indicate counts of items produced and consumed", WINDOW_WIDTH-370, WINDOW_HEIGHT-30, 12, BLACK);
 	queueDisplay.add(&note1);
-	queueDisplay.add(&note2);
 
 	// Label Readers and Writers
 	Text proText("Producers", 30, 20, 24, BLACK);
-	Text conText("Consumers", WINDOW_WIDTH-120, 20, 24, BLACK);
+	Text conText("Consumers", WINDOW_WIDTH-150, 20, 24, BLACK);
 	queueDisplay.add(&proText);
 	queueDisplay.add(&conText);
 

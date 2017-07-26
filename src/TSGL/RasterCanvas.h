@@ -57,7 +57,6 @@ namespace tsgl {
     ColorInt getPixel(int row, int col);
 
     void drawPoint(float x, float y, ColorInt c, float pointSize = 1.0);
-    void drawPoint(float x, float y, ColorInt &c, float pointSize = 1.0);
 
   };
 }
