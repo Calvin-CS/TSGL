@@ -36,7 +36,7 @@ PCOBJ := $(addprefix build/, $(PCSRC:.cpp=.o))
 PCDEP := $(PCOBJ:.o=.d)
 
 #Tests subfolders
-# TESTFOLDERS := $(notdir $(shell find $(TESTDIR)/ -maxdepth 1 -type d))
+TESTFOLDERS := $(notdir $(shell find $(TESTDIR)/ -maxdepth 1 -type d))
 
 #Tests
 TESTPRGMS := $(basename $(notdir $(wildcard $(TESTDIR)/*.cpp)))
@@ -110,7 +110,7 @@ CFLAGS = \
 
 
 
-all: tester ReaderWriter DiningPhilosophers ProducerConsumer sftests
+all: tester ReaderWriter DiningPhilosophers ProducerConsumer sftests $(TESTFOLDERS)
 
 #Test Program
 tester: $(PRGMOBJ) $(TSGLOBJ) $(HEADERS)
@@ -163,6 +163,9 @@ $(TESTPRGMS): %: $(BLDDIR)/tests/%.o $(TSGLOBJ)
 	$(CC) $(BLDDIR)/tests/$(@).o $(TSGLOBJ) $(LFLAGS) -o $(BINDIR)/$(notdir $(@))
 
 
+#Tests with multiple files
+$(TESTFOLDERS): $(TSGLOBJ)
+	cd tests/$@ && make
 
 
 # Include header dependencies

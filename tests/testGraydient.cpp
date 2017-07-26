@@ -24,7 +24,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use in the function.
  */
-void graydientFunction(Canvas& can, int threads) {
+void graydientFunction(RasterCanvas& can, int threads) {
   #pragma omp parallel num_threads(threads)
   {
     for (int i = omp_get_thread_num(); i < can.getWindowWidth(); i += omp_get_num_threads()) {

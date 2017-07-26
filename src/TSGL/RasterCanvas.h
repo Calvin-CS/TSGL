@@ -9,7 +9,7 @@
 
 namespace tsgl {
 
-  class RasterCanvas : public Canvas {
+  class RasterCanvas : virtual public Canvas {
   // private:
     // std::vector<int> v;
   public:
@@ -54,10 +54,9 @@ namespace tsgl {
      *      \param col The column (x-position) of the pixel to grab.
      * \return A ColorInt containing the color of the pixel at (col,row).
      */
-    ColorInt getPixel(int row, int col);
+    virtual ColorInt getPixel(int row, int col);
 
-    void drawPoint(float x, float y, ColorInt c, float pointSize = 1.0);
-    void drawPoint(float x, float y, ColorInt &c, float pointSize = 1.0);
+    virtual void drawPoint(float x, float y, ColorInt c, float pointSize = 1.0);
 
   };
 }

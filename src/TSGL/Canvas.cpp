@@ -214,6 +214,8 @@ namespace tsgl {
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
+
+    //TODO determine hidip present here
   }
 
   void Canvas::setupCamera() {
@@ -546,10 +548,10 @@ namespace tsgl {
         for(std::vector<rasterPointStruct>::iterator it = rasPointVec.begin(); it != rasPointVec.end(); ++it) {
           glPointSize(it->size);
           glColor4f(
-            it->R,
-            it->G,
-            it->B,
-            it->A
+            it->R/255.0,
+            it->G/255.0,
+            it->B/255.0,
+            it->A/255.0
           );
           float verts[2] = {it->x, it->y};
           glVertexPointer(

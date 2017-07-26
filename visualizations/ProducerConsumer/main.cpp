@@ -123,6 +123,7 @@ int main(int argc, char * argv[]) {
 	// Label Readers and Writers
 	Text proText("Producers", 30, 20, 24, BLACK);
 	Text conText("Consumers", WINDOW_WIDTH-120, 20, 24, BLACK);
+	conText.setLocation( WINDOW_WIDTH-30-conText.getStringWidth(), 20);
 	queueDisplay.add(&proText);
 	queueDisplay.add(&conText);
 

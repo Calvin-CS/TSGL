@@ -73,7 +73,7 @@ using namespace tsgl;
  * \param threads Reference to the number of threads passed via command-line arguments.
  * \param depth The number of iterations to go to in order to draw the Mandelbrot set.
  */
-void mandelbrotFunction(Cart& can, unsigned threads, unsigned depth) {
+void mandelbrotFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
   Mandelbrot m(threads,depth);  //Make the object
   m.bindings(can);              //Bind the buttons
   m.draw(can);                  //Draw the Mandelbrot object onto the Canvas
@@ -88,7 +88,7 @@ void mandelbrotFunction(Cart& can, unsigned threads, unsigned depth) {
  * \param depth The number of iterations to go to in order to draw the Gradient Mandelbrot set.
  * \see mandelbrotFunction(), GradientMandelbrot class.
  */
-void gradientMandelbrotFunction(Cart& can, unsigned threads, unsigned depth) {
+void gradientMandelbrotFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
   GradientMandelbrot m(threads,depth);  //Create the GradientMandelbrot
   m.bindings(can);                      //Bind the buttons
   m.draw(can);                          //Draw it
@@ -103,7 +103,7 @@ void gradientMandelbrotFunction(Cart& can, unsigned threads, unsigned depth) {
  * \param numberOfThreads Reference to the number of threads to use.
  * \param depth The number of iterations to go to in order to draw the Buddhabrot set.
  */
-void buddhabrotFunction(Cart& can, unsigned threads, unsigned depth) {
+void buddhabrotFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
   Buddhabrot b(threads, depth);  //Create the Buddhabrot object
   b.draw(can);                   //Draw it
 }
@@ -156,7 +156,7 @@ void buddhabrotFunction(Cart& can, unsigned threads, unsigned depth) {
  * \param threads Reference to the number of threads to use when drawing the Julia object.
  * \param depth The number of iterations to go to in order to draw the Julia object.
  */
-void juliaFunction(Cart& can, unsigned threads, unsigned depth) {
+void juliaFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
   Julia j(threads,depth);  //Create the Julia object
   j.bindings(can);         //Bind the buttons
   j.draw(can);             //Draw it
@@ -169,7 +169,7 @@ void juliaFunction(Cart& can, unsigned threads, unsigned depth) {
  * \param depth The number of iterations to go to in order to draw the Gradient Mandelbrot set.
  * \see mandelbrotFunction(), Nova class.
  */
-void novaFunction(Cart& can, unsigned threads, unsigned depth) {
+void novaFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
     Nova n(threads,depth);  //Create the Nova object
     n.bindings(can);        //Bind the buttons
     n.draw(can);            //Draw it
@@ -197,28 +197,28 @@ int main(int argc, char* argv[]) {
   unsigned d3 = (argc > 4) ? atoi(argv[4]) : 1000; //Buddhabrot & Julia
   //Normal Mandelbrot
   std::cout << "Normal Mandelbrot" << std::endl;
-  Cart c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
+  CartesianRasterCanvas c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
   c1.run(mandelbrotFunction,t,d);
 
   //Gradient Mandelbrot
   std::cout << "Gradient Mandelbrot" << std::endl;
-  Cart c2(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
+  CartesianRasterCanvas c2(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
   c2.run(gradientMandelbrotFunction,t,d2);
   std::cout << "Buddhabrot" << std::endl;
 
   //Buddhabrot
-  Cart c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
+  CartesianRasterCanvas c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
   c3.setBackgroundColor(BLACK);
   c3.run(buddhabrotFunction,t,d3);
 
   //Julia
   std::cout << "Julia set" << std::endl;
-  Cart c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
+  CartesianRasterCanvas c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
   c4.run(juliaFunction,t,d3);
 
   //Nova
-  std::cout << "Nova" << std::endl;
-  Cart c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", FRAME / 2);
-  c5.zoom(-0.361883,-0.217078,0.1f);
-  c5.run(novaFunction,t,32);
+  // std::cout << "Nova" << std::endl;
+  // CartesianRasterCanvas c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", FRAME / 2);
+  // c5.zoom(-0.361883,-0.217078,0.1f);
+  // c5.run(novaFunction,t,32);
 }

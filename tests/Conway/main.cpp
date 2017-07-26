@@ -22,26 +22,26 @@ using namespace tsgl;
  *   Also, set the paused boolean flag to true.
  * - Bind the left mouse button so that when it is clicked the boolean flag for keeping track of the mouse's
  *   state is set to true. When it is released, set that flag to false.
- * - While the Canvas has not been closed:
+ * - While the RasterCanvas has not been closed:
  *    - Sleep the internal timer until the next draw cycle.
  *    - If the paused boolean flag is not set:
- *      - Clear the Canvas.
+ *      - Clear the RasterCanvas.
  *      - For 0 to the number of iterations:
  *        - If the mouse has been clicked:
  *          - Add an ant to the LifeFarm object.
- *          - Draw it on the Canvas.
+ *          - Draw it on the RasterCanvas.
  *          .
  *        - Move the ants in the LifeFarm object.
  *        .
  *      .
- *    - If the mouse has been clicked while the Canvas has been paused,
- *      add an ant to the LifeFarm object and draw it to the Canvas.
+ *    - If the mouse has been clicked while the RasterCanvas has been paused,
+ *      add an ant to the LifeFarm object and draw it to the RasterCanvas.
  *    .
  *  .
  *.
- * \param can Reference to the Canvas to draw to.
+ * \param can Reference to the RasterCanvas to draw to.
  */
-void conwayFunction(Canvas& can) {
+void conwayFunction(RasterCanvas& can) {
     const int IPF = 100,                   // Iterations per frame
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
@@ -65,7 +65,7 @@ void conwayFunction(Canvas& can) {
     while (can.isOpen()) {
       can.sleep();
       if(!paused) {
-        can.clear();
+        // can.clear();
         for (int i = 0; i < IPF; i++) {
           if(mouseDown) {
             farm.addAnt(can.getMouseX(), can.getMouseY());
@@ -81,11 +81,11 @@ void conwayFunction(Canvas& can) {
     }
 }
 
-//Take command-line arguments for the width and height of the Canvas
+//Take command-line arguments for the width and height of the RasterCanvas
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
+    int w = (argc > 1) ? atoi(argv[1]) : 0.9*RasterCanvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
-    Canvas c(-1, -1, w, h, "Conway's Game of Life");
+    RasterCanvas c(-1, -1, w, h, "Conway's Game of Life");
     c.setBackgroundColor(BLACK);
     c.run(conwayFunction);
 }

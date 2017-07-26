@@ -55,9 +55,7 @@ void ShadedVoronoi::draw(Canvas& can) {
       }
       myKValue[i * WH + j] = myBestK;
       myKValue2[i * WH + j] = myNextBestK;
-      Point* p = new Point(i, j, myColor[myBestK]);
-      can.add(p);
-      // can.drawPoint(i, j, myColor[myBestK]);              // Draw the point with the closest control's color
+      can.drawPoint(i, j, myColor[myBestK]);              // Draw the point with the closest control's color
     }
   }
   #pragma omp parallel for

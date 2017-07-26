@@ -6,7 +6,7 @@
 
 Julia::Julia(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
-void Julia::draw(Cart& can) {
+void Julia::draw(CartesianRasterCanvas& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
   VisualTaskQueue vq(CH);
   while(myRedraw) {

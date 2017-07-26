@@ -15,11 +15,11 @@ int main() {
    TsglErr("This color means tests have failed.");
    //Begin Unit testing
    std::cout << "Begin unit testing...." << std::endl << std::endl;
-   Canvas::runTests();   // Canvas (Image test included)
+  //  Canvas::runTests();   // Canvas (Image test included)
    TextureHandler::runTests();   // TextureHandler
    ConcavePolygon::runTests();   // ConcavePolygon
    ConvexPolygon::runTests();    // ConvexPolygon
-   CartesianCanvas::runTests();  // CartesianCanvas
+  //  CartesianCanvas::runTests();  // CartesianCanvas
    std::cout << std::endl;
    TsglDebug("All Unit Tests have completed!");
 }

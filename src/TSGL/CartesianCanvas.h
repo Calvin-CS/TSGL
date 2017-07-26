@@ -20,7 +20,7 @@ typedef Decimal (*functionPointer)(Decimal x);
  * \note While on a regular Canvas, pixels higher on the screen have a lower y-value, <b>on a CartesianCanvas,
  *   pixels higher on the screen have a higher y-value.</b>
  */
-class CartesianCanvas : public Canvas {
+class CartesianCanvas : virtual public Canvas {
 private:
     Decimal cartWidth;                                                  // maxX-minX
     Decimal cartHeight;                                                 // maxY-minY

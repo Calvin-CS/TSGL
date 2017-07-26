@@ -33,9 +33,9 @@ public:
    * \brief Draw the Julia object.
    * \details Actually draws the Julia object to a CartesianCanvas.
    *    \param can Reference to the CartesianCanvas to draw on.
-   * \note Cart is a typedef for a CartesianCanvas object.
+   * \note CartesianRasterCanvas is a typedef for a CartesianCanvas object.
    */
-  void draw(Cart& can);
+  void draw(CartesianRasterCanvas& can);
 };
 
 #endif /* JULIA_H_ */

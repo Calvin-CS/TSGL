@@ -6,7 +6,7 @@
 
 Nova::Nova(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
-void Nova::draw(Cart& can) {
+void Nova::draw(CartesianRasterCanvas& can) {
   const long double R = 1.0l;
   while (myRedraw) {
     myRedraw= false;

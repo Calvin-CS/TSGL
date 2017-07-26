@@ -9,20 +9,20 @@
 using namespace tsgl;
 
 /*!
- * \brief Draws a large number of pixels on a Canvas at a high framerate.
- * \details Very basic stress test for the Canvas' drawPoint() function.
- * - Set up the internal timer of the Canvas to expire every \b FRAME seconds.
- * - Set Local variables to track the internal timer's repetitions, and the Canvas' dimensions.
- * - While the Canvas is open:
+ * \brief Draws a large number of pixels on a RasterCanvas at a high framerate.
+ * \details Very basic stress test for the RasterCanvas' drawPoint() function.
+ * - Set up the internal timer of the RasterCanvas to expire every \b FRAME seconds.
+ * - Set Local variables to track the internal timer's repetitions, and the RasterCanvas' dimensions.
+ * - While the RasterCanvas is open:
  *   - Set \b reps to the timer's current number of repetitions.
  *   - Compute the blue component of the current color based on reps.
  *   - Attempt to draw every pixel with the current 1.0,1.0,blue.
- *   - Sleep the timer until the Canvas is ready to draw again.
+ *   - Sleep the timer until the RasterCanvas is ready to draw again.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
-void highData(Canvas& can, unsigned threads) {
+void highData(RasterCanvas& can, unsigned threads) {
   const float HVAL = 6.0f/255.0f;  // For converting integer hues to floating point values
   const unsigned int width = can.getWindowWidth(), height = can.getWindowHeight();
   #pragma omp parallel num_threads(threads)
@@ -43,11 +43,11 @@ void highData(Canvas& can, unsigned threads) {
 }
 
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*RasterCanvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-      w = 1.2*Canvas::getDisplayHeight(), h = 0.75*w; //If not, set the width and height to a default value
+      w = 1.2*RasterCanvas::getDisplayHeight(), h = 0.75*w; //If not, set the width and height to a default value
     int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
-    Canvas c(-1, -1, w, h, "Pixel Drawing Load Test");
+    RasterCanvas c(-1, -1, w, h, "Pixel Drawing Load Test");
     c.run(highData,t);
 }
