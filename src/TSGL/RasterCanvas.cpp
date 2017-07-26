@@ -26,6 +26,12 @@ namespace tsgl {
       return(retVal);
     }
 
+    void RasterCanvas::drawPoint(float x, float y, ColorInt c, float pointSize){
+
+      drawPoint(x, y, &c, pointSize){
+
+    }
+
     void RasterCanvas::drawPoint(float x, float y, ColorInt &c, float pointSize){
 
       // printf("RasterCanvas drawPoint\n");
