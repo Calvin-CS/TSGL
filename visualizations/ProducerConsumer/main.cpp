@@ -25,16 +25,16 @@ const int CAPACITY = 8;
 const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 500, MAX_DATA = 8; //Size of Canvas and limit on amount of data to be stored in Queue
 Canvas queueDisplay(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Producer-Consumer", FRAME );  //Canvas to draw on
 Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored data)
-Canvas legendDisplay(0, WINDOW_HEIGHT+40, WINDOW_WIDTH, 240, "Producer-Consumer Legend", FRAME );
 
 
 /**
  * displayLegend helps the main method by controlling the legendDisplay
  */
 void displayLegend() {
+	Canvas legendDisplay(0, WINDOW_HEIGHT+40, WINDOW_WIDTH, 240, "Producer-Consumer Legend", FRAME );
 	//Setup Canvas
-	legendDisplay.start();
 	legendDisplay.setBackgroundColor(WHITE);
+	legendDisplay.start();
 
 	int colorChanger = 0; //Counting int to control random bright colors
 	Circle waitingCircle(50, 60, 20, BLACK); //waiting for lock
@@ -67,7 +67,6 @@ void displayLegend() {
 	}
 
 	queueDisplay.wait();
-	// pthread_exit(0);
 }
 
 //Main method
@@ -93,8 +92,8 @@ int main(int argc, char * argv[]) {
 	Consumer * con = new Consumer[numConsumers];  //Array of Consumers
 
 	//Fire up the visualization
-  queueDisplay.start();
 	queueDisplay.setBackgroundColor(WHITE);
+  queueDisplay.start();
 
 	queueDisplay.bindToButton(TSGL_SPACE, TSGL_PRESS, []() { // toggle pause when spacebar is pressed
 		PCThread::paused = !PCThread::paused;
@@ -156,7 +155,6 @@ int main(int argc, char * argv[]) {
 	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
 		con[c].join();
 	}
-
 
 	while( !sharedBuffer.isEmpty() ) {
 		Star * tempPtr = sharedBuffer.remove();
