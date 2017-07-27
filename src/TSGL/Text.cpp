@@ -61,8 +61,6 @@ namespace tsgl {
     // Reset the maxBearing variable to zero
     maxBearing = 0;
 
-    int maxCharWidth = 0;
-
     // Slot is the space where we'll keep the current char TODO make this better
     slot = face->glyph;
 
@@ -108,6 +106,8 @@ namespace tsgl {
 
         // Update the max width
         if (char_obj->width > maxCharWidth) maxCharWidth = char_obj->width;
+        // Update the max height
+        if (char_obj->height > maxCharHeight) maxCharHeight = char_obj->height;
 
         // // Copy the buffer to a new object
         // size_t bufSize = char_obj->width*char_obj->height;
@@ -258,14 +258,9 @@ namespace tsgl {
       return totalW;
     }
 
-    int Text::getStringHeight() { //TODO: check that this makes sense/is best, probably change
-      int max_height = 0;
-      for(std::vector<character_object*>::iterator it = char_vec.begin(); it != char_vec.end(); ++it) {
-        if( (*it)->height > max_height ) {
-          max_height = (*it)->height;
-        }
-      }
-      return max_height;
+    int Text::getStringHeight() {
+      //TODO this actually just returns the height of the tallest char, not the string as a whole
+      return maxCharHeight;
     }
 
     void Text::setString(std::string t) {

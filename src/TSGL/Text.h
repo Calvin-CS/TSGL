@@ -34,6 +34,9 @@ class Text : public DiscreteDrawable {
     unsigned int fontsize;
     int space_size;
 
+    int maxCharWidth = 0;
+    int maxCharHeight = 0;
+
     bool useKerning = true;
 
     struct character_object {
