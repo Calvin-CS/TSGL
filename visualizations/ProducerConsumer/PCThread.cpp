@@ -37,10 +37,7 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 
 //TODO: comment and improve
 void PCThread::wait() {
-	if( myCan->isOpen() )
-		myCan->sleepFor( (rand()%10+3.0)/5.0 );
-	else
-		std::cout << "Cannot sleep closed Canvas." << std::endl;
+	myCan->sleepFor( (rand()%10+3.0)/5.0 );
 	while( paused ) {}
 }
 
@@ -59,27 +56,16 @@ void PCThread::animateItem(int endX, int endY) {
 	int startX = myItem->getX(), startY = myItem->getY();
 
 	Arrow arrow(startX, startY, endX, endY, BLACK, false);
-	if( myCan->isOpen() )
-		myCan->add(&arrow);
-	else
-		std::cout << "Cannot add to closed Canvas." << std::endl;
+	myCan->add(&arrow);
 
 	float deltaX = (endX - startX) / float(steps); //Change in x each step
 	float deltaY = (endY - startY) / float(steps); //Change in y each step
 
 	for(int i = 0; i <= steps; i++) {
-		if( myCan->isOpen() ) {
 		myItem->setCenter( round( startX+ i*deltaX ), round(startY+i*deltaY));
 		myCan->sleepFor( timeInterval / steps );
 		while( paused ) {}
-	} else {
-		std::cout << "Canvas closed already." << std::endl;
-	}
 	}
 
-	if( myCan->isOpen() ) {
 		myCan->remove(&arrow);
-	} else {
-		std::cout << "Cannot remove from closed Canvas." << std::endl;
-	}
 }

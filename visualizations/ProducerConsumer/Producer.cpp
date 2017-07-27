@@ -52,10 +52,7 @@ void Producer::wait() {
  * locks the Queue for production
  */
 void Producer::lock() {
-	if( myCan->isOpen() )
-		myCan->add( myItem );
-	else
-		std::cout << "No adding to closed Canvas." << std::endl;
+	myCan->add( myItem );
 	myShape->setColor( BLACK );
 	myCountLabel->setColor(WHITE);
 	buffer->producerLock();
@@ -69,10 +66,7 @@ void Producer::lock() {
  */
 void Producer::act() {
 	while( paused ) {}
-	if( myCan->isOpen() )
-		myCan->sleep();
-	else
-		std::cout << "Closed Canvas cannot sleep." << std::endl;
+	myCan->sleep();
 	int i = buffer->getLastIndex();
 	buffer->append(myItem, getId());  //Append something and pass your id along too
 
