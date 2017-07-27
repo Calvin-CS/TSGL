@@ -15,20 +15,20 @@ float randfloat(int divisor = 10000) {
 /*!
  * \brief Pseudo-simulates a forest fire using a lot of probability and randomness.
  * \details
- * - Store the Canvas's dimensions for ease of use.
+ * - Store the RasterCanvas's dimensions for ease of use.
  * - Set the fire's life, strength, and maximum spread distance to some predetermined numbers.
  * - Seed the random number generator.
  * - Allocate arrays for storing each pixel's onFire status and flammability.
  * - For each pixel:
- *   - Get its distance from the center of the Canvas.
+ *   - Get its distance from the center of the RasterCanvas.
  *   - Set its flammability and color based upon a semi-arbitrary single-line function.
  *   .
- * - Draw 32 random square "lakes" with very low flammabilities onto the Canvas.
+ * - Draw 32 random square "lakes" with very low flammabilities onto the RasterCanvas.
  * - Declare a mini-firePoint struct with coordinates, life, and strength.
- * - Make a 3x3 square of fire in the middle of the Canvas, and color the pixels accordingly.
- * - The internal timer of the Canvas is set up to expire every \b FRAME seconds.
- * - While the Canvas is open:
- *   - Sleep the internal timer until the Canvas is ready to draw.
+ * - Make a 3x3 square of fire in the middle of the RasterCanvas, and color the pixels accordingly.
+ * - The internal timer of the RasterCanvas is set up to expire every \b FRAME seconds.
+ * - While the RasterCanvas is open:
+ *   - Sleep the internal timer until the RasterCanvas is ready to draw.
  *   - For each fire point:
  *     - Pop it from the queue, pushing it back on only if its life > 0.
  *     - For each cell adjacent to the fire, if it is not on the edge of the screen, not already
@@ -38,13 +38,13 @@ float randfloat(int divisor = 10000) {
  *   .
  * - Deallocate the onFire and flammability arrays.
  * .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
-void forestFireFunction(Canvas& can) {
+void forestFireFunction(RasterCanvas& can) {
     const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
               WINDOW_H = can.getWindowHeight();
     const float LIFE = 10,
-                STRENGTH = 0.06,
+                STRENGTH = 0.03f,
                 MAXDIST = sqrt(WINDOW_W * WINDOW_W + WINDOW_H * WINDOW_H) / 2;
     srand(time(NULL));  // Seed the random number generator
     bool* onFire = new bool[WINDOW_W * WINDOW_H]();
@@ -57,11 +57,10 @@ void forestFireFunction(Canvas& can) {
             float tdist = (MAXDIST - sqrt(xi * xi + yi * yi)) / MAXDIST;
             float f = 0.01 + (i * j % 100) / 100.0 * randfloat(100) / 2 * tdist;
             flammability[i * WINDOW_H + j] = f;
+            can.drawPoint(i, j, ColorFloat(0.0f, f, 0.0f, 1.0f));
         }
     }
     //"Lakes"
-    PointLayer lakes(ColorFloat(0.0f, 0.0f, 1.0f, 0.75f));
-    can.add(&lakes);
     for (int reps = 0; reps < 32; reps++) {
         int x = rand() % WINDOW_W;
         int y = rand() % WINDOW_H;
@@ -72,7 +71,7 @@ void forestFireFunction(Canvas& can) {
         for (int i = 0; i < w; i++) {
             for (int j = 0; j < h; j++) {
                 flammability[(x + i) * WINDOW_H + (y + j)] = 0.01;
-                lakes.addPoint(x + i, y + j);
+                can.drawPoint(x + i, y + j, ColorFloat(0.0f, 0.0f, 1.0f, 0.08f));
             }
         }
     }
@@ -83,13 +82,11 @@ void forestFireFunction(Canvas& can) {
         float strength;
     };
     std::queue<firePoint> fires;
-    PointLayer firePoints(ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH*10));
-    can.add(&firePoints);
     for (int i = 0; i < 2; i++) {
         for (int j = 0; j < 2; j++) {
             firePoint fire = { WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, LIFE, STRENGTH };
             fires.push(fire);
-            firePoints.addPoint(WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j);
+            can.drawPoint(WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH));
         }
     }
     while (can.isOpen()) {
@@ -104,26 +101,26 @@ void forestFireFunction(Canvas& can) {
                 firePoint fire = { f.x - 1, f.y, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell - WINDOW_H] = true;
-                firePoints.addPoint(f.x - 1, f.y);
+                can.drawPoint(f.x - 1, f.y, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
             }
             if (f.x < WINDOW_W - 1 && !onFire[myCell + WINDOW_H]
                 && randfloat() < flammability[myCell + WINDOW_H]) {
                 firePoint fire = { f.x + 1, f.y, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell + WINDOW_H] = true;
-                firePoints.addPoint(f.x + 1, f.y);
+                can.drawPoint(f.x + 1, f.y, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
             }
             if (f.y > 0 && !onFire[myCell - 1] && randfloat() < flammability[myCell - 1]) {
                 firePoint fire = { f.x, f.y - 1, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell - 1] = true;
-                firePoints.addPoint(f.x, f.y - 1);
+                can.drawPoint(f.x, f.y - 1, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
             }
             if (f.y < WINDOW_H && !onFire[myCell + 1] && randfloat() < flammability[myCell + 1]) {
                 firePoint fire = { f.x, f.y + 1, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell + 1] = true;
-                firePoints.addPoint(f.x, f.y + 1);
+                can.drawPoint(f.x, f.y + 1, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
             }
         }
     }
@@ -133,13 +130,12 @@ void forestFireFunction(Canvas& can) {
 
 //Takes width and height as command line arguments
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
+    int w = (argc > 1) ? atoi(argv[1]) : 1.2*RasterCanvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0) {     //Checked the passed width and height if they are valid
       w = 1200;
       h = 900;                  //If not, set the width and height to a default value
     }
-    Canvas c(-1, -1, w, h, "Forest Fire");
-    c.setBackgroundColor(ColorInt(0,50,0));
+    RasterCanvas c(-1, -1, w, h, "Forest Fire");
     c.run(forestFireFunction);
 }

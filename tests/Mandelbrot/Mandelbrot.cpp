@@ -11,7 +11,7 @@ Mandelbrot::Mandelbrot(unsigned threads, unsigned depth) {
     myRedraw = true;
 }
 
-void Mandelbrot::manhattanShading(CartesianCanvas& can) {
+void Mandelbrot::manhattanShading(CartesianRasterCanvas& can) {
   int** canPoints = new int*[can.getWindowHeight()];
   for (int i = 0; i < can.getWindowHeight(); ++i) {
     canPoints[i] = new int[can.getWindowWidth()];
@@ -52,7 +52,7 @@ void Mandelbrot::manhattanShading(CartesianCanvas& can) {
     for (int j = 0; j < cww; ++j) {
       float mult = sqrt(avg*((float)canPoints[i][j])/loop);
       ColorFloat c = can.getPoint(j,i);
-      can.Canvas::drawPoint(j,i,c*mult);
+      can.drawPoint(j,i,c*mult);
     }
   }
 
@@ -62,7 +62,7 @@ void Mandelbrot::manhattanShading(CartesianCanvas& can) {
   canPoints = NULL;
 }
 
-void Mandelbrot::bindings(Cart& can) {
+void Mandelbrot::bindings(CartesianRasterCanvas& can) {
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, this]() {
       can.clear();
       this->myRedraw = true;
@@ -94,17 +94,11 @@ void Mandelbrot::bindings(Cart& can) {
     });
   }
 
-void Mandelbrot::draw(Cart& can) {
+void Mandelbrot::draw(CartesianRasterCanvas& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
   const int XBRD = 10;                    //Border for out progress bar
   const int YBRD = 40;                    //Border for out progress bar
   const int PBWIDTH = 800;
-  Canvas pCan(0, 0, PBWIDTH, 100, "Thread Workloads");        //Canvas for our progress bar
-  pCan.start();
-  ProgressBar pb(
-    XBRD,YBRD,pCan.getWindowWidth()-XBRD*2,pCan.getWindowHeight()-YBRD*2,
-    0,CH - (CH % myThreads),myThreads   //Make the max PB value a multiple of myThreads
-  );
   while(myRedraw) {
     myRedraw = false;
     can.reset();
@@ -115,17 +109,8 @@ void Mandelbrot::draw(Cart& can) {
       ColorFloat tcolor = Colors::highContrastColor(tid);
       double blocksize = can.getCartHeight() / nthreads;
       double blockheight = CH / nthreads;
-      pCan.clear();
-      pb.update(blockheight*tid);
-      pCan.drawProgress(&pb);
       long double startrow = blocksize * tid + can.getMinY();
       for(unsigned int k = 0; k <= blockheight && can.isOpen(); k++) {  // As long as we aren't trying to render off of the screen...
-        pb.update(k+(CH*tid)/nthreads);
-        //Messy, but effective
-//        pCan.drawRectangle(XBRD,YBRD,pCan.getWindowWidth()-XBRD,pCan.getWindowHeight()-YBRD,pCan.getBackgroundColor(),true);
-        //Elegant, but flickery
-        pCan.clear();
-        pCan.drawProgress(&pb);
         long double row = startrow + can.getPixelHeight() * k;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex originalComplex(col, row);
@@ -153,7 +138,4 @@ void Mandelbrot::draw(Cart& can) {
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }
   }
-  if (pCan.isOpen())
-    pCan.close();
-  pCan.wait();  //Close our progress bar if we're done
 }

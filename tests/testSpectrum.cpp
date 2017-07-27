@@ -13,7 +13,7 @@ using namespace tsgl;
  * \brief Draws the full spectrum across the x, y, and time dimensions at the given framerate
  *  and a static number of threads using OMP and takes in a command line argument for the number of threads to use.
  * \details
- * - The internal timer of the Canvas is set up to go off every \b FRAME seconds ( \b FRAME == 1 / \b FPS ).
+ * - The internal timer of the RasterCanvas is set up to go off every \b FRAME seconds ( \b FRAME == 1 / \b FPS ).
  * - A parallel block is set up with OMP, using one thread per processor.
  * - The actual number of threads spawned is stored in: \b nthreads.
  * - Check if the argument for the number of threads is valid:
@@ -28,10 +28,10 @@ using namespace tsgl;
  *   - Each point is drawn to the canvas, with x, y, and time representing red, green, and blue respectively.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  * \param numberOfThreads Reference to the number of threads to use.
  */
-void spectrumFunction(Canvas& can, int numberOfThreads) {
+void spectrumFunction(RasterCanvas& can, int numberOfThreads) {
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
       int holder = omp_get_num_threads();   //Temp variable
@@ -44,7 +44,7 @@ void spectrumFunction(Canvas& can, int numberOfThreads) {
             nthreads = numberOfThreads;  //Else, use the argument as the number of threads
         }
         while (can.isOpen()) {
-            can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
+            can.sleep();   //Removed the timer and replaced it with an internal timer in the RasterCanvas class
             for (int i = omp_get_thread_num(); i < NUM_COLORS; i += nthreads)
                 for (int j = 0; j < NUM_COLORS; j++)
                     can.drawPoint(i, j, ColorInt(i, j, can.getReps() % NUM_COLORS));
@@ -55,7 +55,6 @@ void spectrumFunction(Canvas& can, int numberOfThreads) {
 //Takes command-line arguments for the number of threads to use
 int main(int argc, char* argv[]) {
     int t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();   //Number of threads to use
-    Canvas c(-1,-1,255,255,"The Color Spectrum");
+    RasterCanvas c(-1,-1,255,255,"The Color Spectrum");
     c.run(spectrumFunction, t);
 }
-

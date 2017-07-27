@@ -32,17 +32,17 @@ private:
     int *currentstart, *nextstart;
 public:
     int width, height, size;
-    Canvas* can;
+    RasterCanvas* can;
 
     /*!
      * \brief Explicitly constructs a LifeFarm object.
      * \details Explicit constructor for the LifeFarm class.
      * \param w The width of the LifeFarm object.
      * \param h The height of the LifeFarm object.
-     * \param can Pointer to the Canvas to draw to.
+     * \param can Pointer to the RasterCanvas to draw to.
      * \param randomize Determines if we should randomize the motion of the ants that are currently in the LifeFarm object.
      */
-    LifeFarm(int w, int h, Canvas* can, bool randomize);
+    LifeFarm(int w, int h, RasterCanvas* can, bool randomize);
 
     /*!
      * \brief Destroy a LifeFarm object.

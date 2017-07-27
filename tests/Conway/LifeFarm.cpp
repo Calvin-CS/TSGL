@@ -4,7 +4,7 @@
 
 #include "LifeFarm.h"
 
-LifeFarm::LifeFarm(int w, int h, Canvas* c, bool randomize) {
+LifeFarm::LifeFarm(int w, int h, RasterCanvas* c, bool randomize) {
   framecount = 0;
   listend = 0;
   width = w;

@@ -15,14 +15,14 @@ namespace tsgl {
 class Dot {
 private:
   bool dead;
-  Canvas* myCan;
+  RasterCanvas* myCan;
   float myX, myY, mySpeed, myDir, myFric;
 public:
 
   /*!
    * \brief
    * \details
-   * \param can Reference to the Canvas the Dot draw on.
+   * \param can Reference to the RasterCanvas the Dot draw on.
    * \param x The x coordinate of the Dot.
    * \param y The y coordinate of the Dot.
    * \param s Speed of the Dot.
@@ -30,7 +30,7 @@ public:
    * \param f Friction of Dot.
    * \return
    */
-  Dot(Canvas& can, float x, float y, float s, float d, float f) {
+  Dot(RasterCanvas& can, float x, float y, float s, float d, float f) {
     myCan = &can;
     dead = false;
     myX = x; myY = y; mySpeed = s;
@@ -54,19 +54,19 @@ class Firework {
 private:
   bool dead;
   int myX, myY;
-  Canvas* myCan;
+  RasterCanvas* myCan;
   Dot* myDots[10];
 public:
 
   /*!
    * \brief
    * \details
-   * \param can Reference to Canvas the Firework draws on.
+   * \param can Reference to RasterCanvas the Firework draws on.
    * \param x The x coordinate of the Firework.
    * \param y The y coordinate of teh Firework.
    * \return
    */
-  Firework(Canvas& can, int x, int y) {
+  Firework(RasterCanvas& can, int x, int y) {
     dead = false;
     myCan = &can;
     myX = x;
@@ -102,7 +102,7 @@ public:
  */
 class Arc {
 private:
-  Canvas* myCan;
+  RasterCanvas* myCan;
   int myLife;
   float myX, myY, myRad;
   float myAngle, myStepSize;
@@ -113,7 +113,7 @@ public:
   /*!
    *
    */
-  Arc(Canvas& can) {
+  Arc(RasterCanvas& can) {
     f = NULL;
     myLife = 0;
     myCan = &can;
@@ -128,7 +128,7 @@ public:
   /*!
    *
    */
-  Arc(Canvas* can, int x, int y, int rad, float angle) {
+  Arc(RasterCanvas* can, int x, int y, int rad, float angle) {
     myCan = can;
     myX = x; myY = y;
     myAngle = angle; myRad = rad;
@@ -193,7 +193,7 @@ public:
 /*!
  *
  */
-void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
+void fireworkFunction(RasterCanvas& can, int threads, int numFireworks, int speed) {
   Arc** arcs = new Arc*[numFireworks];
   for (int i = 0; i < numFireworks; arcs[i++] = new Arc(can))
     arcs[i] = new Arc(can);
@@ -220,14 +220,14 @@ void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
 }
 
 int main(int argc, char* argv[]) {
-  int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
+  int w = (argc > 1) ? atoi(argv[1]) : 0.9*RasterCanvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;            //If not, set the width and height to a default value
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
   int f = (argc > 4) ? atoi(argv[4]) : 50;
   int s = (argc > 5) ? atoi(argv[5]) : 10;
-  Canvas c(-1, -1, w, h, "Fireworks!");
+  RasterCanvas c(-1, -1, w, h, "Fireworks!");
   c.setBackgroundColor(BLACK);
   c.start();
   fireworkFunction(c,t,f,s);

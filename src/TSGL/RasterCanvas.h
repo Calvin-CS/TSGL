@@ -9,6 +9,12 @@
 
 namespace tsgl {
 
+  /*!
+   * \class RasterCanvas
+   * \brief Canvas extended and renders objects only once, as they are added.
+   * \details RasterCanvas provides a Canvas with ability to draw individual points.
+   * \note On the RasterCanvas, layers do not work, and drawn objects cannot be removed.
+   */
   class RasterCanvas : public Canvas {
   // private:
     // std::vector<int> v;
@@ -54,9 +60,17 @@ namespace tsgl {
      *      \param col The column (x-position) of the pixel to grab.
      * \return A ColorInt containing the color of the pixel at (col,row).
      */
-    ColorInt getPixel(int row, int col);
+    virtual ColorInt getPixel(int row, int col);
 
-    void drawPoint(float x, float y, ColorInt c, float pointSize = 1.0);
+    /**
+     * \brief Sets the color of the point on the Canvas at the given screen coordinates.
+     * \details Draws a point at (x, y).
+     *    \param x The x coordinate of the point to draw.
+     *    \param y The y coordinate of the point to draw.
+     *    \param c The ColorInt for the color of the point.
+     *    \param pointSize The size of the point to draw. (defaults to 1.0)
+     */
+    virtual void drawPoint(float x, float y, ColorInt c, float pointSize = 1.0);
 
   };
 }

@@ -12,6 +12,7 @@
 #include "Canvas.h"
 #include "RasterCanvas.h"
 #include "CartesianCanvas.h"
+#include "CartesianRasterCanvas.h"
 #include "Color.h"
 #include "Error.h"
 #include "IntegralViewer.h"

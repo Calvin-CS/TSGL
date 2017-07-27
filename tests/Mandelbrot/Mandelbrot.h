@@ -43,7 +43,7 @@ protected:
    *   post-procecssing using the distances from non-escaped pixels to their nearest escaped pixels,
    *   using the average of their Manhattan distances.
    */
-  void manhattanShading(CartesianCanvas& can);
+  void manhattanShading(CartesianRasterCanvas& can);
 
 public:
 
@@ -68,18 +68,18 @@ public:
    * \details Binds buttons and/or mouse clicks needed for I/O capabilities.
    * \details In this case: the mouse wheel, left and right mouse buttons.
    *    \param can Reference to the CartesianCanvas to have the buttons bound to.
-   * \note Cart is a typedef for CartesianCanvas.
+   * \note CartesianRasterCanvas is a typedef for CartesianCanvas.
    */
-  void bindings(Cart& can);
+  void bindings(CartesianRasterCanvas& can);
 
   /*!
    * \brief Draw the Mandelbrot object.
    * \details Actually draws the Mandelbrot object onto the CartesianCanvas.
    *    \param can Reference to the CartesianCanvas to draw on.
    * \note Can be inherited by children classes who extend the Mandelbrot class.
-   * \note Cart is a typedef for CartesianCanvas.
+   * \note CartesianRasterCanvas is a typedef for CartesianCanvas.
    */
-  virtual void draw(Cart& can);
+  virtual void draw(CartesianRasterCanvas& can);
 };
 
 #endif /* MANDELBROT_H_ */

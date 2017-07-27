@@ -7,7 +7,7 @@ SRCDIR = ../../src
 TSGLSRCDIR = $(SRCDIR)/TSGL
 BINDIR = ../../bin
 BLDDIR = ../../build/tests/$(TARGET)
-GLAD = $(SRCDIR)/glad.o
+GLAD = ../../build/src/glad.o
 
 #Library Files
 TSGLSRC := $(wildcard $(TSGLSRCDIR)/*.cpp)
