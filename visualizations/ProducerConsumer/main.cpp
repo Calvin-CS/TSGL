@@ -22,7 +22,7 @@ using namespace tsgl;
 const int INNERRAD = 75;  // radius of the inner circle
 const int OUTERRAD = 150; // radius of the outercircle
 const int CAPACITY = 8;
-const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 500, MAX_DATA = 8; //Size of Canvas and limit on amount of data to be stored in Queue
+const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 550, MAX_DATA = 8; //Size of Canvas and limit on amount of data to be stored in Queue
 Canvas queueDisplay(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Producer-Consumer", FRAME );  //Canvas to draw on
 Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored data)
 
@@ -30,43 +30,13 @@ Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored
 /**
  * displayLegend helps the main method by controlling the legendDisplay
  */
-void displayLegend() {
-	Canvas legendDisplay(0, WINDOW_HEIGHT+40, WINDOW_WIDTH, 240, "Producer-Consumer Legend", FRAME );
-	//Setup Canvas
-	legendDisplay.setBackgroundColor(WHITE);
-	legendDisplay.start();
-
-	int colorChanger = 0; //Counting int to control random bright colors
-	Circle waitingCircle(50, 60, 20, BLACK); //waiting for lock
-	Circle thinkingCircle(50, 120, 20, BLACK); //waiting, not seeking lock
-	Circle lockCircle(50, 180, 20, WHITE); //has lock
-	Rectangle waitingSquare(WINDOW_WIDTH-70, 40, 40, 40, BLACK);
-	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100, 40, 40, BLACK);
-	Rectangle lockSquare(WINDOW_WIDTH-70, 160, 40, 40, WHITE);
-	legendDisplay.add( &waitingCircle ); 	legendDisplay.add( &thinkingCircle );
-	legendDisplay.add( &lockCircle ); 		legendDisplay.add( &waitingSquare );
-	legendDisplay.add( &thinkingSquare );	legendDisplay.add( &lockSquare );
-
-	//Text labels
-	Text colorText("thinking",100,70,24,BLACK);
-	Text blackText("waiting for lock",100,130,24,BLACK);
-	Text whiteText("holding lock",100,190,24,BLACK);
-	legendDisplay.add( &colorText ); legendDisplay.add( &blackText ); legendDisplay.add( &whiteText );
-	Text colorText2("thinking",350,70,24,BLACK);
-	Text blackText2("waiting for lock",350,130,24,BLACK);
-	Text whiteText2("holding lock",350,190,24,BLACK);
-	legendDisplay.add( &colorText2 ); legendDisplay.add( &blackText2 ); legendDisplay.add( &whiteText2 );
-
-	while( legendDisplay.isOpen() ) {
-		waitingCircle.setColor( Colors::highContrastColor(colorChanger) );
-		waitingSquare.setColor( Colors::highContrastColor(colorChanger) );
-			legendDisplay.sleepFor(1.0);
-		colorChanger++;
-		if( !queueDisplay.isOpen() )
-			legendDisplay.stop(); //Closes and waits for Canvas
+void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queueDisplay, int *colorChanger) {
+	while( queueDisplay->isOpen() ) {
+		waitingCircle->setColor( Colors::highContrastColor(colorChanger) );
+		waitingSquare->setColor( Colors::highContrastColor(colorChanger) );
+			queueDisplay->sleepFor(1.0);
+		*colorChanger++;
 	}
-
-	queueDisplay.wait();
 }
 
 //Main method
@@ -100,7 +70,7 @@ int main(int argc, char * argv[]) {
 	});
 
 	//Prepare the display with background items
-	int centerY = queueDisplay.getWindowHeight()/2;
+	int centerY = queueDisplay.getWindowHeight()/2-100;
 	int centerX = queueDisplay.getWindowWidth()/2;
 	Line * queueLines[CAPACITY];
 	for(int i = 0; i < CAPACITY; i++) {
@@ -115,7 +85,7 @@ int main(int argc, char * argv[]) {
 	queueDisplay.add(&innerQueue);
 
 	//Add notes to bottom of main Canvas
-	Text note1("*Numbers indicate counts of items produced and consumed", WINDOW_WIDTH-370, WINDOW_HEIGHT-30, 12, BLACK);
+	Text note1("*Numbers indicate counts of items produced and consumed", WINDOW_WIDTH-370, WINDOW_HEIGHT-20, 12, BLACK);
 	queueDisplay.add(&note1);
 
 	// Label Readers and Writers
@@ -143,7 +113,45 @@ int main(int argc, char * argv[]) {
 		sleep(0.3);
 	}
 
-	displayLegend();
+	// displayLegend();
+
+
+
+	//LEGENDSTART
+
+	int LEGENDOFFSET = 300;
+
+	int colorChanger = 0; //Counting int to control random bright colors
+	Circle waitingCircle(50, 60+LEGENDOFFSET, 20, BLACK); //waiting for lock
+	Circle thinkingCircle(50, 120+LEGENDOFFSET, 20, BLACK); //waiting, not seeking lock
+	Circle lockCircle(50, 180+LEGENDOFFSET, 20, WHITE); //has lock
+	Rectangle waitingSquare(WINDOW_WIDTH-70, 40+LEGENDOFFSET, 40, 40, BLACK);
+	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100+LEGENDOFFSET, 40, 40, BLACK);
+	Rectangle lockSquare(WINDOW_WIDTH-70, 160+LEGENDOFFSET, 40, 40, WHITE);
+	queueDisplay.add( &waitingCircle ); 	queueDisplay.add( &thinkingCircle );
+	queueDisplay.add( &lockCircle ); 		queueDisplay.add( &waitingSquare );
+	queueDisplay.add( &thinkingSquare );	queueDisplay.add( &lockSquare );
+
+	//Text labels
+	Text colorText("thinking",100,70+LEGENDOFFSET,24,BLACK);
+	Text blackText("waiting for lock",100,130+LEGENDOFFSET,24,BLACK);
+	Text whiteText("holding lock",100,190+LEGENDOFFSET,24,BLACK);
+	queueDisplay.add( &colorText ); queueDisplay.add( &blackText ); queueDisplay.add( &whiteText );
+	Text colorText2("thinking",350,70+LEGENDOFFSET,24,BLACK);
+	Text blackText2("waiting for lock",350,130+LEGENDOFFSET,24,BLACK);
+	Text whiteText2("holding lock",350,190+LEGENDOFFSET,24,BLACK);
+	queueDisplay.add( &colorText2 ); queueDisplay.add( &blackText2 ); queueDisplay.add( &whiteText2 );
+
+	//LEGENDEND
+
+	std::thread legendUpdater (displayLegend, &waitingCircle, &waitingSquare, &queueDisplay, &colorChanger);
+
+
+	queueDisplay.wait();
+
+	legendUpdater.join();
+
+	// sleep(0.5);
 
 	//Now join them
 	for(int p = 0; p < numProducers; p++) {	//Join the pthreads for the Producers
@@ -153,16 +161,16 @@ int main(int argc, char * argv[]) {
 	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
 		con[c].join();
 	}
+	//
+	// while( !sharedBuffer.isEmpty() ) {
+	// 	Star * tempPtr = sharedBuffer.remove();
+	// 	delete tempPtr;
+	// }
+	//
+	// // delete [] pro;
+	// // delete [] con;
+	// pro = NULL;
+	// con = NULL;
 
-	while( !sharedBuffer.isEmpty() ) {
-		Star * tempPtr = sharedBuffer.remove();
-		delete tempPtr;
-	}
-
-	delete [] pro;
-	delete [] con;
-	pro = NULL;
-	con = NULL;
-
-	return 0;
+	// return 0;
 }

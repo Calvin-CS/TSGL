@@ -112,6 +112,8 @@ CFLAGS = \
 
 all: tester ReaderWriter DiningPhilosophers ProducerConsumer sftests $(TESTFOLDERS)
 
+vis: ReaderWriter DiningPhilosophers ProducerConsumer
+
 #Test Program
 tester: $(PRGMOBJ) $(TSGLOBJ) $(HEADERS)
 	@echo ""

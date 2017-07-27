@@ -72,7 +72,7 @@ void Producer::act() {
 
 	//Show Item added to Queue
 	float itAngle = (i*2*PI + PI)/8; // angle of item
-	int endX = 100*cos(itAngle)+(myCan->getWindowWidth()/2), endY = 100*sin(itAngle)+(myCan->getWindowHeight()/2);
+	int endX = 100*cos(itAngle)+(myCan->getWindowWidth()/2), endY = 100*sin(itAngle)+(myCan->getWindowHeight()/2)-100;
 	animateItem(endX, endY);
 
 	count++; myCountLabel->setString( to_string(count) );
