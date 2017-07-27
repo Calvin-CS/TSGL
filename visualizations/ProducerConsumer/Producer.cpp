@@ -52,7 +52,10 @@ void Producer::wait() {
  * locks the Queue for production
  */
 void Producer::lock() {
-	myCan->add( myItem );
+	if( myCan->isOpen() )
+		myCan->add( myItem );
+	else
+		std::cout << "No adding to closed Canvas." << std::endl;
 	myShape->setColor( BLACK );
 	myCountLabel->setColor(WHITE);
 	buffer->producerLock();
@@ -66,13 +69,16 @@ void Producer::lock() {
  */
 void Producer::act() {
 	while( paused ) {}
-	myCan->sleep();
+	if( myCan->isOpen() )
+		myCan->sleep();
+	else
+		std::cout << "Closed Canvas cannot sleep." << std::endl;
 	int i = buffer->getLastIndex();
 	buffer->append(myItem, getId());  //Append something and pass your id along too
 
 	//Show Item added to Queue
 	float itAngle = (i*2*PI + PI)/8; // angle of item
-	int endX = 100*cos(itAngle)+(myCan->getWindowWidth()/2), endY = 100*sin(itAngle)+(myCan->getWindowHeight()/2)-100;
+	int endX = 100*cos(itAngle)+300, endY = 100*sin(itAngle)+300-100;
 	animateItem(endX, endY);
 
 	count++; myCountLabel->setString( to_string(count) );

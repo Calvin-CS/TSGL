@@ -6,7 +6,7 @@ int RWThread::WAIT_RANGE = 40, RWThread::WAIT_MIN = 15;
 	// Still need to have these change based on number of threads.
 	const int RWThread::width = 20; //Width of each object
 	const int RWThread::dataX = 200, RWThread::dataY = 670; //Bottom left coordinates of the data area
-	const int RWThread::dataHeight = 600, RWThread::dataWidth = 200; //Dimensions of the data area
+	const int RWThread::dataHeight = 500, RWThread::dataWidth = 200; //Dimensions of the data area
 	int RWThread::threadCount = 0;
 	float RWThread::access_wait = 1.0;
 	atomic<bool> RWThread::paused(false);
@@ -38,7 +38,7 @@ RWThread::RWThread(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Ca
 	count = 0;
 	data = &sharedDatabase;	//Get the handle to the Database
 	myCan = &can;						//Get the handle to the Canvas
-	myY = 50 * (id + 1) + 60;
+	myY = RWThread::dataY - 50 * (id + 1);
 	myX = 0; //Set in subclass constructor
 	myCircle = new Circle(myX, myY, 20, BLACK); //Move based on new x in subclass
 	myCircle->setLayer(3);

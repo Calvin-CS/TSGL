@@ -29,8 +29,12 @@ void Consumer::lock() {
 	myShape->setColor( BLACK );
 	myCountLabel->setColor(WHITE);
 	if( myItem ) {
-		myCan->remove( myItem );
-		delete myItem;
+		if( myCan->isOpen() ) {
+			myCan->remove( myItem );
+			delete myItem;
+		}
+		else
+			std::cout << "Cannot remove consumed item from closed Canvas." << std::endl;
 	}
 
 	buffer->consumerLock(); //Request lock

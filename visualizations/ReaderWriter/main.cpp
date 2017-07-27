@@ -9,7 +9,6 @@
 //#include <omp.h>
 #include <tsgl.h>
 #include <unistd.h>
-#include <cassert> // assert
 #include "Reader.h"
 #include "Writer.h"
 #include "RWDatabase.h"
@@ -54,12 +53,17 @@ int main(int argc, char* argv[]) {
 	dataRec.setHasOutline(false); dataRec.setLayer(2); can.add(&dataRec);
 	Rectangle margins(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, LIGHTGRAY);
 	margins.setLayer(1); can.add(&margins); can.setDefaultLayer(3);
+	Line readerLine(RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY, BLACK);
+	Line writerLine(RWThread::dataX-MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX-MARGIN*2.5, RWThread::dataY, BLACK);
 	Text lockText(lockString, 50, WINDOW_HEIGHT-50, 24, BLACK);
 	Text numText("Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);
 	Text numText2("counts of reads/writes", WINDOW_WIDTH-225, WINDOW_HEIGHT-30, 20, BLACK);
-	Text writeText("Writers", 20, 20, 24, BLACK);
-	Text readText("Readers", WINDOW_WIDTH-150, 20, 24, BLACK);
-	can.add( &lockText ); can.add( &numText ); can.add( &numText2 ); can.add( &writeText ); can.add( &readText );
+	Text writeText("Writers", 20, RWThread::dataY-RWThread::dataHeight-10, 24, BLACK);
+	Text readText("Readers", WINDOW_WIDTH-150, RWThread::dataY-RWThread::dataHeight-10, 24, BLACK);
+	Text dataLabel("Shared Data Store", RWThread::dataX, RWThread::dataY+30, 20, BLACK);
+	dataLabel.setCenter(WINDOW_WIDTH/2, RWThread::dataY+15);
+	can.add( &readerLine ); can.add( &writerLine );
+	can.add( &lockText ); can.add( &numText ); can.add( &numText2 ); can.add( &writeText ); can.add( &readText ); can.add( &dataLabel );
 
 	//Fill the Reader and Writer arrays with their objects
 	for(int i = 0; i < numReaders; i++) {
