@@ -6,7 +6,7 @@
 
 using namespace tsgl;
 
-ShadedVoronoi::ShadedVoronoi(Canvas& can) : Voronoi(can) {
+ShadedVoronoi::ShadedVoronoi(RasterCanvas& can) : Voronoi(can) {
   const int WW = can.getWindowWidth(),                    // Set the screen sizes
             WH = can.getWindowHeight();
   srand(time(NULL));                                      // Seed the random number generator
@@ -32,7 +32,7 @@ ShadedVoronoi::ShadedVoronoi(Canvas& can) : Voronoi(can) {
   }
 }
 
-void ShadedVoronoi::draw(Canvas& can) {
+void ShadedVoronoi::draw(RasterCanvas& can) {
   const int WW = can.getWindowWidth(),                    // Set the screen sizes
             WH = can.getWindowHeight();
   #pragma omp parallel for

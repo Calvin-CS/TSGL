@@ -19,7 +19,7 @@ Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas
 	myCircle->setCenter(myX, myY);
 	myCountLabel->setCenter(myX, myY);
 	if( !dataLabel ) {
-		dataLabel = new Text("0/300", RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 24, BLACK);
+		dataLabel = new Text("0/300", RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 16, BLACK);
 		myCan->add( dataLabel );
 		dataLabel->setLayer(3);
 	}
@@ -31,7 +31,7 @@ Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas
  * \details Includes a half second pause
  */
 void Writer::drawArrow(int x, int y) {
-	Arrow arrow(myX+150, myY, x, y);
+	Arrow arrow(myCircle->getX()+20, myY, x, y);
 	arrow.setLayer(5);
 	myCan->add(&arrow);
 	myCan->sleepFor(0.5);
@@ -81,8 +81,8 @@ void Writer::lock() {
 void Writer::act() {
 	while( paused ) {}
 	int id = randIndex();
-	myCircle->setCenter(myX+130, myY); //Move inside data
-	myCountLabel->setCenter(myX+130, myY);
+	myCircle->setCenter(myX+127, myY); //Move inside data
+	myCountLabel->setCenter(myX+127, myY);
 	Rectangle * rec;
 	if( id < data->getItemCount() ) { //Change the color of an item
 		rec = data->read(id);
@@ -103,6 +103,7 @@ void Writer::act() {
 void Writer::unlock() {
 	//Release lock
 	count++; myCountLabel->setString( to_string(count) ); //Finished another write
+	if( count == 100 ) myCountLabel->setFontSize(20);
 	while( paused ) {}
 	myCircle->setCenter(myX, myY); 	//Return to home location
 	myCountLabel->setCenter(myX, myY);

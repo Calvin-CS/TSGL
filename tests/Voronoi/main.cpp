@@ -17,11 +17,11 @@ using namespace tsgl;
  * \details
  * - The data and methods for drawing are stored in a class.
  * - When you create an instance of the class:
- *    - The Canvas's dimensions are stored in local constants.
+ *    - The RasterCanvas's dimensions are stored in local constants.
  *    - The number of control points are predetermined and stored a protected class instance variable.
  *    - We seed the random number generator with the time.
  *    - We allocate arrays for x and y coordinates for each of the points.
- *    - We allocate an array of k-values for each pixel on the Canvas.
+ *    - We allocate an array of k-values for each pixel on the RasterCanvas.
  *    - For each control point:
  *      - Fill the x-coordinate and y-coordinate arrays with random values (thereby randomizing the locations
  *        of the control points).
@@ -48,17 +48,17 @@ using namespace tsgl;
  *            (best point).
  *          - We set the k-value for row,col to the best-k.
  *          - We draw a pixel at row,col with the best-k's point color.
- *          - If we closed the Canvas, break.
+ *          - If we closed the RasterCanvas, break.
  *          .
  *        .
  *      .
  *   .
  * .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
-void voronoiFunction(Canvas& can) {
+void voronoiFunction(RasterCanvas& can) {
   Voronoi v1(can);   //Make the Voronoi object
-  v1.draw(can);      //Draw it on the Canvas
+  v1.draw(can);      //Draw it on the RasterCanvas
 }
 
 /*!
@@ -73,29 +73,29 @@ void voronoiFunction(Canvas& can) {
  *   - Find the distance from the closest to the 2nd closest control point and store it in: \b kd.
  *   - Set \b shading to ( \b d1 / \b kd ).
  *   - Bind \b shading between 0 and 1, and shade the pixel with \b shading.
- *   - Break if the Canvas is closed.
+ *   - Break if the RasterCanvas is closed.
  *   .
  * .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
-void shadedVoronoiFunction(Canvas& can) {
+void shadedVoronoiFunction(RasterCanvas& can) {
   ShadedVoronoi s1(can);
   s1.draw(can);
 }
 
 //Takes command line arguments for the width and height of the window
 int main(int argc, char* argv[]) {
-  int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
+  int w = (argc > 1) ? atoi(argv[1]) : 0.9*RasterCanvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;            //If not, set the width and height to a default value
   //Normal Voronoi
   std::cout << "Regular Voronoi" << std::endl;
-  Canvas c1(-1, -1, w, h, "Voronoi");
+  RasterCanvas c1(-1, -1, w, h, "Voronoi");
   c1.run(voronoiFunction);
   std::cout << "Special Voronoi" << std::endl;
 
   //Shaded Voronoi
-  Canvas c2(-1, -1, w, h, "Shaded Voronoi");
+  RasterCanvas c2(-1, -1, w, h, "Shaded Voronoi");
   c2.run(shadedVoronoiFunction);
 }

@@ -6,7 +6,6 @@
 #define PCTHREAD_H_
 
 #include <omp.h>
-//#include <tsgl.h>
 #include "Thread.h"
 #include "Queue.h"
 #include <tsgl.h>
@@ -21,7 +20,7 @@ class PCThread : public Thread {
 public:
 	PCThread(); //Default constructor
 	PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can);  //Explicit constructor
-	virtual void run();	//Must be implemented by subclass
+	virtual void run();
 	virtual void wait();
 	virtual void lock() = 0; //Must be implemented by subclass
 	virtual void act() = 0; //Must be implemented by subclass

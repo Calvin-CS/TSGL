@@ -25,7 +25,7 @@ Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas
  * \details Includes a half second pause
  */
 void Reader::drawArrow(int x, int y) {
-	Arrow arrow(myX-150, myY, x, y, BLACK, false);
+	Arrow arrow(myCircle->getX()-20, myY, x, y, BLACK, false);
 	arrow.setLayer(5);
 	myCan->add(&arrow);
 	myCan->sleepFor(0.5);
@@ -40,8 +40,8 @@ void Reader::lock() {
 	data->startRead();  //Lock data for reading
 	myCan->sleepFor(RWThread::access_wait);
 	while( paused ) {}
-	myCircle->setCenter(myX-130, myY); //Move inside data
-	myCountLabel->setCenter(myX-130, myY);
+	myCircle->setCenter(myX-127, myY); //Move inside data
+	myCountLabel->setCenter(myX-127, myY);
 }
 
 //TODO: comment
@@ -58,6 +58,7 @@ void Reader::act() {
 void Reader::unlock() {
 	//Release lock
 	count++; myCountLabel->setString( to_string(count) ); //Finished another read
+	if( count == 100 ) myCountLabel->setFontSize(20);
 	while( paused ) {}
 	myCircle->setCenter(myX, myY); 	//Return to home location
 	myCountLabel->setCenter(myX, myY);

@@ -50,8 +50,10 @@ int main(int argc, char* argv[]) {
 	Writer * writers = new Writer[numWriters]; //Array of Writers
 
 	//Draw labels
-	Rectangle dataRec(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY); // draw data area
-	can.add(&dataRec);
+	Rectangle dataRec(RWThread::dataX, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth, RWThread::dataHeight, GRAY); // draw data area
+	dataRec.setHasOutline(false); dataRec.setLayer(2); can.add(&dataRec);
+	Rectangle margins(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, LIGHTGRAY);
+	margins.setLayer(1); can.add(&margins); can.setDefaultLayer(3);
 	Text lockText(lockString, 50, WINDOW_HEIGHT-50, 24, BLACK);
 	Text numText("Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);
 	Text numText2("counts of reads/writes", WINDOW_WIDTH-225, WINDOW_HEIGHT-30, 20, BLACK);

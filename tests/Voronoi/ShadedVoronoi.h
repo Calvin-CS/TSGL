@@ -25,17 +25,17 @@ public:
   /*!
    * \brief Explicitly construct a ShadedVoronoi object.
    * \details Explicit constructor for a ShadedVoronoi object.
-   * \param can Reference to the Canvas to draw to.
+   * \param can Reference to the RasterCanvas to draw to.
    * \return The constructed ShadedVoronoi object.
    */
-  ShadedVoronoi(Canvas& can);
+  ShadedVoronoi(RasterCanvas& can);
 
   /*!
    * \brief Draw the ShadedVoronoi object.
-   * \details Actually draws the ShadedVoronoi object onto the Canvas.
-   * \param can Reference to the Canvas to draw to.
+   * \details Actually draws the ShadedVoronoi object onto the RasterCanvas.
+   * \param can Reference to the RasterCanvas to draw to.
    */
-  void draw(Canvas& can);
+  void draw(RasterCanvas& can);
 
   /*!
    * \brief Destroy a ShadedVoronoi object.

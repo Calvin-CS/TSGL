@@ -6,7 +6,7 @@
 
 using namespace tsgl;
 
-Voronoi::Voronoi(Canvas& can) {
+Voronoi::Voronoi(RasterCanvas& can) {
   const int NEW_WINDOW_W = can.getWindowWidth(),      // Set the screen sizes
         NEW_WINDOW_H = can.getWindowHeight();
   srand(time(NULL));
@@ -32,7 +32,7 @@ Voronoi::Voronoi(Canvas& can) {
 
 }
 
-void Voronoi::draw(Canvas& can) {
+void Voronoi::draw(RasterCanvas& can) {
   int myBestK = 0;                                  // Keep track of the current best k-value
   float myBDist, myDist, myXD, myYD;                      // Keep track of the closes matches and current distances
   #pragma omp parallel for private(myBDist, myXD, myYD, myDist, myBestK)
