@@ -109,6 +109,9 @@ namespace tsgl {
     }
   };
 
+  /*! \class DiscreteDrawable
+  *  \brief Drawable extended for Drawables that are rendered from a render() method.
+  */
   class DiscreteDrawable : public Drawable {
   public:
     virtual void render() = 0;
