@@ -96,7 +96,7 @@ void alphaRectangleFunction(RasterCanvas& can) {
 
         // Push the rectangle onto the queue and onto the canvas so it can render
         myQueue.push(myRectangle);
-        // can.add(myRectangle);
+        can.add(myRectangle);
 
         // Remove old rectangles if there are more than 40 of them
         if (myQueue.size() >= 50) {
@@ -115,7 +115,7 @@ void alphaRectangleFunction(RasterCanvas& can) {
         // printf("R: %d G: %d B: %d A: %d \n", pixTest.R,pixTest.G,pixTest.B,pixTest.A);
 
         int i = 0;
-        for (i=0; i<4000; i++) can.drawPoint((float)(rand()%400), (float)(rand()%400), BLUE, 2.0);
+        for (i=0; i<20; i++) can.drawPoint((float)(rand()%400), (float)(rand()%400), PURPLE, 10.0);
     }
 }
 
