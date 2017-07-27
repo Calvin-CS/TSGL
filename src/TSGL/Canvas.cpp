@@ -494,6 +494,21 @@ namespace tsgl {
       for(std::vector<Drawable *>::iterator it = objectBuffer.begin(); it != objectBuffer.end(); ++it) {
         // if( isRaster && (*it)->getIsRendered() ) continue;
         try {
+
+          // Set rotations for object
+          bool rotationSet = false;
+          if ((*it)->shouldBeRotated()) {
+            rotationSet = true;
+            float rotDeg, rotX, rotY = 0;
+            (*it)->getRotation(rotDeg, rotX, rotY);
+
+            glMatrixMode(GL_PROJECTION);
+            glPushMatrix();
+            glTranslatef(rotX, rotY, 0.f);
+            glRotatef(rotDeg, 0.f, 0.f, 1.f);
+            glTranslatef(-rotX, -rotY, 0.f);
+          }
+
           if ((*it)->getIsDiscreteRendered()) {
             DiscreteDrawable* rc = *it;
             rc->render();
@@ -536,6 +551,12 @@ namespace tsgl {
                 poly->getOutlineNumberOfVertices() // The number of vertices from the object
               );
             }
+          }
+
+          // Unset rotations
+          if (rotationSet) {
+            glMatrixMode(GL_PROJECTION);
+            glPopMatrix();
           }
         }
         catch (std::exception& e) {

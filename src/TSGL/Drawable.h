@@ -23,6 +23,9 @@ namespace tsgl {
     bool isTextured = false; //TODO remove this
     bool discreteRender; /*! TODO Whether the shape is textured or not. If extending Drawable, <B> you *must* leave this at false (unless you are working with an image). </B> */
     int renderLayer; // The depth index to control the drawing order of the shapes
+    float rotationDeg = 0.0;
+    float rotationX = 0.0;
+    float rotationY = 0.0;
 
     bool hasOutline = false; ///< Whether the shape has an outline. If not implementing methods to get vertices and other information for an outline, this <B>must</B> remain false.
 
@@ -107,7 +110,40 @@ namespace tsgl {
       attribMutex.unlock();
       return retVal;
     }
+
+    /**
+    * \brief Sets the rotation of the object
+    *    \param deg The rotation, in degrees, of the Drawable
+    *    \param x The x coordinate around which to rotate
+    *    \param y The y coordinate around which to rotate
+    */
+    void setRotation(float deg, float x, float y) {
+      attribMutex.lock();
+      rotationDeg = deg;
+      rotationX = x;
+      rotationY = y;
+      attribMutex.unlock();
+    }
+
+    // Returns true if the object has a set rotation, otherwise false
+    // Used by the canvas to avoid instantiating a tuple every time to check if
+    // an object should be rotated.
+    bool shouldBeRotated() {
+      return (rotationDeg!=0.0);
+    }
+
+    /**
+    * \brief Accessor for the rotation details of the Drawable
+    */
+    void getRotation(float &deg, float &x, float &y) {
+      attribMutex.lock();
+      deg = rotationDeg;
+      x = rotationX;
+      y = rotationY;
+      attribMutex.unlock();
+    }
   };
+
 
   /*! \class DiscreteDrawable
   *  \brief Drawable extended for Drawables that are rendered from a render() method.
@@ -116,7 +152,7 @@ namespace tsgl {
   public:
     virtual void render() = 0;
   };
+};
 
-}
 
 #endif /* DRAWABLE_H_ */
