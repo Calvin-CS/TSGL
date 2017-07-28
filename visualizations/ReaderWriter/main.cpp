@@ -58,11 +58,19 @@ int main(int argc, char* argv[]) {
 	Text lockText(lockString, 50, WINDOW_HEIGHT-50, 24, BLACK);
 	Text numText("Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);
 	Text numText2("counts of reads/writes", WINDOW_WIDTH-225, WINDOW_HEIGHT-30, 20, BLACK);
-	Text writeText("Writers", 20, RWThread::dataY-RWThread::dataHeight-10, 24, BLACK);
-	Text readText("Readers", WINDOW_WIDTH-150, RWThread::dataY-RWThread::dataHeight-10, 24, BLACK);
+	Text writeText("Writers", 20, 40, 24, BLACK);
+	Text readText("Readers", WINDOW_WIDTH-150, 40, 24, BLACK);
 	Text dataLabel("Shared Data Store", RWThread::dataX, RWThread::dataY+30, 20, BLACK);
 	dataLabel.setCenter(WINDOW_WIDTH/2, RWThread::dataY+15);
-	can.add( &readerLine ); can.add( &writerLine );
+	Text readThink("Thinking", RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight, 20, BLACK);
+	Text writeThink("Thinking", RWThread::dataX-MARGIN*4, RWThread::dataY-RWThread::dataHeight, 20, BLACK);
+	Text readWait("Waiting", RWThread::dataX+RWThread::dataWidth+MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 20, BLACK);
+	Text writeWait("Waiting", RWThread::dataX-MARGIN*2, RWThread::dataY-RWThread::dataHeight, 20, BLACK);
+	readThink.setRotation(-45, RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight);
+	writeThink.setRotation(-45, RWThread::dataX-MARGIN*4, RWThread::dataY-RWThread::dataHeight);
+	readWait.setRotation(-45, RWThread::dataX+RWThread::dataWidth+MARGIN*1.5, RWThread::dataY-RWThread::dataHeight);
+	writeWait.setRotation(-45, RWThread::dataX-MARGIN*2, RWThread::dataY-RWThread::dataHeight);
+	can.add( &readerLine ); can.add( &writerLine ); can.add( &readThink ); can.add( &writeThink ); can.add( &readWait ); can.add( &writeWait );
 	can.add( &lockText ); can.add( &numText ); can.add( &numText2 ); can.add( &writeText ); can.add( &readText ); can.add( &dataLabel );
 
 	//Fill the Reader and Writer arrays with their objects
