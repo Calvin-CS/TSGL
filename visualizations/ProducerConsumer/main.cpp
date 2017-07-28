@@ -28,12 +28,13 @@ Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored
 /**
  * displayLegend helps the main method by controlling the legendDisplay
  */
-void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queueDisplay, int *colorChanger) {
+void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queueDisplay) {
+	int colorChanger = 0;
 	while( queueDisplay->isOpen() ) {
 		waitingCircle->setColor( Colors::highContrastColor(colorChanger) );
 		waitingSquare->setColor( Colors::highContrastColor(colorChanger) );
 			queueDisplay->sleepFor(1.0);
-		*colorChanger++;
+		colorChanger++;
 	}
 }
 
@@ -68,8 +69,8 @@ int main(int argc, char * argv[]) {
 	});
 
 	//Prepare the display with background items
-	int centerY = queueDisplay.getWindowHeight()/2-100;
-	int centerX = queueDisplay.getWindowWidth()/2;
+	int centerY = 175;
+	int centerX = 300;
 	Line * queueLines[CAPACITY];
 	for(int i = 0; i < CAPACITY; i++) {
 		float langle = (i*2*PI)/CAPACITY; // line angle
@@ -132,7 +133,7 @@ int main(int argc, char * argv[]) {
 
 	//LEGENDEND
 
-	// std::thread legendUpdater (displayLegend, &waitingCircle, &waitingSquare, &queueDisplay, &colorChanger);
+	std::thread legendUpdater (displayLegend, &waitingCircle, &waitingSquare, &queueDisplay);
 
 	//Start up the pthreads for Producers and Consumers
 	for(int k = 0; k < numProducers; k++) {
@@ -146,7 +147,6 @@ int main(int argc, char * argv[]) {
 
 	queueDisplay.wait();
 
-	// legendUpdater.join();
 
 	// sleep(0.5);
 
@@ -158,14 +158,15 @@ int main(int argc, char * argv[]) {
 	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
 		con[c].join();
 	}
+	legendUpdater.join();
 
 	while( !sharedBuffer.isEmpty() ) {
 		Star * tempPtr = sharedBuffer.remove();
 		delete tempPtr;
 	}
 
-	// delete [] pro;
-	// delete [] con;
+	delete [] pro;
+	delete [] con;
 	pro = NULL;
 	con = NULL;
 

@@ -72,7 +72,7 @@ void Producer::act() {
 
 	//Show Item added to Queue
 	float itAngle = (i*2*PI + PI)/8; // angle of item
-	int endX = 100*cos(itAngle)+300, endY = 100*sin(itAngle)+300-100;
+	int endX = 100*cos(itAngle)+300, endY = 100*sin(itAngle)+175;
 	animateItem(endX, endY);
 
 	count++; myCountLabel->setString( to_string(count) );
