@@ -6,7 +6,7 @@ int RWThread::WAIT_RANGE = 40, RWThread::WAIT_MIN = 15;
 	// Still need to have these change based on number of threads.
 	const int RWThread::width = 20; //Width of each object
 	const int RWThread::dataX = 200, RWThread::dataY = 670; //Bottom left coordinates of the data area
-	const int RWThread::dataHeight = 550, RWThread::dataWidth = 200; //Dimensions of the data area
+	const int RWThread::dataHeight = 600, RWThread::dataWidth = 200; //Dimensions of the data area
 	int RWThread::threadCount = 0;
 	float RWThread::access_wait = 1.0;
 	atomic<bool> RWThread::paused(false);

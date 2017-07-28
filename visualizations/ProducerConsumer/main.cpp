@@ -3,7 +3,7 @@
  * It utilizes a custom Queue class to make the shared buffer.
  * Producer and Consumer classes have been made in order to make the Producers and Consumers
  * A Thread class has been made in order to have an encapsulated pthread (which the Producer and Consumer class both inherit from).
- * Usage: ./ProducerConsumer [numberOfProducers] [numberOfConsumers]
+ * Usage: ./ProducerConsumer <numberOfProducers> <numberOfConsumers>
  */
 
 #include <stdlib.h>
@@ -41,6 +41,10 @@ void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queu
 //Main method
 int main(int argc, char * argv[]) {
 	int numProducers, numConsumers;  //Number of producers, consumers
+
+	if( argc == 1) {
+		std::cout << "\nTo run the program with different values, use the format:\n\t./ProducerConsumer [numberOfProducers] [numberOfConsumers]" << std::endl;
+	}
 
 	//Check the command line
 	numProducers = (argc > 1) ? atoi(argv[1]) : 5; //Producers defaults to 5
