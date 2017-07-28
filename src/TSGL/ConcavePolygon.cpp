@@ -155,20 +155,6 @@ void ConcavePolygon::setCenter(float x, float y) {
   Polygon::setCenter(x, y);
 }
 
-void ConcavePolygon::rotate(float angle) {
-  attribMutex.lock();
-  dirty = true;
-  attribMutex.unlock();
-  Polygon::rotate(angle);
-}
-
-void ConcavePolygon::rotateAround(float angle, float x, float y) {
-  attribMutex.lock();
-  dirty = true;
-  attribMutex.unlock();
-  Polygon::rotateAround(angle, x, y);
-}
-
 //----------------------------------------------Unit testing------------------------------
 void ConcavePolygon::runTests() {
   TsglDebug("Testing ConcavePolygon class....");
