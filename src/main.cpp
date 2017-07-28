@@ -24,7 +24,7 @@ using namespace tsgl;
 //       //  drawShape(rec);                                     // Push it onto our drawing buffer
 // }
 
-void alphaRectangleFunction(RasterCanvas& can) {
+void alphaRectangleFunction(Canvas& can) {
     const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
     int a, b, c, d;
     // int counter = 0;
@@ -76,6 +76,8 @@ void alphaRectangleFunction(RasterCanvas& can) {
 
     // // Test the text
     Text* myText = new Text("Testing some more stuff", 200, 200, 26, WHITE);
+    myText->setCenter(100,100);
+    myText->setRotation(-90, 100, 100);
     can.add(myText);
     // printf("Text is %d pixels long.\n", myText->getStringWidth());
 
@@ -114,8 +116,8 @@ void alphaRectangleFunction(RasterCanvas& can) {
         // ColorInt pixTest = can.getPixel(300,300);
         // printf("R: %d G: %d B: %d A: %d \n", pixTest.R,pixTest.G,pixTest.B,pixTest.A);
 
-        int i = 0;
-        for (i=0; i<20; i++) can.drawPoint((float)(rand()%400), (float)(rand()%400), PURPLE, 10.0);
+        // int i = 0;
+        // for (i=0; i<20; i++) can.drawPoint((float)(rand()%400), (float)(rand()%400), PURPLE, 10.0);
     }
 }
 
@@ -125,7 +127,7 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     // if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 700;            //If not, set the width and height to a default value
-    RasterCanvas c(-1, -1, w, h, "Cool Rectangles");
+    Canvas c(-1, -1, w, h, "Cool Rectangles");
     //TODO: why are we not able to set the width and height here? bug?
     // c.setShowFPS(true);
     c.setBackgroundColor(BLACK);
