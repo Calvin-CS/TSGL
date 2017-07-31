@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
 	Reader * readers = new Reader[numReaders]; //Array of Readers
 	Writer * writers = new Writer[numWriters]; //Array of Writers
 
-	//Draw labels
+	//Create labels
 	Rectangle dataRec(RWThread::dataX, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth, RWThread::dataHeight, GRAY); // draw data area
 	dataRec.setHasOutline(false); dataRec.setLayer(2); can.add(&dataRec);
 	Rectangle margins(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, LIGHTGRAY);
@@ -68,6 +68,7 @@ int main(int argc, char* argv[]) {
 	Text dataLabel("Shared Data Store", RWThread::dataX, RWThread::dataY+30, 20, BLACK);
 	dataLabel.setCenter(WINDOW_WIDTH/2, RWThread::dataY+15);
 
+	//Create and rotate more labels
 	Text readThink("Thinking", RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight, 28, LIGHTGRAY);
 	Text readWait("Waiting", RWThread::dataX+RWThread::dataWidth+MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 28, LIGHTGRAY);
 	readThink.setRotation(90, readThink.getX(), readThink.getY());
@@ -78,15 +79,6 @@ int main(int argc, char* argv[]) {
 	writeWait.setLocation(writeWait.getX(), writeWait.getY()+writeWait.getStringWidth());
 	writeThink.setRotation(-90, writeThink.getX(), writeThink.getY());
 	writeWait.setRotation(-90, writeWait.getX(), writeWait.getY());
-
-	// Text readThink("Thinking", RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight, 20, BLACK);
-	// Text writeThink("Thinking", RWThread::dataX-MARGIN*4, RWThread::dataY-RWThread::dataHeight, 20, BLACK);
-	// Text readWait("Waiting", RWThread::dataX+RWThread::dataWidth+MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 20, BLACK);
-	// Text writeWait("Waiting", RWThread::dataX-MARGIN*2, RWThread::dataY-RWThread::dataHeight, 20, BLACK);
-	// readThink.setRotation(-45, RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight);
-	// writeThink.setRotation(-45, RWThread::dataX-MARGIN*4, RWThread::dataY-RWThread::dataHeight);
-	// readWait.setRotation(-45, RWThread::dataX+RWThread::dataWidth+MARGIN*1.5, RWThread::dataY-RWThread::dataHeight);
-	// writeWait.setRotation(-45, RWThread::dataX-MARGIN*2, RWThread::dataY-RWThread::dataHeight);
 
 	//Add labels
 	can.add( &readerLine ); can.add( &writerLine ); can.add( &readThink ); can.add( &writeThink ); can.add( &readWait ); can.add( &writeWait );

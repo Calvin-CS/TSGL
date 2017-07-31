@@ -52,7 +52,7 @@ void Mandelbrot::manhattanShading(CartesianRasterCanvas& can) {
     for (int j = 0; j < cww; ++j) {
       float mult = sqrt(avg*((float)canPoints[i][j])/loop);
       ColorFloat c = can.getPoint(j,i);
-      can.drawPoint(j,i,c*mult);
+      can.drawPoint(j,i,c*mult); //Not working here because getPoint() earlier doesn't work. This affects Nova appearance.
     }
   }
 
@@ -114,17 +114,16 @@ void Mandelbrot::draw(CartesianRasterCanvas& can) {
         long double row = startrow + can.getPixelHeight() * k;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex originalComplex(col, row);
-          complex c(col, row);
+          complex z(col, row);
           unsigned iterations = 0;
-          while (std::abs(c) < 2.0 && iterations != myDepth) {  // Compute it until it escapes or we give up
+          while (std::abs(z) < 2.0 && iterations != myDepth) {  // Compute it until it escapes or we give up
             iterations++;
-            c = c * c + originalComplex;
+            z = z * z + originalComplex;
           }
           if(iterations == myDepth) { // If the point never escaped, draw it black
             can.drawPoint(col, row, BLACK);
           } else { // Otherwise, draw it with color based on how long it took
-            float mult = iterations/(float)myDepth;
-            can.drawPoint(col, row, Colors::blend(tcolor,WHITE,0.25f+0.5f*mult)*mult);
+            can.drawPoint(col, row, ColorHSV(iterations*6.0f/myDepth, 1.0f, 0.6f, 1.0f));
           }
           if (myRedraw) break;
         }

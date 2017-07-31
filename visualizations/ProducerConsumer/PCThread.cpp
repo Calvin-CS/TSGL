@@ -17,11 +17,11 @@ PCThread::PCThread() : Thread() {
 }
 
 /**
- * \brief Explicit-constructor for the PCThread class.
- * \param: sharedBuffer, a reference to the Queue object that is shared between the Producer and Consumer.
- * \param: id, an unsigned long that will be passed to the Thread() constructor that will act as the id for the Thread object.
- * \param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming objects from the Queue.
- * \return: The constructed PCThread object.
+ *  Explicit-constructor for the PCThread class.
+ * param: sharedBuffer, a reference to the Queue object that is shared between the Producer and Consumer.
+ * param: id, an unsigned long that will be passed to the Thread() constructor that will act as the id for the Thread object.
+ * param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming objects from the Queue.
+ * return: The constructed PCThread object.
  */
 PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : Thread(id) {
 	count = 0;

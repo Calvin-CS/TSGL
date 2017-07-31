@@ -2,16 +2,16 @@
 
 /**
  * Default-constructor for the Consumer class.
- * @return: The constructed Consumer object.
+ * return: The constructed Consumer object.
  */
 Consumer::Consumer() : PCThread() { }
 
 /**
  * Explicit-constructor for the Consumer class.
- * @param: sharedBuffer, a reference to the Queue object that is shared between the Consumer and Producer.
- * @param: id, an unsigned long that will be passed to the Thread() constructor that will act as the id for the Thread object.
- * @param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming object from the Queue.
- * @return: The constructed Consumer object.
+ * param: sharedBuffer, a reference to the Queue object that is shared between the Consumer and Producer.
+ * param: id, an unsigned long that will be passed to the Thread() constructor that will act as the id for the Thread object.
+ * param: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming object from the Queue.
+ * return: The constructed Consumer object.
  */
 Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = can.getWindowWidth() - 50;

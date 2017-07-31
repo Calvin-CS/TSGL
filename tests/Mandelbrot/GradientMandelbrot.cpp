@@ -20,24 +20,27 @@ void GradientMandelbrot::draw(CartesianRasterCanvas& can) {
         for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex c(col, row);
           complex z(col, row);
-          smooth = exp(-std::abs(z));
           iterations = 0;
-          while (std::abs(z) < 2.0l && iterations != myDepth) {
+          while (std::abs(z) < 2.0l && iterations < myDepth) {
             iterations++;
             z = z * z + c;
-            smooth += exp(-std::abs(z));
           }
-          smooth /= (myDepth + 1);
-          float value = (float)iterations/myDepth;
-          can.drawPoint(col, row, ColorHSV((float)smooth * 6.0f, 1.0f, value, 1.0f));
+          if( iterations >= myDepth-1 ) { //If iterations reached myDepth
+            can.drawPoint(col, row, BLACK);
+          } else {
+            float value = (float)iterations/myDepth;
+            float mu = iterations + 1 - log( log( std::abs(z) )) / log(2);
+            if( mu < 0 ) can.drawPoint(col, row, ColorHSV(0, 1.0f, 0.6f, 1.0f)); //If we have a negative adjusted iterations
+            else can.drawPoint(col, row, ColorHSV((mu/(float)myDepth)*6.0f, 1.0f, 0.6f, 1.0f));
+          }
           if (myRedraw) break;
         }
         can.handleIO();
         if (myRedraw) break;
       }
     }
+    std::cout << can.getTime() << std::endl;
     while (can.isOpen() && !myRedraw)
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
   }
 }
-

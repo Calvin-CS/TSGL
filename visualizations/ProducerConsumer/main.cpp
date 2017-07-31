@@ -106,12 +106,7 @@ int main(int argc, char * argv[]) {
 		con[j] = Consumer(sharedBuffer, j, queueDisplay);
 	}
 
-	// displayLegend();
-
-
-
-	//LEGENDSTART
-
+	//Create legend items
 	int LEGENDOFFSET = 300;
 
 	int colorChanger = 0; //Counting int to control random bright colors
@@ -151,9 +146,6 @@ int main(int argc, char * argv[]) {
 
 	queueDisplay.wait();
 
-
-	// sleep(0.5);
-
 	//Now join them
 	for(int p = 0; p < numProducers; p++) {	//Join the pthreads for the Producers
 		pro[p].join();
@@ -162,6 +154,7 @@ int main(int argc, char * argv[]) {
 	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
 		con[c].join();
 	}
+
 	legendUpdater.join();
 
 	while( !sharedBuffer.isEmpty() ) {
