@@ -2,7 +2,7 @@
 #
 # install-linux.sh is the installation script for TSGL on Linux.
 # Last updated: 06/30/26
-# 
+#
 # -SUBJECT TO CHANGE-
 ################################################################
 
@@ -12,8 +12,8 @@ echo "Installing TSGL..."
 #(Use glxinfo, available in the mesa-utils package)
 sudo apt-get install mesa-utils
 
-echo 
-echo "Checking OpenGL version (must be 3.0 or higher)..."
+echo
+echo "Checking OpenGL version (must be 2.1 or higher)..."
 
 sudo apt-get install mesa-utils
 
@@ -30,15 +30,15 @@ GLVersNum=$(echo "$GLVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
 #http://tldp.org/LDP/abs/html/comparison-ops.html
 #Check if the version is less than the threshold
-if [ "$GLVersNum" \< "3.0" ]
+if [ "$GLVersNum" \< "2.1" ]
 then
 	echo "Your version of GL is: $GLVersNum."
-	echo "You need at least OpenGL version 3.0 or greater."
+	echo "You need at least OpenGL version 2.1 or greater."
 	echo "Please update your drivers in order to continue."
 	echo "Try the following command to update your drivers:"
 	echo
 	echo "sudo ubuntu-drivers autoinstall"
-	echo  
+	echo
 	echo "Abort."
 	exit 1
 else
@@ -68,7 +68,7 @@ then
 	echo "g++ not installed!"
 	echo "Installing  g++..."
 	sudo apt-get install g++
-	
+
 	#Update versioning info
 	gVersCheck=$(g++ --version)
 
@@ -91,7 +91,7 @@ else
 		echo "Would you like me to do that? (1 = Yes, 2 = No)"
 		#Adapted from: http://stackoverflow.com/questions/226703/how-do-i-prompt-for-input-in-a-linux-shell-script
 		#Get the choice from the user.
-		select choice in "Yes" "No"; do		
+		select choice in "Yes" "No"; do
 		case $choice in
 			Yes ) #Yes, so...
 				echo "Installing a greater version of g++ (4.9)..."
@@ -99,10 +99,10 @@ else
 				#Get g++-4.9 on the machine
 				sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
 				sudo apt-get update;
-				sudo apt-get install --yes --force-yes g++-4.9;		
-				sudo unlink /usr/bin/g++;   #Take out any symlink made before...	
+				sudo apt-get install --yes --force-yes g++-4.9;
+				sudo unlink /usr/bin/g++;   #Take out any symlink made before...
 				sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;
-				
+
 				#Update version info
 				gVersCheck=$(g++ --version)
 
@@ -114,7 +114,7 @@ else
 				gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
 				break;;
-			No ) #No, use the current version		
+			No ) #No, use the current version
 				echo "Cannot continue without g++ 4.8 or greater."
 				echo "Abort."
 				exit 1
@@ -129,8 +129,8 @@ else
 		if [ "$gVersNum" \< "4.9" ]
 		then
 			echo "You have $gVersNum installed."
-			echo "Would you like me to install g++-4.9? (1 = Yes, 2 = No)"		
-			select choice in "Yes" "No"; do		
+			echo "Would you like me to install g++-4.9? (1 = Yes, 2 = No)"
+			select choice in "Yes" "No"; do
 				case $choice in
 					Yes ) #Yes, so...
 
@@ -139,37 +139,37 @@ else
 						#Get g++-4.9 on the machine
 						sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
 						sudo apt-get update;
-						sudo apt-get install --yes --force-yes g++-4.9;		
-						sudo unlink /usr/bin/g++;   #Take out any symlink made before...	
+						sudo apt-get install --yes --force-yes g++-4.9;
+						sudo unlink /usr/bin/g++;   #Take out any symlink made before...
 						sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;
-						
+
 						#Update version info
 						gVersCheck=$(g++ --version)
-						
+
 						#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
 						gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
-	
+
 						#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
 						#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
 						gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
 						break;;
-					No ) #No, use the current version		
-						echo "Proceeding with $gVersNum."; 
+					No ) #No, use the current version
+						echo "Proceeding with $gVersNum.";
 						break;;
 				esac
-			done 
+			done
 		fi
 
-	fi 
+	fi
 fi
 
-echo 
+echo
 
 echo "Checking for necessary dependencies..."
 echo
 
-#Check for the following libraries: 
+#Check for the following libraries:
 glfw=0   #glfw
 GL=0  #OpenGL
 freetype=0  #Freetype
@@ -181,8 +181,8 @@ ldconfig -p | grep GL > opengl.txt  #'GL'
 ldconfig -p | grep freetype > freetype.txt  #'freetype'
 ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
 
-#Based off of the piping above, if any of the keywords were found, then the corresponding text files will have 
-#information about the libraries currently installed. 
+#Based off of the piping above, if any of the keywords were found, then the corresponding text files will have
+#information about the libraries currently installed.
 #If they aren't found, then the text files will be blank.
 #If that is the case, then the library shouldn't be on the machine. (A missing dependency).
 
@@ -192,11 +192,11 @@ ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
 if [ -e glfw.txt ]
 then
 	#Checking for dependencies now...
-	#If the text file contains the name of the library that we are looking 
-	#for, then it must be installed. 
+	#If the text file contains the name of the library that we are looking
+	#for, then it must be installed.
 	if grep "libglfw.so.3" glfw.txt > holder.txt
 	then
-		#Which means, it's not missing. 
+		#Which means, it's not missing.
 		glfw=1
 		echo
 	fi
@@ -211,7 +211,7 @@ then
 	then
 		GL=1
 		echo
-	fi	
+	fi
 fi
 
 #freetype
@@ -221,7 +221,7 @@ then
 	then
 		freetype=1
 		echo
-	fi	
+	fi
 fi
 
 #GLEW
@@ -231,10 +231,10 @@ then
 	then
 		GLEW=1
 		echo
-	fi	
+	fi
 fi
 
-#Alright, we're done checking. 
+#Alright, we're done checking.
 #Clean up the text files, we no longer need them.
 rm glfw.txt
 rm glew.txt
@@ -250,7 +250,7 @@ elif [ $GL == 0 ]
 then
 	echo "GL not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
 	echo "(You may also have to update your drivers!)"
-	exit 1 
+	exit 1
 elif [ $freetype == 0 ]
 then
 	echo "Freetype not found! (Will be resolved shortly)."
@@ -264,16 +264,16 @@ fi
 echo "Getting other dependencies (or updating if all found)..."
 
 #Get the necessary header files as well as doxygen, git
-sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen 
+sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
 
-echo 
+echo
 
 #Get the glfw library
 if [ $glfw == 0 ]
 then
 	echo "Resolving missing glfw dependency..."
 	git clone https://github.com/glfw/glfw.git || exit 1
-	
+
 	cd glfw
 
 	#Build shared lib from source
@@ -294,35 +294,35 @@ if [ $freetype == 0 ]
 then
 
 	echo "Resolving missing freetype dependency..."
-	
+
 	#We do, so get the freetype source
 	wget downloads.sourceforge.net/project/freetype/freetype2/2.6.3/freetype-2.6.3.tar.bz2
 
-	#Untar and unzip, configure, make, and install. 
+	#Untar and unzip, configure, make, and install.
 	tar vxfj freetype-2.6.3.tar.bz2
 
 	cd freetype-2.6.3
 
 	./configure
 
-	make 
+	make
 
 	sudo make install
-	
+
 	cd ../
-	
+
 	#Remove the freetype folders from the TSGL folder
 	rm -rf freetype*
 fi
 
-echo 
+echo
 
 echo
 
 #Dependencies were installed! (GLEW and glfw, as well as g++)
 echo "All dependencies resolved!"
 
-echo 
+echo
 
 echo "Begin installation of TSGL..."
 
@@ -333,22 +333,22 @@ sudo rm -rf /usr/local/include/TSGL
 sudo rm -rf /usr/local/lib/libtsgl.*
 
 #Create the following directories (Since they aren't included in github but are needed)
-mkdir -p lib bin
+mkdir -p lib bin build
 
 #Make the library
+make clean
 make
 
 #Install it
 sudo make install
 
 #Take out the .cpp files from the TSGL library package folder
-sudo rm -rf /usr/local/include/TSGL/*.cpp
+# sudo rm -rf /usr/local/include/TSGL/*.cpp
 
 #Final step (.so file won't be found unless I do this...)
-sudo ldconfig
+# sudo ldconfig
 
 #Done
-echo "Installation complete! Execute the runtests bash script to verify that everything works!"
+echo "Installation complete! Run one of the programs in the bin folder to make sure everything works!"
 
 echo
-

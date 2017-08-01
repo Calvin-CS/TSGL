@@ -70,9 +70,43 @@ void alphaRectangleFunction(Canvas& can) {
     // can.add(c1);
 
     // // Add a blue rectangle at the bottom
-    // Rectangle* botBlueRect = new Rectangle(0, 0, 1000, 1000, ColorInt(0*MAX_COLOR, 1*MAX_COLOR, 1*MAX_COLOR, 255));
-    // botBlueRect->setLayer(0);
-    // can.add(botBlueRect);
+    Rectangle* botBlueRect = new Rectangle(0, 0, 1000, 1000, ColorInt(0*MAX_COLOR, 1*MAX_COLOR, 1*MAX_COLOR, 255));
+    botBlueRect->setHasOutline(false);
+    botBlueRect->setLayer(0);
+    can.add(botBlueRect);
+
+
+
+
+
+    Rectangle* topWhitePointRect = new Rectangle(100, 100, 1, 1, ColorInt(255, 255, 255, 255));
+    topWhitePointRect->setHasOutline(false);
+    topWhitePointRect->setLayer(100);
+    can.add(topWhitePointRect);
+
+
+
+    // int i = 0;
+    // for (i=0; i<255; i++) {
+    //   int x = i;
+    //   int y = 0;
+    //
+    //   Rectangle* topWhitePointRect = new Rectangle(x, y, 1, 700, ColorInt(255*(i/255.0), 0, 255, 255));
+    //   topWhitePointRect->setHasOutline(false);
+    //   topWhitePointRect->setLayer(100);
+    //   can.add(topWhitePointRect);
+    // }
+
+    // int i = 0;
+    // for (i=0; i<255; i++) {
+    //   int x = 0;
+    //   int y = 445+i;
+    //
+    //   Rectangle* topWhitePointRect = new Rectangle(x, y, 700, 1, ColorInt(255*(i/255.0), 0, 255, 255));
+    //   topWhitePointRect->setHasOutline(false);
+    //   topWhitePointRect->setLayer(100);
+    //   can.add(topWhitePointRect);
+    // }
 
     // // Test the text
     Text* myText = new Text("Testing some more stuff", 200, 200, 26, WHITE);
@@ -113,11 +147,14 @@ void alphaRectangleFunction(Canvas& can) {
         }
 
         // Test get pixel value
-        // ColorInt pixTest = can.getPixel(300,300);
+        // ColorInt pixTest = can.getPixel(100,100);
         // printf("R: %d G: %d B: %d A: %d \n", pixTest.R,pixTest.G,pixTest.B,pixTest.A);
 
         // int i = 0;
         // for (i=0; i<20; i++) can.drawPoint((float)(rand()%400), (float)(rand()%400), PURPLE, 10.0);
+
+        // ColorInt testPoint = can.getPoint(100,100);
+        // printf("R: %d, G: %d, B: %d, A: %d\n", testPoint.R, testPoint.G, testPoint.B, testPoint.A);
     }
 }
 

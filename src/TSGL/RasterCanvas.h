@@ -49,19 +49,6 @@ namespace tsgl {
       isRaster = true;
     };
 
-    /*!
-     * \brief Gets the color of the pixel drawn on the current Canvas at the given screen coordinates,
-     *   specified in row,column format.
-     * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
-     * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas.
-     * \note getPixel() will return only what is currently drawn the screen. Any object waiting to be drawn
-     *  will not affect what is returned.
-     *      \param row The row (y-position) of the pixel to grab.
-     *      \param col The column (x-position) of the pixel to grab.
-     * \return A ColorInt containing the color of the pixel at (col,row).
-     */
-    virtual ColorInt getPixel(int row, int col);
-
     /**
      * \brief Sets the color of the point on the Canvas at the given screen coordinates.
      * \details Draws a point at (x, y).

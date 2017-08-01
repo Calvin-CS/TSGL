@@ -50,7 +50,7 @@ namespace tsgl {
     if (padwidth > 0)
     padwidth = 4-padwidth;
     winWidthPadded = winWidth + padwidth;
-    bufferSize = 3 * (winWidthPadded+1) * winHeight;
+    bufferSize = 4 * (winWidthPadded+1) * winHeight;
     screenBuffer = new uint8_t[bufferSize];
     for (unsigned i = 0; i < bufferSize; ++i) {
       screenBuffer[i] = 0;
@@ -475,7 +475,7 @@ namespace tsgl {
       #endif
 
       if( !isRaster ) { glDrawBuffer(GL_BACK); }
-      else { glDrawBuffer(GL_FRONT_AND_BACK); }
+      else { glDrawBuffer(GL_FRONT_AND_BACK); } //TODO causes weird stuff on Pi
 
       // Clear the canvas
       if( !isRaster ) glClear(GL_COLOR_BUFFER_BIT);
@@ -558,6 +558,7 @@ namespace tsgl {
             glMatrixMode(GL_PROJECTION);
             glPopMatrix();
           }
+
         }
         catch (std::exception& e) {
           std::cerr << "Caught an exception!!!" << e.what() << std::endl;
@@ -600,6 +601,12 @@ namespace tsgl {
       // Disable vertex arrays
       glDisableClientState( GL_VERTEX_ARRAY );
 
+
+      // Read pixels into screen buffer
+      frameBufferMutex.lock();
+      glReadPixels(	0, 0, winWidthPadded, winHeight,
+        GL_RGBA, GL_UNSIGNED_BYTE, screenBuffer);
+      frameBufferMutex.unlock();
 
       // Swap the buffer and handle IO
       // glFinish();
@@ -795,19 +802,23 @@ namespace tsgl {
   }
 
 
-  //TODO these need to go, only here to compile for now
+  //TODO move these someplace better
   ColorInt Canvas::getPixel(int row, int col) {
     return getPoint(col,row);
   }
 
   ColorInt Canvas::getPoint(int x, int y) {
+    //TODO this doesn't work on hidpi screens, need to implement fix for that
     int yy;
     //if (atiCard)
     //  yy = (winHeight) - y; //glReadPixels starts from the bottom left, and we have no way to change that...
     //else
     yy = (winHeight-1) - y;
-    int off = 3 * (yy * winWidthPadded + x);
-    return ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
+    int off = 4 * ((yy * winWidth) + x);
+    frameBufferMutex.lock();
+    ColorInt retVal =  ColorInt(screenBuffer[off], screenBuffer[off + 1], screenBuffer[off + 2], 255);
+    frameBufferMutex.unlock();
+    return retVal;
   }
 
 

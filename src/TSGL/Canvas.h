@@ -2,7 +2,7 @@
  * Canvas.h provides a window / canvas for all of the drawing operations in the TSGL library.
  */
 
-// #define __DEBUG__
+#define __DEBUG__
 
 #ifndef CANVAS_H_
 #define CANVAS_H_
@@ -95,8 +95,10 @@ private:
     //TODO do we have too many mutexes?  Probably.
     std::mutex      renderMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     unsigned        bufferSize;                                         // Size of the screen buffer
-    Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
+    std::mutex      frameBufferMutex;                                   // Mutex for locking the framebuffer array
+    uint8_t*        screenBuffer;  //LEAVEOFFHERE                                     // Array that is a copy of the screen
+    Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
     bool            hasEXTFramebuffer;                                  // Whether or not the hardware supports EXT FBOs
@@ -115,7 +117,6 @@ private:
   // #else
     std::thread   renderThread;                                         // Thread dedicated to rendering the Canvas
   // #endif
-    uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
     GLtexture       shaderFragment,                                     // Address of the fragment shader
                     shaderProgram,                                      // Addres of the shader program to send to the GPU
@@ -135,7 +136,6 @@ private:
     //                 uniProj;                                            // Projection of the camera
     GLtexture       vertexArray,                                        // Address of GL's array buffer object
                     vertexBuffer;                                       // Address of GL's vertex buffer object
-    GLFWwindow*     window;                                             // GLFW window that we will draw to
     bool            windowClosed;                                       // Whether we've closed the Canvas' window or not
     std::mutex      windowMutex;                                        // (OS X) Mutex for handling window contexts
     int             winHeight;                                          // Height of the Canvas' window
@@ -179,6 +179,7 @@ private:
     static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods
     static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
 protected:
+  GLFWwindow*     window;                                             // GLFW window that we will draw to
   bool            isRaster = false;                                   ///< Whether is a RasterCanvas or not.
   std::mutex rasterPointMutex;                                        // Mutex that guards the raster point vec
   struct rasterPointStruct {
