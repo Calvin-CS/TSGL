@@ -9,7 +9,7 @@ VisualTaskQueue::VisualTaskQueue(int elements, int sideLength, float aspect, int
     totalElements = elements;
     rowLength = ceil(sqrt(totalElements/aspect));  //Number of elements per row
     blockSize = sideLength;
-    vcan = new Canvas(0,-1,2*border+(blockSize+space)*rowLength,2*border+(blockSize+space)*elements/rowLength,"Thread colors");
+    vcan = new RasterCanvas(0,-1,2*border+(blockSize+space)*rowLength,2*border+(blockSize+space)*elements/rowLength,"Thread colors");
     vcan->start();
 	reset();
 }
@@ -53,14 +53,13 @@ void VisualTaskQueue::showLegend(int threads) {
   #endif
 
     //Actually draw things
-    lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
-	std::cout << lcan->getWindowWidth();
+    lcan = new RasterCanvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"Legend");
     lcan->start();
-    lcan->drawText("Legend:",TEXTW/2,TEXTW,TEXTW,BLACK);
+    lcan->drawText("Legend:",TEXTW/2,TEXTW,TEXTW,WHITE);
     int xx = xStart, yy = yStart;
     for (int i = 0; i < threads; ++i) {
       lcan->drawRectangle(xx,yy,xx+blockSize,yy+blockSize,Colors::highContrastColor(i));
-      lcan->drawText(to_string(i),xx+blockSize+GAP,yy+blockSize,TEXTW/2);
+      lcan->drawText(to_string(i),xx+blockSize+GAP,yy+blockSize,TEXTW/2,WHITE);
       yy += yDelta;
       if (yy > yCutoff) {
         yy = yStart;

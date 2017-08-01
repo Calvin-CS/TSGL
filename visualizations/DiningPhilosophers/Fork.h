@@ -12,7 +12,6 @@ using namespace tsgl;
 struct Fork {
 
   int user, id;
-  double myAngle;
   Canvas* can;
   ConcavePolygon * myShape;
 
@@ -67,10 +66,9 @@ struct Fork {
         // without this line, the forks are perpendicular to philosophers
 
     myShape->setColor(c);
-    myShape->rotate(angle-myAngle); //Undo rotation from last draw and set new rotation
     myShape->setCenter(x, y);
+    myShape->centeredRotation(angle*180/PI); //Convert angle to degrees
 
-    myAngle = angle; //Save current angle
   }
 
 };

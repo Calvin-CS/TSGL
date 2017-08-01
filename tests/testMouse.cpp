@@ -77,10 +77,10 @@ void mouseFunction(Canvas& can, int threads) {
       color = Colors::randomColor();
         #pragma omp parallel num_threads (threads)
         {
-          float tdelta = (2*PI*omp_get_thread_num())/omp_get_num_threads();
+          float tdelta = (360*omp_get_thread_num())/omp_get_num_threads();
           Polygon* newShape = new Triangle(x[0],y[0],x[1],y[1],x[2],y[1],color);
           newShape->setHasOutline(false);
-          newShape->rotateAround(tdelta,CX,CY);
+          newShape->setRotation(tdelta,CX,CY);
           queueLock.lock(); shapes.push(newShape); queueLock.unlock();
           can.add(newShape);
         }

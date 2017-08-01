@@ -99,6 +99,7 @@ void Buddhabrot::draw(CartesianRasterCanvas& can) {
       for (int i = omp_get_thread_num(); i < cwh; i += omp_get_num_threads())
         for (int j = 0; j < cww; ++j) {
           float normalize = sqrt((float)counter[i][j]/maxIts);
+          //TODO: when getPixel works, we will want to fix this next line. Canvas::drawPixel() does not work. Instead, send (i,j) through the conversion on CartesianCanvas and then draw.
           can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j) * normalize);
         }
     }
@@ -106,4 +107,3 @@ void Buddhabrot::draw(CartesianRasterCanvas& can) {
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
   }
 }
-

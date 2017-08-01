@@ -3,9 +3,7 @@
  * It utilizes a custom Queue class to make the shared buffer.
  * Producer and Consumer classes have been made in order to make the Producers and Consumers
  * A Thread class has been made in order to have an encapsulated pthread (which the Producer and Consumer class both inherit from).
- * Usage: ./ProducerConsumer [numberOfProducers] [numberOfConsumers]
- * (Update NOTE: The Canvases may be blank at startup sometimes. If this happens, kill the process in the terminal (using ^C), and
- *	 	         rerun ProducerConsumer.)
+ * Usage: ./ProducerConsumer <numberOfProducers> <numberOfConsumers>
  */
 
 #include <stdlib.h>
@@ -30,18 +28,23 @@ Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored
 /**
  * displayLegend helps the main method by controlling the legendDisplay
  */
-void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queueDisplay, int *colorChanger) {
+void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queueDisplay) {
+	int colorChanger = 0;
 	while( queueDisplay->isOpen() ) {
 		waitingCircle->setColor( Colors::highContrastColor(colorChanger) );
 		waitingSquare->setColor( Colors::highContrastColor(colorChanger) );
 			queueDisplay->sleepFor(1.0);
-		*colorChanger++;
+		colorChanger++;
 	}
 }
 
 //Main method
 int main(int argc, char * argv[]) {
 	int numProducers, numConsumers;  //Number of producers, consumers
+
+	if( argc == 1) {
+		std::cout << "\nTo run the program with different values, use the format:\n\t./ProducerConsumer [numberOfProducers] [numberOfConsumers]" << std::endl;
+	}
 
 	//Check the command line
 	numProducers = (argc > 1) ? atoi(argv[1]) : 5; //Producers defaults to 5
@@ -70,8 +73,8 @@ int main(int argc, char * argv[]) {
 	});
 
 	//Prepare the display with background items
-	int centerY = queueDisplay.getWindowHeight()/2-100;
-	int centerX = queueDisplay.getWindowWidth()/2;
+	int centerY = 175;
+	int centerX = 300;
 	Line * queueLines[CAPACITY];
 	for(int i = 0; i < CAPACITY; i++) {
 		float langle = (i*2*PI)/CAPACITY; // line angle
@@ -103,22 +106,7 @@ int main(int argc, char * argv[]) {
 		con[j] = Consumer(sharedBuffer, j, queueDisplay);
 	}
 
-	//Start up the pthreads for Producers and Consumers
-	for(int k = 0; k < numProducers; k++) {
-		pro[k].start();
-		sleep(0.3);
-	}
-	for(int l = 0; l < numConsumers; l++) {
-		con[l].start();
-		sleep(0.3);
-	}
-
-	// displayLegend();
-
-
-
-	//LEGENDSTART
-
+	//Create legend items
 	int LEGENDOFFSET = 300;
 
 	int colorChanger = 0; //Counting int to control random bright colors
@@ -133,25 +121,30 @@ int main(int argc, char * argv[]) {
 	queueDisplay.add( &thinkingSquare );	queueDisplay.add( &lockSquare );
 
 	//Text labels
-	Text colorText("thinking",100,70+LEGENDOFFSET,24,BLACK);
+	Text colorText("producing",100,70+LEGENDOFFSET,24,BLACK);
 	Text blackText("waiting for lock",100,130+LEGENDOFFSET,24,BLACK);
 	Text whiteText("holding lock",100,190+LEGENDOFFSET,24,BLACK);
 	queueDisplay.add( &colorText ); queueDisplay.add( &blackText ); queueDisplay.add( &whiteText );
-	Text colorText2("thinking",350,70+LEGENDOFFSET,24,BLACK);
+	Text colorText2("consuming",350,70+LEGENDOFFSET,24,BLACK);
 	Text blackText2("waiting for lock",350,130+LEGENDOFFSET,24,BLACK);
 	Text whiteText2("holding lock",350,190+LEGENDOFFSET,24,BLACK);
 	queueDisplay.add( &colorText2 ); queueDisplay.add( &blackText2 ); queueDisplay.add( &whiteText2 );
 
 	//LEGENDEND
 
-	std::thread legendUpdater (displayLegend, &waitingCircle, &waitingSquare, &queueDisplay, &colorChanger);
+	std::thread legendUpdater (displayLegend, &waitingCircle, &waitingSquare, &queueDisplay);
 
+	//Start up the pthreads for Producers and Consumers
+	for(int k = 0; k < numProducers; k++) {
+		pro[k].start();
+		sleep(0.3);
+	}
+	for(int l = 0; l < numConsumers; l++) {
+		con[l].start();
+		sleep(0.3);
+	}
 
 	queueDisplay.wait();
-
-	legendUpdater.join();
-
-	// sleep(0.5);
 
 	//Now join them
 	for(int p = 0; p < numProducers; p++) {	//Join the pthreads for the Producers
@@ -161,16 +154,18 @@ int main(int argc, char * argv[]) {
 	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
 		con[c].join();
 	}
-	//
-	// while( !sharedBuffer.isEmpty() ) {
-	// 	Star * tempPtr = sharedBuffer.remove();
-	// 	delete tempPtr;
-	// }
-	//
-	// // delete [] pro;
-	// // delete [] con;
-	// pro = NULL;
-	// con = NULL;
 
-	// return 0;
+	legendUpdater.join();
+
+	while( !sharedBuffer.isEmpty() ) {
+		Star * tempPtr = sharedBuffer.remove();
+		delete tempPtr;
+	}
+
+	delete [] pro;
+	delete [] con;
+	pro = NULL;
+	con = NULL;
+
+	return 0;
 }

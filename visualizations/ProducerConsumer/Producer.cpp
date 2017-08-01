@@ -16,7 +16,6 @@ Producer::Producer() : PCThread() { }
 Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = 50; //Set the x-coordinate to 50
 	myShape = new Circle(myX, myY, 20, ColorInt(0, 0, 0));
-	// myCountLabel->setLocation(myX-10, myY+5);
 	myCountLabel->setCenter(myX, myY);
 	myCan->add(myShape);
 }
@@ -72,7 +71,7 @@ void Producer::act() {
 
 	//Show Item added to Queue
 	float itAngle = (i*2*PI + PI)/8; // angle of item
-	int endX = 100*cos(itAngle)+(myCan->getWindowWidth()/2), endY = 100*sin(itAngle)+(myCan->getWindowHeight()/2)-100;
+	int endX = 100*cos(itAngle)+300, endY = 100*sin(itAngle)+175;
 	animateItem(endX, endY);
 
 	count++; myCountLabel->setString( to_string(count) );

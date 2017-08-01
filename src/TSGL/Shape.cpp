@@ -71,9 +71,9 @@ namespace tsgl {
   }
 
   void Shape::setCenter(float x, float y) {
+    float deltaX = x - getX(); //Change for x
+    float deltaY = y - getY(); //Change for y
     attribMutex.lock();
-    float deltaX = x - calcX(); //Change for x
-    float deltaY = y - calcY(); //Change for y
 
     for(int i = 0; i < length; i++) {
       vertices[i*2]     += deltaX; //Transpose x
@@ -82,65 +82,42 @@ namespace tsgl {
     attribMutex.unlock();
   }
 
-  float Shape::calcX() {
+  float Shape::getX() { //TODO: decide if this is the best system to protect x and y
+    attribMutex.lock();
     float minX, maxX;
     minX = maxX = vertices[0];
 
     //Find min and max X
     for(int i = 0; i < length; i++) {
       if( vertices[i*2] < minX )
-      minX = vertices[i*2];
+        minX = vertices[i*2];
       else if( vertices[i*2] > maxX )
-      maxX = vertices[i*2];
+        maxX = vertices[i*2];
     }
 
+    attribMutex.unlock();
     return (minX+maxX)/2;
   }
 
-  float Shape::calcY() {
+  float Shape::getY() {
+    attribMutex.lock();
     float minY, maxY;
     minY = maxY = vertices[1];
 
     //Find min and max X
     for(int i = 0; i < length; i++) {
       if( vertices[i*2+1] < minY )
-      minY = vertices[i*2+1];
+        minY = vertices[i*2+1];
       else if( vertices[i*2+1] > maxY )
-      maxY = vertices[i*2+1];
+        maxY = vertices[i*2+1];
     }
 
+    attribMutex.unlock();
     return (minY+maxY)/2;
   }
 
-  float Shape::getX() { //TODO: decide if this is the best system to protect x and y
-    attribMutex.lock();
-    float result = calcX();
-    attribMutex.unlock();
-
-    return result;
-  }
-
-  float Shape::getY() {
-    attribMutex.lock();
-    float result = calcY();
-    attribMutex.unlock();
-
-    return result;
-  }
-
-  void Shape::rotate(float angle) {
-    rotateAround( angle, getX(), getY() );
-  }
-
-  void Shape::rotateAround(float angle, float x, float y) { //Needs to be tested
-    attribMutex.lock();
-    for(int i = 0; i < current; i+=2) {
-      float myX = vertices[i] - x;
-      float myY = vertices[i+1] - y;
-      vertices[i]   = myX*cos(angle)-myY*sin(angle) + x; //New x
-      vertices[i+1] = myX*sin(angle)+myY*cos(angle) + y; //New y
-    }
-    attribMutex.unlock();
+  void Shape::centeredRotation(float angle) {
+    setRotation(angle, getX(), getY());
   }
 
 }

@@ -38,13 +38,13 @@ RWThread::RWThread(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Ca
 	count = 0;
 	data = &sharedDatabase;	//Get the handle to the Database
 	myCan = &can;						//Get the handle to the Canvas
-	myY = 50 * (id + 1) + 60;
+	myY = RWThread::dataY - 50 * (id + 1);
 	myX = 0; //Set in subclass constructor
 	myCircle = new Circle(myX, myY, 20, BLACK); //Move based on new x in subclass
-	myCircle->setLayer(2);
+	myCircle->setLayer(3);
 	myCan->add(myCircle);
 	myCountLabel = new Text( to_string(count), myX, myY+5, 24, BLACK);
-	myCountLabel->setLayer(3);
+	myCountLabel->setLayer(4);
 	myCan->add( myCountLabel );
 }
 

@@ -9,7 +9,9 @@
 #include "Buddhabrot.h"
 #include "Mandelbrot.h"
 #include "GradientMandelbrot.h"
+#include "ThreadMandelbrot.h"
 #include "Julia.h"
+#include "GeneralizedMandelbrot.h"
 #include "Nova.h"
 
 using namespace tsgl;
@@ -38,9 +40,7 @@ using namespace tsgl;
  *      current coordinates and redraw the Mandelbrot at that point.
  *    .
  * - When you actually draw the Mandelbrot object onto the CartesianCanvas:
- *   - Store the height of the Canvas, the x and y-coordinates for the ProgressBar, and the width of the ProgressBar Canvas.
- *   - Create the Canvas that will draw the ProgressBar object.
- *   - Create the ProgressBar object.
+ *   - Store the height of the Canvas.
  *   - While the redraw flag is set:
  *      - Set the redraw flag to false.
  *      - Reset the internal timer to 0.
@@ -49,12 +49,7 @@ using namespace tsgl;
  *      - Assign a color to each thread.
  *      - Figure the cartesian size of the area each thread is to calculate and store it in: \b blocksize.
  *      - Figure out the actual number of rows each thread is to calculate and store it in: \b blockheight.
- *      - Clear the Canvas that holds the ProgressBar.
- *      - Update the ProgressBar.
- *      - Draw the ProgressBar onto the Canvas.
  *      - For 0 to \b blockheight and as long as we aren't trying to render off of the screen:
- *        - Update the ProgressBar.
- *        - Redraw the ProgressBar with labels for the ID of each thread above each segment of the ProgressBar.
  *        - Make an inner loop which determines whether to color the pixels black or a different color based off of whether they've escaped or not.
  *          - (Basic Mandelbrot calculations; see http://en.wikipedia.org/wiki/Mandelbrot_set#Computer_drawings ).
  *          - Break if the Canvas is to redraw.
@@ -67,7 +62,6 @@ using namespace tsgl;
  *        - Sleep the thread for one frame until the Canvas is closed by the user or told to redraw.
  *      .
  *   .
- * - If the ProgressBar Canvas is still open, close it up.
  * .
  * \param can Reference to the CartesianCanvas being drawn to.
  * \param threads Reference to the number of threads passed via command-line arguments.
@@ -81,7 +75,7 @@ void mandelbrotFunction(CartesianRasterCanvas& can, unsigned threads, unsigned d
 
 /*!
  * \brief Draws a Gradient Mandelbrot set on a CartesianCanvas.
- * \details Same as mandelbrotFunction(), but with smoother shading and no ProgressBar.
+ * \details Same as mandelbrotFunction(), but with smoother shading.
  * ( see http://linas.org/art-gallery/escape/smooth.html ).
  * \param can Reference to the CartesianCanvas being drawn to.
  * \param threads Reference to the number of threads to use.
@@ -90,6 +84,21 @@ void mandelbrotFunction(CartesianRasterCanvas& can, unsigned threads, unsigned d
  */
 void gradientMandelbrotFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
   GradientMandelbrot m(threads,depth);  //Create the GradientMandelbrot
+  m.bindings(can);                      //Bind the buttons
+  m.draw(can);                          //Draw it
+}
+
+/*!
+ * \brief Draws a Threaded Mandelbrot set on a CartesianCanvas.
+ * \details Same as mandelbrotFunction(), but with colors based on the threads.
+ * ( see http://linas.org/art-gallery/escape/smooth.html ).
+ * \param can Reference to the CartesianCanvas being drawn to.
+ * \param threads Reference to the number of threads to use.
+ * \param depth The number of iterations to go to in order to draw the Gradient Mandelbrot set.
+ * \see mandelbrotFunction(), GradientMandelbrot class.
+ */
+void threadMandelbrotFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
+  ThreadMandelbrot m(threads,depth);  //Create the ThreadMandelbrot
   m.bindings(can);                      //Bind the buttons
   m.draw(can);                          //Draw it
 }
@@ -163,10 +172,22 @@ void juliaFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth)
 }
 
 /*!
+ * \brief Draws a generalized Mandelbrot set on a CartesianCanvas.
+ * \param can Reference to the CartesianCanvas being drawn to.
+ * \param threads Reference to the number of threads to use.
+ * \param depth The number of iterations to go to in order to draw the Generalized Mandelbrot set.
+ */
+void generalizedFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
+    GeneralizedMandelbrot m(threads,depth);  //Create the Generalized object
+    m.bindings(can);        //Bind the buttons
+    m.draw(can);            //Draw it
+}
+
+/*!
  * \brief Draws a Nova fractal (Newton fractal) on a CartesianCanvas.
  * \param can Reference to the CartesianCanvas being drawn to.
  * \param threads Reference to the number of threads to use.
- * \param depth The number of iterations to go to in order to draw the Gradient Mandelbrot set.
+ * \param depth The number of iterations to go to in order to draw the Mandelbrot set.
  * \see mandelbrotFunction(), Nova class.
  */
 void novaFunction(CartesianRasterCanvas& can, unsigned threads, unsigned depth) {
@@ -193,32 +214,43 @@ int main(int argc, char* argv[]) {
   if (t == 0)
     t = omp_get_num_procs();
   unsigned d = (argc > 4) ? atoi(argv[4]) : MAX_COLOR; //Normal Mandelbrot
-  unsigned d2 = (argc > 4) ? atoi(argv[4]) : 32;  //Gradient Mandelbrot & Nova
-  unsigned d3 = (argc > 4) ? atoi(argv[4]) : 1000; //Buddhabrot & Julia
+  unsigned d2 = (argc > 4) ? atoi(argv[4]) : MAX_COLOR;  //Gradient Mandelbrot
+  unsigned d3 = (argc > 4) ? atoi(argv[4]) : MAX_COLOR; //Buddhabrot & Julia
+  unsigned d4 = (argc > 4) ? atoi(argv[4]) : MAX_COLOR; //Nova
   //Normal Mandelbrot
-  std::cout << "Normal Mandelbrot" << std::endl;
-  CartesianRasterCanvas c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
-  c1.run(mandelbrotFunction,t,d);
-
-  //Gradient Mandelbrot
-  std::cout << "Gradient Mandelbrot" << std::endl;
-  CartesianRasterCanvas c2(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
-  c2.run(gradientMandelbrotFunction,t,d2);
-  std::cout << "Buddhabrot" << std::endl;
-
-  //Buddhabrot
-  CartesianRasterCanvas c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
-  c3.setBackgroundColor(BLACK);
-  c3.run(buddhabrotFunction,t,d3);
+  // std::cout << "Normal Mandelbrot" << std::endl;
+  // CartesianRasterCanvas c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
+  // c1.run(mandelbrotFunction,t,d);
+  //
+  // //Gradient Mandelbrot
+  // std::cout << "Gradient Mandelbrot" << std::endl;
+  // CartesianRasterCanvas c2(-1, -1, w, h, -2, -1.125, 1, 1.125, "Gradient Mandelbrot", FRAME / 2);
+  // c2.run(gradientMandelbrotFunction,t,d2);
+  //
+  // //Thread Mandelbrot
+  // std::cout << "Thread Mandelbrot" << std::endl;
+  // CartesianRasterCanvas c6(-1, -1, w, h, -2, -1.125, 1, 1.125, "Thread Mandelbrot", FRAME / 2);
+  // c6.run(threadMandelbrotFunction,t,d2);
+  //
+  // //Buddhabrot
+  // std::cout << "Buddhabrot" << std::endl;
+  // CartesianRasterCanvas c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
+  // c3.setBackgroundColor(BLACK);
+  // c3.run(buddhabrotFunction,t,d3);
 
   //Julia
   std::cout << "Julia set" << std::endl;
-  CartesianRasterCanvas c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
+  CartesianRasterCanvas c4(x, -1, h2, h2, -2, -2, 2, 2, "Julia Set", FRAME / 2);
   c4.run(juliaFunction,t,d3);
+
+  // //Generalized Mandelbrot
+  // std::cout << "Generalized Mandelbrot set" << std::endl;
+  // CartesianRasterCanvas c7(x, -1, h2, h2, -2, -2, 2, 2, "Generalized Mandelbrot Set", FRAME / 2);
+  // c7.run(generalizedFunction,t,d2);
 
   //Nova
   // std::cout << "Nova" << std::endl;
   // CartesianRasterCanvas c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", FRAME / 2);
   // c5.zoom(-0.361883,-0.217078,0.1f);
-  // c5.run(novaFunction,t,32);
+  // c5.run(novaFunction,t,d4);
 }

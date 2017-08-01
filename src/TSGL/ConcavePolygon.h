@@ -120,22 +120,6 @@ class ConcavePolygon : public Polygon {
      */
     virtual void setCenter(float x, float y);
 
-    /**
-     * \brief Rotates the ConcavePolygon by an angle.
-     * \details Rotates clockwise around the center of the shape.
-     * \param angle Angle to rotate by, in radians.
-     */
-    virtual void rotate(float angle);
-
-    /**
-     * \brief Rotates the Polygon by angle around a point.
-     * \details Rotates clockwise around (x, y) by angle.
-     * \param angle Angle to rotate by, in radians.
-     * \param x The x coordinate to rotate around.
-     * \param y The y coordinate to rotate around.
-     */
-    virtual void rotateAround(float angle, float x, float y);
-
     /*!
      * \brief Runs the Unit tests.
      * \details Runs the Unit tests for the ConcavePolygon class. intersects() and pointInTriangle() are tested.

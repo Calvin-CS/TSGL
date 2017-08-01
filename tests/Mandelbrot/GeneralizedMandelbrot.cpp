@@ -1,22 +1,20 @@
 /*
- * Julia.cpp
+ * GeneralizedMandelbrot.cpp
  */
 
-#include "Julia.h"
+#include "GeneralizedMandelbrot.h"
 
-Julia::Julia(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
+GeneralizedMandelbrot::GeneralizedMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
-void Julia::draw(CartesianRasterCanvas& can) {
+void GeneralizedMandelbrot::draw(CartesianRasterCanvas& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
-  VisualTaskQueue vq(CH);
+  complex n(4, 0); //Value for z = z^n + c
   while(myRedraw) {
     myRedraw = false;
     can.reset();
     unsigned next = 0;
-    vq.reset();
     #pragma omp parallel num_threads(myThreads)
     {
-      vq.showLegend();
       int myNext;
       while(true) {  // As long as we aren't trying to render off of the screen...
         #pragma omp critical
@@ -25,22 +23,14 @@ void Julia::draw(CartesianRasterCanvas& can) {
         }
         if (myNext >= can.getWindowHeight())
           break;
-        vq.update(myNext,RUNNING);
         long double row = can.getMinY() + can.getPixelHeight() * myNext;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
-
-          //Uncomment one line to choose values, or make your own
-          // complex c(-0.8f, 0.156f); complex n(2, 0);
-          // complex c(-0.4, 0.6); complex n(2, 0);
-          // complex c(0.285, 0); complex n(2, 0);
-          // complex c(0.4); complex n(3, 0);
-          // complex c(-0.1, 0.651); complex n(2, 0);
-          complex c(-0.75, 0.11); complex n(2, 0);
-
+          complex c(col, row);
           complex z(col, row);
           unsigned iterations = 0;
           while (std::abs(z) < 2.0 && iterations != myDepth) {  // Compute it until it escapes or we give up
             iterations++;
+            //Calculate z = z^n + c
             z = std::pow(z, n) + c;
           }
           if(iterations == myDepth) { // If the point never escaped, draw it black
@@ -48,19 +38,17 @@ void Julia::draw(CartesianRasterCanvas& can) {
           } else { // Otherwise, draw it with color based on how long it took
             float mult = iterations/(float)myDepth;
             can.drawPoint(col, row, ColorHSV(mult*6.0f, 1.0f, 0.6f, 1.0f));
+            // can.drawPoint(col, row, Colors::blend(BLACK,WHITE,0.25f+0.5f*mult)*mult);
           }
           if (!can.isOpen() || myRedraw) break;
         }
-        vq.update(myNext,FINISHED);
         can.handleIO();
         if (myRedraw) break;
       }
     }
-//    manhattanShading(can);
     std::cout << can.getTime() << std::endl;
     while (can.isOpen() && !myRedraw) {
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }
   }
-  vq.close();
 }

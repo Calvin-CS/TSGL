@@ -24,8 +24,6 @@ namespace tsgl {
    */
 class Shape : public Drawable {
 protected:
-    float calcX(); ///< Calculates the Shape's center x coordinate. For use only where the thread has already locked the Shape's mutex.
-    float calcY(); ///< Calculates the Shape's center y coordinate. For use only where the thread has already locked the Shape's mutex.
     bool init; ///< Whether the vertex has been initialized completely
     GLfloat* vertices; ///< Buffer of x, y coordinates
     ColorFloat color; ///< Color of the Shape
@@ -121,16 +119,7 @@ protected:
      * \details Rotates clockwise around the center of the shape.
      * \param angle Angle to rotate by, in radians.
      */
-    virtual void rotate(float angle);
-
-    /**
-     * \brief Rotates the Shape by angle around a point.
-     * \details Rotates clockwise around (x, y) by angle.
-     * \param angle Angle to rotate by, in radians.
-     * \param x The x coordinate to rotate around.
-     * \param y The y coordinate to rotate around.
-     */
-    virtual void rotateAround(float angle, float x, float y);
+    virtual void centeredRotation(float angle);
 };
 
 }

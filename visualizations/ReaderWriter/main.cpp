@@ -1,15 +1,14 @@
 /**
  * testReaderWriter.cpp contains the code to run the Readers-Writers Problem animation using TSGL and POSIX threads.
  * The program utilizes Reader and Writer classes as well as a custom monitor class to hold the shared data.
- * Usage: ./ReaderWriter [numberOfReaders] [numberOfWriters] [preference] [starved]
- * [preference] can be 'w' for writer priority or 'r' for reader priority and defaults to writer priority
- * [starved] should be 's' for the starved versions, or anything else for the balanced timing
+ * Usage: ./ReaderWriter <numberOfReaders> <numberOfWriters> <preference> <starved>
+ * <preference> can be 'w' for writer priority or 'r' for reader priority and defaults to writer priority
+ * <starved> should be 's' for the starved versions, or anything else for the balanced timing
  */
 
 //#include <omp.h>
 #include <tsgl.h>
 #include <unistd.h>
-#include <cassert> // assert
 #include "Reader.h"
 #include "Writer.h"
 #include "RWDatabase.h"
@@ -22,10 +21,15 @@ const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 800, MARGIN = 45; //Size of Canvas
 
 int main(int argc, char* argv[]) {
 
-	//Number of readers is the first argument or defaults to 4
-	int numReaders  = ( (argc > 1) && (atoi(argv[1]) > 0) && (atoi(argv[1]) <= 8) ) ? atoi(argv[1]) : 4;
-	//Number of writers is the second argument or defaults to 4
-	int numWriters = ( (argc > 2) && (atoi(argv[2]) > 0) && (atoi(argv[2]) <= 8) ) ? atoi(argv[2]) : 4;
+	if( argc == 1) {
+		std::cout << "\nTo run the program with different values, use the format:\n\t./ReaderWriter <numberOfReaders> <numberOfWriters> <preference> <starved>"
+		<< "\nwhere <preference> is w or r for reader or writer priority lock and \n\t<starved> is s for starving lower priority threads or b for the more balanced version." << std::endl;
+	}
+
+	//Number of readers is the first argument or defaults to 6
+	int numReaders  = ( (argc > 1) && (atoi(argv[1]) > 0) && (atoi(argv[1]) <= 9) ) ? atoi(argv[1]) : 6;
+	//Number of writers is the second argument or defaults to 6
+	int numWriters = ( (argc > 2) && (atoi(argv[2]) > 0) && (atoi(argv[2]) <= 9) ) ? atoi(argv[2]) : 6;
 
 	//Start Reader-Writer visualization
 	Canvas can(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Reader-Writer", 1.0f/2);  //Canvas to draw on
@@ -49,15 +53,36 @@ int main(int argc, char* argv[]) {
 	Reader * readers = new Reader[numReaders]; //Array of Readers
 	Writer * writers = new Writer[numWriters]; //Array of Writers
 
-	//Draw labels
-	Rectangle dataRec(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY); // draw data area
-	can.add(&dataRec);
+	//Create labels
+	Rectangle dataRec(RWThread::dataX, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth, RWThread::dataHeight, GRAY); // draw data area
+	dataRec.setHasOutline(false); dataRec.setLayer(2); can.add(&dataRec);
+	Rectangle margins(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, LIGHTGRAY);
+	margins.setLayer(1); can.add(&margins); can.setDefaultLayer(3);
+	Line readerLine(RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY, BLACK);
+	Line writerLine(RWThread::dataX-MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX-MARGIN*2.5, RWThread::dataY, BLACK);
 	Text lockText(lockString, 50, WINDOW_HEIGHT-50, 24, BLACK);
 	Text numText("Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);
 	Text numText2("counts of reads/writes", WINDOW_WIDTH-225, WINDOW_HEIGHT-30, 20, BLACK);
-	Text writeText("Writers", 20, 20, 24, BLACK);
-	Text readText("Readers", WINDOW_WIDTH-150, 20, 24, BLACK);
-	can.add( &lockText ); can.add( &numText ); can.add( &numText2 ); can.add( &writeText ); can.add( &readText );
+	Text writeText("Writers", 20, 40, 24, BLACK);
+	Text readText("Readers", WINDOW_WIDTH-150, 40, 24, BLACK);
+	Text dataLabel("Shared Data Store", RWThread::dataX, RWThread::dataY+30, 20, BLACK);
+	dataLabel.setCenter(WINDOW_WIDTH/2, RWThread::dataY+15);
+
+	//Create and rotate more labels
+	Text readThink("Thinking", RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight, 28, LIGHTGRAY);
+	Text readWait("Waiting", RWThread::dataX+RWThread::dataWidth+MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 28, LIGHTGRAY);
+	readThink.setRotation(90, readThink.getX(), readThink.getY());
+	readWait.setRotation(90, readWait.getX(), readWait.getY());
+	Text writeThink("Thinking", RWThread::dataX-MARGIN*3, RWThread::dataY-RWThread::dataHeight, 28, LIGHTGRAY);
+	Text writeWait("Waiting", RWThread::dataX-MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 28, LIGHTGRAY);
+	writeThink.setLocation(writeThink.getX(), writeThink.getY()+writeThink.getStringWidth());
+	writeWait.setLocation(writeWait.getX(), writeWait.getY()+writeWait.getStringWidth());
+	writeThink.setRotation(-90, writeThink.getX(), writeThink.getY());
+	writeWait.setRotation(-90, writeWait.getX(), writeWait.getY());
+
+	//Add labels
+	can.add( &readerLine ); can.add( &writerLine ); can.add( &readThink ); can.add( &writeThink ); can.add( &readWait ); can.add( &writeWait );
+	can.add( &lockText ); can.add( &numText ); can.add( &numText2 ); can.add( &writeText ); can.add( &readText ); can.add( &dataLabel );
 
 	//Fill the Reader and Writer arrays with their objects
 	for(int i = 0; i < numReaders; i++) {

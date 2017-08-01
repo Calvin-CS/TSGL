@@ -282,6 +282,7 @@ struct ColorHSV {
  */
 const ColorFloat BLACK = ColorFloat(0.0f, 0.0f, 0.0f, 1.0f),    ///< Constant value for black
                  DARKGRAY = ColorFloat(0.5f, 0.5f, 0.5f, 1.0f), ///< Constant value for dark gray
+                 LIGHTGRAY = ColorFloat(0.85f, 0.85f, 0.85f, 1.0f), ///< Constant value for light gray
                  GRAY = ColorFloat(0.75f, 0.75f, 0.75f, 1.0f),  ///< Constant value for gray
                  WHITE = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f),    ///< Constant value for white
                  RED = ColorFloat(1.0f, 0.0f, 0.0f, 1.0f),      ///< Constant value for red

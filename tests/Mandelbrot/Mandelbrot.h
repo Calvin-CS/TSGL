@@ -68,7 +68,6 @@ public:
    * \details Binds buttons and/or mouse clicks needed for I/O capabilities.
    * \details In this case: the mouse wheel, left and right mouse buttons.
    *    \param can Reference to the CartesianCanvas to have the buttons bound to.
-   * \note CartesianRasterCanvas is a typedef for CartesianCanvas.
    */
   void bindings(CartesianRasterCanvas& can);
 
@@ -77,7 +76,6 @@ public:
    * \details Actually draws the Mandelbrot object onto the CartesianCanvas.
    *    \param can Reference to the CartesianCanvas to draw on.
    * \note Can be inherited by children classes who extend the Mandelbrot class.
-   * \note CartesianRasterCanvas is a typedef for CartesianCanvas.
    */
   virtual void draw(CartesianRasterCanvas& can);
 };
