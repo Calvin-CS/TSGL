@@ -217,9 +217,10 @@ int main(int argc, char* argv[]) {
   unsigned d2 = (argc > 4) ? atoi(argv[4]) : MAX_COLOR;  //Gradient Mandelbrot
   unsigned d3 = (argc > 4) ? atoi(argv[4]) : MAX_COLOR; //Buddhabrot & Julia
   unsigned d4 = (argc > 4) ? atoi(argv[4]) : MAX_COLOR; //Nova
-  //Normal Mandelbrot
+
+  // //Normal Mandelbrot
   // std::cout << "Normal Mandelbrot" << std::endl;
-  // CartesianRasterCanvas c1(-1, -1, w, h, -2, -1.125, 1, 1.125, "Mandelbrot", FRAME / 2);
+  // CartesianRasterCanvas c1(-1, -1, w, h, -2, -1, 1, 1, "Mandelbrot", FRAME / 2);
   // c1.run(mandelbrotFunction,t,d);
   //
   // //Gradient Mandelbrot
@@ -232,23 +233,23 @@ int main(int argc, char* argv[]) {
   // CartesianRasterCanvas c6(-1, -1, w, h, -2, -1.125, 1, 1.125, "Thread Mandelbrot", FRAME / 2);
   // c6.run(threadMandelbrotFunction,t,d2);
   //
-  // //Buddhabrot
-  // std::cout << "Buddhabrot" << std::endl;
-  // CartesianRasterCanvas c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
-  // c3.setBackgroundColor(BLACK);
-  // c3.run(buddhabrotFunction,t,d3);
+  //Buddhabrot
+  std::cout << "Buddhabrot" << std::endl;
+  CartesianRasterCanvas c3(-1, -1, w, h, -2, -1.125, 1, 1.125, "Buddhabrot", FRAME / 2);
+  c3.setBackgroundColor(BLACK);
+  c3.run(buddhabrotFunction,t,d3);
 
-  //Julia
-  std::cout << "Julia set" << std::endl;
-  CartesianRasterCanvas c4(x, -1, h2, h2, -2, -2, 2, 2, "Julia Set", FRAME / 2);
-  c4.run(juliaFunction,t,d3);
-
+  // //Julia
+  // std::cout << "Julia set" << std::endl;
+  // CartesianRasterCanvas c4(x, -1, h2, h2, -2, -2, 2, 2, "Julia Set", FRAME / 2);
+  // c4.run(juliaFunction,t,d3);
+  //
   // //Generalized Mandelbrot
   // std::cout << "Generalized Mandelbrot set" << std::endl;
   // CartesianRasterCanvas c7(x, -1, h2, h2, -2, -2, 2, 2, "Generalized Mandelbrot Set", FRAME / 2);
   // c7.run(generalizedFunction,t,d2);
-
-  //Nova
+  //
+  // // Nova
   // std::cout << "Nova" << std::endl;
   // CartesianRasterCanvas c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", FRAME / 2);
   // c5.zoom(-0.361883,-0.217078,0.1f);

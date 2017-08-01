@@ -8,9 +8,6 @@ ThreadMandelbrot::ThreadMandelbrot(unsigned threads, unsigned depth) : Mandelbro
 
 void ThreadMandelbrot::draw(CartesianRasterCanvas& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
-  const int XBRD = 10;                    //Border for out progress bar
-  const int YBRD = 40;                    //Border for out progress bar
-  const int PBWIDTH = 800;
   while(myRedraw) {
     myRedraw = false;
     can.reset();

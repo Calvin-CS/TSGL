@@ -71,7 +71,10 @@ void Buddhabrot::draw(CartesianRasterCanvas& can) {
             int boxX = (znums[its].real()-cMinx)/cpw;
             #pragma omp atomic
               ++(counter[boxY][boxX]);
-            can.Canvas::drawPixel(boxY, boxX, tcolor);
+            Decimal x, y;
+            can.getCartesianCoordinates(znums[its].real(), znums[its].imag(), x, y);
+            printf("Point at (%Le, %Le) from (%d, %d)\n",x,y,znums[its].real(), znums[its].imag());
+            can.drawPixel(x, y, tcolor);
           }
         }
         #pragma omp atomic
@@ -99,8 +102,10 @@ void Buddhabrot::draw(CartesianRasterCanvas& can) {
       for (int i = omp_get_thread_num(); i < cwh; i += omp_get_num_threads())
         for (int j = 0; j < cww; ++j) {
           float normalize = sqrt((float)counter[i][j]/maxIts);
-          //TODO: when getPixel works, we will want to fix this next line. Canvas::drawPixel() does not work. Instead, send (i,j) through the conversion on CartesianCanvas and then draw.
-          can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j) * normalize);
+          Decimal x, y;
+          can.getCartesianCoordinates(i, j, x, y);
+          // printf("Point at (%Le, %Le) from (%d, %d)\n",x,y,i,j);
+          can.drawPixel(x,y, (ColorFloat)can.getPixel(i,j) * normalize);
         }
     }
     while (can.isOpen() && !myRedraw)
