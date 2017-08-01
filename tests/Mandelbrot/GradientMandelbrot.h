@@ -34,7 +34,6 @@ public:
    * \details Actually draws the GradientMandelbrot set onto the CartesianCanvas.
    *    \param can Reference to the CartesianCanvas to draw to.
    * \note This method overrides the Mandelbrot class' draw() method.
-   * \note CartesianRasterCanvas is a typedef for a CartesianCanvas object.
    */
   void draw(CartesianRasterCanvas& can);
 };

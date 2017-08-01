@@ -8,7 +8,7 @@
 #include <cmath>
 #include <omp.h>
 
-#include "Canvas.h"
+#include "RasterCanvas.h"
 
 namespace tsgl {
 
@@ -36,7 +36,7 @@ class VisualTaskQueue {
 private:
   int space, border;
   bool showingLegend;
-  Canvas *vcan, *lcan;
+  RasterCanvas *vcan, *lcan;
   int rowLength, blockSize, totalElements;
 public:
 

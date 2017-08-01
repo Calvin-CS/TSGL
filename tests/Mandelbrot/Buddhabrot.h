@@ -46,10 +46,8 @@ public:
    * \details Actually draws the Buddhabrot object to the CartesianCanvas.
    *    \param can Reference to the CartesianCanvas to draw on.
    * \note This method overrides the draw() method from Mandelbrot.
-   * \note CartesianRasterCanvas is a typedef for CartesianCanvas.
    */
   void draw(CartesianRasterCanvas& can);
 };
 
 #endif /* BUDDHABROT_H_ */
-
