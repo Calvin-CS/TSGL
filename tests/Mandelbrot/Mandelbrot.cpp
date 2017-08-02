@@ -109,7 +109,6 @@ void Mandelbrot::draw(CartesianRasterCanvas& can) {
       unsigned tid = omp_get_thread_num();
       unsigned nthreads = omp_get_num_threads();
       long double blocksize = can.getCartHeight() / nthreads;
-      long double blockheight = CH / nthreads;
       long double startrow = blocksize * tid + can.getMinY();
       long double startcol = can.getMinX();
       for(long double row = startrow; row < startrow + blocksize; row += can.getPixelHeight()) {

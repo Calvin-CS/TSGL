@@ -13,7 +13,7 @@ using namespace tsgl;
  * \class ThreadMandelbrot
  * \brief Draws a ThreadMandelbrot set on a CartesianCanvas.
  * \details Similar to a normal Mandelbrot set but with colors based on threads.
- * \details Extends the Mandelbrot class and overrides its draw() function and setRedraw() function.
+ * \details Extends the Mandelbrot class and overrides its draw() function function.
  * \details Can zoom in and out of the Mandelbrot set by scrolling up and down on the mouse wheel (respectively).
  * \see Mandelbrot class
  */

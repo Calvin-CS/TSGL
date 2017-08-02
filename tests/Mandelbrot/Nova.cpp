@@ -36,7 +36,6 @@ void Nova::draw(CartesianRasterCanvas& can) {
           if (smooth != smooth || smooth < 0)  // Check to see if smooth is NAN
             smooth = 0;
           smooth = smooth - (int)smooth;
-          float mult = iterations/(float)myDepth;
           if (iterations == myDepth)
             can.drawPoint(col, row, BLACK);
           else

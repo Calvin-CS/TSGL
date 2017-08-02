@@ -1,12 +1,12 @@
 /*
- * GradientMandelbrot.cpp
+ * FastMandelbrot.cpp
  */
 
-#include "GradientMandelbrot.h"
+#include "FastMandelbrot.h"
 
-GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
+FastMandelbrot::FastMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) { }
 
-void GradientMandelbrot::draw(CartesianRasterCanvas& can) {
+void FastMandelbrot::draw(CartesianRasterCanvas& can) {
   const int CH = can.getWindowHeight();   //Height of our FastMandelbrot canvas
   while(myRedraw) {
     myRedraw = false;
@@ -25,19 +25,17 @@ void GradientMandelbrot::draw(CartesianRasterCanvas& can) {
           break;
         Decimal row = can.getMaxY() - myNext*can.getPixelHeight();
         for(Decimal col = minX; col <= maxX; col += can.getPixelWidth()) {
-          complex c(col, row);
+          complex originalComplex(col, row);
           complex z(col, row);
-          int iterations = 0;
-          while (std::abs(z) < 2.0l && iterations < myDepth) {
+          unsigned iterations = 0;
+          while (std::abs(z) < 2.0 && iterations <= myDepth) {  // Compute it until it escapes or we give up
             iterations++;
-            z = z * z + c;
+            z = z * z + originalComplex;
           }
-          if( iterations >= myDepth-1 ) { //If iterations reached myDepth
+          if(iterations >= myDepth) { // If the point never escaped, draw it black
             can.drawPoint(col, row, BLACK);
-          } else {
-            float mu = iterations + 1 - log( log( std::abs(z) )) / log(2);
-            if( mu < 0 ) can.drawPoint(col, row, ColorHSV(0, 1.0f, 0.6f, 1.0f)); //If we have a negative adjusted iterations
-            else can.drawPoint(col, row, ColorHSV((mu/(float)myDepth)*6.0f, 1.0f, 0.6f, 1.0f));
+          } else { // Otherwise, draw it with color based on how long it took
+            can.drawPoint(col, row, ColorHSV(iterations*6.0f/myDepth, 1.0f, 0.6f, 1.0f));
           }
           if (myRedraw) break;
         }

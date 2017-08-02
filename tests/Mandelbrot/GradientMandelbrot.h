@@ -13,7 +13,7 @@ using namespace tsgl;
  * \class GradientMandelbrot
  * \brief Draws a GradientMandelbrot set on a CartesianCanvas.
  * \details Similar to a normal Mandelbrot set but with a smoother shading.
- * \details Extends the Mandelbrot class and overrides its draw() function and setRedraw() function.
+ * \details Extends the Mandelbrot class and overrides its draw() function function.
  * \details Can zoom in and out of the Mandelbrot set by scrolling up and down on the mouse wheel (respectively).
  * \see Mandelbrot class
  */

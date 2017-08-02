@@ -12,7 +12,7 @@ void Julia::draw(CartesianRasterCanvas& can) {
   while(myRedraw) {
     myRedraw = false;
     can.reset();
-    unsigned next = 0;
+    int next = 0;
     vq.reset();
     #pragma omp parallel num_threads(myThreads)
     {
@@ -30,12 +30,12 @@ void Julia::draw(CartesianRasterCanvas& can) {
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
 
           //Uncomment one line to choose values, or make your own
-          // complex c(-0.8f, 0.156f); complex n(2, 0);
+          complex c(-0.8f, 0.156f); complex n(2, 0);
           // complex c(-0.4, 0.6); complex n(2, 0);
           // complex c(0.285, 0); complex n(2, 0);
           // complex c(0.4); complex n(3, 0);
           // complex c(-0.1, 0.651); complex n(2, 0);
-          complex c(-0.75, 0.11); complex n(2, 0);
+          // complex c(-0.75, 0.11); complex n(2, 0);
 
           complex z(col, row);
           unsigned iterations = 0;
