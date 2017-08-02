@@ -39,7 +39,8 @@ void GradientMandelbrot::draw(CartesianRasterCanvas& can) {
         if (myRedraw) break;
       }
     }
-    std::cout << can.getTime() << std::endl;
+    printf("%f seconds to draw\n", can.getTime());
+    printf("%Lfx scale\n", 1/(can.getCartHeight()/2));
     while (can.isOpen() && !myRedraw)
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
   }

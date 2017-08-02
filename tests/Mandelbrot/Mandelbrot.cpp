@@ -52,7 +52,9 @@ void Mandelbrot::manhattanShading(CartesianRasterCanvas& can) {
     for (int j = 0; j < cww; ++j) {
       float mult = sqrt(avg*((float)canPoints[i][j])/loop);
       ColorFloat c = can.getPoint(j,i);
-      can.drawPoint(j,i,c*mult); //Not working here because getPoint() earlier doesn't work. This affects Nova appearance.
+      Decimal x, y;
+      can.getCartesianCoordinates(j, i, x, y);
+      can.drawPoint(x,y,c*mult);
     }
   }
 
@@ -84,11 +86,10 @@ void Mandelbrot::bindings(CartesianRasterCanvas& can) {
     this->myRedraw = true;
   });
   can.bindToScroll([&can, this](double dx, double dy) {
-    std::cout << "Height: " << can.getCartHeight() << std::endl;
     Decimal x, y;
     can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
     Decimal scale;
-    if (dy == 1) scale = .5;
+    if (dy == 1) scale = 0.5;
     else scale = 2;
     if( scale > 1 || !(can.getCartHeight() < 0.0003f) ) {
       can.zoom(x, y, scale);
@@ -107,17 +108,12 @@ void Mandelbrot::draw(CartesianRasterCanvas& can) {
     {
       unsigned tid = omp_get_thread_num();
       unsigned nthreads = omp_get_num_threads();
-      double blocksize = can.getCartHeight() / nthreads;
-      double blockheight = CH / nthreads;
+      long double blocksize = can.getCartHeight() / nthreads;
+      long double blockheight = CH / nthreads;
       long double startrow = blocksize * tid + can.getMinY();
       long double startcol = can.getMinX();
-      // std::cout << "Thread " << tid << " startrow = " << startrow << std::endl;
-      // for(unsigned int k = 0; k <= blockheight && can.isOpen(); k++) {  // As long as we aren't trying to render off of the screen...
-      //   long double row = startrow + can.getPixelHeight() * k;
       for(long double row = startrow; row < startrow + blocksize; row += can.getPixelHeight()) {
-        // for(unsigned int j = 0; j <= CW; j++) {
-        //   long double col = startcol + can.getPixelWidth() * j;
-        for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
+        for(long double col = startcol; col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex originalComplex(col, row);
           complex z(col, row);
           unsigned iterations = 0;
@@ -136,8 +132,8 @@ void Mandelbrot::draw(CartesianRasterCanvas& can) {
         if (myRedraw) break;
       }
     }
-//    shadeCanvas(can);  Optional shading
-    std::cout << can.getTime() << std::endl;
+    printf("%f seconds to draw\n", can.getTime());
+    printf("%Lfx scale\n", 1/(can.getCartHeight()/2));
     while (can.isOpen() && !myRedraw) {
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }

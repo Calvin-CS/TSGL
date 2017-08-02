@@ -20,7 +20,7 @@ Buddhabrot::~Buddhabrot() {
   counter = nullptr;
 }
 
-void Buddhabrot::draw(CartesianRasterCanvas& can) {
+void Buddhabrot::draw(RasterCanvas& can) {
   cww = can.getWindowWidth(), cwh = can.getWindowHeight();
   const unsigned long MAXITS = cww*cwh*10;
   ColorFloat tcolor(1.0f,1.0f,1.0f,0.1f);
@@ -34,8 +34,8 @@ void Buddhabrot::draw(CartesianRasterCanvas& can) {
     for (int i = 0; i < cwh; ++i)
       for (int j = 0; j < cww; ++j)
         counter[i][j] = 0;
-    const Decimal cph = can.getPixelHeight(), cpw = can.getPixelWidth(),
-      cMinx = can.getMinX(), cMiny = can.getMinY(),
+    const Decimal cph = 2.25/(cwh-1), cpw = 3.0/(cww-1),
+      cMinx = -2.0, cMiny = -1.125,
       cMaxx = cMinx+cpw*(cww-1), cMaxy = cMiny+cph*(cwh-1);
     unsigned long cycles = 0;
     #pragma omp parallel num_threads(myThreads)
@@ -71,10 +71,7 @@ void Buddhabrot::draw(CartesianRasterCanvas& can) {
             int boxX = (znums[its].real()-cMinx)/cpw;
             #pragma omp atomic
               ++(counter[boxY][boxX]);
-            Decimal x, y;
-            can.getCartesianCoordinates(znums[its].real(), znums[its].imag(), x, y);
-            printf("Point at (%Le, %Le) from (%d, %d)\n",x,y,znums[its].real(), znums[its].imag());
-            can.drawPixel(x, y, tcolor);
+            can.drawPoint(boxX, boxY, tcolor, 0.1f);
           }
         }
         #pragma omp atomic
@@ -97,16 +94,13 @@ void Buddhabrot::draw(CartesianRasterCanvas& can) {
         if (counter[i][j] > maxIts)
           maxIts = counter[i][j];
     std::cout << maxIts << " max iterations" << std::endl;
-    #pragma omp parallel num_threads(myThreads)
-    {
-      for (int i = omp_get_thread_num(); i < cwh; i += omp_get_num_threads())
-        for (int j = 0; j < cww; ++j) {
-          float normalize = sqrt((float)counter[i][j]/maxIts);
-          Decimal x, y;
-          can.getCartesianCoordinates(i, j, x, y);
-          // printf("Point at (%Le, %Le) from (%d, %d)\n",x,y,i,j);
-          can.drawPixel(x,y, (ColorFloat)can.getPixel(i,j) * normalize);
-        }
+
+    #pragma omp parallel for //TODO: get fix in RasterCanvas/CartesianRasterCanvas
+    for(int i = 0; i < cwh; ++i) {
+      for (int j = 0; j < cww; ++j) {
+        float normalize = sqrt((float)counter[i][j]/maxIts);
+        can.drawPoint(j, i, (ColorFloat)can.getPoint(j, i) * normalize, 0.1f);
+      }
     }
     while (can.isOpen() && !myRedraw)
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class

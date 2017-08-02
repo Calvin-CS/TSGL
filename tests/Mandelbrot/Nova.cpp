@@ -46,7 +46,8 @@ void Nova::draw(CartesianRasterCanvas& can) {
         if (myRedraw) break;
       }
     }
-    // manhattanShading(can);
+    manhattanShading(can);
+    std::cout << "Shading done" << std::endl;
     while (can.isOpen() && !myRedraw)
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
   }
