@@ -1,7 +1,7 @@
 /*
- * testMouse.cpp
+ * Kaleidoscope.cpp
  *
- * Usage: ./testMouse <width> <height> <numThreads>
+ * Usage: ./Kaleidoscope <width> <height> <numThreads>
  */
 
 #include <tsgl.h>

@@ -1,7 +1,7 @@
 /*
- * testDumbSort.cpp
+ * DumbSort.cpp
  *
- * Usage: ./testDumbSort <width> <height>
+ * Usage: ./DumbSort <width> <height>
  */
 
 #include <tsgl.h>

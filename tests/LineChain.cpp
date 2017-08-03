@@ -1,7 +1,7 @@
 /*
- * testLineChain.cpp
+ * LineChain.cpp
  *
- * Usage: ./testLineChain <width> <height> <numThreads>
+ * Usage: ./LineChain <width> <height> <numThreads>
  */
 
 #include <tsgl.h>

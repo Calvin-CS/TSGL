@@ -1,7 +1,7 @@
 /*
- * testAlphaRectangle.cpp
+ * AlphaRectangle.cpp
  *
- * Usage: ./testAlphaRectangle <width> <height>
+ * Usage: ./AlphaRectangle <width> <height>
  */
 
 #include <tsgl.h>

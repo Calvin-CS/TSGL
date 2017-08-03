@@ -1,7 +1,7 @@
 /*
- * testBallroom.cpp
+ * Ballroom.cpp
  *
- * Usage: ./testBallroom <width> <height>
+ * Usage: ./Ballroom <width> <height>
  */
 
 #include <list>

@@ -33,7 +33,7 @@ void progressBarFunction(Canvas& can) {
     can.setBackgroundColor(WHITE);
     ProgressBar pb(X,Y,W,H,MIN,MAX,SEGS);
     int progress = 0;
-    // can.add(&pb);
+    can.add(&pb); //TODO: make the ProgressBar work with the new way of doing things.
     while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
         ++progress;
@@ -52,5 +52,6 @@ int main(int argc, char* argv[]) {
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;              //If not, set the width and height to a default value
     Canvas c(-1, -1, w, h, "Progress Bar Example");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
+    c.setBackgroundColor(WHITE);
     c.run(progressBarFunction);
 }

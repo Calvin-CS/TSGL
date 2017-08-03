@@ -1,7 +1,7 @@
 /*
- * testCalcPi.cpp
+ * CalcPi.cpp
  *
- * Usage: ./testCalcPi <numIntervals> <numThreads>
+ * Usage: ./CalcPi <numIntervals> <numThreads>
  */
 
 #include <stdio.h>              // printf(), ...
@@ -34,8 +34,8 @@ inline Decimal sineFunction(Decimal x) {
 }
 
 /*!
- * \brief testCalcPi's main method.
- * \details Everything that is needed in order to run testCalcPi is in this main method.
+ * \brief CalcPi's main method.
+ * \details Everything that is needed in order to run CalcPi is in this main method.
  * - Handle command-line arguments that were passed. If more than 2 were passed, print an error message and
  *   exit the process.
  * - Now, check and see if any command-line arguments were passed at all. If not, set default values

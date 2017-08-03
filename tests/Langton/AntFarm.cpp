@@ -4,7 +4,7 @@
 
 #include "AntFarm.h"
 
-AntFarm::AntFarm(int w, int h, int s, Canvas* c) {
+AntFarm::AntFarm(int w, int h, int s, RasterCanvas* c) {
   width = w;
   height = h;
   cap = s;

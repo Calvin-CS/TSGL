@@ -1,7 +1,7 @@
 /*
- * testForestFire.cpp
+ * ForestFire.cpp
  *
- * Usage: ./testForestFire <width> <height>
+ * Usage: ./ForestFire <width> <height>
  */
 
 #include <tsgl.h>

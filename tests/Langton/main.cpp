@@ -19,16 +19,16 @@ using namespace tsgl;
  * - There are four LangtonAnts in the AntFarm object (same as langtonColonyFunction() ) *BUT* they have alpha transparency.
  * - We set up an additional timer \b pulse to keep track of intervals between clearing the screen.
  * - We set up a function \b tempo, which resets the \b pulse timer, sets its interval to the
- *   time since the last reset, and makes the Canvas clear itself at that interval.
+ *   time since the last reset, and makes the RasterCanvas clear itself at that interval.
  * - We bind the left mouse button and the enter button to the described \b tempo function.
  * - We bind the enter key to pause the animation.
- * - We bind the space key to clearing the Canvas.
+ * - We bind the space key to clearing the RasterCanvas.
  * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear
  * the screen.
  * .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
-void alphaLangtonFunction(Canvas& can) {
+void alphaLangtonFunction(RasterCanvas& can) {
     const int IPF = 5000,                   // Iterations per frame
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight(),   // Window height
@@ -60,7 +60,7 @@ void alphaLangtonFunction(Canvas& can) {
 
     while (can.isOpen()) {
       if (!paused) {
-        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+        can.sleep();  //Removed the timer and replaced it with an internal timer in the RasterCanvas class
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
         if (pulse.pastPeriod())
@@ -70,43 +70,43 @@ void alphaLangtonFunction(Canvas& can) {
 }
 
 /*!
- * \brief Simulates Langton's Ant at speeds faster than the Canvas' framerate.
+ * \brief Simulates Langton's Ant at speeds faster than the RasterCanvas' framerate.
  * \details
- * - The Canvas' width and height are stored.
+ * - The RasterCanvas' width and height are stored.
  * - An AntFarm object is created that will display the LangtonAnt.
  * - The number of iterations per frame is set to a large number.
- * - While the Canvas is still open:
+ * - While the RasterCanvas is still open:
  *    - Sleep the internal timer until the next draw cycle.
  *    - For 0 to the iterations per frame:
  *      - Move the LangtonAnt inside of the AntFarm object.
  *   .
  *  .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
-void langtonFunction(Canvas& can) {
+void langtonFunction(RasterCanvas& can) {
     const int IPF = 1000,                   // Iterations per frame
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
     AntFarm farm(WW,WH,4,&can);
     farm.addAnt(WW / 2,WH / 2,MAX_COLOR,0,0,0);
     while (can.isOpen()) {
-        can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
+        can.sleep(); //Removed the timer and replaced it with an internal timer in the RasterCanvas class
         for (int i = 0; i < IPF; i++)
           farm.moveAnts();
     }
 }
 
 /*!
- * \brief Simulates 4 LangtonAnts at speeds faster than the Canvas' framerate.
+ * \brief Simulates 4 LangtonAnts at speeds faster than the RasterCanvas' framerate.
  * \details Same principle as langtonFunction(). Key differences:
  * - A variable \b R holds the distance from the center for each ant.
  * - There are four LangtonAnts inside of the AntFarm object.
  * - Each ant is tracked separately, with arrays holding each type of variable.
  * - The LangtonAnts are shaded this time.
  * .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
-void langtonColonyFunction(Canvas& can) {
+void langtonColonyFunction(RasterCanvas& can) {
     const int IPF = 5000,                   // Iterations per frame
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight(),   // Window height
@@ -120,19 +120,19 @@ void langtonColonyFunction(Canvas& can) {
     farm.setShading(true);
 
     while (can.isOpen()) {
-        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+        can.sleep();  //Removed the timer and replaced it with an internal timer in the RasterCanvas class
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
     }
 }
 
 /*!
- * \brief Simulates 4 LangtonAnts at speeds faster than the Canvas' framerate, with nicer colors!
+ * \brief Simulates 4 LangtonAnts at speeds faster than the RasterCanvas' framerate, with nicer colors!
  * \details Same as langtonColonyFunction(), but with dynamically-colored LangtonAnts.
  *    .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
-void langtonRainbowFunction(Canvas& can) {
+void langtonRainbowFunction(RasterCanvas& can) {
     const int IPF = 5000,                   // Iterations per frame
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight(),   // Window height
@@ -148,7 +148,7 @@ void langtonRainbowFunction(Canvas& can) {
       farm.ants[j]->setAlpha(64);
 
     while (can.isOpen()) {
-        can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+        can.sleep();  //Removed the timer and replaced it with an internal timer in the RasterCanvas class
         for (int j = 0; j < 4; j++)
           farm.ants[j]->changeColor(ColorHSV((can.getFrameNumber() + 3 * j) % 12 / 2.0f, 1.0f, 1.0f, .25f));
         for (int i = 0; i < IPF; i++)
@@ -162,34 +162,34 @@ void langtonRainbowFunction(Canvas& can) {
  * - The enter key is bound to pause the whole animation.
  * - The space key is bound to clear the screen.
  * .
- * \param can Reference to the Canvas being drawn to.
+ * \param can Reference to the RasterCanvas being drawn to.
  */
 
-//Take command-line arguments for the width and height of the Canvas
+//Take command-line arguments for the width and height of the RasterCanvas
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
+    int w = (argc > 1) ? atoi(argv[1]) : 0.9*RasterCanvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;              //If not, set the width and height to a default value
     //Alpha Langton
     std::cout << "Alpha Langton's Ant" << std::endl;
-    Canvas c1(-1, -1, w, h, "Langton's Ant w/Alpha (enter to pause)");
+    RasterCanvas c1(-1, -1, w, h, "Langton's Ant w/Alpha (enter to pause)");
     c1.setBackgroundColor(BLACK);
     c1.run(alphaLangtonFunction);
 
     //Regular Langton
     std::cout << "Regular Langton's Ant" << std::endl;
-    Canvas c2(-1, -1, w, h, "Langton's Ant");
+    RasterCanvas c2(-1, -1, w, h, "Langton's Ant");
     c2.run(langtonFunction);
 
     //Colony Langton
     std::cout << "Multiple Langton's Ants" << std::endl;
-    Canvas c3(-1, -1, w, h, "4x Langton's Ants");
+    RasterCanvas c3(-1, -1, w, h, "4x Langton's Ants");
     c3.run(langtonColonyFunction);
 
     //Colorful Langton
     std::cout << "Dynamically Colored Langton's Ants" << std::endl;
-    Canvas c4(-1, -1, w, h, "Colorful Langton's Ants");
+    RasterCanvas c4(-1, -1, w, h, "Colorful Langton's Ants");
     c4.setBackgroundColor(BLACK);
     c4.run(langtonRainbowFunction);
 }

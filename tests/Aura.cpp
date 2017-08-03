@@ -1,7 +1,7 @@
 /*
- * testAura.cpp
+ * Aura.cpp
  *
- * Usage: ./testAura <width> <height> <numThreads>
+ * Usage: ./Aura <width> <height> <numThreads>
  */
 
 #include <tsgl.h>
