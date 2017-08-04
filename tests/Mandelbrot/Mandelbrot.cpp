@@ -111,7 +111,7 @@ void Mandelbrot::draw(CartesianRasterCanvas& can) {
       long double blocksize = can.getCartHeight() / nthreads;
       long double startrow = blocksize * tid + can.getMinY();
       long double startcol = can.getMinX();
-      for(long double row = startrow; row < startrow + blocksize; row += can.getPixelHeight()) {
+      for(long double row = startrow + blocksize; row > startrow; row -= can.getPixelHeight()) {
         for(long double col = startcol; col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex originalComplex(col, row);
           complex z(col, row);

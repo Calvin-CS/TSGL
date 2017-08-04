@@ -33,7 +33,7 @@ void progressBarFunction(Canvas& can) {
     can.setBackgroundColor(WHITE);
     ProgressBar pb(X,Y,W,H,MIN,MAX,SEGS);
     int progress = 0;
-    can.add(&pb); //TODO: make the ProgressBar work with the new way of doing things.
+    // can.add(&pb); //TODO: make the ProgressBar work with the new way of doing things.
     while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
         ++progress;

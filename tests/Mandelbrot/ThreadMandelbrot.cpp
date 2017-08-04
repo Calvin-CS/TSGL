@@ -18,9 +18,9 @@ void ThreadMandelbrot::draw(CartesianRasterCanvas& can) {
       ColorFloat tcolor = Colors::highContrastColor(tid);
       double blocksize = can.getCartHeight() / nthreads;
       double blockheight = CH / nthreads;
-      long double startrow = blocksize * tid + can.getMinY();
+      long double startrow = can.getMaxY() - blocksize * tid;
       for(unsigned int k = 0; k <= blockheight && can.isOpen(); k++) {  // As long as we aren't trying to render off of the screen...
-        long double row = startrow + can.getPixelHeight() * k;
+        long double row = startrow - can.getPixelHeight() * k;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex originalComplex(col, row);
           complex c(col, row);

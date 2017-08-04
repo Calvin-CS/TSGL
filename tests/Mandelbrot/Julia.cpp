@@ -26,7 +26,7 @@ void Julia::draw(CartesianRasterCanvas& can) {
         if (myNext >= can.getWindowHeight())
           break;
         vq.update(myNext,RUNNING);
-        long double row = can.getMinY() + can.getPixelHeight() * myNext;
+        long double row = can.getMaxY() - can.getPixelHeight() * myNext;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
 
           //Uncomment one line to choose values, or make your own
