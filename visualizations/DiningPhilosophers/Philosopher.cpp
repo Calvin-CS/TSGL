@@ -9,9 +9,11 @@ Philosopher::Philosopher() {
 
 Philosopher::~Philosopher() {
   delete myCircle; myCircle = NULL;
+  mealLock.lock();
   for(unsigned i = 0; i < meals.size(); i++) {
     delete meals[i];
   }
+  mealLock.unlock();
 }
 
 /**
@@ -46,7 +48,20 @@ void Philosopher::refreshColor() {
  */
 void Philosopher::addMeal(Canvas& can, RegularPolygon * shape) {
   can.add(shape);
-  meals.push_back(shape);
+  mealLock.lock(); meals.push_back(shape); mealLock.unlock();
+}
+
+/**
+ * Clears and deletes all meals.
+ */
+void Philosopher::clearMeals(Canvas& can) {
+  mealLock.lock();
+  for(int i = 0; i < meals.size(); i++) {
+    can.remove( meals[i] );
+    delete meals[i];
+  }
+  meals.erase( meals.begin(), meals.end() );
+  mealLock.unlock();
 }
 
 /**

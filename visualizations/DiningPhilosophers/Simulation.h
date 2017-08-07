@@ -1,7 +1,7 @@
 /*!
- * \class Table
+ * \class Simulation
  * \brief Object managing the forks and philosophers in the Dining Philosophers' problem.
- * \details The Table class keeps track of the forks and philosophers in the Dining
+ * \details The Simulation class keeps track of the forks and philosophers in the Dining
  *   Philosophers' problem; it additionally manages the actions of the philosophers.
  * \details Each step of the problem is broken up into two phases. In the checking phase,
  *   the philosophers look at the table around them and, without communicating with the
@@ -20,7 +20,7 @@
 #include "philEnums.h"
 using namespace tsgl;
 
-class Table {
+class Simulation {
 private:
   int tabX, tabY, numPhils, counter;
   PhilMethod myMethod;
@@ -29,8 +29,8 @@ private:
   Fork *forks;
   Circle *myCircle;
 public:
-  Table(Canvas& can, int p, PhilMethod m);
-  ~Table();
+  Simulation(Canvas& can, int p, PhilMethod m);
+  ~Simulation();
 
   void forfeitWhenBlockedMethod(int id);
   void waitWhenBlockedMethod(int id);

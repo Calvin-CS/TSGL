@@ -11,6 +11,7 @@
 
 #include <tsgl.h>
 #include <vector>
+#include <mutex>
 #include "Fork.h"
 #include "philEnums.h"
 
@@ -23,6 +24,7 @@ private:
   int id, myLeft, myRight;
   Circle * myCircle;
   std::vector<RegularPolygon*> meals;
+  std::mutex mealLock;
 public:
   Philosopher();
   ~Philosopher();
@@ -33,6 +35,7 @@ public:
   void think();
   void eat() { myState = thinking; myAction = doNothing;}
   void addMeal(Canvas& can, RegularPolygon * shape);
+  void clearMeals(Canvas& can);
   void setState(PhilState s) { myState = s; }
   void setAction(PhilAction a) { myAction = a; }
   void setId(int i, int nphil) {id = myLeft = i; myRight = (id+nphil-1)%nphil; }
