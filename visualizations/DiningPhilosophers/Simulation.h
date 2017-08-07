@@ -28,6 +28,7 @@ private:
   Philosopher *phils;
   Fork *forks;
   Circle *myCircle;
+  std::vector<Drawable*> legendShapes;
 public:
   Simulation(Canvas& can, int p, PhilMethod m);
   ~Simulation();

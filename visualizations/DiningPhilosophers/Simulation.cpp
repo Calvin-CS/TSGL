@@ -36,29 +36,34 @@ Simulation::Simulation(Canvas& can, int p, PhilMethod m) {
       break;
   }
 
-  myCan2 = new Canvas(0,0,350,470,"Legend");
+  myCan2 = new Canvas(0,0,350,550,"Legend");
   myCan2->setBackgroundColor(WHITE);
   myCan2->start();
   Text * methodText = new Text("Method:",16,32,24,BLACK);
   Text * methodText2 = new Text(methodString,32,64,24,BLACK);
   Text * legendText = new Text("Legend:",16,96,24,BLACK);
-  Text * redText = new Text("Hungry Philosopher",85,150,24,RED);
-  Text * orangeText = new Text("Phil. with Right Fork",85,215,24,ORANGE);
-  Text * purpleText = new Text("Phil. with Left Fork",85,280,24,PURPLE);
-  Text * greenText = new Text("Eating Philosopher",85,345,24,GREEN);
-  Text * blueText = new Text("Thinking Philosopher",85,410,24,BLUE);
-  Text * mealsText = new Text("Meals eaten",85,458,24,BROWN);
+  Text * redText = new Text("Hungry Philosopher",85,450,24,RED);
+  Text * orangeText = new Text("Phil. with Right Fork",85,225,24,ORANGE);
+  Text * purpleText = new Text("Phil. with Left Fork",85,300,24,PURPLE);
+  Text * greenText = new Text("Eating Philosopher",85,375,24,GREEN);
+  Text * blueText = new Text("Thinking Philosopher",85,150,24,BLUE);
+  Text * mealsText = new Text("Meals eaten",85,508,24,BROWN);
   myCan2->add( methodText ); myCan2->add( methodText2 ); myCan2->add( legendText );
   myCan2->add( redText ); myCan2->add( orangeText ); myCan2->add( purpleText );
   myCan2->add( greenText ); myCan2->add( blueText ); myCan2->add( mealsText );
 
-  RegularPolygon * mealExample = new RegularPolygon(66,449,3,8,BROWN); myCan2->add( mealExample ); //TODO: delete in destructor?
-  Circle * hungryPhil = new Circle(48, 140, 32, RED);
-  Circle * rightPhil = new Circle(48, 205, 32, ORANGE);
-  Circle * leftPhil = new Circle(48, 270, 32, PURPLE);
-  Circle * eatPhil = new Circle(48, 335, 32, GREEN);
-  Circle * thinkPhil = new Circle(48, 400, 32, BLUE);
+  RegularPolygon * mealExample = new RegularPolygon(66,499,3,8,BROWN); myCan2->add( mealExample );
+  Circle * hungryPhil = new Circle(48, 440, 30, RED);
+  Circle * rightPhil = new Circle(48, 215, 30, ORANGE);
+  Circle * leftPhil = new Circle(48, 290, 30, PURPLE);
+  Circle * eatPhil = new Circle(48, 365, 30, GREEN);
+  Circle * thinkPhil = new Circle(48, 140, 30, BLUE);
   myCan2->add( hungryPhil ); myCan2->add( rightPhil ); myCan2->add( leftPhil ); myCan2->add( eatPhil ); myCan2->add( thinkPhil );
+
+  legendShapes.push_back(methodText); legendShapes.push_back(methodText2); legendShapes.push_back(legendText); legendShapes.push_back(redText);
+  legendShapes.push_back(orangeText); legendShapes.push_back(purpleText); legendShapes.push_back(greenText); legendShapes.push_back(blueText);
+  legendShapes.push_back(mealsText); legendShapes.push_back(mealExample); legendShapes.push_back(hungryPhil); legendShapes.push_back(rightPhil);
+  legendShapes.push_back(leftPhil); legendShapes.push_back(eatPhil); legendShapes.push_back(thinkPhil);
 }
 
 Simulation::~Simulation() {
@@ -70,6 +75,9 @@ Simulation::~Simulation() {
   delete myCircle;
   delete [] phils;
   delete [] forks;
+  for(unsigned i = 0; i < legendShapes.size(); i++) {
+    delete legendShapes[i];
+  }
 }
 
 /*!
