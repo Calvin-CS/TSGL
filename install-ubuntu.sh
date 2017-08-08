@@ -264,7 +264,7 @@ fi
 echo "Getting other dependencies (or updating if all found)..."
 
 #Get the necessary header files as well as doxygen, git
-sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen
+sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev libxrandr-dev libxi-dev x11proto-xf86vidmode-dev libglu1-mesa-dev git libglew-dev doxygen libglfw3
 
 echo
 
