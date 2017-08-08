@@ -30,16 +30,6 @@ Goals
 ------------
 The main goal of this library is to provide a thread-safe graphics library for 2D graphics. Other goals include: Helping beginning programming students learn about the complex process of parallelization by giving them hands-on tools to use in order to learn about parallelization without having them to worry about the problems associated with parallelization such as race conditions, mutexes, and more. It also helps educators teach programming students about parallelization through simple visualizations.
 
---------------
-Installation
---------------
-To install TSGL, please see our [installing TSGL page](https://github.com/Calvin-CS/TSGL/wiki/Installing-TSGL).
-
-------------
-Tutorials
-------------
-Want to learn how to utilize the TSGL library? Check out the [wiki](https://github.com/Calvin-CS/TSGL/wiki) pages for some tutorials!
-
 ------------
 docs and docs-wiki
 ------------
