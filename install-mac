@@ -1,11 +1,14 @@
 #!/bin/bash
-# Easy install script for TSGL on OS X
-# Last updated: 08/10/16
+# Installation script for OS X
+# Tested on OS X 10.12
+# Last updated: 3/7/18
 #
-# -SUBJECT TO CHANGE-
 ###############################
 
 VER_XQ="XQuartz-2.7.7"
+
+mkdir build
+mkdir bin
 
 #Function for checking command availability
 has () {
@@ -71,32 +74,36 @@ gVeres=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
 
 echo "$gVers" | grep "clang" > check.txt
 
-version=490
+version=700
+# TODO maybe this is too new?
 
-#First, check if we need to move an existing g++ compiler
-if [ -e /usr/local/bin/g++ ] && [ ! -e /usr/local/Cellar/gcc49 ];
-then
-	sudo mv /usr/local/bin/g++ /usr/local/bin/g++old
-	sudo mv /usr/local/bin/gcc /usr/local/bin/gccold
+# #First, check if we need to move an existing g++ compiler
+# if [ -e /usr/local/bin/g++ ] && [ ! -e /usr/local/Cellar/gcc49 ];
+# then
+# 	sudo mv /usr/local/bin/g++ /usr/local/bin/g++old
+# 	sudo mv /usr/local/bin/gcc /usr/local/bin/gccold
+#
+# fi
 
-fi
-
-#Now check if we need to install gcc49
+#Now check if we need to install gcc
+#
+#Check for the Apple Clang symlink version of gcc
 if grep --quiet clang check.txt; then
-	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+	# echo "Installing g++...this may take a while!"
+  echo "Clang is symlinked in place of GCC.  We need to unlink Clang and install GCC."
+	brew install gcc@7
+	brew link gcc
+  # brew link g++
 elif [ "$gVeres" -lt "$version" ]; then
-	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+	echo "Installing g++... this could be a while!"
+	brew install gcc@7
+  brew link gcc
+  # brew link g++
 else
-	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+	echo "Checking GCC@7 links..."
+	brew install gcc@7
+  brew link gcc
+  # brew link g++
 fi
 
 #Symlinks
@@ -110,21 +117,21 @@ if [ ! -e /usr/X11/lib/libXrandr.dylib ]; then
 fi
 
 #Remove any broken symlinks before installing
-sudo rm -f /usr/local/lib/libtsgl.* 
+sudo rm -f /usr/local/lib/libtsgl.*
 sudo rm -rf /usr/local/include/TSGL
 
 #Build TSGL and install
 echo "Building TSGL..."
 echo
 
-make
+make all -j 4
 
-echo "Installing..."
+# echo "Installing..."
+# echo
+#
+# sudo make install
+
 echo
 
-sudo make install
-
-echo
-
-echo "Installation complete!"
-echo "Run \"./runtests\" to verify everything is working."
+echo "Compilation completed. Due to issues with linking fonts, please run"
+echo "via ./bin/<executable> for now.  I've disabled installation to make debugging easier."
