@@ -15,6 +15,12 @@
  *  'n' for nCountRelease, which does not lock and is mostly fair for N philosophers, N >= 5
  *  'r' for resourceHierarchy, which does not lock and is mostly fair for N philosophers, N >= 2
  *  'o' for oddEven, which does not lock and is perfectly fair for N philosophers, N >= 2 (also default)
+ *
+ * for <speed> enter:
+ *  a number, such as 2, 5, or 10, to specify speed (increasing with higher numbers).
+ *  't' or 'y' to turn on step-through. Press the spacebar to proceed at each step.
+ *
+ * If step-through is turned off, the spacebar pauses the visualization.
  */
 
 #include <omp.h>
@@ -25,7 +31,7 @@
 
 using namespace tsgl;
 
-void philosopherFunction(Canvas& can,int philosophers, std::string RM) {
+void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step) {
 
   PhilMethod method;
   //switch statement to create table with resolution method
@@ -55,15 +61,24 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM) {
 
   srand(time(NULL)); // seed the random number generator for thinking steps
 
+  bool stepThrough = step; // Flag that determines whether the animation pauses between steps
   bool paused = false; // Flag that determines whether the animation is paused
-  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&paused]() { // toggle pause when spacebar is pressed
+  bool philPauses[philosophers];
+  for(int i = 0; i < philosophers; i++) {
+    philPauses[i] = false;
+  }
+  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&paused,&philPauses,&philosophers]() { // toggle pause when spacebar is pressed
 		paused = !paused;
+    for(int i = 0; i < philosophers; i++) {
+      philPauses[i] = false;
+    }
 	});
 
   #pragma omp parallel num_threads(philosophers)
   {
     while(can.isOpen()) {
-		  if (!paused) {
+		  if ((!stepThrough && !paused) || (stepThrough && !philPauses[omp_get_thread_num()])) {
+        if(stepThrough) { philPauses[omp_get_thread_num()] = true; }
       	t.checkStep();
       	can.pauseDrawing();
         if(method == forfeitWhenBlocked || method == waitWhenBlocked) { //Synchronize to see Livelock and Deadlock
@@ -85,9 +100,10 @@ int main(int argc, char* argv[]) {
     << "\nwhere <resolutionMethodChar> is a character specifying conflict resolution of the philosophers. Find options in DiningPhilosophers/main.cpp" << std::endl;
   }
   int  nphil = (argc > 1) ? atoi(argv[1]) : 5;  //Number of philosophers defaults to 5
-  int  speed = (argc > 2) ? atoi(argv[2]) : 5; //Speed defaults to 5
+  int  speed = (argc > 2 && atoi(argv[2]) > 0) ? atoi(argv[2]) : 5; //Speed defaults to 5
+  bool stepThrough = (argc > 2 && ((std::string(argv[2]) == "t") || (std::string(argv[2]) == "y")));
   std::string resM  = (argc > 3) ? argv[3] : "o"; //ResolutionMethod defaults to oddEven
   Canvas c(-1, -1, -1, -1, "Dining Philosophers",1.0f/speed);
   c.setBackgroundColor(WHITE);
-  c.run(philosopherFunction,nphil,resM);
+  c.run(philosopherFunction,nphil,resM,stepThrough);
 }

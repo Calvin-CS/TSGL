@@ -813,6 +813,16 @@ GLuint VertexArrayID;
     virtual void run(void (*myFunction)(Canvas&, std::string, int), std::string s, int i);
 
     /*!
+     * \brief Overload for run()
+     * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+     *   which is a reference to the Canvas to render to.
+     * \param i An integer argument to myFunction
+     * \param s A string argument to myFunction
+     * \param b A boolean argument to myFunction
+     */
+    virtual void run(void (*myFunction)(Canvas&, int i, std::string, bool), int i, std::string s, bool b);
+
+    /*!
      * \brief Mutator for the background color.
      * \details This function sets the clear color for when Canvas::clear() is called.
      *   \param color The color to clear to.

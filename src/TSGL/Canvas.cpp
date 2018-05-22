@@ -769,6 +769,9 @@ namespace tsgl {
   void Canvas::run(void (*myFunction)(Canvas&, std::string, int), std::string s, int i) {
     start(); myFunction(*this, s, i); wait();
   }
+  void Canvas::run(void (*myFunction)(Canvas&, int, std::string, bool), int i, std::string s, bool b) {
+    start(); myFunction(*this, i, s, b); wait();
+  }
 
 
 
