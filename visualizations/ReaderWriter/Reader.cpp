@@ -13,7 +13,7 @@ Reader::Reader() : RWThread() { }
  * \param: can, a handle to the Canvas that will be drawn on.
  * \return: The constructed Reader object.
  */
-Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : RWThread(sharedDatabase, id, can) {
+Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can) : RWThread(sharedDatabase, lock, id, can) {
 	myX = can.getWindowWidth()-50;
 	myCircle->setCenter(myX, myY);
 	myCountLabel->setCenter(myX, myY);
@@ -37,7 +37,7 @@ void Reader::drawArrow(int x, int y) {
 void Reader::lock() {
 	myCircle->setCenter(myX-75, myY); //Move towards data
 	myCountLabel->setCenter(myX-75, myY);
-	data->startRead();  //Lock data for reading
+	monitor->readLock();  //Lock data for reading
 	myCan->sleepFor(RWThread::access_wait);
 	while( paused ) {}
 	myCircle->setCenter(myX-127, myY); //Move inside data
@@ -62,5 +62,5 @@ void Reader::unlock() {
 	while( paused ) {}
 	myCircle->setCenter(myX, myY); 	//Return to home location
 	myCountLabel->setCenter(myX, myY);
-	data->endRead(); 	//Unlock the data
+	monitor->readUnlock(); 	//Unlock the data
 }

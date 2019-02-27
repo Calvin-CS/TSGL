@@ -9,8 +9,8 @@
 #include <tsgl.h>
 #include <atomic> //atomic<bool> paused
 #include "RWDatabase.h"
-#include "WDatabase.h"
 #include "Thread.h"
+#include "Lock.h"
 using namespace tsgl;
 
 /**
@@ -20,7 +20,7 @@ using namespace tsgl;
 class RWThread : public Thread {
 public:
 	RWThread(); //Default constructor
-	RWThread(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can);  //Explicit constructor
+	RWThread(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can);  //Explicit constructor
 	void run();
 	void wait();
 	virtual void lock() = 0; //Must be implemented by subclass
@@ -33,7 +33,9 @@ public:
 protected:
 	int myX, myY; //Center coordinates for the RWThread
 	int count; //Number of colors processed (read or written)
-	RWDatabase<Rectangle*> * data; //Handle to the current monitor
+	RWDatabase<Rectangle*> * data; //Handle to the current database
+	Lock* monitor; //Handle to the current monitor
+
 	Canvas * myCan;  //Handle to the Canvas
 	Circle * myCircle; //Circle representing the Thread
 	Text * myCountLabel; //Text label for number processed

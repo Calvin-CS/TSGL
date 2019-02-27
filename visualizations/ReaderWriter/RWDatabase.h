@@ -3,8 +3,8 @@
  * This class provides a superclass for the monitors with Reader or Writer preference, which are used by the threads.
  */
 
-#ifndef RWMONITOR_H_
-#define RWMONITOR_H_
+#ifndef RWDATA_H_
+#define RWDATA_H_
 
 #include <pthread.h>
 #include <vector>
@@ -23,21 +23,14 @@ class RWDatabase {
 public:
 	RWDatabase();					//Default constructor
 	RWDatabase(int max);				//Explicit constructor
-	virtual void startRead() = 0;	//Must be defined by subclass
-	virtual void endRead() = 0;		//Must be defined by subclass
-	virtual void startWrite() = 0;	//Must be defined by subclass
-	virtual void endWrite() = 0;	//Must be defined by subclass
 	int getItemCount() { return vec.size(); }	//Get number of items in vector
 	int getMaxCapacity() { return maxCapacity; }//Get maximum items in vector
-	Item read(int index);						//Access item at index
+	Item read(unsigned index);						//Access item at index
 	void write(Item it, unsigned index);				//Set item at index
 
 protected:
 	std::vector<Item> vec;
-	int activeWriters, activeReaders, waitingWriters, waitingReaders;
 	unsigned maxCapacity;
-	pthread_mutex_t lock;
-	pthread_cond_t okToRead, okToWrite;
 };
 
 /**
@@ -47,10 +40,6 @@ protected:
 template<class Item>
 RWDatabase<Item>::RWDatabase() {
 	vec = vector<Item>();
-	activeWriters = activeReaders = waitingWriters = waitingReaders = maxCapacity = 0;
-	lock = PTHREAD_MUTEX_INITIALIZER;
-	okToRead = PTHREAD_COND_INITIALIZER;
-	okToWrite = PTHREAD_COND_INITIALIZER;
 }
 
 /**
@@ -61,10 +50,6 @@ RWDatabase<Item>::RWDatabase() {
 template<class Item>
 RWDatabase<Item>::RWDatabase(int max) {
 	vec = vector<Item>();
-	activeWriters = activeReaders = waitingWriters = waitingReaders = 0;
-	lock = PTHREAD_MUTEX_INITIALIZER;
-	okToRead = PTHREAD_COND_INITIALIZER;
-	okToWrite = PTHREAD_COND_INITIALIZER;
 	maxCapacity = max;
 }
 
@@ -73,8 +58,11 @@ RWDatabase<Item>::RWDatabase(int max) {
  * \param index, an index in the vector to access a piece of data
  */
 template<class Item>
-Item RWDatabase<Item>::read(int index) {
-	return vec[index];
+Item RWDatabase<Item>::read(unsigned index) {
+	if( index >= vec.size() )
+		throw range_error("Access attempted beyond present items");
+	else
+		return vec[index];
 }
 
 /**
@@ -94,4 +82,4 @@ void RWDatabase<Item>::write(Item it, unsigned index) {
 	}
 }
 
-#endif /*RWMONITOR_H_*/
+#endif /*RWDATA_H_*/

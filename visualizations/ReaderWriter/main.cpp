@@ -12,8 +12,10 @@
 #include "Reader.h"
 #include "Writer.h"
 #include "RWDatabase.h"
-#include "WDatabase.h"
-#include "RDatabase.h"
+#include "Lock.h"
+#include "RLock.h"
+#include "WLock.h"
+#include "FLock.h"
 using namespace tsgl;
 
 //Constants
@@ -39,15 +41,21 @@ int main(int argc, char* argv[]) {
 	can.setBackgroundColor(WHITE);
 
 	//Create monitor
-	RWDatabase<Rectangle*> * monitor;
+	Lock * lock;
 	string lockString; //String description of lock style
 	int maxItems = floor(RWThread::dataWidth / RWThread::width) * floor(RWThread::dataHeight / RWThread::width);
-	if( argc > 3 && *argv[3] == 'r' ) { //Create Reader preference Database
-		monitor = new RDatabase<Rectangle*>(maxItems);
+	RWDatabase<Rectangle*>* database = new RWDatabase<Rectangle*>(maxItems);
+	if( argc > 3 && *argv[3] == 'r' ) {
+		//Reader preference
+		lock = new RLock(database);
 		lockString = "Reader priority";
-	} else {							//Create Writer preference Database
-		monitor = new WDatabase<Rectangle*>(maxItems);
+	} else if (argc > 3 && *argv[3] == 'w' ) {
+		//Writer preference
+		lock = new WLock(database);
 		lockString = "Writer priority";
+	} else {
+		lock = new FLock(database);
+		lockString = "Fair priority";
 	}
 
 	Reader * readers = new Reader[numReaders]; //Array of Readers
@@ -86,10 +94,10 @@ int main(int argc, char* argv[]) {
 
 	//Fill the Reader and Writer arrays with their objects
 	for(int i = 0; i < numReaders; i++) {
-		readers[i] = Reader(*monitor, i, can); //Reader created
+		readers[i] = Reader(*database, *lock, i, can); //Reader created
 	}
 	for(int i = 0; i < numWriters; i++) {
-		writers[i] = Writer(*monitor, i, can); //Writer created
+		writers[i] = Writer(*database, *lock, i, can); //Writer created
 	}
 
 	//Check if using starved version

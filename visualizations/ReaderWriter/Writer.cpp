@@ -14,7 +14,7 @@ Writer::Writer() : RWThread() { dataLabel = NULL; }
  * \param can, a handle to the Canvas that will be drawn on.
  * \return: The constructed Writer object.
  */
-Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can) : RWThread(sharedDatabase, id, can) {
+Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can) : RWThread(sharedDatabase, lock, id, can) {
 	myX = 50; //Set the x-coordinate to 50
 	myCircle->setCenter(myX, myY);
 	myCountLabel->setCenter(myX, myY);
@@ -73,7 +73,7 @@ Rectangle * Writer::makeRec(int index) {
 void Writer::lock() {
 	myCircle->setCenter(myX+75, myY);  //Move in toward data
 	myCountLabel->setCenter(myX+75, myY);
-	data->startWrite(); //Lock data for writing
+	monitor->writeLock(); //Lock data for writing
 	myCan->sleepFor(RWThread::access_wait);
 }
 
@@ -107,5 +107,5 @@ void Writer::unlock() {
 	while( paused ) {}
 	myCircle->setCenter(myX, myY); 	//Return to home location
 	myCountLabel->setCenter(myX, myY);
-	data->endWrite(); 	//Unlock the data for writing
+	monitor->writeUnlock(); 	//Unlock the data for writing
 }

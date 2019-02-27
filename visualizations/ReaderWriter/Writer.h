@@ -7,7 +7,7 @@
 //#include <omp.h>
 #include <tsgl.h>
 #include "RWDatabase.h"
-#include "WDatabase.h"
+#include "Lock.h"
 #include "RWThread.h"
 #include "Thread.h"
 using namespace tsgl;
@@ -22,7 +22,7 @@ using namespace tsgl;
 class Writer : public RWThread {
 public:
 	Writer(); //Default constructor
-	Writer(RWDatabase<Rectangle*> & sharedDatabase, unsigned long id, Canvas & can); //Explicit constructor
+	Writer(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can); //Explicit constructor
 	void lock();
 	void act();
 	void unlock();
