@@ -105,9 +105,9 @@ int main(int argc, char* argv[]) {
 	//Nearly starves Writers with 3 or more Readers
 	if( argc > 4 && *argv[4] == 's' ) { //Set for starved possibility
 		if( *argv[3] == 'r' ) { //Readers mostly starve Writers
-			RWThread::WAIT_MIN = 2;
-			RWThread::WAIT_RANGE = 25;
-			RWThread::access_wait *= 5.0;
+			RWThread::WAIT_MIN = 0;
+			RWThread::WAIT_RANGE = 20;
+			RWThread::access_wait *= 20.0;
 		} else { //Writers starve Readers
 			RWThread::WAIT_MIN = 2;
 			RWThread::WAIT_RANGE = 10;
