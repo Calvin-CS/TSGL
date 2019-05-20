@@ -48,7 +48,6 @@ public:
 private:
 	Item * myArray;  //Array of data
 	int mySize, myCount, myFirst, myLast;	 //Size, number of elements, and first and last indice
-	friend class ArrayQueueTester;    //Tester class
 	pthread_mutex_t myMutex;
 	//Broadcast a signal indicating that the Queue is not full (append, Producers) and that the Queue is not empty (remove, Consumers)
 	pthread_cond_t notEmpty;  //Condition variable for remove
