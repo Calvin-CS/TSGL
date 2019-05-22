@@ -66,7 +66,15 @@ class Shape {
      *  - You can add other statements in the subclass
      * \note Please refer to the class description for more information and warnings about overriding this method.
      */
-    virtual void draw() = 0;  // Abstract method for actually drawing the shape
+    // virtual void draw() = 0;  // Abstract method for actually drawing the shape
+
+    virtual int getNumberOfVertices() = 0;
+
+    virtual float* getVertices() = 0;
+
+    virtual GLenum getGeometryType() = 0;
+
+    virtual bool isProcessed() { return true; }
 
     /*!
      * \brief Accessor for <code>isTextured</code>.

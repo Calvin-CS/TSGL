@@ -15,9 +15,21 @@ Triangle::Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFl
     vertices[5] = vertices[11] = vertices[17] = color.A;
 }
 
-void Triangle::draw() {
-    glBufferData(GL_ARRAY_BUFFER, 3 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+// void Triangle::draw() {
+//     glBufferData(GL_ARRAY_BUFFER, 3 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+//     glDrawArrays(GL_TRIANGLE_STRIP, 0, 3);
+// }
+
+int Triangle::getNumberOfVertices() {
+    return 3;
+}
+
+float* Triangle::getVertices() {
+    return vertices;
+}
+
+GLenum Triangle::getGeometryType() {
+    return GL_TRIANGLE_STRIP;
 }
 
 }

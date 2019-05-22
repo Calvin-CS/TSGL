@@ -25,13 +25,14 @@ namespace tsgl {
  *   extend Canvas::drawImage() function due to this privatization.
  *  \warning Aside from an error message output to stderr, Image gives no indication if an image failed to load.
  */
-class Image : public Shape {
+class Image {
  private:
     int myWidth, myHeight;
     float vertices[32];
     std::string myFile;
     GLtexture myTexture;
     TextureHandler* myLoader;
+    bool isTextured;
  public:
 
     /*!
@@ -48,6 +49,8 @@ class Image : public Shape {
      * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
      */
     Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha);
+
+    bool getIsTextured() { return isTextured; }
 
     /*!
      * \brief Draw the Image.

@@ -36,7 +36,12 @@ class Triangle : public Shape {
      * \brief Draw the Triangle.
      * \details This function actually draws the Triangle to the Canvas.
      */
-    void draw();
+   //  void draw();
+    int getNumberOfVertices();
+
+    float* getVertices();
+
+    GLenum getGeometryType();
 };
 
 }

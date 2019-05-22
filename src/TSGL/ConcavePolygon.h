@@ -105,7 +105,15 @@ class ConcavePolygon : public Shape {
      * \note A message is given indicating that the ConcavePolygon is *NOT* ready to be drawn yet (vertex buffer = not full).
      * \warning This is an order of n-cubed operation, and is thus <b>VERY SLOW</b>.
      */
-    void draw();
+    void preprocess();
+
+    int getNumberOfVertices();
+
+    float* getVertices();
+
+    GLenum getGeometryType();
+
+    bool isProcessed();
 
     /*!
      * \brief Runs the Unit tests.

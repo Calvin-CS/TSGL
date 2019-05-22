@@ -31,13 +31,25 @@ void TriangleStrip::addVertex(int x, int y, const ColorFloat &color) {
     if (current == size) init = true;
 }
 
-void TriangleStrip::draw() {
-    if (!init) {
-      TsglDebug("Cannot draw yet.");
-      return;
-    }
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
+// void TriangleStrip::draw() {
+//     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+//     glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
+// }
+
+int TriangleStrip::getNumberOfVertices() {
+    return length;
+}
+
+float* TriangleStrip::getVertices() {
+    return vertices;
+}
+
+GLenum TriangleStrip::getGeometryType() {
+    return GL_TRIANGLE_STRIP;
+}
+
+bool TriangleStrip::isProcessed() {
+  return init;
 }
 
 }

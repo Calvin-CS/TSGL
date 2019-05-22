@@ -13,9 +13,21 @@ Line::Line(int x1, int y1, int x2, int y2, const ColorFloat &color) {
     vertices[5] = vertices[11] = color.A;
 }
 
-void Line::draw() {
-    glBufferData(GL_ARRAY_BUFFER, 2 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_LINES, 0, 2);
+// void Line::draw() {
+//     glBufferData(GL_ARRAY_BUFFER, 2 * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+//     glDrawArrays(GL_LINES, 0, 2);
+// }
+
+int Line::getNumberOfVertices() {
+    return 2;
+}
+
+float* Line::getVertices() {
+    return vertices;
+}
+
+GLenum Line::getGeometryType() {
+    return GL_LINES;
 }
 
 }

@@ -166,13 +166,16 @@ void Canvas::draw() {
           unsigned int size = myShapes->size();
           for (unsigned int i = 0; i < size; i++) {
             Shape* s = (*myShapes)[i];
-            if (!s->getIsTextured()) {
-              s->draw();  // Iterate through our queue until we've made it to the end
-            } else {
-              textureShaders(true);
-              s->draw();
-              textureShaders(false);
-            }
+            if(s->isProcessed())
+              if (!s->getIsTextured()) {
+                glBufferData(GL_ARRAY_BUFFER, s->getNumberOfVertices() * 6 * sizeof(float), s->getVertices(), GL_DYNAMIC_DRAW);
+                glDrawArrays(s->getGeometryType(), 0, s->getNumberOfVertices());
+              } else {
+                textureShaders(true);
+                glBufferData(GL_ARRAY_BUFFER, s->getNumberOfVertices() * 6 * sizeof(float), s->getVertices(), GL_DYNAMIC_DRAW);
+                glDrawArrays(s->getGeometryType(), 0, s->getNumberOfVertices());
+                textureShaders(false);
+              }
           }
 
           if (loopAround) {
@@ -307,7 +310,7 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
 
 void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
-    drawShape(im);                                        // Push it onto our drawing buffer
+    im->draw();                                        // Push it onto our drawing buffer
 }
 
 void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {

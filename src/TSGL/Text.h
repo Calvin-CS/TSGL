@@ -23,6 +23,7 @@ class Text : public Shape {
     TextureHandler* myLoader;
     std::wstring myString;
     int myX, myY;
+    float* vertices;
  public:
 
     /*!
@@ -43,6 +44,12 @@ class Text : public Shape {
      * \details This function actually draws the Text to the Canvas.
      */
     void draw();
+
+    int getNumberOfVertices();
+
+    float* getVertices();
+
+    GLenum getGeometryType();
 };
 
 }

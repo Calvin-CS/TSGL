@@ -63,7 +63,15 @@ class TriangleStrip : public Shape {
      * \note A message will be given to show if the TriangleStrip is *NOT* ready to be drawn (vertex buffer = not full).
      * \note Implemented inherited abstract method from Shape class.
      */
-    void draw();
+    // void draw();
+
+    int getNumberOfVertices();
+
+    float* getVertices();
+
+    GLenum getGeometryType();
+
+    bool isProcessed();
 };
 
 }

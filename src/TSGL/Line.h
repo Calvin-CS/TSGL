@@ -34,7 +34,13 @@ class Line : public Shape {
      * \brief Draw the Line.
      * \details This function actually draws the Line to the Canvas.
      */
-    void draw();
+    //void draw();
+
+    int getNumberOfVertices();
+
+    float* getVertices();
+
+    GLenum getGeometryType();
 };
 
 }

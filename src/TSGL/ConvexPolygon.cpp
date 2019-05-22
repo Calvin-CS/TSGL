@@ -31,13 +31,25 @@ void ConvexPolygon::addVertex(int x, int y, const ColorFloat &color) {
     if (current == size) init = true;
 }
 
-void ConvexPolygon::draw() {
-    if (!init) {
-      TsglDebug("Cannot draw yet.");
-      return;
-    }
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, length);
+// void ConvexPolygon::draw() {
+//     if (!init) {
+//       TsglDebug("Cannot draw yet.");
+//       return;
+//     }
+//     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+//     glDrawArrays(GL_TRIANGLE_FAN, 0, length);
+// }
+
+int ConvexPolygon::getNumberOfVertices() {
+    return length;
+}
+
+float* ConvexPolygon::getVertices() {
+    return vertices;
+}
+
+GLenum ConvexPolygon::getGeometryType() {
+    return GL_TRIANGLE_FAN;
 }
 
 void ConvexPolygon::runTests() {

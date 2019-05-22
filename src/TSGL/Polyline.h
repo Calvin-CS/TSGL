@@ -61,7 +61,15 @@ class Polyline : public Shape {
      * \note A message indicating that the Polyline cannot be drawn yet will be given
      *   if the above condition is met (vertex buffer = not full).
      */
-    void draw();
+    // void draw();
+
+    int getNumberOfVertices();
+
+    float* getVertices();
+
+    GLenum getGeometryType();
+
+    bool isProcessed();
 };
 
 }

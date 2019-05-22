@@ -64,7 +64,13 @@ class ConvexPolygon : public Shape {
      * \note This function does nothing if the vertex buffer is not yet full.
      * \note A message is given indicating that the ConvexPolygon is *NOT* ready to be drawn yet (vertex buffer = not full).
      */
-    void draw();
+    // void draw();
+
+    int getNumberOfVertices();
+
+    float* getVertices();
+
+    GLenum getGeometryType();
 
     /*!
      * \brief Runs the Unit tests.

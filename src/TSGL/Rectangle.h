@@ -34,7 +34,13 @@ class Rectangle : public Shape {
      * \brief Draw the Rectangle.
      * \details This function actually draws the Rectangle to the Canvas.
      */
-    void draw();
+    // void draw();
+
+    int getNumberOfVertices();
+
+    float* getVertices();
+
+    GLenum getGeometryType();
 };
 
 }
