@@ -16,14 +16,14 @@ namespace tsgl {
  *  \note Text is aligned by the upper-left corner.
  *  \note Fonts supported by FreeType are also supported.
  */
-class Text : public Shape {
+class Text {
  private:
     ColorFloat myColor;
     unsigned int myFontSize;
     TextureHandler* myLoader;
     std::wstring myString;
     int myX, myY;
-    float* vertices;
+    bool isTextured;
  public:
 
     /*!
@@ -45,11 +45,11 @@ class Text : public Shape {
      */
     void draw();
 
-    int getNumberOfVertices();
-
-    float* getVertices();
-
-    GLenum getGeometryType();
+    /*!
+     * \brief Accessor for <code>isTextured</code>.
+     * \return Whether the shape is a textured primitive or not.
+     */
+    bool getIsTextured() { return isTextured; }
 };
 
 }

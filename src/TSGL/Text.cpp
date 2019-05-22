@@ -11,7 +11,9 @@ Text::Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int
     myY = y;
     myFontSize = fontsize;
     myColor = color;
-        
+}
+
+void Text::draw() {
     float *vertices = new float[32];                                        // Allocate the vertices
 
     vertices[0]  = myX;                                                     // Pre-init the array with the start coords
@@ -26,25 +28,10 @@ Text::Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int
     vertices[14] = 1.0f, vertices[15] = 0.0f;   // Texture coords of top right
     vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
-}
-
-void Text::draw() {
 
     myLoader->drawText(myString, myFontSize, vertices);
 
     delete[] vertices;
-}
-
-int Text::getNumberOfVertices() {
-    return 32;
-}
-
-float* Text::getVertices() {
-    return vertices;
-}
-
-GLenum Text::getGeometryType() {
-    return GL_LINE_STRIP;
 }
 
 }

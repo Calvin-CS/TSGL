@@ -50,8 +50,6 @@ class Image {
      */
     Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha);
 
-    bool getIsTextured() { return isTextured; }
-
     /*!
      * \brief Draw the Image.
      * \details This function actually draws the Image to the Canvas.
@@ -69,6 +67,12 @@ class Image {
      * \return The width of the Image.
      */
     int getWidth() { return myWidth; }
+
+      /*!
+     * \brief Accessor for <code>isTextured</code>.
+     * \return Whether the shape is a textured primitive or not.
+     */
+    bool getIsTextured() { return isTextured; }
 };
 
 }

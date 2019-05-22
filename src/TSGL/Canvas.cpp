@@ -64,7 +64,7 @@ Canvas::Canvas(int x, int y, int width, int height, std::string title, double ti
 Canvas::~Canvas() {
     // Free our pointer memory
     delete myShapes;
-    delete myBuffer;
+    delete shapeBuffer;
     delete drawTimer;
     delete[] vertexData;
     delete [] screenBuffer;
@@ -135,11 +135,11 @@ void Canvas::draw() {
         std::cout.flush();
 
         bufferMutex.lock();  // Time to flush our buffer
-        if (myBuffer->size() > 0) {     // But only if there is anything to flush
+        if (shapeBuffer->size() > 0) {     // But only if there is anything to flush
           nothingDrawn = false;
-          for (unsigned int i = 0; i < myBuffer->size(); i++)
-            myShapes->push((*myBuffer)[i]);
-          myBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
+          for (unsigned int i = 0; i < shapeBuffer->size(); i++)
+            myShapes->push((*shapeBuffer)[i]);
+          shapeBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
         }
         bufferMutex.unlock();
 
@@ -375,7 +375,7 @@ void Canvas::drawShape(Shape* s) {
 	while (!readyToDraw)
 	  sleep();
     bufferMutex.lock();
-    myBuffer->push(s);  // Push it onto our drawing buffer
+    shapeBuffer->push(s);  // Push it onto our drawing buffer
     bufferMutex.unlock();
 }
 
@@ -387,7 +387,7 @@ void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat 
 
 void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
     Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-    drawShape(t);                                // Push it onto our drawing buffer
+    //drawShape(t);                                // Push it onto our drawing buffer
 }
 
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
@@ -579,7 +579,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     monitorX = xx;
     monitorY = yy;
     myShapes = new Array<Shape*>(b);  // Initialize myShapes
-    myBuffer = new Array<Shape*>(b);
+    shapeBuffer = new Array<Shape*>(b);
     vertexData = new float[6 * b];    // Buffer for vertexes for points
     showFPS = false;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering
