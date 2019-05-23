@@ -33,7 +33,6 @@ protected:
 	int activeWriters, activeReaders, waitingWriters, waitingReaders;
 	pthread_mutex_t lock;
 	pthread_cond_t okToRead, okToWrite;
-	queue<pthread_cond_t> threadsQueue;
 	RWDatabase<tsgl::Rectangle*>* data;
 };
 

@@ -9,7 +9,6 @@
  * \return: The constructed Lock object.
  */
 Lock::Lock() {
-	threadsQueue = queue<pthread_cond_t>();
 	activeWriters = activeReaders = waitingWriters = waitingReaders = 0;
 	lock = PTHREAD_MUTEX_INITIALIZER;
 	okToRead = PTHREAD_COND_INITIALIZER;
@@ -22,7 +21,6 @@ Lock::Lock() {
  * \return: The constructed Lock object.
  */
 Lock::Lock(RWDatabase<tsgl::Rectangle*>& data) {
-	threadsQueue = queue<pthread_cond_t>();
 	activeWriters = activeReaders = waitingWriters = waitingReaders = 0;
 	lock = PTHREAD_MUTEX_INITIALIZER;
 	okToRead = PTHREAD_COND_INITIALIZER;
