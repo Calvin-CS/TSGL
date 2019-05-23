@@ -2,21 +2,13 @@
 
 namespace tsgl {
 
-Rectangle::Rectangle(int x, int y, int width, int height, const ColorFloat &color) {
-    vertices = new float[24];
-    vertices[0] = x;
-    vertices[1] = y;
-    vertices[6] = x + width;
-    vertices[7] = y;
-    vertices[12] = x;
-    vertices[13] = y + height;
-    vertices[18] = x + width;
-    vertices[19] = y + height;
-    vertices[2] = vertices[8] = vertices[14] = vertices[20] = color.R;  // Color of the coords
-    vertices[3] = vertices[9] = vertices[15] = vertices[21] = color.G;
-    vertices[4] = vertices[10] = vertices[16] = vertices[22] = color.B;
-    vertices[5] = vertices[11] = vertices[17] = vertices[23] = color.A;
+Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat &color) {
     numberOfVertices = 4;
     geometryType = GL_TRIANGLE_STRIP;
+    vertices = new float[24];
+    addVertex(x, y, color);
+    addVertex(x + width, y, color);
+    addVertex(x, y + height, color);
+    addVertex(x + width, y + height, color);
 }
 }

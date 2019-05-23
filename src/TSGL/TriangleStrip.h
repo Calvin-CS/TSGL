@@ -22,9 +22,7 @@ namespace tsgl {
  */
 class TriangleStrip : public Shape {
  private:
-    bool init;          // Whether the vertex has been initialized completely
-    int size,           // Number of floating point numbers in vertices
-        current;        // Current number of floating point numbers in vertices
+
  public:
 
     /*!
@@ -35,19 +33,6 @@ class TriangleStrip : public Shape {
      * \return A new TriangleStrip with a buffer for storing the specified numbered of vertices.
      */
     TriangleStrip(int numVertices);
-
-    /*!
-     * \brief Adds another vertex to a TriangleStrip.
-     * \details This function initializes the next vertex in the Polyline and adds it to a TriangleStrip buffer.
-     *      \param x The x position of the vertex.
-     *      \param y The y position of the vertex.
-     *      \param color The reference variable to a color of the vertex.
-     * \note This function does nothing if the vertex buffer is already full.
-     * \note A message will be given to show when the vertex buffer is full.
-     */
-    void addVertex(int x, int y, const ColorFloat &color);
-
-    bool isProcessed();
 };
 
 }

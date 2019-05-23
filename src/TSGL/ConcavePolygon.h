@@ -24,14 +24,12 @@ namespace tsgl {
  */
 class ConcavePolygon : public Shape {
  private:
-    bool init;          // Whether the vertex has been initialized completely
     bool dirty;         // Whether the new vertex buffer is dirty
     float* tarray;      // Buffer for recomputed vertex data
     int size,           // Number of floating point numbers in vertices
         numberOfVertices,
         geometryType,
         tsize,          // Number of floating point numbers in tarray
-        current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
 
     static bool testIntersects();     // Unit test for intersects()
@@ -97,7 +95,7 @@ class ConcavePolygon : public Shape {
      * \note This function does nothing if the vertex buffer is already full.
      * \note A message is given indicating that the vertex buffer is full.
      */
-    void addVertex(int x, int y, const ColorFloat &color);
+    void addVertex(float x, float y, const ColorFloat &color);
 
     /*!
      * \brief Draw the ConcavePolygon.
@@ -108,7 +106,6 @@ class ConcavePolygon : public Shape {
      */
     void preprocess();
 
-    bool isProcessed();
 
     /*!
      * \brief Runs the Unit tests.

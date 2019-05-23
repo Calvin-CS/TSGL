@@ -95,7 +95,7 @@ void CartesianCanvas::drawFunction(const Function &function, float sleepTime, Co
     Decimal x = minX;
     for (int i = 0; i < size; ++i) {
         getScreenCoordinates(x, function.valueAt(x), screenX, screenY);
-        p->addNextVertex(screenX, screenY, color);
+        p->addVertex(screenX, screenY, color);
         x += pixelWidth;
     }
     drawDrawable(p);
@@ -144,7 +144,7 @@ void CartesianCanvas::drawPartialFunction(functionPointer &function, Decimal min
     Decimal x = min;
     for (int i = 0; i < size; ++i) {
         getScreenCoordinates(x, (function)(x), screenX, screenY);
-        p->addNextVertex(screenX, screenY, color);
+        p->addVertex(screenX, screenY, color);
         x += pixelWidth;
     }
     drawDrawable(p);

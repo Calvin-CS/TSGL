@@ -8,10 +8,8 @@ ConcavePolygon::ConcavePolygon(int numVertices) {
   length = numVertices+1;
   size = length * 6;
   tsize = 0;
-  current = 0;
   tarray = nullptr;
   vertices = new float[size];
-  init = false;
   dirty = false;
 }
 
@@ -19,7 +17,7 @@ ConcavePolygon::~ConcavePolygon() {
   delete[] tarray;
 }
 
-void ConcavePolygon::addVertex(int x, int y, const ColorFloat &color) {
+void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
     return;
@@ -65,10 +63,6 @@ bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, fl
   bool b3 = ( (px - x1) * (y3 - y1) - (x3 - x1) * (py - y1) ) <= 0.0f;
 
   return ((b1 == b2) && (b2 == b3));
-}
-
-bool ConcavePolygon::isProcessed() {
-  return init;
 }
 
 void ConcavePolygon::preprocess() {
@@ -151,6 +145,7 @@ void ConcavePolygon::preprocess() {
       newvertices.pop();
     }
 
+    delete[] vertices;
     vertices = tarray;
     numberOfVertices = tsize / 6;
     geometryType = GL_TRIANGLES;

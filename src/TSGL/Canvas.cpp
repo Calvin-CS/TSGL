@@ -265,9 +265,9 @@ void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloa
             newX = xverts+radius*cos(i*delta);
             newY = yverts+radius*sin(i*delta);
             if (i > 0)
-                p->addNextVertex(oldX, oldY,color);
+                p->addVertex(oldX, oldY,color);
         }
-        p->addNextVertex(newX, newY,color);
+        p->addVertex(newX, newY,color);
         drawDrawable(p);
     }
 }
@@ -283,7 +283,7 @@ void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
-            p->addNextVertex(xverts[i], yverts[i], color[i]);
+            p->addVertex(xverts[i], yverts[i], color[i]);
         }
         drawDrawable(p);  // Push it onto our drawing buffer
     }
@@ -300,7 +300,7 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
-            p->addNextVertex(x[i], y[i], color[i]);
+            p->addVertex(x[i], y[i], color[i]);
         }
         drawDrawable(p);  // Push it onto our drawing buffer
     }
@@ -356,11 +356,11 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
     }
     else {
         Polyline* p = new Polyline(5);
-        p->addNextVertex(x1, y1, color);
-        p->addNextVertex(x1, y2, color);
-        p->addNextVertex(x2, y2, color);
-        p->addNextVertex(x2, y1, color);
-        p->addNextVertex(x1, y1, color);
+        p->addVertex(x1, y1, color);
+        p->addVertex(x1, y2, color);
+        p->addVertex(x2, y2, color);
+        p->addVertex(x2, y1, color);
+        p->addVertex(x1, y1, color);
         drawDrawable(p);
     }
 }
@@ -395,10 +395,10 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
     }
     else {
         Polyline* p = new Polyline(4);
-        p->addNextVertex(x1,y1,color);
-        p->addNextVertex(x2,y2,color);
-        p->addNextVertex(x3,y3,color);
-        p->addNextVertex(x1,y1,color);
+        p->addVertex(x1,y1,color);
+        p->addVertex(x2,y2,color);
+        p->addVertex(x3,y3,color);
+        p->addVertex(x1,y1,color);
         drawDrawable(p);
     }
 }
@@ -414,7 +414,7 @@ void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat 
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
-            p->addNextVertex(xverts[i], yverts[i], color[i]);
+            p->addVertex(xverts[i], yverts[i], color[i]);
         }
         drawDrawable(p);  // Push it onto our drawing buffer
     }

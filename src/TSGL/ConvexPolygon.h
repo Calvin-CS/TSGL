@@ -22,9 +22,7 @@ namespace tsgl {
  */
 class ConvexPolygon : public Shape {
  private:
-    bool init;          // Whether the vertex has been initialized completely
-    int size,           // Number of floating point numbers in vertices
-        current;        // Current number of floating point numbers in vertices
+   int size;
 
     static bool testAddVertex();  // Unit test for addVertex()
  public:
@@ -37,17 +35,6 @@ class ConvexPolygon : public Shape {
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
     ConvexPolygon(int numVertices);
-
-    /*!
-     * \brief Adds another vertex to a ConvexPolygon.
-     * \details This function initializes the next vertex in the Polyline and adds it to a ConvexPolygon buffer.
-     *   \param x The x position of the vertex.
-     *   \param y The y position of the vertex.
-     *   \param color The reference variable of the color of the vertex.
-     * \note This function does nothing if the vertex buffer is already full.
-     * \note A message is given indicating when the vertex buffer is full.
-     */
-    void addVertex(int x, int y, const ColorFloat &color);
 
     /*!
      * \brief Runs the Unit tests.
