@@ -13,9 +13,6 @@ ConvexPolygon::ConvexPolygon(int numVertices) {
     geometryType = GL_TRIANGLE_FAN;
 }
 
-ConvexPolygon::~ConvexPolygon() {
-    delete[] vertices;
-}
 
 void ConvexPolygon::addVertex(int x, int y, const ColorFloat &color) {
     if (init) {
@@ -31,27 +28,6 @@ void ConvexPolygon::addVertex(int x, int y, const ColorFloat &color) {
     current += 6;
     if (current == size) init = true;
 }
-
-// void ConvexPolygon::draw() {
-//     if (!init) {
-//       TsglDebug("Cannot draw yet.");
-//       return;
-//     }
-//     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-//     glDrawArrays(GL_TRIANGLE_FAN, 0, length);
-// }
-
-// int ConvexPolygon::getNumberOfVertices() {
-//     return length;
-// }
-
-// float* ConvexPolygon::getVertices() {
-//     return vertices;
-// }
-
-// GLenum ConvexPolygon::getGeometryType() {
-//     return GL_TRIANGLE_FAN;
-// }
 
 void ConvexPolygon::runTests() {
     TsglDebug("Testing ConvexPolygon class...");

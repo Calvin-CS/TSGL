@@ -15,7 +15,7 @@ namespace tsgl {
  */
 class Triangle : public Shape {
  private:
-    //float vertices[18];
+ 
  public:
 
     /*!
@@ -31,18 +31,6 @@ class Triangle : public Shape {
      * \return A new Triangle with the specified vertices and color.
      */
     Triangle(int x1, int y1, int x2, int y2, int x3, int y3, const ColorFloat &color);
-
-    /*!
-     * \brief Draw the Triangle.
-     * \details This function actually draws the Triangle to the Canvas.
-     */
-   //  void draw();
-   //  int getNumberOfVertices();
-
-   //  float* getVertices();
-
-   //  GLenum getGeometryType();
-   ~Triangle();
 };
 
 }

@@ -19,26 +19,4 @@ Rectangle::Rectangle(int x, int y, int width, int height, const ColorFloat &colo
     numberOfVertices = 4;
     geometryType = GL_TRIANGLE_STRIP;
 }
-
-Rectangle::~Rectangle() {
-    delete[] vertices;
-}
-
-// void Rectangle::draw() {
-//     glBufferData(GL_ARRAY_BUFFER, 24 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-//     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-// }
-
-// int Rectangle::getNumberOfVertices() {
-//     return 4;
-// }
-
-// float* Rectangle::getVertices() {
-//     return vertices;
-// }
-
-// GLenum Rectangle::getGeometryType() {
-//     return GL_TRIANGLE_STRIP;
-// }
-
 }

@@ -23,10 +23,8 @@ namespace tsgl {
 class ConvexPolygon : public Shape {
  private:
     bool init;          // Whether the vertex has been initialized completely
-    //float* vertices;    // Buffer for vertex data
     int size,           // Number of floating point numbers in vertices
         current;        // Current number of floating point numbers in vertices
-        //length         // Number of vertices in vertices (size / 6)
 
     static bool testAddVertex();  // Unit test for addVertex()
  public:
@@ -41,13 +39,6 @@ class ConvexPolygon : public Shape {
     ConvexPolygon(int numVertices);
 
     /*!
-     * \brief Destroys a ConvexPolygon object.
-     * \details Destructor for a ConvexPolygon.
-     * \details Frees up memory that was allocated to a ConvexPolygon object.
-     */
-    ~ConvexPolygon();
-
-    /*!
      * \brief Adds another vertex to a ConvexPolygon.
      * \details This function initializes the next vertex in the Polyline and adds it to a ConvexPolygon buffer.
      *   \param x The x position of the vertex.
@@ -57,20 +48,6 @@ class ConvexPolygon : public Shape {
      * \note A message is given indicating when the vertex buffer is full.
      */
     void addVertex(int x, int y, const ColorFloat &color);
-
-    /*!
-     * \brief Draw the ConvexPolygon.
-     * \details This function actually draws the ConvexPolygon to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message is given indicating that the ConvexPolygon is *NOT* ready to be drawn yet (vertex buffer = not full).
-     */
-    // void draw();
-
-    // int getNumberOfVertices();
-
-    // float* getVertices();
-
-    // GLenum getGeometryType();
 
     /*!
      * \brief Runs the Unit tests.

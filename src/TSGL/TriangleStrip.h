@@ -23,10 +23,8 @@ namespace tsgl {
 class TriangleStrip : public Shape {
  private:
     bool init;          // Whether the vertex has been initialized completely
-    //float* vertices;    // Buffer for vertex data
     int size,           // Number of floating point numbers in vertices
         current;        // Current number of floating point numbers in vertices
-        //length;         // Number of vertices in vertices (size / 6)
  public:
 
     /*!
@@ -39,13 +37,6 @@ class TriangleStrip : public Shape {
     TriangleStrip(int numVertices);
 
     /*!
-     * \brief Destroys a TriangleStrip object
-     * \details Destructor for a TriangleStrip object.
-     * \details Frees up memory that has been allocated to a TriangleStrip object.
-     */
-    ~TriangleStrip();
-
-    /*!
      * \brief Adds another vertex to a TriangleStrip.
      * \details This function initializes the next vertex in the Polyline and adds it to a TriangleStrip buffer.
      *      \param x The x position of the vertex.
@@ -55,21 +46,6 @@ class TriangleStrip : public Shape {
      * \note A message will be given to show when the vertex buffer is full.
      */
     void addVertex(int x, int y, const ColorFloat &color);
-
-    /*!
-     * \brief Draw the TriangleStrip.
-     * \details This function actually draws the TriangleStrip to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message will be given to show if the TriangleStrip is *NOT* ready to be drawn (vertex buffer = not full).
-     * \note Implemented inherited abstract method from Shape class.
-     */
-    // void draw();
-
-    // int getNumberOfVertices();
-
-    // float* getVertices();
-
-    // GLenum getGeometryType();
 
     bool isProcessed();
 };

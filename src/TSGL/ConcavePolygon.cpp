@@ -16,7 +16,6 @@ ConcavePolygon::ConcavePolygon(int numVertices) {
 }
 
 ConcavePolygon::~ConcavePolygon() {
-  delete[] vertices;
   delete[] tarray;
 }
 
@@ -67,18 +66,6 @@ bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, fl
 
   return ((b1 == b2) && (b2 == b3));
 }
-
-// int ConcavePolygon::getNumberOfVertices() {
-//     return tsize / 6;
-// }
-
-// float* ConcavePolygon::getVertices() {
-//     return tarray;
-// }
-
-// GLenum ConcavePolygon::getGeometryType() {
-//     return GL_TRIANGLES;
-// }
 
 bool ConcavePolygon::isProcessed() {
   return init;
@@ -169,9 +156,6 @@ void ConcavePolygon::preprocess() {
     geometryType = GL_TRIANGLES;
 
   }
-
-  // glBufferData(GL_ARRAY_BUFFER, tsize * sizeof(float), tarray, GL_DYNAMIC_DRAW);
-  // glDrawArrays(GL_TRIANGLES, 0, tsize / 6);
 
   //Debug Outline
   //    for (int i = 0; i < size; i += 6) {

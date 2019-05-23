@@ -13,9 +13,6 @@ TriangleStrip::TriangleStrip(int numVertices) {
     geometryType = GL_TRIANGLE_STRIP;
 }
 
-TriangleStrip::~TriangleStrip() {
-    delete[] vertices;
-}
 
 void TriangleStrip::addVertex(int x, int y, const ColorFloat &color) {
     if (init) {
@@ -31,23 +28,6 @@ void TriangleStrip::addVertex(int x, int y, const ColorFloat &color) {
     current += 6;
     if (current == size) init = true;
 }
-
-// void TriangleStrip::draw() {
-//     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-//     glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
-// }
-
-// int TriangleStrip::getNumberOfVertices() {
-//     return length;
-// }
-
-// float* TriangleStrip::getVertices() {
-//     return vertices;
-// }
-
-// GLenum TriangleStrip::getGeometryType() {
-//     return GL_TRIANGLE_STRIP;
-// }
 
 bool TriangleStrip::isProcessed() {
   return init;

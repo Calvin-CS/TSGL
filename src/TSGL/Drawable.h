@@ -42,7 +42,7 @@ namespace tsgl {
      *    glDrawArrays(drawingMode, 0, numberOfVertices);
      *    </code>
      *  - Really bad things could potentially happen if you do not follow this format. These two statements *MUST* be
-     *    in the draw() method of the subclass that extends the Shape class.
+     *    in the draw() method of the subclass that extends the Drawable class.
      *  - You can add other statements in the subclass
      * \note Please refer to the class description for more information and warnings about overriding this method.
      */

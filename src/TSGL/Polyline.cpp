@@ -13,9 +13,6 @@ Polyline::Polyline(int numVertices) {
     geometryType = GL_LINE_STRIP;
 }
 
-Polyline::~Polyline() {
-    delete[] vertices;
-}
 
 void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
     if (init)  {
@@ -31,27 +28,6 @@ void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
     current += 6;
     if (current == size) init = true;
 }
-
-// void Polyline::draw() {
-//     if (!init || length < 2) {
-//       TsglDebug("Cannot draw uninitialized Polyline.");
-//       return;
-//     }
-//     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-//     glDrawArrays(GL_LINE_STRIP, 0, length);
-// }
-
-// int Polyline::getNumberOfVertices() {
-//     return length;
-// }
-
-// float* Polyline::getVertices() {
-//     return vertices;
-// }
-
-// GLenum Polyline::getGeometryType() {
-//     return GL_LINE_STRIP;
-// }
 
 bool Polyline::isProcessed() {
     if (!init || numberOfVertices < 2) {

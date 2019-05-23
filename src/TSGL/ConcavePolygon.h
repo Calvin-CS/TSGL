@@ -26,7 +26,6 @@ class ConcavePolygon : public Shape {
  private:
     bool init;          // Whether the vertex has been initialized completely
     bool dirty;         // Whether the new vertex buffer is dirty
-    //float* vertices;    // Buffer for vertex data
     float* tarray;      // Buffer for recomputed vertex data
     int size,           // Number of floating point numbers in vertices
         numberOfVertices,
@@ -108,12 +107,6 @@ class ConcavePolygon : public Shape {
      * \warning This is an order of n-cubed operation, and is thus <b>VERY SLOW</b>.
      */
     void preprocess();
-
-    // int getNumberOfVertices();
-
-    // float* getVertices();
-
-    // GLenum getGeometryType();
 
     bool isProcessed();
 

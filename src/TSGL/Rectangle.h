@@ -15,7 +15,7 @@ namespace tsgl {
  */
 class Rectangle : public Shape {
  private:
-    //float vertices[24];
+ 
  public:
 
     /*!
@@ -29,20 +29,6 @@ class Rectangle : public Shape {
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
     Rectangle(int x, int y, int width, int height, const ColorFloat &color);
-
-    ~Rectangle();
-
-    /*!
-     * \brief Draw the Rectangle.
-     * \details This function actually draws the Rectangle to the Canvas.
-     */
-    // void draw();
-
-   //  int getNumberOfVertices();
-
-   //  float* getVertices();
-
-   //  GLenum getGeometryType();
 };
 
 }

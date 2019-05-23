@@ -21,10 +21,8 @@ namespace tsgl {
 class Polyline : public Shape {
  private:
     bool init;          // Whether the Polyline has been initialized completely
-    //float* vertices;    // Buffer for vertex data
     int size,           // Number of floating point numbers in vertices
         current;        // Current number of floating point numbers in vertices
-        //length;         // Number of vertices in vertices (size / 6)
  public:
 
     /*!
@@ -37,13 +35,6 @@ class Polyline : public Shape {
     Polyline(int numVertices);
 
     /*!
-     * \brief Destroys a Polyline object.
-     * \details Destructor for a Polyline object.
-     * \details Frees up memory allocated to a Polyline object.
-     */
-    ~Polyline();
-
-    /*!
      * \brief Adds another vertex to a Polyline.
      * \details This function initializes the next vertex in a Polyline and adds it to the Polyline's buffer.
      *   \param x The x position of the vertex.
@@ -53,21 +44,6 @@ class Polyline : public Shape {
      * \note A message is given indicating when the vertex buffer is full.
      */
     void addNextVertex(int x, int y, const ColorFloat &color = BLACK);
-
-    /*!
-     * \brief Draw the Polyline.
-     * \details This function actually draws the Polyline to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message indicating that the Polyline cannot be drawn yet will be given
-     *   if the above condition is met (vertex buffer = not full).
-     */
-    // void draw();
-
-    // int getNumberOfVertices();
-
-    // float* getVertices();
-
-    // GLenum getGeometryType();
 
     bool isProcessed();
 };

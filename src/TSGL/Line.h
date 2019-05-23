@@ -15,7 +15,7 @@ namespace tsgl {
  */
 class Line : public Shape {
  private:
-    //float vertices[12];
+ 
  public:
 
     /*!
@@ -29,20 +29,6 @@ class Line : public Shape {
      * \return A new Line with the specified endpoints and color.
      */
     Line(int x1, int y1, int x2, int y2, const ColorFloat &color);
-
-    /*!
-     * \brief Draw the Line.
-     * \details This function actually draws the Line to the Canvas.
-     */
-    //void draw();
-
-   //  int getNumberOfVertices();
-
-   //  float* getVertices();
-
-   //  GLenum getGeometryType();
-
-   ~Line();
 };
 
 }
