@@ -42,7 +42,7 @@ class Text : public Drawable {
      * \brief Draw the Text.
      * \details This function actually draws the Text to the Canvas.
      */
-    void draw();
+    virtual void draw();
 };
 
 }

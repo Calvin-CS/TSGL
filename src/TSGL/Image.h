@@ -53,7 +53,7 @@ class Image : public Drawable {
      * \brief Draw the Image.
      * \details This function actually draws the Image to the Canvas.
      */
-    void draw();
+    virtual void draw();
 
     /*!
      * \brief Accessor for the image's height.

@@ -44,7 +44,7 @@ class Shape : public Drawable {
      * \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Shape.</b>
      * \note Refer to the Shape class description for more details.
      */
-    Shape() { isTextured = false; }
+    Shape();
 
     /*!
      * \brief Destructor for the Shape.
@@ -58,29 +58,11 @@ class Shape : public Drawable {
      * \note A message indicating that the Shape cannot be drawn yet will be given
      *   if the above condition is met (vertex buffer = not full).
      */
-    void draw() {
-      glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-      glDrawArrays(geometryType, 0, numberOfVertices);
-    }
+    virtual void draw();
 
-    virtual void addVertex(float x, float y, const ColorFloat &color = BLACK) {
-      if (init) {
-         TsglDebug("Cannot add anymore vertices.");
-         return;
-      }
-      vertices[current] = x;
-      vertices[current + 1] = y;
-      vertices[current + 2] = color.R;
-      vertices[current + 3] = color.G;
-      vertices[current + 4] = color.B;
-      vertices[current + 5] = color.A;
-      current += 6;
-      if (current == numberOfVertices*6) init = true;
-    }
+    virtual void addVertex(float x, float y, const ColorFloat &color = BLACK);
 
-    virtual bool isProcessed() {
-      return init;
-    }
+    virtual bool isProcessed() { return init; }
 };
 
 }

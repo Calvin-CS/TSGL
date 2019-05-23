@@ -6,7 +6,7 @@ ConcavePolygon::ConcavePolygon(int numVertices) {
   if (numVertices < 3)
     TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
   length = numVertices+1;
-  size = length * 6;
+  size = numVertices * 6;
   tsize = 0;
   tarray = nullptr;
   vertices = new float[size];
@@ -31,13 +31,7 @@ void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
   current += 6;
   dirty = true;
 
-  if (current == size-6) {
-    vertices[current] = vertices[0];
-    vertices[current + 1] = vertices[1];
-    vertices[current + 2] = vertices[2];
-    vertices[current + 3] = vertices[3];
-    vertices[current + 4] = vertices[4];
-    vertices[current + 5] = vertices[5];
+  if (current == size) {
     init = true;
     preprocess();
   }
