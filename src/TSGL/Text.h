@@ -5,7 +5,7 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
-#include "Shape.h"          // For extending our Shape object
+#include "Drawable.h"          // For extending our Shape object
 #include "TextureHandler.h"
 
 namespace tsgl {
@@ -16,14 +16,13 @@ namespace tsgl {
  *  \note Text is aligned by the upper-left corner.
  *  \note Fonts supported by FreeType are also supported.
  */
-class Text {
+class Text : public Drawable {
  private:
     ColorFloat myColor;
     unsigned int myFontSize;
     TextureHandler* myLoader;
     std::wstring myString;
     int myX, myY;
-    bool isTextured;
  public:
 
     /*!
@@ -44,12 +43,6 @@ class Text {
      * \details This function actually draws the Text to the Canvas.
      */
     void draw();
-
-    /*!
-     * \brief Accessor for <code>isTextured</code>.
-     * \return Whether the shape is a textured primitive or not.
-     */
-    bool getIsTextured() { return isTextured; }
 };
 
 }

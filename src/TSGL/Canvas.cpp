@@ -63,8 +63,8 @@ Canvas::Canvas(int x, int y, int width, int height, std::string title, double ti
 
 Canvas::~Canvas() {
     // Free our pointer memory
-    delete myShapes;
-    delete shapeBuffer;
+    delete myDrawables;
+    delete drawableBuffer;
     delete drawTimer;
     delete[] vertexData;
     delete [] screenBuffer;
@@ -135,11 +135,11 @@ void Canvas::draw() {
         std::cout.flush();
 
         bufferMutex.lock();  // Time to flush our buffer
-        if (shapeBuffer->size() > 0) {     // But only if there is anything to flush
+        if (drawableBuffer->size() > 0) {     // But only if there is anything to flush
           nothingDrawn = false;
-          for (unsigned int i = 0; i < shapeBuffer->size(); i++)
-            myShapes->push((*shapeBuffer)[i]);
-          shapeBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
+          for (unsigned int i = 0; i < drawableBuffer->size(); i++)
+            myDrawables->push((*drawableBuffer)[i]);
+          drawableBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
         }
         bufferMutex.unlock();
 
@@ -163,24 +163,22 @@ void Canvas::draw() {
           if (toClear) glClear(GL_COLOR_BUFFER_BIT);
           toClear = false;
 
-          unsigned int size = myShapes->size();
+          unsigned int size = myDrawables->size();
           for (unsigned int i = 0; i < size; i++) {
-            Shape* s = (*myShapes)[i];
-            if(s->isProcessed())
-              if (!s->getIsTextured()) {
-                glBufferData(GL_ARRAY_BUFFER, s->getNumberOfVertices() * 6 * sizeof(float), s->getVertices(), GL_DYNAMIC_DRAW);
-                glDrawArrays(s->getGeometryType(), 0, s->getNumberOfVertices());
+            Drawable* d = (*myDrawables)[i];
+            if(d->isProcessed())
+              if (!d->getIsTextured()) {
+                d->draw();
               } else {
                 textureShaders(true);
-                glBufferData(GL_ARRAY_BUFFER, s->getNumberOfVertices() * 6 * sizeof(float), s->getVertices(), GL_DYNAMIC_DRAW);
-                glDrawArrays(s->getGeometryType(), 0, s->getNumberOfVertices());
+                d->draw();
                 textureShaders(false);
               }
           }
 
           if (loopAround) {
             nothingDrawn = false;
-            int toend = myShapes->capacity() - posLast;
+            int toend = myDrawables->capacity() - posLast;
             glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
                    &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
             glDrawArrays(GL_POINTS, 0, toend);
@@ -200,7 +198,7 @@ void Canvas::draw() {
 
         // Update our screenBuffer copy with the screen
         glViewport(0,0,winWidth*scaling,winHeight*scaling);
-        myShapes->clear();                           // Clear our buffer of shapes to be drawn
+        myDrawables->clear();                           // Clear our buffer of shapes to be drawn
 
         if (hasEXTFramebuffer)
           glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
@@ -258,7 +256,7 @@ void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloa
         ConvexPolygon *s = new ConvexPolygon(sides);
         for (int i = 0; i < sides; ++i)
             s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
-        drawShape(s);
+        drawDrawable(s);
     } else {
         float oldX = 0, oldY = 0, newX = 0, newY = 0;
         Polyline *p = new Polyline(sides+1);
@@ -270,7 +268,7 @@ void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloa
                 p->addNextVertex(oldX, oldY,color);
         }
         p->addNextVertex(newX, newY,color);
-        drawShape(p);
+        drawDrawable(p);
     }
 }
 
@@ -280,14 +278,14 @@ void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        drawDrawable(p);  // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
             p->addNextVertex(xverts[i], yverts[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        drawDrawable(p);  // Push it onto our drawing buffer
     }
 }
 
@@ -297,25 +295,25 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
         for (int i = 0; i < size; i++) {
             p->addVertex(x[i], y[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        drawDrawable(p);  // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
             p->addNextVertex(x[i], y[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        drawDrawable(p);  // Push it onto our drawing buffer
     }
 }
 
 void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
-    im->draw();                                        // Push it onto our drawing buffer
+    drawDrawable(im);                                       // Push it onto our drawing buffer
 }
 
 void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
-    drawShape(l);                               // Push it onto our drawing buffer
+    drawDrawable(l);                               // Push it onto our drawing buffer
 }
 
 inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
@@ -324,7 +322,7 @@ inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
 
 void Canvas::drawPoint(int x, int y, ColorFloat color) {
     pointArrayMutex.lock();
-    if (pointBufferPosition >= myShapes->capacity()) {
+    if (pointBufferPosition >= myDrawables->capacity()) {
         loopAround = true;
         pointBufferPosition = 0;
     }
@@ -344,8 +342,8 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
 void Canvas::drawProgress(ProgressBar* p) {
     for (int i = 0; i < p->getSegs(); ++i) {
       drawText(to_string(i),p->getSegX(i)+8,p->getSegY()-8,32,BLACK);
-      drawShape(p->getRect(i));
-      drawShape(p->getBorder(i));
+      drawDrawable(p->getRect(i));
+      drawDrawable(p->getBorder(i));
     }
 }
 
@@ -354,7 +352,7 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
         if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
         Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-        drawShape(rec);                                     // Push it onto our drawing buffer
+        drawDrawable(rec);                                     // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(5);
@@ -363,11 +361,11 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
         p->addNextVertex(x2, y2, color);
         p->addNextVertex(x2, y1, color);
         p->addNextVertex(x1, y1, color);
-        drawShape(p);
+        drawDrawable(p);
     }
 }
 
-void Canvas::drawShape(Shape* s) {
+void Canvas::drawDrawable(Drawable* d) {
 	if (!started) {
 	  TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
 	  return;
@@ -375,7 +373,7 @@ void Canvas::drawShape(Shape* s) {
 	while (!readyToDraw)
 	  sleep();
     bufferMutex.lock();
-    shapeBuffer->push(s);  // Push it onto our drawing buffer
+    drawableBuffer->push(d);  // Push it onto our drawing buffer
     bufferMutex.unlock();
 }
 
@@ -387,13 +385,13 @@ void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat 
 
 void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat color) {
     Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
-    //drawShape(t);                                // Push it onto our drawing buffer
+    drawDrawable(t);                                // Push it onto our drawing buffer
 }
 
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
     if (filled) {
         Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-        drawShape(t);                                               // Push it onto our drawing buffer
+        drawDrawable(t);                                               // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(4);
@@ -401,7 +399,7 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
         p->addNextVertex(x2,y2,color);
         p->addNextVertex(x3,y3,color);
         p->addNextVertex(x1,y1,color);
-        drawShape(p);
+        drawDrawable(p);
     }
 }
 
@@ -411,14 +409,14 @@ void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat 
         for (int i = 0; i < size; i++) {
             p->addVertex(xverts[i], yverts[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        drawDrawable(p);  // Push it onto our drawing buffer
     }
     else {
         Polyline* p = new Polyline(size);
         for (int i = 0; i < size; i++) {
             p->addNextVertex(xverts[i], yverts[i], color[i]);
         }
-        drawShape(p);  // Push it onto our drawing buffer
+        drawDrawable(p);  // Push it onto our drawing buffer
     }
 }
 
@@ -578,8 +576,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     started = false;                  // We haven't started the window yet
     monitorX = xx;
     monitorY = yy;
-    myShapes = new Array<Shape*>(b);  // Initialize myShapes
-    shapeBuffer = new Array<Shape*>(b);
+    myDrawables = new Array<Drawable*>(b);  // Initialize myDrawables
+    drawableBuffer = new Array<Drawable*>(b);
     vertexData = new float[6 * b];    // Buffer for vertexes for points
     showFPS = false;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering

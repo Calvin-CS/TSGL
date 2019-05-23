@@ -5,11 +5,12 @@ namespace tsgl {
 Polyline::Polyline(int numVertices) {
     if (numVertices < 2)
       TsglDebug("Cannot have a line with fewer than 2 vertices.");
-    length = numVertices;
-    size = length * 6;
+    numberOfVertices = numVertices;
+    size = numberOfVertices * 6;
     current = 0;
     vertices = new float[size];
     init = false;
+    geometryType = GL_LINE_STRIP;
 }
 
 Polyline::~Polyline() {
@@ -40,20 +41,20 @@ void Polyline::addNextVertex(int x, int y, const ColorFloat &color) {
 //     glDrawArrays(GL_LINE_STRIP, 0, length);
 // }
 
-int Polyline::getNumberOfVertices() {
-    return length;
-}
+// int Polyline::getNumberOfVertices() {
+//     return length;
+// }
 
-float* Polyline::getVertices() {
-    return vertices;
-}
+// float* Polyline::getVertices() {
+//     return vertices;
+// }
 
-GLenum Polyline::getGeometryType() {
-    return GL_LINE_STRIP;
-}
+// GLenum Polyline::getGeometryType() {
+//     return GL_LINE_STRIP;
+// }
 
 bool Polyline::isProcessed() {
-    if (!init || length < 2) {
+    if (!init || numberOfVertices < 2) {
       TsglDebug("Cannot draw uninitialized Polyline.");
       return false;
     }

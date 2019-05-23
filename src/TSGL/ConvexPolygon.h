@@ -23,10 +23,10 @@ namespace tsgl {
 class ConvexPolygon : public Shape {
  private:
     bool init;          // Whether the vertex has been initialized completely
-    float* vertices;    // Buffer for vertex data
+    //float* vertices;    // Buffer for vertex data
     int size,           // Number of floating point numbers in vertices
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 6)
+        current;        // Current number of floating point numbers in vertices
+        //length         // Number of vertices in vertices (size / 6)
 
     static bool testAddVertex();  // Unit test for addVertex()
  public:
@@ -66,11 +66,11 @@ class ConvexPolygon : public Shape {
      */
     // void draw();
 
-    int getNumberOfVertices();
+    // int getNumberOfVertices();
 
-    float* getVertices();
+    // float* getVertices();
 
-    GLenum getGeometryType();
+    // GLenum getGeometryType();
 
     /*!
      * \brief Runs the Unit tests.

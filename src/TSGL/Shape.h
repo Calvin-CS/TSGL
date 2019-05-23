@@ -7,6 +7,7 @@
 
 #include <GL/glew.h>    // Needed for GL function calls
 #include "Color.h"      // Needed for color type
+#include "Drawable.h"
 
 namespace tsgl {
 
@@ -31,9 +32,12 @@ namespace tsgl {
  *  \details Theoretically, you could potentially extend the Shape class so that you can create another Shape class that suits your needs.
  *  \details However, this is not recommended for normal use of the TSGL library.
  */
-class Shape {
+class Shape : public Drawable {
  protected:
-    bool isTextured; /*! Whether the shape is textured or not. If extending Shape, <B> you *must* leave this at false (unless you are working with an image). </B> */
+    int numberOfVertices;
+    float* vertices;
+    GLenum geometryType;
+    //bool isTextured; /*! Whether the shape is textured or not. If extending Shape, <B> you *must* leave this at false (unless you are working with an image). </B> */
  public:
 
     /*!
@@ -50,37 +54,18 @@ class Shape {
     /*!
      * \brief Destructor for the Shape.
      */
-    virtual ~Shape() {}
+    virtual ~Shape() { }
 
-    /*!
-     * \brief Actually draws the Shape to the Canvas.
-     * \details This method renders the shape to the Canvas.
-     *  - When you extend the Shape class, you *MUST* provide a definition for this method.
-     *  - The definition must follow this format:
-     *    <code>
-     *    glBufferData(drawingMode, numberOfVertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-     *    glDrawArrays(drawingMode, 0, numberOfVertices);
-     *    </code>
-     *  - Really bad things could potentially happen if you do not follow this format. These two statements *MUST* be
-     *    in the draw() method of the subclass that extends the Shape class.
-     *  - You can add other statements in the subclass
-     * \note Please refer to the class description for more information and warnings about overriding this method.
-     */
-    // virtual void draw() = 0;  // Abstract method for actually drawing the shape
+    void draw() {
+      glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+      glDrawArrays(geometryType, 0, numberOfVertices);
+    }
 
-    virtual int getNumberOfVertices() = 0;
+   //  virtual int getNumberOfVertices() = 0;
 
-    virtual float* getVertices() = 0;
+   //  virtual float* getVertices() = 0;
 
-    virtual GLenum getGeometryType() = 0;
-
-    virtual bool isProcessed() { return true; }
-
-    /*!
-     * \brief Accessor for <code>isTextured</code>.
-     * \return Whether the shape is a textured primitive or not.
-     */
-    bool getIsTextured() { return isTextured; }
+   //  virtual GLenum getGeometryType() = 0;
 };
 
 }

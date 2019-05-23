@@ -26,9 +26,11 @@ class ConcavePolygon : public Shape {
  private:
     bool init;          // Whether the vertex has been initialized completely
     bool dirty;         // Whether the new vertex buffer is dirty
-    float* vertices;    // Buffer for vertex data
+    //float* vertices;    // Buffer for vertex data
     float* tarray;      // Buffer for recomputed vertex data
     int size,           // Number of floating point numbers in vertices
+        numberOfVertices,
+        geometryType,
         tsize,          // Number of floating point numbers in tarray
         current,        // Current number of floating point numbers in vertices
         length;         // Number of vertices in vertices (size / 6)
@@ -107,11 +109,11 @@ class ConcavePolygon : public Shape {
      */
     void preprocess();
 
-    int getNumberOfVertices();
+    // int getNumberOfVertices();
 
-    float* getVertices();
+    // float* getVertices();
 
-    GLenum getGeometryType();
+    // GLenum getGeometryType();
 
     bool isProcessed();
 

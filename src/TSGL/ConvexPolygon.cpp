@@ -5,11 +5,12 @@ namespace tsgl {
 ConvexPolygon::ConvexPolygon(int numVertices) {
     if (numVertices < 3)
       TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
-    length = numVertices;
-    size = length * 6;
+    numberOfVertices = numVertices;
+    size = numberOfVertices * 6;
     current = 0;
     vertices = new float[size];
     init = false;
+    geometryType = GL_TRIANGLE_FAN;
 }
 
 ConvexPolygon::~ConvexPolygon() {
@@ -40,17 +41,17 @@ void ConvexPolygon::addVertex(int x, int y, const ColorFloat &color) {
 //     glDrawArrays(GL_TRIANGLE_FAN, 0, length);
 // }
 
-int ConvexPolygon::getNumberOfVertices() {
-    return length;
-}
+// int ConvexPolygon::getNumberOfVertices() {
+//     return length;
+// }
 
-float* ConvexPolygon::getVertices() {
-    return vertices;
-}
+// float* ConvexPolygon::getVertices() {
+//     return vertices;
+// }
 
-GLenum ConvexPolygon::getGeometryType() {
-    return GL_TRIANGLE_FAN;
-}
+// GLenum ConvexPolygon::getGeometryType() {
+//     return GL_TRIANGLE_FAN;
+// }
 
 void ConvexPolygon::runTests() {
     TsglDebug("Testing ConvexPolygon class...");

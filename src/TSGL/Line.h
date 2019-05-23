@@ -15,7 +15,7 @@ namespace tsgl {
  */
 class Line : public Shape {
  private:
-    float vertices[12];
+    //float vertices[12];
  public:
 
     /*!
@@ -36,11 +36,13 @@ class Line : public Shape {
      */
     //void draw();
 
-    int getNumberOfVertices();
+   //  int getNumberOfVertices();
 
-    float* getVertices();
+   //  float* getVertices();
 
-    GLenum getGeometryType();
+   //  GLenum getGeometryType();
+
+   ~Line();
 };
 
 }

@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "Shape.h"           // For extending our Shape object
+#include "Drawable.h"           // For extending our Shape object
 #include "TextureHandler.h"  // For loading images
 #include "TsglAssert.h"      // For unit testing purposes
 
@@ -25,14 +25,13 @@ namespace tsgl {
  *   extend Canvas::drawImage() function due to this privatization.
  *  \warning Aside from an error message output to stderr, Image gives no indication if an image failed to load.
  */
-class Image {
+class Image : public Drawable {
  private:
     int myWidth, myHeight;
     float vertices[32];
     std::string myFile;
     GLtexture myTexture;
     TextureHandler* myLoader;
-    bool isTextured;
  public:
 
     /*!
@@ -67,12 +66,6 @@ class Image {
      * \return The width of the Image.
      */
     int getWidth() { return myWidth; }
-
-      /*!
-     * \brief Accessor for <code>isTextured</code>.
-     * \return Whether the shape is a textured primitive or not.
-     */
-    bool getIsTextured() { return isTextured; }
 };
 
 }

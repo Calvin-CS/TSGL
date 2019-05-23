@@ -15,7 +15,7 @@ namespace tsgl {
  */
 class Triangle : public Shape {
  private:
-    float vertices[18];
+    //float vertices[18];
  public:
 
     /*!
@@ -37,11 +37,12 @@ class Triangle : public Shape {
      * \details This function actually draws the Triangle to the Canvas.
      */
    //  void draw();
-    int getNumberOfVertices();
+   //  int getNumberOfVertices();
 
-    float* getVertices();
+   //  float* getVertices();
 
-    GLenum getGeometryType();
+   //  GLenum getGeometryType();
+   ~Triangle();
 };
 
 }

@@ -5,11 +5,12 @@ namespace tsgl {
 TriangleStrip::TriangleStrip(int numVertices) {
     if (numVertices < 3)
       TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
-    length = numVertices;
-    size = length * 6;
+    numberOfVertices = numVertices;
+    size = numberOfVertices * 6;
     current = 0;
     vertices = new float[size];
     init = false;
+    geometryType = GL_TRIANGLE_STRIP;
 }
 
 TriangleStrip::~TriangleStrip() {
@@ -36,17 +37,17 @@ void TriangleStrip::addVertex(int x, int y, const ColorFloat &color) {
 //     glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 // }
 
-int TriangleStrip::getNumberOfVertices() {
-    return length;
-}
+// int TriangleStrip::getNumberOfVertices() {
+//     return length;
+// }
 
-float* TriangleStrip::getVertices() {
-    return vertices;
-}
+// float* TriangleStrip::getVertices() {
+//     return vertices;
+// }
 
-GLenum TriangleStrip::getGeometryType() {
-    return GL_TRIANGLE_STRIP;
-}
+// GLenum TriangleStrip::getGeometryType() {
+//     return GL_TRIANGLE_STRIP;
+// }
 
 bool TriangleStrip::isProcessed() {
   return init;

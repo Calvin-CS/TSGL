@@ -82,8 +82,8 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    Array<Shape*> * shapeBuffer;                                        // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
-    Array<Shape*> * myShapes;                                           // Our buffer of shapes to draw
+    Array<Drawable*> * drawableBuffer;                                        // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
+    Array<Drawable*> * myDrawables;                                           // Our buffer of shapes to draw
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
@@ -163,7 +163,7 @@ private:
 
 protected:
     bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
-    void        drawShape(Shape* s);                                    // Draw a shape type
+    void        drawDrawable(Drawable* s);                                    // Draw a shape type
 public:
 
     /*!
