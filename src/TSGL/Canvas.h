@@ -13,6 +13,8 @@
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Color.h"          // Our own interface for converting color types
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
+#include "Ellipse.h"        // Our own class for drawing ellipses
+#include "Circle.h" 	    // Our own class for drawing circles
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
 #include "Image.h"          // Our own class for drawing images / textured quads

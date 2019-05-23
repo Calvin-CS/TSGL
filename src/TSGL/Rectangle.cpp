@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat &color) {
+Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat &color) : Shape() {
     numberOfVertices = 4;
     geometryType = GL_TRIANGLE_STRIP;
     vertices = new float[24];

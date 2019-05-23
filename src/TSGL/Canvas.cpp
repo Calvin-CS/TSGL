@@ -251,25 +251,27 @@ void Canvas::draw() {
 }
 
 void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
-    float delta = 2.0f / sides * PI;
-    if (filled) {
-        ConvexPolygon *s = new ConvexPolygon(sides);
-        for (int i = 0; i < sides; ++i)
-            s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
-        drawDrawable(s);
-    } else {
-        float oldX = 0, oldY = 0, newX = 0, newY = 0;
-        Polyline *p = new Polyline(sides+1);
-        for (int i = 0; i <= sides; ++i) {
-            oldX = newX; oldY = newY;
-            newX = xverts+radius*cos(i*delta);
-            newY = yverts+radius*sin(i*delta);
-            if (i > 0)
-                p->addVertex(oldX, oldY,color);
-        }
-        p->addVertex(newX, newY,color);
-        drawDrawable(p);
-    }
+    Circle* c = new Circle(xverts, yverts, radius, color);  // Creates the Line with the specified coordinates and color
+    drawDrawable(c);                               // Push it onto our drawing buffer
+    // float delta = 2.0f / sides * PI;
+    // if (filled) {
+    //     ConvexPolygon *s = new ConvexPolygon(sides);
+    //     for (int i = 0; i < sides; ++i)
+    //         s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
+    //     drawDrawable(s);
+    // } else {
+    //     float oldX = 0, oldY = 0, newX = 0, newY = 0;
+    //     Polyline *p = new Polyline(sides+1);
+    //     for (int i = 0; i <= sides; ++i) {
+    //         oldX = newX; oldY = newY;
+    //         newX = xverts+radius*cos(i*delta);
+    //         newY = yverts+radius*sin(i*delta);
+    //         if (i > 0)
+    //             p->addVertex(oldX, oldY,color);
+    //     }
+    //     p->addVertex(newX, newY,color);
+    //     drawDrawable(p);
+    // }
 }
 
 void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {

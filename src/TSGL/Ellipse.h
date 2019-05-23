@@ -5,16 +5,18 @@
 #ifndef ELLIPSE_H_
 #define ELLIPSE_H_
 
-#include "Shape.h" // For extending our ConvexPolygon object
+#include "Shape.h" // For extending our Shape object
 
 namespace tsgl {
 
   /*! \class Ellipse
-  *  \brief Draw a ellipse.
-  *  \details Ellipse is a class for holding ConvexPolygon data for a ellipse.
+  *  \brief Draw a simple ellipse.
+  *  \details Ellipse is a class for holding vertex data for an ellipse.
   */
-  class Ellipse : public Shape {
-  public:
+class Ellipse : public Shape {
+ private:
+
+ public:
 
     /*!
     * \brief Explicitly constructs a new Ellipse.
@@ -25,9 +27,9 @@ namespace tsgl {
     *   \param yRadius The vertical radius of the ellipse in pixels.
     *   \param color The color of the ellipse (set to BLACK by default).
     */
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat& color = BLACK);
+    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat& color);
 
-  };
+};
 
 }
 

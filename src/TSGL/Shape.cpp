@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Shape::Shape() {
+Shape::Shape() : Drawable() {
     isTextured = false;
 }
 

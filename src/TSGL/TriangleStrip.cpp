@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-TriangleStrip::TriangleStrip(int numVertices) {
+TriangleStrip::TriangleStrip(int numVertices) : Shape() {
     if (numVertices < 3)
       TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
     numberOfVertices = numVertices;

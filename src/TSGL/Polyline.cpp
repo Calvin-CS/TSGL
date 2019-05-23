@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Polyline::Polyline(int numVertices) {
+Polyline::Polyline(int numVertices) : Shape() {
     if (numVertices < 2)
       TsglDebug("Cannot have a line with fewer than 2 vertices.");
     numberOfVertices = numVertices;

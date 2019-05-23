@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-ConcavePolygon::ConcavePolygon(int numVertices) {
+ConcavePolygon::ConcavePolygon(int numVertices) : Shape() {
   if (numVertices < 3)
     TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
   length = numVertices+1;
