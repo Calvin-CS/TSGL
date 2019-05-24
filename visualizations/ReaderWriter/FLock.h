@@ -4,8 +4,8 @@
  * implements the "commonly known solution" presented in: https://arxiv.org/pdf/1309.4507.pdf
  */
 
-#ifndef RWMONITOR_H_
-#define RWMONITOR_H_
+#ifndef RWLOCK_H_
+#define RWLOCK_H_
 
 #include <pthread.h>
 #include <tsgl.h>
@@ -29,9 +29,9 @@ public:
 private:
 
 	// TODO: name these better
-	pthread_mutex_t in;
-	pthread_mutex_t wrt;
+	pthread_mutex_t counterLock;
+	pthread_mutex_t writerLock;
 
 };
 
-#endif /*RWMONITOR_H_*/
+#endif /*RWLOCK_H_*/

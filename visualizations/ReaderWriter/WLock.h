@@ -3,8 +3,8 @@
  * This class is a subclass of Lock and implements its locking and unlocking virtual methods.
  */
 
-#ifndef WMONITOR_H_
-#define WMONITOR_H_
+#ifndef WLOCK_H_
+#define WLOCK_H_
 
 #include <pthread.h>
 #include "Lock.h"
@@ -25,4 +25,4 @@ public:
 	void writeUnlock();										//Inherited from Lock class
 };
 
-#endif /*WMONITOR_H_*/
+#endif /*WLOCK_H_*/

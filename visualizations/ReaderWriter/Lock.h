@@ -3,8 +3,8 @@
  * This class provides a superclass for the monitors with Reader or Writer preference, which are used by the threads.
  */
 
-#ifndef MONITOR_H_
-#define MONITOR_H_
+#ifndef LOCK_H_
+#define LOCK_H_
 
 #include <pthread.h>
 #include <vector>
@@ -36,4 +36,4 @@ protected:
 	RWDatabase<tsgl::Rectangle*>* data;
 };
 
-#endif /*MONITOR_H_*/
+#endif /*LOCK_H_*/
