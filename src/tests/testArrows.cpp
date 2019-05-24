@@ -18,33 +18,35 @@ int main() {
 
 		// draw Arrows outlining a square centered at x, y
 		for(int i = -100; i <= 100; i+= 20) {
-			Arrow * a0 = new Arrow(x, y, x+i, y-100, PURPLE);
-			Arrow * a1 = new Arrow(x, y, x-100, y+i,  GREEN);
-			Arrow * a2 = new Arrow(x, y, x+100, y+i,   BLUE);
-			Arrow * a3 = new Arrow(x, y, x+i, y+100,    RED);
-			c.drawArrow(a0); c.drawArrow(a1); 
-			c.drawArrow(a2); c.drawArrow(a3);
-			shapes.push_back(a0); shapes.push_back(a1);
-			shapes.push_back(a2); shapes.push_back(a3);
+			// Arrow * a0 = new Arrow(x, y, x+i, y-100, PURPLE);
+			// Arrow * a1 = new Arrow(x, y, x-100, y+i,  GREEN);
+			// Arrow * a2 = new Arrow(x, y, x+100, y+i,   BLUE);
+			// Arrow * a3 = new Arrow(x, y, x+i, y+100,    RED);
+			c.drawArrow(x, y, x+i, y-100, PURPLE); 
+			c.drawArrow(x, y, x-100, y+i,  GREEN); 
+			c.drawArrow(x, y, x+100, y+i,   BLUE); 
+			c.drawArrow(x, y, x+i, y+100,    RED);
+			// shapes.push_back(a0); shapes.push_back(a1);
+			// shapes.push_back(a2); shapes.push_back(a3);
 		}
 	}
 
-	//Draw double headed arrow moving around Canvas
-	Arrow* doubleArrow = new Arrow(500, 500, 250, 250, WHITE, true);
-	c.drawArrow(doubleArrow);
+	// //Draw double headed arrow moving around Canvas
+	// Arrow* doubleArrow = new Arrow(500, 500, 250, 250, WHITE, true);
+	// c.drawArrow(doubleArrow);
 
-	int x = 250, y = 250;
+	// int x = 250, y = 250;
 
 	while( c.isOpen() ) {
 		c.sleep();
-		x += 10; if(x > 1000) x = 250;
-		y += 30; if(y > 1000) y = 250;
-		doubleArrow->moveHead(x, y);
+		// x += 10; if(x > 1000) x = 250;
+		// y += 30; if(y > 1000) y = 250;
+		// doubleArrow->moveHead(x, y);
 	}
 
 	c.wait();
 
-	delete doubleArrow;
+	// delete doubleArrow;
 	for(int i = 0; i < shapes.size(); i++) {
 		delete shapes[i];
 	}

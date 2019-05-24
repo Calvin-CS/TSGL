@@ -8,22 +8,28 @@ ConcavePolygon::ConcavePolygon(int numVertices) : Shape() {
   length = numVertices+1;
   size = numVertices * 6;
   tsize = 0;
-  tarray = nullptr;
   vertices = new float[size];
   dirty = false;
-}
-
-ConcavePolygon::~ConcavePolygon() {
-  delete[] tarray;
+  geometryType = GL_TRIANGLES;
 }
 
 void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
-  Shape::addVertex(x, y, color);
+  if (init) {
+    TsglDebug("Cannot add anymore vertices.");
+    return;
+  }
+  vertices[current] = x;
+  vertices[current + 1] = y;
+  vertices[current + 2] = color.R;
+  vertices[current + 3] = color.G;
+  vertices[current + 4] = color.B;
+  vertices[current + 5] = color.A;
+  current += 6;
   dirty = true;
 
   if (current == size) {
-    init = true;
     preprocess();
+    init = true;
   }
 }
 
@@ -123,16 +129,14 @@ void ConcavePolygon::preprocess() {
     }
 
     tsize = newvertices.size();
-    tarray = new float[tsize];
+    delete[] vertices;
+    vertices = new float[tsize];
     for (int i = 0; i < tsize; ++i) {
-      tarray[i] = newvertices.front();
+      vertices[i] = newvertices.front();
       newvertices.pop();
     }
 
-    delete[] vertices;
-    vertices = tarray;
     numberOfVertices = tsize / 6;
-    geometryType = GL_TRIANGLES;
 
   }
 
