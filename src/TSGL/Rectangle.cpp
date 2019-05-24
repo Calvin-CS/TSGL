@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat &color) : Shape() {
+Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat &color) : ConvexPolygon(4) {
     numberOfVertices = 4;
     geometryType = GL_TRIANGLE_STRIP;
     vertices = new float[24];

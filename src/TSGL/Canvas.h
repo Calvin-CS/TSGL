@@ -11,6 +11,7 @@
 #endif
 
 #include "Array.h"          // Our own array for buffering drawing operations
+#include "Arrow.h"	    // Our own array for drawing arrows
 #include "Color.h"          // Our own interface for converting color types
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "Ellipse.h"        // Our own class for drawing ellipses
@@ -23,6 +24,7 @@
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
+#include "RegularPolygon.h" // Our own class for drawing regular polygons
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
@@ -233,6 +235,8 @@ public:
      * \see start(), stop(), wait()
      */
     void close();
+
+    virtual void drawArrow(Arrow * arrow);
 
     /*!
      * \brief Draws a circle.

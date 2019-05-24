@@ -250,9 +250,20 @@ void Canvas::draw() {
     }
 }
 
+void Canvas::drawArrow(Arrow * arrow) {
+  drawDrawable(arrow);
+}
+
 void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
-    Circle* c = new Circle(xverts, yverts, radius, color);  // Creates the Line with the specified coordinates and color
-    drawDrawable(c);                               // Push it onto our drawing buffer
+    // version 1
+    // Circle* c = new Circle(xverts, yverts, radius, color);  // Creates the Line with the specified coordinates and color
+    // drawDrawable(c);                               // Push it onto our drawing buffer
+
+    // version 2
+    RegularPolygon *c = new RegularPolygon(xverts, yverts, radius, sides, color);
+    drawDrawable(c);
+
+    //version 3
     // float delta = 2.0f / sides * PI;
     // if (filled) {
     //     ConvexPolygon *s = new ConvexPolygon(sides);
@@ -290,6 +301,8 @@ void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat
         drawDrawable(p);  // Push it onto our drawing buffer
     }
 }
+
+
 
 void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
     if (filled) {

@@ -49,3 +49,4 @@ run ./testText 1200 900 ../assets/freefont/FreeSerif.ttf           #Width, Heigh
 run ./testTextCart 1200 900 ../assets/freefont/FreeSerifItalic.ttf #Width, Height, Font
 run ./testTextTwo 1200 900                                         #Width, Height
 run ./testVoronoi 640 480 8                                        #Width, Height, Threads
+run ./testArrows

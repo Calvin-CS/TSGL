@@ -5,7 +5,7 @@
 #ifndef LINE_H_
 #define LINE_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "Polyline.h"  // For extending our Shape object
 
 namespace tsgl {
 
@@ -13,7 +13,7 @@ namespace tsgl {
  *  \brief Draw a simple line.
  *  \details Line is a class for holding vertex data for a simple line.
  */
-class Line : public Shape {
+class Line : public Polyline {
  private:
  
  public:

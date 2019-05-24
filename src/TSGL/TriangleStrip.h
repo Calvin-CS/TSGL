@@ -6,7 +6,7 @@
 #ifndef TRIANGLESTRIP_H_
 #define TRIANGLESTRIP_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "ConvexPolygon.h"  // For extending our Shape object
 
 namespace tsgl {
 
@@ -20,7 +20,7 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
-class TriangleStrip : public Shape {
+class TriangleStrip : public ConvexPolygon {
  private:
 
  public:

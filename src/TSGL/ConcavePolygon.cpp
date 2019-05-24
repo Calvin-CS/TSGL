@@ -18,17 +18,7 @@ ConcavePolygon::~ConcavePolygon() {
 }
 
 void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
-  if (init) {
-    TsglDebug("Cannot add anymore vertices.");
-    return;
-  }
-  vertices[current] = x;
-  vertices[current + 1] = y;
-  vertices[current + 2] = color.R;
-  vertices[current + 3] = color.G;
-  vertices[current + 4] = color.B;
-  vertices[current + 5] = color.A;
-  current += 6;
+  Shape::addVertex(x, y, color);
   dirty = true;
 
   if (current == size) {

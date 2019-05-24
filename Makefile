@@ -67,6 +67,7 @@ DEPFLAGS=-MMD -MP
 BINARIES= \
   bin/test_specs \
 	bin/testAlphaRectangle \
+	bin/testArrows \
 	bin/testAura \
 	bin/testBallroom \
 	bin/testBlurImage \

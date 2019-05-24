@@ -5,7 +5,7 @@
 #ifndef ELLIPSE_H_
 #define ELLIPSE_H_
 
-#include "Shape.h" // For extending our Shape object
+#include "ConvexPolygon.h" // For extending our Shape object
 
 namespace tsgl {
 
@@ -13,7 +13,7 @@ namespace tsgl {
   *  \brief Draw a simple ellipse.
   *  \details Ellipse is a class for holding vertex data for an ellipse.
   */
-class Ellipse : public Shape {
+class Ellipse : public ConvexPolygon {
  private:
 
  public:

@@ -5,7 +5,7 @@
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "ConvexPolygon.h"  // For extending our Shape object
 
 namespace tsgl {
 
@@ -13,7 +13,7 @@ namespace tsgl {
  *  \brief Draw a simple Rectangle.
  *  \details Rectangle is a class for holding vertex data for a simple rectangle.
  */
-class Rectangle : public Shape {
+class Rectangle : public ConvexPolygon {
  private:
  
  public:

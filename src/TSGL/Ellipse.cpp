@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat& color = BLACK) : Shape() {
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat& color = BLACK) : ConvexPolygon((xRadius + yRadius) / 2) {
   numberOfVertices = (xRadius + yRadius) / 2;
   geometryType = GL_TRIANGLE_FAN;
   vertices = new float[numberOfVertices * 6];
