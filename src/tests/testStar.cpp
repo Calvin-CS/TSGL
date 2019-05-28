@@ -13,13 +13,17 @@ int main() {
 
     float rotation = 0;
 
-    c.drawStar(xs[0], ys[0], 100, 6, RED, true, PI/12);
-    c.drawStar(xs[1], ys[1], 50, 7, BLUE, false, PI/12);
-    c.drawStar(xs[2], ys[2], 125, 8, GREEN, true, PI/12);
-    c.drawStar(xs[3], ys[3], 75, 9, ORANGE, false, PI/12);
 
 	while( c.isOpen() ) {
 		c.sleep();
+		c.drawStar(xs[2], ys[2], 125, 8, GREEN, true, rotation);
+		c.drawStar(xs[3], ys[3], 75, 9, ORANGE, false, rotation);
+		c.pauseDrawing();
+		c.clear();
+		c.drawStar(xs[0], ys[0], 100, 6, RED, true, rotation);
+		c.drawStar(xs[1], ys[1], 50, 7, BLUE, false, rotation);	
+		rotation += PI / 24;
+		c.resumeDrawing();	
 	}
 
 	c.wait();

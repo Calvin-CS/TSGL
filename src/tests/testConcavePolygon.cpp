@@ -65,8 +65,11 @@ void concavePolygonFunction(Canvas& can) {
 //      color[i] = Colors::randomColor(1.0f);
     // note: when you call drawConcavePolygon, you MUST give it the correct size.
     // otherwise, it is always wrong and inconsistent in how it is wrong.
+    can.pauseDrawing();
+    can.clear();
     can.drawConcavePolygon(12, x, y, color, true);
     can.drawConcavePolygon(PSIZE, xx, yy, color, true);
+    can.resumeDrawing();
   }
 }
 

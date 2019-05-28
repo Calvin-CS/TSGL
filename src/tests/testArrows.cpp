@@ -41,8 +41,23 @@ int main() {
 	while( c.isOpen() ) {
 		c.sleep();
 		c.drawArrow(500, 500, x, y, WHITE, true);
+		c.pauseDrawing();
+		c.clear();
+		for(int i = 0; i < 4; i++) {
+
+			int x = xs[i], y = ys[i];
+
+			// draw Arrows outlining a square centered at x, y
+			for(int i = -100; i <= 100; i+= 20) {
+				c.drawArrow(x, y, x+i, y-100, PURPLE); 
+				c.drawArrow(x, y, x-100, y+i,  GREEN); 
+				c.drawArrow(x, y, x+100, y+i,   BLUE); 
+				c.drawArrow(x, y, x+i, y+100,    RED);
+			}
+		}
 		x += 10; if(x > 1000) x = 250;
 		y += 30; if(y > 1000) y = 250;
+		c.resumeDrawing();
 	}
 
 	c.wait();
