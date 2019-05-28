@@ -8,8 +8,8 @@ run () {
 export LD_LIBRARY_PATH=../lib       #Make sure we load the TSGL library
 cd bin                              #CD into our binary directory
 
-run ./testCalcPi 100 4                                             #Segments, Threads
 run ./testAlphaRectangle 640 480                                   #Width, Height
+run ./testArrows
 run ./testAura 1200 900 8                                          #Width, Height, Segments
 run ./testBallroom 640 640                                         #Width, Height
 run ./testBlurImage 36 ../assets/pics/HDR_landscape.jpg            #Threads, Image
@@ -45,8 +45,8 @@ run ./testScreenshot 900 650                                       #Width, Heigh
 run ./testSmartSort 1024                                           #Elements, Threads
 run ./testSpectrogram ../assets/pics/test.png                      #Image
 run ./testSpectrum 8                                               #Threads
+run ./testStar
 run ./testText 1200 900 ../assets/freefont/FreeSerif.ttf           #Width, Height, Font
 run ./testTextCart 1200 900 ../assets/freefont/FreeSerifItalic.ttf #Width, Height, Font
 run ./testTextTwo 1200 900                                         #Width, Height
 run ./testVoronoi 640 480 8                                        #Width, Height, Threads
-run ./testArrows

@@ -324,6 +324,19 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
     }
 }
 
+
+void Canvas::drawDrawable(Drawable* d) {
+	if (!started) {
+	  TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
+	  return;
+	}
+	while (!readyToDraw)
+	  sleep();
+    bufferMutex.lock();
+    drawableBuffer->push(d);  // Push it onto our drawing buffer
+    bufferMutex.unlock();
+}
+
 void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
     drawDrawable(im);                                       // Push it onto our drawing buffer
@@ -383,16 +396,9 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
     }
 }
 
-void Canvas::drawDrawable(Drawable* d) {
-	if (!started) {
-	  TsglDebug("No drawing before Canvas is started! Ignoring draw request.");
-	  return;
-	}
-	while (!readyToDraw)
-	  sleep();
-    bufferMutex.lock();
-    drawableBuffer->push(d);  // Push it onto our drawing buffer
-    bufferMutex.unlock();
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bool ninja, float rotation) {
+  Star * star = new Star(x, y, radius, points, color, ninja, rotation);
+  drawDrawable(star);
 }
 
 void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {

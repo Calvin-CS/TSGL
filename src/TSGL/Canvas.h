@@ -25,6 +25,7 @@
 #include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
 #include "RegularPolygon.h" // Our own class for drawing regular polygons
+#include "Star.h"           // Our own class for drawing stars
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
@@ -358,6 +359,22 @@ public:
      * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
      */
     virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, bool filled = true);
+
+
+    /*!
+     * \brief Draws a rectangle.
+     * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
+     *   \param x1 The x coordinate of the Rectangle's left edge.
+     *   \param y1 The y coordinate of the Rectangle's top edge.
+     *   \param x2 The x coordinate of the Rectangle's right edge.
+     *   \param y2 The y coordinate of the Rectangle's bottom edge.
+     *   \param color The color of the rectangle
+     *     (set to BLACK by default).
+     *   \param filled Whether the rectangle should be filled
+     *     (set to true by default).
+     * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
+     */
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0);
 
     /*!
      * \brief Draw a string of text.

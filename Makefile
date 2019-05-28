@@ -105,6 +105,7 @@ BINARIES= \
 	bin/testSmartSort \
 	bin/testSpectrogram \
 	bin/testSpectrum \
+	bin/testStar \
 	bin/testText \
 	bin/testTextCart \
 	bin/testTextTwo \
