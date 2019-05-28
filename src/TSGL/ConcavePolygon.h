@@ -25,6 +25,7 @@ namespace tsgl {
 class ConcavePolygon : public Shape {
  private:
     bool dirty;         // Whether the new vertex buffer is dirty
+    float* tarray;      // Buffer for original vertex data
     int size,           // Number of floating point numbers in vertices
         tsize,          // Number of floating point numbers in tarray
         length;         // Number of vertices in vertices (size / 6)
@@ -42,6 +43,13 @@ class ConcavePolygon : public Shape {
      * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
     ConcavePolygon(int numVertices);
+
+    /*!
+     * \brief Destroys a ConcavePolygon object.
+     * \details Destructor for a ConcavePolygon object.
+     * \details Frees up memory that was allocated to a ConcavePolygon object.
+     */
+    ~ConcavePolygon();
 
     /*!
      * \brief Determines if two lines intersect.

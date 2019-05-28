@@ -35,13 +35,14 @@ int main() {
 	// Arrow* doubleArrow = new Arrow(500, 500, 250, 250, WHITE, true);
 	// c.drawArrow(doubleArrow);
 
-	// int x = 250, y = 250;
+	int x = 250, y = 250;
+	//c.drawArrow(500, 500, 250, 250, WHITE, true);
 
 	while( c.isOpen() ) {
 		c.sleep();
-		// x += 10; if(x > 1000) x = 250;
-		// y += 30; if(y > 1000) y = 250;
-		// doubleArrow->moveHead(x, y);
+		c.drawArrow(500, 500, x, y, WHITE, true);
+		x += 10; if(x > 1000) x = 250;
+		y += 30; if(y > 1000) y = 250;
 	}
 
 	c.wait();

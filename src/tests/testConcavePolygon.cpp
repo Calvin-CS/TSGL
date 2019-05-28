@@ -56,14 +56,16 @@ void concavePolygonFunction(Canvas& can) {
       xx[i] = 600 + 300 * sin((1.0f*i)/(PSIZE) * PI * 2);
       yy[i] = 450 - 300 * cos((1.0f*i)/(PSIZE) * PI * 2);
     }
-    std::cout << i << ":" << x[i] << "," << y[i] << std::endl;
+    std::cout << i << ":" << xx[i] << "," << yy[i] << std::endl;
   }
 
   while (can.isOpen()) {  // Checks to see if the window has been closed
     can.sleep();
 //    for (unsigned i = 0; i < PSIZE; ++i)
 //      color[i] = Colors::randomColor(1.0f);
-    can.drawConcavePolygon(PSIZE, x, y, color, true);
+    // note: when you call drawConcavePolygon, you MUST give it the correct size.
+    // otherwise, it is always wrong and inconsistent in how it is wrong.
+    can.drawConcavePolygon(12, x, y, color, true);
     can.drawConcavePolygon(PSIZE, xx, yy, color, true);
   }
 }

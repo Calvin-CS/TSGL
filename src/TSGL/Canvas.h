@@ -236,7 +236,7 @@ public:
      */
     void close();
 
-    virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat &color);
+    virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat &color, bool doubleArrow = false);
 
     /*!
      * \brief Draws a circle.

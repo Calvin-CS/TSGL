@@ -16,7 +16,7 @@ run ./testBlurImage 36 ../assets/pics/HDR_landscape.jpg            #Threads, Ima
 run ./testCalcPi 100 4                                             #Segments, Threads
 run ./testColorPoints 400 400 4                                    #Width, Height, Threads
 run ./testColorWheel 640 640 64                                    #Width, Height, Threads
-# run ./testConcavePolygon                                           #SLOW
+run ./testConcavePolygon                                           #SLOW
 run ./testConway 640 640                                           #Width, Height
 run ./testCosineIntegral 640 480 32                                #Width, Height, Threads
 run ./testDumbSort 1200 600                                        #Width, Height

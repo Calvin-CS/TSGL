@@ -250,8 +250,8 @@ void Canvas::draw() {
     }
 }
 
-void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat &color) {
-  Arrow * arrow = new Arrow(x1, y1, x2, y2, color);
+void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat &color, bool doubleArrow = false) {
+  Arrow * arrow = new Arrow(x1, y1, x2, y2, color, doubleArrow);
   drawDrawable(arrow);
 }
 
@@ -286,6 +286,8 @@ void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloa
     // }
 }
 
+// note: when you call drawConcavePolygon, you MUST give it the correct size.
+// otherwise, it is always wrong and inconsistent in how it is wrong.
 void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
     if (filled) {
         ConcavePolygon* p = new ConcavePolygon(size);
