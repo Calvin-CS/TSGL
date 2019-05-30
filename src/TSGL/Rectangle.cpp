@@ -2,13 +2,10 @@
 
 namespace tsgl {
 
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat &color) : ConvexPolygon(4) {
-    numberOfVertices = 4;
-    geometryType = GL_TRIANGLE_STRIP;
-    vertices = new float[24];
+Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat &color, bool filled = true) : ConvexPolygon(4, filled) {
     addVertex(x, y, color);
     addVertex(x + width, y, color);
-    addVertex(x, y + height, color);
     addVertex(x + width, y + height, color);
+    addVertex(x, y + height, color);
 }
 }

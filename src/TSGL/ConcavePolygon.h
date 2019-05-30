@@ -25,10 +25,11 @@ namespace tsgl {
 class ConcavePolygon : public Shape {
  private:
     bool dirty;         // Whether the new vertex buffer is dirty
-    float* tarray;      // Buffer for original vertex data
+    //float* tarray;      // Buffer for original vertex data
     int size,           // Number of floating point numbers in vertices
         tsize,          // Number of floating point numbers in tarray
         length;         // Number of vertices in vertices (size / 6)
+    bool isFilled = true;
 
     static bool testIntersects();     // Unit test for intersects()
     static bool testPointITriangle(); // Unit test for pointInTriangle()
@@ -42,14 +43,8 @@ class ConcavePolygon : public Shape {
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
-    ConcavePolygon(int numVertices);
+    ConcavePolygon(int numVertices, bool filled = true);
 
-    /*!
-     * \brief Destroys a ConcavePolygon object.
-     * \details Destructor for a ConcavePolygon object.
-     * \details Frees up memory that was allocated to a ConcavePolygon object.
-     */
-    ~ConcavePolygon();
 
     /*!
      * \brief Determines if two lines intersect.

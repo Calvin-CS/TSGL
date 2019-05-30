@@ -34,7 +34,9 @@ class ConvexPolygon : public Shape {
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
-    ConvexPolygon(int numVertices);
+    ConvexPolygon(int numVertices, bool filled = true);
+
+    void setGeometry(bool filled);
 
     /*!
      * \brief Runs the Unit tests.

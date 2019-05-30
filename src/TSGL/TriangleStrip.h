@@ -32,7 +32,7 @@ class TriangleStrip : public ConvexPolygon {
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new TriangleStrip with a buffer for storing the specified numbered of vertices.
      */
-    TriangleStrip(int numVertices);
+    TriangleStrip(int numVertices, bool filled = true);
 };
 
 }

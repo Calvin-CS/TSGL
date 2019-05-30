@@ -2,13 +2,20 @@
 
 namespace tsgl {
 
-ConvexPolygon::ConvexPolygon(int numVertices) : Shape() {
+ConvexPolygon::ConvexPolygon(int numVertices, bool filled = true) : Shape() {
     if (numVertices < 3)
       TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
     numberOfVertices = numVertices;
     size = numberOfVertices * 6;
     vertices = new float[size];
     geometryType = GL_TRIANGLE_FAN;
+    setGeometry(filled);
+}
+
+void ConvexPolygon::setGeometry(bool filled) {
+  if(!filled) {
+    geometryType = GL_LINE_LOOP;
+  }
 }
 
 void ConvexPolygon::runTests() {

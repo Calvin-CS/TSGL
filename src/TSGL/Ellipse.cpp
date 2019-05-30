@@ -2,10 +2,7 @@
 
 namespace tsgl {
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat& color = BLACK) : ConvexPolygon((xRadius + yRadius) / 2) {
-  numberOfVertices = (xRadius + yRadius) / 2;
-  geometryType = GL_TRIANGLE_FAN;
-  vertices = new float[numberOfVertices * 6];
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat& color = BLACK, bool filled = true) : ConvexPolygon((xRadius + yRadius) / 2, filled) {
   //TODO: do we need any locking here? All the values we use below are from the constructor
   float delta = 2.0f / numberOfVertices * PI;
   for (int i = 0; i < numberOfVertices; ++i) {

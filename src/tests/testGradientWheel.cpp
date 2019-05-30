@@ -47,7 +47,7 @@ void gradientWheelFunction(Canvas& can, int threads) {
       xx[2] = CW + RADIUS * sin(ARCLENGTH * (start + 1));
       yy[2] = CH + RADIUS * cos(ARCLENGTH * (start + 1));
 
-      can.drawTriangleStrip(3, xx, yy, color);
+      can.drawTriangleStrip(3, xx, yy, color, true);
     }
   }
 }

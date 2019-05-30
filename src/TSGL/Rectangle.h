@@ -28,7 +28,7 @@ class Rectangle : public ConvexPolygon {
      *   \param color The color of the Rectangle.
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
-    Rectangle(float x, float y, float width, float height, const ColorFloat &color);
+    Rectangle(float x, float y, float width, float height, const ColorFloat &color, bool filled = true);
 };
 
 }

@@ -46,7 +46,6 @@ void concavePolygonFunction(Canvas& can) {
   x[8] = 250; y[8] = 400;
   x[9] = 200; y[9] = 300;
   x[10] = 100; y[10] = 400;
-  x[11] = 100; y[11] = 100;
 
   for (int i = 0; i < PSIZE; ++i) {
     if (i % 2 == 0) {
@@ -67,8 +66,8 @@ void concavePolygonFunction(Canvas& can) {
     // otherwise, it is always wrong and inconsistent in how it is wrong.
     can.pauseDrawing();
     can.clear();
-    can.drawConcavePolygon(12, x, y, color, true);
-    can.drawConcavePolygon(PSIZE, xx, yy, color, true);
+    can.drawConcavePolygon(11, x, y, color, false);
+    can.drawConcavePolygon(PSIZE , xx, yy, color, true);
     can.resumeDrawing();
   }
 }

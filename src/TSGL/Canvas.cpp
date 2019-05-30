@@ -255,54 +255,31 @@ void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat 
   drawDrawable(arrow);
 }
 
-void Canvas::drawCircle(int xverts, int yverts, int radius, int sides, ColorFloat color, bool filled) {
+void Canvas::drawCircle(int x, int y, int radius, int sides, ColorFloat color, bool filled) {
     // version 1
-    // Circle* c = new Circle(xverts, yverts, radius, color);  // Creates the Line with the specified coordinates and color
+    // Circle* c = new Circle(x, y, radius, color, filled);  // Creates the Line with the specified coordinates and color
     // drawDrawable(c);                               // Push it onto our drawing buffer
 
     // version 2
-    RegularPolygon *c = new RegularPolygon(xverts, yverts, radius, sides, color);
+    RegularPolygon *c = new RegularPolygon(x, y, radius, sides, color, filled);
     drawDrawable(c);
 
     //version 3
     // float delta = 2.0f / sides * PI;
-    // if (filled) {
-    //     ConvexPolygon *s = new ConvexPolygon(sides);
-    //     for (int i = 0; i < sides; ++i)
-    //         s->addVertex(xverts+radius*cos(i*delta), yverts+radius*sin(i*delta),color);
-    //     drawDrawable(s);
-    // } else {
-    //     float oldX = 0, oldY = 0, newX = 0, newY = 0;
-    //     Polyline *p = new Polyline(sides+1);
-    //     for (int i = 0; i <= sides; ++i) {
-    //         oldX = newX; oldY = newY;
-    //         newX = xverts+radius*cos(i*delta);
-    //         newY = yverts+radius*sin(i*delta);
-    //         if (i > 0)
-    //             p->addVertex(oldX, oldY,color);
-    //     }
-    //     p->addVertex(newX, newY,color);
-    //     drawDrawable(p);
-    // }
+    // ConvexPolygon *s = new ConvexPolygon(sides, filled);
+    // for (int i = 0; i < sides; ++i)
+    //     s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),color);
+    // drawDrawable(s);
 }
 
 // note: when you call drawConcavePolygon, you MUST give it the correct size.
 // otherwise, it is always wrong and inconsistent in how it is wrong.
 void Canvas::drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
-    if (filled) {
-        ConcavePolygon* p = new ConcavePolygon(size);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawDrawable(p);  // Push it onto our drawing buffer
+    ConcavePolygon* p = new ConcavePolygon(size, filled);
+    for (int i = 0; i < size; i++) {
+        p->addVertex(xverts[i], yverts[i], color[i]);
     }
-    else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawDrawable(p);  // Push it onto our drawing buffer
-    }
+    drawDrawable(p);  // Push it onto our drawing buffer
 }
 
 
@@ -379,25 +356,14 @@ void Canvas::drawProgress(ProgressBar* p) {
 }
 
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
-    if (filled) {
-        if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-        if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-        Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color);  // Creates the Rectangle with the specified coordinates and color
-        drawDrawable(rec);                                     // Push it onto our drawing buffer
-    }
-    else {
-        Polyline* p = new Polyline(5);
-        p->addVertex(x1, y1, color);
-        p->addVertex(x1, y2, color);
-        p->addVertex(x2, y2, color);
-        p->addVertex(x2, y1, color);
-        p->addVertex(x1, y1, color);
-        drawDrawable(p);
-    }
+    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color, filled);  // Creates the Rectangle with the specified coordinates and color
+    drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bool ninja, float rotation) {
-  Star * star = new Star(x, y, radius, points, color, ninja, rotation);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bool ninja, float rotation, bool filled) {
+  Star * star = new Star(x, y, radius, points, color, ninja, rotation, filled);
   drawDrawable(star);
 }
 
@@ -413,35 +379,16 @@ void Canvas::drawText(std::wstring text, int x, int y, unsigned size, ColorFloat
 }
 
 void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
-    if (filled) {
-        Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color);  // Creates the Triangle with the specified vertices and color
-        drawDrawable(t);                                               // Push it onto our drawing buffer
-    }
-    else {
-        Polyline* p = new Polyline(4);
-        p->addVertex(x1,y1,color);
-        p->addVertex(x2,y2,color);
-        p->addVertex(x3,y3,color);
-        p->addVertex(x1,y1,color);
-        drawDrawable(p);
-    }
+    Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color, filled);  // Creates the Triangle with the specified vertices and color
+    drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
 void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled) {
-    if (filled) {
-        TriangleStrip* p = new TriangleStrip(size);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawDrawable(p);  // Push it onto our drawing buffer
+    TriangleStrip* p = new TriangleStrip(size, filled);
+    for (int i = 0; i < size; i++) {
+        p->addVertex(xverts[i], yverts[i], color[i]);
     }
-    else {
-        Polyline* p = new Polyline(size);
-        for (int i = 0; i < size; i++) {
-            p->addVertex(xverts[i], yverts[i], color[i]);
-        }
-        drawDrawable(p);  // Push it onto our drawing buffer
-    }
+    drawDrawable(p);  // Push it onto our drawing buffer
 }
 
 void Canvas::errorCallback(int error, const char* string) {

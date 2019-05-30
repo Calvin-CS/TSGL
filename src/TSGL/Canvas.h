@@ -374,7 +374,7 @@ public:
      *     (set to true by default).
      * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
      */
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0, bool filled = true);
 
     /*!
      * \brief Draw a string of text.

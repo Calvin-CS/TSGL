@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ninja, float rotation) : ConcavePolygon(points*2) {
+Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ninja, float rotation, bool filled) : ConcavePolygon(points*2, filled) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;

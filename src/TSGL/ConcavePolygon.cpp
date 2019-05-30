@@ -2,19 +2,20 @@
 
 namespace tsgl {
 
-ConcavePolygon::ConcavePolygon(int numVertices) : Shape() {
+ConcavePolygon::ConcavePolygon(int numVertices, bool filled = true) : Shape() {
   if (numVertices < 3)
     TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
   length = numVertices+1;
   size = length * 6;
   tsize = 0;
-  tarray = new float[size];
+  isFilled = filled;
+  vertices = new float[size];
   dirty = false;
-  geometryType = GL_TRIANGLES;
-}
-
-ConcavePolygon::~ConcavePolygon() {
-  delete[] tarray;
+  if(filled) {
+    geometryType = GL_TRIANGLES;
+  } else {
+    geometryType = GL_LINE_STRIP;
+  }
 }
 
 void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
@@ -22,24 +23,28 @@ void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
     TsglDebug("Cannot add anymore vertices.");
     return;
   }
-  tarray[current] = x;
-  tarray[current + 1] = y;
-  tarray[current + 2] = color.R;
-  tarray[current + 3] = color.G;
-  tarray[current + 4] = color.B;
-  tarray[current + 5] = color.A;
+  vertices[current] = x;
+  vertices[current + 1] = y;
+  vertices[current + 2] = color.R;
+  vertices[current + 3] = color.G;
+  vertices[current + 4] = color.B;
+  vertices[current + 5] = color.A;
   current += 6;
   dirty = true;
 
   if (current == size-6) {
-    tarray[current] = tarray[0];
-    tarray[current + 1] = tarray[1];
-    tarray[current + 2] = tarray[2];
-    tarray[current + 3] = tarray[3];
-    tarray[current + 4] = tarray[4];
-    tarray[current + 5] = tarray[5];
+    vertices[current] = vertices[0];
+    vertices[current + 1] = vertices[1];
+    vertices[current + 2] = vertices[2];
+    vertices[current + 3] = vertices[3];
+    vertices[current + 4] = vertices[4];
+    vertices[current + 5] = vertices[5];
     init = true;
-    preprocess();
+    if(isFilled) {
+      preprocess();
+    } else {
+      numberOfVertices = size / 6;
+    }
   }
 }
 
@@ -73,20 +78,20 @@ void ConcavePolygon::preprocess() {
 
     bool clockwise = (
         (
-            (tarray[6]-tarray[0]) * (tarray[13]-tarray[7]) -
-            (tarray[7]-tarray[1]) * (tarray[12]-tarray[6])
+            (vertices[6]-vertices[0]) * (vertices[13]-vertices[7]) -
+            (vertices[7]-vertices[1]) * (vertices[12]-vertices[6])
         ) < 0.0);
 
     for (int i = 0; i < size-12; i += 6) {
-      float x1 = tarray[i], y1 = tarray[i+1];
+      float x1 = vertices[i], y1 = vertices[i+1];
       for (int j = i+6; j < size-6; j += 6) {
-        float x2 = tarray[j], y2 = tarray[j+1];
+        float x2 = vertices[j], y2 = vertices[j+1];
         for (int k = j+6; k < size; k += 6) {
-          float x3 = tarray[k], y3 = tarray[k+1];
+          float x3 = vertices[k], y3 = vertices[k+1];
 
           bool open = true;
           for (int n = 0; n < size-6; n += 6) {
-            float x4 = tarray[n], y4 = tarray[n+1], x5 = tarray[n+6],y5 = tarray[n+7];
+            float x4 = vertices[n], y4 = vertices[n+1], x5 = vertices[n+6],y5 = vertices[n+7];
             if (pointInTriangle(x4,y4,x1,y1,x2,y2,x3,y3) || pointInTriangle(x5,y5,x1,y1,x2,y2,x3,y3)) {
               open = false; break;
             }
@@ -118,28 +123,28 @@ void ConcavePolygon::preprocess() {
 
               newvertices.push(x1);
               newvertices.push(y1);
-              newvertices.push(tarray[i+2]);
-              newvertices.push(tarray[i+3]);
-              newvertices.push(tarray[i+4]);
-              newvertices.push(tarray[i+5]);
+              newvertices.push(vertices[i+2]);
+              newvertices.push(vertices[i+3]);
+              newvertices.push(vertices[i+4]);
+              newvertices.push(vertices[i+5]);
               newvertices.push(x2);
               newvertices.push(y2);
-              newvertices.push(tarray[j+2]);
-              newvertices.push(tarray[j+3]);
-              newvertices.push(tarray[j+4]);
-              newvertices.push(tarray[j+5]);
+              newvertices.push(vertices[j+2]);
+              newvertices.push(vertices[j+3]);
+              newvertices.push(vertices[j+4]);
+              newvertices.push(vertices[j+5]);
               newvertices.push(x3);
               newvertices.push(y3);
-              newvertices.push(tarray[k+2]);
-              newvertices.push(tarray[k+3]);
-              newvertices.push(tarray[k+4]);
-              newvertices.push(tarray[k+5]);
+              newvertices.push(vertices[k+2]);
+              newvertices.push(vertices[k+3]);
+              newvertices.push(vertices[k+4]);
+              newvertices.push(vertices[k+5]);
         }
       }
     }
 
     tsize = newvertices.size();
-    // delete[] vertices;
+    delete[] vertices;
     vertices = new float[tsize];
     for (int i = 0; i < tsize; ++i) {
       vertices[i] = newvertices.front();

@@ -27,7 +27,7 @@ namespace tsgl {
     *   \param color The color of the regular polygon (set to BLACK by default).
     *   \param outlineColor The color of the regular polygon's outline (set to BLACK by default).
     */
-    RegularPolygon(float x, float y, float radius, int sides, const ColorFloat& color = BLACK, const ColorFloat& outlineColor = BLACK);
+    RegularPolygon(float x, float y, float radius, int sides, const ColorFloat& color = BLACK, bool filled = true);
 
   };
 
