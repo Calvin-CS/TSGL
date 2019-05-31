@@ -29,7 +29,7 @@ void alphaRectangleFunction(Canvas& can) {
         can.sleep();
         a = rand() % WW; b = rand() % WH;
         c = rand() % WW; d = rand() % WH;
-        can.drawRectangle(a, b, c, d, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16));
+        can.drawRectangle(a, b, c, d, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16), true, false);
     }
 }
 

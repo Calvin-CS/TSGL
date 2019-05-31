@@ -252,7 +252,7 @@ public:
      *   \param filled Whether the circle should be filled
      *     (set to true by default).
      */
-    virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true);
+    virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draws a concave polygon with colored vertices.
@@ -268,7 +268,7 @@ public:
      *   that you draw convex polygons with this function.
      * \see drawConvexPolygon().
      */
-    virtual void drawConcavePolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draws a convex polygon with colored vertices.
@@ -284,7 +284,7 @@ public:
      *   is that a convex polygon has all interior angles less than
      *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
      */
-    virtual void drawConvexPolygon(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Draws an image.
@@ -358,7 +358,7 @@ public:
      *     (set to true by default).
      * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
      */
-    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, bool filled = true);
+    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, bool filled = true, bool outlined = false);
 
 
     /*!
@@ -374,7 +374,7 @@ public:
      *     (set to true by default).
      * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
      */
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0, bool filled = true);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draw a string of text.
@@ -413,7 +413,7 @@ public:
      *   \param filled Whether the Triangle should be filled (set to true by default).
      */
     virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color = BLACK,
-                              bool filled = true);
+                              bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draws an arbitrary triangle strip with colored vertices.
@@ -425,7 +425,7 @@ public:
      *   \param color An array of colors for the vertices.
      *   \param filled Whether the triangle strip should be filled (true) or not (false).
      */
-    virtual void drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true);
+    virtual void drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Accessor for the current background color.

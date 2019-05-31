@@ -39,7 +39,7 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
     int myStart = myPart * omp_get_thread_num();
     for (int i = myStart; i < myStart + myPart; i++) {
       for (int j = 0; j < can.getWindowWidth(); j++) {
-        int id = omp_get_thread_num();
+        // int id = omp_get_thread_num();
         if (i % 2 == 0)
           can.drawPoint(i, j, BLACK);
         else

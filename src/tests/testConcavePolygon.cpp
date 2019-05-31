@@ -66,8 +66,8 @@ void concavePolygonFunction(Canvas& can) {
     // otherwise, it is always wrong and inconsistent in how it is wrong.
     can.pauseDrawing();
     can.clear();
-    can.drawConcavePolygon(11, x, y, color, false);
-    can.drawConcavePolygon(PSIZE , xx, yy, color, true);
+    can.drawConcavePolygon(11, x, y, color, false, true);
+    can.drawConcavePolygon(PSIZE , xx, yy, color, true, false);
     can.resumeDrawing();
   }
 }

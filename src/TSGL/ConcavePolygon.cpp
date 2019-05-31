@@ -2,20 +2,29 @@
 
 namespace tsgl {
 
-ConcavePolygon::ConcavePolygon(int numVertices, bool filled = true) : Shape() {
-  if (numVertices < 3)
-    TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
+ConcavePolygon::ConcavePolygon(int numVertices, bool filled, bool outlined) : Polygon(numVertices) {
   length = numVertices+1;
   size = length * 6;
   tsize = 0;
   isFilled = filled;
+  hasOutline = outlined;
   vertices = new float[size];
   dirty = false;
-  if(filled) {
-    geometryType = GL_TRIANGLES;
-  } else {
-    geometryType = GL_LINE_STRIP;
+  geometryType = GL_TRIANGLES;
+}
+
+ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled, bool outlined) : Polygon(numVertices) {
+  length = numVertices+1;
+  size = length * 6;
+  tsize = 0;
+  isFilled = filled;
+  hasOutline = outlined;
+  vertices = new float[size];
+  for (int i = 0; i < numVertices; i++) {
+      addVertex(x[i], y[i], color[i]);
   }
+  dirty = false;
+  geometryType = GL_TRIANGLES;
 }
 
 void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {

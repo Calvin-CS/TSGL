@@ -5,7 +5,7 @@
 #ifndef CONVEXPOLYGON_H_
 #define CONVEXPOLYGON_H_
 
-#include "Shape.h"       // For extending our Shape object
+#include "Polygon.h"       // For extending our Shape object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -20,12 +20,14 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
-class ConvexPolygon : public Shape {
+class ConvexPolygon : public Polygon {
  private:
    int size;
 
     static bool testAddVertex();  // Unit test for addVertex()
  public:
+
+   ConvexPolygon(int numVertices, bool filled = true, bool outlined = false);
 
     /*!
      * \brief Explicitly constructs a new ConvexPolygon.
@@ -34,9 +36,9 @@ class ConvexPolygon : public Shape {
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
-    ConvexPolygon(int numVertices, bool filled = true);
+    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
 
-    void setGeometry(bool filled);
+    void setup(int numVertices, bool filled, bool outlined);
 
     /*!
      * \brief Runs the Unit tests.

@@ -5,7 +5,7 @@
 #ifndef CONCAVEPOLYGON_H_
 #define CONCAVEPOLYGON_H_
 
-#include "Shape.h"       // For extending our Shape object
+#include "Polygon.h"       // For extending our Shape object
 #include "TsglAssert.h"  // For unit testing purposes
 #include <queue>         // std::queue
 #include <iostream>      // DEBUGGING
@@ -22,14 +22,13 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
-class ConcavePolygon : public Shape {
+class ConcavePolygon : public Polygon {
  private:
     bool dirty;         // Whether the new vertex buffer is dirty
     //float* tarray;      // Buffer for original vertex data
     int size,           // Number of floating point numbers in vertices
         tsize,          // Number of floating point numbers in tarray
         length;         // Number of vertices in vertices (size / 6)
-    bool isFilled = true;
 
     static bool testIntersects();     // Unit test for intersects()
     static bool testPointITriangle(); // Unit test for pointInTriangle()
@@ -43,8 +42,10 @@ class ConcavePolygon : public Shape {
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
      */
-    ConcavePolygon(int numVertices, bool filled = true);
+    ConcavePolygon(int numVertices, bool filled = true, bool outlined = false);
 
+
+    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Determines if two lines intersect.

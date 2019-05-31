@@ -266,7 +266,7 @@ public:
      * \note Identical to Canvas::drawTriangle().
      */
     void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color = BLACK,
-                      bool filled = true);
+                      bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draws an arbitrary triangle strip with colored vertices.
@@ -280,7 +280,7 @@ public:
      *     (set to true by default).
      * \note Identical to Canvas::drawTriangleStrip().
      */
-    void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
+    void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Translates Cartesian coordinates into window coordinates.

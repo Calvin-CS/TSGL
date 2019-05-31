@@ -63,11 +63,11 @@ int main(int argc, char * argv[]) {
 	srand(time(NULL));	//Seed the random number generator (to make random colors)
 	
 	//Fill the arrays of Producers and Consumers with Producer and Consumer objects
-	for(unsigned long i = 0; i < numProducers; i++) {
+	for(int i = 0; i < numProducers; i++) {
 		pro[i] = Producer(sharedBuffer, i, queueDisplay);	
 	}
 
-	for(unsigned long j = 0; j < numConsumers; j++) {
+	for(int j = 0; j < numConsumers; j++) {
 		con[j] = Consumer(sharedBuffer, j, queueDisplay);	
 	}
 

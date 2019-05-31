@@ -32,7 +32,7 @@ public:
        *   \param ninja The ninja setting of the star, making the star points spin differently if true
        *     (set to false by default).
        */
-      Star(float x, float y, float radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0, bool filled = true);
+      Star(float x, float y, float radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
 
 };
 

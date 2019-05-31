@@ -2,20 +2,28 @@
 
 namespace tsgl {
 
-ConvexPolygon::ConvexPolygon(int numVertices, bool filled = true) : Shape() {
+ConvexPolygon::ConvexPolygon(int numVertices, bool filled, bool outlined) : Polygon(numVertices) {
     if (numVertices < 3)
       TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
+    setup(numVertices, filled, outlined);
+}
+
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled, bool outlined) : Polygon(numVertices) {
+    if (numVertices < 3)
+      TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
+    setup(numVertices, filled, outlined);
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], color[i]);
+    }
+}
+
+void ConvexPolygon::setup(int numVertices, bool filled, bool outlined) {
     numberOfVertices = numVertices;
     size = numberOfVertices * 6;
     vertices = new float[size];
     geometryType = GL_TRIANGLE_FAN;
-    setGeometry(filled);
-}
-
-void ConvexPolygon::setGeometry(bool filled) {
-  if(!filled) {
-    geometryType = GL_LINE_LOOP;
-  }
+    isFilled = filled;
+    hasOutline = outlined;
 }
 
 void ConvexPolygon::runTests() {

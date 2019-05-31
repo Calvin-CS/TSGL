@@ -28,7 +28,7 @@ IntegralViewer::~IntegralViewer() {
 void IntegralViewer::drawLabels(CartesianCanvas*& can) {
   const int FSIZE = 32;
   const float cpw = can->getPixelWidth(), cph = can->getPixelHeight();
-  const float xoff = cpw*FSIZE, yoff = cph*FSIZE;
+  const float /* xoff = cpw*FSIZE, */ yoff = cph*FSIZE;
 
   bool blorigin = (myStartX == 0 && myStartY == 0);
   bool tlorigin = (myStartX == 0 && myStopY == 0);
