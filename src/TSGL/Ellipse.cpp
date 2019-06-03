@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat& color = BLACK, bool filled, bool outlined) : ConvexPolygon((xRadius + yRadius) / 2, filled, outlined) {
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat& color, bool filled, bool outlined) : ConvexPolygon((xRadius + yRadius) / 2, filled, outlined) {
   //TODO: do we need any locking here? All the values we use below are from the constructor
   float delta = 2.0f / numberOfVertices * PI;
   for (int i = 0; i < numberOfVertices; ++i) {

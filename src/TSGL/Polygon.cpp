@@ -16,9 +16,59 @@ void Polygon::draw()  {
     glDrawArrays(geometryType, 0, numberOfVertices);
   }
   if(hasOutline) {
-    glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_LINE_LOOP, 0, numberOfVertices);
+    glBufferData(GL_ARRAY_BUFFER, numberOfOutlineVertices * 6 * sizeof(float), outlineVertices, GL_DYNAMIC_DRAW);
+    glDrawArrays(GL_LINE_LOOP, 0, numberOfOutlineVertices);
   }
+}
+
+void Polygon::addVertex(float x, float y, const ColorFloat &color) {
+    if (init) {
+        TsglDebug("Cannot add anymore vertices.");
+        return;
+    }
+    if(isFilled) {
+      vertices[current] = x;
+      vertices[current + 1] = y;
+      vertices[current + 2] = color.R;
+      vertices[current + 3] = color.G;
+      vertices[current + 4] = color.B;
+      vertices[current + 5] = color.A;
+    }
+    if(hasOutline) {
+      outlineVertices[current] = x;
+      outlineVertices[current + 1] = y;
+      outlineVertices[current + 2] = color.R;
+      outlineVertices[current + 3] = color.G;
+      outlineVertices[current + 4] = color.B;
+      outlineVertices[current + 5] = color.A;
+    }
+    current += 6;
+    if (current == numberOfVertices*6) init = true;
+}
+
+void Polygon::addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor) {
+    if (init) {
+        TsglDebug("Cannot add anymore vertices.");
+        return;
+    }
+    if(isFilled) {
+      vertices[current] = x;
+      vertices[current + 1] = y;
+      vertices[current + 2] = fillColor.R;
+      vertices[current + 3] = fillColor.G;
+      vertices[current + 4] = fillColor.B;
+      vertices[current + 5] = fillColor.A;
+    }
+    if(hasOutline) {
+      outlineVertices[current] = x;
+      outlineVertices[current + 1] = y;
+      outlineVertices[current + 2] = outlineColor.R;
+      outlineVertices[current + 3] = outlineColor.G;
+      outlineVertices[current + 4] = outlineColor.B;
+      outlineVertices[current + 5] = outlineColor.A;
+    }
+    current += 6;
+    if (current == numberOfVertices*6) init = true;
 }
 
 // GLfloat* Polygon::getPointerToOutlineVerticesArray() {
@@ -53,5 +103,13 @@ void Polygon::draw()  {
 //   hasOutline = outline;
 //   attribMutex.unlock();
 // }
+  Polygon::~Polygon() {
+    if(hasOutline) { 
+      delete[] outlineVertices; 
+    }
+    if(isFilled) {
+      delete[] vertices;
+    }
+  }
 
 }

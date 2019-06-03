@@ -3,28 +3,31 @@
 namespace tsgl {
 
 ConcavePolygon::ConcavePolygon(int numVertices, bool filled, bool outlined) : Polygon(numVertices) {
-  length = numVertices+1;
-  size = length * 6;
-  tsize = 0;
-  isFilled = filled;
-  hasOutline = outlined;
+  setup(numVertices, filled, outlined);
   vertices = new float[size];
-  dirty = false;
-  geometryType = GL_TRIANGLES;
 }
 
 ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled, bool outlined) : Polygon(numVertices) {
-  length = numVertices+1;
-  size = length * 6;
-  tsize = 0;
-  isFilled = filled;
-  hasOutline = outlined;
-  vertices = new float[size];
+  setup(numVertices, filled, outlined);
   for (int i = 0; i < numVertices; i++) {
       addVertex(x[i], y[i], color[i]);
   }
+}
+
+void ConcavePolygon::setup(int numVertices, bool filled, bool outlined) {
+  numberOfOutlineVertices = numVertices+1;
+  size = numberOfOutlineVertices * 6;
+  tsize = 0;
+  isFilled = filled;
+  hasOutline = outlined;
   dirty = false;
   geometryType = GL_TRIANGLES;
+  if(filled) {
+    vertices = new float[size];
+  }
+  if(outlined) {
+    outlineVertices = new float[size];
+  }
 }
 
 void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
@@ -32,27 +35,93 @@ void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
     TsglDebug("Cannot add anymore vertices.");
     return;
   }
-  vertices[current] = x;
-  vertices[current + 1] = y;
-  vertices[current + 2] = color.R;
-  vertices[current + 3] = color.G;
-  vertices[current + 4] = color.B;
-  vertices[current + 5] = color.A;
+  if(isFilled) {
+    vertices[current] = x;
+    vertices[current + 1] = y;
+    vertices[current + 2] = color.R;
+    vertices[current + 3] = color.G;
+    vertices[current + 4] = color.B;
+    vertices[current + 5] = color.A;
+  }
+  if(hasOutline) {
+    outlineVertices[current] = x;
+    outlineVertices[current + 1] = y;
+    outlineVertices[current + 2] = color.R;
+    outlineVertices[current + 3] = color.G;
+    outlineVertices[current + 4] = color.B;
+    outlineVertices[current + 5] = color.A;
+  }
   current += 6;
   dirty = true;
 
   if (current == size-6) {
-    vertices[current] = vertices[0];
-    vertices[current + 1] = vertices[1];
-    vertices[current + 2] = vertices[2];
-    vertices[current + 3] = vertices[3];
-    vertices[current + 4] = vertices[4];
-    vertices[current + 5] = vertices[5];
+    if(isFilled) {
+      vertices[current] = vertices[0];
+      vertices[current + 1] = vertices[1];
+      vertices[current + 2] = vertices[2];
+      vertices[current + 3] = vertices[3];
+      vertices[current + 4] = vertices[4];
+      vertices[current + 5] = vertices[5];
+    }
+    if(hasOutline) {
+      outlineVertices[current] = outlineVertices[0];
+      outlineVertices[current + 1] = outlineVertices[1];
+      outlineVertices[current + 2] = outlineVertices[2];
+      outlineVertices[current + 3] = outlineVertices[3];
+      outlineVertices[current + 4] = outlineVertices[4];
+      outlineVertices[current + 5] = outlineVertices[5];
+    }
     init = true;
     if(isFilled) {
       preprocess();
-    } else {
-      numberOfVertices = size / 6;
+    }
+  }
+}
+
+void ConcavePolygon::addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor) {
+  if (init) {
+    TsglDebug("Cannot add anymore vertices.");
+    return;
+  }
+  if(isFilled) {
+    vertices[current] = x;
+    vertices[current + 1] = y;
+    vertices[current + 2] = fillColor.R;
+    vertices[current + 3] = fillColor.G;
+    vertices[current + 4] = fillColor.B;
+    vertices[current + 5] = fillColor.A;
+  }
+  if(hasOutline) {
+    outlineVertices[current] = x;
+    outlineVertices[current + 1] = y;
+    outlineVertices[current + 2] = outlineColor.R;
+    outlineVertices[current + 3] = outlineColor.G;
+    outlineVertices[current + 4] = outlineColor.B;
+    outlineVertices[current + 5] = outlineColor.A;
+  }
+  current += 6;
+  dirty = true;
+
+  if (current == size-6) {
+    if(isFilled) {
+      vertices[current] = vertices[0];
+      vertices[current + 1] = vertices[1];
+      vertices[current + 2] = vertices[2];
+      vertices[current + 3] = vertices[3];
+      vertices[current + 4] = vertices[4];
+      vertices[current + 5] = vertices[5];
+    }
+    if(hasOutline) {
+      outlineVertices[current] = outlineVertices[0];
+      outlineVertices[current + 1] = outlineVertices[1];
+      outlineVertices[current + 2] = outlineVertices[2];
+      outlineVertices[current + 3] = outlineVertices[3];
+      outlineVertices[current + 4] = outlineVertices[4];
+      outlineVertices[current + 5] = outlineVertices[5];
+    }
+    init = true;
+    if(isFilled) {
+      preprocess();
     }
   }
 }

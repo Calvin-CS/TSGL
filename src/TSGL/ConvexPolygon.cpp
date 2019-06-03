@@ -19,8 +19,14 @@ ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color
 
 void ConvexPolygon::setup(int numVertices, bool filled, bool outlined) {
     numberOfVertices = numVertices;
+    numberOfOutlineVertices = numVertices;
     size = numberOfVertices * 6;
-    vertices = new float[size];
+    if(filled) {
+      vertices = new float[size];
+    }
+    if(outlined) {
+      outlineVertices = new float[size];
+    }
     geometryType = GL_TRIANGLE_FAN;
     isFilled = filled;
     hasOutline = outlined;

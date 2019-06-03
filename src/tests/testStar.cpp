@@ -17,11 +17,11 @@ int main() {
 	while( c.isOpen() ) {
 		c.sleep();
 		c.drawStar(xs[2], ys[2], 125, 8, GREEN, true, rotation, true, true);
-		c.drawStar(xs[3], ys[3], 75, 9, PURPLE, false, rotation, true, true);
+		c.drawStar(xs[3], ys[3], 75, 9, PURPLE, false, rotation, true, false);
 		c.pauseDrawing();
 		c.clear();
-		c.drawStar(xs[0], ys[0], 100, 6, RED, true, rotation, true, true);
-		c.drawStar(xs[1], ys[1], 50, 7, BLUE, false, rotation, true, true);	
+		c.drawStar(xs[0], ys[0], 100, 6, RED, true, rotation, false, true);
+		c.drawStar(xs[1], ys[1], 50, 7, BLUE, false, rotation, false, false);	
 		rotation += PI / 24;
 		c.resumeDrawing();	
 	}

@@ -33,6 +33,11 @@ class Polyline : public Shape {
     Polyline(int numVertices);
 
     bool isProcessed();
+
+    /*!
+     * \brief Destructor for the Polyline.
+     */
+    ~Polyline() { delete[] vertices; }
 };
 
 }

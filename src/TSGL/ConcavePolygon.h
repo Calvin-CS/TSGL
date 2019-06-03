@@ -30,6 +30,8 @@ class ConcavePolygon : public Polygon {
         tsize,          // Number of floating point numbers in tarray
         length;         // Number of vertices in vertices (size / 6)
 
+    void setup(int numVertices, bool filled, bool outlined = false);
+
     static bool testIntersects();     // Unit test for intersects()
     static bool testPointITriangle(); // Unit test for pointInTriangle()
 
@@ -90,6 +92,17 @@ class ConcavePolygon : public Polygon {
      * \note A message is given indicating that the vertex buffer is full.
      */
     void addVertex(float x, float y, const ColorFloat &color);
+
+        /*!
+     * \brief Adds another vertex to a ConcavePolygon.
+     * \details This function initializes the next vertex in the Polyline and adds it to a ConcavePolygon buffer.
+     *      \param x The x position of the vertex.
+     *      \param y The y position of the vertex.
+     *      \param color The reference variable of the color of the vertex.
+     * \note This function does nothing if the vertex buffer is already full.
+     * \note A message is given indicating that the vertex buffer is full.
+     */
+    void addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor);
 
     /*!
      * \brief Draw the ConcavePolygon.

@@ -369,11 +369,8 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
     drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
-void Canvas::drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled, bool outlined) {
-    TriangleStrip* p = new TriangleStrip(size, filled, outlined);
-    for (int i = 0; i < size; i++) {
-        p->addVertex(xverts[i], yverts[i], color[i]);
-    }
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled, bool outlined) {
+    TriangleStrip* p = new TriangleStrip(size, x, y, color, filled, outlined);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 

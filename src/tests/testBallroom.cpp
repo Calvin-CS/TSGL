@@ -211,7 +211,7 @@ public:
     int mx = c->getMouseX(), my = c->getMouseY();
     Vector2 mvec(mx,my);
     if (attract)
-      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f), false, true);
+      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f), true, true);
     else
       c->drawCircle(mx,my,25,32,ColorFloat(0.5f,1.0f,1.0f,0.5f));
     for (it = balls.begin(); it != balls.end(); ++it) {

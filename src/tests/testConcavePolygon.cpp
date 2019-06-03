@@ -67,7 +67,7 @@ void concavePolygonFunction(Canvas& can) {
     can.pauseDrawing();
     can.clear();
     can.drawConcavePolygon(11, x, y, color, false, true);
-    can.drawConcavePolygon(PSIZE , xx, yy, color, true, false);
+    can.drawConcavePolygon(PSIZE , xx, yy, color, true, true);
     can.resumeDrawing();
   }
 }

@@ -24,6 +24,8 @@ class Polygon : public Shape {
 protected:
   bool isFilled = true;
   bool hasOutline = false;
+  float* outlineVertices;
+  int numberOfOutlineVertices;
 public:
 
     /*!
@@ -37,7 +39,17 @@ public:
      */
     Polygon(int numVertices);
 
+    /*!
+     * \brief Destructor for the Polygon.
+     */
+    virtual ~Polygon();
+
     virtual void draw();
+
+
+    virtual void addVertex(float x, float y, const ColorFloat &color = BLACK);
+
+    virtual void addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor);
 
     // /**
     //  * \brief Returns a pointer to the vertices array for rendering the outline.

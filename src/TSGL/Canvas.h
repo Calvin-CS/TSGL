@@ -425,7 +425,7 @@ public:
      *   \param color An array of colors for the vertices.
      *   \param filled Whether the triangle strip should be filled (true) or not (false).
      */
-    virtual void drawTriangleStrip(int size, int xverts[], int yverts[], ColorFloat color[], bool filled = true, bool outlined = false);
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Accessor for the current background color.

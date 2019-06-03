@@ -46,10 +46,10 @@ class Shape : public Drawable {
      */
     Shape();
 
-    /*!
-     * \brief Destructor for the Shape.
-     */
-    virtual ~Shape() { delete[] vertices; }
+   //  /*!
+   //   * \brief Destructor for the Shape.
+   //   */
+   //  virtual ~Shape() { delete[] vertices; }
 
        /*!
      * \brief Draw the Shape.
