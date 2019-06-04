@@ -7,10 +7,45 @@ ConcavePolygon::ConcavePolygon(int numVertices, bool filled, bool outlined) : Po
   vertices = new float[size];
 }
 
+ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled, bool outlined) : Polygon(numVertices) {
+  setup(numVertices, filled, outlined);
+  for (int i = 0; i < numVertices; i++) {
+      addVertex(x[i], y[i], color);
+  }
+}
+
 ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled, bool outlined) : Polygon(numVertices) {
   setup(numVertices, filled, outlined);
   for (int i = 0; i < numVertices; i++) {
       addVertex(x[i], y[i], color[i]);
+  }
+}
+
+ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) : Polygon(numVertices) {
+  setup(numVertices, filled, outlined);
+  for (int i = 0; i < numVertices; i++) {
+      addVertex(x[i], y[i], fillColor, outlineColor);
+  }
+}
+
+ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) : Polygon(numVertices) {
+  setup(numVertices, filled, outlined);
+  for (int i = 0; i < numVertices; i++) {
+      addVertex(x[i], y[i], fillColor[i], outlineColor);
+  }
+}
+
+ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) : Polygon(numVertices) {
+  setup(numVertices, filled, outlined);
+  for (int i = 0; i < numVertices; i++) {
+      addVertex(x[i], y[i], fillColor, outlineColor[i]);
+  }
+}
+
+ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) : Polygon(numVertices) {
+  setup(numVertices, filled, outlined);
+  for (int i = 0; i < numVertices; i++) {
+      addVertex(x[i], y[i], fillColor[i], outlineColor[i]);
   }
 }
 

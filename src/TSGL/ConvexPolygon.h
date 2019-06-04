@@ -36,7 +36,17 @@ class ConvexPolygon : public Polygon {
      * \warning An invariant is held where if v is less than 3 then an error message is given.
      * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
      */
+    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled = true, bool outlined = false);
+
     ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
+
+    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
 
     void setup(int numVertices, bool filled, bool outlined);
 

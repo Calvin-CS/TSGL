@@ -3,17 +3,48 @@
 namespace tsgl {
 
 ConvexPolygon::ConvexPolygon(int numVertices, bool filled, bool outlined) : Polygon(numVertices) {
-    if (numVertices < 3)
-      TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
     setup(numVertices, filled, outlined);
 }
 
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled, bool outlined) : Polygon(numVertices) {
+    setup(numVertices, filled, outlined);
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], color);
+    }
+}
+
 ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled, bool outlined) : Polygon(numVertices) {
-    if (numVertices < 3)
-      TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
     setup(numVertices, filled, outlined);
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], color[i]);
+    }
+}
+
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) : Polygon(numVertices) {
+    setup(numVertices, filled, outlined);
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], fillColor, outlineColor);
+    }
+}
+
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) : Polygon(numVertices) {
+    setup(numVertices, filled, outlined);
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], fillColor[i], outlineColor);
+    }
+}
+
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) : Polygon(numVertices) {
+    setup(numVertices, filled, outlined);
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], fillColor, outlineColor[i]);
+    }
+}
+
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) : Polygon(numVertices) {
+    setup(numVertices, filled, outlined);
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], fillColor[i], outlineColor[i]);
     }
 }
 

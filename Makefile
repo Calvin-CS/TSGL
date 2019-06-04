@@ -75,6 +75,7 @@ BINARIES= \
 	bin/testColorPoints \
 	bin/testColorWheel \
 	bin/testConcavePolygon \
+	bin/testConstructors \
 	bin/testConway \
 	bin/testCosineIntegral \
 	bin/testDumbSort \

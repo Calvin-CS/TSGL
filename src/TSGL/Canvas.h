@@ -237,7 +237,9 @@ public:
      */
     void close();
 
-    virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat &color, bool doubleArrow = false);
+    virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color, bool doubleArrow = false);
+
+    virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color[], bool doubleArrow = false);
 
     /*!
      * \brief Draws a circle.
@@ -251,8 +253,20 @@ public:
      *     (set to BLACK by default).
      *   \param filled Whether the circle should be filled
      *     (set to true by default).
+     *   \param outlined Whether the circle should be outlined
+     *     (set to false by default)
      */
     virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true, bool outlined = false);
+
+    virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat color[], bool filled = true, bool outlined = false);
+
+    virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+    virtual void drawCircle(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draws a concave polygon with colored vertices.
@@ -262,13 +276,25 @@ public:
      *   \param xverts An array of x positions of said vertices.
      *   \param yverts An array of y positions of said vertices.
      *   \param color An array of colors for the said vertices.
-     *   \param filled Whether the Concave polygon should be filled in or not
+     *   \param filled Whether the ConcavePolygon should be filled in or not
      *     (set to true by default).
+     *   \param outlined Whether the ConcavePolygon should be outlined
+     *     (set to false by default)
      * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
      *   that you draw convex polygons with this function.
      * \see drawConvexPolygon().
      */
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color, bool filled = true, bool outlined = false);
+
     virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
+
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draws a convex polygon with colored vertices.
@@ -280,11 +306,50 @@ public:
      *   \param color An array of colors for the said vertices.
      *   \param filled Whether the ConvexPolygon should be filled in or not
      *     (set to true by default).
+     *   \param outlined Whether the ConvexPolygon should be outlined
+     *     (set to false by default)
      * \note The difference between a convex polygon and a concave polygon
      *   is that a convex polygon has all interior angles less than
      *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
      */
-    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color, bool filled = true, bool outlined = false);
+
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
+
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+    /*!
+     * \brief Draws an ellipse.
+     * \details This function draws an ellipse with the given center, radii, resolution
+     *   (number of sides), color, and fill status.
+     *   \param x The x coordinate of the ellipse's center.
+     *   \param y The y coordinate of the ellipse's center.
+     *   \param xRadius The x radius of the ellipse in pixels.
+     *   \param yRadius The x radius of the ellipse in pixels.
+     *   \param sides The number of sides to use in the ellipse.
+     *   \param color The color of the ellipse
+     *   \param filled Whether the ellipse should be filled
+     *     (set to true by default).
+     *   \param outlined Whether the ellipse should be outlined
+     *     (set to false by default)
+     */
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color, bool filled, bool outlined);
+
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color[], bool filled, bool outlined);
+
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined);
+
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined);
+
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined);
+
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined);
 
     /*!
      * \brief Draws an image.
@@ -356,25 +421,62 @@ public:
      *     (set to BLACK by default).
      *   \param filled Whether the rectangle should be filled
      *     (set to true by default).
+     *   \param outlined Whether the rectangle should be outlined
+     *     (set to false by default)
      * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
      */
     virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, bool filled = true, bool outlined = false);
 
+    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color[], bool filled = true, bool outlined = false);
 
-    /*!
-     * \brief Draws a rectangle.
-     * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-     *   \param x1 The x coordinate of the Rectangle's left edge.
-     *   \param y1 The y coordinate of the Rectangle's top edge.
-     *   \param x2 The x coordinate of the Rectangle's right edge.
-     *   \param y2 The y coordinate of the Rectangle's bottom edge.
-     *   \param color The color of the rectangle
+    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true, bool outlined = false);
+
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled = true, bool outlined = false);
+
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    
+    /*! #FIXME
+     * \brief Draws a star.
+     * \details This function draws a Star with the given coordinates, radius, points, and color.
+     *   \param x1 The x coordinate of the star's center
+     *   \param y1 The y coordinate of the star's center
+     *   \param radius Radius of the outer points of the star
+     *   \param points The number of points on the star
+     *   \param color The color of the star
      *     (set to BLACK by default).
-     *   \param filled Whether the rectangle should be filled
+     *   \param ninja makes it look conventional or like a shuriken
+     *   \param rotation how many radians the star should be rotated
+     *   \param filled Whether the star should be filled
      *     (set to true by default).
-     * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
+     *   \param outlined Whether the star should be outlined
+     *     (set to false by default)
      */
     virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color[], bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draw a string of text.
@@ -411,9 +513,20 @@ public:
      *   \param y3 The y coordinate of the third vertex of the Triangle.
      *   \param color The color of the Triangle (set to BLACK by default).
      *   \param filled Whether the Triangle should be filled (set to true by default).
+     *   \param outlined Whether the Triangle should be outlined
+     *     (set to false by default)
      */
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color = BLACK,
-                              bool filled = true, bool outlined = false);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color = BLACK, bool filled = true, bool outlined = false);
+
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color[], bool filled = true, bool outlined = false);
+
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Draws an arbitrary triangle strip with colored vertices.
@@ -424,8 +537,20 @@ public:
      *   \param yverts An array of y positions of the vertices.
      *   \param color An array of colors for the vertices.
      *   \param filled Whether the triangle strip should be filled (true) or not (false).
+     *   \param outlined Whether the triangle strip should be outlined
+     *     (set to false by default)
      */
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color, bool filled = true, bool outlined = false);
+
     virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
+
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
 
     /*!
      * \brief Accessor for the current background color.

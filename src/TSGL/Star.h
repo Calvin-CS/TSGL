@@ -19,20 +19,30 @@ private:
   int myPoints;
 public:
 
-      /*!
-       * \brief Explicitly constructs a new Star.
-       * \details This function draws a star with the given center,
-       *   radius, points, and color.
-       *   \param x The x coordinate of the star's center.
-       *   \param y The y coordinate of the star's center.
-       *   \param radius The radius of the star in pixels.
-       *   \param points The number of points to use in the star.
-       *   \param color The color of the star (set to BLACK by default).
-       *   \param outlineColor The color of the star's outline (set to BLACK by default).
-       *   \param ninja The ninja setting of the star, making the star points spin differently if true
-       *     (set to false by default).
-       */
-      Star(float x, float y, float radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+  /*!
+    * \brief Explicitly constructs a new Star.
+    * \details This function draws a star with the given center,
+    *   radius, points, and color.
+    *   \param x The x coordinate of the star's center.
+    *   \param y The y coordinate of the star's center.
+    *   \param radius The radius of the star in pixels.
+    *   \param points The number of points to use in the star.
+    *   \param color The color of the star (set to BLACK by default).
+    *   \param outlineColor The color of the star's outline (set to BLACK by default).
+    *   \param ninja The ninja setting of the star, making the star points spin differently if true
+    *     (set to false by default).
+    */
+  Star(float x, float y, float radius, int points, ColorFloat color = BLACK, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+  Star(float x, float y, float radius, int points, ColorFloat color[], bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+  Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+  Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+  
+  Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
+
+  Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja = false, float rotation = 0, bool filled = true, bool outlined = false);
 
 };
 

@@ -17,6 +17,7 @@ run ./testCalcPi 100 4                                             #Segments, Th
 run ./testColorPoints 400 400 4                                    #Width, Height, Threads
 run ./testColorWheel 640 640 64                                    #Width, Height, Threads
 run ./testConcavePolygon                                           #SLOW
+run ./testConstructors
 run ./testConway 640 640                                           #Width, Height
 run ./testCosineIntegral 640 480 32                                #Width, Height, Threads
 run ./testDumbSort 1200 600                                        #Width, Height

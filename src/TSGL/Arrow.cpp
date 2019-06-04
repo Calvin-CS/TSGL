@@ -2,14 +2,21 @@
 
 namespace tsgl {
 
-  Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat &color, bool doubleArrow) : ConcavePolygon((doubleArrow)? 10 : 7) {
+  Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat color, bool doubleArrow) : ConcavePolygon((doubleArrow)? 10 : 7) {
     headX = x2; headY = y2;
     tailX = x1; tailY = y1;
     isDoubleArrow = doubleArrow;
     generateVertices(color);
   }
 
-  void Arrow::generateVertices(const ColorFloat& color) {
+  Arrow::Arrow(int x1, int y1, int x2, int y2, const ColorFloat color[], bool doubleArrow) : ConcavePolygon((doubleArrow)? 10 : 7) {
+    headX = x2; headY = y2;
+    tailX = x1; tailY = y1;
+    isDoubleArrow = doubleArrow;
+    generateVertices(color);
+  }
+
+  void Arrow::generateVertices(const ColorFloat color) {
     //TODO: figure out locking for this since we are adding vertices, which uses the lock
     makeArrowHead(headX, headY, headX-tailX, headY-tailY, color);
 
@@ -24,6 +31,24 @@ namespace tsgl {
 
       addVertex(tailX-a, tailY-b, color);
       addVertex(tailX+a, tailY+b, color);
+    }
+  }
+
+  void Arrow::generateVertices(const ColorFloat color[]) {
+    //TODO: figure out locking for this since we are adding vertices, which uses the lock
+    makeArrowHead(headX, headY, headX-tailX, headY-tailY, color[0]);
+
+    if( isDoubleArrow ) {
+      makeArrowHead(tailX, tailY, tailX-headX, tailY-headY, color[1]);
+    } else {
+      int a, b; //Offsets for vertices
+      if( tailY < headY ) a = 1;
+      else a = -1;
+      if( tailX > headX ) b = 1;
+      else b = -1;
+
+      // addVertex(tailX-a, tailY-b, color[2]);
+      // addVertex(tailX+a, tailY+b, color[3]);
     }
   }
 
@@ -46,7 +71,7 @@ namespace tsgl {
  /*!
   * \brief private method helping constructor for the arrow heads
   */
-  void Arrow::makeArrowHead(float x, float y, float deltaX, float deltaY, const ColorFloat& color) {
+  void Arrow::makeArrowHead(float x, float y, float deltaX, float deltaY, const ColorFloat color) {
 
     int a, b;
     if( deltaY > 0 ) a = 1;

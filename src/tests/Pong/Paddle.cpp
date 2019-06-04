@@ -26,7 +26,11 @@ void Paddle::bindings(Canvas& can, int side) {
 
 void Paddle::draw(Canvas& can, int side) {
   if(side == -1) {  //Left side
-    can.drawRectangle(8, myY, 32, myY + 64, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f), false, true);
+    // ColorFloat color[4];
+    // for (unsigned i = 0; i < 4; ++i) {
+    //   color[i] = Colors::randomColor(1.0f);
+    // }
+    can.drawRectangle(8, myY, 32, myY + 64, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f) /* color */, false, true);
   } else if(side == 1) { //Right side
     can.drawRectangle(can.getWindowWidth() - 24 - 8, myY, can.getWindowWidth() - 8, myY + 64, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f), true, true);
   }

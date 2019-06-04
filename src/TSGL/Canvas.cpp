@@ -251,7 +251,12 @@ void Canvas::draw() {
     }
 }
 
-void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat &color, bool doubleArrow = false) {
+void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color, bool doubleArrow = false) {
+  Arrow * arrow = new Arrow(x1, y1, x2, y2, color, doubleArrow);
+  drawDrawable(arrow);
+}
+
+void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color[], bool doubleArrow = false) {
   Arrow * arrow = new Arrow(x1, y1, x2, y2, color, doubleArrow);
   drawDrawable(arrow);
 }
@@ -261,11 +266,7 @@ void Canvas::drawCircle(int x, int y, int radius, int sides, ColorFloat color, b
     // Circle* c = new Circle(x, y, radius, color, filled, outlined);  // Creates the Line with the specified coordinates and color
     // drawDrawable(c);                               // Push it onto our drawing buffer
 
-    // version 2
-    // RegularPolygon *c = new RegularPolygon(x, y, radius, sides, color, filled, outlined);
-    // drawDrawable(c);
-
-    //version 3
+    //version 2
     float delta = 2.0f / sides * PI;
     ConvexPolygon *s = new ConvexPolygon(sides, filled, outlined);
     for (int i = 0; i < sides; ++i)
@@ -273,17 +274,132 @@ void Canvas::drawCircle(int x, int y, int radius, int sides, ColorFloat color, b
     drawDrawable(s);
 }
 
+void Canvas::drawCircle(int x, int y, int radius, int sides, ColorFloat color[], bool filled, bool outlined) {
+    // version 1
+    // Circle* c = new Circle(x, y, radius, color, filled, outlined);  // Creates the Line with the specified coordinates and color
+    // drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2
+    float delta = 2.0f / sides * PI;
+    ConvexPolygon *s = new ConvexPolygon(sides, filled, outlined);
+    for (int i = 0; i < sides; ++i)
+        s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),color[i]);
+    drawDrawable(s);
+}
+
+void Canvas::drawCircle(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) {
+    // version 1
+    // Circle* c = new Circle(x, y, radius, fillColor, outlineColor, filled, outlined);  // Creates the Line with the specified coordinates and color
+    // drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2
+    float delta = 2.0f / sides * PI;
+    ConvexPolygon *s = new ConvexPolygon(sides, filled, outlined);
+    for (int i = 0; i < sides; ++i)
+        s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),fillColor, outlineColor);
+    drawDrawable(s);
+}
+
+void Canvas::drawCircle(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) {
+    // version 1
+    // Circle* c = new Circle(x, y, radius, fillColor, outlineColor, filled, outlined);  // Creates the Line with the specified coordinates and color
+    // drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2
+    float delta = 2.0f / sides * PI;
+    ConvexPolygon *s = new ConvexPolygon(sides, filled, outlined);
+    for (int i = 0; i < sides; ++i)
+        s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),fillColor[i], outlineColor);
+    drawDrawable(s);
+}
+
+void Canvas::drawCircle(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) {
+    // version 1
+    // Circle* c = new Circle(x, y, radius, fillColor, outlineColor, filled, outlined);  // Creates the Line with the specified coordinates and color
+    // drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2
+    float delta = 2.0f / sides * PI;
+    ConvexPolygon *s = new ConvexPolygon(sides, filled, outlined);
+    for (int i = 0; i < sides; ++i)
+        s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),fillColor, outlineColor[i]);
+    drawDrawable(s);
+}
+
+void Canvas::drawCircle(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) {
+    // version 1
+    // Circle* c = new Circle(x, y, radius, fillColor, outlineColor, filled, outlined);  // Creates the Line with the specified coordinates and color
+    // drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2
+    float delta = 2.0f / sides * PI;
+    ConvexPolygon *s = new ConvexPolygon(sides, filled, outlined);
+    for (int i = 0; i < sides; ++i)
+        s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),fillColor[i],outlineColor[i]);
+    drawDrawable(s);
+}
+
 // note: when you call drawConcavePolygon, you MUST give it the correct size.
 // otherwise, it is always wrong and inconsistent in how it is wrong.
+// 6 versions
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color, bool filled, bool outlined) {
+    ConcavePolygon* p = new ConcavePolygon(size, x, y, color, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
 void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled, bool outlined) {
     ConcavePolygon* p = new ConcavePolygon(size, x, y, color, filled, outlined);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) {
+    ConcavePolygon* p = new ConcavePolygon(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) {
+    ConcavePolygon* p = new ConcavePolygon(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) {
+    ConcavePolygon* p = new ConcavePolygon(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) {
+    ConcavePolygon* p = new ConcavePolygon(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
 
 
-void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
-    ConvexPolygon* p = new ConvexPolygon(size, x, y, color, filled);
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color, bool filled, bool outlined) {
+    ConvexPolygon* p = new ConvexPolygon(size, x, y, color, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled, bool outlined) {
+    ConvexPolygon* p = new ConvexPolygon(size, x, y, color, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) {
+    ConvexPolygon* p = new ConvexPolygon(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) {
+    ConvexPolygon* p = new ConvexPolygon(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) {
+    ConvexPolygon* p = new ConvexPolygon(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) {
+    ConvexPolygon* p = new ConvexPolygon(size, x, y, fillColor, outlineColor, filled, outlined);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -299,6 +415,38 @@ void Canvas::drawDrawable(Drawable* d) {
     drawableBuffer->push(d);  // Push it onto our drawing buffer
     bufferMutex.unlock();
 }
+
+// 6 versions of drawEllipse
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color, bool filled, bool outlined) {
+  Ellipse * e = new Ellipse(x, y, xRadius, yRadius, color, filled, outlined);
+  drawDrawable(e);
+}
+
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color[], bool filled, bool outlined) {
+  Ellipse * e = new Ellipse(x, y, xRadius, yRadius, color, filled, outlined);
+  drawDrawable(e);
+}
+
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) {
+  Ellipse * e = new Ellipse(x, y, xRadius, yRadius, fillColor, outlineColor, filled, outlined);
+  drawDrawable(e);
+}
+
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) {
+  Ellipse * e = new Ellipse(x, y, xRadius, yRadius, fillColor, outlineColor, filled, outlined);
+  drawDrawable(e);
+}
+
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) {
+  Ellipse * e = new Ellipse(x, y, xRadius, yRadius, fillColor, outlineColor, filled, outlined);
+  drawDrawable(e);
+}
+
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) {
+  Ellipse * e = new Ellipse(x, y, xRadius, yRadius, fillColor, outlineColor, filled, outlined);
+  drawDrawable(e);
+}
+
 
 void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
@@ -341,6 +489,7 @@ void Canvas::drawProgress(ProgressBar* p) {
     }
 }
 
+//6 versions of drawRectangle
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled, bool outlined) {
     if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
     if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
@@ -348,8 +497,101 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
+void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color[], bool filled, bool outlined) {
+    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color, filled, outlined);  // Creates the Rectangle with the specified coordinates and color
+    drawDrawable(rec);                                     // Push it onto our drawing buffer
+}
+
+void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) {
+    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, fillColor, outlineColor, filled, outlined);  // Creates the Rectangle with the specified coordinates and color
+    drawDrawable(rec);                                     // Push it onto our drawing buffer
+}
+
+void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) {
+    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, fillColor, outlineColor, filled, outlined);  // Creates the Rectangle with the specified coordinates and color
+    drawDrawable(rec);                                     // Push it onto our drawing buffer
+}
+
+void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) {
+    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, fillColor, outlineColor, filled, outlined);  // Creates the Rectangle with the specified coordinates and color
+    drawDrawable(rec);                                     // Push it onto our drawing buffer
+}
+
+void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) {
+    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
+    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
+    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, fillColor, outlineColor, filled, outlined);  // Creates the Rectangle with the specified coordinates and color
+    drawDrawable(rec);                                     // Push it onto our drawing buffer
+}
+
+//6 methods for regular polygons
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color, bool filled, bool outlined) {
+    RegularPolygon *c = new RegularPolygon(x, y, radius, sides, color, filled, outlined);
+    drawDrawable(c);
+}
+
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled, bool outlined) {
+    RegularPolygon *c = new RegularPolygon(x, y, radius, sides, color, filled, outlined);
+    drawDrawable(c);
+}
+
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) {
+    RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor, filled, outlined);
+    drawDrawable(c);
+}
+
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) {
+    RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor, filled, outlined);
+    drawDrawable(c);
+}
+
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) {
+    RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor, filled, outlined);
+    drawDrawable(c);
+}
+
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) {
+    RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor, filled, outlined);
+    drawDrawable(c);
+}
+
+
+//6 methods for stars
 void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bool ninja, float rotation, bool filled, bool outlined) {
   Star * star = new Star(x, y, radius, points, color, ninja, rotation, filled, outlined);
+  drawDrawable(star);
+}
+
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color[], bool ninja, float rotation, bool filled, bool outlined) {
+  Star * star = new Star(x, y, radius, points, color, ninja, rotation, filled, outlined);
+  drawDrawable(star);
+}
+
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja, float rotation, bool filled, bool outlined) {
+  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja, rotation, filled, outlined);
+  drawDrawable(star);
+}
+
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja, float rotation, bool filled, bool outlined) {
+  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja, rotation, filled, outlined);
+  drawDrawable(star);
+}
+
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja, float rotation, bool filled, bool outlined) {
+  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja, rotation, filled, outlined);
+  drawDrawable(star);
+}
+
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja, float rotation, bool filled, bool outlined) {
+  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja, rotation, filled, outlined);
   drawDrawable(star);
 }
 
@@ -369,8 +611,60 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
     drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
+//6 methods for drawing triangles
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color[], bool filled, bool outlined) {
+    Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color, filled, outlined);  // Creates the Triangle with the specified vertices and color
+    drawDrawable(t);                                               // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) {
+    Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, fillColor, outlineColor, filled, outlined);  // Creates the Triangle with the specified vertices and color
+    drawDrawable(t);                                               // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) {
+    Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, fillColor, outlineColor, filled, outlined);  // Creates the Triangle with the specified vertices and color
+    drawDrawable(t);                                               // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) {
+    Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, fillColor, outlineColor, filled, outlined);  // Creates the Triangle with the specified vertices and color
+    drawDrawable(t);                                               // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) {
+    Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, fillColor, outlineColor, filled, outlined);  // Creates the Triangle with the specified vertices and color
+    drawDrawable(t);                                               // Push it onto our drawing buffer
+}
+
+// 6 versions of drawTriangleStrip
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color, bool filled, bool outlined) {
+    TriangleStrip* p = new TriangleStrip(size, x, y, color, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
 void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled, bool outlined) {
     TriangleStrip* p = new TriangleStrip(size, x, y, color, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) {
+    TriangleStrip* p = new TriangleStrip(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) {
+    TriangleStrip* p = new TriangleStrip(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) {
+    TriangleStrip* p = new TriangleStrip(size, x, y, fillColor, outlineColor, filled, outlined);
+    drawDrawable(p);  // Push it onto our drawing buffer
+}
+
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) {
+    TriangleStrip* p = new TriangleStrip(size, x, y, fillColor, outlineColor, filled, outlined);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
