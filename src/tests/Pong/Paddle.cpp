@@ -30,9 +30,9 @@ void Paddle::draw(Canvas& can, int side) {
     // for (unsigned i = 0; i < 4; ++i) {
     //   color[i] = Colors::randomColor(1.0f);
     // }
-    can.drawRectangle(8, myY, 32, myY + 64, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f) /* color */, false, true);
+    can.drawRectangle(8, myY, 32, myY + 64, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f) /* color */, false);
   } else if(side == 1) { //Right side
-    can.drawRectangle(can.getWindowWidth() - 24 - 8, myY, can.getWindowWidth() - 8, myY + 64, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f), true, true);
+    can.drawRectangle(can.getWindowWidth() - 24 - 8, myY, can.getWindowWidth() - 8, myY + 64, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f), true);
   }
 }
 

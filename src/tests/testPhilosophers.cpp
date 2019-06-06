@@ -37,7 +37,7 @@ struct Fork {
     user = -1; id = 0;
   }
   void draw(Canvas& can, int x, int y, ColorFloat c) {
-    can.drawCircle(x,y,16,32,c,true);
+    can.drawCircle(x,y,16,c,true);
   }
 };
 
@@ -68,7 +68,7 @@ public:
       case hasBoth:  c=GREEN;  break;
       case isFull:   c=BLUE;   break;
     }
-    can.drawCircle(x,y,SIZE,SIZE,c,true);
+    can.drawCircle(x,y,SIZE,c,true);
   }
   bool acquire(Fork& f) {
     if (f.user >= 0)
@@ -550,7 +550,7 @@ public:
     const float CLOSE = 0.15f;
     const float BASEDIST = RAD+64;
 
-    myCan->drawCircle(tabX,tabY,RAD-48,RAD,DARKGRAY);
+    myCan->drawCircle(tabX,tabY,RAD-48,DARKGRAY);
     int i = omp_get_thread_num();
 //    for (int i = 0; i < numPhils; ++i) {
       float pangle = (i*2*PI)/numPhils;
@@ -560,7 +560,7 @@ public:
       phils[i].draw(*myCan,tabX+RAD*cos(pangle),tabY+RAD*sin(pangle));
       for (int j = 0; j < phils[i].getMeals(); ++j) {
         float angle = pangle+(j/10)*2*PI/RAD, dist = BASEDIST+8*(j%10);
-        myCan->drawCircle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
+        myCan->drawCircle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,BROWN);
       }
       if (forks[i].user == i) {
         fangle = i*ARC + CLOSE;

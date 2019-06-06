@@ -16,7 +16,7 @@ Ball::Ball(Canvas& can, int & speed) {
 }
 
 void Ball::draw(Canvas& can) {
-  can.drawCircle(myX, myY, 8, 8, WHITE, true);
+  can.drawCircle(myX, myY, 8, WHITE, true);
 }
 
 float Ball::getX() const {

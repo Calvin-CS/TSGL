@@ -39,12 +39,12 @@ void CartesianCanvas::drawAxes(Decimal originX, Decimal originY, Decimal spacing
     }
 }
 
-void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, int sides, ColorFloat color, bool filled) {
+void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat color, bool filled) {
     int actualX, actualY, actualR;
     getScreenCoordinates(x, y, actualX, actualY);
     getScreenCoordinates(x+radius,y,actualR,actualY);
     actualR -= actualX;
-    Canvas::drawCircle(actualX, actualY, actualR, sides, color, filled);
+    Canvas::drawCircle(actualX, actualY, actualR, color, filled);
 }
 
 void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
@@ -186,22 +186,22 @@ void CartesianCanvas::drawText(std::wstring text, Decimal x, Decimal y, unsigned
     Canvas::drawText(text, actualX, actualY, size, color);
 }
 
-void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color, bool filled, bool outlined) {
+void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color, bool filled) {
     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
     getScreenCoordinates(x1, y1, actualX1, actualY1);
     getScreenCoordinates(x2, y2, actualX2, actualY2);
     getScreenCoordinates(x3, y3, actualX3, actualY3);
-    Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, color, filled, outlined);
+    Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, color, filled);
 }
 
-void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled, bool outlined) {
+void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
     int* int_x = new int[size];
     int* int_y = new int[size];
 
     for (int i = 0; i < size; i++) {
         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
     }
-    Canvas::drawTriangleStrip(size, int_x, int_y, color, filled, outlined);
+    Canvas::drawTriangleStrip(size, int_x, int_y, color, filled);
 
     delete int_x;
     delete int_y;

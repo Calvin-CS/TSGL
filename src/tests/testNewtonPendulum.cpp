@@ -79,15 +79,15 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
     //Draw stationary lines and balls
     for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
       can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN);
-      can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, SIDES, GRAY, true);
+      can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, GRAY, true);
     }
     //Draw moving lines and balls!
     //Left
     can.drawLine(CX - OFFSET, 0, CX - OFFSET + LINELEN*sin(leftPos/AMP), LINELEN*cos(leftPos/AMP));
-    can.drawCircle(CX - OFFSET + LINELEN*sin(leftPos/AMP),  LINELEN*cos(leftPos/AMP), RADIUS, SIDES, GRAY, true);
+    can.drawCircle(CX - OFFSET + LINELEN*sin(leftPos/AMP),  LINELEN*cos(leftPos/AMP), RADIUS, GRAY, true);
     //Right
     can.drawLine(CX + OFFSET, 0, CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
-    can.drawCircle(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP), RADIUS, SIDES, GRAY, true);
+    can.drawCircle(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP), RADIUS, GRAY, true);
     can.resumeDrawing();
   }
 }

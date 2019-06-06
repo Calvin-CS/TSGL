@@ -6,43 +6,43 @@ ConvexPolygon::ConvexPolygon(int numVertices, bool filled, bool outlined) : Poly
     setup(numVertices, filled, outlined);
 }
 
-ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled, bool outlined) : Polygon(numVertices) {
-    setup(numVertices, filled, outlined);
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled) : Polygon(numVertices) {
+    setup(numVertices, filled, !filled);
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], color);
     }
 }
 
-ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled, bool outlined) : Polygon(numVertices) {
-    setup(numVertices, filled, outlined);
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled) : Polygon(numVertices) {
+    setup(numVertices, filled, !filled);
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], color[i]);
     }
 }
 
-ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled, bool outlined) : Polygon(numVertices) {
-    setup(numVertices, filled, outlined);
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor) : Polygon(numVertices) {
+    setup(numVertices, true, true);
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], fillColor, outlineColor);
     }
 }
 
-ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled, bool outlined) : Polygon(numVertices) {
-    setup(numVertices, filled, outlined);
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor) : Polygon(numVertices) {
+    setup(numVertices, true, true);
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], fillColor[i], outlineColor);
     }
 }
 
-ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled, bool outlined) : Polygon(numVertices) {
-    setup(numVertices, filled, outlined);
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]) : Polygon(numVertices) {
+    setup(numVertices, true, true);
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], fillColor, outlineColor[i]);
     }
 }
 
-ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled, bool outlined) : Polygon(numVertices) {
-    setup(numVertices, filled, outlined);
+ConvexPolygon::ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]) : Polygon(numVertices) {
+    setup(numVertices, true, true);
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], fillColor[i], outlineColor[i]);
     }

@@ -27,17 +27,17 @@ class Ellipse : public ConvexPolygon {
     *   \param yRadius The vertical radius of the ellipse in pixels.
     *   \param color The color of the ellipse (set to BLACK by default).
     */
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color, bool filled = true, bool outlined = false);
+    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color, bool filled = true);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color[], bool filled = true, bool outlined = false);
+    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color[], bool filled = true);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor[]);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor[]);
     
 
 };

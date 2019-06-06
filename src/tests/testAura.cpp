@@ -88,7 +88,7 @@ void auraFunction(Canvas& can, int segs) {
         }
       }
 	  if (next >= 0) {
-		can.drawTriangle(mx,my,x1[next],y1[next],x2[next],y2[next],cf[next],true, false);
+		can.drawTriangle(mx,my,x1[next],y1[next],x2[next],y2[next],cf[next],true);
 		drawn[next] = true;
 	  }
     }

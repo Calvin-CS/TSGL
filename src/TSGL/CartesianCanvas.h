@@ -89,7 +89,7 @@ public:
      *     (set to true by default).
      * \note Identical to Canvas::drawCircle().
      */
-    void drawCircle(Decimal x, Decimal y, Decimal radius, int sides, ColorFloat color = BLACK, bool filled = true);
+    void drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat color = BLACK, bool filled = true);
 
     /*!
      * \brief Draws a Concave polygon with colored vertices.
@@ -266,7 +266,7 @@ public:
      * \note Identical to Canvas::drawTriangle().
      */
     void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color = BLACK,
-                      bool filled = true, bool outlined = false);
+                      bool filled = true);
 
     /*!
      * \brief Draws an arbitrary triangle strip with colored vertices.
@@ -280,7 +280,7 @@ public:
      *     (set to true by default).
      * \note Identical to Canvas::drawTriangleStrip().
      */
-    void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true, bool outlined = false);
+    void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
 
     /*!
      * \brief Translates Cartesian coordinates into window coordinates.

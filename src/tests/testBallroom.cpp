@@ -211,9 +211,9 @@ public:
     int mx = c->getMouseX(), my = c->getMouseY();
     Vector2 mvec(mx,my);
     if (attract)
-      c->drawCircle(mx,my,25,32,ColorFloat(1.0f,0.5f,0.5f,0.5f), true, true);
+      c->drawCircle(mx,my,25,ColorFloat(1.0f,0.5f,0.5f,0.5f));
     else
-      c->drawCircle(mx,my,25,32,ColorFloat(0.5f,1.0f,1.0f,0.5f));
+      c->drawCircle(mx,my,25,ColorFloat(0.5f,1.0f,1.0f,0.5f));
     for (it = balls.begin(); it != balls.end(); ++it) {
       BouncingBall *b = (*it);
 
@@ -238,7 +238,7 @@ public:
     c->clear();
     for (it = balls.begin(); it != balls.end(); ++it) {
       BouncingBall *b = (*it);
-      c->drawCircle(b->pos.x,b->pos.y,b->rad,16,b->color);
+      c->drawCircle(b->pos.x,b->pos.y,b->rad,b->color);
     }
     c->resumeDrawing();
   }

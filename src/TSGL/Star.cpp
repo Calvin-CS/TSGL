@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ninja, float rotation, bool filled, bool outlined) : ConcavePolygon(points*2, filled, outlined) {
+Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ninja, float rotation, bool filled) : ConcavePolygon(points*2, filled, !filled) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
@@ -16,7 +16,7 @@ Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ni
   }
 }
 
-Star::Star(float x, float y, float radius, int points, ColorFloat color[], bool ninja, float rotation, bool filled, bool outlined) : ConcavePolygon(points*2, filled, outlined) {
+Star::Star(float x, float y, float radius, int points, ColorFloat color[], bool ninja, float rotation, bool filled) : ConcavePolygon(points*2, filled, !filled) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
@@ -30,7 +30,7 @@ Star::Star(float x, float y, float radius, int points, ColorFloat color[], bool 
   }
 }
 
-Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja, float rotation, bool filled, bool outlined) : ConcavePolygon(points*2, filled, outlined) {
+Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja, float rotation) : ConcavePolygon(points*2, true, true) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
@@ -44,7 +44,7 @@ Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, Col
   }
 }
 
-Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja, float rotation, bool filled, bool outlined) : ConcavePolygon(points*2, filled, outlined) {
+Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja, float rotation) : ConcavePolygon(points*2, true, true) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
@@ -58,7 +58,7 @@ Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], C
   }
 }
 
-Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja, float rotation, bool filled, bool outlined) : ConcavePolygon(points*2, filled, outlined) {
+Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja, float rotation) : ConcavePolygon(points*2, true, true) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
@@ -72,7 +72,7 @@ Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, Col
   }
 }
 
-Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja, float rotation, bool filled, bool outlined) : ConcavePolygon(points*2, filled, outlined) {
+Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja, float rotation) : ConcavePolygon(points*2, true, true) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;

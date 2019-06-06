@@ -28,17 +28,17 @@ class Rectangle : public ConvexPolygon {
      *   \param color The color of the Rectangle.
      * \return A new Rectangle with the specified top left corner, dimensions, and color.
      */
-    Rectangle(float x, float y, float width, float height, const ColorFloat color, bool filled = true, bool outlined = false);
+    Rectangle(float x, float y, float width, float height, const ColorFloat color, bool filled = true);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat color[], bool filled = true, bool outlined = false);
+    Rectangle(float x, float y, float width, float height, const ColorFloat color[], bool filled = true);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor[]);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor[]);
 };
 
 }

@@ -46,17 +46,17 @@ class ConcavePolygon : public Polygon {
      */
     ConcavePolygon(int numVertices, bool filled = true, bool outlined = false);
 
-    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled = true, bool outlined = false);
+    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled = true);
 
-    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true, bool outlined = false);
+    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true);
 
-    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
 
-    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
 
-    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
 
-    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
 
     /*!
      * \brief Determines if two lines intersect.

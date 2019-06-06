@@ -25,17 +25,17 @@ namespace tsgl {
     *   \param color The color of the circle (set to BLACK by default).
     *   \param outlineColor The color of the circle's outline (set to BLACK by default).
     */
-    Circle(float x, float y, float radius, const ColorFloat color = BLACK, bool filled = true, bool outlined = false);
+    Circle(float x, float y, float radius, const ColorFloat color = BLACK, bool filled = true);
 
-    Circle(float x, float y, float radius, const ColorFloat color[], bool filled = true, bool outlined = false);
+    Circle(float x, float y, float radius, const ColorFloat color[], bool filled = true);
 
-    Circle(float x, float y, float radius, const ColorFloat fillColor, const ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    Circle(float x, float y, float radius, const ColorFloat fillColor, const ColorFloat outlineColor);
 
-    Circle(float x, float y, float radius, const ColorFloat fillColor[], const ColorFloat outlineColor, bool filled = true, bool outlined = false);
+    Circle(float x, float y, float radius, const ColorFloat fillColor[], const ColorFloat outlineColor);
 
-    Circle(float x, float y, float radius, const ColorFloat fillColor, const ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    Circle(float x, float y, float radius, const ColorFloat fillColor, const ColorFloat outlineColor[]);
 
-    Circle(float x, float y, float radius, const ColorFloat fillColor[], const ColorFloat outlineColor[], bool filled = true, bool outlined = false);
+    Circle(float x, float y, float radius, const ColorFloat fillColor[], const ColorFloat outlineColor[]);
 
   };
 

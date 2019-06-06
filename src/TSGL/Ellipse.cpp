@@ -2,7 +2,7 @@
 
 namespace tsgl {
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color, bool filled, bool outlined) : ConvexPolygon((xRadius + yRadius) / 2, filled, outlined) {
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color, bool filled) : ConvexPolygon((xRadius + yRadius) / 2, filled, !filled) {
   //TODO: do we need any locking here? All the values we use below are from the constructor
   float delta = 2.0f / numberOfVertices * PI;
   for (int i = 0; i < numberOfVertices; ++i) {
@@ -10,7 +10,7 @@ Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloa
   }
 }
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color[], bool filled, bool outlined) : ConvexPolygon((xRadius + yRadius) / 2, filled, outlined) {
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color[], bool filled) : ConvexPolygon((xRadius + yRadius) / 2, filled, !filled) {
   //TODO: do we need any locking here? All the values we use below are from the constructor
   float delta = 2.0f / numberOfVertices * PI;
   for (int i = 0; i < numberOfVertices; ++i) {
@@ -18,7 +18,7 @@ Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloa
   }
 }
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor, bool filled, bool outlined) : ConvexPolygon((xRadius + yRadius) / 2, filled, outlined) {
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor) : ConvexPolygon((xRadius + yRadius) / 2, true, true) {
   //TODO: do we need any locking here? All the values we use below are from the constructor
   float delta = 2.0f / numberOfVertices * PI;
   for (int i = 0; i < numberOfVertices; ++i) {
@@ -26,7 +26,7 @@ Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloa
   }
 }
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor, bool filled, bool outlined) : ConvexPolygon((xRadius + yRadius) / 2, filled, outlined) {
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor) : ConvexPolygon((xRadius + yRadius) / 2, true, true) {
   //TODO: do we need any locking here? All the values we use below are from the constructor
   float delta = 2.0f / numberOfVertices * PI;
   for (int i = 0; i < numberOfVertices; ++i) {
@@ -34,7 +34,7 @@ Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloa
   }
 }
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor[], bool filled, bool outlined) : ConvexPolygon((xRadius + yRadius) / 2, filled, outlined) {
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor[]) : ConvexPolygon((xRadius + yRadius) / 2, true, true) {
   //TODO: do we need any locking here? All the values we use below are from the constructor
   float delta = 2.0f / numberOfVertices * PI;
   for (int i = 0; i < numberOfVertices; ++i) {
@@ -42,7 +42,7 @@ Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloa
   }
 }
 
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor[], bool filled, bool outlined) : ConvexPolygon((xRadius + yRadius) / 2, filled, outlined) {
+Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor[]) : ConvexPolygon((xRadius + yRadius) / 2, true, true) {
   //TODO: do we need any locking here? All the values we use below are from the constructor
   float delta = 2.0f / numberOfVertices * PI;
   for (int i = 0; i < numberOfVertices; ++i) {
