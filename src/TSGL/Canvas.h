@@ -25,6 +25,7 @@
 #include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
 #include "RegularPolygon.h" // Our own class for drawing regular polygons
+#include "Square.h"         // Our own class for drawing squares
 #include "Star.h"           // Our own class for drawing stars
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
@@ -87,11 +88,12 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    Array<Drawable*> * drawableBuffer;                                        // Our buffer of shapes that the can be pushed to, and will later be flushed to the shapes array
-    Array<Drawable*> * myDrawables;                                           // Our buffer of shapes to draw
+    std::vector<Drawable *> objectBuffer;                               // Holds a list of pointers to objects drawn each frame
+    Array<Drawable*> * drawableBuffer;                                  // Our buffer of drawables that the can be pushed to, and will later be flushed to the shapes array
+    Array<Drawable*> * myDrawables;                                     // Our buffer of drawables to draw
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
-	bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
+	  bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
     int             realFPS;                                            // Actual FPS of drawing
     GLuint          renderedTexture;                                    // Texture to which we render to every frame
   #ifdef __APPLE__
@@ -109,7 +111,7 @@ private:
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
     std::mutex      syncMutex;                                          // Mutex for syncing the rendering thread with a computational thread
     int             syncMutexLocked;                                    // Whether the syncMutex is currently locked
-	int             syncMutexOwner;                                     // Thread ID of the owner of the syncMutex
+	  int             syncMutexOwner;                                     // Thread ID of the owner of the syncMutex
     GLtexture       textureShaderFragment,                              // Address of the textured fragment shader
                     textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
                     textureShaderVertex;                                // Address of the textured vertex shader
@@ -168,7 +170,7 @@ private:
 
 protected:
     bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
-    void        drawDrawable(Drawable* s);                                    // Draw a shape type
+    void        drawDrawable(Drawable* s);                              // Draw a drawable type
 public:
 
     Canvas(double timerLength = 0.0f);
@@ -184,6 +186,33 @@ public:
     void clear();
 
     void close();
+
+    /**
+     * \brief Adds a Drawable to the Canvas.
+     * \details If the Drawable's layer has not been set, it will default to <code>currentNewShapeLayerDefault</code>,
+     * which can be set through <code>setDefaultLayer()</code>.
+     *    \param shapePtr Pointer to the Drawable to add to this Canvas.
+     */
+    void add(Drawable * shapePtr);
+
+    /**
+     * \brief Removes a Drawable from the Canvas.
+     * \details Removes shapePtr from the Canvas's drawing buffer.
+     *    \param shapePtr Pointer to the Drawable to remove from this Canvas.
+     * \warning The Drawable being deleted or going out of scope before remove() is called will cause a segmentation fault.
+     * \warning If shapePtr is not in the drawing buffer, behavior is undefined.
+     */
+    void remove(Drawable * shapePtr);
+
+    /**
+     * \brief Removes all Drawables from the Canvas.
+     * \details Clears all Drawables from the drawing buffer.
+     *    \param shouldFreeMemory Whether the pointers will be deleted as well as removed and free their memory. (Defaults to false.)
+     * \warning Setting shouldFreeMemory to true will cause a segmentation fault if the user continues to access the pointer to a
+     *  Drawable that has been added to the Canvas.
+     * \warning Setting shouldFreeMemory to false will leak memory from any objects created in Canvas draw methods.
+     */
+    void clearObjectBuffer(bool shouldFreeMemory = false);
 
     virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color, bool doubleArrow = false);
 
@@ -270,6 +299,18 @@ public:
     virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[]);
 
     virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[]);
+
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat color, bool filled = true);
+
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat color[], bool filled = true);
+
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor);
+
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor);
+
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor[]);
+
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor[]);
     
     virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color, bool ninja = false, float rotation = 0, bool filled = true);
 

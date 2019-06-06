@@ -150,6 +150,48 @@ void Canvas::close() {
     TsglDebug("Window closed successfully.");
 }
 
+///////////////////////////////////////////////
+// Object Interface
+///////////////////////////////////////////////
+
+void Canvas::add(Drawable * shapePtr) {
+
+  //TODO: make this check for duplicates
+  //TODO: check that this is properly thread safe now
+  //TODO: check that the shapes will change layer if layer is changed after addition.
+
+  // Set the default current layer if layer not explicitly set
+  // if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
+
+  // objectMutex.lock();
+  objectBuffer.push_back(shapePtr);
+  // std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
+  //   return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
+  // });
+  // objectMutex.unlock();
+
+}
+
+void Canvas::remove(Drawable * shapePtr) {
+
+  //TODO: make this thread safe! (check that it is now)
+
+  // objectMutex.lock();
+  // objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
+  // objectMutex.unlock();
+
+}
+
+void Canvas::clearObjectBuffer(bool shouldFreeMemory = false) {
+  //TODO: check that this frees memory when the user requests it
+  if( shouldFreeMemory ) {
+    for(unsigned i = 0; i < objectBuffer.size(); i++) {
+      delete objectBuffer[i]; //TODO fix this, causes to crash
+    }
+  }
+  objectBuffer.clear();
+}
+
 void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
@@ -214,6 +256,12 @@ void Canvas::draw() {
 
           if (toClear) glClear(GL_COLOR_BUFFER_BIT);
           toClear = false;
+
+          if (objectBuffer.size() > 0) {
+            for (unsigned int i = 0; i < objectBuffer.size(); i++) {
+              objectBuffer[i]->draw();
+            }
+          }
 
           unsigned int size = myDrawables->size();
           for (unsigned int i = 0; i < size; i++) {
@@ -912,10 +960,10 @@ void Canvas::drawProgress(ProgressBar* p) {
   *   \param y1 The y coordinate of the Rectangle's top edge.
   *   \param x2 The x coordinate of the Rectangle's right edge.
   *   \param y2 The y coordinate of the Rectangle's bottom edge.
-  *   \param color A single color for ellipse.
-  *   \param filled Whether the rectangle should be filled
+  *   \param color A single color for Rectangle.
+  *   \param filled Whether the Rectangle should be filled
   *     (set to true by default).
-  * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
+  * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
     if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
@@ -931,10 +979,10 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, boo
   *   \param y1 The y coordinate of the Rectangle's top edge.
   *   \param x2 The x coordinate of the Rectangle's right edge.
   *   \param y2 The y coordinate of the Rectangle's bottom edge.
-  *   \param color An array of colors for ellipse.
-  *   \param filled Whether the rectangle should be filled
+  *   \param color An array of colors for Rectangle.
+  *   \param filled Whether the Rectangle should be filled
   *     (set to true by default).
-  * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
+  * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color[], bool filled) {
     if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
@@ -950,9 +998,9 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color[], b
   *   \param y1 The y coordinate of the Rectangle's top edge.
   *   \param x2 The x coordinate of the Rectangle's right edge.
   *   \param y2 The y coordinate of the Rectangle's bottom edge.
-  *   \param fillColor A single color for ellipse's fill vertices.
-  *   \param outlineColor A single color for ellipse's outline vertices.
-  * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
+  *   \param fillColor A single color for Rectangle's fill vertices.
+  *   \param outlineColor A single color for Rectangle's outline vertices.
+  * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor) {
     if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
@@ -968,9 +1016,9 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor,
   *   \param y1 The y coordinate of the Rectangle's top edge.
   *   \param x2 The x coordinate of the Rectangle's right edge.
   *   \param y2 The y coordinate of the Rectangle's bottom edge.
-  *   \param fillColor An array of colors for ellipse's fill vertices.
-  *   \param outlineColor A single color for ellipse's outline vertices.
-  * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
+  *   \param fillColor An array of colors for Rectangle's fill vertices.
+  *   \param outlineColor A single color for Rectangle's outline vertices.
+  * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor) {
     if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
@@ -986,9 +1034,9 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[
   *   \param y1 The y coordinate of the Rectangle's top edge.
   *   \param x2 The x coordinate of the Rectangle's right edge.
   *   \param y2 The y coordinate of the Rectangle's bottom edge.
-  *   \param fillColor A single color for ellipse's fill vertices.
-  *   \param outlineColor An array of colors for ellipse's outline vertices.
-  * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
+  *   \param fillColor A single color for Rectangle's fill vertices.
+  *   \param outlineColor An array of colors for Rectangle's outline vertices.
+  * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor[]) {
     if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
@@ -1004,9 +1052,9 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor,
   *   \param y1 The y coordinate of the Rectangle's top edge.
   *   \param x2 The x coordinate of the Rectangle's right edge.
   *   \param y2 The y coordinate of the Rectangle's bottom edge.
-  *   \param fillColor An array of colors for ellipse's fill vertices.
-  *   \param outlineColor An array of colors for ellipse's outline vertices.
-  * \bug The bottom-right pixel of a non-filled rectangle may not get drawn on some machines.
+  *   \param fillColor An array of colors for Rectangle's fill vertices.
+  *   \param outlineColor An array of colors for Rectangle's outline vertices.
+  * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
 void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor[]) {
     if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
@@ -1022,8 +1070,8 @@ void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[
   *   \param y The y coordinate of the RegularPolygon's center
   *   \param radius The distance from the center to each vertex
   *   \param sides The number of sides for the RegularPolygon
-  *   \param color A single color for ellipse.
-  *   \param filled Whether the rectangle should be filled
+  *   \param color A single color for RegularPolygon.
+  *   \param filled Whether the regular polygon should be filled
   *     (set to true by default).
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color, bool filled) {
@@ -1038,8 +1086,8 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param y The y coordinate of the RegularPolygon's center
   *   \param radius The distance from the center to each vertex
   *   \param sides The number of sides for the RegularPolygon
-  *   \param color An array of colors for ellipse.
-  *   \param filled Whether the rectangle should be filled
+  *   \param color An array of colors for RegularPolygon.
+  *   \param filled Whether the regular polygon should be filled
   *     (set to true by default).
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled) {
@@ -1054,8 +1102,8 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param y The y coordinate of the RegularPolygon's center
   *   \param radius The distance from the center to each vertex
   *   \param sides The number of sides for the RegularPolygon
-  *   \param fillColor A single color for ellipse's fill vertices.
-  *   \param outlineColor A single color for ellipse's outline vertices.
+  *   \param fillColor A single color for RegularPolygon's fill vertices.
+  *   \param outlineColor A single color for RegularPolygon's outline vertices.
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
@@ -1069,8 +1117,8 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param y The y coordinate of the RegularPolygon's center
   *   \param radius The distance from the center to each vertex
   *   \param sides The number of sides for the RegularPolygon
-  *   \param fillColor An array of colors for ellipse's fill vertices.
-  *   \param outlineColor A single color for ellipse's outline vertices.
+  *   \param fillColor An array of colors for RegularPolygon's fill vertices.
+  *   \param outlineColor A single color for RegularPolygon's outline vertices.
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
@@ -1084,8 +1132,8 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param y The y coordinate of the RegularPolygon's center
   *   \param radius The distance from the center to each vertex
   *   \param sides The number of sides for the RegularPolygon
-  *   \param fillColor A single color for ellipse's fill vertices.
-  *   \param outlineColor An array of colors for ellipse's outline vertices.
+  *   \param fillColor A single color for RegularPolygon's fill vertices.
+  *   \param outlineColor An array of colors for RegularPolygon's outline vertices.
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[]) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
@@ -1099,12 +1147,110 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param y The y coordinate of the RegularPolygon's center
   *   \param radius The distance from the center to each vertex
   *   \param sides The number of sides for the RegularPolygon
-  *   \param fillColor An array of colors for ellipse's fill vertices.
-  *   \param outlineColor An array of colors for ellipse's outline vertices.
+  *   \param fillColor An array of colors for RegularPolygon's fill vertices.
+  *   \param outlineColor An array of colors for RegularPolygon's outline vertices.
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[]) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
     drawDrawable(c);
+}
+
+ /*!
+  * \brief Draws a monocolored filled or outlined square.
+  * \details This function draws a Square with the given coordinates, dimensions, and color.
+  *   \param x1 The x coordinate of the Square's left edge.
+  *   \param y1 The y coordinate of the Square's top edge.
+  *   \param x2 The x coordinate of the Square's right edge.
+  *   \param y2 The y coordinate of the Square's bottom edge.
+  *   \param color A single color for Square.
+  *   \param filled Whether the Square should be filled
+  *     (set to true by default).
+  * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
+  */
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat color, bool filled) {
+    Square* s = new Square(x1, y1, sideLength, color, filled);  // Creates the Square with the specified coordinates and color
+    drawDrawable(s);                                     // Push it onto our drawing buffer
+}
+
+ /*!
+  * \brief Draws a multicolored filled or outlined Square.
+  * \details This function draws a Square with the given coordinates, dimensions, and color.
+  *   \param x1 The x coordinate of the Square's left edge.
+  *   \param y1 The y coordinate of the Square's top edge.
+  *   \param x2 The x coordinate of the Square's right edge.
+  *   \param y2 The y coordinate of the Square's bottom edge.
+  *   \param color An array of colors for Square.
+  *   \param filled Whether the Square should be filled
+  *     (set to true by default).
+  * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
+  */
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat color[], bool filled) {
+    Square* s = new Square(x1, y1, sideLength, color, filled);  // Creates the Square with the specified coordinates and color
+    drawDrawable(s);                                     // Push it onto our drawing buffer
+}
+
+ /*!
+  * \brief Draws a filled and outlined Square with different monocolored fill and outline.
+  * \details This function draws a Square with the given coordinates, dimensions, and color.
+  *   \param x1 The x coordinate of the Square's left edge.
+  *   \param y1 The y coordinate of the Square's top edge.
+  *   \param x2 The x coordinate of the Square's right edge.
+  *   \param y2 The y coordinate of the Square's bottom edge.
+  *   \param fillColor A single color for Square's fill vertices.
+  *   \param outlineColor A single color for Square's outline vertices.
+  * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
+  */
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor) {
+    Square* s = new Square(x1, y1, sideLength, fillColor, outlineColor);  // Creates the Square with the specified coordinates and color
+    drawDrawable(s);                                     // Push it onto our drawing buffer
+}
+
+ /*!
+  * \brief  Draws a filled and outlined Square with multicolored fill and monocolored outline.
+  * \details This function draws a Square with the given coordinates, dimensions, and color.
+  *   \param x1 The x coordinate of the Square's left edge.
+  *   \param y1 The y coordinate of the Square's top edge.
+  *   \param x2 The x coordinate of the Square's right edge.
+  *   \param y2 The y coordinate of the Square's bottom edge.
+  *   \param fillColor An array of colors for Square's fill vertices.
+  *   \param outlineColor A single color for Square's outline vertices.
+  * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
+  */
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor) {
+    Square* s = new Square(x1, y1, sideLength, fillColor, outlineColor);  // Creates the Square with the specified coordinates and color
+    drawDrawable(s);                                     // Push it onto our drawing buffer
+}
+
+ /*!
+  * \brief Draws a filled and outlined Square with monocolored fill and multicolored outline.
+  * \details This function draws a Square with the given coordinates, dimensions, and color.
+  *   \param x1 The x coordinate of the Square's left edge.
+  *   \param y1 The y coordinate of the Square's top edge.
+  *   \param x2 The x coordinate of the Square's right edge.
+  *   \param y2 The y coordinate of the Square's bottom edge.
+  *   \param fillColor A single color for Square's fill vertices.
+  *   \param outlineColor An array of colors for Square's outline vertices.
+  * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
+  */
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor[]) {
+    Square* s = new Square(x1, y1, sideLength, fillColor, outlineColor);  // Creates the Square with the specified coordinates and color
+    drawDrawable(s);                                     // Push it onto our drawing buffer
+}
+
+ /*!
+  * \brief Draws a filled and outlined Square with different multicolored fill and outline.
+  * \details This function draws a Square with the given coordinates, dimensions, and color.
+  *   \param x1 The x coordinate of the Square's left edge.
+  *   \param y1 The y coordinate of the Square's top edge.
+  *   \param x2 The x coordinate of the Square's right edge.
+  *   \param y2 The y coordinate of the Square's bottom edge.
+  *   \param fillColor An array of colors for Square's fill vertices.
+  *   \param outlineColor An array of colors for Square's outline vertices.
+  * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
+  */
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+    Square* s = new Square(x1, y1, sideLength, fillColor, outlineColor);  // Creates the Square with the specified coordinates and color
+    drawDrawable(s);                                     // Push it onto our drawing buffer
 }
 
 

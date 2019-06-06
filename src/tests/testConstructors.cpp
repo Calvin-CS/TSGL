@@ -36,65 +36,75 @@ void constructorFunction(Canvas& can) {
     outlineColor[i] = Colors::randomColor(1.0f);
   }
 
-  can.drawRectangle(5, 5, 95, 95, fillColor[0], true);
-  can.drawRectangle(105, 5, 195, 95, fillColor[0], false);
-  can.drawRectangle(205, 5, 295, 95, fillColor, true);
-  can.drawRectangle(305, 5, 395, 95, fillColor, false);
+  can.drawRectangle(15, 5, 85, 95, fillColor[0], true);
+  can.drawRectangle(115, 5, 185, 95, fillColor[0], false);
+  can.drawRectangle(215, 5, 285, 95, fillColor, true);
+  can.drawRectangle(315, 5, 385, 95, fillColor, false);
 
-  can.drawRectangle(405, 5, 495, 95, fillColor[0], outlineColor[0]);
-  can.drawRectangle(505, 5, 595, 95, fillColor, outlineColor[0]);
-  can.drawRectangle(605, 5, 695, 95, fillColor[0], outlineColor);
-  can.drawRectangle(705, 5, 795, 95, fillColor, outlineColor);
+  can.drawRectangle(415, 5, 485, 95, fillColor[0], outlineColor[0]);
+  can.drawRectangle(515, 5, 585, 95, fillColor, outlineColor[0]);
+  can.drawRectangle(615, 5, 685, 95, fillColor[0], outlineColor);
+  can.drawRectangle(715, 5, 785, 95, fillColor, outlineColor);
 
-  can.drawStar(50, 150, 45, 6, fillColor[0], false, 0, true);
-  can.drawStar(150, 150, 45, 6, fillColor[0], true, 0, false);
-  can.drawStar(250, 150, 45, 6, fillColor, false, 0, true);
-  can.drawStar(350, 150, 45, 6, fillColor, true, 0, false);
+  can.drawSquare(5, 105, 90, fillColor[0], true);
+  can.drawSquare(105, 105, 90, fillColor[0], false);
+  can.drawSquare(205, 105, 90, fillColor, true);
+  can.drawSquare(305, 105, 90, fillColor, false);
 
-  can.drawStar(450, 150, 45, 6, fillColor[0], outlineColor[0], false, 0);
-  can.drawStar(550, 150, 45, 6, fillColor, outlineColor[0], false, 0);
-  can.drawStar(650, 150, 45, 6, fillColor[0], outlineColor, false, 0);  
-  can.drawStar(750, 150, 45, 6, fillColor, outlineColor, false, 0);
+  can.drawSquare(405, 105, 90, fillColor[0], outlineColor[0]);
+  can.drawSquare(505, 105, 90, fillColor, outlineColor[0]);
+  can.drawSquare(605, 105, 90, fillColor[0], outlineColor);
+  can.drawSquare(705, 105, 90, fillColor, outlineColor);
 
-  can.drawRegularPolygon(50, 250, 45, 6, fillColor[0], true);
-  can.drawRegularPolygon(150, 250, 45, 6, fillColor[0], false);
-  can.drawRegularPolygon(250, 250, 45, 6, fillColor, true);
-  can.drawRegularPolygon(350, 250, 45, 6, fillColor, false);
+  can.drawStar(50, 250, 45, 6, fillColor[0], false, 0, true);
+  can.drawStar(150, 250, 45, 6, fillColor[0], true, 0, false);
+  can.drawStar(250, 250, 45, 6, fillColor, false, 0, true);
+  can.drawStar(350, 250, 45, 6, fillColor, true, 0, false);
 
-  can.drawRegularPolygon(450, 250, 45, 6, fillColor[0], outlineColor[0]);
-  can.drawRegularPolygon(550, 250, 45, 6, fillColor, outlineColor[0]);
-  can.drawRegularPolygon(650, 250, 45, 6, fillColor[0], outlineColor);
-  can.drawRegularPolygon(750, 250, 45, 6, fillColor, outlineColor);
+  can.drawStar(450, 250, 45, 6, fillColor[0], outlineColor[0], false, 0);
+  can.drawStar(550, 250, 45, 6, fillColor, outlineColor[0], false, 0);
+  can.drawStar(650, 250, 45, 6, fillColor[0], outlineColor, false, 0);  
+  can.drawStar(750, 250, 45, 6, fillColor, outlineColor, false, 0);
 
-  can.drawEllipse(50, 350, 35, 45, fillColor[0], true);
-  can.drawEllipse(150, 350, 35, 45, fillColor[0], false);
-  can.drawEllipse(250, 350, 35, 45, fillColor, true);
-  can.drawEllipse(350, 350, 35, 45, fillColor, false);
+  can.drawRegularPolygon(50, 350, 45, 6, fillColor[0], true);
+  can.drawRegularPolygon(150, 350, 45, 6, fillColor[0], false);
+  can.drawRegularPolygon(250, 350, 45, 6, fillColor, true);
+  can.drawRegularPolygon(350, 350, 45, 6, fillColor, false);
 
-  can.drawEllipse(450, 350, 35, 45, fillColor[0], outlineColor[0]);
-  can.drawEllipse(550, 350, 35, 45, fillColor, outlineColor[0]);
-  can.drawEllipse(650, 350, 35, 45, fillColor[0], outlineColor);
-  can.drawEllipse(750, 350, 35, 45, fillColor, outlineColor);
+  can.drawRegularPolygon(450, 350, 45, 6, fillColor[0], outlineColor[0]);
+  can.drawRegularPolygon(550, 350, 45, 6, fillColor, outlineColor[0]);
+  can.drawRegularPolygon(650, 350, 45, 6, fillColor[0], outlineColor);
+  can.drawRegularPolygon(750, 350, 45, 6, fillColor, outlineColor);
 
-  can.drawTriangle(50, 405, 5, 495, 95, 495, fillColor[0], true);
-  can.drawTriangle(150, 405, 105, 495, 195, 495, fillColor[0], false);
-  can.drawTriangle(250, 405, 205, 495, 295, 495, fillColor, true);
-  can.drawTriangle(350, 405, 305, 495, 395, 495, fillColor, false);
+  can.drawEllipse(50, 450, 35, 45, fillColor[0], true);
+  can.drawEllipse(150, 450, 35, 45, fillColor[0], false);
+  can.drawEllipse(250, 450, 35, 45, fillColor, true);
+  can.drawEllipse(350, 450, 35, 45, fillColor, false);
 
-  can.drawTriangle(450, 405, 405, 495, 495, 495, fillColor[0], outlineColor[0]);
-  can.drawTriangle(550, 405, 505, 495, 595, 495, fillColor, outlineColor[0]);
-  can.drawTriangle(650, 405, 605, 495, 695, 495, fillColor[0], outlineColor);
-  can.drawTriangle(750, 405, 705, 495, 795, 495, fillColor, outlineColor);
+  can.drawEllipse(450, 450, 35, 45, fillColor[0], outlineColor[0]);
+  can.drawEllipse(550, 450, 35, 45, fillColor, outlineColor[0]);
+  can.drawEllipse(650, 450, 35, 45, fillColor[0], outlineColor);
+  can.drawEllipse(750, 450, 35, 45, fillColor, outlineColor);
 
-  can.drawCircle(50, 550, 45, fillColor[0], true);
-  can.drawCircle(150, 550, 45, fillColor[0], false);
-  can.drawCircle(250, 550, 45, fillColor, true);
-  can.drawCircle(350, 550, 45, fillColor, false);
+  can.drawTriangle(50, 505, 5, 595, 95, 595, fillColor[0], true);
+  can.drawTriangle(150, 505, 105, 595, 195, 595, fillColor[0], false);
+  can.drawTriangle(250, 505, 205, 595, 295, 595, fillColor, true);
+  can.drawTriangle(350, 505, 305, 595, 395, 595, fillColor, false);
 
-  can.drawCircle(450, 550, 45, fillColor[0], outlineColor[0]);
-  can.drawCircle(550, 550, 45, fillColor, outlineColor[0]);
-  can.drawCircle(650, 550, 45, fillColor[0], outlineColor);
-  can.drawCircle(750, 550, 45, fillColor, outlineColor);
+  can.drawTriangle(450, 505, 405, 595, 495, 595, fillColor[0], outlineColor[0]);
+  can.drawTriangle(550, 505, 505, 595, 595, 595, fillColor, outlineColor[0]);
+  can.drawTriangle(650, 505, 605, 595, 695, 595, fillColor[0], outlineColor);
+  can.drawTriangle(750, 505, 705, 595, 795, 595, fillColor, outlineColor);
+
+  can.drawCircle(50, 650, 45, fillColor[0], true);
+  can.drawCircle(150, 650, 45, fillColor[0], false);
+  can.drawCircle(250, 650, 45, fillColor, true);
+  can.drawCircle(350, 650, 45, fillColor, false);
+
+  can.drawCircle(450, 650, 45, fillColor[0], outlineColor[0]);
+  can.drawCircle(550, 650, 45, fillColor, outlineColor[0]);
+  can.drawCircle(650, 650, 45, fillColor[0], outlineColor);
+  can.drawCircle(750, 650, 45, fillColor, outlineColor);
 
   int x1[5], x2[5], x3[5], x4[5], x5[5], x6[5], x7[5], x8[5], y1[5], y2[5], y3[5], y4[5], y5[5], y6[5], y7[5], y8[5];
 
@@ -130,11 +140,11 @@ void constructorFunction(Canvas& can) {
   x8[2] = 750;
   x8[3] = x8[4] = 795;
 
-  y1[0] = y2[0] = y3[0] = y4[0] = y5[0] = y6[0] = y7[0] = y8[0] = 695;
-  y1[1] = y2[1] = y3[1] = y4[1] = y5[1] = y6[1] = y7[1] = y8[1] = 650;
-  y1[2] = y2[2] = y3[2] = y4[2] = y5[2] = y6[2] = y7[2] = y8[2] = 605;
-  y1[3] = y2[3] = y3[3] = y4[3] = y5[3] = y6[3] = y7[3] = y8[3] = 650;
-  y1[4] = y2[4] = y3[4] = y4[4] = y5[4] = y6[4] = y7[4] = y8[4] = 695;
+  y1[0] = y2[0] = y3[0] = y4[0] = y5[0] = y6[0] = y7[0] = y8[0] = 795;
+  y1[1] = y2[1] = y3[1] = y4[1] = y5[1] = y6[1] = y7[1] = y8[1] = 750;
+  y1[2] = y2[2] = y3[2] = y4[2] = y5[2] = y6[2] = y7[2] = y8[2] = 705;
+  y1[3] = y2[3] = y3[3] = y4[3] = y5[3] = y6[3] = y7[3] = y8[3] = 750;
+  y1[4] = y2[4] = y3[4] = y4[4] = y5[4] = y6[4] = y7[4] = y8[4] = 795;
 
   can.drawTriangleStrip(5, x1, y1, fillColor[0], true);
   can.drawTriangleStrip(5, x2, y2, fillColor[0], false);
@@ -181,12 +191,12 @@ void constructorFunction(Canvas& can) {
   x16[2] = x16[5] = 750;
   x16[3] = x16[4] = 795;
 
-  y9[0] = y10[0] = y11[0] = y12[0] = y13[0] = y14[0] = y15[0] = y16[0] = 770;
-  y9[1] = y10[1] = y11[1] = y12[1] = y13[1] = y14[1] = y15[1] = y16[1] = 740;
-  y9[2] = y10[2] = y11[2] = y12[2] = y13[2] = y14[2] = y15[2] = y16[2] = 705;
-  y9[3] = y10[3] = y11[3] = y12[3] = y13[3] = y14[3] = y15[3] = y16[3] = 730;
-  y9[4] = y10[4] = y11[4] = y12[4] = y13[4] = y14[4] = y15[4] = y16[4] = 760;
-  y9[5] = y10[5] = y11[5] = y12[5] = y13[5] = y14[5] = y15[5] = y16[5] = 795;
+  y9[0] = y10[0] = y11[0] = y12[0] = y13[0] = y14[0] = y15[0] = y16[0] = 870;
+  y9[1] = y10[1] = y11[1] = y12[1] = y13[1] = y14[1] = y15[1] = y16[1] = 840;
+  y9[2] = y10[2] = y11[2] = y12[2] = y13[2] = y14[2] = y15[2] = y16[2] = 805;
+  y9[3] = y10[3] = y11[3] = y12[3] = y13[3] = y14[3] = y15[3] = y16[3] = 830;
+  y9[4] = y10[4] = y11[4] = y12[4] = y13[4] = y14[4] = y15[4] = y16[4] = 860;
+  y9[5] = y10[5] = y11[5] = y12[5] = y13[5] = y14[5] = y15[5] = y16[5] = 895;
 
   can.drawConvexPolygon(6, x9, y9, fillColor[0], true);
   can.drawConvexPolygon(6, x10, y10, fillColor[0], false);
@@ -233,12 +243,12 @@ void constructorFunction(Canvas& can) {
   x24[2] = x24[5] = 750;
   x24[3] = x24[4] = 795;
 
-  y17[0] = y18[0] = y19[0] = y20[0] = y21[0] = y22[0] = y23[0] = y24[0] = 895;
-  y17[1] = y18[1] = y19[1] = y20[1] = y21[1] = y22[1] = y23[1] = y24[1] = 850;
-  y17[2] = y18[2] = y19[2] = y20[2] = y21[2] = y22[2] = y23[2] = y24[2] = 805;
-  y17[3] = y18[3] = y19[3] = y20[3] = y21[3] = y22[3] = y23[3] = y24[3] = 850;
-  y17[4] = y18[4] = y19[4] = y20[4] = y21[4] = y22[4] = y23[4] = y24[4] = 895;
-  y17[5] = y18[5] = y19[5] = y20[5] = y21[5] = y22[5] = y23[5] = y24[5] = 855;
+  y17[0] = y18[0] = y19[0] = y20[0] = y21[0] = y22[0] = y23[0] = y24[0] = 995;
+  y17[1] = y18[1] = y19[1] = y20[1] = y21[1] = y22[1] = y23[1] = y24[1] = 950;
+  y17[2] = y18[2] = y19[2] = y20[2] = y21[2] = y22[2] = y23[2] = y24[2] = 905;
+  y17[3] = y18[3] = y19[3] = y20[3] = y21[3] = y22[3] = y23[3] = y24[3] = 950;
+  y17[4] = y18[4] = y19[4] = y20[4] = y21[4] = y22[4] = y23[4] = y24[4] = 995;
+  y17[5] = y18[5] = y19[5] = y20[5] = y21[5] = y22[5] = y23[5] = y24[5] = 955;
 
   can.drawConcavePolygon(6, x17, y17, fillColor[0], true);
   can.drawConcavePolygon(6, x18, y18, fillColor[0], true);

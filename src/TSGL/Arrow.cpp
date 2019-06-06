@@ -47,8 +47,8 @@ namespace tsgl {
       if( tailX > headX ) b = 1;
       else b = -1;
 
-      // addVertex(tailX-a, tailY-b, color[2]);
-      // addVertex(tailX+a, tailY+b, color[3]);
+      addVertex(tailX-a, tailY-b, color[1]);
+      addVertex(tailX+a, tailY+b, color[1]);
     }
   }
 
