@@ -879,7 +879,7 @@ void Canvas::drawImage(std::string filename, int x, int y, int width, int height
 }
 
  /*!
-  * \brief Draws a line.
+  * \brief Draws a monocolored line.
   * \details This function draws a Line at the given coordinates with the given color.
   *   \param x1 The x position of the start of the line.
   *   \param y1 The y position of the start of the line.
@@ -889,6 +889,20 @@ void Canvas::drawImage(std::string filename, int x, int y, int width, int height
   *     (set to BLACK by default).
   */
 void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
+    Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
+    drawDrawable(l);                               // Push it onto our drawing buffer
+}
+
+ /*!
+  * \brief Draws a multicolored line.
+  * \details This function draws a Line at the given coordinates with the given color.
+  *   \param x1 The x position of the start of the line.
+  *   \param y1 The y position of the start of the line.
+  *   \param x2 The x position of the end of the line.
+  *   \param y2 The y position of the end of the line.
+  *   \param color A color array for the line.
+  */
+void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color[]) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
     drawDrawable(l);                               // Push it onto our drawing buffer
 }
@@ -934,6 +948,32 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
     vertexData[tempPos + 4] = color.B;
     vertexData[tempPos + 5] = color.A;
     pointArrayMutex.unlock();
+}
+
+ /*!
+  * \brief Draws a monocolored series of connected lines.
+  * \details This function draws Polyline at the given coordinates with the given color.
+  *   \param size The number of vertices of the polyline.
+  *   \param x An array of the x positions of the polyline's vertices.
+  *   \param y An array of the y positions of the polyline's vertices.
+  *   \param color A color for the Polyline.
+  */
+void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color) {
+    Polyline* p = new Polyline(size, x, y, color);  // Creates the Line with the specified coordinates and color
+    drawDrawable(p);                               // Push it onto our drawing buffer
+}
+
+ /*!
+  * \brief Draws a multicolored series of connected lines.
+  * \details This function draws Polyline at the given coordinates with the given color.
+  *   \param size The number of vertices of the polyline.
+  *   \param x An array of the x positions of the polyline's vertices.
+  *   \param y An array of the y positions of the polyline's vertices.
+  *   \param color A color array for the Polyline.
+  */
+void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color[]) {
+    Polyline* p = new Polyline(size, x, y, color);  // Creates the Line with the specified coordinates and color
+    drawDrawable(p);                               // Push it onto our drawing buffer
 }
 
  /*!

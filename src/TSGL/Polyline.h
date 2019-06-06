@@ -32,6 +32,10 @@ class Polyline : public Shape {
      */
     Polyline(int numVertices);
 
+    Polyline(int numVertices, int x[], int y[], ColorFloat color);
+
+    Polyline(int numVertices, int x[], int y[], ColorFloat color[]);
+
     bool isProcessed();
 
     /*!

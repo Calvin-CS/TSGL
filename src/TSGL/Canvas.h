@@ -270,9 +270,15 @@ public:
 
     virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color = BLACK);
 
+    virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color[]);
+
     virtual void drawPixel(int row, int col, ColorFloat color = BLACK);
 
     virtual void drawPoint(int x, int y, ColorFloat color = BLACK);
+
+    virtual void drawPolyline(int size, int x[], int y[], ColorFloat color);
+
+    virtual void drawPolyline(int size, int x[], int y[], ColorFloat color[]);
 
     virtual void drawProgress(ProgressBar* p);
 

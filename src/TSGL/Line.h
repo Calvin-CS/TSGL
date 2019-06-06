@@ -28,7 +28,9 @@ class Line : public Polyline {
      *      \param color The reference variable to the color of the Line.
      * \return A new Line with the specified endpoints and color.
      */
-    Line(int x1, int y1, int x2, int y2, const ColorFloat &color);
+    Line(int x1, int y1, int x2, int y2, const ColorFloat color);
+
+    Line(int x1, int y1, int x2, int y2, const ColorFloat color[]);
 };
 
 }

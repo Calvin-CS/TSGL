@@ -263,6 +263,32 @@ void constructorFunction(Canvas& can) {
   can.drawArrow(805, 5, 895, 95, fillColor[3], true);
   can.drawArrow(805, 105, 895, 195, fillColor, true);
 
+  can.drawLine(805, 205, 895, 295, fillColor[3]);
+  can.drawLine(805, 305, 895, 395, fillColor);
+
+  int x25[5], x26[5], y25[5], y26[5];
+
+  x25[0] = x26[0] = 820;
+  x25[1] = x26[1] = 805;
+  x25[2] = x26[2] = 880;
+  x25[3] = x26[3] = 895;
+  x25[4] = x26[4] = 870;
+
+  y25[0] = 450;
+  y25[1] = 405;
+  y25[2] = 420;
+  y25[3] = 460;
+  y25[4] = 495;
+
+  y26[0] = 550;
+  y26[1] = 505;
+  y26[2] = 520;
+  y26[3] = 560;
+  y26[4] = 595;
+
+  can.drawPolyline(5, x25, y25, fillColor[3]);
+  can.drawPolyline(5, x26, y26, outlineColor);
+
   while (can.isOpen()) {  // Checks to see if the window has been closed
     can.sleep();
 
