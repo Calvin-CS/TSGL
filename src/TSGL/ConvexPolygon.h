@@ -26,35 +26,23 @@ class ConvexPolygon : public Polygon {
 
     static bool testAddVertex();  // Unit test for addVertex()
  public:
+  ConvexPolygon(int numVertices, bool filled = true, bool outlined = false);
 
-   ConvexPolygon(int numVertices, bool filled = true, bool outlined = false);
+  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled = true);
 
-    /*!
-     * \brief Explicitly constructs a new ConvexPolygon.
-     * \details Explicit constructor for a Convex Polygon object.
-     *   \param numVertices the number of vertices the complete ConvexPolygon will have.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
-     * \return A new ConvexPolygon with a buffer for storing the specified numbered of vertices.
-     */
-    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled = true);
+  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true);
 
-    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true);
+  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
 
-    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
+  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
 
-    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
+  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
 
-    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
+  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
 
-    ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
+  void setup(int numVertices, bool filled, bool outlined);
 
-    void setup(int numVertices, bool filled, bool outlined);
-
-    /*!
-     * \brief Runs the Unit tests.
-     * \details Runs the Unit tests for the ConvexPolygon class. addVertex() is tested.
-     */
-    static void runTests();
+  static void runTests();
 };
 
 }

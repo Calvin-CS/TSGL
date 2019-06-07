@@ -187,31 +187,10 @@ public:
 
     void close();
 
-    /**
-     * \brief Adds a Drawable to the Canvas.
-     * \details If the Drawable's layer has not been set, it will default to <code>currentNewShapeLayerDefault</code>,
-     * which can be set through <code>setDefaultLayer()</code>.
-     *    \param shapePtr Pointer to the Drawable to add to this Canvas.
-     */
     void add(Drawable * shapePtr);
 
-    /**
-     * \brief Removes a Drawable from the Canvas.
-     * \details Removes shapePtr from the Canvas's drawing buffer.
-     *    \param shapePtr Pointer to the Drawable to remove from this Canvas.
-     * \warning The Drawable being deleted or going out of scope before remove() is called will cause a segmentation fault.
-     * \warning If shapePtr is not in the drawing buffer, behavior is undefined.
-     */
     void remove(Drawable * shapePtr);
 
-    /**
-     * \brief Removes all Drawables from the Canvas.
-     * \details Clears all Drawables from the drawing buffer.
-     *    \param shouldFreeMemory Whether the pointers will be deleted as well as removed and free their memory. (Defaults to false.)
-     * \warning Setting shouldFreeMemory to true will cause a segmentation fault if the user continues to access the pointer to a
-     *  Drawable that has been added to the Canvas.
-     * \warning Setting shouldFreeMemory to false will leak memory from any objects created in Canvas draw methods.
-     */
     void clearObjectBuffer(bool shouldFreeMemory = false);
 
     virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color, bool doubleArrow = false);

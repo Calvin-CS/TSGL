@@ -28,24 +28,11 @@ protected:
   int numberOfOutlineVertices;
 public:
 
-    /*!
-     * \brief Explicitly constructs a new Polygon.
-     * \details Explicit constructor for a Convex Polygon object.
-     *   \param numVertices the number of vertices the complete Polygon will have.
-     *   \param c The color of the Polygon.
-     *   \param outlineC The color of the Polygon's outline.
-     * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
-     * \return A new Polygon with a buffer for storing the specified numbered of vertices.
-     */
     Polygon(int numVertices);
 
-    /*!
-     * \brief Destructor for the Polygon.
-     */
     virtual ~Polygon();
 
     virtual void draw();
-
 
     virtual void addVertex(float x, float y, const ColorFloat &color = BLACK);
 

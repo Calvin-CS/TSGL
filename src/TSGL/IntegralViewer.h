@@ -36,28 +36,9 @@ private:
 
 public:
 
-  /*!
-   * \brief Default IntegralViewer constructor method.
-   * \details This is the default constructor for the IntegralViewer class.
-   *   \param f A function to integrate and display. The function must accept exactly one argument of type
-   *     Decimal, and return a Decimal.
-   *   \param width The width of the window displaying the integration.
-   *   \param height The height of the window displaying the integration.
-   *   \param startX The minimum x-value whose y-value should be computed.
-   *   \param stopX The maximum x-value whose y-value should be computed.
-   *   \param startY The minimum y-value that should be displayed on the IntegralViewer's Canvas.
-   *   \param stopY The maximum y-value that should be displayed on the IntegralViewer's Canvas.
-   *   \param fname A descriptive name for the function you wish to integrate.
-   * \return A new IntegralViewer with the specified dimensions, bounds, and function description.
-   */
   IntegralViewer(functionPointer f, int width, int height, Decimal startX, Decimal stopX, Decimal startY = 0, Decimal stopY = 1,
            std::string fname  = "function");
 
-  /*!
-   * \brief IntegralViewer destructor method.
-   * \details This is the destructor for the IntegralViewer class.
-   * \details Frees up memory that was allocated to a IntegralViewer instance.
-   */
   ~IntegralViewer();
 
   /*!
@@ -72,20 +53,8 @@ public:
    */
   double getTrapTime() const { return myTrapTime; }
 
-  /*!
-   * \brief Evaluate an integral using the rectangle method.
-   *   \param numRectangles The number of rectangles to use for the integration.
-   * \return The area under the curve represented by the IntegralViewer's function, evaluated using
-   *   the rectangle method.
-   */
   long double rectangleEvaluate(long long numRectangles);
 
-  /*!
-   * \brief Evaluate an integral using the trapezoid method.
-   *   \param numRectangles The number of trapezoids to use for the integration.
-   * \return The area under the curve represented by the IntegralViewer's function, evaluated using
-   *   the trapezoid method.
-   */
   long double trapezoidEvaluate(long long numTrapezoids);
 };
 

@@ -34,34 +34,16 @@ class Shape : public Drawable {
     bool init = false;
     int current = 0;
  public:
-
-    /*!
-     * \brief Constructs a new Shape.
-     * \details
-     * - Usually <code>vertices</code> is filled with floating point values that represent the vertices of the shape to be drawn.
-     * - You may define other items in the constructor that pertain to the attributes of the subclass that is extending Shape.
-     * - At a minimum, you *MUST* fill an array of floating point values that pertain to the vertices of the shape.
-     * \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Shape.</b>
-     * \note Refer to the Shape class description for more details.
-     */
     Shape();
 
-   //  /*!
-   //   * \brief Destructor for the Shape.
-   //   */
-   //  virtual ~Shape() { delete[] vertices; }
-
-       /*!
-     * \brief Draw the Shape.
-     * \details This function actually draws the Shape to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message indicating that the Shape cannot be drawn yet will be given
-     *   if the above condition is met (vertex buffer = not full).
-     */
     virtual void draw();
 
     virtual void addVertex(float x, float y, const ColorFloat &color = BLACK);
 
+   /*!
+    * \brief Accessor that returns if Shape is processed and ready to be drawn
+    * \details This function returns true only if all vertices have been inserted into an array.
+    */
     virtual bool isProcessed() { return init; }
 };
 

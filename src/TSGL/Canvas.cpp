@@ -154,6 +154,12 @@ void Canvas::close() {
 // Object Interface
 ///////////////////////////////////////////////
 
+/**
+ * \brief Adds a Drawable to the Canvas.
+ * \details If the Drawable's layer has not been set, it will default to <code>currentNewShapeLayerDefault</code>,
+ * which can be set through <code>setDefaultLayer()</code>.
+ *    \param shapePtr Pointer to the Drawable to add to this Canvas.
+ */
 void Canvas::add(Drawable * shapePtr) {
 
   //TODO: make this check for duplicates
@@ -172,6 +178,13 @@ void Canvas::add(Drawable * shapePtr) {
 
 }
 
+/**
+ * \brief Removes a Drawable from the Canvas.
+ * \details Removes shapePtr from the Canvas's drawing buffer.
+ *    \param shapePtr Pointer to the Drawable to remove from this Canvas.
+ * \warning The Drawable being deleted or going out of scope before remove() is called will cause a segmentation fault.
+ * \warning If shapePtr is not in the drawing buffer, behavior is undefined.
+ */
 void Canvas::remove(Drawable * shapePtr) {
 
   //TODO: make this thread safe! (check that it is now)
@@ -182,7 +195,15 @@ void Canvas::remove(Drawable * shapePtr) {
 
 }
 
-void Canvas::clearObjectBuffer(bool shouldFreeMemory = false) {
+/**
+ * \brief Removes all Drawables from the Canvas.
+ * \details Clears all Drawables from the drawing buffer.
+ *    \param shouldFreeMemory Whether the pointers will be deleted as well as removed and free their memory. (Defaults to false.)
+ * \warning Setting shouldFreeMemory to true will cause a segmentation fault if the user continues to access the pointer to a
+ *  Drawable that has been added to the Canvas.
+ * \warning Setting shouldFreeMemory to false will leak memory from any objects created in Canvas draw methods.
+ */
+void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
   //TODO: check that this frees memory when the user requests it
   if( shouldFreeMemory ) {
     for(unsigned i = 0; i < objectBuffer.size(); i++) {
@@ -361,7 +382,7 @@ void Canvas::draw() {
   *   \param color A single color for the arrow.
   *   \param doubleArrow Boolean value that determines if the first endpoint is also an arrowhead.
   */
-void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color, bool doubleArrow = false) {
+void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color, bool doubleArrow) {
   Arrow * arrow = new Arrow(x1, y1, x2, y2, color, doubleArrow);
   drawDrawable(arrow);
 }
@@ -376,7 +397,7 @@ void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat 
   *   \param color An array of colors for the circle.
   *   \param doubleArrow Boolean value that determines if the first endpoint is also an arrowhead.
   */
-void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color[], bool doubleArrow = false) {
+void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color[], bool doubleArrow) {
   Arrow * arrow = new Arrow(x1, y1, x2, y2, color, doubleArrow);
   drawDrawable(arrow);
 }

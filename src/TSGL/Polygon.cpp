@@ -2,6 +2,13 @@
 
 namespace tsgl {
 
+ /*!
+  * \brief Explicitly constructs a new Polygon.
+  * \details Explicit constructor for a Convex Polygon object.
+  *   \param numVertices the number of vertices the complete Polygon will have.
+  * \warning An invariant is held where if numVertices is less than 3 then an error message is given.
+  * \return A new Polygon with a buffer for storing the specified numbered of vertices.
+  */
 Polygon::Polygon(int numVertices)  : Shape()  {
 //  attribMutex.lock();
   if (numVertices < 3) {
@@ -10,6 +17,10 @@ Polygon::Polygon(int numVertices)  : Shape()  {
 //  attribMutex.unlock();
 }
 
+/*!
+ *  \brief This method actually draws the Polygon
+ *  \details Depending on isFilled and hasOutline, draws either a series of connected lines outlining the Polygon or a filled version.
+ */
 void Polygon::draw()  {
   if(isFilled) {
     glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
@@ -21,6 +32,15 @@ void Polygon::draw()  {
   }
 }
 
+ /*!
+  * \brief Adds another vertex to a Polygon.
+  * \details This function initializes the next vertex in the Polygon and adds it to a Polygon buffer.
+  *      \param x The x position of the vertex.
+  *      \param y The y position of the vertex.
+  *      \param color The reference variable of the color of the vertex.
+  * \note This function does nothing if the vertex buffer is already full.
+  * \note A message is given indicating that the vertex buffer is full.
+  */
 void Polygon::addVertex(float x, float y, const ColorFloat &color) {
     if (init) {
         TsglDebug("Cannot add anymore vertices.");
@@ -46,6 +66,16 @@ void Polygon::addVertex(float x, float y, const ColorFloat &color) {
     if (current == numberOfVertices*6) init = true;
 }
 
+ /*!
+  * \brief Adds another vertex to a ConcavePolygon.
+  * \details This function initializes the next vertex in the ConcavePolygon and adds it to a ConcavePolygon buffer.
+  *      \param x The x position of the vertex.
+  *      \param y The y position of the vertex.
+  *      \param fillColor The reference variable of the fill color of the vertex.
+  *      \param outlineColor The reference variable of the outline color of the vertex.
+  * \note This function does nothing if the vertex buffer is already full.
+  * \note A message is given indicating that the vertex buffer is full.
+  */
 void Polygon::addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor) {
     if (init) {
         TsglDebug("Cannot add anymore vertices.");
@@ -103,6 +133,10 @@ void Polygon::addVertex(float x, float y, const ColorFloat &fillColor, const Col
 //   hasOutline = outline;
 //   attribMutex.unlock();
 // }
+
+ /*!
+  * \brief Destructor for the Polygon.
+  */
   Polygon::~Polygon() {
     if(hasOutline) { 
       delete[] outlineVertices; 

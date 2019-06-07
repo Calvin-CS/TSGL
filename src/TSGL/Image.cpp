@@ -2,6 +2,19 @@
 
 namespace tsgl {
 
+ /*!
+  * \brief Explicitly constructs a new Image.
+  * \details This is the explicit constructor for the Image class.
+  *   \param filename The filename of the image to load.
+  *   \param loader A reference pointer to the TextureHandler with which to load the image.
+  *   \param x The x coordinate of the left of the Image.
+  *   \param y The y coordinate of the top of the Image.
+  *   \param width The width of the Image.
+  *   \param height The height of the Image.
+  *   \param alhpa The alpha of the Image.
+  * \return A new Image is drawn with the specified coordinates, dimensions, and transparency.
+  * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
+  */
 Image::Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myTexture = 0;      // Fix no texture initialization warning
@@ -29,6 +42,10 @@ Image::Image(std::string filename, TextureHandler &loader, int x, int y, int wid
     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
 }
 
+ /*!
+  * \brief Draw the Image.
+  * \details This function actually draws the Image to the Canvas.
+  */
 void Image::draw() {
     unsigned int w, h;
     myLoader->loadPicture(myFile, w, h, myTexture);

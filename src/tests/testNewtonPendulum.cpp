@@ -31,8 +31,7 @@ using namespace tsgl;
  */
 void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
   //User variables
-  const int   SIDES = 128,      //Sizes for each circle
-              BALLS = numberOfBalls, //Keep this odd
+  const int   BALLS = numberOfBalls, //Keep this odd
               RADIUS = 20;      //Radius of circles
   const float ACCEL = 0.5f,     //Acceleration of balls
               TOPSPEED = 9.0f, //Starting speed of balls

@@ -2,10 +2,27 @@
 
 namespace tsgl {
 
+ /*!
+  * \brief Explicitly constructs a new ConcavePolygon.
+  * \details Explicit constructor for a ConcavePolygon object.
+  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  */
 ConcavePolygon::ConcavePolygon(int numVertices, bool filled, bool outlined) : Polygon(numVertices) {
   setup(numVertices, filled, outlined);
 }
 
+ /*!
+  * \brief Explicitly constructs a new ConcavePolygon with monocolored fill or outline.
+  * \details Explicit constructor for a ConcavePolygon object.
+  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+  *   \param x An array of x values for the vertices.
+  *   \param y An array of y values for the vertices.
+  *   \param color An array of colors for the ConcavePolygon's fill or outline.
+  *   \param filled Whether the ConcavePolygon should be filled
+  *     (set to true by default).
+  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  */
 ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled) : Polygon(numVertices) {
   setup(numVertices, filled, !filled);
   for (int i = 0; i < numVertices; i++) {
@@ -13,6 +30,17 @@ ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat col
   }
 }
 
+ /*!
+  * \brief Explicitly constructs a new ConcavePolygon with multicolored fill or outline.
+  * \details Explicit constructor for a ConcavePolygon object.
+  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+  *   \param x An array of x values for the vertices.
+  *   \param y An array of y values for the vertices.
+  *   \param color An array of colors for the ConcavePolygon's fill or outline.
+  *   \param filled Whether the ConcavePolygon should be filled
+  *     (set to true by default).
+  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  */
 ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled) : Polygon(numVertices) {
   setup(numVertices, filled, !filled);
   for (int i = 0; i < numVertices; i++) {
@@ -20,6 +48,16 @@ ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat col
   }
 }
 
+ /*!
+  * \brief Explicitly constructs a new ConcavePolygon with different monocolored fill and outline.
+  * \details Explicit constructor for a ConcavePolygon object.
+  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+  *   \param x An array of x values for the vertices.
+  *   \param y An array of y values for the vertices.
+  *   \param fillColor The color of the ConcavePolygon's fill.
+  *   \param outlineColor The color of the ConcavePolygon's outline.
+  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  */
 ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor) : Polygon(numVertices) {
   setup(numVertices, true, true);
   for (int i = 0; i < numVertices; i++) {
@@ -27,6 +65,16 @@ ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fil
   }
 }
 
+ /*!
+  * \brief Explicitly constructs a new ConcavePolygon with multicolored fill and monocolored outline.
+  * \details Explicit constructor for a ConcavePolygon object.
+  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+  *   \param x An array of x values for the vertices.
+  *   \param y An array of y values for the vertices.
+  *   \param fillColor An array of colors for the ConcavePolygon's fill.
+  *   \param outlineColor The color of the ConcavePolygon's outline.
+  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  */
 ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor) : Polygon(numVertices) {
   setup(numVertices, true, true);
   for (int i = 0; i < numVertices; i++) {
@@ -34,6 +82,16 @@ ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fil
   }
 }
 
+ /*!
+  * \brief Explicitly constructs a new ConcavePolygon with monocolored fill and multicolored outline.
+  * \details Explicit constructor for a ConcavePolygon object.
+  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+  *   \param x An array of x values for the vertices.
+  *   \param y An array of y values for the vertices.
+  *   \param fillColor The color of the ConcavePolygon's fill.
+  *   \param outlineColor An array of colors for the ConcavePolygon's outline.
+  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  */
 ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]) : Polygon(numVertices) {
   setup(numVertices, true, true);
   for (int i = 0; i < numVertices; i++) {
@@ -41,6 +99,16 @@ ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fil
   }
 }
 
+ /*!
+  * \brief Explicitly constructs a new ConcavePolygon with different multicolored fill and outline.
+  * \details Explicit constructor for a ConcavePolygon object.
+  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+  *   \param x An array of x values for the vertices.
+  *   \param y An array of y values for the vertices.
+  *   \param fillColor An array of colors for the ConcavePolygon's fill.
+  *   \param outlineColor An array of colors for the ConcavePolygon's outline.
+  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  */
 ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]) : Polygon(numVertices) {
   setup(numVertices, true, true);
   for (int i = 0; i < numVertices; i++) {
@@ -48,6 +116,13 @@ ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fil
   }
 }
 
+/*!
+ * \brief private helper method that works with the constructor
+ * \details Defines a lot of instance variables, initializes vertices and outlineVertices arrays
+ *    \param numVertices Number of vertices on the ConcavePolygon
+ *    \param filled Whether or not the ConcavePolygon is filled.
+ *    \param outlined Whether or not the ConcavePolygon is outlined.
+ */
 void ConcavePolygon::setup(int numVertices, bool filled, bool outlined) {
   numberOfOutlineVertices = numVertices+1;
   size = numberOfOutlineVertices * 6;
@@ -64,6 +139,15 @@ void ConcavePolygon::setup(int numVertices, bool filled, bool outlined) {
   }
 }
 
+ /*!
+  * \brief Adds another vertex to a ConcavePolygon.
+  * \details This function initializes the next vertex in the ConcavePolygon and adds it to a ConcavePolygon buffer.
+  *      \param x The x position of the vertex.
+  *      \param y The y position of the vertex.
+  *      \param color The reference variable of the color of the vertex.
+  * \note This function does nothing if the vertex buffer is already full.
+  * \note A message is given indicating that the vertex buffer is full.
+  */
 void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
@@ -112,6 +196,16 @@ void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
   }
 }
 
+ /*!
+  * \brief Adds another vertex to a ConcavePolygon.
+  * \details This function initializes the next vertex in the ConcavePolygon and adds it to a ConcavePolygon buffer.
+  *      \param x The x position of the vertex.
+  *      \param y The y position of the vertex.
+  *      \param fillColor The reference variable of the fill color of the vertex.
+  *      \param outlineColor The reference variable of the outline color of the vertex.
+  * \note This function does nothing if the vertex buffer is already full.
+  * \note A message is given indicating that the vertex buffer is full.
+  */
 void ConcavePolygon::addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor) {
   if (init) {
     TsglDebug("Cannot add anymore vertices.");
@@ -160,6 +254,20 @@ void ConcavePolygon::addVertex(float x, float y, const ColorFloat &fillColor, co
   }
 }
 
+ /*!
+  * \brief Determines if two lines intersect.
+  * \details Simulates two lines inside of a ConcavePolygon object and determines whether
+  * those two lines intersect.
+  *      \param p0_x The x coordinate of the first point of the first line.
+  *      \param p0_y The y coordinate of the first point of the first line.
+  *      \param p1_x The x coordinate of the second point of the first line.
+  *      \param p1_y The y coordinate of the second point of the first line.
+  *      \param p2_x The x coordinate of the first point of the second line.
+  *      \param p2_y The y coordinate of the first point of the second line.
+  *      \param p3_x The x coordinate of the second point of the second line.
+  *      \param p3_y The y coordinate of the second point of the second line.
+  * \returns true if the lines do intersect, false if otherwise.
+  */
 bool ConcavePolygon::intersects(float p0_x, float p0_y, float p1_x, float p1_y,
                                 float p2_x, float p2_y, float p3_x, float p3_y) {
   float s1_x, s1_y, s2_x, s2_y;
@@ -173,6 +281,20 @@ bool ConcavePolygon::intersects(float p0_x, float p0_y, float p1_x, float p1_y,
   return (s >= 0 && s <= 1 && t >= 0 && t <= 1);
 }
 
+ /*!
+  * \brief Determines whether a point resides inside of a Triangle.
+  * \details Simulates a Triangle and point inside of a ConcavePolygon object and determines whether the point resides inside of
+  * the Triangle.
+  *   \param px The x coordinate of the point.
+  *   \param py The y coordinate of the point.
+  *   \param x1 The x coordinate of the first vertex of the Triangle.
+  *   \param y1 The y coordinate of the first vertex of the Triangle.
+  *   \param x2 The x coordinate of the second vertex of the Triangle.
+  *   \param y2 The y coordinate of the second vertex of the Triangle.
+  *   \param x3 The x coordinate of the third vertex of the Triangle.
+  *   \param y3 The y coordinate of the third vertex of the Triangle.
+  * \returns true if the point does reside in the Triangle, false if otherwise.
+  */
 bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, float x2, float y2, float x3, float y3)
 {
   bool b1 = ( (px - x2) * (y1 - y2) - (x1 - x2) * (py - y2) ) <= 0.0f;
@@ -182,6 +304,12 @@ bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, fl
   return ((b1 == b2) && (b2 == b3));
 }
 
+ /*!
+  * \brief Draw the ConcavePolygon.
+  * \details This function alters the vertices array so that it will render a Concave polygon correctly
+  * \note This function does nothing if the vertex buffer is not yet full.
+  * \warning This is an order of n-cubed operation, and is thus <b>VERY SLOW</b>.
+  */
 void ConcavePolygon::preprocess() {
 
   if (dirty) {
@@ -279,6 +407,10 @@ void ConcavePolygon::preprocess() {
 }
 
 //----------------------------------------------Unit testing------------------------------
+/*!
+ * \brief Runs the Unit tests.
+ * \details Runs the Unit tests for the ConcavePolygon class. intersects() and pointInTriangle() are tested.
+ */
 void ConcavePolygon::runTests() {
   TsglDebug("Testing ConcavePolygon class....");
   tsglAssert(testIntersects(), "Unit test for intersecting lines failed!");

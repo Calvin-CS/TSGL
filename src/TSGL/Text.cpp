@@ -3,6 +3,17 @@
 
 namespace tsgl {
 
+/*!
+ * \brief Explicitly constructs a new Text instance.
+ * \details This is the constructor for the Text class.
+ *      \param text The string to draw.
+ *      \param loader A reference pointer to the TextureHandler with which to load the font.
+ *      \param x The x coordinate.
+ *      \param y The y coordinate.
+ *      \param fontsize The size of the text in pixels.
+ *      \param color A reference to the ColorFloat to use.
+ * \return A new Text instance with the specified string, position, and color.
+ */
 Text::Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int fontsize, const ColorFloat &color) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myString = text;
@@ -13,6 +24,10 @@ Text::Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int
     myColor = color;
 }
 
+/*!
+ * \brief Draw the Text.
+ * \details This function actually draws the Text to the Canvas. 
+ */
 void Text::draw() {
     float *vertices = new float[32];                                        // Allocate the vertices
 

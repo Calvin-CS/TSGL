@@ -24,14 +24,6 @@ class TriangleStrip : public ConvexPolygon {
  private:
 
  public:
-
-    /*!
-     * \brief Explicitly construct a new TriangleStrip.
-     * \details Explicit constructor for a TriangleStrip object.
-     *   \param numVertices The number of vertices the complete TriangleStrip will have.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
-     * \return A new TriangleStrip with a buffer for storing the specified numbered of vertices.
-     */
     TriangleStrip(int numVertices, int x[], int y[], ColorFloat color, bool filled = true);
 
     TriangleStrip(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true);

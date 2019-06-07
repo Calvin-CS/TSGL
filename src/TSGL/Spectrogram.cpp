@@ -4,6 +4,17 @@ namespace tsgl {
 
 const int Spectrogram::B = 16;
 const float Spectrogram::PI = 3.149f;
+
+ /*!
+  * \brief Explicit Spectrogram constructor method.
+  * \details This is the explicit constructor for the Spectrogram class.
+  *   \param drawMode Method used for displaying spectral data. Can be one of CIRCULAR
+  *     or HORIZONTAL.
+  *   \param width The width of the Spectrogram canvas.
+  *   \param height The height of the Spectrogram canvas. This value is ignored for
+  *     HORIZONTAL Spectrograms. Setting this to -1 sets the width automatically.
+  * \return A new Spectrogram with the specified drawing mode and size.
+  */
 Spectrogram::Spectrogram(SpectrogramDrawmode drawMode, int width, int height) {
   for (int i = 0; i < NUM_COLORS; ++i)
     omp_init_lock(&(writelock[i]));
@@ -42,6 +53,11 @@ Spectrogram::Spectrogram(SpectrogramDrawmode drawMode, int width, int height) {
   can->start();
 }
 
+ /*!
+  * \brief Spectrogram destructor method.
+  * \details This is the destructor for the Spectrogram class.
+  * \details Frees up memory that was allocated to a Spectrogram instance.
+  */
 Spectrogram::~Spectrogram() {
   for (int i = 0; i < NUM_COLORS; ++i)
     omp_destroy_lock(&(writelock[i]));
@@ -49,6 +65,15 @@ Spectrogram::~Spectrogram() {
   delete can;
 }
 
+ /*!
+  * \brief Updates a spectrogram with new data, using locks for thread safety.
+  * \details This function adds the value of <code>weight</code> to the hue specified
+  *   by <code>index</code>, and adds the value (<code>decay</code>^<code>n</code>)*
+  *   <code>weight</code> to all hues <code>n</code> steps away from <code>index</code>.
+  *   \param index Index of the hue to update. Value is taken mod 256.
+  *   \param weight The value to add to <code>index</code>.
+  *   \param decay Falloff for <code>weight</code> upon adjacent values.
+  */
 void Spectrogram::updateLocked(int index, float weight, float decay) {
   int i = index % NUM_COLORS;
   omp_set_lock(&(writelock[i]));
@@ -72,6 +97,15 @@ void Spectrogram::updateLocked(int index, float weight, float decay) {
   }
 }
 
+ /*!
+  * \brief Updates a spectrogram with new data, using critical sections for thread safety.
+  * \details This function adds the value of <code>weight</code> to the hue specified
+  *   by <code>index</code>, and adds the value (<code>decay</code>^<code>n</code>)*
+  *   <code>weight</code> to all hues <code>n</code> steps away from <code>index</code>.
+  *   \param index Index of the hue to update. Value is taken mod 256.
+  *   \param weight The value to add to <code>index</code>.
+  *   \param decay Falloff for <code>weight</code> upon adjacent values.
+  */
 void Spectrogram::updateCritical(int index, float weight, float decay) {
   int i = index % NUM_COLORS;
   #pragma omp critical
@@ -94,6 +128,12 @@ void Spectrogram::updateCritical(int index, float weight, float decay) {
   }
 }
 
+ /*!
+  * \brief Updates the image on the spectrogram.
+  * \details This function updates the Spectrogram's Canvas with the data since the last
+  *   call to update() and redraws it.
+  *   \param ratio The scaling of the visualizer. Accepts values between 0.0f and 1.0f.
+  */
 void Spectrogram::draw(float ratio) {
   if (maxCount > 0) {
     const float DELTA = (2*PI)/NUM_COLORS;
@@ -133,6 +173,11 @@ void Spectrogram::draw(float ratio) {
   }
 }
 
+ /*!
+  * \brief Finishes the spectrogram.
+  * \details This function tells the Spectrogram to free all of its memory and close
+  *   down its Canvas.
+  */
 void Spectrogram::finish() {
   can->wait();
 }

@@ -18,7 +18,7 @@ namespace tsgl {
   class Drawable {
   protected:
     std::mutex      attribMutex;  ///< Protects the attributes of the Drawable from being accessed while simultaneously being changed
-    bool isTextured = false; //TODO remove this
+    bool isTextured = false; ///< Whether the Drawable is a Textured object.
   public:
 
     /*!
@@ -68,7 +68,11 @@ namespace tsgl {
       attribMutex.unlock();
       return retVal;
     }
-
+    
+   /*!
+    * \brief Virtual accessor that returns if Drawable is processed and ready to be drawn
+    * \details This function returns true only if all vertices have been inserted into an array.
+    */
     virtual bool isProcessed() { return true; }
   };
 };

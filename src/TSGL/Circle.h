@@ -15,17 +15,7 @@ namespace tsgl {
   */
   class Circle : public Ellipse {
   public:
-
-    /*!
-    * \brief Explicitly constructs a new Circle.
-    * \details This function draws a circle with the given center, radius, color, and outline color.
-    *   \param x The x coordinate of the circle's center.
-    *   \param y The y coordinate of the circle's center.
-    *   \param radius The radius of the circle in pixels.
-    *   \param color The color of the circle (set to BLACK by default).
-    *   \param outlineColor The color of the circle's outline (set to BLACK by default).
-    */
-    Circle(float x, float y, float radius, const ColorFloat color = BLACK, bool filled = true);
+    Circle(float x, float y, float radius, const ColorFloat color, bool filled = true);
 
     Circle(float x, float y, float radius, const ColorFloat color[], bool filled = true);
 

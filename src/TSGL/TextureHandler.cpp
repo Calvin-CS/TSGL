@@ -83,11 +83,21 @@ namespace tsgl {
 
 #define GL_GLEXT_PROTOTYPES
 
+/*!
+ * \brief Default TextureHandler constructor method.
+ * \details This is the default constructor for theTextureHandler Canvas class.
+ * \return A new TextureHandler instance.
+ */
 TextureHandler::TextureHandler() {
     fontLibrary = nullptr;
     fontFace = nullptr;
 }
 
+/*!
+ * \brief TextureHandler destructor method.
+ * \details This is the destructor for the TextureHandler class.
+ * \details Frees up memory that was allocated to a TextureHandler instance.
+ */
 TextureHandler::~TextureHandler() {
     for (TextureMap::iterator it = loadedTextures.begin(); it != loadedTextures.end(); ++it) {
         glDeleteTextures(1, &(it->second));
@@ -129,6 +139,20 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
+/*!
+ * \brief Draws text.
+ * \details Draws the text specified by its parameters onto a Canvas.
+ *   \param text The UTF-8 encoded string of text to be drawn.
+ *   \param font_size The size of the text in pixels.
+ *   \param vertices An array of vertex data for the bonding box of the text.
+ * \note <code>vertices</code> will be partially automatically set by drawText()
+ *   itself in order to draw / kern the text properly, but the color, starting
+ *   position, and texture coordinates will be left unchanged.
+ * \note If no font is loaded before calling this function, TSGL will attempt to locate a
+ *   default font at <i>../assets/freefont/FreeMono.ttf.</i>
+ * \return True if successful, false otherwise.
+ * \bug If the default font cannot be located, TSGL will crash.
+ */
 bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //If no font is set, load up a default one
@@ -215,6 +239,15 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
     return true;
 }
 
+/*!
+ * \brief Loads a font.
+ * \details Loads a font from the library given by <code>filename</code>.
+ *   \param filename The file name of the font to be loaded.
+ * \warning If the font cannot be found then an error message is printed out.
+ * \warning If the font library is not correctly installed then an error message is printed out.
+ * \warning If the font is not supported then an error message is printed out.
+ * \return True if successful, false otherwise.
+ */
 bool TextureHandler::loadFont(const std::string& filename) {
     if (fontLibrary == nullptr) {
         if (FT_Init_FreeType(&fontLibrary)) {
@@ -245,6 +278,16 @@ bool TextureHandler::loadFont(const std::string& filename) {
     return true;
 }
 
+/*!
+ * \brief Loads an image.
+ * \details Loads a .png, .jpeg, or .bmp image from a file.
+ *   \param filename The file name of the picture.
+ *   \param width A reference variable for holding the width of the picture.
+ *   \param height A reference variable for holding the height of the picture.
+ *   \param texture A reference variable for holding the texture of the picture.
+ *     (same as return value)
+ * \return The texture that created from the loaded image.
+ */
 GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height,
                                 GLtexture &texture) {
     if (loadedTextures.find(filename) == loadedTextures.end()) {  // Load the image if we haven't already
@@ -369,6 +412,14 @@ GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int 
     return texture;
 }
 
+/*!
+ * \brief Gets the dimensions of an image
+ * \details Loads the header of a .png, .jpeg, or .bmp image to read their dimensions.
+ *   \param filename The file name of the picture.
+ *   \param width A reference variable for holding the width of the picture.
+ *   \param height A reference variable for holding the height of the picture.
+ * \return The texture that created from the loaded image.
+ */
 void TextureHandler::getDimensions(std::string filename, int &width, int &height) {
     int w = 0, h = 0;
     stbi_load(filename.c_str(), &w, &h, 0, 4);
@@ -413,6 +464,15 @@ GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int 
   return texture;
 }
 
+/*!
+ * \brief Saves an Image. 
+ * \details Saves an Image to file that was captured from a Canvas object.
+ *   \param filename The name of the file to save the Image to.
+ *   \param pixels The pixel data for the Image.
+ *   \param width The width of the Image.
+ *   \param height The height of the Image.
+ * \return True if successful, false otherwise.
+ */
 bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels,
                                      unsigned int width, unsigned int height) const {
     std::string extension = filename.substr(filename.find_last_of('.'));
@@ -534,7 +594,10 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
     return true;
 }
 
-//-------------------------Unit testing----------------------------------------------
+//-------------------------Unit testing---------------------------------------------
+/*!
+ * \brief Runs the Unit tests for TextureHandler.
+ */
 void TextureHandler::runTests() {
     TsglDebug("Testing TextureHandler class...");
     TextureHandler tester;

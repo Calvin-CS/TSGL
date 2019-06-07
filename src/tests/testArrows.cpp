@@ -55,7 +55,7 @@ int main() {
 	c.wait();
 
 	// delete doubleArrow;
-	for(int i = 0; i < shapes.size(); i++) {
+	for(unsigned int i = 0; i < shapes.size(); i++) {
 		delete shapes[i];
 	}
 	return 0;
