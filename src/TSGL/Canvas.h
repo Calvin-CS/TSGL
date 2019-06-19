@@ -88,7 +88,8 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    std::vector<Drawable *> objectBuffer;                               // Holds a list of pointers to objects drawn each frame
+    Array<Drawable*> * objectBuffer;                                    // Holds a list of pointers to objects drawn each frame
+    bool            objectBufferEmpty;                                  // States whether the object buffer is empty/has been recently cleared
     Array<Drawable*> * drawableBuffer;                                  // Our buffer of drawables that the can be pushed to, and will later be flushed to the shapes array
     Array<Drawable*> * myDrawables;                                     // Our buffer of drawables to draw
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
@@ -102,6 +103,7 @@ private:
     std::thread   renderThread;                                         // Thread dedicated to rendering the Canvas
   #endif
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
+    uint8_t*        proceduralBuffer;                                   // Array that is a copy of just the procedural portion of the window
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
     GLtexture       shaderFragment,                                     // Address of the fragment shader
                     shaderProgram,                                      // Addres of the shader program to send to the GPU

@@ -27,6 +27,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void constructorFunction(Canvas& can) {
+  // srand(time(NULL));
   const int PSIZE = 50;
 
   ColorFloat fillColor[PSIZE];

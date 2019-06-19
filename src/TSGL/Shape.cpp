@@ -51,4 +51,103 @@ void Shape::addVertex(float x, float y, const ColorFloat &color) {
     if (current == numberOfVertices*6) init = true;
 }
 
+/**
+ * \brief Sets the Shape to a new color.
+ * \param c The new ColorFloat.
+ */
+void Shape::setColor(ColorFloat c) {
+    for(int i = 0; i < numberOfVertices; i++) {
+        vertices[i*6 + 2] = c.R;
+        vertices[i*6 + 3] = c.G;
+        vertices[i*6 + 4] = c.B;
+        vertices[i*6 + 5] = c.A;
+    }
+}
+
+/**
+ * \brief Sets the Shape to a new array of colors.
+ * \param c The new array of ColorFloats.
+ */
+void Shape::setColor(ColorFloat c[]) {
+    for(int i = 0; i < numberOfVertices; i++) {
+        vertices[i*6 + 2] = c[i].R;
+        vertices[i*6 + 3] = c[i].G;
+        vertices[i*6 + 4] = c[i].B;
+        vertices[i*6 + 5] = c[i].A;
+    }
+}
+
+/**
+ * \brief Alters the Shape's vertex locations.
+ * \param deltaX The difference between the new and old vertex X coordinates.
+ * \param deltaY The difference between the new and old vertex Y coordinates.
+ */
+void Shape::moveShapeBy(float deltaX, float deltaY) {
+    attribMutex.lock();
+    for(int i = 0; i < numberOfVertices; i++) {
+      vertices[i*6]     += deltaX; //Transpose x
+      vertices[(i*6)+1] += deltaY; //Transpose y
+    }
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Moves the Shape to new coordinates.
+ * \param x The new center x coordinate.
+ * \param y The new center y coordinate.
+ */
+void Shape::setCenter(float x, float y) {
+    float deltaX = x - getX(); //Change for x
+    float deltaY = y - getY(); //Change for y
+    attribMutex.lock();
+
+    for(int i = 0; i < numberOfVertices; i++) {
+      vertices[i*6]     += deltaX; //Transpose x
+      vertices[(i*6)+1] += deltaY; //Transpose y
+    }
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Returns the x coordinate of the Shape.
+ * \return A float, the center x coordinate.
+ */
+float Shape::getX() { //TODO: decide if this is the best system to protect x and y
+    attribMutex.lock();
+    float minX, maxX;
+    minX = maxX = vertices[0];
+
+    //Find min and max X
+    for(int i = 0; i < numberOfVertices; i++) {
+        if( vertices[i*6] < minX )
+        minX = vertices[i*6];
+        else if( vertices[i*6] > maxX )
+        maxX = vertices[i*6];
+    }
+
+    attribMutex.unlock();
+    return (minX+maxX)/2;
+}
+
+/**
+ * \brief Returns the y coordinate of the Shape.
+ * \return A float, the center y coordinate.
+ */
+float Shape::getY() {
+    attribMutex.lock();
+    float minY, maxY;
+    minY = maxY = vertices[1];
+
+    //Find min and max X
+    for(int i = 0; i < numberOfVertices; i++) {
+        if( vertices[i*6+1] < minY )
+        minY = vertices[i*6+1];
+        else if( vertices[i*6+1] > maxY )
+        maxY = vertices[i*6+1];
+    }
+
+    attribMutex.unlock();
+    return (minY+maxY)/2;
+}
+
 }

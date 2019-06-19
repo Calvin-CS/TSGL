@@ -305,7 +305,7 @@ bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, fl
 }
 
  /*!
-  * \brief Draw the ConcavePolygon.
+  * \brief Process the the ConcavePolygon vertices.
   * \details This function alters the vertices array so that it will render a Concave polygon correctly
   * \note This function does nothing if the vertex buffer is not yet full.
   * \warning This is an order of n-cubed operation, and is thus <b>VERY SLOW</b>.

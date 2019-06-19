@@ -186,6 +186,8 @@ bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
 	build/tests/Mandelbrot/Buddhabrot.o \
 	build/tests/Mandelbrot/Julia.o \
 	build/tests/Mandelbrot/Nova.o
+bin/testPhilosophers: build/tests/DiningPhilosophers/Philosopher.o \
+	build/tests/DiningPhilosophers/Table.o \
 
 #General compilation recipes for test binaries (appended to earlier dependencies)
 bin/test%: build/tests/test%.o lib/libtsgl.a

@@ -157,7 +157,7 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //If no font is set, load up a default one
       bool found = false;
-      for (int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
+      for (unsigned int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
           if (fileExists(DEFAULTFONTPATHS[i])) {
               TsglDebug("No Font set! Now loading from " + std::string(DEFAULTFONTPATHS[i]));    //NEW
               loadFont(DEFAULTFONTPATHS[i]);

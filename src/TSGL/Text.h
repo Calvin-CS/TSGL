@@ -27,6 +27,8 @@ class Text : public Drawable {
     Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int fontsize, const ColorFloat &color);
 
     virtual void draw();
+
+    virtual void setText(std::wstring text);
 };
 
 }

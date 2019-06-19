@@ -49,4 +49,13 @@ void Text::draw() {
     delete[] vertices;
 }
 
+/*!
+ * \brief Alter the Text's string
+ * \details This function changes myString to the parameter text
+ *  \param text The text to change myString to.
+ */
+void Text::setText(std::wstring text) {
+    myString = text;
+}
+
 }

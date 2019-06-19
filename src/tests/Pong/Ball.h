@@ -36,7 +36,7 @@ class Ball {
    * \details Actually draws the Ball object onto the Canvas.
    * \param can Reference to the Canvas object to draw to.
    */
-  void draw(Canvas& can);
+  // void draw(Canvas& can);
 
   /*!
    * \brief Accessor for the Ball object's current x-coordinate.
@@ -76,6 +76,7 @@ class Ball {
 private:
   float myX, myY, myXX, myYY, mySpeed, myDir;
   float randfloat(int divisor = 10000);
+  Circle* myCircle;
 };
 
 #endif /* BALL_H_ */

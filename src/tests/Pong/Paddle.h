@@ -33,7 +33,7 @@ public:
    * \param speed Reference to the speed of the Paddle object.
    * \return The constructed Paddle object.
    */
-  Paddle(Canvas& can, int & speed);
+  Paddle(Canvas& can, int & speed, int side);
 
   /*!
    * \brief Binds the buttons.
@@ -84,6 +84,7 @@ private:
   int myPoints;  //Score
   int mySpeed;  //Speed
   float myY; //y-coordinate for Paddle
+  Rectangle * myRect;
 };
 
 #endif /* PADDLE_H_ */

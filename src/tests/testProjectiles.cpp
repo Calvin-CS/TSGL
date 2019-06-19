@@ -63,17 +63,29 @@ void projectileFunction(Canvas& can) {
     }
   });
 
+  //Create circles of target and add to Canvas
+  Circle * blueCircle = new Circle(targetX, targetY, 50, BLUE);   //Outer circle
+  Circle * redCircle = new Circle(targetX, targetY, 30, RED);  //Middle
+  Circle * yellowCircle = new Circle(targetX, targetY, 10, YELLOW); //Inner
+  can.add(blueCircle); can.add(redCircle); can.add(yellowCircle);
+
   //Draw loop
   while(can.isOpen()) {
     can.sleep();
-    can.pauseDrawing();
     can.clear();
+
     targetX += coordinateChangerX;  //Horizontal movement
     targetY -= coordinateChangerY; //Vertical movement
-    can.drawCircle(targetX, targetY, 50, blueTarget, true);   //Outer circle
-    can.drawCircle(targetX, targetY, 30, redTarget, true);  //Middle
-    can.drawCircle(targetX, targetY, 10, yellowTarget, true); //Inner
-    can.resumeDrawing();
+
+    //Move each circle to the target's location
+    blueCircle->setCenter(targetX, targetY);
+    redCircle->setCenter(targetX, targetY);
+    yellowCircle->setCenter(targetX, targetY);
+
+    if(numberOfTargets == 0) {   //End game
+      std::cout << "Your score: " << score << std::endl;
+      can.stop();
+    }
     if(targetX >= centerX) { //If it hits the middle of the screen, invert the vertical direction
       coordinateChangerY = -1;
     }

@@ -4,10 +4,19 @@
 
 #include "Paddle.h"
 
-Paddle::Paddle(Canvas& can, int & speed) {
+Paddle::Paddle(Canvas& can, int & speed, int side) {
   mySpeed = speed;
   myDir = myPoints = 0;
   myY = can.getWindowHeight() / 2 - 32;
+  myRect = new Rectangle(0,0,24,64, BLACK);
+  if(side == -1) {  //Left side
+    myRect->setColor(BLUE);
+    myRect->setCenter(20, myY);
+  } else if(side == 1) { //Right side
+    myRect->setColor(RED);
+    myRect->setCenter(can.getWindowWidth() - 20, myY);
+  }
+  can.add(myRect);
 }
 
 void Paddle::bindings(Canvas& can, int side) {
@@ -42,6 +51,7 @@ void Paddle::increment() {
 
 void Paddle::move() {
   myY += mySpeed * myDir;
+  myRect->moveShapeBy(0, mySpeed * myDir);
 }
 
 int Paddle::getPoints() const {

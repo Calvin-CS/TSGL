@@ -20,6 +20,12 @@ class Line : public Polyline {
     Line(int x1, int y1, int x2, int y2, const ColorFloat color);
 
     Line(int x1, int y1, int x2, int y2, const ColorFloat color[]);
+
+    void setFirstEnd(float x, float y);
+
+    void setSecondEnd(float x, float y);
+
+    float getLength();
 };
 
 }

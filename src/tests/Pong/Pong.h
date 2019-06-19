@@ -48,9 +48,16 @@ public:
    */
   void draw(Canvas& can);
 
+  /**
+   * \brief Destroys the Pong game object.
+   */
+  ~Pong();
+
 private:
   Paddle *leftPaddle, *rightPaddle;
   Ball *pongBall;
+  Text *leftScore, *rightScore;
+  TextureHandler loader;
 };
 
 #endif /* PONG_H_ */

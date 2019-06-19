@@ -38,40 +38,25 @@ public:
 
     virtual void addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor);
 
-    // /**
-    //  * \brief Returns a pointer to the vertices array for rendering the outline.
-    //  * \details Vertices specifies x and y coordinates for the Shape.
-    //  * \return Pointer to vertices.
-    //  */
-    // virtual GLfloat* getPointerToOutlineVerticesArray();
+    virtual void setColor(ColorFloat c);
 
-    // /**
-    //  * \brief Returns the geometry type for drawing the outline.
-    //  */
-    // virtual GLenum getOutlineGeometryType() { return GL_LINE_LOOP; }
+    virtual void setColor(ColorFloat c[]);
 
-    // /**
-    //  * \brief Returns the number of vertices in the Polygon's outline for renderer.
-    //  * \return An int specifying the number of vertices in outline.
-    //  */
-    // virtual int getOutlineNumberOfVertices();
+    virtual void setColor(ColorFloat fillColor, ColorFloat outlineColor);
+    
+    virtual void setColor(ColorFloat fillColor, ColorFloat outlineColor[]);
+    
+    virtual void setColor(ColorFloat fillColor[], ColorFloat outlineColor);
 
-    // /**
-    //  * \brief Returns the color of the Polygon's outline.
-    //  * \return Pointer to color of the outline.
-    //  */
-    // virtual ColorFloat* getOutlineColor();
+    virtual void setColor(ColorFloat fillColor[], ColorFloat outlineColor[]);
 
-    // /**
-    //  * \brief Sets the color of the Polygon's outline.
-    //  */
-    // virtual void setOutlineColor(const ColorFloat& newColor);
+    virtual void moveShapeBy(float deltaX, float deltaY);
 
-    // /**
-    //  * \brief Sets whether the Polygon shows an outline.
-    //  */
-    // void setHasOutline(bool outline);
+    virtual void setCenter(float x, float y);
 
+    virtual float getX();
+
+    virtual float getY();
 };
 
 }

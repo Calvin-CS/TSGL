@@ -16,7 +16,9 @@ namespace tsgl {
     headX = x2; headY = y2;
     tailX = x1; tailY = y1;
     isDoubleArrow = doubleArrow;
-    generateVertices(color);
+    headColor = color;
+    tailColor = color;
+    generateVertices();
   }
 
  /*!
@@ -33,18 +35,20 @@ namespace tsgl {
     headX = x2; headY = y2;
     tailX = x1; tailY = y1;
     isDoubleArrow = doubleArrow;
-    generateVertices(color);
+    headColor = color[0];
+    tailColor = color[1];
+    generateVertices();
   }
 
  /*!
   * \brief private method helping constructor initialize vertices array for monocolored arrow
   */
-  void Arrow::generateVertices(const ColorFloat color) {
+  void Arrow::generateVertices() {
     //TODO: figure out locking for this since we are adding vertices, which uses the lock
-    makeArrowHead(headX, headY, headX-tailX, headY-tailY, color);
+    makeArrowHead(headX, headY, headX-tailX, headY-tailY, headColor);
 
     if( isDoubleArrow ) {
-      makeArrowHead(tailX, tailY, tailX-headX, tailY-headY, color);
+      makeArrowHead(tailX, tailY, tailX-headX, tailY-headY, tailColor);
     } else {
       int a, b; //Offsets for vertices
       if( tailY < headY ) a = 1;
@@ -52,29 +56,8 @@ namespace tsgl {
       if( tailX > headX ) b = 1;
       else b = -1;
 
-      addVertex(tailX-a, tailY-b, color);
-      addVertex(tailX+a, tailY+b, color);
-    }
-  }
-
- /*!
-  * \brief private method helping constructor initialize vertices array for multicolored arrow
-  */
-  void Arrow::generateVertices(const ColorFloat color[]) {
-    //TODO: figure out locking for this since we are adding vertices, which uses the lock
-    makeArrowHead(headX, headY, headX-tailX, headY-tailY, color[0]);
-
-    if( isDoubleArrow ) {
-      makeArrowHead(tailX, tailY, tailX-headX, tailY-headY, color[1]);
-    } else {
-      int a, b; //Offsets for vertices
-      if( tailY < headY ) a = 1;
-      else a = -1;
-      if( tailX > headX ) b = 1;
-      else b = -1;
-
-      addVertex(tailX-a, tailY-b, color[1]);
-      addVertex(tailX+a, tailY+b, color[1]);
+      addVertex(tailX-a, tailY-b, tailColor);
+      addVertex(tailX+a, tailY+b, tailColor);
     }
   }
 
@@ -86,10 +69,10 @@ namespace tsgl {
    */
   void Arrow::moveHead(float x, float y) {
     // attribMutex.lock();
-    //current = 0; init = false;
+    current = 0; init = false;
     headX = x; headY = y;
     // attribMutex.unlock();
-    //generateVertices();
+    generateVertices();
   }
 
   /**
@@ -100,10 +83,10 @@ namespace tsgl {
    */
   void Arrow::moveTail(float x, float y) {
     // attribMutex.lock();
-    //current = 0; init = false;
+    current = 0; init = false;
     tailX = x; tailY = y;
     // attribMutex.unlock();
-    //generateVertices();
+    generateVertices();
   }
 
  /*!

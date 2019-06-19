@@ -40,6 +40,18 @@ class Shape : public Drawable {
 
     virtual void addVertex(float x, float y, const ColorFloat &color = BLACK);
 
+    virtual void setColor(ColorFloat c);
+
+    virtual void setColor(ColorFloat c[]);
+
+    virtual void moveShapeBy(float deltaX, float deltaY);
+
+    virtual void setCenter(float x, float y);
+
+    virtual float getX();
+
+    virtual float getY();
+
    /*!
     * \brief Accessor that returns if Shape is processed and ready to be drawn
     * \details This function returns true only if all vertices have been inserted into an array.

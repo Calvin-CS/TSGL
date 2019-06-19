@@ -146,6 +146,31 @@ class Array {
             size_++;                                            // Otherwise, we added an item
         return myArray[last_] = item;                           // Actually add the item
     }
+
+    /*!
+     * \brief Removes the item <code>item</code> from the internal array.
+     *  \note If the internal array does not contain the item, this does nothing.
+     * \param item The item to remove.
+     */
+    void remove(Item item) {
+        int itemIndex = -1;
+        for (unsigned int i = 0; i < size_; i++) {
+            if(myArray[i] == item) {
+                itemIndex = i;
+                break;
+            }
+        }
+        if(itemIndex != -1) {
+            for (unsigned int i = itemIndex; i < size_; i++) {
+                if(i == size_ - 1) {
+                    size_--;
+                    myArray[i] = nullptr;
+                } else {
+                    myArray[i] = myArray[i+1];
+                }
+            }
+        }
+    }
 };
 
 }

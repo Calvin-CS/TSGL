@@ -13,11 +13,13 @@ Ball::Ball(Canvas& can, int & speed) {
     myXX = mySpeed * cos(myDir);
     myYY = mySpeed * sin(myDir);
   } while(myXX > -4 && myXX < 4);
+  myCircle = new Circle(myX, myY, 8, WHITE);
+  can.add(myCircle);
 }
 
-void Ball::draw(Canvas& can) {
-  can.drawCircle(myX, myY, 8, WHITE, true);
-}
+// void Ball::draw(Canvas& can) {
+//   can.drawCircle(myX, myY, 8, WHITE, true);
+// }
 
 float Ball::getX() const {
   return myX;
@@ -38,6 +40,7 @@ void Ball::invert(int choice) {
 void Ball::move() {
   myX += myXX;
   myY += myYY;
+  myCircle->setCenter(myX, myY);
 }
 
 float Ball::randfloat(int divisor) {

@@ -17,9 +17,10 @@ class Arrow : public ConcavePolygon {
  private:
     int headX, headY, tailX, tailY;
     bool isDoubleArrow;
+    ColorFloat headColor;
+    ColorFloat tailColor;
     void makeArrowHead(float x, float y, float deltaX, float deltaY, const ColorFloat color); // Helps constructor by calculating the Arrow Head's coordinates
-    void generateVertices(const ColorFloat color);
-    void generateVertices(const ColorFloat color[]);
+    void generateVertices();
  public:
 
     Arrow(int x1, int y1, int x2, int y2, const ColorFloat color, bool doubleArrow = false);

@@ -22,6 +22,7 @@ void textFunction(Canvas& can, std::string font) {
     ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
     ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
+    TextureHandler loader;
 
     can.setFont(font);
     can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);

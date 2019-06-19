@@ -101,49 +101,264 @@ void Polygon::addVertex(float x, float y, const ColorFloat &fillColor, const Col
     if (current == numberOfVertices*6) init = true;
 }
 
-// GLfloat* Polygon::getPointerToOutlineVerticesArray() {
-//   attribMutex.lock();
-//   GLfloat* result = vertices;
-//   attribMutex.unlock();
-//   return result;
-// }
-
-// int Polygon::getOutlineNumberOfVertices() {
-//   attribMutex.lock();
-//   int l = length;
-//   attribMutex.unlock();
-//   return l;
-// }
-
-// ColorFloat* Polygon::getOutlineColor() {
-//   attribMutex.lock();
-//   ColorFloat* c = &outlineColor;
-//   attribMutex.unlock();
-//   return c;
-// }
-
-// void Polygon::setOutlineColor(const ColorFloat& newColor) {
-//   attribMutex.lock();
-//   outlineColor = newColor;
-//   attribMutex.unlock();
-// }
-
-// void Polygon::setHasOutline(bool outline) {
-//   attribMutex.lock();
-//   hasOutline = outline;
-//   attribMutex.unlock();
-// }
-
- /*!
-  * \brief Destructor for the Polygon.
-  */
-  Polygon::~Polygon() {
-    if(hasOutline) { 
-      delete[] outlineVertices; 
-    }
-    if(isFilled) {
-      delete[] vertices;
+/**
+ * \brief Sets the Polygon to a new color.
+ * \param c The new ColorFloat.
+ */
+void Polygon::setColor(ColorFloat c) {
+  if(isFilled) {
+    for(int i = 0; i < numberOfVertices; i++) {
+      vertices[i*6 + 2] = c.R;
+      vertices[i*6 + 3] = c.G;
+      vertices[i*6 + 4] = c.B;
+      vertices[i*6 + 5] = c.A;
     }
   }
+  if(hasOutline) {
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+      outlineVertices[i*6 + 2] = c.R;
+      outlineVertices[i*6 + 3] = c.G;
+      outlineVertices[i*6 + 4] = c.B;
+      outlineVertices[i*6 + 5] = c.A;
+    }
+  }
+}
+
+/**
+ * \brief Sets the Polygon to an array of new colors.
+ * \param c An array of new ColorFloats.
+ */
+void Polygon::setColor(ColorFloat c[]) {
+  if(isFilled) {
+    for(int i = 0; i < numberOfVertices; i++) {
+      vertices[i*6 + 2] = c[i].R;
+      vertices[i*6 + 3] = c[i].G;
+      vertices[i*6 + 4] = c[i].B;
+      vertices[i*6 + 5] = c[i].A;
+    }
+  }
+  if(hasOutline) {
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+      outlineVertices[i*6 + 2] = c[i].R;
+      outlineVertices[i*6 + 3] = c[i].G;
+      outlineVertices[i*6 + 4] = c[i].B;
+      outlineVertices[i*6 + 5] = c[i].A;
+    }
+  }
+}
+
+/**
+ * \brief Sets the Polygon to new single fill and outline colors.
+ * \param fillColor A new ColorFloat for the Polygon's fill.
+ * \param outlineColor A new ColorFloat for the Polygon's outline.
+ */
+void Polygon::setColor(ColorFloat fillColor, ColorFloat outlineColor) {
+  if(!isFilled || !hasOutline) {
+    TsglErr("Polygon isn't filled and outlined.");
+    return;
+  }
+  for(int i = 0; i < numberOfVertices; i++) {
+    vertices[i*6 + 2] = fillColor.R;
+    vertices[i*6 + 3] = fillColor.G;
+    vertices[i*6 + 4] = fillColor.B;
+    vertices[i*6 + 5] = fillColor.A;
+  }
+  for(int i = 0; i < numberOfOutlineVertices; i++) {
+    outlineVertices[i*6 + 2] = outlineColor.R;
+    outlineVertices[i*6 + 3] = outlineColor.G;
+    outlineVertices[i*6 + 4] = outlineColor.B;
+    outlineVertices[i*6 + 5] = outlineColor.A;
+  }
+}
+
+/**
+ * \brief Gives the Polygon a new monocolored fill and multicolored outline.
+ * \param fillColor A new ColorFloat for the Polygon's fill.
+ * \param outlineColor A new array of ColorFloats for the Polygon's outline.
+ */
+void Polygon::setColor(ColorFloat fillColor, ColorFloat outlineColor[]) {
+  if(!isFilled || !hasOutline) {
+    TsglErr("Polygon isn't filled and outlined.");
+    return;
+  }
+  for(int i = 0; i < numberOfVertices; i++) {
+    vertices[i*6 + 2] = fillColor.R;
+    vertices[i*6 + 3] = fillColor.G;
+    vertices[i*6 + 4] = fillColor.B;
+    vertices[i*6 + 5] = fillColor.A;
+  }
+  for(int i = 0; i < numberOfOutlineVertices; i++) {
+    outlineVertices[i*6 + 2] = outlineColor[i].R;
+    outlineVertices[i*6 + 3] = outlineColor[i].G;
+    outlineVertices[i*6 + 4] = outlineColor[i].B;
+    outlineVertices[i*6 + 5] = outlineColor[i].A;
+  }
+}
+
+/**
+ * \brief Gives the Polygon a new multicolored fill and monocolored outline.
+ * \param fillColor A new array of ColorFloats for the Polygon's fill.
+ * \param outlineColor A new ColorFloat for the Polygon's outline.
+ */
+void Polygon::setColor(ColorFloat fillColor[], ColorFloat outlineColor) {
+  if(!isFilled || !hasOutline) {
+    TsglErr("Polygon isn't filled and outlined.");
+    return;
+  }
+  for(int i = 0; i < numberOfVertices; i++) {
+    vertices[i*6 + 2] = fillColor[i].R;
+    vertices[i*6 + 3] = fillColor[i].G;
+    vertices[i*6 + 4] = fillColor[i].B;
+    vertices[i*6 + 5] = fillColor[i].A;
+  }
+  for(int i = 0; i < numberOfOutlineVertices; i++) {
+    outlineVertices[i*6 + 2] = outlineColor.R;
+    outlineVertices[i*6 + 3] = outlineColor.G;
+    outlineVertices[i*6 + 4] = outlineColor.B;
+    outlineVertices[i*6 + 5] = outlineColor.A;
+  }
+}
+
+/**
+ * \brief Sets the Polygon to new single fill and outline colors.
+ * \param fillColor A new array of ColorFloats for the Polygon's fill.
+ * \param outlineColor A new array of ColorFloats for the Polygon's outline.
+ */
+void Polygon::setColor(ColorFloat fillColor[], ColorFloat outlineColor[]) {
+  if(!isFilled || !hasOutline) {
+    TsglErr("Polygon isn't filled and outlined.");
+    return;
+  }
+  for(int i = 0; i < numberOfVertices; i++) {
+    vertices[i*6 + 2] = fillColor[i].R;
+    vertices[i*6 + 3] = fillColor[i].G;
+    vertices[i*6 + 4] = fillColor[i].B;
+    vertices[i*6 + 5] = fillColor[i].A;
+  }
+  for(int i = 0; i < numberOfOutlineVertices; i++) {
+    outlineVertices[i*6 + 2] = outlineColor[i].R;
+    outlineVertices[i*6 + 3] = outlineColor[i].G;
+    outlineVertices[i*6 + 4] = outlineColor[i].B;
+    outlineVertices[i*6 + 5] = outlineColor[i].A;
+  }
+}
+
+/**
+ * \brief Alters the Polygon's vertex locations.
+ * \param deltaX The difference between the new and old vertex X coordinates.
+ * \param deltaY The difference between the new and old vertex Y coordinates.
+ */
+void Polygon::moveShapeBy(float deltaX, float deltaY) {
+  if(isFilled) {
+    for(int i = 0; i < numberOfVertices; i++) {
+      vertices[i*6]     += deltaX; //Transpose x
+      vertices[(i*6)+1] += deltaY; //Transpose y
+    }
+  }
+  if(hasOutline) {
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+      outlineVertices[i*6]     += deltaX; //Transpose x
+      outlineVertices[(i*6)+1] += deltaY; //Transpose y
+    }
+  }
+}
+
+/**
+ * \brief Moves the Polygon to new coordinates.
+ * \param x The new center x coordinate.
+ * \param y The new center y coordinate.
+ */
+void Polygon::setCenter(float x, float y) {
+    float deltaX = x - getX(); //Change for x
+    float deltaY = y - getY(); //Change for y
+    attribMutex.lock();
+    if(isFilled) {
+      for(int i = 0; i < numberOfVertices; i++) {
+        vertices[i*6]     += deltaX; //Transpose x
+        vertices[(i*6)+1] += deltaY; //Transpose y
+      }
+    }
+    if(hasOutline) {
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        outlineVertices[i*6]     += deltaX; //Transpose x
+        outlineVertices[(i*6)+1] += deltaY; //Transpose y
+      }
+    }
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Returns the x coordinate of the Polygon.
+ * \return A float, the center x coordinate.
+ */
+float Polygon::getX() { //TODO: decide if this is the best system to protect x and y
+    attribMutex.lock();
+    float minX, maxX;
+
+    //Find min and max X
+    if(hasOutline) {
+      minX = maxX = outlineVertices[0];
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+          if( outlineVertices[i*6] < minX )
+          minX = outlineVertices[i*6];
+          else if( outlineVertices[i*6] > maxX )
+          maxX = outlineVertices[i*6];
+      }
+    } else {
+      minX = maxX = vertices[0];
+      for(int i = 0; i < numberOfVertices; i++) {
+          if( vertices[i*6] < minX )
+          minX = vertices[i*6];
+          else if( vertices[i*6] > maxX )
+          maxX = vertices[i*6];
+      }
+    }
+
+    attribMutex.unlock();
+    return (minX+maxX)/2;
+}
+
+/**
+ * \brief Returns the y coordinate of the Polygon.
+ * \return A float, the center y coordinate.
+ */
+float Polygon::getY() {
+    attribMutex.lock();
+    float minY, maxY;
+
+    //Find min and max Y
+    if(hasOutline) {
+      minY = maxY = outlineVertices[1];
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        if( outlineVertices[i*6+1] < minY )
+        minY = outlineVertices[i*6+1];
+        else if( outlineVertices[i*6+1] > maxY )
+        maxY = outlineVertices[i*6+1];
+      }
+    } else {
+      minY = maxY = vertices[1];
+      for(int i = 0; i < numberOfVertices; i++) {
+          if( vertices[i*6+1] < minY )
+          minY = vertices[i*6+1];
+          else if( vertices[i*6+1] > maxY )
+          maxY = vertices[i*6+1];
+      }
+    }
+
+    attribMutex.unlock();
+    return (minY+maxY)/2;
+}
+
+/*!
+ * \brief Destructor for the Polygon.
+ */
+Polygon::~Polygon() {
+  if(hasOutline) { 
+    delete[] outlineVertices; 
+  }
+  if(isFilled) {
+    delete[] vertices;
+  }
+}
 
 }
