@@ -92,6 +92,7 @@ Canvas::~Canvas() {
     delete myDrawables;
     delete drawableBuffer;
     delete objectBuffer;
+    delete[] proceduralBuffer;
     delete drawTimer;
     delete[] vertexData;
     delete [] screenBuffer;
@@ -219,6 +220,7 @@ void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
 void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
+    int frame = 0;
 
     // Get actual framebuffer size and adjust scaling accordingly
     int fbw, fbh;
@@ -232,7 +234,7 @@ void Canvas::draw() {
 
 
     setBackgroundColor(bgcolor); //Set our initial clear / background color
-    glClear(GL_COLOR_BUFFER_BIT);
+    // glClear(GL_COLOR_BUFFER_BIT);
     glfwSwapBuffers(window);
     readyToDraw = true;
     bool newThingDrawn = true;  //Always draw the first frame
@@ -277,9 +279,16 @@ void Canvas::draw() {
           glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
           glViewport(0,0,winWidth,winHeight);
-
+          
           if (toClear) glClear(GL_COLOR_BUFFER_BIT);
           toClear = false;
+
+          if(frame > 1) {
+            textureShaders(true);
+            loader.drawGLtextureFromBuffer(proceduralBuffer, -1, 0, winWidth, winHeight, GL_RGB);
+            textureShaders(false);
+          }
+
 
           unsigned int size = myDrawables->size();
           for (unsigned int i = 0; i < size; i++) {
@@ -295,7 +304,31 @@ void Canvas::draw() {
             }
           }
 
-          glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, proceduralBuffer);
+          if (loopAround) {
+            newThingDrawn = true;
+            int toend = myDrawables->capacity() - posLast;
+            glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
+                   &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+            glDrawArrays(GL_POINTS, 0, toend);
+            posLast = 0;
+            loopAround = false;
+          }
+          int pbsize = pos - posLast;
+          if (pbsize > 0) {
+            newThingDrawn = true;
+            glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+            glDrawArrays(GL_POINTS, 0, pbsize);
+          }
+
+          if(frame > 0) {
+            if (newThingDrawn) {
+              glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, proceduralBuffer);
+              frame = 2;
+            }
+          } else {
+            frame = 1;
+          }
+
        
           if (objectBuffer->size() > 0) {
             for (unsigned int i = 0; i < objectBuffer->size(); i++) {
@@ -312,23 +345,6 @@ void Canvas::draw() {
             }
           } else {
             objectBufferEmpty = true;
-          }
-
-
-          if (loopAround) {
-            newThingDrawn = true;
-            int toend = myDrawables->capacity() - posLast;
-            glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
-                   &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, toend);
-            posLast = 0;
-            loopAround = false;
-          }
-          int pbsize = pos - posLast;
-          if (pbsize > 0) {
-            newThingDrawn = true;
-            glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, pbsize);
           }
         }
 
@@ -367,11 +383,11 @@ void Canvas::draw() {
         };
         glBindTexture(GL_TEXTURE_2D,renderedTexture);
         /* these 5 lines don't seem to do anything */
-        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        // glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
         /* next two lines are very essential */
         glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_STRIP,0,4);
@@ -1911,11 +1927,14 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
        padwidth = 4-padwidth;
     winWidthPadded = winWidth + padwidth;
     bufferSize = 3 * (winWidthPadded+1) * winHeight;
+    proceduralBufferSize = 3 * winWidth * winHeight;
     screenBuffer = new uint8_t[bufferSize];
-    proceduralBuffer = new uint8_t[bufferSize];
+    proceduralBuffer = new GLubyte[bufferSize];
     for (unsigned i = 0; i < bufferSize; ++i) {
-      proceduralBuffer[i] = 0;
-      proceduralBuffer[i] = 0;
+      screenBuffer[i] = 0;
+    }
+    for (unsigned i = 0; i < proceduralBufferSize; i++) {
+      proceduralBuffer[i] = 255;
     }
 
     toClear = true;                   // Don't need to clear at the start
@@ -1926,7 +1945,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     drawableBuffer = new Array<Drawable*>(b);
     objectBuffer = new Array<Drawable*>(b);
     vertexData = new float[6 * b];    // Buffer for vertexes for points
-    showFPS = false;                  // Set debugging FPS to false
+    showFPS = true;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering
     pointBufferPosition = pointLastPosition = 0;
     loopAround = false;

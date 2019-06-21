@@ -53,7 +53,7 @@ class TextureHandler {
 
     static void createGLtextureFromBuffer(GLtexture &texture, unsigned char* buffer, const unsigned int &width,
                                           const unsigned int &height, int glMode);
-
+                                          
     GLtexture loadTextureFromBMP(const char* filename, unsigned int &width, unsigned int &height,
                                  GLtexture &texture) const;
     GLtexture loadTextureFromJPG(const char* filename, unsigned int &width, unsigned int &height,
@@ -80,6 +80,9 @@ class TextureHandler {
     GLtexture loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture);
 
     bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int width, unsigned int height) const;
+
+
+    void drawGLtextureFromBuffer(unsigned char* buffer, int x, int y, unsigned int width, unsigned int height, int glMode);
 
     static void runTests();
 };

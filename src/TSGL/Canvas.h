@@ -103,7 +103,8 @@ private:
     std::thread   renderThread;                                         // Thread dedicated to rendering the Canvas
   #endif
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
-    uint8_t*        proceduralBuffer;                                   // Array that is a copy of just the procedural portion of the window
+    GLubyte*        proceduralBuffer;                                   // Array that is a copy of just the procedural portion of the window
+    unsigned        proceduralBufferSize;
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
     GLtexture       shaderFragment,                                     // Address of the fragment shader
                     shaderProgram,                                      // Addres of the shader program to send to the GPU

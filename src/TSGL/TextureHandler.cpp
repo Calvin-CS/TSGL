@@ -125,7 +125,7 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newBuffer);
-        delete newBuffer;
+        delete[] newBuffer;
     } else {
         if (glMode == GL_RED) {
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -137,6 +137,63 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+}
+
+void TextureHandler::drawGLtextureFromBuffer(unsigned char* buffer, int x, int y, unsigned int width, unsigned int height, int glMode) {
+    // Generate the OpenGL texture object
+    GLtexture texture;
+
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    if (glMode == GL_ALPHA) {
+        unsigned char* newBuffer = new unsigned char[width * height * 4];
+        unsigned maxSize = width * height;
+        for (unsigned int i = 0, x = 0; i < maxSize; i++, x += 4) {
+            newBuffer[x] = newBuffer[x + 1] = newBuffer[x + 2] = newBuffer[x + 3] = buffer[i];
+        }
+
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newBuffer);
+        delete[] newBuffer;
+    } else {
+        if (glMode == GL_RED) {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        } else {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        }
+        glTexImage2D(GL_TEXTURE_2D, 0, glMode, width, height, 0, glMode, GL_UNSIGNED_BYTE, buffer);
+    }
+
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    float* vertices = new float[32];
+    vertices[0] = x;
+    vertices[1] = y + height;
+    vertices[8] = x + width;
+    vertices[9] = y + height;
+    vertices[16] = x;
+    vertices[17] = y;
+    vertices[24] = x + width;
+    vertices[25] = y;
+    vertices[2] = vertices[10] = vertices[18] = vertices[26] = 1.0f;  // Texture color of the coords
+    vertices[3] = vertices[11] = vertices[19] = vertices[27] = 1.0f;
+    vertices[4] = vertices[12] = vertices[20] = vertices[28] = 1.0f;
+    vertices[5] = vertices[13] = vertices[21] = vertices[29] = 1.0f;
+    vertices[6] = vertices[7] = 0.0f;           // Texture coords of top left
+    vertices[14] = 1.0f, vertices[15] = 0.0f;   // Texture coords of top right
+    vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
+    vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
+
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    delete[] vertices;
 }
 
 /*!
