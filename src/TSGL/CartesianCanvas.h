@@ -91,17 +91,17 @@ public:
 
     void drawPoint(Decimal x, Decimal y, ColorFloat color = BLACK);
 
-    void drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color = BLACK, bool filled = true);
+    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color = BLACK, bool filled = true);
 
-    void drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color[], bool filled = true);
+    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color[], bool filled = true);
 
-    void drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat fillColor, ColorFloat outlineColor);
+    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor, ColorFloat outlineColor);
 
-    void drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat fillColor[], ColorFloat outlineColor);
+    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor);
 
-    void drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat fillColor, ColorFloat outlineColor[]);
+    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor, ColorFloat outlineColor[]);
 
-    void drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat fillColor[], ColorFloat outlineColor[]);
+    void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor[]);
 
     void drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
 

@@ -88,10 +88,11 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
+    Array<Drawable*> * myDrawables;                                     // Our buffer of drawables to draw
     Array<Drawable*> * objectBuffer;                                    // Holds a list of pointers to objects drawn each frame
     bool            objectBufferEmpty;                                  // States whether the object buffer is empty/has been recently cleared
+    std::mutex	    objectMutex;
     Array<Drawable*> * drawableBuffer;                                  // Our buffer of drawables that the can be pushed to, and will later be flushed to the shapes array
-    Array<Drawable*> * myDrawables;                                     // Our buffer of drawables to draw
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	  bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
@@ -264,17 +265,17 @@ public:
 
     virtual void drawProgress(ProgressBar* p);
 
-    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled = true);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat color, bool filled = true);
 
-    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color[], bool filled = true);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat color[], bool filled = true);
 
-    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor);
 
-    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor);
 
-    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor[]);
 
-    virtual void drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor[]);
 
     virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true);
 

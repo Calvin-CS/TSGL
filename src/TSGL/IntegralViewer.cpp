@@ -70,7 +70,7 @@ void IntegralViewer::setupCanvas(CartesianCanvas*& can, const std::string& label
 
   can->start();
 
-  can->drawRectangle(myStartX,myStartY,myStopX,myStopY,WHITE);        //Area we're drawing to
+  can->drawRectangle(myStartX,myStartY,myStopX - myStartX, myStartY - myStopY,WHITE);        //Area we're drawing to
   can->drawPartialFunction(myF,myStartX,myStopX,0,ColorInt(0,0,255)); //Outline of function
   can->drawAxes(0, 0, SPACING, SPACING);                              //Axes marks
   drawLabels(can);
@@ -97,11 +97,12 @@ long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
     for (long long i = 0; i < numRectangles; ++i) {
       if (!myRecCanvas->isOpen()) continue;
       myRecCanvas->sleep();
-      xLo = myStartX + i * recWidth;
+      xLo = myStartX + i  * recWidth;
       xMid = xLo + halfRecWidth;
+      Decimal xHigh = xLo + recWidth;
       y = (*myF)(xMid);
       result += y;
-      myRecCanvas->drawRectangle(xLo, 0, xLo+recWidth, y, tcol);
+      myRecCanvas->drawRectangle(xLo, y, recWidth, y, tcol);
     }
     result *= recWidth;
   }

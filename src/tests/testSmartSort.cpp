@@ -151,7 +151,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
             ColorFloat color;
             if (sd[tid]->state != S_HIDE) {
               //Draw a black rectangle over our portion of the screen to cover up the old drawing
-              can.drawRectangle(start,0,start + sd[tid]->last - sd[tid]->first,cwh,can.getBackgroundColor());
+              can.drawRectangle(start,0,sd[tid]->last - sd[tid]->first,cwh,can.getBackgroundColor());
               for (int i = sd[tid]->first; i < sd[tid]->last; ++i, ++start) {
                   height = numbers[i];
                   if (sd[tid]->state == S_WAIT || sd[tid]->state == S_DONE)

@@ -40,13 +40,15 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
     for (int i = myStart; i < myStart + myPart; i++) {
       for (int j = 0; j < can.getWindowWidth(); j++) {
         // int id = omp_get_thread_num();
-        if (i % 2 == 0)
+        if (i % 2 == 0) {
           can.drawPoint(i, j, BLACK);
-        else
-          can.drawPoint(i, j, ColorInt(i % NUM_COLORS, j % NUM_COLORS, (i * j) % NUM_COLORS));
+        } else {
+          can.drawPoint(i, j, ColorInt(i % 255, j % 255, (i*j) % 255));
+        }
+        //can.sleepFor(.0001);
       }
       if (!can.isOpen()) break;
-      can.sleep();
+      // can.clear();
     }
   }
 }

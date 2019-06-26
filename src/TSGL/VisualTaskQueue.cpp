@@ -84,7 +84,7 @@ void VisualTaskQueue::showLegend(int threads) {
     lcan->drawText("Legend:",TEXTW/2,TEXTW,TEXTW,BLACK);
     int xx = xStart, yy = yStart;
     for (int i = 0; i < threads; ++i) {
-      lcan->drawRectangle(xx,yy,xx+blockSize,yy+blockSize,Colors::highContrastColor(i));
+      lcan->drawRectangle(xx,yy,blockSize,blockSize,Colors::highContrastColor(i));
       lcan->drawText(to_string(i),xx+blockSize+GAP,yy+blockSize,TEXTW/2);
       yy += yDelta;
       if (yy > yCutoff) {
@@ -106,7 +106,7 @@ void VisualTaskQueue::update(int index, VQState state) {
   int y = index / rowLength;
   vcan->drawRectangle(
     border+x*(blockSize+space),border+y*(blockSize+space),
-    border+x*(blockSize+space)+blockSize,border+y*(blockSize+space)+blockSize,
+    blockSize,blockSize,
     Colors::blend(
       Colors::highContrastColor(omp_get_thread_num()),(state == RUNNING) ? BLACK : WHITE,0.5f
     ),true
@@ -123,7 +123,7 @@ void VisualTaskQueue::reset() {
     int y = i / rowLength;
     vcan->drawRectangle(
       border+x*(blockSize+space),border+y*(blockSize+space),
-      border+x*(blockSize+space)+blockSize,border+y*(blockSize+space)+blockSize,
+      blockSize,blockSize,
       WHITE,true
     );
   }

@@ -171,13 +171,13 @@ void Canvas::add(Drawable * shapePtr) {
   // Set the default current layer if layer not explicitly set
   // if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
 
-  // objectMutex.lock();
+  objectMutex.lock();
   objectBuffer->push(shapePtr);
   objectBufferEmpty = false;
   // std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
   //   return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
   // });
-  // objectMutex.unlock();
+  objectMutex.unlock();
 
 }
 
@@ -192,11 +192,11 @@ void Canvas::remove(Drawable * shapePtr) {
 
   //TODO: make this thread safe! (check that it is now)
 
-  // objectMutex.lock();
+  objectMutex.lock();
   if (objectBuffer->size() != 0) {
     objectBuffer->remove(shapePtr);
   }
-  // objectMutex.unlock();
+  objectMutex.unlock();
 
 }
 
@@ -220,7 +220,6 @@ void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
 void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
-    int frame = 0;
 
     // Get actual framebuffer size and adjust scaling accordingly
     int fbw, fbh;
@@ -238,6 +237,7 @@ void Canvas::draw() {
     glfwSwapBuffers(window);
     readyToDraw = true;
     bool newThingDrawn = true;  //Always draw the first frame
+    int frame = 0;
 
     // Start the drawing loop
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
@@ -280,14 +280,15 @@ void Canvas::draw() {
 
           glViewport(0,0,winWidth,winHeight);
           
-          if (toClear) glClear(GL_COLOR_BUFFER_BIT);
-          toClear = false;
-
-          if(frame > 1) {
-            textureShaders(true);
-            loader.drawGLtextureFromBuffer(proceduralBuffer, -1, 0, winWidth, winHeight, GL_RGB);
-            textureShaders(false);
+          if (toClear) {
+            glClear(GL_COLOR_BUFFER_BIT);
+            if(frame > 1) {
+              textureShaders(true);
+              loader.drawGLtextureFromBuffer(proceduralBuffer, -1, 0, winWidth, winHeight, GL_RGBA);
+              textureShaders(false);
+            }
           }
+          toClear = false;
 
 
           unsigned int size = myDrawables->size();
@@ -321,15 +322,16 @@ void Canvas::draw() {
           }
 
           if(frame > 0) {
-            if (newThingDrawn) {
-              glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, proceduralBuffer);
-              frame = 2;
+            if(newThingDrawn) {
+              glReadPixels(0, 0, winWidth, winHeight, GL_RGBA, GL_UNSIGNED_BYTE, proceduralBuffer);
             }
+            // Reset drawn status for the next frame
+            newThingDrawn = false;
+            frame = 2;
           } else {
             frame = 1;
           }
 
-       
           if (objectBuffer->size() > 0) {
             for (unsigned int i = 0; i < objectBuffer->size(); i++) {
               Drawable* d = (*objectBuffer)[i];
@@ -348,12 +350,11 @@ void Canvas::draw() {
           }
         }
 
-        // Reset drawn status for the next frame
-        newThingDrawn = false;
-
         // Update our screenBuffer copy with the screen
         glViewport(0,0,winWidth*scaling,winHeight*scaling);
-        myDrawables->clear();                           // Clear our buffer of shapes to be drawn
+        if(frame > 1) {
+          myDrawables->clear();                           // Clear our buffer of shapes to be drawn
+        }
 
         /* not sure what the point of this chunk is. */
         if (hasEXTFramebuffer)
@@ -383,11 +384,11 @@ void Canvas::draw() {
         };
         glBindTexture(GL_TEXTURE_2D,renderedTexture);
         /* these 5 lines don't seem to do anything */
-        // glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
         /* next two lines are very essential */
         glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_STRIP,0,4);
@@ -1056,110 +1057,98 @@ void Canvas::drawProgress(ProgressBar* p) {
  /*!
   * \brief Draws a monocolored filled or outlined rectangle.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's top edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param color A single color for Rectangle.
   *   \param filled Whether the Rectangle should be filled
   *     (set to true by default).
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color, bool filled) {
-    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color, filled);  // Creates the Rectangle with the specified coordinates and color
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat color, bool filled) {
+    Rectangle* rec = new Rectangle(x, y, w, h, color, filled);  // Creates the Rectangle with the specified coordinates and color
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
  /*!
   * \brief Draws a multicolored filled or outlined rectangle.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's top edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param color An array of colors for Rectangle.
   *   \param filled Whether the Rectangle should be filled
   *     (set to true by default).
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat color[], bool filled) {
-    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, color, filled);  // Creates the Rectangle with the specified coordinates and color
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat color[], bool filled) {
+    Rectangle* rec = new Rectangle(x, y, w, h, color, filled);  // Creates the Rectangle with the specified coordinates and color
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
  /*!
   * \brief Draws a filled and outlined rectangle with different monocolored fill and outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's top edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param fillColor A single color for Rectangle's fill vertices.
   *   \param outlineColor A single color for Rectangle's outline vertices.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor) {
-    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor) {
+    Rectangle* rec = new Rectangle(x, y, w, h, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
  /*!
   * \brief  Draws a filled and outlined rectangle with multicolored fill and monocolored outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's top edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param fillColor An array of colors for Rectangle's fill vertices.
   *   \param outlineColor A single color for Rectangle's outline vertices.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor) {
-    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor) {
+    Rectangle* rec = new Rectangle(x, y, w, h, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
  /*!
   * \brief Draws a filled and outlined rectangle with monocolored fill and multicolored outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's top edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param fillColor A single color for Rectangle's fill vertices.
   *   \param outlineColor An array of colors for Rectangle's outline vertices.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor, ColorFloat outlineColor[]) {
-    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor[]) {
+    Rectangle* rec = new Rectangle(x, y, w, h, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
  /*!
   * \brief Draws a filled and outlined rectangle with different multicolored fill and outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's top edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param fillColor An array of colors for Rectangle's fill vertices.
   *   \param outlineColor An array of colors for Rectangle's outline vertices.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(int x1, int y1, int x2, int y2, ColorFloat fillColor[], ColorFloat outlineColor[]) {
-    if (x2 < x1) { int t = x1; x1 = x2; x2 = t; }
-    if (y2 < y1) { int t = y1; y1 = y2; y2 = t; }
-    Rectangle* rec = new Rectangle(x1, y1, x2-x1, y2-y1, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+    Rectangle* rec = new Rectangle(x, y, w, h, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
@@ -1927,9 +1916,9 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
        padwidth = 4-padwidth;
     winWidthPadded = winWidth + padwidth;
     bufferSize = 3 * (winWidthPadded+1) * winHeight;
-    proceduralBufferSize = 3 * winWidth * winHeight;
+    proceduralBufferSize = 4 * winWidth * winHeight;
     screenBuffer = new uint8_t[bufferSize];
-    proceduralBuffer = new GLubyte[bufferSize];
+    proceduralBuffer = new GLubyte[proceduralBufferSize];
     for (unsigned i = 0; i < bufferSize; ++i) {
       screenBuffer[i] = 0;
     }
@@ -1945,7 +1934,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     drawableBuffer = new Array<Drawable*>(b);
     objectBuffer = new Array<Drawable*>(b);
     vertexData = new float[6 * b];    // Buffer for vertexes for points
-    showFPS = true;                  // Set debugging FPS to false
+    showFPS = false;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering
     pointBufferPosition = pointLastPosition = 0;
     loopAround = false;

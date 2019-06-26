@@ -139,7 +139,7 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
-void TextureHandler::drawGLtextureFromBuffer(unsigned char* buffer, int x, int y, unsigned int width, unsigned int height, int glMode) {
+void TextureHandler::drawGLtextureFromBuffer(GLubyte* buffer, int x, int y, unsigned int width, unsigned int height, int glMode) {
     // Generate the OpenGL texture object
     GLtexture texture;
 

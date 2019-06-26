@@ -37,15 +37,15 @@ void constructorFunction(Canvas& can) {
     outlineColor[i] = Colors::randomColor(1.0f);
   }
 
-  can.drawRectangle(15, 5, 85, 95, fillColor[0], true);
-  can.drawRectangle(115, 5, 185, 95, fillColor[0], false);
-  can.drawRectangle(215, 5, 285, 95, fillColor, true);
-  can.drawRectangle(315, 5, 385, 95, fillColor, false);
+  can.drawRectangle(15, 5, 70, 95, fillColor[0], true);
+  can.drawRectangle(115, 5, 70, 95, fillColor[0], false);
+  can.drawRectangle(215, 5, 70, 95, fillColor, true);
+  can.drawRectangle(315, 5, 70, 95, fillColor, false);
 
-  can.drawRectangle(415, 5, 485, 95, fillColor[0], outlineColor[0]);
-  can.drawRectangle(515, 5, 585, 95, fillColor, outlineColor[0]);
-  can.drawRectangle(615, 5, 685, 95, fillColor[0], outlineColor);
-  can.drawRectangle(715, 5, 785, 95, fillColor, outlineColor);
+  can.drawRectangle(415, 5, 70, 95, fillColor[0], outlineColor[0]);
+  can.drawRectangle(515, 5, 70, 95, fillColor, outlineColor[0]);
+  can.drawRectangle(615, 5, 70, 95, fillColor[0], outlineColor);
+  can.drawRectangle(715, 5, 70, 95, fillColor, outlineColor);
 
   can.drawSquare(5, 105, 90, fillColor[0], true);
   can.drawSquare(105, 105, 90, fillColor[0], false);

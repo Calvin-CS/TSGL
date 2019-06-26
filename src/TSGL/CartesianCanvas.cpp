@@ -675,107 +675,113 @@ void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
  /*!
   * \brief Draws a rectangle with monocolored fill or outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's BOTTOM edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param color The color of the rectangle
   *     (set to BLACK by default).
   *   \param filled Whether the rectangle should be filled
   *     (set to true by default).
+  * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
   */
-void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color, bool filled) {
-    int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x1, y1, actualX1, actualY1);
-    getScreenCoordinates(x2, y2, actualX2, actualY2);  //Change y - h to y + h
-    Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, color, filled);
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color, bool filled) {
+    int actualX, actualY, actualX2, actualY2;
+    getScreenCoordinates(x, y, actualX, actualY);
+    getScreenCoordinates(x + w, y + h, actualX2, actualY2);
+    Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY- actualY2, color, filled);
 }
 
  /*!
   * \brief Draws a rectangle with multicolored fill or outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's BOTTOM edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param color An array of colors for the rectangle
   *     (set to BLACK by default).
   *   \param filled Whether the rectangle should be filled
   *     (set to true by default).
+  * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
   */
-void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color[], bool filled) {
-    int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x1, y1, actualX1, actualY1);
-    getScreenCoordinates(x2, y2, actualX2, actualY2);  //Change y - h to y + h
-    Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, color, filled);
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color[], bool filled) {
+    int actualX, actualY, actualX2, actualY2;
+    getScreenCoordinates(x, y, actualX, actualY);
+    getScreenCoordinates(x + w, y + h, actualX2, actualY2);
+    Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY- actualY2, color, filled);
 }
 
  /*!
   * \brief Draws a rectangle with different monocolored fill and outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's BOTTOM edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param fillColor A color for the Rectangle's fill
   *   \param outlineColor A color for the Rectangle's outline
+  * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
   */
-void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat fillColor, ColorFloat outlineColor) {
-    int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x1, y1, actualX1, actualY1);
-    getScreenCoordinates(x2, y2, actualX2, actualY2);  //Change y - h to y + h
-    Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, fillColor, outlineColor);
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor, ColorFloat outlineColor) {
+    int actualX, actualY, actualX2, actualY2;
+    getScreenCoordinates(x, y, actualX, actualY);
+    getScreenCoordinates(x + w, y + h, actualX2, actualY2);
+    Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY2 - actualY, fillColor, outlineColor);
 }
 
  /*!
   * \brief Draws a rectangle with multicolored fill and monocolored outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's BOTTOM edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param fillColor An array of colors for the Rectangle's fill
   *   \param outlineColor A color for the Rectangle's outline
+  * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
   */
-void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat fillColor[], ColorFloat outlineColor) {
-    int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x1, y1, actualX1, actualY1);
-    getScreenCoordinates(x2, y2, actualX2, actualY2);  //Change y - h to y + h
-    Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, fillColor, outlineColor);
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor) {
+    int actualX, actualY, actualX2, actualY2;
+    getScreenCoordinates(x, y, actualX, actualY);
+    getScreenCoordinates(x + w, y + h, actualX2, actualY2);
+    Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY2 - actualY, fillColor, outlineColor);
 }
 
  /*!
   * \brief Draws a rectangle with monocolored fill and multicolored outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's BOTTOM edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param fillColor A color for the Rectangle's fill
   *   \param outlineColor An array of colors for the Rectangle's outline
+  * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
   */
-void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat fillColor, ColorFloat outlineColor[]) {
-    int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x1, y1, actualX1, actualY1);
-    getScreenCoordinates(x2, y2, actualX2, actualY2);  //Change y - h to y + h
-    Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, fillColor, outlineColor);
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor, ColorFloat outlineColor[]) {
+    int actualX, actualY, actualX2, actualY2;
+    getScreenCoordinates(x, y, actualX, actualY);
+    getScreenCoordinates(x + w, y + h, actualX2, actualY2);
+    Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY2 - actualY, fillColor, outlineColor);
 }
 
  /*!
   * \brief Draws a rectangle with different multicolored fill and outline.
   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-  *   \param x1 The x coordinate of the Rectangle's left edge.
-  *   \param y1 The y coordinate of the Rectangle's top edge.
-  *   \param x2 The x coordinate of the Rectangle's right edge.
-  *   \param y2 The y coordinate of the Rectangle's bottom edge.
+  *   \param x The x coordinate of the Rectangle's left edge.
+  *   \param y The y coordinate of the Rectangle's BOTTOM edge.
+  *   \param w The Rectangle's width.
+  *   \param h The Rectangle's height.
   *   \param fillColor An array of colors for the Rectangle's fill
   *   \param outlineColor An array of colors for the Rectangle's outline
+  * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
   */
-void CartesianCanvas::drawRectangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat fillColor[], ColorFloat outlineColor[]) {
-    int actualX1, actualY1, actualX2, actualY2;
-    getScreenCoordinates(x1, y1, actualX1, actualY1);
-    getScreenCoordinates(x2, y2, actualX2, actualY2);  //Change y - h to y + h
-    Canvas::drawRectangle(actualX1, actualY1, actualX2, actualY2, fillColor, outlineColor);
+void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+    int actualX, actualY, actualX2, actualY2;
+    getScreenCoordinates(x, y, actualX, actualY);
+    getScreenCoordinates(x + w, y + h, actualX2, actualY2);
+    Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY2 - actualY, fillColor, outlineColor);
 }
 
  /*!
