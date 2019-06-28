@@ -36,6 +36,7 @@ using namespace tsgl;
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
+ * \param threads Number of threads to use.
  */
 void colorWheelFunction(Canvas& can, int threads) {
     const int CW = can.getWindowWidth() / 2,          // Half the window's width

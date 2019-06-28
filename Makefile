@@ -172,22 +172,25 @@ lib/libtsgl.a: ${OBJS}
 	@touch build/build
 
 #List additional dependencies for test binaries
-bin/testLangton: build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
-bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 bin/testConway: build/tests/Conway/LifeFarm.o
+bin/testFireworks: build/tests/Fireworks/Arc.o \
+		   build/tests/Fireworks/Dot.o \
+		   build/tests/Fireworks/Firework.o
 bin/testInverter: build/tests/ImageInverter/ImageInverter.o
-bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
-bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
-bin/testProducerConsumer: build/tests/ProducerConsumer/Producer.o \
-	build/tests/ProducerConsumer/Consumer.o \
-	build/tests/ProducerConsumer/Thread.o
+bin/testLangton: build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
 	build/tests/Mandelbrot/GradientMandelbrot.o \
 	build/tests/Mandelbrot/Buddhabrot.o \
 	build/tests/Mandelbrot/Julia.o \
 	build/tests/Mandelbrot/Nova.o
 bin/testPhilosophers: build/tests/DiningPhilosophers/Philosopher.o \
-	build/tests/DiningPhilosophers/Table.o \
+	build/tests/DiningPhilosophers/Table.o
+bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
+bin/testProducerConsumer: build/tests/ProducerConsumer/Producer.o \
+	build/tests/ProducerConsumer/Consumer.o \
+	build/tests/ProducerConsumer/Thread.o
+bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
+bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 
 #General compilation recipes for test binaries (appended to earlier dependencies)
 bin/test%: build/tests/test%.o lib/libtsgl.a
@@ -197,18 +200,32 @@ bin/test%: build/tests/test%.o lib/libtsgl.a
 	@touch build/build
 
 build/%.o: src/%.cpp
+	@echo ""
+	@tput setaf 3;
+	@echo "+++++++++++++++++++ Building $@ +++++++++++++++++++"
+	@tput sgr0;
+	@echo ""
 	mkdir -p ${@D}
-	@echo 'Building $(patsubst src/tests/%,%,$<)'
 	$(CC) -c -fpic $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
+
+
 
 #Doxygen stuff
 docs/html/index.html: ${HEADERS} doxyfile
+	@echo ""
+	@tput setaf 3;
+	@echo "+++++++++++++++++++ Generating Doxygen +++++++++++++++++++"
+	@tput sgr0;
+	@echo ""
 	mkdir -p docs
-	@echo 'Generating Doxygen'
 	@doxygen doxyfile
 
 tutorial/docs/html/index.html: ${HEADERS} tutDoxyFile
-	@echo 'Generating Doxygen'
+	@echo ""
+	@tput setaf 3;
+	@echo "+++++++++++++++++++ Generating Doxygen +++++++++++++++++++"
+	@tput sgr0;
+	@echo ""
 	mkdir -p tutorial/docs
 	doxygen tutDoxyFile
 

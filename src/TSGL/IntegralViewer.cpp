@@ -99,7 +99,6 @@ long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
       myRecCanvas->sleep();
       xLo = myStartX + i  * recWidth;
       xMid = xLo + halfRecWidth;
-      Decimal xHigh = xLo + recWidth;
       y = (*myF)(xMid);
       result += y;
       myRecCanvas->drawRectangle(xLo, y, recWidth, y, tcol);

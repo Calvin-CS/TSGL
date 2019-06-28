@@ -30,7 +30,7 @@ using namespace tsgl;
  *        .
  *      - Update the number of pixels checked in an parallel atomic block (to avoid conflicts).
  *      - Draw the results on the Spectrogram object.
- *     .
+ *      .
  *   .
  * - Have the Canvas sleep for: FRAME seconds.
  * - Draw the chosen image onto the Canvas.

@@ -13,7 +13,7 @@ using namespace tsgl;
  * \brief Draws a neat pattern of points to a Canvas using OMP and takes in a command line
  *  argument for the number of threads to use.
  * \details
- * - A parallel block is set up with #pragma omp parallel using the number of threads passed.
+ * - A parallel block is set up with \#pragma omp parallel using the number of threads passed.
  * - The actual number of threads created is stored in: \b nthreads .
  * - The number of lines per thread is calculated and stored in: \b myPart .
  * - The starting position of each given thread is calculated and stored in: \b myStart .
@@ -29,10 +29,10 @@ using namespace tsgl;
  * - Sleep the internal timer of the Canvas until the next draw cycle.
  * .
  * \param can Reference to the Canvas being drawn to.
- * \param numberOfThreads Reference to the number of threads to use.
+ * \param numberOfThreads Number of threads to use.
  */
 void colorPointsFunction(Canvas& can, int numberOfThreads) {
-#pragma omp parallel num_threads(numberOfThreads)
+  #pragma omp parallel num_threads(numberOfThreads)
   {
     int nthreads = omp_get_num_threads();  //Actual number of threads to use
     int myPart = can.getWindowHeight() / nthreads + 1;

@@ -23,7 +23,7 @@ using namespace tsgl;
  *   .
  * .
  * \note The details of the recordForNumFrames() function are handled automatically in Canvas, and
- * are by default written to the \i frames/ directory.
+ * are by default written to the i frames/ directory.
  * \param can Reference to the Canvas being drawn to.
  */
 void screenShotFunction(Cart& can) {

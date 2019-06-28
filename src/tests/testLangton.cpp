@@ -23,8 +23,7 @@ using namespace tsgl;
  * - We bind the left mouse button and the enter button to the described \b tempo function.
  * - We bind the enter key to pause the animation.
  * - We bind the space key to clearing the Canvas.
- * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear
- * the screen.
+ * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear the screen.
  * .
  * \param can Reference to the Canvas being drawn to.
  */
@@ -79,8 +78,9 @@ void alphaLangtonFunction(Canvas& can) {
  *    - Sleep the internal timer until the next draw cycle.
  *    - For 0 to the iterations per frame:
  *      - Move the LangtonAnt inside of the AntFarm object.
- *   .
- *  .
+ *      .
+ *    .
+ * .
  * \param can Reference to the Canvas being drawn to.
  */
 void langtonFunction(Canvas& can) {
@@ -129,7 +129,6 @@ void langtonColonyFunction(Canvas& can) {
 /*!
  * \brief Simulates 4 LangtonAnts at speeds faster than the Canvas' framerate, with nicer colors!
  * \details Same as langtonColonyFunction(), but with dynamically-colored LangtonAnts.
- *    .
  * \param can Reference to the Canvas being drawn to.
  */
 void langtonRainbowFunction(Canvas& can) {
@@ -155,15 +154,6 @@ void langtonRainbowFunction(Canvas& can) {
             farm.moveAnts();
     }
 }
-
-/*!
- * \brief Simulates 4 LangtonAnts with alpha transparency (with screenshot capabilities).
- * \details Same as alphaLangtonFunction, with a few key differences:
- * - The enter key is bound to pause the whole animation.
- * - The space key is bound to clear the screen.
- * .
- * \param can Reference to the Canvas being drawn to.
- */
 
 //Take command-line arguments for the width and height of the Canvas
 int main(int argc, char* argv[]) {

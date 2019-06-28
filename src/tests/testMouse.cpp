@@ -50,6 +50,7 @@ inline void rotate(float cx, float cy, int& xx, int& yy, float rot) {
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
+ * \param threads Number of threads to use.
  */
 void mouseFunction(Canvas& can, int threads) {
   const int CX = can.getWindowWidth() / 2, CY = can.getWindowHeight() / 2;

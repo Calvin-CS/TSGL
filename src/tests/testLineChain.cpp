@@ -33,7 +33,6 @@ using namespace tsgl;
  *      .
  *   - If we are working with the main thread, draw a rectangle that is the size of the Canvas and has an alpha transparency
  *     of: \b FADERATE.
- *     .
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.

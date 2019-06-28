@@ -52,7 +52,7 @@ using namespace tsgl;
  *          .
  *        .
  *      .
- *   .
+ *    .
  * .
  * \param can Reference to the Canvas being drawn to.
  */

@@ -6,6 +6,14 @@
 
 using namespace tsgl;
 
+ /*!
+  * \brief Explicitly construct the game, Pong.
+  * \details Explicit constructor for the game, Pong. It sets up the Paddle objects and the Ball object
+  *   in order to play.
+  * \param can Reference to the Canvas to use when playing Pong.
+  * \param ballSpeed Reference to the ball speed to use in the game.
+  * \param paddleSpeed Reference to the paddle speed to use in the game.
+  */
 Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
   leftPaddle = new Paddle(can, paddleSpeed, -1);  // Create the Paddle objects and the Ball object
   rightPaddle = new Paddle(can, paddleSpeed, 1);
@@ -19,6 +27,13 @@ Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
   can.add(leftScore); can.add(rightScore);
 }
 
+ /*!
+  * \brief Draw the game of Pong.
+  * \details Actually draws all of the necessary components in order to play Pong.
+  *   This also includes any necessary button bindings in order to move the Paddle objects.
+  * \param can Reference to the Canvas to draw on.
+  * \see Paddle class, Ball class.
+  */
 void Pong::draw(Canvas& can) {
   // While the window has not been closed....
   while (can.isOpen()) {
@@ -59,6 +74,9 @@ void Pong::draw(Canvas& can) {
   }
 }
 
+/**
+ * \brief Destroys the Pong game object.
+ */
 Pong::~Pong() {
   delete pongBall;
   delete leftPaddle;

@@ -18,9 +18,9 @@
 
 /**
  * display() method draws the color data that is currently in the shared buffer.
- * @param: can, a reference to the Canvas to draw on.
- * @param: centerX, an int representing the center x-coordinate of the colored "object" to draw. 
- * @param: sharedBuffer, a reference to the Queue shared between the Producers and Consumers.
+ * \param can A reference to the Canvas to draw on.
+ * \param centerX An int representing the center x-coordinate of the colored "object" to draw. 
+ * \param sharedBuffer A reference to the Queue shared between the Producers and Consumers.
  */
 void display(Canvas & can, int centerX, Queue<ColorInt> & sharedBuffer) {
 	int y = 50;	

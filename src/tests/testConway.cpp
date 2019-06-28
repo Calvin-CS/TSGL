@@ -37,55 +37,54 @@ using namespace tsgl;
  *    - If the mouse has been clicked while the Canvas has been paused,
  *      add an ant to the LifeFarm object and draw it to the Canvas.
  *    .
- *  .
- *.
+ * .
  * \param can Reference to the Canvas to draw to.
  */
 void conwayFunction(Canvas& can) {
-    const int IPF = 100,                   // Iterations per frame
-              WW = can.getWindowWidth(),    // Window width
-              WH = can.getWindowHeight();   // Window height
-    LifeFarm farm(WW,WH,&can,false);    //Change the false to true for something awesome!
-    farm.setDrawdead(true);
-    bool paused = false;
-    bool mouseDown = false;
+  const int IPF = 100,                   // Iterations per frame
+            WW = can.getWindowWidth(),    // Window width
+            WH = can.getWindowHeight();   // Window height
+  LifeFarm farm(WW,WH,&can,false);    //Change the false to true for something awesome!
+  farm.setDrawdead(true);
+  bool paused = false;
+  bool mouseDown = false;
 
-    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &paused]() {
-      paused = !paused;
-      can.recordForNumFrames(1);  //Screenshot
-    });
+  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &paused]() {
+    paused = !paused;
+    can.recordForNumFrames(1);  //Screenshot
+  });
 
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown]() {
-      mouseDown = true;
-    });
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown]() {
-      mouseDown = false;
-    });
+  can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown]() {
+    mouseDown = true;
+  });
+  can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&mouseDown]() {
+    mouseDown = false;
+  });
 
-    while (can.isOpen()) {
-      can.sleep();
-      if(!paused) {
-        can.clear();
-        for (int i = 0; i < IPF; i++) {
-          if(mouseDown) {
-            farm.addAnt(can.getMouseX(), can.getMouseY());
-            can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
-          }
-          farm.moveAnts();
+  while (can.isOpen()) {
+    can.sleep();
+    if(!paused) {
+      can.clear();
+      for (int i = 0; i < IPF; i++) {
+        if(mouseDown) {
+          farm.addAnt(can.getMouseX(), can.getMouseY());
+          can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
         }
-      }
-      if(mouseDown) {
-        farm.addAnt(can.getMouseX(), can.getMouseY());
-        can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
+        farm.moveAnts();
       }
     }
+    if(mouseDown) {
+      farm.addAnt(can.getMouseX(), can.getMouseY());
+      can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
+    }
+  }
 }
 
 //Take command-line arguments for the width and height of the Canvas
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
-    int h = (argc > 2) ? atoi(argv[2]) : w;
-    Canvas c(-1, -1, w, h, "Conway's Game of Life");
-    c.setBackgroundColor(BLACK);
-    c.run(conwayFunction);
+  int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
+  int h = (argc > 2) ? atoi(argv[2]) : w;
+  Canvas c(-1, -1, w, h, "Conway's Game of Life");
+  c.setBackgroundColor(BLACK);
+  c.run(conwayFunction);
 }
