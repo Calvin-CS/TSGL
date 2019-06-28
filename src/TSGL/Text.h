@@ -29,6 +29,10 @@ class Text : public Drawable {
     virtual void draw();
 
     virtual void setText(std::wstring text);
+
+    virtual void setColor(const ColorFloat& color);
+
+    virtual void setBottomLeftCorner(int x, int y);
 };
 
 }

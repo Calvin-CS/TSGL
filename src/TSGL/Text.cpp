@@ -58,4 +58,26 @@ void Text::setText(std::wstring text) {
     myString = text;
 }
 
+/*!
+ * \brief Alter the Text's color
+ * \details This function changes myColor to the parameter ColorFloat
+ *  \param color The ColorFloat to change myColor to.
+ */
+void Text::setColor(const ColorFloat& color) {
+    myColor = color;
+}
+
+/*!
+ * \brief Alter the Text's lower left hand corner location
+ * \details This function changes myX and myY to the parameter x and y.
+ *  \param x The new x-coordinate for myX.
+ *  \param y The new y-coordinate for myY.
+ */
+void Text::setBottomLeftCorner(int x, int y) {
+    myX = x;
+    myY = y;
+}
+
+
+
 }

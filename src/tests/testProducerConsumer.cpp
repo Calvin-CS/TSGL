@@ -26,8 +26,8 @@ void display(Canvas & can, int centerX, Queue<ColorInt> & sharedBuffer) {
 	int y = 50;	
 	for(int i = 0; i < sharedBuffer.getCount(); i++) {
 		ColorFloat color = Colors::highContrastColor(sharedBuffer.getPthreadIds()[i]);  //Use the color based off of the stored pthread ids
-		can.drawRectangle(centerX+20, y+20, centerX-20, y-20, sharedBuffer.getArray()[i], true);  //Get the array of the shared buffer and draw the colored rectangle
-		can.drawRectangle(centerX+25, y+25, centerX - 25, y - 25, color, false); //Draw a Rectangle around the colored rectangle
+		can.drawRectangle(centerX-20, y-20, 40, 40, sharedBuffer.getArray()[i], true);  //Get the array of the shared buffer and draw the colored rectangle
+		can.drawRectangle(centerX-25, y-25, 50, 50, color, false); //Draw a Rectangle around the colored rectangle
 		y += 50;
 	}
 }
