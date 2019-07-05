@@ -77,14 +77,10 @@ void projectileFunction(Canvas& can) {
     targetX += coordinateChangerX;  //Horizontal movement
     targetY -= coordinateChangerY; //Vertical movement
 
-    //Move each circle to the target's location
-    blueCircle->setCenter(targetX, targetY);
-    redCircle->setCenter(targetX, targetY);
-    yellowCircle->setCenter(targetX, targetY);
-
-    if(numberOfTargets == 0) {   //End game
-      std::cout << "Your score: " << score << std::endl;
-      can.stop();
+    if(hit) {   //If we hit a target....
+      score++;
+      targetX = WINDOW_W + 60;
+      hit = false;
     }
     if(targetX >= centerX) { //If it hits the middle of the screen, invert the vertical direction
       coordinateChangerY = -1;
@@ -95,20 +91,25 @@ void projectileFunction(Canvas& can) {
       targetY = 200;
       coordinateChangerY = 1;
     }
-    if(hit) {   //If we hit a target....
-      score++;
-      targetX = WINDOW_W + 60;
-      hit = false;
-    }
     if(numberOfTargets <= 5) {   //Mix it up if there are only five targets left (speed up the targets)
       coordinateChangerX = 6;
     }
-
+    //Move each circle to the target's location
+    blueCircle->setCenter(targetX, targetY);
+    redCircle->setCenter(targetX, targetY);
+    yellowCircle->setCenter(targetX, targetY);
     if(numberOfTargets == 0) {   //End game
       std::cout << "Your score: " << score << std::endl;
-      return;
+      can.remove(redCircle);
+      can.remove(blueCircle);
+      can.remove(yellowCircle);
+      numberOfTargets--;
     }
   }
+
+  delete redCircle;
+  delete blueCircle;
+  delete yellowCircle;
 }
 
 //Takes command-line arguments for the width and height

@@ -21,11 +21,6 @@ void arrowFunction(Canvas& c) {
 
 		// draw Arrows outlining a square centered at x, y
 		for(int i = -100; i <= 100; i+= 20) {
-			// Arrow * a0 = new Arrow(x, y, x+i, y-100, PURPLE);
-			// Arrow * a1 = new Arrow(x, y, x-100, y+i,  GREEN);
-			// Arrow * a2 = new Arrow(x, y, x+100, y+i,  color);
-			// Arrow * a3 = new Arrow(x, y, x+i, y+100,    RED);
-			// c.add(a0); c.add(a1); c.add(a2); c.add(a3);
 			c.drawArrow(x, y, x+i, y-100, PURPLE); 
 			c.drawArrow(x, y, x-100, y+i,  GREEN); 
 			c.drawArrow(x, y, x+100, y+i,  color); 
@@ -38,38 +33,22 @@ void arrowFunction(Canvas& c) {
 
 	while( c.isOpen() ) {
 		c.sleep();
-		//c.drawArrow(500, 500, x, y, WHITE, true);
 		c.clear();
 		x += 10; if(x > 1000) x = 250;
 		y += 30; if(y > 1000) y = 250;
 		doubleArrow->moveHead(x, y);
-		// c.sleepFor(0.5f);
 		if (count == 200) {
 			c.remove(doubleArrow);
+			count = 201;
+		} else if (count == 300) {
+			c.add(doubleArrow);
 		} else {
-			count++;
+		  count++;
 		}
 	}
+
+	delete doubleArrow;
 }
-
-// void arrowFunction(Canvas& c) {
-// 	int x = c.getWindowWidth()/2;
-// 	int y = c.getWindowHeight()/2;
-// 	c.drawRectangle(0, 0, x, y, PURPLE); 
-// 	c.drawRectangle(0, y, x, y,  GREEN); 
-// 	c.drawRectangle(x, 0, x, y,  BLUE); 
-// 	c.drawRectangle(x, y, x, y,    RED);
-
-// 	Rectangle * rec = new Rectangle(100, 100, 100, 100, YELLOW);
-// 	c.add(rec);
-
-// 	while(c.isOpen() ) {
-// 		c.sleep();
-// 		c.clear();
-// 		rec->moveShapeBy(2, 2);
-
-// 	}
-// }
 
 //Takes in command line arguments for the window width and height
 int main(int argc, char* argv[]) {

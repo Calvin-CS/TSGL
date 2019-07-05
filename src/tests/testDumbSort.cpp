@@ -81,8 +81,8 @@ void dumbSortFunction(Canvas& can) {
       int cwh = can.getWindowHeight() - 20;
       ColorFloat color;
       can.pauseDrawing(); //Tell the Canvas to stop updating the screen temporarily
-      // can.clear();
       can.clearObjectBuffer(true);
+      can.clear();
       for (int i = 0; i < SIZE; i++, start += width * 2) {
         height = numbers[i];
         color = ColorInt(MAX_COLOR, (i == pos) ? MAX_COLOR : 0, 0);
@@ -91,8 +91,9 @@ void dumbSortFunction(Canvas& can) {
         can.add(rec);
       }
       can.resumeDrawing(); //Tell the Canvas it can resume drawing
-      can.clear();
     }
+
+    can.clearObjectBuffer(true);
 }
 
 //Takes in command line arguments for the window width and height

@@ -40,6 +40,8 @@ run ./testMouse 900 900 5                                          #Width, Heigh
 run ./testNewtonPendulum 900 400 11                                #Width, Height, Number Of Balls
 run ./testPhilosophers 5 10                                        #Philosophers, Speed
 run ./testPong 7 4                                                 #Ball Speed, Paddle Speed
+run ./testProducerConsumer
+run ./testProgressBar
 run ./testProjectiles 400 400                                      #Width, Height
 run ./testSeaUrchin 16                                             #Threads
 run ./testScreenshot 900 650                                       #Width, Height

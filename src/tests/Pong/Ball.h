@@ -33,6 +33,11 @@ class Ball {
 
   void reset(Canvas& can);
 
+  /*!
+   * \brief Destroys the Ball object.
+   */
+  virtual ~Ball() { delete myCircle; }
+
 private:
   float myX, myY, myXX, myYY, mySpeed, myDir;
   float randfloat(int divisor = 10000);

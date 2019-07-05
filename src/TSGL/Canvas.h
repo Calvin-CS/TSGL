@@ -37,6 +37,7 @@
 #include <mutex>            // Needed for locking the Canvas for thread-safety
 #include <sstream>          // For string building
 #include <string>           // For window titles
+#include <algorithm>
 #ifdef __APPLE__
   #include <pthread.h>
 #else
@@ -89,7 +90,7 @@ private:
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Array<Drawable*> * myDrawables;                                     // Our buffer of drawables to draw
-    Array<Drawable*> * objectBuffer;                                    // Holds a list of pointers to objects drawn each frame
+    std::vector<Drawable*> objectBuffer;                                    // Holds a list of pointers to objects drawn each frame
     bool            objectBufferEmpty;                                  // States whether the object buffer is empty/has been recently cleared
     std::mutex	    objectMutex;
     Array<Drawable*> * drawableBuffer;                                  // Our buffer of drawables that the can be pushed to, and will later be flushed to the shapes array

@@ -81,4 +81,6 @@ Pong::~Pong() {
   delete pongBall;
   delete leftPaddle;
   delete rightPaddle;
+  delete leftScore;
+  delete rightScore;
 }

@@ -91,7 +91,6 @@ Canvas::~Canvas() {
     // Free our pointer memory
     delete myDrawables;
     delete drawableBuffer;
-    delete objectBuffer;
     delete[] proceduralBuffer;
     delete drawTimer;
     delete[] vertexData;
@@ -172,7 +171,7 @@ void Canvas::add(Drawable * shapePtr) {
   // if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
 
   objectMutex.lock();
-  objectBuffer->push(shapePtr);
+  objectBuffer.push_back(shapePtr);
   objectBufferEmpty = false;
   // std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
   //   return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
@@ -193,9 +192,7 @@ void Canvas::remove(Drawable * shapePtr) {
   //TODO: make this thread safe! (check that it is now)
 
   objectMutex.lock();
-  if (objectBuffer->size() != 0) {
-    objectBuffer->remove(shapePtr);
-  }
+  objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
   objectMutex.unlock();
 
 }
@@ -209,12 +206,12 @@ void Canvas::remove(Drawable * shapePtr) {
  * \warning Setting shouldFreeMemory to false will leak memory from any objects created in Canvas draw methods.
  */
 void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
-  //TODO: check that this frees memory when the user requests it
   if( shouldFreeMemory ) {
-    objectBuffer->clear();
-  } else {
-    objectBuffer->shallowClear();
+    for(unsigned i = 0; i < objectBuffer.size(); i++) {
+      delete objectBuffer[i]; //TODO fix this, causes to crash
+    }
   }
+  objectBuffer.clear();
 }
 
 void Canvas::draw() {
@@ -332,9 +329,9 @@ void Canvas::draw() {
             frame = 1;
           }
 
-          if (objectBuffer->size() > 0) {
-            for (unsigned int i = 0; i < objectBuffer->size(); i++) {
-              Drawable* d = (*objectBuffer)[i];
+          if (objectBuffer.size() > 0) {
+            for (unsigned int i = 0; i < objectBuffer.size(); i++) {
+              Drawable* d = objectBuffer[i];
               if(d->isProcessed()) {
                 if (!d->getIsTextured()) {
                   d->draw();
@@ -1932,7 +1929,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     monitorY = yy;
     myDrawables = new Array<Drawable*>(b);  // Initialize myDrawables
     drawableBuffer = new Array<Drawable*>(b);
-    objectBuffer = new Array<Drawable*>(b);
+    // objectBuffer = new Array<Drawable*>(b);
     vertexData = new float[6 * b];    // Buffer for vertexes for points
     showFPS = false;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering
@@ -2537,15 +2534,13 @@ void Canvas::textureShaders(bool on) {
   * \see start(), end(), close(), stop().
   */
 int Canvas::wait() {
-    if (!started) return -1;  // If we haven't even started yet, return error code -1
+  if (!started) return -1;  // If we haven't even started yet, return error code -1
   #ifdef __APPLE__
     while(!isFinished)
       sleepFor(0.1f);
-    pthread_join(renderThread, NULL);
-  #else
-    renderThread.join();
   #endif
-    return 0;
+  renderThread.join();
+  return 0;
 }
 
 //-----------------Unit testing-------------------------------------------------------

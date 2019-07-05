@@ -148,11 +148,15 @@ void LifeFarm::initGun() {
 }
 
 LifeFarm::~LifeFarm() {
-  delete alive;
-  delete neighbors;
-  delete livelist;
-  delete currentstate;
-  delete nextstate;
+  for (int i = 0; i < height; ++i) {
+    delete[] alive[i];
+    delete[] neighbors[i];
+  }
+  delete[] alive;
+  delete[] neighbors;
+  delete[] livelist;
+  delete[] currentstate;
+  delete[] nextstate;
 }
 
 void LifeFarm::addAnt(int x, int y) {

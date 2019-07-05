@@ -41,6 +41,11 @@ public:
 
   void setDir(int direction);
 
+  /**
+   * \brief Destroys the Paddle object.
+   */
+  ~Paddle() { delete myRect; }
+
 private:
   int myDir;  //-1 = up, 1 = down, 0 = stationary
   int myPoints;  //Score

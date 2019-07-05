@@ -18,8 +18,8 @@ Thread::Thread(unsigned long id) {
 }
 
 /**
- * threadFunction() is the function that the pthread should run as soon as it is created. 
- * @param: obj, a void* that will be statically casted into a Thread object. 
+ * threadFunction() is the function that the pthread should run as soon as it is created.
+ * @param: obj, a void* that will be statically casted into a Thread object.
  *              It will run the run() function, which will be defined by the inheriting subclass.
  ^ @return: NULL.
  */
@@ -34,13 +34,14 @@ void* Thread::threadFunction(void* obj) {
  */
 void Thread::start() {
 	pthread_create(&myThread, NULL, threadFunction, this);
+	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE,NULL);
 }
 
 /**
- * join() function joins the pthread inside of the Thread class.
+ * join() function cancels the pthread inside of the Thread class.
  */
 void Thread::join() {
-	pthread_join(myThread, NULL);
+	pthread_cancel(myThread);
 }
 
 /**

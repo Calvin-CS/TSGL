@@ -19,8 +19,8 @@ using namespace tsgl;
 void imageFunction(Canvas& can) {
     int ww = can.getWindowWidth()/3, hh = can.getWindowHeight()/2;
     can.drawImage("../assets/pics/test.png", 0, 0, ww, hh);
-    can.drawImage("../assets/pics/ship.bmp", ww, 0, ww, hh);
-    can.drawImage("../assets/pics/shiprgb.bmp", ww*2, 0, ww, hh);
+    can.drawImage("../assets/pics/ship.bmp", ww, 0, ww, hh); // possibly lost
+    can.drawImage("../assets/pics/shiprgb.bmp", ww*2, 0, ww, hh); // definitely lost
     can.drawImage("../assets/pics/sky_main.jpg", 0, hh, ww, hh);
     can.drawImage("../assets/pics/colorfulKeyboard.jpg", ww, hh, ww, hh);
     can.drawImage("../assets/pics/cow.jpg", ww*2, hh, ww, hh);

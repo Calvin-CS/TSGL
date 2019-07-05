@@ -26,7 +26,9 @@ Firework::Firework(Canvas& can, int x, int y) {
  * \details Deallocates the myDots array.
  */
 Firework::~Firework() {
-  for (int i = 0; i < 10; delete myDots[i++]);
+  for (int i = 0; i < 10; i++) {
+    delete myDots[i];
+  }
 }
 
 /*!

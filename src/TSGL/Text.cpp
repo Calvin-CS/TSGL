@@ -78,6 +78,15 @@ void Text::setBottomLeftCorner(int x, int y) {
     myY = y;
 }
 
+/*!
+ * \brief Alter the Text's font size
+ * \details This function changes myFontSize to the parameter fontsize.
+ *  \param fontsize The new fontsize.
+ */
+void Text::setFontSize(int fontsize) {
+    myFontSize = fontsize;
+}
+
 
 
 }

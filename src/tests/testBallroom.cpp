@@ -204,6 +204,7 @@ public:
       balls.pop_front();
       delete b;
     }
+    delete mouseCircle;
   }
   void addBall(int x, int y, int r,  ColorFloat c = WHITE) {
     addBall(x,y,0,0,r,c);
@@ -230,12 +231,6 @@ public:
     Vector2 mvec(mx,my);
     mouseCircle->setCenter(mx, my);
     if (attract) {
-      // ColorFloat fillColor[100];
-      // ColorFloat outlineColor[100];
-      // for (unsigned i = 0; i < 100; ++i) {
-      //   fillColor[i] = Colors::randomColor(1.0f);
-      //   outlineColor[i] = Colors::randomColor(1.0f);
-      // }
       mouseCircle->setColor(ColorFloat(0.5f,1.0f,1.0f,0.5f));
     } else {
       mouseCircle->setColor(ColorFloat(1.0f,0.5f,0.5f,0.5f));
@@ -262,10 +257,6 @@ public:
     }
     c->pauseDrawing();
     c->clear();
-    // for (it = balls.begin(); it != balls.end(); ++it) {
-    //   BouncingBall *b = (*it);
-    //   c->drawCircle(b->pos.x,b->pos.y,b->rad,b->color);
-    // }
     c->resumeDrawing();
   }
   inline void toggleAttract() {

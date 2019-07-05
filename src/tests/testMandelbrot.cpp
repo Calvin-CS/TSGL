@@ -211,7 +211,7 @@ int main(int argc, char* argv[]) {
   c3.setBackgroundColor(BLACK);
   c3.run(buddhabrotFunction,t,d3);
 
-  //Julia
+  //Julia #FIXME requires a different library path
   std::cout << "Julia set" << std::endl;
   Cart c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", FRAME / 2);
   c4.run(juliaFunction,t,d3);

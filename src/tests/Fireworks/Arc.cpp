@@ -102,3 +102,7 @@ void Arc::step() {
   }
   myCan->drawPoint(myX,myY,myColor);
 }
+
+Arc::~Arc() {
+  delete f;
+}

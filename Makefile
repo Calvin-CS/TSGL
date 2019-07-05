@@ -188,7 +188,8 @@ bin/testPhilosophers: build/tests/DiningPhilosophers/Philosopher.o \
 bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
 bin/testProducerConsumer: build/tests/ProducerConsumer/Producer.o \
 	build/tests/ProducerConsumer/Consumer.o \
-	build/tests/ProducerConsumer/Thread.o
+	build/tests/ProducerConsumer/Thread.o \
+	build/tests/ProducerConsumer/PCThread.o
 bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
 bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 

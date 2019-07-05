@@ -23,6 +23,8 @@ public:
 
   Arc(Canvas* can, int x, int y, int rad, float angle);
 
+  ~Arc();
+
   bool outOfBounds();
 
   bool onBlackPixel();

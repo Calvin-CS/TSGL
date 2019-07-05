@@ -11,6 +11,13 @@ Philosopher::Philosopher() {
   myCircle = NULL;
 }
 
+Philosopher::~Philosopher() {
+  delete myCircle;
+  for (unsigned int i = 0; i < meals.size(); i++) {
+    delete meals[i];
+  }
+}
+
 /**
  * Adds Philosopher to Canvas or refreshes its color.
  */

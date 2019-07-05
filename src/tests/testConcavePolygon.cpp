@@ -64,16 +64,15 @@ void concavePolygonFunction(Canvas& can) {
   while (can.isOpen()) {  // Checks to see if the window has been closed
     can.sleep();
     can.clear();
-//    for (unsigned i = 0; i < PSIZE; ++i)
-//      color[i] = Colors::randomColor(1.0f);
     // note: when you call drawConcavePolygon, you MUST give it the correct size.
     // otherwise, it is always wrong and inconsistent in how it is wrong.
     can.pauseDrawing();
     c1->setCenter(can.getWindowWidth() / 2 + 450 * sin((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2), can.getWindowHeight() / 2 - 450 * cos((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2) );
-    // can.drawConcavePolygon(11, x, y, color, false);
-    // can.drawConcavePolygon(PSIZE , xx, yy, color, true);
     can.resumeDrawing();
   }
+
+  delete c1;
+  delete c2;
 }
 
 //Takes command-line arguments for the width and height of the screen

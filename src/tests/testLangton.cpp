@@ -88,6 +88,7 @@ void langtonFunction(Canvas& can) {
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
     AntFarm farm(WW,WH,4,&can);
+    farm.setParallel(false);
     farm.addAnt(WW / 2,WH / 2,MAX_COLOR,0,0,0);
     while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
@@ -118,7 +119,6 @@ void langtonColonyFunction(Canvas& can) {
     farm.addAnt(WW / 2 + R,WH / 2,0,MAX_COLOR,0,2);
     farm.addAnt(WW / 2,WH / 2 + R,MAX_COLOR,0,MAX_COLOR,3);
     farm.setShading(true);
-
     while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
@@ -162,20 +162,20 @@ int main(int argc, char* argv[]) {
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;              //If not, set the width and height to a default value
     //Alpha Langton
-    std::cout << "Alpha Langton's Ant" << std::endl;
-    Canvas c1(-1, -1, w, h, "Langton's Ant w/Alpha (enter to pause)");
-    c1.setBackgroundColor(BLACK);
-    c1.run(alphaLangtonFunction);
+    // std::cout << "Alpha Langton's Ant" << std::endl;
+    // Canvas c1(-1, -1, w, h, "Langton's Ant w/Alpha (enter to pause)");
+    // c1.setBackgroundColor(BLACK);
+    // c1.run(alphaLangtonFunction);
 
     //Regular Langton
-    std::cout << "Regular Langton's Ant" << std::endl;
-    Canvas c2(-1, -1, w, h, "Langton's Ant");
-    c2.run(langtonFunction);
+    // std::cout << "Regular Langton's Ant" << std::endl;
+    // Canvas c2(-1, -1, w, h, "Langton's Ant");
+    // c2.run(langtonFunction);
 
     //Colony Langton
-    std::cout << "Multiple Langton's Ants" << std::endl;
-    Canvas c3(-1, -1, w, h, "4x Langton's Ants");
-    c3.run(langtonColonyFunction);
+    // std::cout << "Multiple Langton's Ants" << std::endl;
+    // Canvas c3(-1, -1, w, h, "4x Langton's Ants");
+    // c3.run(langtonColonyFunction);
 
     //Colorful Langton
     std::cout << "Dynamically Colored Langton's Ants" << std::endl;

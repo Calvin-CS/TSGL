@@ -45,6 +45,9 @@ struct Fork {
     myShape->setCenter(x, y);
     // myShape->centeredRotation(angle*180/PI);
   }
+  ~Fork() {
+    delete myShape;
+  }
 };
 
 #endif /* FORK_H_ */

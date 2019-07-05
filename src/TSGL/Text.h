@@ -33,6 +33,8 @@ class Text : public Drawable {
     virtual void setColor(const ColorFloat& color);
 
     virtual void setBottomLeftCorner(int x, int y);
+
+    virtual void setFontSize(int fontsize);
 };
 
 }

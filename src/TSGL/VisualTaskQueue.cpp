@@ -17,15 +17,15 @@ namespace tsgl {
   *   approximate aspect ratio, spacing between rectangles, and spacing around the borders.
   */
 VisualTaskQueue::VisualTaskQueue(int elements, int sideLength, float aspect, int spacing, int borderLength) {
-    showingLegend = false;
-    space = spacing;
-    border = borderLength;
-    totalElements = elements;
-    rowLength = ceil(sqrt(totalElements/aspect));  //Number of elements per row
-    blockSize = sideLength;
-    vcan = new Canvas(0,-1,2*border+(blockSize+space)*rowLength,2*border+(blockSize+space)*elements/rowLength,"Thread colors");
-    vcan->start();
-	reset();
+  showingLegend = false;
+  space = spacing;
+  border = borderLength;
+  totalElements = elements;
+  rowLength = ceil(sqrt(totalElements/aspect));  //Number of elements per row
+  blockSize = sideLength;
+  vcan = new Canvas(0,-1,2*border+(blockSize+space)*rowLength,2*border+(blockSize+space)*elements/rowLength,"Thread colors");
+  vcan->start();
+  reset();
 }
 
  /*!

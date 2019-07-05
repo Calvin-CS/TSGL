@@ -47,9 +47,8 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
               OFFSET = RADIUS*(BALLS-1);
 
   for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
-    Line* l = new Line(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN, BLACK);
-    Circle* c = new Circle(CX + RADIUS*2*i, CY, RADIUS, GRAY, WHITE);
-    can.add(l); can.add(c);
+    can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN, BLACK);
+    can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, GRAY, WHITE);
   }
 
   //Add moving Shapes
@@ -96,6 +95,11 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
     rightLine->setSecondEnd(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
     rightCircle->setCenter(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
   }
+
+  delete leftCircle;
+  delete rightCircle;
+  delete leftLine;
+  delete rightLine;
 }
 
 // saving this if we ever get procedural stuff working

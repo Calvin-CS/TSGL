@@ -17,12 +17,17 @@ AntFarm::AntFarm(int w, int h, int s, Canvas* c) {
 }
 
 AntFarm::~AntFarm() {
-  delete filled;
+  for (int i = 0; i < cap; i++) {
+    delete ants[i];
+  }
+  delete[] ants;
+  delete[] filled;
 }
 
 void AntFarm::addAnt(int x, int y, int r, int g, int b, int d) {
   if (size < cap)
-    ants[size++] = new LangtonAnt(x, y, r, g, b, d, this);
+    ants[size] = new LangtonAnt(x, y, r, g, b, d, this);
+    size++;
 }
 
 inline void AntFarm::moveAnt(int j) {

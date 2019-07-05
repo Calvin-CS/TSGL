@@ -24,6 +24,7 @@ private:
   std::vector<Circle*> meals;
 public:
   Philosopher();
+  ~Philosopher();
   void draw(Canvas& can, int x, int y);
   void refreshColor();
   void addMeal(Canvas& can, Circle * shape);

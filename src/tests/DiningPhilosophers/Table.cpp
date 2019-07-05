@@ -12,8 +12,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myCan = &can;
   tabX = can.getWindowWidth()/2;
   tabY = can.getWindowHeight()/2;
-  myCircle = new Circle(tabX,tabY,252,DARKGRAY);
-  myCan->add(myCircle);
+  can.drawCircle(tabX,tabY,252,DARKGRAY);
   phils = new Philosopher[numPhils];
   forks = new Fork[numPhils];
   for (int i = 0; i < numPhils; ++i) {

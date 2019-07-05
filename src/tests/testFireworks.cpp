@@ -19,8 +19,9 @@ using namespace tsgl;
  */
 void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
   Arc** arcs = new Arc*[numFireworks];
-  for (int i = 0; i < numFireworks; arcs[i++] = new Arc(can))
+  for (int i = 0; i < numFireworks; i++) {
     arcs[i] = new Arc(can);
+  }
   ColorFloat col = can.getBackgroundColor();
   col.A = 0.04f;
   #pragma omp parallel num_threads(threads)
@@ -39,7 +40,9 @@ void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
       can.sleep();
     }
   }
-  for (int i = 0; i < numFireworks; delete arcs[i++]);
+  for (int i = 0; i < numFireworks; i++) {
+    delete arcs[i];
+  }
   delete [] arcs;
 }
 

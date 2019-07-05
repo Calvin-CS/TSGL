@@ -55,11 +55,13 @@ void spectrogramFunction(Canvas& can, std::string fname) {
       for (int j = start; j < end; ++j) {
         if (can.isOpen()) {
           can.sleep();
+          ColorHSV hsv;
           for (int i = 0; i < cww; ++i) {
-            ColorHSV hsv = can.getPoint(i,j);
-            if (hsv.H == hsv.H) //Check for NAN
+            hsv = can.getPoint(i,j);
+            if (hsv.H == hsv.H) { //Check for NAN
               sp.updateLocked(MAX_COLOR*hsv.H/6,1.0f,0.8f);
-//              sp.updateCritical(MAX_COLOR*hsv.H/6,1.0f,0.8f);
+              sp.updateCritical(MAX_COLOR*hsv.H/6,1.0f,0.8f);
+            }
             can.drawPoint(i,j,ColorHSV(0.0f,0.0f,hsv.V));
           }
           #pragma omp atomic
@@ -68,7 +70,7 @@ void spectrogramFunction(Canvas& can, std::string fname) {
         }
       }
     }
-    can.sleepFor(FRAME);
+    // can.sleepFor(FRAME);
     can.drawImage(fname, 0, 0, cww, cwh);
     sp.finish();
 }

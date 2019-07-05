@@ -28,7 +28,6 @@ private:
   Canvas *myCan, *myCan2;
   Philosopher *phils;
   Fork *forks;
-  Circle *myCircle;
 public:
   Table(Canvas& can, int p, PhilMethod m);
 
