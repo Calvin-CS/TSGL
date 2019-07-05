@@ -62,10 +62,14 @@ void Consumer::act() {
 void Consumer::unlock() {
 	myCan->remove(myItem); // this is the problem line. since Canvas::remove deallocates myItem, can't be operated on further.
 	delete myItem;
+	myItem = NULL;
 	buffer->consumerUnlock();
 	while( paused ) {}
 }
 
 Consumer::~Consumer() {
-
+	if(myItem) {
+		delete myItem;
+		myItem = NULL;
+	}
 }

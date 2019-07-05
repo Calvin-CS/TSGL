@@ -10,7 +10,6 @@
 #include <unistd.h>
 #include <tsgl.h>
 #include <exception> //for try-catch debugging
-#include "ProducerConsumer/PCThread.h"
 #include "ProducerConsumer/Producer.h"
 #include "ProducerConsumer/Consumer.h"
 using namespace tsgl;
@@ -61,9 +60,6 @@ int main(int argc, char * argv[]) {
 
 	srand(time(NULL)); // seed the random number generator
 
-	Producer * pro = new Producer[numProducers]; //Array of Producers
-	Consumer * con = new Consumer[numConsumers];  //Array of Consumers
-
 	//Fire up the visualization
 	queueDisplay.setBackgroundColor(WHITE);
 	queueDisplay.clear();
@@ -90,13 +86,16 @@ int main(int argc, char * argv[]) {
 	queueDisplay.drawText("Producers", 30, 20, 24, BLACK);
 	queueDisplay.drawText("Consumers", WINDOW_WIDTH-150, 20, 24, BLACK);
 
+	Producer** pro = new Producer*[numProducers]; //Array of Producers
+	Consumer** con = new Consumer*[numConsumers];  //Array of Consumers
+
 	//Fill the arrays of Producers and Consumers with Producer and Consumer objects
 	for(int i = 0; i < numProducers; i++) {
-		pro[i] = Producer(sharedBuffer, i, queueDisplay);
+		pro[i] = new Producer(sharedBuffer, i, queueDisplay);
 	}
 
 	for(int j = 0; j < numConsumers; j++) {
-		con[j] = Consumer(sharedBuffer, j, queueDisplay);
+		con[j] = new Consumer(sharedBuffer, j, queueDisplay);
 	}
 
 	//Create legend items
@@ -127,24 +126,24 @@ int main(int argc, char * argv[]) {
 
 	//Start up the pthreads for Producers and Consumers
 	for(int k = 0; k < numProducers; k++) {
-		pro[k].start();
+		pro[k]->start();
 		sleep(0.3);
 	}
 	for(int l = 0; l < numConsumers; l++) {
-		con[l].start();
+		con[l]->start();
 		sleep(0.3);
 	}
 
-
+	queueDisplay.clear();
 	queueDisplay.wait();
 
 	//Now join them
 	for(int p = 0; p < numProducers; p++) {	//Join the pthreads for the Producers
-		pro[p].join();
+		pro[p]->join();
 	}
 
 	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
-		con[c].join();
+		con[c]->join();
 	}
 
 	legendUpdater.join();
@@ -154,6 +153,13 @@ int main(int argc, char * argv[]) {
 		delete tempPtr;
 	}
 
+	for(int i = 0; i < numProducers; i++) {
+		delete pro[i];
+	}
+
+	for(int j = 0; j < numConsumers; j++) {
+		delete con[j];
+	}
 
 	delete [] pro;
 	delete [] con;

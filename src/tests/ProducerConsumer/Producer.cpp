@@ -68,7 +68,6 @@ void Producer::act() {
 	myCan->sleep();
 	int i = buffer->getLastIndex();
 	buffer->append(myItem, getId());  //Append something and pass your id along too
-
 	//Show Item added to Queue
 	float itAngle = (i*2*PI + PI)/8; // angle of item
 	int endX = 100*cos(itAngle)+300, endY = 100*sin(itAngle)+175;
@@ -77,7 +76,6 @@ void Producer::act() {
 	count++; myCountLabel->setText( std::to_wstring(count) );
 	if(count == 10) myCountLabel->setBottomLeftCorner(myX - 10, myY + 10);
 	if(count == 100) {
-		// myCountLabel->setFontSize(20);
 		myCountLabel->setBottomLeftCorner(myX - 18, myY + 10);
 	}
 	myItem = NULL;
@@ -92,5 +90,8 @@ void Producer::unlock() {
 }
 
 Producer::~Producer() {
-	// delete myShape;
+	if(myItem) {
+		delete myItem;
+		myItem = NULL;
+	}
 }

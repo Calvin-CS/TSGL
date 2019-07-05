@@ -282,6 +282,7 @@ Queue<Item>::~Queue() {
 	pthread_cond_destroy(&notOpen);
 	pthread_mutex_destroy(&myMutex);
 	delete [] myArray;      //Deallocate the array
+	delete [] myPthreadIds;
 	myArray = NULL;
 }
 

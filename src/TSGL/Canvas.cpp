@@ -178,6 +178,8 @@ void Canvas::add(Drawable * shapePtr) {
   // });
   objectMutex.unlock();
 
+  // std::cout << objectBuffer.size() << std::endl;
+
 }
 
 /**

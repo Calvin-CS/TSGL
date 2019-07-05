@@ -33,7 +33,7 @@ ifeq ($(UNAME), Darwin)
 	OS_GL :=
 endif
 
-CXXFLAGS=-O3 -g3 \
+CXXFLAGS=-O3 -g3 -ggdb3 \
 	-Wall -Wextra \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
 	-I/usr/local/include/Cellar/glfw3/3.1.1/include/ \

@@ -34,6 +34,7 @@ protected:
 	Queue<Star*> * buffer; //Handle to the current buffer
 	Canvas * myCan;  //Handle to the Canvas
 	ConvexPolygon * myShape;
+	Arrow * myArrow;
 	Star * myItem; //Handle to item Produced/Consumed
 	Text * myCountLabel; //Text label for number Produced/Consumed
 	TextureHandler loader;

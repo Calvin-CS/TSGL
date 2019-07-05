@@ -11,6 +11,7 @@ PCThread::PCThread() : Thread() {
 	myCan = NULL;
 	myShape = NULL;
 	myItem = NULL;
+	myArrow = NULL;
 	myCountLabel = NULL;
 	count = 0;
 	myX = myY = 0;
@@ -30,6 +31,7 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myY = 50 * (id + 1);
 	myX = 0; //Set in subclass constructor
 	myItem = NULL;
+	myArrow = NULL;
 	myCountLabel = new Text( std::to_wstring(count),loader, myX, myY+5, 24, WHITE);
 	// myCountLabel->setLayer(3);
 	myCan->add( myCountLabel );
@@ -55,8 +57,8 @@ void PCThread::animateItem(int endX, int endY) {
 	const float timeInterval = 0.7;
 	int startX = myItem->getX(), startY = myItem->getY();
 
-	Arrow * arrow = new Arrow (startX, startY, endX, endY, BLACK, false);
-	myCan->add(arrow);
+	myArrow = new Arrow (startX, startY, endX, endY, BLACK, false);
+	myCan->add(myArrow);
 
 	float deltaX = (endX - startX) / float(steps); //Change in x each step
 	float deltaY = (endY - startY) / float(steps); //Change in y each step
@@ -67,10 +69,20 @@ void PCThread::animateItem(int endX, int endY) {
 		myCan->sleepFor( timeInterval / steps );
 		while( paused ) {}
 	}
-	myCan->remove(arrow);
-	delete arrow;
+	myCan->remove(myArrow);
+	delete myArrow;
+	myArrow = NULL;
 }
 
 PCThread::~PCThread() {
-	// delete myCountLabel;
+	delete myCountLabel;
+	delete myShape;
+	if(myItem) {
+		delete myItem;
+		myItem = NULL;
+	}
+	if(myArrow) {
+		delete myArrow;
+		myArrow = NULL;
+	}
 }
