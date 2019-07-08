@@ -50,6 +50,10 @@ public:
 
     virtual void setColor(ColorFloat fillColor[], ColorFloat outlineColor[]);
 
+    virtual ColorFloat* getFillColor();
+
+    virtual ColorFloat* getOutlineColor();
+
     virtual void moveShapeBy(float deltaX, float deltaY);
 
     virtual void setCenter(float x, float y);

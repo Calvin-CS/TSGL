@@ -15,8 +15,10 @@ Producer::Producer() : PCThread() { }
  */
 Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = 50; //Set the x-coordinate to 50
-	myShape = new Circle(myX, myY, 20, ColorInt(0, 0, 0), false);
+	myShape = new Circle(myX, myY, 20, ColorInt(0, 0, 0), BLACK);
+	myShape->setLayer(1);
 	myCountLabel->setBottomLeftCorner(myX - 5, myY + 10);
+	myCountLabel->setLayer(2);
 	myCan->add(myShape);
 }
 
@@ -42,7 +44,9 @@ Star* Producer::nextItem() {
  */
 void Producer::wait() {
 	myItem = nextItem();
-	// myShape->setColor( myItem->getColor() );
+	ColorFloat * fillColor = myItem->getFillColor();
+	myShape->setColor( fillColor, BLACK );
+	delete[] fillColor;
 	myCountLabel->setColor(BLACK);
 	PCThread::wait();
 }
@@ -52,10 +56,10 @@ void Producer::wait() {
  */
 void Producer::lock() {
 	myCan->add( myItem );
-	myShape->setColor( BLACK );
+	myShape->setColor( BLACK, WHITE );
 	myCountLabel->setColor(WHITE);
 	buffer->producerLock();
-	myShape->setColor( WHITE );
+	myShape->setColor( WHITE, BLACK );
 	myCountLabel->setColor(BLACK);
 	while( paused ) {}
 }

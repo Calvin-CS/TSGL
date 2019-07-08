@@ -30,8 +30,8 @@ Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored
 void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queueDisplay) {
 	int colorChanger = 0;
 	while( queueDisplay->isOpen() ) {
-		waitingCircle->setColor( Colors::highContrastColor(colorChanger) );
-		waitingSquare->setColor( Colors::highContrastColor(colorChanger) );
+		waitingCircle->setColor( Colors::highContrastColor(colorChanger), BLACK );
+		waitingSquare->setColor( Colors::highContrastColor(colorChanger), BLACK );
 		queueDisplay->sleepFor(1.0);
 		colorChanger++;
 	}
@@ -102,12 +102,12 @@ int main(int argc, char * argv[]) {
 	int LEGENDOFFSET = 300;
 
 	// int colorChanger = 0; //Counting int to control random bright colors
-	Circle waitingCircle(50, 60+LEGENDOFFSET, 20, BLACK, false); //waiting for lock
-	Circle thinkingCircle(50, 120+LEGENDOFFSET, 20, BLACK, false); //waiting, not seeking lock
-	Circle lockCircle(50, 180+LEGENDOFFSET, 20, WHITE); //has lock
-	Rectangle waitingSquare(WINDOW_WIDTH-70, 40+LEGENDOFFSET, 40, 40, BLACK, false);
-	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100+LEGENDOFFSET, 40, 40, BLACK, false);
-	Rectangle lockSquare(WINDOW_WIDTH-70, 160+LEGENDOFFSET, 40, 40, WHITE);
+	Circle waitingCircle(50, 60+LEGENDOFFSET, 20, BLACK, BLACK); //waiting for lock
+	Circle thinkingCircle(50, 120+LEGENDOFFSET, 20, BLACK, true); //waiting, not seeking lock
+	Circle lockCircle(50, 180+LEGENDOFFSET, 20, BLACK, false); //has lock
+	Rectangle waitingSquare(WINDOW_WIDTH-70, 40+LEGENDOFFSET, 40, 40, BLACK, BLACK);
+	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100+LEGENDOFFSET, 40, 40, BLACK, true);
+	Rectangle lockSquare(WINDOW_WIDTH-70, 160+LEGENDOFFSET, 40, 40, BLACK, false);
 	queueDisplay.add( &waitingCircle ); 	queueDisplay.add( &thinkingCircle );
 	queueDisplay.add( &lockCircle ); 		queueDisplay.add( &waitingSquare );
 	queueDisplay.add( &thinkingSquare );	queueDisplay.add( &lockSquare );
@@ -151,14 +151,6 @@ int main(int argc, char * argv[]) {
 	while( !sharedBuffer.isEmpty() ) {
 		Star * tempPtr = sharedBuffer.remove();
 		delete tempPtr;
-	}
-
-	for(int i = 0; i < numProducers; i++) {
-		delete pro[i];
-	}
-
-	for(int j = 0; j < numConsumers; j++) {
-		delete con[j];
 	}
 
 	delete [] pro;

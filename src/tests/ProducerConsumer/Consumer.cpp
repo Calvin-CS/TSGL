@@ -15,9 +15,11 @@ Consumer::Consumer() : PCThread() { }
  */
 Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
 	myX = can.getWindowWidth() - 50;
-	myShape = new Rectangle(myX, myY, 40, 40, ColorInt(0, 0, 0), false);
+	myShape = new Rectangle(myX, myY, 40, 40, ColorInt(0, 0, 0), BLACK);
 	myShape->setCenter(myX, myY);
+	myShape->setLayer(1);
 	myCountLabel->setBottomLeftCorner(myX - 5, myY + 10);
+	myCountLabel->setLayer(2);
 	myCan->add(myShape);
 }
 
@@ -26,14 +28,16 @@ Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
  */
 void Consumer::lock() {
 	//Show waiting status
-	myShape->setColor( BLACK );
+	myShape->setColor( BLACK, WHITE );
 	myCountLabel->setColor(WHITE);
-	// if( myItem ) {
-	// 	myCan->remove( myItem );
-	// }
+	if( myItem ) {
+		myCan->remove( myItem );
+		delete myItem;
+		myItem = NULL;
+	}
 
 	buffer->consumerLock(); //Request lock
-	myShape->setColor( WHITE );
+	myShape->setColor( WHITE, BLACK );
 	myCountLabel->setColor(BLACK);
 	while( paused ) {}
 }
@@ -46,7 +50,9 @@ void Consumer::act() {
 	int endX = myShape->getX()-50, endY = myShape->getY();
 	animateItem(endX, endY);
 	while( paused ) {}
-	// myShape->setColor( myItem->getColor() ); //Change Consumer color to Item color
+	ColorFloat* fillColor = myItem->getFillColor();
+	myShape->setColor( fillColor, BLACK ); //Change Consumer color to Item color
+	delete[] fillColor;
 	myCountLabel->setColor(BLACK);
 	count++; myCountLabel->setText( std::to_wstring(count) );
 	if(count == 10) myCountLabel->setBottomLeftCorner(myX - 10, myY + 10);
@@ -60,9 +66,9 @@ void Consumer::act() {
  * unlocks the Queue after consuming an item
  */
 void Consumer::unlock() {
-	myCan->remove(myItem); // this is the problem line. since Canvas::remove deallocates myItem, can't be operated on further.
-	delete myItem;
-	myItem = NULL;
+	// myCan->remove(myItem);
+	// delete myItem;
+	// myItem = NULL;
 	buffer->consumerUnlock();
 	while( paused ) {}
 }

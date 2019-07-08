@@ -10,11 +10,11 @@ namespace tsgl {
   * \return A new Polygon with a buffer for storing the specified numbered of vertices.
   */
 Polygon::Polygon(int numVertices)  : Shape()  {
-//  attribMutex.lock();
+  attribMutex.lock();
   if (numVertices < 3) {
     TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
   }
-//  attribMutex.unlock();
+  attribMutex.unlock();
 }
 
 /*!
@@ -146,6 +146,44 @@ void Polygon::setColor(ColorFloat c[]) {
     }
   }
 }
+
+/**
+ * \brief Gets an array of the Polygon's fill vertex colors.
+ * \return c An array of ColorFloats.
+ */
+ColorFloat* Polygon::getFillColor() {
+  ColorFloat * c = new ColorFloat[numberOfVertices];
+  if(isFilled) {
+    for(int i = 0; i < numberOfVertices; i++) {
+      c[i] = ColorFloat(vertices[i*6 + 2], vertices[i*6 + 3], vertices[i*6 + 4], vertices[i*6 + 5]);
+    }
+  } else {
+    for(int i = 0; i < numberOfVertices; i++) {
+      c[i] = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+  }
+  return c;
+}
+
+/**
+ * \brief Gets an array of the Polygon's fill vertex colors.
+ * \return c An array of ColorFloats.
+ */
+ColorFloat* Polygon::getOutlineColor() {
+  ColorFloat * c = new ColorFloat[numberOfOutlineVertices];
+  if(hasOutline) {
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+      c[i] = ColorFloat(outlineVertices[i*6 + 2], outlineVertices[i*6 + 3], outlineVertices[i*6 + 4], outlineVertices[i*6 + 5]);
+    }
+  } else {
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+      c[i] = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+  }
+  return c;
+}
+
+
 
 /**
  * \brief Sets the Polygon to new single fill and outline colors.

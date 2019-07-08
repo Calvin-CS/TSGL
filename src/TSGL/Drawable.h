@@ -19,6 +19,7 @@ namespace tsgl {
   protected:
     std::mutex      attribMutex;  ///< Protects the attributes of the Drawable from being accessed while simultaneously being changed
     bool isTextured = false; ///< Whether the Drawable is a Textured object.
+    int renderLayer; // The depth index to control the drawing order of the shapes
   public:
 
     /*!
@@ -27,8 +28,9 @@ namespace tsgl {
     * \note Refer to the Drawable class description for more details.
     */
     Drawable() {
-      // attribMutex.lock();
-      // attribMutex.unlock();
+      attribMutex.lock();
+      renderLayer = -1;
+      attribMutex.unlock();
     }
 
 
@@ -65,6 +67,28 @@ namespace tsgl {
     bool getIsTextured() {
       attribMutex.lock();
       bool retVal = isTextured;
+      attribMutex.unlock();
+      return retVal;
+    }
+
+    /**
+    * \brief Sets the layer of the Drawable.
+    *    \param n The new layer of the Drawable.
+    * \details Sets <code>renderLayer</code> to n if n >= 0.
+    */
+    void setLayer(int n) {
+      attribMutex.lock();
+      if (n>=0) { renderLayer = n; }
+      attribMutex.unlock();
+    }  //TODO: make this validate layer numbers and return an error if not ok
+
+    /**
+    * \brief Accessor for <code>renderLayer</code>.
+    * \return The layer the drawable is set at.
+    */
+    int getLayer() {
+      attribMutex.lock();
+      int retVal = renderLayer;
       attribMutex.unlock();
       return retVal;
     }

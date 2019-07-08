@@ -90,6 +90,7 @@ public:
     color = c;
     bounced = false;
     circle = new Circle(x,y,r,c);
+    circle->setLayer(1);
     can->add(circle);
   }
   BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorFloat c, Canvas * canvas) {
@@ -105,6 +106,7 @@ public:
     bounced = false;
     can = canvas;
     circle = new Circle(x,y,r,c);
+    circle->setLayer(1);
     can->add(circle);
   }
   ~BouncingBall() {
@@ -195,7 +197,8 @@ public:
     gravity = 0.1f;
     attract = true;
     can = canvas;
-    mouseCircle = new Circle(0,0,25,ColorFloat(1.0f,0.5f,0.5f,0.5f)/* , ColorFloat(0.5f,1.0f,0.5f,0.5f) */);
+    mouseCircle = new Circle(0,0,25,ColorFloat(1.0f,0.5f,0.5f,0.5f));
+    mouseCircle->setLayer(2);
     can->add(mouseCircle);
   }
   ~BallRoom() {

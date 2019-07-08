@@ -173,13 +173,10 @@ void Canvas::add(Drawable * shapePtr) {
   objectMutex.lock();
   objectBuffer.push_back(shapePtr);
   objectBufferEmpty = false;
-  // std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
-  //   return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
-  // });
+  std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
+    return (a->getLayer() < b->getLayer());  // true if A's layer is higher than B's layer
+  });
   objectMutex.unlock();
-
-  // std::cout << objectBuffer.size() << std::endl;
-
 }
 
 /**
