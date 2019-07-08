@@ -294,6 +294,8 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
 
         glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);  // Fill the buffer
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);                                         // Draw the character
+
+        glDeleteTextures(1, &texture);
     }
     return true;
 }
