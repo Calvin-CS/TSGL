@@ -9,7 +9,7 @@ FLock::FLock() : Lock() {
 	writerLock = PTHREAD_MUTEX_INITIALIZER;
 }
 
-FLock::FLock(RWDatabase<tsgl::Rectangle*>& data) : Lock(data) {
+FLock::FLock(RWDatabase<tsgl::Rectangle*>* data) : Lock(data) {
 	counterLock = PTHREAD_MUTEX_INITIALIZER;
 	writerLock = PTHREAD_MUTEX_INITIALIZER;
 }

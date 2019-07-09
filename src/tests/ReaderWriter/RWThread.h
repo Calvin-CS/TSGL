@@ -33,6 +33,7 @@ public:
 protected:
 	int myX, myY; //Center coordinates for the RWThread
 	int count; //Number of colors processed (read or written)
+	int countLabelOffset; //Difference between myCountLabel's bottom left x and myCircle's center x.
 	RWDatabase<Rectangle*> * data; //Handle to the current database
 	Lock* monitor; //Handle to the current monitor
 	TextureHandler loader;

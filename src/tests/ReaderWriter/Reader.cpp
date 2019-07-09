@@ -16,7 +16,7 @@ Reader::Reader() : RWThread() { }
 Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can) : RWThread(sharedDatabase, lock, id, can) {
 	myX = can.getWindowWidth()-50;
 	myCircle->setCenter(myX, myY);
-	myCountLabel->setBottomLeftCorner(myX, myY);
+	myCountLabel->setBottomLeftCorner(myX + countLabelOffset, myY + 8);
 }
 
 /**
@@ -36,19 +36,21 @@ void Reader::drawArrow(int x, int y) {
 //TODO: comment
 void Reader::lock() {
 	myCircle->setCenter(myX-75, myY); //Move towards data
-	myCountLabel->setBottomLeftCorner(myX-75, myY);
+	myCountLabel->setBottomLeftCorner(myX-75+countLabelOffset, myY + 8);
 	monitor->readLock();  //Lock data for reading
 	myCan->sleepFor(RWThread::access_wait);
 	while( paused ) {}
 	myCircle->setCenter(myX-127, myY); //Move inside data
-	myCountLabel->setBottomLeftCorner(myX-127, myY);
+	myCountLabel->setBottomLeftCorner(myX-127+countLabelOffset, myY + 8);
 }
 
 //TODO: comment
 void Reader::act() {
 	//Read
 	Rectangle * rec = data->read(rand()%data->getItemCount()); //Get the color
-	myCircle->setColor( rec->getFillColor() );
+	ColorFloat* fillColor = rec->getFillColor();
+	myCircle->setColor( fillColor[0] );
+	delete[] fillColor;
 
 	//Draw and erase the arrow
 	drawArrow(rec->getX(), rec->getY());
@@ -58,9 +60,14 @@ void Reader::act() {
 void Reader::unlock() {
 	//Release lock
 	count++; myCountLabel->setText( to_wstring(count) ); //Finished another read
-	if( count == 100 ) myCountLabel->setFontSize(20);
+	if( count == 10  ) {
+		countLabelOffset = -12;
+	} else if( count == 100 ) {
+		myCountLabel->setFontSize(22);
+		countLabelOffset = -18;
+	}
 	while( paused ) {}
 	myCircle->setCenter(myX, myY); 	//Return to home location
-	myCountLabel->setBottomLeftCorner(myX, myY);
+	myCountLabel->setBottomLeftCorner(myX + countLabelOffset, myY + 8);
 	monitor->readUnlock(); 	//Unlock the data
 }

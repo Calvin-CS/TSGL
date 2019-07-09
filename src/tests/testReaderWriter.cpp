@@ -64,7 +64,8 @@ int main(int argc, char* argv[]) {
 	//Create labels
 	TextureHandler loader;
 	Rectangle dataRec(RWThread::dataX, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth, RWThread::dataHeight, GRAY); // draw data area
-	// dataRec.setHasOutline(false); dataRec.setLayer(2); can.add(&dataRec);
+	// dataRec.setHasOutline(false); 
+	dataRec.setLayer(2); can.add(&dataRec);
 	Rectangle margins(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY);
 	margins.setLayer(1); can.add(&margins); // can.setDefaultLayer(3);
 	Line readerLine(RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY, BLACK);
@@ -75,7 +76,7 @@ int main(int argc, char* argv[]) {
 	Text writeText(L"Writers", loader, 20, 40, 24, BLACK);
 	Text readText(L"Readers", loader, WINDOW_WIDTH-150, 40, 24, BLACK);
 	Text dataLabel(L"Shared Data Store", loader, RWThread::dataX, RWThread::dataY+30, 20, BLACK);
-	dataLabel.setBottomLeftCorner(WINDOW_WIDTH/2, RWThread::dataY+15);
+	dataLabel.setBottomLeftCorner(5*WINDOW_WIDTH/14, RWThread::dataY+25);
 
 	//Create and rotate more labels
 	Text readThink(L"Thinking", loader, RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
@@ -123,23 +124,23 @@ int main(int argc, char* argv[]) {
 
 	//Start the Reader and Writer pthreads
 	for(int i = 0; i < numWriters; i++) {
-		writers[i].start();
+		writers[i]->start();
 		sleep(0.1);
 	}
 	for(int i = 0; i < numReaders; i++) {
-		readers[i].start();
+		readers[i]->start();
 		sleep(0.1);
 	}
 
-
+	can.clear();
 	can.wait(); //Wait for the main Canvas to be closed
 
 	//End threads
 	for(int i = 0; i < numReaders; i++) {
-		readers[i].join();
+		readers[i]->join();
 	}
 	for(int i = 0; i < numWriters; i++) {
-		writers[i].join();
+		writers[i]->join();
 	}
 
 	//Cleanup

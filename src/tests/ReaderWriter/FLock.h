@@ -21,7 +21,7 @@
 class FLock : public Lock {
 public:
 	FLock();			//Default  constructor
-	FLock(RWDatabase<tsgl::Rectangle*>& data);	//Explicit constructor
+	FLock(RWDatabase<tsgl::Rectangle*>* data);	//Explicit constructor
 	void readLock();	//Inherited from Lock class
 	void readUnlock();		//Inherited from Lock class
 	void writeLock();//Inherited from Lock class

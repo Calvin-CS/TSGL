@@ -18,7 +18,7 @@
 class WLock : public Lock {
 public:
 	WLock() : Lock() {};						//Default  constructor
-	WLock(RWDatabase<tsgl::Rectangle*>& data) : Lock(data) {};	//Explicit constructor
+	WLock(RWDatabase<tsgl::Rectangle*>* data) : Lock(data) {};	//Explicit constructor
 	void readLock();											//Inherited from Lock class
 	void readUnlock();										//Inherited from Lock class
 	void writeLock();											//Inherited from Lock class

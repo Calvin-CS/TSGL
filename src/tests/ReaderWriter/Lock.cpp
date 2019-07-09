@@ -20,10 +20,10 @@ Lock::Lock() {
  * \param data, the database being protected
  * \return: The constructed Lock object.
  */
-Lock::Lock(RWDatabase<tsgl::Rectangle*>& data) {
+Lock::Lock(RWDatabase<tsgl::Rectangle*>* database) {
 	activeWriters = activeReaders = waitingWriters = waitingReaders = 0;
 	lock = PTHREAD_MUTEX_INITIALIZER;
 	okToRead = PTHREAD_COND_INITIALIZER;
 	okToWrite = PTHREAD_COND_INITIALIZER;
-	this->data = &data;
+	data = database;
 }

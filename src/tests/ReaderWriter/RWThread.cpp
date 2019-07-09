@@ -17,6 +17,7 @@ int RWThread::WAIT_RANGE = 40, RWThread::WAIT_MIN = 15;
  */
 RWThread::RWThread() : Thread() {
 	myX = myY = count = 0;
+	countLabelOffset = -6;
 	data = NULL;
 	monitor = NULL;
 	myCan = NULL;
@@ -37,12 +38,13 @@ RWThread::RWThread(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned
 	access_wait = 1.0/threadCount;
 
 	count = 0;
+	countLabelOffset = -6;
 	data = &sharedDatabase;	//Get the handle to the Database
 	monitor = &lock;				//Get the handle to the monitor
 	myCan = &can;						//Get the handle to the Canvas
 	myY = RWThread::dataY - 50 * (id + 1);
 	myX = 0; //Set in subclass constructor
-	myCircle = new Circle(myX, myY, 20, BLACK); //Move based on new x in subclass
+	myCircle = new Circle(myX, myY, 20, GRAY); //Move based on new x in subclass
 	myCircle->setLayer(3);
 	myCan->add(myCircle);
 	myCountLabel = new Text( to_wstring(count), loader, myX, myY+5, 24, BLACK);

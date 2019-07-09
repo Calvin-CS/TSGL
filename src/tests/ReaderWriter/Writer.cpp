@@ -17,7 +17,7 @@ Writer::Writer() : RWThread() { dataLabel = NULL; }
 Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can) : RWThread(sharedDatabase, lock, id, can) {
 	myX = 50; //Set the x-coordinate to 50
 	myCircle->setCenter(myX, myY);
-	myCountLabel->setBottomLeftCorner(myX, myY);
+	myCountLabel->setBottomLeftCorner(myX + countLabelOffset, myY + 8);
 	if( !dataLabel ) {
 		dataLabel = new Text(L"0/300", loader, RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 16, BLACK);
 		myCan->add( dataLabel );
@@ -72,7 +72,7 @@ Rectangle * Writer::makeRec(int index) {
 //TODO: comment
 void Writer::lock() {
 	myCircle->setCenter(myX+75, myY);  //Move in toward data
-	myCountLabel->setBottomLeftCorner(myX+75, myY);
+	myCountLabel->setBottomLeftCorner(myX+75+countLabelOffset, myY + 8);
 	monitor->writeLock(); //Lock data for writing
 	myCan->sleepFor(RWThread::access_wait);
 }
@@ -82,7 +82,7 @@ void Writer::act() {
 	while( paused ) {}
 	int id = randIndex();
 	myCircle->setCenter(myX+127, myY); //Move inside data
-	myCountLabel->setBottomLeftCorner(myX+127, myY);
+	myCountLabel->setBottomLeftCorner(myX+127+countLabelOffset, myY + 8);
 	Rectangle * rec;
 	if( id < data->getItemCount() ) { //Change the color of an item
 		rec = data->read(id);
@@ -90,10 +90,14 @@ void Writer::act() {
 	} else { //Create a new item
 		rec = makeRec(id); //Make random color at random index
 		data->write(rec, id);  // Write the item to the data
+		myCan->clear();
+		rec->setLayer(3);
 		myCan->add(rec);
 		dataLabel->setText( to_wstring( data->getItemCount() ) + L"/" + to_wstring( data->getMaxCapacity() ) );
 	}
-	myCircle->setColor( rec->getFillColor() );
+	ColorFloat* fillColor = rec->getFillColor();
+	myCircle->setColor( fillColor[0] );
+	delete[] fillColor;
 
 	//Draw an arrow down to the item
 	drawArrow(rec->getX(), rec->getY());
@@ -103,9 +107,15 @@ void Writer::act() {
 void Writer::unlock() {
 	//Release lock
 	count++; myCountLabel->setText( to_wstring(count) ); //Finished another write
-	if( count == 100 ) myCountLabel->setFontSize(20);
+	if( count == 10  ) {
+		countLabelOffset = -12;
+	} else if( count == 100 ) {
+		myCountLabel->setFontSize(22);
+		countLabelOffset = -18;
+	}
 	while( paused ) {}
+	myCan->clear();
 	myCircle->setCenter(myX, myY); 	//Return to home location
-	myCountLabel->setBottomLeftCorner(myX, myY);
+	myCountLabel->setBottomLeftCorner(myX + countLabelOffset, myY + 8);
 	monitor->writeUnlock(); 	//Unlock the data for writing
 }
