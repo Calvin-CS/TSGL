@@ -43,6 +43,7 @@ run ./testPong 7 4                                                 #Ball Speed, 
 run ./testProducerConsumer
 run ./testProgressBar
 run ./testProjectiles 400 400                                      #Width, Height
+run ./testReaderWriter
 run ./testSeaUrchin 16                                             #Threads
 run ./testScreenshot 900 650                                       #Width, Height
 run ./testSmartSort 1024                                           #Elements, Threads

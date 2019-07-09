@@ -101,6 +101,7 @@ BINARIES= \
 	bin/testPong \
 	bin/testProgressBar \
 	bin/testProjectiles \
+	bin/testReaderWriter \
 	bin/testScreenshot \
 	bin/testSeaUrchin \
 	bin/testSmartSort \
@@ -190,6 +191,14 @@ bin/testProducerConsumer: build/tests/ProducerConsumer/Producer.o \
 	build/tests/ProducerConsumer/Consumer.o \
 	build/tests/ProducerConsumer/Thread.o \
 	build/tests/ProducerConsumer/PCThread.o
+bin/testReaderWriter: build/tests/ReaderWriter/FLock.o \
+	build/tests/ReaderWriter/Lock.o \
+	build/tests/ReaderWriter/Reader.o \
+	build/tests/ReaderWriter/RLock.o \
+	build/tests/ReaderWriter/RWThread.o \
+	build/tests/ReaderWriter/Thread.o \
+	build/tests/ReaderWriter/WLock.o \
+	build/tests/ReaderWriter/Writer.o
 bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
 bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 
