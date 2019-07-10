@@ -13,22 +13,20 @@ namespace tsgl {
   *   \param color The color of the star.
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
-  *   \param rotation Value in radians of how many degrees to rotate the star
-  *     (set to 0 by default).
   *   \param filled Whether the star should be filled
   *     (set to true by default).
   */
-Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ninja, float rotation, bool filled) : ConcavePolygon(points*2, filled, !filled) {
+Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ninja, bool filled) : ConcavePolygon(points*2, filled, !filled) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
   float delta = 2.0f / points * PI;
   for(int i = 0; i < points; ++i) {
-    addVertex(x+(radius/2)*cos(i*delta + rotation), y+(radius/2)*sin(i*delta + rotation), color);
+    addVertex(x+(radius/2)*cos(i*delta), y+(radius/2)*sin(i*delta), color);
     if( ninja )
-      addVertex(x+(radius*cos(i*delta + rotation)), y+(radius*sin(i*delta + rotation)), color);
+      addVertex(x+(radius*cos(i*delta)), y+(radius*sin(i*delta)), color);
     else
-      addVertex(x+(radius*cos((i+0.5)*delta + rotation)), y+(radius*sin((i+0.5)*delta + rotation)), color);
+      addVertex(x+(radius*cos((i+0.5)*delta)), y+(radius*sin((i+0.5)*delta)), color);
   }
 }
 
@@ -43,22 +41,20 @@ Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ni
   *   \param color An array of colors for the star.
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
-  *   \param rotation Value in radians of how many degrees to rotate the star
-  *     (set to 0 by default).
   *   \param filled Whether the star should be filled
   *     (set to true by default).
   */
-Star::Star(float x, float y, float radius, int points, ColorFloat color[], bool ninja, float rotation, bool filled) : ConcavePolygon(points*2, filled, !filled) {
+Star::Star(float x, float y, float radius, int points, ColorFloat color[], bool ninja, bool filled) : ConcavePolygon(points*2, filled, !filled) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
   float delta = 2.0f / points * PI;
   for(int i = 0; i < points; ++i) {
-    addVertex(x+(radius/2)*cos(i*delta + rotation), y+(radius/2)*sin(i*delta + rotation), color[i]);
+    addVertex(x+(radius/2)*cos(i*delta), y+(radius/2)*sin(i*delta), color[i]);
     if( ninja )
-      addVertex(x+(radius*cos(i*delta + rotation)), y+(radius*sin(i*delta + rotation)), color[i]);
+      addVertex(x+(radius*cos(i*delta)), y+(radius*sin(i*delta)), color[i]);
     else
-      addVertex(x+(radius*cos((i+0.5)*delta + rotation)), y+(radius*sin((i+0.5)*delta + rotation)), color[i]);
+      addVertex(x+(radius*cos((i+0.5)*delta)), y+(radius*sin((i+0.5)*delta)), color[i]);
   }
 }
 
@@ -74,20 +70,18 @@ Star::Star(float x, float y, float radius, int points, ColorFloat color[], bool 
   *   \param outlineColor The color of the star's outline.
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
-  *   \param rotation Value in radians of how many degrees to rotate the star
-  *     (set to 0 by default).
   */
-Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja, float rotation) : ConcavePolygon(points*2, true, true) {
+Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja) : ConcavePolygon(points*2, true, true) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
   float delta = 2.0f / points * PI;
   for(int i = 0; i < points; ++i) {
-    addVertex(x+(radius/2)*cos(i*delta + rotation), y+(radius/2)*sin(i*delta + rotation), fillColor, outlineColor);
+    addVertex(x+(radius/2)*cos(i*delta), y+(radius/2)*sin(i*delta), fillColor, outlineColor);
     if( ninja )
-      addVertex(x+(radius*cos(i*delta + rotation)), y+(radius*sin(i*delta + rotation)), fillColor, outlineColor);
+      addVertex(x+(radius*cos(i*delta)), y+(radius*sin(i*delta)), fillColor, outlineColor);
     else
-      addVertex(x+(radius*cos((i+0.5)*delta + rotation)), y+(radius*sin((i+0.5)*delta + rotation)), fillColor, outlineColor);
+      addVertex(x+(radius*cos((i+0.5)*delta)), y+(radius*sin((i+0.5)*delta)), fillColor, outlineColor);
   }
 }
 
@@ -103,20 +97,18 @@ Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, Col
   *   \param outlineColor The color of the star's outline.
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
-  *   \param rotation Value in radians of how many degrees to rotate the star
-  *     (set to 0 by default).
   */
-Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja, float rotation) : ConcavePolygon(points*2, true, true) {
+Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja) : ConcavePolygon(points*2, true, true) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
   float delta = 2.0f / points * PI;
   for(int i = 0; i < points; ++i) {
-    addVertex(x+(radius/2)*cos(i*delta + rotation), y+(radius/2)*sin(i*delta + rotation), fillColor[i], outlineColor);
+    addVertex(x+(radius/2)*cos(i*delta), y+(radius/2)*sin(i*delta), fillColor[i], outlineColor);
     if( ninja )
-      addVertex(x+(radius*cos(i*delta + rotation)), y+(radius*sin(i*delta + rotation)), fillColor[i], outlineColor);
+      addVertex(x+(radius*cos(i*delta)), y+(radius*sin(i*delta)), fillColor[i], outlineColor);
     else
-      addVertex(x+(radius*cos((i+0.5)*delta + rotation)), y+(radius*sin((i+0.5)*delta + rotation)), fillColor[i], outlineColor);
+      addVertex(x+(radius*cos((i+0.5)*delta)), y+(radius*sin((i+0.5)*delta)), fillColor[i], outlineColor);
   }
 }
 
@@ -132,20 +124,18 @@ Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], C
   *   \param outlineColor An array of colors for the star's outline.
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
-  *   \param rotation Value in radians of how many degrees to rotate the star
-  *     (set to 0 by default).
   */
-Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja, float rotation) : ConcavePolygon(points*2, true, true) {
+Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja) : ConcavePolygon(points*2, true, true) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
   float delta = 2.0f / points * PI;
   for(int i = 0; i < points; ++i) {
-    addVertex(x+(radius/2)*cos(i*delta + rotation), y+(radius/2)*sin(i*delta + rotation), fillColor, outlineColor[i]);
+    addVertex(x+(radius/2)*cos(i*delta), y+(radius/2)*sin(i*delta), fillColor, outlineColor[i]);
     if( ninja )
-      addVertex(x+(radius*cos(i*delta + rotation)), y+(radius*sin(i*delta + rotation)), fillColor, outlineColor[i]);
+      addVertex(x+(radius*cos(i*delta)), y+(radius*sin(i*delta)), fillColor, outlineColor[i]);
     else
-      addVertex(x+(radius*cos((i+0.5)*delta + rotation)), y+(radius*sin((i+0.5)*delta + rotation)), fillColor, outlineColor[i]);
+      addVertex(x+(radius*cos((i+0.5)*delta)), y+(radius*sin((i+0.5)*delta)), fillColor, outlineColor[i]);
   }
 }
 
@@ -161,20 +151,18 @@ Star::Star(float x, float y, float radius, int points, ColorFloat fillColor, Col
   *   \param outlineColor An array of colors for the star's outline.
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
-  *   \param rotation Value in radians of how many degrees to rotate the star
-  *     (set to 0 by default).
   */
-Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja, float rotation) : ConcavePolygon(points*2, true, true) {
+Star::Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja) : ConcavePolygon(points*2, true, true) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
   float delta = 2.0f / points * PI;
   for(int i = 0; i < points; ++i) {
-    addVertex(x+(radius/2)*cos(i*delta + rotation), y+(radius/2)*sin(i*delta + rotation), fillColor[i], outlineColor[i]);
+    addVertex(x+(radius/2)*cos(i*delta), y+(radius/2)*sin(i*delta), fillColor[i], outlineColor[i]);
     if( ninja )
-      addVertex(x+(radius*cos(i*delta + rotation)), y+(radius*sin(i*delta + rotation)), fillColor[i], outlineColor[i]);
+      addVertex(x+(radius*cos(i*delta)), y+(radius*sin(i*delta)), fillColor[i], outlineColor[i]);
     else
-      addVertex(x+(radius*cos((i+0.5)*delta + rotation)), y+(radius*sin((i+0.5)*delta + rotation)), fillColor[i], outlineColor[i]);
+      addVertex(x+(radius*cos((i+0.5)*delta)), y+(radius*sin((i+0.5)*delta)), fillColor[i], outlineColor[i]);
   }
 }
 }

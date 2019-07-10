@@ -11,19 +11,27 @@ int main() {
 	int xs[4] = {250, 250, 750, 750};
 	int ys[4] = {250, 750, 250, 750};
 
-    float rotation = 0;
+	ColorFloat * colors = new ColorFloat[16];
+	colors[0] = YELLOW;
+	for(int i = 1; i < 16; i ++) {
+		colors[i] = GREEN;
+	}
 
+    float rotation = 0;
+	Star * s1 = new Star(xs[2], ys[2], 125, 8, colors, colors, true);
+	Star * s2 = new Star(xs[3], ys[3], 75, 9, PURPLE, BLUE, false);
+	Star * s3 = new Star(xs[0], ys[0], 100, 6, RED, true, true);
+	Star * s4 = new Star(xs[1], ys[1], 50, 7, BLUE, false, false);
+	c.add(s1); c.add(s2); c.add(s3); c.add(s4); 
 
 	while( c.isOpen() ) {
 		c.sleep();
-		c.drawStar(xs[2], ys[2], 125, 8, GREEN, YELLOW, true, rotation);
-		c.drawStar(xs[3], ys[3], 75, 9, PURPLE, BLUE, false, rotation);
 		c.pauseDrawing();
 		c.clear();
-		c.drawStar(xs[0], ys[0], 100, 6, RED, true, rotation, true);
-		c.drawStar(xs[1], ys[1], 50, 7, BLUE, false, rotation, false);	
-		rotation += PI / 24;
-		c.resumeDrawing();	
+		rotation += PI / 3;
+		s1->setRotation(rotation);
+		c.resumeDrawing();
+		c.sleepFor(1);	
 	}
 
 	c.wait();

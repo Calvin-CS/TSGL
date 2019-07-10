@@ -20,6 +20,10 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     forks[i].id = i;
     forks[i].setCanvas(myCan);
   }
+  spaghetti = new Image("../assets/pics/spaghet.png", loader, 0, 0, 300, 180, 1.0f);
+  spaghetti->setCenter(can.getWindowWidth()/2, can.getWindowHeight()/2);
+  myCan->add(spaghetti);
+  // myCan->drawImage("../assets/pics/ball.png", 764, 563, 200, 160, 1.0f);
   myMethod = m;
   switch(myMethod) {
     case forfeitWhenBlocked:
@@ -64,6 +68,7 @@ Table::~Table() {
   else
     myCan2->wait();
   delete myCan2;
+  delete spaghetti;
   delete [] phils;
   delete [] forks;
 }
@@ -469,6 +474,8 @@ void Table::drawStep() {
       float dist = BASEDIST+8*(j%10);
       Circle * c = new Circle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,BROWN);
       phils[i].addMeal(*myCan, c);
+  } else if(phils[i].state() == hasBoth) {
+    spaghetti->setRotation(pangle + PI/2);
   }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;
@@ -479,6 +486,7 @@ void Table::drawStep() {
     fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? GREEN : ORANGE;
   } else {
     FORK_RAD = 220;
+    fangle = pangle + PI / numPhils;
   }
   forks[i].draw(tabX+FORK_RAD*cos(fangle),tabY+FORK_RAD*sin(fangle),fangle,fcolor);
 }

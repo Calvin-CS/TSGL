@@ -33,6 +33,9 @@ class Shape : public Drawable {
     GLenum geometryType;
     bool init = false;
     int current = 0;
+    float currentRotation;
+    float centerX;
+    float centerY;
  public:
     Shape();
 
@@ -51,6 +54,8 @@ class Shape : public Drawable {
     virtual float getX();
 
     virtual float getY();
+
+    virtual void setRotation(float radians);
 
    /*!
     * \brief Accessor that returns if Shape is processed and ready to be drawn

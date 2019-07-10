@@ -28,7 +28,9 @@ namespace tsgl {
 class Image : public Drawable {
  private:
     int myWidth, myHeight;
-    float vertices[32];
+    float centerX, centerY;
+    float currentRotation;
+    float *vertices;
     std::string myFile;
     GLtexture myTexture;
     TextureHandler* myLoader;
@@ -48,6 +50,19 @@ class Image : public Drawable {
      * \return The width of the Image.
      */
     int getWidth() { return myWidth; }
+
+    float getX();
+
+    float getY();
+
+    virtual void setRotation(float radians);
+
+    void setCenter(float x, float y);
+
+    void changeFileName(std::string filename, int width = 0, int height = 0);
+
+    ~Image() { delete[] vertices; }
+
 };
 
 }

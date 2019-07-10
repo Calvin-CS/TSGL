@@ -57,15 +57,15 @@ void constructorFunction(Canvas& can) {
   can.drawSquare(605, 105, 90, fillColor[0], outlineColor);
   can.drawSquare(705, 105, 90, fillColor, outlineColor);
 
-  can.drawStar(50, 250, 45, 6, fillColor[0], false, 0, true);
-  can.drawStar(150, 250, 45, 6, fillColor[0], true, 0, false);
-  can.drawStar(250, 250, 45, 6, fillColor, false, 0, true);
-  can.drawStar(350, 250, 45, 6, fillColor, true, 0, false);
+  can.drawStar(50, 250, 45, 6, fillColor[0], false, true);
+  can.drawStar(150, 250, 45, 6, fillColor[0], true, false);
+  can.drawStar(250, 250, 45, 6, fillColor, false, true);
+  can.drawStar(350, 250, 45, 6, fillColor, true, false);
 
-  can.drawStar(450, 250, 45, 6, fillColor[0], outlineColor[0], false, 0);
-  can.drawStar(550, 250, 45, 6, fillColor, outlineColor[0], false, 0);
-  can.drawStar(650, 250, 45, 6, fillColor[0], outlineColor, false, 0);  
-  can.drawStar(750, 250, 45, 6, fillColor, outlineColor, false, 0);
+  can.drawStar(450, 250, 45, 6, fillColor[0], outlineColor[0], false);
+  can.drawStar(550, 250, 45, 6, fillColor, outlineColor[0], false);
+  can.drawStar(650, 250, 45, 6, fillColor[0], outlineColor, false);  
+  can.drawStar(750, 250, 45, 6, fillColor, outlineColor, false);
 
   can.drawRegularPolygon(50, 350, 45, 6, fillColor[0], true);
   can.drawRegularPolygon(150, 350, 45, 6, fillColor[0], false);

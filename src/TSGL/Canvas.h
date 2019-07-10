@@ -302,17 +302,17 @@ public:
 
     virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor[]);
     
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color, bool ninja = false, float rotation = 0, bool filled = true);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color, bool ninja = false, bool filled = true);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color[], bool ninja = false, float rotation = 0, bool filled = true);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color[], bool ninja = false, bool filled = true);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja = false, float rotation = 0);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja = false);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja = false, float rotation = 0);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja = false);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja = false, float rotation = 0);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja = false);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja = false, float rotation = 0);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja = false);
 
     virtual void drawText(std::string text, int x, int y, unsigned size, ColorFloat color = BLACK);
 

@@ -40,10 +40,10 @@ struct Fork {
     can->add(myShape);
   }
   void draw(int x, int y, double angle, ColorFloat c) {
-    // angle -= PI/2;
+    angle -= PI/2;
     myShape->setColor(c);
     myShape->setCenter(x, y);
-    // myShape->centeredRotation(angle*180/PI);
+    myShape->setRotation(angle);
   }
   ~Fork() {
     delete myShape;

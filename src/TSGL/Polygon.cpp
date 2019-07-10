@@ -98,7 +98,53 @@ void Polygon::addVertex(float x, float y, const ColorFloat &fillColor, const Col
       outlineVertices[current + 5] = outlineColor.A;
     }
     current += 6;
-    if (current == numberOfVertices*6) init = true;
+    if (current == numberOfVertices*6) {
+      init = true;
+      attribMutex.lock();
+      float minX = 0, maxX = 0;
+      float minY = 0, maxY = 0;
+      if(hasOutline) {
+        minX = maxX = outlineVertices[0];
+        //Find min and max X
+        for(int i = 0; i < numberOfOutlineVertices; i++) {
+            if( outlineVertices[i*6] < minX )
+            minX = outlineVertices[i*6];
+            else if( outlineVertices[i*6] > maxX )
+            maxX = outlineVertices[i*6];
+        }
+        minY = maxY = outlineVertices[1];
+        //Find min and max X
+        for(int i = 0; i < numberOfOutlineVertices; i++) {
+            if( outlineVertices[i*6+1] < minY )
+            minY = outlineVertices[i*6+1];
+            else if( outlineVertices[i*6+1] > maxY )
+            maxY = outlineVertices[i*6+1];
+        }
+      } else if (isFilled) {
+        minX = maxX = vertices[0];
+        //Find min and max X
+        for(int i = 0; i < numberOfVertices; i++) {
+            if( vertices[i*6] < minX )
+            minX = vertices[i*6];
+            else if( vertices[i*6] > maxX )
+            maxX = vertices[i*6];
+        }
+
+        minY = maxY = vertices[1];
+        //Find min and max X
+        for(int i = 0; i < numberOfVertices; i++) {
+            if( vertices[i*6+1] < minY )
+            minY = vertices[i*6+1];
+            else if( vertices[i*6+1] > maxY )
+            maxY = vertices[i*6+1];
+        }
+      }
+      
+      centerX = (minX+maxX)/2;
+      centerY = (minY+maxY)/2;
+
+      attribMutex.unlock();
+    }
 }
 
 /**
@@ -385,6 +431,49 @@ float Polygon::getY() {
 
     attribMutex.unlock();
     return (minY+maxY)/2;
+}
+
+/*!
+ * \brief Mutator for the rotation of the Polygon.
+ * \details Rotates the Polygon vertices around centerX, centerY.
+ * \param radians Float value denoting how many radians to rotate the Polygon.
+ */
+void Polygon::setRotation(float radians) {
+  float pivotX = getX();
+  float pivotY = getY();
+  float s = sin(radians - currentRotation);
+  float c = cos(radians - currentRotation);
+  currentRotation = radians;
+  if(isFilled) {
+    for(int i = 0; i < numberOfVertices; i++) {
+      float x = vertices[6*i];
+      float y = vertices[6*i+1];
+      x -= pivotX;
+      y -= pivotY;
+      float xnew = x * c - y * s;
+      float ynew = x * s + y * c;
+
+      x = xnew + pivotX;
+      y = ynew + pivotY;
+      vertices[6*i] = x;
+      vertices[6*i+1] = y;
+    }
+  }
+  if(hasOutline) {
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+      float x = outlineVertices[6*i];
+      float y = outlineVertices[6*i+1];
+      x -= pivotX;
+      y -= pivotY;
+      float xnew = x * c - y * s;
+      float ynew = x * s + y * c;
+
+      x = xnew + pivotX;
+      y = ynew + pivotY;
+      outlineVertices[6*i] = x;
+      outlineVertices[6*i+1] = y;
+    }
+  }
 }
 
 /*!

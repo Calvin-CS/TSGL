@@ -35,6 +35,8 @@ class Text : public Drawable {
     virtual void setBottomLeftCorner(int x, int y);
 
     virtual void setFontSize(int fontsize);
+
+    virtual void setRotation(float radians);
 };
 
 }

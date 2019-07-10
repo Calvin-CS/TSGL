@@ -1348,12 +1348,11 @@ void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], 
   *   \param points The number of points on the star
   *   \param color A single color or array of colors for the star vertices.
   *   \param ninja makes it look conventional or like a shuriken
-  *   \param rotation how many radians the star should be rotated
   *   \param filled Whether the star should be filled
   *     (set to true by default).
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bool ninja, float rotation, bool filled) {
-  Star * star = new Star(x, y, radius, points, color, ninja, rotation, filled);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bool ninja, bool filled) {
+  Star * star = new Star(x, y, radius, points, color, ninja, filled);
   drawDrawable(star);
 }
 
@@ -1366,12 +1365,11 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bo
   *   \param points The number of points on the star
   *   \param color A single color or array of colors for the star vertices.
   *   \param ninja makes it look conventional or like a shuriken
-  *   \param rotation how many radians the star should be rotated
   *   \param filled Whether the star should be filled
   *     (set to true by default).
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color[], bool ninja, float rotation, bool filled) {
-  Star * star = new Star(x, y, radius, points, color, ninja, rotation, filled);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color[], bool ninja, bool filled) {
+  Star * star = new Star(x, y, radius, points, color, ninja, filled);
   drawDrawable(star);
 }
 
@@ -1385,10 +1383,9 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color[], 
   *   \param fillColor A single color or array of colors for the star's fill vertices.
   *   \param outlineColor A single color or array of colors for the star's outline vertices.
   *   \param ninja makes it look conventional or like a shuriken
-  *   \param rotation how many radians the star should be rotated
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja, float rotation) {
-  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja, rotation);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja) {
+  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja);
   drawDrawable(star);
 }
 
@@ -1402,10 +1399,9 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor
   *   \param fillColor A single color or array of colors for the star's fill vertices.
   *   \param outlineColor A single color or array of colors for the star's outline vertices.
   *   \param ninja makes it look conventional or like a shuriken
-  *   \param rotation how many radians the star should be rotated
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja, float rotation) {
-  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja, rotation);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja) {
+  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja);
   drawDrawable(star);
 }
 
@@ -1419,10 +1415,9 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor
   *   \param fillColor A single color or array of colors for the star's fill vertices.
   *   \param outlineColor A single color or array of colors for the star's outline vertices.
   *   \param ninja makes it look conventional or like a shuriken
-  *   \param rotation how many radians the star should be rotated
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja, float rotation) {
-  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja, rotation);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja) {
+  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja);
   drawDrawable(star);
 }
 
@@ -1436,10 +1431,9 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor
   *   \param fillColor A single color or array of colors for the star's fill vertices.
   *   \param outlineColor A single color or array of colors for the star's outline vertices.
   *   \param ninja makes it look conventional or like a shuriken
-  *   \param rotation how many radians the star should be rotated
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja, float rotation) {
-  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja, rotation);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja) {
+  Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja);
   drawDrawable(star);
 }
 

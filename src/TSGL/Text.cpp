@@ -87,6 +87,15 @@ void Text::setFontSize(int fontsize) {
     myFontSize = fontsize;
 }
 
+/*!
+ * \brief Mutator for the rotation of the Text.
+ * \details Rotates the Text vertices around centerX, centerY.
+ * \param radians Float value denoting how many radians to rotate the Text.
+ */
+void Text::setRotation(float radians) {
+
+}
+
 
 
 }

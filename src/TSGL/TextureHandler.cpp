@@ -349,8 +349,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
  *     (same as return value)
  * \return The texture that created from the loaded image.
  */
-GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height,
-                                GLtexture &texture) {
+GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture) {
     if (loadedTextures.find(filename) == loadedTextures.end()) {  // Load the image if we haven't already
         texture = 0;
         std::string extension = filename.substr(filename.find_last_of('.'));

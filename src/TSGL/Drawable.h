@@ -98,6 +98,13 @@ namespace tsgl {
     * \details This function returns true only if all vertices have been inserted into an array.
     */
     virtual bool isProcessed() { return true; }
+
+    /*!
+     * \brief Pure virtual mutator that changes the rotation of the Drawable
+     * \details Rotates the Drawable clockwise by radians radians.
+     * \param radians The number of radians to rotate the Drawable.
+     */
+    virtual void setRotation(float radians) = 0;
   };
 };
 

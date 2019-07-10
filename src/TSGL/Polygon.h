@@ -61,6 +61,8 @@ public:
     virtual float getX();
 
     virtual float getY();
+
+    virtual void setRotation(float radians);
 };
 
 }

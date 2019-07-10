@@ -26,8 +26,10 @@ private:
   PhilMethod myMethod;
   std::string methodString;
   Canvas *myCan, *myCan2;
+  Image * spaghetti;
   Philosopher *phils;
   Fork *forks;
+  TextureHandler loader;
 public:
   Table(Canvas& can, int p, PhilMethod m);
 

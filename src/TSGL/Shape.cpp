@@ -13,6 +13,8 @@ namespace tsgl {
  */
 Shape::Shape() : Drawable() {
     isTextured = false;
+    currentRotation = 0;
+    centerX = centerY = 0;
 }
 
 /*!
@@ -48,7 +50,34 @@ void Shape::addVertex(float x, float y, const ColorFloat &color) {
     vertices[current + 4] = color.B;
     vertices[current + 5] = color.A;
     current += 6;
-    if (current == numberOfVertices*6) init = true;
+    if (current == numberOfVertices*6) {
+        init = true;
+        attribMutex.lock();
+
+        float minX, maxX;
+        minX = maxX = vertices[0];
+        //Find min and max X
+        for(int i = 0; i < numberOfVertices; i++) {
+            if( vertices[i*6] < minX )
+            minX = vertices[i*6];
+            else if( vertices[i*6] > maxX )
+            maxX = vertices[i*6];
+        }
+        centerX = (minX+maxX)/2;
+
+        float minY, maxY;
+        minY = maxY = vertices[1];
+        //Find min and max X
+        for(int i = 0; i < numberOfVertices; i++) {
+            if( vertices[i*6+1] < minY )
+            minY = vertices[i*6+1];
+            else if( vertices[i*6+1] > maxY )
+            maxY = vertices[i*6+1];
+        }
+        centerY = (minY+maxY)/2;
+
+        attribMutex.unlock();
+    }
 }
 
 /**
@@ -88,6 +117,8 @@ void Shape::moveShapeBy(float deltaX, float deltaY) {
       vertices[i*6]     += deltaX; //Transpose x
       vertices[(i*6)+1] += deltaY; //Transpose y
     }
+    centerX += deltaX;
+    centerY += deltaY;
     attribMutex.unlock();
 }
 
@@ -97,9 +128,12 @@ void Shape::moveShapeBy(float deltaX, float deltaY) {
  * \param y The new center y coordinate.
  */
 void Shape::setCenter(float x, float y) {
-    float deltaX = x - getX(); //Change for x
-    float deltaY = y - getY(); //Change for y
+    float deltaX = x - centerX; //Change for x
+    float deltaY = y - centerY; //Change for y
     attribMutex.lock();
+
+    centerX = x;
+    centerY = y;
 
     for(int i = 0; i < numberOfVertices; i++) {
       vertices[i*6]     += deltaX; //Transpose x
@@ -113,20 +147,7 @@ void Shape::setCenter(float x, float y) {
  * \return A float, the center x coordinate.
  */
 float Shape::getX() { //TODO: decide if this is the best system to protect x and y
-    attribMutex.lock();
-    float minX, maxX;
-    minX = maxX = vertices[0];
-
-    //Find min and max X
-    for(int i = 0; i < numberOfVertices; i++) {
-        if( vertices[i*6] < minX )
-        minX = vertices[i*6];
-        else if( vertices[i*6] > maxX )
-        maxX = vertices[i*6];
-    }
-
-    attribMutex.unlock();
-    return (minX+maxX)/2;
+    return centerX;
 }
 
 /**
@@ -134,20 +155,33 @@ float Shape::getX() { //TODO: decide if this is the best system to protect x and
  * \return A float, the center y coordinate.
  */
 float Shape::getY() {
-    attribMutex.lock();
-    float minY, maxY;
-    minY = maxY = vertices[1];
+    return centerY;
+}
 
-    //Find min and max X
-    for(int i = 0; i < numberOfVertices; i++) {
-        if( vertices[i*6+1] < minY )
-        minY = vertices[i*6+1];
-        else if( vertices[i*6+1] > maxY )
-        maxY = vertices[i*6+1];
-    }
+/*!
+ * \brief Mutator for the rotation of the Shape.
+ * \details Rotates the Shape vertices around centerX, centerY.
+ * \param radians Float value denoting how many radians to rotate the Shape.
+ */
+void Shape::setRotation(float radians) {
+  float pivotX = getX();
+  float pivotY = getY();
+  float s = sin(radians - currentRotation);
+  float c = cos(radians - currentRotation);
+  currentRotation = radians;
+  for(int i = 0; i < numberOfVertices; i++) {
+    float x = vertices[6*i];
+    float y = vertices[6*i+1];
+    x -= pivotX;
+    y -= pivotY;
+    float xnew = x * c - y * s;
+    float ynew = x * s + y * c;
 
-    attribMutex.unlock();
-    return (minY+maxY)/2;
+    x = xnew + pivotX;
+    y = ynew + pivotY;
+    vertices[6*i] = x;
+    vertices[6*i+1] = y;
+  }
 }
 
 }
