@@ -32,7 +32,7 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myX = 0; //Set in subclass constructor
 	myItem = NULL;
 	myArrow = NULL;
-	myCountLabel = new Text( std::to_wstring(count),loader, myX, myY+5, 24, WHITE);
+	myCountLabel = new Text( std::to_wstring(count), myX, myY+5, 24, WHITE);
 	// myCountLabel->setLayer(3);
 	myCan->add( myCountLabel );
 }

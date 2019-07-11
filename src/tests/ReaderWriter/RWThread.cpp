@@ -47,7 +47,7 @@ RWThread::RWThread(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned
 	myCircle = new Circle(myX, myY, 20, GRAY); //Move based on new x in subclass
 	myCircle->setLayer(3);
 	myCan->add(myCircle);
-	myCountLabel = new Text( to_wstring(count), loader, myX, myY+5, 24, BLACK);
+	myCountLabel = new Text( to_wstring(count), myX, myY+5, 24, BLACK);
 	myCountLabel->setLayer(4);
 	myCan->add( myCountLabel );
 }

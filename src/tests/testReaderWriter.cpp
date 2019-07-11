@@ -62,7 +62,6 @@ int main(int argc, char* argv[]) {
 	Writer ** writers = new Writer*[numWriters]; //Array of Writers
 
 	//Create labels
-	TextureHandler loader;
 	Rectangle dataRec(RWThread::dataX, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth, RWThread::dataHeight, GRAY); // draw data area
 	// dataRec.setHasOutline(false); 
 	dataRec.setLayer(2); can.add(&dataRec);
@@ -70,21 +69,21 @@ int main(int argc, char* argv[]) {
 	margins.setLayer(1); can.add(&margins); // can.setDefaultLayer(3);
 	Line readerLine(RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY, BLACK);
 	Line writerLine(RWThread::dataX-MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX-MARGIN*2.5, RWThread::dataY, BLACK);
-	Text lockText(lockString, loader, 50, WINDOW_HEIGHT-50, 24, BLACK);
-	Text numText(L"Numbers indicate", loader, WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);
-	Text numText2(L"counts of reads/writes", loader, WINDOW_WIDTH-225, WINDOW_HEIGHT-30, 20, BLACK);
-	Text writeText(L"Writers", loader, 20, 40, 24, BLACK);
-	Text readText(L"Readers", loader, WINDOW_WIDTH-150, 40, 24, BLACK);
-	Text dataLabel(L"Shared Data Store", loader, RWThread::dataX, RWThread::dataY+30, 20, BLACK);
+	Text lockText(lockString, 50, WINDOW_HEIGHT-50, 24, BLACK);
+	Text numText(L"Numbers indicate", WINDOW_WIDTH-225, WINDOW_HEIGHT-50, 20, BLACK);
+	Text numText2(L"counts of reads/writes", WINDOW_WIDTH-225, WINDOW_HEIGHT-30, 20, BLACK);
+	Text writeText(L"Writers", 20, 40, 24, BLACK);
+	Text readText(L"Readers", WINDOW_WIDTH-150, 40, 24, BLACK);
+	Text dataLabel(L"Shared Data Store", RWThread::dataX, RWThread::dataY+30, 20, BLACK);
 	dataLabel.setBottomLeftCorner(5*WINDOW_WIDTH/14, RWThread::dataY+25);
 
 	//Create and rotate more labels
-	Text readThink(L"Thinking", loader, RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
-	Text readWait(L"Waiting", loader, RWThread::dataX+RWThread::dataWidth+MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
+	Text readThink(L"Thinking", RWThread::dataX+RWThread::dataWidth+MARGIN*3, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
+	Text readWait(L"Waiting", RWThread::dataX+RWThread::dataWidth+MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
 	// readThink.setRotation(90, readThink.getX(), readThink.getY());
 	// readWait.setRotation(90, readWait.getX(), readWait.getY());
-	Text writeThink(L"Thinking", loader, RWThread::dataX-MARGIN*3, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
-	Text writeWait(L"Waiting", loader, RWThread::dataX-MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
+	Text writeThink(L"Thinking", RWThread::dataX-MARGIN*3, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
+	Text writeWait(L"Waiting", RWThread::dataX-MARGIN*1.5, RWThread::dataY-RWThread::dataHeight, 28, GRAY);
 	// writeThink.setLocation(writeThink.getX(), writeThink.getY()+writeThink.getStringWidth());
 	// writeWait.setLocation(writeWait.getX(), writeWait.getY()+writeWait.getStringWidth());
 	// writeThink.setRotation(-90, writeThink.getX(), writeThink.getY());

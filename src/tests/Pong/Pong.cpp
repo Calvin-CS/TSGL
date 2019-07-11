@@ -22,8 +22,8 @@ Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
   leftPaddle->bindings(can, -1);  // W & S keys
   rightPaddle->bindings(can, 1);  // Up and Down arrow keys
   pongBall = new Ball(can, ballSpeed);
-  leftScore = new Text(L"0", loader, can.getWindowWidth() / 2-64, 40, 32, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
-  rightScore = new Text(L"0", loader, can.getWindowWidth()/2+64, 40, 32, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
+  leftScore = new Text(L"0", can.getWindowWidth() / 2-64, 40, 32, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
+  rightScore = new Text(L"0", can.getWindowWidth()/2+64, 40, 32, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
   can.add(leftScore); can.add(rightScore);
 }
 

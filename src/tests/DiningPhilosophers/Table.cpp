@@ -20,7 +20,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     forks[i].id = i;
     forks[i].setCanvas(myCan);
   }
-  spaghetti = new Image("../assets/pics/spaghet.png", loader, 0, 0, 300, 180, 1.0f);
+  spaghetti = new Image("./assets/pics/spaghet.png", loader, 0, 0, 300, 180, 1.0f);
   spaghetti->setCenter(can.getWindowWidth()/2, can.getWindowHeight()/2);
   myCan->add(spaghetti);
   // myCan->drawImage("../assets/pics/ball.png", 764, 563, 200, 160, 1.0f);
@@ -463,6 +463,7 @@ void Table::drawStep() {
   float pangle = (i*2*PI)/numPhils;
   ColorFloat fcolor = BLACK;
   float fangle = (i+0.5f)*ARC;
+
   if( !phils[i].hasCircle() ) {
     phils[i].draw(*myCan,tabX+RAD*cos(pangle),tabY+RAD*sin(pangle));
   }
@@ -472,14 +473,14 @@ void Table::drawStep() {
       int j = phils[i].getMeals();
       float angle = pangle+(j/10)*2*PI/RAD; 
       float dist = BASEDIST+8*(j%10);
-      Circle * c = new Circle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,BROWN);
-      phils[i].addMeal(*myCan, c);
-  } else if(phils[i].state() == hasBoth) {
-    spaghetti->setRotation(pangle + PI/2);
+      myCan->drawCircle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,BROWN);
   }
+  // } else if(phils[i].state() == hasBoth) {
+  //   spaghetti->setRotation(pangle + PI/2);
+  // }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;
-    fcolor = (phils[i].state() == hasBoth) ? GREEN : YELLOW;
+    fcolor = (phils[i].state() == hasBoth) ? GREEN : PURPLE;
   }
   else if((forks[i].user == (i+1)%numPhils)) {
     fangle = ((i+1)*ARC) - CLOSE;

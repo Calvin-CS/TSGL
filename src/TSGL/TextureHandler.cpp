@@ -212,7 +212,7 @@ void TextureHandler::drawGLtextureFromBuffer(GLubyte* buffer, int x, int y, unsi
  * \return True if successful, false otherwise.
  * \bug If the default font cannot be located, TSGL will crash.
  */
-bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
+bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices, int centerX, int centerY, float rotation) {
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //If no font is set, load up a default one
       bool found = false;
@@ -229,6 +229,7 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
           exit(44);
       }
     }
+
     FT_GlyphSlot glyph = fontFace->glyph;
     FT_UInt current_glyph_index, previous_glyph_index = 0;
     int penX = vertices[0],
@@ -254,7 +255,7 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
 
         error = FT_Load_Glyph(fontFace, current_glyph_index, FT_LOAD_RENDER);
         if (error) {
-            fprintf(stderr, "FT_Load_Char falied\n");
+            fprintf(stderr, "FT_Load_Char failed\n");
             return false;
         }
 
@@ -289,6 +290,23 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
         vertices[1]  = vertices[9]  = penY - glyph->bitmap_top;
         vertices[25] = vertices[17] = penY - glyph->bitmap_top + glyph->bitmap.rows;
 
+
+        float s = sin(rotation);
+        float c = cos(rotation);
+        for(int i = 0; i < 4; i++) {
+            float x = vertices[8*i];
+            float y = vertices[8*i+1];
+            x -= centerX;
+            y -= centerY;
+            float xnew = x * c - y * s;
+            float ynew = x * s + y * c;
+
+            x = xnew + centerX;
+            y = ynew + centerY;
+            vertices[8*i] = x;
+            vertices[8*i+1] = y;
+        }
+
         penX += glyph->advance.x >> 6;
         penY += glyph->advance.y >> 6;
 
@@ -317,6 +335,11 @@ bool TextureHandler::loadFont(const std::string& filename) {
         }
     }
 
+    if(filename == "") {
+        fontFace = nullptr;
+        return true;
+    }
+
     if (loadedFonts.find(filename) == loadedFonts.end()) {  // Load the image if we haven't already
         FT_Face tmp_face;
         int error = FT_New_Face(fontLibrary, filename.c_str(), 0, &tmp_face);
@@ -337,6 +360,81 @@ bool TextureHandler::loadFont(const std::string& filename) {
     }
 
     return true;
+}
+
+void TextureHandler::calculateTextCenter(std::wstring text, unsigned int font_size, int leftX, int bottomY, int& centerX, int& centerY) {
+    const wchar_t* string = text.c_str();
+    if(fontFace == nullptr) {   //If no font is set, load up a default one
+      bool found = false;
+      for (unsigned int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
+          if (fileExists(DEFAULTFONTPATHS[i])) {
+              TsglDebug("No Font set! Now loading from " + std::string(DEFAULTFONTPATHS[i]));    //NEW
+              loadFont(DEFAULTFONTPATHS[i]);
+              found = true;
+              break;
+          }
+      }
+      if (!found) {
+          TsglErr("No suitable fonts found...exiting");    //NEW
+          exit(44);
+      }
+    }
+    FT_GlyphSlot glyph = fontFace->glyph;
+    FT_UInt current_glyph_index, previous_glyph_index = 0;
+    int penX = leftX;
+    int penY = bottomY;
+
+    int minX = leftX;
+    int minY = bottomY;
+    int maxX = leftX;
+    int maxY = bottomY;
+
+    int currentRightX, currentTopY, currentBottomY;
+
+    bool error = FT_Set_Pixel_Sizes(fontFace, 0, font_size);
+    if (error) {
+        fprintf(stderr, "FT_Set_Pixel_Sizes failed\n");
+        return;
+    }
+
+    bool use_kerning = FT_HAS_KERNING(fontFace);
+
+    for (unsigned int i = 0; i < text.size(); i++) {
+        current_glyph_index = FT_Get_Char_Index(fontFace, string[i]);
+
+        if (use_kerning && previous_glyph_index && current_glyph_index) {
+            FT_Vector delta;
+            FT_Get_Kerning(fontFace, previous_glyph_index, current_glyph_index, FT_KERNING_DEFAULT, &delta);
+            penX += delta.x >> 6;
+            penY += delta.y >> 6;
+        }
+
+        error = FT_Load_Glyph(fontFace, current_glyph_index, FT_LOAD_RENDER);
+        if (error) {
+            fprintf(stderr, "FT_Load_Char falied\n");
+            return;
+        }
+
+        previous_glyph_index = current_glyph_index;
+
+        currentRightX = penX + glyph->bitmap_left + glyph->bitmap.width;
+        currentTopY  = penY - glyph->bitmap_top;
+        currentBottomY = penY - glyph->bitmap_top + glyph->bitmap.rows;
+
+        maxX = currentRightX;
+        if(currentBottomY > maxY) {
+            maxY = currentBottomY;
+        }
+        if(currentTopY < minY) {
+            minY = currentTopY;
+        }
+
+        penX += glyph->advance.x >> 6;
+        penY += glyph->advance.y >> 6;
+    }
+
+    centerX = (minX + maxX) / 2;
+    centerY = (minY + maxY) / 2;
 }
 
 /*!

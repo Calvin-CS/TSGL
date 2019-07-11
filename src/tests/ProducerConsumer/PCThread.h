@@ -37,7 +37,6 @@ protected:
 	Arrow * myArrow;
 	Star * myItem; //Handle to item Produced/Consumed
 	Text * myCountLabel; //Text label for number Produced/Consumed
-	TextureHandler loader;
 };
 
 #endif /* PCTHREAD_H_ */

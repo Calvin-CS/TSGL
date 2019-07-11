@@ -14,14 +14,19 @@ namespace tsgl {
  *      \param color A reference to the ColorFloat to use.
  * \return A new Text instance with the specified string, position, and color.
  */
-Text::Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int fontsize, const ColorFloat &color) {
+Text::Text(std::wstring text, int x, int y, unsigned int fontsize, const ColorFloat &color) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myString = text;
-    myLoader = &loader;
+    myLoader = new TextureHandler();
     myX = x;
     myY = y;
     myFontSize = fontsize;
     myColor = color;
+    myRotation = 0;
+    myCenterX = 0;
+    myCenterY = 0;
+    vertices = new float[32];                                        // Allocate the vertices
+    myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
 }
 
 /*!
@@ -29,8 +34,6 @@ Text::Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int
  * \details This function actually draws the Text to the Canvas. 
  */
 void Text::draw() {
-    float *vertices = new float[32];                                        // Allocate the vertices
-
     vertices[0]  = myX;                                                     // Pre-init the array with the start coords
     vertices[1]  = myY;
 
@@ -44,9 +47,7 @@ void Text::draw() {
     vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
 
-    myLoader->drawText(myString, myFontSize, vertices);
-
-    delete[] vertices;
+    myLoader->drawText(myString, myFontSize, vertices, myCenterX, myCenterY, myRotation);
 }
 
 /*!
@@ -56,6 +57,7 @@ void Text::draw() {
  */
 void Text::setText(std::wstring text) {
     myString = text;
+    myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
 }
 
 /*!
@@ -74,8 +76,27 @@ void Text::setColor(const ColorFloat& color) {
  *  \param y The new y-coordinate for myY.
  */
 void Text::setBottomLeftCorner(int x, int y) {
+    int deltaX = x - myX;
+    int deltaY = y - myY;
+    myCenterX += deltaX;
+    myCenterY += deltaY;
     myX = x;
     myY = y;
+}
+
+/*!
+ * \brief Alter the Text's lower left hand corner location
+ * \details This function changes myX and myY to the parameter x and y.
+ *  \param x The new x-coordinate for myX.
+ *  \param y The new y-coordinate for myY.
+ */
+void Text::setCenter(int x, int y) {
+    int deltaX = x - myCenterX;
+    int deltaY = y - myCenterY;
+    myX += deltaX;
+    myY += deltaY;
+    myCenterX = x;
+    myCenterY = y;
 }
 
 /*!
@@ -85,6 +106,7 @@ void Text::setBottomLeftCorner(int x, int y) {
  */
 void Text::setFontSize(int fontsize) {
     myFontSize = fontsize;
+    myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
 }
 
 /*!
@@ -93,7 +115,16 @@ void Text::setFontSize(int fontsize) {
  * \param radians Float value denoting how many radians to rotate the Text.
  */
 void Text::setRotation(float radians) {
+    myRotation = radians;
+}
 
+void Text::setFont(std::string filename) {
+    myLoader->loadFont(filename);
+    myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
+}
+
+Text::~Text() {
+    delete[] vertices;
 }
 
 

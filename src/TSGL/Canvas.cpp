@@ -1446,10 +1446,10 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor
   *   \param size The size of the text in pixels.
   *   \param color The color of the Text (set to BLACK by default).
   */
-void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color) {
+void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color, std::string fontFileName) {
     std::wstring wsTmp(text.begin(), text.end());
     std::wstring ws = wsTmp;
-    drawText(ws, x, y, size, color);
+    drawText(ws, x, y, size, color, fontFileName);
 }
 
  /*!
@@ -1463,8 +1463,15 @@ void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat 
   * \note Identical to the drawText(std::string, ...) aside from the first parameter.
   * \see drawText(std::string s, int x, int y, unsigned size, ColorFloat color = BLACK).
   */
-void Canvas::drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color) {
-    Text* t = new Text(text, loader, x, y, size, color);  // Creates the Point with the specified coordinates and color
+void Canvas::drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color, std::string fontFileName) {
+    Text* t = new Text(text, x, y, size, color);  // Creates the Point with the specified coordinates and color
+    if(fontFileName != defaultFontFileName && fontFileName != "") {
+      t->setFont(fontFileName);
+    } else {
+      if(defaultFontFileName != "") {
+        t->setFont(defaultFontFileName);
+      }
+    }
     drawDrawable(t);                                // Push it onto our drawing buffer
 }
 
@@ -1938,6 +1945,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
 
+    defaultFontFileName = "";
+
     initGlfw();
 #ifndef _WIN32
     initWindow();
@@ -2357,7 +2366,7 @@ void Canvas::setDrawBuffer(int buffer) {
   * \note Supports all font types that FreeType supports.
   */
 void Canvas::setFont(std::string filename) {
-    loader.loadFont(filename);
+    defaultFontFileName = filename;
 }
 
  /*!

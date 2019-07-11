@@ -794,11 +794,11 @@ void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, 
   *   \param color The color of the Text (set to BLACK by default).
   * \note Identical to Canvas::drawText(std::string,..).
   */
-void CartesianCanvas::drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color) {
+void CartesianCanvas::drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color, const std::string& fontFileName) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
-    Canvas::drawText(text, actualX, actualY, size, color);
+    Canvas::drawText(text, actualX, actualY, size, color, fontFileName);
 }
 
  /*!
@@ -811,11 +811,11 @@ void CartesianCanvas::drawText(std::string text, Decimal x, Decimal y, unsigned 
   *   \param color The color of the Text (set to BLACK by default).
   * \note Identical to Canvas::drawText(std::wstring,..).
   */
-void CartesianCanvas::drawText(std::wstring text, Decimal x, Decimal y, unsigned size, ColorFloat color) {
+void CartesianCanvas::drawText(std::wstring text, Decimal x, Decimal y, unsigned size, ColorFloat color, const std::string& fontFileName) {
     int actualX, actualY;
     getScreenCoordinates(x, y, actualX, actualY);
 
-    Canvas::drawText(text, actualX, actualY, size, color);
+    Canvas::drawText(text, actualX, actualY, size, color, fontFileName);
 }
 
  /*!

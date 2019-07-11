@@ -103,9 +103,9 @@ public:
 
     void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor[]);
 
-    void drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
+    void drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK, const std::string& fontFileName = "");
 
-    void drawText(std::wstring text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK);
+    void drawText(std::wstring text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK, const std::string& fontFileName = "");
 
     void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color = BLACK, bool filled = true);
 

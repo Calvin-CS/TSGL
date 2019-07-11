@@ -71,9 +71,11 @@ class TextureHandler {
 
     ~TextureHandler();
 
-    bool drawText(std::wstring text, unsigned int font_size, float* vertices);
+    bool drawText(std::wstring text, unsigned int font_size, float* vertices, int centerX = 0, int centerY = 0, float rotation = 0);
 
     bool loadFont(const std::string& filename);
+
+    void calculateTextCenter(std::wstring text, unsigned int font_size, int leftX, int bottomY, int& centerX, int& centerY);
 
     static void getDimensions(std::string filename, int &width, int &height);
 

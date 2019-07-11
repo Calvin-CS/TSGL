@@ -36,7 +36,6 @@ protected:
 	int countLabelOffset; //Difference between myCountLabel's bottom left x and myCircle's center x.
 	RWDatabase<Rectangle*> * data; //Handle to the current database
 	Lock* monitor; //Handle to the current monitor
-	TextureHandler loader;
 	Canvas * myCan;  //Handle to the Canvas
 	Circle * myCircle; //Circle representing the Thread
 	Text * myCountLabel; //Text label for number processed
