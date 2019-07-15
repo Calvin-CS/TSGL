@@ -215,133 +215,133 @@ public:
 
     virtual void drawCircle(int x, int y, int radius, ColorFloat fillColor[], ColorFloat outlineColor[]);
 
-    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color, bool filled = true);
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color, bool filled = true, float rotation = 0);
 
-    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true, float rotation = 0);
 
-    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color, bool filled = true);
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color, bool filled = true, float rotation = 0);
 
-    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true, float rotation = 0);
 
-    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color, bool filled);
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color, bool filled, float rotation = 0);
 
-    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color[], bool filled);
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color[], bool filled, float rotation = 0);
 
-    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawImage(std::string filename, int x, int y, int width, int height, float alpha = 1.0f);
+    virtual void drawImage(std::string filename, int x, int y, int width, int height, float alpha = 1.0f, float rotation = 0);
 
-    virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color = BLACK);
+    virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, float rotation = 0);
 
-    virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color[]);
+    virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color[], float rotation = 0);
 
     virtual void drawPixel(int row, int col, ColorFloat color = BLACK);
 
     virtual void drawPoint(int x, int y, ColorFloat color = BLACK);
 
-    virtual void drawPolyline(int size, int x[], int y[], ColorFloat color);
+    virtual void drawPolyline(int size, int x[], int y[], ColorFloat color, float rotation = 0);
 
-    virtual void drawPolyline(int size, int x[], int y[], ColorFloat color[]);
+    virtual void drawPolyline(int size, int x[], int y[], ColorFloat color[], float rotation = 0);
 
     virtual void drawProgress(ProgressBar* p);
 
-    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat color, bool filled = true);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat color, bool filled = true, float rotation = 0);
 
-    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat color[], bool filled = true);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat color[], bool filled = true, float rotation = 0);
 
-    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true);
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true, float rotation = 0);
 
-    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled = true);
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled = true, float rotation = 0);
 
-    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
     
-    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat color, bool filled = true);
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat color, bool filled = true, float rotation = 0);
 
-    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat color[], bool filled = true);
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat color[], bool filled = true, float rotation = 0);
 
-    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
     
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color, bool ninja = false, bool filled = true);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color, bool filled = true, bool ninja = false, float rotation = 0);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color[], bool ninja = false, bool filled = true);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color[], bool filled = true, bool ninja = false, float rotation = 0);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja = false);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja = false, float rotation = 0);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja = false);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja = false, float rotation = 0);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja = false);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja = false, float rotation = 0);
 
-    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja = false);
+    virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja = false, float rotation = 0);
 
-    virtual void drawText(std::string text, int x, int y, unsigned size, ColorFloat color = BLACK, std::string fontFileName = "");
+    virtual void drawText(std::string text, int x, int y, unsigned size, ColorFloat color = BLACK, std::string fontFileName = "", float rotation = 0);
 
-    virtual void drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color = BLACK, std::string fontFileName = "");
+    virtual void drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color = BLACK, std::string fontFileName = "", float rotation = 0);
 
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled = true);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled = true, float rotation = 0);
 
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color[], bool filled = true);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color[], bool filled = true, float rotation = 0);
 
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color, bool filled = true);
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color, bool filled = true, float rotation = 0);
 
-    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled = true);
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled = true, float rotation = 0);
 
-    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
 
-    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
     ColorFloat getBackgroundColor();
 
@@ -404,6 +404,8 @@ public:
     virtual void run(void (*myFunction)(Canvas&, int, std::string), int i, std::string s);
 
     virtual void run(void (*myFunction)(Canvas&, std::string, int), std::string s, int i);
+
+    virtual void run(void (*myFunction)(Canvas&, int i, std::string, bool), int i, std::string s, bool b);
 
     void setBackgroundColor(ColorFloat color);
 

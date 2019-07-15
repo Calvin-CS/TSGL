@@ -36,7 +36,7 @@ ColorInt Producer::randColor() {
  * nextItem generates a new Star with a random color
  */
 Star* Producer::nextItem() {
-	return new Star(myX+50, myY, 20, 5, randColor(), false );
+	return new Star(myX+50, myY, 20, 5, randColor() );
 }
 
 /**

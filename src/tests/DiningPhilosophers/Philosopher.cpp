@@ -13,9 +13,6 @@ Philosopher::Philosopher() {
 
 Philosopher::~Philosopher() {
   delete myCircle;
-  for (unsigned int i = 0; i < meals.size(); i++) {
-    delete meals[i];
-  }
 }
 
 /**
@@ -24,7 +21,7 @@ Philosopher::~Philosopher() {
 void Philosopher::draw(Canvas& can, int x, int y) {
   const int SIZE = 32;
   if( !myCircle) {
-    myCircle = new Circle(x,y,SIZE,RED);
+    myCircle = new Circle(x,y,SIZE,RED,BLACK);
     can.add(myCircle);
   }
 }
@@ -42,15 +39,14 @@ void Philosopher::refreshColor() {
     case isFull:   c=BLUE;   break;
     case thinking: c=BLUE;   break;
   }
-  myCircle->setColor(c);
+  myCircle->setColor(c, BLACK);
 }
 
 /**
  * Adds a meal representation to meals and the Canvas
  */
-void Philosopher::addMeal(Canvas& can, Circle * shape) {
-  can.add(shape);
-  meals.push_back(shape);
+void Philosopher::addMeal() {
+  numMeals++;
 }
 
 /**

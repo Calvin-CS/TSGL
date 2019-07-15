@@ -11,12 +11,12 @@ namespace tsgl {
   *   \param radius The radius of the star in pixels.
   *   \param points The number of points to use in the star.
   *   \param color The color of the star.
-  *   \param ninja The ninja setting of the star, making the star points spin differently if true
-  *     (set to false by default).
   *   \param filled Whether the star should be filled
   *     (set to true by default).
+  *   \param ninja The ninja setting of the star, making the star points spin differently if true
+  *     (set to false by default).
   */
-Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ninja, bool filled) : ConcavePolygon(points*2, filled, !filled) {
+Star::Star(float x, float y, float radius, int points, ColorFloat color, bool filled, bool ninja) : ConcavePolygon(points*2, filled, !filled) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;
@@ -39,12 +39,12 @@ Star::Star(float x, float y, float radius, int points, ColorFloat color, bool ni
   *   \param radius The radius of the star in pixels.
   *   \param points The number of points to use in the star.
   *   \param color An array of colors for the star.
-  *   \param ninja The ninja setting of the star, making the star points spin differently if true
-  *     (set to false by default).
   *   \param filled Whether the star should be filled
   *     (set to true by default).
+  *   \param ninja The ninja setting of the star, making the star points spin differently if true
+  *     (set to false by default).
   */
-Star::Star(float x, float y, float radius, int points, ColorFloat color[], bool ninja, bool filled) : ConcavePolygon(points*2, filled, !filled) {
+Star::Star(float x, float y, float radius, int points, ColorFloat color[], bool filled, bool ninja) : ConcavePolygon(points*2, filled, !filled) {
   //TODO: maybe take "ninja" out, decide how we want the stars to be
   myRadius = radius;
   myPoints = points;

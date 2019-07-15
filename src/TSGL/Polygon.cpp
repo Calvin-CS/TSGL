@@ -439,39 +439,41 @@ float Polygon::getY() {
  * \param radians Float value denoting how many radians to rotate the Polygon.
  */
 void Polygon::setRotation(float radians) {
-  float pivotX = getX();
-  float pivotY = getY();
-  float s = sin(radians - currentRotation);
-  float c = cos(radians - currentRotation);
-  currentRotation = radians;
-  if(isFilled) {
-    for(int i = 0; i < numberOfVertices; i++) {
-      float x = vertices[6*i];
-      float y = vertices[6*i+1];
-      x -= pivotX;
-      y -= pivotY;
-      float xnew = x * c - y * s;
-      float ynew = x * s + y * c;
+  if(radians != currentRotation) {
+    float pivotX = getX();
+    float pivotY = getY();
+    float s = sin(radians - currentRotation);
+    float c = cos(radians - currentRotation);
+    currentRotation = radians;
+    if(isFilled) {
+      for(int i = 0; i < numberOfVertices; i++) {
+        float x = vertices[6*i];
+        float y = vertices[6*i+1];
+        x -= pivotX;
+        y -= pivotY;
+        float xnew = x * c - y * s;
+        float ynew = x * s + y * c;
 
-      x = xnew + pivotX;
-      y = ynew + pivotY;
-      vertices[6*i] = x;
-      vertices[6*i+1] = y;
+        x = xnew + pivotX;
+        y = ynew + pivotY;
+        vertices[6*i] = x;
+        vertices[6*i+1] = y;
+      }
     }
-  }
-  if(hasOutline) {
-    for(int i = 0; i < numberOfOutlineVertices; i++) {
-      float x = outlineVertices[6*i];
-      float y = outlineVertices[6*i+1];
-      x -= pivotX;
-      y -= pivotY;
-      float xnew = x * c - y * s;
-      float ynew = x * s + y * c;
+    if(hasOutline) {
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        float x = outlineVertices[6*i];
+        float y = outlineVertices[6*i+1];
+        x -= pivotX;
+        y -= pivotY;
+        float xnew = x * c - y * s;
+        float ynew = x * s + y * c;
 
-      x = xnew + pivotX;
-      y = ynew + pivotY;
-      outlineVertices[6*i] = x;
-      outlineVertices[6*i+1] = y;
+        x = xnew + pivotX;
+        y = ynew + pivotY;
+        outlineVertices[6*i] = x;
+        outlineVertices[6*i+1] = y;
+      }
     }
   }
 }

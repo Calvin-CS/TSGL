@@ -588,12 +588,14 @@ void Canvas::drawCircle(int x, int y, int radius, ColorFloat fillColor[], ColorF
   *   \param color A single color for the said vertices.
   *   \param filled Whether the ConcavePolygon should be filled in or not
   *     (set to true by default).
+  *   \param rotation Rotation of the ConcavePolygon in radians clockwise.
   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
   *   that you draw convex polygons with this function.
   * \see drawConvexPolygon().
   */
-void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color, bool filled) {
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color, bool filled, float rotation) {
     ConcavePolygon* p = new ConcavePolygon(size, x, y, color, filled);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -607,12 +609,14 @@ void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color, bo
   *   \param color An array of colors for the said vertices.
   *   \param filled Whether the ConcavePolygon should be filled in or not
   *     (set to true by default).
+  *   \param rotation Rotation of the ConcavePolygon in radians clockwise.
   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
   *   that you draw convex polygons with this function.
   * \see drawConvexPolygon().
   */
-void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled, float rotation) {
     ConcavePolygon* p = new ConcavePolygon(size, x, y, color, filled);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -625,12 +629,14 @@ void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], 
   *   \param y An array of y positions of said vertices.
   *   \param fillColor A single color for the fill vertices.
   *   \param outlineColor A single color for the outline vertices.
+  *   \param rotation Rotation of the ConcavePolygon in radians clockwise.
   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
   *   that you draw convex polygons with this function.
   * \see drawConvexPolygon().
   */
-void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor) {
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
     ConcavePolygon* p = new ConcavePolygon(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -643,12 +649,14 @@ void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor
   *   \param y An array of y positions of said vertices.
   *   \param fillColor An array of colors for the fill vertices.
   *   \param outlineColor A single color for the outline vertices.
+  *   \param rotation Rotation of the ConcavePolygon in radians clockwise.
   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
   *   that you draw convex polygons with this function.
   * \see drawConvexPolygon().
   */
-void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor) {
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
     ConcavePolygon* p = new ConcavePolygon(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -661,12 +669,14 @@ void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor
   *   \param y An array of y positions of said vertices.
   *   \param fillColor A single color for the fill vertices.
   *   \param outlineColor An array of colors for the outline vertices.
+  *   \param rotation Rotation of the ConcavePolygon in radians clockwise.
   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
   *   that you draw convex polygons with this function.
   * \see drawConvexPolygon().
   */
-void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]) {
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
     ConcavePolygon* p = new ConcavePolygon(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -679,12 +689,14 @@ void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor
   *   \param y An array of y positions of said vertices.
   *   \param fillColor An array of colors for the fill vertices.
   *   \param outlineColor An array of colors for the outline vertices.
+  *   \param rotation Rotation of the ConcavePolygon in radians clockwise.
   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
   *   that you draw convex polygons with this function.
   * \see drawConvexPolygon().
   */
-void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]) {
+void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation) {
     ConcavePolygon* p = new ConcavePolygon(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -698,12 +710,14 @@ void Canvas::drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor
   *   \param color A single color for the said vertices.
   *   \param filled Whether the ConvexPolygon should be filled in or not
   *     (set to true by default).
+  *   \param rotation Rotation of the ConvexPolygon in radians clockwise.
   * \note The difference between a convex polygon and a concave polygon
   *   is that a convex polygon has all interior angles less than
   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
   */
-void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color, bool filled) {
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color, bool filled, float rotation) {
     ConvexPolygon* p = new ConvexPolygon(size, x, y, color, filled);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -717,12 +731,14 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color, boo
   *   \param color An array of colors for the said vertices.
   *   \param filled Whether the ConvexPolygon should be filled in or not
   *     (set to true by default).
+  *   \param rotation Rotation of the ConvexPolygon in radians clockwise.
   * \note The difference between a convex polygon and a concave polygon
   *   is that a convex polygon has all interior angles less than
   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
   */
-void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled) {
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled, float rotation) {
     ConvexPolygon* p = new ConvexPolygon(size, x, y, color, filled);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -735,12 +751,14 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], b
   *   \param y An array of the y positions of said vertices.
   *   \param fillColor A single color for the fill vertices.
   *   \param outlineColor An array of colors for the outline vertices.
+  *   \param rotation Rotation of the ConvexPolygon in radians clockwise.
   * \note The difference between a convex polygon and a concave polygon
   *   is that a convex polygon has all interior angles less than
   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
   */
-void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor) {
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
     ConvexPolygon* p = new ConvexPolygon(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -753,12 +771,14 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor,
   *   \param y An array of the y positions of said vertices.
   *   \param fillColor An array of colors for the fill vertices.
   *   \param outlineColor A single color for the outline vertices.
+  *   \param rotation Rotation of the ConvexPolygon in radians clockwise.
   * \note The difference between a convex polygon and a concave polygon
   *   is that a convex polygon has all interior angles less than
   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
   */
-void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor) {
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
     ConvexPolygon* p = new ConvexPolygon(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -771,12 +791,14 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[
   *   \param y An array of the y positions of said vertices.
   *   \param fillColor A single color for the fill vertices.
   *   \param outlineColor An array of colors for the outline vertices.
+  *   \param rotation Rotation of the ConvexPolygon in radians clockwise.
   * \note The difference between a convex polygon and a concave polygon
   *   is that a convex polygon has all interior angles less than
   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
   */
-void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]) {
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
     ConvexPolygon* p = new ConvexPolygon(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -789,12 +811,14 @@ void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor,
   *   \param y An array of the y positions of said vertices.
   *   \param fillColor An array of colors for the fill vertices.
   *   \param outlineColor An array of colors for the outline vertices.
+  *   \param rotation Rotation of the ConvexPolygon in radians clockwise.
   * \note The difference between a convex polygon and a concave polygon
   *   is that a convex polygon has all interior angles less than
   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
   */
-void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]) {
+void Canvas::drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation) {
     ConvexPolygon* p = new ConvexPolygon(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -828,9 +852,11 @@ void Canvas::drawDrawable(Drawable* d) {
   *   \param color A single color for ellipse.
   *   \param filled Whether the ellipse should be filled
   *     (set to true by default).
+  *   \param rotation Rotation of the ellipse in radians clockwise.
   */
-void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color, bool filled) {
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color, bool filled, float rotation) {
   Ellipse * e = new Ellipse(x, y, xRadius, yRadius, color, filled);
+  e->setRotation(rotation);
   drawDrawable(e);
 }
 
@@ -846,9 +872,11 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat colo
   *   \param color An array of colors for ellipse.
   *   \param filled Whether the ellipse should be filled
   *     (set to true by default).
+  *   \param rotation Rotation of the ellipse in radians clockwise.
   */
-void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color[], bool filled) {
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color[], bool filled, float rotation) {
   Ellipse * e = new Ellipse(x, y, xRadius, yRadius, color, filled);
+  e->setRotation(rotation);
   drawDrawable(e);
 }
 
@@ -863,9 +891,11 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat colo
   *   \param sides The number of sides to use in the ellipse.
   *   \param fillColor A single color for ellipse's fill vertices.
   *   \param outlineColor A single color for ellipse's outline vertices.
+  *   \param rotation Rotation of the ellipse in radians clockwise.
   */
-void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor) {
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
   Ellipse * e = new Ellipse(x, y, xRadius, yRadius, fillColor, outlineColor);
+  e->setRotation(rotation);
   drawDrawable(e);
 }
 
@@ -880,9 +910,11 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fill
   *   \param sides The number of sides to use in the ellipse.
   *   \param fillColor An array of colors for ellipse's fill vertices.
   *   \param outlineColor A single color for ellipse's outline vertices.
+  *   \param rotation Rotation of the ellipse in radians clockwise.
   */
-void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor) {
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
   Ellipse * e = new Ellipse(x, y, xRadius, yRadius, fillColor, outlineColor);
+  e->setRotation(rotation);
   drawDrawable(e);
 }
 
@@ -897,9 +929,11 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fill
   *   \param sides The number of sides to use in the ellipse.
   *   \param fillColor A single color for ellipse's fill vertices.
   *   \param outlineColor An array of colors for ellipse's outline vertices.
+  *   \param rotation Rotation of the ellipse in radians clockwise.
   */
-void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor[]) {
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
   Ellipse * e = new Ellipse(x, y, xRadius, yRadius, fillColor, outlineColor);
+  e->setRotation(rotation);
   drawDrawable(e);
 }
 
@@ -914,9 +948,11 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fill
   *   \param sides The number of sides to use in the ellipse.
   *   \param fillColor An array of colors for ellipse's fill vertices.
   *   \param outlineColor An array of colors for ellipse's outline vertices.
+  *   \param rotation Rotation of the ellipse in radians clockwise.
   */
-void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation) {
   Ellipse * e = new Ellipse(x, y, xRadius, yRadius, fillColor, outlineColor);
+  e->setRotation(rotation);
   drawDrawable(e);
 }
 
@@ -929,9 +965,11 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fill
   *   \param width The width of the Image.
   *   \param height The height of the Image.
   *   \param alpha The alpha with which to draw the Image
+  *   \param rotation Rotation of the Image in radians clockwise.   
   */
-void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
+void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha, float rotation) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
+    im->setRotation(rotation);
     drawDrawable(im);                                       // Push it onto our drawing buffer
 }
 
@@ -944,9 +982,11 @@ void Canvas::drawImage(std::string filename, int x, int y, int width, int height
   *   \param y2 The y position of the end of the line.
   *   \param color The color of the line
   *     (set to BLACK by default).
+  *   \param rotation Rotation of the line in radians clockwise. 
   */
-void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
+void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color, float rotation) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
+    l->setRotation(rotation);
     drawDrawable(l);                               // Push it onto our drawing buffer
 }
 
@@ -958,9 +998,11 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color) {
   *   \param x2 The x position of the end of the line.
   *   \param y2 The y position of the end of the line.
   *   \param color A color array for the line.
+  *   \param rotation Rotation of the line in radians clockwise.
   */
-void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color[]) {
+void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color[], float rotation) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
+    l->setRotation(rotation);
     drawDrawable(l);                               // Push it onto our drawing buffer
 }
 
@@ -972,6 +1014,7 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color[]) {
   *   \param row The row (y-position) of the pixel.
   *   \param col The column (x-position) of the pixel.
   *   \param color The color of the point (set to BLACK by default).
+  *   \param rotation Rotation of the ConcavePolygon in radians clockwise. 
   * \see drawPoint()
   */
 inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
@@ -1014,9 +1057,11 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
   *   \param x An array of the x positions of the polyline's vertices.
   *   \param y An array of the y positions of the polyline's vertices.
   *   \param color A color for the Polyline.
+  *   \param rotation Rotation of the Polyline in radians clockwise.   
   */
-void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color) {
+void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color, float rotation) {
     Polyline* p = new Polyline(size, x, y, color);  // Creates the Line with the specified coordinates and color
+    p->setRotation(rotation);
     drawDrawable(p);                               // Push it onto our drawing buffer
 }
 
@@ -1027,9 +1072,11 @@ void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color) {
   *   \param x An array of the x positions of the polyline's vertices.
   *   \param y An array of the y positions of the polyline's vertices.
   *   \param color A color array for the Polyline.
+  *   \param rotation Rotation of the Polyline in radians clockwise.
   */
-void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color[]) {
+void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color[], float rotation) {
     Polyline* p = new Polyline(size, x, y, color);  // Creates the Line with the specified coordinates and color
+    p->setRotation(rotation);
     drawDrawable(p);                               // Push it onto our drawing buffer
 }
 
@@ -1060,10 +1107,12 @@ void Canvas::drawProgress(ProgressBar* p) {
   *   \param color A single color for Rectangle.
   *   \param filled Whether the Rectangle should be filled
   *     (set to true by default).
+  *   \param rotation Rotation of the Rectangle in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat color, bool filled) {
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat color, bool filled, float rotation) {
     Rectangle* rec = new Rectangle(x, y, w, h, color, filled);  // Creates the Rectangle with the specified coordinates and color
+    rec->setRotation(rotation);
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
@@ -1077,10 +1126,12 @@ void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat color,
   *   \param color An array of colors for Rectangle.
   *   \param filled Whether the Rectangle should be filled
   *     (set to true by default).
+  *   \param rotation Rotation of the Rectangle in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat color[], bool filled) {
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat color[], bool filled, float rotation) {
     Rectangle* rec = new Rectangle(x, y, w, h, color, filled);  // Creates the Rectangle with the specified coordinates and color
+    rec->setRotation(rotation);
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
@@ -1093,10 +1144,12 @@ void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat color[
   *   \param h The Rectangle's height.
   *   \param fillColor A single color for Rectangle's fill vertices.
   *   \param outlineColor A single color for Rectangle's outline vertices.
+  *   \param rotation Rotation of the Rectangle in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor) {
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
     Rectangle* rec = new Rectangle(x, y, w, h, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
+    rec->setRotation(rotation);
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
@@ -1109,10 +1162,12 @@ void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillCo
   *   \param h The Rectangle's height.
   *   \param fillColor An array of colors for Rectangle's fill vertices.
   *   \param outlineColor A single color for Rectangle's outline vertices.
+  *   \param rotation Rotation of the Rectangle in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor) {
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
     Rectangle* rec = new Rectangle(x, y, w, h, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
+    rec->setRotation(rotation);
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
@@ -1125,10 +1180,12 @@ void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillCo
   *   \param h The Rectangle's height.
   *   \param fillColor A single color for Rectangle's fill vertices.
   *   \param outlineColor An array of colors for Rectangle's outline vertices.
+  *   \param rotation Rotation of the Rectangle in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor[]) {
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
     Rectangle* rec = new Rectangle(x, y, w, h, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
+    rec->setRotation(rotation);
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
@@ -1141,10 +1198,12 @@ void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillCo
   *   \param h The Rectangle's height.
   *   \param fillColor An array of colors for Rectangle's fill vertices.
   *   \param outlineColor An array of colors for Rectangle's outline vertices.
+  *   \param rotation Rotation of the Rectangle in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Rectangle may not get drawn on some machines.
   */
-void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation) {
     Rectangle* rec = new Rectangle(x, y, w, h, fillColor, outlineColor);  // Creates the Rectangle with the specified coordinates and color
+    rec->setRotation(rotation);
     drawDrawable(rec);                                     // Push it onto our drawing buffer
 }
 
@@ -1158,9 +1217,11 @@ void Canvas::drawRectangle(float x, float y, float w, float h, ColorFloat fillCo
   *   \param color A single color for RegularPolygon.
   *   \param filled Whether the regular polygon should be filled
   *     (set to true by default).
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.
   */
-void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color, bool filled) {
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color, bool filled, float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, color, filled);
+    c->setRotation(rotation);
     drawDrawable(c);
 }
 
@@ -1174,9 +1235,11 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param color An array of colors for RegularPolygon.
   *   \param filled Whether the regular polygon should be filled
   *     (set to true by default).
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.   
   */
-void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled) {
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled, float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, color, filled);
+    c->setRotation(rotation);
     drawDrawable(c);
 }
 
@@ -1189,9 +1252,11 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param sides The number of sides for the RegularPolygon
   *   \param fillColor A single color for RegularPolygon's fill vertices.
   *   \param outlineColor A single color for RegularPolygon's outline vertices.
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.   
   */
-void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor) {
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
+    c->setRotation(rotation);
     drawDrawable(c);
 }
 
@@ -1204,9 +1269,11 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param sides The number of sides for the RegularPolygon
   *   \param fillColor An array of colors for RegularPolygon's fill vertices.
   *   \param outlineColor A single color for RegularPolygon's outline vertices.
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.  
   */
-void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor) {
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
+    c->setRotation(rotation);
     drawDrawable(c);
 }
 
@@ -1219,9 +1286,11 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param sides The number of sides for the RegularPolygon
   *   \param fillColor A single color for RegularPolygon's fill vertices.
   *   \param outlineColor An array of colors for RegularPolygon's outline vertices.
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.   
   */
-void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[]) {
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
+    c->setRotation(rotation);
     drawDrawable(c);
 }
 
@@ -1234,9 +1303,11 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param sides The number of sides for the RegularPolygon
   *   \param fillColor An array of colors for RegularPolygon's fill vertices.
   *   \param outlineColor An array of colors for RegularPolygon's outline vertices.
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.
   */
-void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
+    c->setRotation(rotation);
     drawDrawable(c);
 }
 
@@ -1250,10 +1321,12 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param color A single color for Square.
   *   \param filled Whether the Square should be filled
   *     (set to true by default).
+  *   \param rotation Rotation of the Square in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
   */
-void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat color, bool filled) {
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat color, bool filled, float rotation) {
     Square* s = new Square(x1, y1, sideLength, color, filled);  // Creates the Square with the specified coordinates and color
+    s->setRotation(rotation);
     drawDrawable(s);                                     // Push it onto our drawing buffer
 }
 
@@ -1267,10 +1340,12 @@ void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat color, bool f
   *   \param color An array of colors for Square.
   *   \param filled Whether the Square should be filled
   *     (set to true by default).
+  *   \param rotation Rotation of the Square in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
   */
-void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat color[], bool filled) {
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat color[], bool filled, float rotation) {
     Square* s = new Square(x1, y1, sideLength, color, filled);  // Creates the Square with the specified coordinates and color
+    s->setRotation(rotation);
     drawDrawable(s);                                     // Push it onto our drawing buffer
 }
 
@@ -1283,10 +1358,12 @@ void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat color[], bool
   *   \param y2 The y coordinate of the Square's bottom edge.
   *   \param fillColor A single color for Square's fill vertices.
   *   \param outlineColor A single color for Square's outline vertices.
+  *   \param rotation Rotation of the Square in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
   */
-void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor) {
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
     Square* s = new Square(x1, y1, sideLength, fillColor, outlineColor);  // Creates the Square with the specified coordinates and color
+    s->setRotation(rotation);
     drawDrawable(s);                                     // Push it onto our drawing buffer
 }
 
@@ -1299,10 +1376,12 @@ void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, Co
   *   \param y2 The y coordinate of the Square's bottom edge.
   *   \param fillColor An array of colors for Square's fill vertices.
   *   \param outlineColor A single color for Square's outline vertices.
+  *   \param rotation Rotation of the Square in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
   */
-void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor) {
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
     Square* s = new Square(x1, y1, sideLength, fillColor, outlineColor);  // Creates the Square with the specified coordinates and color
+    s->setRotation(rotation);
     drawDrawable(s);                                     // Push it onto our drawing buffer
 }
 
@@ -1315,10 +1394,12 @@ void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], 
   *   \param y2 The y coordinate of the Square's bottom edge.
   *   \param fillColor A single color for Square's fill vertices.
   *   \param outlineColor An array of colors for Square's outline vertices.
+  *   \param rotation Rotation of the Square in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
   */
-void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor[]) {
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
     Square* s = new Square(x1, y1, sideLength, fillColor, outlineColor);  // Creates the Square with the specified coordinates and color
+    s->setRotation(rotation);
     drawDrawable(s);                                     // Push it onto our drawing buffer
 }
 
@@ -1331,10 +1412,12 @@ void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, Co
   *   \param y2 The y coordinate of the Square's bottom edge.
   *   \param fillColor An array of colors for Square's fill vertices.
   *   \param outlineColor An array of colors for Square's outline vertices.
+  *   \param rotation Rotation of the Square in radians clockwise.
   * \bug The bottom-right pixel of a non-filled Square may not get drawn on some machines.
   */
-void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation) {
     Square* s = new Square(x1, y1, sideLength, fillColor, outlineColor);  // Creates the Square with the specified coordinates and color
+    s->setRotation(rotation);
     drawDrawable(s);                                     // Push it onto our drawing buffer
 }
 
@@ -1347,12 +1430,14 @@ void Canvas::drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], 
   *   \param radius Radius of the outer points of the star
   *   \param points The number of points on the star
   *   \param color A single color or array of colors for the star vertices.
-  *   \param ninja makes it look conventional or like a shuriken
   *   \param filled Whether the star should be filled
   *     (set to true by default).
+  *   \param ninja makes it look conventional or like a shuriken
+  *   \param rotation Rotation of the star in radians clockwise.
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bool ninja, bool filled) {
-  Star * star = new Star(x, y, radius, points, color, ninja, filled);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bool filled, bool ninja, float rotation) {
+  Star * star = new Star(x, y, radius, points, color, filled, ninja);
+  star->setRotation(rotation);
   drawDrawable(star);
 }
 
@@ -1364,12 +1449,14 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color, bo
   *   \param radius Radius of the outer points of the star
   *   \param points The number of points on the star
   *   \param color A single color or array of colors for the star vertices.
-  *   \param ninja makes it look conventional or like a shuriken
   *   \param filled Whether the star should be filled
   *     (set to true by default).
+  *   \param ninja makes it look conventional or like a shuriken
+  *   \param rotation Rotation of the star in radians clockwise.
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color[], bool ninja, bool filled) {
-  Star * star = new Star(x, y, radius, points, color, ninja, filled);
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color[], bool filled, bool ninja, float rotation) {
+  Star * star = new Star(x, y, radius, points, color, filled, ninja);
+  star->setRotation(rotation);
   drawDrawable(star);
 }
 
@@ -1383,9 +1470,11 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat color[], 
   *   \param fillColor A single color or array of colors for the star's fill vertices.
   *   \param outlineColor A single color or array of colors for the star's outline vertices.
   *   \param ninja makes it look conventional or like a shuriken
+  *   \param rotation Rotation of the star in radians clockwise.
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja) {
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja, float rotation) {
   Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja);
+  star->setRotation(rotation);
   drawDrawable(star);
 }
 
@@ -1399,9 +1488,11 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor
   *   \param fillColor A single color or array of colors for the star's fill vertices.
   *   \param outlineColor A single color or array of colors for the star's outline vertices.
   *   \param ninja makes it look conventional or like a shuriken
+  *   \param rotation Rotation of the star in radians clockwise.
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja) {
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja, float rotation) {
   Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja);
+  star->setRotation(rotation);
   drawDrawable(star);
 }
 
@@ -1415,9 +1506,11 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor
   *   \param fillColor A single color or array of colors for the star's fill vertices.
   *   \param outlineColor A single color or array of colors for the star's outline vertices.
   *   \param ninja makes it look conventional or like a shuriken
+  *   \param rotation Rotation of the star in radians clockwise.
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja) {
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja, float rotation) {
   Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja);
+  star->setRotation(rotation);
   drawDrawable(star);
 }
 
@@ -1431,9 +1524,11 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor
   *   \param fillColor A single color or array of colors for the star's fill vertices.
   *   \param outlineColor A single color or array of colors for the star's outline vertices.
   *   \param ninja makes it look conventional or like a shuriken
+  *   \param rotation Rotation of the star in radians clockwise.
   */
-void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja) {
+void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja, float rotation) {
   Star * star = new Star(x, y, radius, points, fillColor, outlineColor, ninja);
+  star->setRotation(rotation);
   drawDrawable(star);
 }
 
@@ -1445,11 +1540,12 @@ void Canvas::drawStar(int x, int y, int radius, int points, ColorFloat fillColor
   *   \param y The y coordinate of the text's left bound.
   *   \param size The size of the text in pixels.
   *   \param color The color of the Text (set to BLACK by default).
+  *   \param rotation Rotation of the Text in radians clockwise.
   */
-void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color, std::string fontFileName) {
+void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat color, std::string fontFileName, float rotation) {
     std::wstring wsTmp(text.begin(), text.end());
     std::wstring ws = wsTmp;
-    drawText(ws, x, y, size, color, fontFileName);
+    drawText(ws, x, y, size, color, fontFileName, rotation);
 }
 
  /*!
@@ -1460,10 +1556,11 @@ void Canvas::drawText(std::string text, int x, int y, unsigned size, ColorFloat 
   *   \param y The y coordinate of the text's left bound.
   *   \param size The size of the text in pixels.
   *   \param color The color of the Text (set to BLACK by default).
+  *   \param rotation Rotation of the Text in radians clockwise.
   * \note Identical to the drawText(std::string, ...) aside from the first parameter.
   * \see drawText(std::string s, int x, int y, unsigned size, ColorFloat color = BLACK).
   */
-void Canvas::drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color, std::string fontFileName) {
+void Canvas::drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color, std::string fontFileName, float rotation) {
     Text* t = new Text(text, x, y, size, color);  // Creates the Point with the specified coordinates and color
     if(fontFileName != defaultFontFileName && fontFileName != "") {
       t->setFont(fontFileName);
@@ -1472,6 +1569,7 @@ void Canvas::drawText(std::wstring text, int x, int y, unsigned int size, ColorF
         t->setFont(defaultFontFileName);
       }
     }
+    t->setRotation(rotation);
     drawDrawable(t);                                // Push it onto our drawing buffer
 }
 
@@ -1486,9 +1584,11 @@ void Canvas::drawText(std::wstring text, int x, int y, unsigned int size, ColorF
   *   \param y3 The y coordinate of the third vertex of the Triangle.
   *   \param color A single color for the Triangle vertices.
   *   \param filled Whether the Triangle should be filled (set to true by default).
+  *   \param rotation Rotation of the Triangle in radians clockwise.
   */
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled, float rotation) {
     Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color, filled);  // Creates the Triangle with the specified vertices and color
+    t->setRotation(rotation);
     drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
@@ -1503,9 +1603,11 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
   *   \param y3 The y coordinate of the third vertex of the Triangle.
   *   \param color An array of colors for the Triangle vertices.
   *   \param filled Whether the Triangle should be filled (set to true by default).
+  *   \param rotation Rotation of the Triangle in radians clockwise.
   */
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color[], bool filled) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color[], bool filled, float rotation) {
     Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, color, filled);  // Creates the Triangle with the specified vertices and color
+    t->setRotation(rotation);
     drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
@@ -1520,9 +1622,11 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
   *   \param y3 The y coordinate of the third vertex of the Triangle.
   *   \param fillColor A single color for the Triangle's fill vertices.
   *   \param outlineColor A single color for the Triangle's outline vertices.
+  *   \param rotation Rotation of the Triangle in radians clockwise.
   */
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
     Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, fillColor, outlineColor);  // Creates the Triangle with the specified vertices and color
+    t->setRotation(rotation);
     drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
@@ -1537,9 +1641,11 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
   *   \param y3 The y coordinate of the third vertex of the Triangle.
   *   \param fillColor An array of colors for the Triangle's fill vertices.
   *   \param outlineColor A single color for the Triangle's outline vertices.
+  *   \param rotation Rotation of the Triangle in radians clockwise.
   */
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
     Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, fillColor, outlineColor);  // Creates the Triangle with the specified vertices and color
+    t->setRotation(rotation);
     drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
@@ -1554,9 +1660,11 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
   *   \param y3 The y coordinate of the third vertex of the Triangle.
   *   \param fillColor A single color for the Triangle's fill vertices.
   *   \param outlineColor An array of colors for the Triangle's outline vertices.
+  *   \param rotation Rotation of the Triangle in radians clockwise.
   */
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor[]) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
     Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, fillColor, outlineColor);  // Creates the Triangle with the specified vertices and color
+    t->setRotation(rotation);
     drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
@@ -1571,9 +1679,11 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
   *   \param y3 The y coordinate of the third vertex of the Triangle.
   *   \param fillColor An array of colors for the Triangle's fill vertices.
   *   \param outlineColor An array of colors for the Triangle's outline vertices.
+  *   \param rotation Rotation of the Triangle in radians clockwise.
   */
-void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation) {
     Triangle* t = new Triangle(x1, y1, x2, y2, x3, y3, fillColor, outlineColor);  // Creates the Triangle with the specified vertices and color
+    t->setRotation(rotation);
     drawDrawable(t);                                               // Push it onto our drawing buffer
 }
 
@@ -1586,9 +1696,11 @@ void Canvas::drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorF
   *   \param y An array of y positions of the vertices.
   *   \param color A single color for the vertices.
   *   \param filled Whether the triangle strip should be filled (true) or not (false).
+  *   \param rotation Rotation of the TriangleStrip in radians clockwise.
   */
-void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color, bool filled) {
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color, bool filled, float rotation) {
     TriangleStrip* p = new TriangleStrip(size, x, y, color, filled);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -1601,9 +1713,11 @@ void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color, boo
   *   \param y An array of y positions of the vertices.
   *   \param color An array of colors for the said vertices.
   *   \param filled Whether the triangle strip should be filled (true) or not (false).
+  *   \param rotation Rotation of the TriangleStrip in radians clockwise.
   */
-void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled) {
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled, float rotation) {
     TriangleStrip* p = new TriangleStrip(size, x, y, color, filled);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -1616,9 +1730,11 @@ void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], b
   *   \param y An array of y positions of the vertices.
   *   \param fillColor A single color for the fill vertices.
   *   \param outlineColor A single color for the outline vertices.
+  *   \param rotation Rotation of the TriangleStrip in radians clockwise.
   */
-void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor) {
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
     TriangleStrip* p = new TriangleStrip(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -1631,9 +1747,11 @@ void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor,
   *   \param y An array of y positions of the vertices.
   *   \param fillColor An array of colors for the fill vertices.
   *   \param outlineColor A single color for the outline vertices.
+  *   \param rotation Rotation of the TriangleStrip in radians clockwise.
   */
-void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor) {
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
     TriangleStrip* p = new TriangleStrip(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -1646,9 +1764,11 @@ void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[
   *   \param y An array of y positions of the vertices.
   *   \param fillColor A single color for the fill vertices.
   *   \param outlineColor An array of colors for the outline vertices.
+  *   \param rotation Rotation of the TriangleStrip in radians clockwise.
   */
-void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]) {
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
     TriangleStrip* p = new TriangleStrip(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -1661,9 +1781,11 @@ void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor,
   *   \param y An array of y positions of the vertices.
   *   \param fillColor An array of colors for the fill vertices.
   *   \param outlineColor An array of colors for the outline vertices.
+  *   \param rotation Rotation of the TriangleStrip in radians clockwise.
   */
-void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]) {
+void Canvas::drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation) {
     TriangleStrip* p = new TriangleStrip(size, x, y, fillColor, outlineColor);
+    p->setRotation(rotation);
     drawDrawable(p);  // Push it onto our drawing buffer
 }
 
@@ -2325,6 +2447,18 @@ void Canvas::run(void (*myFunction)(Canvas&, int, std::string), int i, std::stri
   */
 void Canvas::run(void (*myFunction)(Canvas&, std::string, int), std::string s, int i) {
   start(); myFunction(*this, s, i); wait();
+}
+
+ /*!
+  * \brief Overload for run()
+  * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+  *   which is a reference to the Canvas to render to.
+  * \param i An integer argument to myFunction
+  * \param s A string argument to myFunction
+  * \param b A boolean argument to myFunction
+  */
+void Canvas::run(void (*myFunction)(Canvas&, int, std::string, bool), int i, std::string s, bool b) {
+  start(); myFunction(*this, i, s, b); wait();
 }
 
 void Canvas::screenShot() {

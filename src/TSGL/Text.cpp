@@ -124,6 +124,7 @@ void Text::setFont(std::string filename) {
 }
 
 Text::~Text() {
+    delete myLoader;
     delete[] vertices;
 }
 

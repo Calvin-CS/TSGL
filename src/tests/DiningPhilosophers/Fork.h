@@ -34,14 +34,14 @@ struct Fork {
     }
 
     //Add vertices
-    myShape = new ConcavePolygon(POINTS, xs, ys, BLACK);
+    myShape = new ConcavePolygon(POINTS, xs, ys, BLACK, BLACK);
   }
   void setCanvas( Canvas* can) {
     can->add(myShape);
   }
   void draw(int x, int y, double angle, ColorFloat c) {
     angle -= PI/2;
-    myShape->setColor(c);
+    myShape->setColor(c, (c.asString() != "0R,0G,0B,1A")? BLACK : DARKGRAY);
     myShape->setCenter(x, y);
     myShape->setRotation(angle);
   }

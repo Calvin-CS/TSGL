@@ -36,6 +36,10 @@ void textFunction(Canvas& can, std::string font) {
     text->setCenter(can.getWindowWidth()/2, 4*can.getWindowHeight() /5);
     text->setRotation(PI/8);
     can.add(text);
+    while(can.isOpen()) {
+        can.sleep();
+    }
+    delete text;
 
 }
 

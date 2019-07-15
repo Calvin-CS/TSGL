@@ -20,10 +20,11 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     forks[i].id = i;
     forks[i].setCanvas(myCan);
   }
-  spaghetti = new Image("./assets/pics/spaghet.png", loader, 0, 0, 300, 180, 1.0f);
-  spaghetti->setCenter(can.getWindowWidth()/2, can.getWindowHeight()/2);
-  myCan->add(spaghetti);
-  // myCan->drawImage("../assets/pics/ball.png", 764, 563, 200, 160, 1.0f);
+  myCan->drawImage("./assets/pics/spaghet.png", tabX + 150, tabY - 20, 100, 50, 1.0f);
+  myCan->drawImage("./assets/pics/spaghet.png", tabX + 15, tabY - 230, 100, 50, 1.0f);
+  myCan->drawImage("./assets/pics/spaghet.png", tabX - 210, tabY - 160, 100, 50, 1.0f);
+  myCan->drawImage("./assets/pics/spaghet.png", tabX + 10, tabY + 170, 100, 50, 1.0f);
+  myCan->drawImage("./assets/pics/spaghet.png", tabX - 210, tabY + 100, 100, 50, 1.0f);
   myMethod = m;
   switch(myMethod) {
     case forfeitWhenBlocked:
@@ -454,7 +455,7 @@ void Table::actStep() {
  */
 void Table::drawStep() {
   const int RAD = 300;
-  int FORK_RAD = 300;
+  int FORK_RAD = 250;
   const float ARC =2*PI/numPhils;
   const float CLOSE = 0.15f;
   const float BASEDIST = RAD+64;
@@ -474,10 +475,8 @@ void Table::drawStep() {
       float angle = pangle+(j/10)*2*PI/RAD; 
       float dist = BASEDIST+8*(j%10);
       myCan->drawCircle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,BROWN);
+      phils[i].addMeal();
   }
-  // } else if(phils[i].state() == hasBoth) {
-  //   spaghetti->setRotation(pangle + PI/2);
-  // }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;
     fcolor = (phils[i].state() == hasBoth) ? GREEN : PURPLE;

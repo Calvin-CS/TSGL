@@ -20,14 +20,14 @@ private:
   PhilState myState;
   PhilAction myAction;
   int id, myLeft, myRight;
+  unsigned int numMeals;
   Circle *myCircle;
-  std::vector<Circle*> meals;
 public:
   Philosopher();
   ~Philosopher();
   void draw(Canvas& can, int x, int y);
   void refreshColor();
-  void addMeal(Canvas& can, Circle * shape);
+  void addMeal();
   bool acquire(Fork& f);
   bool release(Fork& f);
   void think();
@@ -58,7 +58,7 @@ public:
   /**
    *  Accessor for number of meals Philosopher has consumed.
    */
-  int getMeals() { return meals.size(); }
+  int getMeals() { return numMeals; }
   /**
    *  Accessor for Philosopher's state.
    */

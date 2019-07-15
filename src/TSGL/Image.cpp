@@ -106,26 +106,28 @@ void Image::setCenter(float x, float y) {
  * \param radians Float value denoting how many radians to rotate the Image.
  */
 void Image::setRotation(float radians) {
-  attribMutex.lock();
-  float pivotX = getX();
-  float pivotY = getY();
-  float s = sin(radians - currentRotation);
-  float c = cos(radians - currentRotation);
-  currentRotation = radians;
-  for(int i = 0; i < 4; i++) {
-    float x = vertices[8*i];
-    float y = vertices[8*i+1];
-    x -= pivotX;
-    y -= pivotY;
-    float xnew = x * c - y * s;
-    float ynew = x * s + y * c;
+  if(radians != currentRotation) {
+    attribMutex.lock();
+    float pivotX = getX();
+    float pivotY = getY();
+    float s = sin(radians - currentRotation);
+    float c = cos(radians - currentRotation);
+    currentRotation = radians;
+    for(int i = 0; i < 4; i++) {
+      float x = vertices[8*i];
+      float y = vertices[8*i+1];
+      x -= pivotX;
+      y -= pivotY;
+      float xnew = x * c - y * s;
+      float ynew = x * s + y * c;
 
-    x = xnew + pivotX;
-    y = ynew + pivotY;
-    vertices[8*i] = x;
-    vertices[8*i+1] = y;
+      x = xnew + pivotX;
+      y = ynew + pivotY;
+      vertices[8*i] = x;
+      vertices[8*i+1] = y;
+    }
+    attribMutex.unlock();
   }
-  attribMutex.unlock();
 }
 
 /*!

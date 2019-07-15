@@ -57,10 +57,10 @@ void constructorFunction(Canvas& can) {
   can.drawSquare(605, 105, 90, fillColor[0], outlineColor);
   can.drawSquare(705, 105, 90, fillColor, outlineColor);
 
-  can.drawStar(50, 250, 45, 6, fillColor[0], false, true);
-  can.drawStar(150, 250, 45, 6, fillColor[0], true, false);
-  can.drawStar(250, 250, 45, 6, fillColor, false, true);
-  can.drawStar(350, 250, 45, 6, fillColor, true, false);
+  can.drawStar(50, 250, 45, 6, fillColor[0], true, false);
+  can.drawStar(150, 250, 45, 6, fillColor[0], false, true);
+  can.drawStar(250, 250, 45, 6, fillColor, true, false);
+  can.drawStar(350, 250, 45, 6, fillColor, false, true);
 
   can.drawStar(450, 250, 45, 6, fillColor[0], outlineColor[0], false);
   can.drawStar(550, 250, 45, 6, fillColor, outlineColor[0], false);

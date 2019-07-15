@@ -20,6 +20,7 @@ Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned lon
 	myCountLabel->setBottomLeftCorner(myX + countLabelOffset, myY + 8);
 	if( !dataLabel ) {
 		dataLabel = new Text(L"0/300", RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 16, BLACK);
+		dataLabel->setCenter(RWThread::dataX - 20, RWThread::dataY-RWThread::dataHeight-15);
 		myCan->add( dataLabel );
 		dataLabel->setLayer(3);
 	}

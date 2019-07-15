@@ -22,7 +22,10 @@ int main() {
 	Star * s2 = new Star(xs[3], ys[3], 75, 9, PURPLE, BLUE, false);
 	Star * s3 = new Star(xs[0], ys[0], 100, 6, RED, true, true);
 	Star * s4 = new Star(xs[1], ys[1], 50, 7, BLUE, false, false);
-	c.add(s1); c.add(s2); c.add(s3); c.add(s4); 
+	c.add(s1); 
+	c.add(s2); 
+	c.add(s3); 
+	c.add(s4); 
 
 	while( c.isOpen() ) {
 		c.sleep();
@@ -31,9 +34,15 @@ int main() {
 		rotation += PI / 3;
 		s1->setRotation(rotation);
 		c.resumeDrawing();
-		c.sleepFor(1);	
+		c.sleepFor(1);
 	}
 
 	c.wait();
+
+	delete[] colors;
+	delete s1;
+	delete s2;
+	delete s3;
+	delete s4;
 	return 0;
 }
