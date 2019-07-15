@@ -239,6 +239,13 @@ ColorFloat ColorFloat::operator*(float f) {
     return ColorFloat(newR,newG,newB,newA);
 }
 
+ColorFloat ColorFloat::getContrast() {
+    float newR = (R > 0.5)? 0 : 1;
+    float newG = (G > 0.5)? 0 : 1;
+    float newB = (B > 0.5)? 0 : 1;
+    return ColorFloat(newR, newG, newB, A);
+}
+
 /*!
  * \brief Default ColorInt constructor method.
  * \details This is the default constructor for the ColorInt struct.

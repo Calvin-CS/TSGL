@@ -48,6 +48,8 @@ struct ColorFloat {
     bool operator==(ColorFloat& c2);
 
     bool operator!=(ColorFloat& c2);
+
+    ColorFloat getContrast();
 };
 
 /*!

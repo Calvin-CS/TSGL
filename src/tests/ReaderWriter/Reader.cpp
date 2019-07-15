@@ -50,6 +50,7 @@ void Reader::act() {
 	Rectangle * rec = data->read(rand()%data->getItemCount()); //Get the color
 	ColorFloat* fillColor = rec->getFillColor();
 	myCircle->setColor( fillColor[0] );
+	myCountLabel->setColor( fillColor[0].getContrast() );
 	delete[] fillColor;
 
 	//Draw and erase the arrow

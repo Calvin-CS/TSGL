@@ -52,8 +52,8 @@ void Consumer::act() {
 	while( paused ) {}
 	ColorFloat* fillColor = myItem->getFillColor();
 	myShape->setColor( fillColor, BLACK ); //Change Consumer color to Item color
+	myCountLabel->setColor(fillColor->getContrast());
 	delete[] fillColor;
-	myCountLabel->setColor(BLACK);
 	count++; myCountLabel->setText( std::to_wstring(count) );
 	if(count == 10) myCountLabel->setBottomLeftCorner(myX - 10, myY + 10);
 	if(count == 100) {

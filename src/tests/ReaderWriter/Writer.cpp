@@ -98,6 +98,7 @@ void Writer::act() {
 	}
 	ColorFloat* fillColor = rec->getFillColor();
 	myCircle->setColor( fillColor[0] );
+	myCountLabel->setColor(fillColor[0].getContrast());
 	delete[] fillColor;
 
 	//Draw an arrow down to the item
