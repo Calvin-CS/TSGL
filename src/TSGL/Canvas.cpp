@@ -967,7 +967,7 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fill
   *   \param alpha The alpha with which to draw the Image
   *   \param rotation Rotation of the Image in radians clockwise.   
   */
-void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha, float rotation) {
+void Canvas::drawImage(const std::string& filename, int x, int y, int width, int height, float alpha, float rotation) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
     im->setRotation(rotation);
     drawDrawable(im);                                       // Push it onto our drawing buffer
@@ -1091,7 +1091,6 @@ void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color[], float 
   */
 void Canvas::drawProgress(ProgressBar* p) {
     for (int i = 0; i < p->getSegs(); ++i) {
-      drawText(to_string(i),p->getSegX(i)+8,p->getSegY()-8,32,BLACK);
       drawDrawable(p->getRect(i));
       drawDrawable(p->getBorder(i));
     }
@@ -2372,7 +2371,9 @@ void Canvas::resumeDrawing() {
   *   which is a reference to the Canvas to render to.
   */
 void Canvas::run(void (*myFunction)(Canvas&) ) {
-  start(); myFunction(*this); wait();
+  start(); 
+  myFunction(*this); 
+  wait();
 }
 
  /*!

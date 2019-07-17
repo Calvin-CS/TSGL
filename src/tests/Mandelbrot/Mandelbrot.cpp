@@ -105,6 +105,9 @@ void Mandelbrot::draw(Cart& can) {
     XBRD,YBRD,pCan.getWindowWidth()-XBRD*2,pCan.getWindowHeight()-YBRD*2,
     0,CH - (CH % myThreads),myThreads   //Make the max PB value a multiple of myThreads
   );
+  for (int i = 0; i < myThreads; ++i) {
+    pCan.drawText(to_string(i),pb.getSegX(i)+8,pb.getSegY()-8,32,BLACK);
+  }
   while(myRedraw) {
     myRedraw = false;
     can.reset();

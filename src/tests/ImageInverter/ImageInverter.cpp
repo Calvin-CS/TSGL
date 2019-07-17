@@ -12,7 +12,7 @@ ImageInverter::ImageInverter(const std::string& fileName, unsigned width, unsign
    myWidth(width), myHeight(height), myFileName(fileName)
 {
   myCanvas1.start();
-  myCanvas1.drawImage(fileName, 0, 0, width, height);
+  myCanvas1.drawImage(fileName, 0, 0, width, height, 1.0f, 0);
   sleep(1);
   myCanvas2.start();
 }

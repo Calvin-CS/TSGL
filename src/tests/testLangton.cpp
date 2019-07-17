@@ -54,7 +54,7 @@ void alphaLangtonFunction(Canvas& can) {
         paused = !paused;
     });
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-        can.clear();
+        can.drawRectangle(0,0,can.getWindowWidth(),can.getWindowHeight(), BLACK);
     });
 
     while (can.isOpen()) {
@@ -63,7 +63,7 @@ void alphaLangtonFunction(Canvas& can) {
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
         if (pulse.pastPeriod())
-            can.clear();
+            can.drawRectangle(0,0,can.getWindowWidth(),can.getWindowHeight(), BLACK);
       }
     }
 }
@@ -92,8 +92,9 @@ void langtonFunction(Canvas& can) {
     farm.addAnt(WW / 2,WH / 2,MAX_COLOR,0,0,0);
     while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-        for (int i = 0; i < IPF; i++)
+        for (int i = 0; i < IPF; i++) {
           farm.moveAnts();
+        }
     }
 }
 

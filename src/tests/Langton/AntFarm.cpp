@@ -17,7 +17,7 @@ AntFarm::AntFarm(int w, int h, int s, Canvas* c) {
 }
 
 AntFarm::~AntFarm() {
-  for (int i = 0; i < cap; i++) {
+  for (int i = 0; i < size; i++) {
     delete ants[i];
   }
   delete[] ants;

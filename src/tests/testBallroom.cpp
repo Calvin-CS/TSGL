@@ -223,8 +223,6 @@ public:
           delete b;
           return;
         }
-        b->pos.x = 25 + rand() % (width-50);
-        b->pos.y = 25 + rand() % (height-50);
       }
     }
     balls.push_back(b);

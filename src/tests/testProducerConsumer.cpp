@@ -28,12 +28,25 @@ Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored
  * displayLegend helps the main method by controlling the legendDisplay
  */
 void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queueDisplay) {
-	int colorChanger = 0;
+	Star** bufferArray = sharedBuffer.getArray();
+	int produceIndex;
+	int cap = sharedBuffer.getCapacity();
+	int oldFirstIndex = 0;
+	ColorFloat* prodFillColor;
+	ColorFloat* consFillColor;
 	while( queueDisplay->isOpen() ) {
-		waitingCircle->setColor( Colors::highContrastColor(colorChanger), BLACK );
-		waitingSquare->setColor( Colors::highContrastColor(colorChanger), BLACK );
-		queueDisplay->sleepFor(1.0);
-		colorChanger++;
+		if(!sharedBuffer.isEmpty()) {
+			produceIndex = (sharedBuffer.getLastIndex() + cap - 1) % cap;
+			prodFillColor = bufferArray[produceIndex]->getFillColor();
+			waitingCircle->setColor( prodFillColor[0], BLACK );
+			delete[] prodFillColor;
+		}
+		if(oldFirstIndex != sharedBuffer.getFirstIndex()) {
+			consFillColor = bufferArray[oldFirstIndex]->getFillColor();
+			waitingSquare->setColor( consFillColor[0], BLACK );
+			delete[] consFillColor;
+			oldFirstIndex = sharedBuffer.getFirstIndex();
+		}
 	}
 }
 

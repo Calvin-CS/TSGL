@@ -182,6 +182,7 @@ bin/testLangton: build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
 	build/tests/Mandelbrot/GradientMandelbrot.o \
 	build/tests/Mandelbrot/Buddhabrot.o \
+	build/TSGL/VisualTaskQueue.o \
 	build/tests/Mandelbrot/Julia.o \
 	build/tests/Mandelbrot/Nova.o
 bin/testPhilosophers: build/tests/DiningPhilosophers/Philosopher.o \

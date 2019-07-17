@@ -46,7 +46,6 @@ void Producer::wait() {
 	myItem = nextItem();
 	ColorFloat * fillColor = myItem->getFillColor();
 	myShape->setColor( fillColor, BLACK );
-	// std::cout << fillColor->toString() << std::endl;
 	myCountLabel->setColor(fillColor->getContrast());
 	delete[] fillColor;
 	PCThread::wait();

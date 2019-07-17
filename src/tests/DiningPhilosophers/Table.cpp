@@ -20,11 +20,10 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     forks[i].id = i;
     forks[i].setCanvas(myCan);
   }
-  myCan->drawImage("./assets/pics/spaghet.png", tabX + 150, tabY - 20, 100, 50, 1.0f);
-  myCan->drawImage("./assets/pics/spaghet.png", tabX + 15, tabY - 230, 100, 50, 1.0f);
-  myCan->drawImage("./assets/pics/spaghet.png", tabX - 210, tabY - 160, 100, 50, 1.0f);
-  myCan->drawImage("./assets/pics/spaghet.png", tabX + 10, tabY + 170, 100, 50, 1.0f);
-  myCan->drawImage("./assets/pics/spaghet.png", tabX - 210, tabY + 100, 100, 50, 1.0f);
+  float delta = 2.0f / numPhils * PI;
+  for(int i = 0; i < numPhils; i++) {
+    myCan->drawImage("../assets/pics/spaghet.png", tabX-50+(200)*cos(i*delta), tabY-25+(215)*sin(i*delta), 100, 50, 1.0f);
+  }
   myMethod = m;
   switch(myMethod) {
     case forfeitWhenBlocked:

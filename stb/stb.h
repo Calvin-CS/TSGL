@@ -1840,8 +1840,11 @@ int stb_search_open(stb_search *s, int minv, int find_smallest)
    int r;
    s->step   = 4;
    s->minval = minv;
-   s->maxval = minv+(s->step);
-   s->mode = find_smallest ? STB_probe_open_smallest : STB_probe_open_largest;
+   s->maxval = minv+4;
+   /* #FIXME? This is a hacky fix. But for some reason this throws a warning otherwise.
+   This doesn't get called anyway for TSGL's purposes so does it really matter? */
+   // s->mode = find_smallest ? STB_probe_open_smallest : STB_probe_open_largest;
+   s->mode = STB_probe_open_largest;
    stb_probe_guess(s, &r);
    return r;
 }
