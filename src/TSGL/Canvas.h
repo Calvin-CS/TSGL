@@ -251,7 +251,7 @@ public:
 
     virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawImage(const std::string& filename, int x, int y, int width, int height, float alpha = 1.0f, float rotation = 0.0f);
+    virtual void drawImage(std::string filename, int x, int y, int width, int height, float alpha = 1.0f);
 
     virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, float rotation = 0);
 
@@ -405,7 +405,7 @@ public:
 
     virtual void run(void (*myFunction)(Canvas&, std::string, int), std::string s, int i);
 
-    virtual void run(void (*myFunction)(Canvas&, int i, std::string, bool), int i, std::string s, bool b);
+    virtual void run(void (*myFunction)(Canvas&, int, std::string, bool), int i, std::string s, bool b);
 
     void setBackgroundColor(ColorFloat color);
 

@@ -967,9 +967,8 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fill
   *   \param alpha The alpha with which to draw the Image
   *   \param rotation Rotation of the Image in radians clockwise.   
   */
-void Canvas::drawImage(const std::string& filename, int x, int y, int width, int height, float alpha, float rotation) {
+void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
-    im->setRotation(rotation);
     drawDrawable(im);                                       // Push it onto our drawing buffer
 }
 
@@ -2371,9 +2370,7 @@ void Canvas::resumeDrawing() {
   *   which is a reference to the Canvas to render to.
   */
 void Canvas::run(void (*myFunction)(Canvas&) ) {
-  start(); 
-  myFunction(*this); 
-  wait();
+  start(); myFunction(*this); wait();
 }
 
  /*!

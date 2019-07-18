@@ -4,15 +4,14 @@
 
 #include "ImageInverter.h"
 
-using namespace tsgl;
-
 ImageInverter::ImageInverter(const std::string& fileName, unsigned width, unsigned height)
  : myCanvas1(0, 0, width, height, fileName),
    myCanvas2(-1, -1, width, height, fileName),
    myWidth(width), myHeight(height), myFileName(fileName)
 {
   myCanvas1.start();
-  myCanvas1.drawImage(fileName, 0, 0, width, height, 1.0f, 0);
+  myCanvas1.drawImage(fileName, 0, 0, width, height);
+  // myCanvas1.drawRectangle(1,1,width-2,height-2,BLACK,false);
   sleep(1);
   myCanvas2.start();
 }

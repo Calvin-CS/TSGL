@@ -48,6 +48,7 @@ void conwayFunction(Canvas& can) {
   farm.setDrawdead(true);
   bool paused = false;
   bool mouseDown = false;
+  // can.drawRectangle(1,1,can.getWindowWidth()-2,can.getWindowHeight()-2,GREEN,false,PI/4);
 
   can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, &paused]() {
     paused = !paused;
