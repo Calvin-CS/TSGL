@@ -72,7 +72,7 @@ void projectileFunction(Canvas& can) {
   //Draw loop
   while(can.isOpen()) {
     can.sleep();
-    can.clear();
+    can.clearProcedural();
 
     targetX += coordinateChangerX;  //Horizontal movement
     targetY -= coordinateChangerY; //Vertical movement

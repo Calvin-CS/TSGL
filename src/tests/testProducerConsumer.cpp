@@ -75,7 +75,6 @@ int main(int argc, char * argv[]) {
 
 	//Fire up the visualization
 	queueDisplay.setBackgroundColor(WHITE);
-	queueDisplay.clear();
   	queueDisplay.start();
 
 	queueDisplay.bindToButton(TSGL_SPACE, TSGL_PRESS, []() { // toggle pause when spacebar is pressed
@@ -147,7 +146,6 @@ int main(int argc, char * argv[]) {
 		sleep(0.3);
 	}
 
-	queueDisplay.clear();
 	queueDisplay.wait();
 
 	//Now join them

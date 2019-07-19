@@ -123,7 +123,6 @@ private:
                     textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
-    bool            toClear;                                            // Flag for clearing the canvas
     GLint           uniModel,                                           // Model perspective of the camera
                     uniView,                                            // View perspective of the camera
                     uniProj;                                            // Projection of the camera
@@ -189,7 +188,7 @@ public:
 
     void bindToScroll(std::function<void(double, double)> function);
 
-    void clear();
+    void clearProcedural();
 
     void close();
 

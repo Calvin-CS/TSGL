@@ -64,7 +64,7 @@ void Mandelbrot::manhattanShading(CartesianCanvas& can) {
 
 void Mandelbrot::bindings(Cart& can) {
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, this]() {
-      can.clear();
+      can.clearProcedural();
       this->myRedraw = true;
     });
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&can, this]() {
@@ -118,7 +118,6 @@ void Mandelbrot::draw(Cart& can) {
       ColorFloat tcolor = Colors::highContrastColor(tid);
       double blocksize = can.getCartHeight() / nthreads;
       double blockheight = CH / nthreads;
-      pCan.clear();
       pb.update(blockheight*tid);
       pCan.drawProgress(&pb);
       long double startrow = blocksize * tid + can.getMinY();
@@ -127,7 +126,6 @@ void Mandelbrot::draw(Cart& can) {
         //Messy, but effective
 //        pCan.drawRectangle(XBRD,YBRD,pCan.getWindowWidth()-XBRD,pCan.getWindowHeight()-YBRD,pCan.getBackgroundColor(),true);
         //Elegant, but flickery
-        pCan.clear();
         pCan.drawProgress(&pb);
         long double row = startrow + can.getPixelHeight() * k;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {

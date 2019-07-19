@@ -136,8 +136,8 @@ void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods
   * \brief Clears the Canvas.
   * \details This function clears the screen to the color specified in setBackgroundColor().
   */
-void Canvas::clear() {
-    toClear = true;
+void Canvas::clearProcedural() {
+    drawRectangle(0,0,getWindowWidth(),getWindowHeight(),getBackgroundColor());
 }
 
  /*!
@@ -276,7 +276,7 @@ void Canvas::draw() {
 
           glViewport(0,0,winWidth,winHeight);
           
-          if (toClear) {
+          if (frame == 0 || !objectBufferEmpty) {
             glClear(GL_COLOR_BUFFER_BIT);
             if(frame > 1) {
               textureShaders(true);
@@ -284,7 +284,6 @@ void Canvas::draw() {
               textureShaders(false);
             }
           }
-          toClear = false;
 
 
           unsigned int size = myDrawables->size();
@@ -2043,7 +2042,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
       proceduralBuffer[i] = 255;
     }
 
-    toClear = true;                   // Don't need to clear at the start
     started = false;                  // We haven't started the window yet
     monitorX = xx;
     monitorY = yy;
@@ -2761,11 +2759,11 @@ bool Canvas::testFilledDraw(Canvas& can) {
 
   //Determine if we passed all four tests or not, Results:
   if(passed == 4 && failed == 0) {
-    can.clear();
+    can.clearProcedural();
     TsglDebug("Unit test for drawing filled shapes passed!");
     return true;
   } else {
-    can.clear();
+    can.clearProcedural();
     TsglErr("This many passed for testFilledDraw(): ");
     std::cerr << " " << passed << std::endl;
     TsglErr("This many failed for testFilledDraw(): ");
@@ -2823,11 +2821,11 @@ bool Canvas::testLine(Canvas & can) {
 
    //Results:
    if(passed == 4 && failed == 0) {
-     can.clear();
+     can.clearProcedural();
      TsglDebug("Unit test for line passed!");
      return true;
    } else {
-     can.clear();
+     can.clearProcedural();
      TsglErr("This many passed testLine(): ");
      std::cerr << " " << passed << std::endl;
      TsglErr("This many failed for testLine(): ");
@@ -2893,11 +2891,11 @@ bool Canvas::testAccessors(Canvas& can) {
 
     //Results:
     if(passed == 4 && failed == 0) {
-      can.clear();
+      can.clearProcedural();
       TsglDebug("Unit test for accessors/mutators passed!");
       return true;
     } else {
-      can.clear();
+      can.clearProcedural();
       TsglErr("This many passed for testAccessors(): ");
       std::cerr << " " << passed << std::endl;
       TsglErr("This many failed for testAccessors(): ");

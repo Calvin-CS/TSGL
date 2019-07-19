@@ -47,14 +47,13 @@ void alphaLangtonFunction(Canvas& can) {
         std::cout << (pulse.getTime() - time) << std::endl;
         pulse.reset(pulse.getTime() - time);
         time = pulse.getTime();
-        can.clear();
     };
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, tempo);
     can.bindToButton(TSGL_ENTER, TSGL_PRESS, [&paused]() {
         paused = !paused;
     });
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-        can.drawRectangle(0,0,can.getWindowWidth(),can.getWindowHeight(), BLACK);
+        can.clearProcedural();
     });
 
     while (can.isOpen()) {
@@ -63,7 +62,7 @@ void alphaLangtonFunction(Canvas& can) {
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
         if (pulse.pastPeriod())
-            can.drawRectangle(0,0,can.getWindowWidth(),can.getWindowHeight(), BLACK);
+            can.clearProcedural();
       }
     }
 }

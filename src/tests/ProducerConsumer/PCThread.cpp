@@ -64,7 +64,6 @@ void PCThread::animateItem(int endX, int endY) {
 	float deltaY = (endY - startY) / float(steps); //Change in y each step
 
 	for(int i = 0; i <= steps; i++) {
-		myCan->clear();
 		myItem->setCenter( round( startX+ i*deltaX ), round(startY+i*deltaY));
 		myCan->sleepFor( timeInterval / steps );
 		while( paused ) {}

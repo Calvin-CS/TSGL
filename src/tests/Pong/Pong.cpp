@@ -70,7 +70,6 @@ void Pong::draw(Canvas& can) {
     // Move the paddles if necessary
     leftPaddle->move();
     rightPaddle->move();
-    can.clear();
   }
 }
 

@@ -65,7 +65,6 @@ void conwayFunction(Canvas& can) {
   while (can.isOpen()) {
     can.sleep();
     if(!paused) {
-      can.clear();
       for (int i = 0; i < IPF; i++) {
         if(mouseDown) {
           farm.addAnt(can.getMouseX(), can.getMouseY());

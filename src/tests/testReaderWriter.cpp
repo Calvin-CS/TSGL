@@ -117,7 +117,6 @@ int main(int argc, char* argv[]) {
 		sleep(0.1);
 	}
 
-	can.clear();
 	can.wait(); //Wait for the main Canvas to be closed
 
 	//End threads

@@ -94,7 +94,6 @@ void auraFunction(Canvas& can, int segs) {
     }
     can.resumeDrawing();
     can.sleep();
-    can.clear();
   }
 
   //Clean up

@@ -50,7 +50,6 @@ void seaUrchinFunction(Canvas& can, int threads) {
     SeaUrchin s(can, omp_get_thread_num());   //A thread gets a Sea Urchin
     while(can.isOpen()) {   //Draw loop
       can.sleep();
-      can.clear();
       s.move(can);  //And draws it
     }
   }

@@ -85,7 +85,6 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
         #pragma omp barrier               //Barrier for optional synchronization
         }
       	t.actStep();
-        can.clear();
         can.sleep(); // ensures each fork is only drawn once per frame
         t.drawStep();
         can.resumeDrawing();

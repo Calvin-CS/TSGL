@@ -63,7 +63,6 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
   float leftMoving = 0, rightMoving = TOPSPEED;  //Right goes first, left stays stationary
   while(can.isOpen()) {
     can.sleep();
-    can.clear();
 
     //Drawing conditional for right ball motion
     if(rightMoving != 0 || rightPos != 0) {   //If the ball isn't stationary

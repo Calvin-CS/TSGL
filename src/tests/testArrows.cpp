@@ -33,7 +33,6 @@ void arrowFunction(Canvas& c) {
 
 	while( c.isOpen() ) {
 		c.sleep();
-		c.clear();
 		x += 10; if(x > 1000) x = 250;
 		y += 30; if(y > 1000) y = 250;
 		doubleArrow->moveHead(x, y);

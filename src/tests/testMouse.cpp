@@ -59,7 +59,7 @@ void mouseFunction(Canvas& can, int threads) {
   ColorFloat color[3];
 
   can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-      can.clear();
+      can.clearProcedural();
   });
   can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &index, &x, &y, &color]() {
       x[0] = can.getMouseX();

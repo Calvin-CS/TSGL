@@ -63,7 +63,6 @@ void concavePolygonFunction(Canvas& can) {
 
   while (can.isOpen()) {  // Checks to see if the window has been closed
     can.sleep();
-    can.clear();
     // note: when you call drawConcavePolygon, you MUST give it the correct size.
     // otherwise, it is always wrong and inconsistent in how it is wrong.
     can.pauseDrawing();

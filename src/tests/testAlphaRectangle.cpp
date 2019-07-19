@@ -27,7 +27,6 @@ void alphaRectangleFunction(Canvas& can) {
     int a, b, c, d, x, y, w, h;
     while (can.isOpen()) {
         can.sleep();
-        can.clear();
         a = rand() % WW; b = rand() % WH;
         c = rand() % WW; d = rand() % WH;
         x = (a > c ? c : a);

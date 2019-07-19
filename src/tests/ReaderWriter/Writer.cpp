@@ -91,7 +91,6 @@ void Writer::act() {
 	} else { //Create a new item
 		rec = makeRec(id); //Make random color at random index
 		data->write(rec, id);  // Write the item to the data
-		myCan->clear();
 		rec->setLayer(3);
 		myCan->add(rec);
 		dataLabel->setText( to_wstring( data->getItemCount() ) + L"/" + to_wstring( data->getMaxCapacity() ) );
@@ -116,7 +115,6 @@ void Writer::unlock() {
 		countLabelOffset = -18;
 	}
 	while( paused ) {}
-	myCan->clear();
 	myCircle->setCenter(myX, myY); 	//Return to home location
 	myCountLabel->setBottomLeftCorner(myX + countLabelOffset, myY + 8);
 	monitor->writeUnlock(); 	//Unlock the data for writing

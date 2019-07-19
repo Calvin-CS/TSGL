@@ -151,13 +151,11 @@ void Spectrogram::draw(float ratio) {
       xx[NUM_COLORS] = xx[1];
       yy[NUM_COLORS] = yy[1];
       col[NUM_COLORS] = col[1];
-      can->clear();
       can->drawConvexPolygon(NUM_COLORS+1,maxx,maxy,black,true);
       can->drawConvexPolygon(NUM_COLORS+1,xx,yy,col,true);
       break;
     case HORIZONTAL:
       can->pauseDrawing();
-      can->clear();
       for (int k = 0; k < MAX_COLOR; ++k)
         can->drawLine(0,k,(ratio*myWidth*count[k])/localmax,k,ColorHSV((6.0f*k)/MAX_COLOR,1.0f,1.0f));
       can->resumeDrawing();

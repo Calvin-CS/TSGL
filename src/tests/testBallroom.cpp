@@ -257,7 +257,6 @@ public:
       }
     }
     c->pauseDrawing();
-    c->clear();
     c->resumeDrawing();
   }
   inline void toggleAttract() {

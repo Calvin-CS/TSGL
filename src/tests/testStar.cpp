@@ -30,7 +30,6 @@ int main() {
 	while( c.isOpen() ) {
 		c.sleep();
 		c.pauseDrawing();
-		c.clear();
 		rotation += PI / 3;
 		s1->setRotation(rotation);
 		c.resumeDrawing();
