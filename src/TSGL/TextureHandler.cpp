@@ -173,9 +173,9 @@ void TextureHandler::drawGLtextureFromBuffer(GLubyte* buffer, int x, int y, unsi
     vertices[1] = y + height;
     vertices[8] = x + width;
     vertices[9] = y + height;
-    vertices[16] = x;
+    vertices[16] = x + width;
     vertices[17] = y;
-    vertices[24] = x + width;
+    vertices[24] = x;
     vertices[25] = y;
     vertices[2] = vertices[10] = vertices[18] = vertices[26] = 1.0f;  // Texture color of the coords
     vertices[3] = vertices[11] = vertices[19] = vertices[27] = 1.0f;
@@ -183,15 +183,15 @@ void TextureHandler::drawGLtextureFromBuffer(GLubyte* buffer, int x, int y, unsi
     vertices[5] = vertices[13] = vertices[21] = vertices[29] = 1.0f;
     vertices[6] = vertices[7] = 0.0f;           // Texture coords of top left
     vertices[14] = 1.0f, vertices[15] = 0.0f;   // Texture coords of top right
-    vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
-    vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
+    vertices[30] = 0.0f, vertices[31] = 1.0f;   // Texture coords of bottom left
+    vertices[22] = vertices[23] = 1.0f;         // Texture coords of bottom right
 
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
     glDeleteTextures(1, &texture);
 

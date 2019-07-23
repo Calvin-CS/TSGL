@@ -193,7 +193,6 @@ void Canvas::remove(Drawable * shapePtr) {
   objectMutex.lock();
   objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
   objectMutex.unlock();
-
 }
 
 /**
@@ -261,7 +260,6 @@ void Canvas::draw() {
 
         int pos = pointBufferPosition;
         int posLast = pointLastPosition;
-        pointLastPosition = pos;
 
         if (loopAround || pos != posLast)
           newThingDrawn = true;
@@ -280,11 +278,10 @@ void Canvas::draw() {
             glClear(GL_COLOR_BUFFER_BIT);
             if(frame > 1) {
               textureShaders(true);
-              loader.drawGLtextureFromBuffer(proceduralBuffer, -1, 0, winWidth, winHeight, GL_RGBA);
+              loader.drawGLtextureFromBuffer(proceduralBuffer, -1, 0, winWidth, winHeight, GL_RGB);
               textureShaders(false);
             }
           }
-
 
           unsigned int size = myDrawables->size();
           for (unsigned int i = 0; i < size; i++) {
@@ -300,25 +297,28 @@ void Canvas::draw() {
             }
           }
 
-          if (loopAround) {
-            newThingDrawn = true;
-            int toend = myDrawables->capacity() - posLast;
-            glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
-                   &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, toend);
-            posLast = 0;
-            loopAround = false;
-          }
-          int pbsize = pos - posLast;
-          if (pbsize > 0) {
-            newThingDrawn = true;
-            glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, pbsize);
+          if(frame > 0) {
+            if (loopAround) {
+              newThingDrawn = true;
+              int toend = myDrawables->capacity() - posLast;
+              glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
+                    &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+              glDrawArrays(GL_POINTS, 0, toend);
+              posLast = 0;
+              loopAround = false;
+            }
+            int pbsize = pos - posLast;
+            if (pbsize > 0) {
+              newThingDrawn = true;
+              glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
+              glDrawArrays(GL_POINTS, 0, pbsize);
+            }
+            pointLastPosition = pos;
           }
 
           if(frame > 0) {
             if(newThingDrawn) {
-              glReadPixels(0, 0, winWidth, winHeight, GL_RGBA, GL_UNSIGNED_BYTE, proceduralBuffer);
+              glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, proceduralBuffer);
             }
             // Reset drawn status for the next frame
             newThingDrawn = false;
@@ -2054,6 +2054,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     pointBufferPosition = pointLastPosition = 0;
     loopAround = false;
     toRecord = 0;
+    objectBufferEmpty = true;
 
     bgcolor = GRAY;
     window = nullptr;

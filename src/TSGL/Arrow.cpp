@@ -68,10 +68,10 @@ namespace tsgl {
    *    \param y The new y coordinate of the head.
    */
   void Arrow::moveHead(float x, float y) {
-    // attribMutex.lock();
+    attribMutex.lock();
     current = 0; init = false;
     headX = x; headY = y;
-    // attribMutex.unlock();
+    attribMutex.unlock();
     generateVertices();
   }
 
@@ -82,10 +82,10 @@ namespace tsgl {
    *    \param y The new y coordinate of the tail.
    */
   void Arrow::moveTail(float x, float y) {
-    // attribMutex.lock();
+    attribMutex.lock();
     current = 0; init = false;
     tailX = x; tailY = y;
-    // attribMutex.unlock();
+    attribMutex.unlock();
     generateVertices();
   }
 

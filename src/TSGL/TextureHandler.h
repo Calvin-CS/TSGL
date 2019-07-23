@@ -84,7 +84,7 @@ class TextureHandler {
     bool saveImageToFile(std::string filename, GLubyte *pixels, unsigned int width, unsigned int height) const;
 
 
-    void drawGLtextureFromBuffer(unsigned char* buffer, int x, int y, unsigned int width, unsigned int height, int glMode);
+    void drawGLtextureFromBuffer(GLubyte* buffer, int x, int y, unsigned int width, unsigned int height, int glMode);
 
     static void runTests();
 };

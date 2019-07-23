@@ -32,18 +32,19 @@ void arrowFunction(Canvas& c) {
 	int count = 0;
 
 	while( c.isOpen() ) {
-		c.sleep();
-		x += 10; if(x > 1000) x = 250;
-		y += 30; if(y > 1000) y = 250;
-		doubleArrow->moveHead(x, y);
 		if (count == 200) {
 			c.remove(doubleArrow);
 			count = 201;
 		} else if (count == 300) {
 			c.add(doubleArrow);
-		} else {
-		  count++;
+			count = 301;
+		} else if (count < 300) {
+			count++;
 		}
+		c.sleep();
+		x += 10; if(x > 1000) x = 250;
+		y += 30; if(y > 1000) y = 250;
+		doubleArrow->moveHead(x, y);
 	}
 
 	delete doubleArrow;

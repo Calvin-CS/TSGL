@@ -32,6 +32,8 @@ using namespace tsgl;
  * \param numberOfThreads Number of threads to use.
  */
 void colorPointsFunction(Canvas& can, int numberOfThreads) {
+  Rectangle *rec = new Rectangle(1,1,1,1,BLUE);
+  can.add(rec);
   #pragma omp parallel num_threads(numberOfThreads)
   {
     int nthreads = omp_get_num_threads();  //Actual number of threads to use
@@ -45,12 +47,12 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
         } else {
           can.drawPoint(i, j, ColorInt(i % 255, j % 255, (i*j) % 255));
         }
-        //can.sleepFor(.0001);
       }
       if (!can.isOpen()) break;
-      // can.clear();
     }
   }
+  can.remove(rec);
+  delete rec;
 }
 
 //Takes in command line arguments for the window width and height as well
