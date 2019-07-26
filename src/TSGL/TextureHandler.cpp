@@ -362,7 +362,7 @@ bool TextureHandler::loadFont(const std::string& filename) {
     return true;
 }
 
-void TextureHandler::calculateTextCenter(std::wstring text, unsigned int font_size, int leftX, int bottomY, int& centerX, int& centerY) {
+void TextureHandler::calculateTextCenter(std::wstring text, unsigned int font_size, int leftX, int bottomY, float& centerX, float& centerY) {
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //If no font is set, load up a default one
       bool found = false;

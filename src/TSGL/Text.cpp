@@ -27,6 +27,8 @@ Text::Text(std::wstring text, int x, int y, unsigned int fontsize, const ColorFl
     myCenterY = 0;
     vertices = new float[32];                                        // Allocate the vertices
     myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
+
+    setRotationPoint(myCenterX, myCenterY);
 }
 
 /*!
@@ -47,26 +49,64 @@ void Text::draw() {
     vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
 
-    myLoader->drawText(myString, myFontSize, vertices, myCenterX, myCenterY, myRotation);
+    myLoader->drawText(myString, myFontSize, vertices, myRotationPointX, myRotationPointY, myRotation);
 }
 
 /*!
  * \brief Alter the Text's string
  * \details This function changes myString to the parameter text
  *  \param text The text to change myString to.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
  */
 void Text::setText(std::wstring text) {
     myString = text;
+    bool shiftRotationPoint = false;
+    if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
+        shiftRotationPoint = true;
+    }
     myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
+    if(shiftRotationPoint) {
+        setRotationPoint(myCenterX, myCenterY);
+    }
 }
 
 /*!
- * \brief Alter the Text's color
- * \details This function changes myColor to the parameter ColorFloat
- *  \param color The ColorFloat to change myColor to.
+ * \brief Alter the Text's font size
+ * \details This function changes myFontSize to the parameter fontsize.
+ *  \param fontsize The new fontsize.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
  */
-void Text::setColor(const ColorFloat& color) {
-    myColor = color;
+void Text::setFontSize(int fontsize) {
+    myFontSize = fontsize;
+    bool shiftRotationPoint = false;
+    if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
+        shiftRotationPoint = true;
+    }
+    myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
+    if(shiftRotationPoint) {
+        setRotationPoint(myCenterX, myCenterY);
+    }
+}
+
+/*!
+ * \brief Alter the Text's font
+ * \details This function changes myLoader's font to the parameter font.
+ *  \param filename The new font file name.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
+ */
+void Text::setFont(std::string filename) {
+    myLoader->loadFont(filename);
+    bool shiftRotationPoint = false;
+    if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
+        shiftRotationPoint = true;
+    }
+    myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
+    if(shiftRotationPoint) {
+        setRotationPoint(myCenterX, myCenterY);
+    }
 }
 
 /*!
@@ -74,10 +114,16 @@ void Text::setColor(const ColorFloat& color) {
  * \details This function changes myX and myY to the parameter x and y.
  *  \param x The new x-coordinate for myX.
  *  \param y The new y-coordinate for myY.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
  */
 void Text::setBottomLeftCorner(int x, int y) {
     int deltaX = x - myX;
     int deltaY = y - myY;
+    if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
+        myRotationPointX += deltaX;
+        myRotationPointY += deltaY;
+    }
     myCenterX += deltaX;
     myCenterY += deltaY;
     myX = x;
@@ -89,24 +135,38 @@ void Text::setBottomLeftCorner(int x, int y) {
  * \details This function changes myX and myY to the parameter x and y.
  *  \param x The new x-coordinate for myX.
  *  \param y The new y-coordinate for myY.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
  */
 void Text::setCenter(int x, int y) {
     int deltaX = x - myCenterX;
     int deltaY = y - myCenterY;
     myX += deltaX;
     myY += deltaY;
+    if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
+        setRotationPoint(x, y);
+    }
     myCenterX = x;
     myCenterY = y;
 }
 
 /*!
- * \brief Alter the Text's font size
- * \details This function changes myFontSize to the parameter fontsize.
- *  \param fontsize The new fontsize.
+ * \brief Alter the Text's location by deltaX and deltaY.
+ * \details This function changes all coordinate variables by the parameter deltaX and deltaY
+ *  \param deltaX The amount to change x-coordinates by.
+ *  \param deltaY The amount to change y-coordinates by.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
  */
-void Text::setFontSize(int fontsize) {
-    myFontSize = fontsize;
-    myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
+void Text::moveTextBy(int deltaX, int deltaY) {
+    myX += deltaX;
+    myY += deltaY;
+    if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
+        myRotationPointX += deltaX;
+        myRotationPointY += deltaY;
+    }
+    myCenterX += deltaX;
+    myCenterY += deltaY;
 }
 
 /*!
@@ -118,9 +178,13 @@ void Text::setRotation(float radians) {
     myRotation = radians;
 }
 
-void Text::setFont(std::string filename) {
-    myLoader->loadFont(filename);
-    myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
+/*!
+ * \brief Alter the Text's color
+ * \details This function changes myColor to the parameter ColorFloat
+ *  \param color The ColorFloat to change myColor to.
+ */
+void Text::setColor(const ColorFloat& color) {
+    myColor = color;
 }
 
 Text::~Text() {

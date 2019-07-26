@@ -58,10 +58,6 @@ public:
 
     virtual void setCenter(float x, float y);
 
-    virtual float getX();
-
-    virtual float getY();
-
     virtual void setRotation(float radians);
 };
 

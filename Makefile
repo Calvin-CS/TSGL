@@ -102,6 +102,7 @@ BINARIES= \
 	bin/testProgressBar \
 	bin/testProjectiles \
 	bin/testReaderWriter \
+	bin/testRotation \
 	bin/testScreenshot \
 	bin/testSeaUrchin \
 	bin/testSmartSort \

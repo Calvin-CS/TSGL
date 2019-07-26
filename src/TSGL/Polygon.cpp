@@ -42,28 +42,76 @@ void Polygon::draw()  {
   * \note A message is given indicating that the vertex buffer is full.
   */
 void Polygon::addVertex(float x, float y, const ColorFloat &color) {
-    if (init) {
-        TsglDebug("Cannot add anymore vertices.");
-        return;
-    }
-    if(isFilled) {
-      vertices[current] = x;
-      vertices[current + 1] = y;
-      vertices[current + 2] = color.R;
-      vertices[current + 3] = color.G;
-      vertices[current + 4] = color.B;
-      vertices[current + 5] = color.A;
-    }
+  if (init) {
+    TsglDebug("Cannot add anymore vertices.");
+    return;
+  }
+  if(isFilled) {
+    vertices[current] = x;
+    vertices[current + 1] = y;
+    vertices[current + 2] = color.R;
+    vertices[current + 3] = color.G;
+    vertices[current + 4] = color.B;
+    vertices[current + 5] = color.A;
+  }
+  if(hasOutline) {
+    outlineVertices[current] = x;
+    outlineVertices[current + 1] = y;
+    outlineVertices[current + 2] = color.R;
+    outlineVertices[current + 3] = color.G;
+    outlineVertices[current + 4] = color.B;
+    outlineVertices[current + 5] = color.A;
+  }
+  current += 6;
+  if (current == numberOfVertices*6) {
+    init = true;
+    attribMutex.lock();
+    float minX = 0, maxX = 0;
+    float minY = 0, maxY = 0;
     if(hasOutline) {
-      outlineVertices[current] = x;
-      outlineVertices[current + 1] = y;
-      outlineVertices[current + 2] = color.R;
-      outlineVertices[current + 3] = color.G;
-      outlineVertices[current + 4] = color.B;
-      outlineVertices[current + 5] = color.A;
+      minX = maxX = outlineVertices[0];
+      //Find min and max X
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        if( outlineVertices[i*6] < minX )
+        minX = outlineVertices[i*6];
+        else if( outlineVertices[i*6] > maxX )
+        maxX = outlineVertices[i*6];
+      }
+      minY = maxY = outlineVertices[1];
+      //Find min and max X
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        if( outlineVertices[i*6+1] < minY )
+        minY = outlineVertices[i*6+1];
+        else if( outlineVertices[i*6+1] > maxY )
+        maxY = outlineVertices[i*6+1];
+      }
+    } else if (isFilled) {
+      minX = maxX = vertices[0];
+      //Find min and max X
+      for(int i = 0; i < numberOfVertices; i++) {
+        if( vertices[i*6] < minX )
+        minX = vertices[i*6];
+        else if( vertices[i*6] > maxX )
+        maxX = vertices[i*6];
+      }
+
+      minY = maxY = vertices[1];
+      //Find min and max X
+      for(int i = 0; i < numberOfVertices; i++) {
+        if( vertices[i*6+1] < minY )
+        minY = vertices[i*6+1];
+        else if( vertices[i*6+1] > maxY )
+        maxY = vertices[i*6+1];
+      }
     }
-    current += 6;
-    if (current == numberOfVertices*6) init = true;
+    
+    myCenterX = (minX+maxX)/2;
+    myCenterY = (minY+maxY)/2;
+
+    setRotationPoint(myCenterX, myCenterY);
+
+    attribMutex.unlock();
+  }
 }
 
  /*!
@@ -77,74 +125,76 @@ void Polygon::addVertex(float x, float y, const ColorFloat &color) {
   * \note A message is given indicating that the vertex buffer is full.
   */
 void Polygon::addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor) {
-    if (init) {
-        TsglDebug("Cannot add anymore vertices.");
-        return;
-    }
-    if(isFilled) {
-      vertices[current] = x;
-      vertices[current + 1] = y;
-      vertices[current + 2] = fillColor.R;
-      vertices[current + 3] = fillColor.G;
-      vertices[current + 4] = fillColor.B;
-      vertices[current + 5] = fillColor.A;
-    }
+  if (init) {
+    TsglDebug("Cannot add anymore vertices.");
+    return;
+  }
+  if(isFilled) {
+    vertices[current] = x;
+    vertices[current + 1] = y;
+    vertices[current + 2] = fillColor.R;
+    vertices[current + 3] = fillColor.G;
+    vertices[current + 4] = fillColor.B;
+    vertices[current + 5] = fillColor.A;
+  }
+  if(hasOutline) {
+    outlineVertices[current] = x;
+    outlineVertices[current + 1] = y;
+    outlineVertices[current + 2] = outlineColor.R;
+    outlineVertices[current + 3] = outlineColor.G;
+    outlineVertices[current + 4] = outlineColor.B;
+    outlineVertices[current + 5] = outlineColor.A;
+  }
+  current += 6;
+  if (current == numberOfVertices*6) {
+    init = true;
+    attribMutex.lock();
+    float minX = 0, maxX = 0;
+    float minY = 0, maxY = 0;
     if(hasOutline) {
-      outlineVertices[current] = x;
-      outlineVertices[current + 1] = y;
-      outlineVertices[current + 2] = outlineColor.R;
-      outlineVertices[current + 3] = outlineColor.G;
-      outlineVertices[current + 4] = outlineColor.B;
-      outlineVertices[current + 5] = outlineColor.A;
-    }
-    current += 6;
-    if (current == numberOfVertices*6) {
-      init = true;
-      attribMutex.lock();
-      float minX = 0, maxX = 0;
-      float minY = 0, maxY = 0;
-      if(hasOutline) {
-        minX = maxX = outlineVertices[0];
-        //Find min and max X
-        for(int i = 0; i < numberOfOutlineVertices; i++) {
-            if( outlineVertices[i*6] < minX )
-            minX = outlineVertices[i*6];
-            else if( outlineVertices[i*6] > maxX )
-            maxX = outlineVertices[i*6];
-        }
-        minY = maxY = outlineVertices[1];
-        //Find min and max X
-        for(int i = 0; i < numberOfOutlineVertices; i++) {
-            if( outlineVertices[i*6+1] < minY )
-            minY = outlineVertices[i*6+1];
-            else if( outlineVertices[i*6+1] > maxY )
-            maxY = outlineVertices[i*6+1];
-        }
-      } else if (isFilled) {
-        minX = maxX = vertices[0];
-        //Find min and max X
-        for(int i = 0; i < numberOfVertices; i++) {
-            if( vertices[i*6] < minX )
-            minX = vertices[i*6];
-            else if( vertices[i*6] > maxX )
-            maxX = vertices[i*6];
-        }
-
-        minY = maxY = vertices[1];
-        //Find min and max X
-        for(int i = 0; i < numberOfVertices; i++) {
-            if( vertices[i*6+1] < minY )
-            minY = vertices[i*6+1];
-            else if( vertices[i*6+1] > maxY )
-            maxY = vertices[i*6+1];
-        }
+      minX = maxX = outlineVertices[0];
+      //Find min and max X
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        if( outlineVertices[i*6] < minX )
+        minX = outlineVertices[i*6];
+        else if( outlineVertices[i*6] > maxX )
+        maxX = outlineVertices[i*6];
       }
-      
-      centerX = (minX+maxX)/2;
-      centerY = (minY+maxY)/2;
+      minY = maxY = outlineVertices[1];
+      //Find min and max X
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        if( outlineVertices[i*6+1] < minY )
+        minY = outlineVertices[i*6+1];
+        else if( outlineVertices[i*6+1] > maxY )
+        maxY = outlineVertices[i*6+1];
+      }
+    } else if (isFilled) {
+      minX = maxX = vertices[0];
+      //Find min and max X
+      for(int i = 0; i < numberOfVertices; i++) {
+        if( vertices[i*6] < minX )
+        minX = vertices[i*6];
+        else if( vertices[i*6] > maxX )
+        maxX = vertices[i*6];
+      }
 
-      attribMutex.unlock();
+      minY = maxY = vertices[1];
+      //Find min and max X
+      for(int i = 0; i < numberOfVertices; i++) {
+        if( vertices[i*6+1] < minY )
+        minY = vertices[i*6+1];
+        else if( vertices[i*6+1] > maxY )
+        maxY = vertices[i*6+1];
+      }
     }
+    
+    myCenterX = (minX+maxX)/2;
+    myCenterY = (minY+maxY)/2;
+
+    setRotationPoint(myCenterX, myCenterY);
+
+    attribMutex.unlock();
+  }
 }
 
 /**
@@ -192,44 +242,6 @@ void Polygon::setColor(ColorFloat c[]) {
     }
   }
 }
-
-/**
- * \brief Gets an array of the Polygon's fill vertex colors.
- * \return c An array of ColorFloats.
- */
-ColorFloat* Polygon::getFillColor() {
-  ColorFloat * c = new ColorFloat[numberOfVertices];
-  if(isFilled) {
-    for(int i = 0; i < numberOfVertices; i++) {
-      c[i] = ColorFloat(vertices[i*6 + 2], vertices[i*6 + 3], vertices[i*6 + 4], vertices[i*6 + 5]);
-    }
-  } else {
-    for(int i = 0; i < numberOfVertices; i++) {
-      c[i] = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
-    }
-  }
-  return c;
-}
-
-/**
- * \brief Gets an array of the Polygon's fill vertex colors.
- * \return c An array of ColorFloats.
- */
-ColorFloat* Polygon::getOutlineColor() {
-  ColorFloat * c = new ColorFloat[numberOfOutlineVertices];
-  if(hasOutline) {
-    for(int i = 0; i < numberOfOutlineVertices; i++) {
-      c[i] = ColorFloat(outlineVertices[i*6 + 2], outlineVertices[i*6 + 3], outlineVertices[i*6 + 4], outlineVertices[i*6 + 5]);
-    }
-  } else {
-    for(int i = 0; i < numberOfOutlineVertices; i++) {
-      c[i] = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
-    }
-  }
-  return c;
-}
-
-
 
 /**
  * \brief Sets the Polygon to new single fill and outline colors.
@@ -328,11 +340,58 @@ void Polygon::setColor(ColorFloat fillColor[], ColorFloat outlineColor[]) {
 }
 
 /**
+ * \brief Gets an array of the Polygon's fill vertex colors.
+ * \return c An array of ColorFloats.
+ * \warning This method allocates memory. The caller is responsible for deallocating it.
+ */
+ColorFloat* Polygon::getFillColor() {
+  ColorFloat * c = new ColorFloat[numberOfVertices];
+  if(isFilled) {
+    for(int i = 0; i < numberOfVertices; i++) {
+      c[i] = ColorFloat(vertices[i*6 + 2], vertices[i*6 + 3], vertices[i*6 + 4], vertices[i*6 + 5]);
+    }
+  } else {
+    TsglErr("Polygon isn't filled.");
+    for(int i = 0; i < numberOfVertices; i++) {
+      c[i] = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+  }
+  return c;
+}
+
+/**
+ * \brief Gets an array of the Polygon's fill vertex colors.
+ * \return c An array of ColorFloats.
+ * \warning This method allocates memory. The caller is responsible for deallocating it.
+ */
+ColorFloat* Polygon::getOutlineColor() {
+  ColorFloat * c = new ColorFloat[numberOfOutlineVertices];
+  if(hasOutline) {
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+      c[i] = ColorFloat(outlineVertices[i*6 + 2], outlineVertices[i*6 + 3], outlineVertices[i*6 + 4], outlineVertices[i*6 + 5]);
+    }
+  } else {
+    TsglErr("Polygon isn't outlined.");
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+      c[i] = ColorFloat(1.0f, 1.0f, 1.0f, 1.0f);
+    }
+  }
+  return c;
+}
+
+/**
  * \brief Alters the Polygon's vertex locations.
  * \param deltaX The difference between the new and old vertex X coordinates.
  * \param deltaY The difference between the new and old vertex Y coordinates.
+ * \warning This will also alter the Polygon's rotation point if and only if the 
+ *          old rotation point was at the Polygon's old center.
  */
 void Polygon::moveShapeBy(float deltaX, float deltaY) {
+  attribMutex.lock();
+  if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
+    myRotationPointX += deltaX;
+    myRotationPointY += deltaY;
+  }
   if(isFilled) {
     for(int i = 0; i < numberOfVertices; i++) {
       vertices[i*6]     += deltaX; //Transpose x
@@ -345,17 +404,27 @@ void Polygon::moveShapeBy(float deltaX, float deltaY) {
       outlineVertices[(i*6)+1] += deltaY; //Transpose y
     }
   }
+  myCenterX += deltaX;
+  myCenterY += deltaY;
+  attribMutex.unlock();
 }
 
 /**
  * \brief Moves the Polygon to new coordinates.
  * \param x The new center x coordinate.
  * \param y The new center y coordinate.
+ * \warning This will also alter the Polygon's rotation point if and only if the 
+ *          old rotation point was at the Polygon's old center.
  */
 void Polygon::setCenter(float x, float y) {
-    float deltaX = x - getX(); //Change for x
-    float deltaY = y - getY(); //Change for y
+    float deltaX = x - myCenterX; //Change for x
+    float deltaY = y - myCenterY; //Change for y
     attribMutex.lock();
+    if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
+      setRotationPoint(x,y);
+    }
+    myCenterX = x;
+    myCenterY = y;
     if(isFilled) {
       for(int i = 0; i < numberOfVertices; i++) {
         vertices[i*6]     += deltaX; //Transpose x
@@ -371,77 +440,16 @@ void Polygon::setCenter(float x, float y) {
     attribMutex.unlock();
 }
 
-/**
- * \brief Returns the x coordinate of the Polygon.
- * \return A float, the center x coordinate.
- */
-float Polygon::getX() { //TODO: decide if this is the best system to protect x and y
-    attribMutex.lock();
-    float minX, maxX;
-
-    //Find min and max X
-    if(hasOutline) {
-      minX = maxX = outlineVertices[0];
-      for(int i = 0; i < numberOfOutlineVertices; i++) {
-          if( outlineVertices[i*6] < minX )
-          minX = outlineVertices[i*6];
-          else if( outlineVertices[i*6] > maxX )
-          maxX = outlineVertices[i*6];
-      }
-    } else {
-      minX = maxX = vertices[0];
-      for(int i = 0; i < numberOfVertices; i++) {
-          if( vertices[i*6] < minX )
-          minX = vertices[i*6];
-          else if( vertices[i*6] > maxX )
-          maxX = vertices[i*6];
-      }
-    }
-
-    attribMutex.unlock();
-    return (minX+maxX)/2;
-}
-
-/**
- * \brief Returns the y coordinate of the Polygon.
- * \return A float, the center y coordinate.
- */
-float Polygon::getY() {
-    attribMutex.lock();
-    float minY, maxY;
-
-    //Find min and max Y
-    if(hasOutline) {
-      minY = maxY = outlineVertices[1];
-      for(int i = 0; i < numberOfOutlineVertices; i++) {
-        if( outlineVertices[i*6+1] < minY )
-        minY = outlineVertices[i*6+1];
-        else if( outlineVertices[i*6+1] > maxY )
-        maxY = outlineVertices[i*6+1];
-      }
-    } else {
-      minY = maxY = vertices[1];
-      for(int i = 0; i < numberOfVertices; i++) {
-          if( vertices[i*6+1] < minY )
-          minY = vertices[i*6+1];
-          else if( vertices[i*6+1] > maxY )
-          maxY = vertices[i*6+1];
-      }
-    }
-
-    attribMutex.unlock();
-    return (minY+maxY)/2;
-}
 
 /*!
  * \brief Mutator for the rotation of the Polygon.
- * \details Rotates the Polygon vertices around centerX, centerY.
+ * \details Rotates the Polygon vertices around myRotationPointX, myRotationPointY.
  * \param radians Float value denoting how many radians to rotate the Polygon.
  */
 void Polygon::setRotation(float radians) {
   if(radians != currentRotation) {
-    float pivotX = getX();
-    float pivotY = getY();
+    float pivotX = myRotationPointX;
+    float pivotY = myRotationPointY;
     float s = sin(radians - currentRotation);
     float c = cos(radians - currentRotation);
     currentRotation = radians;

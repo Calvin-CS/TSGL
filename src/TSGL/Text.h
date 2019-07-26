@@ -23,7 +23,7 @@ class Text : public Drawable {
     TextureHandler* myLoader;
     float * vertices;
     std::wstring myString;
-    int myX, myY, myCenterX, myCenterY;
+    int myX, myY;
     float myRotation;
  public:
     Text(std::wstring text, int x, int y, unsigned int fontsize, const ColorFloat &color);
@@ -32,17 +32,19 @@ class Text : public Drawable {
 
     virtual void setText(std::wstring text);
 
-    virtual void setColor(const ColorFloat& color);
+    virtual void setFontSize(int fontsize);
+
+    virtual void setFont(std::string filename);
 
     virtual void setBottomLeftCorner(int x, int y);
 
     virtual void setCenter(int x, int y);
 
-    virtual void setFontSize(int fontsize);
-
-    virtual void setFont(std::string filename);
+    virtual void moveTextBy(int deltaX, int deltaY);
 
     virtual void setRotation(float radians);
+
+    virtual void setColor(const ColorFloat& color);
 
     ~Text();
 };

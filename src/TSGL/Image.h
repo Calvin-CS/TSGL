@@ -28,14 +28,13 @@ namespace tsgl {
 class Image : public Drawable {
  private:
     int myWidth, myHeight;
-    float centerX, centerY;
     float currentRotation;
     float *vertices;
     std::string myFile;
     GLtexture myTexture;
     TextureHandler* myLoader;
  public:
-    Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha);
+    Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha = 1.0f);
 
     virtual void draw();
 
@@ -51,13 +50,11 @@ class Image : public Drawable {
      */
     int getWidth() { return myWidth; }
 
-    float getX();
+    void setCenter(float x, float y);
 
-    float getY();
+    void moveImageBy(float deltaX, float deltaY);
 
     virtual void setRotation(float radians);
-
-    void setCenter(float x, float y);
 
     void changeFileName(std::string filename, int width = 0, int height = 0);
 

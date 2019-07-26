@@ -296,12 +296,9 @@ void constructorFunction(Canvas& can) {
   }
 }
 
-//Takes command-line arguments for the width and height of the screen
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
-    int h = (argc > 2) ? atoi(argv[2]) : w;
-    if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-      w = h = 960;              //If not, set the width and height to a default value
+    int w = 0.9*Canvas::getDisplayHeight();
+    int h = w;
     Canvas c(-1, -1, w, h, "Constructors");
     c.setBackgroundColor(WHITE);
     c.run(constructorFunction);

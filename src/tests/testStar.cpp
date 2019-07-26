@@ -1,5 +1,5 @@
 /**
- * testArrows.cpp tests displaying the Line class's Arrow and Dotted attributes
+ * testStar.cpp tests displaying the Star class
  */
 #include <tsgl.h>
 using namespace tsgl;

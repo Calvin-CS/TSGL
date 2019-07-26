@@ -22,8 +22,9 @@ Image::Image(std::string filename, TextureHandler &loader, int x, int y, int wid
   if (myWidth <= 0 || myHeight <= 0) {
     TextureHandler::getDimensions(filename,myWidth,myHeight);
   }
-  centerX = x + myWidth / 2;
-  centerY = y + myHeight / 2;
+  myCenterX = x + myWidth / 2;
+  myCenterY = y + myHeight / 2;
+  setRotationPoint(myCenterX, myCenterY);
   currentRotation = 0;
   myFile = filename;
   myLoader = &loader;
@@ -64,52 +65,66 @@ void Image::draw() {
 }
 
 /*!
- * \brief Accessor for the center x-coordinate of the Image.
- * \details Returns the value of the centerX private variable.
- */
-float Image::getX() {
-  return centerX;
-}
-
-/*!
- * \brief Accessor for the center y-coordinate of the Image.
- * \details Returns the value of the centerX private variable.
- */
-float Image::getY() {
-  return centerY;
-}
-
-/*!
  * \brief Mutator for the center coordinates of the Image.
- * \details Alters the values of the centerX and centerY private variables.
+ * \details Alters the values of the myCenterX and myCenterY private variables.
  * \param x Float value for the new center x-coordinate.
  * \param y Float value for the new center y-coordinate.
+ * \warning This will also alter the Image's rotation point if and only if the 
+ *          old rotation point was at the Image's old center.
  */
 void Image::setCenter(float x, float y) {
   attribMutex.lock();
-  if(centerX != x || centerY != y) {
-    float deltaX = x - centerX;
-    float deltaY = y - centerY;
+  if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
+    setRotationPoint(x, y);
+  }
+  if(myCenterX != x || myCenterY != y) {
+    float deltaX = x - myCenterX;
+    float deltaY = y - myCenterY;
     for(int i = 0; i < 4; i++) {
       vertices[8*i] += deltaX;
       vertices[8*i+1] += deltaY;
     }
-    centerX = x;
-    centerY = y;
+    myCenterX = x;
+    myCenterY = y;
+  }
+  attribMutex.unlock();
+}
+
+/*!
+ * \brief Mutator for the coordinates of the Image.
+ * \details Alters all coordinate variables for the Image.
+ * \param deltaX Float value of how much to alter the y-coordinates.
+ * \param deltaY Float value of how much to alter the y-coordinates.
+ * \warning This will also alter the Image's rotation point if and only if the 
+ *          old rotation point was at the Image's old center.
+ */
+void Image::moveImageBy(float deltaX, float deltaY) {
+  attribMutex.lock();
+  if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
+    myRotationPointX += deltaX;
+    myRotationPointY += deltaY;
+  }
+  if(deltaX != 0 || deltaY != 0) {
+    for(int i = 0; i < 4; i++) {
+      vertices[8*i] += deltaX;
+      vertices[8*i+1] += deltaY;
+    }
+    myCenterX += deltaX;
+    myCenterY += deltaY;
   }
   attribMutex.unlock();
 }
 
 /*!
  * \brief Mutator for the rotation of the Image.
- * \details Rotates the Image corners around centerX, centerY.
+ * \details Rotates the Image corners around myRotationPointX, myRotationPointY.
  * \param radians Float value denoting how many radians to rotate the Image.
  */
 void Image::setRotation(float radians) {
   if(radians != currentRotation) {
     attribMutex.lock();
-    float pivotX = getX();
-    float pivotY = getY();
+    float pivotX = myRotationPointX;
+    float pivotY = myRotationPointY;
     float s = sin(radians - currentRotation);
     float c = cos(radians - currentRotation);
     currentRotation = radians;
@@ -144,14 +159,14 @@ void Image::changeFileName(std::string filename, int width, int height) {
   if (myWidth <= 0 || myHeight <= 0) {
     TextureHandler::getDimensions(filename,myWidth,myHeight);
   }
-  vertices[0] = centerX - myWidth/2;
-  vertices[1] = centerY - myHeight/2;
-  vertices[8] = centerX + myWidth/2;
-  vertices[9] = centerY - myHeight/2;
-  vertices[16] = centerX - myWidth/2;
-  vertices[17] = centerY + myHeight/2;
-  vertices[24] = centerX + myWidth/2;
-  vertices[25] = centerY + myHeight/2;
+  vertices[0] = myCenterX - myWidth/2;
+  vertices[1] = myCenterY - myHeight/2;
+  vertices[8] = myCenterX + myWidth/2;
+  vertices[9] = myCenterY - myHeight/2;
+  vertices[16] = myCenterX - myWidth/2;
+  vertices[17] = myCenterY + myHeight/2;
+  vertices[24] = myCenterX + myWidth/2;
+  vertices[25] = myCenterY + myHeight/2;
   attribMutex.unlock();
 }
 

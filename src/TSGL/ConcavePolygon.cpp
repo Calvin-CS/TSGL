@@ -193,6 +193,49 @@ void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
     if(isFilled) {
       preprocess();
     }
+    attribMutex.lock();
+    float minX, maxX;
+    //Find min and max X
+    if(hasOutline) {
+      minX = maxX = outlineVertices[0];
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+          if( outlineVertices[i*6] < minX )
+          minX = outlineVertices[i*6];
+          else if( outlineVertices[i*6] > maxX )
+          maxX = outlineVertices[i*6];
+      }
+    } else {
+      minX = maxX = vertices[0];
+      for(int i = 0; i < numberOfVertices; i++) {
+          if( vertices[i*6] < minX )
+          minX = vertices[i*6];
+          else if( vertices[i*6] > maxX )
+          maxX = vertices[i*6];
+      }
+    }
+    myCenterX = myRotationPointX = (minX+maxX)/2;
+
+    float minY, maxY;
+    //Find min and max Y
+    if(hasOutline) {
+      minY = maxY = outlineVertices[1];
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        if( outlineVertices[i*6+1] < minY )
+        minY = outlineVertices[i*6+1];
+        else if( outlineVertices[i*6+1] > maxY )
+        maxY = outlineVertices[i*6+1];
+      }
+    } else {
+      minY = maxY = vertices[1];
+      for(int i = 0; i < numberOfVertices; i++) {
+          if( vertices[i*6+1] < minY )
+          minY = vertices[i*6+1];
+          else if( vertices[i*6+1] > maxY )
+          maxY = vertices[i*6+1];
+      }
+    }
+    myCenterY = myRotationPointY = (minY+maxY)/2;
+    attribMutex.unlock();
   }
 }
 
@@ -251,6 +294,50 @@ void ConcavePolygon::addVertex(float x, float y, const ColorFloat &fillColor, co
     if(isFilled) {
       preprocess();
     }
+    attribMutex.lock();
+    float minX, maxX;
+
+    //Find min and max X
+    if(hasOutline) {
+      minX = maxX = outlineVertices[0];
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+          if( outlineVertices[i*6] < minX )
+          minX = outlineVertices[i*6];
+          else if( outlineVertices[i*6] > maxX )
+          maxX = outlineVertices[i*6];
+      }
+    } else {
+      minX = maxX = vertices[0];
+      for(int i = 0; i < numberOfVertices; i++) {
+          if( vertices[i*6] < minX )
+          minX = vertices[i*6];
+          else if( vertices[i*6] > maxX )
+          maxX = vertices[i*6];
+      }
+    }
+    myCenterX = myRotationPointX = (minX+maxX)/2;
+    
+    float minY, maxY;
+    //Find min and max Y
+    if(hasOutline) {
+      minY = maxY = outlineVertices[1];
+      for(int i = 0; i < numberOfOutlineVertices; i++) {
+        if( outlineVertices[i*6+1] < minY )
+        minY = outlineVertices[i*6+1];
+        else if( outlineVertices[i*6+1] > maxY )
+        maxY = outlineVertices[i*6+1];
+      }
+    } else {
+      minY = maxY = vertices[1];
+      for(int i = 0; i < numberOfVertices; i++) {
+          if( vertices[i*6+1] < minY )
+          minY = vertices[i*6+1];
+          else if( vertices[i*6+1] > maxY )
+          maxY = vertices[i*6+1];
+      }
+    }
+    myCenterY = myRotationPointY = (minY+maxY)/2;
+    attribMutex.unlock();
   }
 }
 

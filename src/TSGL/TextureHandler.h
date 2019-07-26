@@ -75,7 +75,7 @@ class TextureHandler {
 
     bool loadFont(const std::string& filename);
 
-    void calculateTextCenter(std::wstring text, unsigned int font_size, int leftX, int bottomY, int& centerX, int& centerY);
+    void calculateTextCenter(std::wstring text, unsigned int font_size, int leftX, int bottomY, float& centerX, float& centerY);
 
     static void getDimensions(std::string filename, int &width, int &height);
 

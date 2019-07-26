@@ -47,7 +47,7 @@ void Consumer::lock() {
  */
 void Consumer::act() {
 	myItem = buffer->remove();	//Take out data from the Queue and consume it
-	int endX = myShape->getX()-50, endY = myShape->getY();
+	int endX = myShape->getCenterX()-50, endY = myShape->getCenterY();
 	animateItem(endX, endY);
 	while( paused ) {}
 	ColorFloat* fillColor = myItem->getFillColor();

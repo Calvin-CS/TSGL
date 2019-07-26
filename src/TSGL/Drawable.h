@@ -19,20 +19,17 @@ namespace tsgl {
   protected:
     std::mutex      attribMutex;  ///< Protects the attributes of the Drawable from being accessed while simultaneously being changed
     bool isTextured = false; ///< Whether the Drawable is a Textured object.
+    float myRotationPointX, myRotationPointY, myCenterX, myCenterY;
     int renderLayer; // The depth index to control the drawing order of the shapes
   public:
+    Drawable();
 
     /*!
-    * \brief Constructs a new Drawable.
-    * \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Drawable.</b>
-    * \note Refer to the Drawable class description for more details.
+    * \brief Destroys the Drawable.
+    * \details Destructor for a Drawable.
+    * \details Frees up memory that was allocated to a Drawable object.
     */
-    Drawable() {
-      attribMutex.lock();
-      renderLayer = -1;
-      attribMutex.unlock();
-    }
-
+    virtual ~Drawable() { }
 
     /*!
      * \brief Actually draws the Drawable to the Canvas.
@@ -48,50 +45,13 @@ namespace tsgl {
      *  - You can add other statements in the subclass
      * \note Please refer to the class description for more information and warnings about overriding this method.
      */
-     virtual void draw() = 0;  // Abstract method for actually drawing the shape
+    virtual void draw() = 0;  // Abstract method for actually drawing the shape
 
-    /*!
-    * \brief Destroys the Drawable.
-    * \details Destructor for a Drawable.
-    * \details Frees up memory that was allocated to a Drawable object.
-    */
-    virtual ~Drawable() {
-      // attribMutex.lock(); //TODO: decide if we need this. Is it necessary so the item isn't destroyed when another thread is using?
-      // attribMutex.unlock();
-    };
+    bool getIsTextured();
 
-    /*!
-    * \brief Accessor for <code>isTextured</code>.
-    * \return Whether the drawable is a textured primitive or not.
-    */
-    bool getIsTextured() {
-      attribMutex.lock();
-      bool retVal = isTextured;
-      attribMutex.unlock();
-      return retVal;
-    }
+    void setLayer(int n);
 
-    /**
-    * \brief Sets the layer of the Drawable.
-    *    \param n The new layer of the Drawable.
-    * \details Sets <code>renderLayer</code> to n if n >= 0.
-    */
-    void setLayer(int n) {
-      attribMutex.lock();
-      if (n>=0) { renderLayer = n; }
-      attribMutex.unlock();
-    }  //TODO: make this validate layer numbers and return an error if not ok
-
-    /**
-    * \brief Accessor for <code>renderLayer</code>.
-    * \return The layer the drawable is set at.
-    */
-    int getLayer() {
-      attribMutex.lock();
-      int retVal = renderLayer;
-      attribMutex.unlock();
-      return retVal;
-    }
+    int getLayer();
     
    /*!
     * \brief Virtual accessor that returns if Drawable is processed and ready to be drawn
@@ -105,6 +65,20 @@ namespace tsgl {
      * \param radians The number of radians to rotate the Drawable.
      */
     virtual void setRotation(float radians) = 0;
+
+    virtual void setRotationPoint(float x, float y);
+
+    /*!
+    * \brief Accessor for the center x-coordinate of the Drawable.
+    * \details Returns the value of the myCenterX private variable.
+    */
+    virtual float getCenterX() { return myCenterX; }
+
+    /*!
+    * \brief Accessor for the center y-coordinate of the Drawable.
+    * \details Returns the value of the myCenterY private variable.
+    */
+    virtual float getCenterY() { return myCenterY; }
   };
 };
 

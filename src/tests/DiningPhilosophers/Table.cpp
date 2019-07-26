@@ -470,11 +470,10 @@ void Table::drawStep() {
 
   phils[i].refreshColor();
   if( phils[i].state() == isFull ) {
-      int j = phils[i].getMeals();
-      float angle = pangle+(j/10)*2*PI/RAD; 
-      float dist = BASEDIST+8*(j%10);
-      myCan->drawCircle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,BROWN);
-      phils[i].addMeal();
+    int meals = phils[i].getMeals();
+    float angle = pangle+(meals/10)*2*PI/RAD, dist = BASEDIST+8*(meals%10);
+    myCan->drawCircle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,BROWN);
+    phils[i].addMeal();
   }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;

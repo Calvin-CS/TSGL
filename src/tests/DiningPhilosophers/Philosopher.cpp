@@ -9,6 +9,7 @@ Philosopher::Philosopher() {
   myState = hasNone;
   myAction = doNothing;
   myCircle = NULL;
+  numMeals = 0;
 }
 
 Philosopher::~Philosopher() {

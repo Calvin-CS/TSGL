@@ -14,7 +14,7 @@ namespace tsgl {
 Shape::Shape() : Drawable() {
     isTextured = false;
     currentRotation = 0;
-    centerX = centerY = 0;
+    myCenterX = myCenterY = 0;
 }
 
 /*!
@@ -63,7 +63,7 @@ void Shape::addVertex(float x, float y, const ColorFloat &color) {
             else if( vertices[i*6] > maxX )
             maxX = vertices[i*6];
         }
-        centerX = (minX+maxX)/2;
+        myCenterX = (minX+maxX)/2;
 
         float minY, maxY;
         minY = maxY = vertices[1];
@@ -74,7 +74,9 @@ void Shape::addVertex(float x, float y, const ColorFloat &color) {
             else if( vertices[i*6+1] > maxY )
             maxY = vertices[i*6+1];
         }
-        centerY = (minY+maxY)/2;
+        myCenterY = (minY+maxY)/2;
+
+        setRotationPoint(myCenterX, myCenterY);
 
         attribMutex.unlock();
     }
@@ -110,6 +112,8 @@ void Shape::setColor(ColorFloat c[]) {
  * \brief Alters the Shape's vertex locations.
  * \param deltaX The difference between the new and old vertex X coordinates.
  * \param deltaY The difference between the new and old vertex Y coordinates.
+ * \warning This will also alter the Shape's rotation point if and only if the 
+ *          old rotation point was at the Shape's old center.
  */
 void Shape::moveShapeBy(float deltaX, float deltaY) {
     attribMutex.lock();
@@ -117,8 +121,12 @@ void Shape::moveShapeBy(float deltaX, float deltaY) {
       vertices[i*6]     += deltaX; //Transpose x
       vertices[(i*6)+1] += deltaY; //Transpose y
     }
-    centerX += deltaX;
-    centerY += deltaY;
+    if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
+        myRotationPointX += deltaX;
+        myRotationPointY += deltaY;
+    }
+    myCenterX += deltaX;
+    myCenterY += deltaY;
     attribMutex.unlock();
 }
 
@@ -126,14 +134,20 @@ void Shape::moveShapeBy(float deltaX, float deltaY) {
  * \brief Moves the Shape to new coordinates.
  * \param x The new center x coordinate.
  * \param y The new center y coordinate.
+ * \warning This will also alter the Shape's rotation point if and only if the 
+ *          old rotation point was at the Shape's old center.
  */
 void Shape::setCenter(float x, float y) {
-    float deltaX = x - centerX; //Change for x
-    float deltaY = y - centerY; //Change for y
+    float deltaX = x - myCenterX; //Change for x
+    float deltaY = y - myCenterY; //Change for y
     attribMutex.lock();
+    if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
+        myRotationPointX = x;
+        myRotationPointY = y;
+    }
 
-    centerX = x;
-    centerY = y;
+    myCenterX = x;
+    myCenterY = y;
 
     for(int i = 0; i < numberOfVertices; i++) {
       vertices[i*6]     += deltaX; //Transpose x
@@ -142,32 +156,16 @@ void Shape::setCenter(float x, float y) {
     attribMutex.unlock();
 }
 
-/**
- * \brief Returns the x coordinate of the Shape.
- * \return A float, the center x coordinate.
- */
-float Shape::getX() { //TODO: decide if this is the best system to protect x and y
-    return centerX;
-}
-
-/**
- * \brief Returns the y coordinate of the Shape.
- * \return A float, the center y coordinate.
- */
-float Shape::getY() {
-    return centerY;
-}
-
 /*!
  * \brief Mutator for the rotation of the Shape.
- * \details Rotates the Shape vertices around centerX, centerY.
+ * \details Rotates the Shape vertices around myRotationPointX, myRotationPointY.
  * \param radians Float value denoting how many radians to rotate the Shape.
  */
 void Shape::setRotation(float radians) {
   if(radians != currentRotation) {
     attribMutex.lock();
-    float pivotX = getX();
-    float pivotY = getY();
+    float pivotX = myRotationPointX;
+    float pivotY = myRotationPointY;
     float s = sin(radians - currentRotation);
     float c = cos(radians - currentRotation);
     currentRotation = radians;

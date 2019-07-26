@@ -50,12 +50,9 @@ void arrowFunction(Canvas& c) {
 	delete doubleArrow;
 }
 
-//Takes in command line arguments for the window width and height
 int main(int argc, char* argv[]) {
-  int w = (argc > 1) ? atoi(argv[1]) : 1000;
-  int h = (argc > 2) ? atoi(argv[2]) : 1000;
-  if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-    w = h = 1000;            //If not, set the width and height to a default value
+  int w = 1000;
+  int h = 1000;
   Canvas c(-1, -1, w, h, "Line Tests");
   c.run(arrowFunction);
 }

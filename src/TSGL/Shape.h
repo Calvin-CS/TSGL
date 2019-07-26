@@ -34,8 +34,6 @@ class Shape : public Drawable {
     bool init = false;
     int current = 0;
     float currentRotation;
-    float centerX;
-    float centerY;
  public:
     Shape();
 
@@ -50,10 +48,6 @@ class Shape : public Drawable {
     virtual void moveShapeBy(float deltaX, float deltaY);
 
     virtual void setCenter(float x, float y);
-
-    virtual float getX();
-
-    virtual float getY();
 
     virtual void setRotation(float radians);
 

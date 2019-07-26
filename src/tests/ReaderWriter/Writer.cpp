@@ -32,7 +32,7 @@ Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned lon
  * \details Includes a half second pause
  */
 void Writer::drawArrow(int x, int y) {
-	Arrow arrow(myCircle->getX()+20, myY, x, y, BLACK);
+	Arrow arrow(myCircle->getCenterX()+20, myY, x, y, BLACK);
 	arrow.setLayer(5);
 	myCan->add(&arrow);
 	myCan->sleepFor(0.5);
@@ -101,7 +101,7 @@ void Writer::act() {
 	delete[] fillColor;
 
 	//Draw an arrow down to the item
-	drawArrow(rec->getX(), rec->getY());
+	drawArrow(rec->getCenterX(), rec->getCenterY());
 }
 
 //TODO: comment

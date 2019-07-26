@@ -55,7 +55,7 @@ void PCThread::run() {
 void PCThread::animateItem(int endX, int endY) {
 	const int steps = 20;
 	const float timeInterval = 0.7;
-	int startX = myItem->getX(), startY = myItem->getY();
+	int startX = myItem->getCenterX(), startY = myItem->getCenterY();
 
 	myArrow = new Arrow (startX, startY, endX, endY, BLACK, false);
 	myCan->add(myArrow);

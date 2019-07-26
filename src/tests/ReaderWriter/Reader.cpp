@@ -25,7 +25,7 @@ Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned lon
  * \details Includes a half second pause
  */
 void Reader::drawArrow(int x, int y) {
-	Arrow arrow(myCircle->getX()-20, myY, x, y, BLACK, false);
+	Arrow arrow(myCircle->getCenterX()-20, myY, x, y, BLACK, false);
 	arrow.setLayer(5);
 	myCan->add(&arrow);
 	myCan->sleepFor(0.5);
@@ -54,7 +54,7 @@ void Reader::act() {
 	delete[] fillColor;
 
 	//Draw and erase the arrow
-	drawArrow(rec->getX(), rec->getY());
+	drawArrow(rec->getCenterX(), rec->getCenterY());
 }
 
 //TODO: comment
