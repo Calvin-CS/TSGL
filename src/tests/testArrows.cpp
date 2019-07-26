@@ -53,6 +53,6 @@ void arrowFunction(Canvas& c) {
 int main(int argc, char* argv[]) {
   int w = 1000;
   int h = 1000;
-  Canvas c(-1, -1, w, h, "Line Tests");
+  Canvas c(-1, -1, w, h, "Arrows");
   c.run(arrowFunction);
 }

@@ -14,7 +14,7 @@ namespace tsgl {
  *      \param color A reference to the ColorFloat to use.
  * \return A new Text instance with the specified string, position, and color.
  */
-Text::Text(std::wstring text, int x, int y, unsigned int fontsize, const ColorFloat &color) {
+Text::Text(std::wstring text, float x, float y, unsigned int fontsize, const ColorFloat &color) {
     isTextured = true;  // Let the Canvas know we're a textured object
     myString = text;
     myLoader = new TextureHandler();
@@ -49,7 +49,7 @@ void Text::draw() {
     vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
 
-    myLoader->drawText(myString, myFontSize, vertices, myRotationPointX, myRotationPointY, myRotation);
+    myLoader->drawText(myString, myFontSize, vertices, myCenterX, myCenterY, myRotation);
 }
 
 /*!
@@ -117,9 +117,9 @@ void Text::setFont(std::string filename) {
  * \warning This will also alter the Text's rotation point to the new center if and only if 
  *          the old rotation point was at the Text's old center.
  */
-void Text::setBottomLeftCorner(int x, int y) {
-    int deltaX = x - myX;
-    int deltaY = y - myY;
+void Text::setBottomLeftCorner(float x, float y) {
+    float deltaX = x - myX;
+    float deltaY = y - myY;
     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
         myRotationPointX += deltaX;
         myRotationPointY += deltaY;
@@ -138,9 +138,9 @@ void Text::setBottomLeftCorner(int x, int y) {
  * \warning This will also alter the Text's rotation point to the new center if and only if 
  *          the old rotation point was at the Text's old center.
  */
-void Text::setCenter(int x, int y) {
-    int deltaX = x - myCenterX;
-    int deltaY = y - myCenterY;
+void Text::setCenter(float x, float y) {
+    float deltaX = x - myCenterX;
+    float deltaY = y - myCenterY;
     myX += deltaX;
     myY += deltaY;
     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
@@ -158,7 +158,7 @@ void Text::setCenter(int x, int y) {
  * \warning This will also alter the Text's rotation point to the new center if and only if 
  *          the old rotation point was at the Text's old center.
  */
-void Text::moveTextBy(int deltaX, int deltaY) {
+void Text::moveTextBy(float deltaX, float deltaY) {
     myX += deltaX;
     myY += deltaY;
     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
@@ -175,7 +175,36 @@ void Text::moveTextBy(int deltaX, int deltaY) {
  * \param radians Float value denoting how many radians to rotate the Text.
  */
 void Text::setRotation(float radians) {
+    // myRotation = radians;
+  if(radians != myRotation) {
+    attribMutex.lock();
+
+    // distance between myCenter and bottom left corner
+    float deltaX = std::roundf(myCenterX - myX);
+    float deltaY = std::roundf(myCenterY - myY);
+
+    //deal with rotation variables
+    float s = sin(radians - myRotation);
+    float c = cos(radians - myRotation);
     myRotation = radians;
+
+    //rotate myCenter around myRotationPoint
+    float x = myCenterX;
+    float y = myCenterY;
+    x -= myRotationPointX;
+    y -= myRotationPointY;
+    float xnew = x * c - y * s;
+    float ynew = x * s + y * c;
+    x = xnew + myRotationPointX;
+    y = ynew + myRotationPointY;
+    myCenterX = x;
+    myCenterY = y;
+
+    //calculate new location of bottom left corner
+    myX = myCenterX - deltaX;
+    myY = myCenterY - deltaY;
+    attribMutex.unlock();
+  }
 }
 
 /*!

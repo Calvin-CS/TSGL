@@ -23,6 +23,10 @@ void rotationFunction(Canvas& can) {
   Arrow * a = new Arrow(0,0,0,50,ORANGE, true);
   a->setCenter(can.getWindowWidth() / 2, can.getWindowHeight()/2);
 
+  // l->setCenter(3* can.getWindowWidth() / 4, can.getWindowHeight() / 2);
+  // sq->setCenter(3* can.getWindowWidth() / 4, can.getWindowHeight() / 2);
+  // im->setCenter(3* can.getWindowWidth() / 4, can.getWindowHeight() / 2);
+
   l->setRotationPoint(can.getWindowWidth() / 2, can.getWindowHeight() / 2);
   im->setRotationPoint(can.getWindowWidth() / 2, can.getWindowHeight() / 2);
   text->setRotationPoint(can.getWindowWidth() / 2, can.getWindowHeight() / 2);
@@ -43,6 +47,10 @@ void rotationFunction(Canvas& can) {
     l->setRotation(rotation);
     a->setRotation(rotation);
     rotation += PI/365;
+    // sq->moveShapeBy(1,0);
+    // im->moveImageBy(1,0);
+    // text->moveTextBy(1,0);
+    // l->moveShapeBy(1,0);
     can.sleepFor(.02);
   }
 
@@ -55,8 +63,8 @@ void rotationFunction(Canvas& can) {
 
 //Takes command-line arguments for the width and height of the screen
 int main(int argc, char* argv[]) {
-  int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
+  int w = (argc > 1) ? atoi(argv[1]) : 1000;
   int h = (argc > 2) ? atoi(argv[2]) : w;
-  Canvas c(-1, -1, w, h, "Click the Target!");    //Can change the size of the window
+  Canvas c(-1, -1, w, h, "Rotation");    //Can change the size of the window
   c.run(rotationFunction);
 }

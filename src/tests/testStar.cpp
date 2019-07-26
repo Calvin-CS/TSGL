@@ -5,7 +5,7 @@
 using namespace tsgl;
 
 int main() {
-	Canvas c(-1, -1, 1000, 1000, "Line Tests", FRAME * 13);
+	Canvas c(-1, -1, 1000, 1000, "Stars", FRAME * 13);
 	c.start();
 
 	int xs[4] = {250, 250, 750, 750};

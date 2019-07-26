@@ -283,21 +283,21 @@ void Canvas::draw() {
             }
           }
 
-          unsigned int size = myDrawables->size();
-          for (unsigned int i = 0; i < size; i++) {
-            Drawable* d = (*myDrawables)[i];
-            if(d->isProcessed()) {
-              if (!d->getIsTextured()) {
-                d->draw();
-              } else {
-                textureShaders(true);
-                d->draw();
-                textureShaders(false);
+          if(frame > 0) {
+            unsigned int size = myDrawables->size();
+            for (unsigned int i = 0; i < size; i++) {
+              Drawable* d = (*myDrawables)[i];
+              if(d->isProcessed()) {
+                if (!d->getIsTextured()) {
+                  d->draw();
+                } else {
+                  textureShaders(true);
+                  d->draw();
+                  textureShaders(false);
+                }
               }
             }
-          }
-
-          if(frame > 0) {
+          
             if (loopAround) {
               newThingDrawn = true;
               int toend = myDrawables->capacity() - posLast;

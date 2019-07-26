@@ -98,6 +98,31 @@ int main(int argc, char * argv[]) {
 	queueDisplay.drawText("Producers", 30, 20, 24, BLACK);
 	queueDisplay.drawText("Consumers", WINDOW_WIDTH-150, 20, 24, BLACK);
 
+	int LEGENDOFFSET = 300;
+
+	//Text labels
+	queueDisplay.drawText("producing",100,70+LEGENDOFFSET,24,BLACK);
+	queueDisplay.drawText("waiting for lock",100,130+LEGENDOFFSET,24,BLACK);
+	queueDisplay.drawText("holding lock",100,190+LEGENDOFFSET,24,BLACK);
+	queueDisplay.drawText("consuming",350,70+LEGENDOFFSET,24,BLACK);
+	queueDisplay.drawText("waiting for lock",350,130+LEGENDOFFSET,24,BLACK);
+	queueDisplay.drawText("holding lock",350,190+LEGENDOFFSET,24,BLACK);
+
+	//Create legend items
+	Circle waitingCircle(50, 60+LEGENDOFFSET, 20, BLACK, BLACK); //waiting for lock
+	Circle thinkingCircle(50, 120+LEGENDOFFSET, 20, BLACK, true); //waiting, not seeking lock
+	Circle lockCircle(50, 180+LEGENDOFFSET, 20, BLACK, false); //has lock
+	Rectangle waitingSquare(WINDOW_WIDTH-70, 40+LEGENDOFFSET, 40, 40, BLACK, BLACK);
+	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100+LEGENDOFFSET, 40, 40, BLACK, true);
+	Rectangle lockSquare(WINDOW_WIDTH-70, 160+LEGENDOFFSET, 40, 40, BLACK, false);
+	queueDisplay.add( &waitingCircle ); 	queueDisplay.add( &thinkingCircle );
+	queueDisplay.add( &lockCircle ); 		queueDisplay.add( &waitingSquare );
+	queueDisplay.add( &thinkingSquare );	queueDisplay.add( &lockSquare );
+
+	//LEGENDEND
+
+	std::thread legendUpdater (displayLegend, &waitingCircle, &waitingSquare, &queueDisplay);
+
 	Producer** pro = new Producer*[numProducers]; //Array of Producers
 	Consumer** con = new Consumer*[numConsumers];  //Array of Consumers
 
@@ -109,32 +134,6 @@ int main(int argc, char * argv[]) {
 	for(int j = 0; j < numConsumers; j++) {
 		con[j] = new Consumer(sharedBuffer, j, queueDisplay);
 	}
-
-	//Create legend items
-	int LEGENDOFFSET = 300;
-
-	// int colorChanger = 0; //Counting int to control random bright colors
-	Circle waitingCircle(50, 60+LEGENDOFFSET, 20, BLACK, BLACK); //waiting for lock
-	Circle thinkingCircle(50, 120+LEGENDOFFSET, 20, BLACK, true); //waiting, not seeking lock
-	Circle lockCircle(50, 180+LEGENDOFFSET, 20, BLACK, false); //has lock
-	Rectangle waitingSquare(WINDOW_WIDTH-70, 40+LEGENDOFFSET, 40, 40, BLACK, BLACK);
-	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100+LEGENDOFFSET, 40, 40, BLACK, true);
-	Rectangle lockSquare(WINDOW_WIDTH-70, 160+LEGENDOFFSET, 40, 40, BLACK, false);
-	queueDisplay.add( &waitingCircle ); 	queueDisplay.add( &thinkingCircle );
-	queueDisplay.add( &lockCircle ); 		queueDisplay.add( &waitingSquare );
-	queueDisplay.add( &thinkingSquare );	queueDisplay.add( &lockSquare );
-
-	//Text labels
-	queueDisplay.drawText("producing",100,70+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("waiting for lock",100,130+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("holding lock",100,190+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("consuming",350,70+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("waiting for lock",350,130+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("holding lock",350,190+LEGENDOFFSET,24,BLACK);
-
-	//LEGENDEND
-
-	std::thread legendUpdater (displayLegend, &waitingCircle, &waitingSquare, &queueDisplay);
 
 	//Start up the pthreads for Producers and Consumers
 	for(int k = 0; k < numProducers; k++) {
