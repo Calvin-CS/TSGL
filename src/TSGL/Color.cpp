@@ -240,10 +240,8 @@ ColorFloat ColorFloat::operator*(float f) {
 }
 
 ColorFloat ColorFloat::getContrast() {
-    float newR = (R > 0.5)? 0 : 1;
-    float newG = (G > 0.5)? 0 : 1;
-    float newB = (B > 0.5)? 0 : 1;
-    return ColorFloat(newR, newG, newB, A);
+    float color = (R + G + B > 1.5) ? 0.0 : 1.0;
+    return ColorFloat(color, color, color, A);
 }
 
 /*!

@@ -33,6 +33,7 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myItem = NULL;
 	myArrow = NULL;
 	myCountLabel = new Text( std::to_wstring(count), myX, myY+5, 24, WHITE);
+	myCountLabel->setFont("../assets/freefont/FreeSans.ttf");
 	// myCountLabel->setLayer(3);
 	myCan->add( myCountLabel );
 }

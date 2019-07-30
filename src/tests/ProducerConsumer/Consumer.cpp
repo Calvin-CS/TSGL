@@ -18,7 +18,7 @@ Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myShape = new Rectangle(myX, myY, 40, 40, ColorInt(0, 0, 0), BLACK);
 	myShape->setCenter(myX, myY);
 	myShape->setLayer(1);
-	myCountLabel->setBottomLeftCorner(myX - 5, myY + 10);
+	myCountLabel->setCenter(myX, myY);
 	myCountLabel->setLayer(2);
 	myCan->add(myShape);
 }
@@ -55,10 +55,10 @@ void Consumer::act() {
 	myCountLabel->setColor(fillColor->getContrast());
 	delete[] fillColor;
 	count++; myCountLabel->setText( std::to_wstring(count) );
-	if(count == 10) myCountLabel->setBottomLeftCorner(myX - 10, myY + 10);
+	if(count == 10) myCountLabel->setCenter(myX, myY);
 	if(count == 100) {
-		// myCountLabel->setFontSize(20);
-		myCountLabel->setBottomLeftCorner(myX - 18, myY + 10);
+		myCountLabel->setFontSize(22);
+		myCountLabel->setCenter(myX, myY);
 	}
 }
 

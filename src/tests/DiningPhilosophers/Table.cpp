@@ -472,7 +472,7 @@ void Table::drawStep() {
   if( phils[i].state() == isFull ) {
     int meals = phils[i].getMeals();
     float angle = pangle+(meals/10)*2*PI/RAD, dist = BASEDIST+8*(meals%10);
-    myCan->drawCircle(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,BROWN);
+    myCan->drawRegularPolygon(tabX+dist*cos(angle), tabY+dist*sin(angle), 3, 10 ,BROWN, BLACK);
     phils[i].addMeal();
   }
   if (forks[i].user == i) {

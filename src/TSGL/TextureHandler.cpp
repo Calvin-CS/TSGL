@@ -335,10 +335,10 @@ bool TextureHandler::loadFont(const std::string& filename) {
         }
     }
 
-    // if(filename == "") {
-    //     fontFace = nullptr;
-    //     return true;
-    // }
+    if(filename == "") {
+        fontFace = nullptr;
+        return true;
+    }
 
     if (loadedFonts.find(filename) == loadedFonts.end()) {  // Load the image if we haven't already
         FT_Face tmp_face;

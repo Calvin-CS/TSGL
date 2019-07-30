@@ -103,6 +103,6 @@ int main(int argc, char* argv[]) {
   int  speed = (argc > 2 && atoi(argv[2]) > 0) ? atoi(argv[2]) : 10; //Speed defaults to 5
   bool stepThrough = (argc > 2 && ((std::string(argv[2]) == "t") || (std::string(argv[2]) == "y")));
   std::string resM  = (argc > 3) ? argv[3] : "o"; //ResolutionMethod defaults to oddEven
-  Canvas c(-1, -1, -1, -1, "Dining Philosophers",1.0f/speed);
+  Canvas c(-1, -1, 1300, 1000, "Dining Philosophers",1.0f/speed);
   c.run(philosopherFunction,nphil,resM,stepThrough);
 }

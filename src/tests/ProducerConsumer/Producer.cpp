@@ -78,9 +78,10 @@ void Producer::act() {
 	animateItem(endX, endY);
 
 	count++; myCountLabel->setText( std::to_wstring(count) );
-	if(count == 10) myCountLabel->setBottomLeftCorner(myX - 10, myY + 10);
+	if(count == 10) myCountLabel->setCenter(myX, myY);
 	if(count == 100) {
-		myCountLabel->setBottomLeftCorner(myX - 18, myY + 10);
+		myCountLabel->setFontSize(22);
+		myCountLabel->setCenter(myX, myY);
 	}
 	myItem = NULL;
 }
