@@ -162,14 +162,6 @@ void Canvas::close() {
  *    \param shapePtr Pointer to the Drawable to add to this Canvas.
  */
 void Canvas::add(Drawable * shapePtr) {
-
-  //TODO: make this check for duplicates
-  //TODO: check that this is properly thread safe now
-  //TODO: check that the shapes will change layer if layer is changed after addition.
-
-  // Set the default current layer if layer not explicitly set
-  // if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
-
   objectMutex.lock();
   objectBuffer.push_back(shapePtr);
   objectBufferEmpty = false;
@@ -187,9 +179,6 @@ void Canvas::add(Drawable * shapePtr) {
  * \warning If shapePtr is not in the drawing buffer, behavior is undefined.
  */
 void Canvas::remove(Drawable * shapePtr) {
-
-  //TODO: make this thread safe! (check that it is now)
-
   objectMutex.lock();
   objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
   objectMutex.unlock();
