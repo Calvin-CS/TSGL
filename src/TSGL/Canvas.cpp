@@ -162,6 +162,14 @@ void Canvas::close() {
  *    \param shapePtr Pointer to the Drawable to add to this Canvas.
  */
 void Canvas::add(Drawable * shapePtr) {
+
+  //TODO: make this check for duplicates
+  //TODO: check that this is properly thread safe now
+  //TODO: check that the shapes will change layer if layer is changed after addition.
+
+  // Set the default current layer if layer not explicitly set
+  // if (shapePtr->getLayer() < 0) shapePtr->setLayer(currentNewShapeLayerDefault);
+
   objectMutex.lock();
   objectBuffer.push_back(shapePtr);
   objectBufferEmpty = false;
@@ -179,6 +187,9 @@ void Canvas::add(Drawable * shapePtr) {
  * \warning If shapePtr is not in the drawing buffer, behavior is undefined.
  */
 void Canvas::remove(Drawable * shapePtr) {
+
+  //TODO: make this thread safe! (check that it is now)
+
   objectMutex.lock();
   objectBuffer.erase(std::remove(objectBuffer.begin(), objectBuffer.end(), shapePtr), objectBuffer.end());
   objectMutex.unlock();
@@ -262,7 +273,7 @@ void Canvas::draw() {
           glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
           glViewport(0,0,winWidth,winHeight);
-
+          
           if (frame == 0 || !objectBufferEmpty) {
             glClear(GL_COLOR_BUFFER_BIT);
             if(frame > 1) {
@@ -286,7 +297,7 @@ void Canvas::draw() {
                 }
               }
             }
-
+          
             if (loopAround) {
               newThingDrawn = true;
               int toend = myDrawables->capacity() - posLast;
@@ -438,8 +449,16 @@ void Canvas::drawArrow(float x1, float y1, float x2, float y2, const ColorFloat 
   *     (set to true by default).
   */
 void Canvas::drawCircle(int x, int y, int radius, ColorFloat color, bool filled) {
+    // version 1
     Circle* c = new Circle(x, y, radius, color, filled);  // Creates the Line with the specified coordinates and color
     drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2 requires sides parameter
+    // float delta = 2.0f / sides * PI;
+    // ConvexPolygon *s = new ConvexPolygon(sides, filled, !filled);
+    // for (int i = 0; i < sides; ++i)
+    //     s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),color);
+    // drawDrawable(s);
 }
 
  /*!
@@ -454,8 +473,16 @@ void Canvas::drawCircle(int x, int y, int radius, ColorFloat color, bool filled)
   *     (set to true by default).
   */
 void Canvas::drawCircle(int x, int y, int radius, ColorFloat color[], bool filled) {
+    // version 1
     Circle* c = new Circle(x, y, radius, color, filled);  // Creates the Line with the specified coordinates and color
     drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2 requires sides parameter
+    // float delta = 2.0f / sides * PI;
+    // ConvexPolygon *s = new ConvexPolygon(sides, filled, !filled);
+    // for (int i = 0; i < sides; ++i)
+    //     s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),color[i]);
+    // drawDrawable(s);
 }
 
  /*!
@@ -469,8 +496,16 @@ void Canvas::drawCircle(int x, int y, int radius, ColorFloat color[], bool fille
   *   \param outlineColor A single color for circle's outline vertices.
   */
 void Canvas::drawCircle(int x, int y, int radius, ColorFloat fillColor, ColorFloat outlineColor) {
+    // version 1
     Circle* c = new Circle(x, y, radius, fillColor, outlineColor);  // Creates the Line with the specified coordinates and color
     drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2 requires sides parameter
+    // float delta = 2.0f / sides * PI;
+    // ConvexPolygon *s = new ConvexPolygon(sides, true, true);
+    // for (int i = 0; i < sides; ++i)
+    //     s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),fillColor, outlineColor);
+    // drawDrawable(s);
 }
 
  /*!
@@ -484,8 +519,16 @@ void Canvas::drawCircle(int x, int y, int radius, ColorFloat fillColor, ColorFlo
   *   \param outlineColor A single color for circle's outline vertices.
   */
 void Canvas::drawCircle(int x, int y, int radius, ColorFloat fillColor[], ColorFloat outlineColor) {
+    // version 1
     Circle* c = new Circle(x, y, radius, fillColor, outlineColor);  // Creates the Line with the specified coordinates and color
     drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2 requires sides parameter
+    // float delta = 2.0f / sides * PI;
+    // ConvexPolygon *s = new ConvexPolygon(sides, true, true);
+    // for (int i = 0; i < sides; ++i)
+    //     s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),fillColor[i], outlineColor);
+    // drawDrawable(s);
 }
 
  /*!
@@ -499,8 +542,16 @@ void Canvas::drawCircle(int x, int y, int radius, ColorFloat fillColor[], ColorF
   *   \param outlineColor An array of colors for circle's outline vertices.
   */
 void Canvas::drawCircle(int x, int y, int radius, ColorFloat fillColor, ColorFloat outlineColor[]) {
+    // version 1
     Circle* c = new Circle(x, y, radius, fillColor, outlineColor);  // Creates the Line with the specified coordinates and color
     drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2 requires sides parameter
+    // float delta = 2.0f / sides * PI;
+    // ConvexPolygon *s = new ConvexPolygon(sides, true, true);
+    // for (int i = 0; i < sides; ++i)
+    //     s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),fillColor, outlineColor[i]);
+    // drawDrawable(s);
 }
 
  /*!
@@ -514,8 +565,16 @@ void Canvas::drawCircle(int x, int y, int radius, ColorFloat fillColor, ColorFlo
   *   \param outlineColor An array of colors for circle's outline vertices.
   */
 void Canvas::drawCircle(int x, int y, int radius, ColorFloat fillColor[], ColorFloat outlineColor[]) {
+    // version 1
     Circle* c = new Circle(x, y, radius, fillColor, outlineColor);  // Creates the Line with the specified coordinates and color
     drawDrawable(c);                               // Push it onto our drawing buffer
+
+    //version 2 requires sides parameter
+    // float delta = 2.0f / sides * PI;
+    // ConvexPolygon *s = new ConvexPolygon(sides, true, true);
+    // for (int i = 0; i < sides; ++i)
+    //     s->addVertex(x+radius*cos(i*delta), y+radius*sin(i*delta),fillColor[i],outlineColor[i]);
+    // drawDrawable(s);
 }
 
  /*!
@@ -905,11 +964,10 @@ void Canvas::drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fill
   *   \param width The width of the Image.
   *   \param height The height of the Image.
   *   \param alpha The alpha with which to draw the Image
-  *   \param rotation Rotation of the Image in radians clockwise.
+  *   \param rotation Rotation of the Image in radians clockwise.   
   */
-void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha, float rotation) {
+void Canvas::drawImage(std::string filename, int x, int y, int width, int height, float alpha) {
     Image* im = new Image(filename, loader, x, y, width, height, alpha);  // Creates the Image with the specified coordinates
-    im->setRotation(rotation);
     drawDrawable(im);                                       // Push it onto our drawing buffer
 }
 
@@ -922,7 +980,7 @@ void Canvas::drawImage(std::string filename, int x, int y, int width, int height
   *   \param y2 The y position of the end of the line.
   *   \param color The color of the line
   *     (set to BLACK by default).
-  *   \param rotation Rotation of the line in radians clockwise.
+  *   \param rotation Rotation of the line in radians clockwise. 
   */
 void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color, float rotation) {
     Line* l = new Line(x1, y1, x2, y2, color);  // Creates the Line with the specified coordinates and color
@@ -954,7 +1012,7 @@ void Canvas::drawLine(int x1, int y1, int x2, int y2, ColorFloat color[], float 
   *   \param row The row (y-position) of the pixel.
   *   \param col The column (x-position) of the pixel.
   *   \param color The color of the point (set to BLACK by default).
-  *   \param rotation Rotation of the ConcavePolygon in radians clockwise.
+  *   \param rotation Rotation of the ConcavePolygon in radians clockwise. 
   * \see drawPoint()
   */
 inline void Canvas::drawPixel(int row, int col, ColorFloat color) {
@@ -997,7 +1055,7 @@ void Canvas::drawPoint(int x, int y, ColorFloat color) {
   *   \param x An array of the x positions of the polyline's vertices.
   *   \param y An array of the y positions of the polyline's vertices.
   *   \param color A color for the Polyline.
-  *   \param rotation Rotation of the Polyline in radians clockwise.
+  *   \param rotation Rotation of the Polyline in radians clockwise.   
   */
 void Canvas::drawPolyline(int size, int x[], int y[], ColorFloat color, float rotation) {
     Polyline* p = new Polyline(size, x, y, color);  // Creates the Line with the specified coordinates and color
@@ -1174,7 +1232,7 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param color An array of colors for RegularPolygon.
   *   \param filled Whether the regular polygon should be filled
   *     (set to true by default).
-  *   \param rotation Rotation of the RegularPolygon in radians clockwise.
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.   
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled, float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, color, filled);
@@ -1191,7 +1249,7 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param sides The number of sides for the RegularPolygon
   *   \param fillColor A single color for RegularPolygon's fill vertices.
   *   \param outlineColor A single color for RegularPolygon's outline vertices.
-  *   \param rotation Rotation of the RegularPolygon in radians clockwise.
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.   
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor, float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
@@ -1208,7 +1266,7 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param sides The number of sides for the RegularPolygon
   *   \param fillColor An array of colors for RegularPolygon's fill vertices.
   *   \param outlineColor A single color for RegularPolygon's outline vertices.
-  *   \param rotation Rotation of the RegularPolygon in radians clockwise.
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.  
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor, float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
@@ -1225,7 +1283,7 @@ void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat 
   *   \param sides The number of sides for the RegularPolygon
   *   \param fillColor A single color for RegularPolygon's fill vertices.
   *   \param outlineColor An array of colors for RegularPolygon's outline vertices.
-  *   \param rotation Rotation of the RegularPolygon in radians clockwise.
+  *   \param rotation Rotation of the RegularPolygon in radians clockwise.   
   */
 void Canvas::drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[], float rotation) {
     RegularPolygon *c = new RegularPolygon(x, y, radius, sides, fillColor, outlineColor);
