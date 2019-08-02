@@ -250,7 +250,7 @@ public:
 
     virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
-    virtual void drawImage(std::string filename, int x, int y, int width, int height, float alpha = 1.0f);
+    virtual void drawImage(std::string filename, int x, int y, int width, int height, float alpha = 1.0f, float rotation = 0);
 
     virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, float rotation = 0);
 
