@@ -47,7 +47,7 @@ echo
 
 brew update
 
-brew tap homebrew/versions
+#brew tap homebrew/versions
 
 #Install glfw3 (will do nothing if already installed)
 echo "Installing GLFW..."
@@ -84,19 +84,14 @@ fi
 #Now check if we need to install gcc49
 if grep --quiet clang check.txt; then
 	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
-elif [ "$gVeres" -lt "$version" ]; then
-	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+	brew install gcc@8
+	sudo ln -s /usr/local/Cellar/gcc@8/8.3.0/bin/gcc-8 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc@8/8.3.0/bin/g++-8 /usr/local/bin/g++
 else
-	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+	echo "Installing g++...this may take a while!2"
+	brew install gcc@8
+	sudo ln -s /usr/local/Cellar/gcc@8/8.3.0/bin/gcc-8 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc@8/8.3.0/bin/g++-8 /usr/local/bin/g++
 fi
 
 #Symlinks

@@ -74,9 +74,9 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
     }
 	});
 
-  #pragma omp parallel num_threads(philosophers)
-  {
-    while(can.isOpen()) {
+  while(can.isOpen()) {
+    #pragma omp parallel num_threads(philosophers)
+    {
 		  if ((!stepThrough && !paused) || (stepThrough && !philPauses[omp_get_thread_num()])) {
         if(stepThrough) { philPauses[omp_get_thread_num()] = true; }
       	t.checkStep();
@@ -85,7 +85,6 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
         #pragma omp barrier               //Barrier for optional synchronization
         }
       	t.actStep();
-        can.sleep(); // ensures each fork is only drawn once per frame
         t.drawStep();
         can.resumeDrawing();
 		  }

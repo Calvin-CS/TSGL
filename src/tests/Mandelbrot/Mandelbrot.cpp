@@ -151,6 +151,7 @@ void Mandelbrot::draw(Cart& can) {
 //    shadeCanvas(can);  Optional shading
     std::cout << can.getTime() << std::endl;
     while (can.isOpen() && !myRedraw) {
+      pCan.sleep();
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }
   }

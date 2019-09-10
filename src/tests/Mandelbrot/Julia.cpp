@@ -52,6 +52,7 @@ void Julia::draw(Cart& can) {
     std::cout << can.getTime() << std::endl;
     while (can.isOpen() && !myRedraw) {
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
+      vq.sleep();
     }
   }
   vq.close();

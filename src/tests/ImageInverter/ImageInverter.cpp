@@ -23,23 +23,23 @@ void ImageInverter::run(unsigned numThreads) {
 
 void ImageInverter::invertImage(unsigned numThreads) {
   ColorInt pixelColor;
-  #pragma omp parallel for num_threads(numThreads)
-  for (int row = 0; row < myHeight; row++) {
-    myCanvas1.sleep();
-/*
-    if (! (myCanvas1.isOpen() && myCanvas2.isOpen()) ) {
-      #ifndef _WIN32
-      row = myHeight; //Exit out (not allowed on Windows)
-      #endif
-      continue;
-    }
-*/
-    for (int col = 0; col < myWidth; col++) {
-      pixelColor = myCanvas1.getPixel(row, col);
-      int invertedR = 255 - pixelColor.R;
-      int invertedG = 255 - pixelColor.G;
-      int invertedB = 255 - pixelColor.B;
-      myCanvas2.drawPixel(row, col, ColorInt(invertedR,invertedG,invertedB) );
+  // #pragma omp parallel for num_threads(numThreads)
+  const unsigned WW = myCanvas1.getWindowWidth(),WH = myCanvas1.getWindowHeight();
+  #pragma omp parallel num_threads(numThreads) 
+  {
+    int nthreads = omp_get_num_threads();
+    unsigned int blocksize = WH / nthreads;
+    unsigned int row = blocksize * omp_get_thread_num();
+    for (unsigned int x = row; x < row + blocksize; x++) {
+      for (unsigned int y = 0; y < WW; y++) {
+        pixelColor = myCanvas1.getPixel(x, y);
+        int invertedR = 255 - pixelColor.R;
+        int invertedG = 255 - pixelColor.G;
+        int invertedB = 255 - pixelColor.B;
+        myCanvas2.drawPixel(x, y, ColorInt(invertedR,invertedG,invertedB) );
+      }
+      myCanvas1.sleep();
+      myCanvas2.sleep();
     }
   }
 }
