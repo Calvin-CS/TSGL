@@ -53,8 +53,6 @@ CXXFLAGS=-O3 -g3 -ggdb3 \
   ${NOWARN} -fpermissive
   # -pedantic-errors
 
-#note: -L/opt/X11/lib/ used to be -L/usr/X11/lib/
-#seems to have been erased upon upgrading to MacOS Catalina
 LFLAGS=-Llib/ \
 	-L/usr/local/lib \
 	${OS_EXTRA_LIB} \

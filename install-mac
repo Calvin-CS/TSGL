@@ -52,19 +52,19 @@ brew update
 
 #Install glfw3 (will do nothing if already installed)
 echo "Installing GLFW..."
-brew reinstall glfw3
+brew install glfw3
 
 #GLEW
 echo "Installing GLEW..."
-brew reinstall glew
+brew install glew
 
 #Freetype
 echo "Installing Freetype2..."
-brew reinstall freetype
+brew install freetype
 
 #Doxygen
 echo "Installing Doxygen..."
-brew reinstall doxygen
+brew install doxygen
 
 #g++
 gVers=$(g++ -v 2>&1)
@@ -82,21 +82,20 @@ then
 
 fi
 
-#Now check if we need to install gcc49
+#Now check if we need to install gcc9
 if grep --quiet clang check.txt; then
 	echo "Installing g++...this may take a while!"
-	brew reinstall gcc
+	brew install gcc
 	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/gcc-9 /usr/local/bin/gcc
 	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 /usr/local/bin/g++
 else
 	echo "Installing g++...this may take a while!2"
-	brew reinstall gcc
+	brew install gcc
 	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/gcc-9 /usr/local/bin/gcc
 	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 /usr/local/bin/g++
 fi
 
 #Symlinks
-#note: used to be /usr/X11/*
 echo "Fixing missing symlinks..."
 if [ ! -e /usr/X11/lib/libX11.dylib ]; then
   sudo ln -s /usr/X11/lib/libX11.6.dylib /usr/X11/lib/libX11.dylib
