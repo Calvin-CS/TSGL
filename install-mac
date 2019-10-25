@@ -5,13 +5,14 @@
 # -SUBJECT TO CHANGE-
 ###############################
 
-VER_XQ="XQuartz-2.7.7"
+VER_XQ="XQuartz-2.7.11"
 
 #Function for checking command availability
 has () {
   (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
 }
 
+#FIXME: probably need to make it so X11 autoupdates. this currently seems super broken.
 #Print X11 warning
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   echo "Installing X11"
@@ -51,19 +52,19 @@ brew update
 
 #Install glfw3 (will do nothing if already installed)
 echo "Installing GLFW..."
-brew install glfw3
+brew reinstall glfw3
 
 #GLEW
 echo "Installing GLEW..."
-brew install glew
+brew reinstall glew
 
 #Freetype
 echo "Installing Freetype2..."
-brew install freetype
+brew reinstall freetype
 
 #Doxygen
 echo "Installing Doxygen..."
-brew install doxygen
+brew reinstall doxygen
 
 #g++
 gVers=$(g++ -v 2>&1)
@@ -84,17 +85,18 @@ fi
 #Now check if we need to install gcc49
 if grep --quiet clang check.txt; then
 	echo "Installing g++...this may take a while!"
-	brew install gcc@8
-	sudo ln -s /usr/local/Cellar/gcc@8/8.3.0/bin/gcc-8 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc@8/8.3.0/bin/g++-8 /usr/local/bin/g++
+	brew reinstall gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/gcc-9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 /usr/local/bin/g++
 else
 	echo "Installing g++...this may take a while!2"
-	brew install gcc@8
-	sudo ln -s /usr/local/Cellar/gcc@8/8.3.0/bin/gcc-8 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc@8/8.3.0/bin/g++-8 /usr/local/bin/g++
+	brew reinstall gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/gcc-9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 /usr/local/bin/g++
 fi
 
 #Symlinks
+#note: used to be /usr/X11/*
 echo "Fixing missing symlinks..."
 if [ ! -e /usr/X11/lib/libX11.dylib ]; then
   sudo ln -s /usr/X11/lib/libX11.6.dylib /usr/X11/lib/libX11.dylib
