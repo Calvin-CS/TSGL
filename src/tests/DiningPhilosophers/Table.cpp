@@ -421,6 +421,7 @@ void Table::checkStep() {
  * \brief Method for philosopher to act based on myAction.
  */
 void Table::actStep() {
+  myCan2->sleep();
   int i = omp_get_thread_num();
   int left = i, right = (i+numPhils-1)%numPhils;
   switch(phils[i].action()) {

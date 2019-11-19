@@ -229,8 +229,13 @@ void Canvas::draw() {
 
         syncMutex.lock();
 
+        int leftWindowIndex;
+
       #ifdef __APPLE__
+        leftWindowIndex = 0;
         windowMutex.lock();
+      #else
+        leftWindowIndex = -1;
       #endif
         glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
 
@@ -267,7 +272,7 @@ void Canvas::draw() {
             glClear(GL_COLOR_BUFFER_BIT);
             if(frame > 1) {
               textureShaders(true);
-              loader.drawGLtextureFromBuffer(proceduralBuffer, -1, 0, winWidth, winHeight, GL_RGB);
+              loader.drawGLtextureFromBuffer(proceduralBuffer, leftWindowIndex, 0, winWidth, winHeight, GL_RGB);
               textureShaders(false);
             }
           }
@@ -2613,8 +2618,11 @@ int Canvas::wait() {
   #ifdef __APPLE__
     while(!isFinished)
       sleepFor(0.1f);
+    pthread_join(renderThread, NULL);
+  #else
+    renderThread.join();
   #endif
-  renderThread.join();
+
   return 0;
 }
 

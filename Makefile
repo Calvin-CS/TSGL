@@ -18,7 +18,7 @@ NOWARN   := -Wno-unused-parameter -Wno-unused-function -Wno-narrowing
 UNAME    := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	OS_LFLAGS :=
+	OS_LFLAGS := -lpthread
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
 	OS_EXTRA_LIB := -L/usr/lib
 	OS_GLFW := glfw
@@ -29,14 +29,14 @@ ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_LDIRS :=
 	OS_EXTRA_LIB := 
-	OS_GLFW := glfw3
+	OS_GLFW := glfw
 	OS_GL :=
 endif
 
 CXXFLAGS=-O3 -g3 -ggdb3 \
 	-Wall -Wextra \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
-	-I/usr/local/include/Cellar/glfw3/3.1.1/include/ \
+	-I/usr/local/include/Cellar/glfw3/3.3/include/ \
 	-I${SRC_PATH}/ \
 	-I/usr/include/ \
 	-I/usr/local/include/ \
@@ -59,7 +59,7 @@ LFLAGS=-Llib/ \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
 	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
-	-lX11 ${OS_GL} -lXrandr -fopenmp \
+	-lX11 ${OS_GL} -lXrandr -Xpreprocessor -fopenmp -lomp -I"$(brew --prefix libomp)/include" \
 	${OS_LFLAGS} 
 
 DEPFLAGS=-MMD -MP

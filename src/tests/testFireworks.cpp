@@ -24,20 +24,20 @@ void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
   }
   ColorFloat col = can.getBackgroundColor();
   col.A = 0.04f;
-  #pragma omp parallel num_threads(threads)
-  {
-    const int CWW = can.getWindowWidth(), CWH = can.getWindowHeight();
+  const int CWW = can.getWindowWidth(), CWH = can.getWindowHeight();
+  while(can.isOpen()) {
+    #pragma omp parallel num_threads(threads)
+    {
     int tid = omp_get_thread_num();
     int nthreads = omp_get_num_threads();
-    while(can.isOpen()) {
-      for (int n = 0; n < speed; ++n) {
-        for (int i = tid; i < numFireworks; i += nthreads)
-          arcs[i]->step();
-        if (tid == 0)
-          can.drawRectangle(0,0,CWW,CWH,col);
-        #pragma omp barrier
-      }
-      can.sleep();
+    for (int n = 0; n < speed; ++n) {
+      for (int i = tid; i < numFireworks; i += nthreads)
+        arcs[i]->step();
+      if (tid == 0)
+        can.drawRectangle(0,0,CWW,CWH,col);
+      #pragma omp barrier
+    }
+    can.sleep();
     }
   }
   for (int i = 0; i < numFireworks; i++) {
@@ -58,5 +58,4 @@ int main(int argc, char* argv[]) {
   c.setBackgroundColor(BLACK);
   c.start();
   fireworkFunction(c,t,f,s);
-  c.wait();
 }

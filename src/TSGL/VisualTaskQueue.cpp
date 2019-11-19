@@ -145,4 +145,9 @@ void VisualTaskQueue::close() {
   }
 }
 
+void VisualTaskQueue::sleep() {
+  lcan->sleep();
+  vcan->sleep();
+}
+
 }

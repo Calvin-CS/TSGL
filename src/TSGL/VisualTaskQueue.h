@@ -51,6 +51,8 @@ public:
   void reset();
 
   void close();
+
+  void sleep();
 };
 
 }
