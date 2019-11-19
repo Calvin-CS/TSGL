@@ -17,10 +17,11 @@ namespace tsgl {
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, float sideLength, float yaw, float pitch, float roll, ColorFloat c)  
-: Prism(x, y, z, 8, 4, yaw, pitch, roll, c)  { // FIXME vertices
+: Prism(x, y, z, 4, yaw, pitch, roll)  { // FIXME vertices
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }
+    // add vertices based on parameters and color
 }
 
  /*!
@@ -38,10 +39,11 @@ Cube::Cube(float x, float y, float z, float sideLength, float yaw, float pitch, 
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, float sideLength, float yaw, float pitch, float roll, ColorFloat c[])  
-: Prism(x, y, z, 8, 4, yaw, pitch, roll, c)  { // FIXME vertices
+: Prism(x, y, z, 4, yaw, pitch, roll)  { // FIXME vertices
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive side length.");
     }
+    // add vertices based on parameters and color
 }
 
 /**

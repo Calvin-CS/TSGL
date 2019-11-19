@@ -17,14 +17,13 @@ namespace tsgl {
 class Prism : public Object3D {
 protected:
     // float myHeight;
+    Prism(float x, float y, float z, int sides, float yaw, float pitch, float roll);
 public:
-    Prism(float x, float y, float z, float vertices, int sides, float yaw, float pitch, float roll, ColorFloat c);
+    Prism(float x, float y, float z, float vertices[], int sides, float yaw, float pitch, float roll, ColorFloat c);
 
-    Prism(float x, float y, float z, float vertices, int sides, float yaw, float pitch, float roll, ColorFloat c[]);
+    Prism(float x, float y, float z, float vertices[], int sides, float yaw, float pitch, float roll, ColorFloat c[]);
 
     virtual ~Prism();
-
-    virtual void draw();
 
     virtual void setColor(ColorFloat c);
 

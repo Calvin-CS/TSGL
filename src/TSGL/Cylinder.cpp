@@ -18,10 +18,11 @@ namespace tsgl {
   * \return A new Cylinder with a buffer for storing the specified numbered of vertices.
   */
 Cylinder::Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c)  
-: Prism(x, y, z, 8, 4, yaw, pitch, roll, c)  { // FIXME vertices
+: Prism(x, y, z, (radius > 1) ? radius * 3 : 3, yaw, pitch, roll)  {
     if (radius <= 0 ||  height <= 0) {
         TsglDebug("Cannot have a Cylinder with non-positive height or radius.");
     }
+    // add vertices based on parameters and color
 }
 
  /*!
@@ -40,10 +41,11 @@ Cylinder::Cylinder(float x, float y, float z, float height, float radius, float 
   * \return A new Cylinder with a buffer for storing the specified numbered of vertices.
   */
 Cylinder::Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c[])  
-: Prism(x, y, z, 8, 4, yaw, pitch, roll, c)  { // FIXME vertices
+: Prism(x, y, z, (radius > 1) ? radius * 3 : 3, yaw, pitch, roll)  { // FIXME vertices
     if (radius <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cylinder with non-positive height or radius.");
     }
+    // add vertices based on parameters and color
 }
 
 /**

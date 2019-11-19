@@ -19,7 +19,7 @@ namespace tsgl {
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, float vertices, int sides, float yaw, float pitch, float roll, ColorFloat c)  : Object3D(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, float vertices[], int sides, float yaw, float pitch, float roll, ColorFloat c)  : Object3D(x, y, z, yaw, pitch, roll)  {
     attribMutex.lock();
     if (sides < 3) {
         TsglDebug("Cannot have a Prism with fewer than 3 sides.");
@@ -46,7 +46,32 @@ Prism::Prism(float x, float y, float z, float vertices, int sides, float yaw, fl
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, float vertices, int sides, float yaw, float pitch, float roll, ColorFloat c[])  : Object3D(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, float vertices[], int sides, float yaw, float pitch, float roll, ColorFloat c[])  : Object3D(x, y, z, yaw, pitch, roll)  {
+    attribMutex.lock();
+    if (sides < 3) {
+        TsglDebug("Cannot have a Prism with fewer than 3 sides.");
+    }
+    // FIXME make sure all vertex points are within one plane
+    // FIXME calculate myHeight based on vertices and xyz?
+    attribMutex.unlock();
+}
+
+ /*!
+  * \brief Explicitly constructs a new Prism. Protected method.
+  * \details Explicit constructor for a Prism object. Intended to be called only from subclasses.
+  *   \param x The x coordinate of the center of the Prism.
+  *   \param y The y coordinate of the center of the Prism.
+  *   \param z The z coordinate of the center of the Prism.
+  *   \param sides The number of sides of the Prism's base.
+  *   \param yaw The Prism's yaw.
+  *   \param pitch The Prism's pitch.
+  *   \param roll The Prism's roll.
+  * \warning An invariant is held where if sides is less than 3 then an error message is given.
+  * \warning An invariant is held where if radius isn't positive then an error message is given.
+  * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
+  * \return A new Prism with a buffer for storing the specified numbered of vertices.
+  */
+Prism::Prism(float x, float y, float z, int sides, float yaw, float pitch, float roll)  : Object3D(x, y, z, yaw, pitch, roll)  {
     attribMutex.lock();
     if (sides < 3) {
         TsglDebug("Cannot have a Prism with fewer than 3 sides.");

@@ -18,7 +18,7 @@ namespace tsgl {
   * \warning An invariant is held where if any radius isn't positive then an error message is given.
   * \return A new Ellipsoid with a buffer for storing the specified numbered of vertices.
   */
-Ellipsoid::Ellipsoid(float x, float y, float z, float xRadius, float yRadius, float zRadius, float yaw, float pitch, float roll, ColorFloat c)  : Object3D(x, y, z, yaw, pitch, roll)  {
+Ellipsoid::Ellipsoid(float x, float y, float z, float xRadius, float yRadius, float zRadius, float yaw, float pitch, float roll, ColorFloat c) : Object3D(x, y, z, yaw, pitch, roll)  {
     attribMutex.lock();
     if (xRadius <= 0 || yRadius <= 0 || zRadius <= 0) {
         TsglDebug("Cannot have an Ellipsoid with any radius less than or equal to 0.");
@@ -45,7 +45,7 @@ Ellipsoid::Ellipsoid(float x, float y, float z, float xRadius, float yRadius, fl
   * \warning An invariant is held where if any radius isn't positive then an error message is given.
   * \return A new Ellipsoid with a buffer for storing the specified numbered of vertices.
   */
-Ellipsoid::Ellipsoid(float x, float y, float z, float xRadius, float yRadius, float zRadius, float yaw, float pitch, float roll, ColorFloat c[])  : Object3D(x, y, z, yaw, pitch, roll)  {
+Ellipsoid::Ellipsoid(float x, float y, float z, float xRadius, float yRadius, float zRadius, float yaw, float pitch, float roll, ColorFloat c[]) : Object3D(x, y, z, yaw, pitch, roll)  {
     attribMutex.lock();
     if (xRadius <= 0 || yRadius <= 0 || zRadius <= 0) {
         TsglDebug("Cannot have an Ellipsoid with any radius less than or equal to 0.");

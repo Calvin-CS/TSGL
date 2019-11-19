@@ -25,8 +25,6 @@ public:
 
     virtual ~Pyramid();
 
-    virtual void draw();
-
     virtual void setColor(ColorFloat c);
 
     virtual void setColor(ColorFloat c[]);

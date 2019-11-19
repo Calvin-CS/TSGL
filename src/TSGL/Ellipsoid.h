@@ -24,8 +24,6 @@ public:
 
     virtual ~Ellipsoid();
 
-    virtual void draw();
-
     virtual void setColor(ColorFloat c);
 
     virtual void setColor(ColorFloat c[]);

@@ -19,10 +19,11 @@ namespace tsgl {
   * \return A new Cuboid with a buffer for storing the specified numbered of vertices.
   */
 Cuboid::Cuboid(float x, float y, float z, float length, float width, float height, float yaw, float pitch, float roll, ColorFloat c)  
-: Prism(x, y, z, 8, 4, yaw, pitch, roll, c)  { // FIXME vertices
+: Prism(x, y, z, 4, yaw, pitch, roll)  {
     if (length <= 0 || width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cuboid with non-positive length, width, or height.");
     }
+    // add vertices based on parameters and color
 }
 
  /*!
@@ -42,10 +43,11 @@ Cuboid::Cuboid(float x, float y, float z, float length, float width, float heigh
   * \return A new Cuboid with a buffer for storing the specified numbered of vertices.
   */
 Cuboid::Cuboid(float x, float y, float z, float length, float width, float height, float yaw, float pitch, float roll, ColorFloat c[])  
-: Prism(x, y, z, 8, 4, yaw, pitch, roll, c)  { // FIXME vertices
+: Prism(x, y, z, 4, yaw, pitch, roll)  { // FIXME vertices
     if (length <= 0 || width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cuboid with non-positive length, width, or height.");
     }
+    // add vertices based on parameters and color
 }
 
 /**

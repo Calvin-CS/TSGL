@@ -48,6 +48,7 @@ void Object3D::addVertex(float x, float y, float z, const ColorFloat &color) {
         TsglDebug("Cannot add anymore vertices.");
         return;
     }
+    attribMutex.lock();
 //   vertices[current] = x;
 //   vertices[current + 1] = y;
 //   vertices[current + 2] = color.R;
