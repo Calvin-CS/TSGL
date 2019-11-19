@@ -46,26 +46,32 @@ void concavePolygonFunction(Canvas& can) {
   x[8] = 250; y[8] = 400;
   x[9] = 200; y[9] = 300;
   x[10] = 100; y[10] = 400;
-  x[11] = 100; y[11] = 100;
 
   for (int i = 0; i < PSIZE; ++i) {
     if (i % 2 == 0) {
-      xx[i] = 600 + 150 * sin((1.0f*i)/(PSIZE) * PI * 2);
-      yy[i] = 450 - 150 * cos((1.0f*i)/(PSIZE) * PI * 2);
+      xx[i] = can.getWindowWidth() / 2 + 150 * sin((1.0f*i)/(PSIZE) * PI * 2);
+      yy[i] = can.getWindowHeight() / 2 - 150 * cos((1.0f*i)/(PSIZE) * PI * 2);
     } else {
-      xx[i] = 600 + 300 * sin((1.0f*i)/(PSIZE) * PI * 2);
-      yy[i] = 450 - 300 * cos((1.0f*i)/(PSIZE) * PI * 2);
+      xx[i] = can.getWindowWidth() / 2 + 300 * sin((1.0f*i)/(PSIZE) * PI * 2);
+      yy[i] = can.getWindowHeight() / 2 - 300 * cos((1.0f*i)/(PSIZE) * PI * 2);
     }
-    std::cout << i << ":" << x[i] << "," << y[i] << std::endl;
   }
+
+  ConcavePolygon * c1 = new ConcavePolygon(11, x, y, color, false);
+  ConcavePolygon * c2 = new ConcavePolygon(PSIZE, xx, yy, color, true);
+  can.add(c1); can.add(c2);
 
   while (can.isOpen()) {  // Checks to see if the window has been closed
     can.sleep();
-//    for (unsigned i = 0; i < PSIZE; ++i)
-//      color[i] = Colors::randomColor(1.0f);
-    can.drawConcavePolygon(PSIZE, x, y, color, true);
-    can.drawConcavePolygon(PSIZE, xx, yy, color, true);
+    // note: when you call drawConcavePolygon, you MUST give it the correct size.
+    // otherwise, it is always wrong and inconsistent in how it is wrong.
+    can.pauseDrawing();
+    c1->setCenter(can.getWindowWidth() / 2 + 450 * sin((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2), can.getWindowHeight() / 2 - 450 * cos((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2) );
+    can.resumeDrawing();
   }
+
+  delete c1;
+  delete c2;
 }
 
 //Takes command-line arguments for the width and height of the screen

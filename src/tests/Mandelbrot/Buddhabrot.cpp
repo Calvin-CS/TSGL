@@ -30,7 +30,7 @@ void Buddhabrot::draw(Cart& can) {
     counter[i] = new int[cww];
   while (myRedraw) {
     myRedraw = false;
-    can.clear();
+    can.clearProcedural();
     for (int i = 0; i < cwh; ++i)
       for (int j = 0; j < cww; ++j)
         counter[i][j] = 0;

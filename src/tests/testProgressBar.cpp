@@ -28,27 +28,31 @@ using namespace tsgl;
  * .
  * \param can Reference to the Canvas being drawn to.
  */
-void progressBarFunction(Canvas& can) {
-    const int X = 100, Y = X, W = can.getWindowWidth()-X*2, H = 20, MIN = 0, MAX = 1000, SEGS = 8;
+void progressBarFunction(Canvas& can, int numThreads) {
+    const int X = 100, Y = X, W = can.getWindowWidth()-X*2, H = 20, MIN = 0, MAX = 1000, SEGS = numThreads;
     ProgressBar pb(X,Y,W,H,MIN,MAX,SEGS);
     int progress = 0;
+    for (int i = 0; i < SEGS; ++i)
+      can.drawText(to_string(i),pb.getSegX(i)+8,pb.getSegY()-8,32,BLACK);
     while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
         ++progress;
-        for (unsigned i = 0; i < SEGS; ++i)
+        for (int i = 0; i < SEGS; ++i)
           pb.update(progress+i*(MAX/SEGS),i);
         can.drawProgress(&pb);
     }
 }
 
-//Takes in the window width and height as command line arguments for the Canvas
-//as well as for the number of threads to use
+//Takes in the number of threads to use as a command line argument for the Canvas, defaulting to 8.
 //( see http://www.cplusplus.com/articles/DEN36Up4/ )
 int main(int argc, char* argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
-    int h = (argc > 2) ? atoi(argv[2]) : w;
-    if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
-      w = h = 960;              //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "Progress Bar Example");   //Create an explicit Canvas based off of the passed width and height (or the defaults if the width and height were invalid)
-    c.run(progressBarFunction);
+    int t = (argc > 1) ? atoi(argv[1]) : 8;
+    int w;
+    int h;
+    if (t <= 0 || 10 < t) //Checked the passed threadNumber if it is valid
+      t = 8;              //If not, set numThreads to a default value
+    w = (t+2)*100;
+    h = 200;
+    Canvas c(-1, -1, w, h, "Progress Bar Example");
+    c.run(progressBarFunction, t);
 }

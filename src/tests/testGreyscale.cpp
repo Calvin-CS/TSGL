@@ -64,10 +64,11 @@ void greyScaleFunction(Canvas& can, int numberOfThreads) {
         can.drawPoint(x, y, ColorInt(gray, gray, gray));
       }
       if (! can.isOpen()) break;
-      can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
+      can.sleep();
     }
     for (unsigned int i = 0; i < thickness; i++) {
-      can.drawRectangle(i, row + i, WW - 1 - i, row + blocksize - i, color, false);
+      can.drawRectangle(i, row + i, WW - 1 - i, blocksize - i*2, color, false);
+      // can.drawRectangle(column + i, i, column + blocksize - i, WH - 1 - i, color, false);
     }
   }
 }

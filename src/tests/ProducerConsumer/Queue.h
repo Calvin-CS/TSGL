@@ -3,7 +3,7 @@
  * Used in the Producer-Consumer visualization in order to visualize a shared buffer amongst pthreads.
  * A mutex and condition variables are used to synchronize accesses to the Queue and to avoid race conditions.
  * (Condition variable logic was adapted from the TS_Queue code given to me by Professor Joel Adams).
- * (Self-synchronization logic was also adapted from TS_Queue). 
+ * (Self-synchronization logic was also adapted from TS_Queue).
  */
 
 #ifndef QUEUE_H_
@@ -11,14 +11,15 @@
 
 #include <stdio.h>
 #include <pthread.h>
+#include <unistd.h>
 #include <tsgl.h>
 using namespace tsgl;
 
-template<class Item> 
+template<class Item>
 
 /**
  * Queue class contains the data necessary in order to create a custom Queue object.
- * Used as a shared buffer in the Producer-Consumer visualization. 
+ * Used as a shared buffer in the Producer-Consumer visualization.
  */
 class Queue {
 public:
@@ -26,22 +27,27 @@ public:
 	Queue(int size, Canvas & can);  //Explicit Constructor
 	void append(Item it, int proId);	//Push an Item onto the Queue
 	Item remove();    //Get an Item off of the Queue
-	//Accessors	
+	//Accessors
 	Item* getArray();
 	int getCount();
 	Item getFirst();
 	Item getLast();
 	int getCapacity();
 	int* getPthreadIds();  //Stored Pthread ids
-	//Utility methods	
+	int getLastIndex() { return myLast; }
+	int getFirstIndex() { return myFirst; }
+	//Utility methods
 	bool isEmpty() const;
 	bool isFull() const;
-	~Queue(); //Destructor	
+	void producerLock();
+	void producerUnlock();
+	void consumerLock();
+	void consumerUnlock();
+	~Queue(); //Destructor
 
 private:
 	Item * myArray;  //Array of data
 	int mySize, myCount, myFirst, myLast;	 //Size, number of elements, and first and last indice
-	friend class ArrayQueueTester;    //Tester class
 	pthread_mutex_t myMutex;
 	//Broadcast a signal indicating that the Queue is not full (append, Producers) and that the Queue is not empty (remove, Consumers)
 	pthread_cond_t notEmpty;  //Condition variable for remove
@@ -77,7 +83,7 @@ Queue<Item>::Queue(int size, Canvas & can) {
 	myPthreadIds = new int[size];
 	mySize = size;  //Max number of elements to be in the Queue
 	myCount = 0;  //Number of elements currently in the Queue
-	myFirst = myLast = 0;  
+	myFirst = myLast = 0;
 	pthread_cond_init( &notEmpty, NULL );   //Initialize the condition variables and the mutex
 	pthread_cond_init( &notFull, NULL );
 	pthread_cond_init( &notOpen, NULL );
@@ -87,12 +93,25 @@ Queue<Item>::Queue(int size, Canvas & can) {
 
 /**
  * append() puts an item into the Queue.
- * @param: it, an Item to put into the Queue. 
- * @param: proId, an int representing the pthread id. 
+ * @param: it, an Item to put into the Queue.
+ * @param: proId, an int representing the pthread id.
  * (Pthread condition variable logic adapted from TS_Queue code given to me by Professor Joel Adams).
  */
 template<class Item>
 void Queue<Item>::append(Item it, int proId) {
+	myArray[myLast] = it;
+	myLast = (myLast + 1) % mySize;  //Increment the indexer to my last item
+	myCount++;
+	myPthreadIds[myLast] = proId;  //Store the most recent pthread id
+	pthread_cond_signal(&notEmpty);  //Signal that the Queue is not empty.
+	myPthreadIds[myLast] = proId;  //Store the most recent pthread id
+}
+
+/**
+ * producerLock() locks the Queue for the thread to append an item
+ */
+template<class Item>
+void Queue<Item>::producerLock() {
 	pthread_mutex_lock( &myMutex );  //Lock the mutex so only one thread can append
 	while(myCount == mySize) {
 		pthread_cond_wait(&notFull, &myMutex); //The Queue is full, please wait until it is not full.
@@ -101,10 +120,13 @@ void Queue<Item>::append(Item it, int proId) {
 		pthread_cond_broadcast( &notOpen );
 		pthread_mutex_unlock( &myMutex );
 	}	//Else...
-	myLast = (myLast + 1) % mySize;  //Increment the indexer to my last item
-	myArray[myLast] = it;
-	myCount++;
-	myPthreadIds[myLast] = proId;  //Store the most recent pthread id		
+}
+
+/**
+ * producerUnlock() unlocks the Queue after the thread appends an item
+ */
+template<class Item>
+void Queue<Item>::producerUnlock() {
 	pthread_cond_signal(&notEmpty);  //Signal that the Queue is not empty.
 	pthread_mutex_unlock( &myMutex );		//Unlock for other threads
 }
@@ -116,27 +138,40 @@ void Queue<Item>::append(Item it, int proId) {
  */
 template<class Item>
 Item Queue<Item>::remove() {
-//	ColorInt white(0, 0, 0);	
-	pthread_mutex_lock( &myMutex );  //Lock the mutex
-	Item temp;  //Item to be removed from Queue
-	if(!myCan->isOpen()) { //If the Canvas is not open, wake up all of the sleeping threads
-		pthread_cond_broadcast( &notOpen );
-		pthread_mutex_unlock( &myMutex );
-		return temp;  //Return the item
-	}	//Else...
-	while(myCount == 0) {
-		pthread_cond_wait(&notEmpty, &myMutex);  //The Queue is empty, please wait until it is not empty
-	} 
-	temp = myArray[myFirst];
-//	myArray[myFirst] = white;	
+	//ColorInt white(255, 255, 255);
+	Item temp = myArray[myFirst]; // Item to be removed from Queue
+	//myArray[myFirst] = white;
 	myFirst = (myFirst + 1) % mySize;
-	myCount--;    
-	pthread_cond_signal(&notFull);  //Signal that the Queue is not full
-	pthread_mutex_unlock( &myMutex );  //Unlock before returning
+	myCount--;
 	return temp;
 }
 
-//Accessors 
+/**
+ * consumerLock() locks the Queue for the thread to remove an item
+ */
+template<class Item>
+void Queue<Item>::consumerLock() {
+	pthread_mutex_lock( &myMutex );  //Lock the mutex
+	if(!myCan->isOpen()) { //If the Canvas is not open, wake up all of the sleeping threads
+		pthread_cond_broadcast( &notOpen );
+		pthread_mutex_unlock( &myMutex );
+	} else {	//Else...
+		while(myCount == 0) {
+			pthread_cond_wait(&notEmpty, &myMutex);  //The Queue is empty, please wait until it is not empty
+		}
+	}
+}
+
+/**
+ * consumerUnlock() locks the Queue after the thread to removes an item
+ */
+template<class Item>
+void Queue<Item>::consumerUnlock() {
+	pthread_cond_signal(&notFull);  //Signal that the Queue is not full
+	pthread_mutex_unlock( &myMutex );  //Unlock before returning
+}
+
+//Accessors
 
 /**
  * getArray() is the accessor method for the array of the Queue.
@@ -144,9 +179,9 @@ Item Queue<Item>::remove() {
  */
 template<class Item>
 Item* Queue<Item>::getArray() {
-	Item * array;  
+	Item * array;
 	pthread_mutex_lock( &myMutex );
-	array = myArray;  
+	array = myArray;
 	pthread_mutex_unlock( &myMutex );
 	return array;
 }
@@ -206,7 +241,7 @@ int Queue<Item>::getCapacity() {
 /**
  * getPthreadIds() is the accessor method for the stored pthread ids of the Producers.
  * (They are used to determine the color of the Rectangle drawn around the circles in the visualization).
- * @return: ids, the array of stored pthread ids. 
+ * @return: ids, the array of stored pthread ids.
  */
 template<class Item>
 int* Queue<Item>::getPthreadIds() {
@@ -240,14 +275,15 @@ bool Queue<Item>::isFull() const {
 /**
  * Destructor for the Queue.
  */
-template<class Item> 
+template<class Item>
 Queue<Item>::~Queue() {
 	pthread_cond_destroy(&notEmpty);  //Destroy the condition variables and mutex
 	pthread_cond_destroy(&notFull);
 	pthread_cond_destroy(&notOpen);
 	pthread_mutex_destroy(&myMutex);
 	delete [] myArray;      //Deallocate the array
+	delete [] myPthreadIds;
 	myArray = NULL;
 }
-	
+
 #endif /*QUEUE_H_*/

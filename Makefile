@@ -18,7 +18,7 @@ NOWARN   := -Wno-unused-parameter -Wno-unused-function -Wno-narrowing
 UNAME    := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	OS_LFLAGS :=
+	OS_LFLAGS := -lpthread
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
 	OS_EXTRA_LIB := -L/usr/lib
 	OS_GLFW := glfw
@@ -29,14 +29,14 @@ ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_LDIRS :=
 	OS_EXTRA_LIB := 
-	OS_GLFW := glfw3
+	OS_GLFW := glfw
 	OS_GL :=
 endif
 
-CXXFLAGS=-O3 -g3 \
+CXXFLAGS=-O3 -g3 -ggdb3 \
 	-Wall -Wextra \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
-	-I/usr/local/include/Cellar/glfw3/3.1.1/include/ \
+	-I/usr/local/include/Cellar/glfw3/3.3/include/ \
 	-I${SRC_PATH}/ \
 	-I/usr/include/ \
 	-I/usr/local/include/ \
@@ -59,7 +59,7 @@ LFLAGS=-Llib/ \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
 	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
-	-lX11 ${OS_GL} -lXrandr -fopenmp \
+	-lX11 ${OS_GL} -lXrandr -Xpreprocessor -fopenmp -lomp -I"$(brew --prefix libomp)/include" \
 	${OS_LFLAGS} 
 
 DEPFLAGS=-MMD -MP
@@ -67,6 +67,7 @@ DEPFLAGS=-MMD -MP
 BINARIES= \
   bin/test_specs \
 	bin/testAlphaRectangle \
+	bin/testArrows \
 	bin/testAura \
 	bin/testBallroom \
 	bin/testBlurImage \
@@ -74,6 +75,7 @@ BINARIES= \
 	bin/testColorPoints \
 	bin/testColorWheel \
 	bin/testConcavePolygon \
+	bin/testConstructors \
 	bin/testConway \
 	bin/testCosineIntegral \
 	bin/testDumbSort \
@@ -99,11 +101,14 @@ BINARIES= \
 	bin/testPong \
 	bin/testProgressBar \
 	bin/testProjectiles \
+	bin/testReaderWriter \
+	bin/testRotation \
 	bin/testScreenshot \
 	bin/testSeaUrchin \
 	bin/testSmartSort \
 	bin/testSpectrogram \
 	bin/testSpectrum \
+	bin/testStar \
 	bin/testText \
 	bin/testTextCart \
 	bin/testTextTwo \
@@ -169,20 +174,35 @@ lib/libtsgl.a: ${OBJS}
 	@touch build/build
 
 #List additional dependencies for test binaries
-bin/testLangton: build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
-bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 bin/testConway: build/tests/Conway/LifeFarm.o
+bin/testFireworks: build/tests/Fireworks/Arc.o \
+		   build/tests/Fireworks/Dot.o \
+		   build/tests/Fireworks/Firework.o
 bin/testInverter: build/tests/ImageInverter/ImageInverter.o
-bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
-bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
-bin/testProducerConsumer: build/tests/ProducerConsumer/Producer.o \
-	build/tests/ProducerConsumer/Consumer.o \
-	build/tests/ProducerConsumer/Thread.o
+bin/testLangton: build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
 bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
 	build/tests/Mandelbrot/GradientMandelbrot.o \
 	build/tests/Mandelbrot/Buddhabrot.o \
+	build/TSGL/VisualTaskQueue.o \
 	build/tests/Mandelbrot/Julia.o \
 	build/tests/Mandelbrot/Nova.o
+bin/testPhilosophers: build/tests/DiningPhilosophers/Philosopher.o \
+	build/tests/DiningPhilosophers/Table.o
+bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
+bin/testProducerConsumer: build/tests/ProducerConsumer/Producer.o \
+	build/tests/ProducerConsumer/Consumer.o \
+	build/tests/ProducerConsumer/Thread.o \
+	build/tests/ProducerConsumer/PCThread.o
+bin/testReaderWriter: build/tests/ReaderWriter/FLock.o \
+	build/tests/ReaderWriter/Lock.o \
+	build/tests/ReaderWriter/Reader.o \
+	build/tests/ReaderWriter/RLock.o \
+	build/tests/ReaderWriter/RWThread.o \
+	build/tests/ReaderWriter/Thread.o \
+	build/tests/ReaderWriter/WLock.o \
+	build/tests/ReaderWriter/Writer.o
+bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
+bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
 
 #General compilation recipes for test binaries (appended to earlier dependencies)
 bin/test%: build/tests/test%.o lib/libtsgl.a
@@ -192,18 +212,32 @@ bin/test%: build/tests/test%.o lib/libtsgl.a
 	@touch build/build
 
 build/%.o: src/%.cpp
+	@echo ""
+	@tput setaf 3;
+	@echo "+++++++++++++++++++ Building $@ +++++++++++++++++++"
+	@tput sgr0;
+	@echo ""
 	mkdir -p ${@D}
-	@echo 'Building $(patsubst src/tests/%,%,$<)'
 	$(CC) -c -fpic $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
+
+
 
 #Doxygen stuff
 docs/html/index.html: ${HEADERS} doxyfile
+	@echo ""
+	@tput setaf 3;
+	@echo "+++++++++++++++++++ Generating Doxygen +++++++++++++++++++"
+	@tput sgr0;
+	@echo ""
 	mkdir -p docs
-	@echo 'Generating Doxygen'
 	@doxygen doxyfile
 
 tutorial/docs/html/index.html: ${HEADERS} tutDoxyFile
-	@echo 'Generating Doxygen'
+	@echo ""
+	@tput setaf 3;
+	@echo "+++++++++++++++++++ Generating Doxygen +++++++++++++++++++"
+	@tput sgr0;
+	@echo ""
 	mkdir -p tutorial/docs
 	doxygen tutDoxyFile
 

@@ -11,8 +11,8 @@ namespace tsgl {
     #define STB_DEFINE
 //It may look truly awful....but its an easy way to turn off warnings
 //solely for stb.h. Sorry :'(
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-fpermissive"
+// #pragma GCC diagnostic push
+// #pragma GCC diagnostic ignored "-fpermissive"
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #pragma GCC diagnostic push
@@ -83,11 +83,21 @@ namespace tsgl {
 
 #define GL_GLEXT_PROTOTYPES
 
+/*!
+ * \brief Default TextureHandler constructor method.
+ * \details This is the default constructor for theTextureHandler Canvas class.
+ * \return A new TextureHandler instance.
+ */
 TextureHandler::TextureHandler() {
     fontLibrary = nullptr;
     fontFace = nullptr;
 }
 
+/*!
+ * \brief TextureHandler destructor method.
+ * \details This is the destructor for the TextureHandler class.
+ * \details Frees up memory that was allocated to a TextureHandler instance.
+ */
 TextureHandler::~TextureHandler() {
     for (TextureMap::iterator it = loadedTextures.begin(); it != loadedTextures.end(); ++it) {
         glDeleteTextures(1, &(it->second));
@@ -115,7 +125,7 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newBuffer);
-        delete newBuffer;
+        delete[] newBuffer;
     } else {
         if (glMode == GL_RED) {
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -129,11 +139,84 @@ void TextureHandler::createGLtextureFromBuffer(GLtexture &texture, unsigned char
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
 
-bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices) {
+void TextureHandler::drawGLtextureFromBuffer(GLubyte* buffer, int x, int y, unsigned int width, unsigned int height, int glMode) {
+    // Generate the OpenGL texture object
+    GLtexture texture;
+
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    if (glMode == GL_ALPHA) {
+        unsigned char* newBuffer = new unsigned char[width * height * 4];
+        unsigned maxSize = width * height;
+        for (unsigned int i = 0, x = 0; i < maxSize; i++, x += 4) {
+            newBuffer[x] = newBuffer[x + 1] = newBuffer[x + 2] = newBuffer[x + 3] = buffer[i];
+        }
+
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, newBuffer);
+        delete[] newBuffer;
+    } else {
+        if (glMode == GL_RED) {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        } else {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        }
+        glTexImage2D(GL_TEXTURE_2D, 0, glMode, width, height, 0, glMode, GL_UNSIGNED_BYTE, buffer);
+    }
+
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    float* vertices = new float[32];
+    vertices[0] = x;
+    vertices[1] = y + height;
+    vertices[8] = x + width;
+    vertices[9] = y + height;
+    vertices[16] = x + width;
+    vertices[17] = y;
+    vertices[24] = x;
+    vertices[25] = y;
+    vertices[2] = vertices[10] = vertices[18] = vertices[26] = 1.0f;  // Texture color of the coords
+    vertices[3] = vertices[11] = vertices[19] = vertices[27] = 1.0f;
+    vertices[4] = vertices[12] = vertices[20] = vertices[28] = 1.0f;
+    vertices[5] = vertices[13] = vertices[21] = vertices[29] = 1.0f;
+    vertices[6] = vertices[7] = 0.0f;           // Texture coords of top left
+    vertices[14] = 1.0f, vertices[15] = 0.0f;   // Texture coords of top right
+    vertices[30] = 0.0f, vertices[31] = 1.0f;   // Texture coords of bottom left
+    vertices[22] = vertices[23] = 1.0f;         // Texture coords of bottom right
+
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+    glDeleteTextures(1, &texture);
+
+    delete[] vertices;
+}
+
+/*!
+ * \brief Draws text.
+ * \details Draws the text specified by its parameters onto a Canvas.
+ *   \param text The UTF-8 encoded string of text to be drawn.
+ *   \param font_size The size of the text in pixels.
+ *   \param vertices An array of vertex data for the bonding box of the text.
+ * \note <code>vertices</code> will be partially automatically set by drawText()
+ *   itself in order to draw / kern the text properly, but the color, starting
+ *   position, and texture coordinates will be left unchanged.
+ * \note If no font is loaded before calling this function, TSGL will attempt to locate a
+ *   default font at <i>../assets/freefont/FreeMono.ttf.</i>
+ * \return True if successful, false otherwise.
+ * \bug If the default font cannot be located, TSGL will crash.
+ */
+bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices, int centerX, int centerY, float rotation) {
     const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //If no font is set, load up a default one
       bool found = false;
-      for (int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
+      for (unsigned int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
           if (fileExists(DEFAULTFONTPATHS[i])) {
               TsglDebug("No Font set! Now loading from " + std::string(DEFAULTFONTPATHS[i]));    //NEW
               loadFont(DEFAULTFONTPATHS[i]);
@@ -146,6 +229,7 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
           exit(44);
       }
     }
+
     FT_GlyphSlot glyph = fontFace->glyph;
     FT_UInt current_glyph_index, previous_glyph_index = 0;
     int penX = vertices[0],
@@ -171,7 +255,7 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
 
         error = FT_Load_Glyph(fontFace, current_glyph_index, FT_LOAD_RENDER);
         if (error) {
-            fprintf(stderr, "FT_Load_Char falied\n");
+            fprintf(stderr, "FT_Load_Char failed\n");
             return false;
         }
 
@@ -206,21 +290,54 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
         vertices[1]  = vertices[9]  = penY - glyph->bitmap_top;
         vertices[25] = vertices[17] = penY - glyph->bitmap_top + glyph->bitmap.rows;
 
+
+        float s = sin(rotation);
+        float c = cos(rotation);
+        for(int i = 0; i < 4; i++) {
+            float x = vertices[8*i];
+            float y = vertices[8*i+1];
+            x -= centerX;
+            y -= centerY;
+            float xnew = x * c - y * s;
+            float ynew = x * s + y * c;
+
+            x = xnew + centerX;
+            y = ynew + centerY;
+            vertices[8*i] = x;
+            vertices[8*i+1] = y;
+        }
+
         penX += glyph->advance.x >> 6;
         penY += glyph->advance.y >> 6;
 
         glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);  // Fill the buffer
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);                                         // Draw the character
+
+        glDeleteTextures(1, &texture);
     }
     return true;
 }
 
+/*!
+ * \brief Loads a font.
+ * \details Loads a font from the library given by <code>filename</code>.
+ *   \param filename The file name of the font to be loaded.
+ * \warning If the font cannot be found then an error message is printed out.
+ * \warning If the font library is not correctly installed then an error message is printed out.
+ * \warning If the font is not supported then an error message is printed out.
+ * \return True if successful, false otherwise.
+ */
 bool TextureHandler::loadFont(const std::string& filename) {
     if (fontLibrary == nullptr) {
         if (FT_Init_FreeType(&fontLibrary)) {
             fprintf(stderr, "An error occurred during freetype font library initialization\n");
             return false;
         }
+    }
+
+    if(filename == "") {
+        fontFace = nullptr;
+        return true;
     }
 
     if (loadedFonts.find(filename) == loadedFonts.end()) {  // Load the image if we haven't already
@@ -245,8 +362,92 @@ bool TextureHandler::loadFont(const std::string& filename) {
     return true;
 }
 
-GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height,
-                                GLtexture &texture) {
+void TextureHandler::calculateTextCenter(std::wstring text, unsigned int font_size, int leftX, int bottomY, float& centerX, float& centerY) {
+    const wchar_t* string = text.c_str();
+    if(fontFace == nullptr) {   //If no font is set, load up a default one
+      bool found = false;
+      for (unsigned int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
+          if (fileExists(DEFAULTFONTPATHS[i])) {
+              TsglDebug("No Font set! Now loading from " + std::string(DEFAULTFONTPATHS[i]));    //NEW
+              loadFont(DEFAULTFONTPATHS[i]);
+              found = true;
+              break;
+          }
+      }
+      if (!found) {
+          TsglErr("No suitable fonts found...exiting");    //NEW
+          exit(44);
+      }
+    }
+    FT_GlyphSlot glyph = fontFace->glyph;
+    FT_UInt current_glyph_index, previous_glyph_index = 0;
+    int penX = leftX;
+    int penY = bottomY;
+
+    int minX = leftX;
+    int minY = bottomY;
+    int maxX = leftX;
+    int maxY = bottomY;
+
+    int currentRightX, currentTopY, currentBottomY;
+
+    bool error = FT_Set_Pixel_Sizes(fontFace, 0, font_size);
+    if (error) {
+        fprintf(stderr, "FT_Set_Pixel_Sizes failed\n");
+        return;
+    }
+
+    bool use_kerning = FT_HAS_KERNING(fontFace);
+
+    for (unsigned int i = 0; i < text.size(); i++) {
+        current_glyph_index = FT_Get_Char_Index(fontFace, string[i]);
+
+        if (use_kerning && previous_glyph_index && current_glyph_index) {
+            FT_Vector delta;
+            FT_Get_Kerning(fontFace, previous_glyph_index, current_glyph_index, FT_KERNING_DEFAULT, &delta);
+            penX += delta.x >> 6;
+            penY += delta.y >> 6;
+        }
+
+        error = FT_Load_Glyph(fontFace, current_glyph_index, FT_LOAD_RENDER);
+        if (error) {
+            fprintf(stderr, "FT_Load_Char falied\n");
+            return;
+        }
+
+        previous_glyph_index = current_glyph_index;
+
+        currentRightX = penX + glyph->bitmap_left + glyph->bitmap.width;
+        currentTopY  = penY - glyph->bitmap_top;
+        currentBottomY = penY - glyph->bitmap_top + glyph->bitmap.rows;
+
+        maxX = currentRightX;
+        if(currentBottomY > maxY) {
+            maxY = currentBottomY;
+        }
+        if(currentTopY < minY) {
+            minY = currentTopY;
+        }
+
+        penX += glyph->advance.x >> 6;
+        penY += glyph->advance.y >> 6;
+    }
+
+    centerX = (minX + maxX) / 2;
+    centerY = (minY + maxY) / 2;
+}
+
+/*!
+ * \brief Loads an image.
+ * \details Loads a .png, .jpeg, or .bmp image from a file.
+ *   \param filename The file name of the picture.
+ *   \param width A reference variable for holding the width of the picture.
+ *   \param height A reference variable for holding the height of the picture.
+ *   \param texture A reference variable for holding the texture of the picture.
+ *     (same as return value)
+ * \return The texture that created from the loaded image.
+ */
+GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width, unsigned int &height, GLtexture &texture) {
     if (loadedTextures.find(filename) == loadedTextures.end()) {  // Load the image if we haven't already
         texture = 0;
         std::string extension = filename.substr(filename.find_last_of('.'));
@@ -366,12 +567,22 @@ GLtexture TextureHandler::loadTextureFromBMP(const char* filename, unsigned int 
 
     createGLtextureFromBuffer(texture, data, width, height, components);
 
+    delete[] data;
+
     return texture;
 }
 
+/*!
+ * \brief Gets the dimensions of an image
+ * \details Loads the header of a .png, .jpeg, or .bmp image to read their dimensions.
+ *   \param filename The file name of the picture.
+ *   \param width A reference variable for holding the width of the picture.
+ *   \param height A reference variable for holding the height of the picture.
+ * \return The texture that created from the loaded image.
+ */
 void TextureHandler::getDimensions(std::string filename, int &width, int &height) {
     int w = 0, h = 0;
-    stbi_load(filename.c_str(), &w, &h, 0, 4);
+    stbi_info(filename.c_str(), &w, &h, 0);
     width = w; height = h;
 }
 
@@ -413,6 +624,15 @@ GLtexture TextureHandler::loadTextureFromPNG(const char* filename, unsigned int 
   return texture;
 }
 
+/*!
+ * \brief Saves an Image.
+ * \details Saves an Image to file that was captured from a Canvas object.
+ *   \param filename The name of the file to save the Image to.
+ *   \param pixels The pixel data for the Image.
+ *   \param width The width of the Image.
+ *   \param height The height of the Image.
+ * \return True if successful, false otherwise.
+ */
 bool TextureHandler::saveImageToFile(std::string filename, GLubyte *pixels,
                                      unsigned int width, unsigned int height) const {
     std::string extension = filename.substr(filename.find_last_of('.'));
@@ -534,7 +754,10 @@ bool TextureHandler::saveToPNG(const char* filename, GLubyte *pixels, unsigned i
     return true;
 }
 
-//-------------------------Unit testing----------------------------------------------
+//-------------------------Unit testing---------------------------------------------
+/*!
+ * \brief Runs the Unit tests for TextureHandler.
+ */
 void TextureHandler::runTests() {
     TsglDebug("Testing TextureHandler class...");
     TextureHandler tester;

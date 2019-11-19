@@ -2,6 +2,20 @@
 
 namespace tsgl {
 
+ /*!
+  * \brief Default IntegralViewer constructor method.
+  * \details This is the default constructor for the IntegralViewer class.
+  *   \param f A function to integrate and display. The function must accept exactly one argument of type
+  *     Decimal, and return a Decimal.
+  *   \param width The width of the window displaying the integration.
+  *   \param height The height of the window displaying the integration.
+  *   \param startX The minimum x-value whose y-value should be computed.
+  *   \param stopX The maximum x-value whose y-value should be computed.
+  *   \param startY The minimum y-value that should be displayed on the IntegralViewer's Canvas.
+  *   \param stopY The maximum y-value that should be displayed on the IntegralViewer's Canvas.
+  *   \param fname A descriptive name for the function you wish to integrate.
+  * \return A new IntegralViewer with the specified dimensions, bounds, and function description.
+  */
 IntegralViewer::IntegralViewer(functionPointer f, int width, int height, Decimal startX, Decimal stopX, Decimal startY, Decimal stopY, std::string fname) {
   myF = f;
   myWidth = width; myHeight = height;
@@ -15,6 +29,11 @@ IntegralViewer::IntegralViewer(functionPointer f, int width, int height, Decimal
   setupCanvas(myRecCanvas, ss.str() + " using Rectangles", myDelay);  //Canvas for rectangle method
 }
 
+ /*!
+  * \brief IntegralViewer destructor method.
+  * \details This is the destructor for the IntegralViewer class.
+  * \details Frees up memory that was allocated to a IntegralViewer instance.
+  */
 IntegralViewer::~IntegralViewer() {
   if (myRecCanvas->isOpen())
     myRecCanvas->stop();
@@ -27,8 +46,8 @@ IntegralViewer::~IntegralViewer() {
 
 void IntegralViewer::drawLabels(CartesianCanvas*& can) {
   const int FSIZE = 32;
-  const float cpw = can->getPixelWidth(), cph = can->getPixelHeight();
-  const float xoff = cpw*FSIZE, yoff = cph*FSIZE;
+  const float /* cpw = can->getPixelWidth(), */ cph = can->getPixelHeight();
+  const float /* xoff = cpw*FSIZE, */ yoff = cph*FSIZE;
 
   bool blorigin = (myStartX == 0 && myStartY == 0);
   bool tlorigin = (myStartX == 0 && myStopY == 0);
@@ -51,12 +70,18 @@ void IntegralViewer::setupCanvas(CartesianCanvas*& can, const std::string& label
 
   can->start();
 
-  can->drawRectangle(myStartX,myStartY,myStopX,myStopY,WHITE);        //Area we're drawing to
+  can->drawRectangle(myStartX,myStartY,myStopX - myStartX, myStartY - myStopY,WHITE);        //Area we're drawing to
   can->drawPartialFunction(myF,myStartX,myStopX,0,ColorInt(0,0,255)); //Outline of function
   can->drawAxes(0, 0, SPACING, SPACING);                              //Axes marks
   drawLabels(can);
 }
 
+ /*!
+  * \brief Evaluate an integral using the rectangle method.
+  *   \param numRectangles The number of rectangles to use for the integration.
+  * \return The area under the curve represented by the IntegralViewer's function, evaluated using
+  *   the rectangle method.
+  */
 long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
   double startTime = omp_get_wtime();
   long double result = 0.0,
@@ -72,11 +97,11 @@ long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
     for (long long i = 0; i < numRectangles; ++i) {
       if (!myRecCanvas->isOpen()) continue;
       myRecCanvas->sleep();
-      xLo = myStartX + i * recWidth;
+      xLo = myStartX + i  * recWidth;
       xMid = xLo + halfRecWidth;
       y = (*myF)(xMid);
       result += y;
-      myRecCanvas->drawRectangle(xLo, 0, xLo+recWidth, y, tcol);
+      myRecCanvas->drawRectangle(xLo, y, recWidth, y, tcol);
     }
     result *= recWidth;
   }
@@ -85,6 +110,12 @@ long double IntegralViewer::rectangleEvaluate(long long numRectangles) {
   return result;
 }
 
+ /*!
+  * \brief Evaluate an integral using the trapezoid method.
+  *   \param numRectangles The number of trapezoids to use for the integration.
+  * \return The area under the curve represented by the IntegralViewer's function, evaluated using
+  *   the trapezoid method.
+  */
 long double IntegralViewer::trapezoidEvaluate(long long numTrapezoids) {
   double startTime = omp_get_wtime();
   long double result = 0.0,

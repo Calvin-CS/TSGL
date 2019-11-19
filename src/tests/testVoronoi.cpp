@@ -52,7 +52,7 @@ using namespace tsgl;
  *          .
  *        .
  *      .
- *   .
+ *    .
  * .
  * \param can Reference to the Canvas being drawn to.
  */
@@ -93,9 +93,9 @@ int main(int argc, char* argv[]) {
   std::cout << "Regular Voronoi" << std::endl;
   Canvas c1(-1, -1, w, h, "Voronoi");
   c1.run(voronoiFunction);
-  std::cout << "Special Voronoi" << std::endl;
 
   //Shaded Voronoi
+  std::cout << "Special Voronoi" << std::endl;
   Canvas c2(-1, -1, w, h, "Shaded Voronoi");
   c2.run(shadedVoronoiFunction);
 }

@@ -24,13 +24,22 @@ void textFunction(Canvas& can, std::string font) {
     ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
 
     can.setFont(font);
-    can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
-    can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
-    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
-    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
+    can.drawText("A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
+    can.drawText("Something extraordinary happened.", 16, 150, 32, RED);
+    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
+    can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
                  32, BLUE);
-    can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
-    can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
+    can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
+    can.drawText("And to that I say...oh well.", 16, 550, 32, WHITE);
+    Text * text = new Text(L"Blergh", 0,0, 30, PURPLE);
+    text->setFont(font);
+    text->setCenter(can.getWindowWidth()/2, 4*can.getWindowHeight() /5);
+    text->setRotation(PI/8);
+    can.add(text);
+    while(can.isOpen()) {
+        can.sleep();
+    }
+    delete text;
 
 }
 
@@ -39,7 +48,7 @@ void textFunction(Canvas& can, std::string font) {
 int main(int argc, char * argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2f*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w - 330.0f;
-    std::string font = (argc > 3) ? argv[3] : "../assets/freefont/FreeMono.ttf";
+    std::string font = (argc > 3) ? argv[3] : "./assets/freefont/FreeMono.ttf";
     if(w <= 0 || h <= 0) {  //Check validity of width and height
       w = 1.2f*Canvas::getDisplayHeight();
       h = 0.75f*w;

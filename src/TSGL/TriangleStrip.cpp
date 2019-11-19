@@ -2,42 +2,101 @@
 
 namespace tsgl {
 
-TriangleStrip::TriangleStrip(int numVertices) {
-    if (numVertices < 3)
-      TsglDebug("Cannot have a polygon with fewer than 3 vertices.");
-    length = numVertices;
-    size = length * 6;
-    current = 0;
-    vertices = new float[size];
-    init = false;
-}
-
-TriangleStrip::~TriangleStrip() {
-    delete[] vertices;
-}
-
-void TriangleStrip::addVertex(int x, int y, const ColorFloat &color) {
-    if (init) {
-      TsglDebug("Cannot add anymore vertices.");
-      return;
+/*!
+ *  \brief Explicitly construct a new TriangleStrip with monocolored fill or outline.
+ *  \details Explicit constructor for a TriangleStrip object.
+ *      \param numVertices The number of vertices.
+ *      \param x An array of x parameters for the vertices
+ *      \param y An array of y parameters for the vertices
+ *      \param color The color of the TriangleStrip
+ *      \param filled Whether the TriangleStrip should be filled
+ *          (set to true by default).
+ *  \return A new TriangleStrip with the specified vertices and color.
+ */
+TriangleStrip::TriangleStrip(int numVertices, int x[], int y[], ColorFloat color, bool filled) : ConvexPolygon(numVertices, filled, !filled) { 
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], color);
     }
-    vertices[current] = x;
-    vertices[current + 1] = y;
-    vertices[current + 2] = color.R;
-    vertices[current + 3] = color.G;
-    vertices[current + 4] = color.B;
-    vertices[current + 5] = color.A;
-    current += 6;
-    if (current == size) init = true;
 }
 
-void TriangleStrip::draw() {
-    if (!init) {
-      TsglDebug("Cannot draw yet.");
-      return;
+/*!
+ *  \brief Explicitly construct a new TriangleStrip with multicolored fill or outline.
+ *  \details Explicit constructor for a TriangleStrip object.
+ *      \param numVertices The number of vertices.
+ *      \param x An array of x parameters for the vertices
+ *      \param y An array of y parameters for the vertices
+ *      \param color An array of colors for the TriangleStrip
+ *      \param filled Whether the TriangleStrip should be filled
+ *          (set to true by default).
+ *  \return A new TriangleStrip with the specified vertices and color.
+ */
+TriangleStrip::TriangleStrip(int numVertices, int x[], int y[], ColorFloat color[], bool filled) : ConvexPolygon(numVertices, filled, !filled) { 
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], color[i]);
     }
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, length);
 }
 
+/*!
+ *  \brief Explicitly construct a new TriangleStrip with different monocolored fill and outline.
+ *  \details Explicit constructor for a TriangleStrip object.
+ *      \param numVertices The number of vertices.
+ *      \param x An array of x parameters for the vertices
+ *      \param y An array of y parameters for the vertices
+ *      \param fillColor The color of the TriangleStrip's fill.
+ *      \param outlineColor The color of the TriangleStrip's outline.
+ *  \return A new TriangleStrip with the specified vertices and color.
+ */
+TriangleStrip::TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor) : ConvexPolygon(numVertices, true, true) { 
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], fillColor, outlineColor);
+    }
+}
+
+/*!
+ *  \brief Explicitly construct a new TriangleStrip with multicolored fill and monocolored outline.
+ *  \details Explicit constructor for a TriangleStrip object.
+ *      \param numVertices The number of vertices.
+ *      \param x An array of x parameters for the vertices
+ *      \param y An array of y parameters for the vertices
+ *      \param fillColor An array of colors for the TriangleStrip's fill.
+ *      \param outlineColor The color of the TriangleStrip's outline.
+ *  \return A new TriangleStrip with the specified vertices and color.
+ */
+TriangleStrip::TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor) : ConvexPolygon(numVertices, true, true) { 
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], fillColor[i], outlineColor);
+    }
+}
+
+/*!
+ *  \brief Explicitly construct a new TriangleStrip with monocolored fill and multicolored outline.
+ *  \details Explicit constructor for a TriangleStrip object.
+ *      \param numVertices The number of vertices.
+ *      \param x An array of x parameters for the vertices
+ *      \param y An array of y parameters for the vertices
+ *      \param fillColor The color of the TriangleStrip's fill.
+ *      \param outlineColor An array of colors for the TriangleStrip's outline.
+ *  \return A new TriangleStrip with the specified vertices and color.
+ */
+TriangleStrip::TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]) : ConvexPolygon(numVertices, true, true) { 
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], fillColor, outlineColor[i]);
+    }
+}
+
+/*!
+ *  \brief Explicitly construct a new TriangleStrip with different multicolored fill and outline.
+ *  \details Explicit constructor for a TriangleStrip object.
+ *      \param numVertices The number of vertices.
+ *      \param x An array of x parameters for the vertices
+ *      \param y An array of y parameters for the vertices
+ *      \param fillColor An array of colors for the TriangleStrip's fill.
+ *      \param outlineColor An array of colors for the TriangleStrip's outline.
+ *  \return A new TriangleStrip with the specified vertices and color.
+ */
+TriangleStrip::TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]) : ConvexPolygon(numVertices, true, true) { 
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], fillColor[i], outlineColor[i]);
+    }
+}
 }

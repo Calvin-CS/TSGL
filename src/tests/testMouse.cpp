@@ -50,6 +50,7 @@ inline void rotate(float cx, float cy, int& xx, int& yy, float rot) {
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
+ * \param threads Number of threads to use.
  */
 void mouseFunction(Canvas& can, int threads) {
   const int CX = can.getWindowWidth() / 2, CY = can.getWindowHeight() / 2;
@@ -58,7 +59,7 @@ void mouseFunction(Canvas& can, int threads) {
   ColorFloat color[3];
 
   can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-      can.clear();
+      can.clearProcedural();
   });
   can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &index, &x, &y, &color]() {
       x[0] = can.getMouseX();

@@ -20,26 +20,26 @@ using namespace tsgl;
  * - Bind the mouse so that when one clicks and hits the target in the middle then
  *   the score counter goes up.
  * - While the Canvas is still open:
- *    - Sleep the internal timer of the Canvas until the next drawing loop is ready to be drawn.
- *    - Increment the target's x-coordinate by the coordinate changer.
- *    - Move the target up vertically by coordinate changer for its y-coordinate.
- *    - Draw the actual target.
- *    - If the target hits the middle of the screen:
+ *   - Sleep the internal timer of the Canvas until the next drawing loop is ready to be drawn.
+ *   - Increment the target's x-coordinate by the coordinate changer.
+ *   - Move the target up vertically by coordinate changer for its y-coordinate.
+ *   - Draw the actual target.
+ *   - If the target hits the middle of the screen:
  *     - Invert the y change so that the target moves downward.
  *     .
- *    - If the target goes off screen to the right:
+ *   - If the target goes off screen to the right:
  *     - Decrement the number of targets left.
  *     - Reset the targetX, targetY, and the coordinate changer for y.
  *     .
- *    - If we hit a target in the middle:
+ *   - If we hit a target in the middle:
  *     - Increment the score.
  *     - Change the hit to false;
  *     - Move the target off of the screen.
  *     .
- *    - If the number of targets is less than 5:
+ *   - If the number of targets is less than 5:
  *     - Speed up the movement of the remaining targets.
  *     .
- *    - If the number of targets left is 0:
+ *   - If the number of targets left is 0:
  *     - Print out the score, clear the Canvas one last time, and get out of the drawing loop.
  *     .
  *   .
@@ -63,17 +63,25 @@ void projectileFunction(Canvas& can) {
     }
   });
 
+  //Create circles of target and add to Canvas
+  Circle * blueCircle = new Circle(targetX, targetY, 50, BLUE);   //Outer circle
+  Circle * redCircle = new Circle(targetX, targetY, 30, RED);  //Middle
+  Circle * yellowCircle = new Circle(targetX, targetY, 10, YELLOW); //Inner
+  can.add(blueCircle); can.add(redCircle); can.add(yellowCircle);
+
   //Draw loop
   while(can.isOpen()) {
     can.sleep();
-    can.pauseDrawing();
-    can.clear();
+    can.clearProcedural();
+
     targetX += coordinateChangerX;  //Horizontal movement
     targetY -= coordinateChangerY; //Vertical movement
-    can.drawCircle(targetX, targetY, 50, 32, blueTarget, true);   //Outer circle
-    can.drawCircle(targetX, targetY, 30, 32, redTarget, true);  //Middle
-    can.drawCircle(targetX, targetY, 10, 32, yellowTarget, true); //Inner
-    can.resumeDrawing();
+
+    if(hit) {   //If we hit a target....
+      score++;
+      targetX = WINDOW_W + 60;
+      hit = false;
+    }
     if(targetX >= centerX) { //If it hits the middle of the screen, invert the vertical direction
       coordinateChangerY = -1;
     }
@@ -83,20 +91,25 @@ void projectileFunction(Canvas& can) {
       targetY = 200;
       coordinateChangerY = 1;
     }
-    if(hit) {   //If we hit a target....
-      score++;
-      targetX = WINDOW_W + 60;
-      hit = false;
-    }
     if(numberOfTargets <= 5) {   //Mix it up if there are only five targets left (speed up the targets)
       coordinateChangerX = 6;
     }
-
+    //Move each circle to the target's location
+    blueCircle->setCenter(targetX, targetY);
+    redCircle->setCenter(targetX, targetY);
+    yellowCircle->setCenter(targetX, targetY);
     if(numberOfTargets == 0) {   //End game
       std::cout << "Your score: " << score << std::endl;
-      return;
+      can.remove(redCircle);
+      can.remove(blueCircle);
+      can.remove(yellowCircle);
+      numberOfTargets--;
     }
   }
+
+  delete redCircle;
+  delete blueCircle;
+  delete yellowCircle;
 }
 
 //Takes command-line arguments for the width and height

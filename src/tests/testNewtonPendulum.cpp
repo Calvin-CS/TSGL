@@ -29,10 +29,10 @@ using namespace tsgl;
  * \param can Reference to the Canvas to draw on.
  * \param numberOfBalls The number of balls to use in the function.
  */
+
 void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
   //User variables
-  const int   SIDES = 128,      //Sizes for each circle
-              BALLS = numberOfBalls, //Keep this odd
+  const int   BALLS = numberOfBalls, //Keep this odd
               RADIUS = 20;      //Radius of circles
   const float ACCEL = 0.5f,     //Acceleration of balls
               TOPSPEED = 9.0f, //Starting speed of balls
@@ -45,6 +45,18 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
               CY = WINDOW_H / 2;
   const float LINELEN = CY,
               OFFSET = RADIUS*(BALLS-1);
+
+  for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
+    can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN, BLACK);
+    can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, GRAY, WHITE);
+  }
+
+  //Add moving Shapes
+  Circle* leftCircle  = new Circle(CX - OFFSET, LINELEN, RADIUS, GRAY, WHITE);
+  Circle* rightCircle = new Circle(CX + OFFSET, LINELEN, RADIUS, GRAY, WHITE);
+  Line* leftLine  = new Line(CX - OFFSET, 0, CX - OFFSET, LINELEN, BLACK);
+  Line* rightLine = new Line(CX + OFFSET, 0, CX + OFFSET, LINELEN, BLACK);
+  can.add(rightLine); can.add(leftLine); can.add(leftCircle); can.add(rightCircle);
 
   //Computation
   float rightPos = 0, leftPos = 0;               //Initial positions of the edge balls
@@ -74,23 +86,27 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
       }
     }
 
-    can.pauseDrawing();
-    can.clear();
-    //Draw stationary lines and balls
-    for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
-      can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN);
-      can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, SIDES, GRAY, true);
-    }
-    //Draw moving lines and balls!
+    //Move the lines and balls!
     //Left
-    can.drawLine(CX - OFFSET, 0, CX - OFFSET + LINELEN*sin(leftPos/AMP), LINELEN*cos(leftPos/AMP));
-    can.drawCircle(CX - OFFSET + LINELEN*sin(leftPos/AMP),  LINELEN*cos(leftPos/AMP), RADIUS, SIDES, GRAY, true);
+    leftLine->setSecondEnd(CX - OFFSET + LINELEN*sin(leftPos/AMP), LINELEN*cos(leftPos/AMP));
+    leftCircle->setCenter(CX - OFFSET + LINELEN*sin(leftPos/AMP),  LINELEN*cos(leftPos/AMP));
     //Right
-    can.drawLine(CX + OFFSET, 0, CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
-    can.drawCircle(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP), RADIUS, SIDES, GRAY, true);
-    can.resumeDrawing();
+    rightLine->setSecondEnd(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
+    rightCircle->setCenter(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
   }
+
+  delete leftCircle;
+  delete rightCircle;
+  delete leftLine;
+  delete rightLine;
 }
+
+// saving this if we ever get procedural stuff working
+//     //Draw stationary lines and balls
+//     for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
+//       can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN);
+//       can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, GRAY, true);
+//     }
 
 //Takes command line arguments for the width and height of the screen
 //as well as for the number of balls

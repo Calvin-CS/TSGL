@@ -127,50 +127,50 @@ void smartSortFunction(Canvas& can, int threads, int size) {
       if (i < ex-1) l += (bs + 1);
       else          l += bs;
     }
-    #pragma omp parallel num_threads(threads)
-    {
+    while (can.isOpen()) {
+      #pragma omp parallel num_threads(threads)
+      {
         int tid = omp_get_thread_num();
-        while (can.isOpen()) {
-            can.sleep();
-            if (sd[tid]->state == S_WAIT) {  //Merge waiting threads
-              if ((tid % sd[tid]->size) > 0)
-                sd[tid]->state = S_DONE;
-              else {
-                int next = tid+sd[tid]->size/2;
-                if (next < threads && sd[next]->state == S_DONE) {
-                  sd[next]->state = S_HIDE;
-                  sd[tid]->restart(sd[next]->last);
-                }
-              }
+        can.sleep();
+        if (sd[tid]->state == S_WAIT) {  //Merge waiting threads
+          if ((tid % sd[tid]->size) > 0)
+            sd[tid]->state = S_DONE;
+          else {
+            int next = tid+sd[tid]->size/2;
+            if (next < threads && sd[next]->state == S_DONE) {
+              sd[next]->state = S_HIDE;
+              sd[tid]->restart(sd[next]->last);
             }
-            for (int i = 0; i < IPF; i++)
-              sd[tid]->sortStep();
-            can.pauseDrawing();  //Tell the Canvas to stop updating the screen temporarily
-            int start = MARGIN/2 + sd[tid]->first, height;
-            int cwh = can.getWindowHeight() - MARGIN/2;
-            ColorFloat color;
-            if (sd[tid]->state != S_HIDE) {
-              //Draw a black rectangle over our portion of the screen to cover up the old drawing
-              can.drawRectangle(start,0,start + sd[tid]->last - sd[tid]->first,cwh,can.getBackgroundColor());
-              for (int i = sd[tid]->first; i < sd[tid]->last; ++i, ++start) {
-                  height = numbers[i];
-                  if (sd[tid]->state == S_WAIT || sd[tid]->state == S_DONE)
-                    color = WHITE;
-                  else {
-                    if (i == sd[tid]->right || i == sd[tid]->left)
-                      color = WHITE;
-                    else if (i < sd[tid]->left)
-                      color = sd[tid]->color;
-                    else if (i >= sd[tid]->fi && i <= sd[tid]->li)
-                      color = Colors::blend(sd[tid]->color, WHITE, 0.5f);
-                    else
-                      color = Colors::blend(sd[tid]->color, BLACK, 0.5f);
-                  }
-                  can.drawLine(start, cwh - height, start, cwh, color);
-              }
-            }
-            can.resumeDrawing();  //Tell the Canvas it can resume updating
+          }
         }
+        for (int i = 0; i < IPF; i++)
+          sd[tid]->sortStep();
+        can.pauseDrawing();  //Tell the Canvas to stop updating the screen temporarily
+        int start = MARGIN/2 + sd[tid]->first, height;
+        int cwh = can.getWindowHeight() - MARGIN/2;
+        ColorFloat color;
+        if (sd[tid]->state != S_HIDE) {
+          //Draw a black rectangle over our portion of the screen to cover up the old drawing
+          can.drawRectangle(start,0,sd[tid]->last - sd[tid]->first,cwh,can.getBackgroundColor());
+          for (int i = sd[tid]->first; i < sd[tid]->last; ++i, ++start) {
+              height = numbers[i];
+              if (sd[tid]->state == S_WAIT || sd[tid]->state == S_DONE)
+                color = WHITE;
+              else {
+                if (i == sd[tid]->right || i == sd[tid]->left)
+                  color = WHITE;
+                else if (i < sd[tid]->left)
+                  color = sd[tid]->color;
+                else if (i >= sd[tid]->fi && i <= sd[tid]->li)
+                  color = Colors::blend(sd[tid]->color, WHITE, 0.5f);
+                else
+                  color = Colors::blend(sd[tid]->color, BLACK, 0.5f);
+              }
+              can.drawLine(start, cwh - height, start, cwh, color);
+          }
+        }
+        can.resumeDrawing();  //Tell the Canvas it can resume updating
+      }
     }
     for (int i = 0; i < threads; ++i)
       delete sd[i];

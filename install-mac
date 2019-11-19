@@ -5,13 +5,14 @@
 # -SUBJECT TO CHANGE-
 ###############################
 
-VER_XQ="XQuartz-2.7.7"
+VER_XQ="XQuartz-2.7.11"
 
 #Function for checking command availability
 has () {
   (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
 }
 
+#FIXME: probably need to make it so X11 autoupdates. this currently seems super broken.
 #Print X11 warning
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   echo "Installing X11"
@@ -47,7 +48,7 @@ echo
 
 brew update
 
-brew tap homebrew/versions
+#brew tap homebrew/versions
 
 #Install glfw3 (will do nothing if already installed)
 echo "Installing GLFW..."
@@ -81,22 +82,17 @@ then
 
 fi
 
-#Now check if we need to install gcc49
+#Now check if we need to install gcc9
 if grep --quiet clang check.txt; then
 	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
-elif [ "$gVeres" -lt "$version" ]; then
-	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+	brew install gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/gcc-9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 /usr/local/bin/g++
 else
-	echo "Installing g++...this may take a while!"
-	brew install gcc49 --without-multilib --without-fortran
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/gcc-4.9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc49/4.9.3/bin/g++-4.9 /usr/local/bin/g++
+	echo "Installing g++...this may take a while!2"
+	brew install gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/gcc-9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 /usr/local/bin/g++
 fi
 
 #Symlinks

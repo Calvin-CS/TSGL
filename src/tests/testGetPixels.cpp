@@ -33,6 +33,7 @@ using namespace tsgl;
  * .
  *
  * \param can Reference to the Canvas being drawn to.
+ * \param threads Number of threads to use.
  */
 void getPixelsFunction(Canvas& can, int threads) {
   unsigned width = can.getWindowWidth(), height = can.getWindowHeight();

@@ -36,6 +36,7 @@ using namespace tsgl;
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
+ * \param threads Number of threads to use.
  */
 void colorWheelFunction(Canvas& can, int threads) {
     const int CW = can.getWindowWidth() / 2,          // Half the window's width
@@ -56,7 +57,7 @@ void colorWheelFunction(Canvas& can, int threads) {
             x3 = CW + RADIUS * sin(GRADIENT * (start + 1));
             y3 = CH + RADIUS * cos(GRADIENT * (start + 1));
             can.drawTriangle(CW, CH, x2, y2, x3, y3,
-                             ColorHSV(start * 6.0f / NUM_COLORS, 1.0f, shading));
+                             ColorHSV(start * 6.0f / NUM_COLORS, 1.0f, shading), true);
         }
     }
 }

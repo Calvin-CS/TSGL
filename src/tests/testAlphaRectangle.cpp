@@ -24,12 +24,16 @@ using namespace tsgl;
  */
 void alphaRectangleFunction(Canvas& can) {
     const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
-    int a, b, c, d;
+    int a, b, c, d, x, y, w, h;
     while (can.isOpen()) {
         can.sleep();
         a = rand() % WW; b = rand() % WH;
         c = rand() % WW; d = rand() % WH;
-        can.drawRectangle(a, b, c, d, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16));
+        x = (a > c ? c : a);
+        y = (b > d ? d : b);
+        w = abs(c - a);
+        h = abs(d - b);
+        can.drawRectangle(x, y, w, h, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16), true);
     }
 }
 

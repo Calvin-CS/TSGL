@@ -5,7 +5,7 @@
 #ifndef TEXT_H_
 #define TEXT_H_
 
-#include "Shape.h"          // For extending our Shape object
+#include "Drawable.h"          // For extending our Shape object
 #include "TextureHandler.h"
 
 namespace tsgl {
@@ -16,33 +16,37 @@ namespace tsgl {
  *  \note Text is aligned by the upper-left corner.
  *  \note Fonts supported by FreeType are also supported.
  */
-class Text : public Shape {
+class Text : public Drawable {
  private:
     ColorFloat myColor;
     unsigned int myFontSize;
     TextureHandler* myLoader;
+    float * vertices;
     std::wstring myString;
-    int myX, myY;
+    float myX, myY;
+    float myRotation;
  public:
+    Text(std::wstring text, float x, float y, unsigned int fontsize, const ColorFloat &color);
 
-    /*!
-     * \brief Explicitly constructs a new Text instance.
-     * \details This is the constructor for the Text class.
-     *      \param text The string to draw.
-     *      \param loader A reference pointer to the TextureHandler with which to load the font.
-     *      \param x The x coordinate.
-     *      \param y The y coordinate.
-     *      \param fontsize The size of the text in pixels.
-     *      \param color A reference to the ColorFloat to use.
-     * \return A new Text instance with the specified string, position, and color.
-     */
-    Text(std::wstring text, TextureHandler &loader, int x, int y, unsigned int fontsize, const ColorFloat &color);
+    virtual void draw();
 
-    /*!
-     * \brief Draw the Text.
-     * \details This function actually draws the Text to the Canvas.
-     */
-    void draw();
+    virtual void setText(std::wstring text);
+
+    virtual void setFontSize(int fontsize);
+
+    virtual void setFont(std::string filename);
+
+    virtual void setBottomLeftCorner(float x, float y);
+
+    virtual void setCenter(float x, float y);
+
+    virtual void moveTextBy(float deltaX, float deltaY);
+
+    virtual void setRotation(float radians);
+
+    virtual void setColor(const ColorFloat& color);
+
+    ~Text();
 };
 
 }

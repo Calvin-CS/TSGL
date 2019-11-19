@@ -18,8 +18,6 @@
 class ShadedVoronoi : public Voronoi {
 private:
   int * myKValue2;
-  ColorFloat myColor[MY_POINTS];
-
 public:
 
   /*!

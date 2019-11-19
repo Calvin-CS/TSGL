@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "Shape.h"           // For extending our Shape object
+#include "Drawable.h"           // For extending our Shape object
 #include "TextureHandler.h"  // For loading images
 #include "TsglAssert.h"      // For unit testing purposes
 
@@ -25,35 +25,18 @@ namespace tsgl {
  *   extend Canvas::drawImage() function due to this privatization.
  *  \warning Aside from an error message output to stderr, Image gives no indication if an image failed to load.
  */
-class Image : public Shape {
+class Image : public Drawable {
  private:
     int myWidth, myHeight;
-    float vertices[32];
+    float currentRotation;
+    float *vertices;
     std::string myFile;
     GLtexture myTexture;
     TextureHandler* myLoader;
  public:
+    Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha = 1.0f);
 
-    /*!
-     * \brief Explicitly constructs a new Image.
-     * \details This is the explicit constructor for the Image class.
-     *   \param filename The filename of the image to load.
-     *   \param loader A reference pointer to the TextureHandler with which to load the image.
-     *   \param x The x coordinate of the left of the Image.
-     *   \param y The y coordinate of the top of the Image.
-     *   \param width The width of the Image.
-     *   \param height The height of the Image.
-     *   \param alhpa The alpha of the Image.
-     * \return A new Image is drawn with the specified coordinates, dimensions, and transparency.
-     * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
-     */
-    Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha);
-
-    /*!
-     * \brief Draw the Image.
-     * \details This function actually draws the Image to the Canvas.
-     */
-    void draw();
+    virtual void draw();
 
     /*!
      * \brief Accessor for the image's height.
@@ -66,6 +49,17 @@ class Image : public Shape {
      * \return The width of the Image.
      */
     int getWidth() { return myWidth; }
+
+    void setCenter(float x, float y);
+
+    void moveImageBy(float deltaX, float deltaY);
+
+    virtual void setRotation(float radians);
+
+    void changeFileName(std::string filename, int width = 0, int height = 0);
+
+    ~Image() { delete[] vertices; }
+
 };
 
 }

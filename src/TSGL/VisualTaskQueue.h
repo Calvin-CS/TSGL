@@ -40,57 +40,19 @@ private:
   int rowLength, blockSize, totalElements;
 public:
 
-  /*!
-   * \brief Default VisualTaskQueue constructor method.
-   * \details This is the default constructor for the VisualTaskQueue class.
-   *   \param elements The maximum number of elements to be drawn on the VisualTaskQueue. Setting this to higher than
-   *     the actual number of elements may result in some unused, empty rectangle. Setting this to lower than
-   *     the actual number of elements may result in some rectangles being drawn off the VisualTaskQueue Canvas.
-   *   \param sideLength The side length in pixels of the task rectangles to be drawn on the VisualTaskQueue Canvas.
-   *   \param aspec The approximate aspect ratio of height/width for the VisualTaskQueue Canvas.
-   *   \param spacing The space in pixels between the rectangles representing elements in the VisualTaskQueue.
-   *   \param borderLength The space in pixels between the outer VisualTaskQueue rectangles and the border of the
-   *     VisualTaskQueue Canvas.
-   * \return A new VisualTaskQueue with the specified maximum number of elements, rectangle side length,
-   *   approximate aspect ratio, spacing between rectangles, and spacing around the borders.
-   */
   VisualTaskQueue(int elements, int sideLength = 12, float aspect = 1.0f, int spacing = 2, int borderLength = 8);
 
-  /*!
-   * \brief VisualTaskQueue destructor method.
-   * \details This is the destructor for the VisualTaskQueue class.
-   * \details Frees up memory that was allocated to a VisualTaskQueue instance.
-   */
   ~VisualTaskQueue();
 
-  /*!
-   * \brief Shows a key/legend for the VisualTaskQueue.
-   * \details This function opens up a separate Canvas displaying a legend for the VisualTaskQueue, showing which
-   *   colors correspond to which threads.
-   *   \param threads The number of threads the VisualTaskQueue is using.
-   */
   void showLegend(int threads = -1);
 
-  /*!
-   * \brief Updates the state of the VisualTaskQueue.
-   * \details This function updates an element of the VisualTaskQueue with a new state.
-   *   \param index The index of the element to update.
-   *   \param state The new state to put the element in. Must be one of RUNNING or FINISHED.
-   */
   void update(int index, VQState state);
 
-  /*!
-   * \brief Resets all of the elements in the VisualTaskQueue.
-   * \details This function tells VisualTaskQueue to clear the state information of all of the elements.
-   */
   void reset();
 
-  /*!
-   * \brief Closes the visual queue.
-   * \details This function closes and destroys the internal Canvas created by the VisualTaskQueue.
-   * \warning <b> Do not attempt to reset() or update() the VisualTaskQueue after closing it.</b>
-   */
   void close();
+
+  void sleep();
 };
 
 }

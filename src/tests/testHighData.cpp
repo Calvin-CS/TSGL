@@ -21,6 +21,7 @@ using namespace tsgl;
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
+ * \param threads Number of threads to use.
  */
 void highData(Canvas& can, unsigned threads) {
   const float HVAL = 6.0f/255.0f;  // For converting integer hues to floating point values

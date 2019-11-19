@@ -20,48 +20,21 @@ namespace tsgl {
  */
 class Polyline : public Shape {
  private:
-    bool init;          // Whether the Polyline has been initialized completely
-    float* vertices;    // Buffer for vertex data
-    int size,           // Number of floating point numbers in vertices
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 6)
+
  public:
 
-    /*!
-     * \brief Explicitly constructs a new Polyline.
-     * \details Explicit constructor for a new Polyline object.
-     *   \param numVertices The number of vertices the complete Polyline will have.
-     * \warning An invariant is held where if v is less than 2 then an error message is given.
-     * \return A new Polyline with a buffer for storing the specified numbered of vertices.
-     */
     Polyline(int numVertices);
 
-    /*!
-     * \brief Destroys a Polyline object.
-     * \details Destructor for a Polyline object.
-     * \details Frees up memory allocated to a Polyline object.
-     */
-    ~Polyline();
+    Polyline(int numVertices, int x[], int y[], ColorFloat color);
+
+    Polyline(int numVertices, int x[], int y[], ColorFloat color[]);
+
+    bool isProcessed();
 
     /*!
-     * \brief Adds another vertex to a Polyline.
-     * \details This function initializes the next vertex in a Polyline and adds it to the Polyline's buffer.
-     *   \param x The x position of the vertex.
-     *   \param y The y position of the vertex.
-     *   \param color The reference variable to the color of the vertex (set to BLACK by default).
-     * \note This function does nothing if the vertex buffer is already full.
-     * \note A message is given indicating when the vertex buffer is full.
+     * \brief Destructor for the Polyline.
      */
-    void addNextVertex(int x, int y, const ColorFloat &color = BLACK);
-
-    /*!
-     * \brief Draw the Polyline.
-     * \details This function actually draws the Polyline to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message indicating that the Polyline cannot be drawn yet will be given
-     *   if the above condition is met (vertex buffer = not full).
-     */
-    void draw();
+    ~Polyline() { delete[] vertices; }
 };
 
 }

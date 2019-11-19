@@ -5,7 +5,7 @@
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "ConvexPolygon.h"  // For extending our Shape object
 
 namespace tsgl {
 
@@ -13,28 +13,22 @@ namespace tsgl {
  *  \brief Draw a simple Rectangle.
  *  \details Rectangle is a class for holding vertex data for a simple rectangle.
  */
-class Rectangle : public Shape {
+class Rectangle : public ConvexPolygon {
  private:
-    float vertices[24];
+ 
  public:
 
-    /*!
-     * \brief Explicitly constructs a Rectangle.
-     * \details This is the constructor for the Rectangle class.
-     *   \param x The x coordinate of the Rectangle's left edge.
-     *   \param y The y coordinate of the Rectangle's top edge.
-     *   \param width The width of the Rectangle.
-     *   \param height The height of the Rectangle.
-     *   \param color The color of the Rectangle.
-     * \return A new Rectangle with the specified top left corner, dimensions, and color.
-     */
-    Rectangle(int x, int y, int width, int height, const ColorFloat &color);
+    Rectangle(float x, float y, float width, float height, const ColorFloat color, bool filled = true);
 
-    /*!
-     * \brief Draw the Rectangle.
-     * \details This function actually draws the Rectangle to the Canvas.
-     */
-    void draw();
+    Rectangle(float x, float y, float width, float height, const ColorFloat color[], bool filled = true);
+
+    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor);
+
+    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor);
+
+    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor[]);
+
+    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor[]);
 };
 
 }

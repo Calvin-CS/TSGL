@@ -8,28 +8,8 @@ using namespace tsgl;
 
 ShadedVoronoi::ShadedVoronoi(Canvas& can) : Voronoi(can) {
   const int WW = can.getWindowWidth(),                    // Set the screen sizes
-            WH = can.getWindowHeight();
-  srand(time(NULL));                                      // Seed the random number generator
-  myX = new int[MY_POINTS]();                             // Initialize an array for POINTS x coords
-  myY = new int[MY_POINTS]();                             // Do the same for y coords
-  for (int i = 0; i < MY_POINTS; i++) {                   // Randomize the control points
-    myX[i] = rand() % WW;
-    myY[i] = rand() % WH;
-  }
-  myKValue = new int[WW * WH]();                          // Create a mapping of control point values
+            WH = can.getWindowHeight();               // Create a mapping of control point values
   myKValue2 = new int[WW * WH]();                         // Create a mapping of more control point values
-  srand(time(NULL));
-  myTC = Colors::randomColor(1.0f);                       // Randomize the axis colors
-  myRC = Colors::randomColor(1.0f);
-  myLC = Colors::randomColor(1.0f);
-  myBC = Colors::randomColor(1.0f);
-  for (int i = 0; i < MY_POINTS; i++) {                   // For each control point...
-    float xx = (float) myX[i] / WW;                       // Calculate an value from 0:1 based on x coord
-    float yy = (float) myY[i] / WH;                       // Do the same for y
-    myXC = Colors::blend(myLC, myRC, xx);          // Interpolate between the left and right colors
-    myYC = Colors::blend(myTC, myBC, yy);          // Do the same for top and bottom
-    myColor[i] = Colors::blend(myXC, myYC, 0.5f);  // Complete the 4-way interpolation
-  }
 }
 
 void ShadedVoronoi::draw(Canvas& can) {

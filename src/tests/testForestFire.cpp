@@ -89,6 +89,8 @@ void forestFireFunction(Canvas& can) {
             can.drawPoint(WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH));
         }
     }
+    Rectangle *rec = new Rectangle(10,10,10,10,BLUE);
+    can.add(rec);
     while (can.isOpen()) {
         can.sleep();
         int l = fires.size();
@@ -124,6 +126,7 @@ void forestFireFunction(Canvas& can) {
             }
         }
     }
+    delete rec;
     delete[] onFire;
     delete[] flammability;
 }

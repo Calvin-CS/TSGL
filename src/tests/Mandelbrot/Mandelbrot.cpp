@@ -64,7 +64,7 @@ void Mandelbrot::manhattanShading(CartesianCanvas& can) {
 
 void Mandelbrot::bindings(Cart& can) {
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, this]() {
-      can.clear();
+      can.clearProcedural();
       this->myRedraw = true;
     });
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&can, this]() {
@@ -105,6 +105,9 @@ void Mandelbrot::draw(Cart& can) {
     XBRD,YBRD,pCan.getWindowWidth()-XBRD*2,pCan.getWindowHeight()-YBRD*2,
     0,CH - (CH % myThreads),myThreads   //Make the max PB value a multiple of myThreads
   );
+  for (int i = 0; i < myThreads; ++i) {
+    pCan.drawText(to_string(i),pb.getSegX(i)+8,pb.getSegY()-8,32,BLACK);
+  }
   while(myRedraw) {
     myRedraw = false;
     can.reset();
@@ -115,7 +118,6 @@ void Mandelbrot::draw(Cart& can) {
       ColorFloat tcolor = Colors::highContrastColor(tid);
       double blocksize = can.getCartHeight() / nthreads;
       double blockheight = CH / nthreads;
-      pCan.clear();
       pb.update(blockheight*tid);
       pCan.drawProgress(&pb);
       long double startrow = blocksize * tid + can.getMinY();
@@ -124,7 +126,6 @@ void Mandelbrot::draw(Cart& can) {
         //Messy, but effective
 //        pCan.drawRectangle(XBRD,YBRD,pCan.getWindowWidth()-XBRD,pCan.getWindowHeight()-YBRD,pCan.getBackgroundColor(),true);
         //Elegant, but flickery
-        pCan.clear();
         pCan.drawProgress(&pb);
         long double row = startrow + can.getPixelHeight() * k;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
@@ -150,6 +151,7 @@ void Mandelbrot::draw(Cart& can) {
 //    shadeCanvas(can);  Optional shading
     std::cout << can.getTime() << std::endl;
     while (can.isOpen() && !myRedraw) {
+      pCan.sleep();
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }
   }

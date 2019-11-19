@@ -14,11 +14,12 @@ using namespace tsgl;
  * \brief Draws a gradient color wheel using OMP with multiple threads per processor and TSGL's colored polygons.
  * \details Same principle as colorWheelFunction(). Since colored polygons take arrays as parameters
  * to allow for arbitrary-length polygons, there are some key differences:
- * - Colors, x and y coordinates are declared within the #pragma omp block so they can be
+ * - Colors, x and y coordinates are declared within the \#pragma omp block so they can be
  *   declared as an array.
  * - At the end, drawColoredPolygon() is called on a polygon with 3 vertices, with arrays for the
  *   x coordinates, y coordinates, and color.
  * \param can Reference to the Canvas being drawn to.
+ * \param threads Number of threads to use.
  */
 void gradientWheelFunction(Canvas& can, int threads) {
   const int CW = can.getWindowWidth() / 2,         // Half the window's width
@@ -47,7 +48,7 @@ void gradientWheelFunction(Canvas& can, int threads) {
       xx[2] = CW + RADIUS * sin(ARCLENGTH * (start + 1));
       yy[2] = CH + RADIUS * cos(ARCLENGTH * (start + 1));
 
-      can.drawTriangleStrip(3, xx, yy, color);
+      can.drawTriangleStrip(3, xx, yy, color, true);
     }
   }
 }

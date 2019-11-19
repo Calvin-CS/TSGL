@@ -13,7 +13,7 @@ using namespace tsgl;
  * \brief Draws a diagonal black-to-white gradient using OMP and takes in a command-line argument for the
  * number of threads to use.
  * \details
- * - A parallel block is set up with #pragma omp parallel using the number of threads passed as a command-line argument.
+ * - A parallel block is set up with \#pragma omp parallel using the number of threads passed as a command-line argument.
  * - The outer for loop is set up in a striping pattern, and the inner for loop runs from 0 to the Canvas height.
  *   - If the Canvas is not open anymore, break out of the function.
  *   - The color ( \b color ) is set to a shade of gray based on its distance from the top left of the canvas.
@@ -22,7 +22,7 @@ using namespace tsgl;
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
- * \param numberOfThreads Reference to the number of threads to use in the function.
+ * \param threads Number of threads to use.
  */
 void graydientFunction(Canvas& can, int threads) {
   #pragma omp parallel num_threads(threads)

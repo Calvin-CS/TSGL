@@ -11,6 +11,8 @@
 
 using namespace tsgl;
 
+// possible FIXME: sometimes this results in a segmentation fault. no discernable pattern+
+
 /*!
  * \brief Displays different colored sea urchins and takes a command-line argument.
  * \details Displays different colored sea urchins where each sea urchin is drawn by a thread
@@ -48,11 +50,9 @@ void seaUrchinFunction(Canvas& can, int threads) {
     SeaUrchin s(can, omp_get_thread_num());   //A thread gets a Sea Urchin
     while(can.isOpen()) {   //Draw loop
       can.sleep();
-      can.clear();
-      s.draw(can);  //And draws it
+      s.move(can);  //And draws it
     }
   }
-  std::cout << "YOU KILLED MY SEA URCHINS! :'(" << std::endl;
 }
 
 int main(int argc, char * argv[]) {

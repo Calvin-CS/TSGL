@@ -23,8 +23,7 @@ using namespace tsgl;
  * - We bind the left mouse button and the enter button to the described \b tempo function.
  * - We bind the enter key to pause the animation.
  * - We bind the space key to clearing the Canvas.
- * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear
- * the screen.
+ * - After all the ants are moved on a given frame, if the \b pulse timer is expired, we clear the screen.
  * .
  * \param can Reference to the Canvas being drawn to.
  */
@@ -48,14 +47,13 @@ void alphaLangtonFunction(Canvas& can) {
         std::cout << (pulse.getTime() - time) << std::endl;
         pulse.reset(pulse.getTime() - time);
         time = pulse.getTime();
-        can.clear();
     };
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, tempo);
     can.bindToButton(TSGL_ENTER, TSGL_PRESS, [&paused]() {
         paused = !paused;
     });
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-        can.clear();
+        can.clearProcedural();
     });
 
     while (can.isOpen()) {
@@ -64,7 +62,7 @@ void alphaLangtonFunction(Canvas& can) {
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
         if (pulse.pastPeriod())
-            can.clear();
+            can.clearProcedural();
       }
     }
 }
@@ -79,8 +77,9 @@ void alphaLangtonFunction(Canvas& can) {
  *    - Sleep the internal timer until the next draw cycle.
  *    - For 0 to the iterations per frame:
  *      - Move the LangtonAnt inside of the AntFarm object.
- *   .
- *  .
+ *      .
+ *    .
+ * .
  * \param can Reference to the Canvas being drawn to.
  */
 void langtonFunction(Canvas& can) {
@@ -88,11 +87,13 @@ void langtonFunction(Canvas& can) {
               WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
     AntFarm farm(WW,WH,4,&can);
+    farm.setParallel(false);
     farm.addAnt(WW / 2,WH / 2,MAX_COLOR,0,0,0);
     while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
-        for (int i = 0; i < IPF; i++)
+        for (int i = 0; i < IPF; i++) {
           farm.moveAnts();
+        }
     }
 }
 
@@ -118,7 +119,6 @@ void langtonColonyFunction(Canvas& can) {
     farm.addAnt(WW / 2 + R,WH / 2,0,MAX_COLOR,0,2);
     farm.addAnt(WW / 2,WH / 2 + R,MAX_COLOR,0,MAX_COLOR,3);
     farm.setShading(true);
-
     while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++)
@@ -129,7 +129,6 @@ void langtonColonyFunction(Canvas& can) {
 /*!
  * \brief Simulates 4 LangtonAnts at speeds faster than the Canvas' framerate, with nicer colors!
  * \details Same as langtonColonyFunction(), but with dynamically-colored LangtonAnts.
- *    .
  * \param can Reference to the Canvas being drawn to.
  */
 void langtonRainbowFunction(Canvas& can) {
@@ -155,15 +154,6 @@ void langtonRainbowFunction(Canvas& can) {
             farm.moveAnts();
     }
 }
-
-/*!
- * \brief Simulates 4 LangtonAnts with alpha transparency (with screenshot capabilities).
- * \details Same as alphaLangtonFunction, with a few key differences:
- * - The enter key is bound to pause the whole animation.
- * - The space key is bound to clear the screen.
- * .
- * \param can Reference to the Canvas being drawn to.
- */
 
 //Take command-line arguments for the width and height of the Canvas
 int main(int argc, char* argv[]) {

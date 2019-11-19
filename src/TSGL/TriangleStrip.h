@@ -6,7 +6,7 @@
 #ifndef TRIANGLESTRIP_H_
 #define TRIANGLESTRIP_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "ConvexPolygon.h"  // For extending our Shape object
 
 namespace tsgl {
 
@@ -20,50 +20,21 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
-class TriangleStrip : public Shape {
+class TriangleStrip : public ConvexPolygon {
  private:
-    bool init;          // Whether the vertex has been initialized completely
-    float* vertices;    // Buffer for vertex data
-    int size,           // Number of floating point numbers in vertices
-        current,        // Current number of floating point numbers in vertices
-        length;         // Number of vertices in vertices (size / 6)
+
  public:
+    TriangleStrip(int numVertices, int x[], int y[], ColorFloat color, bool filled = true);
 
-    /*!
-     * \brief Explicitly construct a new TriangleStrip.
-     * \details Explicit constructor for a TriangleStrip object.
-     *   \param numVertices The number of vertices the complete TriangleStrip will have.
-     * \warning An invariant is held where if v is less than 3 then an error message is given.
-     * \return A new TriangleStrip with a buffer for storing the specified numbered of vertices.
-     */
-    TriangleStrip(int numVertices);
+    TriangleStrip(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true);
 
-    /*!
-     * \brief Destroys a TriangleStrip object
-     * \details Destructor for a TriangleStrip object.
-     * \details Frees up memory that has been allocated to a TriangleStrip object.
-     */
-    ~TriangleStrip();
+    TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
 
-    /*!
-     * \brief Adds another vertex to a TriangleStrip.
-     * \details This function initializes the next vertex in the Polyline and adds it to a TriangleStrip buffer.
-     *      \param x The x position of the vertex.
-     *      \param y The y position of the vertex.
-     *      \param color The reference variable to a color of the vertex.
-     * \note This function does nothing if the vertex buffer is already full.
-     * \note A message will be given to show when the vertex buffer is full.
-     */
-    void addVertex(int x, int y, const ColorFloat &color);
+    TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
 
-    /*!
-     * \brief Draw the TriangleStrip.
-     * \details This function actually draws the TriangleStrip to the Canvas.
-     * \note This function does nothing if the vertex buffer is not yet full.
-     * \note A message will be given to show if the TriangleStrip is *NOT* ready to be drawn (vertex buffer = not full).
-     * \note Implemented inherited abstract method from Shape class.
-     */
-    void draw();
+    TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
+
+    TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
 };
 
 }

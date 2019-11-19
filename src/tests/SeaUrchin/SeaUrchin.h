@@ -37,7 +37,7 @@ public:
    * \details Actually draws the SeaUrchin object onto the Canvas.
    * \param can Reference to the Canvas object to draw to.
    */
-  void draw(Canvas& can);
+  void move(Canvas& can);
 
   /*!
    * \brief Destroy a SeaUrchin.
@@ -50,6 +50,7 @@ private:
   static const int MY_SPOKES = 8;
   int myOldX, myOldY, myNewX, myNewY;
   ColorFloat myColor;
+  std::vector<Line*> lines;
 };
 
 #endif /* SEAURCHIN_H_ */

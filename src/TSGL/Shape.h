@@ -7,6 +7,7 @@
 
 #include <GL/glew.h>    // Needed for GL function calls
 #include "Color.h"      // Needed for color type
+#include "Drawable.h"
 
 namespace tsgl {
 
@@ -16,12 +17,6 @@ namespace tsgl {
  *  could potentially mess up the internal GL calls the library uses. Proceed with great caution.</i></b>
  *  \details Shape provides a base class for drawing shapes to a Canvas or CartesianCanvas.
  *  \note Shape is abstract, and must be extended by the user.
- *  \details All Shape subclasses must override the draw() method. Though theoretically any GL calls can be used here,
- *  something like the following should be used:
- *    <code>
- *    glBufferData(GL_ARRAY_BUFFER, numberofvertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
- *    glDrawArrays(drawingmode, 0, numberofvertices);
- *    </code>
  *  \details <code>vertices</code> should be an array of floating point values in TSGL's vertex format.
  *  One vertex consists of 6 floating point values, signifying x,y,red,green,blue,and alpha components respectively.
  *  E.g., to draw a triangle, you would need 3 vertices = 18 floats -> vertices should be an array of length 18.
@@ -31,48 +26,36 @@ namespace tsgl {
  *  \details Theoretically, you could potentially extend the Shape class so that you can create another Shape class that suits your needs.
  *  \details However, this is not recommended for normal use of the TSGL library.
  */
-class Shape {
+class Shape : public Drawable {
  protected:
-    bool isTextured; /*! Whether the shape is textured or not. If extending Shape, <B> you *must* leave this at false (unless you are working with an image). </B> */
+    int numberOfVertices;
+    float* vertices;
+    GLenum geometryType;
+    bool init = false;
+    int current = 0;
+    float currentRotation;
  public:
+    Shape();
 
-    /*!
-     * \brief Constructs a new Shape.
-     * \details
-     * - Usually <code>vertices</code> is filled with floating point values that represent the vertices of the shape to be drawn.
-     * - You may define other items in the constructor that pertain to the attributes of the subclass that is extending Shape.
-     * - At a minimum, you *MUST* fill an array of floating point values that pertain to the vertices of the shape.
-     * \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Shape.</b>
-     * \note Refer to the Shape class description for more details.
-     */
-    Shape() { isTextured = false; }
+    virtual void draw();
 
-    /*!
-     * \brief Destructor for the Shape.
-     */
-    virtual ~Shape() {}
+    virtual void addVertex(float x, float y, const ColorFloat &color = BLACK);
 
-    /*!
-     * \brief Actually draws the Shape to the Canvas.
-     * \details This method renders the shape to the Canvas.
-     *  - When you extend the Shape class, you *MUST* provide a definition for this method.
-     *  - The definition must follow this format:
-     *    <code>
-     *    glBufferData(drawingMode, numberOfVertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-     *    glDrawArrays(drawingMode, 0, numberOfVertices);
-     *    </code>
-     *  - Really bad things could potentially happen if you do not follow this format. These two statements *MUST* be
-     *    in the draw() method of the subclass that extends the Shape class.
-     *  - You can add other statements in the subclass
-     * \note Please refer to the class description for more information and warnings about overriding this method.
-     */
-    virtual void draw() = 0;  // Abstract method for actually drawing the shape
+    virtual void setColor(ColorFloat c);
 
-    /*!
-     * \brief Accessor for <code>isTextured</code>.
-     * \return Whether the shape is a textured primitive or not.
-     */
-    bool getIsTextured() { return isTextured; }
+    virtual void setColor(ColorFloat c[]);
+
+    virtual void moveShapeBy(float deltaX, float deltaY);
+
+    virtual void setCenter(float x, float y);
+
+    virtual void setRotation(float radians);
+
+   /*!
+    * \brief Accessor that returns if Shape is processed and ready to be drawn
+    * \details This function returns true only if all vertices have been inserted into an array.
+    */
+    virtual bool isProcessed() { return init; }
 };
 
 }
