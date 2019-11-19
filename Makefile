@@ -18,7 +18,7 @@ NOWARN   := -Wno-unused-parameter -Wno-unused-function -Wno-narrowing
 UNAME    := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	OS_LFLAGS :=
+	OS_LFLAGS := -lpthread
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
 	OS_EXTRA_LIB := -L/usr/lib
 	OS_GLFW := glfw

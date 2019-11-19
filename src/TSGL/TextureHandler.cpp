@@ -11,8 +11,8 @@ namespace tsgl {
     #define STB_DEFINE
 //It may look truly awful....but its an easy way to turn off warnings
 //solely for stb.h. Sorry :'(
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-fpermissive"
+// #pragma GCC diagnostic push
+// #pragma GCC diagnostic ignored "-fpermissive"
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers"
 #pragma GCC diagnostic push
