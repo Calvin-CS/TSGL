@@ -5,16 +5,10 @@ Thread Safe Graphics Library
 
 You can generate Doxygen locally using 'make docs', or view the [TSGL API here](http://calvin-cs.github.io/TSGL/html/index.html).
 
-------------
-Visualization Note
-------------
-The visualizations as shown at SIGCSE 2019 are not currently on the main branch of the project but are on the OpenGL2.1 branch. By fall of 2019, we intend to have the features on the OpenGL2.1 branch merged into the main branch. Over the summer, we'll be working on it, so the repository will be in flux.
-
-If you are interested in screen captures of the visualizations, we have videos for the [Dining Philosophers Problem](https://www.youtube.com/playlist?list=PLo3EW4nvOpoldGFxXCFtHq_MpdI4-18y6).
-
-Contact us with any other questions you have.
+Contact us with any questions you have.
 Dr. Joel Adams, adams@calvin.edu
 Elizabeth Koning, erk24@students.calvin.edu
+Ian Adams, isa3@students.calvin.edu
 
 ------------
 Description
