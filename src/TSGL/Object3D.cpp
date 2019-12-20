@@ -29,7 +29,7 @@ Object3D::Object3D(float yaw, float pitch, float roll, float x, float y, float z
  *   if the above condition is met (vertex buffer = not full).
  */
 void Object3D::draw() {
-    glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 7 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(geometryType, 0, numberOfVertices);
 }
 
@@ -49,44 +49,19 @@ void Object3D::addVertex(float x, float y, float z, const ColorFloat &color) {
         return;
     }
     attribMutex.lock();
-//   vertices[current] = x;
-//   vertices[current + 1] = y;
-//   vertices[current + 2] = color.R;
-//   vertices[current + 3] = color.G;
-//   vertices[current + 4] = color.B;
-//   vertices[current + 5] = color.A;
-//   current += 6;
-//   if (current == numberOfVertices*6) {
-//     init = true;
-//     attribMutex.lock();
-//     float minX = 0, maxX = 0;
-//     float minY = 0, maxY = 0;
-//     minX = maxX = vertices[0];
-//     //Find min and max X
-//     for(int i = 0; i < numberOfVertices; i++) {
-//         if( vertices[i*6] < minX )
-//         minX = vertices[i*6];
-//         else if( vertices[i*6] > maxX )
-//         maxX = vertices[i*6];
-//     }
-
-//     minY = maxY = vertices[1];
-//     //Find min and max X
-//     for(int i = 0; i < numberOfVertices; i++) {
-//         if( vertices[i*6+1] < minY )
-//         minY = vertices[i*6+1];
-//         else if( vertices[i*6+1] > maxY )
-//         maxY = vertices[i*6+1];
-//     }
-    
-//     myCenterX = (minX+maxX)/2;
-//     myCenterY = (minY+maxY)/2;
-//     myCenterZ = (minZ+maxZ)/2;
-
-//     setRotationPoint(myCenterX, myCenterY, myCenterZ);
-
-    attribMutex.unlock();
-//  }
+    vertices[current] = x;
+    vertices[current + 1] = y;
+    vertices[current + 2] = z;
+    vertices[current + 3] = color.R;
+    vertices[current + 4] = color.G;
+    vertices[current + 5] = color.B;
+    vertices[current + 6] = color.A;
+    current += 7;
+    if (current == numberOfVertices*7) {
+        attribMutex.lock();
+        init = true;
+        attribMutex.unlock();
+    }
 }
 
 /**
@@ -94,12 +69,12 @@ void Object3D::addVertex(float x, float y, float z, const ColorFloat &color) {
  * \param c The new ColorFloat.
  */
 void Object3D::setColor(ColorFloat c) {
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //     vertices[i*6 + 2] = c.R;
-    //     vertices[i*6 + 3] = c.G;
-    //     vertices[i*6 + 4] = c.B;
-    //     vertices[i*6 + 5] = c.A;
-    // }
+    for(int i = 0; i < numberOfVertices; i++) {
+        vertices[i*7 + 3] = c.R;
+        vertices[i*7 + 4] = c.G;
+        vertices[i*7 + 5] = c.B;
+        vertices[i*7 + 6] = c.A;
+    }
 }
 
 /**
@@ -107,12 +82,12 @@ void Object3D::setColor(ColorFloat c) {
  * \param c The new array of ColorFloats.
  */
 void Object3D::setColor(ColorFloat c[]) {
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //     vertices[i*6 + 2] = c[i].R;
-    //     vertices[i*6 + 3] = c[i].G;
-    //     vertices[i*6 + 4] = c[i].B;
-    //     vertices[i*6 + 5] = c[i].A;
-    // }
+    for(int i = 0; i < numberOfVertices; i++) {
+        vertices[i*7 + 3] = c[i].R;
+        vertices[i*7 + 4] = c[i].G;
+        vertices[i*7 + 5] = c[i].B;
+        vertices[i*7 + 6] = c[i].A;
+    }
 }
 
 /**
@@ -155,14 +130,16 @@ void Object3D::changeZBy(float deltaZ) {
  */
 void Object3D::changeCenterBy(float deltaX, float deltaY, float deltaZ) {
     attribMutex.lock();
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //   vertices[i*6]     += deltaX; //Transpose x
-    //   vertices[(i*6)+1] += deltaY; //Transpose y
-    // }
-    // if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
-    //     myRotationPointX += deltaX;
-    //     myRotationPointY += deltaY;
-    // }
+    for(int i = 0; i < numberOfVertices; i++) {
+      vertices[i*7]     += deltaX; //Transpose x
+      vertices[(i*7)+1] += deltaY; //Transpose y
+      vertices[(i*7)+2] += deltaZ; //Transpose z
+    }
+    if(myRotationPointX == myCenterX && myRotationPointY == myCenterY && myRotationPointZ == myCenterZ) {
+        myRotationPointX += deltaX;
+        myRotationPointY += deltaY;
+        myRotationPointZ += deltaZ;
+    }
     myCenterX += deltaX;
     myCenterY += deltaY;
     myCenterZ += deltaZ;
@@ -208,22 +185,25 @@ void Object3D::setCenterZ(float z) {
  *          old rotation point was at the Object3D's old center.
  */
 void Object3D::setCenter(float x, float y, float z) {
-    // float deltaX = x - myCenterX; //Change for x
-    // float deltaY = y - myCenterY; //Change for y
+    float deltaX = x - myCenterX; //Change for x
+    float deltaY = y - myCenterY; //Change for y
+    float deltaZ = z - myCenterZ;
     attribMutex.lock();
-    // if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
-    //     myRotationPointX = x;
-    //     myRotationPointY = y;
-    // }
+    if(myRotationPointX == myCenterX && myRotationPointY == myCenterY && myRotationPointZ == myCenterZ) {
+        myRotationPointX = x;
+        myRotationPointY = y;
+        myRotationPointZ = z;
+    }
 
     myCenterX = x;
     myCenterY = y;
     myCenterZ = z;
 
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //   vertices[i*6]     += deltaX; //Transpose x
-    //   vertices[(i*6)+1] += deltaY; //Transpose y
-    // }
+    for(int i = 0; i < numberOfVertices; i++) {
+      vertices[i*7]     += deltaX; //Transpose x
+      vertices[(i*7)+1] += deltaY; //Transpose y
+      vertices[(i*7)+2] += deltaZ; //Transpose y
+    }
     attribMutex.unlock();
 }
 

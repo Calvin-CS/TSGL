@@ -24,6 +24,9 @@ Prism::Prism(float x, float y, float z, float vertices[], int sides, float yaw, 
     if (sides < 3) {
         TsglDebug("Cannot have a Prism with fewer than 3 sides.");
     }
+    numberOfVertices = sides * 3 * 2 + (sides - 2) * 2;
+    vertices = new float[numberOfVertices * 7];
+    geometryType = GL_TRIANGLES;
     // FIXME make sure all vertex points are within one plane
     // FIXME calculate myHeight based on vertices and xyz?
     attribMutex.unlock();
@@ -51,6 +54,9 @@ Prism::Prism(float x, float y, float z, float vertices[], int sides, float yaw, 
     if (sides < 3) {
         TsglDebug("Cannot have a Prism with fewer than 3 sides.");
     }
+    numberOfVertices = sides * 3 * 2 + (sides - 2) * 2;
+    vertices = new float[numberOfVertices * 7];
+    geometryType = GL_TRIANGLES;
     // FIXME make sure all vertex points are within one plane
     // FIXME calculate myHeight based on vertices and xyz?
     attribMutex.unlock();
@@ -76,8 +82,9 @@ Prism::Prism(float x, float y, float z, int sides, float yaw, float pitch, float
     if (sides < 3) {
         TsglDebug("Cannot have a Prism with fewer than 3 sides.");
     }
-    // FIXME make sure all vertex points are within one plane
-    // FIXME calculate myHeight based on vertices and xyz?
+    numberOfVertices = sides * 3 * 2 + (sides - 2) * 2;
+    vertices = new float[numberOfVertices * 7];
+    geometryType = GL_TRIANGLES;
     attribMutex.unlock();
 }
 
