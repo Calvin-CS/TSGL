@@ -74,9 +74,10 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
     }
 	});
 
+  #pragma omp parallel num_threads(philosophers)
+  {
   while(can.isOpen()) {
-    #pragma omp parallel num_threads(philosophers)
-    {
+    can.sleep();
 		  if ((!stepThrough && !paused) || (stepThrough && !philPauses[omp_get_thread_num()])) {
         if(stepThrough) { philPauses[omp_get_thread_num()] = true; }
       	t.checkStep();
@@ -88,7 +89,6 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
         t.drawStep();
         can.resumeDrawing();
 		  }
-      can.sleep();
     }
   }
 }

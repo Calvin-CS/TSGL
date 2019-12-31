@@ -65,8 +65,6 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
 Table::~Table() {
   if (myCan2->isOpen())
     myCan2->stop();
-  else
-    myCan2->wait();
   delete myCan2;
   delete [] phils;
   delete [] forks;
