@@ -25,9 +25,10 @@ AntFarm::~AntFarm() {
 }
 
 void AntFarm::addAnt(int x, int y, int r, int g, int b, int d) {
-  if (size < cap)
+  if (size < cap) {
     ants[size] = new LangtonAnt(x, y, r, g, b, d, this);
     size++;
+  }
 }
 
 inline void AntFarm::moveAnt(int j) {

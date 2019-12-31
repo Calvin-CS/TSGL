@@ -2354,6 +2354,18 @@ void Canvas::run(void (*myFunction)(Canvas&, int, int), int i1, int i2) {
   * \brief Overload for run()
   * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
   *   which is a reference to the Canvas to render to.
+  * \param i1 An integer argument to myFunction
+  * \param i2 An integer argument to myFunction
+  * \param i3 An integer argument to myFunction
+  */
+void Canvas::run(void (*myFunction)(Canvas&, int, int, int), int i1, int i2, int i3) {
+  start(); myFunction(*this, i1, i2, i3); wait();
+}
+
+ /*!
+  * \brief Overload for run()
+  * \param myFunction The function to run on the Canvas. Must take exactly one parameter of type Canvas&,
+  *   which is a reference to the Canvas to render to.
   * \param u1 An unsigned integer argument to myFunction
   * \param u2 An unsigned integer argument to myFunction
   */

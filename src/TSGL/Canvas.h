@@ -395,6 +395,8 @@ public:
     virtual void run(void (*myFunction)(Canvas&, unsigned), unsigned u);
 
     virtual void run(void (*myFunction)(Canvas&, int, int), int i1, int i2);
+    
+    virtual void run(void (*myFunction)(Canvas&, int, int, int), int i1, int i2, int i3);
 
     virtual void run(void (*myFunction)(Canvas&, unsigned, unsigned), unsigned u1, unsigned u2);
 

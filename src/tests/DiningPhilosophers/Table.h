@@ -26,7 +26,6 @@ private:
   PhilMethod myMethod;
   std::string methodString;
   Canvas *myCan, *myCan2;
-  Image * spaghetti;
   Philosopher *phils;
   Fork *forks;
   TextureHandler loader;
