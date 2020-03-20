@@ -625,7 +625,7 @@ bool ColorGLfloat::operator!=(ColorGLfloat& c2) {
  * \returns A new ColorFloat constructed as ColorFloat(orig.R*f, orig.G*f, orig.b*f, orig.A*f)
  * \note Individual channels are clamped between 0 and 1.
  */
-ColorGLfloat ColorGLfloat::operator*(float f) {
+ColorGLfloat ColorGLfloat::operator*(GLfloat f) {
     GLfloat newR = (*this).R*f; clamp(newR,0,1);
     GLfloat newG = (*this).G*f; clamp(newG,0,1);
     GLfloat newB = (*this).B*f; clamp(newB,0,1);

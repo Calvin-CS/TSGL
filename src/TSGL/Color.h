@@ -35,9 +35,9 @@ struct ColorFloat {
 
     ColorFloat();
 
-    ColorFloat(GLfloat v, GLfloat a = 1.0f);
+    ColorFloat(float v, float a = 1.0f);
 
-    ColorFloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a = 1.0f);
+    ColorFloat(float r, float g, float b, float a = 1.0f);
 
     std::string asString();
 
@@ -45,7 +45,7 @@ struct ColorFloat {
 
     operator ColorInt();
 
-    ColorFloat operator*(GLfloat f);
+    ColorFloat operator*(float f);
 
     bool operator==(ColorFloat& c2);
 
@@ -122,9 +122,9 @@ struct ColorGLfloat {
 
     ColorGLfloat();
 
-    ColorGLfloat(float v, float a = 1.0f);
+    ColorGLfloat(GLfloat v, GLfloat a = 1.0f);
 
-    ColorGLfloat(float r, float g, float b, float a = 1.0f);
+    ColorGLfloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a = 1);
 
     std::string asString();
 
@@ -132,7 +132,7 @@ struct ColorGLfloat {
 
     operator ColorInt();
 
-    ColorGLfloat operator*(float f);
+    ColorGLfloat operator*(GLfloat f);
 
     bool operator==(ColorGLfloat& c2);
 
