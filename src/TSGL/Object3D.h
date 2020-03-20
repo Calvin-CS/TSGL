@@ -5,7 +5,6 @@
 #ifndef OBJECT3D_H_
 #define OBJECT3D_H_
 
-#include <GL/glew.h>    // Needed for GL function calls
 #include "Color.h"      // Needed for color type
 #include "Drawable.h"
 
@@ -29,8 +28,10 @@ namespace tsgl {
 class Object3D : public Drawable {
  protected:
     int numberOfVertices;
-    float* vertices;
-    int current = 0;
+    GLfloat* vertices;
+    GLfloat* colors;
+    int currentVertex = 0;
+    int currentColor = 0;
     float myCurrentYaw, myCurrentPitch, myCurrentRoll;
     float myCenterZ;                                    // myCenterX and myCenterY inherited
     float myRotationPointZ;                             // myRotationPointX and myRotationPointY inherited
@@ -43,10 +44,10 @@ class Object3D : public Drawable {
 
     virtual void draw();
 
-    virtual void addVertex(float x, float y, float z, const ColorFloat &color = BLACK);
+    virtual void addVertex(float x, float y, float z, const ColorGLfloat &color = ColorGLfloat(1,1,1,1));
 
-    virtual void setColor(ColorFloat c);
-    virtual void setColor(ColorFloat c[]);
+    virtual void setColor(ColorGLfloat c);
+    virtual void setColor(ColorGLfloat c[]);
 
     virtual void changeXBy(float deltaX);
     virtual void changeYBy(float deltaY);

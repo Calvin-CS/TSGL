@@ -45,11 +45,11 @@ CXXFLAGS=-O3 -g3 -ggdb3 \
 	-I/opt/AMDAPP/include/ \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
-	-I/usr/lib/gcc/x86_64-linux-gnu/4.6/include/ \
+	-I/usr/lib/gcc/x86_64-linux-gnu/9/include/ \
 	-I/usr/include/freetype2  \
 	-I/usr/include/freetype2/freetype  \
 	-I./ \
-  -std=c++0x -fopenmp \
+  -std=c++0x -Xpreprocessor -fopenmp \
   ${NOWARN} -fpermissive
   # -pedantic-errors
 
@@ -58,7 +58,7 @@ LFLAGS=-Llib/ \
 	${OS_EXTRA_LIB} \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
-	-ltsgl -lfreetype -lGLEW -l${OS_GLFW} \
+	-ltsgl -lfreetype -lGLEW -lglfw -l${OS_GLFW} \
 	-lX11 ${OS_GL} -lXrandr -Xpreprocessor -fopenmp -lomp -I"$(brew --prefix libomp)/include" \
 	${OS_LFLAGS} 
 
@@ -78,6 +78,7 @@ BINARIES= \
 	bin/testConstructors \
 	bin/testConway \
 	bin/testCosineIntegral \
+	bin/testCube \
 	bin/testDumbSort \
 	bin/testFireworks \
 	bin/testForestFire \

@@ -13,6 +13,7 @@
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Arrow.h"	    // Our own array for drawing arrows
 #include "Color.h"          // Our own interface for converting color types
+#include "Cube.h"
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "Ellipse.h"        // Our own class for drawing ellipses
 #include "Circle.h" 	    // Our own class for drawing circles
@@ -44,8 +45,7 @@
   #include <thread>           // For spawning rendering in a different thread
 #endif
 
-#include <GL/glew.h>        // Needed for GL function calls
-#include <GLFW/glfw3.h>     // For window creation and management
+#include "gl_includes.h"
 
 #ifdef _WIN32
   #define round(x) ((x-floor(x))>0.5 ? ceil(x) : floor(x))      // round is not defined in Visual Studio

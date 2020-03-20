@@ -25,10 +25,6 @@ public:
 
     virtual ~Prism();
 
-    virtual void setColor(ColorFloat c);
-
-    virtual void setColor(ColorFloat c[]);
-
     // virtual void setHeight(float height);
 
     // virtual void changeHeightBy(float delta);

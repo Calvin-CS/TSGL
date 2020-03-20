@@ -9,6 +9,7 @@
 #include <stdexcept>    // Needed for exceptions
 #include <cstdlib>      // Needed for rand()
 #include <sstream>      // Needed for Windows integer / float to string conversion
+#include <gl_includes.h>
 
 #include "Util.h"       // Clamp()
 #include "Error.h"      // TsglErr() / TsglDebug()
@@ -18,6 +19,7 @@ namespace tsgl {
 struct ColorFloat;  //Forward declarations
 struct ColorInt;
 struct ColorHSV;
+struct ColorGLfloat;
 
 /*!
  * \brief Floating point RGBA color struct.
@@ -29,13 +31,13 @@ struct ColorHSV;
  */
 struct ColorFloat {
  public:
-    float R, G, B, A;
+    GLfloat R, G, B, A;
 
     ColorFloat();
 
-    ColorFloat(float v, float a = 1.0f);
+    ColorFloat(GLfloat v, GLfloat a = 1.0f);
 
-    ColorFloat(float r, float g, float b, float a = 1.0f);
+    ColorFloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a = 1.0f);
 
     std::string asString();
 
@@ -43,7 +45,7 @@ struct ColorFloat {
 
     operator ColorInt();
 
-    ColorFloat operator*(float f);
+    ColorFloat operator*(GLfloat f);
 
     bool operator==(ColorFloat& c2);
 
@@ -104,6 +106,39 @@ struct ColorHSV {
     operator ColorFloat();
 
     std::string asString();
+};
+
+/*!
+ * \brief Floating point RGBA color struct.
+ * \details ColorFloat defines a color with floating point red, green, blue, and alpha components.
+ *    \param R Red component, between 0 and 1 inclusive.
+ *    \param G Green component, between 0 and 1 inclusive.
+ *    \param B Blue component, between 0 and 1 inclusive.
+ *    \param A Alpha component, between 0 and 1 inclusive.
+ */
+struct ColorGLfloat {
+ public:
+    float R, G, B, A;
+
+    ColorGLfloat();
+
+    ColorGLfloat(float v, float a = 1.0f);
+
+    ColorGLfloat(float r, float g, float b, float a = 1.0f);
+
+    std::string asString();
+
+    operator ColorHSV();
+
+    operator ColorInt();
+
+    ColorGLfloat operator*(float f);
+
+    bool operator==(ColorGLfloat& c2);
+
+    bool operator!=(ColorGLfloat& c2);
+
+    ColorGLfloat getContrast();
 };
 
 /*!

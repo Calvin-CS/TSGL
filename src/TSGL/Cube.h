@@ -17,15 +17,17 @@ namespace tsgl {
  */
 class Cube : public Prism {
 protected:
-    float mySideLength;
+    GLfloat mySideLength;
 public:
-    Cube(float x, float y, float z, float sideLength, float yaw, float pitch, float roll, ColorFloat c);
+    Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c);
 
-    Cube(float x, float y, float z, float sideLength, float yaw, float pitch, float roll, ColorFloat c[]);
+    Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c[]);
 
     virtual void setSideLength(float length);
 
     virtual void changeSideLengthBy(float delta);
+
+    virtual void setRotation(float radians);
 
     virtual ~Cube();
 };
