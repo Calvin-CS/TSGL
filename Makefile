@@ -49,7 +49,7 @@ CXXFLAGS=-O3 -g3 -ggdb3 \
 	-I/usr/include/freetype2  \
 	-I/usr/include/freetype2/freetype  \
 	-I./ \
-  -std=c++0x -Xpreprocessor -fopenmp \
+  -std=c++0x -fopenmp \
   ${NOWARN} -fpermissive
   # -pedantic-errors
 

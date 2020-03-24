@@ -33,6 +33,7 @@ void Object3D::draw() {
     // glDrawArrays(geometryType, 0, numberOfVertices);
 
     glPushMatrix();
+    glTranslatef(myCenterX, myCenterY, myCenterZ);
     glRotatef(myCurrentYaw, 1, 0, 0);
     glRotatef(myCurrentPitch, 0, 1, 0);
     glRotatef(myCurrentRoll, 0, 0, 1);

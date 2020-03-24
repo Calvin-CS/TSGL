@@ -2031,9 +2031,13 @@ void Canvas::initGl() {
 #endif
 
     // Enable and disable necessary stuff
-    glDisable(GL_DEPTH_TEST);                           // Disable depth testing because we're not drawing in 3d
-    glDisable(GL_DITHER);                               // Disable dithering because pixels do not (generally) overlap
-    glDisable(GL_CULL_FACE);                            // Disable culling because the camera is stationary
+    glEnable(GL_DEPTH_TEST); // Depth Testing
+    glDepthFunc(GL_LEQUAL);
+    glDisable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    // glDisable(GL_DEPTH_TEST);                           // Disable depth testing because we're not drawing in 3d
+    // glDisable(GL_DITHER);                               // Disable dithering because pixels do not (generally) overlap
+    // glDisable(GL_CULL_FACE);                            // Disable culling because the camera is stationary
     glEnable(GL_BLEND);                                 // Enable blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // Set blending mode to standard alpha blending
 

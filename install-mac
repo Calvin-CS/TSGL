@@ -86,13 +86,17 @@ fi
 if grep --quiet clang check.txt; then
 	echo "Installing g++...this may take a while!"
 	brew install gcc
-	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/gcc-9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 /usr/local/bin/g++
+  sudo rm /usr/local/bin/gcc
+  sudo rm /usr/local/bin/g++
+	sudo ln -s /usr/local/Cellar/gcc/9.3.0/bin/gcc-9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.3.0/bin/g++-9 /usr/local/bin/g++
 else
 	echo "Installing g++...this may take a while!2"
 	brew install gcc
-	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/gcc-9 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc/9.2.0_1/bin/g++-9 /usr/local/bin/g++
+  sudo rm /usr/local/bin/gcc
+  sudo rm /usr/local/bin/g++
+	sudo ln -s /usr/local/Cellar/gcc/9.3.0/bin/gcc-9 /usr/local/bin/gcc
+	sudo ln -s /usr/local/Cellar/gcc/9.3.0/bin/g++-9 /usr/local/bin/g++
 fi
 
 #Symlinks
