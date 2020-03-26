@@ -9,9 +9,9 @@ namespace tsgl {
   *   \param y The y coordinate of the center of the Cube.
   *   \param z The z coordinate of the center of the Cube.
   *   \param sideLength The side length of the Cube.
-  *   \param yaw The Cube's yaw.
-  *   \param pitch The Cube's pitch.
-  *   \param roll The Cube's roll.
+  *   \param yaw The Cube's yaw, in degrees.
+  *   \param pitch The Cube's pitch, in degrees.
+  *   \param roll The Cube's roll, in degrees.
   *   \param c A ColorGLfloat for the Cube's vertex colors.
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
@@ -22,35 +22,35 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }
     mySideLength = sideLength;
-    addVertex(-1*mySideLength, -1*mySideLength, -1*mySideLength, c);
-    addVertex(-1*mySideLength, -1*mySideLength, 1*mySideLength, c);
-    addVertex(-1*mySideLength, 1*mySideLength, 1*mySideLength, c);
-    addVertex(-1*mySideLength, 1*mySideLength, -1*mySideLength, c);
+    addVertex(-1*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
     
-    addVertex(1*mySideLength, -1*mySideLength, -1*mySideLength, c);
-    addVertex(1*mySideLength, -1*mySideLength, 1*mySideLength, c);
-    addVertex(1*mySideLength, 1*mySideLength, 1*mySideLength, c);
-    addVertex(1*mySideLength, 1*mySideLength, -1*mySideLength, c);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
 
-    addVertex(-1*mySideLength, -1*mySideLength, -1*mySideLength, c);
-    addVertex(-1*mySideLength, -1*mySideLength, 1*mySideLength, c);
-    addVertex(1*mySideLength, -1*mySideLength, 1*mySideLength, c);
-    addVertex(1*mySideLength, -1*mySideLength, -1*mySideLength, c);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
 
-    addVertex(-1*mySideLength, 1*mySideLength, -1*mySideLength, c);
-    addVertex(-1*mySideLength, 1*mySideLength, 1*mySideLength, c);
-    addVertex(1*mySideLength, 1*mySideLength, 1*mySideLength, c);
-    addVertex(1*mySideLength, 1*mySideLength, -1*mySideLength, c);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
 
-    addVertex(-1*mySideLength, -1*mySideLength, -1*mySideLength, c);
-    addVertex(-1*mySideLength, 1*mySideLength, -1*mySideLength, c);
-    addVertex(1*mySideLength, 1*mySideLength, -1*mySideLength, c);
-    addVertex(1*mySideLength, -1*mySideLength, -1*mySideLength, c);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
 
-    addVertex(-1*mySideLength, -1*mySideLength, 1*mySideLength, c);
-    addVertex(-1*mySideLength, 1*mySideLength, 1*mySideLength, c);
-    addVertex(1*mySideLength, 1*mySideLength, 1*mySideLength, c);
-    addVertex(1*mySideLength, -1*mySideLength, 1*mySideLength, c);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
 }
 
  /*!
@@ -60,9 +60,9 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
   *   \param y The y coordinate of the center of the Cube.
   *   \param z The z coordinate of the center of the Cube.
   *   \param sideLength The side length of the Cube.
-  *   \param yaw The Cube's yaw.
-  *   \param pitch The Cube's pitch.
-  *   \param roll The Cube's roll.
+  *   \param yaw The Cube's yaw, in degrees.
+  *   \param pitch The Cube's pitch, in degrees.
+  *   \param roll The Cube's roll, in degrees.
   *   \param c An array of ColorGLfloats for the Cube's vertex colors.
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
@@ -73,35 +73,35 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
         TsglDebug("Cannot have a Cube with non-positive side length.");
     }
     mySideLength = sideLength;
-    addVertex(-1*mySideLength, -1*mySideLength, -1*mySideLength, c[0]);
-    addVertex(-1*mySideLength, -1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(-1*mySideLength, 1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(-1*mySideLength, 1*mySideLength, -1*mySideLength, c[0]);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[0]);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[1]);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[2]);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[3]);
     
-    addVertex(1*mySideLength, -1*mySideLength, -1*mySideLength, c[0]);
-    addVertex(1*mySideLength, -1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(1*mySideLength, 1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(1*mySideLength, 1*mySideLength, -1*mySideLength, c[0]);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[4]);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[5]);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[6]);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[7]);
 
-    addVertex(-1*mySideLength, -1*mySideLength, -1*mySideLength, c[0]);
-    addVertex(-1*mySideLength, -1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(1*mySideLength, -1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(1*mySideLength, -1*mySideLength, -1*mySideLength, c[0]);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[0]);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[1]);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[5]);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[4]);
 
-    addVertex(-1*mySideLength, 1*mySideLength, -1*mySideLength, c[0]);
-    addVertex(-1*mySideLength, 1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(1*mySideLength, 1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(1*mySideLength, 1*mySideLength, -1*mySideLength, c[0]);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[3]);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[2]);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[6]);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[7]);
 
-    addVertex(-1*mySideLength, -1*mySideLength, -1*mySideLength, c[0]);
-    addVertex(-1*mySideLength, 1*mySideLength, -1*mySideLength, c[0]);
-    addVertex(1*mySideLength, 1*mySideLength, -1*mySideLength, c[0]);
-    addVertex(1*mySideLength, -1*mySideLength, -1*mySideLength, c[0]);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[0]);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[3]);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[7]);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[4]);
 
-    addVertex(-1*mySideLength, -1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(-1*mySideLength, 1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(1*mySideLength, 1*mySideLength, 1*mySideLength, c[0]);
-    addVertex(1*mySideLength, -1*mySideLength, 1*mySideLength, c[0]);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[1]);
+    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[2]);
+    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[6]);
+    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[5]);
 }
 
 /**

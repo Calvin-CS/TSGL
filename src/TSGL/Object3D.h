@@ -71,6 +71,37 @@ class Object3D : public Drawable {
 
     virtual void setRotationPoint(float x, float y, float z);
 
+    /*!
+    * \brief Accessor for the center z-coordinate of the Object3D.
+    * \details Returns the value of the myCenterZ private variable.
+    */
+    virtual float getCenterZ() { return myCenterZ; } // getCenterX, getCenterY inherited
+
+    /*!
+    * \brief Accessor for the Yaw of the Object3D.
+    * \details Returns the value of the myCurrentYaw private variable.
+    */
+    virtual float getYaw() { return myCurrentYaw; }
+
+    /*!
+    * \brief Accessor for the Pitch of the Object3D.
+    * \details Returns the value of the myCurrentPitch private variable.
+    */
+    virtual float getPitch() { return myCurrentPitch; }
+
+    /*!
+    * \brief Accessor for the Roll of the Drawable.
+    * \details Returns the value of the myCurrentRoll private variable.
+    */
+    virtual float getRoll() { return myCurrentRoll; }
+
+   /*!
+    * \brief Accessor for the rotation z-coordinate of the Drawable.
+    * \details Returns the value of the myRotationPointZ private variable.
+    */
+    virtual float getRotationPointZ() { return myRotationPointZ; }
+
+
    /*!
     * \brief Accessor that returns if Object3D is processed and ready to be drawn
     * \details This function returns true only if all vertices have been inserted into an array.

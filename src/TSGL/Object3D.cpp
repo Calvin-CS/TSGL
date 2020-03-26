@@ -11,7 +11,7 @@ namespace tsgl {
  * \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Object3D.</b>
  * \note Refer to the Object3D class description for more details.
  */
-Object3D::Object3D(float yaw, float pitch, float roll, float x, float y, float z) : Drawable() {
+Object3D::Object3D(float x, float y, float z, float yaw, float pitch, float roll) : Drawable() {
     isTextured = false;
     myCurrentYaw = yaw;
     myCurrentPitch = pitch;
@@ -19,6 +19,9 @@ Object3D::Object3D(float yaw, float pitch, float roll, float x, float y, float z
     myCenterX = x;
     myCenterY = y;
     myCenterZ = z;
+    myRotationPointX = myCenterX;
+    myRotationPointY = myCenterY;
+    myRotationPointZ = myCenterZ;
 }
 
 /*!
@@ -29,14 +32,13 @@ Object3D::Object3D(float yaw, float pitch, float roll, float x, float y, float z
  *   if the above condition is met (vertex buffer = not full).
  */
 void Object3D::draw() {
-    // glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 7 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    // glDrawArrays(geometryType, 0, numberOfVertices);
-
+    printf("Drawbuffer Pitch: %f\n", getCenterZ());
     glPushMatrix();
     glTranslatef(myCenterX, myCenterY, myCenterZ);
-    glRotatef(myCurrentYaw, 1, 0, 0);
-    glRotatef(myCurrentPitch, 0, 1, 0);
+    glRotatef(myCurrentPitch, 1, 0, 0);
+    glRotatef(myCurrentYaw, 0, 1, 0);
     glRotatef(myCurrentRoll, 0, 0, 1);
+    // glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
 
     /* We have a color array and a vertex array */
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -87,6 +89,11 @@ void Object3D::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorGLfloat &co
     }
 }
 
+/////////////////////////////////////////////////
+// MUTATORS
+/////////////////////////////////////////////////
+
+
 /**
  * \brief Sets the Object3D to a new color.
  * \param c The new ColorGLfloat.
@@ -123,6 +130,9 @@ void Object3D::setColor(ColorGLfloat c[]) {
  */
 void Object3D::changeXBy(float deltaX) {
     attribMutex.lock();
+    // if (myCenterX == myRotationPointX) {
+    //     myRotationPointX += deltaX;
+    // }
     myCenterX += deltaX;
     attribMutex.unlock();
 }
@@ -133,6 +143,9 @@ void Object3D::changeXBy(float deltaX) {
  */
 void Object3D::changeYBy(float deltaY) {
     attribMutex.lock();
+    // if (myCenterY == myRotationPointY) {
+    //     myRotationPointY += deltaY;
+    // }
     myCenterY += deltaY;
     attribMutex.unlock();
 }
@@ -143,6 +156,9 @@ void Object3D::changeYBy(float deltaY) {
  */
 void Object3D::changeZBy(float deltaZ) {
     attribMutex.lock();
+    // if (myCenterZ == myRotationPointZ) {
+    //     myRotationPointZ += deltaZ;
+    // }
     myCenterZ += deltaZ;
     attribMutex.unlock();
 }
@@ -156,21 +172,16 @@ void Object3D::changeZBy(float deltaZ) {
  *          old rotation point was at the Object3D's old center.
  */
 void Object3D::changeCenterBy(float deltaX, float deltaY, float deltaZ) {
-    // attribMutex.lock();
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //   vertices[i*7]     += deltaX; //Transpose x
-    //   vertices[(i*7)+1] += deltaY; //Transpose y
-    //   vertices[(i*7)+2] += deltaZ; //Transpose z
-    // }
-    // if(myRotationPointX == myCenterX && myRotationPointY == myCenterY && myRotationPointZ == myCenterZ) {
+    attribMutex.lock();
+    // if (myCenterX == myRotationPointX && myCenterY == myRotationPointY && myCenterZ == myRotationPointZ) {
     //     myRotationPointX += deltaX;
     //     myRotationPointY += deltaY;
     //     myRotationPointZ += deltaZ;
     // }
-    // myCenterX += deltaX;
-    // myCenterY += deltaY;
-    // myCenterZ += deltaZ;
-    // attribMutex.unlock();
+    myCenterX += deltaX;
+    myCenterY += deltaY;
+    myCenterZ += deltaZ;
+    attribMutex.unlock();
 }
 
 /**
@@ -178,9 +189,12 @@ void Object3D::changeCenterBy(float deltaX, float deltaY, float deltaZ) {
  * \param x The new center x coordinate.
  */
 void Object3D::setCenterX(float x) {
-    // attribMutex.lock();
-    // myCenterX = x;
-    // attribMutex.unlock();
+    attribMutex.lock();
+    // if (myCenterX == myRotationPointX) {
+    //     myRotationPointX = x;
+    // }
+    myCenterX = x;
+    attribMutex.unlock();
 }
 
 /**
@@ -188,9 +202,12 @@ void Object3D::setCenterX(float x) {
  * \param y The new center y coordinate.
  */
 void Object3D::setCenterY(float y) {
-    // attribMutex.lock();
-    // myCenterY = y;
-    // attribMutex.unlock();
+    attribMutex.lock();
+    // if (myCenterY == myRotationPointY) {
+    //     myRotationPointY = y;
+    // }
+    myCenterY = y;
+    attribMutex.unlock();
 }
 
 /**
@@ -198,9 +215,12 @@ void Object3D::setCenterY(float y) {
  * \param z The new center z coordinate.
  */
 void Object3D::setCenterZ(float z) {
-    // attribMutex.lock();
-    // myCenterZ = z;
-    // attribMutex.unlock();
+    attribMutex.lock();
+    // if (myCenterZ == myRotationPointZ) {
+    //     myRotationPointZ = z;
+    // }
+    myCenterZ = z;
+    attribMutex.unlock();
 }
 
 /**
@@ -212,26 +232,16 @@ void Object3D::setCenterZ(float z) {
  *          old rotation point was at the Object3D's old center.
  */
 void Object3D::setCenter(float x, float y, float z) {
-    float deltaX = x - myCenterX; //Change for x
-    float deltaY = y - myCenterY; //Change for y
-    float deltaZ = z - myCenterZ;
-    // attribMutex.lock();
-    // if(myRotationPointX == myCenterX && myRotationPointY == myCenterY && myRotationPointZ == myCenterZ) {
+    attribMutex.lock();
+    // if (myCenterX == myRotationPointX && myCenterY == myRotationPointY && myCenterZ == myRotationPointZ) {
     //     myRotationPointX = x;
     //     myRotationPointY = y;
     //     myRotationPointZ = z;
     // }
-
-    // myCenterX = x;
-    // myCenterY = y;
-    // myCenterZ = z;
-
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //   vertices[i*7]     += deltaX; //Transpose x
-    //   vertices[(i*7)+1] += deltaY; //Transpose y
-    //   vertices[(i*7)+2] += deltaZ; //Transpose y
-    // }
-    // attribMutex.unlock();
+    myCenterX = x;
+    myCenterY = y;
+    myCenterZ = z;
+    attribMutex.unlock();
 }
 
 /**

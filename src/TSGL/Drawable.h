@@ -79,6 +79,18 @@ namespace tsgl {
     * \details Returns the value of the myCenterY private variable.
     */
     virtual float getCenterY() { return myCenterY; }
+
+    /*!
+    * \brief Accessor for the rotation x-coordinate of the Drawable.
+    * \details Returns the value of the myRotationPointX private variable.
+    */
+    virtual float getRotationPointX() { return myRotationPointX; }
+
+    /*!
+    * \brief Accessor for the rotation y-coordinate of the Drawable.
+    * \details Returns the value of the myRotationPointY private variable.
+    */
+    virtual float getRotationPointY() { return myRotationPointY; }
   };
 };
 

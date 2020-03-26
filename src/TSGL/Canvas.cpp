@@ -201,7 +201,77 @@ void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
   objectBuffer.clear();
 }
 
-void Canvas::draw() {
+void Canvas::draw( )
+{
+    printf("Entered draw()\n");
+    glfwMakeContextCurrent(window);
+    // Reset the window
+    glfwSetWindowShouldClose(window, GL_FALSE);
+    while(!glfwWindowShouldClose(window))
+    {
+      #ifdef __APPLE__
+        // leftWindowIndex = 0;
+        windowMutex.lock();
+      #endif
+        // Scale to window size
+        GLint windowWidth, windowHeight;
+        glfwGetWindowSize(window, &windowWidth, &windowHeight);
+        glViewport(0, 0, windowWidth, windowHeight);
+
+        // Draw stuff
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glMatrixMode(GL_PROJECTION_MATRIX);
+        glLoadIdentity();
+        gluPerspective( 60, (double)windowWidth / (double)windowHeight, 0.1, 100 );
+
+        glMatrixMode(GL_MODELVIEW_MATRIX);
+        glTranslatef(0,0,-5);
+
+        /* commented out stuff really only seems to
+            need to be called once per draw cycle tbh */
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        if (objectBuffer.size() > 0) {
+          for (unsigned int i = 0; i < objectBuffer.size(); i++) {
+            Drawable* d = objectBuffer[i];
+            d->draw();
+            // if(d->isProcessed()) {
+            //   if (!d->getIsTextured()) {
+            //     d->draw();
+            //   } else {
+            //     textureShaders(true);
+            //     d->draw();
+            //     textureShaders(false);
+            //   }
+            // }
+          }
+        } else {
+          objectBufferEmpty = true;
+        }
+        /* Cleanup states */
+        glDisableClientState(GL_COLOR_ARRAY);
+        glDisableClientState(GL_VERTEX_ARRAY);
+
+        // Update Screen
+        glfwSwapBuffers(window);
+
+      #ifndef __APPLE__
+        glfwPollEvents();                            // Handle any I/O
+      #endif
+        glfwGetCursorPos(window, &mouseX, &mouseY);
+        glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
+      #ifdef __APPLE__
+        windowMutex.unlock();
+      #endif
+
+        syncMutex.unlock();
+
+        if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
+    }
+}
+
+/* void Canvas::draw() {
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
 
@@ -345,7 +415,7 @@ void Canvas::draw() {
           myDrawables->clear();                           // Clear our buffer of shapes to be drawn
         }
 
-        /* not sure what the point of this chunk is. */
+        // not sure what the point of this chunk is. 
         if (hasEXTFramebuffer)
           glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
         else
@@ -359,9 +429,9 @@ void Canvas::draw() {
           --toRecord;
         }
 
-        /* very vital */
+        // very vital
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
-        /* apparently not very vital at all */
+        // apparently not very vital at all
         glDrawBuffer(drawBuffer);
 
         textureShaders(true);
@@ -372,13 +442,13 @@ void Canvas::draw() {
           winWidth,winHeight,1,1,1,1,1,0
         };
         glBindTexture(GL_TEXTURE_2D,renderedTexture);
-        /* these 5 lines don't seem to do anything */
+        // these 5 lines don't seem to do anything
         glPixelStorei(GL_UNPACK_ALIGNMENT,4);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-        /* next two lines are very essential */
+        // next two lines are very essential
         glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLE_STRIP,0,4);
         glFlush();                                   // Flush buffer data to the actual draw buffer
@@ -399,7 +469,7 @@ void Canvas::draw() {
 
         if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
     }
-}
+} */
 
  /*!
   * \brief Draws a monocolored arrow.
@@ -1913,18 +1983,18 @@ int Canvas::getWindowY() {
 
 void Canvas::glDestroy() {
     // Free up our resources
-    glDetachShader(shaderProgram, shaderFragment);
-    glDetachShader(shaderProgram, shaderVertex);
-    glDeleteShader(shaderFragment);
-    glDeleteShader(shaderVertex);
-    glDeleteProgram(shaderProgram);
-    glDetachShader(textureShaderProgram, textureShaderFragment);
-    glDetachShader(textureShaderProgram, textureShaderVertex);
-    glDeleteShader(textureShaderFragment);
-    glDeleteShader(textureShaderVertex);
-    glDeleteProgram(textureShaderProgram);
-    glDeleteBuffers(1, &vertexBuffer);
-    glDeleteVertexArrays(1, &vertexArray);
+    // glDetachShader(shaderProgram, shaderFragment);
+    // glDetachShader(shaderProgram, shaderVertex);
+    // glDeleteShader(shaderFragment);
+    // glDeleteShader(shaderVertex);
+    // glDeleteProgram(shaderProgram);
+    // glDetachShader(textureShaderProgram, textureShaderFragment);
+    // glDetachShader(textureShaderProgram, textureShaderVertex);
+    // glDeleteShader(textureShaderFragment);
+    // glDeleteShader(textureShaderVertex);
+    // glDeleteProgram(textureShaderProgram);
+    // glDeleteBuffers(1, &vertexBuffer);
+    // glDeleteVertexArrays(1, &vertexArray);
 }
 
  /*!
@@ -2016,12 +2086,15 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     initGlfw();
 #ifndef _WIN32
     initWindow();
-    initGlew();
+    printf("initGlew disabled.\n");
+    printf("Also check glDestroy.\n");
+    // initGlew();
     glfwMakeContextCurrent(NULL);   // Reset the context
 #endif
 }
 
 void Canvas::initGl() {
+    printf("Entered initGl.\n");
 #ifdef _WIN32
     initWindow();
     initGlew();
@@ -2055,6 +2128,7 @@ void Canvas::initGl() {
     hasBackbuffer = ((int)dbuff[0] > 0);
 
     glfwMakeContextCurrent(NULL);   // Reset the context
+    printf("Exiting initGl.\n");
 }
 
 void Canvas::initGlew() {
@@ -2187,6 +2261,7 @@ void Canvas::initGlfw() {
 }
 
 void Canvas::initWindow() {
+    printf("Entered initWindow.\n");
     glfwSetErrorCallback(errorCallback);
 
      // Create a Window and the Context
@@ -2195,15 +2270,15 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);                  // Set target GL minor version to 2.0
     glfwWindowHint(GLFW_CLIENT_API,GLFW_OPENGL_ES_API);             // Pi uses OpenGL ES
   #else
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // Set target GL major version to 3
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);                  // Set target GL minor version to 3.2
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
+    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
   #endif
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
-    glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
-    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
+    // glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
+    // glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
+    // glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    // glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
@@ -2226,12 +2301,13 @@ void Canvas::initWindow() {
     glfwSetWindowPos(window, monitorX, monitorY);
 
     glfwMakeContextCurrent(window);
-    glfwShowWindow(window);                 // Show the window
+    // glfwShowWindow(window);                 // Show the window
     glfwSetWindowUserPointer(window, this);
 
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
+    printf("Exiting initWindow.\n");
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
