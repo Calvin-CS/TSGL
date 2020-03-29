@@ -105,8 +105,8 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
 }
 
 /**
- * \brief Mutates the distance from the Cube's front face to its back face.
- * \param height The Cube's new length.
+ * \brief Mutates the distance between the Cube's opposite faces.
+ * \param length The Cube's new side length.
  */
 void Cube::setSideLength(GLfloat length) {
     attribMutex.lock();
@@ -115,7 +115,11 @@ void Cube::setSideLength(GLfloat length) {
         attribMutex.unlock();
         return;
     }
+    GLfloat ratio = length/mySideLength;
     mySideLength = length;
+    for(int i = 0; i < numberOfVertices * 3; i++) {
+        vertices[i] *= ratio;
+    }
     attribMutex.unlock();
     // FIXME alter vertices
 }
@@ -132,8 +136,18 @@ void Cube::changeSideLengthBy(GLfloat delta) {
         return;
     }
     mySideLength += delta;
+    for(int i = 0; i < numberOfVertices * 3; i++) {
+        if (vertices[i] > 0)
+            vertices[i] += delta/2;
+        else
+            vertices[i] -= delta/2;
+    }
     attribMutex.unlock();
     // FIXME alter vertices
+}
+
+GLfloat Cube::getSideLength() {
+    return mySideLength;
 }
 
 void Cube::setRotation(float radians) {

@@ -27,6 +27,8 @@ public:
 
     virtual void changeSideLengthBy(float delta);
 
+    virtual GLfloat getSideLength();
+
     virtual void setRotation(float radians);
 
     virtual ~Cube();

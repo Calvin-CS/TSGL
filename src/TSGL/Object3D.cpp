@@ -32,12 +32,11 @@ Object3D::Object3D(float x, float y, float z, float yaw, float pitch, float roll
  *   if the above condition is met (vertex buffer = not full).
  */
 void Object3D::draw() {
-    printf("Drawbuffer Pitch: %f\n", getCenterZ());
     glPushMatrix();
     glTranslatef(myCenterX, myCenterY, myCenterZ);
-    glRotatef(myCurrentPitch, 1, 0, 0);
-    glRotatef(myCurrentYaw, 0, 1, 0);
-    glRotatef(myCurrentRoll, 0, 0, 1);
+    glRotatef(myCurrentYaw, 0, 0, 1);
+    glRotatef(myCurrentPitch, 0, 1, 0);
+    glRotatef(myCurrentRoll, 1, 0, 0);
     // glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
 
     /* We have a color array and a vertex array */

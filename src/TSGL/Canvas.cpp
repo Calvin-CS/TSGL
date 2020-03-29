@@ -201,7 +201,7 @@ void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
   objectBuffer.clear();
 }
 
-void Canvas::draw( )
+void Canvas::draw()
 {
     printf("Entered draw()\n");
     glfwMakeContextCurrent(window);
@@ -213,6 +213,7 @@ void Canvas::draw( )
         // leftWindowIndex = 0;
         windowMutex.lock();
       #endif
+        glfwMakeContextCurrent(window);
         // Scale to window size
         GLint windowWidth, windowHeight;
         glfwGetWindowSize(window, &windowWidth, &windowHeight);
