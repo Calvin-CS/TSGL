@@ -79,6 +79,8 @@ BINARIES= \
 	bin/testConway \
 	bin/testCosineIntegral \
 	bin/testCube \
+	bin/testCuboid \
+	bin/testCylinder \
 	bin/testDumbSort \
 	bin/testFireworks \
 	bin/testForestFire \

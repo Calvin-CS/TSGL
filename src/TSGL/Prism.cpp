@@ -70,7 +70,7 @@ Prism::Prism(float x, float y, float z, float vertices[], int sides, float yaw, 
   *   \param x The x coordinate of the center of the Prism.
   *   \param y The y coordinate of the center of the Prism.
   *   \param z The z coordinate of the center of the Prism.
-  *   \param sides The number of sides of the Prism's base.
+  *   \param numVertices The number of vertices of the Prism.
   *   \param yaw The Prism's yaw.
   *   \param pitch The Prism's pitch.
   *   \param roll The Prism's roll.
@@ -79,15 +79,14 @@ Prism::Prism(float x, float y, float z, float vertices[], int sides, float yaw, 
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, int sides, float yaw, float pitch, float roll)  : Object3D(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, int numVertices, float yaw, float pitch, float roll)  : Object3D(x, y, z, yaw, pitch, roll)  {
     attribMutex.lock();
-    if (sides < 3) {
-        TsglDebug("Cannot have a Prism with fewer than 3 sides.");
+    if (numVertices < 12) {
+        TsglDebug("Cannot have a Prism with fewer than 12 vertices.");
     }
-    numberOfVertices = sides * 6;
+    numberOfVertices = numVertices;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
-    geometryType = GL_QUADS;
     attribMutex.unlock();
 }
 

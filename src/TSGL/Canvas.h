@@ -13,7 +13,9 @@
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Arrow.h"	    // Our own array for drawing arrows
 #include "Color.h"          // Our own interface for converting color types
-#include "Cube.h"
+#include "Cube.h"           // Our own class for drawing cubes
+#include "Cuboid.h"         // Our own class for drawing cuboids
+#include "Cylinder.h"       // Our own class for drawing cylinders
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "Ellipse.h"        // Our own class for drawing ellipses
 #include "Circle.h" 	    // Our own class for drawing circles

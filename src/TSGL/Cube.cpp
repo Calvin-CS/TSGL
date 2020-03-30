@@ -17,12 +17,13 @@ namespace tsgl {
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c)  
-: Prism(x, y, z, 4, yaw, pitch, roll)  { // FIXME vertices
+: Prism(x, y, z, 24, yaw, pitch, roll)  { // FIXME vertices
+    geometryType = GL_QUADS;
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }
     mySideLength = sideLength;
-    addVertex(-1*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
     addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
     addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
     addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
@@ -68,7 +69,8 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c[])  
-: Prism(x, y, z, 4, yaw, pitch, roll)  { // FIXME vertices
+: Prism(x, y, z, 24, yaw, pitch, roll)  { // FIXME vertices
+    geometryType = GL_QUADS;
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive side length.");
     }
@@ -148,10 +150,6 @@ void Cube::changeSideLengthBy(GLfloat delta) {
 
 GLfloat Cube::getSideLength() {
     return mySideLength;
-}
-
-void Cube::setRotation(float radians) {
-
 }
 
 /*!

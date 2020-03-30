@@ -17,12 +17,14 @@ namespace tsgl {
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cylinder with a buffer for storing the specified numbered of vertices.
   */
-Cylinder::Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c)  
-: Prism(x, y, z, (radius > 1) ? radius * 3 : 3, yaw, pitch, roll)  {
+Cylinder::Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  
+: Prism(x, y, z, 2 * ( (radius > 1) ? radius * 6 : 6), yaw, pitch, roll)  {
     if (radius <= 0 ||  height <= 0) {
         TsglDebug("Cannot have a Cylinder with non-positive height or radius.");
     }
-    // add vertices based on parameters and color
+    myRadius = radius;
+    myHeight = height;
+    geometryType = GL_TRIANGLES;
 }
 
  /*!
@@ -40,12 +42,15 @@ Cylinder::Cylinder(float x, float y, float z, float height, float radius, float 
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cylinder with a buffer for storing the specified numbered of vertices.
   */
-Cylinder::Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c[])  
-: Prism(x, y, z, (radius > 1) ? radius * 3 : 3, yaw, pitch, roll)  { // FIXME vertices
-    if (radius <= 0 || height <= 0) {
+Cylinder::Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorGLfloat c[])  
+: Prism(x, y, z, 2 * ( (radius > 1) ? radius * 6 : 6), yaw, pitch, roll)  { // FIXME vertices
+    if (radius <= 0 ||  height <= 0) {
         TsglDebug("Cannot have a Cylinder with non-positive height or radius.");
     }
-    // add vertices based on parameters and color
+    myRadius = radius;
+    myHeight = height;
+    geometryType = GL_TRIANGLES;
+
 }
 
 /**
@@ -61,6 +66,7 @@ void Cylinder::setRadius(float radius) {
     }
     myRadius = radius;
     attribMutex.unlock();
+    // fix vertices
 }
 
 /**
@@ -76,6 +82,7 @@ void Cylinder::changeRadiusBy(float delta) {
     }
     myRadius += delta;
     attribMutex.unlock();
+    // fix vertices
 }
 
 /**
@@ -91,6 +98,7 @@ void Cylinder::setHeight(float height) {
     }
     myHeight = height;
     attribMutex.unlock();
+    // fix vertices
 }
 
 /**
@@ -106,6 +114,7 @@ void Cylinder::changeHeightBy(float delta) {
     }
     myHeight += delta;
     attribMutex.unlock();
+    // fix vertices
 }
 
 /*!

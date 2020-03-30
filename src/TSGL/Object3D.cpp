@@ -345,6 +345,10 @@ void Object3D::setRotationPoint(float x, float y, float z) {
     attribMutex.unlock();
 }
 
+void Object3D::setRotation(float radians) {
+
+}
+
 Object3D::~Object3D() {
     delete[] vertices;
 }

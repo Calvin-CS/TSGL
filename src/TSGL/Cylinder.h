@@ -19,9 +19,9 @@ class Cylinder : public Prism {
 protected:
     float myRadius, myHeight;
 public:
-    Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c);
+    Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c);
 
-    Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c[]);
+    Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
 
     virtual void setRadius(float radius);
 
@@ -30,6 +30,10 @@ public:
     virtual void setHeight(float height);
 
     virtual void changeHeightBy(float delta);
+
+    virtual GLfloat getRadius() { return myRadius; }
+
+    virtual GLfloat getHeight() { return myHeight; }
 
     virtual ~Cylinder();
 };

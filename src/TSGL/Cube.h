@@ -29,8 +29,6 @@ public:
 
     virtual GLfloat getSideLength();
 
-    virtual void setRotation(float radians);
-
     virtual ~Cube();
 };
 

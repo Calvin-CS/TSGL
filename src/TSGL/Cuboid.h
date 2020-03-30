@@ -17,23 +17,29 @@ namespace tsgl {
  */
 class Cuboid : public Prism {
 protected:
-    float myLength, myWidth, myHeight;
+    GLfloat myLength, myWidth, myHeight;
 public:
-    Cuboid(float x, float y, float z, float length, float width, float height, float yaw, float pitch, float roll, ColorFloat c);
+    Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c);
 
-    Cuboid(float x, float y, float z, float length, float width, float height, float yaw, float pitch, float roll, ColorFloat c[]);
+    Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c[]);
 
-    virtual void setLength(float length);
+    virtual void setLength(GLfloat length);
 
-    virtual void changeLengthBy(float delta);
+    virtual void changeLengthBy(GLfloat delta);
 
-    virtual void setWidth(float width);
+    virtual void setWidth(GLfloat width);
 
-    virtual void changeWidthBy(float delta);
+    virtual void changeWidthBy(GLfloat delta);
 
-    virtual void setHeight(float height);
+    virtual void setHeight(GLfloat height);
 
-    virtual void changeHeightBy(float delta);
+    virtual void changeHeightBy(GLfloat delta);
+
+    virtual GLfloat getLength() { return myLength; }
+
+    virtual GLfloat getHeight() { return myHeight; }
+
+    virtual GLfloat getWidth() { return myWidth; }
 
     virtual ~Cuboid();
 };

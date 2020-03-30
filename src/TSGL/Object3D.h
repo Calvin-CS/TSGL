@@ -101,6 +101,9 @@ class Object3D : public Drawable {
     */
     virtual float getRotationPointZ() { return myRotationPointZ; }
 
+    virtual void setRotation(float radians);
+    
+
 
    /*!
     * \brief Accessor that returns if Object3D is processed and ready to be drawn
