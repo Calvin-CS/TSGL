@@ -16,31 +16,38 @@ namespace tsgl {
  */
 class Ellipsoid : public Object3D {
 protected:
-    float myXRadius, myYRadius, myZRadius;
+    GLfloat myXRadius, myYRadius, myZRadius;
+    int horizontalSections, verticalSections;
 public:
-    Ellipsoid(float x, float y, float z, float xRadius, float yRadius, float zRadius, float yaw, float pitch, float roll, ColorFloat c);
+    Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorGLfloat c);
 
-    Ellipsoid(float x, float y, float z, float xRadius, float yRadius, float zRadius, float yaw, float pitch, float roll, ColorFloat c[]);
+    Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorGLfloat c[]);
 
     virtual ~Ellipsoid();
 
-    virtual void setColor(ColorFloat c);
+    virtual void setColor(ColorGLfloat c);
 
-    virtual void setColor(ColorFloat c[]);
+    virtual void setColor(ColorGLfloat c[]);
 
-    virtual void setXRadius(float radiusX);
+    virtual void setXRadius(GLfloat radiusX);
 
-    virtual void changeXRadiusBy(float delta);
+    virtual void changeXRadiusBy(GLfloat delta);
 
-    virtual void setYRadius(float radiusY);
+    virtual void setYRadius(GLfloat radiusY);
 
-    virtual void changeYRadiusBy(float delta);
+    virtual void changeYRadiusBy(GLfloat delta);
 
-    virtual void setZRadius(float radiusZ);
+    virtual void setZRadius(GLfloat radiusZ);
 
-    virtual void changeZRadiusBy(float delta);
+    virtual void changeZRadiusBy(GLfloat delta);
 
-    virtual ColorFloat* getColor();
+    virtual GLfloat getXRadius() { return myXRadius; }
+
+    virtual GLfloat getYRadius() { return myYRadius; }
+
+    virtual GLfloat getZRadius() { return myZRadius; }
+
+    // virtual ColorGLfloat* getColor();
 };
 
 }

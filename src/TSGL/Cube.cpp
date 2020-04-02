@@ -17,12 +17,17 @@ namespace tsgl {
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c)  
-: Prism(x, y, z, 24, yaw, pitch, roll)  { // FIXME vertices
-    geometryType = GL_QUADS;
+: Object3D(x, y, z, yaw, pitch, roll)  { // FIXME vertices
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }
+    attribMutex.lock();
+    geometryType = GL_QUADS;
     mySideLength = sideLength;
+    numberOfVertices = 24;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
+    attribMutex.unlock();
     addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
     addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
     addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
@@ -69,12 +74,17 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c[])  
-: Prism(x, y, z, 24, yaw, pitch, roll)  { // FIXME vertices
-    geometryType = GL_QUADS;
+: Object3D(x, y, z, yaw, pitch, roll)  { // FIXME vertices
     if (sideLength <= 0) {
-        TsglDebug("Cannot have a Cube with non-positive side length.");
+        TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }
+    attribMutex.lock();
+    geometryType = GL_QUADS;
     mySideLength = sideLength;
+    numberOfVertices = 24;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
+    attribMutex.unlock();
     addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[0]);
     addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[1]);
     addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[2]);
@@ -111,12 +121,11 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
  * \param length The Cube's new side length.
  */
 void Cube::setSideLength(GLfloat length) {
-    attribMutex.lock();
     if (length <= 0) {
         TsglDebug("Cannot have a Cube with side length less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     GLfloat ratio = length/mySideLength;
     mySideLength = length;
     for(int i = 0; i < numberOfVertices * 3; i++) {
@@ -131,12 +140,11 @@ void Cube::setSideLength(GLfloat length) {
  * \param delta The amount by which to change the length of the Cube.
  */
 void Cube::changeSideLengthBy(GLfloat delta) {
-    attribMutex.lock();
     if (mySideLength + delta <= 0) {
         TsglDebug("Cannot have a Cube with length less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     mySideLength += delta;
     for(int i = 0; i < numberOfVertices * 3; i++) {
         if (vertices[i] > 0)

@@ -14,19 +14,24 @@ namespace tsgl {
   *   \param yaw The Cuboid's yaw.
   *   \param pitch The Cuboid's pitch.
   *   \param roll The Cuboid's roll.
-  *   \param c A ColorFloat for the Cuboid's vertex colors.
+  *   \param c A ColorGLfloat for the Cuboid's vertex colors.
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cuboid with a buffer for storing the specified numbered of vertices.
   */
 Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c)  
-: Prism(x, y, z, 24, yaw, pitch, roll)  {
-    geometryType = GL_QUADS;
+: Object3D(x, y, z, yaw, pitch, roll)  {
     if (length <= 0 || width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cuboid with non-positive length, width, or height.");
     }
+    attribMutex.lock();
+    geometryType = GL_QUADS;
     myLength = length;
     myWidth = width;
     myHeight = height;
+    numberOfVertices = 24;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
+    attribMutex.unlock();
     addVertex(-0.5*myWidth, -0.5*myHeight, -0.5*myLength, c);
     addVertex(-0.5*myWidth, -0.5*myHeight, 0.5*myLength, c);
     addVertex(-0.5*myWidth, 0.5*myHeight, 0.5*myLength, c);
@@ -70,19 +75,24 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
   *   \param yaw The Cuboid's yaw.
   *   \param pitch The Cuboid's pitch.
   *   \param roll The Cuboid's roll.
-  *   \param c An array of ColorFloats for the Cuboid's vertex colors.
+  *   \param c An array of ColorGLfloats for the Cuboid's vertex colors.
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cuboid with a buffer for storing the specified numbered of vertices.
   */
 Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c[])  
-: Prism(x, y, z, 24, yaw, pitch, roll)  {
-    geometryType = GL_QUADS;
+: Object3D(x, y, z, yaw, pitch, roll)  {
     if (length <= 0 || width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cuboid with non-positive length, width, or height.");
     }
+    attribMutex.lock();
+    geometryType = GL_QUADS;
     myLength = length;
     myWidth = width;
     myHeight = height;
+    numberOfVertices = 24;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
+    attribMutex.unlock();
     addVertex(-0.5*myWidth, -0.5*myHeight, -0.5*myLength, c[0]);
     addVertex(-0.5*myWidth, -0.5*myHeight, 0.5*myLength, c[1]);
     addVertex(-0.5*myWidth, 0.5*myHeight, 0.5*myLength, c[2]);
@@ -119,12 +129,11 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
  * \param height The Cuboid's new length.
  */
 void Cuboid::setLength(GLfloat length) {
-    attribMutex.lock();
     if (length <= 0) {
         TsglDebug("Cannot have a Cuboid with length less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     GLfloat ratio = length/myLength;
     myLength = length;
     for(int i = 0; i < numberOfVertices; i++) {
@@ -138,12 +147,11 @@ void Cuboid::setLength(GLfloat length) {
  * \param delta The amount by which to change the length of the Cuboid.
  */
 void Cuboid::changeLengthBy(GLfloat delta) {
-    attribMutex.lock();
     if (myLength + delta <= 0) {
         TsglDebug("Cannot have a Cuboid with length less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     myLength += delta;
     for(int i = 0; i < numberOfVertices; i++) {
         if (vertices[i*3 + 2] > 0)
@@ -159,12 +167,11 @@ void Cuboid::changeLengthBy(GLfloat delta) {
  * \param height The Cuboid's new width.
  */
 void Cuboid::setWidth(GLfloat width) {
-    attribMutex.lock();
     if (width <= 0) {
         TsglDebug("Cannot have a Cuboid with width less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     GLfloat ratio = width/myWidth;
     myWidth = width;
     for(int i = 0; i < numberOfVertices; i++) {
@@ -178,12 +185,11 @@ void Cuboid::setWidth(GLfloat width) {
  * \param delta The amount by which to change the width of the Cuboid.
  */
 void Cuboid::changeWidthBy(GLfloat delta) {
-    attribMutex.lock();
     if (myWidth + delta <= 0) {
         TsglDebug("Cannot have a Cuboid with width less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     myWidth += delta;
     for(int i = 0; i < numberOfVertices; i++) {
         if (vertices[i*3] > 0)
@@ -199,12 +205,11 @@ void Cuboid::changeWidthBy(GLfloat delta) {
  * \param height The Cuboid's new height.
  */
 void Cuboid::setHeight(GLfloat height) {
-    attribMutex.lock();
     if (height <= 0) {
         TsglDebug("Cannot have a Cuboid with height less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     GLfloat ratio = height/myHeight;
     myHeight = height;
     for(int i = 0; i < numberOfVertices; i++) {
@@ -218,12 +223,11 @@ void Cuboid::setHeight(GLfloat height) {
  * \param delta The amount by which to change the height of the Cuboid.
  */
 void Cuboid::changeHeightBy(GLfloat delta) {
-    attribMutex.lock();
     if (myHeight + delta <= 0) {
         TsglDebug("Cannot have a Cuboid with height less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     myHeight += delta;
     for(int i = 0; i < numberOfVertices; i++) {
         if (vertices[i*3 + 1] > 0)

@@ -5,7 +5,7 @@
 #ifndef CUBOID_H_
 #define CUBOID_H_
 
-#include "Prism.h"       // For extending our Prism object
+#include "Object3D.h"       // For extending our Prism object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -13,9 +13,9 @@ namespace tsgl {
 /*! \class Cuboid
  *  \brief Draw an arbitrary Cuboid with colored vertices.
  *  \details Cuboid is a class for holding vertex data for a Cuboid.
- *  \details Cuboid is a subclass of Prism with all rectangular faces.
+ *  \details Cuboid is a 6-sided subclass of Object3D with all rectangular faces.
  */
-class Cuboid : public Prism {
+class Cuboid : public Object3D {
 protected:
     GLfloat myLength, myWidth, myHeight;
 public:

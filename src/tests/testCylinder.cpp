@@ -10,18 +10,17 @@
 using namespace tsgl;
 
 void cylinderFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0.5,0.5,0.5,0.8), ColorGLfloat(0,0,1,0.8),
-        ColorGLfloat(0,1,0,0.8), ColorGLfloat(0,1,1,0.8), ColorGLfloat(1,0,0,0.8),
-        ColorGLfloat(1,0,1,0.8), ColorGLfloat(1,1,0,0.8), ColorGLfloat(1,1,1,0.8),
-        ColorGLfloat(0.5,0,0.5,0.8), ColorGLfloat(0,0.5,0.5,0.8), 
-        ColorGLfloat(0.5,0.5,0,0.8), ColorGLfloat(0.5,0,0,0.8),
-        ColorGLfloat(0,0.5,0,0.8), ColorGLfloat(0,0,0.5,0.8) };
-    Cylinder * testCylinder = new Cylinder(0.0, 0.0, 0.0, 1, 3, 0.0, 0.0, 0.0, colors);
+    ColorGLfloat colors[] = { ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1),
+        ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
+        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
+        ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
+        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1) };
+    Cylinder * testCylinder = new Cylinder(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 45.0, colors);
     // Cylinder * testCylinder2 = new Cylinder(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCylinder);
     // can.add(testCylinder2);
-    // float rotation = 0.0f;
-    // GLfloat delta = 0.05;
+    float rotation = 0.0f;
+    GLfloat delta = 0.05;
     while (can.isOpen()) {
         can.sleep();
         // testCylinder->setCenterX(sin(rotation)*2);
@@ -30,17 +29,24 @@ void cylinderFunction(Canvas& can) {
         // testCylinder->setYaw(rotation*45);
         // testCylinder->setPitch(rotation*45);
         // testCylinder->setRoll(rotation*45);
-        // testCylinder->setSideLength(cos(rotation)+1.01);
-        // if(testCylinder->getSideLength() >= 2) {
+        // testCylinder->setHeight(sin(rotation)+1.01);
+        // testCylinder->setRadius(sin(rotation)+1.01);
+        if(testCylinder->getHeight() >= 2) {
+            delta = -0.05;
+        }
+        if(testCylinder->getHeight() <= 0.05) {
+            delta = 0.05;
+        }
+        testCylinder->changeHeightBy(delta);
+        rotation+=0.01;
+        // if(testCylinder->getRadius() >= 2) {
         //     delta = -0.05;
         // }
-        // if(testCylinder->getSideLength() <= 0.05) {
+        // if(testCylinder->getRadius() <= 0.05) {
         //     delta = 0.05;
         // }
-        // testCylinder->changeSideLengthBy(delta);
-        //testCylinder2->setRoll(rotation);
+        // testCylinder->changeRadiusBy(delta);
         // rotation+=0.01;
-        // printf("Roll %f\n", testCylinder2->getRoll());
     }
 }
 

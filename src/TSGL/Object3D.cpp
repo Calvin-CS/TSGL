@@ -46,7 +46,7 @@ void Object3D::draw() {
     glColorPointer(4, GL_FLOAT, 0, colors);
 
     /* Send data : 24 vertices */
-    glDrawArrays(geometryType, 0, 24);
+    glDrawArrays(geometryType, 0, numberOfVertices);
 
     glPopMatrix();
 
@@ -351,6 +351,7 @@ void Object3D::setRotation(float radians) {
 
 Object3D::~Object3D() {
     delete[] vertices;
+    delete[] colors;
 }
 
 }

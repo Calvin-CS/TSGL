@@ -16,23 +16,26 @@ namespace tsgl {
  */
 class Sphere : public Object3D {
 protected:
-    float myRadius;
+    GLfloat myRadius;
+    int horizontalSections, verticalSections;
 public:
-    Sphere(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat c);
+    Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c);
 
-    Sphere(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat c[]);
+    Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
 
     virtual ~Sphere();
 
-    virtual void setColor(ColorFloat c);
+    virtual void setColor(ColorGLfloat c);
 
-    virtual void setColor(ColorFloat c[]);
+    virtual void setColor(ColorGLfloat c[]);
 
     virtual void setRadius(float radius);
 
     virtual void changeRadiusBy(float delta);
 
-    virtual ColorFloat* getColor();
+    virtual GLfloat getRadius() { return myRadius; }
+
+    // virtual ColorGLfloat* getColor();
 };
 
 }

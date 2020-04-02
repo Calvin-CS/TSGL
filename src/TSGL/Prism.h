@@ -16,20 +16,29 @@ namespace tsgl {
  */
 class Prism : public Object3D {
 protected:
-    // float myHeight;
-    Prism(float x, float y, float z, int sides, float yaw, float pitch, float roll);
+    GLfloat myHeight;
+    GLfloat myRadius;
+    int mySides;
 public:
-    Prism(float x, float y, float z, float vertices[], int sides, float yaw, float pitch, float roll, ColorFloat c);
+    Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c);
 
-    Prism(float x, float y, float z, float vertices[], int sides, float yaw, float pitch, float roll, ColorFloat c[]);
+    Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
 
     virtual ~Prism();
 
-    // virtual void setHeight(float height);
+    virtual void setHeight(GLfloat height);
 
-    // virtual void changeHeightBy(float delta);
+    virtual void changeHeightBy(GLfloat delta);
 
-    virtual ColorFloat* getColor();
+    virtual void setRadius(GLfloat radius);
+
+    virtual void changeRadiusBy(GLfloat delta);
+
+    virtual GLfloat getRadius() { return myRadius; }
+
+    virtual GLfloat getHeight() { return myHeight; }
+
+    // virtual ColorGLfloat* getColor();
 };
 
 }

@@ -5,7 +5,7 @@
 #ifndef CUBE_H_
 #define CUBE_H_
 
-#include "Prism.h"       // For extending our Prism object
+#include "Object3D.h"       // For extending our Prism object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -13,9 +13,9 @@ namespace tsgl {
 /*! \class Cube
  *  \brief Draw an arbitrary Cube with colored vertices.
  *  \details Cube is a class for holding vertex data for a Cube.
- *  \details Cube is a subclass of Prism with all square faces.
+ *  \details Cube is a 6-sided subclass of Object3D with all square faces.
  */
-class Cube : public Prism {
+class Cube : public Object3D {
 protected:
     GLfloat mySideLength;
 public:

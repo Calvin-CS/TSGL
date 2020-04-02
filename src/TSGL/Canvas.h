@@ -18,6 +18,7 @@
 #include "Cylinder.h"       // Our own class for drawing cylinders
 #include "TriangleStrip.h" // Our own class for drawing polygons with colored vertices
 #include "Ellipse.h"        // Our own class for drawing ellipses
+#include "Ellipsoid.h"      // Our own class for drawing ellipsoids
 #include "Circle.h" 	    // Our own class for drawing circles
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
@@ -28,6 +29,7 @@
 #include "ProgressBar.h"    // Our own class for drawing progress bars
 #include "Rectangle.h"      // Our own class for drawing rectangles
 #include "RegularPolygon.h" // Our own class for drawing regular polygons
+#include "Sphere.h"         // Our own class for drawing spheres
 #include "Square.h"         // Our own class for drawing squares
 #include "Star.h"           // Our own class for drawing stars
 #include "Text.h"           // Our own class for drawing text

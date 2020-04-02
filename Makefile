@@ -82,6 +82,7 @@ BINARIES= \
 	bin/testCuboid \
 	bin/testCylinder \
 	bin/testDumbSort \
+	bin/testEllipsoid \
 	bin/testFireworks \
 	bin/testForestFire \
 	bin/testFunction \
@@ -102,6 +103,7 @@ BINARIES= \
 	bin/testPhilosophers \
 	bin/testProducerConsumer \
 	bin/testPong \
+	bin/testPrism \
 	bin/testProgressBar \
 	bin/testProjectiles \
 	bin/testReaderWriter \
@@ -111,6 +113,7 @@ BINARIES= \
 	bin/testSmartSort \
 	bin/testSpectrogram \
 	bin/testSpectrum \
+	bin/testSphere \
 	bin/testStar \
 	bin/testText \
 	bin/testTextCart \
