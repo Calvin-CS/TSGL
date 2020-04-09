@@ -31,23 +31,24 @@ void cylinderFunction(Canvas& can) {
         // testCylinder->setRoll(rotation*45);
         // testCylinder->setHeight(sin(rotation)+1.01);
         // testCylinder->setRadius(sin(rotation)+1.01);
-        if(testCylinder->getHeight() >= 2) {
-            delta = -0.05;
-        }
-        if(testCylinder->getHeight() <= 0.05) {
-            delta = 0.05;
-        }
-        testCylinder->changeHeightBy(delta);
-        rotation+=0.01;
-        // if(testCylinder->getRadius() >= 2) {
+        // if(testCylinder->getHeight() >= 2) {
         //     delta = -0.05;
         // }
-        // if(testCylinder->getRadius() <= 0.05) {
+        // if(testCylinder->getHeight() <= 0.05) {
         //     delta = 0.05;
         // }
-        // testCylinder->changeRadiusBy(delta);
-        // rotation+=0.01;
+        // testCylinder->changeHeightBy(delta);
+        if(testCylinder->getRadius() >= 2) {
+            delta = -0.05;
+        }
+        if(testCylinder->getRadius() <= 0.05) {
+            delta = 0.05;
+        }
+        testCylinder->changeRadiusBy(delta);
+        rotation+=0.01;
     }
+
+    delete testCylinder;
 }
 
 int main(int argc, char* argv[]) {

@@ -28,6 +28,9 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     myRadius = radius;
+    myXScale = radius;
+    myYScale = radius;
+    myZScale = radius;
     attribMutex.unlock();
 	for(int b=0;b<horizontalSections;b++)
 	{
@@ -65,6 +68,9 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     myRadius = radius;
+    myXScale = radius;
+    myYScale = radius;
+    myZScale = radius;
     attribMutex.unlock();
 	for(int b=0;b<horizontalSections;b++)
 	{
@@ -129,11 +135,10 @@ void Sphere::setRadius(float radius) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = radius/myRadius;
     myRadius = radius;
-    for (int i = 0; i < numberOfVertices * 3; i++) {
-        vertices[i] *= ratio;
-    }
+    myXScale = radius;
+    myYScale = radius;
+    myZScale = radius;
     attribMutex.unlock();
 }
 
@@ -148,18 +153,9 @@ void Sphere::changeRadiusBy(float delta) {
     }
     attribMutex.lock();
     myRadius += delta;
-	for(int b=0;b<horizontalSections;b++)
-	{
-		for(int a=0;a<verticalSections;a++)
-		{
-            vertices[(b*verticalSections + a) * 2 * 3] = myRadius*(sin((a*PI)/(verticalSections/2)))*(sin((b*PI)/horizontalSections));
-            vertices[(b*verticalSections + a) * 2 * 3 + 1] = myRadius*(cos((a*PI)/(verticalSections/2)));
-            vertices[(b*verticalSections + a) * 2 * 3 + 2] = myRadius*(cos((b*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2)));
-            vertices[(b*verticalSections + a) * 2 * 3 + 3] = myRadius*(sin((a*PI)/(verticalSections/2)))*(sin(((b+1)*PI)/horizontalSections));
-            vertices[(b*verticalSections + a) * 2 * 3 + 4] = myRadius*(cos((a*PI)/(verticalSections/2)));
-            vertices[(b*verticalSections + a) * 2 * 3 + 5] = myRadius*(cos(((b+1)*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2)));
-		}
-	}
+    myXScale += delta;
+    myYScale += delta;
+    myZScale += delta;
     attribMutex.unlock();
 }
 

@@ -24,7 +24,10 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     }
     attribMutex.lock();
     myRadius = radius;
+    myXScale = radius;
+    myZScale = radius;
     myHeight = height;
+    myYScale = height;
     mySides = sides;
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 12;
@@ -34,19 +37,19 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     GLfloat half = myHeight/2;
     for (int i = 0; i < mySides; i++) {
         addVertex(0,half,0, c);
-        addVertex(myRadius * cos(TWOPI * i / mySides), half, myRadius * sin(TWOPI * i / mySides), c);
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), half, myRadius * sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
 
-        addVertex(myRadius * cos(TWOPI * i / mySides), half, myRadius * sin(TWOPI * i / mySides), c);
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), half, myRadius * sin(TWOPI * (i + 1) / mySides), c);
-        addVertex(myRadius * cos(TWOPI * i / mySides), -half, myRadius * sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
 
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), half, myRadius * sin(TWOPI * (i + 1) / mySides), c);
-        addVertex(myRadius * cos(TWOPI * i / mySides), -half, myRadius * sin(TWOPI * i / mySides), c);
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), -half, myRadius * sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
 
-        addVertex(myRadius * cos(TWOPI * i / mySides), -half, myRadius * sin(TWOPI * i / mySides), c);
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), -half, myRadius * sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
         addVertex(0,-half,0, c);
     }
 }
@@ -73,7 +76,10 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     }
     attribMutex.lock();
     myRadius = radius;
+    myXScale = radius;
+    myZScale = radius;
     myHeight = height;
+    myYScale = height;
     mySides = sides;
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 12;
@@ -83,19 +89,19 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     GLfloat half = myHeight/2;
     for (int i = 0; i < mySides; i++) {
         addVertex(0,half,0, c[0]);
-        addVertex(myRadius * cos(TWOPI * i / mySides), half, myRadius * sin(TWOPI * i / mySides), c[1]);
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), half, myRadius * sin(TWOPI * (i + 1) / mySides), c[1]);
+        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c[1]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[1]);
 
-        addVertex(myRadius * cos(TWOPI * i / mySides), half, myRadius * sin(TWOPI * i / mySides), c[2]);
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), half, myRadius * sin(TWOPI * (i + 1) / mySides), c[2]);
-        addVertex(myRadius * cos(TWOPI * i / mySides), -half, myRadius * sin(TWOPI * i / mySides), c[2]);
+        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c[2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[2]);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[2]);
 
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), half, myRadius * sin(TWOPI * (i + 1) / mySides), c[2]);
-        addVertex(myRadius * cos(TWOPI * i / mySides), -half, myRadius * sin(TWOPI * i / mySides), c[2]);
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), -half, myRadius * sin(TWOPI * (i + 1) / mySides), c[2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[2]);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[2]);
 
-        addVertex(myRadius * cos(TWOPI * i / mySides), -half, myRadius * sin(TWOPI * i / mySides), c[3]);
-        addVertex(myRadius * cos(TWOPI * (i + 1) / mySides), -half, myRadius * sin(TWOPI * (i + 1) / mySides), c[3]);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[3]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[3]);
         addVertex(0,-half,0, c[4]);
     }
 }
@@ -123,11 +129,8 @@ void Prism::setHeight(GLfloat height) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = height/myHeight;
     myHeight = height;
-    for (int i = 0; i < numberOfVertices; i++) {
-        vertices[i*3 + 1] *= ratio;
-    }
+    myYScale = height;
     attribMutex.unlock();
 }
 
@@ -142,12 +145,7 @@ void Prism::changeHeightBy(GLfloat delta) {
     }
     attribMutex.lock();
     myHeight += delta;
-    for (int i = 0; i < numberOfVertices; i++) {
-        if (vertices[i*3 + 1] > 0)
-            vertices[i*3 + 1] += delta/2;
-        else
-            vertices[i*3 + 1] -= delta/2;
-    }
+    myYScale += delta;
     attribMutex.unlock();
 }
 
@@ -161,12 +159,9 @@ void Prism::setRadius(GLfloat radius) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = radius/myRadius;
     myRadius = radius;
-    for (int i = 0; i < numberOfVertices; i++) {
-        vertices[i*3] *= ratio;
-        vertices[i*3 + 2] *= ratio;
-    }
+    myXScale = radius;
+    myZScale = radius;
     attribMutex.unlock();
 }
 
@@ -181,40 +176,8 @@ void Prism::changeRadiusBy(GLfloat delta) {
     }
     attribMutex.lock();
     myRadius += delta;
-    for (int i = 0; i < mySides; i++) {
-        // 0, 2
-        vertices[i*36 + 3] = myRadius * cos(TWOPI * i / mySides);
-        vertices[i*36 + 5] = myRadius * sin(TWOPI * i / mySides);
-
-        vertices[i*36 + 6] = myRadius * cos(TWOPI * (i + 1) / mySides);
-        vertices[i*36 + 8] = myRadius * sin(TWOPI * (i + 1) / mySides);
-
-        vertices[i*36 + 9] = myRadius * cos(TWOPI * i / mySides);
-        vertices[i*36 + 11] = myRadius * sin(TWOPI * i / mySides);
-
-        vertices[i*36 + 12] = myRadius * cos(TWOPI * (i + 1) / mySides);
-        vertices[i*36 + 14] = myRadius * sin(TWOPI * (i + 1) / mySides);
-        
-        vertices[i*36 + 15] = myRadius * cos(TWOPI * i / mySides);
-        vertices[i*36 + 17] = myRadius * sin(TWOPI * i / mySides);
-
-        vertices[i*36 + 18] = myRadius * cos(TWOPI * (i + 1) / mySides);
-        vertices[i*36 + 20] = myRadius * sin(TWOPI * (i + 1) / mySides);
-        
-        vertices[i*36 + 21] = myRadius * cos(TWOPI * i / mySides);
-        vertices[i*36 + 23] = myRadius * sin(TWOPI * i / mySides);
-
-        vertices[i*36 + 24] = myRadius * cos(TWOPI * (i + 1) / mySides);
-        vertices[i*36 + 26] = myRadius * sin(TWOPI * (i + 1) / mySides);
-
-        vertices[i*36 + 27] = myRadius * cos(TWOPI * i / mySides);
-        vertices[i*36 + 29] = myRadius * sin(TWOPI * i / mySides);
-
-        vertices[i*36 + 30] = myRadius * cos(TWOPI * (i + 1) / mySides);
-        vertices[i*36 + 32] = myRadius * sin(TWOPI * (i + 1) / mySides);
-
-        // 33, 35
-    }
+    myXScale += delta;
+    myZScale += delta;
     attribMutex.unlock();
 }
 

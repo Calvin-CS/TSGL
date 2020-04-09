@@ -57,4 +57,22 @@ void Drawable::setRotationPoint(float x, float y) {
     myRotationPointY = y;
 }
 
+/*!
+ * \brief Virtual mutator that changes the rotation point of the Drawable's x value.
+ * \details Alters myRotationPointX;
+ * \param x myRotationPointX's new float value.
+ */
+void Drawable::setRotationPointX(float x) {
+    myRotationPointX = x;
+}
+
+/*!
+ * \brief Virtual mutator that changes the rotation point of the Drawable's y value.
+ * \details Alters myRotationPointY;
+ * \param y myRotationPointY's new float value.
+ */
+void Drawable::setRotationPointY(float y) {
+    myRotationPointY = y;
+}
+
 }

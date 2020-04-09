@@ -46,15 +46,17 @@ void cuboidFunction(Canvas& can) {
         // }
         // testCuboid->changeHeightBy(delta);
 
-        // if(testCuboid->getLength() >= 3) {
-        //     delta = -0.05;
-        // }
-        // if(testCuboid->getLength() <= 1) {
-        //     delta = 0.05;
-        // }
-        // testCuboid->changeLengthBy(delta);
-        // rotation+=0.01;
+        if(testCuboid->getLength() >= 3) {
+            delta = -0.05;
+        }
+        if(testCuboid->getLength() <= 1) {
+            delta = 0.05;
+        }
+        testCuboid->changeLengthBy(delta);
+        rotation+=0.01;
     }
+
+    delete testCuboid;
 }
 
 int main(int argc, char* argv[]) {

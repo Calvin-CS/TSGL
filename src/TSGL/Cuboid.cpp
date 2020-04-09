@@ -28,39 +28,42 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     myLength = length;
     myWidth = width;
     myHeight = height;
+    myXScale = width;
+    myYScale = height;
+    myZScale = length;
     numberOfVertices = 24;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
-    addVertex(-0.5*myWidth, -0.5*myHeight, -0.5*myLength, c);
-    addVertex(-0.5*myWidth, -0.5*myHeight, 0.5*myLength, c);
-    addVertex(-0.5*myWidth, 0.5*myHeight, 0.5*myLength, c);
-    addVertex(-0.5*myWidth, 0.5*myHeight, -0.5*myLength, c);
+    addVertex(-0.5, -0.5, -0.5, c);
+    addVertex(-0.5, -0.5, 0.5, c);
+    addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(-0.5, 0.5, -0.5, c);
     
-    addVertex(0.5*myWidth, -0.5*myHeight, -0.5*myLength, c);
-    addVertex(0.5*myWidth, -0.5*myHeight, 0.5*myLength, c);
-    addVertex(0.5*myWidth, 0.5*myHeight, 0.5*myLength, c);
-    addVertex(0.5*myWidth, 0.5*myHeight, -0.5*myLength, c);
+    addVertex(0.5, -0.5, -0.5, c);
+    addVertex(0.5, -0.5, 0.5, c);
+    addVertex(0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, -0.5, c);
 
-    addVertex(-0.5*myWidth, -0.5*myHeight, -0.5*myLength, c);
-    addVertex(-0.5*myWidth, -0.5*myHeight, 0.5*myLength, c);
-    addVertex(0.5*myWidth, -0.5*myHeight, 0.5*myLength, c);
-    addVertex(0.5*myWidth, -0.5*myHeight, -0.5*myLength, c);
+    addVertex(-0.5, -0.5, -0.5, c);
+    addVertex(-0.5, -0.5, 0.5, c);
+    addVertex(0.5, -0.5, 0.5, c);
+    addVertex(0.5, -0.5, -0.5, c);
 
-    addVertex(-0.5*myWidth, 0.5*myHeight, -0.5*myLength, c);
-    addVertex(-0.5*myWidth, 0.5*myHeight, 0.5*myLength, c);
-    addVertex(0.5*myWidth, 0.5*myHeight, 0.5*myLength, c);
-    addVertex(0.5*myWidth, 0.5*myHeight, -0.5*myLength, c);
+    addVertex(-0.5, 0.5, -0.5, c);
+    addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, -0.5, c);
 
-    addVertex(-0.5*myWidth, -0.5*myHeight, -0.5*myLength, c);
-    addVertex(-0.5*myWidth, 0.5*myHeight, -0.5*myLength, c);
-    addVertex(0.5*myWidth, 0.5*myHeight, -0.5*myLength, c);
-    addVertex(0.5*myWidth, -0.5*myHeight, -0.5*myLength, c);
+    addVertex(-0.5, -0.5, -0.5, c);
+    addVertex(-0.5, 0.5, -0.5, c);
+    addVertex(0.5, 0.5, -0.5, c);
+    addVertex(0.5, -0.5, -0.5, c);
 
-    addVertex(-0.5*myWidth, -0.5*myHeight, 0.5*myLength, c);
-    addVertex(-0.5*myWidth, 0.5*myHeight, 0.5*myLength, c);
-    addVertex(0.5*myWidth, 0.5*myHeight, 0.5*myLength, c);
-    addVertex(0.5*myWidth, -0.5*myHeight, 0.5*myLength, c);
+    addVertex(-0.5, -0.5, 0.5, c);
+    addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, 0.5, c);
+    addVertex(0.5, -0.5, 0.5, c);
 }
 
  /*!
@@ -89,39 +92,42 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     myLength = length;
     myWidth = width;
     myHeight = height;
+    myXScale = width;
+    myYScale = height;
+    myZScale = length;
     numberOfVertices = 24;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
-    addVertex(-0.5*myWidth, -0.5*myHeight, -0.5*myLength, c[0]);
-    addVertex(-0.5*myWidth, -0.5*myHeight, 0.5*myLength, c[1]);
-    addVertex(-0.5*myWidth, 0.5*myHeight, 0.5*myLength, c[2]);
-    addVertex(-0.5*myWidth, 0.5*myHeight, -0.5*myLength, c[3]);
+    addVertex(-0.5, -0.5, -0.5, c[0]);
+    addVertex(-0.5, -0.5, 0.5, c[1]);
+    addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(-0.5, 0.5, -0.5, c[3]);
     
-    addVertex(0.5*myWidth, -0.5*myHeight, -0.5*myLength, c[4]);
-    addVertex(0.5*myWidth, -0.5*myHeight, 0.5*myLength, c[5]);
-    addVertex(0.5*myWidth, 0.5*myHeight, 0.5*myLength, c[6]);
-    addVertex(0.5*myWidth, 0.5*myHeight, -0.5*myLength, c[7]);
+    addVertex(0.5, -0.5, -0.5, c[4]);
+    addVertex(0.5, -0.5, 0.5, c[5]);
+    addVertex(0.5, 0.5, 0.5, c[6]);
+    addVertex(0.5, 0.5, -0.5, c[7]);
 
-    addVertex(-0.5*myWidth, -0.5*myHeight, -0.5*myLength, c[0]);
-    addVertex(-0.5*myWidth, -0.5*myHeight, 0.5*myLength, c[1]);
-    addVertex(0.5*myWidth, -0.5*myHeight, 0.5*myLength, c[5]);
-    addVertex(0.5*myWidth, -0.5*myHeight, -0.5*myLength, c[4]);
+    addVertex(-0.5, -0.5, -0.5, c[0]);
+    addVertex(-0.5, -0.5, 0.5, c[1]);
+    addVertex(0.5, -0.5, 0.5, c[5]);
+    addVertex(0.5, -0.5, -0.5, c[4]);
 
-    addVertex(-0.5*myWidth, 0.5*myHeight, -0.5*myLength, c[3]);
-    addVertex(-0.5*myWidth, 0.5*myHeight, 0.5*myLength, c[2]);
-    addVertex(0.5*myWidth, 0.5*myHeight, 0.5*myLength, c[6]);
-    addVertex(0.5*myWidth, 0.5*myHeight, -0.5*myLength, c[7]);
+    addVertex(-0.5, 0.5, -0.5, c[3]);
+    addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(0.5, 0.5, 0.5, c[6]);
+    addVertex(0.5, 0.5, -0.5, c[7]);
 
-    addVertex(-0.5*myWidth, -0.5*myHeight, -0.5*myLength, c[0]);
-    addVertex(-0.5*myWidth, 0.5*myHeight, -0.5*myLength, c[3]);
-    addVertex(0.5*myWidth, 0.5*myHeight, -0.5*myLength, c[7]);
-    addVertex(0.5*myWidth, -0.5*myHeight, -0.5*myLength, c[4]);
+    addVertex(-0.5, -0.5, -0.5, c[0]);
+    addVertex(-0.5, 0.5, -0.5, c[3]);
+    addVertex(0.5, 0.5, -0.5, c[7]);
+    addVertex(0.5, -0.5, -0.5, c[4]);
 
-    addVertex(-0.5*myWidth, -0.5*myHeight, 0.5*myLength, c[1]);
-    addVertex(-0.5*myWidth, 0.5*myHeight, 0.5*myLength, c[2]);
-    addVertex(0.5*myWidth, 0.5*myHeight, 0.5*myLength, c[6]);
-    addVertex(0.5*myWidth, -0.5*myHeight, 0.5*myLength, c[5]);
+    addVertex(-0.5, -0.5, 0.5, c[1]);
+    addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(0.5, 0.5, 0.5, c[6]);
+    addVertex(0.5, -0.5, 0.5, c[5]);
 }
 
 /**
@@ -134,11 +140,8 @@ void Cuboid::setLength(GLfloat length) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = length/myLength;
     myLength = length;
-    for(int i = 0; i < numberOfVertices; i++) {
-        vertices[i*3 + 2] *= ratio;
-    }
+    myZScale = length;
     attribMutex.unlock();
 }
 
@@ -153,12 +156,7 @@ void Cuboid::changeLengthBy(GLfloat delta) {
     }
     attribMutex.lock();
     myLength += delta;
-    for(int i = 0; i < numberOfVertices; i++) {
-        if (vertices[i*3 + 2] > 0)
-            vertices[i*3 + 2] += delta/2;
-        else
-            vertices[i*3 + 2] -= delta/2;
-    }
+    myZScale += delta;
     attribMutex.unlock();
 }
 
@@ -172,11 +170,8 @@ void Cuboid::setWidth(GLfloat width) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = width/myWidth;
     myWidth = width;
-    for(int i = 0; i < numberOfVertices; i++) {
-        vertices[i*3] *= ratio;
-    }
+    myXScale = width;
     attribMutex.unlock();
 }
 
@@ -191,12 +186,7 @@ void Cuboid::changeWidthBy(GLfloat delta) {
     }
     attribMutex.lock();
     myWidth += delta;
-    for(int i = 0; i < numberOfVertices; i++) {
-        if (vertices[i*3] > 0)
-            vertices[i*3] += delta/2;
-        else
-            vertices[i*3] -= delta/2;
-    }
+    myXScale += delta;
     attribMutex.unlock();
 }
 
@@ -210,11 +200,8 @@ void Cuboid::setHeight(GLfloat height) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = height/myHeight;
     myHeight = height;
-    for(int i = 0; i < numberOfVertices; i++) {
-        vertices[i*3 + 1] *= ratio;
-    }
+    myYScale = height;
     attribMutex.unlock();
 }
 
@@ -229,12 +216,7 @@ void Cuboid::changeHeightBy(GLfloat delta) {
     }
     attribMutex.lock();
     myHeight += delta;
-    for(int i = 0; i < numberOfVertices; i++) {
-        if (vertices[i*3 + 1] > 0)
-            vertices[i*3 + 1] += delta/2;
-        else
-            vertices[i*3 + 1] -= delta/2;
-    }
+    myYScale += delta;
     attribMutex.unlock();
 }
 

@@ -18,7 +18,7 @@ void cubeFunction(Canvas& can) {
     can.add(testCube);
     can.add(testCube2);
     float rotation = 0.0f;
-    // GLfloat delta = 0.05;
+    GLfloat delta = 0.05;
     while (can.isOpen()) {
         can.sleep();
         // testCube->setCenterX(sin(rotation)*2);
@@ -28,17 +28,20 @@ void cubeFunction(Canvas& can) {
         // testCube->setPitch(rotation*45);
         // testCube->setRoll(rotation*45);
         // testCube->setSideLength(cos(rotation)+1.01);
-        // if(testCube->getSideLength() >= 2) {
-        //     delta = -0.05;
-        // }
-        // if(testCube->getSideLength() <= 0.05) {
-        //     delta = 0.05;
-        // }
-        // testCube->changeSideLengthBy(delta);
+        if(testCube->getSideLength() >= 2) {
+            delta = -0.05;
+        }
+        if(testCube->getSideLength() <= 0.05) {
+            delta = 0.05;
+        }
+        testCube->changeSideLengthBy(delta);
         //testCube2->setRoll(rotation);
         rotation+=0.01;
         // printf("Roll %f\n", testCube2->getRoll());
     }
+
+    delete testCube;
+    delete testCube2;
 }
 
 int main(int argc, char* argv[]) {

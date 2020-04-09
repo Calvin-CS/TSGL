@@ -68,6 +68,10 @@ namespace tsgl {
 
     virtual void setRotationPoint(float x, float y);
 
+    virtual void setRotationPointX(float x);
+
+    virtual void setRotationPointY(float y);
+
     /*!
     * \brief Accessor for the center x-coordinate of the Drawable.
     * \details Returns the value of the myCenterX private variable.

@@ -32,13 +32,16 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
     myXRadius = xRadius;
     myYRadius = yRadius;
     myZRadius = zRadius;
+    myXScale = xRadius;
+    myYScale = yRadius;
+    myZScale = zRadius;
     attribMutex.unlock();
 	for(int b=0;b<horizontalSections;b++)
 	{
 		for(int a=0;a<verticalSections;a++)
 		{
-			addVertex(myXRadius*(sin((a*PI)/(verticalSections/2)))*(sin((b*PI)/horizontalSections)), myYRadius*(cos((a*PI)/(verticalSections/2))), myZRadius*(cos((b*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c);
-			addVertex(myXRadius*(sin((a*PI)/(verticalSections/2)))*(sin(((b+1)*PI)/horizontalSections)), myYRadius*(cos((a*PI)/(verticalSections/2))), myZRadius*(cos(((b+1)*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c);
+			addVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), c);
+			addVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), c);
 		}
 	}
 }
@@ -73,13 +76,16 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
     myXRadius = xRadius;
     myYRadius = yRadius;
     myZRadius = zRadius;
+    myXScale = xRadius;
+    myYScale = yRadius;
+    myZScale = zRadius;
     attribMutex.unlock();
 	for(int b=0;b<horizontalSections;b++)
 	{
 		for(int a=0;a<verticalSections;a++)
 		{
-			addVertex(myXRadius*(sin((a*PI)/(verticalSections/2)))*(sin((b*PI)/horizontalSections)), myYRadius*(cos((a*PI)/(verticalSections/2))), myZRadius*(cos((b*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c[b]);
-			addVertex(myXRadius*(sin((a*PI)/(verticalSections/2)))*(sin(((b+1)*PI)/horizontalSections)), myYRadius*(cos((a*PI)/(verticalSections/2))), myZRadius*(cos(((b+1)*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c[b]);
+			addVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), c[b]);
+			addVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), c[b]);
 		}
 	}
 }
@@ -137,11 +143,8 @@ void Ellipsoid::setXRadius(GLfloat radiusX) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = radiusX / myXRadius;
     myXRadius = radiusX;
-    for (int i = 0; i < numberOfVertices; i++) {
-        vertices[i*3] *= ratio;
-    }
+    myXScale = radiusX;
     attribMutex.unlock();
 }
 
@@ -156,14 +159,7 @@ void Ellipsoid::changeXRadiusBy(GLfloat delta) {
     }
     attribMutex.lock();
     myXRadius += delta;
-	for(int b=0;b<horizontalSections;b++)
-	{
-		for(int a=0;a<verticalSections;a++)
-		{
-            vertices[(b*verticalSections + a) * 2 * 3] = myXRadius*(sin((a*PI)/(verticalSections/2)))*(sin((b*PI)/horizontalSections));
-            vertices[(b*verticalSections + a) * 2 * 3 + 3] = myXRadius*(sin((a*PI)/(verticalSections/2)))*(sin(((b+1)*PI)/horizontalSections));
-		}
-	}
+    myXScale += delta;
     attribMutex.unlock();
 }
 
@@ -177,11 +173,8 @@ void Ellipsoid::setYRadius(GLfloat radiusY) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = radiusY / myYRadius;
     myYRadius = radiusY;
-    for (int i = 0; i < numberOfVertices; i++) {
-        vertices[i*3 + 1] *= ratio;
-    }
+    myYScale = radiusY;
     attribMutex.unlock();
 }
 
@@ -196,14 +189,7 @@ void Ellipsoid::changeYRadiusBy(GLfloat delta) {
     }
     attribMutex.lock();
     myYRadius += delta;
-	for(int b=0;b<horizontalSections;b++)
-	{
-		for(int a=0;a<verticalSections;a++)
-		{
-            vertices[(b*verticalSections + a) * 2 * 3 + 1] = myYRadius*(cos((a*PI)/(verticalSections/2)));
-            vertices[(b*verticalSections + a) * 2 * 3 + 4] = myYRadius*(cos((a*PI)/(verticalSections/2)));
-		}
-	}
+    myYScale += delta;
     attribMutex.unlock();
 }
 
@@ -217,11 +203,8 @@ void Ellipsoid::setZRadius(GLfloat radiusZ) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = radiusZ / myZRadius;
     myZRadius = radiusZ;
-    for (int i = 0; i < numberOfVertices; i++) {
-        vertices[i*3 + 2] *= ratio;
-    }
+    myZScale = radiusZ;
     attribMutex.unlock();
 }
 
@@ -236,14 +219,7 @@ void Ellipsoid::changeZRadiusBy(GLfloat delta) {
     }
     attribMutex.lock();
     myZRadius += delta;
-	for(int b=0;b<horizontalSections;b++)
-	{
-		for(int a=0;a<verticalSections;a++)
-		{
-            vertices[(b*verticalSections + a) * 2 * 3 + 2] = myZRadius*(cos((b*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2)));
-            vertices[(b*verticalSections + a) * 2 * 3 + 5] = myZRadius*(cos(((b+1)*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2)));
-		}
-	}
+    myZScale += delta;
     attribMutex.unlock();
 }
 

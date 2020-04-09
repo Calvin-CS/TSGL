@@ -24,39 +24,42 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
     attribMutex.lock();
     geometryType = GL_QUADS;
     mySideLength = sideLength;
+    myXScale = sideLength;
+    myYScale = sideLength;
+    myZScale = sideLength;
     numberOfVertices = 24;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5, -0.5, -0.5, c);
+    addVertex(-0.5, -0.5, 0.5, c);
+    addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(-0.5, 0.5, -0.5, c);
     
-    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(0.5, -0.5, -0.5, c);
+    addVertex(0.5, -0.5, 0.5, c);
+    addVertex(0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, -0.5, c);
 
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5, -0.5, -0.5, c);
+    addVertex(-0.5, -0.5, 0.5, c);
+    addVertex(0.5, -0.5, 0.5, c);
+    addVertex(0.5, -0.5, -0.5, c);
 
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5, 0.5, -0.5, c);
+    addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, -0.5, c);
 
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c);
+    addVertex(-0.5, -0.5, -0.5, c);
+    addVertex(-0.5, 0.5, -0.5, c);
+    addVertex(0.5, 0.5, -0.5, c);
+    addVertex(0.5, -0.5, -0.5, c);
 
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c);
+    addVertex(-0.5, -0.5, 0.5, c);
+    addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, 0.5, c);
+    addVertex(0.5, -0.5, 0.5, c);
 }
 
  /*!
@@ -81,39 +84,42 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
     attribMutex.lock();
     geometryType = GL_QUADS;
     mySideLength = sideLength;
+    myXScale = sideLength;
+    myYScale = sideLength;
+    myZScale = sideLength;
     numberOfVertices = 24;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[0]);
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[1]);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[2]);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[3]);
+    addVertex(-0.5, -0.5, -0.5, c[0]);
+    addVertex(-0.5, -0.5, 0.5, c[1]);
+    addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(-0.5, 0.5, -0.5, c[3]);
     
-    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[4]);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[5]);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[6]);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[7]);
+    addVertex(0.5, -0.5, -0.5, c[4]);
+    addVertex(0.5, -0.5, 0.5, c[5]);
+    addVertex(0.5, 0.5, 0.5, c[6]);
+    addVertex(0.5, 0.5, -0.5, c[7]);
 
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[0]);
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[1]);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[5]);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[4]);
+    addVertex(-0.5, -0.5, -0.5, c[0]);
+    addVertex(-0.5, -0.5, 0.5, c[1]);
+    addVertex(0.5, -0.5, 0.5, c[5]);
+    addVertex(0.5, -0.5, -0.5, c[4]);
 
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[3]);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[2]);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[6]);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[7]);
+    addVertex(-0.5, 0.5, -0.5, c[3]);
+    addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(0.5, 0.5, 0.5, c[6]);
+    addVertex(0.5, 0.5, -0.5, c[7]);
 
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[0]);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[3]);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, -0.5*mySideLength, c[7]);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, -0.5*mySideLength, c[4]);
+    addVertex(-0.5, -0.5, -0.5, c[0]);
+    addVertex(-0.5, 0.5, -0.5, c[3]);
+    addVertex(0.5, 0.5, -0.5, c[7]);
+    addVertex(0.5, -0.5, -0.5, c[4]);
 
-    addVertex(-0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[1]);
-    addVertex(-0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[2]);
-    addVertex(0.5*mySideLength, 0.5*mySideLength, 0.5*mySideLength, c[6]);
-    addVertex(0.5*mySideLength, -0.5*mySideLength, 0.5*mySideLength, c[5]);
+    addVertex(-0.5, -0.5, 0.5, c[1]);
+    addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(0.5, 0.5, 0.5, c[6]);
+    addVertex(0.5, -0.5, 0.5, c[5]);
 }
 
 /**
@@ -126,13 +132,11 @@ void Cube::setSideLength(GLfloat length) {
         return;
     }
     attribMutex.lock();
-    GLfloat ratio = length/mySideLength;
+    myXScale = length;
+    myYScale = length;
+    myZScale = length;
     mySideLength = length;
-    for(int i = 0; i < numberOfVertices * 3; i++) {
-        vertices[i] *= ratio;
-    }
     attribMutex.unlock();
-    // FIXME alter vertices
 }
 
 /**
@@ -146,14 +150,10 @@ void Cube::changeSideLengthBy(GLfloat delta) {
     }
     attribMutex.lock();
     mySideLength += delta;
-    for(int i = 0; i < numberOfVertices * 3; i++) {
-        if (vertices[i] > 0)
-            vertices[i] += delta/2;
-        else
-            vertices[i] -= delta/2;
-    }
+    myXScale += delta;
+    myYScale += delta;
+    myZScale += delta;
     attribMutex.unlock();
-    // FIXME alter vertices
 }
 
 GLfloat Cube::getSideLength() {

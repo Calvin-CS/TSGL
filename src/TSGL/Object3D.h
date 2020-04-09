@@ -33,18 +33,27 @@ class Object3D : public Drawable {
     int currentVertex = 0;
     int currentColor = 0;
     float myCurrentYaw, myCurrentPitch, myCurrentRoll;
+    float myXScale, myYScale, myZScale;
     float myCenterZ;                                    // myCenterX and myCenterY inherited
     float myRotationPointZ;                             // myRotationPointX and myRotationPointY inherited
     GLenum geometryType;
     bool init = false;
+    virtual void addVertex(float x, float y, float z, const ColorGLfloat &color = ColorGLfloat(1,1,1,1));
+
+    /*!
+     * \brief Protected helper method that determines if the Object3D's center matches its rotation point.
+     * \details Checks to see if myCenterX == myRotationPointX, myCenterY == myRotationPointY, myCenterZ == myRotationPointZ
+     * \return True if all three coordinates match their respective others, false otherwise.
+     */
+    bool centerMatchesRotationPoint() {
+       return (myCenterX == myRotationPointX && myCenterY == myRotationPointY && myCenterZ == myRotationPointZ);
+    }
  public:
     Object3D(float yaw, float pitch, float roll, float x, float y, float z);
 
     virtual ~Object3D();
 
     virtual void draw();
-
-    virtual void addVertex(float x, float y, float z, const ColorGLfloat &color = ColorGLfloat(1,1,1,1));
 
     virtual void setColor(ColorGLfloat c);
     virtual void setColor(ColorGLfloat c[]);
@@ -70,6 +79,8 @@ class Object3D : public Drawable {
     virtual void changeYawPitchRollBy(float deltaYaw, float deltaPitch, float deltaRoll);
 
     virtual void setRotationPoint(float x, float y, float z);
+
+    virtual void setRotationPointZ(float z);
 
     /*!
     * \brief Accessor for the center z-coordinate of the Object3D.

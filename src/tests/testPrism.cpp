@@ -49,6 +49,10 @@ void prismFunction(Canvas& can) {
         testPrism->changeRadiusBy(delta);
         rotation+=0.01;
     }
+
+    delete testPrism;
+    delete testPrism2;
+    delete testPrism3;
 }
 
 int main(int argc, char* argv[]) {

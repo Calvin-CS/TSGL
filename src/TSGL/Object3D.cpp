@@ -33,11 +33,12 @@ Object3D::Object3D(float x, float y, float z, float yaw, float pitch, float roll
  */
 void Object3D::draw() {
     glPushMatrix();
-    glTranslatef(myCenterX, myCenterY, myCenterZ);
+    glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
     glRotatef(myCurrentYaw, 0, 0, 1);
     glRotatef(myCurrentPitch, 0, 1, 0);
-    glRotatef(myCurrentRoll, 1, 0, 0);
-    // glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
+    glRotatef(myCurrentRoll, 1, 0, 0); 
+    glTranslatef(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ);
+    glScalef(myXScale, myYScale, myZScale);
 
     /* We have a color array and a vertex array */
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -126,12 +127,14 @@ void Object3D::setColor(ColorGLfloat c[]) {
 /**
  * \brief Alters the Object3D's x position
  * \param deltaX The difference between the new and old vertex x coordinates.
+ * \warning This will also alter the Object3D's rotation point similarly if and 
+ *          only if the old rotation point was at the Object3D's old center.
  */
 void Object3D::changeXBy(float deltaX) {
     attribMutex.lock();
-    // if (myCenterX == myRotationPointX) {
-    //     myRotationPointX += deltaX;
-    // }
+    if (centerMatchesRotationPoint()) {
+        myRotationPointX += deltaX;
+    }
     myCenterX += deltaX;
     attribMutex.unlock();
 }
@@ -139,12 +142,14 @@ void Object3D::changeXBy(float deltaX) {
 /**
  * \brief Alters the Object3D's y position
  * \param deltaY The difference between the new and old vertex y coordinates.
+ * \warning This will also alter the Object3D's rotation point similarly if and 
+ *          only if the old rotation point was at the Object3D's old center.
  */
 void Object3D::changeYBy(float deltaY) {
     attribMutex.lock();
-    // if (myCenterY == myRotationPointY) {
-    //     myRotationPointY += deltaY;
-    // }
+    if (centerMatchesRotationPoint()) {
+        myRotationPointY += deltaY;
+    }
     myCenterY += deltaY;
     attribMutex.unlock();
 }
@@ -152,12 +157,14 @@ void Object3D::changeYBy(float deltaY) {
 /**
  * \brief Alters the Object3D's z position
  * \param deltaZ The difference between the new and old vertex z coordinates.
+ * \warning This will also alter the Object3D's rotation point similarly if and 
+ *          only if the old rotation point was at the Object3D's old center.
  */
 void Object3D::changeZBy(float deltaZ) {
     attribMutex.lock();
-    // if (myCenterZ == myRotationPointZ) {
-    //     myRotationPointZ += deltaZ;
-    // }
+    if (centerMatchesRotationPoint()) {
+        myRotationPointZ += deltaZ;
+    }
     myCenterZ += deltaZ;
     attribMutex.unlock();
 }
@@ -167,16 +174,16 @@ void Object3D::changeZBy(float deltaZ) {
  * \param deltaX The difference between the new and old vertex x coordinates.
  * \param deltaY The difference between the new and old vertex y coordinates.
  * \param deltaZ The difference between the new and old vertex z coordinates.
- * \warning This will also alter the Object3D's rotation point if and only if the 
- *          old rotation point was at the Object3D's old center.
+ * \warning This will also alter the Object3D's rotation point similarly if and 
+ *          only if the old rotation point was at the Object3D's old center.
  */
 void Object3D::changeCenterBy(float deltaX, float deltaY, float deltaZ) {
     attribMutex.lock();
-    // if (myCenterX == myRotationPointX && myCenterY == myRotationPointY && myCenterZ == myRotationPointZ) {
-    //     myRotationPointX += deltaX;
-    //     myRotationPointY += deltaY;
-    //     myRotationPointZ += deltaZ;
-    // }
+    if (centerMatchesRotationPoint()) {
+        myRotationPointX += deltaX;
+        myRotationPointY += deltaY;
+        myRotationPointZ += deltaZ;
+    }
     myCenterX += deltaX;
     myCenterY += deltaY;
     myCenterZ += deltaZ;
@@ -186,12 +193,14 @@ void Object3D::changeCenterBy(float deltaX, float deltaY, float deltaZ) {
 /**
  * \brief Sets the Object3D's x position
  * \param x The new center x coordinate.
+ * \warning This will also alter the Object3D's rotation point similarly if and only 
+ *           if the old rotation point was at the Object3D's old center.
  */
 void Object3D::setCenterX(float x) {
     attribMutex.lock();
-    // if (myCenterX == myRotationPointX) {
-    //     myRotationPointX = x;
-    // }
+    if (centerMatchesRotationPoint()) {
+        myRotationPointX = x;
+    }
     myCenterX = x;
     attribMutex.unlock();
 }
@@ -199,12 +208,14 @@ void Object3D::setCenterX(float x) {
 /**
  * \brief Sets the Object3D's y position
  * \param y The new center y coordinate.
+ * \warning This will also alter the Object3D's rotation point similarly if and only 
+ *           if the old rotation point was at the Object3D's old center.
  */
 void Object3D::setCenterY(float y) {
     attribMutex.lock();
-    // if (myCenterY == myRotationPointY) {
-    //     myRotationPointY = y;
-    // }
+    if (centerMatchesRotationPoint()) {
+        myRotationPointY = y;
+    }
     myCenterY = y;
     attribMutex.unlock();
 }
@@ -212,12 +223,14 @@ void Object3D::setCenterY(float y) {
 /**
  * \brief Sets the Object3D's z position
  * \param z The new center z coordinate.
+ * \warning This will also alter the Object3D's rotation point similarly if and only 
+ *           if the old rotation point was at the Object3D's old center.
  */
 void Object3D::setCenterZ(float z) {
     attribMutex.lock();
-    // if (myCenterZ == myRotationPointZ) {
-    //     myRotationPointZ = z;
-    // }
+    if (centerMatchesRotationPoint()) {
+        myRotationPointZ = z;
+    }
     myCenterZ = z;
     attribMutex.unlock();
 }
@@ -227,16 +240,16 @@ void Object3D::setCenterZ(float z) {
  * \param x The new center x coordinate.
  * \param y The new center y coordinate.
  * \param z The new center z coordinate.
- * \warning This will also alter the Object3D's rotation point if and only if the 
- *          old rotation point was at the Object3D's old center.
+ * \warning This will also alter the Object3D's rotation point similarly if and only 
+ *           if the old rotation point was at the Object3D's old center.
  */
 void Object3D::setCenter(float x, float y, float z) {
     attribMutex.lock();
-    // if (myCenterX == myRotationPointX && myCenterY == myRotationPointY && myCenterZ == myRotationPointZ) {
-    //     myRotationPointX = x;
-    //     myRotationPointY = y;
-    //     myRotationPointZ = z;
-    // }
+    if (centerMatchesRotationPoint()) {
+        myRotationPointX = x;
+        myRotationPointY = y;
+        myRotationPointZ = z;
+    }
     myCenterX = x;
     myCenterY = y;
     myCenterZ = z;
@@ -341,6 +354,17 @@ void Object3D::setRotationPoint(float x, float y, float z) {
     attribMutex.lock();
     myRotationPointX = x;
     myRotationPointY = y;
+    myRotationPointZ = z;
+    attribMutex.unlock();
+}
+
+/*!
+ * \brief Virtual mutator that changes the rotation point of the Object3D's z value.
+ * \details Alters myRotationPointZ;
+ * \param z myRotationPointZ's new float value.
+ */
+void Object3D::setRotationPointZ(float z) {
+    attribMutex.lock();
     myRotationPointZ = z;
     attribMutex.unlock();
 }
