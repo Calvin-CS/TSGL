@@ -16,18 +16,19 @@ namespace tsgl {
  */
 class Pyramid : public Object3D {
 protected:
-    float myHeight;
-    float myRadius;
+    GLfloat myHeight;
+    GLfloat myRadius;
+    int mySides;
 public:
-    Pyramid(float x, float y, float z, float height, float radius, int sides, float yaw, float pitch, float roll, ColorFloat c);
+    Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c);
 
-    Pyramid(float x, float y, float z, float height, float radius, int sides, float yaw, float pitch, float roll, ColorFloat c[]);
+    Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
 
     virtual ~Pyramid();
 
-    virtual void setColor(ColorFloat c);
+    virtual void setColor(ColorGLfloat c);
 
-    virtual void setColor(ColorFloat c[]);
+    virtual void setColor(ColorGLfloat c[]);
 
     virtual void setRadius(float radius);
 
@@ -37,7 +38,11 @@ public:
 
     virtual void changeHeightBy(float delta);
 
-    virtual ColorFloat* getColor();
+    virtual GLfloat getHeight() { return myHeight; }
+
+    virtual GLfloat getRadius() { return myRadius; }    
+
+    // virtual ColorFloat* getColor();
 };
 
 }

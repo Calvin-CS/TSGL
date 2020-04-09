@@ -17,9 +17,9 @@ namespace tsgl {
  */
 class Cone : public Pyramid {
 public:
-    Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c);
+    Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorGLfloat c);
 
-    Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c[]);
+    Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
 
     virtual ~Cone();
 };

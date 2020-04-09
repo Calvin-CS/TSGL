@@ -19,17 +19,35 @@ namespace tsgl {
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Pyramid with a buffer for storing the specified numbered of vertices.
   */
-Pyramid::Pyramid(float x, float y, float z, float height, float radius, int sides, float yaw, float pitch, float roll, ColorFloat c)  : Object3D(x, y, z, yaw, pitch, roll)  {
-    attribMutex.lock();
+Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Object3D(x, y, z, yaw, pitch, roll)  {
     if (sides < 3) {
         TsglDebug("Cannot have a Pyramid with fewer than 3 sides.");
     }
     if (radius <= 0 || height <= 0) {
         TsglDebug("Cannot have a Pyramid with radius or height less than or equal to 0.");
     }
+    attribMutex.lock();
     myHeight = height;
+    myYScale = height;
     myRadius = radius;
+    myXScale = radius;
+    myZScale = radius;
+    mySides = sides;
+    geometryType = GL_TRIANGLES;
+    numberOfVertices = mySides * 6;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
+    GLfloat half = myHeight/2;
+    for (int i = 0; i < mySides; i++) {
+        addVertex(0,half,0, c);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
+
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(0,-half,0, c);
+    }
 }
 
  /*!
@@ -49,47 +67,65 @@ Pyramid::Pyramid(float x, float y, float z, float height, float radius, int side
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Pyramid with a buffer for storing the specified numbered of vertices.
   */
-Pyramid::Pyramid(float x, float y, float z, float height, float radius, int sides, float yaw, float pitch, float roll, ColorFloat c[])  : Object3D(x, y, z, yaw, pitch, roll)  {
-    attribMutex.lock();
+Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Object3D(x, y, z, yaw, pitch, roll)  {
     if (sides < 3) {
         TsglDebug("Cannot have a Pyramid with fewer than 3 sides.");
     }
-    if (radius <= 0) {
-        TsglDebug("Cannot have a Pyramid with radius less than or equal to 0.");
+    if (radius <= 0 || height <= 0) {
+        TsglDebug("Cannot have a Pyramid with radius or height less than or equal to 0.");
     }
+    attribMutex.lock();
     myHeight = height;
+    myYScale = height;
     myRadius = radius;
+    myXScale = radius;
+    myZScale = radius;
+    mySides = sides;
+    geometryType = GL_TRIANGLES;
+    numberOfVertices = mySides * 6;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
+    GLfloat half = myHeight/2;
+    for (int i = 0; i < mySides; i++) {
+        addVertex(0,half,0, c[0]);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[i]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[i+1]);
+
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[i]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[i+1]);
+        addVertex(0,-half,0, c[mySides+1]);
+    }
 }
 
 /**
  * \brief Sets the Pyramid to a new color.
  * \param c The new ColorFloat.
  */
-void Pyramid::setColor(ColorFloat c) {
-    attribMutex.lock();
-    for(int i = 0; i < numberOfVertices; i++) {
-        vertices[i*6 + 2] = c.R;
-        vertices[i*6 + 3] = c.G;
-        vertices[i*6 + 4] = c.B;
-        vertices[i*6 + 5] = c.A;
-    }
-    attribMutex.unlock();
+void Pyramid::setColor(ColorGLfloat c) {
+    // attribMutex.lock();
+    // for(int i = 0; i < numberOfVertices; i++) {
+    //     vertices[i*6 + 2] = c.R;
+    //     vertices[i*6 + 3] = c.G;
+    //     vertices[i*6 + 4] = c.B;
+    //     vertices[i*6 + 5] = c.A;
+    // }
+    // attribMutex.unlock();
 }
 
 /**
  * \brief Sets the Pyramid to an array of new colors.
  * \param c An array of new ColorFloats.
  */
-void Pyramid::setColor(ColorFloat c[]) {
-    attribMutex.lock();
-    for(int i = 0; i < numberOfVertices; i++) {
-        vertices[i*6 + 2] = c[i].R;
-        vertices[i*6 + 3] = c[i].G;
-        vertices[i*6 + 4] = c[i].B;
-        vertices[i*6 + 5] = c[i].A;
-    }
-    attribMutex.unlock();
+void Pyramid::setColor(ColorGLfloat c[]) {
+    // attribMutex.lock();
+    // for(int i = 0; i < numberOfVertices; i++) {
+    //     vertices[i*6 + 2] = c[i].R;
+    //     vertices[i*6 + 3] = c[i].G;
+    //     vertices[i*6 + 4] = c[i].B;
+    //     vertices[i*6 + 5] = c[i].A;
+    // }
+    // attribMutex.unlock();
 }
 
 /**
@@ -97,13 +133,13 @@ void Pyramid::setColor(ColorFloat c[]) {
  * \return c An array of ColorFloats.
  * \warning This method allocates memory. The caller is responsible for deallocating it.
  */
-ColorFloat* Pyramid::getColor() {
-  ColorFloat * c = new ColorFloat[numberOfVertices];
-    for(int i = 0; i < numberOfVertices; i++) {
-        c[i] = ColorFloat(vertices[i*6 + 2], vertices[i*6 + 3], vertices[i*6 + 4], vertices[i*6 + 5]);
-    }
-    return c;
-}
+// ColorFloat* Pyramid::getColor() {
+//   ColorFloat * c = new ColorFloat[numberOfVertices];
+//     for(int i = 0; i < numberOfVertices; i++) {
+//         c[i] = ColorFloat(vertices[i*6 + 2], vertices[i*6 + 3], vertices[i*6 + 4], vertices[i*6 + 5]);
+//     }
+//     return c;
+// }
 
 /**
  * \brief Mutates the Pyramid's base's radius.
@@ -117,6 +153,8 @@ void Pyramid::setRadius(float radius) {
         return;
     }
     myRadius = radius;
+    myXScale = radius;
+    myZScale = radius;
     attribMutex.unlock();
 }
 
@@ -132,6 +170,8 @@ void Pyramid::changeRadiusBy(float delta) {
         return;
     }
     myRadius += delta;
+    myXScale += delta;
+    myZScale += delta;
     attribMutex.unlock();
 }
 
@@ -140,13 +180,13 @@ void Pyramid::changeRadiusBy(float delta) {
  * \param height The Pyramid's new height.
  */
 void Pyramid::setHeight(float height) {
-    attribMutex.lock();
     if (height <= 0) {
         TsglDebug("Cannot have a Pyramid with height less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     myHeight = height;
+    myYScale = height;
     attribMutex.unlock();
 }
 
@@ -155,13 +195,13 @@ void Pyramid::setHeight(float height) {
  * \param delta The amount by which to change the height of the pyramid.
  */
 void Pyramid::changeHeightBy(float delta) {
-    attribMutex.lock();
     if (myHeight + delta <= 0) {
         TsglDebug("Cannot have a Pyramid with height less than or equal to 0.");
-        attribMutex.unlock();
         return;
     }
+    attribMutex.lock();
     myHeight += delta;
+    myYScale += delta;
     attribMutex.unlock();
 }
 

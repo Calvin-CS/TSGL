@@ -13,6 +13,7 @@
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Arrow.h"	    // Our own array for drawing arrows
 #include "Color.h"          // Our own interface for converting color types
+#include "Cone.h"           // Our own class for drawing cones
 #include "Cube.h"           // Our own class for drawing cubes
 #include "Cuboid.h"         // Our own class for drawing cuboids
 #include "Cylinder.h"       // Our own class for drawing cylinders
@@ -27,6 +28,7 @@
 #include "Line.h"           // Our own class for drawing straight lines
 #include "Polyline.h"       // Our own class for drawing polylines
 #include "ProgressBar.h"    // Our own class for drawing progress bars
+#include "Pyramid.h"        // Our own class for drawing pyramids
 #include "Rectangle.h"      // Our own class for drawing rectangles
 #include "RegularPolygon.h" // Our own class for drawing regular polygons
 #include "Sphere.h"         // Our own class for drawing spheres

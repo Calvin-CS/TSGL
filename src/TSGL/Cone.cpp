@@ -17,8 +17,8 @@ namespace tsgl {
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Cone with a buffer for storing the specified numbered of vertices.
   */
-Cone::Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c)  
-: Pyramid(x, y, z, height, radius, (radius > 1) ? radius * 3 : 3, yaw, pitch, roll, c)  { }
+Cone::Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorGLfloat c)  
+: Pyramid(x, y, z, 12, height, radius, yaw, pitch, roll, c)  { }
 
  /*!
   * \brief Explicitly constructs a new Cone.
@@ -35,8 +35,8 @@ Cone::Cone(float x, float y, float z, float height, float radius, float yaw, flo
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Cone with a buffer for storing the specified numbered of vertices.
   */
-Cone::Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c[]) 
-: Pyramid(x, y, z, height, radius, (radius > 1) ? radius * 3 : 3, yaw, pitch, roll, c)  { }
+Cone::Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorGLfloat c[]) 
+: Pyramid(x, y, z, 12, height, radius, yaw, pitch, roll, c)  { }
 
 /*!
  * \brief Destructor for the Cone.

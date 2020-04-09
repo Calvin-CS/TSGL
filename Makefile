@@ -76,6 +76,7 @@ BINARIES= \
 	bin/testColorPoints \
 	bin/testColorWheel \
 	bin/testConcavePolygon \
+	bin/testCone \
 	bin/testConstructors \
 	bin/testConway \
 	bin/testCosineIntegral \
@@ -107,6 +108,7 @@ BINARIES= \
 	bin/testPrism \
 	bin/testProgressBar \
 	bin/testProjectiles \
+	bin/testPyramid \
 	bin/testReaderWriter \
 	bin/testRotation \
 	bin/testScreenshot \
