@@ -18,7 +18,12 @@ namespace tsgl {
   * \return A new Cylinder with a buffer for storing the specified numbered of vertices.
   */
 Cylinder::Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  
-: Prism(x, y, z, 15, height, radius, yaw, pitch, roll, c)  { }
+: Prism(x, y, z, 15, height, radius, yaw, pitch, roll, c)  {
+    outlineStride = 3;
+    numberOfOutlineVertices = mySides * 4;
+    outlineFirstIndex = 0;
+    outlineGeometryType = GL_LINES;
+}
 
  /*!
   * \brief Explicitly constructs a new Cylinder.
@@ -36,7 +41,12 @@ Cylinder::Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, fl
   * \return A new Cylinder with a buffer for storing the specified numbered of vertices.
   */
 Cylinder::Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorGLfloat c[])  
-: Prism(x, y, z, 15, height, radius, yaw, pitch, roll, c)  { }
+: Prism(x, y, z, 15, height, radius, yaw, pitch, roll, c)  { 
+    outlineStride = 3;
+    numberOfOutlineVertices = mySides * 4;
+    outlineFirstIndex = 0;
+    outlineGeometryType = GL_LINES;
+}
 
 /*!
  * \brief Destructor for the Cylinder.

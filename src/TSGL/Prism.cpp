@@ -31,25 +31,29 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     mySides = sides;
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 12;
+    outlineStride = 2;
+    numberOfOutlineVertices = mySides * 6;
+    outlineFirstIndex = 0;
+    outlineGeometryType = GL_LINES;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
     GLfloat half = myHeight/2;
     for (int i = 0; i < mySides; i++) {
+        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c);
         addVertex(0,half,0, c);
-        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c);
         addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
 
-        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c);
         addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c);
         addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
 
-        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
         addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
         addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
 
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
         addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
         addVertex(0,-half,0, c);
     }
 }
@@ -83,25 +87,29 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     mySides = sides;
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 12;
+    outlineStride = 2;
+    numberOfOutlineVertices = mySides * 6;
+    outlineFirstIndex = 0;
+    outlineGeometryType = GL_LINES;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
     GLfloat half = myHeight/2;
     for (int i = 0; i < mySides; i++) {
-        addVertex(0,half,0, c[0]);
         addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c[1]);
+        addVertex(0,half,0, c[0]);
         addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[1]);
 
-        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c[2]);
         addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[2]);
+        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c[2]);
         addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[2]);
 
-        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[2]);
         addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[2]);
         addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[2]);
 
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[3]);
         addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[3]);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[3]);
         addVertex(0,-half,0, c[4]);
     }
 }

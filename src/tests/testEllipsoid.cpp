@@ -18,7 +18,7 @@ void ellipsoidFunction(Canvas& can) {
         ColorGLfloat(1,0.5,1,0.8), ColorGLfloat(1,1,0.5,0.8), ColorGLfloat(0,0,0.5,0.8),
         ColorGLfloat(0,0.5,0,0.8), ColorGLfloat(0,0.5,0.5,0.8), ColorGLfloat(0.5,0,0,0.8),
         ColorGLfloat(0.5,0,0.5,0.8), ColorGLfloat(0.5,0.5,0,0.8), ColorGLfloat(0.5,0.5,0.5,0.8)};
-    Ellipsoid * testEllipsoid = new Ellipsoid(0.0, 0.0, 0.0, 1.5, 1.5, 1.5, 0.0, 0.0, 0.0, colors);
+    Ellipsoid * testEllipsoid = new Ellipsoid(0.0, 0.0, 0.0, 2, 2, 2, 0.0, 0.0, 0.0, colors/* ColorGLfloat(1,0,0,1) */);
     // Ellipsoid * testEllipsoid2 = new Ellipsoid(-2.0, 0.0, 0.0, 1.5, 1.5, 1.5, 0.0, 0.0, 0.0, colors);
     can.add(testEllipsoid);
     // can.add(testEllipsoid2);
@@ -38,7 +38,7 @@ void ellipsoidFunction(Canvas& can) {
         // testEllipsoid->setYaw(rotation*45);
         // testEllipsoid->setPitch(rotation*45);
         // testEllipsoid2->setPitch(rotation*45);
-        // testEllipsoid->setRoll(rotation*45);
+        testEllipsoid->setRoll(rotation*45);
         // testEllipsoid->setXRadius(cos(rotation)+1.01);
         // testEllipsoid->setYRadius(sin(rotation)+2.01);
         // testEllipsoid->setZRadius(sin(rotation)+3.01);
@@ -58,13 +58,13 @@ void ellipsoidFunction(Canvas& can) {
         // }
         // testEllipsoid->changeYRadiusBy(delta);
 
-        if(testEllipsoid->getZRadius() >= 3) {
-            delta = -0.05;
-        }
-        if(testEllipsoid->getZRadius() <= 1) {
-            delta = 0.05;
-        }
-        testEllipsoid->changeZRadiusBy(delta);
+        // if(testEllipsoid->getZRadius() >= 3) {
+        //     delta = -0.05;
+        // }
+        // if(testEllipsoid->getZRadius() <= 1) {
+        //     delta = 0.05;
+        // }
+        // testEllipsoid->changeZRadiusBy(delta);
         rotation+=0.01;
     }
 

@@ -35,18 +35,22 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     mySides = sides;
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 6;
+    outlineStride = 2;
+    outlineFirstIndex = 0;
+    outlineGeometryType = GL_LINE_LOOP;
+    numberOfOutlineVertices = mySides * 3;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
     GLfloat half = myHeight/2;
     for (int i = 0; i < mySides; i++) {
-        addVertex(0,half,0, c);
         addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
+        addVertex(0,-half,0, c);
         addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
 
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);    
+        addVertex(0,half,0, ColorGLfloat(c.R*.5,c.G*.5,c.B*.5,c.A));
         addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
-        addVertex(0,-half,0, c);
     }
 }
 
@@ -83,14 +87,18 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     mySides = sides;
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 6;
+    outlineStride = 2;
+    outlineFirstIndex = 0;
+    outlineGeometryType = GL_LINE_LOOP;
+    numberOfOutlineVertices = mySides * 3;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
     GLfloat half = myHeight/2;
     for (int i = 0; i < mySides; i++) {
         addVertex(0,half,0, c[0]);
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[i]);
         addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[i+1]);
+        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[i]);    
 
         addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[i]);
         addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[i+1]);

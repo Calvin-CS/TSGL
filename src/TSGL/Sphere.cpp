@@ -24,22 +24,24 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     geometryType = GL_TRIANGLE_STRIP;
     verticalSections = 36;
     horizontalSections = 20;
-    numberOfVertices = verticalSections*horizontalSections*2;
+    numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2+1;
+    edgesOutlined = false;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     myRadius = radius;
     myXScale = radius;
     myYScale = radius;
     myZScale = radius;
-    attribMutex.unlock();
-	for(int b=0;b<horizontalSections;b++)
+    attribMutex.unlock();  
+	for(float b=0;b<horizontalSections;b++)
 	{
-		for(int a=0;a<verticalSections;a++)
+		for(float a=0;a<verticalSections;a++)
 		{
-			addVertex(myRadius*(sin((a*PI)/(verticalSections/2)))*(sin((b*PI)/horizontalSections)), myRadius*(cos((a*PI)/(verticalSections/2))), myRadius*(cos((b*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c);
-			addVertex(myRadius*(sin((a*PI)/(verticalSections/2)))*(sin(((b+1)*PI)/horizontalSections)), myRadius*(cos((a*PI)/(verticalSections/2))), myRadius*(cos(((b+1)*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c);
+			addVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorGLfloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), c.A));
+			addVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorGLfloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), c.A));
 		}
 	}
+    addVertex(0, 1, 0, ColorGLfloat(c.R, c.G, c.B, c.A));
 }
 
  /*!
@@ -64,7 +66,8 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     geometryType = GL_TRIANGLE_STRIP;
     verticalSections = 36;
     horizontalSections = 20;
-    numberOfVertices = verticalSections*horizontalSections*2;
+    numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2 + 1;
+    edgesOutlined = false;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     myRadius = radius;
@@ -76,10 +79,11 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
 	{
 		for(int a=0;a<verticalSections;a++)
 		{
-			addVertex(myRadius*(sin((a*PI)/(verticalSections/2)))*(sin((b*PI)/horizontalSections)), myRadius*(cos((a*PI)/(verticalSections/2))), myRadius*(cos((b*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c[b]);
-			addVertex(myRadius*(sin((a*PI)/(verticalSections/2)))*(sin(((b+1)*PI)/horizontalSections)), myRadius*(cos((a*PI)/(verticalSections/2))), myRadius*(cos(((b+1)*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c[b]);
+			addVertex((sin((a*PI)/(verticalSections/2)))*(sin((b*PI)/horizontalSections)), (cos((a*PI)/(verticalSections/2))), (cos((b*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c[b]);
+			addVertex((sin((a*PI)/(verticalSections/2)))*(sin(((b+1)*PI)/horizontalSections)), (cos((a*PI)/(verticalSections/2))), (cos(((b+1)*PI)/horizontalSections))*(sin((a*PI)/(verticalSections/2))), c[b]);
 		}
 	}
+    addVertex(0, 1, 0, c[horizontalSections]);
 }
 
 /**

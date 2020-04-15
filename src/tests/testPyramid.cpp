@@ -15,7 +15,7 @@ void pyramidFunction(Canvas& can) {
         ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
         ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
         ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1) };
-    Pyramid * testPyramid = new Pyramid(0.0, 0.0, 0.0, 3, 1, 1, 0.0, 0.0, 45.0, colors);
+    Pyramid * testPyramid = new Pyramid(0.0, 0.0, 0.0, 3, 1, 1, 0.0, 0.0, 45.0, ColorGLfloat(1,0,0,1));
     Pyramid * testPyramid2 = new Pyramid(-3.0, 0.0, 0.0, 5, 1, 1, 0.0, 0.0, 45.0, colors);
     Pyramid * testPyramid3 = new Pyramid(3.0, 0.0, 0.0, 8, 1, 1, 0.0, 0.0, 45.0, colors);
     can.add(testPyramid);
@@ -29,7 +29,9 @@ void pyramidFunction(Canvas& can) {
         // testPyramid->setCenterY(cos(rotation)*2);
         // testPyramid->setCenterZ(sin(rotation));
         // testPyramid->setYaw(rotation*45);
-        // testPyramid->setPitch(rotation*45);
+        testPyramid->setPitch(rotation*45);
+        testPyramid2->setPitch(rotation*45);
+        testPyramid3->setPitch(rotation*45);
         // testPyramid->setRoll(rotation*45);
         // testPyramid->setHeight(sin(rotation)+1.01);
         // testPyramid->setRadius(sin(rotation)+1.01);

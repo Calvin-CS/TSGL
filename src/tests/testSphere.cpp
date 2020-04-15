@@ -18,7 +18,7 @@ void sphereFunction(Canvas& can) {
         ColorGLfloat(1,0.5,1,0.8), ColorGLfloat(1,1,0.5,0.8), ColorGLfloat(0,0,0.5,0.8),
         ColorGLfloat(0,0.5,0,0.8), ColorGLfloat(0,0.5,0.5,0.8), ColorGLfloat(0.5,0,0,0.8),
         ColorGLfloat(0.5,0,0.5,0.8), ColorGLfloat(0.5,0.5,0,0.8), ColorGLfloat(0.5,0.5,0.5,0.8)};
-    Sphere * testSphere = new Sphere(0.0, 0.0, 0.0, 1.5, 0.0, 0.0, 0.0, colors);
+    Sphere * testSphere = new Sphere(0.0, 0.0, 0.0, 2, 0.0, 0.0, 0.0, colors /* ColorGLfloat(1,0.1,0.5,1) */);
     can.add(testSphere);
     float rotation = 0.0f;
     GLfloat delta = 0.05;
@@ -29,7 +29,7 @@ void sphereFunction(Canvas& can) {
         // testSphere->setCenterZ(sin(rotation));
         // testSphere->setYaw(rotation*45);
         // testSphere->setPitch(rotation*45);
-        // testSphere->setRoll(rotation*45);
+        testSphere->setRoll(rotation*45);
         // testSphere->setRadius(cos(rotation)+1.01);
         // if(testSphere->getRadius() >= 2) {
         //     delta = -0.05;

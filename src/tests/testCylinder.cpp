@@ -15,7 +15,7 @@ void cylinderFunction(Canvas& can) {
         ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
         ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
         ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1) };
-    Cylinder * testCylinder = new Cylinder(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 45.0, colors);
+    Cylinder * testCylinder = new Cylinder(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 45.0, ColorGLfloat(1,0,0,1));
     // Cylinder * testCylinder2 = new Cylinder(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCylinder);
     // can.add(testCylinder2);
@@ -27,7 +27,7 @@ void cylinderFunction(Canvas& can) {
         // testCylinder->setCenterY(cos(rotation)*2);
         // testCylinder->setCenterZ(sin(rotation));
         // testCylinder->setYaw(rotation*45);
-        // testCylinder->setPitch(rotation*45);
+        testCylinder->setPitch(rotation*45);
         // testCylinder->setRoll(rotation*45);
         // testCylinder->setHeight(sin(rotation)+1.01);
         // testCylinder->setRadius(sin(rotation)+1.01);
@@ -38,13 +38,13 @@ void cylinderFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testCylinder->changeHeightBy(delta);
-        if(testCylinder->getRadius() >= 2) {
-            delta = -0.05;
-        }
-        if(testCylinder->getRadius() <= 0.05) {
-            delta = 0.05;
-        }
-        testCylinder->changeRadiusBy(delta);
+        // if(testCylinder->getRadius() >= 2) {
+        //     delta = -0.05;
+        // }
+        // if(testCylinder->getRadius() <= 0.05) {
+        //     delta = 0.05;
+        // }
+        // testCylinder->changeRadiusBy(delta);
         rotation+=0.01;
     }
 

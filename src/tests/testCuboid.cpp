@@ -13,7 +13,7 @@ void cuboidFunction(Canvas& can) {
     ColorGLfloat colors[] = { ColorGLfloat(0,0,0,0.8), ColorGLfloat(0,0,1,0.8),
         ColorGLfloat(0,1,0,0.8), ColorGLfloat(0,1,1,0.8), ColorGLfloat(1,0,0,0.8),
         ColorGLfloat(1,0,1,0.8), ColorGLfloat(1,1,0,0.8), ColorGLfloat(1,1,1,0.8) };
-    Cuboid * testCuboid = new Cuboid(0.0, 0.0, 0.0, 1, 4, 2, 0.0, 45.0, 0.0, colors);
+    Cuboid * testCuboid = new Cuboid(0.0, 0.0, 0.0, 1, 4, 2, 0.0, 45.0, 0.0, ColorGLfloat(1,0,0,1));
     // Cuboid * testCuboid2 = new Cuboid(-3.0, 0.0, 0.0, 1, 3, 2, 0.0, 0.0, 0.0, colors);
     can.add(testCuboid);
     // can.add(testCuboid2);
@@ -25,7 +25,7 @@ void cuboidFunction(Canvas& can) {
         // testCuboid->setCenterY(cos(rotation)*2);
         // testCuboid->setCenterZ(sin(rotation));
         // testCuboid->setYaw(rotation*45);
-        // testCuboid->setPitch(rotation*45);
+        testCuboid->setPitch(rotation*45);
         // testCuboid->setRoll(rotation*45);
         // testCuboid->setWidth(cos(rotation)+1.01);
         // testCuboid->setHeight(cos(rotation)+3.01);
@@ -46,13 +46,13 @@ void cuboidFunction(Canvas& can) {
         // }
         // testCuboid->changeHeightBy(delta);
 
-        if(testCuboid->getLength() >= 3) {
-            delta = -0.05;
-        }
-        if(testCuboid->getLength() <= 1) {
-            delta = 0.05;
-        }
-        testCuboid->changeLengthBy(delta);
+        // if(testCuboid->getLength() >= 3) {
+        //     delta = -0.05;
+        // }
+        // if(testCuboid->getLength() <= 1) {
+        //     delta = 0.05;
+        // }
+        // testCuboid->changeLengthBy(delta);
         rotation+=0.01;
     }
 

@@ -46,8 +46,14 @@ void Object3D::draw() {
     glVertexPointer(3, GL_FLOAT, 0, vertices);
     glColorPointer(4, GL_FLOAT, 0, colors);
 
-    /* Send data : 24 vertices */
     glDrawArrays(geometryType, 0, numberOfVertices);
+
+    if (edgesOutlined) {
+        glVertexPointer(3, GL_FLOAT, outlineStride*sizeof(GLfloat)*3, vertices);
+        glColorPointer(4, GL_FLOAT, 0, outlineArray);
+
+        glDrawArrays(outlineGeometryType, outlineFirstIndex, numberOfOutlineVertices);
+    }
 
     glPopMatrix();
 
@@ -84,6 +90,12 @@ void Object3D::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorGLfloat &co
     attribMutex.unlock();
     if (currentVertex == numberOfVertices*3) {
         attribMutex.lock();
+        outlineArray = new GLfloat[numberOfOutlineVertices*4];
+        std::fill_n(outlineArray, numberOfOutlineVertices*4, 1.0);
+        // for(int i = 0; i < numberOfVertices; i++) {
+        //     outlineArray[4*i] = outlineArray[4*i + 1] = outlineArray[4*i + 2] = 1;
+        //     outlineArray[4*i + 3] = 0.3; 
+        // }
         init = true;
         attribMutex.unlock();
     }
@@ -369,6 +381,40 @@ void Object3D::setRotationPointZ(float z) {
     attribMutex.unlock();
 }
 
+/*!
+ * \brief Accessor for the center x-coordinate of the Object3D.
+ * \details Returns the value of the myCenterX private variable,
+ *          rotated by yaw, pitch, and roll about myRotationPointX;
+ */
+float Object3D::getCenterX() {
+    if (centerMatchesRotationPoint()) {
+        return myCenterX;
+    }
+    return myCenterX;
+}
+
+/*!
+ * \brief Accessor for the center z-coordinate of the Object3D.
+ * \details Returns the value of the myCenterZ private variable.
+ */
+float Object3D::getCenterY() {
+    if (centerMatchesRotationPoint()) {
+        return myCenterY;
+    }
+    return myCenterY;
+}
+
+/*!
+ * \brief Accessor for the center z-coordinate of the Object3D.
+ * \details Returns the value of the myCenterZ private variable.
+ */
+float Object3D::getCenterZ() {
+    if (centerMatchesRotationPoint()) {
+        return myCenterZ;
+    }
+    return myCenterZ;
+}
+
 void Object3D::setRotation(float radians) {
 
 }
@@ -376,6 +422,7 @@ void Object3D::setRotation(float radians) {
 Object3D::~Object3D() {
     delete[] vertices;
     delete[] colors;
+    delete[] outlineArray;
 }
 
 }

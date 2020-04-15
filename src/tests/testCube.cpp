@@ -13,7 +13,7 @@ void cubeFunction(Canvas& can) {
     ColorGLfloat colors[] = { ColorGLfloat(0,0,0,0.8), ColorGLfloat(0,0,1,0.8),
         ColorGLfloat(0,1,0,0.8), ColorGLfloat(0,1,1,0.8), ColorGLfloat(1,0,0,0.8),
         ColorGLfloat(1,0,1,0.8), ColorGLfloat(1,1,0,0.8), ColorGLfloat(1,1,1,0.8) };
-    Cube * testCube = new Cube(0.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
+    Cube * testCube = new Cube(0.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, ColorGLfloat(1,0,0,1));
     Cube * testCube2 = new Cube(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCube);
     can.add(testCube2);
@@ -25,16 +25,16 @@ void cubeFunction(Canvas& can) {
         // testCube->setCenterY(cos(rotation)*2);
         // testCube->setCenterZ(sin(rotation));
         // testCube->setYaw(rotation*45);
-        // testCube->setPitch(rotation*45);
+        testCube->setPitch(rotation*45);
         // testCube->setRoll(rotation*45);
         // testCube->setSideLength(cos(rotation)+1.01);
-        if(testCube->getSideLength() >= 2) {
-            delta = -0.05;
-        }
-        if(testCube->getSideLength() <= 0.05) {
-            delta = 0.05;
-        }
-        testCube->changeSideLengthBy(delta);
+        // if(testCube->getSideLength() >= 2) {
+        //     delta = -0.05;
+        // }
+        // if(testCube->getSideLength() <= 0.05) {
+        //     delta = 0.05;
+        // }
+        // testCube->changeSideLengthBy(delta);
         //testCube2->setRoll(rotation);
         rotation+=0.01;
         // printf("Roll %f\n", testCube2->getRoll());

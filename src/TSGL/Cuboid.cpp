@@ -31,7 +31,8 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     myXScale = width;
     myYScale = height;
     myZScale = length;
-    numberOfVertices = 24;
+    numberOfVertices = numberOfOutlineVertices = 24;
+    outlineGeometryType = GL_LINES;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
@@ -45,15 +46,15 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     addVertex(0.5, 0.5, 0.5, c);
     addVertex(0.5, 0.5, -0.5, c);
 
+    addVertex(0.5, -0.5, -0.5, c);
     addVertex(-0.5, -0.5, -0.5, c);
     addVertex(-0.5, -0.5, 0.5, c);
     addVertex(0.5, -0.5, 0.5, c);
-    addVertex(0.5, -0.5, -0.5, c);
 
+    addVertex(0.5, 0.5, -0.5, c);
     addVertex(-0.5, 0.5, -0.5, c);
     addVertex(-0.5, 0.5, 0.5, c);
     addVertex(0.5, 0.5, 0.5, c);
-    addVertex(0.5, 0.5, -0.5, c);
 
     addVertex(-0.5, -0.5, -0.5, c);
     addVertex(-0.5, 0.5, -0.5, c);
@@ -95,7 +96,8 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     myXScale = width;
     myYScale = height;
     myZScale = length;
-    numberOfVertices = 24;
+    numberOfVertices = numberOfOutlineVertices = 24;
+    outlineGeometryType = GL_LINES;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
@@ -109,15 +111,15 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     addVertex(0.5, 0.5, 0.5, c[6]);
     addVertex(0.5, 0.5, -0.5, c[7]);
 
+    addVertex(0.5, -0.5, -0.5, c[4]);
     addVertex(-0.5, -0.5, -0.5, c[0]);
     addVertex(-0.5, -0.5, 0.5, c[1]);
     addVertex(0.5, -0.5, 0.5, c[5]);
-    addVertex(0.5, -0.5, -0.5, c[4]);
 
+    addVertex(0.5, 0.5, -0.5, c[7]);
     addVertex(-0.5, 0.5, -0.5, c[3]);
     addVertex(-0.5, 0.5, 0.5, c[2]);
     addVertex(0.5, 0.5, 0.5, c[6]);
-    addVertex(0.5, 0.5, -0.5, c[7]);
 
     addVertex(-0.5, -0.5, -0.5, c[0]);
     addVertex(-0.5, 0.5, -0.5, c[3]);

@@ -15,7 +15,7 @@ void prismFunction(Canvas& can) {
         ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
         ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
         ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1) };
-    Prism * testPrism = new Prism(0.0, 0.0, 0.0, 3, 1, 1, 0.0, 0.0, 45.0, colors);
+    Prism * testPrism = new Prism(0.0, 0.0, 0.0, 3, 1, 1, 0.0, 0.0, 45.0, ColorGLfloat(1,0,0,1));
     Prism * testPrism2 = new Prism(-3.0, 0.0, 0.0, 5, 1, 1, 0.0, 0.0, 45.0, colors);
     Prism * testPrism3 = new Prism(3.0, 0.0, 0.0, 8, 1, 1, 0.0, 0.0, 45.0, colors);
     can.add(testPrism);
@@ -29,7 +29,7 @@ void prismFunction(Canvas& can) {
         // testPrism->setCenterY(cos(rotation)*2);
         // testPrism->setCenterZ(sin(rotation));
         // testPrism->setYaw(rotation*45);
-        // testPrism->setPitch(rotation*45);
+        testPrism->setPitch(rotation*45);
         // testPrism->setRoll(rotation*45);
         // testPrism->setHeight(sin(rotation)+1.01);
         // testPrism->setRadius(sin(rotation)+1.01);
@@ -40,13 +40,13 @@ void prismFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testPrism->changeHeightBy(delta);
-        if(testPrism->getRadius() >= 2) {
-            delta = -0.05;
-        }
-        if(testPrism->getRadius() <= 0.05) {
-            delta = 0.05;
-        }
-        testPrism->changeRadiusBy(delta);
+        // if(testPrism->getRadius() >= 2) {
+        //     delta = -0.05;
+        // }
+        // if(testPrism->getRadius() <= 0.05) {
+        //     delta = 0.05;
+        // }
+        // testPrism->changeRadiusBy(delta);
         rotation+=0.01;
     }
 

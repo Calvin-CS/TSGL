@@ -27,9 +27,14 @@ namespace tsgl {
  */
 class Object3D : public Drawable {
  protected:
+    bool edgesOutlined = true;
     int numberOfVertices;
+    int numberOfOutlineVertices;
+    GLint outlineFirstIndex = 0;
+    GLsizei outlineStride = 0;
     GLfloat* vertices;
     GLfloat* colors;
+    GLfloat* outlineArray;
     int currentVertex = 0;
     int currentColor = 0;
     float myCurrentYaw, myCurrentPitch, myCurrentRoll;
@@ -37,16 +42,17 @@ class Object3D : public Drawable {
     float myCenterZ;                                    // myCenterX and myCenterY inherited
     float myRotationPointZ;                             // myRotationPointX and myRotationPointY inherited
     GLenum geometryType;
+    GLenum outlineGeometryType;
     bool init = false;
     virtual void addVertex(float x, float y, float z, const ColorGLfloat &color = ColorGLfloat(1,1,1,1));
 
     /*!
-     * \brief Protected helper method that determines if the Object3D's center matches its rotation point.
-     * \details Checks to see if myCenterX == myRotationPointX, myCenterY == myRotationPointY, myCenterZ == myRotationPointZ
-     * \return True if all three coordinates match their respective others, false otherwise.
-     */
+        * \brief Protected helper method that determines if the Object3D's center matches its rotation point.
+        * \details Checks to see if myCenterX == myRotationPointX, myCenterY == myRotationPointY, myCenterZ == myRotationPointZ
+        * \return True if all three coordinates match their respective others, false otherwise.
+        */
     bool centerMatchesRotationPoint() {
-       return (myCenterX == myRotationPointX && myCenterY == myRotationPointY && myCenterZ == myRotationPointZ);
+        return (myCenterX == myRotationPointX && myCenterY == myRotationPointY && myCenterZ == myRotationPointZ);
     }
  public:
     Object3D(float yaw, float pitch, float roll, float x, float y, float z);
@@ -62,7 +68,7 @@ class Object3D : public Drawable {
     virtual void changeYBy(float deltaY);
     virtual void changeZBy(float deltaZ);
     virtual void changeCenterBy(float deltaX, float deltaY, float deltaZ);
-    
+
     virtual void setCenterX(float x);
     virtual void setCenterY(float y);
     virtual void setCenterZ(float z);
@@ -82,11 +88,11 @@ class Object3D : public Drawable {
 
     virtual void setRotationPointZ(float z);
 
-    /*!
-    * \brief Accessor for the center z-coordinate of the Object3D.
-    * \details Returns the value of the myCenterZ private variable.
-    */
-    virtual float getCenterZ() { return myCenterZ; } // getCenterX, getCenterY inherited
+    virtual float getCenterX();
+
+    virtual float getCenterY();
+
+    virtual float getCenterZ();
 
     /*!
     * \brief Accessor for the Yaw of the Object3D.

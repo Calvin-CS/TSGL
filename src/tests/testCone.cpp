@@ -14,8 +14,11 @@ void coneFunction(Canvas& can) {
         ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
         ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
         ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
-        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1) };
-    Cone * testCone = new Cone(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 0.0, colors);
+        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1), 
+        ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1),
+        ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
+        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1) };
+    Cone * testCone = new Cone(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 0.0, ColorGLfloat(1,0,0,1));
     // Cone * testCone2 = new Cone(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCone);
     // can.add(testCone2);
@@ -28,7 +31,7 @@ void coneFunction(Canvas& can) {
         // testCone->setCenterZ(sin(rotation));
         // testCone->setYaw(rotation*45);
         // testCone->setPitch(rotation*45);
-        // testCone->setRoll(rota tion*45);
+        testCone->setRoll(rotation*45);
         // testCone->setHeight(sin(rotation)+1.01);
         // testCone->setRadius(sin(rotation)+1.01);
         // if(testCone->getHeight() >= 2) {
@@ -38,13 +41,13 @@ void coneFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testCone->changeHeightBy(delta);
-        if(testCone->getRadius() >= 2) {
-            delta = -0.05;
-        }
-        if(testCone->getRadius() <= 0.05) {
-            delta = 0.05;
-        }
-        testCone->changeRadiusBy(delta);
+        // if(testCone->getRadius() >= 2) {
+        //     delta = -0.05;
+        // }
+        // if(testCone->getRadius() <= 0.05) {
+        //     delta = 0.05;
+        // }
+        // testCone->changeRadiusBy(delta);
         rotation+=0.01;
     }
 
