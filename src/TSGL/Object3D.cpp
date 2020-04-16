@@ -384,7 +384,8 @@ float Object3D::getCenterX() {
     if (centerMatchesRotationPoint()) {
         return myCenterX;
     }
-    return myCenterX;
+    // return myCenterX;
+    return cos(myCurrentYaw * PI / 180) * cos(myCurrentPitch * PI / 180) * (myCenterX - myRotationPointX) + (cos(myCurrentYaw * PI / 180) * sin(myCurrentPitch * PI / 180) * sin(myCurrentRoll * PI / 180) - sin(myCurrentYaw * PI / 180) * cos(myCurrentRoll * PI / 180)) * (myCenterY - myRotationPointY) + (cos(myCurrentYaw * PI / 180) * sin(myCurrentPitch * PI / 180) * cos(myCurrentRoll * PI / 180) + sin(myCurrentYaw * PI / 180) * sin(myCurrentRoll * PI / 180)) * (myCenterZ - myRotationPointZ) + myRotationPointX;
 }
 
 /*!
@@ -395,7 +396,8 @@ float Object3D::getCenterY() {
     if (centerMatchesRotationPoint()) {
         return myCenterY;
     }
-    return myCenterY;
+    // return myCenterY;
+    return sin(myCurrentYaw * PI / 180) * cos(myCurrentPitch * PI / 180) * (myCenterX - myRotationPointX) + (sin(myCurrentYaw * PI / 180) * sin(myCurrentPitch * PI / 180) * sin(myCurrentRoll * PI / 180) + cos(myCurrentYaw * PI / 180) * cos(myCurrentRoll * PI / 180)) * (myCenterY - myRotationPointY) + (sin(myCurrentYaw * PI / 180) * sin(myCurrentPitch * PI / 180) * cos(myCurrentRoll * PI / 180) - cos(myCurrentYaw * PI / 180) * sin(myCurrentRoll * PI / 180)) * (myCenterZ - myRotationPointZ)  + myRotationPointY;
 }
 
 /*!
@@ -406,7 +408,8 @@ float Object3D::getCenterZ() {
     if (centerMatchesRotationPoint()) {
         return myCenterZ;
     }
-    return myCenterZ;
+    // return myCenterZ;
+    return -sin(myCurrentPitch * PI / 180) * (myCenterX - myRotationPointX) + cos(myCurrentPitch * PI / 180) * sin(myCurrentRoll * PI / 180) * (myCenterY - myRotationPointY) + cos(myCurrentPitch * PI / 180) * cos(myCurrentRoll * PI / 180) * (myCenterZ - myRotationPointZ) + myRotationPointZ;
 }
 
 void Object3D::setRotation(float radians) {
