@@ -34,11 +34,21 @@ public:
 
     virtual void changeRadiusBy(GLfloat delta);
 
+    /*!
+    * \brief Accessor for the radius of the Prism.
+    * \details Returns the value of the myRadius private variable, a GLfloat.
+    */
     virtual GLfloat getRadius() { return myRadius; }
 
+    /*!
+    * \brief Accessor for the height of the Prism.
+    * \details Returns the value of the myHeight private variable, a GLfloat.
+    */
     virtual GLfloat getHeight() { return myHeight; }
 
-    // virtual ColorGLfloat* getColor();
+    virtual void setColor(ColorGLfloat c) { Object3D::setColor(c); }
+
+    virtual void setColor(ColorGLfloat c[]);
 };
 
 }

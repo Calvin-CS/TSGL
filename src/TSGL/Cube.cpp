@@ -158,8 +158,53 @@ void Cube::changeSideLengthBy(GLfloat delta) {
     attribMutex.unlock();
 }
 
-GLfloat Cube::getSideLength() {
-    return mySideLength;
+/**
+ * \brief Sets the Cube to an array of new colors.
+ * \param c An array of new ColorGLfloats.
+ * \details The array should have 8 ColorGLfloats minimum, one for each corner.
+ */
+void Cube::setColor(ColorGLfloat c[]) {
+    attribMutex.lock();
+    colors[0] = colors[36] = colors[64] = c[0].R;
+    colors[1] = colors[37] = colors[65] = c[0].G;
+    colors[2] = colors[38] = colors[66] = c[0].B;
+    colors[3] = colors[39] = colors[67] = c[0].A;
+
+    colors[4] = colors[40] = colors[80] = c[1].R;
+    colors[5] = colors[41] = colors[81] = c[1].G;
+    colors[6] = colors[42] = colors[82] = c[1].B;
+    colors[7] = colors[43] = colors[83] = c[1].A;
+
+    colors[8] = colors[56] = colors[84] = c[2].R;
+    colors[9] = colors[57] = colors[85] = c[2].G;
+    colors[10] = colors[58] = colors[86] = c[2].B;
+    colors[11] = colors[59] = colors[87] = c[2].A;
+
+    colors[12] = colors[52] = colors[68] = c[3].R;
+    colors[13] = colors[53] = colors[69] = c[3].G;
+    colors[14] = colors[54] = colors[70] = c[3].B;
+    colors[15] = colors[55] = colors[71] = c[3].A;
+
+    colors[16] = colors[32] = colors[76] = c[4].R;
+    colors[17] = colors[33] = colors[77] = c[4].G;
+    colors[18] = colors[34] = colors[78] = c[4].B;
+    colors[19] = colors[35] = colors[79] = c[4].A;
+
+    colors[20] = colors[44] = colors[92] = c[5].R;
+    colors[21] = colors[45] = colors[93] = c[5].G;
+    colors[22] = colors[46] = colors[94] = c[5].B;
+    colors[23] = colors[47] = colors[95] = c[5].A;
+
+    colors[24] = colors[60] = colors[88] = c[6].R;
+    colors[25] = colors[61] = colors[89] = c[6].G;
+    colors[26] = colors[62] = colors[90] = c[6].B;
+    colors[27] = colors[63] = colors[91] = c[6].A;
+
+    colors[28] = colors[48] = colors[72] = c[7].R;
+    colors[29] = colors[49] = colors[73] = c[7].G;
+    colors[30] = colors[50] = colors[74] = c[7].B;
+    colors[31] = colors[51] = colors[75] = c[7].A;
+    attribMutex.unlock();
 }
 
 /*!

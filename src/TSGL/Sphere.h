@@ -25,17 +25,15 @@ public:
 
     virtual ~Sphere();
 
-    virtual void setColor(ColorGLfloat c);
-
-    virtual void setColor(ColorGLfloat c[]);
-
     virtual void setRadius(float radius);
 
     virtual void changeRadiusBy(float delta);
 
     virtual GLfloat getRadius() { return myRadius; }
 
-    // virtual ColorGLfloat* getColor();
+    virtual void setColor(ColorGLfloat c);
+
+    virtual void setColor(ColorGLfloat c[]);
 };
 
 }

@@ -27,6 +27,7 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
     verticalSections = 36;
     horizontalSections = 20;
     numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2 + 1;
+    outlineGeometryType = GL_LINES;
     edgesOutlined = false;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
@@ -73,6 +74,7 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
     verticalSections = 36;
     horizontalSections = 20;
     numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2 + 1;
+    outlineGeometryType = GL_LINES;
     edgesOutlined = false;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
@@ -91,51 +93,8 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
 			addVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), c[b]);
 		}
 	}
-    addVertex(0, 1, 0, c[horizontalSections]);
+    addVertex(0, 1, 0, c[horizontalSections-1]);
 }
-
-/**
- * \brief Sets the Ellipsoid to a new color.
- * \param c The new ColorGLfloat.
- */
-void Ellipsoid::setColor(ColorGLfloat c) {
-    // attribMutex.lock();
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //     colors[i*6 + 2] = c.R;
-    //     colors[i*6 + 3] = c.G;
-    //     colors[i*6 + 4] = c.B;
-    //     colors[i*6 + 5] = c.A;
-    // }
-    // attribMutex.unlock();
-}
-
-/**
- * \brief Sets the Ellipsoid to an array of new colors.
- * \param c An array of new ColorGLfloats.
- */
-void Ellipsoid::setColor(ColorGLfloat c[]) {
-    // attribMutex.lock();
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //     colors[i*4] = c[i].R;
-    //     colors[i*4 + 1] = c[i].G;
-    //     colors[i*4 + 2] = c[i].B;
-    //     colors[i*4 + 3] = c[i].A;
-    // }
-    // attribMutex.unlock();
-}
-
-/**
- * \brief Gets an array of the Ellipsoid's fill vertex colors.
- * \return c An array of ColorGLfloats.
- * \warning This method allocates memory. The caller is responsible for deallocating it.
- */
-// ColorGLfloat* Ellipsoid::getColor() {
-//   ColorGLfloat * c = new ColorGLfloat[numberOfVertices * 4];
-//     for(int i = 0; i < numberOfVertices; i++) {
-//         c[i] = ColorGLfloat(colors[i*6 + 2], colors[i*6 + 3], colors[i*6 + 4], colors[i*6 + 5]);
-//     }
-//     return c;
-// }
 
 /**
  * \brief Mutates the Ellipsoid's x-axis radius.
@@ -224,6 +183,61 @@ void Ellipsoid::changeZRadiusBy(GLfloat delta) {
     attribMutex.lock();
     myZRadius += delta;
     myZScale += delta;
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Sets the Ellipsoid to a new color.
+ * \param c The new ColorGLfloat.
+ */
+void Ellipsoid::setColor(ColorGLfloat c) {
+    attribMutex.lock();
+	for(int b=0;b<horizontalSections;b++)
+	{
+		for(int a=0;a<verticalSections;a++)
+		{
+			colors[(b*verticalSections + a)*2*4] = c.R * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 1] = c.G * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 2] = c.B * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 3] = c.A;
+			colors[(b*verticalSections + a)*2*4 + 4] = c.R * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 5] = c.G * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 6] = c.B * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 7] = c.A;
+		}
+	}
+    colors[horizontalSections*verticalSections*2*4] = c.R;
+    colors[horizontalSections*verticalSections*2*4+1] = c.G;
+    colors[horizontalSections*verticalSections*2*4+2] = c.B;
+    colors[horizontalSections*verticalSections*2*4+3] = c.A;
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Sets the Ellipsoid to an array of new colors.
+ * \param c An array of new ColorGLfloats.
+ * \details The array should have 20 ColorGLfloats minimum, one for each horizontal section.
+ */
+void Ellipsoid::setColor(ColorGLfloat c[]) {
+    attribMutex.lock();
+	for(int b=0;b<horizontalSections;b++)
+	{
+		for(int a=0;a<verticalSections;a++)
+		{
+			colors[(b*verticalSections + a)*2*4] = c[b].R;
+            colors[(b*verticalSections + a)*2*4 + 1] = c[b].G;
+            colors[(b*verticalSections + a)*2*4 + 2] = c[b].B;
+            colors[(b*verticalSections + a)*2*4 + 3] = c[b].A;
+			colors[(b*verticalSections + a)*2*4 + 4] = c[b].R;
+            colors[(b*verticalSections + a)*2*4 + 5] = c[b].G;
+            colors[(b*verticalSections + a)*2*4 + 6] = c[b].B;
+            colors[(b*verticalSections + a)*2*4 + 7] = c[b].A;
+		}
+	}
+    colors[horizontalSections*verticalSections*2*4] = c[horizontalSections-1].R;
+    colors[horizontalSections*verticalSections*2*4+1] = c[horizontalSections-1].G;
+    colors[horizontalSections*verticalSections*2*4+2] = c[horizontalSections-1].B;
+    colors[horizontalSections*verticalSections*2*4+3] = c[horizontalSections-1].A;
     attribMutex.unlock();
 }
 

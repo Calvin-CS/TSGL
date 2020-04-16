@@ -35,11 +35,27 @@ public:
 
     virtual void changeHeightBy(GLfloat delta);
 
+    /*!
+    * \brief Accessor for the length of the Prism.
+    * \details Returns the value of the myLength private variable, a GLfloat.
+    */
     virtual GLfloat getLength() { return myLength; }
 
+    /*!
+    * \brief Accessor for the height of the Prism.
+    * \details Returns the value of the myHeight private variable, a GLfloat.
+    */
     virtual GLfloat getHeight() { return myHeight; }
 
+    /*!
+    * \brief Accessor for the width of the Prism.
+    * \details Returns the value of the myWidth private variable, a GLfloat.
+    */
     virtual GLfloat getWidth() { return myWidth; }
+
+    virtual void setColor(ColorGLfloat c) { Object3D::setColor(c); }
+
+    virtual void setColor(ColorGLfloat c[]);
 
     virtual ~Cuboid();
 };

@@ -23,6 +23,7 @@ void pyramidFunction(Canvas& can) {
     can.add(testPyramid3);
     float rotation = 0.0f;
     GLfloat delta = 0.05;
+    bool boolean = false;
     while (can.isOpen()) {
         can.sleep();
         // testPyramid->setCenterX(sin(rotation)*2);
@@ -49,6 +50,15 @@ void pyramidFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testPyramid->changeRadiusBy(delta);
+        if (rotation*45 >= 360) {
+            if (boolean) {
+                testPyramid->setColor(ColorGLfloat(1,0,0,1));
+            } else {
+                testPyramid->setColor(colors);
+            }
+            boolean = !boolean;
+            rotation = 0;
+        }
         rotation+=0.01;
     }
 

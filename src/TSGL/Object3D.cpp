@@ -91,11 +91,7 @@ void Object3D::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorGLfloat &co
     if (currentVertex == numberOfVertices*3) {
         attribMutex.lock();
         outlineArray = new GLfloat[numberOfOutlineVertices*4];
-        std::fill_n(outlineArray, numberOfOutlineVertices*4, 1.0);
-        // for(int i = 0; i < numberOfVertices; i++) {
-        //     outlineArray[4*i] = outlineArray[4*i + 1] = outlineArray[4*i + 2] = 1;
-        //     outlineArray[4*i + 3] = 0.3; 
-        // }
+        std::fill_n(outlineArray, numberOfOutlineVertices*4, 0.75);
         init = true;
         attribMutex.unlock();
     }
@@ -122,18 +118,16 @@ void Object3D::setColor(ColorGLfloat c) {
 }
 
 /**
- * \brief Sets the Object3D to a new array of colors.
- * \param c The new array of ColorGLfloats.
+ * \brief Sets the Object3D's outline/edges to a new color
+ * \param c The new ColorGLfloat.
  */
-void Object3D::setColor(ColorGLfloat c[]) {
-    attribMutex.lock();
-    for(int i = 0; i < numberOfVertices; i++) {
-        colors[i*4] = c[i].R;
-        colors[i*6 + 1] = c[i].G;
-        colors[i*6 + 2] = c[i].B;
-        colors[i*6 + 3] = c[i].A;
+void Object3D::setEdgeColor(ColorGLfloat c) {
+    for (int i = 0; i < numberOfOutlineVertices; i++) {
+        outlineArray[4*i] = c.R;
+        outlineArray[4*i+1] = c.G;
+        outlineArray[4*i+2] = c.B;
+        outlineArray[4*i+3] = c.A;
     }
-    attribMutex.unlock();
 }
 
 /**

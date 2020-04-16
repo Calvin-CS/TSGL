@@ -23,7 +23,8 @@ void ellipsoidFunction(Canvas& can) {
     can.add(testEllipsoid);
     // can.add(testEllipsoid2);
     float rotation = 0.0f;
-    GLfloat delta = 0.05;
+    // GLfloat delta = 0.05;
+    bool boolean = true;
     // testEllipsoid->setXRadius(1.5);
     // testEllipsoid->setYRadius(1.5);
     // testEllipsoid->setZRadius(1.5);
@@ -36,9 +37,9 @@ void ellipsoidFunction(Canvas& can) {
         // testEllipsoid->setCenterY(cos(rotation));
         // testEllipsoid->setCenterZ(sin(rotation));
         // testEllipsoid->setYaw(rotation*45);
-        // testEllipsoid->setPitch(rotation*45);
+        testEllipsoid->setPitch(rotation*45);
         // testEllipsoid2->setPitch(rotation*45);
-        testEllipsoid->setRoll(rotation*45);
+        // testEllipsoid->setRoll(rotation*45);
         // testEllipsoid->setXRadius(cos(rotation)+1.01);
         // testEllipsoid->setYRadius(sin(rotation)+2.01);
         // testEllipsoid->setZRadius(sin(rotation)+3.01);
@@ -65,6 +66,20 @@ void ellipsoidFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testEllipsoid->changeZRadiusBy(delta);
+        // if (rotation*45 >= 360) {
+        //     testEllipsoid->displayOutlineEdges(boolean);
+        //     boolean = !boolean;
+        //     rotation = 0;
+        // }
+        if (rotation*45 >= 360) {
+            if (boolean) {
+                testEllipsoid->setColor(ColorGLfloat(1,0,0,1));
+            } else {
+                testEllipsoid->setColor(colors);
+            }
+            boolean = !boolean;
+            rotation = 0;
+        }
         rotation+=0.01;
     }
 

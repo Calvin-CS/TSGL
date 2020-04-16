@@ -115,19 +115,6 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
 }
 
 /**
- * \brief Gets an array of the Prism's fill vertex colors.
- * \return c An array of ColorGLfloats.
- * \warning This method allocates memory. The caller is responsible for deallocating it.
- */
-// ColorGLfloat* Prism::getColor() {
-//   ColorGLfloat * c = new ColorGLfloat[numberOfVertices];
-//     for(int i = 0; i < numberOfVertices; i++) {
-//         c[i] = ColorGLfloat(colors[i*4], colors[i*4 + 1], colors[i*4 + 2], colors[i*4 + 3]);
-//     }
-//     return c;
-// }
-
-/**
  * \brief Mutates the distance from the center of the Prism's base to the tip.
  * \param height The Prism's new height.
  */
@@ -186,6 +173,47 @@ void Prism::changeRadiusBy(GLfloat delta) {
     myRadius += delta;
     myXScale += delta;
     myZScale += delta;
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Mutator. Sets the Prism to a new array of colors.
+ * \param c The array of new ColorGLfloats.
+ * \details The array should have 5 ColorGLfloats minimum: for the top middle, top outside, sides, bottom outside, and bottom middle respectively.
+ */
+void Prism::setColor(ColorGLfloat c[]) {
+    attribMutex.lock();
+    for (int i = 0; i < mySides; i++) {
+        colors[i*48] = c[1].R;
+        colors[i*48+1] = c[1].G;
+        colors[i*48+2] = c[1].B;
+        colors[i*48+3] = c[1].A;
+
+        colors[i*48+4] = c[0].R;
+        colors[i*48+5] = c[0].G;
+        colors[i*48+6] = c[0].B;
+        colors[i*48+7] = c[0].A;
+
+        colors[i*48+8] = c[1].R;
+        colors[i*48+9] = c[1].G;
+        colors[i*48+10] = c[1].B;
+        colors[i*48+11] = c[1].A;
+
+        colors[i*48+12] = colors[i*48+16] = colors[i*48+20] = colors[i*48+24] = colors[i*48+28] = colors[i*48+32] = c[2].R;
+        colors[i*48+13] = colors[i*48+17] = colors[i*48+21] = colors[i*48+25] = colors[i*48+29] = colors[i*48+33] = c[2].G;
+        colors[i*48+14] = colors[i*48+18] = colors[i*48+22] = colors[i*48+26] = colors[i*48+30] = colors[i*48+34] = c[2].B;
+        colors[i*48+15] = colors[i*48+19] = colors[i*48+23] = colors[i*48+27] = colors[i*48+31] = colors[i*48+35] = c[2].A;
+
+        colors[i*48+36] = colors[i*48+40] = c[3].R;
+        colors[i*48+37] = colors[i*48+41] = c[3].G;
+        colors[i*48+38] = colors[i*48+42] = c[3].B;
+        colors[i*48+39] = colors[i*48+43] = c[3].A;
+
+        colors[i*48+44] = c[4].R;
+        colors[i*48+45] = c[4].G;
+        colors[i*48+46] = c[4].B;
+        colors[i*48+47] = c[4].A;
+    }
     attribMutex.unlock();
 }
 

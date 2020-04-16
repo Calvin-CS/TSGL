@@ -23,6 +23,7 @@ void prismFunction(Canvas& can) {
     can.add(testPrism3);
     float rotation = 0.0f;
     GLfloat delta = 0.05;
+    bool boolean = false;
     while (can.isOpen()) {
         can.sleep();
         // testPrism->setCenterX(sin(rotation)*2);
@@ -47,6 +48,19 @@ void prismFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testPrism->changeRadiusBy(delta);
+        // if (rotation*45 >= 360) {
+        //     testPrism->setEdgeColor(ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     rotation = 0;
+        // }
+        // if (rotation*45 >= 360) {
+        //     if (boolean) {
+        //         testPrism->setColor(ColorGLfloat(1,0,0,1));
+        //     } else {
+        //         testPrism->setColor(colors);
+        //     }
+        //     boolean = !boolean;
+        //     rotation = 0;
+        // }
         rotation+=0.01;
     }
 

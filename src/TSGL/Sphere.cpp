@@ -25,6 +25,7 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     verticalSections = 36;
     horizontalSections = 20;
     numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2+1;
+    outlineGeometryType = GL_LINES;
     edgesOutlined = false;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
@@ -67,6 +68,7 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     verticalSections = 36;
     horizontalSections = 20;
     numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2 + 1;
+    outlineGeometryType = GL_LINES;
     edgesOutlined = false;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
@@ -85,49 +87,6 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
 	}
     addVertex(0, 1, 0, c[horizontalSections]);
 }
-
-/**
- * \brief Sets the Sphere to a new color.
- * \param c The new ColorGLfloat.
- */
-void Sphere::setColor(ColorGLfloat c) {
-    // attribMutex.lock();
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //     vertices[i*6 + 2] = c.R;
-    //     vertices[i*6 + 3] = c.G;
-    //     vertices[i*6 + 4] = c.B;
-    //     vertices[i*6 + 5] = c.A;
-    // }
-    // attribMutex.unlock();
-}
-
-/**
- * \brief Sets the Sphere to an array of new colors.
- * \param c An array of new ColorGLfloats.
- */
-void Sphere::setColor(ColorGLfloat c[]) {
-    // attribMutex.lock();
-    // for(int i = 0; i < numberOfVertices; i++) {
-    //     vertices[i*6 + 2] = c[i].R;
-    //     vertices[i*6 + 3] = c[i].G;
-    //     vertices[i*6 + 4] = c[i].B;
-    //     vertices[i*6 + 5] = c[i].A;
-    // }
-    // attribMutex.unlock();
-}
-
-/**
- * \brief Gets an array of the Sphere's fill vertex colors.
- * \return c An array of ColorGLfloats.
- * \warning This method allocates memory. The caller is responsible for deallocating it.
- */
-// ColorGLfloat* Sphere::getColor() {
-//     ColorGLfloat * c = new ColorGLfloat[numberOfVertices];
-//     for(int i = 0; i < numberOfVertices; i++) {
-//         c[i] = ColorGLfloat(vertices[i*6 + 2], vertices[i*6 + 3], vertices[i*6 + 4], vertices[i*6 + 5]);
-//     }
-//     return c;
-// }
 
 /**
  * \brief Mutates the Sphere's radius.
@@ -160,6 +119,61 @@ void Sphere::changeRadiusBy(float delta) {
     myXScale += delta;
     myYScale += delta;
     myZScale += delta;
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Sets the Sphere to a new color.
+ * \param c The new ColorGLfloat.
+ */
+void Sphere::setColor(ColorGLfloat c) {
+    attribMutex.lock();
+	for(int b=0;b<horizontalSections;b++)
+	{
+		for(int a=0;a<verticalSections;a++)
+		{
+			colors[(b*verticalSections + a)*2*4] = c.R * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 1] = c.G * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 2] = c.B * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 3] = c.A;
+			colors[(b*verticalSections + a)*2*4 + 4] = c.R * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 5] = c.G * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 6] = c.B * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            colors[(b*verticalSections + a)*2*4 + 7] = c.A;
+		}
+	}
+    colors[horizontalSections*verticalSections*2*4] = c.R;
+    colors[horizontalSections*verticalSections*2*4+1] = c.G;
+    colors[horizontalSections*verticalSections*2*4+2] = c.B;
+    colors[horizontalSections*verticalSections*2*4+3] = c.A;
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Sets the Sphere to an array of new colors.
+ * \param c An array of new ColorGLfloats.
+ * \details The array should have 20 ColorGLfloats minimum, one for each horizontal section. 
+ */
+void Sphere::setColor(ColorGLfloat c[]) {
+    attribMutex.lock();
+	for(int b=0;b<horizontalSections;b++)
+	{
+		for(int a=0;a<verticalSections;a++)
+		{
+			colors[(b*verticalSections + a)*2*4] = c[b].R;
+            colors[(b*verticalSections + a)*2*4 + 1] = c[b].G;
+            colors[(b*verticalSections + a)*2*4 + 2] = c[b].B;
+            colors[(b*verticalSections + a)*2*4 + 3] = c[b].A;
+			colors[(b*verticalSections + a)*2*4 + 4] = c[b].R;
+            colors[(b*verticalSections + a)*2*4 + 5] = c[b].G;
+            colors[(b*verticalSections + a)*2*4 + 6] = c[b].B;
+            colors[(b*verticalSections + a)*2*4 + 7] = c[b].A;
+		}
+	}
+    colors[horizontalSections*verticalSections*2*4] = c[horizontalSections].R;
+    colors[horizontalSections*verticalSections*2*4+1] = c[horizontalSections].G;
+    colors[horizontalSections*verticalSections*2*4+2] = c[horizontalSections].B;
+    colors[horizontalSections*verticalSections*2*4+3] = c[horizontalSections].A;
     attribMutex.unlock();
 }
 

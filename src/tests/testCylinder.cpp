@@ -20,7 +20,8 @@ void cylinderFunction(Canvas& can) {
     can.add(testCylinder);
     // can.add(testCylinder2);
     float rotation = 0.0f;
-    GLfloat delta = 0.05;
+    // GLfloat delta = 0.05;
+    bool boolean = false;
     while (can.isOpen()) {
         can.sleep();
         // testCylinder->setCenterX(sin(rotation)*2);
@@ -45,6 +46,20 @@ void cylinderFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testCylinder->changeRadiusBy(delta);
+        // if (rotation*45 >= 360) {
+        //     testCylinder->displayOutlineEdges(boolean);
+        //     boolean = !boolean;
+        //     rotation = 0;
+        // }
+        if (rotation*45 >= 360) {
+            if (boolean) {
+                testCylinder->setColor(ColorGLfloat(1,0,0,1));
+            } else {
+                testCylinder->setColor(colors);
+            }
+            boolean = !boolean;
+            rotation = 0;
+        }
         rotation+=0.01;
     }
 

@@ -19,6 +19,7 @@ void cuboidFunction(Canvas& can) {
     // can.add(testCuboid2);
     float rotation = 0.0f;
     GLfloat delta = 0.05;
+    bool boolean = false;;
     while (can.isOpen()) {
         can.sleep();
         // testCuboid->setCenterX(sin(rotation)*2);
@@ -53,6 +54,15 @@ void cuboidFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testCuboid->changeLengthBy(delta);
+        if (rotation*45 >= 360) {
+            if (boolean) {
+                testCuboid->setColor(ColorGLfloat(1,0,0,1));
+            } else {
+                testCuboid->setColor(colors);
+            }
+            boolean = !boolean;
+            rotation = 0;
+        }
         rotation+=0.01;
     }
 

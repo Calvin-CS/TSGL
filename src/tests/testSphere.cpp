@@ -18,10 +18,11 @@ void sphereFunction(Canvas& can) {
         ColorGLfloat(1,0.5,1,0.8), ColorGLfloat(1,1,0.5,0.8), ColorGLfloat(0,0,0.5,0.8),
         ColorGLfloat(0,0.5,0,0.8), ColorGLfloat(0,0.5,0.5,0.8), ColorGLfloat(0.5,0,0,0.8),
         ColorGLfloat(0.5,0,0.5,0.8), ColorGLfloat(0.5,0.5,0,0.8), ColorGLfloat(0.5,0.5,0.5,0.8)};
-    Sphere * testSphere = new Sphere(0.0, 0.0, 0.0, 2, 0.0, 0.0, 0.0, colors /* ColorGLfloat(1,0.1,0.5,1) */);
+    Sphere * testSphere = new Sphere(0.0, 0.0, 0.0, 2, 0.0, 0.0, 0.0, colors);
     can.add(testSphere);
     float rotation = 0.0f;
-    GLfloat delta = 0.05;
+    // GLfloat delta = 0.05;
+    bool boolean = true;
     while (can.isOpen()) {
         can.sleep();
         // testSphere->setCenterX(sin(rotation));
@@ -38,6 +39,22 @@ void sphereFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testSphere->changeRadiusBy(delta);
+        // if (rotation*45 >= 360) {
+        //     testSphere->displayOutlineEdges(boolean);
+        //     boolean = !boolean;
+        //     rotation = 0;
+        // }
+        // printf("%f\n", rotation*45);
+        if (rotation*45 >= 360) {
+            if (boolean) {
+                testSphere->setColor(ColorGLfloat(1,0,0,1));
+            } else {
+                testSphere->setColor(colors);
+            }
+            boolean = !boolean;
+            rotation = 0;
+        }
+
         rotation+=0.01;
     }
 

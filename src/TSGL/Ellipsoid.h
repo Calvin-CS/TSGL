@@ -25,10 +25,6 @@ public:
 
     virtual ~Ellipsoid();
 
-    virtual void setColor(ColorGLfloat c);
-
-    virtual void setColor(ColorGLfloat c[]);
-
     virtual void setXRadius(GLfloat radiusX);
 
     virtual void changeXRadiusBy(GLfloat delta);
@@ -47,7 +43,9 @@ public:
 
     virtual GLfloat getZRadius() { return myZRadius; }
 
-    // virtual ColorGLfloat* getColor();
+    virtual void setColor(ColorGLfloat c);
+
+    virtual void setColor(ColorGLfloat c[]);
 };
 
 }

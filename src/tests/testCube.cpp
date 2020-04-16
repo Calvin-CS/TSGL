@@ -19,6 +19,7 @@ void cubeFunction(Canvas& can) {
     can.add(testCube2);
     float rotation = 0.0f;
     GLfloat delta = 0.05;
+    bool boolean = false;
     while (can.isOpen()) {
         can.sleep();
         // testCube->setCenterX(sin(rotation)*2);
@@ -36,8 +37,16 @@ void cubeFunction(Canvas& can) {
         // }
         // testCube->changeSideLengthBy(delta);
         //testCube2->setRoll(rotation);
+        if (rotation*45 >= 360) {
+            if (boolean) {
+                testCube->setColor(ColorGLfloat(1,0,0,1));
+            } else {
+                testCube->setColor(colors);
+            }
+            boolean = !boolean;
+            rotation = 0;
+        }
         rotation+=0.01;
-        // printf("Roll %f\n", testCube2->getRoll());
     }
 
     delete testCube;

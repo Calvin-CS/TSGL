@@ -27,7 +27,15 @@ public:
 
     virtual void changeSideLengthBy(float delta);
 
-    virtual GLfloat getSideLength();
+    /*!
+    * \brief Accessor for the radius of the Prism.
+    * \details Returns the value of the myRadius private variable, a GLfloat.
+    */
+    virtual GLfloat getSideLength() { return mySideLength; }
+
+    virtual void setColor(ColorGLfloat c) { Object3D::setColor(c); }
+
+    virtual void setColor(ColorGLfloat c[]);
 
     virtual ~Cube();
 };

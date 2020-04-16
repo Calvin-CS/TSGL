@@ -26,10 +26,6 @@ public:
 
     virtual ~Pyramid();
 
-    virtual void setColor(ColorGLfloat c);
-
-    virtual void setColor(ColorGLfloat c[]);
-
     virtual void setRadius(float radius);
 
     virtual void changeRadiusBy(float delta);
@@ -38,11 +34,21 @@ public:
 
     virtual void changeHeightBy(float delta);
 
+   /*!
+    * \brief Accessor for the height of the Prism.
+    * \details Returns the value of the myHeight private variable, a GLfloat.
+    */
     virtual GLfloat getHeight() { return myHeight; }
 
+    /*!
+    * \brief Accessor for the radius of the Prism.
+    * \details Returns the value of the myRadius private variable, a GLfloat.
+    */
     virtual GLfloat getRadius() { return myRadius; }    
 
-    // virtual ColorFloat* getColor();
+    virtual void setColor(ColorGLfloat c);
+
+    virtual void setColor(ColorGLfloat c[]);
 };
 
 }

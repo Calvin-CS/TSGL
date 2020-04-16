@@ -17,13 +17,17 @@ void coneFunction(Canvas& can) {
         ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1), 
         ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1),
         ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
-        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1) };
+        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
+        ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
+        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1), 
+        ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1) };
     Cone * testCone = new Cone(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 0.0, ColorGLfloat(1,0,0,1));
     // Cone * testCone2 = new Cone(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCone);
     // can.add(testCone2);
     float rotation = 0.0f;
     GLfloat delta = 0.05;
+    bool boolean = false;
     while (can.isOpen()) {
         can.sleep();
         // testCone->setCenterX(sin(rotation)*2);
@@ -48,6 +52,15 @@ void coneFunction(Canvas& can) {
         //     delta = 0.05;
         // }
         // testCone->changeRadiusBy(delta);
+        if (rotation*45 >= 360) {
+            if (boolean) {
+                testCone->setColor(ColorGLfloat(1,0,0,1));
+            } else {
+                testCone->setColor(colors);
+            }
+            boolean = !boolean;
+            rotation = 0;
+        }
         rotation+=0.01;
     }
 

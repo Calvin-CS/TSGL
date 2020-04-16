@@ -62,7 +62,13 @@ class Object3D : public Drawable {
     virtual void draw();
 
     virtual void setColor(ColorGLfloat c);
-    virtual void setColor(ColorGLfloat c[]);
+    /**
+     * \brief Pure virtual mutator. Sets the Object3D to a new array of colors.
+     * \param c An array of the new ColorGLfloats.
+     * \warning Inheriting subclasses MUST define an override method for this method.
+     */
+    virtual void setColor(ColorGLfloat c[]) = 0;
+    virtual void setEdgeColor(ColorGLfloat c);
 
     virtual void changeXBy(float deltaX);
     virtual void changeYBy(float deltaY);
@@ -119,6 +125,12 @@ class Object3D : public Drawable {
     virtual float getRotationPointZ() { return myRotationPointZ; }
 
     virtual void setRotation(float radians);
+
+   /*
+    * \brief Mutator that determines if the edges of the Object3D should be highlighted.
+    * \details Updates the value of the edgesOutlined instance variable. Defaults to true.
+    */
+    virtual void displayOutlineEdges(bool on=true) { edgesOutlined=on; }
     
 
 
