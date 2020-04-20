@@ -21,7 +21,6 @@ Cylinder::Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, fl
 : Prism(x, y, z, 15, height, radius, yaw, pitch, roll, c)  {
     outlineStride = 3;
     numberOfOutlineVertices = mySides * 4;
-    outlineFirstIndex = 0;
     outlineGeometryType = GL_LINES;
 }
 
@@ -44,7 +43,6 @@ Cylinder::Cylinder(float x, float y, float z, float height, float radius, float 
 : Prism(x, y, z, 15, height, radius, yaw, pitch, roll, c)  { 
     outlineStride = 3;
     numberOfOutlineVertices = mySides * 4;
-    outlineFirstIndex = 0;
     outlineGeometryType = GL_LINES;
 }
 

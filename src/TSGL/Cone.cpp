@@ -21,7 +21,6 @@ Cone::Cone(float x, float y, float z, float height, float radius, float yaw, flo
 : Pyramid(x, y, z, 20, height, radius, yaw, pitch, roll, c)  { 
     outlineStride = 6;
     numberOfOutlineVertices = mySides;
-    outlineFirstIndex = 0;
     outlineGeometryType = GL_LINE_LOOP;
 }
 
@@ -44,7 +43,6 @@ Cone::Cone(float x, float y, float z, float height, float radius, float yaw, flo
 : Pyramid(x, y, z, 20, height, radius, yaw, pitch, roll, c)  {
     outlineStride = 6;
     numberOfOutlineVertices = mySides;
-    outlineFirstIndex = 0;
     outlineGeometryType = GL_LINE_LOOP;
 }
 

@@ -36,7 +36,6 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 6;
     outlineStride = 2;
-    outlineFirstIndex = 0;
     outlineGeometryType = GL_LINE_LOOP;
     numberOfOutlineVertices = mySides * 3;
     vertices = new GLfloat[numberOfVertices * 3];
@@ -87,7 +86,6 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 6;
     outlineStride = 2;
-    outlineFirstIndex = 0;
     outlineGeometryType = GL_LINE_LOOP;
     numberOfOutlineVertices = mySides * 3;
     vertices = new GLfloat[numberOfVertices * 3];

@@ -52,7 +52,7 @@ void Object3D::draw() {
         glVertexPointer(3, GL_FLOAT, outlineStride*sizeof(GLfloat)*3, vertices);
         glColorPointer(4, GL_FLOAT, 0, outlineArray);
 
-        glDrawArrays(outlineGeometryType, outlineFirstIndex, numberOfOutlineVertices);
+        glDrawArrays(outlineGeometryType, 0, numberOfOutlineVertices);
     }
 
     glPopMatrix();
@@ -377,8 +377,9 @@ void Object3D::setRotationPointZ(float z) {
 
 /*!
  * \brief Accessor for the center x-coordinate of the Object3D.
- * \details Returns the value of the myCenterX private variable,
- *          rotated by yaw, pitch, and roll about myRotationPointX;
+ * \details Returns the value of the myCenterX private variable, rotated by myCurrentYaw, myCurrentPitch, and myCurrentRoll about myRotationPointX;
+ * \note See https://math.stackexchange.com/questions/2093314/rotation-matrix-of-rotation-around-a-point-other-than-the-origin
+ * \note and http://planning.cs.uiuc.edu/node102.html for more more understanding.
  */
 float Object3D::getCenterX() {
     if (centerMatchesRotationPoint()) {
@@ -395,7 +396,9 @@ float Object3D::getCenterX() {
 
 /*!
  * \brief Accessor for the center z-coordinate of the Object3D.
- * \details Returns the value of the myCenterZ private variable.
+ * \details Returns the value of the myCenterY private variable, rotated by myCurrentYaw, myCurrentPitch, and myCurrentRoll about myRotationPointY;
+ * \note See https://math.stackexchange.com/questions/2093314/rotation-matrix-of-rotation-around-a-point-other-than-the-origin
+ * \note and http://planning.cs.uiuc.edu/node102.html for more more understanding.
  */
 float Object3D::getCenterY() {
     if (centerMatchesRotationPoint()) {
@@ -412,7 +415,9 @@ float Object3D::getCenterY() {
 
 /*!
  * \brief Accessor for the center z-coordinate of the Object3D.
- * \details Returns the value of the myCenterZ private variable.
+ * \details Returns the value of the myCenterZ private variable, rotated by myCurrentYaw, myCurrentPitch, and myCurrentRoll about myRotationPointZ;
+ * \note See https://math.stackexchange.com/questions/2093314/rotation-matrix-of-rotation-around-a-point-other-than-the-origin
+ * \note and http://planning.cs.uiuc.edu/node102.html for more more understanding.
  */
 float Object3D::getCenterZ() {
     if (centerMatchesRotationPoint()) {

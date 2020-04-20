@@ -30,7 +30,6 @@ class Object3D : public Drawable {
     bool edgesOutlined = true;
     int numberOfVertices;
     int numberOfOutlineVertices;
-    GLint outlineFirstIndex = 0;
     GLsizei outlineStride = 0;
     GLfloat* vertices;
     GLfloat* colors;

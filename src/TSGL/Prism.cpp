@@ -33,7 +33,6 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     numberOfVertices = mySides * 12;
     outlineStride = 2;
     numberOfOutlineVertices = mySides * 6;
-    outlineFirstIndex = 0;
     outlineGeometryType = GL_LINES;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
@@ -89,7 +88,6 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     numberOfVertices = mySides * 12;
     outlineStride = 2;
     numberOfOutlineVertices = mySides * 6;
-    outlineFirstIndex = 0;
     outlineGeometryType = GL_LINES;
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
