@@ -5,11 +5,17 @@ namespace tsgl {
  /*!
   * \brief Explicitly constructs a new Polyline.
   * \details Explicit constructor for a new Polyline object.
-  *   \param numVertices The number of vertices the complete Polyline will have.
+  *   \param x The x coordinate of the center of the Polyline.
+  *   \param y The y coordinate of the center of the Polyline.
+  *   \param z The z coordinate of the center of the Polyline.
+  *   \param numVertices The number of vertices in the Polyline.
+  *   \param yaw The Polyline's yaw.
+  *   \param pitch The Polyline's pitch.
+  *   \param roll The Polyline's roll.
   * \warning An invariant is held where if v is less than 2 then an error message is given.
   * \return A new Polyline with a buffer for storing the specified numbered of vertices.
   */
-Polyline::Polyline(int numVertices) : Shape() {
+Polyline::Polyline(float x, float y, float z, int numVertices, float yaw, float pitch, float roll) : Shape(x,y,z,yaw,pitch,roll) {
     if (numVertices < 2)
       TsglDebug("Cannot have a line with fewer than 2 vertices.");
     numberOfVertices = numVertices;
@@ -21,50 +27,70 @@ Polyline::Polyline(int numVertices) : Shape() {
  /*!
   * \brief Explicitly constructs a new monocolored Polyline.
   * \details Explicit constructor for a new Polyline object.
-  *   \param numVertices The number of vertices the complete Polyline will have.
-  *   \param x Array of x positions for the Polyline vertices.
-  *   \param y Array of y positions for the Polyline vertices.
-  *   \param color Color of the Polyline.
+  *   \param x The x coordinate of the center of the Polyline.
+  *   \param y The y coordinate of the center of the Polyline.
+  *   \param z The z coordinate of the center of the Polyline.
+  *   \param numVertices The number of vertices in the Polyline.
+  *   \param lineVertices An array of vertices for the Polyline. 3 floats * numVertices, x-y-z.
+  *   \param yaw The Polyline's yaw.
+  *   \param pitch The Polyline's pitch.
+  *   \param roll The Polyline's roll.
+  *   \param color Color of the Polyline, as a ColorGLfloat.
   * \warning An invariant is held where if v is less than 2 then an error message is given.
   * \return A new Polyline with a buffer for storing the specified numbered of vertices.
   */
-Polyline::Polyline(int numVertices, int x[], int y[], ColorFloat color) {
+Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorGLfloat color) : Shape(x,y,z,yaw,pitch,roll) {
     if (numVertices < 2)
       TsglDebug("Cannot have a line with fewer than 2 vertices.");
+    attribMutex.lock();
     numberOfVertices = numVertices;
-    vertices = new float[numberOfVertices*6];
-    init = false;
+    numberOfOutlineVertices = 0;
+    edgesOutlined = false;
+    myXScale = myYScale = myZScale = 1;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
     geometryType = GL_LINE_STRIP;
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], color);
+        addVertex(lineVertices[3*i], lineVertices[3*i + 1], lineVertices[3*i + 2], color);
     }
+    attribMutex.unlock();
 }
 
  /*!
   * \brief Explicitly constructs a new multicolored Polyline.
   * \details Explicit constructor for a new Polyline object.
-  *   \param numVertices The number of vertices the complete Polyline will have.
-  *   \param x Array of x positions for the Polyline vertices.
-  *   \param y Array of y positions for the Polyline vertices.
-  *   \param color Color of the Polyline.
+  *   \param x The x coordinate of the center of the Polyline.
+  *   \param y The y coordinate of the center of the Polyline.
+  *   \param z The z coordinate of the center of the Polyline.
+  *   \param numVertices The number of vertices in the Polyline.
+  *   \param lineVertices An array of vertices for the Polyline. 3 floats * numVertices, x-y-z.
+  *   \param yaw The Polyline's yaw.
+  *   \param pitch The Polyline's pitch.
+  *   \param roll The Polyline's roll.
+  *   \param color Array of ColorGLfloats for the Polyline; 1 ColorGLfloat per vertex.
   * \warning An invariant is held where if v is less than 2 then an error message is given.
   * \return A new Polyline with a buffer for storing the specified numbered of vertices.
   */
-Polyline::Polyline(int numVertices, int x[], int y[], ColorFloat color[]) {
+Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorGLfloat color[]) : Shape(x,y,z,yaw,pitch,roll) {
     if (numVertices < 2)
-      TsglDebug("Cannot have a line with fewer than 2 vertices.");
+        TsglDebug("Cannot have a line with fewer than 2 vertices.");
+    attribMutex.lock();
     numberOfVertices = numVertices;
-    vertices = new float[numberOfVertices*6];
-    init = false;
+    numberOfOutlineVertices = 0;
+    edgesOutlined = false;
+    myXScale = myYScale = myZScale = 1;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
     geometryType = GL_LINE_STRIP;
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], color[i]);
+        addVertex(lineVertices[3*i], lineVertices[3*i + 1], lineVertices[3*i + 2], color[i]);
     }
+    attribMutex.unlock();
 }
 
 /*!
- *  \brief Overrides isProcessed() in Shape.h
- *  \details Overrides Shape::isProcessed() to include invariant.
+ *  \brief Overrides isProcessed() in Drawable.h
+ *  \details Overrides Drawable::isProcessed() to include invariant.
  */
 bool Polyline::isProcessed() {
     if (numberOfVertices < 2) {

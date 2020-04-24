@@ -1,11 +1,11 @@
 /*
- * Ellipsoid.h extends Object3D and provides a class for drawing a ellipsoid.
+ * Ellipsoid.h extends Drawable and provides a class for drawing a ellipsoid.
  */
 
 #ifndef ELLIPSOID_H_
 #define ELLIPSOID_H_
 
-#include "Object3D.h"       // For extending our Object3D object
+#include "Drawable.h"       // For extending our Drawable object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -14,7 +14,7 @@ namespace tsgl {
  *  \brief Draw an arbitrary Ellipsoid with colored vertices.
  *  \details Ellipsoid is a class for holding vertex data for an Ellipsoid.
  */
-class Ellipsoid : public Object3D {
+class Ellipsoid : public Drawable {
 protected:
     GLfloat myXRadius, myYRadius, myZRadius;
     int horizontalSections, verticalSections;

@@ -19,7 +19,7 @@ namespace tsgl {
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Pyramid with a buffer for storing the specified numbered of vertices.
   */
-Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Object3D(x, y, z, yaw, pitch, roll)  {
+Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (sides < 3) {
         TsglDebug("Cannot have a Pyramid with fewer than 3 sides.");
     }
@@ -69,7 +69,7 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Pyramid with a buffer for storing the specified numbered of vertices.
   */
-Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Object3D(x, y, z, yaw, pitch, roll)  {
+Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (sides < 3) {
         TsglDebug("Cannot have a Pyramid with fewer than 3 sides.");
     }

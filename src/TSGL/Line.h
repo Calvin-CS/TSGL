@@ -15,17 +15,22 @@ namespace tsgl {
  */
 class Line : public Polyline {
  private:
- 
+    GLfloat myLength;
  public:
-    Line(int x1, int y1, int x2, int y2, const ColorFloat color);
+    Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color);
 
-    Line(int x1, int y1, int x2, int y2, const ColorFloat color[]);
+    Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color[]);
 
-    void setFirstEnd(float x, float y);
+    void setLength(GLfloat length);
 
-    void setSecondEnd(float x, float y);
+    void changeLineLengthBy(GLfloat delta);
 
-    float getLength();
+    /**
+     * \brief Returns the length of the line.
+     * \details Returns the value of the myLength instance variable.
+     * \return Length of the Line.
+     */
+    GLfloat getLength() { return myLength; }
 };
 
 }

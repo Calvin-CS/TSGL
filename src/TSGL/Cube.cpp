@@ -17,7 +17,7 @@ namespace tsgl {
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c)  
-: Object3D(x, y, z, yaw, pitch, roll)  { // FIXME vertices
+: Drawable(x, y, z, yaw, pitch, roll)  { // FIXME vertices
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }
@@ -78,7 +78,7 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c[])  
-: Object3D(x, y, z, yaw, pitch, roll)  { // FIXME vertices
+: Drawable(x, y, z, yaw, pitch, roll)  { // FIXME vertices
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }

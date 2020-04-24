@@ -65,64 +65,75 @@ LFLAGS=-Llib/ \
 DEPFLAGS=-MMD -MP
 
 BINARIES= \
-  bin/test_specs \
 	bin/test3DRotation \
-	bin/testAlphaRectangle \
 	bin/testArrows \
-	bin/testAura \
 	bin/testBallroom \
-	bin/testBlurImage \
-	bin/testCalcPi \
-	bin/testColorPoints \
-	bin/testColorWheel \
-	bin/testConcavePolygon \
 	bin/testCone \
-	bin/testConstructors \
-	bin/testConway \
-	bin/testCosineIntegral \
+	bin/testConvexPolygon \
+	bin/testConcavePolygon \
 	bin/testCube \
 	bin/testCuboid \
 	bin/testCylinder \
-	bin/testDumbSort \
+	bin/testCircle \
+	bin/testEllipse \
 	bin/testEllipsoid \
-	bin/testFireworks \
-	bin/testForestFire \
-	bin/testFunction \
-	bin/testGetPixels \
-	bin/testGradientWheel \
-	bin/testGraydient \
-	bin/testGreyscale \
-	bin/testHighData \
-	bin/testImage \
-	bin/testImageCart \
-	bin/testInverter \
-	bin/testLangton \
-	bin/testLineChain \
-	bin/testLineFan \
-	bin/testMandelbrot \
-	bin/testMouse \
-	bin/testNewtonPendulum \
-	bin/testPhilosophers \
-	bin/testProducerConsumer \
-	bin/testPong \
 	bin/testPrism \
-	bin/testProgressBar \
-	bin/testProjectiles \
 	bin/testPyramid \
-	bin/testReaderWriter \
-	bin/testRotation \
-	bin/testScreenshot \
-	bin/testSeaUrchin \
-	bin/testSmartSort \
-	bin/testSpectrogram \
-	bin/testSpectrum \
+	bin/testRectangle \
+	bin/testRegularPolygon \
 	bin/testSphere \
+	bin/testSquare \
 	bin/testStar \
-	bin/testText \
-	bin/testTextCart \
-	bin/testTextTwo \
-	bin/testUnits \
-	bin/testVoronoi \
+	bin/testTriangle \
+	bin/testTriangleStrip \
+#  bin/test_specs \
+#	bin/testAlphaRectangle \
+#	bin/testArrows \
+#	bin/testAura \
+#	bin/testBlurImage \
+#	bin/testCalcPi \
+#	bin/testColorPoints \
+#	bin/testColorWheel \
+#	bin/testConcavePolygon \
+#	bin/testConstructors \
+#	bin/testConway \
+#	bin/testCosineIntegral \
+#	bin/testDumbSort \
+#	bin/testFireworks \
+#	bin/testForestFire \
+#	bin/testFunction \
+#	bin/testGetPixels \
+#	bin/testGradientWheel \
+#	bin/testGraydient \
+#	bin/testGreyscale \
+#	bin/testHighData \
+#	bin/testImage \
+#	bin/testImageCart \
+#	bin/testInverter \
+#	bin/testLangton \
+#	bin/testLineChain \
+#	bin/testLineFan \
+#	bin/testMandelbrot \
+#	bin/testMouse \
+#	bin/testNewtonPendulum \
+#	bin/testPhilosophers \
+#	bin/testProducerConsumer \
+#	bin/testPong \
+#	bin/testProgressBar \
+#	bin/testProjectiles \
+#	bin/testReaderWriter \
+#	bin/testRotation \
+#	bin/testScreenshot \
+#	bin/testSeaUrchin \
+#	bin/testSmartSort \
+#	bin/testSpectrogram \
+#	bin/testSpectrum \
+#	bin/testStar \
+#	bin/testText \
+#	bin/testTextCart \
+#	bin/testTextTwo \
+#	bin/testUnits \
+#	bin/testVoronoi
 
 #Use make tsgl to make only the library files
 all: dif tsgl tests docs tutorial

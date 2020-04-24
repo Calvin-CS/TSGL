@@ -8,8 +8,21 @@ namespace tsgl {
   *   \param numVertices The number of vertices the complete ConcavePolygon will have.
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
-ConcavePolygon::ConcavePolygon(int numVertices, bool filled, bool outlined) : Polygon(numVertices) {
-  setup(numVertices, filled, outlined);
+ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
+    attribMutex.lock();
+    edgesOutlined = false;
+    geometryType = GL_TRIANGLES;
+    numberOfVertices = numVertices;
+    numberOfOutlineVertices = numVertices+1;
+    size = numberOfOutlineVertices * 3;
+    tsize = 0;
+    csize = 0;
+    dirty = false;
+    outlineGeometryType = GL_LINE_STRIP;
+    vertices = new GLfloat[numberOfOutlineVertices * 3];
+    colors = new GLfloat[numberOfOutlineVertices * 4];
+    myXScale = myYScale = myZScale = 1;
+    attribMutex.unlock();   
 }
 
  /*!
@@ -23,11 +36,24 @@ ConcavePolygon::ConcavePolygon(int numVertices, bool filled, bool outlined) : Po
   *     (set to true by default).
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
-ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled) : Polygon(numVertices) {
-  setup(numVertices, filled, !filled);
-  for (int i = 0; i < numVertices; i++) {
-      addVertex(x[i], y[i], color);
-  }
+ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, int x[], int y[], float yaw, float pitch, float roll, ColorGLfloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
+    attribMutex.lock();
+    edgesOutlined = false;
+    geometryType = GL_TRIANGLES;
+    numberOfVertices = numVertices;
+    numberOfOutlineVertices = numVertices+1;
+    size = numberOfOutlineVertices * 3;
+    tsize = 0;
+    csize = 0;
+    dirty = false;
+    outlineGeometryType = GL_LINE_STRIP;
+    vertices = new GLfloat[numberOfOutlineVertices * 3];
+    colors = new GLfloat[numberOfOutlineVertices * 4];
+    myXScale = myYScale = myZScale = 1;
+    attribMutex.unlock(); 
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], 0, color);
+    }
 }
 
  /*!
@@ -41,102 +67,24 @@ ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat col
   *     (set to true by default).
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
-ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled) : Polygon(numVertices) {
-  setup(numVertices, filled, !filled);
-  for (int i = 0; i < numVertices; i++) {
-      addVertex(x[i], y[i], color[i]);
-  }
-}
-
- /*!
-  * \brief Explicitly constructs a new ConcavePolygon with different monocolored fill and outline.
-  * \details Explicit constructor for a ConcavePolygon object.
-  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
-  *   \param x An array of x values for the vertices.
-  *   \param y An array of y values for the vertices.
-  *   \param fillColor The color of the ConcavePolygon's fill.
-  *   \param outlineColor The color of the ConcavePolygon's outline.
-  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
-  */
-ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor) : Polygon(numVertices) {
-  setup(numVertices, true, true);
-  for (int i = 0; i < numVertices; i++) {
-      addVertex(x[i], y[i], fillColor, outlineColor);
-  }
-}
-
- /*!
-  * \brief Explicitly constructs a new ConcavePolygon with multicolored fill and monocolored outline.
-  * \details Explicit constructor for a ConcavePolygon object.
-  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
-  *   \param x An array of x values for the vertices.
-  *   \param y An array of y values for the vertices.
-  *   \param fillColor An array of colors for the ConcavePolygon's fill.
-  *   \param outlineColor The color of the ConcavePolygon's outline.
-  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
-  */
-ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor) : Polygon(numVertices) {
-  setup(numVertices, true, true);
-  for (int i = 0; i < numVertices; i++) {
-      addVertex(x[i], y[i], fillColor[i], outlineColor);
-  }
-}
-
- /*!
-  * \brief Explicitly constructs a new ConcavePolygon with monocolored fill and multicolored outline.
-  * \details Explicit constructor for a ConcavePolygon object.
-  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
-  *   \param x An array of x values for the vertices.
-  *   \param y An array of y values for the vertices.
-  *   \param fillColor The color of the ConcavePolygon's fill.
-  *   \param outlineColor An array of colors for the ConcavePolygon's outline.
-  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
-  */
-ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]) : Polygon(numVertices) {
-  setup(numVertices, true, true);
-  for (int i = 0; i < numVertices; i++) {
-      addVertex(x[i], y[i], fillColor, outlineColor[i]);
-  }
-}
-
- /*!
-  * \brief Explicitly constructs a new ConcavePolygon with different multicolored fill and outline.
-  * \details Explicit constructor for a ConcavePolygon object.
-  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
-  *   \param x An array of x values for the vertices.
-  *   \param y An array of y values for the vertices.
-  *   \param fillColor An array of colors for the ConcavePolygon's fill.
-  *   \param outlineColor An array of colors for the ConcavePolygon's outline.
-  * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
-  */
-ConcavePolygon::ConcavePolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]) : Polygon(numVertices) {
-  setup(numVertices, true, true);
-  for (int i = 0; i < numVertices; i++) {
-      addVertex(x[i], y[i], fillColor[i], outlineColor[i]);
-  }
-}
-
-/*!
- * \brief private helper method that works with the constructor
- * \details Defines a lot of instance variables, initializes vertices and outlineVertices arrays
- *    \param numVertices Number of vertices on the ConcavePolygon
- *    \param filled Whether or not the ConcavePolygon is filled.
- *    \param outlined Whether or not the ConcavePolygon is outlined.
- */
-void ConcavePolygon::setup(int numVertices, bool filled, bool outlined) {
-  numberOfOutlineVertices = numVertices+1;
-  size = numberOfOutlineVertices * 6;
-  tsize = 0;
-  isFilled = filled;
-  hasOutline = outlined;
-  dirty = false;
-  geometryType = GL_TRIANGLES;
-  if(filled) {
-    vertices = new float[size];
-  }
-  if(outlined) {
-    outlineVertices = new float[size];
-  }
+ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, int x[], int y[], float yaw, float pitch, float roll, ColorGLfloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
+    attribMutex.lock();
+    edgesOutlined = false;
+    geometryType = GL_TRIANGLES;
+    numberOfVertices = numVertices;
+    numberOfOutlineVertices = numVertices+1;
+    size = numberOfOutlineVertices * 3;
+    tsize = 0;
+    csize = 0;
+    dirty = false;
+    outlineGeometryType = GL_LINE_STRIP;
+    vertices = new GLfloat[numberOfOutlineVertices * 3];
+    colors = new GLfloat[numberOfOutlineVertices * 4];
+    myXScale = myYScale = myZScale = 1;
+    attribMutex.unlock(); 
+    for (int i = 0; i < numVertices; i++) {
+        addVertex(x[i], y[i], 0, color[i]);
+    }
 }
 
  /*!
@@ -148,197 +96,39 @@ void ConcavePolygon::setup(int numVertices, bool filled, bool outlined) {
   * \note This function does nothing if the vertex buffer is already full.
   * \note A message is given indicating that the vertex buffer is full.
   */
-void ConcavePolygon::addVertex(float x, float y, const ColorFloat &color) {
-  if (init) {
+void ConcavePolygon::addVertex(float x, float y, float z, ColorGLfloat &color) {
+    if (init) {
     TsglDebug("Cannot add anymore vertices.");
     return;
-  }
-  if(isFilled) {
-    vertices[current] = x;
-    vertices[current + 1] = y;
-    vertices[current + 2] = color.R;
-    vertices[current + 3] = color.G;
-    vertices[current + 4] = color.B;
-    vertices[current + 5] = color.A;
-  }
-  if(hasOutline) {
-    outlineVertices[current] = x;
-    outlineVertices[current + 1] = y;
-    outlineVertices[current + 2] = color.R;
-    outlineVertices[current + 3] = color.G;
-    outlineVertices[current + 4] = color.B;
-    outlineVertices[current + 5] = color.A;
-  }
-  current += 6;
-  dirty = true;
-
-  if (current == size-6) {
-    if(isFilled) {
-      vertices[current] = vertices[0];
-      vertices[current + 1] = vertices[1];
-      vertices[current + 2] = vertices[2];
-      vertices[current + 3] = vertices[3];
-      vertices[current + 4] = vertices[4];
-      vertices[current + 5] = vertices[5];
-    }
-    if(hasOutline) {
-      outlineVertices[current] = outlineVertices[0];
-      outlineVertices[current + 1] = outlineVertices[1];
-      outlineVertices[current + 2] = outlineVertices[2];
-      outlineVertices[current + 3] = outlineVertices[3];
-      outlineVertices[current + 4] = outlineVertices[4];
-      outlineVertices[current + 5] = outlineVertices[5];
-    }
-    init = true;
-    if(isFilled) {
-      preprocess();
     }
     attribMutex.lock();
-    float minX, maxX;
-    //Find min and max X
-    if(hasOutline) {
-      minX = maxX = outlineVertices[0];
-      for(int i = 0; i < numberOfOutlineVertices; i++) {
-          if( outlineVertices[i*6] < minX )
-          minX = outlineVertices[i*6];
-          else if( outlineVertices[i*6] > maxX )
-          maxX = outlineVertices[i*6];
-      }
-    } else {
-      minX = maxX = vertices[0];
-      for(int i = 0; i < numberOfVertices; i++) {
-          if( vertices[i*6] < minX )
-          minX = vertices[i*6];
-          else if( vertices[i*6] > maxX )
-          maxX = vertices[i*6];
-      }
-    }
-    myCenterX = myRotationPointX = (minX+maxX)/2;
-
-    float minY, maxY;
-    //Find min and max Y
-    if(hasOutline) {
-      minY = maxY = outlineVertices[1];
-      for(int i = 0; i < numberOfOutlineVertices; i++) {
-        if( outlineVertices[i*6+1] < minY )
-        minY = outlineVertices[i*6+1];
-        else if( outlineVertices[i*6+1] > maxY )
-        maxY = outlineVertices[i*6+1];
-      }
-    } else {
-      minY = maxY = vertices[1];
-      for(int i = 0; i < numberOfVertices; i++) {
-          if( vertices[i*6+1] < minY )
-          minY = vertices[i*6+1];
-          else if( vertices[i*6+1] > maxY )
-          maxY = vertices[i*6+1];
-      }
-    }
-    myCenterY = myRotationPointY = (minY+maxY)/2;
+    vertices[currentVertex] = x;
+    vertices[currentVertex + 1] = y;
+    vertices[currentVertex + 2] = z;
+    colors[currentColor] = color.R;
+    colors[currentColor + 1] = color.G;
+    colors[currentColor + 2] = color.B;
+    colors[currentColor + 3] = color.A;
+    currentVertex += 3;
+    currentColor += 4;
+    dirty = true;
     attribMutex.unlock();
-  }
-}
 
- /*!
-  * \brief Adds another vertex to a ConcavePolygon.
-  * \details This function initializes the next vertex in the ConcavePolygon and adds it to a ConcavePolygon buffer.
-  *      \param x The x position of the vertex.
-  *      \param y The y position of the vertex.
-  *      \param fillColor The reference variable of the fill color of the vertex.
-  *      \param outlineColor The reference variable of the outline color of the vertex.
-  * \note This function does nothing if the vertex buffer is already full.
-  * \note A message is given indicating that the vertex buffer is full.
-  */
-void ConcavePolygon::addVertex(float x, float y, const ColorFloat &fillColor, const ColorFloat &outlineColor) {
-  if (init) {
-    TsglDebug("Cannot add anymore vertices.");
-    return;
-  }
-  if(isFilled) {
-    vertices[current] = x;
-    vertices[current + 1] = y;
-    vertices[current + 2] = fillColor.R;
-    vertices[current + 3] = fillColor.G;
-    vertices[current + 4] = fillColor.B;
-    vertices[current + 5] = fillColor.A;
-  }
-  if(hasOutline) {
-    outlineVertices[current] = x;
-    outlineVertices[current + 1] = y;
-    outlineVertices[current + 2] = outlineColor.R;
-    outlineVertices[current + 3] = outlineColor.G;
-    outlineVertices[current + 4] = outlineColor.B;
-    outlineVertices[current + 5] = outlineColor.A;
-  }
-  current += 6;
-  dirty = true;
-
-  if (current == size-6) {
-    if(isFilled) {
-      vertices[current] = vertices[0];
-      vertices[current + 1] = vertices[1];
-      vertices[current + 2] = vertices[2];
-      vertices[current + 3] = vertices[3];
-      vertices[current + 4] = vertices[4];
-      vertices[current + 5] = vertices[5];
+    if (currentVertex == size-3) {
+        attribMutex.lock();
+        vertices[currentVertex] = vertices[0];
+        vertices[currentVertex + 1] = vertices[1];
+        vertices[currentVertex + 2] = vertices[2];
+        colors[currentColor] = colors[0];
+        colors[currentColor + 1] = vertices[1];
+        colors[currentColor + 2] = vertices[2];
+        colors[currentColor + 3] = vertices[3];
+        outlineArray = new GLfloat[numberOfOutlineVertices*4];
+        std::fill_n(outlineArray, numberOfOutlineVertices*4, 0.75);
+        preprocess();
+        init = true;
+        attribMutex.unlock();
     }
-    if(hasOutline) {
-      outlineVertices[current] = outlineVertices[0];
-      outlineVertices[current + 1] = outlineVertices[1];
-      outlineVertices[current + 2] = outlineVertices[2];
-      outlineVertices[current + 3] = outlineVertices[3];
-      outlineVertices[current + 4] = outlineVertices[4];
-      outlineVertices[current + 5] = outlineVertices[5];
-    }
-    init = true;
-    if(isFilled) {
-      preprocess();
-    }
-    attribMutex.lock();
-    float minX, maxX;
-
-    //Find min and max X
-    if(hasOutline) {
-      minX = maxX = outlineVertices[0];
-      for(int i = 0; i < numberOfOutlineVertices; i++) {
-          if( outlineVertices[i*6] < minX )
-          minX = outlineVertices[i*6];
-          else if( outlineVertices[i*6] > maxX )
-          maxX = outlineVertices[i*6];
-      }
-    } else {
-      minX = maxX = vertices[0];
-      for(int i = 0; i < numberOfVertices; i++) {
-          if( vertices[i*6] < minX )
-          minX = vertices[i*6];
-          else if( vertices[i*6] > maxX )
-          maxX = vertices[i*6];
-      }
-    }
-    myCenterX = myRotationPointX = (minX+maxX)/2;
-    
-    float minY, maxY;
-    //Find min and max Y
-    if(hasOutline) {
-      minY = maxY = outlineVertices[1];
-      for(int i = 0; i < numberOfOutlineVertices; i++) {
-        if( outlineVertices[i*6+1] < minY )
-        minY = outlineVertices[i*6+1];
-        else if( outlineVertices[i*6+1] > maxY )
-        maxY = outlineVertices[i*6+1];
-      }
-    } else {
-      minY = maxY = vertices[1];
-      for(int i = 0; i < numberOfVertices; i++) {
-          if( vertices[i*6+1] < minY )
-          minY = vertices[i*6+1];
-          else if( vertices[i*6+1] > maxY )
-          maxY = vertices[i*6+1];
-      }
-    }
-    myCenterY = myRotationPointY = (minY+maxY)/2;
-    attribMutex.unlock();
-  }
 }
 
  /*!
@@ -384,11 +174,11 @@ bool ConcavePolygon::intersects(float p0_x, float p0_y, float p1_x, float p1_y,
   */
 bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, float x2, float y2, float x3, float y3)
 {
-  bool b1 = ( (px - x2) * (y1 - y2) - (x1 - x2) * (py - y2) ) <= 0.0f;
-  bool b2 = ( (px - x3) * (y2 - y3) - (x2 - x3) * (py - y3) ) <= 0.0f;
-  bool b3 = ( (px - x1) * (y3 - y1) - (x3 - x1) * (py - y1) ) <= 0.0f;
+    bool b1 = ( (px - x2) * (y1 - y2) - (x1 - x2) * (py - y2) ) <= 0.0f;
+    bool b2 = ( (px - x3) * (y2 - y3) - (x2 - x3) * (py - y3) ) <= 0.0f;
+    bool b3 = ( (px - x1) * (y3 - y1) - (x3 - x1) * (py - y1) ) <= 0.0f;
 
-  return ((b1 == b2) && (b2 == b3));
+    return ((b1 == b2) && (b2 == b3));
 }
 
  /*!
@@ -398,89 +188,100 @@ bool ConcavePolygon::pointInTriangle (float px, float py, float x1, float y1, fl
   * \warning This is an order of n-cubed operation, and is thus <b>VERY SLOW</b>.
   */
 void ConcavePolygon::preprocess() {
+    if (dirty) {
+        dirty = false;
+        std::queue<float> newvertices;
+        std::queue<float> newcolors;
 
-  if (dirty) {
-    dirty = false;
-    std::queue<float> newvertices;
+        bool clockwise = (
+            (
+                (vertices[3]-vertices[0]) * (vertices[7]-vertices[4]) -
+                (vertices[4]-vertices[1]) * (vertices[6]-vertices[3])
+            ) < 0.0);
 
-    bool clockwise = (
-        (
-            (vertices[6]-vertices[0]) * (vertices[13]-vertices[7]) -
-            (vertices[7]-vertices[1]) * (vertices[12]-vertices[6])
-        ) < 0.0);
+        for (int i = 0; i < size-6; i += 3) {
+            float x1 = vertices[i], y1 = vertices[i+1];
+            for (int j = i+3; j < size-3; j += 3) {
+                float x2 = vertices[j], y2 = vertices[j+1];
+                for (int k = j+3; k < size; k += 3) {
+                    float x3 = vertices[k], y3 = vertices[k+1];
 
-    for (int i = 0; i < size-12; i += 6) {
-      float x1 = vertices[i], y1 = vertices[i+1];
-      for (int j = i+6; j < size-6; j += 6) {
-        float x2 = vertices[j], y2 = vertices[j+1];
-        for (int k = j+6; k < size; k += 6) {
-          float x3 = vertices[k], y3 = vertices[k+1];
+                    bool open = true;
+                    for (int n = 0; n < size-3; n += 3) {
+                        float x4 = vertices[n], y4 = vertices[n+1], x5 = vertices[n+3],y5 = vertices[n+4];
+                        if (pointInTriangle(x4,y4,x1,y1,x2,y2,x3,y3) || pointInTriangle(x5,y5,x1,y1,x2,y2,x3,y3)) {
+                            open = false; break;
+                        }
+                        if (intersects(x1,y1,x2,y2,x4,y4,x5,y5)) {
+                            if ( !( (x1==x4 && y1==y4) || (x2==x5 && y2==y5) || (x1==x5 && y1==y5) || (x2==x4 && y2==y4)) ) {
+                                open = false; break;
+                            }
+                        }
+                        if (intersects(x2,y2,x3,y3,x4,y4,x5,y5)) {
+                            if ( !( (x2==x4 && y2==y4) || (x3==x5 && y3==y5) || (x2==x5 && y2==y5) || (x3==x4 && y3==y4)) ) {
+                                open = false; break;
+                            }
+                        }
+                        if (intersects(x1,y1,x3,y3,x4,y4,x5,y5)) {
+                            if ( !( (x1==x4 && y1==y4) || (x3==x5 && y3==y5) || (x1==x5 && y1==y5) || (x3==x4 && y3==y4)) ) {
+                                open = false; break;
+                            }
+                        }
+                    }
 
-          bool open = true;
-          for (int n = 0; n < size-6; n += 6) {
-            float x4 = vertices[n], y4 = vertices[n+1], x5 = vertices[n+6],y5 = vertices[n+7];
-            if (pointInTriangle(x4,y4,x1,y1,x2,y2,x3,y3) || pointInTriangle(x5,y5,x1,y1,x2,y2,x3,y3)) {
-              open = false; break;
+                    //If the angle is not open (intersects something), draw nothing
+                    if (!open)
+                        continue;
+
+                    //If the angle is concave, draw nothing
+                    if ( ( ( (x2-x1) * (y3-y2) - (y2-y1) * (x3-x2) ) <= 0.0) != clockwise) {
+                        continue;
+                    }
+
+                    newvertices.push(x1);
+                    newvertices.push(y1);
+                    newvertices.push(vertices[i+2]);
+                    newcolors.push(colors[4*i/3]);
+                    newcolors.push(colors[4*i/3+1]);
+                    newcolors.push(colors[4*i/3+2]);
+                    newcolors.push(colors[4*i/3+3]);
+                    newvertices.push(x2);
+                    newvertices.push(y2);
+                    newvertices.push(vertices[j+2]);
+                    newcolors.push(colors[4*j/3]);
+                    newcolors.push(colors[4*j/3+1]);
+                    newcolors.push(colors[4*j/3+2]);
+                    newcolors.push(colors[4*j/3+3]);
+                    newvertices.push(x3);
+                    newvertices.push(y3);
+                    newvertices.push(vertices[k+2]);
+                    newcolors.push(colors[4*k/3]);
+                    newcolors.push(colors[4*k/3+1]);
+                    newcolors.push(colors[4*k/3+2]);
+                    newcolors.push(colors[4*k/3+3]);
+                }
             }
-            if (intersects(x1,y1,x2,y2,x4,y4,x5,y5)) {
-              if ( !( (x1==x4 && y1==y4) || (x2==x5 && y2==y5) || (x1==x5 && y1==y5) || (x2==x4 && y2==y4)) ) {
-                open = false; break;
-              }
-            }
-            if (intersects(x2,y2,x3,y3,x4,y4,x5,y5)) {
-              if ( !( (x2==x4 && y2==y4) || (x3==x5 && y3==y5) || (x2==x5 && y2==y5) || (x3==x4 && y3==y4)) ) {
-                open = false; break;
-              }
-            }
-            if (intersects(x1,y1,x3,y3,x4,y4,x5,y5)) {
-              if ( !( (x1==x4 && y1==y4) || (x3==x5 && y3==y5) || (x1==x5 && y1==y5) || (x3==x4 && y3==y4)) ) {
-                open = false; break;
-              }
-            }
-          }
-
-          //If the angle is not open (intersects something), draw nothing
-              if (!open)
-                continue;
-
-              //If the angle is concave, draw nothing
-              if ( ( ( (x2-x1) * (y3-y2) - (y2-y1) * (x3-x2) ) <= 0.0) != clockwise) {
-                continue;
-              }
-
-              newvertices.push(x1);
-              newvertices.push(y1);
-              newvertices.push(vertices[i+2]);
-              newvertices.push(vertices[i+3]);
-              newvertices.push(vertices[i+4]);
-              newvertices.push(vertices[i+5]);
-              newvertices.push(x2);
-              newvertices.push(y2);
-              newvertices.push(vertices[j+2]);
-              newvertices.push(vertices[j+3]);
-              newvertices.push(vertices[j+4]);
-              newvertices.push(vertices[j+5]);
-              newvertices.push(x3);
-              newvertices.push(y3);
-              newvertices.push(vertices[k+2]);
-              newvertices.push(vertices[k+3]);
-              newvertices.push(vertices[k+4]);
-              newvertices.push(vertices[k+5]);
         }
-      }
+
+        tsize = newvertices.size();
+        delete[] vertices;
+        vertices = new GLfloat[tsize];
+        for (int i = 0; i < tsize; ++i) {
+            vertices[i] = newvertices.front();
+            newvertices.pop();
+        }
+
+        csize = newcolors.size();
+        delete[] colors;
+        colors = new GLfloat[csize];
+        for (int i = 0; i < csize; ++i) {
+            colors[i] = newcolors.front();
+            newcolors.pop();
+        }
+
+        numberOfVertices = tsize / 3;
+
     }
-
-    tsize = newvertices.size();
-    delete[] vertices;
-    vertices = new float[tsize];
-    for (int i = 0; i < tsize; ++i) {
-      vertices[i] = newvertices.front();
-      newvertices.pop();
-    }
-
-    numberOfVertices = tsize / 6;
-
-  }
 
   //Debug Outline
   //    for (int i = 0; i < size; i += 6) {
@@ -509,7 +310,7 @@ void ConcavePolygon::runTests() {
 bool ConcavePolygon::testIntersects() {
   int passed = 0;
   int failed = 0;
-  ConcavePolygon c1(10);
+  ConcavePolygon c1(0,0,0,10,0,0,0);
 
   //Test 1: Intersecting lines
   float x1, y1, x2, y2, x3, y3, x4, y4 = 0.0;
@@ -566,7 +367,7 @@ bool ConcavePolygon::testIntersects() {
 bool ConcavePolygon::testPointITriangle() {
     int passed = 0;
     int failed = 0;
-    ConcavePolygon c2(10);
+    ConcavePolygon c2(0,0,0,10,0,0,0);
     //Test 1: Point is in the triangle
     float px, py, x1, y1, x2, y2, x3, y3 = 0.0;
 

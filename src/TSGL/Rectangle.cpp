@@ -14,11 +14,17 @@ namespace tsgl {
  *     (set to true by default).
  * \return A new Rectangle with the specified top left corner, dimensions, and color.
  */
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat color, bool filled) : ConvexPolygon(4, filled, !filled) {
-    addVertex(x, y, color);
-    addVertex(x + width, y, color);
-    addVertex(x + width, y + height, color);
-    addVertex(x, y + height, color);
+Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
+    attribMutex.lock();
+    geometryType = GL_QUADS;
+    myXScale = myWidth = width;
+    myYScale = myHeight = height;
+    myZScale = 1;
+    attribMutex.unlock();
+    addVertex(-0.5, 0.5, 0, color);
+    addVertex(-0.5, -0.5, 0, color);
+    addVertex(0.5, -0.5, 0, color);
+    addVertex(0.5, 0.5, 0, color);
 }
 
 /*!
@@ -33,83 +39,77 @@ Rectangle::Rectangle(float x, float y, float width, float height, const ColorFlo
  *     (set to true by default).
  * \return A new Rectangle with the specified top left corner, dimensions, and colors.
  */
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat color[], bool filled) : ConvexPolygon(4, filled, !filled) {
-    addVertex(x, y, color[0]);
-    addVertex(x + width, y, color[1]);
-    addVertex(x + width, y + height, color[2]);
-    addVertex(x, y + height, color[3]);
+Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
+    attribMutex.lock();
+    geometryType = GL_QUADS;
+    myXScale = myWidth = width;
+    myYScale = myHeight = height;
+    myZScale = 1;
+    attribMutex.unlock();
+    addVertex(-0.5, 0.5, 0, color[0]);
+    addVertex(-0.5, -0.5, 0, color[1]);
+    addVertex(0.5, -0.5, 0, color[2]);
+    addVertex(0.5, 0.5, 0, color[3]);
 }
 
-/*!
- * \brief Explicitly constructs a Rectangle with different monocolored fill and outline.
- * \details This is the constructor for the Rectangle class.
- *   \param x The x coordinate of the Rectangle's left edge.
- *   \param y The y coordinate of the Rectangle's top edge.
- *   \param width The width of the Rectangle.
- *   \param height The height of the Rectangle.
- *   \param fillColor The color of the Rectangle's fill
- *   \param outlineColor The color of the Rectangle's outline
- * \return A new Rectangle with the specified top left corner, dimensions, and coloring.
+/**
+ * \brief Mutates the distance from the left side of the Rectangle base to its right side.
+ * \param width The Rectangle's new width.
  */
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor) : ConvexPolygon(4, true, true) {
-    addVertex(x, y, fillColor, outlineColor);
-    addVertex(x + width, y, fillColor, outlineColor);
-    addVertex(x + width, y + height, fillColor, outlineColor);
-    addVertex(x, y + height, fillColor, outlineColor);
+void Rectangle::setWidth(GLfloat width) {
+    if (width <= 0) {
+        TsglDebug("Cannot have a Rectangle with width less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myWidth = width;
+    myXScale = width;
+    attribMutex.unlock();
 }
 
-/*!
- * \brief Explicitly constructs a Rectangle with multicolored fill and monocolored outline.
- * \details This is the constructor for the Rectangle class.
- *   \param x The x coordinate of the Rectangle's left edge.
- *   \param y The y coordinate of the Rectangle's top edge.
- *   \param width The width of the Rectangle.
- *   \param height The height of the Rectangle.
- *   \param fillColor An array of colors for the Rectangle's fill
- *   \param outlineColor The color of the Rectangle's outline
- * \return A new Rectangle with the specified top left corner, dimensions, and coloring.
+/**
+ * \brief Mutates the distance from the left side of the Rectangle base to its right side by the parameter amount.
+ * \param delta The amount by which to change the width of the Rectangle.
  */
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor) : ConvexPolygon(4, true, true) {
-    addVertex(x, y, fillColor[0], outlineColor);
-    addVertex(x + width, y, fillColor[1], outlineColor);
-    addVertex(x + width, y + height, fillColor[2], outlineColor);
-    addVertex(x, y + height, fillColor[3], outlineColor);
+void Rectangle::changeWidthBy(GLfloat delta) {
+    if (myWidth + delta <= 0) {
+        TsglDebug("Cannot have a Rectangle with width less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myWidth += delta;
+    myXScale += delta;
+    attribMutex.unlock();
 }
 
-/*!
- * \brief Explicitly constructs a Rectangle with monocolored fill and multicolored outline.
- * \details This is the constructor for the Rectangle class.
- *   \param x The x coordinate of the Rectangle's left edge.
- *   \param y The y coordinate of the Rectangle's top edge.
- *   \param width The width of the Rectangle.
- *   \param height The height of the Rectangle.
- *   \param fillColor The color of the Rectangle's fill
- *   \param outlineColor An array of colors for the Rectangle's outline
- * \return A new Rectangle with the specified top left corner, dimensions, and coloring.
+/**
+ * \brief Mutates the distance from the top side of the Rectangle base to its bottom side.
+ * \param height The Rectangle's new height.
  */
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor[]) : ConvexPolygon(4, true, true) {
-    addVertex(x, y, fillColor, outlineColor[0]);
-    addVertex(x + width, y, fillColor, outlineColor[1]);
-    addVertex(x + width, y + height, fillColor, outlineColor[2]);
-    addVertex(x, y + height, fillColor, outlineColor[3]);
+void Rectangle::setHeight(GLfloat height) {
+    if (height <= 0) {
+        TsglDebug("Cannot have a Rectangle with height less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myWidth = height;
+    myYScale = height;
+    attribMutex.unlock();
 }
 
-/*!
- * \brief Explicitly constructs a Rectangle with different multicolored fill and outline.
- * \details This is the constructor for the Rectangle class.
- *   \param x The x coordinate of the Rectangle's left edge.
- *   \param y The y coordinate of the Rectangle's top edge.
- *   \param width The width of the Rectangle.
- *   \param height The height of the Rectangle.
- *   \param fillColor An array of colors for the Circle's fill
- *   \param outlineColor An array of colors for the Rectangle's outline
- * \return A new Rectangle with the specified top left corner, dimensions, and coloring.
+/**
+ * \brief Mutates the distance from the top side of the Rectangle base to its bottom side by the parameter amount.
+ * \param delta The amount by which to change the height of the Rectangle.
  */
-Rectangle::Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor[]) : ConvexPolygon(4, true, true) {
-    addVertex(x, y, fillColor[0], outlineColor[0]);
-    addVertex(x + width, y, fillColor[1], outlineColor[1]);
-    addVertex(x + width, y + height, fillColor[2], outlineColor[2]);
-    addVertex(x, y + height, fillColor[3], outlineColor[3]);
+void Rectangle::changeHeightBy(GLfloat delta) {
+    if (myHeight + delta <= 0) {
+        TsglDebug("Cannot have a Rectangle with height less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myHeight += delta;
+    myYScale += delta;
+    attribMutex.unlock();
 }
 
 }

@@ -19,7 +19,7 @@ namespace tsgl {
   * \return A new Cuboid with a buffer for storing the specified numbered of vertices.
   */
 Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c)  
-: Object3D(x, y, z, yaw, pitch, roll)  {
+: Drawable(x, y, z, yaw, pitch, roll)  {
     if (length <= 0 || width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cuboid with non-positive length, width, or height.");
     }
@@ -84,7 +84,7 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
   * \return A new Cuboid with a buffer for storing the specified numbered of vertices.
   */
 Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c[])  
-: Object3D(x, y, z, yaw, pitch, roll)  {
+: Drawable(x, y, z, yaw, pitch, roll)  {
     if (length <= 0 || width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cuboid with non-positive length, width, or height.");
     }

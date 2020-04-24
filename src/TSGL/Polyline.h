@@ -14,27 +14,22 @@ namespace tsgl {
  *  \details Polyline is a class for holding vertex data for multiple lines whose endpoints are connected.
  *  \details This method is optimized for long lists and offers a marked improvement over drawing individual
  *   Line instances.
- *  \note The addVertex() method must be called the same number of times as specified in the constructor.
+ *  \note The addVertex() method must be called the same number of times as specified in the constructor, unless a float array is also passed.
  *  \note Calling addVertex() after all vertices have been added will do nothing.
- *  \note Calling draw() before all vertices have been added will do nothing.
+ *  \note Calling Drawable::draw() before all vertices have been added will do nothing.
  */
 class Polyline : public Shape {
  private:
 
  public:
 
-    Polyline(int numVertices);
+    Polyline(float x, float y, float z, int numVertices, float yaw, float pitch, float roll);
 
-    Polyline(int numVertices, int x[], int y[], ColorFloat color);
+    Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorGLfloat color);
 
-    Polyline(int numVertices, int x[], int y[], ColorFloat color[]);
+    Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorGLfloat color[]);
 
     bool isProcessed();
-
-    /*!
-     * \brief Destructor for the Polyline.
-     */
-    ~Polyline() { delete[] vertices; }
 };
 
 }

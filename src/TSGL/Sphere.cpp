@@ -16,7 +16,7 @@ namespace tsgl {
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Sphere with a buffer for storing the specified numbered of vertices.
   */
-Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Object3D(x, y, z, yaw, pitch, roll)  {
+Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0) {
         TsglDebug("Cannot have a Sphere with radius less than or equal to 0.");
     }
@@ -59,7 +59,7 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Sphere with a buffer for storing the specified numbered of vertices.
   */
-Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Object3D(x, y, z, yaw, pitch, roll)  {
+Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0) {
         TsglDebug("Cannot have a Sphere with radius less than or equal to 0.");
     }

@@ -31,9 +31,10 @@ void concavePolygonFunction(Canvas& can) {
 
   int x[PSIZE], xx[PSIZE];
   int y[PSIZE], yy[PSIZE];
-  ColorFloat color[PSIZE];
+  ColorGLfloat color[PSIZE];
   for (unsigned i = 0; i < PSIZE; ++i)
-    color[i] = Colors::randomColor(1.0f);
+    color[i] = ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1);
+
 
   x[0] = 100; y[0] = 100;
   x[1] = 200; y[1] = 100;
@@ -49,28 +50,29 @@ void concavePolygonFunction(Canvas& can) {
 
   for (int i = 0; i < PSIZE; ++i) {
     if (i % 2 == 0) {
-      xx[i] = can.getWindowWidth() / 2 + 150 * sin((1.0f*i)/(PSIZE) * PI * 2);
-      yy[i] = can.getWindowHeight() / 2 - 150 * cos((1.0f*i)/(PSIZE) * PI * 2);
+      xx[i] = 0 + 2.5 * sin((1.0f*i)/(PSIZE) * PI * 2);
+      yy[i] = 0 - 2.5 * cos((1.0f*i)/(PSIZE) * PI * 2);
     } else {
-      xx[i] = can.getWindowWidth() / 2 + 300 * sin((1.0f*i)/(PSIZE) * PI * 2);
-      yy[i] = can.getWindowHeight() / 2 - 300 * cos((1.0f*i)/(PSIZE) * PI * 2);
+      xx[i] = 0 + 1.5 * sin((1.0f*i)/(PSIZE) * PI * 2);
+      yy[i] = 0 - 1.5 * cos((1.0f*i)/(PSIZE) * PI * 2);
     }
   }
 
-  ConcavePolygon * c1 = new ConcavePolygon(11, x, y, color, false);
-  ConcavePolygon * c2 = new ConcavePolygon(PSIZE, xx, yy, color, true);
-  can.add(c1); can.add(c2);
+  // ConcavePolygon * c1 = new ConcavePolygon(11, x, y, color, false);
+  ConcavePolygon * c2 = new ConcavePolygon(0,0,0,PSIZE, xx, yy, 0,0,0,ColorGLfloat(1,0,0,1));
+  // can.add(c1); 
+  can.add(c2);
 
   while (can.isOpen()) {  // Checks to see if the window has been closed
     can.sleep();
     // note: when you call drawConcavePolygon, you MUST give it the correct size.
     // otherwise, it is always wrong and inconsistent in how it is wrong.
     can.pauseDrawing();
-    c1->setCenter(can.getWindowWidth() / 2 + 450 * sin((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2), can.getWindowHeight() / 2 - 450 * cos((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2) );
+    // c1->setCenter(can.getWindowWidth() / 2 + 450 * sin((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2), can.getWindowHeight() / 2 - 450 * cos((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2) );
     can.resumeDrawing();
   }
 
-  delete c1;
+  // delete c1;
   delete c2;
 }
 

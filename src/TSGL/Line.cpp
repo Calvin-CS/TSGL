@@ -12,9 +12,10 @@ namespace tsgl {
  *      \param color The reference variable to the color of the Line.
  * \return A new Line with the specified endpoints and color.
  */
-Line::Line(int x1, int y1, int x2, int y2, const ColorFloat color) : Polyline(2) {
-    addVertex(x1, y1, color);
-    addVertex(x2, y2, color);
+Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color) : Polyline(x,y,z,2,yaw,pitch,roll) {
+    addVertex(-0.5, 0, 0, color);
+    addVertex(0.5, 0, 0, color);
+    myXScale = length;
 }
 
 /*!
@@ -27,46 +28,40 @@ Line::Line(int x1, int y1, int x2, int y2, const ColorFloat color) : Polyline(2)
  *      \param color An array for the colors of the line endpoints.
  * \return A new Line with the specified endpoints and colors.
  */
-Line::Line(int x1, int y1, int x2, int y2, const ColorFloat color[]) : Polyline(2) {
-    addVertex(x1, y1, color[0]);
-    addVertex(x2, y2, color[1]);
+Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color[]) : Polyline(x,y,z,2,yaw,pitch,roll) {
+    addVertex(-0.5, 0, 0, color[0]);
+    addVertex(0.5, 0, 0, color[1]);
+    myXScale = length;
 }
 
 /**
- * \brief Moves one end of the Line.
- * \details Moves the end of the line originally specified by (x1, y1).
- *   \param x The new x coordinate.
- *   \param y The new y coordinate.
+ * \brief Mutates the line's length to the new parameter value.
+ * \param length The Prism's new length.
  */
-void Line::setFirstEnd(float x, float y) {
-  attribMutex.lock();
-  vertices[0] = x;
-  vertices[1] = y;
-  attribMutex.unlock();
+void Line::setLength(GLfloat length) {
+    if (length <= 0) {
+        TsglDebug("Cannot have a Line with length less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myXScale = length;
+    myLength = length; 
+    attribMutex.unlock();
 }
 
 /**
- * \brief Moves one end of the Line.
- * \details Moves the end of the line originally specified by (x2, y2).
- *   \param x The new x coordinate.
- *   \param y The new y coordinate.
+ * \brief Mutates the line's length by the parameter value.
+ * \param delta The difference between the new and old line lengths.
  */
-void Line::setSecondEnd(float x, float y) {
-  attribMutex.lock();
-  vertices[6] = x;
-  vertices[7] = y;
-  attribMutex.unlock();
+void Line::changeLineLengthBy(GLfloat delta) {
+    if (myLength + delta <= 0) {
+        TsglDebug("Cannot have a Line with length less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myXScale += delta;
+    myLength += delta; 
+    attribMutex.unlock();
 }
 
-/**
- * \brief Calculates the length of the line.
- * \details Finds the distance between the two ends of the line.
- * \return Length of the Line.
- */
-float Line::getLength() {
-  attribMutex.lock();
-  float length = sqrt((vertices[0]-vertices[2])*(vertices[0]-vertices[2])+(vertices[1]-vertices[3])*(vertices[1]-vertices[3]));
-  attribMutex.unlock();
-  return length;
-}
 }

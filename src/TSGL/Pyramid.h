@@ -1,11 +1,11 @@
 /*
- * Pyramid.h extends Object3D and provides a class for drawing a pyramid.
+ * Pyramid.h extends Drawable and provides a class for drawing a pyramid.
  */
 
 #ifndef PYRAMID_H_
 #define PYRAMID_H_
 
-#include "Object3D.h"       // For extending our Object3D object
+#include "Drawable.h"       // For extending our Drawable object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -14,7 +14,7 @@ namespace tsgl {
  *  \brief Draw an arbitrary Pyramid with colored vertices.
  *  \details Pyramid is a class for holding vertex data for a pyramid with a base with at least 3 sides.
  */
-class Pyramid : public Object3D {
+class Pyramid : public Drawable {
 protected:
     GLfloat myHeight;
     GLfloat myRadius;

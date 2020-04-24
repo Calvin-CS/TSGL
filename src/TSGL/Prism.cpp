@@ -18,7 +18,7 @@ namespace tsgl {
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Object3D(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0 ||  height <= 0 || sides < 3) {
         TsglDebug("Cannot have a Prism with non-positive height or radius or fewer than 3 sides");
     }
@@ -37,23 +37,22 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
-    GLfloat half = myHeight/2;
     for (int i = 0; i < mySides; i++) {
-        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c);
-        addVertex(0,half,0, c);
-        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), c);
+        addVertex(0,0.5,0, c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), 0.5, sin(TWOPI * (i + 1) / mySides), c);
 
-        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
-        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c);
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), 0.5, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c);
 
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
-        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c);
-        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), 0.5, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c);
 
-        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c);
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c);
-        addVertex(0,-half,0, c);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c);
+        addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c);
+        addVertex(0,-0.5,0, c);
     }
 }
 
@@ -73,7 +72,7 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Object3D(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0 ||  height <= 0 || sides < 3) {
         TsglDebug("Cannot have a Prism with non-positive height or radius or fewer than 3 sides");
     }
@@ -92,28 +91,27 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     attribMutex.unlock();
-    GLfloat half = myHeight/2;
     for (int i = 0; i < mySides; i++) {
-        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c[1]);
-        addVertex(0,half,0, c[0]);
-        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[1]);
+        addVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), c[1]);
+        addVertex(0,0.5,0, c[0]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), 0.5, sin(TWOPI * (i + 1) / mySides), c[1]);
 
-        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[2]);
-        addVertex(cos(TWOPI * i / mySides), half, sin(TWOPI * i / mySides), c[2]);
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), 0.5, sin(TWOPI * (i + 1) / mySides), c[2]);
+        addVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), c[2]);
+        addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[2]);
 
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[2]);
-        addVertex(cos(TWOPI * (i + 1) / mySides), half, sin(TWOPI * (i + 1) / mySides), c[2]);
-        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[2]);
+        addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), 0.5, sin(TWOPI * (i + 1) / mySides), c[2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[2]);
 
-        addVertex(cos(TWOPI * (i + 1) / mySides), -half, sin(TWOPI * (i + 1) / mySides), c[3]);
-        addVertex(cos(TWOPI * i / mySides), -half, sin(TWOPI * i / mySides), c[3]);
-        addVertex(0,-half,0, c[4]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[3]);
+        addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[3]);
+        addVertex(0,-0.5,0, c[4]);
     }
 }
 
 /**
- * \brief Mutates the distance from the center of the Prism's base to the tip.
+ * \brief Mutates the distance from the Prism's bottom to its top.
  * \param height The Prism's new height.
  */
 void Prism::setHeight(GLfloat height) {
@@ -128,7 +126,7 @@ void Prism::setHeight(GLfloat height) {
 }
 
 /**
- * \brief Mutates the distance from the center of the Prism's base to the tip by the parameter amount.
+ * \brief Mutates the distance from the Prism's bottom to its top by the parameter amount.
  * \param delta The amount by which to change the height of the Prism.
  */
 void Prism::changeHeightBy(GLfloat delta) {
@@ -143,8 +141,8 @@ void Prism::changeHeightBy(GLfloat delta) {
 }
 
 /**
- * \brief Mutates the distance from the center of the Prism's base to the tip.
- * \param height The Prism's new height.
+ * \brief Mutates the distance from the center of the Prism's base to the corners.
+ * \param radius The Prism's new radius.
  */
 void Prism::setRadius(GLfloat radius) {
     if (radius <= 0) {
@@ -159,8 +157,8 @@ void Prism::setRadius(GLfloat radius) {
 }
 
 /**
- * \brief Mutates the distance from the center of the Prism's base to the tip by the parameter amount.
- * \param delta The amount by which to change the height of the Prism.
+ * \brief Mutates the distance from the center of the Prism's base to the corner by the parameter amount.
+ * \param delta The amount by which to change the radius of the Prism.
  */
 void Prism::changeRadiusBy(GLfloat delta) {
     if (myRadius + delta <= 0) {

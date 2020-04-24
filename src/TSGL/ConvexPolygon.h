@@ -5,7 +5,7 @@
 #ifndef CONVEXPOLYGON_H_
 #define CONVEXPOLYGON_H_
 
-#include "Polygon.h"       // For extending our Shape object
+#include "Shape.h"       // For extending our Shape object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -20,29 +20,13 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
-class ConvexPolygon : public Polygon {
- private:
-   int size;
-
-    static bool testAddVertex();  // Unit test for addVertex()
+class ConvexPolygon : public Shape {
+ protected:
+    ConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll);
  public:
-  ConvexPolygon(int numVertices, bool filled = true, bool outlined = false);
+    ConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorGLfloat color);
 
-  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color, bool filled = true);
-
-  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true);
-
-  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
-
-  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
-
-  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
-
-  ConvexPolygon(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
-
-  void setup(int numVertices, bool filled, bool outlined);
-
-  static void runTests();
+    ConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorGLfloat color[]);
 };
 
 }

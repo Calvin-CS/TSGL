@@ -12,8 +12,16 @@ namespace tsgl {
  *   \param filled Whether the circle should be filled
  *     (set to true by default).
  */
-Circle::Circle(float x, float y, float radius, const ColorFloat color, bool filled)
-: Ellipse(x,y,radius,radius,color,filled) { } //Create an Ellipse with equal x and y radii
+Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon(x,y,z,radius * 30,yaw,pitch,roll) {
+    attribMutex.lock();
+    myXScale = myYScale = myRadius = radius;
+    myZScale = 1;
+    attribMutex.unlock();
+    float delta = 2.0f / numberOfVertices * PI;
+    for (int i = 0; i < numberOfVertices; ++i) {
+        addVertex(cos(i*delta), sin(i*delta), 0, color);
+    }
+}
 
 /*!
  * \brief Explicitly constructs a new multicolored filled or outlined Circle.
@@ -25,55 +33,46 @@ Circle::Circle(float x, float y, float radius, const ColorFloat color, bool fill
  *   \param filled Whether the circle should be filled
  *     (set to true by default).
  */
-Circle::Circle(float x, float y, float radius, const ColorFloat color[], bool filled)
-: Ellipse(x,y,radius,radius,color,filled) { } //Create an Ellipse with equal x and y radii
+Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(x,y,z,radius * 30,yaw,pitch,roll) {
+    attribMutex.lock();
+    myXScale = myYScale = myRadius = radius;
+    myZScale = 1;
+    attribMutex.unlock();
+    float delta = 2.0f / numberOfVertices * PI;
+    for (int i = 0; i < numberOfVertices; ++i) {
+        addVertex(cos(i*delta), sin(i*delta), 0, color[i]);
+    }
+}
 
-/*!
- * \brief Explicitly constructs a new Circle with different monocolored fill and outline.
- * \details This function draws a circle with the given center, radius, fillColor, and outline color.
- *   \param x The x coordinate of the circle's center.
- *   \param y The y coordinate of the circle's center.
- *   \param radius The radius of the circle in pixels.
- *   \param fillColor The color of the circle's fill
- *   \param outlineColor The color of the circle's outline
+/**
+ * \brief Mutates the radius of the Circle.
+ * \param radius The Circle's new radius.
  */
-Circle::Circle(float x, float y, float radius, const ColorFloat fillColor, const ColorFloat outlineColor)
-: Ellipse(x,y,radius,radius,fillColor,outlineColor) { } //Create an Ellipse with equal x and y radii
+void Circle::setRadius(GLfloat radius) {
+    if (radius <= 0) {
+        TsglDebug("Cannot have a Circle with radius less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myRadius = radius;
+    myXScale = myYScale = radius;
+    attribMutex.unlock();
+}
 
-/*!
- * \brief Explicitly constructs a new Circle with multicolored fill and monocolored outline.
- * \details This function draws a circle with the given center, radius, fillColor, and outline color.
- *   \param x The x coordinate of the circle's center.
- *   \param y The y coordinate of the circle's center.
- *   \param radius The radius of the circle in pixels.
- *   \param fillColor An array of colors for the Circle's fill
- *   \param outlineColor The color of the circle's outline
+/**
+ * \brief Mutates the radius of the Circle by the parameter amount.
+ * \param delta The amount by which to change the radius of the Circle.
  */
-Circle::Circle(float x, float y, float radius, const ColorFloat fillColor[], const ColorFloat outlineColor)
-: Ellipse(x,y,radius,radius,fillColor,outlineColor) { } //Create an Ellipse with equal x and y radii
-
-/*!
- * \brief Explicitly constructs a new Circle with monocolored fill and multicolored outline.
- * \details This function draws a circle with the given center, radius, fillColor, and outline color.
- *   \param x The x coordinate of the circle's center.
- *   \param y The y coordinate of the circle's center.
- *   \param radius The radius of the circle in pixels.
- *   \param fillColor The color of the circle's fill
- *   \param outlineColor An array of colors for the Circle's outline
- */
-Circle::Circle(float x, float y, float radius, const ColorFloat fillColor, const ColorFloat outlineColor[])
-: Ellipse(x,y,radius,radius,fillColor,outlineColor) { } //Create an Ellipse with equal x and y radii
-
-/*!
- * \brief Explicitly constructs a new Circle with different multicolored fill and outline.
- * \details This function draws a circle with the given center, radius, fillColor, and outline color.
- *   \param x The x coordinate of the circle's center.
- *   \param y The y coordinate of the circle's center.
- *   \param radius The radius of the circle in pixels.
- *   \param fillColor An array of colors for the Circle's fill
- *   \param outlineColor An array of colors for the Circle's outline
- */
-Circle::Circle(float x, float y, float radius, const ColorFloat fillColor[], const ColorFloat outlineColor[])
-: Ellipse(x,y,radius,radius,fillColor,outlineColor) { } //Create an Ellipse with equal x and y radii
+void Circle::changeRadiusBy(GLfloat delta) {
+    if (myRadius + delta <= 0) {
+        TsglDebug("Cannot have a Circle with radius less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myRadius += delta;
+    myXScale += delta;
+    myYScale += delta;
+    attribMutex.unlock();
+}
 
 }

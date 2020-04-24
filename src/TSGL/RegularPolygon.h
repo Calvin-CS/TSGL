@@ -9,26 +9,35 @@
 
 namespace tsgl {
 
-  /*! \class RegularPolygon
-  *  \brief Draw a regular polygon.
-  *  \details RegularPolygon is a class for holding ConvexPolygon data for a regular polygon.
-  */
-  class RegularPolygon : public ConvexPolygon {
-  public:
-    RegularPolygon(float x, float y, float radius, int sides, const ColorFloat color, bool filled = true);
+/*! \class RegularPolygon
+*  \brief Draw a regular polygon.
+*  \details RegularPolygon is a class for holding ConvexPolygon data for a regular polygon.
+*/
+class RegularPolygon : public ConvexPolygon {
+protected:
+    GLfloat myRadius;
+    int mySides;
+public:
+    RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorGLfloat color);
 
-    RegularPolygon(float x, float y, float radius, int sides, const ColorFloat color[], bool filled = true);
+    RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorGLfloat color[]);
 
-    RegularPolygon(float x, float y, float radius, int sides, const ColorFloat fillColor, const ColorFloat outlineColor);
+    /*!
+    * \brief Accessor for the number of sides of the RegularPolygon.
+    * \details Returns the value of the mySides private variable, an int.
+    */
+    int getSides() { return mySides; }
 
-    RegularPolygon(float x, float y, float radius, int sides, const ColorFloat fillColor[], const ColorFloat outlineColor);
+    /*!
+    * \brief Accessor for the radius of the RegularPolygon.
+    * \details Returns the value of the myRadius private variable, a GLfloat.
+    */
+    GLfloat getRadius() { return myRadius; }
 
-    RegularPolygon(float x, float y, float radius, int sides, const ColorFloat fillColor, const ColorFloat outlineColor[]);
+    void setRadius(GLfloat radius);
 
-    RegularPolygon(float x, float y, float radius, int sides, const ColorFloat fillColor[], const ColorFloat outlineColor[]);
-    
-
-  };
+    void changeRadiusBy(GLfloat delta);
+};
 
 }
 

@@ -5,46 +5,29 @@
 using namespace tsgl;
 
 void arrowFunction(Canvas& c) {
-	int xs[4] = {250, 250, 750, 750};
-	int ys[4] = {250, 750, 250, 750};
-	ColorFloat color[2];
-	color[0] = BLUE;
-	color[1] = YELLOW;
-
-	//Draw double headed arrow moving around Canvas
-	Arrow* doubleArrow = new Arrow(500, 500, 250, 250, WHITE, true);
+	ColorGLfloat colors[] = { ColorGLfloat(1,0,0,1), ColorGLfloat(0,1,0,1) };
+	Arrow* doubleArrow = new Arrow(0, 0, 0, 2,0,0,0, colors, true);
 	c.add(doubleArrow);
-
-	for(int i = 0; i < 4; i++) {
-
-		int x = xs[i], y = ys[i];
-
-		// draw Arrows outlining a square centered at x, y
-		for(int i = -100; i <= 100; i+= 20) {
-			c.drawArrow(x, y, x+i, y-100, PURPLE); 
-			c.drawArrow(x, y, x-100, y+i,  GREEN); 
-			c.drawArrow(x, y, x+100, y+i,  color); 
-			c.drawArrow(x, y, x+i, y+100,    RED);
-		}
-	}
-
-	int x = 250, y = 250;
-	int count = 0;
-
+	// doubleArrow->setCenterX(1);
+	// doubleArrow->setRotationPoint(0,0,0);
+	// doubleArrow->setYaw(45);
+	// doubleArrow->setColor(ColorGLfloat(1,0,0,1));
+    float floatVal = 0.0f;
+    GLfloat delta = 0.05;
 	while( c.isOpen() ) {
-		if (count == 200) {
-			c.remove(doubleArrow);
-			count = 201;
-		} else if (count == 300) {
-			c.add(doubleArrow);
-			count = 301;
-		} else if (count < 300) {
-			count++;
-		}
 		c.sleep();
-		x += 10; if(x > 1000) x = 250;
-		y += 30; if(y > 1000) y = 250;
-		doubleArrow->moveHead(x, y);
+        // doubleArrow->setCenterX(sin(floatVal/90));
+        // doubleArrow->setCenterY(sin(floatVal/90));
+        // doubleArrow->setCenterZ(sin(floatVal/90));
+        // doubleArrow->setYaw(floatVal);
+        // doubleArrow->setPitch(floatVal);
+        // doubleArrow->setRoll(floatVal);
+        // doubleArrow->setLength(sin(floatVal/90) + 2);
+        // if (doubleArrow->getLength() > 3 || doubleArrow->getLength() < 1) {
+        //     delta *= -1;
+        // }
+        // doubleArrow->changeLengthBy(delta);
+        floatVal += 1;
 	}
 
 	delete doubleArrow;

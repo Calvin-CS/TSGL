@@ -15,19 +15,31 @@ namespace tsgl {
   */
 class Ellipse : public ConvexPolygon {
  private:
-
+    GLfloat myXRadius, myYRadius;
  public:
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color, bool filled = true);
+    Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorGLfloat color);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color[], bool filled = true);
+    Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorGLfloat color[]);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor);
+    void setXRadius(GLfloat xRadius);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor);
+    void setYRadius(GLfloat yRadius);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor[]);
+    void changeXRadiusBy(GLfloat delta);
 
-    Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor[]);
+    void changeYRadiusBy(GLfloat delta);
+
+    /*!
+    * \brief Accessor for the x-radius of the Ellipse.
+    * \details Returns the value of the myXRadius private variable, a GLfloat.
+    */
+    GLfloat getXRadius() { return myXRadius; }
+
+    /*!
+    * \brief Accessor for the y-radius of the Ellipse.
+    * \details Returns the value of the myYRadius private variable, a GLfloat.
+    */
+    GLfloat getYRadius() { return myYRadius; }
     
 
 };

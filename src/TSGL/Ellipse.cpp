@@ -13,12 +13,16 @@ namespace tsgl {
  *   \param filled Whether the Ellipse should be filled
  *     (set to true by default).
  */
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color, bool filled) : ConvexPolygon((xRadius + yRadius) / 2, filled, !filled) {
-  //TODO: do we need any locking here? All the values we use below are from the constructor
-  float delta = 2.0f / numberOfVertices * PI;
-  for (int i = 0; i < numberOfVertices; ++i) {
-      addVertex(x+xRadius*cos(i*delta), y+yRadius*sin(i*delta), color);
-  }
+Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon(x,y,z,(xRadius + yRadius) / 2 * 30,yaw,pitch,roll) {
+    attribMutex.lock();
+    myXScale = myXRadius = xRadius;
+    myYScale = myYRadius = yRadius;
+    myZScale = 1;
+    attribMutex.unlock();
+    float delta = 2.0f / numberOfVertices * PI;
+    for (int i = 0; i < numberOfVertices; ++i) {
+        addVertex(cos(i*delta), sin(i*delta), 0, color);
+    }
 }
 
 /*!
@@ -32,84 +36,76 @@ Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloa
  *   \param filled Whether the Ellipse should be filled
  *     (set to true by default).
  */
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat color[], bool filled) : ConvexPolygon((xRadius + yRadius) / 2, filled, !filled) {
-  //TODO: do we need any locking here? All the values we use below are from the constructor
-  float delta = 2.0f / numberOfVertices * PI;
-  for (int i = 0; i < numberOfVertices; ++i) {
-      addVertex(x+xRadius*cos(i*delta), y+yRadius*sin(i*delta), color[i]);
-  }
+Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(x,y,z,(xRadius + yRadius) / 2 * 30,yaw,pitch,roll) {
+    attribMutex.lock();
+    myXScale = myXRadius = xRadius;
+    myYScale = myYRadius = yRadius;
+    myZScale = 1;
+    attribMutex.unlock();
+    float delta = 2.0f / numberOfVertices * PI;
+    for (int i = 0; i < numberOfVertices; ++i) {
+        addVertex(cos(i*delta), sin(i*delta), 0, color[i]);
+    }
 }
 
-/*!
- * \brief Explicitly constructs a new Ellipse with different monocolored fill and outline.
- * \details This function draws a Ellipse with the given center, radii, fillColor, and outline color.
- *   \param x The x coordinate of the Ellipse's center.
- *   \param y The y coordinate of the Ellipse's center.
- *   \param xRadius The horizontal radius of the Ellipse in pixels.
- *   \param yRadius The vertical radius of the Ellipse in pixels.
- *   \param fillColor The color of the Ellipse's fill
- *   \param outlineColor The color of the Ellipse's outline
+/**
+ * \brief Mutates the horizontal radius of the Ellipse.
+ * \param xRadius The Ellipse's new x-radius.
  */
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor) : ConvexPolygon((xRadius + yRadius) / 2, true, true) {
-  //TODO: do we need any locking here? All the values we use below are from the constructor
-  float delta = 2.0f / numberOfVertices * PI;
-  for (int i = 0; i < numberOfVertices; ++i) {
-      addVertex(x+xRadius*cos(i*delta), y+yRadius*sin(i*delta), fillColor, outlineColor);
-  }
+void Ellipse::setXRadius(GLfloat xRadius) {
+    if (xRadius <= 0) {
+        TsglDebug("Cannot have a Ellipse with x-radius less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myXRadius = xRadius;
+    myXScale = xRadius;
+    attribMutex.unlock();
 }
 
-/*!
- * \brief Explicitly constructs a new Ellipse with multicolored fill and monocolored outline.
- * \details This function draws a Ellipse with the given center, radii, fillColor, and outline color.
- *   \param x The x coordinate of the Ellipse's center.
- *   \param y The y coordinate of the Ellipse's center.
- *   \param xRadius The horizontal radius of the Ellipse in pixels.
- *   \param yRadius The vertical radius of the Ellipse in pixels.
- *   \param fillColor An array of colors for the Ellipse's fill
- *   \param outlineColor The color of the Ellipse's outline
+/**
+ * \brief Mutates the horizontal radius of the Ellipse by the parameter amount.
+ * \param delta The amount by which to change the x-radius of the Ellipse.
  */
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor) : ConvexPolygon((xRadius + yRadius) / 2, true, true) {
-  //TODO: do we need any locking here? All the values we use below are from the constructor
-  float delta = 2.0f / numberOfVertices * PI;
-  for (int i = 0; i < numberOfVertices; ++i) {
-      addVertex(x+xRadius*cos(i*delta), y+yRadius*sin(i*delta), fillColor[i], outlineColor);
-  }
+void Ellipse::changeXRadiusBy(GLfloat delta) {
+    if (myXRadius + delta <= 0) {
+        TsglDebug("Cannot have a Ellipse with x-radius less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myXRadius += delta;
+    myXScale += delta;
+    attribMutex.unlock();
 }
 
-/*!
- * \brief Explicitly constructs a new Ellipse with monocolored fill and multicolored outline.
- * \details This function draws a Ellipse with the given center, radii, fillColor, and outline color.
- *   \param x The x coordinate of the Ellipse's center.
- *   \param y The y coordinate of the Ellipse's center.
- *   \param xRadius The horizontal radius of the Ellipse in pixels.
- *   \param yRadius The vertical radius of the Ellipse in pixels.
- *   \param fillColor The color of the Ellipse's fill
- *   \param outlineColor An array of colors for the Ellipse's outline
+/**
+ * \brief Mutates the vertical radius of the Ellipse.
+ * \param YRadius The Ellipse's new y-radius.
  */
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor, const ColorFloat outlineColor[]) : ConvexPolygon((xRadius + yRadius) / 2, true, true) {
-  //TODO: do we need any locking here? All the values we use below are from the constructor
-  float delta = 2.0f / numberOfVertices * PI;
-  for (int i = 0; i < numberOfVertices; ++i) {
-      addVertex(x+xRadius*cos(i*delta), y+yRadius*sin(i*delta), fillColor, outlineColor[i]);
-  }
+void Ellipse::setYRadius(GLfloat yRadius) {
+    if (yRadius <= 0) {
+        TsglDebug("Cannot have a Ellipse with y-radius less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myYRadius = yRadius;
+    myYScale = yRadius;
+    attribMutex.unlock();
 }
 
-/*!
- * \brief Explicitly constructs a new Ellipse with different multicolored fill and outline.
- * \details This function draws a Ellipse with the given center, radius, fillColor, and outline color.
- *   \param x The x coordinate of the Ellipse's center.
- *   \param y The y coordinate of the Ellipse's center.
- *   \param xRadius The horizontal radius of the Ellipse in pixels.
- *   \param yRadius The vertical radius of the Ellipse in pixels.
- *   \param fillColor An array of colors for the Ellipse's fill
- *   \param outlineColor An array of colors for the Ellipse's outline
+/**
+ * \brief Mutates the vertical radius of the Ellipse by the parameter amount.
+ * \param delta The amount by which to change the y-radius of the Ellipse.
  */
-Ellipse::Ellipse(float x, float y, float xRadius, float yRadius, const ColorFloat fillColor[], const ColorFloat outlineColor[]) : ConvexPolygon((xRadius + yRadius) / 2, true, true) {
-  //TODO: do we need any locking here? All the values we use below are from the constructor
-  float delta = 2.0f / numberOfVertices * PI;
-  for (int i = 0; i < numberOfVertices; ++i) {
-      addVertex(x+xRadius*cos(i*delta), y+yRadius*sin(i*delta), fillColor[i], outlineColor[i]);
-  }
+void Ellipse::changeYRadiusBy(GLfloat delta) {
+    if (myYRadius + delta <= 0) {
+        TsglDebug("Cannot have a Ellipse with y-radius less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myYRadius += delta;
+    myYScale += delta;
+    attribMutex.unlock();
 }
 
 

@@ -27,35 +27,12 @@ namespace tsgl {
  *  \details However, this is not recommended for normal use of the TSGL library.
  */
 class Shape : public Drawable {
- protected:
-    int numberOfVertices;
-    float* vertices;
-    GLenum geometryType;
-    bool init = false;
-    int current = 0;
-    float currentRotation;
  public:
-    Shape();
+    Shape(float x, float y, float z, float yaw, float pitch, float roll);
 
-    virtual void draw();
+    virtual void setColor(ColorGLfloat c);
 
-    virtual void addVertex(float x, float y, const ColorFloat &color = BLACK);
-
-    virtual void setColor(ColorFloat c);
-
-    virtual void setColor(ColorFloat c[]);
-
-    virtual void moveShapeBy(float deltaX, float deltaY);
-
-    virtual void setCenter(float x, float y);
-
-    virtual void setRotation(float radians);
-
-   /*!
-    * \brief Accessor that returns if Shape is processed and ready to be drawn
-    * \details This function returns true only if all vertices have been inserted into an array.
-    */
-    virtual bool isProcessed() { return init; }
+    virtual void setColor(ColorGLfloat c[]);
 };
 
 }
