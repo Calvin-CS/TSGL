@@ -18,10 +18,15 @@ namespace tsgl {
 Polyline::Polyline(float x, float y, float z, int numVertices, float yaw, float pitch, float roll) : Shape(x,y,z,yaw,pitch,roll) {
     if (numVertices < 2)
       TsglDebug("Cannot have a line with fewer than 2 vertices.");
+    attribMutex.lock();
     numberOfVertices = numVertices;
-    vertices = new float[numberOfVertices*6];
-    init = false;
+    numberOfOutlineVertices = 0;
+    edgesOutlined = false;
+    myXScale = myYScale = myZScale = 1;
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
     geometryType = GL_LINE_STRIP;
+    attribMutex.unlock();
 }
 
  /*!
@@ -50,10 +55,10 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     geometryType = GL_LINE_STRIP;
+    attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
         addVertex(lineVertices[3*i], lineVertices[3*i + 1], lineVertices[3*i + 2], color);
     }
-    attribMutex.unlock();
 }
 
  /*!
@@ -82,10 +87,10 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
     vertices = new GLfloat[numberOfVertices * 3];
     colors = new GLfloat[numberOfVertices * 4];
     geometryType = GL_LINE_STRIP;
+    attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
         addVertex(lineVertices[3*i], lineVertices[3*i + 1], lineVertices[3*i + 2], color[i]);
     }
-    attribMutex.unlock();
 }
 
 /*!

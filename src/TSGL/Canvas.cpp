@@ -236,7 +236,9 @@ void Canvas::draw()
         if (objectBuffer.size() > 0) {
           for (unsigned int i = 0; i < objectBuffer.size(); i++) {
             Drawable* d = objectBuffer[i];
-            d->draw();
+            if(d->isProcessed()) {
+              d->draw();
+            }
             // if(d->isProcessed()) {
             //   if (!d->getIsTextured()) {
             //     d->draw();

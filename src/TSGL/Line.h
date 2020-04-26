@@ -23,7 +23,7 @@ class Line : public Polyline {
 
     void setLength(GLfloat length);
 
-    void changeLineLengthBy(GLfloat delta);
+    void changeLengthBy(GLfloat delta);
 
     /**
      * \brief Returns the length of the line.

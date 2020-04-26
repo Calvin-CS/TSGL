@@ -31,6 +31,10 @@ Drawable::Drawable(float x, float y, float z, float yaw, float pitch, float roll
  *   if the above condition is met (vertex buffer = not full).
  */
 void Drawable::draw() {
+    if (!init) {
+        TsglDebug("Vertex buffer is not full.");
+        return;
+    }
     glPushMatrix();
     glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
     glRotatef(myCurrentYaw, 0, 0, 1);

@@ -5,19 +5,16 @@
 #include <tsgl.h>
 using namespace tsgl;
 
-int main() {
-	Canvas c(-1, -1, 1000, 1000, "Stars", FRAME * 13);
-	c.start();
-
-	ColorGLfloat * colors = new ColorGLfloat[16];
+void starFunction(Canvas& c) {
+	ColorGLfloat * colors = new ColorGLfloat[400];
 	colors[0] = ColorGLfloat(1,0,0,1);
-	for(int i = 1; i < 16; i ++) {
-		colors[i] = ColorGLfloat(0,1,0,1);
+	for(int i = 1; i < 10; i ++) {
+		// colors[i] = ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)));
+        colors[i] = ColorGLfloat(0,0,1,1);
 	}
 
 	Star * s1 = new Star(0, 0, 0, 1, 5, 0,0,0, colors, true);
-	s1->displayOutlineEdges(false);
-	// s1->setColor(ColorGLfloat(1,0,0,1));
+    // s1->setColor(ColorGLfloat(1,0,0,1));
 	c.add(s1);
 
     float floatVal = 0.0f;
@@ -44,9 +41,14 @@ int main() {
         floatVal += 1;
     }
 
-	c.wait();
-
 	delete[] colors;
 	// delete s1; // not sure why this doesn't have to be deleted. But it doesn't.
 	return 0;
+}
+
+int main(int argc, char* argv[]) {
+  int w = 1000;
+  int h = 1000;
+  Canvas c(-1, -1, w, h, "Stars");
+  c.run(starFunction);
 }

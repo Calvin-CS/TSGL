@@ -14,14 +14,12 @@ using namespace tsgl;
  * \note See http://www.mathopenref.com/polygonconcave.html
  * \details
  * - Initialize a constant \b PSIZE.
- * - Have four arrays of integers \b x, \b y, \b xx, and \b yy and set them to have size \b PSIZE.
+ * - Have two arrays of integers, \b xx and \b yy and set them to have size \b PSIZE.
  * - Create an empty array of colors of size \b PSIZE and fill it with random colors.
- * - Fill the arrays of integers, \b x and \b y with specific values (which will then be used in the while loop to draw a Concave polygon).
- * - Fill the other arrays of integers, \b xx and \b yy, with specific values.
+ * - Fill the arrays of integers, \b xx and \b yy, with specific values.
  * - While the Canvas is open:
  *   - Sleep the internal timer of the Canvas until the Canvas is ready to draw.
- *   - Draw a Concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
- *   - Draw another Concave polygon on the Canvas and pass \b PSIZE, the arrays \b x and \b y, and the array of colors as arguments.
+ *   - Draw a Concave polygon on the Canvas and pass x-coordinate, y-coordinate, z-coordinate, \b PSIZE, the arrays \b xx and \b yy, yaw, pitch, roll, and the array of colors as arguments.
  *   .
  * .
  * \param can Reference to the Canvas being drawn to.
@@ -29,50 +27,43 @@ using namespace tsgl;
 void concavePolygonFunction(Canvas& can) {
   const int PSIZE = 64;
 
-  int x[PSIZE], xx[PSIZE];
-  int y[PSIZE], yy[PSIZE];
+  float xx[PSIZE];
+  float yy[PSIZE];
   ColorGLfloat color[PSIZE];
   for (unsigned i = 0; i < PSIZE; ++i)
     color[i] = ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1);
 
+  color[1] = color[PSIZE-1];
 
-  x[0] = 100; y[0] = 100;
-  x[1] = 200; y[1] = 100;
-  x[2] = 200; y[2] = 200;
-  x[3] = 300; y[3] = 200;
-  x[4] = 300; y[4] = 100;
-  x[5] = 400; y[5] = 100;
-  x[6] = 400; y[6] = 400;
-  x[7] = 300; y[7] = 300;
-  x[8] = 250; y[8] = 400;
-  x[9] = 200; y[9] = 300;
-  x[10] = 100; y[10] = 400;
-
-  for (int i = 0; i < PSIZE; ++i) {
+  xx[0] = 0;
+  yy[0] = 0;
+  for (int i = 0; i < PSIZE-1; ++i) {
     if (i % 2 == 0) {
-      xx[i] = 0 + 2.5 * sin((1.0f*i)/(PSIZE) * PI * 2);
-      yy[i] = 0 - 2.5 * cos((1.0f*i)/(PSIZE) * PI * 2);
+      xx[i+1] = 0 + 2.5 * sin((1.0f*i)/(PSIZE-2) * PI * 2);
+      yy[i+1] = 0 - 2.5 * cos((1.0f*i)/(PSIZE-2) * PI * 2);
     } else {
-      xx[i] = 0 + 1.5 * sin((1.0f*i)/(PSIZE) * PI * 2);
-      yy[i] = 0 - 1.5 * cos((1.0f*i)/(PSIZE) * PI * 2);
+      xx[i+1] = 0 + 1.5 * sin((1.0f*i)/(PSIZE-2) * PI * 2);
+      yy[i+1] = 0 - 1.5 * cos((1.0f*i)/(PSIZE-2) * PI * 2);
     }
   }
 
-  // ConcavePolygon * c1 = new ConcavePolygon(11, x, y, color, false);
-  ConcavePolygon * c2 = new ConcavePolygon(0,0,0,PSIZE, xx, yy, 0,0,0,ColorGLfloat(1,0,0,1));
-  // can.add(c1); 
+  ConcavePolygon * c2 = new ConcavePolygon(0,0,0,PSIZE, xx, yy, 0,0,0,color);
+  // c2->setColor(color);
+  // c2->setColor(ColorGLfloat(1,0,0,1));
   can.add(c2);
 
+  float floatVal = 0.0f;
   while (can.isOpen()) {  // Checks to see if the window has been closed
     can.sleep();
-    // note: when you call drawConcavePolygon, you MUST give it the correct size.
-    // otherwise, it is always wrong and inconsistent in how it is wrong.
-    can.pauseDrawing();
-    // c1->setCenter(can.getWindowWidth() / 2 + 450 * sin((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2), can.getWindowHeight() / 2 - 450 * cos((1.0f*can.getFrameNumber() / 8)/(PSIZE) * PI * 2) );
-    can.resumeDrawing();
+    // c2->setCenterX(sin(floatVal/90));
+    // c2->setCenterY(sin(floatVal/90));
+    // c2->setCenterZ(sin(floatVal/90));
+    // c2->setYaw(floatVal);
+    // c2->setPitch(floatVal);
+    c2->setRoll(floatVal);
+    floatVal += 1;
   }
 
-  // delete c1;
   delete c2;
 }
 

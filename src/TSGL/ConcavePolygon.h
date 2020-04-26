@@ -25,33 +25,16 @@ namespace tsgl {
  *  \note Calling draw() before all vertices have been added will do nothing.
  */
 class ConcavePolygon : public Shape {
- private:
-    bool dirty;         // Whether the new vertex buffer is dirty
-    int size,           // Number of floating point numbers in vertices
-        tsize,          // Number of floating point numbers in tarray
-        csize,          // Number of floating point numbers in colors array
-        length;         // Number of vertices in vertices (size / 6)
-
-    static bool testIntersects();     // Unit test for intersects()
-    static bool testPointITriangle(); // Unit test for pointInTriangle()
-
- public:
-    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll);
-
-    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, int x[], int y[], float yaw, float pitch, float roll, ColorGLfloat color);
-
-    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, int x[], int y[], float yaw, float pitch, float roll, ColorGLfloat color[]);
-
-    bool intersects(float p0_x, float p0_y, float p1_x, float p1_y,
-                    float p2_x, float p2_y, float p3_x, float p3_y);
-
-    bool pointInTriangle (float px, float py, float x1, float y1, float x2, float y2, float x3, float y3);
+ protected:
+    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll); 
 
     void addVertex(float x, float y, float z, ColorGLfloat &color);
+ public:
+    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorGLfloat color);
 
-    void preprocess();
+    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorGLfloat color[]);
 
-    static void runTests();
+    virtual void draw();
 };
 
 }

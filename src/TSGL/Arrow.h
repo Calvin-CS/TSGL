@@ -15,13 +15,8 @@ namespace tsgl {
  */
 class Arrow : public ConcavePolygon {
  private:
-    float headX, headY, tailX, tailY;
     bool isDoubleArrow;
     GLfloat myLength;
-    ColorGLfloat headColor;
-    ColorGLfloat tailColor;
-    void makeArrowHead(float x, float y, float deltaX, float deltaY, const ColorGLfloat color); // Helps constructor by calculating the Arrow Head's coordinates
-    void generateVertices();
  public:
 
     Arrow(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color, bool doubleArrow = false);
@@ -33,6 +28,10 @@ class Arrow : public ConcavePolygon {
     void changeLengthBy(GLfloat delta);
 
     GLfloat getLength() { return myLength; }
+
+    void setColor(ColorGLfloat c) { Shape::setColor(c); }
+
+    void setColor(ColorGLfloat c[]);
 };
 
 }

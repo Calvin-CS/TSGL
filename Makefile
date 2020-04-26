@@ -77,6 +77,7 @@ BINARIES= \
 	bin/testCircle \
 	bin/testEllipse \
 	bin/testEllipsoid \
+	bin/testLines \
 	bin/testPrism \
 	bin/testPyramid \
 	bin/testRectangle \

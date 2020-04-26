@@ -3,45 +3,79 @@
 namespace tsgl {
 
 /*!
-* \brief Explicitly constructs a new monocolored Line.
-* \details This is the constructor for the Line class.
-*      \param x1 The x coordinate of the first endpoint.
-*      \param y1 The y coordinate of the first endpoint.
-*      \param x2 The x coordinate of the second endpoint.
-*      \param y2 The y coordinate of the second endpoint.
-*      \param color The reference variable to the color of the Line.
-* \return A new Line with the specified endpoints and color.
-*/
+ * \brief Explicitly constructs a new Arrow.
+ * \details This is the constructor for the Arrow class.
+ *      \param x The x coordinate of the center of the arrow.
+ *      \param y The y coordinate of the center of the arrow.
+ *      \param z The z coordinate of the center of the arrow.
+ *      \param length The length of the arrow.
+ *      \param yaw The yaw of the arrow.
+ *      \param pitch The pitch of the arrow.
+ *      \param roll The roll of the arrow.
+ *      \param color A ColorGLfloats for the color of the Arrow.
+ * \return A new Arrow with the specified length and color.
+ * \note At 0,0,0 yaw,pitch,roll, the arrow will be drawn directly parallel to the x-axis as a plane perpindicular to the z-axis.
+ */
 Arrow::Arrow(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color, bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
-    headX = -0.5; headY = 0;
-    tailX = 0.5; tailY = 0;
+    attribMutex.lock();
     myXScale = length;
     myLength = length;
     isDoubleArrow = doubleArrow;
-    headColor = color;
-    tailColor = color;
-    generateVertices();
+    attribMutex.unlock();
+    addVertex(-0.4, 0.02, 0, color);
+    addVertex(-0.4, 0.05, 0, color);
+    addVertex(-0.5, 0, 0, color);
+    addVertex(-0.4, -0.05, 0, color);
+    addVertex(-0.4, -0.02, 0, color);
+
+    if( isDoubleArrow ) {
+        addVertex(0.4, -0.02, 0, color);
+        addVertex(0.4, -0.05, 0, color);
+        addVertex(0.5, 0, 0, color);
+        addVertex(0.4, 0.05, 0, color);
+        addVertex(0.4, 0.02, 0, color);
+    } else {
+        addVertex(0.5, -.02, 0, color);
+        addVertex(0.5, .02, 0, color);
+    }
 }
 
 /*!
-* \brief Explicitly constructs a new multicolored Line.
-* \details This is the constructor for the Line class.
-*      \param x1 The x coordinate of the first endpoint.
-*      \param y1 The y coordinate of the first endpoint.
-*      \param x2 The x coordinate of the second endpoint.
-*      \param y2 The y coordinate of the second endpoint.
-*      \param color An array of colors for the line endpoints.
-* \return A new Line with the specified endpoints and endpoint colors.
-*/
+ * \brief Explicitly constructs a new Arrow.
+ * \details This is the constructor for the Arrow class.
+ *      \param x The x coordinate of the center of the arrow.
+ *      \param y The y coordinate of the center of the arrow.
+ *      \param z The z coordinate of the center of the arrow.
+ *      \param length The length of the arrow.
+ *      \param yaw The yaw of the arrow.
+ *      \param pitch The pitch of the arrow.
+ *      \param roll The roll of the arrow.
+ *      \param color An array of ColorGLfloats for the colors of the Arrow.
+ * \return A new Arrow with the specified length and color.
+ * \note At 0,0,0 yaw,pitch,roll, the arrow will be drawn directly parallel to the x-axis as a plane perpindicular to the z-axis.
+ */
 Arrow::Arrow(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color[], bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
-    headX = -0.5; headY = 0;
-    tailX = 0.5; tailY = 0;
+    attribMutex.lock();
     myXScale = length;
     myLength = length;
     isDoubleArrow = doubleArrow;
-    headColor = color[0];
-    tailColor = color[1];
-    generateVertices();
+    attribMutex.unlock();
+    addVertex(-0.4, 0.02, 0, color[0]);
+    addVertex(-0.4, 0.05, 0, color[0]);
+    addVertex(-0.5, 0, 0, color[0]);
+    addVertex(-0.4, -0.05, 0, color[0]);
+    addVertex(-0.4, -0.02, 0, color[0]);
+
+    if( isDoubleArrow ) {
+        addVertex(0.4, -0.02, 0, color[1]);
+        addVertex(0.4, -0.05, 0, color[1]);
+        addVertex(0.5, 0, 0, color[1]);
+        addVertex(0.4, 0.05, 0, color[1]);
+        addVertex(0.4, 0.02, 0, color[1]);
+    } else {
+        addVertex(0.5, -0.02, 0, color[1]);
+        addVertex(0.5, 0.02, 0, color[1]);
+    }
 }
 
 void Arrow::setLength(GLfloat length) {
@@ -66,67 +100,26 @@ void Arrow::changeLengthBy(GLfloat delta) {
     attribMutex.unlock();
 }
 
-/*!
-* \brief private method helping constructor initialize vertices array for monocolored arrow
-*/
-void Arrow::generateVertices() {
-    //TODO: figure out locking for this since we are adding vertices, which uses the lock
-    makeArrowHead(-0.5, 0, -1, 0, headColor);
-
-    if( isDoubleArrow ) {
-        makeArrowHead(0.5, 0, 1, 0, tailColor);
-    } else {
-        float a, b; //Offsets for vertices
-        // if( tailY < headY ) a = 1;
-        // else a = -1;
-        a = -.02;
-        // if( tailX > headX ) b = 1;
-        // else b = -1;
-        b = .02;
-
-        // addVertex(tailX-a, tailY-b, 0, tailColor);
-        // addVertex(tailX+a, tailY+b, 0, tailColor);
-        addVertex(tailX, -b, 0, tailColor);
-        addVertex(tailX, b, 0, tailColor);
+/**
+ * \brief Sets the Arrow to a new color.
+ * \param c The new array of ColorGLfloats.
+ * \note Overrides Shape::setColor(ColorGLfloat c[]).
+ */
+void Arrow::setColor(ColorGLfloat c[]) {
+    for(int i = 0; i < 7; i++) {
+        colors[i*4] = c[i/5].R;
+        colors[i*4 + 1] = c[i/5].G;
+        colors[i*4 + 2] = c[i/5].B;
+        colors[i*4 + 3] = c[i/5].A;
+    }
+    if (isDoubleArrow) {
+        for(int i = 7; i < 10; i++) {
+            colors[i*4] = c[1].R;
+            colors[i*4 + 1] = c[1].G;
+            colors[i*4 + 2] = c[1].B;
+            colors[i*4 + 3] = c[1].A;
+        }
     }
 }
 
-/*!
-* \brief private method helping constructor for the arrow heads
-*/
-void Arrow::makeArrowHead(float x, float y, float deltaX, float deltaY, ColorGLfloat color) {
-
-    float a, b;
-    // if( deltaY > 0 ) a = 1;
-    // else a = -1;
-    a = -.02;
-    if( deltaX < 0 ) b = .02;
-    else b = -.02;
-    // b = 1;
-
-    // float angle = atan( deltaY / deltaX );
-    float angle = 0;
-    // float s = sin( angle ), c = cos( angle );
-    float s = 0, c = 1;
-    // float x1 = -10*c-(-5)*s, x2 = 2*c - 0*s, x3 = -10*c-5*s;
-    // float y1 = -10*s+(-5)*c, y2 = 2*s + 0*c, y3 = -10*s+5*c;
-    float x1 = -0.1, x2 = .02, x3 = -0.1;
-    float y1 = -.05, y2 = 0, y3 = .05;
-    // if we have an arrow pointing left, rotate it pi radians ( sin = 0, cos = -1)
-    if (deltaX < 0) {
-        x1 = -x1, x2 = -x2, x3 = -x3;
-        y1 = -y1, y2 = -y2, y3 = -y3;
-    }
-    // transpose the triangle to the end of the line
-    x1 += x, x2 += x, x3 += x;
-    y1 += y, y2 += y, y3 += y;
-
-    // addVertex( (x1+x3)/2+a, (y1+y3)/2+b, 0, color  );
-    addVertex(x1, +b, 0, color);
-    addVertex(x1, y1, 0, color);
-    addVertex(x2, y2, 0, color);
-    addVertex(x3, y3, 0, color);
-    // addVertex( (x1+x3)/2-a, (y1+y3)/2-b, 0, color );
-    addVertex(x3, -b, 0, color);
-}
 }
