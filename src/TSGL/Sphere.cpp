@@ -17,6 +17,7 @@ namespace tsgl {
   * \return A new Sphere with a buffer for storing the specified numbered of vertices.
   */
 Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
+    // FIXME alpha param works kinda weirdly
     if (radius <= 0) {
         TsglDebug("Cannot have a Sphere with radius less than or equal to 0.");
     }
@@ -38,11 +39,11 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
 	{
 		for(float a=0;a<verticalSections;a++)
 		{
-			addVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorGLfloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), c.A));
-			addVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorGLfloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), c.A));
+			addVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorGLfloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), 1));
+			addVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorGLfloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), 1));
 		}
 	}
-    addVertex(0, 1, 0, ColorGLfloat(c.R, c.G, c.B, c.A));
+    addVertex(0, 1, 0, ColorGLfloat(c.R, c.G, c.B, 1));
 }
 
  /*!

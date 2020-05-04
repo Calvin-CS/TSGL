@@ -82,6 +82,7 @@ BINARIES= \
 	bin/testPyramid \
 	bin/testRectangle \
 	bin/testRegularPolygon \
+	bin/testSolarSystem \
 	bin/testSphere \
 	bin/testSquare \
 	bin/testStar \

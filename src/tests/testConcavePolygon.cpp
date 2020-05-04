@@ -47,6 +47,16 @@ void concavePolygonFunction(Canvas& can) {
     }
   }
 
+  // for (int i = 0; i < PSIZE; ++i) {
+  //   if (i % 2 == 0) {
+  //     xx[i] = 0 + 2.5 * sin((1.0f*i)/(PSIZE) * PI * 2);
+  //     yy[i] = 0 - 2.5 * cos((1.0f*i)/(PSIZE) * PI * 2);
+  //   } else {
+  //     xx[i] = 0 + 1.5 * sin((1.0f*i)/(PSIZE) * PI * 2);
+  //     yy[i] = 0 - 1.5 * cos((1.0f*i)/(PSIZE) * PI * 2);
+  //   }
+  // }
+
   ConcavePolygon * c2 = new ConcavePolygon(0,0,0,PSIZE, xx, yy, 0,0,0,color);
   // c2->setColor(color);
   // c2->setColor(ColorGLfloat(1,0,0,1));
@@ -60,7 +70,7 @@ void concavePolygonFunction(Canvas& can) {
     // c2->setCenterZ(sin(floatVal/90));
     // c2->setYaw(floatVal);
     // c2->setPitch(floatVal);
-    c2->setRoll(floatVal);
+    // c2->setRoll(floatVal);
     floatVal += 1;
   }
 

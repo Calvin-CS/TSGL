@@ -26,6 +26,7 @@ namespace tsgl {
 class Drawable {
  protected:
     std::mutex      attribMutex; ///< Protects the attributes of the Drawable from being accessed while simultaneously being changed
+    bool isTextured = false;
     bool edgesOutlined = true;
     int numberOfVertices;
     int numberOfOutlineVertices;
@@ -147,6 +148,8 @@ class Drawable {
     * \details This function returns true only if all vertices have been inserted into an array.
     */
     virtual bool isProcessed() { return init; }
+
+    virtual bool getIsTextured() { return isTextured; }
 };
 
 }
