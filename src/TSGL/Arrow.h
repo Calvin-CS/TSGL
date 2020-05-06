@@ -16,18 +16,24 @@ namespace tsgl {
 class Arrow : public ConcavePolygon {
  private:
     bool isDoubleArrow;
-    GLfloat myLength;
+    GLfloat myLength, myWidth;
  public:
 
-    Arrow(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color, bool doubleArrow = false);
+    Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorGLfloat color, bool doubleArrow = false);
 
-    Arrow(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color[], bool doubleArrow = false);
+    Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorGLfloat color[], bool doubleArrow = false);
 
     void setLength(GLfloat length);
 
     void changeLengthBy(GLfloat delta);
 
     GLfloat getLength() { return myLength; }
+
+    void setWidth(GLfloat width);
+
+    void changeWidthBy(GLfloat delta);
+
+    GLfloat getWidth() { return myWidth; }
 
     void setColor(ColorGLfloat c) { Shape::setColor(c); }
 

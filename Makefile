@@ -75,9 +75,11 @@ BINARIES= \
 	bin/testCuboid \
 	bin/testCylinder \
 	bin/testCircle \
+	bin/testClock \
 	bin/testEllipse \
 	bin/testEllipsoid \
 	bin/testLines \
+	bin/testPanorama \
 	bin/testPrism \
 	bin/testPyramid \
 	bin/testRectangle \
@@ -100,6 +102,7 @@ BINARIES= \
 #	bin/testConstructors \
 #	bin/testConway \
 #	bin/testCosineIntegral \
+#	bin/testDice \
 #	bin/testDumbSort \
 #	bin/testFireworks \
 #	bin/testForestFire \

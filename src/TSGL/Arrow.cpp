@@ -16,27 +16,33 @@ namespace tsgl {
  * \return A new Arrow with the specified length and color.
  * \note At 0,0,0 yaw,pitch,roll, the arrow will be drawn directly parallel to the x-axis as a plane perpindicular to the z-axis.
  */
-Arrow::Arrow(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color, bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
+Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorGLfloat color, bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
+    if (width <= 0 || length <= 0) {
+        TsglDebug("Cannot have an Arrow with length or width less than or equal to 0.");
+        return;
+    }
     attribMutex.lock();
     myXScale = length;
     myLength = length;
+    myYScale = width;
+    myWidth = width;
     isDoubleArrow = doubleArrow;
     attribMutex.unlock();
-    addVertex(-0.4, 0.02, 0, color);
-    addVertex(-0.4, 0.05, 0, color);
+    addVertex(-0.4, 0.4, 0, color);
+    addVertex(-0.4, 1, 0, color);
     addVertex(-0.5, 0, 0, color);
-    addVertex(-0.4, -0.05, 0, color);
-    addVertex(-0.4, -0.02, 0, color);
+    addVertex(-0.4, -1, 0, color);
+    addVertex(-0.4, -0.4, 0, color);
 
     if( isDoubleArrow ) {
-        addVertex(0.4, -0.02, 0, color);
-        addVertex(0.4, -0.05, 0, color);
+        addVertex(0.4, -0.4, 0, color);
+        addVertex(0.4, -1, 0, color);
         addVertex(0.5, 0, 0, color);
-        addVertex(0.4, 0.05, 0, color);
-        addVertex(0.4, 0.02, 0, color);
+        addVertex(0.4, 1, 0, color);
+        addVertex(0.4, 0.4, 0, color);
     } else {
-        addVertex(0.5, -.02, 0, color);
-        addVertex(0.5, .02, 0, color);
+        addVertex(0.5, -.4, 0, color);
+        addVertex(0.5, .4, 0, color);
     }
 }
 
@@ -54,27 +60,33 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, float yaw, float pitch, 
  * \return A new Arrow with the specified length and color.
  * \note At 0,0,0 yaw,pitch,roll, the arrow will be drawn directly parallel to the x-axis as a plane perpindicular to the z-axis.
  */
-Arrow::Arrow(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color[], bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
+Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorGLfloat color[], bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
+    if (width <= 0 || length <= 0) {
+        TsglDebug("Cannot have an Arrow with length or width less than or equal to 0.");
+        return;
+    }
     attribMutex.lock();
     myXScale = length;
     myLength = length;
+    myYScale = width;
+    myWidth = width;
     isDoubleArrow = doubleArrow;
     attribMutex.unlock();
-    addVertex(-0.4, 0.02, 0, color[0]);
-    addVertex(-0.4, 0.05, 0, color[0]);
+    addVertex(-0.4, 0.4, 0, color[0]);
+    addVertex(-0.4, 1, 0, color[0]);
     addVertex(-0.5, 0, 0, color[0]);
-    addVertex(-0.4, -0.05, 0, color[0]);
-    addVertex(-0.4, -0.02, 0, color[0]);
+    addVertex(-0.4, -1, 0, color[0]);
+    addVertex(-0.4, -0.4, 0, color[0]);
 
     if( isDoubleArrow ) {
-        addVertex(0.4, -0.02, 0, color[1]);
-        addVertex(0.4, -0.05, 0, color[1]);
+        addVertex(0.4, -0.4, 0, color[1]);
+        addVertex(0.4, -1, 0, color[1]);
         addVertex(0.5, 0, 0, color[1]);
-        addVertex(0.4, 0.05, 0, color[1]);
-        addVertex(0.4, 0.02, 0, color[1]);
+        addVertex(0.4, 1, 0, color[1]);
+        addVertex(0.4, 0.4, 0, color[1]);
     } else {
-        addVertex(0.5, -0.02, 0, color[1]);
-        addVertex(0.5, 0.02, 0, color[1]);
+        addVertex(0.5, -0.4, 0, color[1]);
+        addVertex(0.5, 0.4, 0, color[1]);
     }
 }
 
@@ -97,6 +109,28 @@ void Arrow::changeLengthBy(GLfloat delta) {
     attribMutex.lock();
     myXScale += delta;
     myLength += delta;
+    attribMutex.unlock();
+}
+
+void Arrow::setWidth(GLfloat width) {
+    if (width <= 0) {
+        TsglDebug("Cannot have an Arrow with width less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myYScale = width;
+    myWidth = width;
+    attribMutex.unlock();
+}
+
+void Arrow::changeWidthBy(GLfloat delta) {
+    if (myWidth + delta <= 0) {
+        TsglDebug("Cannot have an Arrow with width less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myYScale += delta;
+    myWidth += delta;
     attribMutex.unlock();
 }
 
