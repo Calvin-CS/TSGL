@@ -45,6 +45,7 @@
 #include <sstream>          // For string building
 #include <string>           // For window titles
 #include <algorithm>
+#include <omp.h>
 #ifdef __APPLE__
   #include <pthread.h>
 #else

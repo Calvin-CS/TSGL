@@ -1,10 +1,10 @@
 /*!
- * \class Table
+ * \class Table3D
  * \brief Object managing the forks and philosophers in the Dining Philosophers' problem.
- * \details The Table class keeps track of the forks and philosophers in the Dining
+ * \details The Table3D class keeps track of the forks and philosophers in the Dining
  *   Philosophers' problem; it additionally manages the actions of the philosophers.
  * \details Each step of the problem is broken up into two phases. In the checking phase,
- *   the philosophers look at the table around them and, without communicating with the
+ *   the philosophers look at the 3D table around them and, without communicating with the
  *   other philosophers, determine an action to take based on their state and the states
  *   of their adjacent forks.
  * \details In the action phase, each philosopher attempts to execute the action previously
@@ -12,28 +12,28 @@
  *   otherwise, the philosopher's state changes depending on the action taken.
  */
 
-#ifndef TABLE_H_
-#define TABLE_H_
+#ifndef TABLE3D_H_
+#define TABLE3D_H_
 
 #include <tsgl.h>
-#include "Philosopher.h"
+#include "Philosopher3D.h"
 
 using namespace tsgl;
 
-class Table {
+class Table3D {
 private:
   int numPhils;
   PhilMethod myMethod;
   std::string methodString;
   Canvas *myCan/* , *myCan2 */;
-  Philosopher *phils;
-  Fork *forks;
-  Circle * myTable;
+  Philosopher3D *phils;
+  Fork3D *forks;
+  Cylinder * myTable;
   // TextureHandler loader;
 public:
-  Table(Canvas& can, int p, PhilMethod m);
+  Table3D(Canvas& can, int p, PhilMethod m);
 
-  ~Table();
+  ~Table3D();
 
   void forfeitWhenBlockedMethod(int id);
 
@@ -52,4 +52,4 @@ public:
   void drawStep();
 };
 
-#endif /* TABLE_H_ */
+#endif /* TABLE3D_H_ */

@@ -1,20 +1,19 @@
-#include "Table.h"
+#include "Table3D.h"
 
 /*!
- * \brief Creates a new Table of dining philosophers.
- * \details Explicit constructor for a new Table object.
- *  \param can The Canvas on which the Table is to be drawn.
- *  \param p Integer denoting the number of Philosophers at the Table
- *  \param m PhilMethod denoting how the Philosophers should interact.
+ * \brief Creates a new 3D Table of dining Philosopher3Ds.
+ * \details Explicit constructor for a new Table3D object.
+ *  \param can The Canvas on which the Table3D is to be drawn.
+ *  \param p Integer denoting the number of Philosopher3Ds at the Table3D
+ *  \param m PhilMethod denoting how the Philosopher3Ds should interact.
  */
-Table::Table(Canvas& can, int p, PhilMethod m) {
+Table3D::Table3D(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
-  myTable = new Circle(0,0,-1,2.2,0,0,0,ColorGLfloat(0.5,0.5,0.5,1));
+  myTable = new Cylinder(0,0,-2,1,2,0,0,90,ColorGLfloat(0.5,0.5,0.5,1));
   can.add(myTable);
-  // can.drawCircle(0,0,1,ColorGLfloat(0.5,0.5,0.5,1));
-  phils = new Philosopher[numPhils];
-  forks = new Fork[numPhils];
+  phils = new Philosopher3D[numPhils];
+  forks = new Fork3D[numPhils];
   for (int i = 0; i < numPhils; ++i) {
     phils[i].setId(i,numPhils);
     forks[i].id = i;
@@ -60,9 +59,9 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
 }
 
 /*!
- * \brief Destructor for Table.
+ * \brief Destructor for Table3D.
  */
-Table::~Table() {
+Table3D::~Table3D() {
   // if (myCan2->isOpen())
   //   myCan2->stop();
   // delete myCan2;
@@ -72,31 +71,31 @@ Table::~Table() {
 }
 
  /*!
-  * \brief Method for determining which fork a Philosopher should get.
+  * \brief Method for determining which fork a Philosopher3D should get.
   * \details
   * - Store the id numbers for the left and the right Philsopher's state.
-  * - Switch for the state of a Philosopher:
-  *   - Philosopher has no fork:
+  * - Switch for the state of a Philosopher3D:
+  *   - Philosopher3D has no fork:
   *     - If the right fork is free, try to get that fork.
   *     - Else, if the left fork is free, try to get that fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has right fork:
+  *   - Philosopher3D has right fork:
   *     - If the left fork is free, try to get that fork.
   *     .
-  *   - Philosopher has the left fork:
+  *   - Philosopher3D has the left fork:
   *     - If the right fork is free, try to get that fork.
   *     - Else, release the left fork.
   *     .
-  *   - Philosopher has both forks:
+  *   - Philosopher3D has both forks:
   *     - Release both of them.
   *     .
   *   .
   * .
-  * \param id The id number of the current Philosopher.
+  * \param id The id number of the current Philosopher3D.
   * \note This is an example of Deadlock amongst threads.
   */
-void Table::forfeitWhenBlockedMethod(int id) {
+void Table3D::forfeitWhenBlockedMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -131,32 +130,32 @@ void Table::forfeitWhenBlockedMethod(int id) {
 }
 
  /*!
-  * \brief Method for determining which fork a Philosopher should get.
+  * \brief Method for determining which fork a Philosopher3D should get.
   * \details
-  * - Store the states of the left and right Philosophers.
-  * - Switch for the state of the current Philosopher:
-  *   - Philosopher has no forks:
+  * - Store the states of the left and right Philosopher3Ds.
+  * - Switch for the state of the current Philosopher3D:
+  *   - Philosopher3D has no forks:
   *     - If the right fork is free, try to get that fork.
   *     - Else if the left fork is free, try to get that fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has right fork:
+  *   - Philosopher3D has right fork:
   *     - If the left fork is free, try to get that fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has the left fork:
+  *   - Philosopher3D has the left fork:
   *     - If the right fork is free, try to get that fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has both forks:
+  *   - Philosopher3D has both forks:
   *     - Release both of them.
   *     .
   *   .
   * .
-  * \param id The id number of the current Philosopher.
+  * \param id The id number of the current Philosopher3D.
   * \note This is an example of Livelock amongst threads.
   */
-void Table::waitWhenBlockedMethod(int id) {
+void Table3D::waitWhenBlockedMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -191,35 +190,35 @@ void Table::waitWhenBlockedMethod(int id) {
 }
 
  /*!
-  * \brief Method for determining which fork a Philosopher should get.
+  * \brief Method for determining which fork a Philosopher3D should get.
   * \details
-  * - Store the states of the left and right Philosophers.
-  * - Switch statement for the current Philosopher:
-  *   - Philosopher has no forks:
+  * - Store the states of the left and right Philosopher3Ds.
+  * - Switch statement for the current Philosopher3D:
+  *   - Philosopher3D has no forks:
   *     - If the right fork is free, try to get that fork.
   *     - Else, if the left fork is free, try to get that fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has right fork:
+  *   - Philosopher3D has right fork:
   *     - If the left fork is free, try to get that fork.
-  *     - Else, if the id of the current Philosopher is equal to the frame number of the Canvas
-  *       modulo the number of Philosophers+1, then release the right fork.
+  *     - Else, if the id of the current Philosopher3D is equal to the frame number of the Canvas
+  *       modulo the number of Philosopher3Ds+1, then release the right fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has the left fork:
+  *   - Philosopher3D has the left fork:
   *     - If the right fork is free, try and get that fork.
-  *     - Else, if the id of the current Philosopher is equal to the frame number of the Canvas
-  *       modulo the number of Philosophers+1, then release the left fork.
+  *     - Else, if the id of the current Philosopher3D is equal to the frame number of the Canvas
+  *       modulo the number of Philosopher3Ds+1, then release the left fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has both forks:
+  *   - Philosopher3D has both forks:
   *     - Release both of them.
   *     .
   *   .
   * .
-  * \param id The id number of the current Philosopher.
+  * \param id The id number of the current Philosopher3D.
   */
-void Table::nFrameReleaseMethod(int id) {
+void Table3D::nFrameReleaseMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -262,34 +261,34 @@ void Table::nFrameReleaseMethod(int id) {
 }
 
  /*!
-  * \brief Method for determining which fork a Philosopher should get.
+  * \brief Method for determining which fork a Philosopher3D should get.
   * \details
-  * - Store the states for the left and right Philosophers.
-  * - Switch statement for the state of the current Philosopher.
-  *   - Philosopher has no forks:
-  *     - If the right Philosopher's id is less than the left Philsopher's id:
+  * - Store the states for the left and right Philosopher3Ds.
+  * - Switch statement for the state of the current Philosopher3D.
+  *   - Philosopher3D has no forks:
+  *     - If the right Philosopher3D's id is less than the left Philsopher's id:
   *       - If the right fork is free, try to get that fork.
   *       - Else, do nothing.
   *       .
   *     - Else, if the left fork is free then try and get that fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has the right fork:
+  *   - Philosopher3D has the right fork:
   *     - If the left fork is free, try and get that fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has the left fork:
+  *   - Philosopher3D has the left fork:
   *     - If the right fork is free, try and get that fork.
   *     - Else, do nothing.
   *     .
-  *   - Philosopher has both forks:
+  *   - Philosopher3D has both forks:
   *     - Release both of them.
   *     .
   *   .
   * .
-  * \param id The id number of the current Philosopher.
+  * \param id The id number of the current Philosopher3D.
   */
-void Table::hierarchyMethod(int id) {
+void Table3D::hierarchyMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -330,30 +329,30 @@ void Table::hierarchyMethod(int id) {
 }
 
  /*!
-  * \brief Method for determining which fork a Philosopher should get.
+  * \brief Method for determining which fork a Philosopher3D should get.
   * \details
-  * - Switch statement for the current Philosopher:
-  *   - Philosopher has no forks:
-  *     - If the Philosopher's id is even
-  *   - Philosopher has right fork (odd id):
+  * - Switch statement for the current Philosopher3D:
+  *   - Philosopher3D has no forks:
+  *     - If the Philosopher3D's id is even
+  *   - Philosopher3D has right fork (odd id):
   *     - If the Philsopher's id modulo 2 is equal to the Canvas' current frame number
   *       modulo 2, then try and get the left fork.
   *     - Else, release the right fork.
   *     .
-  *   - Philosopher has left fork (even id):
+  *   - Philosopher3D has left fork (even id):
   *     - If the Philsopher's id modulo 2 is equal to the Canvas' current frame number
   *       modulo 2, then try and get the right fork.
   *     - Else, release the left fork.
   *     .
-  *   - Philosopher has both forks:
+  *   - Philosopher3D has both forks:
   *     - Release both of them.
   *     .
   *   .
   * .
-  * \param id The id number of the current Philosopher.
+  * \param id The id number of the current Philosopher3D.
   * \note This method is the one that works best.
   */
-void Table::oddEvenMethod(int id) {
+void Table3D::oddEvenMethod(int id) {
   switch(phils[id].state()) {
     case hasNone:
       if ((id % 2) == (myCan->getFrameNumber() % 2))
@@ -388,7 +387,7 @@ void Table::oddEvenMethod(int id) {
 /*!
  * \brief Method for determining which method of resolution the philosopher is using.
  */
-void Table::checkStep() {
+void Table3D::checkStep() {
   int i = omp_get_thread_num();
   if (phils[i].state() == isFull) {
     phils[i].eat();
@@ -418,7 +417,7 @@ void Table::checkStep() {
 /*!
  * \brief Method for philosopher to act based on myAction.
  */
-void Table::actStep() {
+void Table3D::actStep() {
   // myCan2->sleep();
   int i = omp_get_thread_num();
   int left = i, right = (i+numPhils-1)%numPhils;
@@ -451,9 +450,9 @@ void Table::actStep() {
 /*!
  * \brief Method calculating angles calling draw methods of a philosopher and its fork or forks.
  */
-void Table::drawStep() {
-  const float RAD = 2.4;
-  float FORK_RAD = 2;
+void Table3D::drawStep() {
+  const float RAD = 2.5;
+  float FORK_RAD = 1.4;
   const float ARC =2*PI/numPhils;
   const float CLOSE = 0.15f;
   const float BASEDIST = RAD+64;
@@ -463,7 +462,7 @@ void Table::drawStep() {
   ColorGLfloat fcolor = ColorGLfloat(1,1,1,1);
   float fangle = (i+0.5f)*ARC;
 
-  if( !phils[i].hasCircle() ) {
+  if( !phils[i].hasCylinder() ) {
     phils[i].draw(*myCan,RAD*cos(pangle),RAD*sin(pangle));
   }
 
@@ -482,7 +481,7 @@ void Table::drawStep() {
     fangle = ((i+1)*ARC) - CLOSE;
     fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? ColorGLfloat(0,1,0,1) : ColorGLfloat(1,0.65,0,1);
   } else {
-    FORK_RAD = 1.8;
+    FORK_RAD = 1.2;
     fangle = pangle + PI / numPhils;
   }
   forks[i].draw(FORK_RAD*cos(fangle),FORK_RAD*sin(fangle),fangle,fcolor);

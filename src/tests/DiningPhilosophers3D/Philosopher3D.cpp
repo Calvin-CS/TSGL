@@ -1,36 +1,43 @@
-#include "Philosopher.h"
+#include "Philosopher3D.h"
 
 /*!
- *  \brief Explicitly constructs a new Philosopher.
- *  \details Explicit constructor for a new Philosopher object.
+ *  \brief Explicitly constructs a new Philosopher3D.
+ *  \details Explicit constructor for a new Philosopher3D object.
  */
-Philosopher::Philosopher() {
+Philosopher3D::Philosopher3D() {
   setId(0,1);
   myState = hasNone;
   myAction = doNothing;
-  myCircle = NULL;
+  myCylinder = NULL;
+  myCone = NULL;
   numMeals = 0;
 }
 
-Philosopher::~Philosopher() {
-  delete myCircle;
+Philosopher3D::~Philosopher3D() {
+  delete myCylinder;
+  delete myCone;
 }
 
 /**
- * Adds Philosopher to Canvas or refreshes its color.
+ * Adds Philosopher3D to Canvas or refreshes its color.
  */
-void Philosopher::draw(Canvas& can, float x, float y) {
+void Philosopher3D::draw(Canvas& can, float x, float y) {
   const float SIZE = .5;
-  if( !myCircle) {
-    myCircle = new Circle(x,y,0,SIZE,0,0,0,ColorGLfloat(1,0,0,1));
-    can.add(myCircle);
+  if( !myCylinder) {
+    myCylinder = new Cylinder(x,y,-1,SIZE*4,SIZE,0,0,90,ColorGLfloat(1,0,0,1));
+    can.add(myCylinder);
+  }
+  if( !myCone && myCylinder) {
+    myCone = new Cone(x,y+SIZE*3,-1,SIZE*2.25,SIZE*1.25,0,0,90,ColorGLfloat(0.7,0,0,1));
+    myCone->setRotationPoint(myCylinder->getCenterX(), myCylinder->getCenterY(), myCylinder->getCenterZ());
+    can.add(myCone);
   }
 }
 
 /**
- * Updates the Philosopher's color based on its state
+ * Updates the Philosopher3D's color based on its state
  */
-void Philosopher::refreshColor() {
+void Philosopher3D::refreshColor() {
   ColorGLfloat c;
   switch(myState) {
     case hasNone:  c=ColorGLfloat(1,0,0,1);    break;
@@ -40,20 +47,21 @@ void Philosopher::refreshColor() {
     case isFull:   c=ColorGLfloat(0,0,1, 1.0);   break;
     case thinking: c=ColorGLfloat(0,0,1, 1.0);   break;
   }
-  myCircle->setColor(c);
+  myCylinder->setColor(c);
+  myCone->setColor(ColorGLfloat(c.R*.7,c.G*.7,c.B*.7,c.A));
 }
 
 /**
  * Adds a meal representation to meals and the Canvas
  */
-void Philosopher::addMeal() {
+void Philosopher3D::addMeal() {
   numMeals++;
 }
 
 /**
  * Picks up a fork specified by its reference
  */
-bool Philosopher::acquire(Fork& f) {
+bool Philosopher3D::acquire(Fork3D& f) {
   if (f.user >= 0)
     return false;
   if (f.id == myLeft) {
@@ -82,7 +90,7 @@ bool Philosopher::acquire(Fork& f) {
 /**
  * Releases a fork specified by its reference
  */
-bool Philosopher::release(Fork& f) {
+bool Philosopher3D::release(Fork3D& f) {
   if (f.user != id)
     return false;
   if (myState != isFull)
@@ -94,7 +102,7 @@ bool Philosopher::release(Fork& f) {
 /**
  * Thinks and switches to hungry state if a random number is a multiple of 3.
  */
-void Philosopher::think() {
+void Philosopher3D::think() {
   if(rand()%3 == 0) { // 1/3 probability to go to hungry state
     setState(hasNone);
     setAction(doNothing);

@@ -207,7 +207,7 @@ void Canvas::draw()
     glfwMakeContextCurrent(window);
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
-    while(!glfwWindowShouldClose(window))
+    for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++)
     {
       #ifdef __APPLE__
         // leftWindowIndex = 0;

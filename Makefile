@@ -68,18 +68,20 @@ BINARIES= \
 	bin/test3DRotation \
 	bin/testArrows \
 	bin/testBallroom \
+	bin/testCircle \
+	bin/testClock \
 	bin/testCone \
 	bin/testConvexPolygon \
 	bin/testConcavePolygon \
 	bin/testCube \
 	bin/testCuboid \
 	bin/testCylinder \
-	bin/testCircle \
-	bin/testClock \
 	bin/testEllipse \
 	bin/testEllipsoid \
 	bin/testLines \
 	bin/testPanorama \
+	bin/testPhilosophers \
+	bin/test3DPhilosophers \
 	bin/testPrism \
 	bin/testPyramid \
 	bin/testRectangle \
@@ -121,7 +123,6 @@ BINARIES= \
 #	bin/testMandelbrot \
 #	bin/testMouse \
 #	bin/testNewtonPendulum \
-#	bin/testPhilosophers \
 #	bin/testProducerConsumer \
 #	bin/testPong \
 #	bin/testProgressBar \
@@ -199,6 +200,8 @@ lib/libtsgl.a: ${OBJS}
 	@touch build/build
 
 #List additional dependencies for test binaries
+bin/test3DPhilosophers: build/tests/DiningPhilosophers3D/Philosopher3D.o \
+	build/tests/DiningPhilosophers3D/Table3D.o
 bin/testConway: build/tests/Conway/LifeFarm.o
 bin/testFireworks: build/tests/Fireworks/Arc.o \
 		   build/tests/Fireworks/Dot.o \
