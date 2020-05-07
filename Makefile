@@ -65,6 +65,7 @@ LFLAGS=-Llib/ \
 DEPFLAGS=-MMD -MP
 
 BINARIES= \
+	bin/test2Dvs3D \
 	bin/test3DRotation \
 	bin/testArrows \
 	bin/testBallroom \
