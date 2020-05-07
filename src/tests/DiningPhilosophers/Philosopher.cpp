@@ -14,13 +14,18 @@ Philosopher::Philosopher() {
 
 Philosopher::~Philosopher() {
   delete myCircle;
+  for (RegularPolygon * meal : meals)
+  {
+    delete meal;
+  } 
+  meals.clear();
 }
 
 /**
  * Adds Philosopher to Canvas or refreshes its color.
  */
 void Philosopher::draw(Canvas& can, float x, float y) {
-  const float SIZE = .5;
+  const float SIZE = .45;
   if( !myCircle) {
     myCircle = new Circle(x,y,0,SIZE,0,0,0,ColorGLfloat(1,0,0,1));
     can.add(myCircle);
@@ -46,8 +51,14 @@ void Philosopher::refreshColor() {
 /**
  * Adds a meal representation to meals and the Canvas
  */
-void Philosopher::addMeal() {
+void Philosopher::addMeal(float x, float y, float z) {
   numMeals++;
+  meals.push_back(new RegularPolygon(x,y,z,.03,3,0,0,0,ColorGLfloat(0.5,0.3,0,1)));
+  meals.back()->displayOutlineEdges(false);
+}
+
+RegularPolygon * Philosopher::getLastMeal() {
+  return meals.back();
 }
 
 /**

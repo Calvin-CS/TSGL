@@ -10,7 +10,7 @@
 Table3D::Table3D(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
-  myTable = new Cylinder(0,0,-2,1,2,0,0,90,ColorGLfloat(0.5,0.5,0.5,1));
+  myTable = new Cylinder(0,0,-2,1,1.5,0,0,90,ColorGLfloat(0.5,0.5,0.5,1));
   can.add(myTable);
   phils = new Philosopher3D[numPhils];
   forks = new Fork3D[numPhils];
@@ -451,11 +451,11 @@ void Table3D::actStep() {
  * \brief Method calculating angles calling draw methods of a philosopher and its fork or forks.
  */
 void Table3D::drawStep() {
-  const float RAD = 2.5;
-  float FORK_RAD = 1.4;
+  const float RAD = 1.95;
+  float FORK_RAD = 1;
   const float ARC =2*PI/numPhils;
   const float CLOSE = 0.15f;
-  const float BASEDIST = RAD+64;
+  const float BASEDIST = RAD+.58;
 
   int i = omp_get_thread_num();
   float pangle = (i*2*PI)/numPhils;
@@ -469,9 +469,10 @@ void Table3D::drawStep() {
   phils[i].refreshColor();
   if( phils[i].state() == isFull ) {
     int meals = phils[i].getMeals();
-    float angle = pangle+(meals/10)*2*PI/RAD, dist = BASEDIST+8*(meals%10);
+    float angle = pangle+(meals/10)*2*PI/(100*RAD), dist = BASEDIST+.08*(meals%10);
     // myCan->drawRegularPolygon(dist*cos(angle), dist*sin(angle), 3, 10 ,BROWN, BLACK);
-    phils[i].addMeal();
+    phils[i].addMeal(dist*cos(angle), dist*sin(angle),0);
+    myCan->add(phils[i].getLastMeal());
   }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;
@@ -481,7 +482,7 @@ void Table3D::drawStep() {
     fangle = ((i+1)*ARC) - CLOSE;
     fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? ColorGLfloat(0,1,0,1) : ColorGLfloat(1,0.65,0,1);
   } else {
-    FORK_RAD = 1.2;
+    FORK_RAD = 0.9;
     fangle = pangle + PI / numPhils;
   }
   forks[i].draw(FORK_RAD*cos(fangle),FORK_RAD*sin(fangle),fangle,fcolor);

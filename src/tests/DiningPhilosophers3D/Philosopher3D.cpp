@@ -16,13 +16,18 @@ Philosopher3D::Philosopher3D() {
 Philosopher3D::~Philosopher3D() {
   delete myCylinder;
   delete myCone;
+  for (Pyramid * meal : meals)
+  {
+    delete meal;
+  } 
+  meals.clear();
 }
 
 /**
  * Adds Philosopher3D to Canvas or refreshes its color.
  */
 void Philosopher3D::draw(Canvas& can, float x, float y) {
-  const float SIZE = .5;
+  const float SIZE = .45;
   if( !myCylinder) {
     myCylinder = new Cylinder(x,y,-1,SIZE*4,SIZE,0,0,90,ColorGLfloat(1,0,0,1));
     can.add(myCylinder);
@@ -54,8 +59,14 @@ void Philosopher3D::refreshColor() {
 /**
  * Adds a meal representation to meals and the Canvas
  */
-void Philosopher3D::addMeal() {
+void Philosopher3D::addMeal(float x, float y, float z) {
   numMeals++;
+  meals.push_back(new Pyramid(x,y,z,3,.08,.04,0,0,90,ColorGLfloat(0.5,0.3,0,1)));
+  meals.back()->displayOutlineEdges(false);
+}
+
+Pyramid * Philosopher3D::getLastMeal() {
+  return meals.back();
 }
 
 /**

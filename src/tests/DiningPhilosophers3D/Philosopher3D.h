@@ -23,12 +23,14 @@ private:
   unsigned int numMeals;
   Cylinder *myCylinder;
   Cone * myCone;
+  std::vector<Pyramid *> meals;
 public:
   Philosopher3D();
   ~Philosopher3D();
   void draw(Canvas& can, float x, float y);
   void refreshColor();
-  void addMeal();
+  void addMeal(float x, float y, float z);
+  Pyramid * getLastMeal();
   bool acquire(Fork3D& f);
   bool release(Fork3D& f);
   void think();
