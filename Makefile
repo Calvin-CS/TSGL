@@ -77,10 +77,10 @@ BINARIES= \
 	bin/testCube \
 	bin/testCuboid \
 	bin/testCylinder \
+	bin/testDiorama \
 	bin/testEllipse \
 	bin/testEllipsoid \
 	bin/testLines \
-	bin/testPanorama \
 	bin/testPhilosophers \
 	bin/test3DPhilosophers \
 	bin/testPrism \

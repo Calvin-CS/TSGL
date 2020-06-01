@@ -36,41 +36,41 @@ void contrastFunction(Canvas& can) {
     int stepsTaken = 0;
     while (can.isOpen()) {
         can.sleep();
-        if (can.getFrameNumber() >= 1000 && stepsTaken < 1) {
+        if (can.getFrameNumber() >= 1700 && stepsTaken < 1) {
             can.add(triangle1);
             stepsTaken++;
         }
-        if (can.getFrameNumber() >= 1200 && stepsTaken < 2) {
+        if (can.getFrameNumber() >= 1800 && stepsTaken < 2) {
             can.add(triangle2);
             stepsTaken++;
         }
-        if (can.getFrameNumber() >= 1400 && stepsTaken < 3) {
+        if (can.getFrameNumber() >= 1900 && stepsTaken < 3) {
             can.add(triangle3);
             stepsTaken++;
         }
-        if (can.getFrameNumber() >= 2000 && stepsTaken < 4) {
+        if (can.getFrameNumber() >= 2600 && stepsTaken < 4) {
             can.add(testPyramid);
             stepsTaken++;
         }
-        if (can.getFrameNumber() >= 3000 && stepsTaken < 5) {
+        if (can.getFrameNumber() >= 3300 && stepsTaken < 5) {
             can.remove(triangle1);
             can.remove(triangle2);
             can.remove(triangle3);
             stepsTaken++;
         }
-        if (can.getFrameNumber() >= 3400 && stepsTaken < 6) {
+        if (can.getFrameNumber() >= 3800 && stepsTaken < 6) {
             can.add(triangle4);
             stepsTaken++;
         }
-        if (can.getFrameNumber() >= 3600 && stepsTaken < 7) {
+        if (can.getFrameNumber() >= 3900 && stepsTaken < 7) {
             can.add(triangle5);
             stepsTaken++;
         }
-        if (can.getFrameNumber() >= 3800 && stepsTaken < 8) {
+        if (can.getFrameNumber() >= 4000 && stepsTaken < 8) {
             can.add(triangle6);
             stepsTaken++;
         }  
-        if (can.getFrameNumber() >= 5000 && stepsTaken < 9) {
+        if (can.getFrameNumber() >= 4400 && stepsTaken < 9) {
             if (testPyramid->getPitch() < 45) {
                 testPyramid->changePitchBy(0.5);
             } else {
@@ -78,7 +78,6 @@ void contrastFunction(Canvas& can) {
                 stepsTaken++;
             }
         }
-        printf("%d\n", can.getFrameNumber());
     }
 
     delete testPyramid;
