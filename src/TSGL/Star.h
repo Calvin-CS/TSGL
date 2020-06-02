@@ -18,9 +18,9 @@ private:
     GLfloat myRadius;
     int myPoints;
 public:
-    Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorGLfloat color, bool ninja = false);
+    Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorFloat color, bool ninja = false);
 
-    Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorGLfloat color[], bool ninja = false);
+    Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja = false);
 
     void setRadius(GLfloat radius);
 

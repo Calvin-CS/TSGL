@@ -32,7 +32,7 @@ ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int n
   *     (set to true by default).
   * \return A new ConvexPolygon with the specified vertices and color.
   */
-ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorGLfloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
+ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorFloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
     geometryType = GL_POLYGON;
     numberOfVertices = numberOfOutlineVertices = numVertices;
@@ -57,7 +57,7 @@ ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int n
   *     (set to true by default).
   * \return A new ConvexPolygon with the specified vertices and color.
   */
-ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorGLfloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
+ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorFloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
     geometryType = GL_POLYGON;
     numberOfVertices = numberOfOutlineVertices = numVertices;

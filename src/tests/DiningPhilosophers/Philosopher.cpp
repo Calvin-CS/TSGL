@@ -6,7 +6,7 @@
  */
 Philosopher::Philosopher() {
   setId(0,1);
-  myState = hasNone;
+  myState = thinking;
   myAction = doNothing;
   myCircle = NULL;
   numMeals = 0;
@@ -27,7 +27,7 @@ Philosopher::~Philosopher() {
 void Philosopher::draw(Canvas& can, float x, float y) {
   const float SIZE = .45;
   if( !myCircle) {
-    myCircle = new Circle(x,y,0,SIZE,0,0,0,ColorGLfloat(1,0,0,1));
+    myCircle = new Circle(x,y,0,SIZE,0,0,0,ColorFloat(1,0,0,1));
     can.add(myCircle);
   }
 }
@@ -36,14 +36,14 @@ void Philosopher::draw(Canvas& can, float x, float y) {
  * Updates the Philosopher's color based on its state
  */
 void Philosopher::refreshColor() {
-  ColorGLfloat c;
+  ColorFloat c;
   switch(myState) {
-    case hasNone:  c=ColorGLfloat(1,0,0,1);    break;
-    case hasRight: c=ColorGLfloat(1,0.65,0,1); break;
-    case hasLeft:  c=ColorGLfloat(0.75, 0.0, 0.75, 1.0); break;
-    case hasBoth:  c=ColorGLfloat(0, 1.0, 0, 1.0);  break;
-    case isFull:   c=ColorGLfloat(0,0,1, 1.0);   break;
-    case thinking: c=ColorGLfloat(0,0,1, 1.0);   break;
+    case hasNone:  c=RED;   break;
+    case hasRight: c=ORANGE; break;
+    case hasLeft:  c=PURPLE; break;
+    case hasBoth:  c=GREEN;  break;
+    case isFull:   c=BLUE;   break;
+    case thinking: c=BLUE;   break;
   }
   myCircle->setColor(c);
 }
@@ -53,7 +53,7 @@ void Philosopher::refreshColor() {
  */
 void Philosopher::addMeal(float x, float y, float z) {
   numMeals++;
-  meals.push_back(new RegularPolygon(x,y,z,.03,3,0,0,0,ColorGLfloat(0.5,0.3,0,1)));
+  meals.push_back(new RegularPolygon(x,y,z,.03,3,0,0,0,ColorFloat(0.5,0.3,0,1)));
   meals.back()->displayOutlineEdges(false);
 }
 
@@ -106,7 +106,7 @@ bool Philosopher::release(Fork& f) {
  * Thinks and switches to hungry state if a random number is a multiple of 3.
  */
 void Philosopher::think() {
-  if(rand()%3 == 0) { // 1/3 probability to go to hungry state
+  if(saferand(1,9999)%3 == 0) { // 1/3 probability to go to hungry state
     setState(hasNone);
     setAction(doNothing);
   }

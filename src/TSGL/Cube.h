@@ -19,9 +19,9 @@ class Cube : public Drawable {
 protected:
     GLfloat mySideLength;
 public:
-    Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c);
+    Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat c);
 
-    Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c[]);
+    Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat c[]);
 
     virtual void setSideLength(float length);
 
@@ -33,9 +33,9 @@ public:
     */
     virtual GLfloat getSideLength() { return mySideLength; }
 
-    virtual void setColor(ColorGLfloat c) { Drawable::setColor(c); }
+    virtual void setColor(ColorFloat c) { Drawable::setColor(c); }
 
-    virtual void setColor(ColorGLfloat c[]);
+    virtual void setColor(ColorFloat c[]);
 
     virtual ~Cube();
 };

@@ -11,41 +11,41 @@
 using namespace tsgl;
 
 void clockFunction(Canvas& can) {
-    Prism * head = new Prism(0,1.33,1.01,12,1,0.59,0,0,90,ColorGLfloat(.6,.3,0,1));
+    Prism * head = new Prism(0,1.33,1.01,12,1,0.59,0,0,90,ColorFloat(.6,.3,0,1));
     can.add(head);
 
-    Cuboid * left = new Cuboid(-0.45,-.5,1,0.1,3,1,0,0,0,ColorGLfloat(.6,.3,0,1) );
+    Cuboid * left = new Cuboid(-0.45,-.5,1,0.1,3,1,0,0,0,ColorFloat(.6,.3,0,1) );
     can.add(left);
 
-    Cuboid * right = new Cuboid(0.45,-0.5,1,0.1,3,1,0,0,0,ColorGLfloat(.6,.3,0,1));
+    Cuboid * right = new Cuboid(0.45,-0.5,1,0.1,3,1,0,0,0,ColorFloat(.6,.3,0,1));
     can.add(right);
 
-    Cuboid * back = new Cuboid(0,-0.5,0.55,0.8,3,0.1,0,0,0,ColorGLfloat(.6,.3,0,1) );
+    Cuboid * back = new Cuboid(0,-0.5,0.55,0.8,3,0.1,0,0,0,ColorFloat(.6,.3,0,1) );
     can.add(back);
 
-    Cuboid * bottom = new Cuboid(0,-1.95,1.10,0.79,0.1,0.8,0,0,0,ColorGLfloat(.6,.3,0,1) );
+    Cuboid * bottom = new Cuboid(0,-1.95,1.10,0.79,0.1,0.8,0,0,0,ColorFloat(.6,.3,0,1) );
     can.add(bottom);
 
-    Circle * face = new Circle(0,1.15,2.01,0.4,0,0,0,ColorGLfloat(1,1,0.8,1));
+    Circle * face = new Circle(0,1.15,2.01,0.4,0,0,0,ColorFloat(1,1,0.8,1));
     can.add(face);
 
-    Arrow * second = new Arrow(-0.19,1.15,2.03,0.38,0.02,0,0,0,ColorGLfloat(1,.8,.2,1),false);
+    Arrow * second = new Arrow(-0.19,1.15,2.03,0.38,0.02,0,0,0,ColorFloat(1,.8,.2,1),false);
     can.add(second);
     second->setRotationPoint(face->getCenterX(), face->getCenterY(), face->getCenterZ());
 
-    Arrow * minute = new Arrow(-0.19,1.15,2.02,0.38,0.02,0,0,0,ColorGLfloat(0,0,0,1),false);
+    Arrow * minute = new Arrow(-0.19,1.15,2.02,0.38,0.02,0,0,0,ColorFloat(0,0,0,1),false);
     can.add(minute);
     minute->setRotationPoint(face->getCenterX(), face->getCenterY(), face->getCenterZ());
 
-    Arrow * hour = new Arrow(-0.1,1.15,2.02,0.2,0.02,0,0,0,ColorGLfloat(0,0,0,1),false);
+    Arrow * hour = new Arrow(-0.1,1.15,2.02,0.2,0.02,0,0,0,ColorFloat(0,0,0,1),false);
     can.add(hour);
     hour->setRotationPoint(face->getCenterX(), face->getCenterY(), face->getCenterZ());
 
-    Ellipsoid * pendulum = new Ellipsoid(0, -1.5, 1,0.1, 0.1,0.02,0,0,0,ColorGLfloat(0.75,0.6,.19, 1) );
+    Ellipsoid * pendulum = new Ellipsoid(0, -1.5, 1,0.1, 0.1,0.02,0,0,0,ColorFloat(0.75,0.6,.19, 1) );
     pendulum->setRotationPoint(0,0.8,1);
     can.add(pendulum);
 
-    Rectangle * cord = new Rectangle(-1.1,0.8,1,2.2,0.05,90,0,0,ColorGLfloat(0,0,0,1));
+    Rectangle * cord = new Rectangle(-1.1,0.8,1,2.2,0.05,90,0,0,ColorFloat(0,0,0,1));
     cord->setRotationPoint(0,0.8,1);
     cord->displayOutlineEdges(false);
     can.add(cord);

@@ -10,10 +10,10 @@
 using namespace tsgl;
 
 void cubeFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0,0,0,0.8), ColorGLfloat(0,0,1,0.8),
-        ColorGLfloat(0,1,0,0.8), ColorGLfloat(0,1,1,0.8), ColorGLfloat(1,0,0,0.8),
-        ColorGLfloat(1,0,1,0.8), ColorGLfloat(1,1,0,0.8), ColorGLfloat(1,1,1,0.8) };
-    Cube * testCube = new Cube(0.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, ColorGLfloat(1,0,0,1));
+    ColorFloat colors[] = { ColorFloat(0,0,0,0.8), ColorFloat(0,0,1,0.8),
+        ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
+        ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8) };
+    Cube * testCube = new Cube(0.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, ColorFloat(1,0,0,1));
     Cube * testCube2 = new Cube(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCube);
     can.add(testCube2);
@@ -39,7 +39,7 @@ void cubeFunction(Canvas& can) {
         //testCube2->setRoll(rotation);
         if (rotation*45 >= 360) {
             if (boolean) {
-                testCube->setColor(ColorGLfloat(1,0,0,1));
+                testCube->setColor(RED);
             } else {
                 testCube->setColor(colors);
             }

@@ -17,9 +17,9 @@ class Circle : public ConvexPolygon {
 protected:
 	GLfloat myRadius;
 public:
-    Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat color);
+    Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color);
 
-    Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat color[]);
+    Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color[]);
 
     void setRadius(GLfloat radius);
 

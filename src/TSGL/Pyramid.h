@@ -20,9 +20,9 @@ protected:
     GLfloat myRadius;
     int mySides;
 public:
-    Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c);
+    Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c);
 
-    Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
+    Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[]);
 
     virtual ~Pyramid();
 
@@ -46,9 +46,9 @@ public:
     */
     virtual GLfloat getRadius() { return myRadius; }    
 
-    virtual void setColor(ColorGLfloat c);
+    virtual void setColor(ColorFloat c);
 
-    virtual void setColor(ColorGLfloat c[]);
+    virtual void setColor(ColorFloat c[]);
 };
 
 }

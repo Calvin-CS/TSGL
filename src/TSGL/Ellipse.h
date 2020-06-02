@@ -17,9 +17,9 @@ class Ellipse : public ConvexPolygon {
  private:
     GLfloat myXRadius, myYRadius;
  public:
-    Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorGLfloat color);
+    Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorFloat color);
 
-    Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorGLfloat color[]);
+    Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorFloat color[]);
 
     void setXRadius(GLfloat xRadius);
 

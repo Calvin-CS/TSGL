@@ -14,7 +14,7 @@ namespace tsgl {
  *   \param filled Whether the regular polygon should be filled
  *     (set to true by default).
  */
-RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon(x,y,z,sides,yaw,pitch,roll) {
+RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,sides,yaw,pitch,roll) {
     attribMutex.lock();
     myXScale = myYScale = myRadius = radius;
     myZScale = 1;
@@ -37,7 +37,7 @@ RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int si
  *   \param filled Whether the regular polygon should be filled
  *     (set to true by default).
  */
-RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(x,y,z,sides,yaw,pitch,roll) {
+RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,sides,yaw,pitch,roll) {
     attribMutex.lock();
     myXScale = myYScale = myRadius = radius;
     myZScale = 1;

@@ -17,9 +17,9 @@ namespace tsgl {
  */
 class Cylinder : public Prism {
 public:
-    Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c);
+    Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c);
 
-    Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
+    Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[]);
 
     virtual ~Cylinder();
 };

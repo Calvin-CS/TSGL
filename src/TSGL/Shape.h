@@ -30,9 +30,9 @@ class Shape : public Drawable {
  public:
     Shape(float x, float y, float z, float yaw, float pitch, float roll);
 
-    virtual void setColor(ColorGLfloat c);
+    virtual void setColor(ColorFloat c);
 
-    virtual void setColor(ColorGLfloat c[]);
+    virtual void setColor(ColorFloat c[]);
 };
 
 }

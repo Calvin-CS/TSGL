@@ -10,15 +10,15 @@
 using namespace tsgl;
 
 void rectangleFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0.5,0.5,0.5,0.8), ColorGLfloat(0,0,1,0.8),
-        ColorGLfloat(0,1,0,0.8), ColorGLfloat(0,1,1,0.8), ColorGLfloat(1,0,0,0.8),
-        ColorGLfloat(1,0,1,0.8), ColorGLfloat(1,1,0,0.8), ColorGLfloat(1,1,1,0.8),
-        ColorGLfloat(0.5,0.5,0.5,0.8), ColorGLfloat(0.5,0.5,1,0.8),
-        ColorGLfloat(0.5,1,0.5,0.8), ColorGLfloat(0.5,1,1,0.8), ColorGLfloat(1,0.5,0.5,0.8),
-        ColorGLfloat(1,0.5,1,0.8), ColorGLfloat(1,1,0.5,0.8), ColorGLfloat(0,0,0.5,0.8),
-        ColorGLfloat(0,0.5,0,0.8), ColorGLfloat(0,0.5,0.5,0.8), ColorGLfloat(0.5,0,0,0.8),
-        ColorGLfloat(0.5,0,0.5,0.8), ColorGLfloat(0.5,0.5,0,0.8), ColorGLfloat(0.5,0.5,0.5,0.8)};
-    Rectangle * rectangle = new Rectangle(0,0,0,1,2,0,0,0,colors/* ColorGLfloat(1,0,0,1) */);
+    ColorFloat colors[] = { ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0,0,1,0.8),
+        ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
+        ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8),
+        ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0.5,0.5,1,0.8),
+        ColorFloat(0.5,1,0.5,0.8), ColorFloat(0.5,1,1,0.8), ColorFloat(1,0.5,0.5,0.8),
+        ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
+        ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
+        ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
+    Rectangle * rectangle = new Rectangle(0,0,0,1,2,0,0,0,colors/* ColorFloat(1,0,0,1) */);
     // rectangle->setCenterX(2);
     // rectangle->setRotationPoint(0,0,0);
     can.add(rectangle);
@@ -36,18 +36,18 @@ void rectangleFunction(Canvas& can) {
         // rectangle->setHeight(sin(floatVal/90) + 2);
         // if (rectangle->getWidth() > 2 || rectangle->getWidth() < 1) {
         //     delta *= -1;
-        //     // rectangle->setEdgeColor(ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     // rectangle->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
         // }
         // rectangle->changeWidthBy(delta);
         // if (rectangle->getHeight() > 3 || rectangle->getHeight() < 1) {
         //     delta *= -1;
-        //     // rectangle->setEdgeColor(ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     // rectangle->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
         // }
         // rectangle->changeHeightBy(delta);
         // if (delta > 0) {
         //     rectangle->setColor(colors);
         // } else {
-        //     rectangle->setColor(ColorGLfloat(1,0,0,1));
+        //     rectangle->setColor(RED);
         // }
         floatVal += 1;
     }

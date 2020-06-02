@@ -14,11 +14,11 @@ namespace tsgl {
   *   \param yaw The Cuboid's yaw.
   *   \param pitch The Cuboid's pitch.
   *   \param roll The Cuboid's roll.
-  *   \param c A ColorGLfloat for the Cuboid's vertex colors.
+  *   \param c A ColorFloat for the Cuboid's vertex colors.
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cuboid with a buffer for storing the specified numbered of vertices.
   */
-Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c)  
+Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorFloat c)  
 : Drawable(x, y, z, yaw, pitch, roll)  {
     if (length <= 0 || width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cuboid with non-positive length, width, or height.");
@@ -79,11 +79,11 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
   *   \param yaw The Cuboid's yaw.
   *   \param pitch The Cuboid's pitch.
   *   \param roll The Cuboid's roll.
-  *   \param c An array of ColorGLfloats for the Cuboid's vertex colors.
+  *   \param c An array of ColorFloats for the Cuboid's vertex colors.
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cuboid with a buffer for storing the specified numbered of vertices.
   */
-Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c[])  
+Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorFloat c[])  
 : Drawable(x, y, z, yaw, pitch, roll)  {
     if (length <= 0 || width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Cuboid with non-positive length, width, or height.");
@@ -224,10 +224,10 @@ void Cuboid::changeHeightBy(GLfloat delta) {
 
 /**
  * \brief Sets the Cuboid to an array of new colors.
- * \param c An array of new ColorGLfloats.
- * \details The array should have 8 ColorGLfloats minimum, one for each corner.
+ * \param c An array of new ColorFloats.
+ * \details The array should have 8 ColorFloats minimum, one for each corner.
  */
-void Cuboid::setColor(ColorGLfloat c[]) {
+void Cuboid::setColor(ColorFloat c[]) {
     attribMutex.lock();
     colors[0] = colors[36] = colors[64] = c[0].R;
     colors[1] = colors[37] = colors[65] = c[0].G;

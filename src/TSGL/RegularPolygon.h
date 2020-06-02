@@ -18,9 +18,9 @@ protected:
     GLfloat myRadius;
     int mySides;
 public:
-    RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorGLfloat color);
+    RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorFloat color);
 
-    RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorGLfloat color[]);
+    RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorFloat color[]);
 
     /*!
     * \brief Accessor for the number of sides of the RegularPolygon.

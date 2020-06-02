@@ -10,18 +10,18 @@
 using namespace tsgl;
 
 void triangleStripFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0.5,0.5,0.5,0.8), ColorGLfloat(0,0,1,0.8),
-        ColorGLfloat(0,1,0,0.8), ColorGLfloat(0,1,1,0.8), ColorGLfloat(1,0,0,0.8),
-        ColorGLfloat(1,0,1,0.8), ColorGLfloat(1,1,0,0.8), ColorGLfloat(1,1,1,0.8),
-        ColorGLfloat(0.5,0.5,0.5,0.8), ColorGLfloat(0.5,0.5,1,0.8),
-        ColorGLfloat(0.5,1,0.5,0.8), ColorGLfloat(0.5,1,1,0.8), ColorGLfloat(1,0.5,0.5,0.8),
-        ColorGLfloat(1,0.5,1,0.8), ColorGLfloat(1,1,0.5,0.8), ColorGLfloat(0,0,0.5,0.8),
-        ColorGLfloat(0,0.5,0,0.8), ColorGLfloat(0,0.5,0.5,0.8), ColorGLfloat(0.5,0,0,0.8),
-        ColorGLfloat(0.5,0,0.5,0.8), ColorGLfloat(0.5,0.5,0,0.8), ColorGLfloat(0.5,0.5,0.5,0.8)};
+    ColorFloat colors[] = { ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0,0,1,0.8),
+        ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
+        ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8),
+        ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0.5,0.5,1,0.8),
+        ColorFloat(0.5,1,0.5,0.8), ColorFloat(0.5,1,1,0.8), ColorFloat(1,0.5,0.5,0.8),
+        ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
+        ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
+        ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
     float x[] = { 0,-0.5,0.5,-0.5,0.5,0 };
     float y[] = { -1,-0.5,-0.5,0.5,0.5,1 };
     float z[] = { 0,0.5,0.5,0.5,0.5,0 };
-    TriangleStrip * ts = new TriangleStrip(0,0,0,6,x,y,z,0,0,0,colors/* ColorGLfloat(1,0,0,1) */);
+    TriangleStrip * ts = new TriangleStrip(0,0,0,6,x,y,z,0,0,0,colors/* RED */);
     // ts->setCenterX(2);
     // ts->setRotationPoint(0,0,0);
     can.add(ts);
@@ -38,10 +38,10 @@ void triangleStripFunction(Canvas& can) {
         // if (floatVal < 200) {
         //     ts->setColor(colors);
         // } else {
-        //     ts->setColor(ColorGLfloat(1,0,0,1));
+        //     ts->setColor(RED);
         //     if (floatVal > 400) {
         //         floatVal = 0;
-        //         ts->setEdgeColor(ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //         ts->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
         //     }
         // }
         floatVal += 1;

@@ -12,7 +12,7 @@ namespace tsgl {
  *   \param filled Whether the circle should be filled
  *     (set to true by default).
  */
-Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon(x,y,z,radius * 30,yaw,pitch,roll) {
+Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,radius * 30,yaw,pitch,roll) {
     attribMutex.lock();
     myXScale = myYScale = myRadius = radius;
     myZScale = 1;
@@ -33,7 +33,7 @@ Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch
  *   \param filled Whether the circle should be filled
  *     (set to true by default).
  */
-Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(x,y,z,radius * 30,yaw,pitch,roll) {
+Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,radius * 30,yaw,pitch,roll) {
     attribMutex.lock();
     myXScale = myYScale = myRadius = radius;
     myZScale = 1;

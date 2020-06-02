@@ -14,11 +14,11 @@ namespace tsgl {
   *   \param yaw The Ellipsoid's yaw.
   *   \param pitch The Ellipsoid's pitch.
   *   \param roll The Ellipsoid's roll.
-  *   \param c A ColorGLfloat for the Ellipsoid's vertex colors.
+  *   \param c A ColorFloat for the Ellipsoid's vertex colors.
   * \warning An invariant is held where if any radius isn't positive then an error message is given.
   * \return A new Ellipsoid with a buffer for storing the specified numbered of vertices.
   */
-Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorGLfloat c) : Drawable(x, y, z, yaw, pitch, roll)  {
+Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorFloat c) : Drawable(x, y, z, yaw, pitch, roll)  {
     if (xRadius <= 0 || yRadius <= 0 || zRadius <= 0) {
         TsglDebug("Cannot have an Ellipsoid with any radius less than or equal to 0.");
     }
@@ -42,8 +42,8 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
 	{
 		for(float a=0;a<verticalSections;a++)
 		{
-			addVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorGLfloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), c.A));
-			addVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorGLfloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), c.A));
+			addVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorFloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), c.A));
+			addVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), ColorFloat(c.R * (1 - 1 * sin(a/verticalSections * PI) / 2), c.G * (1 - 1 * sin(a/verticalSections * PI) / 2), c.B * (1 - 1 * sin(a/verticalSections * PI) / 2), c.A));
 		}
 	}
     addVertex(0, 1, 0, c);
@@ -61,11 +61,11 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
   *   \param yaw The Ellipsoid's yaw.
   *   \param pitch The Ellipsoid's pitch.
   *   \param roll The Ellipsoid's roll.
-  *   \param c An array of ColorGLfloats for the Ellipsoid's vertex colors.
+  *   \param c An array of ColorFloats for the Ellipsoid's vertex colors.
   * \warning An invariant is held where if any radius isn't positive then an error message is given.
   * \return A new Ellipsoid with a buffer for storing the specified numbered of vertices.
   */
-Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorGLfloat c[]) : Drawable(x, y, z, yaw, pitch, roll)  {
+Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorFloat c[]) : Drawable(x, y, z, yaw, pitch, roll)  {
     if (xRadius <= 0 || yRadius <= 0 || zRadius <= 0) {
         TsglDebug("Cannot have an Ellipsoid with any radius less than or equal to 0.");
     }
@@ -188,9 +188,9 @@ void Ellipsoid::changeZRadiusBy(GLfloat delta) {
 
 /**
  * \brief Sets the Ellipsoid to a new color.
- * \param c The new ColorGLfloat.
+ * \param c The new ColorFloat.
  */
-void Ellipsoid::setColor(ColorGLfloat c) {
+void Ellipsoid::setColor(ColorFloat c) {
     attribMutex.lock();
 	for(int b=0;b<horizontalSections;b++)
 	{
@@ -215,10 +215,10 @@ void Ellipsoid::setColor(ColorGLfloat c) {
 
 /**
  * \brief Sets the Ellipsoid to an array of new colors.
- * \param c An array of new ColorGLfloats.
- * \details The array should have 20 ColorGLfloats minimum, one for each horizontal section.
+ * \param c An array of new ColorFloat.
+ * \details The array should have 20 ColorFloat minimum, one for each horizontal section.
  */
-void Ellipsoid::setColor(ColorGLfloat c[]) {
+void Ellipsoid::setColor(ColorFloat c[]) {
     attribMutex.lock();
 	for(int b=0;b<horizontalSections;b++)
 	{

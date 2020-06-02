@@ -1,7 +1,5 @@
 /*
  * ConcavePolygon.h extends Shape and provides a class for drawing a Concave polygon to a Canvas.
- * #FIXME setColor(ColorGLfloat c[]) needs to be overrided. Looks awful with the default.
- * #FIXME Performance is horrific. This is going to need to be fixed.
  */
 
 #ifndef CONCAVEPOLYGON_H_
@@ -28,11 +26,11 @@ class ConcavePolygon : public Shape {
  protected:
     ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll); 
 
-    void addVertex(float x, float y, float z, ColorGLfloat &color);
+    void addVertex(float x, float y, float z, ColorFloat &color);
  public:
-    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorGLfloat color);
+    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color);
 
-    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorGLfloat color[]);
+    ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]);
 
     virtual void draw();
 };

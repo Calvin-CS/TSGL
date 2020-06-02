@@ -20,7 +20,7 @@ namespace tsgl {
  *      \param color The color of the Triangle.
  * \return A new Triangle with the specified vertices and color.
  */
-Triangle::Triangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon((x1 + x2 + x3) / 3, (y1 + y2 + y3) / 3, (z1 + z2 + z3) / 3, 3,yaw,pitch,roll) {
+Triangle::Triangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon((x1 + x2 + x3) / 3, (y1 + y2 + y3) / 3, (z1 + z2 + z3) / 3, 3,yaw,pitch,roll) {
     float xAverage = (x1 + x2 + x3) / 3;
     float yAverage = (y1 + y2 + y3) / 3;
     float zAverage = (z1 + z2 + z3) / 3;
@@ -47,7 +47,7 @@ Triangle::Triangle(float x1, float y1, float z1, float x2, float y2, float z2, f
  *      \param color An array of colors for the Triangle's vertices.
  * \return A new Triangle with the specified vertices and color.
  */
-Triangle::Triangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll,  ColorGLfloat color[]) : ConvexPolygon((x1 + x2 + x3) / 3, (y1 + y2 + y3) / 3, (z1 + z2 + z3) / 3, 3,yaw,pitch,roll) {
+Triangle::Triangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll,  ColorFloat color[]) : ConvexPolygon((x1 + x2 + x3) / 3, (y1 + y2 + y3) / 3, (z1 + z2 + z3) / 3, 3,yaw,pitch,roll) {
     float xAverage = (x1 + x2 + x3) / 3;
     float yAverage = (y1 + y2 + y3) / 3;
     float zAverage = (z1 + z2 + z3) / 3;

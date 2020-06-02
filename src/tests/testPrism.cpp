@@ -10,12 +10,12 @@
 using namespace tsgl;
 
 void prismFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1),
-        ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
-        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
-        ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
-        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1) };
-    Prism * testPrism = new Prism(0.0, 0.0, 0.0, 3, 1, 1, 0.0, 0.0, 45.0, ColorGLfloat(1,0,0,1));
+    ColorFloat colors[] = { ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1),
+        ColorFloat(0,1,0,1), ColorFloat(0,1,1,1), ColorFloat(1,0,0,1),
+        ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
+        ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
+        ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1) };
+    Prism * testPrism = new Prism(0.0, 0.0, 0.0, 3, 1, 1, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
     Prism * testPrism2 = new Prism(-3.0, 0.0, 0.0, 5, 1, 1, 0.0, 0.0, 45.0, colors);
     Prism * testPrism3 = new Prism(3.0, 0.0, 0.0, 8, 1, 1, 0.0, 0.0, 45.0, colors);
     can.add(testPrism);
@@ -49,12 +49,12 @@ void prismFunction(Canvas& can) {
         // }
         // testPrism->changeRadiusBy(delta);
         // if (rotation*45 >= 360) {
-        //     testPrism->setEdgeColor(ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     testPrism->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
         //     rotation = 0;
         // }
         // if (rotation*45 >= 360) {
         //     if (boolean) {
-        //         testPrism->setColor(ColorGLfloat(1,0,0,1));
+        //         testPrism->setColor(RED);
         //     } else {
         //         testPrism->setColor(colors);
         //     }

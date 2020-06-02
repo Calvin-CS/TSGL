@@ -10,12 +10,12 @@
 using namespace tsgl;
 
 void cylinderFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1),
-        ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
-        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
-        ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
-        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1) };
-    Cylinder * testCylinder = new Cylinder(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 45.0, ColorGLfloat(1,0,0,1));
+    ColorFloat colors[] = { ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1),
+        ColorFloat(0,1,0,1), ColorFloat(0,1,1,1), ColorFloat(1,0,0,1),
+        ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
+        ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
+        ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1) };
+    Cylinder * testCylinder = new Cylinder(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
     // Cylinder * testCylinder2 = new Cylinder(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCylinder);
     // can.add(testCylinder2);
@@ -53,7 +53,7 @@ void cylinderFunction(Canvas& can) {
         // }
         if (rotation*45 >= 360) {
             if (boolean) {
-                testCylinder->setColor(ColorGLfloat(1,0,0,1));
+                testCylinder->setColor(RED);
             } else {
                 testCylinder->setColor(colors);
             }

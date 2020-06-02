@@ -10,35 +10,35 @@
 using namespace tsgl;
 
 void dioramaFunction(Canvas& can) {
-    Square * blankCanvas = new Square(1.8,0,1.35,2.7,0,0,0,ColorGLfloat(1,1,1,1));
-    blankCanvas->setEdgeColor(ColorGLfloat(0.1,0.1,0.1,1));
+    Square * blankCanvas = new Square(1.8,0,1.35,2.7,0,0,0,WHITE);
+    blankCanvas->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(blankCanvas);
 
-    Rectangle * emptyDioramaLeft = new Rectangle(-0.45,0,0,2.7,2.7,0,90,0,ColorGLfloat(1,1,1,0));
-    emptyDioramaLeft->setEdgeColor(ColorGLfloat(0.1,0.1,0.1,1));
+    Rectangle * emptyDioramaLeft = new Rectangle(-0.45,0,0,2.7,2.7,0,90,0,ColorFloat(1,1,1,0));
+    emptyDioramaLeft->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaLeft);
-    Rectangle * emptyDioramaRight = new Rectangle(-3.15,0,0,2.7,2.7,0,90,0,ColorGLfloat(1,1,1,0));
-    emptyDioramaRight->setEdgeColor(ColorGLfloat(0.1,0.1,0.1,1));
+    Rectangle * emptyDioramaRight = new Rectangle(-3.15,0,0,2.7,2.7,0,90,0,ColorFloat(1,1,1,0));
+    emptyDioramaRight->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaRight);
-    Rectangle * emptyDioramaTop = new Rectangle(-1.8,1.35,0,2.7,2.7,0,0,90,ColorGLfloat(1,1,1,0));
-    emptyDioramaTop->setEdgeColor(ColorGLfloat(0.1,0.1,0.1,1));
+    Rectangle * emptyDioramaTop = new Rectangle(-1.8,1.35,0,2.7,2.7,0,0,90,ColorFloat(1,1,1,0));
+    emptyDioramaTop->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaTop);
-    Rectangle * emptyDioramaBottom = new Rectangle(-1.8,-1.35,0,2.7,2.7,0,0,90,ColorGLfloat(1,1,1,0));
-    emptyDioramaBottom->setEdgeColor(ColorGLfloat(0.1,0.1,0.1,1));
+    Rectangle * emptyDioramaBottom = new Rectangle(-1.8,-1.35,0,2.7,2.7,0,0,90,ColorFloat(1,1,1,0));
+    emptyDioramaBottom->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaBottom);
 
-    Cuboid * trunk = new Cuboid(-2,-.3,0,0.25,2,0.25,0,0,0,ColorGLfloat(.6,.3,0,1));
+    Cuboid * trunk = new Cuboid(-2,-.3,0,0.25,2,0.25,0,0,0,ColorFloat(.6,.3,0,1));
     trunk->displayOutlineEdges(false);
     // can.add(trunk);
 
-    Ellipsoid * leaves = new Ellipsoid(-2,0.7,0,0.75,0.5,0.4,0,0,0,ColorGLfloat(0,1,0,1));
+    Ellipsoid * leaves = new Ellipsoid(-2,0.7,0,0.75,0.5,0.4,0,0,0,GREEN);
     // can.add(leaves);
 
-    Rectangle * trunkFlat = new Rectangle(1.6,-.3,1.35,0.25,2,0,0,0,ColorGLfloat(.6,.3,0,1));
+    Rectangle * trunkFlat = new Rectangle(1.6,-.3,1.35,0.25,2,0,0,0,ColorFloat(.6,.3,0,1));
     trunkFlat->displayOutlineEdges(false);
     // can.add(trunkFlat);
 
-    Ellipse * leavesFlat = new Ellipse(1.6,0.7,1.35,0.75,0.5,0,0,0,ColorGLfloat(0,0.8,0,1));
+    Ellipse * leavesFlat = new Ellipse(1.6,0.7,1.35,0.75,0.5,0,0,0,ColorFloat(0,0.8,0,1));
     // can.add(leavesFlat);
 
     float counter = 0;

@@ -14,71 +14,71 @@
 using namespace tsgl;
 
 void diceFunction(Canvas& can) {
-    Cube * die = new Cube(0.0, 0.0, 0.0, 2, 0.0, 0.0, 0.0, ColorGLfloat(1,1,1,1));
+    Cube * die = new Cube(0.0, 0.0, 0.0, 2, 0.0, 0.0, 0.0, WHITE);
     can.add(die);
 
-    RegularPolygon * spot1 =  new RegularPolygon(0,0,1.01,0.5,6,0,0,0,ColorGLfloat(0,0,0,1));
+    RegularPolygon * spot1 =  new RegularPolygon(0,0,1.01,0.5,6,0,0,0,BLACK);
     can.add(spot1);
     spot1->setRotationPoint(0,0,0);
 
 
-    RegularPolygon * spot2_1 = new RegularPolygon(-0.6,0.6,1.01,0.3,6,0,0,-90,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot2_1 = new RegularPolygon(-0.6,0.6,1.01,0.3,6,0,0,-90,BLACK);
     spot2_1->setRotationPoint(0,0,0);
     can.add(spot2_1);
-    RegularPolygon * spot2_2 = new RegularPolygon(0.6,-0.6,1.01,0.3,6,0,0,-90,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot2_2 = new RegularPolygon(0.6,-0.6,1.01,0.3,6,0,0,-90,BLACK);
     spot2_2->setRotationPoint(0,0,0);
     can.add(spot2_2);
 
-    RegularPolygon * spot3_1 = new RegularPolygon(0,1.01,0,0.3,6,90,0,0,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot3_1 = new RegularPolygon(0,1.01,0,0.3,6,90,0,0,BLACK);
     spot3_1->setRotationPoint(0,0,0);
     can.add(spot3_1);
-    RegularPolygon * spot3_2 = new RegularPolygon(0.6,1.01,0.6,0.3,6,90,0,0,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot3_2 = new RegularPolygon(0.6,1.01,0.6,0.3,6,90,0,0,BLACK);
     spot3_2->setRotationPoint(0,0,0);
     can.add(spot3_2);
-    RegularPolygon * spot3_3 = new RegularPolygon(-0.6,1.01,-0.6,0.3,6,90,0,0,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot3_3 = new RegularPolygon(-0.6,1.01,-0.6,0.3,6,90,0,0,BLACK);
     spot3_3->setRotationPoint(0,0,0);
     can.add(spot3_3);
 
-    // RegularPolygon * spot4_1 = new RegularPolygon(0.6,0.6,1.01,0.3,6,0,90,0,ColorGLfloat(0,0,0,1) );
+    // RegularPolygon * spot4_1 = new RegularPolygon(0.6,0.6,1.01,0.3,6,0,90,0,BLACK);
     // spot4_1->setRotationPoint(0,0,0);
     // can.add(spot4_1);
-    // RegularPolygon * spot4_2 = new RegularPolygon(-0.6,0.6,1.01,0.3,6,0,90,0,ColorGLfloat(0,0,0,1) );
+    // RegularPolygon * spot4_2 = new RegularPolygon(-0.6,0.6,1.01,0.3,6,0,90,0,BLACK);
     // spot4_2->setRotationPoint(0,0,0);
     // can.add(spot4_2);
-    // RegularPolygon * spot4_3 = new RegularPolygon(0.6,-0.6,1.01,0.3,6,0,90,0,ColorGLfloat(0,0,0,1) );
+    // RegularPolygon * spot4_3 = new RegularPolygon(0.6,-0.6,1.01,0.3,6,0,90,0,BLACK);
     // spot4_3->setRotationPoint(0,0,0);
     // can.add(spot4_3);
-    // RegularPolygon * spot4_4 = new RegularPolygon(-0.6,-0.6,1.01,0.3,6,0,90,0,ColorGLfloat(0,0,0,1) );
+    // RegularPolygon * spot4_4 = new RegularPolygon(-0.6,-0.6,1.01,0.3,6,0,90,0,BLACK);
     // spot4_4->setRotationPoint(0,0,0);
     // can.add(spot4_4);
 
-    RegularPolygon * spot5_1 = new RegularPolygon(0,0,1.01,0.3,6,0,0,90,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot5_1 = new RegularPolygon(0,0,1.01,0.3,6,0,0,90,BLACK);
     spot5_1->setRotationPoint(0,0,0);
     can.add(spot5_1);
-    RegularPolygon * spot5_2 = new RegularPolygon(0.6,0.6,1.01,0.3,6,0,0,90,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot5_2 = new RegularPolygon(0.6,0.6,1.01,0.3,6,0,0,90,BLACK);
     spot5_2->setRotationPoint(0,0,0);
     can.add(spot5_2);
-    RegularPolygon * spot5_3 = new RegularPolygon(-0.6,0.6,1.01,0.3,6,0,0,90,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot5_3 = new RegularPolygon(-0.6,0.6,1.01,0.3,6,0,0,90,BLACK);
     spot5_3->setRotationPoint(0,0,0);
     can.add(spot5_3);
-    RegularPolygon * spot5_4 = new RegularPolygon(0.6,-0.6,1.01,0.3,6,0,0,90,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot5_4 = new RegularPolygon(0.6,-0.6,1.01,0.3,6,0,0,90,BLACK);
     spot5_4->setRotationPoint(0,0,0);
     can.add(spot5_4);
-    RegularPolygon * spot5_5 = new RegularPolygon(-0.6,-0.6,1.01,0.3,6,0,0,90,ColorGLfloat(0,0,0,1) );
+    RegularPolygon * spot5_5 = new RegularPolygon(-0.6,-0.6,1.01,0.3,6,0,0,90,BLACK);
     spot5_5->setRotationPoint(0,0,0);
     can.add(spot5_5);
 
-    RegularPolygon * spot6_1 =  new RegularPolygon(-0.5,0.65,1.01,0.3,6,0,0,180,ColorGLfloat(0,0,0,1));
+    RegularPolygon * spot6_1 =  new RegularPolygon(-0.5,0.65,1.01,0.3,6,0,0,180,BLACK);
     can.add(spot6_1);
-    RegularPolygon * spot6_2 =  new RegularPolygon(-0.5,0,1.01,0.3,6,0,0,180,ColorGLfloat(0,0,0,1));
+    RegularPolygon * spot6_2 =  new RegularPolygon(-0.5,0,1.01,0.3,6,0,0,180,BLACK);
     can.add(spot6_2);
-    RegularPolygon * spot6_3 =  new RegularPolygon(-0.5,-0.65,1.01,0.3,6,0,0,180,ColorGLfloat(0,0,0,1));
+    RegularPolygon * spot6_3 =  new RegularPolygon(-0.5,-0.65,1.01,0.3,6,0,0,180,BLACK);
     can.add(spot6_3);
-    RegularPolygon * spot6_4 =  new RegularPolygon(0.5,0.65,1.01,0.3,6,0,0,180,ColorGLfloat(0,0,0,1));
+    RegularPolygon * spot6_4 =  new RegularPolygon(0.5,0.65,1.01,0.3,6,0,0,180,BLACK);
     can.add(spot6_4);
-    RegularPolygon * spot6_5 =  new RegularPolygon(0.5,0,1.01,0.3,6,0,0,180,ColorGLfloat(0,0,0,1));
+    RegularPolygon * spot6_5 =  new RegularPolygon(0.5,0,1.01,0.3,6,0,0,180,BLACK);
     can.add(spot6_5);
-    RegularPolygon * spot6_6 =  new RegularPolygon(0.5,-0.65,1.01,0.3,6,0,0,180,ColorGLfloat(0,0,0,1));
+    RegularPolygon * spot6_6 =  new RegularPolygon(0.5,-0.65,1.01,0.3,6,0,0,180,BLACK);
     can.add(spot6_6);
     spot6_1->setRotationPoint(0,0,0);
     spot6_2->setRotationPoint(0,0,0);

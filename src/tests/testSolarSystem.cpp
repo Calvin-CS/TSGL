@@ -10,16 +10,16 @@
 using namespace tsgl;
 
 void ssFunction(Canvas& can) {
-    Sphere * sun = new Sphere(0, 0, 0, 0.75, 15, 0.0, 15.0, ColorGLfloat(1,1,0,1));
-    Sphere * mercury = new Sphere(0.95, 0, 0, .15, 15, 0.0, 15.0, ColorGLfloat(.8,.55,0,1));
-    Sphere * venus = new Sphere(1.4, 0, 0, .25, 15, 0.0, 15.0, ColorGLfloat(1,.8,.5,1));
-    Sphere * earth = new Sphere(2.05, 0, 0, .3, 15, 0.0, 15.0, ColorGLfloat(0,0.8,0.3,1));
-    Sphere * mars =  new Sphere(2.7, 0, 0, .2, 15, 0.0, 15.0, ColorGLfloat(1,.4,0,1));
-    Sphere * jupiter = new Sphere(3.45, 0, 0, .5, 15, 0.0, 15.0, ColorGLfloat(1,0.9,.6,1));
-    Sphere * saturn = new Sphere(4.45, 0, 0, .4, 15, 0.0, 15.0, ColorGLfloat(.9,.65,.25,1));
-    Circle * saturnRings = new Circle(4.45, 0, 0, .7, 15, 0, 75, ColorGLfloat(.9,.8,.3,0.5));
-    Sphere * uranus = new Sphere(5.15, 0, 0, .25, 15, 0.0, 15.0, ColorGLfloat(.2,.6,1,1));
-    Sphere * neptune = new Sphere(5.75, 0, 0, .2, 15, 0.0, 15.0, ColorGLfloat(.25,.65,1,1));
+    Sphere * sun = new Sphere(0, 0, 0, 0.75, 15, 0.0, 15.0, YELLOW);
+    Sphere * mercury = new Sphere(0.95, 0, 0, .15, 15, 0.0, 15.0, ColorFloat(.8,.55,0,1));
+    Sphere * venus = new Sphere(1.4, 0, 0, .25, 15, 0.0, 15.0, ColorFloat(1,.8,.5,1));
+    Sphere * earth = new Sphere(2.05, 0, 0, .3, 15, 0.0, 15.0, ColorFloat(0,0.8,0.3,1));
+    Sphere * mars =  new Sphere(2.7, 0, 0, .2, 15, 0.0, 15.0, ColorFloat(1,.4,0,1));
+    Sphere * jupiter = new Sphere(3.45, 0, 0, .5, 15, 0.0, 15.0, ColorFloat(1,0.9,.6,1));
+    Sphere * saturn = new Sphere(4.45, 0, 0, .4, 15, 0.0, 15.0, ColorFloat(.9,.65,.25,1));
+    Circle * saturnRings = new Circle(4.45, 0, 0, .7, 15, 0, 75, ColorFloat(.9,.8,.3,0.5));
+    Sphere * uranus = new Sphere(5.15, 0, 0, .25, 15, 0.0, 15.0, ColorFloat(.2,.6,1,1));
+    Sphere * neptune = new Sphere(5.75, 0, 0, .2, 15, 0.0, 15.0, ColorFloat(.25,.65,1,1));
 
     saturnRings->displayOutlineEdges(false);
 

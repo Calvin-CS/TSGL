@@ -34,12 +34,12 @@ struct Fork3D {
     }
 
     //Add vertices
-    myShape = new ConcavePolygon(0,0,0,POINTS, xs, ys, 0,0,0,ColorGLfloat(1,1,1,1));
+    myShape = new ConcavePolygon(0,0,0,POINTS, xs, ys, 0,0,0,WHITE);
   }
   void setCanvas( Canvas* can) {
     can->add(myShape);
   }
-  void draw(float x, float y, double angle, ColorGLfloat c) {
+  void draw(float x, float y, double angle, ColorFloat c) {
     angle -= PI/2;
     myShape->setColor(c);
     myShape->setCenter(x, y, 0);

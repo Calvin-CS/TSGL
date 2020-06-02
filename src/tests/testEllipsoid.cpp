@@ -10,15 +10,15 @@
 using namespace tsgl;
 
 void ellipsoidFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0,0,0,0.8), ColorGLfloat(0,0,1,0.8),
-        ColorGLfloat(0,1,0,0.8), ColorGLfloat(0,1,1,0.8), ColorGLfloat(1,0,0,0.8),
-        ColorGLfloat(1,0,1,0.8), ColorGLfloat(1,1,0,0.8), ColorGLfloat(1,1,1,0.8),
-        ColorGLfloat(0.5,0.5,0.5,0.8), ColorGLfloat(0.5,0.5,1,0.8),
-        ColorGLfloat(0.5,1,0.5,0.8), ColorGLfloat(0.5,1,1,0.8), ColorGLfloat(1,0.5,0.5,0.8),
-        ColorGLfloat(1,0.5,1,0.8), ColorGLfloat(1,1,0.5,0.8), ColorGLfloat(0,0,0.5,0.8),
-        ColorGLfloat(0,0.5,0,0.8), ColorGLfloat(0,0.5,0.5,0.8), ColorGLfloat(0.5,0,0,0.8),
-        ColorGLfloat(0.5,0,0.5,0.8), ColorGLfloat(0.5,0.5,0,0.8), ColorGLfloat(0.5,0.5,0.5,0.8)};
-    Ellipsoid * testEllipsoid = new Ellipsoid(0.0, 0.0, 0.0, 2, 2, 2, 0.0, 0.0, 0.0, colors/* ColorGLfloat(1,0,0,1) */);
+    ColorFloat colors[] = { ColorFloat(0,0,0,0.8), ColorFloat(0,0,1,0.8),
+        ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
+        ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8),
+        ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0.5,0.5,1,0.8),
+        ColorFloat(0.5,1,0.5,0.8), ColorFloat(0.5,1,1,0.8), ColorFloat(1,0.5,0.5,0.8),
+        ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
+        ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
+        ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
+    Ellipsoid * testEllipsoid = new Ellipsoid(0.0, 0.0, 0.0, 2, 2, 2, 0.0, 0.0, 0.0, colors/* ColorFloat(1,0,0,1) */);
     // Ellipsoid * testEllipsoid2 = new Ellipsoid(-2.0, 0.0, 0.0, 1.5, 1.5, 1.5, 0.0, 0.0, 0.0, colors);
     can.add(testEllipsoid);
     // can.add(testEllipsoid2);
@@ -73,7 +73,7 @@ void ellipsoidFunction(Canvas& can) {
         // }
         if (rotation*45 >= 360) {
             if (boolean) {
-                testEllipsoid->setColor(ColorGLfloat(1,0,0,1));
+                testEllipsoid->setColor(RED);
             } else {
                 testEllipsoid->setColor(colors);
             }

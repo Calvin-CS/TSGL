@@ -17,9 +17,9 @@ class Rectangle : public ConvexPolygon {
  private:
     GLfloat myWidth, myHeight;
  public:
-    Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorGLfloat color);
+    Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorFloat color);
 
-    Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorGLfloat color[]);
+    Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorFloat color[]);
 
     /*!
     * \brief Accessor for the width of the Rectangle.

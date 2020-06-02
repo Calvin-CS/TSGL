@@ -2328,17 +2328,17 @@ void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
   * \see resumeDrawing()
   */
 void Canvas::pauseDrawing() {
-  // #pragma omp critical (pauseResume)
-  // {
-  // if (syncMutexLocked == 0 && syncMutexOwner == -1) {
-  //   syncMutex.lock();
-  //   syncMutexOwner = omp_get_thread_num();
-  // }
-  // #pragma omp critical (syncMutLock)
-  // {
-  //   ++syncMutexLocked;
-  // }
-  // }
+  #pragma omp critical (pauseResume)
+  {
+  if (syncMutexLocked == 0 && syncMutexOwner == -1) {
+    syncMutex.lock();
+    syncMutexOwner = omp_get_thread_num();
+  }
+  #pragma omp critical (syncMutLock)
+  {
+    ++syncMutexLocked;
+  }
+  }
 }
 
  /*!
@@ -2373,21 +2373,21 @@ void Canvas::reset() {
   * \see pauseDrawing()
   */
 void Canvas::resumeDrawing() {
-  // #pragma omp critical (syncMutLock)
-  // {
-  //   --syncMutexLocked;
-  // }
-  // #pragma omp critical (pauseResume)
-  // {
-  //   if (syncMutexOwner == omp_get_thread_num()) {
-  //     while (syncMutexLocked > 0)
-  //       sleepFor(FRAME/2);
-  //     syncMutex.unlock();
-  //     syncMutexOwner = -1;
-  //   }
-  // }
-  // while (syncMutexOwner != -1)
-  //   sleepFor(FRAME/2);
+  #pragma omp critical (syncMutLock)
+  {
+    --syncMutexLocked;
+  }
+  #pragma omp critical (pauseResume)
+  {
+    if (syncMutexOwner == omp_get_thread_num()) {
+      while (syncMutexLocked > 0)
+        sleepFor(FRAME/2);
+      syncMutex.unlock();
+      syncMutexOwner = -1;
+    }
+  }
+  while (syncMutexOwner != -1)
+    sleepFor(FRAME/2);
 }
 
  /*!

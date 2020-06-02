@@ -12,11 +12,11 @@ namespace tsgl {
  *      \param yaw The yaw of the arrow.
  *      \param pitch The pitch of the arrow.
  *      \param roll The roll of the arrow.
- *      \param color A ColorGLfloats for the color of the Arrow.
+ *      \param color A ColorFloat for the color of the Arrow.
  * \return A new Arrow with the specified length and color.
  * \note At 0,0,0 yaw,pitch,roll, the arrow will be drawn directly parallel to the x-axis as a plane perpindicular to the z-axis.
  */
-Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorGLfloat color, bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
+Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorFloat color, bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
     if (width <= 0 || length <= 0) {
         TsglDebug("Cannot have an Arrow with length or width less than or equal to 0.");
         return;
@@ -56,11 +56,11 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw
  *      \param yaw The yaw of the arrow.
  *      \param pitch The pitch of the arrow.
  *      \param roll The roll of the arrow.
- *      \param color An array of ColorGLfloats for the colors of the Arrow.
+ *      \param color An array of ColorFloats for the colors of the Arrow.
  * \return A new Arrow with the specified length and color.
  * \note At 0,0,0 yaw,pitch,roll, the arrow will be drawn directly parallel to the x-axis as a plane perpindicular to the z-axis.
  */
-Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorGLfloat color[], bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
+Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorFloat color[], bool doubleArrow) : ConcavePolygon(x, y, z, (doubleArrow)? 10 : 7, yaw, pitch, roll) {
     if (width <= 0 || length <= 0) {
         TsglDebug("Cannot have an Arrow with length or width less than or equal to 0.");
         return;
@@ -136,10 +136,10 @@ void Arrow::changeWidthBy(GLfloat delta) {
 
 /**
  * \brief Sets the Arrow to a new color.
- * \param c The new array of ColorGLfloats.
- * \note Overrides Shape::setColor(ColorGLfloat c[]).
+ * \param c The new array of ColorFloats.
+ * \note Overrides Shape::setColor(ColorFloat c[]).
  */
-void Arrow::setColor(ColorGLfloat c[]) {
+void Arrow::setColor(ColorFloat c[]) {
     for(int i = 0; i < 7; i++) {
         colors[i*4] = c[i/5].R;
         colors[i*4 + 1] = c[i/5].G;

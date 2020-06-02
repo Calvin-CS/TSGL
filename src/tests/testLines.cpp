@@ -5,13 +5,13 @@
 using namespace tsgl;
 
 void lineFunction(Canvas& c) {
-	ColorGLfloat colors[] = { ColorGLfloat(1,0,0,1), ColorGLfloat(0,1,0,1),
-                            ColorGLfloat(0,0,1,1), ColorGLfloat(1,0,1,1), 
-                            ColorGLfloat(1,1,0,1), ColorGLfloat(0,1,1,1), 
-                            ColorGLfloat(0,0,1,1) };
-    Line * l = new Line(0,0,0,2,0,0,0,ColorGLfloat(1,0,0,1));
+	ColorFloat colors[] = { ColorFloat(1,0,0,1), ColorFloat(0,1,0,1),
+                            ColorFloat(0,0,1,1), ColorFloat(1,0,1,1), 
+                            ColorFloat(1,1,0,1), ColorFloat(0,1,1,1), 
+                            ColorFloat(0,0,1,1) };
+    Line * l = new Line(0,0,0,2,0,0,0,ColorFloat(1,0,0,1));
 
-    // l->setColor(ColorGLfloat(1,0,0,1));
+    // l->setColor(RED);
     l->setColor(colors);
 
     float vertices[] = { -1.5,-1,-1, 
@@ -22,9 +22,9 @@ void lineFunction(Canvas& c) {
                         1,-1,1, 
                         1.5,-1,-1 };
 
-    Polyline * p = new Polyline(0,0,0,7,vertices,0,0,0,ColorGLfloat(0,0,1,1));
+    Polyline * p = new Polyline(0,0,0,7,vertices,0,0,0,BLUE);
 
-    // p->setColor(ColorGLfloat(0,0,1,1));
+    // p->setColor(BLUE);
     p->setColor(colors);
     c.add(l);
     c.add(p);

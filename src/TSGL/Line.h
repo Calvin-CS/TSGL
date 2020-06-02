@@ -17,9 +17,9 @@ class Line : public Polyline {
  private:
     GLfloat myLength;
  public:
-    Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color);
+    Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorFloat color);
 
-    Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color[]);
+    Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorFloat color[]);
 
     void setLength(GLfloat length);
 

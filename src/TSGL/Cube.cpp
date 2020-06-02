@@ -12,11 +12,11 @@ namespace tsgl {
   *   \param yaw The Cube's yaw, in degrees.
   *   \param pitch The Cube's pitch, in degrees.
   *   \param roll The Cube's roll, in degrees.
-  *   \param c A ColorGLfloat for the Cube's vertex colors.
+  *   \param c A ColorFloat for the Cube's vertex colors.
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
-Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c)  
+Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat c)  
 : Drawable(x, y, z, yaw, pitch, roll)  { // FIXME vertices
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
@@ -73,11 +73,11 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
   *   \param yaw The Cube's yaw, in degrees.
   *   \param pitch The Cube's pitch, in degrees.
   *   \param roll The Cube's roll, in degrees.
-  *   \param c An array of ColorGLfloats for the Cube's vertex colors.
+  *   \param c An array of ColorFloats for the Cube's vertex colors.
   * \warning An invariant is held where if length, width, or height isn't positive then an error message is given.
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
-Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat c[])  
+Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat c[])  
 : Drawable(x, y, z, yaw, pitch, roll)  { // FIXME vertices
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
@@ -160,10 +160,10 @@ void Cube::changeSideLengthBy(GLfloat delta) {
 
 /**
  * \brief Sets the Cube to an array of new colors.
- * \param c An array of new ColorGLfloats.
- * \details The array should have 8 ColorGLfloats minimum, one for each corner.
+ * \param c An array of new ColorFloats.
+ * \details The array should have 8 ColorFloats minimum, one for each corner.
  */
-void Cube::setColor(ColorGLfloat c[]) {
+void Cube::setColor(ColorFloat c[]) {
     attribMutex.lock();
     colors[0] = colors[36] = colors[64] = c[0].R;
     colors[1] = colors[37] = colors[65] = c[0].G;

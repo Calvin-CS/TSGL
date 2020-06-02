@@ -19,7 +19,7 @@ namespace tsgl {
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Pyramid with a buffer for storing the specified numbered of vertices.
   */
-Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
+Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (sides < 3) {
         TsglDebug("Cannot have a Pyramid with fewer than 3 sides.");
     }
@@ -47,7 +47,7 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
         addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c);
 
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c);    
-        addVertex(0,0.5,0, ColorGLfloat(c.R*.5,c.G*.5,c.B*.5,c.A));
+        addVertex(0,0.5,0, ColorFloat(c.R*.5,c.G*.5,c.B*.5,c.A));
         addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c);
     }
 }
@@ -69,7 +69,7 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Pyramid with a buffer for storing the specified numbered of vertices.
   */
-Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
+Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (sides < 3) {
         TsglDebug("Cannot have a Pyramid with fewer than 3 sides.");
     }
@@ -170,7 +170,7 @@ void Pyramid::changeHeightBy(float delta) {
  * \brief Sets the Pyramid to a new color.
  * \param c The new ColorFloat.
  */
-void Pyramid::setColor(ColorGLfloat c) {
+void Pyramid::setColor(ColorFloat c) {
     attribMutex.lock();
     for(int i = 0; i < mySides; i++) {
         colors[i*24] = colors[i*24 + 4] = colors[i*24 + 8] = colors[i*24 + 12] = colors[i*24 + 20] = c.R;
@@ -188,10 +188,10 @@ void Pyramid::setColor(ColorGLfloat c) {
 
 /**
  * \brief Sets the Pyramid to an array of new colors.
- * \param c An array of new ColorGLfloats.
- * \details The array should have mySides+2 ColorGLfloats minimum.
+ * \param c An array of new ColorFloats.
+ * \details The array should have mySides+2 ColorFloats minimum.
  */
-void Pyramid::setColor(ColorGLfloat c[]) {
+void Pyramid::setColor(ColorFloat c[]) {
     attribMutex.lock();
     for(int i = 0; i < mySides; i++) {
         colors[i*24] = c[i+1].R;

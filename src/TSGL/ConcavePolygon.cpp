@@ -32,7 +32,7 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
   *     (set to true by default).
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
-ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorGLfloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
+ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
     edgesOutlined = false;
     geometryType = GL_TRIANGLE_FAN;
@@ -59,7 +59,7 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
   *     (set to true by default).
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
-ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorGLfloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
+ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
     edgesOutlined = false;
     geometryType = GL_TRIANGLE_FAN;
@@ -84,7 +84,7 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
   * \note This function does nothing if the vertex buffer is already full.
   * \note A message is given indicating that the vertex buffer is full.
   */
-void ConcavePolygon::addVertex(float x, float y, float z, ColorGLfloat &color) {
+void ConcavePolygon::addVertex(float x, float y, float z, ColorFloat &color) {
     if (init) {
     TsglDebug("Cannot add anymore vertices.");
     return;

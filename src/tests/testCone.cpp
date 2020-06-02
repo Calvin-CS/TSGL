@@ -10,18 +10,18 @@
 using namespace tsgl;
 
 void coneFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1),
-        ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
-        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
-        ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
-        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1), 
-        ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1),
-        ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
-        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
-        ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
-        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1), 
-        ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1) };
-    Cone * testCone = new Cone(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 0.0, ColorGLfloat(1,0,0,1));
+    ColorFloat colors[] = { ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1),
+        ColorFloat(0,1,0,1), ColorFloat(0,1,1,1), ColorFloat(1,0,0,1),
+        ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
+        ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
+        ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1), 
+        ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1),
+        ColorFloat(0,1,0,1), ColorFloat(0,1,1,1), ColorFloat(1,0,0,1),
+        ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
+        ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
+        ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1), 
+        ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1) };
+    Cone * testCone = new Cone(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 0.0, ColorFloat(1,0,0,1));
     // Cone * testCone2 = new Cone(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCone);
     // can.add(testCone2);
@@ -54,7 +54,7 @@ void coneFunction(Canvas& can) {
         // testCone->changeRadiusBy(delta);
         if (rotation*45 >= 360) {
             if (boolean) {
-                testCone->setColor(ColorGLfloat(1,0,0,1));
+                testCone->setColor(RED);
             } else {
                 testCone->setColor(colors);
             }

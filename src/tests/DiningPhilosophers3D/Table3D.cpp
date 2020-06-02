@@ -10,7 +10,7 @@
 Table3D::Table3D(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
-  myTable = new Cylinder(0,0,-2,1,1.5,0,0,90,ColorGLfloat(0.5,0.5,0.5,1));
+  myTable = new Cylinder(0,0,-2,1,1.5,0,0,90,ColorFloat(0.5,0.5,0.5,1));
   can.add(myTable);
   phils = new Philosopher3D[numPhils];
   forks = new Fork3D[numPhils];
@@ -459,7 +459,7 @@ void Table3D::drawStep() {
 
   int i = omp_get_thread_num();
   float pangle = (i*2*PI)/numPhils;
-  ColorGLfloat fcolor = ColorGLfloat(1,1,1,1);
+  ColorFloat fcolor = WHITE;
   float fangle = (i+0.5f)*ARC;
 
   if( !phils[i].hasCylinder() ) {
@@ -476,11 +476,11 @@ void Table3D::drawStep() {
   }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;
-    fcolor = (phils[i].state() == hasBoth) ? ColorGLfloat(0,1,0,1) : ColorGLfloat(0.75,0,0.75,1);
+    fcolor = (phils[i].state() == hasBoth) ? GREEN : PURPLE;
   }
   else if((forks[i].user == (i+1)%numPhils)) {
     fangle = ((i+1)*ARC) - CLOSE;
-    fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? ColorGLfloat(0,1,0,1) : ColorGLfloat(1,0.65,0,1);
+    fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? GREEN : ORANGE;
   } else {
     FORK_RAD = 0.9;
     fangle = pangle + PI / numPhils;

@@ -10,14 +10,14 @@
 using namespace tsgl;
 
 void contrastFunction(Canvas& can) {
-    ColorGLfloat pyramidcolors[] = { ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,0,1,1),
-        ColorGLfloat(0,1,0,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1),
-        ColorGLfloat(1,0,1,1), ColorGLfloat(1,1,0,1), ColorGLfloat(1,1,1,1),
-        ColorGLfloat(0.5,0,0.5,1), ColorGLfloat(0,0.5,0.5,1), 
-        ColorGLfloat(0.5,0.5,0,1), ColorGLfloat(0,0.5,1,1) };
-    ColorGLfloat triangle2Colors[] = { ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,1,1,1), ColorGLfloat(0,1,0,1) }; 
-    ColorGLfloat triangle3Colors[] = { ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(1,0,1,1), ColorGLfloat(1,0,0,1) }; 
-    ColorGLfloat triangle6Colors[] = { ColorGLfloat(0.5,0.5,0.5,1), ColorGLfloat(0,1,1,1), ColorGLfloat(1,0,0,1) };
+    ColorFloat pyramidcolors[] = { ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1),
+        ColorFloat(0,1,0,1), ColorFloat(0,1,1,1), ColorFloat(1,0,0,1),
+        ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
+        ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
+        ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1) };
+    ColorFloat triangle2Colors[] = { ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,1,1,1), ColorFloat(0,1,0,1) }; 
+    ColorFloat triangle3Colors[] = { ColorFloat(0.5,0.5,0.5,1), ColorFloat(1,0,1,1), ColorFloat(1,0,0,1) }; 
+    ColorFloat triangle6Colors[] = { ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,1,1,1), ColorFloat(1,0,0,1) };
     Pyramid * testPyramid = new Pyramid(-2.0, 0.0, -1.0, 4, 2, 2, 0.0, 0.0, 45.0, pyramidcolors);
     // can.add(testPyramid);
     Triangle * triangle1 = new Triangle(1.39,0.66,0,3.5,-0.52,0,1.62,-2,0,0,0,0,pyramidcolors);

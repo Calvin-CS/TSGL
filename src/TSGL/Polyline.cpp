@@ -40,11 +40,11 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float yaw, float 
   *   \param yaw The Polyline's yaw.
   *   \param pitch The Polyline's pitch.
   *   \param roll The Polyline's roll.
-  *   \param color Color of the Polyline, as a ColorGLfloat.
+  *   \param color Color of the Polyline, as a ColorFloat.
   * \warning An invariant is held where if v is less than 2 then an error message is given.
   * \return A new Polyline with a buffer for storing the specified numbered of vertices.
   */
-Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorGLfloat color) : Shape(x,y,z,yaw,pitch,roll) {
+Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color) : Shape(x,y,z,yaw,pitch,roll) {
     if (numVertices < 2)
       TsglDebug("Cannot have a line with fewer than 2 vertices.");
     attribMutex.lock();
@@ -72,11 +72,11 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
   *   \param yaw The Polyline's yaw.
   *   \param pitch The Polyline's pitch.
   *   \param roll The Polyline's roll.
-  *   \param color Array of ColorGLfloats for the Polyline; 1 ColorGLfloat per vertex.
+  *   \param color Array of ColorFloats for the Polyline; 1 ColorFloat per vertex.
   * \warning An invariant is held where if v is less than 2 then an error message is given.
   * \return A new Polyline with a buffer for storing the specified numbered of vertices.
   */
-Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorGLfloat color[]) : Shape(x,y,z,yaw,pitch,roll) {
+Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color[]) : Shape(x,y,z,yaw,pitch,roll) {
     if (numVertices < 2)
         TsglDebug("Cannot have a line with fewer than 2 vertices.");
     attribMutex.lock();

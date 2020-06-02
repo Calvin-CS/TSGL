@@ -25,9 +25,9 @@ class Polyline : public Shape {
 
     Polyline(float x, float y, float z, int numVertices, float yaw, float pitch, float roll);
 
-    Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorGLfloat color);
+    Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color);
 
-    Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorGLfloat color[]);
+    Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color[]);
 
     bool isProcessed();
 };

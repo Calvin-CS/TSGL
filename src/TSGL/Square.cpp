@@ -12,7 +12,7 @@ namespace tsgl {
  *   \param filled Whether the Square should be filled
  *     (set to true by default).
  */
-Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
+Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
     attribMutex.lock();
     geometryType = GL_QUADS;
     myXScale = myYScale = mySideLength = sideLength;
@@ -34,7 +34,7 @@ Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float p
  *   \param filled Whether the Square should be filled
  *     (set to true by default).
  */
-Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
+Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
     attribMutex.lock();
     geometryType = GL_QUADS;
     myXScale = myYScale = mySideLength = sideLength;

@@ -10,10 +10,10 @@
 using namespace tsgl;
 
 void cuboidFunction(Canvas& can) {
-    ColorGLfloat colors[] = { ColorGLfloat(0,0,0,0.8), ColorGLfloat(0,0,1,0.8),
-        ColorGLfloat(0,1,0,0.8), ColorGLfloat(0,1,1,0.8), ColorGLfloat(1,0,0,0.8),
-        ColorGLfloat(1,0,1,0.8), ColorGLfloat(1,1,0,0.8), ColorGLfloat(1,1,1,0.8) };
-    Cuboid * testCuboid = new Cuboid(0.0, 0.0, 0.0, 1, 4, 2, 0.0, 45.0, 0.0, ColorGLfloat(1,0,0,1));
+    ColorFloat colors[] = { ColorFloat(0,0,0,0.8), ColorFloat(0,0,1,0.8),
+        ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
+        ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8) };
+    Cuboid * testCuboid = new Cuboid(0.0, 0.0, 0.0, 1, 4, 2, 0.0, 45.0, 0.0, ColorFloat(1,0,0,1));
     // Cuboid * testCuboid2 = new Cuboid(-3.0, 0.0, 0.0, 1, 3, 2, 0.0, 0.0, 0.0, colors);
     can.add(testCuboid);
     // can.add(testCuboid2);
@@ -56,7 +56,7 @@ void cuboidFunction(Canvas& can) {
         // testCuboid->changeLengthBy(delta);
         if (rotation*45 >= 360) {
             if (boolean) {
-                testCuboid->setColor(ColorGLfloat(1,0,0,1));
+                testCuboid->setColor(RED);
             } else {
                 testCuboid->setColor(colors);
             }

@@ -20,9 +20,9 @@ protected:
     GLfloat myRadius;
     int mySides;
 public:
-    Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c);
+    Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c);
 
-    Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
+    Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[]);
 
     virtual ~Prism();
 
@@ -46,9 +46,9 @@ public:
     */
     virtual GLfloat getHeight() { return myHeight; }
 
-    virtual void setColor(ColorGLfloat c) { Drawable::setColor(c); }
+    virtual void setColor(ColorFloat c) { Drawable::setColor(c); }
 
-    virtual void setColor(ColorGLfloat c[]);
+    virtual void setColor(ColorFloat c[]);
 };
 
 }

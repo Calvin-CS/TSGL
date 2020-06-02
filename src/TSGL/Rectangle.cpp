@@ -14,7 +14,11 @@ namespace tsgl {
  *     (set to true by default).
  * \return A new Rectangle with the specified top left corner, dimensions, and color.
  */
-Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
+Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
+    if (height <= 0 || width <= 0) {
+        TsglDebug("Cannot have a Rectangle with height less than or equal to 0.");
+        return;
+    }
     attribMutex.lock();
     geometryType = GL_QUADS;
     myXScale = myWidth = width;
@@ -39,7 +43,11 @@ Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, f
  *     (set to true by default).
  * \return A new Rectangle with the specified top left corner, dimensions, and colors.
  */
-Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
+Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
+    if (height <= 0 || width <= 0) {
+        TsglDebug("Cannot have a Rectangle with height less than or equal to 0.");
+        return;
+    }
     attribMutex.lock();
     geometryType = GL_QUADS;
     myXScale = myWidth = width;

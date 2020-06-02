@@ -19,9 +19,9 @@ protected:
     GLfloat myRadius;
     int horizontalSections, verticalSections;
 public:
-    Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c);
+    Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c);
 
-    Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[]);
+    Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[]);
 
     virtual ~Sphere();
 
@@ -31,9 +31,9 @@ public:
 
     virtual GLfloat getRadius() { return myRadius; }
 
-    virtual void setColor(ColorGLfloat c);
+    virtual void setColor(ColorFloat c);
 
-    virtual void setColor(ColorGLfloat c[]);
+    virtual void setColor(ColorFloat c[]);
 };
 
 }

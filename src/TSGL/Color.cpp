@@ -102,7 +102,7 @@ ColorFloat::ColorFloat() {
  * \return A ColorFloat struct with equal R, G, and B values set to <code>v</code>,
  *    and the specified A value.
  */
-ColorFloat::ColorFloat(float v, float a) {
+ColorFloat::ColorFloat(GLfloat v, GLfloat a) {
     if (clamp(v,0,1))
       TsglDebug("Out of range parameter specified for ColorFloat");
     R = v; G = v; B = v; A = a;
@@ -119,7 +119,7 @@ ColorFloat::ColorFloat(float v, float a) {
  *    is out of the range 0 - 1 inclusive then an error message is given.
  * \return A ColorFloat struct with the specified R, G, B, and A values.
  */
-ColorFloat::ColorFloat(float r, float g, float b, float a) {
+ColorFloat::ColorFloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
     bool oor = false;
     oor |= clamp(r,0,1);
     oor |= clamp(g,0,1);
@@ -474,171 +474,6 @@ ColorHSV::operator ColorFloat() {
 ColorHSV::operator ColorInt() {
   return (ColorInt)((ColorFloat)(*this));
 }
-
-
-/*!
- * \brief Default ColorFloat constructor method.
- * \details This is the default constructor for the ColorFloat struct.
- * \note R, G, B, and A are all set to 1.0f by default.
- * \return A ColorFloat struct with default R, G, B, and A values.
- */
-ColorGLfloat::ColorGLfloat() {
-    R = G = B = A = 1;
-}
-
-/*!
- * \brief Basic explicit ColorFloat constructor method.
- * \details This is the basic explicit constructor for the ColorFloat struct.
- *    \param v The value component of the color.
- *    \param a The alpha component of the struct (set to 1.0f by default).
- * \warning An invariant is set where if any of the specified R, G, B, or A values
- *    is out of the range 0 - 1 inclusive then an error message is given.
- * \return A ColorFloat struct with equal R, G, and B values set to <code>v</code>,
- *    and the specified A value.
- */
-ColorGLfloat::ColorGLfloat(GLfloat v, GLfloat a) {
-    if (clamp(v,0,1))
-      TsglDebug("Out of range parameter specified for ColorFloat");
-    R = v; G = v; B = v; A = a;
-}
-
-/*!
- * \brief Full explicit ColorFloat constructor method.
- * \details This is the full explicit constructor for the ColorFloat struct.
- *    \param r The red component of the struct.
- *    \param g The green component of the struct.
- *    \param b The blue component of the struct.
- *    \param a The alpha component of the struct (set to 1.0f by default).
- * \warning An invariant is set where if any of the specified R, G, B, or A values
- *    is out of the range 0 - 1 inclusive then an error message is given.
- * \return A ColorFloat struct with the specified R, G, B, and A values.
- */
-ColorGLfloat::ColorGLfloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
-    bool oor = false;
-    oor |= clamp(r,0,1);
-    oor |= clamp(g,0,1);
-    oor |= clamp(b,0,1);
-    oor |= clamp(a,0,1);
-    if (oor)
-      TsglDebug("Out of range parameter specified for ColorFloat");
-    R = r; G = g; B = b; A = a;
-}
-
-/*!
- * \brief Returns a string representation of the ColorFloat.
- * \details This function returns a std::string representation of the ColorFloat.
- * \return A string representation of the ColorFloat.
- */
-std::string ColorGLfloat::asString() {
-    std::stringstream ss;
-    ss << R << "R," << G << "G," << B << "B," << A << "A";
-    return ss.str();
-}
-
-//From http://stackoverflow.com/questions/3018313/algorithm-to-convert-rgb-to-hsv-and-hsv-to-rgb-in-range-0-255-for-both
-/*!
- * \brief Implicit conversion from ColorFloat to ColorHSV.
- * \details This defines the implicit conversion operator from a floating point color type (ColorFloat) to an
- *   HSV color type (ColorHSV).
- */
-ColorGLfloat::operator ColorHSV() {
-    ColorHSV    out;
-    double      min, max, delta;
-
-    min = R < G ? R : G;
-    min = min  < B ? min  : B;
-
-    max = R > G ? R : G;
-    max = max  > B ? max  : B;
-
-    out.V = max;                                // v
-    delta = max - min;
-    if( max > 0.0 ) { // NOTE: if Max is == 0, this divide would cause a crash
-        out.S = (delta / max);                  // s
-    } else {
-        // if max is 0, then r = g = b = 0
-            // s = 0, v is undefined
-        out.S = 0.0;
-        out.H = NAN;                            // its now undefined
-        return out;
-    }
-    if( R >= max )                           // > is bogus, just keeps compilor happy
-        out.H = ( G - B ) / delta;        // between yellow & magenta
-    else
-    if( G >= max )
-        out.H = 2.0 + ( B - R ) / delta;  // between cyan & yellow
-    else
-        out.H = 4.0 + ( R - G ) / delta;  // between magenta & cyan
-
-    if( out.H < 0.0 )
-        out.H += 6.0;
-
-    return out;
-}
-
-/*!
- * \brief Implicit conversion from ColorFloat to ColorInt.
- * \details This defines the implicit conversion operator from a floating point color type (ColorFloat) to an
- *   integer color type (ColorInt).
- */
-ColorGLfloat::operator ColorInt() {
-    return ColorInt(R*MAX_COLOR,G*MAX_COLOR,B*MAX_COLOR,A*MAX_COLOR);
-}
-
-/*!
- * \brief Determines if two ColorFloats are equivalent.
- * \details Equality operator for two ColorFloats. Determines if they are equivalent.
- *    \param c2 Reference to the ColorFloat struct that is the second one in the equivalence comparison.
- * \note This function relies on (*this), which is a dereferenced pointer to the first ColorFloat struct in the comparison.
- *    (its the one on the left side of the == sign).
- * \returns true if the two ColorFloats are equivalent, false if otherwise.
- */
-bool ColorGLfloat::operator==(ColorGLfloat& c2) {
-    if((*this).R == c2.R && (*this).G == c2.G && (*this).B == c2.B) {
-      return true;
-    } else {
-      return false;
-    }
-}
-
-/*!
- * \brief Determines if two ColorFloats are *NOT* equivalent.
- * \details Inequality operator for two ColorFloats. Determines if they are *NOT* equivalent.
- *    \param c2 Reference to the ColorFloat struct that is the second one in the inequality comparison.
- * \note This function relies on (*this), which is a dereferenced pointer to the first ColorFloat struct in the inequality comparison.
- *       (its the one on the left side of the != sign).
- * \returns true if the two ColorFloats are not equivalent, false if otherwise.
- */
-bool ColorGLfloat::operator!=(ColorGLfloat& c2) {
-    if((*this).R == c2.R && (*this).G == c2.G && (*this).B == c2.B) {
-      return false;
-    } else {
-      return true;
-    }
-}
-
-/*!
- * \brief Multiplies the values of a ColorFloat by a float
- * \details This operator multiplies each of the components of a ColorFloat
- *   by amount <code>f</code>.
- * \param f Amount to multiply each component by
- * \returns A new ColorFloat constructed as ColorFloat(orig.R*f, orig.G*f, orig.b*f, orig.A*f)
- * \note Individual channels are clamped between 0 and 1.
- */
-ColorGLfloat ColorGLfloat::operator*(GLfloat f) {
-    GLfloat newR = (*this).R*f; clamp(newR,0,1);
-    GLfloat newG = (*this).G*f; clamp(newG,0,1);
-    GLfloat newB = (*this).B*f; clamp(newB,0,1);
-    GLfloat newA = (*this).A;
-    return ColorGLfloat(newR,newG,newB,newA);
-}
-
-ColorGLfloat ColorGLfloat::getContrast() {
-    GLfloat color = (R + G + B > 1.5) ? 0.0 : 1.0;
-    return ColorGLfloat(color, color, color, A);
-}
-
-
 
 /*!
  * \brief Returns an HSVA color with a hue dependent on the number of sections.

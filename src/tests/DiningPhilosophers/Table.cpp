@@ -10,9 +10,9 @@
 Table::Table(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
-  myTable = new Circle(0,0,-1,1.5,0,0,0,ColorGLfloat(0.5,0.5,0.5,1));
+  myTable = new Circle(0,0,-1,1.5,0,0,0,ColorFloat(0.5,0.5,0.5,1));
   can.add(myTable);
-  // can.drawCircle(0,0,1,ColorGLfloat(0.5,0.5,0.5,1));
+  // can.drawCircle(0,0,1,ColorFloat(0.5,0.5,0.5,1));
   phils = new Philosopher[numPhils];
   forks = new Fork[numPhils];
   for (int i = 0; i < numPhils; ++i) {
@@ -460,7 +460,7 @@ void Table::drawStep() {
 
   int i = omp_get_thread_num();
   float pangle = (i*2*PI)/numPhils;
-  ColorGLfloat fcolor = ColorGLfloat(1,1,1,1);
+  ColorFloat fcolor = ColorFloat(1,1,1,1);
   float fangle = (i+0.5f)*ARC;
 
   if( !phils[i].hasCircle() ) {
@@ -477,11 +477,11 @@ void Table::drawStep() {
   }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;
-    fcolor = (phils[i].state() == hasBoth) ? ColorGLfloat(0,1,0,1) : ColorGLfloat(0.75,0,0.75,1);
+    fcolor = (phils[i].state() == hasBoth) ? GREEN : PURPLE;
   }
   else if((forks[i].user == (i+1)%numPhils)) {
     fangle = ((i+1)*ARC) - CLOSE;
-    fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? ColorGLfloat(0,1,0,1) : ColorGLfloat(1,0.65,0,1);
+    fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? GREEN : ORANGE;
   } else {
     FORK_RAD = 1;
     fangle = pangle + PI / numPhils;

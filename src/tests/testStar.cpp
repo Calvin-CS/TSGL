@@ -6,15 +6,15 @@
 using namespace tsgl;
 
 void starFunction(Canvas& c) {
-	ColorGLfloat * colors = new ColorGLfloat[400];
-	colors[0] = ColorGLfloat(1,0,0,1);
+	ColorFloat * colors = new ColorFloat[400];
+	colors[0] = ColorFloat(1,0,0,1);
 	for(int i = 1; i < 10; i ++) {
-		// colors[i] = ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)));
-        colors[i] = ColorGLfloat(0,0,1,1);
+		// colors[i] = ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)));
+        colors[i] = ColorFloat(0,0,1,1);
 	}
 
 	Star * s1 = new Star(0, 0, 0, 1, 5, 0,0,0, colors, true);
-    // s1->setColor(ColorGLfloat(1,0,0,1));
+    // s1->setColor(ColorFloat(1,0,0,1));
 	c.add(s1);
 
     float floatVal = 0.0f;
@@ -30,13 +30,13 @@ void starFunction(Canvas& c) {
         // s1->setRadius(sin(floatVal/90) + 3);
         // if (s1->getRadius() > 3 || s1->getRadius() < 1) {
         //     delta *= -1;
-        //     // s1->setEdgeColor(ColorGLfloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     // s1->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
         // }
         // s1->changeRadiusBy(delta);
         // if (delta > 0) {
         //     s1->setColor(colors);
         // } else {
-        //     s1->setColor(ColorGLfloat(1,0,0,1));
+        //     s1->setColor(ColorFloat(1,0,0,1));
         // }
         floatVal += 1;
     }

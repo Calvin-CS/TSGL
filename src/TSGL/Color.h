@@ -19,7 +19,7 @@ namespace tsgl {
 struct ColorFloat;  //Forward declarations
 struct ColorInt;
 struct ColorHSV;
-struct ColorGLfloat;
+struct ColorFloat;
 
 /*!
  * \brief Floating point RGBA color struct.
@@ -35,9 +35,9 @@ struct ColorFloat {
 
     ColorFloat();
 
-    ColorFloat(float v, float a = 1.0f);
+    ColorFloat(GLfloat v, GLfloat a = 1.0f);
 
-    ColorFloat(float r, float g, float b, float a = 1.0f);
+    ColorFloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a = 1.0f);
 
     std::string asString();
 
@@ -106,39 +106,6 @@ struct ColorHSV {
     operator ColorFloat();
 
     std::string asString();
-};
-
-/*!
- * \brief Floating point RGBA color struct.
- * \details ColorFloat defines a color with floating point red, green, blue, and alpha components.
- *    \param R Red component, between 0 and 1 inclusive.
- *    \param G Green component, between 0 and 1 inclusive.
- *    \param B Blue component, between 0 and 1 inclusive.
- *    \param A Alpha component, between 0 and 1 inclusive.
- */
-struct ColorGLfloat {
- public:
-    float R, G, B, A;
-
-    ColorGLfloat();
-
-    ColorGLfloat(GLfloat v, GLfloat a = 1.0f);
-
-    ColorGLfloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a = 1);
-
-    std::string asString();
-
-    operator ColorHSV();
-
-    operator ColorInt();
-
-    ColorGLfloat operator*(GLfloat f);
-
-    bool operator==(ColorGLfloat& c2);
-
-    bool operator!=(ColorGLfloat& c2);
-
-    ColorGLfloat getContrast();
 };
 
 /*!

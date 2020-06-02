@@ -12,13 +12,13 @@ namespace tsgl {
   *   \param yaw The Prism's yaw.
   *   \param pitch The Prism's pitch.
   *   \param roll The Prism's roll.
-  *   \param c A ColorGLfloat for the Prism's vertex colors.
+  *   \param c A ColorFloat for the Prism's vertex colors.
   * \warning An invariant is held where if sides is less than 3 then an error message is given.
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0 ||  height <= 0 || sides < 3) {
         TsglDebug("Cannot have a Prism with non-positive height or radius or fewer than 3 sides");
     }
@@ -66,13 +66,13 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
   *   \param yaw The Prism's yaw.
   *   \param pitch The Prism's pitch.
   *   \param roll The Prism's roll.
-  *   \param c An array of ColorGLfloats for the Prism's vertex colors.
+  *   \param c An array of ColorFloats for the Prism's vertex colors.
   * \warning An invariant is held where if sides is less than 3 then an error message is given.
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorGLfloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0 ||  height <= 0 || sides < 3) {
         TsglDebug("Cannot have a Prism with non-positive height or radius or fewer than 3 sides");
     }
@@ -174,10 +174,10 @@ void Prism::changeRadiusBy(GLfloat delta) {
 
 /**
  * \brief Mutator. Sets the Prism to a new array of colors.
- * \param c The array of new ColorGLfloats.
- * \details The array should have 5 ColorGLfloats minimum: for the top middle, top outside, sides, bottom outside, and bottom middle respectively.
+ * \param c The array of new ColorFloats.
+ * \details The array should have 5 ColorFloats minimum: for the top middle, top outside, sides, bottom outside, and bottom middle respectively.
  */
-void Prism::setColor(ColorGLfloat c[]) {
+void Prism::setColor(ColorFloat c[]) {
     attribMutex.lock();
     for (int i = 0; i < mySides; i++) {
         colors[i*48] = c[1].R;

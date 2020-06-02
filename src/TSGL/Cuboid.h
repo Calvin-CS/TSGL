@@ -19,9 +19,9 @@ class Cuboid : public Drawable {
 protected:
     GLfloat myLength, myWidth, myHeight;
 public:
-    Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c);
+    Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorFloat c);
 
-    Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat c[]);
+    Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat length, float yaw, float pitch, float roll, ColorFloat c[]);
 
     virtual void setLength(GLfloat length);
 
@@ -53,9 +53,9 @@ public:
     */
     virtual GLfloat getWidth() { return myWidth; }
 
-    virtual void setColor(ColorGLfloat c) { Drawable::setColor(c); }
+    virtual void setColor(ColorFloat c) { Drawable::setColor(c); }
 
-    virtual void setColor(ColorGLfloat c[]);
+    virtual void setColor(ColorFloat c[]);
 
     virtual ~Cuboid();
 };

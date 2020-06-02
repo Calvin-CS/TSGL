@@ -6,7 +6,7 @@
  */
 Philosopher3D::Philosopher3D() {
   setId(0,1);
-  myState = hasNone;
+  myState = thinking;
   myAction = doNothing;
   myCylinder = NULL;
   myCone = NULL;
@@ -29,11 +29,11 @@ Philosopher3D::~Philosopher3D() {
 void Philosopher3D::draw(Canvas& can, float x, float y) {
   const float SIZE = .45;
   if( !myCylinder) {
-    myCylinder = new Cylinder(x,y,-1,SIZE*4,SIZE,0,0,90,ColorGLfloat(1,0,0,1));
+    myCylinder = new Cylinder(x,y,-1,SIZE*4,SIZE,0,0,90,RED);
     can.add(myCylinder);
   }
   if( !myCone && myCylinder) {
-    myCone = new Cone(x,y+SIZE*3,-1,SIZE*2.25,SIZE*1.25,0,0,90,ColorGLfloat(0.7,0,0,1));
+    myCone = new Cone(x,y+SIZE*3,-1,SIZE*2.25,SIZE*1.25,0,0,90,ColorFloat(0.7,0,0,1));
     myCone->setRotationPoint(myCylinder->getCenterX(), myCylinder->getCenterY(), myCylinder->getCenterZ());
     can.add(myCone);
   }
@@ -43,17 +43,17 @@ void Philosopher3D::draw(Canvas& can, float x, float y) {
  * Updates the Philosopher3D's color based on its state
  */
 void Philosopher3D::refreshColor() {
-  ColorGLfloat c;
+  ColorFloat c;
   switch(myState) {
-    case hasNone:  c=ColorGLfloat(1,0,0,1);    break;
-    case hasRight: c=ColorGLfloat(1,0.65,0,1); break;
-    case hasLeft:  c=ColorGLfloat(0.75, 0.0, 0.75, 1.0); break;
-    case hasBoth:  c=ColorGLfloat(0, 1.0, 0, 1.0);  break;
-    case isFull:   c=ColorGLfloat(0,0,1, 1.0);   break;
-    case thinking: c=ColorGLfloat(0,0,1, 1.0);   break;
+    case hasNone:  c=RED;    break;
+    case hasRight: c=ORANGE; break;
+    case hasLeft:  c=PURPLE; break;
+    case hasBoth:  c=GREEN;  break;
+    case isFull:   c=BLUE;   break;
+    case thinking: c=BLUE;   break;
   }
   myCylinder->setColor(c);
-  myCone->setColor(ColorGLfloat(c.R*.7,c.G*.7,c.B*.7,c.A));
+  myCone->setColor(ColorFloat(c.R*.7,c.G*.7,c.B*.7,c.A));
 }
 
 /**
@@ -61,7 +61,7 @@ void Philosopher3D::refreshColor() {
  */
 void Philosopher3D::addMeal(float x, float y, float z) {
   numMeals++;
-  meals.push_back(new Pyramid(x,y,z,3,.08,.04,0,0,90,ColorGLfloat(0.5,0.3,0,1)));
+  meals.push_back(new Pyramid(x,y,z,3,.08,.04,0,0,90,ColorFloat(0.5,0.3,0,1)));
   meals.back()->displayOutlineEdges(false);
 }
 
@@ -114,7 +114,7 @@ bool Philosopher3D::release(Fork3D& f) {
  * Thinks and switches to hungry state if a random number is a multiple of 3.
  */
 void Philosopher3D::think() {
-  if(rand()%3 == 0) { // 1/3 probability to go to hungry state
+  if(saferand(1,9999)%3 == 0) { // 1/3 probability to go to hungry state
     setState(hasNone);
     setAction(doNothing);
   }

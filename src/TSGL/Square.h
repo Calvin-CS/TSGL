@@ -17,9 +17,9 @@ class Square : public ConvexPolygon {
 protected:
     GLfloat mySideLength;
 public:
-    Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat color);
+    Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat color);
 
-    Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorGLfloat color[]);
+    Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat color[]);
 
     /*!
     * \brief Accessor for the side length of the Square.

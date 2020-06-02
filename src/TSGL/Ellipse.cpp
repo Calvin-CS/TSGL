@@ -13,7 +13,7 @@ namespace tsgl {
  *   \param filled Whether the Ellipse should be filled
  *     (set to true by default).
  */
-Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorGLfloat color) : ConvexPolygon(x,y,z,(xRadius + yRadius) / 2 * 30,yaw,pitch,roll) {
+Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,(xRadius + yRadius) / 2 * 30,yaw,pitch,roll) {
     attribMutex.lock();
     myXScale = myXRadius = xRadius;
     myYScale = myYRadius = yRadius;
@@ -36,7 +36,7 @@ Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, fl
  *   \param filled Whether the Ellipse should be filled
  *     (set to true by default).
  */
-Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(x,y,z,(xRadius + yRadius) / 2 * 30,yaw,pitch,roll) {
+Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,(xRadius + yRadius) / 2 * 30,yaw,pitch,roll) {
     attribMutex.lock();
     myXScale = myXRadius = xRadius;
     myYScale = myYRadius = yRadius;

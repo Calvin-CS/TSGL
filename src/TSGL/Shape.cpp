@@ -15,9 +15,9 @@ Shape::Shape(float x, float y, float z, float yaw, float pitch, float roll) : Dr
 
 /**
  * \brief Sets the Shape to a new color.
- * \param c The new ColorGLfloat.
+ * \param c The new ColorFloat.
  */
-void Shape::setColor(ColorGLfloat c) {
+void Shape::setColor(ColorFloat c) {
     for(int i = 0; i < numberOfVertices; i++) {
         colors[i*4] = c.R;
         colors[i*4 + 1] = c.G;
@@ -28,9 +28,9 @@ void Shape::setColor(ColorGLfloat c) {
 
 /**
  * \brief Sets the Shape to a new array of colors.
- * \param c The new array of ColorGLfloats.
+ * \param c The new array of ColorFloats.
  */
-void Shape::setColor(ColorGLfloat c[]) {
+void Shape::setColor(ColorFloat c[]) {
     for(int i = 0; i < numberOfVertices; i++) {
         colors[i*4] = c[i].R;
         colors[i*4 + 1] = c[i].G;

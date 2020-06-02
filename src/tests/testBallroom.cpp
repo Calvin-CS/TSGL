@@ -76,10 +76,10 @@ private:
   Canvas * can;
 public:
   Vector2 pos, vel, acc;
-  ColorGLfloat color;
+  ColorFloat color;
   int rad;
   bool bounced;
-  BouncingBall(int x, int y, int r, int w, int h, ColorGLfloat c, Canvas * can) {
+  BouncingBall(int x, int y, int r, int w, int h, ColorFloat c, Canvas * can) {
     pos = Vector2(x,y);
     vel = Vector2(0,0);
     acc = Vector2(0,0);
@@ -93,7 +93,7 @@ public:
     // circle->setLayer(1);
     can->add(circle);
   }
-  BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorGLfloat c, Canvas * canvas) {
+  BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorFloat c, Canvas * canvas) {
     pos = Vector2(x,y);
     vel = Vector2(vx,vy);
     acc = Vector2(0,0.1f);
@@ -197,7 +197,7 @@ public:
     gravity = 0.1f;
     attract = true;
     can = canvas;
-    mouseCircle = new Circle(0,0,0,1,0,0,0,ColorGLfloat(1.0,0.5,0.5,0.5));
+    mouseCircle = new Circle(0,0,0,1,0,0,0,ColorFloat(1.0,0.5,0.5,0.5));
     // mouseCircle->setLayer(2);
     can->add(mouseCircle);
   }
@@ -209,10 +209,10 @@ public:
     }
     delete mouseCircle;
   }
-  void addBall(int x, int y, int r,  ColorGLfloat c = ColorGLfloat(1,1,1,1)) {
+  void addBall(int x, int y, int r,  ColorFloat c = WHITE) {
     addBall(x,y,0,0,r,c);
   }
-  void addBall(int x, int y, int vx, int vy, int r, ColorGLfloat c = ColorGLfloat(1,1,1,1)) {
+  void addBall(int x, int y, int vx, int vy, int r, ColorFloat c = WHITE) {
     BouncingBall* b = new BouncingBall(x,y,vx,vy,r,width,height,c, can);
     const int MAXFAIL = 1000;
     int fails = 0;
@@ -232,9 +232,9 @@ public:
     Vector2 mvec(mx,my);
     mouseCircle->setCenter(mx, my, 0);
     if (attract) {
-      mouseCircle->setColor(ColorGLfloat(0.5,1.0,1.0,0.5));
+      mouseCircle->setColor(ColorFloat(0.5,1.0,1.0,0.5));
     } else {
-      mouseCircle->setColor(ColorGLfloat(1.0,0.5,0.5,0.5));
+      mouseCircle->setColor(ColorFloat(1.0,0.5,0.5,0.5));
     }
     for (it = balls.begin(); it != balls.end(); ++it) {
       BouncingBall *b = (*it);
@@ -294,14 +294,13 @@ void ballroomFunction(Canvas& can) {
       float speed = 5.0f;
       float dir = 2 * 3.14159f * (rand() % 100) / 100.0f;
       b.addBall(25 + rand() % (WW-50),25 + rand() % (WH-50),speed*cos(dir),speed*sin(dir),10,
-        ColorGLfloat((64 + rand() % 192) / 255,(64 + rand() % 192) / 255,(64 + rand() % 192) / 255,1));
+        ColorFloat((64 + rand() % 192) / 255,(64 + rand() % 192) / 255,(64 + rand() % 192) / 255,1));
     }
 
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&b]() {
         b.toggleAttract();
     });
 
-//    ColorGLfloat clearcolor = ColorInt(0,0,0,16);
 
     while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class

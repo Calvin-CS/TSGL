@@ -14,7 +14,7 @@ namespace tsgl {
  *          (set to true by default).
  *  \return A new TriangleStrip with the specified vertices and color.
  */
-TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll,  ColorGLfloat color) : ConvexPolygon(centerX,centerY,centerZ,numVertices,yaw,pitch,roll) { 
+TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll,  ColorFloat color) : ConvexPolygon(centerX,centerY,centerZ,numVertices,yaw,pitch,roll) { 
     attribMutex.lock();
     geometryType = GL_TRIANGLE_STRIP;
     outlineGeometryType = GL_LINE_STRIP;
@@ -35,7 +35,7 @@ TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int nu
  *          (set to true by default).
  *  \return A new TriangleStrip with the specified vertices and color.
  */
-TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorGLfloat color[]) : ConvexPolygon(centerX,centerY,centerZ,numVertices,yaw,pitch,roll) { 
+TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(centerX,centerY,centerZ,numVertices,yaw,pitch,roll) { 
     attribMutex.lock();
     geometryType = GL_TRIANGLE_STRIP;
     outlineGeometryType = GL_LINE_STRIP;

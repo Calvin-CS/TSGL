@@ -19,9 +19,9 @@ protected:
     GLfloat myXRadius, myYRadius, myZRadius;
     int horizontalSections, verticalSections;
 public:
-    Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorGLfloat c);
+    Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorFloat c);
 
-    Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorGLfloat c[]);
+    Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorFloat c[]);
 
     virtual ~Ellipsoid();
 
@@ -43,9 +43,9 @@ public:
 
     virtual GLfloat getZRadius() { return myZRadius; }
 
-    virtual void setColor(ColorGLfloat c);
+    virtual void setColor(ColorFloat c);
 
-    virtual void setColor(ColorGLfloat c[]);
+    virtual void setColor(ColorFloat c[]);
 };
 
 }

@@ -75,7 +75,7 @@ void Drawable::draw() {
   * \note This function does nothing if the vertex buffer is already full.
   * \note A message is given indicating that the vertex buffer is full.
   */
-void Drawable::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorGLfloat &color) {
+void Drawable::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color) {
     if (init) {
         TsglDebug("Cannot add anymore vertices.");
         return;
@@ -107,9 +107,9 @@ void Drawable::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorGLfloat &co
 
 /**
  * \brief Sets the Drawable to a new color.
- * \param c The new ColorGLfloat.
+ * \param c The new ColorFloat.
  */
-void Drawable::setColor(ColorGLfloat c) {
+void Drawable::setColor(ColorFloat c) {
     attribMutex.lock();
     for(int i = 0; i < numberOfVertices; i++) {
         colors[i*4] = c.R;
@@ -122,9 +122,9 @@ void Drawable::setColor(ColorGLfloat c) {
 
 /**
  * \brief Sets the Drawable's outline/edges to a new color
- * \param c The new ColorGLfloat.
+ * \param c The new ColorFloat.
  */
-void Drawable::setEdgeColor(ColorGLfloat c) {
+void Drawable::setEdgeColor(ColorFloat c) {
     for (int i = 0; i < numberOfOutlineVertices; i++) {
         outlineArray[4*i] = c.R;
         outlineArray[4*i+1] = c.G;

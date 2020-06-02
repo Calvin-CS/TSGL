@@ -16,7 +16,7 @@ namespace tsgl {
  * \return A new Line with the specified length and color.
  * \note At 0,0,0 yaw,pitch,roll, the line will be drawn directly parallel to the x-axis.
  */
-Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color) : Polyline(x,y,z,2,yaw,pitch,roll) {
+Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorFloat color) : Polyline(x,y,z,2,yaw,pitch,roll) {
     if (length <= 0)
         TsglDebug("Cannot have a line with length less than or equal to 0.");
     attribMutex.lock();
@@ -41,7 +41,7 @@ Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, fl
  * \return A new Line with the specified length and color.
  * \note At 0,0,0 yaw,pitch,roll, the line will be drawn directly parallel to the x-axis.
  */
-Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorGLfloat color[]) : Polyline(x,y,z,2,yaw,pitch,roll) {
+Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorFloat color[]) : Polyline(x,y,z,2,yaw,pitch,roll) {
     if (length <= 0)
         TsglDebug("Cannot have a line with length less than or equal to 0.");
     attribMutex.lock();

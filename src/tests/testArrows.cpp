@@ -5,9 +5,9 @@
 using namespace tsgl;
 
 void arrowFunction(Canvas& c) {
-	ColorGLfloat colors[] = { ColorGLfloat(1,0,0,1), ColorGLfloat(0,1,0,1) };
+	ColorFloat colors[] = { ColorFloat(1,0,0,1), ColorFloat(0,1,0,1) };
 	Arrow* doubleArrow = new Arrow(0, 0, 0, 2, 0.05,0,0,0, colors, false);
-  Arrow* arrow2 = new Arrow(1 ,1 ,-1 ,2 ,0.05,0,0,0,ColorGLfloat(0,0,1,0.65), true);
+  Arrow* arrow2 = new Arrow(1 ,1 ,-1 ,2 ,0.05,0,0,0,ColorFloat(0,0,1,0.65), true);
 	c.add(doubleArrow);
   c.add(arrow2);
 	// doubleArrow->setCenterX(1);

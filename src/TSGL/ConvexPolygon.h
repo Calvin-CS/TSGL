@@ -24,9 +24,9 @@ class ConvexPolygon : public Shape {
  protected:
     ConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll);
  public:
-    ConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorGLfloat color);
+    ConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorFloat color);
 
-    ConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorGLfloat color[]);
+    ConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorFloat color[]);
 };
 
 }

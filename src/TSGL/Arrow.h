@@ -19,9 +19,9 @@ class Arrow : public ConcavePolygon {
     GLfloat myLength, myWidth;
  public:
 
-    Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorGLfloat color, bool doubleArrow = false);
+    Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorFloat color, bool doubleArrow = false);
 
-    Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorGLfloat color[], bool doubleArrow = false);
+    Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw, float pitch, float roll, ColorFloat color[], bool doubleArrow = false);
 
     void setLength(GLfloat length);
 
@@ -35,9 +35,9 @@ class Arrow : public ConcavePolygon {
 
     GLfloat getWidth() { return myWidth; }
 
-    void setColor(ColorGLfloat c) { Shape::setColor(c); }
+    void setColor(ColorFloat c) { Shape::setColor(c); }
 
-    void setColor(ColorGLfloat c[]);
+    void setColor(ColorFloat c[]);
 };
 
 }

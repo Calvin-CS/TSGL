@@ -67,6 +67,7 @@ DEPFLAGS=-MMD -MP
 BINARIES= \
 	bin/test2Dvs3D \
 	bin/test3DRotation \
+	bin/test3DPhilosophers \
 	bin/testArrows \
 	bin/testBallroom \
 	bin/testCircle \
@@ -81,12 +82,13 @@ BINARIES= \
 	bin/testEllipse \
 	bin/testEllipsoid \
 	bin/testLines \
+	bin/testMergeSort \
 	bin/testPhilosophers \
-	bin/test3DPhilosophers \
 	bin/testPrism \
 	bin/testPyramid \
 	bin/testRectangle \
 	bin/testRegularPolygon \
+	bin/testShakerSort \
 	bin/testSolarSystem \
 	bin/testSphere \
 	bin/testSquare \
@@ -106,7 +108,6 @@ BINARIES= \
 #	bin/testConway \
 #	bin/testCosineIntegral \
 #	bin/testDice \
-#	bin/testDumbSort \
 #	bin/testFireworks \
 #	bin/testForestFire \
 #	bin/testFunction \
@@ -132,7 +133,6 @@ BINARIES= \
 #	bin/testRotation \
 #	bin/testScreenshot \
 #	bin/testSeaUrchin \
-#	bin/testSmartSort \
 #	bin/testSpectrogram \
 #	bin/testSpectrum \
 #	bin/testStar \
