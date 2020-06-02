@@ -9,7 +9,7 @@
 
 using namespace tsgl;
 
-const int MARGIN = 8;    // Border for drawing
+// const int MARGIN = 8;    // Border for drawing
 
 enum MergeState {
     S_MERGE = 1,
@@ -114,24 +114,27 @@ struct sortData {
 void mergeSortFunction(Canvas& can, int threads, int size) {
     const int IPF = 1;      // Iterations per frame
     float* numbers = new float[size];       // Array to store the data
-    Line** lines = new Line*[size];      // Array to store the data
+    Rectangle** rectangles = new Rectangle*[size];      // Array to store the data
+    float start = -5;
+    float width = 0.01 * 1024/size;
     for (int i = 0; i < size; i++) {
         numbers[i] = (float) (saferand(1,200000)) / 50000;
         printf("%d: %f\n", i, numbers[i]);
-        lines[i] = new Line(-5.6 + ((float) i * size / 95000), 0, 0, numbers[i], 90, 0, 0, RED);
-        can.add(lines[i]);
+        rectangles[i] = new Rectangle(start + i * width, 0, 0, width, numbers[i], 0, 0, 0, RED);
+        rectangles[i]->displayOutlineEdges(false);
+        can.add(rectangles[i]);
     }
 
-    int bs = size / threads;
-    int ex = size % threads;
+    int baseNumVals = size / threads;
+    int extraVals = size % threads;
     sortData** sd = new sortData*[threads];
-    int f = 0;
-    int l = (ex == 0) ? bs-1 : bs;
+    int firstIndex = 0;
+    int lastIndex = (extraVals == 0) ? baseNumVals-1 : baseNumVals;
     for (int i = 0; i < threads; ++i) {
-        sd[i] = new sortData(numbers,f,l,Colors::highContrastColor(i));
-        f = l+1;
-        if (i < ex-1) l += (bs + 1);
-        else          l += bs;
+        sd[i] = new sortData(numbers,firstIndex,lastIndex,Colors::highContrastColor(i));
+        firstIndex = lastIndex+1;
+        if (i < extraVals-1) lastIndex += (baseNumVals + 1);
+        else                 lastIndex += baseNumVals;
     }
     while (can.isOpen()) {
         #pragma omp parallel num_threads(threads)
@@ -152,14 +155,12 @@ void mergeSortFunction(Canvas& can, int threads, int size) {
         for (int i = 0; i < IPF; i++)
             sd[tid]->sortStep();
         can.pauseDrawing();  //Tell the Canvas to stop updating the screen temporarily
-        int start = MARGIN/2 + sd[tid]->first;
         float height;
-        int cwh = can.getWindowHeight() - MARGIN/2;
         ColorFloat color;
         if (sd[tid]->state != S_HIDE) {
             //Draw a black rectangle over our portion of the screen to cover up the old drawing
             // can.drawRectangle(start,0,sd[tid]->last - sd[tid]->first,cwh,can.getBackgroundColor());
-            for (int i = sd[tid]->first; i < sd[tid]->last; ++i, ++start) {
+            for (int i = sd[tid]->first; i <= sd[tid]->last; ++i, ++start) {
                 height = numbers[i];
                 if (sd[tid]->state == S_WAIT || sd[tid]->state == S_DONE)
                     color = WHITE;
@@ -173,10 +174,8 @@ void mergeSortFunction(Canvas& can, int threads, int size) {
                     else
                         color = Colors::blend(sd[tid]->color, BLACK, 0.5f);
                 }
-                lines[i]->setLength(height);
-                lines[i]->setColor(color);
-                // lines[i]->setCenterX(start);
-                // can.drawLine(start, cwh - height, start, cwh, color);
+                rectangles[i]->setHeight(height);
+                rectangles[i]->setColor(color);
             }
         }
         can.resumeDrawing();  //Tell the Canvas it can resume updating
@@ -187,9 +186,9 @@ void mergeSortFunction(Canvas& can, int threads, int size) {
     delete [] sd;
     delete [] numbers;
     for (int i = 0; i < size; i++) {
-        delete lines[i];
+        delete rectangles[i];
     }
-    delete [] lines;
+    delete [] rectangles;
 }
 
 //Takes in command line arguments for the window width and height
@@ -197,13 +196,13 @@ void mergeSortFunction(Canvas& can, int threads, int size) {
 int main(int argc, char* argv[]) {
     int s = (argc > 1) ? atoi(argv[1]) : 1024;
     if (s < 10) s = 10;
-    int w = s * 1.3 + MARGIN;
+    int w = s * 1.3;
     int h = w/2;
 
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(-1, -1, w, h, "Bottom-up Merge Sort");
+    Canvas c(0, 0, w, h, "Bottom-up Merge Sort");
     c.setBackgroundColor(BLACK);
     c.run(mergeSortFunction, threads, s);
 }

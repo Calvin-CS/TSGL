@@ -44,8 +44,12 @@ void shakerSortFunction(Canvas& can) {
     int pos = 0, min = 0, max = SIZE - 1, lastSwap = 0;
     float temp;
     bool goingUp = true;
+    printf("%d, %d\n", can.getWindowWidth(), can.getDisplayWidth());
+    int canWidth = (can.getWindowWidth() > can.getDisplayWidth()) ? can.getDisplayWidth() : can.getWindowWidth();
+    float start = -3.6 * canWidth / 960;
+    float rectangleWidth = 0.013 * canWidth / 960;
     for (int i = 0; i < SIZE; i++) {
-        rectangles[i] = new Rectangle(-3.75 + ((float) i * SIZE / 40000), 0, 0, 0.0075, (float) (saferand(1,200000)) / 50000/* (float) (saferand() % (can.getWindowHeight()) ) / 200 */, 0, 0, 0, RED);
+        rectangles[i] = new Rectangle(start + i * rectangleWidth, 0, 0, rectangleWidth, (float) (saferand(1,200000)) / 50000, 0, 0, 0, RED);
         numbers[i] = rectangles[i]->getHeight();
         rectangles[i]->displayOutlineEdges(false);
         can.add(rectangles[i]);
@@ -87,18 +91,12 @@ void shakerSortFunction(Canvas& can) {
                     pos--;
             }
         }
-        // float start = 50, width = 1, height;
-        // int cwh = can.getWindowHeight() - 20;
         ColorFloat color;
         can.pauseDrawing(); //Tell the Canvas to stop updating the screen temporarily
-        // can.clearProcedural();
-        for (int i = 0; i < SIZE; i++/* , start += width * 2 */) {
+        for (int i = 0; i < SIZE; i++) {
             color = (i == pos) ? YELLOW : RED;
             rectangles[i]->setColor(color);
             rectangles[i]->setHeight(numbers[i]);
-            // rectangles[i]->setHeight(2);
-            // height = rectangles[i]->getHeight();
-            // can.drawRectangle(start, cwh - height, width, height, color);
         }
         can.resumeDrawing(); //Tell the Canvas it can resume drawing
     }
@@ -113,7 +111,7 @@ int main(int argc, char* argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75*w;
     if (w <= 0 || h <= 0) {     // Checked the passed width and height if they are valid
-        w = 1200; h = 900;        // If not, set the width and height to a default value
+        w = 1300; h = 900;        // If not, set the width and height to a default value
     }
     Canvas c(-1, -1, w, h, "Shaker Sort");
     c.run(shakerSortFunction);
