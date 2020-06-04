@@ -17,15 +17,42 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void imageFunction(Canvas& can) {
-    int ww = can.getWindowWidth()/3, hh = can.getWindowHeight()/2;
-    can.drawImage("../assets/pics/test.png", 0, 0, ww, hh);
-    can.drawImage("../assets/pics/ship.bmp", ww, 0, ww, hh); // possibly lost
-    can.drawImage("../assets/pics/shiprgb.bmp", ww*2, 0, ww, hh); // definitely lost
-    can.drawImage("../assets/pics/sky_main.jpg", 0, hh, ww, hh);
-    can.drawImage("../assets/pics/colorfulKeyboard.jpg", ww, hh, ww, hh);
-    can.drawImage("../assets/pics/cow.jpg", ww*2, hh, ww, hh);
+    Image * image = new Image(0,0,0,"./assets/pics/launch.bmp", 4,4, 0,0,0);
+    can.add(image);
 
-    can.drawImage("../assets/pics/background.jpg", ww/2, 0, ww*2, hh*2, 0.25f); //Overlay
+    float floatVal = 0.0f;
+    GLfloat delta = 0.05;
+    while (can.isOpen()) {
+        can.sleep();
+        // image->setCenterX(sin(floatVal/90));
+        // image->setCenterY(sin(floatVal/90));
+        // image->setCenterZ(sin(floatVal/90));
+        // image->setYaw(floatVal);
+        // image->setPitch(floatVal);
+        // image->setRoll(floatVal);
+        // image->setWidth(sin(floatVal/90) + 4);
+        // image->setHeight(sin(floatVal/90) + 4);
+        // if (image->getWidth() > 5 || image->getWidth() < 3) {
+        //     delta *= -1;
+        // }
+        // image->changeWidthBy(delta);
+        if (image->getHeight() > 5 || image->getHeight() < 3) {
+            delta *= -1;
+        }
+        image->changeHeightBy(delta);
+        floatVal += 1;
+    }
+    // int ww = can.getWindowWidth()/3, hh = can.getWindowHeight()/2;
+    // can.drawImage("../assets/pics/test.png", 0, 0, ww, hh);
+    // can.drawImage("../assets/pics/ship.bmp", ww, 0, ww, hh); // possibly lost
+    // can.drawImage("../assets/pics/shiprgb.bmp", ww*2, 0, ww, hh); // definitely lost
+    // can.drawImage("../assets/pics/sky_main.jpg", 0, hh, ww, hh);
+    // can.drawImage("../assets/pics/colorfulKeyboard.jpg", ww, hh, ww, hh);
+    // can.drawImage("../assets/pics/cow.jpg", ww*2, hh, ww, hh);
+
+    // can.drawImage("../assets/pics/background.jpg", ww/2, 0, ww*2, hh*2, 0.25f); //Overlay
+
+    delete image;
 }
 
 //Takes command-line arguments for the width and height of the screen

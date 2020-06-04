@@ -2106,6 +2106,10 @@ void Canvas::initGl() {
     glfwSetWindowUserPointer(window, this);
 #endif
 
+    // Specify how texture values combine with current surface color values.
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); // GL_REPLACE
+
+    glEnable(GL_TEXTURE_2D);
     // Enable and disable necessary stuff
     glEnable(GL_DEPTH_TEST); // Depth Testing
     glDepthFunc(GL_LEQUAL);
@@ -2310,6 +2314,9 @@ void Canvas::initWindow() {
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
+    // Get info of GPU and supported OpenGL version
+    printf("Renderer: %s\n", glGetString(GL_RENDERER));
+    printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
     printf("Exiting initWindow.\n");
 }
 

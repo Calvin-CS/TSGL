@@ -16,7 +16,11 @@ namespace tsgl {
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
   */
-Star::Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorFloat color, bool ninja = false) : ConcavePolygon(x,y,z,points*2,yaw,pitch,roll) {
+Star::Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorFloat color, bool ninja) : ConcavePolygon(x,y,z,points*2,yaw,pitch,roll) {
+    if (radius <= 0) {
+        TsglDebug("Cannot have a Star with radius less than or equal to 0.");
+        return;
+    }
     //TODO: maybe take "ninja" out, decide how we want the stars to be
     attribMutex.lock();
     myRadius = radius;
@@ -49,7 +53,11 @@ Star::Star(float x, float y, float z, GLfloat radius, int points, float yaw, flo
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
   */
-Star::Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja = false) : ConcavePolygon(x,y,z,points*2,yaw,pitch,roll) {
+Star::Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja) : ConcavePolygon(x,y,z,points*2,yaw,pitch,roll) {
+    if (radius <= 0) {
+        TsglDebug("Cannot have a Star with radius less than or equal to 0.");
+        return;
+    }
     //TODO: maybe take "ninja" out, decide how we want the stars to be
     attribMutex.lock();
     myRadius = radius;

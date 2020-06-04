@@ -23,7 +23,7 @@
 #include "Circle.h" 	    // Our own class for drawing circles
 #include "ConcavePolygon.h" // Our own class for concave polygons with colored vertices
 #include "ConvexPolygon.h"  // Our own class for convex polygons with colored vertices
-// #include "Image.h"          // Our own class for drawing images / textured quads
+#include "Image.h"          // Our own class for drawing images / textured quads
 #include "Keynums.h"        // Our enums for key presses
 #include "Line.h"           // Our own class for drawing straight lines
 #include "Polyline.h"       // Our own class for drawing polylines

@@ -1,149 +1,170 @@
-// #include "Image.h"
+#include "Image.h"
 
-// namespace tsgl {
+namespace tsgl {
 
-//  /*!
-//   * \brief Explicitly constructs a new Image.
-//   * \details This is the explicit constructor for the Image class.
-//   *   \param filename The filename of the image to load.
-//   *   \param loader A reference pointer to the TextureHandler with which to load the image.
-//   *   \param x The x coordinate of the left of the Image.
-//   *   \param y The y coordinate of the top of the Image.
-//   *   \param width The width of the Image.
-//   *   \param height The height of the Image.
-//   *   \param alhpa The alpha of the Image.
-//   * \return A new Image is drawn with the specified coordinates, dimensions, and transparency.
-//   * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
-//   */
-// Image::Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha) {
-//   isTextured = true;  // Let the Canvas know we're a textured object
-//   myTexture = 0;      // Fix no texture initialization warning
-//   myWidth = width; myHeight = height;
-//   if (myWidth <= 0 || myHeight <= 0) {
-//     TextureHandler::getDimensions(filename,myWidth,myHeight);
-//   }
-//   myCenterX = x + myWidth / 2;
-//   myCenterY = y + myHeight / 2;
-//   setRotationPoint(myCenterX, myCenterY);
-//   currentRotation = 0;
-//   myFile = filename;
-//   myLoader = &loader;
-//   vertices = new float[32];
-//   vertices[0] = x;
-//   vertices[1] = y;
-//   vertices[8] = x + myWidth;
-//   vertices[9] = y;
-//   vertices[16] = x;
-//   vertices[17] = y + myHeight;
-//   vertices[24] = x + myWidth;
-//   vertices[25] = y + myHeight;
-//   vertices[2] = vertices[10] = vertices[18] = vertices[26] = 1.0f;  // Texture color of the coords
-//   vertices[3] = vertices[11] = vertices[19] = vertices[27] = 1.0f;
-//   vertices[4] = vertices[12] = vertices[20] = vertices[28] = 1.0f;
-//   vertices[5] = vertices[13] = vertices[21] = vertices[29] = alpha;
-//   vertices[6] = vertices[7] = 0.0f;           // Texture coords of top left
-//   vertices[14] = 1.0f, vertices[15] = 0.0f;   // Texture coords of top right
-//   vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
-//   vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
-// }
+ /*!
+  * \brief Explicitly constructs a new Image.
+  * \details This is the explicit constructor for the Image class.
+  *   \param filename The filename of the image to load.
+  *   \param loader A reference pointer to the TextureHandler with which to load the image.
+  *   \param x The x coordinate of the left of the Image.
+  *   \param y The y coordinate of the top of the Image.
+  *   \param width The width of the Image.
+  *   \param height The height of the Image.
+  *   \param alhpa The alpha of the Image.
+  * \return A new Image is drawn with the specified coordinates, dimensions, and transparency.
+  * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
+  */
+Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLfloat height, float yaw, float pitch, float roll/* , float alpha */) : Drawable(x,y,z,yaw,pitch,roll) {
+    if (width <= 0 || height <= 0) {
+        TsglDebug("Cannot have an Image with width or height less than or equal to 0.");
+        return;
+    }
+    myWidth = width; myHeight = height;
+    myXScale = width; myYScale = height;
+    numberOfVertices = numberOfOutlineVertices = 4;
+    myFile = filename;
 
-//  /*!
-//   * \brief Draw the Image.
-//   * \details This function actually draws the Image to the Canvas.
-//   */
-// void Image::draw() {
-//   unsigned int w, h;
-//   myLoader->loadPicture(myFile, w, h, myTexture);
+	// Load the image.
+	image = getBMP(filename);
 
-//   glBindTexture(GL_TEXTURE_2D, myTexture);
-//   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//   glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-//   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-// }
+    // create the Image's texture id
+    glGenTextures(1, &myTexture);
 
-// /*!
-//  * \brief Mutator for the center coordinates of the Image.
-//  * \details Alters the values of the myCenterX and myCenterY private variables.
-//  * \param x Float value for the new center x-coordinate.
-//  * \param y Float value for the new center y-coordinate.
-//  * \warning This will also alter the Image's rotation point if and only if the 
-//  *          old rotation point was at the Image's old center.
-//  */
-// void Image::setCenter(float x, float y) {
-//   attribMutex.lock();
-//   if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
-//     setRotationPoint(x, y);
-//   }
-//   if(myCenterX != x || myCenterY != y) {
-//     float deltaX = x - myCenterX;
-//     float deltaY = y - myCenterY;
-//     for(int i = 0; i < 4; i++) {
-//       vertices[8*i] += deltaX;
-//       vertices[8*i+1] += deltaY;
-//     }
-//     myCenterX = x;
-//     myCenterY = y;
-//   }
-//   attribMutex.unlock();
-// }
+    // vertex allocation and assignment
+    vertices = new GLfloat[numberOfVertices * 3];
+    colors = new GLfloat[numberOfVertices * 4];
 
-// /*!
-//  * \brief Mutator for the coordinates of the Image.
-//  * \details Alters all coordinate variables for the Image.
-//  * \param deltaX Float value of how much to alter the y-coordinates.
-//  * \param deltaY Float value of how much to alter the y-coordinates.
-//  * \warning This will also alter the Image's rotation point if and only if the 
-//  *          old rotation point was at the Image's old center.
-//  */
-// void Image::moveImageBy(float deltaX, float deltaY) {
-//   attribMutex.lock();
-//   if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
-//     myRotationPointX += deltaX;
-//     myRotationPointY += deltaY;
-//   }
-//   if(deltaX != 0 || deltaY != 0) {
-//     for(int i = 0; i < 4; i++) {
-//       vertices[8*i] += deltaX;
-//       vertices[8*i+1] += deltaY;
-//     }
-//     myCenterX += deltaX;
-//     myCenterY += deltaY;
-//   }
-//   attribMutex.unlock();
-// }
+    addVertex(-0.5,-0.5,0,RED);
+    addVertex(-0.5,0.5,0,BLUE);
+    addVertex(0.5,0.5,0,CYAN);
+    addVertex(0.5,-0.5,0,GREEN);
+}
 
-// /*!
-//  * \brief Mutator for the rotation of the Image.
-//  * \details Rotates the Image corners around myRotationPointX, myRotationPointY.
-//  * \param radians Float value denoting how many radians to rotate the Image.
-//  */
-// void Image::setRotation(float radians) {
-//   if(radians != currentRotation) {
-//     attribMutex.lock();
-//     float pivotX = myRotationPointX;
-//     float pivotY = myRotationPointY;
-//     float s = sin(radians - currentRotation);
-//     float c = cos(radians - currentRotation);
-//     currentRotation = radians;
-//     for(int i = 0; i < 4; i++) {
-//       float x = vertices[8*i];
-//       float y = vertices[8*i+1];
-//       x -= pivotX;
-//       y -= pivotY;
-//       float xnew = x * c - y * s;
-//       float ynew = x * s + y * c;
+ /*!
+  * \brief Draw the Image.
+  * \details This function actually draws the Image to the Canvas.
+  */
+void Image::draw() {
+    if (!init) {
+        TsglDebug("Vertex buffer is not full.");
+        return;
+    }
+    // enable textures and bind the texture id
+    glBindTexture(GL_TEXTURE_2D, myTexture);
 
-//       x = xnew + pivotX;
-//       y = ynew + pivotY;
-//       vertices[8*i] = x;
-//       vertices[8*i+1] = y;
-//     }
-//     attribMutex.unlock();
-//   }
-// }
+    // Set texture parameters for wrapping.
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    // Set texture parameters for filtering.
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    // actually generate the texture
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->width, image->height, 0,
+	           	 GL_RGBA, GL_UNSIGNED_BYTE, image->data);
+
+    // transformation matrix
+    glPushMatrix();
+    glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
+    glRotatef(myCurrentYaw, 0, 0, 1);
+    glRotatef(myCurrentPitch, 0, 1, 0);
+    glRotatef(myCurrentRoll, 1, 0, 0); 
+    glTranslatef(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ);
+    glScalef(myXScale, myYScale, myZScale);
+
+    // enable necessary states (vertex, color, and texture)
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    // link arrays to their respective opengl pointers
+    glVertexPointer(3, GL_FLOAT, 0, vertices);
+    glColorPointer(4, GL_FLOAT, 0, colors);
+    glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
+
+    // draw the image
+    glDrawArrays(GL_QUADS, 0, numberOfVertices);
+
+    // pop transformation matrix
+    glPopMatrix();
+
+    /* Cleanup states */
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void Image::setColor(ColorFloat c[]) {
+    for (int i = 0; i < numberOfVertices; i++) {
+        colors[i*4] = c[i].R;
+        colors[i*4+1] = c[i].G;
+        colors[i*4+2] = c[i].B;
+        colors[i*4+3] = c[i].A;
+    }
+}
+
+
+/**
+ * \brief Mutates the distance from the left side of the Image base to its right side.
+ * \param width The Image's new width.
+ */
+void Image::setWidth(GLfloat width) {
+    if (width <= 0) {
+        TsglDebug("Cannot have an Image with width less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myWidth = width;
+    myXScale = width;
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Mutates the distance from the left side of the Image base to its right side by the parameter amount.
+ * \param delta The amount by which to change the width of the Image.
+ */
+void Image::changeWidthBy(GLfloat delta) {
+    if (myWidth + delta <= 0) {
+        TsglDebug("Cannot have an Image with width less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myWidth += delta;
+    myXScale += delta;
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Mutates the distance from the top side of the Image base to its bottom side.
+ * \param height The Image's new height.
+ */
+void Image::setHeight(GLfloat height) {
+    if (height <= 0) {
+        TsglDebug("Cannot have an Image with height less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myWidth = height;
+    myYScale = height;
+    attribMutex.unlock();
+}
+
+/**
+ * \brief Mutates the distance from the top side of the Image base to its bottom side by the parameter amount.
+ * \param delta The amount by which to change the height of the Image.
+ */
+void Image::changeHeightBy(GLfloat delta) {
+    if (myHeight + delta <= 0) {
+        TsglDebug("Cannot have an Image with height less than or equal to 0.");
+        return;
+    }
+    attribMutex.lock();
+    myHeight += delta;
+    myYScale += delta;
+    attribMutex.unlock();
+}
 
 // /*!
 //  * \brief Alters the file the Image draws.
@@ -170,4 +191,4 @@
 //   attribMutex.unlock();
 // }
 
-// }
+}

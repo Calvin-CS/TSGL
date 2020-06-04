@@ -1,67 +1,68 @@
-// /*
-//  * Image.h extends Shape and provides a class for drawing an image to a Canvas.
-//  */
+/*
+ * Image.h extends Drawable and provides a class for drawing an image to a Canvas.
+ */
 
-// #ifndef IMAGE_H_
-// #define IMAGE_H_
+#ifndef IMAGE_H_
+#define IMAGE_H_
 
-// #include <string>
+#include <string>
 
-// #include "Drawable.h"           // For extending our Shape object
-// #include "TextureHandler.h"  // For loading images
-// #include "TsglAssert.h"      // For unit testing purposes
+#include "Drawable.h"           // For extending our Shape object
+#include "getBMP.h"
+#include "TsglAssert.h"      // For unit testing purposes
 
-// namespace tsgl {
+namespace tsgl {
 
-// /*! \class Image
-//  *  \brief Draw an image to the Canvas.
-//  *  \details Image is a class which provides a simple interface for loading and drawing images.
-//  *   The Image class currently supports files in the .png, .bmp, and .jpg formats.
-//  *  \note For the time being, there is no way to measure the size of an image once it's loaded.
-//  *   Therefore, the width and height must be specified manually, and stretching may occur if the
-//  *   input dimensions don't match the images actual dimensions.
-//  *  \note Additionally, an ImageLoader must be passed as an argument. This ImageLoader is automatically
-//  *   constructed with the Canvas as the private *loader* variable. At the moment, there is no way to
-//  *   extend Canvas::drawImage() function due to this privatization.
-//  *  \warning Aside from an error message output to stderr, Image gives no indication if an image failed to load.
-//  */
-// class Image : public Drawable {
-//  private:
-//     int myWidth, myHeight;
-//     float currentRotation;
-//     float *vertices;
-//     std::string myFile;
-//     GLtexture myTexture;
-//     TextureHandler* myLoader;
-//  public:
-//     Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha = 1.0f);
+/*! \class Image
+ *  \brief Draw an image to the Canvas.
+ *  \details Image is a class which provides a simple interface for loading and drawing images.
+ *   The Image class currently supports files in the .png, .bmp, and .jpg formats.
+ *  \note For the time being, there is no way to measure the size of an image once it's loaded.
+ *   Therefore, the width and height must be specified manually, and stretching may occur if the
+ *   input dimensions don't match the images actual dimensions.
+ *  \warning Aside from an error message output to stderr, Image gives no indication if an image failed to load.
+ */
+class Image : public Drawable {
+ private:
+    imageFile * image;
+    GLfloat myWidth, myHeight;
+    std::string myFile;
+    GLuint myTexture;
+    GLfloat texcoords[8] = 
+    {
+        0, 0,   0, 1,   1, 1,   1, 0
+    };
+ public:
+    Image(float x, float y, float z, std::string filename, GLfloat width, GLfloat height, float yaw, float pitch, float roll/* , float alpha = 1.0f */);
 
-//     virtual void draw();
+    virtual void draw();
 
-//     /*!
-//      * \brief Accessor for the image's height.
-//      * \return The height of the Image.
-//      */
-//     int getHeight() { return myHeight; }
+    /*!
+     * \brief Accessor for the image's height.
+     * \return The height of the Image.
+     */
+    GLfloat getHeight() { return myHeight; }
 
-//     /*!
-//      * \brief Accessor for the image's width.
-//      * \return The width of the Image.
-//      */
-//     int getWidth() { return myWidth; }
+    /*!
+     * \brief Accessor for the image's width.
+     * \return The width of the Image.
+     */
+    GLfloat getWidth() { return myWidth; }
 
-//     void setCenter(float x, float y);
+    void setWidth(GLfloat width);
 
-//     void moveImageBy(float deltaX, float deltaY);
+    void setHeight(GLfloat height);
 
-//     virtual void setRotation(float radians);
+    void changeWidthBy(GLfloat delta);
 
-//     void changeFileName(std::string filename, int width = 0, int height = 0);
+    void changeHeightBy(GLfloat delta);
 
-//     ~Image() { delete[] vertices; }
+    void setColor(ColorFloat c[]);
 
-// };
+    ~Image() { glDeleteTextures(1, &myTexture); delete image; }
 
-// }
+};
 
-// #endif /* IMAGE_H_ */
+}
+
+#endif /* IMAGE_H_ */

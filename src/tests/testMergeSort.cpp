@@ -9,8 +9,6 @@
 
 using namespace tsgl;
 
-// const int MARGIN = 8;    // Border for drawing
-
 enum MergeState {
     S_MERGE = 1,
     S_SHIFT = 2,
@@ -119,7 +117,6 @@ void mergeSortFunction(Canvas& can, int threads, int size) {
     float width = 0.01 * 1024/size;
     for (int i = 0; i < size; i++) {
         numbers[i] = (float) (saferand(1,200000)) / 50000;
-        printf("%d: %f\n", i, numbers[i]);
         rectangles[i] = new Rectangle(start + i * width, 0, 0, width, numbers[i], 0, 0, 0, RED);
         rectangles[i]->displayOutlineEdges(false);
         can.add(rectangles[i]);

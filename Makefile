@@ -81,6 +81,7 @@ BINARIES= \
 	bin/testDiorama \
 	bin/testEllipse \
 	bin/testEllipsoid \
+	bin/testImage \
 	bin/testLines \
 	bin/testMergeSort \
 	bin/testPhilosophers \
@@ -116,7 +117,6 @@ BINARIES= \
 #	bin/testGraydient \
 #	bin/testGreyscale \
 #	bin/testHighData \
-#	bin/testImage \
 #	bin/testImageCart \
 #	bin/testInverter \
 #	bin/testLangton \
