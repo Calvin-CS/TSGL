@@ -17,6 +17,12 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void imageFunction(Canvas& can) {
+    Square * s = new Square(5,0,0,0.5,0,0,0,RED);
+    can.add(s);
+
+    Pyramid * p = new Pyramid(-5,0,0,5,1,0.5,0,0,0,BLUE);
+    can.add(p);
+
     Image * image = new Image(0,0,0,"./assets/pics/launch.bmp", 4,3, 0,0,0);
     can.add(image);
 

@@ -67,6 +67,7 @@ void Image::draw() {
         TsglDebug("Vertex buffer is not full.");
         return;
     }
+    glEnable(GL_TEXTURE_2D);
     // enable textures and bind the texture id
     glBindTexture(GL_TEXTURE_2D, myTexture);
 
@@ -112,6 +113,8 @@ void Image::draw() {
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
+
+    glDisable(GL_TEXTURE_2D);
 }
 
 void Image::setColor(ColorFloat c[]) {
