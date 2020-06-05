@@ -1,3 +1,9 @@
+// From stb_image.h:
+// Do this:
+//   #define STB_IMAGE_IMPLEMENTATION
+// before you include this file in *one* C or C++ file to create the implementation.
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb/stb_image.h"
 #include "Image.h"
 
 namespace tsgl {
@@ -5,13 +11,16 @@ namespace tsgl {
  /*!
   * \brief Explicitly constructs a new Image.
   * \details This is the explicit constructor for the Image class.
-  *   \param filename The filename of the image to load.
-  *   \param loader A reference pointer to the TextureHandler with which to load the image.
-  *   \param x The x coordinate of the left of the Image.
-  *   \param y The y coordinate of the top of the Image.
+  *   \param x The x coordinate of the center of the Image.
+  *   \param y The y coordinate of the center of the Image.
+  *   \param z The z coordinate of the center of the Image.
+  *   \param filename The filename of the image to load, a std::string
   *   \param width The width of the Image.
   *   \param height The height of the Image.
-  *   \param alhpa The alpha of the Image.
+  *   \param yaw The yaw orientation of the Image.
+  *   \param pitch The pitch orientation of the Image.
+  *   \param roll The roll orientation of the Image. 
+  *   \param alpha The alpha of the Image.
   * \return A new Image is drawn with the specified coordinates, dimensions, and transparency.
   * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
   */
@@ -26,7 +35,15 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
     myFile = filename;
 
 	// Load the image.
-	image = getBMP(filename);
+	// image = getBMP(filename);
+    stbi_set_flip_vertically_on_load(true);
+    data = stbi_load(filename.c_str(), &pixelWidth, &pixelHeight, 0, 4);
+    assert(data);
+    if (!data)
+    {
+        TsglDebug("Failed to load texture");
+    }
+    glEnable(GL_TEXTURE_2D);
 
     // create the Image's texture id
     glGenTextures(1, &myTexture);
@@ -62,8 +79,9 @@ void Image::draw() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     // actually generate the texture
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->width, image->height, 0,
-	           	 GL_RGBA, GL_UNSIGNED_BYTE, image->data);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixelWidth, pixelHeight, 0,
+	           	 GL_RGBA, GL_UNSIGNED_BYTE, data);
 
     // transformation matrix
     glPushMatrix();
@@ -190,5 +208,12 @@ void Image::changeHeightBy(GLfloat delta) {
 //   vertices[25] = myCenterY + myHeight/2;
 //   attribMutex.unlock();
 // }
+
+Image::~Image() { 
+    glDeleteTextures(1, &myTexture);
+    //  delete image; 
+    stbi_image_free(data); 
+}
+
 
 }

@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "Drawable.h"           // For extending our Shape object
-#include "getBMP.h"
+#include "Drawable.h"           // For extending our Drawable object
+// #include "getBMP.h"
 #include "TsglAssert.h"      // For unit testing purposes
 
 namespace tsgl {
@@ -24,8 +24,10 @@ namespace tsgl {
  */
 class Image : public Drawable {
  private:
-    imageFile * image;
+    // imageFile * image;
+    unsigned char * data = 0;
     GLfloat myWidth, myHeight;
+    GLint pixelWidth, pixelHeight;
     std::string myFile;
     GLuint myTexture;
     GLfloat texcoords[8] = 
@@ -57,10 +59,13 @@ class Image : public Drawable {
 
     void changeHeightBy(GLfloat delta);
 
+    GLint getPixelHeight() { return pixelHeight; }
+
+    GLint getPixelWidth() { return pixelWidth; }
+
     void setColor(ColorFloat c[]);
 
-    ~Image() { glDeleteTextures(1, &myTexture); delete image; }
-
+    ~Image();
 };
 
 }

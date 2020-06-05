@@ -17,8 +17,11 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void imageFunction(Canvas& can) {
-    Image * image = new Image(0,0,0,"./assets/pics/launch.bmp", 4,4, 0,0,0);
+    Image * image = new Image(0,0,0,"./assets/pics/launch.bmp", 4,3, 0,0,0);
     can.add(image);
+
+    // image->setHeight((GLfloat)image->getPixelHeight() / 100);
+    // image->setWidth((GLfloat)image->getPixelWidth() / 100);
 
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
@@ -36,10 +39,10 @@ void imageFunction(Canvas& can) {
         //     delta *= -1;
         // }
         // image->changeWidthBy(delta);
-        if (image->getHeight() > 5 || image->getHeight() < 3) {
-            delta *= -1;
-        }
-        image->changeHeightBy(delta);
+        // if (image->getHeight() > 5 || image->getHeight() < 3) {
+        //     delta *= -1;
+        // }
+        // image->changeHeightBy(delta);
         floatVal += 1;
     }
     // int ww = can.getWindowWidth()/3, hh = can.getWindowHeight()/2;
