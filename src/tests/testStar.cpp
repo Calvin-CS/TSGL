@@ -13,7 +13,7 @@ void starFunction(Canvas& c) {
         colors[i] = ColorFloat(0,0,1,1);
 	}
 
-	Star * s1 = new Star(0, 0, 0, 1, 5, 0,0,0, colors, true);
+	Star * s1 = new Star(0, 0, 0, 200, 5, 0,0,0, colors, true);
     // s1->setColor(ColorFloat(1,0,0,1));
 	c.add(s1);
 

@@ -1,51 +1,59 @@
 #include "Canvas.h"
 
+// From stb_image.h:
+// Do this:
+//   #define STB_IMAGE_IMPLEMENTATION
+// before you include this file in *one* C or C++ file to create the implementation.
+// If TextureHandler is no longer useful, uncomment the two lines below.
+// #define STB_IMAGE_IMPLEMENTATION
+// #include "stb/stb_image.h"
+
 namespace tsgl {
 
 // Shader sources
-// static const GLchar* vertexSource =
-//     "#version 150 core\n"
-//     "in vec2 position;"
-//     "in vec4 color;"
-//     "out vec4 Color;"
-//     "uniform mat4 model;"
-//     "uniform mat4 view;"
-//     "uniform mat4 proj;"
-//     "void main() {"
-//     "   Color = color;"
-//     "   gl_Position = proj * view * model * vec4(position, 0.0, 1.0);"
-//     "}";
-// static const GLchar* fragmentSource =
-//     "#version 150\n"
-//     "in vec4 Color;"
-//     "out vec4 outColor;"
-//     "void main() {"
-//     "    outColor = vec4(Color);"
-//     "}";
-// static const GLchar* textureVertexSource =
-//     "#version 150 core\n"
-//     "in vec2 position;"
-//     "in vec4 color;"
-//     "in vec2 texcoord;"
-//     "out vec4 Color;"
-//     "out vec2 Texcoord;"
-//     "uniform mat4 model;"
-//     "uniform mat4 view;"
-//     "uniform mat4 proj;"
-//     "void main() {"
-//     "   Texcoord = texcoord;"
-//     "   Color = color;"
-//     "   gl_Position = proj * view * model * vec4(position, 0.0, 1.0);"
-//     "}";
-// static const GLchar* textureFragmentSource =
-//     "#version 150\n"
-//     "in vec4 Color;"
-//     "in vec2 Texcoord;"
-//     "out vec4 outColor;"
-//     "uniform sampler2D tex;"
-//     "void main() {"
-//     "    outColor = texture(tex, Texcoord) * vec4(Color);"
-//     "}";
+static const GLchar* vertexSource =
+    "#version 150 core\n"
+    "in vec3 position;"
+    "in vec4 color;"
+    "out vec4 Color;"
+    "uniform mat4 model;"
+    "uniform mat4 view;"
+    "uniform mat4 proj;"
+    "void main() {"
+    "   Color = color;"
+    "   gl_Position = proj * view * model * vec4(position, 1.0);"
+    "}";
+static const GLchar* fragmentSource =
+    "#version 150\n"
+    "in vec4 Color;"
+    "out vec4 outColor;"
+    "void main() {"
+    "    outColor = vec4(Color);"
+    "}";
+static const GLchar* textureVertexSource =
+    "#version 150 core\n"
+    "in vec3 position;"
+    "in vec4 color;"
+    "in vec2 texcoord;"
+    "out vec4 Color;"
+    "out vec2 Texcoord;"
+    "uniform mat4 model;"
+    "uniform mat4 view;"
+    "uniform mat4 proj;"
+    "void main() {"
+    "   Texcoord = texcoord;"
+    "   Color = color;"
+    "   gl_Position = proj * view * model * vec4(position, 1.0);"
+    "}";
+static const GLchar* textureFragmentSource =
+    "#version 150\n"
+    "in vec4 Color;"
+    "in vec2 Texcoord;"
+    "out vec4 outColor;"
+    "uniform sampler2D tex;"
+    "void main() {"
+    "    outColor = texture(tex, Texcoord) * vec4(Color);"
+    "}";
 
 int Canvas::drawBuffer = GL_FRONT_LEFT;
 bool Canvas::glfwIsReady = false;
@@ -207,54 +215,133 @@ void Canvas::draw()
     glfwMakeContextCurrent(window);
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
+
+    // Get actual framebuffer size and adjust scaling accordingly
+    // NOTE: framebuffer stuff seems purposeless, at least with pure OO on MacOS.
+    // int fbw, fbh;
+    // glfwGetFramebufferSize(window, &fbw, &fbh);
+    // int scaling = round((1.0f*fbw)/winWidth);
+
+    if (hasStereo)
+      Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
+    else
+      Canvas::setDrawBuffer(hasBackbuffer ? GL_LEFT : GL_FRONT_LEFT);
+
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++)
     {
+        drawTimer->sleep(true);
+
+        syncMutex.lock();
+
       #ifdef __APPLE__
         // leftWindowIndex = 0;
         windowMutex.lock();
       #endif
         glfwMakeContextCurrent(window);
+
+        realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
+        if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
+        std::cout.flush();
+
+        // set it up so draw calls write into the framebuffer
+        // if (hasEXTFramebuffer)
+        //   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+        // else
+        //   glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+        // glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
         // Scale to window size
         GLint windowWidth, windowHeight;
         glfwGetWindowSize(window, &windowWidth, &windowHeight);
         glViewport(0, 0, windowWidth, windowHeight);
+        winWidth = windowWidth;
+        winHeight = windowHeight;
 
         // Draw stuff
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glMatrixMode(GL_PROJECTION_MATRIX);
+        // glMatrixMode(GL_PROJECTION_MATRIX); // glMatrixMode is deprecated, so it's ignored regardless of whether it's called
         glLoadIdentity();
-        gluPerspective( 60, (double)windowWidth / (double)windowHeight, 0.1, 100 );
+        gluPerspective( 60, (double)windowWidth / (double)windowHeight, 0.1, 1000 );
 
-        glMatrixMode(GL_MODELVIEW_MATRIX);
-        glTranslatef(0,0,-5);
+        // glMatrixMode(GL_MODELVIEW_MATRIX); // glMatrixMode is deprecated, so it's ignored regardless of whether it's called
+        // based on a gluPerspective angle of 60 (PI/3)
+        glTranslatef(0,0,(-windowHeight / 2) / tan(PI/6));
 
         /* commented out stuff really only seems to
             need to be called once per draw cycle tbh */
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glEnableClientState(GL_COLOR_ARRAY);
+        // glEnableClientState(GL_VERTEX_ARRAY);
+        // glEnableClientState(GL_COLOR_ARRAY);
         if (objectBuffer.size() > 0) {
           for (unsigned int i = 0; i < objectBuffer.size(); i++) {
             Drawable* d = objectBuffer[i];
-            if(d->isProcessed()) {
-              d->draw();
-            }
             // if(d->isProcessed()) {
-            //   if (!d->getIsTextured()) {
-            //     d->draw();
-            //   } else {
-            //     textureShaders(true);
-            //     d->draw();
-            //     textureShaders(false);
-            //   }
+            //   d->draw();
             // }
+            if(d->isProcessed()) {
+              if (!d->getIsTextured()) {
+                d->draw();
+              } else {
+                // should be noted that the texture shader programs do literally nothing right now, and need correction.
+                // calls to stuff like glEnableClientState() override them, it seems.
+                // but at least they're not causing compilation errors anymore.
+                // tried fixing them, for image at least, but I think model, view, and projection matrices need work.
+                textureShaders(true);
+                d->draw();
+                textureShaders(false);
+              }
+            }
           }
         } else {
           objectBufferEmpty = true;
         }
         /* Cleanup states */
-        glDisableClientState(GL_COLOR_ARRAY);
-        glDisableClientState(GL_VERTEX_ARRAY);
+        // glDisableClientState(GL_COLOR_ARRAY);
+        // glDisableClientState(GL_VERTEX_ARRAY);
+
+        // Update our screenBuffer copy with the screen
+        // glViewport(0,0,winWidth*scaling,winHeight*scaling);
+
+        // set it up so TSGL reads from the framebuffer
+        // if (hasEXTFramebuffer)
+        //   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+        // else
+        //   glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
+        // glReadBuffer(GL_COLOR_ATTACHMENT0);
+
+        // screenshots and testing
+        // read from the framebuffer into the screenbuffer
+        glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+        if (toRecord > 0) {
+          screenShot();
+          --toRecord;
+        }
+
+        // actually render everything in the framebuffer to the screen
+        // glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
+        // glDrawBuffer(drawBuffer);
+
+        // textureShaders(true);
+        // const float vertices[36] = {
+        //   0,       0,        0,1,1,1,1,0,1,
+        //   winWidth,0,        0,1,1,1,1,1,1,
+        //   0,       winHeight,0,1,1,1,1,0,0,
+        //   winWidth,winHeight,0,1,1,1,1,1,0
+        // };
+        // glBindTexture(GL_TEXTURE_2D,renderedTexture);
+        // /* these 5 lines don't seem to do anything */
+        // glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        // /* next two lines are very essential */
+        // glBufferData(GL_ARRAY_BUFFER,36*sizeof(float),vertices,GL_DYNAMIC_DRAW);
+        // glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+        // glFlush();                                   // Flush buffer data to the actual draw buffer
+        // glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
+
+        // textureShaders(false);
 
         // Update Screen
         glfwSwapBuffers(window);
@@ -1986,18 +2073,18 @@ int Canvas::getWindowY() {
 
 void Canvas::glDestroy() {
     // Free up our resources
-    // glDetachShader(shaderProgram, shaderFragment);
-    // glDetachShader(shaderProgram, shaderVertex);
-    // glDeleteShader(shaderFragment);
-    // glDeleteShader(shaderVertex);
-    // glDeleteProgram(shaderProgram);
-    // glDetachShader(textureShaderProgram, textureShaderFragment);
-    // glDetachShader(textureShaderProgram, textureShaderVertex);
-    // glDeleteShader(textureShaderFragment);
-    // glDeleteShader(textureShaderVertex);
-    // glDeleteProgram(textureShaderProgram);
-    // glDeleteBuffers(1, &vertexBuffer);
-    // glDeleteVertexArrays(1, &vertexArray);
+    glDetachShader(shaderProgram, shaderFragment);
+    glDetachShader(shaderProgram, shaderVertex);
+    glDeleteShader(shaderFragment);
+    glDeleteShader(shaderVertex);
+    glDeleteProgram(shaderProgram);
+    glDetachShader(textureShaderProgram, textureShaderFragment);
+    glDetachShader(textureShaderProgram, textureShaderVertex);
+    glDeleteShader(textureShaderFragment);
+    glDeleteShader(textureShaderVertex);
+    glDeleteProgram(textureShaderProgram);
+    glDeleteBuffers(1, &vertexBuffer);
+    glDeleteVertexArrays(1, &vertexArray);
 }
 
  /*!
@@ -2089,9 +2176,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     initGlfw();
 #ifndef _WIN32
     initWindow();
-    printf("initGlew disabled.\n");
-    printf("Also check glDestroy.\n");
-    // initGlew();
+    initGlew();
     glfwMakeContextCurrent(NULL);   // Reset the context
 #endif
 }
@@ -2109,7 +2194,7 @@ void Canvas::initGl() {
     // Specify how texture values combine with current surface color values.
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); // GL_REPLACE
 
-    // glEnable(GL_TEXTURE_2D);
+    glEnable(GL_TEXTURE_2D);
     // Enable and disable necessary stuff
     glEnable(GL_DEPTH_TEST); // Depth Testing
     glDepthFunc(GL_LEQUAL);
@@ -2138,126 +2223,127 @@ void Canvas::initGl() {
     printf("Exiting initGl.\n");
 }
 
-// void Canvas::initGlew() {
-//     // Enable Experimental GLEW to Render Properly
-//     glewExperimental = GL_TRUE;
-//     GLenum err = glewInit();
-//     if (GLEW_OK != err) {
-//         // Problem: glewInit failed, something is seriously wrong.
-//         fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
-//         exit(102);
-//     }
+void Canvas::initGlew() {
+    // Enable Experimental GLEW to Render Properly
+    glewExperimental = GL_TRUE;
+    GLenum err = glewInit();
+    if (GLEW_OK != err) {
+        // Problem: glewInit failed, something is seriously wrong.
+        fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+        exit(102);
+    }
 
-//     hasEXTFramebuffer = false;
+    // hasEXTFramebuffer = false;
 
-//     GLint n, i;
-//     glGetIntegerv(GL_NUM_EXTENSIONS, &n);
-//     for (i = 0; i < n; i++) {
-//       std::string s = reinterpret_cast< char const * >(glGetStringi(GL_EXTENSIONS, i));
-//       if (s == "GL_EXT_framebuffer_object") {
-//         hasEXTFramebuffer = true;
-//         break;
-//       }
-//     }
-//     const GLubyte* gfxVendor = glGetString(GL_VENDOR);
-//     std::string gfx(gfxVendor, gfxVendor + strlen((char*)gfxVendor));
-//     atiCard = (gfx.find("ATI") != std::string::npos);
-// //    #define DEBUG
-//     #ifdef DEBUG
-//         printf("Vendor:         %s %s\n", gfx.c_str(), glGetString(GL_RENDERER));
-//         printf("OpenGL version: %s\n", glGetString(GL_VERSION));
-//         printf("GLFW version:   %s\n", glfwGetVersionString());
-//         printf("GL Extension: ");
-//         for (i = 0; i < n; i++)
-//           printf("%s, ", glGetStringi(GL_EXTENSIONS, i));
-//         if (hasEXTFramebuffer)
-//           TsglDebug("EXT Framebuffer available");
-//     #endif
+    // GLint n, i;
+    // glGetIntegerv(GL_NUM_EXTENSIONS, &n);
+    // for (i = 0; i < n; i++) {
+    //   std::string s = reinterpret_cast< char const * >(glGetStringi(GL_EXTENSIONS, i));
+    //   if (s == "GL_EXT_framebuffer_object") {
+    //     hasEXTFramebuffer = true;
+    //     break;
+    //   }
+    // }
+    const GLubyte* gfxVendor = glGetString(GL_VENDOR);
+    std::string gfx(gfxVendor, gfxVendor + strlen((char*)gfxVendor));
+    atiCard = (gfx.find("ATI") != std::string::npos);
+//    #define DEBUG
+    #ifdef DEBUG
+        printf("Vendor:         %s %s\n", gfx.c_str(), glGetString(GL_RENDERER));
+        printf("OpenGL version: %s\n", glGetString(GL_VERSION));
+        printf("GLFW version:   %s\n", glfwGetVersionString());
+        printf("GL Extension: ");
+        for (i = 0; i < n; i++)
+          printf("%s, ", glGetStringi(GL_EXTENSIONS, i));
+        // if (hasEXTFramebuffer)
+        //   TsglDebug("EXT Framebuffer available");
+    #endif
 
-//     GLint status;
+    GLint status;
 
-//     // Create and bind our Vertex Array Object
-//     glGenVertexArrays(1, &vertexArray);
-//     glBindVertexArray(vertexArray);
+    // Create and bind our Vertex Array Object
+    glGenVertexArrays(1, &vertexArray);
+    glBindVertexArray(vertexArray);
 
-//     // Create and bind our Vertex Buffer Object
-//     glGenBuffers(1, &vertexBuffer);
-//     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    // Create and bind our Vertex Buffer Object
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 
-//     // Create / compile vertex shader
-//     shaderVertex = glCreateShader(GL_VERTEX_SHADER);
-//     glShaderSource(shaderVertex, 1, &vertexSource, NULL);
-//     glCompileShader(shaderVertex);
-//     glGetShaderiv(shaderVertex, GL_COMPILE_STATUS, &status);
+    // Create / compile vertex shader
+    shaderVertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(shaderVertex, 1, &vertexSource, NULL);
+    glCompileShader(shaderVertex);
+    glGetShaderiv(shaderVertex, GL_COMPILE_STATUS, &status);
 
-//     // Create / compile fragment shader
-//     shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
-//     glShaderSource(shaderFragment, 1, &fragmentSource, NULL);
-//     glCompileShader(shaderFragment);
-//     glGetShaderiv(shaderFragment, GL_COMPILE_STATUS, &status);
+    // Create / compile fragment shader
+    shaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(shaderFragment, 1, &fragmentSource, NULL);
+    glCompileShader(shaderFragment);
+    glGetShaderiv(shaderFragment, GL_COMPILE_STATUS, &status);
 
-//     // Attach both shaders to a shader program, link the program
-//     shaderProgram = glCreateProgram();
-//     glAttachShader(shaderProgram, shaderVertex);
-//     glAttachShader(shaderProgram, shaderFragment);
-//     glBindFragDataLocation(shaderProgram, 0, "outColor");
+    // Attach both shaders to a shader program, link the program
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, shaderVertex);
+    glAttachShader(shaderProgram, shaderFragment);
+    glBindFragDataLocation(shaderProgram, 0, "outColor");
 
-//     // Specify the layout of the vertex data in our standard shader
-//     glLinkProgram(shaderProgram);
+    // Specify the layout of the vertex data in our standard shader
+    glLinkProgram(shaderProgram);
 
-//     // Create / compile textured vertex shader
-//     textureShaderVertex = glCreateShader(GL_VERTEX_SHADER);
-//     glShaderSource(textureShaderVertex, 1, &textureVertexSource, NULL);
-//     glCompileShader(textureShaderVertex);
-//     glGetShaderiv(textureShaderVertex, GL_COMPILE_STATUS, &status);
+    // Create / compile textured vertex shader
+    textureShaderVertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(textureShaderVertex, 1, &textureVertexSource, NULL);
+    glCompileShader(textureShaderVertex);
+    glGetShaderiv(textureShaderVertex, GL_COMPILE_STATUS, &status);
 
-//     // Create / compile textured fragment shader
-//     textureShaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
-//     glShaderSource(textureShaderFragment, 1, &textureFragmentSource, NULL);
-//     glCompileShader(textureShaderFragment);
-//     glGetShaderiv(textureShaderFragment, GL_COMPILE_STATUS, &status);
+    // Create / compile textured fragment shader
+    textureShaderFragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(textureShaderFragment, 1, &textureFragmentSource, NULL);
+    glCompileShader(textureShaderFragment);
+    glGetShaderiv(textureShaderFragment, GL_COMPILE_STATUS, &status);
 
-//     // Attach both shaders to another shader program, link the program
-//     textureShaderProgram = glCreateProgram();
-//     glAttachShader(textureShaderProgram, textureShaderVertex);
-//     glAttachShader(textureShaderProgram, textureShaderFragment);
-//     glBindFragDataLocation(textureShaderProgram, 0, "outColor");
+    // Attach both shaders to another shader program, link the program
+    textureShaderProgram = glCreateProgram();
+    glAttachShader(textureShaderProgram, textureShaderVertex);
+    glAttachShader(textureShaderProgram, textureShaderFragment);
+    glBindFragDataLocation(textureShaderProgram, 0, "outColor");
 
-//     // Specify the layout of the vertex data in our textured shader
-//     glLinkProgram(textureShaderProgram);
-//     textureShaders(false);
+    // Specify the layout of the vertex data in our textured shader
+    glLinkProgram(textureShaderProgram);
+    textureShaders(false);
 
-//     /****** NEW ******/
-//     // Create a framebuffer
-//     frameBuffer = 0;
-//     glGenFramebuffersEXT(1, &frameBuffer);
-//     if (hasEXTFramebuffer)
-//       glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBuffer);
-//     else
-//       glBindFramebuffer(GL_FRAMEBUFFER_EXT, frameBuffer);
-//     // The texture we're going to render to
-//     glGenTextures(1, &renderedTexture);
-//     // "Bind" the newly created texture : all future texture functions will modify this texture
-//     glBindTexture(GL_TEXTURE_2D, renderedTexture);
-//     // Give an empty image to OpenGL ( the last "0" )
-//     // Note: Using RGBA here creates a texture with alpha, which causes weird redrawing problems
-//     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, winWidth+1, winHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
-//     // Poor filtering. Needed !
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//     // Set "renderedTexture" as our colour attachement #0
-//     glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D,renderedTexture, 0);
-//     // Set the list of draw buffers.
-//     GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-//     glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
-//     // Always check that our framebuffer is ok
-//     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-//       TsglErr("FRAMEBUFFER CREATION FAILED");
+    /****** NEW ******/
+    // Create a framebuffer
+    // frameBuffer = 0;
+    // glGenFramebuffersEXT(1, &frameBuffer);
+    // if (hasEXTFramebuffer)
+    //   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBuffer);
+    // else
+    //   glBindFramebuffer(GL_FRAMEBUFFER_EXT, frameBuffer);
+    // std::cout << glGetError() << std::endl;
+    // // The texture we're going to render to
+    // glGenTextures(1, &renderedTexture);
+    // // "Bind" the newly created texture : all future texture functions will modify this texture
+    // glBindTexture(GL_TEXTURE_2D, renderedTexture);
+    // // Give an empty image to OpenGL ( the last "0" )
+    // // Note: Using RGBA here creates a texture with alpha, which causes weird redrawing problems
+    // glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, winWidth+1, winHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
+    // // Poor filtering. Needed !
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    // // Set "renderedTexture" as our colour attachement #0
+    // glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D,renderedTexture, 0);
+    // // Set the list of draw buffers.
+    // GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+    // glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
+    // // Always check that our framebuffer is ok
+    // if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    //   TsglErr("FRAMEBUFFER CREATION FAILED");
 
-//     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-// }
+    // glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
 
 void Canvas::initGlfw() {
   if (!glfwIsReady) {
@@ -2283,9 +2369,9 @@ void Canvas::initWindow() {
     // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
   #endif
     // glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
-    // glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
+    glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     // glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
-    // glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
+    glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
@@ -2308,7 +2394,7 @@ void Canvas::initWindow() {
     glfwSetWindowPos(window, monitorX, monitorY);
 
     glfwMakeContextCurrent(window);
-    // glfwShowWindow(window);                 // Show the window
+    glfwShowWindow(window);                 // Show the window
     glfwSetWindowUserPointer(window, this);
 
     glfwSetMouseButtonCallback(window, buttonCallback);
@@ -2511,7 +2597,7 @@ void Canvas::screenShot() {
     char filename[25];
     sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
 
-    // loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
+    loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
 }
 
 void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
@@ -2666,47 +2752,47 @@ void Canvas::takeScreenShot() {
     if (toRecord == 0) toRecord = 1;
 }
 
-// void Canvas::textureShaders(bool on) {
-//     GLint program;
-//     if (!on) {
-//         program = shaderProgram;
+void Canvas::textureShaders(bool on) {
+    GLint program;
+    if (!on) {
+        program = shaderProgram;
 
-//         // Relocate the shader attributes
-//         GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-//         glEnableVertexAttribArray(posAttrib);
-//         glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
-//         GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-//         glEnableVertexAttribArray(colAttrib);
-//         glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) (2 * sizeof(float)));
+        // Relocate the shader attributes
+        GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), 0);
+        GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
+        glEnableVertexAttribArray(colAttrib);
+        glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*) (3 * sizeof(float)));
 
-//     } else {
-//         program = textureShaderProgram;
+    } else {
+        program = textureShaderProgram;
 
-//         // Relocate the shader attributes
-//         GLint texturePosAttrib = glGetAttribLocation(textureShaderProgram, "position");
-//         glEnableVertexAttribArray(texturePosAttrib);
-//         glVertexAttribPointer(texturePosAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
-//         GLint textureColAttrib = glGetAttribLocation(textureShaderProgram, "color");
-//         glEnableVertexAttribArray(textureColAttrib);
-//         glVertexAttribPointer(textureColAttrib, 4, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-//                               (void*) (2 * sizeof(float)));
-//         GLint textureTexAttrib = glGetAttribLocation(textureShaderProgram, "texcoord");
-//         glEnableVertexAttribArray(textureTexAttrib);
-//         glVertexAttribPointer(textureTexAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-//                               (void*) (6 * sizeof(float)));
-//     }
+        // Relocate the shader attributes
+        GLint texturePosAttrib = glGetAttribLocation(textureShaderProgram, "position");
+        glEnableVertexAttribArray(texturePosAttrib);
+        glVertexAttribPointer(texturePosAttrib, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), 0);
+        GLint textureColAttrib = glGetAttribLocation(textureShaderProgram, "color");
+        glEnableVertexAttribArray(textureColAttrib);
+        glVertexAttribPointer(textureColAttrib, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
+                              (void*) (3 * sizeof(float)));
+        GLint textureTexAttrib = glGetAttribLocation(textureShaderProgram, "texcoord");
+        glEnableVertexAttribArray(textureTexAttrib);
+        glVertexAttribPointer(textureTexAttrib, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float),
+                              (void*) (7 * sizeof(float)));
+    }
 
-//     // Reallocate the shader program for use
-//     glUseProgram(program);
+    // Reallocate the shader program for use
+    glUseProgram(program);
 
-//     // Recompute the camera matrices
-//     uniModel = glGetUniformLocation(program, "model");
-//     uniView = glGetUniformLocation(program, "view");
-//     uniProj = glGetUniformLocation(program, "proj");
+    // Recompute the camera matrices
+    uniModel = glGetUniformLocation(program, "model");
+    uniView = glGetUniformLocation(program, "view");
+    uniProj = glGetUniformLocation(program, "proj");
 
-//     // Update the camera
-//     setupCamera();
-// }
+    // Update the camera
+    setupCamera();
+}
 
  /*!
   * \brief Waits for the user to close the Canvas.

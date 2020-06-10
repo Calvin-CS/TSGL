@@ -39,21 +39,21 @@ void concavePolygonFunction(Canvas& can) {
   yy[0] = 0;
   for (int i = 0; i < PSIZE-1; ++i) {
     if (i % 2 == 0) {
-      xx[i+1] = 0 + 2.5 * sin((1.0f*i)/(PSIZE-2) * PI * 2);
-      yy[i+1] = 0 - 2.5 * cos((1.0f*i)/(PSIZE-2) * PI * 2);
+      xx[i+1] = 0 + 250 * sin((1.0f*i)/(PSIZE-2) * PI * 2);
+      yy[i+1] = 0 - 250 * cos((1.0f*i)/(PSIZE-2) * PI * 2);
     } else {
-      xx[i+1] = 0 + 1.5 * sin((1.0f*i)/(PSIZE-2) * PI * 2);
-      yy[i+1] = 0 - 1.5 * cos((1.0f*i)/(PSIZE-2) * PI * 2);
+      xx[i+1] = 0 + 150 * sin((1.0f*i)/(PSIZE-2) * PI * 2);
+      yy[i+1] = 0 - 150 * cos((1.0f*i)/(PSIZE-2) * PI * 2);
     }
   }
 
   // for (int i = 0; i < PSIZE; ++i) {
   //   if (i % 2 == 0) {
-  //     xx[i] = 0 + 2.5 * sin((1.0f*i)/(PSIZE) * PI * 2);
-  //     yy[i] = 0 - 2.5 * cos((1.0f*i)/(PSIZE) * PI * 2);
+  //     xx[i] = 0 + 250 * sin((1.0f*i)/(PSIZE) * PI * 2);
+  //     yy[i] = 0 - 250 * cos((1.0f*i)/(PSIZE) * PI * 2);
   //   } else {
-  //     xx[i] = 0 + 1.5 * sin((1.0f*i)/(PSIZE) * PI * 2);
-  //     yy[i] = 0 - 1.5 * cos((1.0f*i)/(PSIZE) * PI * 2);
+  //     xx[i] = 0 + 150 * sin((1.0f*i)/(PSIZE) * PI * 2);
+  //     yy[i] = 0 - 150 * cos((1.0f*i)/(PSIZE) * PI * 2);
   //   }
   // }
 

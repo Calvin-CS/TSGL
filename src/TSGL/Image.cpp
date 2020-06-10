@@ -1,9 +1,3 @@
-// From stb_image.h:
-// Do this:
-//   #define STB_IMAGE_IMPLEMENTATION
-// before you include this file in *one* C or C++ file to create the implementation.
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb/stb_image.h"
 #include "Image.h"
 
 namespace tsgl {
@@ -24,25 +18,21 @@ namespace tsgl {
   * \return A new Image is drawn with the specified coordinates, dimensions, and transparency.
   * \note <B>IMPORTANT</B>: In CartesianCanvas, *y* specifies the bottom, not the top, of the image.
   */
-Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLfloat height, float yaw, float pitch, float roll/* , float alpha */) : Drawable(x,y,z,yaw,pitch,roll) {
+Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLfloat height, float yaw, float pitch, float roll, float alpha) : Drawable(x,y,z,yaw,pitch,roll) {
     if (width <= 0 || height <= 0) {
         TsglDebug("Cannot have an Image with width or height less than or equal to 0.");
         return;
     }
+    isTextured = true;  // Let the Canvas know we're a textured object
     myWidth = width; myHeight = height;
     myXScale = width; myYScale = height;
     numberOfVertices = numberOfOutlineVertices = 4;
     myFile = filename;
 
 	// Load the image.
-	// image = getBMP(filename);
     stbi_set_flip_vertically_on_load(true);
     data = stbi_load(filename.c_str(), &pixelWidth, &pixelHeight, 0, 4);
-    assert(data);
-    if (!data)
-    {
-        TsglDebug("Failed to load texture");
-    }
+    tsglAssert(data, "stbi_load(filename) failed.");
     glEnable(GL_TEXTURE_2D);
 
     // create the Image's texture id
@@ -56,6 +46,27 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
     addVertex(-0.5,0.5,0,BLUE);
     addVertex(0.5,0.5,0,CYAN);
     addVertex(0.5,-0.5,0,GREEN);
+    // vertices = new GLfloat[36];
+    // colors = nullptr;
+    // outlineArray = nullptr;
+
+    // // vertices = {
+    // // //   x  , y  ,z, R,G,B,A, txX,txY
+    // //     -0.5,-0.5,0, 1,1,1,1, 0.0,0.0,
+    // //     -0.5, 0.5,0, 1,1,1,1, 0.0,1.0,
+    // //      0.5, 0.5,0, 1,1,1,1, 1.0,1.0,
+    // //      0.5,-0.5,0, 1,1,1,1, 1.0,0.0
+    // // }
+    // vertices[0]  = vertices[1]  = vertices[9]  = vertices[28] = -0.5; // x + y
+    // vertices[10] = vertices[18] = vertices[19] = vertices[27] = 0.5; // x + y
+    // vertices[2] = vertices[11] = vertices[20] = vertices[29] = 0; // z
+    // vertices[3] = vertices[12] = vertices[21] = // R
+    // vertices[4] = vertices[13] = vertices[22] = // G
+    // vertices[5] = vertices[14] = vertices[23] = // B
+    // vertices[6] = vertices[15] = vertices[24] = 1;// A
+    // vertices[7]  = vertices[8]  = vertices[16] = vertices[35] = 0.0; // texture coord x + y
+    // vertices[17] = vertices[25] = vertices[26] = vertices[34] = 1.0; // texture coord x + y
+    // init = true;
 }
 
  /*!
@@ -76,13 +87,14 @@ void Image::draw() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     // Set texture parameters for filtering.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // actually generate the texture
+    // actually generate the texture + mipmaps
     glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pixelWidth, pixelHeight, 0,
 	           	 GL_RGBA, GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     // transformation matrix
     glPushMatrix();
@@ -104,6 +116,7 @@ void Image::draw() {
     glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
 
     // draw the image
+    // glBufferData(GL_ARRAY_BUFFER, 36 * sizeof(GLfloat), vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_QUADS, 0, numberOfVertices);
 
     // pop transformation matrix
@@ -214,7 +227,6 @@ void Image::changeHeightBy(GLfloat delta) {
 
 Image::~Image() { 
     glDeleteTextures(1, &myTexture);
-    //  delete image; 
     stbi_image_free(data); 
 }
 

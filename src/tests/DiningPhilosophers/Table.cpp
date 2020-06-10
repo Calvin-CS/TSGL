@@ -20,10 +20,13 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     forks[i].id = i;
     forks[i].setCanvas(myCan);
   }
-  // float delta = 2.0f / numPhils * PI;
-  // for(int i = 0; i < numPhils; i++) {
-  //   myCan->drawImage("../assets/pics/spaghet.png", tabX-50+(200)*cos(i*delta), tabY-25+(215)*sin(i*delta), 100, 50, 1.0f);
-  // }
+  spaghettis = new Image*[numPhils];
+  float delta = 2.0f / numPhils * PI;
+  for(int i = 0; i < numPhils; i++) {
+    spaghettis[i] = new Image(0 + 0.8 * cos(i*delta), sin(i*delta), -0.5, "./assets/pics/spaghet.png", 1, 0.5, 0,0,0);
+    can.add(spaghettis[i]);
+    // myCan->drawImage("../assets/pics/spaghet.png", -50+(200)*cos(i*delta), -25+(215)*sin(i*delta), 100, 50, 1.0f);
+  }
   myMethod = m;
   switch(myMethod) {
     case forfeitWhenBlocked:
@@ -66,6 +69,10 @@ Table::~Table() {
   // if (myCan2->isOpen())
   //   myCan2->stop();
   // delete myCan2;
+  for (int i = 0; i < numPhils; i++) {
+    delete spaghettis[i];
+  }
+  delete [] spaghettis;
   delete myTable;
   delete [] phils;
   delete [] forks;

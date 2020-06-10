@@ -37,6 +37,7 @@
 // #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
+#include "TextureHandler.h" // Currently used for screenshots, might change this
 #include "Util.h"           // Needed constants and has cmath for performing math operations
 
 #include <functional>       // For callback upon key presses
@@ -86,14 +87,14 @@ private:
     unsigned        bufferSize;                                         // Size of the screen buffer
     std::string     defaultFontFileName;
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
-    GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
+    // GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
-    bool            hasEXTFramebuffer;                                  // Whether or not the hard supports EXT FBOs
+    // bool            hasEXTFramebuffer;                                  // Whether or not the hard supports EXT FBOs
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
-    // TextureHandler  loader;                                             // The ImageLoader that holds all our already loaded textures
+    TextureHandler  loader;                                             // The TextureHandler that holds all our already loaded textures
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
@@ -116,33 +117,33 @@ private:
     GLubyte*        proceduralBuffer;                                   // Array that is a copy of just the procedural portion of the window
     unsigned        proceduralBufferSize;
     doubleFunction  scrollFunction;                                     // Single function object for scrolling
-    // GLtexture       shaderFragment,                                     // Address of the fragment shader
-    //                 shaderProgram,                                      // Addres of the shader program to send to the GPU
-    //                 shaderVertex;                                       // Address of the vertex shader
+    GLtexture       shaderFragment,                                     // Address of the fragment shader
+                    shaderProgram,                                      // Addres of the shader program to send to the GPU
+                    shaderVertex;                                       // Address of the vertex shader
     std::mutex      shapesMutex;                                        // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
     std::mutex      syncMutex;                                          // Mutex for syncing the rendering thread with a computational thread
     int             syncMutexLocked;                                    // Whether the syncMutex is currently locked
 	  int             syncMutexOwner;                                     // Thread ID of the owner of the syncMutex
-    // GLtexture       textureShaderFragment,                              // Address of the textured fragment shader
-    //                 textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
-    //                 textureShaderVertex;                                // Address of the textured vertex shader
+    GLtexture       textureShaderFragment,                              // Address of the textured fragment shader
+                    textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
+                    textureShaderVertex;                                // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
     GLint           uniModel,                                           // Model perspective of the camera
                     uniView,                                            // View perspective of the camera
                     uniProj;                                            // Projection of the camera
-    // GLtexture       vertexArray,                                        // Address of GL's array buffer object
-    //                 vertexBuffer;                                       // Address of GL's vertex buffer object
+    GLtexture       vertexArray,                                        // Address of GL's array buffer object
+                    vertexBuffer;                                       // Address of GL's vertex buffer object
     float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     bool            windowClosed;                                       // Whether we've closed the Canvas' window or not
     std::mutex      windowMutex;                                        // (OS X) Mutex for handling window contexts
     int             winHeight;                                          // Height of the Canvas' window
     std::string     winTitle;                                           // Title of the window
-    int             winWidth;                                           // Width of the Canvas' window
-    int             winWidthPadded;                                     // Window width padded to a multiple of 4 (necessary for taking screenshots)
+    GLint           winWidth;                                           // Width of the Canvas' window
+    GLint           winWidthPadded;                                     // Window width padded to a multiple of 4 (necessary for taking screenshots)
 
     static int          drawBuffer;                                     // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
     static bool         glfwIsReady;                                    // Whether or not we have info about our monitor
@@ -159,7 +160,7 @@ private:
                    unsigned int b, std::string title,
                    double timerLength);                                 // Method for initializing the canvas
     void         initGl();                                              // Initializes the GL things specific to the Canvas
-    // void         initGlew();                                            // Initialized the GLEW things specific to the Canvas
+    void         initGlew();                                            // Initialized the GLEW things specific to the Canvas
     static void  initGlfw();                                            // Initalizes GLFW for all future canvases.
     void         initWindow();                                          // Initalizes the window specific to the Canvas
     static void  keyCallback(GLFWwindow* window, int key,
@@ -174,7 +175,7 @@ private:
   #else
     static void  startDrawing(Canvas *c);                               // Static method that is called by the render thread
   #endif
-    // void         textureShaders(bool state);                            // Turn textures on or off
+    void         textureShaders(bool state);                            // Turn textures on or off
     // static bool  testFilledDraw(Canvas& can);                           // Unit test for drawing shapes and determining if fill works
     // static bool testLine(Canvas& can);                                  // Unit tester for lines
     static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods

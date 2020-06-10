@@ -18,7 +18,7 @@ void sphereFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Sphere * testSphere = new Sphere(0.0, 0.0, 0.0, 2, 0.0, 0.0, 0.0, colors);
+    Sphere * testSphere = new Sphere(0.0, 0.0, 0.0, 250, 0.0, 0.0, 0.0, colors);
     can.add(testSphere);
     float rotation = 0.0f;
     // GLfloat delta = 0.05;

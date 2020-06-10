@@ -8,7 +8,8 @@
 #include <string>
 
 #include "Drawable.h"           // For extending our Drawable object
-// #include "getBMP.h"
+#include <stb/stb_image.h>
+// #include "TextureHandler.h"
 #include "TsglAssert.h"      // For unit testing purposes
 
 namespace tsgl {
@@ -24,7 +25,7 @@ namespace tsgl {
  */
 class Image : public Drawable {
  private:
-    // imageFile * image;
+    // TextureHandler myTH;
     unsigned char * data = 0;
     GLfloat myWidth, myHeight;
     GLint pixelWidth, pixelHeight;
@@ -35,7 +36,7 @@ class Image : public Drawable {
         0, 0,   0, 1,   1, 1,   1, 0
     };
  public:
-    Image(float x, float y, float z, std::string filename, GLfloat width, GLfloat height, float yaw, float pitch, float roll/* , float alpha = 1.0f */);
+    Image(float x, float y, float z, std::string filename, GLfloat width, GLfloat height, float yaw, float pitch, float roll, float alpha = 1.0f);
 
     virtual void draw();
 

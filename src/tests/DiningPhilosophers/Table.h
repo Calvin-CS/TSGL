@@ -29,6 +29,7 @@ private:
   Philosopher *phils;
   Fork *forks;
   Circle * myTable;
+  Image ** spaghettis;
   // TextureHandler loader;
 public:
   Table(Canvas& can, int p, PhilMethod m);

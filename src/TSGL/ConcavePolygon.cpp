@@ -75,41 +75,6 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     }
 }
 
- /*!
-  * \brief Adds another vertex to a ConcavePolygon.
-  * \details This function initializes the next vertex in the ConcavePolygon and adds it to a ConcavePolygon buffer.
-  *      \param x The x position of the vertex.
-  *      \param y The y position of the vertex.
-  *      \param color The reference variable of the color of the vertex.
-  * \note This function does nothing if the vertex buffer is already full.
-  * \note A message is given indicating that the vertex buffer is full.
-  */
-void ConcavePolygon::addVertex(float x, float y, float z, ColorFloat &color) {
-    if (init) {
-    TsglDebug("Cannot add anymore vertices.");
-    return;
-    }
-    attribMutex.lock();
-    vertices[currentVertex] = x;
-    vertices[currentVertex + 1] = y;
-    vertices[currentVertex + 2] = z;
-    colors[currentColor] = color.R;
-    colors[currentColor + 1] = color.G;
-    colors[currentColor + 2] = color.B;
-    colors[currentColor + 3] = color.A;
-    currentVertex += 3;
-    currentColor += 4;
-    attribMutex.unlock();
-
-    if (currentVertex == numberOfVertices*3) {
-        attribMutex.lock();
-        outlineArray = new GLfloat[numberOfOutlineVertices*4];
-        std::fill_n(outlineArray, numberOfOutlineVertices*4, 0.75);
-        init = true;
-        attribMutex.unlock();
-    }
-}
-
 /*!
  * \brief Draw the ConcavePolygon.
  * \details This function actually draws the ConcavePolygon to the Canvas.

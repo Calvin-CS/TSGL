@@ -25,8 +25,6 @@ namespace tsgl {
 class ConcavePolygon : public Shape {
  protected:
     ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll); 
-
-    void addVertex(float x, float y, float z, ColorFloat &color);
  public:
     ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color);
 

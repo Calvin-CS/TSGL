@@ -18,7 +18,7 @@ void squareFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Square * square = new Square(0,0,0,1,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    Square * square = new Square(0,0,0,500,0,0,0,colors/* ColorFloat(1,0,0,1) */);
     // square->setCenterX(2);
     // square->setRotationPoint(0,0,0);
     can.add(square);
