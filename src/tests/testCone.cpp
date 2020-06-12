@@ -20,8 +20,18 @@ void coneFunction(Canvas& can) {
         ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
         ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
         ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1), 
+        ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1), ColorFloat(0,0,1,1),
+        ColorFloat(0,1,0,1), ColorFloat(0,1,1,1), ColorFloat(1,0,0,1),
+        ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
+        ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
+        ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1), 
+        ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1),
+        ColorFloat(0,1,0,1), ColorFloat(0,1,1,1), ColorFloat(1,0,0,1),
+        ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
+        ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
+        ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1), 
         ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1) };
-    Cone * testCone = new Cone(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 0.0, ColorFloat(1,0,0,1));
+    Cone * testCone = new Cone(0.0, 0.0, 0.0, 100, 100, 0.0, 0.0, 0.0, colors);
     // Cone * testCone2 = new Cone(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
     can.add(testCone);
     // can.add(testCone2);

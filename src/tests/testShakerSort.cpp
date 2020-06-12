@@ -44,12 +44,11 @@ void shakerSortFunction(Canvas& can) {
     int pos = 0, min = 0, max = SIZE - 1, lastSwap = 0;
     float temp;
     bool goingUp = true;
-    printf("%d, %d\n", can.getWindowWidth(), can.getDisplayWidth());
     int canWidth = (can.getWindowWidth() > can.getDisplayWidth()) ? can.getDisplayWidth() : can.getWindowWidth();
-    float start = -3.6 * canWidth / 960;
-    float rectangleWidth = 0.013 * canWidth / 960;
+    float start = canWidth * -.45;
+    float rectangleWidth = canWidth * .9 / SIZE;
     for (int i = 0; i < SIZE; i++) {
-        rectangles[i] = new Rectangle(start + i * rectangleWidth, 0, 0, rectangleWidth, (float) (saferand(1,200000)) / 50000, 0, 0, 0, RED);
+        rectangles[i] = new Rectangle(start + i * rectangleWidth, 0, 0, rectangleWidth, saferand(1,can.getWindowHeight()*.9), 0, 0, 0, RED);
         numbers[i] = rectangles[i]->getHeight();
         rectangles[i]->displayOutlineEdges(false);
         can.add(rectangles[i]);

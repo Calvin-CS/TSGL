@@ -18,17 +18,17 @@ void triangleFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Triangle * triangle = new Triangle(-0.5,-0.5,0,0,0.5,0,0.5,-0.5,0,0,0,0,colors/* ColorFloat(1,0,0,1) */);
-    // triangle->setCenterX(2);
+    Triangle * triangle = new Triangle(-50,-50,0,0,50,0,50,-50,0,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    // triangle->setCenterX(200);
     // triangle->setRotationPoint(0,0,0);
     can.add(triangle);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
     while (can.isOpen()) {
         can.sleep();
-        // triangle->setCenterX(sin(floatVal/90));
-        // triangle->setCenterY(sin(floatVal/90));
-        // triangle->setCenterZ(sin(floatVal/90));
+        // triangle->setCenterX(sin(floatVal/90) * 100);
+        // triangle->setCenterY(sin(floatVal/90) * 100);
+        // triangle->setCenterZ(sin(floatVal/90) * 100);
         // triangle->setYaw(floatVal);
         // triangle->setPitch(floatVal);
         // triangle->setRoll(floatVal);

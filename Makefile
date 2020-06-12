@@ -98,13 +98,11 @@ BINARIES= \
 	bin/testTriangleStrip \
 #  bin/test_specs \
 #	bin/testAlphaRectangle \
-#	bin/testArrows \
 #	bin/testAura \
 #	bin/testBlurImage \
 #	bin/testCalcPi \
 #	bin/testColorPoints \
 #	bin/testColorWheel \
-#	bin/testConcavePolygon \
 #	bin/testConstructors \
 #	bin/testConway \
 #	bin/testCosineIntegral \
@@ -135,7 +133,6 @@ BINARIES= \
 #	bin/testSeaUrchin \
 #	bin/testSpectrogram \
 #	bin/testSpectrum \
-#	bin/testStar \
 #	bin/testText \
 #	bin/testTextCart \
 #	bin/testTextTwo \

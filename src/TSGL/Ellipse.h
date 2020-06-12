@@ -16,6 +16,7 @@ namespace tsgl {
 class Ellipse : public ConvexPolygon {
  private:
     GLfloat myXRadius, myYRadius;
+    GLfloat verticesPerColor;
  public:
     Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorFloat color);
 
@@ -41,7 +42,11 @@ class Ellipse : public ConvexPolygon {
     */
     GLfloat getYRadius() { return myYRadius; }
     
+    void setColor(ColorFloat c) { Drawable::setColor(c); }
 
+    void setColor(ColorFloat c[]);
+
+    void displayOutlineEdges(bool b) { }
 };
 
 }

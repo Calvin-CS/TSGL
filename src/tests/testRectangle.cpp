@@ -18,30 +18,30 @@ void rectangleFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Rectangle * rectangle = new Rectangle(0,0,0,1,2,0,0,0,colors/* ColorFloat(1,0,0,1) */);
-    // rectangle->setCenterX(2);
+    Rectangle * rectangle = new Rectangle(0,0,0,100,200,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    // rectangle->setCenterX(200);
     // rectangle->setRotationPoint(0,0,0);
     can.add(rectangle);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
     while (can.isOpen()) {
         can.sleep();
-        // rectangle->setCenterX(sin(floatVal/90));
-        // rectangle->setCenterY(sin(floatVal/90));
-        // rectangle->setCenterZ(sin(floatVal/90));
+        // rectangle->setCenterX(sin(floatVal/90)*100);
+        // rectangle->setCenterY(sin(floatVal/90)*100);
+        // rectangle->setCenterZ(sin(floatVal/90)*100);
         // rectangle->setYaw(floatVal);
         // rectangle->setPitch(floatVal);
         // rectangle->setRoll(floatVal);
-        // rectangle->setWidth(sin(floatVal/90) + 1);
-        // rectangle->setHeight(sin(floatVal/90) + 2);
-        // if (rectangle->getWidth() > 2 || rectangle->getWidth() < 1) {
+        // rectangle->setWidth(sin(floatVal/90) *100 + 100);
+        // rectangle->setHeight(sin(floatVal/90) *100 + 200);
+        // if (rectangle->getWidth() > 200 || rectangle->getWidth() < 100) {
         //     delta *= -1;
-        //     // rectangle->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     // rectangle->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
         // }
         // rectangle->changeWidthBy(delta);
-        // if (rectangle->getHeight() > 3 || rectangle->getHeight() < 1) {
+        // if (rectangle->getHeight() > 300 || rectangle->getHeight() < 100) {
         //     delta *= -1;
-        //     // rectangle->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     // rectangle->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
         // }
         // rectangle->changeHeightBy(delta);
         // if (delta > 0) {

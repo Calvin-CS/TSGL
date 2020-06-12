@@ -18,8 +18,8 @@ void convexPolygonFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    float x[] = { -0.5,-0.5,0  ,0.25,0.5,0.5,0.25 };
-    float y[] = { -0.5,0.25,0.5,0.4 ,0.1,-0.1,-0.5 };
+    float x[] = { -50,-50, 0,25,50, 50, 25 };
+    float y[] = { -50, 25,50,40,10,-10,-50 };
     ConvexPolygon * cp = new ConvexPolygon(0,0,0,7,x,y,0,0,0,colors/* ColorFloat(1,0,0,1) */);
     // cp->setCenterX(2);
     // cp->setRotationPoint(0,0,0);
@@ -27,9 +27,9 @@ void convexPolygonFunction(Canvas& can) {
     float floatVal = 0.0f;
     while (can.isOpen()) {
         can.sleep();
-        // cp->setCenterX(sin(floatVal/90));
-        // cp->setCenterY(sin(floatVal/90));
-        // cp->setCenterZ(sin(floatVal/90));
+        // cp->setCenterX(sin(floatVal/90) * 100);
+        // cp->setCenterY(sin(floatVal/90) * 100);
+        // cp->setCenterZ(sin(floatVal/90) * 100);
         // cp->setYaw(floatVal);
         // cp->setPitch(floatVal);
         // cp->setRoll(floatVal);

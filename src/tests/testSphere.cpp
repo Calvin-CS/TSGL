@@ -21,22 +21,22 @@ void sphereFunction(Canvas& can) {
     Sphere * testSphere = new Sphere(0.0, 0.0, 0.0, 250, 0.0, 0.0, 0.0, colors);
     can.add(testSphere);
     float rotation = 0.0f;
-    // GLfloat delta = 0.05;
+    // GLfloat delta = 5;
     bool boolean = true;
     while (can.isOpen()) {
         can.sleep();
-        // testSphere->setCenterX(sin(rotation));
-        // testSphere->setCenterY(cos(rotation));
-        // testSphere->setCenterZ(sin(rotation));
+        // testSphere->setCenterX(sin(rotation) * 100);
+        // testSphere->setCenterY(cos(rotation) * 100);
+        // testSphere->setCenterZ(sin(rotation) * 100);
         // testSphere->setYaw(rotation*45);
         // testSphere->setPitch(rotation*45);
         testSphere->setRoll(rotation*45);
-        // testSphere->setRadius(cos(rotation)+1.01);
-        // if(testSphere->getRadius() >= 2) {
-        //     delta = -0.05;
+        // testSphere->setRadius(cos(rotation) * 100 +101);
+        // if(testSphere->getRadius() >= 200) {
+        //     delta = -5;
         // }
-        // if(testSphere->getRadius() <= 0.05) {
-        //     delta = 0.05;
+        // if(testSphere->getRadius() <= 500) {
+        //     delta = 5;
         // }
         // testSphere->changeRadiusBy(delta);
         // if (rotation*45 >= 360) {

@@ -15,10 +15,10 @@ void cylinderFunction(Canvas& can) {
         ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
         ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
         ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1) };
-    Cylinder * testCylinder = new Cylinder(0.0, 0.0, 0.0, 1, 1, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
-    // Cylinder * testCylinder2 = new Cylinder(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
+    Cylinder * testCylinder = new Cylinder(0.0, 0.0, 0.0, 100, 100, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
+    Cylinder * testCylinder2 = new Cylinder(-300, 0.0, 0.0, 200, 150, 0.0, 45.0, 45.0, colors);
     can.add(testCylinder);
-    // can.add(testCylinder2);
+    can.add(testCylinder2);
     float rotation = 0.0f;
     // GLfloat delta = 0.05;
     bool boolean = false;

@@ -27,7 +27,7 @@ Philosopher3D::~Philosopher3D() {
  * Adds Philosopher3D to Canvas or refreshes its color.
  */
 void Philosopher3D::draw(Canvas& can, float x, float y) {
-  const float SIZE = .45;
+  const float SIZE = 45;
   if( !myCylinder) {
     myCylinder = new Cylinder(x,y,-1,SIZE*4,SIZE,0,0,90,RED);
     can.add(myCylinder);
@@ -61,7 +61,7 @@ void Philosopher3D::refreshColor() {
  */
 void Philosopher3D::addMeal(float x, float y, float z) {
   numMeals++;
-  meals.push_back(new Pyramid(x,y,z,3,.08,.04,0,0,90,ColorFloat(0.5,0.3,0,1)));
+  meals.push_back(new Pyramid(x,y,z,3,8,4,0,0,90,ColorFloat(0.5,0.3,0,1)));
   meals.back()->displayOutlineEdges(false);
 }
 

@@ -18,22 +18,22 @@ void triangleStripFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    float x[] = { 0,-0.5,0.5,-0.5,0.5,0 };
-    float y[] = { -1,-0.5,-0.5,0.5,0.5,1 };
-    float z[] = { 0,0.5,0.5,0.5,0.5,0 };
+    float x[] = { 0,-50,50,-50,50,0 };
+    float y[] = { -100,-50,-50,50,50,100 };
+    float z[] = { 0,50,50,50,50,0 };
     TriangleStrip * ts = new TriangleStrip(0,0,0,6,x,y,z,0,0,0,colors/* RED */);
     // ts->setCenterX(2);
-    // ts->setRotationPoint(0,0,0);
+    ts->setRotationPoint(0,0,0);
     can.add(ts);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
     while (can.isOpen()) {
         can.sleep();
-        // ts->setCenterX(sin(floatVal/90));
-        // ts->setCenterY(sin(floatVal/90));
-        // ts->setCenterZ(sin(floatVal/90));
+        // ts->setCenterX(sin(floatVal/90) * 100);
+        // ts->setCenterY(sin(floatVal/90) * 100);
+        // ts->setCenterZ(sin(floatVal/90) * 100);
         // ts->setYaw(floatVal);
-        // ts->setPitch(floatVal);
+        ts->setPitch(floatVal);
         // ts->setRoll(floatVal);
         // if (floatVal < 200) {
         //     ts->setColor(colors);

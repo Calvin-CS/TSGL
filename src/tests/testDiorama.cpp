@@ -10,35 +10,35 @@
 using namespace tsgl;
 
 void dioramaFunction(Canvas& can) {
-    Square * blankCanvas = new Square(1.8,0,1.35,2.7,0,0,0,WHITE);
+    Square * blankCanvas = new Square(180,0,135,270,0,0,0,WHITE);
     blankCanvas->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(blankCanvas);
 
-    Rectangle * emptyDioramaLeft = new Rectangle(-0.45,0,0,2.7,2.7,0,90,0,ColorFloat(1,1,1,0));
+    Rectangle * emptyDioramaLeft = new Rectangle(-45,0,0,270,270,0,90,0,ColorFloat(1,1,1,0));
     emptyDioramaLeft->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaLeft);
-    Rectangle * emptyDioramaRight = new Rectangle(-3.15,0,0,2.7,2.7,0,90,0,ColorFloat(1,1,1,0));
+    Rectangle * emptyDioramaRight = new Rectangle(-315,0,0,270,270,0,90,0,ColorFloat(1,1,1,0));
     emptyDioramaRight->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaRight);
-    Rectangle * emptyDioramaTop = new Rectangle(-1.8,1.35,0,2.7,2.7,0,0,90,ColorFloat(1,1,1,0));
+    Rectangle * emptyDioramaTop = new Rectangle(-180,135,0,270,270,0,0,90,ColorFloat(1,1,1,0));
     emptyDioramaTop->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaTop);
-    Rectangle * emptyDioramaBottom = new Rectangle(-1.8,-1.35,0,2.7,2.7,0,0,90,ColorFloat(1,1,1,0));
+    Rectangle * emptyDioramaBottom = new Rectangle(-180,-135,0,270,270,0,0,90,ColorFloat(1,1,1,0));
     emptyDioramaBottom->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaBottom);
 
-    Cuboid * trunk = new Cuboid(-2,-.3,0,0.25,2,0.25,0,0,0,ColorFloat(.6,.3,0,1));
+    Cuboid * trunk = new Cuboid(-200,-30,0,25,200,25,0,0,0,ColorFloat(.6,.3,0,1));
     trunk->displayOutlineEdges(false);
     // can.add(trunk);
 
-    Ellipsoid * leaves = new Ellipsoid(-2,0.7,0,0.75,0.5,0.4,0,0,0,GREEN);
+    Ellipsoid * leaves = new Ellipsoid(-200,70,0,75,50,40,0,0,0,GREEN);
     // can.add(leaves);
 
-    Rectangle * trunkFlat = new Rectangle(1.6,-.3,1.35,0.25,2,0,0,0,ColorFloat(.6,.3,0,1));
+    Rectangle * trunkFlat = new Rectangle(160,-30,135,25,200,0,0,0,ColorFloat(.6,.3,0,1));
     trunkFlat->displayOutlineEdges(false);
     // can.add(trunkFlat);
 
-    Ellipse * leavesFlat = new Ellipse(1.6,0.7,1.35,0.75,0.5,0,0,0,ColorFloat(0,0.8,0,1));
+    Ellipse * leavesFlat = new Ellipse(160,70,135,75,50,0,0,0,ColorFloat(0,0.8,0,1));
     // can.add(leavesFlat);
 
     float counter = 0;
@@ -73,32 +73,32 @@ void dioramaFunction(Canvas& can) {
             counter++;
         }
         if(can.getFrameNumber() > 4000 && counter < 7) {
-            if(emptyDioramaLeft->getWidth() > .15) {
-                emptyDioramaLeft->changeWidthBy(-2.7/20);
-                emptyDioramaRight->changeWidthBy(-2.7/20);
-                emptyDioramaTop->changeHeightBy(-2.7/20);
-                emptyDioramaBottom->changeHeightBy(-2.7/20);
-                emptyDioramaTop->changeZBy(1.35/20);
-                emptyDioramaBottom->changeZBy(1.35/20);
-                emptyDioramaLeft->changeZBy(1.35/20);
-                emptyDioramaRight->changeZBy(1.35/20);
-                trunk->changeLengthBy(-0.25/20);
-                trunk->changeZBy(1.35/20);
-                leaves->changeZRadiusBy(-0.4/20);
-                leaves->changeZBy(1.35/20);
+            if(emptyDioramaLeft->getWidth() > 15) {
+                emptyDioramaLeft->changeWidthBy(-270/20);
+                emptyDioramaRight->changeWidthBy(-270/20);
+                emptyDioramaTop->changeHeightBy(-270/20);
+                emptyDioramaBottom->changeHeightBy(-270/20);
+                emptyDioramaTop->changeZBy(135/20);
+                emptyDioramaBottom->changeZBy(135/20);
+                emptyDioramaLeft->changeZBy(135/20);
+                emptyDioramaRight->changeZBy(135/20);
+                trunk->changeLengthBy(-25/20);
+                trunk->changeZBy(135/20);
+                leaves->changeZRadiusBy(-40/20);
+                leaves->changeZBy(135/20);
             } else {
-                emptyDioramaLeft->setWidth(0.01);
-                emptyDioramaRight->setWidth(0.01);
-                emptyDioramaTop->setHeight(0.01);
-                emptyDioramaBottom->setHeight(0.01);
-                emptyDioramaTop->setCenterZ(1.35);
-                emptyDioramaBottom->setCenterZ(1.35);
-                emptyDioramaLeft->setCenterZ(1.35);
-                emptyDioramaRight->setCenterZ(1.35);
-                trunk->setLength(0.01);
-                trunk->setCenterZ(1.35);
-                leaves->setZRadius(0.01);
-                leaves->setCenterZ(1.35);
+                emptyDioramaLeft->setWidth(1);
+                emptyDioramaRight->setWidth(1);
+                emptyDioramaTop->setHeight(1);
+                emptyDioramaBottom->setHeight(1);
+                emptyDioramaTop->setCenterZ(135);
+                emptyDioramaBottom->setCenterZ(135);
+                emptyDioramaLeft->setCenterZ(135);
+                emptyDioramaRight->setCenterZ(135);
+                trunk->setLength(1);
+                trunk->setCenterZ(135);
+                leaves->setZRadius(1);
+                leaves->setCenterZ(135);
                 counter++;
             }
         }

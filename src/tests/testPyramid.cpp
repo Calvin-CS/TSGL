@@ -15,9 +15,9 @@ void pyramidFunction(Canvas& can) {
         ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
         ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
         ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1) };
-    Pyramid * testPyramid = new Pyramid(0.0, 0.0, 0.0, 3, 1, 1, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
-    Pyramid * testPyramid2 = new Pyramid(-3.0, 0.0, 0.0, 5, 1, 1, 0.0, 0.0, 45.0, colors);
-    Pyramid * testPyramid3 = new Pyramid(3.0, 0.0, 0.0, 8, 1, 1, 0.0, 0.0, 45.0, colors);
+    Pyramid * testPyramid = new Pyramid(0.0, 0.0, 0.0, 3, 100, 100, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
+    Pyramid * testPyramid2 = new Pyramid(-300, 0.0, 0.0, 5, 100, 100, 0.0, 0.0, 45.0, colors);
+    Pyramid * testPyramid3 = new Pyramid(300, 0.0, 0.0, 8, 100, 100, 0.0, 0.0, 45.0, colors);
     can.add(testPyramid);
     can.add(testPyramid2);
     can.add(testPyramid3);
@@ -26,28 +26,28 @@ void pyramidFunction(Canvas& can) {
     bool boolean = false;
     while (can.isOpen()) {
         can.sleep();
-        // testPyramid->setCenterX(sin(rotation)*2);
-        // testPyramid->setCenterY(cos(rotation)*2);
-        // testPyramid->setCenterZ(sin(rotation));
+        // testPyramid->setCenterX(sin(rotation)*200);
+        // testPyramid->setCenterY(cos(rotation)*200);
+        // testPyramid->setCenterZ(sin(rotation)*100);
         // testPyramid->setYaw(rotation*45);
         testPyramid->setPitch(rotation*45);
         testPyramid2->setPitch(rotation*45);
         testPyramid3->setPitch(rotation*45);
-        // testPyramid->setRoll(rotation*45);
-        // testPyramid->setHeight(sin(rotation)+1.01);
-        // testPyramid->setRadius(sin(rotation)+1.01);
-        // if(testPyramid->getHeight() >= 2) {
-        //     delta = -0.05;
+        // testPyramid->setRoll(sin(rotation*45)*100+101);
+        // testPyramid->setHeight(sin(rotation)*100+101);
+        // testPyramid->setRadius(sin(rotation)*100+101);
+        // if(testPyramid->getHeight() >= 200) {
+        //     delta = -5;
         // }
-        // if(testPyramid->getHeight() <= 0.05) {
-        //     delta = 0.05;
+        // if(testPyramid->getHeight() <= 5) {
+        //     delta = 5;
         // }
         // testPyramid->changeHeightBy(delta);
-        // if(testPyramid->getRadius() >= 2) {
-        //     delta = -0.05;
+        // if(testPyramid->getRadius() >= 200) {
+        //     delta = -5;
         // }
-        // if(testPyramid->getRadius() <= 0.05) {
-        //     delta = 0.05;
+        // if(testPyramid->getRadius() <= 5) {
+        //     delta = 5;
         // }
         // testPyramid->changeRadiusBy(delta);
         if (rotation*45 >= 360) {

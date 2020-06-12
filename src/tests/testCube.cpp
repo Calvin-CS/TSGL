@@ -13,8 +13,8 @@ void cubeFunction(Canvas& can) {
     ColorFloat colors[] = { ColorFloat(0,0,0,0.8), ColorFloat(0,0,1,0.8),
         ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
         ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8) };
-    Cube * testCube = new Cube(0.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, ColorFloat(1,0,0,1));
-    Cube * testCube2 = new Cube(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
+    Cube * testCube = new Cube(0.0, 0.0, 0.0, 200, 0.0, 45.0, 45.0, ColorFloat(1,0,0,1));
+    Cube * testCube2 = new Cube(-300, 0.0, 0.0, 200, 0.0, 45.0, 45.0, colors);
     can.add(testCube);
     can.add(testCube2);
     float rotation = 0.0f;
@@ -22,18 +22,18 @@ void cubeFunction(Canvas& can) {
     bool boolean = false;
     while (can.isOpen()) {
         can.sleep();
-        // testCube->setCenterX(sin(rotation)*2);
-        // testCube->setCenterY(cos(rotation)*2);
-        // testCube->setCenterZ(sin(rotation));
+        // testCube->setCenterX(sin(rotation)*200);
+        // testCube->setCenterY(cos(rotation)*200);
+        // testCube->setCenterZ(sin(rotation)*100);
         // testCube->setYaw(rotation*45);
         testCube->setPitch(rotation*45);
         // testCube->setRoll(rotation*45);
-        // testCube->setSideLength(cos(rotation)+1.01);
+        // testCube->setSideLength(cos(rotation) * 100 +101);
         // if(testCube->getSideLength() >= 2) {
-        //     delta = -0.05;
+        //     delta = -5;
         // }
-        // if(testCube->getSideLength() <= 0.05) {
-        //     delta = 0.05;
+        // if(testCube->getSideLength() <= 5) {
+        //     delta = 5;
         // }
         // testCube->changeSideLengthBy(delta);
         //testCube2->setRoll(rotation);

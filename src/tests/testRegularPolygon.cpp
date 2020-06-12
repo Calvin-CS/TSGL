@@ -18,24 +18,24 @@ void rpFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    RegularPolygon * rp = new RegularPolygon(0,0,0,1,7,0,0,0,colors/* ColorFloat(1,0,0,1) */);
-    // rp->setCenterX(2);
+    RegularPolygon * rp = new RegularPolygon(0,0,0,100,7,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    // rp->setCenterX(200);
     // rp->setRotationPoint(0,0,0);
     can.add(rp);
     float floatVal = 0.0f;
-    GLfloat delta = 0.05;
+    GLfloat delta = 5;
     while (can.isOpen()) {
         can.sleep();
-        // rp->setCenterX(sin(floatVal/90));
-        // rp->setCenterY(sin(floatVal/90));
-        // rp->setCenterZ(sin(floatVal/90));
+        // rp->setCenterX(sin(floatVal/90)*100);
+        // rp->setCenterY(sin(floatVal/90)*100);
+        // rp->setCenterZ(sin(floatVal/90)*100);
         // rp->setYaw(floatVal);
         // rp->setPitch(floatVal);
         // rp->setRoll(floatVal);
-        // rp->setRadius(sin(floatVal/90) + 3);
-        // if (rp->getRadius() > 3 || rp->getRadius() < 1) {
+        // rp->setRadius(sin(floatVal/90)*100 + 300);
+        // if (rp->getRadius() > 300 || rp->getRadius() < 100) {
         //     delta *= -1;
-        //     rp->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     rp->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
         // }
         // rp->changeRadiusBy(delta);
         // if (delta > 0) {

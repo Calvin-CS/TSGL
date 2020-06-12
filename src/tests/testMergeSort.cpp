@@ -113,10 +113,10 @@ void mergeSortFunction(Canvas& can, int threads, int size) {
     const int IPF = 1;      // Iterations per frame
     float* numbers = new float[size];       // Array to store the data
     Rectangle** rectangles = new Rectangle*[size];      // Array to store the data
-    float start = -5;
-    float width = 0.01 * 1024/size;
+    float start = -can.getWindowWidth() * .45;
+    float width = can.getWindowWidth() * .9 / size;
     for (int i = 0; i < size; i++) {
-        numbers[i] = (float) (saferand(1,200000)) / 50000;
+        numbers[i] = saferand(1,can.getWindowHeight());
         rectangles[i] = new Rectangle(start + i * width, 0, 0, width, numbers[i], 0, 0, 0, RED);
         rectangles[i]->displayOutlineEdges(false);
         can.add(rectangles[i]);

@@ -18,19 +18,19 @@ void ellipsoidFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Ellipsoid * testEllipsoid = new Ellipsoid(0.0, 0.0, 0.0, 2, 2, 2, 0.0, 0.0, 0.0, colors/* ColorFloat(1,0,0,1) */);
-    // Ellipsoid * testEllipsoid2 = new Ellipsoid(-2.0, 0.0, 0.0, 1.5, 1.5, 1.5, 0.0, 0.0, 0.0, colors);
+    Ellipsoid * testEllipsoid = new Ellipsoid(0.0, 0.0, 0.0, 200, 200, 200, 0.0, 0.0, 0.0, colors/* ColorFloat(1,0,0,1) */);
+    // Ellipsoid * testEllipsoid2 = new Ellipsoid(-2.0, 0.0, 0.0, 150, 150, 150, 0.0, 0.0, 0.0, colors);
     can.add(testEllipsoid);
     // can.add(testEllipsoid2);
     float rotation = 0.0f;
     // GLfloat delta = 0.05;
     bool boolean = true;
-    // testEllipsoid->setXRadius(1.5);
-    // testEllipsoid->setYRadius(1.5);
-    // testEllipsoid->setZRadius(1.5);
-    // testEllipsoid->changeXRadiusBy(1.4);
-    // testEllipsoid->changeYRadiusBy(1.4);
-    // testEllipsoid->changeZRadiusBy(1.4);
+    // testEllipsoid->setXRadius(150);
+    // testEllipsoid->setYRadius(150);
+    // testEllipsoid->setZRadius(150);
+    // testEllipsoid->changeXRadiusBy(140);
+    // testEllipsoid->changeYRadiusBy(140);
+    // testEllipsoid->changeZRadiusBy(140);
     while (can.isOpen()) {
         can.sleep();
         // testEllipsoid->setCenterX(sin(rotation));
@@ -40,30 +40,30 @@ void ellipsoidFunction(Canvas& can) {
         testEllipsoid->setPitch(rotation*45);
         // testEllipsoid2->setPitch(rotation*45);
         // testEllipsoid->setRoll(rotation*45);
-        // testEllipsoid->setXRadius(cos(rotation)+1.01);
-        // testEllipsoid->setYRadius(sin(rotation)+2.01);
-        // testEllipsoid->setZRadius(sin(rotation)+3.01);
-        // if(testEllipsoid->getXRadius() >= 2) {
-        //     delta = -0.05;
+        // testEllipsoid->setXRadius(cos(rotation) * 100 +101);
+        // testEllipsoid->setYRadius(sin(rotation) * 100 +201);
+        // testEllipsoid->setZRadius(sin(rotation) * 100 +301);
+        // if(testEllipsoid->getXRadius() >= 200) {
+        //     delta = -5;
         // }
-        // if(testEllipsoid->getXRadius() <= 0.05) {
-        //     delta = 0.05;
+        // if(testEllipsoid->getXRadius() <= 5) {
+        //     delta = 5;
         // }
         // testEllipsoid->changeXRadiusBy(delta);
 
-        // if(testEllipsoid->getYRadius() >= 5) {
-        //     delta = -0.05;
+        // if(testEllipsoid->getYRadius() >= 500) {
+        //     delta = -5;
         // }
-        // if(testEllipsoid->getYRadius() <= 3) {
-        //     delta = 0.05;
+        // if(testEllipsoid->getYRadius() <= 300) {
+        //     delta = 5;
         // }
         // testEllipsoid->changeYRadiusBy(delta);
 
-        // if(testEllipsoid->getZRadius() >= 3) {
-        //     delta = -0.05;
+        // if(testEllipsoid->getZRadius() >= 300) {
+        //     delta = -5;
         // }
-        // if(testEllipsoid->getZRadius() <= 1) {
-        //     delta = 0.05;
+        // if(testEllipsoid->getZRadius() <= 100) {
+        //     delta = 5;
         // }
         // testEllipsoid->changeZRadiusBy(delta);
         // if (rotation*45 >= 360) {

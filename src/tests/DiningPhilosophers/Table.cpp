@@ -10,7 +10,7 @@
 Table::Table(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
-  myTable = new Circle(0,0,-1,1.5,0,0,0,ColorFloat(0.5,0.5,0.5,1));
+  myTable = new Circle(0,0,-1,175,0,0,0,ColorFloat(0.5,0.5,0.5,1));
   can.add(myTable);
   // can.drawCircle(0,0,1,ColorFloat(0.5,0.5,0.5,1));
   phils = new Philosopher[numPhils];
@@ -23,7 +23,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   spaghettis = new Image*[numPhils];
   float delta = 2.0f / numPhils * PI;
   for(int i = 0; i < numPhils; i++) {
-    spaghettis[i] = new Image(0 + 0.8 * cos(i*delta), sin(i*delta), -0.5, "./assets/pics/spaghet.png", 1, 0.5, 0,0,0);
+    spaghettis[i] = new Image(120 * cos(i*delta), 140 * sin(i*delta), -0.5, "./assets/pics/spaghet.png", 100, 50, 0,0,0);
     can.add(spaghettis[i]);
     // myCan->drawImage("../assets/pics/spaghet.png", -50+(200)*cos(i*delta), -25+(215)*sin(i*delta), 100, 50, 1.0f);
   }
@@ -459,11 +459,11 @@ void Table::actStep() {
  * \brief Method calculating angles calling draw methods of a philosopher and its fork or forks.
  */
 void Table::drawStep() {
-  const float RAD = 1.8;
-  float FORK_RAD = 1.3;
+  const float RAD = 225;
+  float FORK_RAD = 175;
   const float ARC =2*PI/numPhils;
   const float CLOSE = 0.15f;
-  const float BASEDIST = RAD+.54;
+  const float BASEDIST = RAD+54;
 
   int i = omp_get_thread_num();
   float pangle = (i*2*PI)/numPhils;
@@ -477,7 +477,7 @@ void Table::drawStep() {
   phils[i].refreshColor();
   if( phils[i].state() == isFull ) {
     int meals = phils[i].getMeals();
-    float angle = pangle+(meals/10)*2*PI/(100*RAD), dist = BASEDIST+.08*(meals%10);
+    float angle = pangle+(meals/10)*2*PI/(RAD), dist = BASEDIST+8*(meals%10);
     // myCan->drawRegularPolygon(dist*cos(angle), dist*sin(angle), 3, 10 ,BROWN, BLACK);
     phils[i].addMeal(dist*cos(angle), dist*sin(angle),0);
     myCan->add(phils[i].getLastMeal());
@@ -490,7 +490,7 @@ void Table::drawStep() {
     fangle = ((i+1)*ARC) - CLOSE;
     fcolor = (phils[(i+1)%numPhils].state() == hasBoth) ? GREEN : ORANGE;
   } else {
-    FORK_RAD = 1;
+    FORK_RAD = 140;
     fangle = pangle + PI / numPhils;
   }
   forks[i].draw(FORK_RAD*cos(fangle),FORK_RAD*sin(fangle),fangle,fcolor);

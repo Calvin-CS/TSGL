@@ -13,8 +13,8 @@ void cuboidFunction(Canvas& can) {
     ColorFloat colors[] = { ColorFloat(0,0,0,0.8), ColorFloat(0,0,1,0.8),
         ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
         ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8) };
-    Cuboid * testCuboid = new Cuboid(0.0, 0.0, 0.0, 1, 4, 2, 0.0, 45.0, 0.0, ColorFloat(1,0,0,1));
-    // Cuboid * testCuboid2 = new Cuboid(-3.0, 0.0, 0.0, 1, 3, 2, 0.0, 0.0, 0.0, colors);
+    Cuboid * testCuboid = new Cuboid(0.0, 0.0, 0.0, 100, 400, 200, 0.0, 45.0, 0.0, ColorFloat(1,0,0,1));
+    // Cuboid * testCuboid2 = new Cuboid(-300, 0.0, 0.0, 100, 300, 200, 0.0, 0.0, 0.0, colors);
     can.add(testCuboid);
     // can.add(testCuboid2);
     float rotation = 0.0f;
@@ -22,36 +22,36 @@ void cuboidFunction(Canvas& can) {
     bool boolean = false;;
     while (can.isOpen()) {
         can.sleep();
-        // testCuboid->setCenterX(sin(rotation)*2);
-        // testCuboid->setCenterY(cos(rotation)*2);
-        // testCuboid->setCenterZ(sin(rotation));
+        // testCuboid->setCenterX(sin(rotation)*200);
+        // testCuboid->setCenterY(cos(rotation)*200);
+        // testCuboid->setCenterZ(sin(rotation)*100);
         // testCuboid->setYaw(rotation*45);
         testCuboid->setPitch(rotation*45);
         // testCuboid->setRoll(rotation*45);
-        // testCuboid->setWidth(cos(rotation)+1.01);
-        // testCuboid->setHeight(cos(rotation)+3.01);
-        // testCuboid->setLength(cos(rotation)+2.01);
-        // if(testCuboid->getWidth() >= 2) {
-        //     delta = -0.05;
+        // testCuboid->setWidth(cos(rotation)*100+101);
+        // testCuboid->setHeight(cos(rotation)*100+301);
+        // testCuboid->setLength(cos(rotation)*100+201);
+        // if(testCuboid->getWidth() >= 200) {
+        //     delta = -5;
         // }
-        // if(testCuboid->getWidth() <= 0.05) {
-        //     delta = 0.05;
+        // if(testCuboid->getWidth() <= 5) {
+        //     delta = 5;
         // }
         // testCuboid->changeWidthBy(delta);
 
-        // if(testCuboid->getHeight() >= 5) {
-        //     delta = -0.05;
+        // if(testCuboid->getHeight() >= 500) {
+        //     delta = -5;
         // }
-        // if(testCuboid->getHeight() <= 3) {
-        //     delta = 0.05;
+        // if(testCuboid->getHeight() <= 300) {
+        //     delta = 5;
         // }
         // testCuboid->changeHeightBy(delta);
 
-        // if(testCuboid->getLength() >= 3) {
-        //     delta = -0.05;
+        // if(testCuboid->getLength() >= 300) {
+        //     delta = -5;
         // }
-        // if(testCuboid->getLength() <= 1) {
-        //     delta = 0.05;
+        // if(testCuboid->getLength() <= 100) {
+        //     delta = 5;
         // }
         // testCuboid->changeLengthBy(delta);
         if (rotation*45 >= 360) {

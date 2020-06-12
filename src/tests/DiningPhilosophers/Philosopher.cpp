@@ -25,7 +25,7 @@ Philosopher::~Philosopher() {
  * Adds Philosopher to Canvas or refreshes its color.
  */
 void Philosopher::draw(Canvas& can, float x, float y) {
-  const float SIZE = .45;
+  const float SIZE = 45;
   if( !myCircle) {
     myCircle = new Circle(x,y,0,SIZE,0,0,0,ColorFloat(1,0,0,1));
     can.add(myCircle);
@@ -53,7 +53,7 @@ void Philosopher::refreshColor() {
  */
 void Philosopher::addMeal(float x, float y, float z) {
   numMeals++;
-  meals.push_back(new RegularPolygon(x,y,z,.03,3,0,0,0,ColorFloat(0.5,0.3,0,1)));
+  meals.push_back(new RegularPolygon(x,y,z,3,3,0,0,0,ColorFloat(0.5,0.3,0,1)));
   meals.back()->displayOutlineEdges(false);
 }
 

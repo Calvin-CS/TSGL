@@ -21,22 +21,22 @@ void starFunction(Canvas& c) {
 	GLfloat delta = 0.05;
     while (c.isOpen()) {
         c.sleep();
-        // s1->setCenterX(sin(floatVal/90));
-        // s1->setCenterY(sin(floatVal/90));
-        // s1->setCenterZ(sin(floatVal/90));
+        // s1->setCenterX(sin(floatVal/90) * 100);
+        // s1->setCenterY(sin(floatVal/90) * 100);
+        // s1->setCenterZ(sin(floatVal/90) * 100);
         // s1->setYaw(floatVal);
         // s1->setPitch(floatVal);
         // s1->setRoll(floatVal);
-        // s1->setRadius(sin(floatVal/90) + 3);
-        // if (s1->getRadius() > 3 || s1->getRadius() < 1) {
+        // s1->setRadius(sin(floatVal/90) * 100 + 300);
+        // if (s1->getRadius() > 300 || s1->getRadius() < 100) {
         //     delta *= -1;
-        //     // s1->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     // s1->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
         // }
         // s1->changeRadiusBy(delta);
         // if (delta > 0) {
         //     s1->setColor(colors);
         // } else {
-        //     s1->setColor(ColorFloat(1,0,0,1));
+        //     s1->setColor(RED);
         // }
         floatVal += 1;
     }

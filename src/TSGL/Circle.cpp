@@ -12,13 +12,20 @@ namespace tsgl {
  *   \param filled Whether the circle should be filled
  *     (set to true by default).
  */
-Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,radius * 30,yaw,pitch,roll) {
+Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,(radius + 5) + 1,yaw,pitch,roll) {
+    if (radius <= 0) {
+        TsglDebug("Cannot have a Circle with radius less than or equal to 0.");
+        return;
+    }
     attribMutex.lock();
     myXScale = myYScale = myRadius = radius;
     myZScale = 1;
+    edgesOutlined = false;
+    verticesPerColor = (myRadius + 6) / 8;
     attribMutex.unlock();
-    float delta = 2.0f / numberOfVertices * PI;
-    for (int i = 0; i < numberOfVertices; ++i) {
+    addVertex(0,0,0,color);
+    float delta = 2.0f / (numberOfVertices - 2) * PI;
+    for (int i = 0; i < numberOfVertices - 1; ++i) {
         addVertex(cos(i*delta), sin(i*delta), 0, color);
     }
 }
@@ -33,14 +40,21 @@ Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch
  *   \param filled Whether the circle should be filled
  *     (set to true by default).
  */
-Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,radius * 30,yaw,pitch,roll) {
+Circle::Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,(GLint) (radius + 5) + 1,yaw,pitch,roll) {
+    if (radius <= 0) {
+        TsglDebug("Cannot have a Circle with radius less than or equal to 0.");
+        return;
+    }
     attribMutex.lock();
     myXScale = myYScale = myRadius = radius;
     myZScale = 1;
+    edgesOutlined = false;
+    verticesPerColor = (myRadius + 6) / 8;
     attribMutex.unlock();
-    float delta = 2.0f / numberOfVertices * PI;
-    for (int i = 0; i < numberOfVertices; ++i) {
-        addVertex(cos(i*delta), sin(i*delta), 0, color[i]);
+    addVertex(0,0,0,color[0]);
+    float delta = 2.0f / (numberOfVertices - 2) * PI;
+    for (int i = 0; i < numberOfVertices - 1; ++i) {
+        addVertex(cos(i*delta), sin(i*delta), 0, color[(int) ((float) i / verticesPerColor + 1)]);
     }
 }
 
@@ -73,6 +87,25 @@ void Circle::changeRadiusBy(GLfloat delta) {
     myXScale += delta;
     myYScale += delta;
     attribMutex.unlock();
+}
+
+/**
+ * \brief Sets the Circle to a new array of colors.
+ * \param c An array of the new ColorFloats.
+ */
+void Circle::setColor(ColorFloat c[]) {
+    colors[0] = c[0].R;
+    colors[1] = c[0].G;
+    colors[2] = c[0].B;
+    colors[3] = c[0].A;
+    int colorIndex;
+    for (int i = 1; i < numberOfVertices; ++i) {
+        colorIndex = (int) ((float) (i - 1) / verticesPerColor + 1);
+        colors[i*4] = c[colorIndex].R;
+        colors[i*4 + 1] = c[colorIndex].G;
+        colors[i*4 + 2] = c[colorIndex].B;
+        colors[i*4 + 3] = c[colorIndex].A;
+    }
 }
 
 }

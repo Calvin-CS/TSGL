@@ -18,24 +18,24 @@ void squareFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Square * square = new Square(0,0,0,500,0,0,0,colors/* ColorFloat(1,0,0,1) */);
-    // square->setCenterX(2);
+    Square * square = new Square(0,0,0,200,0,0,0,colors/* RED */);
+    // square->setCenterX(200);
     // square->setRotationPoint(0,0,0);
     can.add(square);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
     while (can.isOpen()) {
         can.sleep();
-        // square->setCenterX(sin(floatVal/90));
-        // square->setCenterY(sin(floatVal/90));
-        // square->setCenterZ(sin(floatVal/90));
+        // square->setCenterX(sin(floatVal/90) * 100);
+        // square->setCenterY(sin(floatVal/90) * 100);
+        // square->setCenterZ(sin(floatVal/90) * 100);
         // square->setYaw(floatVal);
         // square->setPitch(floatVal);
         // square->setRoll(floatVal);
-        // square->setSideLength(sin(floatVal/90) + 3);
-        // if (square->getSideLength() > 3 || square->getSideLength() < 1) {
+        // square->setSideLength(sin(floatVal/90) * 100 + 300);
+        // if (square->getSideLength() > 300 || square->getSideLength() < 100) {
         //     delta *= -1;
-        //     // square->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
+        //     // square->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
         // }
         // square->changeSideLengthBy(delta);
         // if (delta > 0) {

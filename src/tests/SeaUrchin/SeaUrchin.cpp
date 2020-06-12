@@ -12,6 +12,7 @@ SeaUrchin::SeaUrchin(Canvas& can, int threadId) {
   myColor = Colors::highContrastColor(threadId);
   for(int i = 0; i < MY_SPOKES; i++) {
     Line * l = new Line(myOldX, myOldY, myNewX, myNewY, myColor);
+    // Line * l = new Line()
     lines.push_back(l);
     can.add(l);
   }

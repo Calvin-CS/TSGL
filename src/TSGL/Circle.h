@@ -16,6 +16,7 @@ namespace tsgl {
 class Circle : public ConvexPolygon {
 protected:
 	GLfloat myRadius;
+    GLfloat verticesPerColor;
 public:
     Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color);
 
@@ -30,6 +31,12 @@ public:
     * \details Returns the value of the myRadius private variable, a GLfloat.
     */
     GLfloat getRadius() { return myRadius; }
+
+    void setColor(ColorFloat c) { Drawable::setColor(c); }
+
+    void setColor(ColorFloat c[]);
+
+    void displayOutlineEdges(bool b) { }
 
 
   };

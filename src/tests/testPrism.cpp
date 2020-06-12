@@ -15,9 +15,9 @@ void prismFunction(Canvas& can) {
         ColorFloat(1,0,1,1), ColorFloat(1,1,0,1), ColorFloat(1,1,1,1),
         ColorFloat(0.5,0,0.5,1), ColorFloat(0,0.5,0.5,1), 
         ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1) };
-    Prism * testPrism = new Prism(0.0, 0.0, 0.0, 3, 1, 1, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
-    Prism * testPrism2 = new Prism(-3.0, 0.0, 0.0, 5, 1, 1, 0.0, 0.0, 45.0, colors);
-    Prism * testPrism3 = new Prism(3.0, 0.0, 0.0, 8, 1, 1, 0.0, 0.0, 45.0, colors);
+    Prism * testPrism = new Prism(0.0, 0.0, 0.0, 3, 100, 100, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
+    Prism * testPrism2 = new Prism(-300, 0.0, 0.0, 5, 100, 100, 0.0, 0.0, 45.0, colors);
+    Prism * testPrism3 = new Prism(300, 0.0, 0.0, 8, 100, 100, 0.0, 0.0, 45.0, colors);
     can.add(testPrism);
     can.add(testPrism2);
     can.add(testPrism3);
@@ -26,26 +26,26 @@ void prismFunction(Canvas& can) {
     bool boolean = false;
     while (can.isOpen()) {
         can.sleep();
-        // testPrism->setCenterX(sin(rotation)*2);
-        // testPrism->setCenterY(cos(rotation)*2);
-        // testPrism->setCenterZ(sin(rotation));
+        // testPrism->setCenterX(sin(rotation)*200);
+        // testPrism->setCenterY(cos(rotation)*200);
+        // testPrism->setCenterZ(sin(rotation)*100);
         // testPrism->setYaw(rotation*45);
         testPrism->setPitch(rotation*45);
         // testPrism->setRoll(rotation*45);
-        // testPrism->setHeight(sin(rotation)+1.01);
-        // testPrism->setRadius(sin(rotation)+1.01);
-        // if(testPrism->getHeight() >= 2) {
-        //     delta = -0.05;
+        // testPrism->setHeight(sin(rotation)*100+101);
+        // testPrism->setRadius(sin(rotation)*100+101);
+        // if(testPrism->getHeight() >= 200) {
+        //     delta = -5;
         // }
-        // if(testPrism->getHeight() <= 0.05) {
-        //     delta = 0.05;
+        // if(testPrism->getHeight() <= 5) {
+        //     delta = 5;
         // }
         // testPrism->changeHeightBy(delta);
-        // if(testPrism->getRadius() >= 2) {
-        //     delta = -0.05;
+        // if(testPrism->getRadius() >= 200) {
+        //     delta = -5;
         // }
-        // if(testPrism->getRadius() <= 0.05) {
-        //     delta = 0.05;
+        // if(testPrism->getRadius() <= 5) {
+        //     delta = 5;
         // }
         // testPrism->changeRadiusBy(delta);
         // if (rotation*45 >= 360) {

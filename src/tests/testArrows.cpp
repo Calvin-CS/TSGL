@@ -6,16 +6,16 @@ using namespace tsgl;
 
 void arrowFunction(Canvas& c) {
 	ColorFloat colors[] = { ColorFloat(1,0,0,1), ColorFloat(0,1,0,1) };
-	Arrow* doubleArrow = new Arrow(0, 0, 0, 2, 0.05,0,0,0, colors, false);
-  Arrow* arrow2 = new Arrow(1 ,1 ,-1 ,2 ,0.05,0,0,0,ColorFloat(0,0,1,0.65), true);
+	Arrow* doubleArrow = new Arrow(0, 0, 0, 200, 5,0,0,0, colors, false);
+  Arrow* arrow2 = new Arrow(100 ,100 ,-1 ,200 ,5,0,0,0,ColorFloat(0,0,1,0.65), true);
 	c.add(doubleArrow);
   c.add(arrow2);
-	// doubleArrow->setCenterX(1);
+	// doubleArrow->setCenterX(100);
 	// doubleArrow->setRotationPoint(0,0,0);
 	// doubleArrow->setYaw(45);
 	doubleArrow->setColor(colors);
     float floatVal = 0.0f;
-    GLfloat delta = 0.05;
+    GLfloat delta = 5;
 	while( c.isOpen() ) {
 		c.sleep();
         // doubleArrow->setCenterX(sin(floatVal/90));
@@ -24,8 +24,8 @@ void arrowFunction(Canvas& c) {
         // doubleArrow->setYaw(floatVal);
         // doubleArrow->setPitch(floatVal);
         // doubleArrow->setRoll(floatVal);
-        // doubleArrow->setLength(sin(floatVal/90) + 2);
-        if (doubleArrow->getLength() > 3 || doubleArrow->getLength() < 1) {
+        // doubleArrow->setLength(sin(floatVal/90) * 100 + 200);
+        if (doubleArrow->getLength() > 300 || doubleArrow->getLength() < 100) {
             delta *= -1;
         }
         doubleArrow->changeLengthBy(delta);

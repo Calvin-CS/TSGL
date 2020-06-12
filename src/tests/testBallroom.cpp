@@ -133,18 +133,18 @@ public:
     bounced = false;
     vel += acc;
     pos += vel;
-    if (pos.x <= rad) {
-      pos.x = rad;
+    if (pos.x <= -rw / 2 + rad) {
+      pos.x = -rw / 2 + rad;
       vel.x *= -0.5f;
-    } else if (pos.x >= rw-rad) {
-      pos.x = rw-rad;
+    } else if (pos.x >= rw / 2 -rad) {
+      pos.x = rw / 2-rad;
       vel.x *= -0.5f;
     }
-    if (pos.y <= rad) {
-      pos.y = rad;
+    if (pos.y <= -rh / 2 + rad) {
+      pos.y = -rh / 2 + rad;
       vel.y *= -1.0f;
-    } else if (pos.y >= rh-rad) {
-      pos.y = rh-rad;
+    } else if (pos.y >= rh / 2 -rad) {
+      pos.y = rh / 2 -rad;
       vel.y *= -1.0f;
     }
     calcSpeed();
@@ -197,7 +197,7 @@ public:
     gravity = 0.1f;
     attract = true;
     can = canvas;
-    mouseCircle = new Circle(0,0,0,1,0,0,0,ColorFloat(1.0,0.5,0.5,0.5));
+    mouseCircle = new Circle(0,0,0,20,0,0,0,ColorFloat(1.0,0.5,0.5,0.5));
     // mouseCircle->setLayer(2);
     can->add(mouseCircle);
   }
@@ -228,7 +228,7 @@ public:
     balls.push_back(b);
   }
   void step(Canvas* c) {
-    int mx = c->getMouseX(), my = c->getMouseY();
+    int mx = c->getMouseX() - c->getWindowWidth()/2, my = c->getWindowHeight()/2 - c->getMouseY();
     Vector2 mvec(mx,my);
     mouseCircle->setCenter(mx, my, 0);
     if (attract) {
@@ -289,12 +289,11 @@ void ballroomFunction(Canvas& can) {
     const int WW = can.getWindowWidth(),    // Window width
               WH = can.getWindowHeight();   // Window height
     BallRoom b(WW,WH, &can);
-    srand(time(NULL));
     for (int i = 0; i < 100; ++ i) {
       float speed = 5.0f;
-      float dir = 2 * 3.14159f * (rand() % 100) / 100.0f;
-      b.addBall(25 + rand() % (WW-50),25 + rand() % (WH-50),speed*cos(dir),speed*sin(dir),10,
-        ColorFloat((64 + rand() % 192) / 255,(64 + rand() % 192) / 255,(64 + rand() % 192) / 255,1));
+      float dir  = 2 * PI * saferand(0,100) / 100.0f;
+      ColorInt c = ColorInt(64 + saferand(0,191),64 + saferand(0,191),64 + saferand(0,191),255);
+      b.addBall(saferand(-WW/2,WW/2), saferand(-WH/2, WH/2), speed*cos(dir),speed*sin(dir),10,c);
     }
 
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&b]() {

@@ -10,16 +10,16 @@
 using namespace tsgl;
 
 void ssFunction(Canvas& can) {
-    Sphere * sun = new Sphere(0, 0, 0, 0.75, 15, 0.0, 15.0, YELLOW);
-    Sphere * mercury = new Sphere(0.95, 0, 0, .15, 15, 0.0, 15.0, ColorFloat(.8,.55,0,1));
-    Sphere * venus = new Sphere(1.4, 0, 0, .25, 15, 0.0, 15.0, ColorFloat(1,.8,.5,1));
-    Sphere * earth = new Sphere(2.05, 0, 0, .3, 15, 0.0, 15.0, ColorFloat(0,0.8,0.3,1));
-    Sphere * mars =  new Sphere(2.7, 0, 0, .2, 15, 0.0, 15.0, ColorFloat(1,.4,0,1));
-    Sphere * jupiter = new Sphere(3.45, 0, 0, .5, 15, 0.0, 15.0, ColorFloat(1,0.9,.6,1));
-    Sphere * saturn = new Sphere(4.45, 0, 0, .4, 15, 0.0, 15.0, ColorFloat(.9,.65,.25,1));
-    Circle * saturnRings = new Circle(4.45, 0, 0, .7, 15, 0, 75, ColorFloat(.9,.8,.3,0.5));
-    Sphere * uranus = new Sphere(5.15, 0, 0, .25, 15, 0.0, 15.0, ColorFloat(.2,.6,1,1));
-    Sphere * neptune = new Sphere(5.75, 0, 0, .2, 15, 0.0, 15.0, ColorFloat(.25,.65,1,1));
+    Sphere * sun = new Sphere(0, 0, 0, 75, 15, 0.0, 15.0, YELLOW);
+    Sphere * mercury = new Sphere(95, 0, 0, 15, 15, 0.0, 15.0, ColorFloat(.8,.55,0,1));
+    Sphere * venus = new Sphere(140, 0, 0, 25, 15, 0.0, 15.0, ColorFloat(1,.8,.5,1));
+    Sphere * earth = new Sphere(205, 0, 0, 30, 15, 0.0, 15.0, ColorFloat(0,0.8,0.3,1));
+    Sphere * mars =  new Sphere(270, 0, 0, 20, 15, 0.0, 15.0, ColorFloat(1,.4,0,1));
+    Sphere * jupiter = new Sphere(345, 0, 0, 50, 15, 0.0, 15.0, ColorFloat(1,0.9,.6,1));
+    Sphere * saturn = new Sphere(445, 0, 0, 40, 15, 0.0, 15.0, ColorFloat(.9,.65,.25,1));
+    Circle * saturnRings = new Circle(445, 0, 0, 70, 15, 0, 75, ColorFloat(.9,.8,.3,0.5));
+    Sphere * uranus = new Sphere(515, 0, 0, 25, 15, 0.0, 15.0, ColorFloat(.2,.6,1,1));
+    Sphere * neptune = new Sphere(575, 0, 0, 20, 15, 0.0, 15.0, ColorFloat(.25,.65,1,1));
 
     saturnRings->displayOutlineEdges(false);
 
@@ -44,7 +44,6 @@ void ssFunction(Canvas& can) {
     can.add(uranus);
     can.add(neptune);
     float rotation = 0.0f;
-    // GLfloat delta = 0.05;
     while (can.isOpen()) {
         can.sleep();
         sun->setPitch(rotation);

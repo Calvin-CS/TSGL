@@ -16,8 +16,8 @@ struct Fork3D {
     user = -1; id = 0;
 
     const int POINTS = 20; // number of vertices in polygon
-    const float HEIGHT = .42; // 42 is preferred, but can be changed
-    const float WIDTH = .12;  // 12 is preferred, but can be changed
+    const float HEIGHT = 42; // 42 is preferred, but can be changed
+    const float WIDTH = 12;  // 12 is preferred, but can be changed
     float xs[POINTS], ys[POINTS];
 
     // scales (out of 100) for the dimensions of the 3D fork

@@ -27,57 +27,40 @@ void imageFunction(Canvas& can) {
     // Image * image = new Image(0,0,0,"./assets/pics/Messier51.jpg", 4,3, 0,0,0);
     // can.add(image);
 
-    // Image * image = new Image(-ww,0.5 * hh,0,"./assets/pics/test.png", ww,hh, 0,0,0);
-    // can.add(image);
-    // Image * image2 = new Image(0,0.5 * hh,0,"./assets/pics/ship.bmp", ww,hh, 0,0,0);
-    // can.add(image2);
-    // Image * image3 = new Image(ww,0.5 * hh,0,"./assets/pics/shiprgb.bmp", ww,hh, 0,0,0);
-    // can.add(image3);
-    // Image * image4 = new Image(-ww,-0.5 * hh,0,"./assets/pics/sky_main.jpg", ww,hh, 0,0,0);
-    // can.add(image4);
-    // Image * image5 = new Image(0,-0.5 * hh,0,"./assets/pics/colorfulKeyboard.jpg", ww,hh, 0,0,0);
-    // can.add(image5);
-    // Image * image6 = new Image(ww,-0.5 * hh,0,"./assets/pics/cow.jpg", ww,hh, 0,0,0);
-    // can.add(image6);
-
-    Image * image = new Image(-ww,0.5 * hh,0,"./assets/pics/launch.bmp", ww,hh, 0,0,0);
+    Image * image = new Image(-ww,0.5 * hh,0,"./assets/pics/test.png", ww,hh, 0,0,0);
     can.add(image);
-    Image * image2 = new Image(0,0.5 * hh,0,"./assets/pics/launch.bmp", ww,hh, 0,0,0);
+    Image * image2 = new Image(0,0.5 * hh,0,"./assets/pics/ship.bmp", ww,hh, 0,0,0);
     can.add(image2);
-    Image * image3 = new Image(ww,0.5 * hh,0,"./assets/pics/launch.bmp", ww,hh, 0,0,0);
+    Image * image3 = new Image(ww,0.5 * hh,0,"./assets/pics/shiprgb.bmp", ww,hh, 0,0,0);
     can.add(image3);
-    Image * image4 = new Image(-ww,-0.5 * hh,0,"./assets/pics/launch.bmp", ww,hh, 0,0,0);
+    Image * image4 = new Image(-ww,-0.5 * hh,0,"./assets/pics/sky_main.jpg", ww,hh, 0,0,0);
     can.add(image4);
-    Image * image5 = new Image(0,-0.5 * hh,0,"./assets/pics/launch.bmp", ww,hh, 0,0,0);
+    Image * image5 = new Image(0,-0.5 * hh,0,"./assets/pics/colorfulKeyboard.jpg", ww,hh, 0,0,0);
     can.add(image5);
-    Image * image6 = new Image(ww,-0.5 * hh,0,"./assets/pics/launch.bmp", ww,hh, 0,0,0);
+    Image * image6 = new Image(ww,-0.5 * hh,0,"./assets/pics/cow.jpg", ww,hh, 0,0,0);
     can.add(image6);
 
-    // Image * image7 = new Image(0,0,0,"./assets/pics/cow.jpg", 960,480,0,0,0,th);
-    // can.add(image7);
-
-    // image->setHeight((GLfloat)image->getPixelHeight() / 100);
-    // image->setWidth((GLfloat)image->getPixelWidth() / 100);
+    // image->setHeight((GLfloat)image->getPixelHeight());
+    // image->setWidth((GLfloat)image->getPixelWidth());
 
     float floatVal = 0.0f;
-    GLfloat delta = 0.05;
+    GLfloat delta = 5;
     bool ss = false;
     while (can.isOpen()) {
         can.sleep();
-        // image->setCenterX(sin(floatVal/90));
-        // printf("%f\n", image->getCenterX());
-        // image->setCenterY(sin(floatVal/90));
-        // image->setCenterZ(sin(floatVal/90));
+        // image->setCenterX(sin(floatVal/90) * 100);
+        // image->setCenterY(sin(floatVal/90) * 100);
+        // image->setCenterZ(sin(floatVal/90) * 100);
         // image->setYaw(floatVal);
-        // image->setPitch(floatVal);
+        image->setPitch(floatVal);
         // image->setRoll(floatVal);
-        // image->setWidth(sin(floatVal/90) + 4);
-        // image->setHeight(sin(floatVal/90) + 4);
-        // if (image->getWidth() > 5 || image->getWidth() < 3) {
+        // image->setWidth(sin(floatVal/90) * 100 + 400);
+        // image->setHeight(sin(floatVal/90) * 100 + 400);
+        // if (image->getWidth() > 500 || image->getWidth() < 300) {
         //     delta *= -1;
         // }
         // image->changeWidthBy(delta);
-        // if (image->getHeight() > 5 || image->getHeight() < 3) {
+        // if (image->getHeight() > 500 || image->getHeight() < 300) {
         //     delta *= -1;
         // }
         // image->changeHeightBy(delta);
@@ -86,17 +69,10 @@ void imageFunction(Canvas& can) {
         //     can.takeScreenShot();
         //     ss = true;
         // }
-        // ColorInt blah = can.getPoint(can.getWindowWidth()/2,can.getWindowHeight()/2);
-        // printf("%d, %d, %d, %d\n", blah.R, blah.G, blah.B, blah.A);
+        // ColorInt point = can.getPoint(can.getWindowWidth()/2,can.getWindowHeight()/2);
+        // printf("%d, %d, %d, %d\n", point.R, point.G, point.B, point.A);
         floatVal += 1;
     }
-    // int ww = can.getWindowWidth()/3, hh = can.getWindowHeight()/2;
-    // can.drawImage("../assets/pics/test.png", 0, 0, ww, hh);
-    // can.drawImage("../assets/pics/ship.bmp", ww, 0, ww, hh); // possibly lost
-    // can.drawImage("../assets/pics/shiprgb.bmp", ww*2, 0, ww, hh); // definitely lost
-    // can.drawImage("../assets/pics/sky_main.jpg", 0, hh, ww, hh);
-    // can.drawImage("../assets/pics/colorfulKeyboard.jpg", ww, hh, ww, hh);
-    // can.drawImage("../assets/pics/cow.jpg", ww*2, hh, ww, hh);
 
     // can.drawImage("../assets/pics/background.jpg", ww/2, 0, ww*2, hh*2, 0.25f); //Overlay
 
@@ -106,7 +82,6 @@ void imageFunction(Canvas& can) {
     delete image4;
     delete image5;
     delete image6;
-    // delete image7;
 }
 
 //Takes command-line arguments for the width and height of the screen
