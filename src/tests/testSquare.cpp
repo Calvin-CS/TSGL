@@ -35,7 +35,7 @@ void squareFunction(Canvas& can) {
         // square->setSideLength(sin(floatVal/90) * 100 + 300);
         // if (square->getSideLength() > 300 || square->getSideLength() < 100) {
         //     delta *= -1;
-        //     // square->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
+        //     // square->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
         // }
         // square->changeSideLengthBy(delta);
         // if (delta > 0) {

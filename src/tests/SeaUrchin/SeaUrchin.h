@@ -48,7 +48,7 @@ public:
 
 private:
   static const int MY_SPOKES = 8;
-  int myOldX, myOldY, myNewX, myNewY;
+  int myX, myY;
   ColorFloat myColor;
   std::vector<Line*> lines;
 };

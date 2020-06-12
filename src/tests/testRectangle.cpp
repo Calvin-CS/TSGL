@@ -36,12 +36,12 @@ void rectangleFunction(Canvas& can) {
         // rectangle->setHeight(sin(floatVal/90) *100 + 200);
         // if (rectangle->getWidth() > 200 || rectangle->getWidth() < 100) {
         //     delta *= -1;
-        //     // rectangle->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
+        //     // rectangle->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
         // }
         // rectangle->changeWidthBy(delta);
         // if (rectangle->getHeight() > 300 || rectangle->getHeight() < 100) {
         //     delta *= -1;
-        //     // rectangle->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
+        //     // rectangle->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
         // }
         // rectangle->changeHeightBy(delta);
         // if (delta > 0) {

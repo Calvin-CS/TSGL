@@ -38,25 +38,29 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
               TOPSPEED = 9.0f, //Starting speed of balls
               AMP = 100;        //Inverse amplitude of balls
 
-  //Automatic variables
-  const int   WINDOW_W = can.getWindowWidth(),
-              WINDOW_H = can.getWindowHeight(),
-              CX = WINDOW_W / 2,   //Center of window
-              CY = WINDOW_H / 2;
-  const float LINELEN = CY,
+  const float LINELEN = can.getWindowHeight() / 2,
               OFFSET = RADIUS*(BALLS-1);
 
-  for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
-    can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN, BLACK);
-    can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, GRAY, WHITE);
+  Line ** lines = new Line*[BALLS - 2];
+  Circle ** balls = new Circle*[BALLS - 2];
+  for (int i = -(BALLS/2)+1; i < BALLS/2; ++i) {
+    lines[i + BALLS/2 - 1] = new Line(RADIUS*2*i,LINELEN,0, LINELEN * 2, -90,0,0, BLACK);
+    can.add(lines[i + BALLS/2 - 1]);
+    balls[i + BALLS/2 - 1] = new Circle(RADIUS*2*i,0,0, RADIUS, 0,0,0,GRAY);
+    can.add(balls[i + BALLS/2 - 1]);
   }
 
   //Add moving Shapes
-  Circle* leftCircle  = new Circle(CX - OFFSET, LINELEN, RADIUS, GRAY, WHITE);
-  Circle* rightCircle = new Circle(CX + OFFSET, LINELEN, RADIUS, GRAY, WHITE);
-  Line* leftLine  = new Line(CX - OFFSET, 0, CX - OFFSET, LINELEN, BLACK);
-  Line* rightLine = new Line(CX + OFFSET, 0, CX + OFFSET, LINELEN, BLACK);
-  can.add(rightLine); can.add(leftLine); can.add(leftCircle); can.add(rightCircle);
+  Circle* leftCircle  = new Circle(-OFFSET,0,0, RADIUS, 0,0,0,GRAY);
+  leftCircle->setRotationPoint(-OFFSET, LINELEN, 0);
+  Circle* rightCircle = new Circle(OFFSET,0,0, RADIUS, 0,0,0,GRAY);
+  rightCircle->setRotationPoint(OFFSET, LINELEN, 0);
+  Line* leftLine  = new Line(-OFFSET,LINELEN,0, LINELEN * 2, -90,0,0, BLACK);
+  leftLine->setRotationPoint(-OFFSET, LINELEN, 0);
+  Line* rightLine = new Line(OFFSET,LINELEN,0, LINELEN * 2, -90,0,0, BLACK);
+  rightLine->setRotationPoint(OFFSET, LINELEN, 0);
+  can.add(rightLine); can.add(leftLine); 
+  can.add(leftCircle); can.add(rightCircle);
 
   //Computation
   float rightPos = 0, leftPos = 0;               //Initial positions of the edge balls
@@ -88,25 +92,24 @@ void newtonPendulumFunction(Canvas& can, int numberOfBalls) {
 
     //Move the lines and balls!
     //Left
-    leftLine->setSecondEnd(CX - OFFSET + LINELEN*sin(leftPos/AMP), LINELEN*cos(leftPos/AMP));
-    leftCircle->setCenter(CX - OFFSET + LINELEN*sin(leftPos/AMP),  LINELEN*cos(leftPos/AMP));
+    leftLine->setYaw(leftPos/AMP * 180 / PI - 90);
+    leftCircle->setYaw(leftPos/AMP * 180 / PI);
     //Right
-    rightLine->setSecondEnd(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
-    rightCircle->setCenter(CX + OFFSET + LINELEN*sin(rightPos/AMP), LINELEN*cos(rightPos/AMP));
+    rightLine->setYaw(rightPos/AMP * 180 / PI - 90);
+    rightCircle->setYaw(rightPos/AMP * 180 / PI);
   }
 
   delete leftCircle;
   delete rightCircle;
   delete leftLine;
   delete rightLine;
+  for (int i = 0; i < BALLS - 2; i++) {
+    delete balls[i];
+    delete lines[i];
+  }
+  delete [] balls;
+  delete [] lines;
 }
-
-// saving this if we ever get procedural stuff working
-//     //Draw stationary lines and balls
-//     for (float i = -(BALLS/2)+1; i < BALLS/2; ++i) {
-//       can.drawLine(CX + RADIUS*2*i, 0, CX + RADIUS*2*i, LINELEN);
-//       can.drawCircle(CX + RADIUS*2*i, CY, RADIUS, GRAY, true);
-//     }
 
 //Takes command line arguments for the width and height of the screen
 //as well as for the number of balls

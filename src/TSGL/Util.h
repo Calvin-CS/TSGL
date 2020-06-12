@@ -156,6 +156,15 @@ inline int saferand(int min, int max)
     // return (*generator)();
 }
 
+ /*!
+  * \brief Thread safe random float generator
+  * \details Calculates a random float to return.
+  * \param divisor Divisor used to calculate the random float.
+  */
+inline float randfloat(int divisor = 10000) { 
+    return (float) saferand(0, divisor) / divisor;
+}
+
 }
 
 #endif /* SRC_TSGL_UTIL_H_ */

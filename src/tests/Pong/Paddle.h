@@ -25,33 +25,33 @@ using namespace tsgl;
  */
 class Paddle {
 public:
-  Paddle(Canvas& can, int & speed, int side);
+    Paddle(Canvas& can, int & speed, int side);
 
-  void bindings(Canvas& can, int side);
+    void bindings(Canvas& can, int side);
 
-  void draw(Canvas& can, int side);
+    void draw(Canvas& can, int side);
 
-  void increment();
+    void increment();
 
-  void move();
+    void move();
 
-  int getPoints() const;
+    int getPoints() const;
 
-  float getY() const;
+    float getY() const;
 
-  void setDir(int direction);
+    void setDir(int direction);
 
-  /**
-   * \brief Destroys the Paddle object.
-   */
-  ~Paddle() { delete myRect; }
+    /**
+     * \brief Destroys the Paddle object.
+     */
+    ~Paddle() { delete myRect; }
 
 private:
-  int myDir;  //-1 = up, 1 = down, 0 = stationary
-  int myPoints;  //Score
-  int mySpeed;  //Speed
-  float myY; //y-coordinate for Paddle
-  Rectangle * myRect;
+    int myDir;  //-1 = up, 1 = down, 0 = stationary
+    int myPoints;  //Score
+    int mySpeed;  //Speed
+    float myY; //y-coordinate for Paddle
+    Rectangle * myRect;
 };
 
 #endif /* PADDLE_H_ */

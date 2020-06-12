@@ -30,7 +30,7 @@ void starFunction(Canvas& c) {
         // s1->setRadius(sin(floatVal/90) * 100 + 300);
         // if (s1->getRadius() > 300 || s1->getRadius() < 100) {
         //     delta *= -1;
-        //     // s1->setEdgeColor(ColorFloat(saferand(0,255) / 255, saferand(0,255) / 255, saferand(0,255) / 255, 1));
+        //     // s1->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
         // }
         // s1->changeRadiusBy(delta);
         // if (delta > 0) {

@@ -13,16 +13,16 @@
   * \return The constructed Ball object.
   */
 Ball::Ball(Canvas& can, int & speed) {
-  mySpeed = speed;
-  myX = can.getWindowWidth() / 2-8;
-  myY = can.getWindowHeight() / 2-8;
-  do {
-    myDir = randfloat(1000) * 2 * PI;
-    myXX = mySpeed * cos(myDir);
-    myYY = mySpeed * sin(myDir);
-  } while(myXX > -4 && myXX < 4);
-  myCircle = new Circle(myX, myY, 8, WHITE);
-  can.add(myCircle);
+    mySpeed = speed;
+    myX = -8;
+    myY = -8;
+    do {
+        myDir = randfloat(1000) * 2 * PI;
+        myXX = mySpeed * cos(myDir);
+        myYY = mySpeed * sin(myDir);
+    } while(myXX > -4 && myXX < 4);
+    myCircle = new Circle(myX, myY, 0, 8, 0,0,0, WHITE);
+    can.add(myCircle);
 }
 
  /*!
@@ -30,7 +30,7 @@ Ball::Ball(Canvas& can, int & speed) {
   * \return myX The x-coordinate of the Ball object.
   */
 float Ball::getX() const {
-  return myX;
+    return myX;
 }
 
  /*!
@@ -38,7 +38,7 @@ float Ball::getX() const {
   * \return myY The y-coordinate of the Ball object.
   */
 float Ball::getY() const {
-  return myY;
+    return myY;
 }
 
  /*!
@@ -49,12 +49,12 @@ float Ball::getY() const {
   * \see Paddle class, Pong class.
   */
 void Ball::invert(int choice) {
-  if(choice == 0) {
-    myYY = -myYY;
-  } else if(choice == 1) {
-    myXX = -myXX;
-    myYY += randfloat(1000) * 2 - 1;
-  }
+    if(choice == 0) {
+        myYY = -myYY;
+    } else if(choice == 1) {
+        myXX = -myXX;
+        myYY += randfloat(1000) * 2 - 1;
+    }
 }
 
  /*!
@@ -62,17 +62,9 @@ void Ball::invert(int choice) {
   * \details Actually moves the Ball object around.
   */
 void Ball::move() {
-  myX += myXX;
-  myY += myYY;
-  myCircle->setCenter(myX, myY);
-}
-
- /*!
-  * \brief Private helper returning a random float.
-  * \details Calculates a random float to return.
-  */
-float Ball::randfloat(int divisor) {
-    return (rand() % divisor) / (float) divisor;
+    myX += myXX;
+    myY += myYY;
+    myCircle->setCenter(myX, myY, 0);
 }
 
  /*!
@@ -82,11 +74,11 @@ float Ball::randfloat(int divisor) {
   * \param can Reference to the Canvas object that has the Ball object.
   */
 void Ball::reset(Canvas& can) {
-  myX = can.getWindowWidth() / 2-8;
-  myY = can.getWindowHeight() / 2-8;
-  do {
-    myDir = randfloat(1000) * 2 * 3.14159f;
-    myXX = mySpeed * cos(myDir);
-    myYY = mySpeed * sin(myDir);
-  } while (myXX > -4 && myXX < 4);
+    myX = -8;
+    myY = -8;
+    do {
+        myDir = randfloat(1000) * 2 * PI;
+        myXX = mySpeed * cos(myDir);
+        myYY = mySpeed * sin(myDir);
+    } while (myXX > -4 && myXX < 4);
 }

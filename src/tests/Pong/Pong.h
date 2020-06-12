@@ -29,16 +29,16 @@ using namespace tsgl;
 class Pong {
 public:
 
-  Pong(Canvas& can, int & ballSpeed, int & paddleSpeed);
+    Pong(Canvas& can, int & ballSpeed, int & paddleSpeed);
 
-  void draw(Canvas& can);
+    void draw(Canvas& can);
 
-  ~Pong();
+    ~Pong();
 
 private:
-  Paddle *leftPaddle, *rightPaddle;
-  Ball *pongBall;
-  Text *leftScore, *rightScore;
+    Paddle *leftPaddle, *rightPaddle;
+    Ball *pongBall;
+  // Text *leftScore, *rightScore;
 };
 
 #endif /* PONG_H_ */

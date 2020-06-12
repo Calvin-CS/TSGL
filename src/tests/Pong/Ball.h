@@ -21,27 +21,26 @@ using namespace tsgl;
  */
 class Ball {
  public:
-  Ball(Canvas& can, int & speed);
+    Ball(Canvas& can, int & speed);
 
-  float getX() const;
+    float getX() const;
 
-  float getY() const;
+    float getY() const;
 
-  void invert(int choice);
+    void invert(int choice);
 
-  void move();
+    void move();
 
-  void reset(Canvas& can);
+    void reset(Canvas& can);
 
-  /*!
-   * \brief Destroys the Ball object.
-   */
-  virtual ~Ball() { delete myCircle; }
+    /*!
+    * \brief Destroys the Ball object.
+    */
+    virtual ~Ball() { delete myCircle; }
 
 private:
-  float myX, myY, myXX, myYY, mySpeed, myDir;
-  float randfloat(int divisor = 10000);
-  Circle* myCircle;
+    float myX, myY, myXX, myYY, mySpeed, myDir;
+    Circle* myCircle;
 };
 
 #endif /* BALL_H_ */

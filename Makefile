@@ -84,12 +84,15 @@ BINARIES= \
 	bin/testImage \
 	bin/testLines \
 	bin/testMergeSort \
+	bin/testNewtonPendulum \
 	bin/testPhilosophers \
+	bin/testPong \
 	bin/testPrism \
 	bin/testPyramid \
 	bin/testRectangle \
 	bin/testRegularPolygon \
 	bin/testShakerSort \
+	bin/testSeaUrchin \
 	bin/testSolarSystem \
 	bin/testSphere \
 	bin/testSquare \
@@ -122,15 +125,11 @@ BINARIES= \
 #	bin/testLineFan \
 #	bin/testMandelbrot \
 #	bin/testMouse \
-#	bin/testNewtonPendulum \
 #	bin/testProducerConsumer \
-#	bin/testPong \
 #	bin/testProgressBar \
 #	bin/testProjectiles \
 #	bin/testReaderWriter \
-#	bin/testRotation \
 #	bin/testScreenshot \
-#	bin/testSeaUrchin \
 #	bin/testSpectrogram \
 #	bin/testSpectrum \
 #	bin/testText \
