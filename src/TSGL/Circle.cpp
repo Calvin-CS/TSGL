@@ -94,17 +94,17 @@ void Circle::changeRadiusBy(GLfloat delta) {
  * \param c An array of the new ColorFloats.
  */
 void Circle::setColor(ColorFloat c[]) {
-    colors[0] = c[0].R;
-    colors[1] = c[0].G;
-    colors[2] = c[0].B;
-    colors[3] = c[0].A;
+    vertices[3] = c[0].R;
+    vertices[4] = c[0].G;
+    vertices[5] = c[0].B;
+    vertices[6] = c[0].A;
     int colorIndex;
     for (int i = 1; i < numberOfVertices; ++i) {
         colorIndex = (int) ((float) (i - 1) / verticesPerColor + 1);
-        colors[i*4] = c[colorIndex].R;
-        colors[i*4 + 1] = c[colorIndex].G;
-        colors[i*4 + 2] = c[colorIndex].B;
-        colors[i*4 + 3] = c[colorIndex].A;
+        vertices[i*7 + 3] = c[colorIndex].R;
+        vertices[i*7 + 4] = c[colorIndex].G;
+        vertices[i*7 + 5] = c[colorIndex].B;
+        vertices[i*7 + 6] = c[colorIndex].A;
     }
 }
 

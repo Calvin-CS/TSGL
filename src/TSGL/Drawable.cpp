@@ -23,115 +23,10 @@ Drawable::Drawable(float x, float y, float z, float yaw, float pitch, float roll
     myRotationPointZ = myCenterZ;
 }
 
-/*!
- * \brief Draw the Drawable.
- * \details This function actually draws the Drawable to the Canvas.
- * \note This function does nothing if the vertex buffer is not yet full.
- * \note A message indicating that the Drawable cannot be drawn yet will be given
- *   if the above condition is met (vertex buffer = not full).
- */
-void Drawable::draw() {
-    if (!init) {
-        TsglDebug("Vertex buffer is not full.");
-        return;
-    }
-    glPushMatrix();
-    glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
-    glRotatef(myCurrentYaw, 0, 0, 1);
-    glRotatef(myCurrentPitch, 0, 1, 0);
-    glRotatef(myCurrentRoll, 1, 0, 0); 
-    glTranslatef(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ);
-    glScalef(myXScale, myYScale, myZScale);
-
-    /* We have a color array and a vertex array */
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
-    glColorPointer(4, GL_FLOAT, 0, colors);
-
-    glDrawArrays(geometryType, 0, numberOfVertices);
-
-    if (edgesOutlined) {
-        glVertexPointer(3, GL_FLOAT, outlineStride*sizeof(GLfloat)*3, vertices);
-        glColorPointer(4, GL_FLOAT, 0, outlineArray);
-
-        glDrawArrays(outlineGeometryType, 0, numberOfOutlineVertices);
-    }
-
-    glPopMatrix();
-
-    /* Cleanup states */
-    glDisableClientState(GL_COLOR_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
-}
-
- /*!
-  * \brief Adds another vertex to a Drawable.
-  * \details This function initializes the next vertex in the Drawable and adds it to a Drawable buffer.
-  *      \param x The x position of the vertex.
-  *      \param y The y position of the vertex.
-  *      \param z The z position of the vertex.
-  *      \param color The reference variable of the color of the vertex.
-  * \note This function does nothing if the vertex buffer is already full.
-  * \note A message is given indicating that the vertex buffer is full.
-  */
-void Drawable::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color) {
-    if (init) {
-        TsglDebug("Cannot add anymore vertices.");
-        return;
-    }
-    attribMutex.lock();
-    vertices[currentVertex] = x;
-    vertices[currentVertex + 1] = y;
-    vertices[currentVertex + 2] = z;
-    currentVertex += 3;
-    colors[currentColor] = color.R;
-    colors[currentColor+1] = color.G;
-    colors[currentColor+2] = color.B;
-    colors[currentColor+3] = color.A;
-    currentColor += 4;
-    attribMutex.unlock();
-    if (currentVertex == numberOfVertices*3) {
-        attribMutex.lock();
-        outlineArray = new GLfloat[numberOfOutlineVertices*4];
-        std::fill_n(outlineArray, numberOfOutlineVertices*4, 0.75);
-        init = true;
-        attribMutex.unlock();
-    }
-}
-
 /////////////////////////////////////////////////
 // MUTATORS
 /////////////////////////////////////////////////
 
-
-/**
- * \brief Sets the Drawable to a new color.
- * \param c The new ColorFloat.
- */
-void Drawable::setColor(ColorFloat c) {
-    attribMutex.lock();
-    for(int i = 0; i < numberOfVertices; i++) {
-        colors[i*4] = c.R;
-        colors[i*4 + 1] = c.G;
-        colors[i*4 + 2] = c.B;
-        colors[i*4 + 3] = c.A;
-    }
-    attribMutex.unlock();
-}
-
-/**
- * \brief Sets the Drawable's outline/edges to a new color
- * \param c The new ColorFloat.
- */
-void Drawable::setEdgeColor(ColorFloat c) {
-    for (int i = 0; i < numberOfOutlineVertices; i++) {
-        outlineArray[4*i] = c.R;
-        outlineArray[4*i+1] = c.G;
-        outlineArray[4*i+2] = c.B;
-        outlineArray[4*i+3] = c.A;
-    }
-}
 
 /**
  * \brief Alters the Drawable's x position
@@ -459,8 +354,6 @@ float Drawable::getCenterZ() {
 
 Drawable::~Drawable() {
     delete[] vertices;
-    delete[] colors;
-    delete[] outlineArray;
 }
 
 }

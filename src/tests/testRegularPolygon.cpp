@@ -33,16 +33,16 @@ void rpFunction(Canvas& can) {
         // rp->setPitch(floatVal);
         // rp->setRoll(floatVal);
         // rp->setRadius(sin(floatVal/90)*100 + 300);
-        // if (rp->getRadius() > 300 || rp->getRadius() < 100) {
-        //     delta *= -1;
-        //     rp->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
-        // }
-        // rp->changeRadiusBy(delta);
-        // if (delta > 0) {
-        //     rp->setColor(colors);
-        // } else {
-        //     rp->setColor(RED);
-        // }
+        if (rp->getRadius() > 300 || rp->getRadius() < 100) {
+            delta *= -1;
+            // rp->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
+        }
+        rp->changeRadiusBy(delta);
+        if (delta > 0) {
+            rp->setColor(colors);
+        } else {
+            rp->setColor(RED);
+        }
         floatVal += 1;
     }
 

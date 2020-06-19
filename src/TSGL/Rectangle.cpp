@@ -20,7 +20,6 @@ Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, f
         return;
     }
     attribMutex.lock();
-    geometryType = GL_QUADS;
     myXScale = myWidth = width;
     myYScale = myHeight = height;
     myZScale = 1;
@@ -49,7 +48,6 @@ Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, f
         return;
     }
     attribMutex.lock();
-    geometryType = GL_QUADS;
     myXScale = myWidth = width;
     myYScale = myHeight = height;
     myZScale = 1;

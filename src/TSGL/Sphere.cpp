@@ -16,7 +16,7 @@ namespace tsgl {
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Sphere with a buffer for storing the specified numbered of vertices.
   */
-Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
+Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  : Shape(x, y, z, yaw, pitch, roll)  {
     // FIXME alpha param works kinda weirdly
     if (radius <= 0) {
         TsglDebug("Cannot have a Sphere with radius less than or equal to 0.");
@@ -28,8 +28,7 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2+1;
     outlineGeometryType = GL_LINES;
     edgesOutlined = false;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     myRadius = radius;
     myXScale = radius;
     myYScale = radius;
@@ -60,7 +59,7 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Sphere with a buffer for storing the specified numbered of vertices.
   */
-Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
+Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[])  : Shape(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0) {
         TsglDebug("Cannot have a Sphere with radius less than or equal to 0.");
     }
@@ -71,8 +70,7 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2 + 1;
     outlineGeometryType = GL_LINES;
     edgesOutlined = false;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     myRadius = radius;
     myXScale = radius;
     myYScale = radius;
@@ -133,20 +131,20 @@ void Sphere::setColor(ColorFloat c) {
 	{
 		for(int a=0;a<verticalSections;a++)
 		{
-			colors[(b*verticalSections + a)*2*4] = c.R * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
-            colors[(b*verticalSections + a)*2*4 + 1] = c.G * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
-            colors[(b*verticalSections + a)*2*4 + 2] = c.B * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
-            colors[(b*verticalSections + a)*2*4 + 3] = c.A;
-			colors[(b*verticalSections + a)*2*4 + 4] = c.R * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
-            colors[(b*verticalSections + a)*2*4 + 5] = c.G * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
-            colors[(b*verticalSections + a)*2*4 + 6] = c.B * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
-            colors[(b*verticalSections + a)*2*4 + 7] = c.A;
+			vertices[(b*verticalSections + a)*2*7 + 3] = c.R * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            vertices[(b*verticalSections + a)*2*7 + 4] = c.G * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            vertices[(b*verticalSections + a)*2*7 + 5] = c.B * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            vertices[(b*verticalSections + a)*2*7 + 6] = c.A;
+			vertices[(b*verticalSections + a)*2*7 + 10] = c.R * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            vertices[(b*verticalSections + a)*2*7 + 11] = c.G * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            vertices[(b*verticalSections + a)*2*7 + 12] = c.B * (1 - 1 * sin(((float)a)/verticalSections * PI) / 2);
+            vertices[(b*verticalSections + a)*2*7 + 13] = c.A;
 		}
 	}
-    colors[horizontalSections*verticalSections*2*4] = c.R;
-    colors[horizontalSections*verticalSections*2*4+1] = c.G;
-    colors[horizontalSections*verticalSections*2*4+2] = c.B;
-    colors[horizontalSections*verticalSections*2*4+3] = c.A;
+    vertices[horizontalSections*verticalSections*2*7+3] = c.R;
+    vertices[horizontalSections*verticalSections*2*7+4] = c.G;
+    vertices[horizontalSections*verticalSections*2*7+5] = c.B;
+    vertices[horizontalSections*verticalSections*2*7+6] = c.A;
     attribMutex.unlock();
 }
 
@@ -161,20 +159,20 @@ void Sphere::setColor(ColorFloat c[]) {
 	{
 		for(int a=0;a<verticalSections;a++)
 		{
-			colors[(b*verticalSections + a)*2*4] = c[b].R;
-            colors[(b*verticalSections + a)*2*4 + 1] = c[b].G;
-            colors[(b*verticalSections + a)*2*4 + 2] = c[b].B;
-            colors[(b*verticalSections + a)*2*4 + 3] = c[b].A;
-			colors[(b*verticalSections + a)*2*4 + 4] = c[b].R;
-            colors[(b*verticalSections + a)*2*4 + 5] = c[b].G;
-            colors[(b*verticalSections + a)*2*4 + 6] = c[b].B;
-            colors[(b*verticalSections + a)*2*4 + 7] = c[b].A;
+			vertices[(b*verticalSections + a)*2*7 + 3] = c[b].R;
+            vertices[(b*verticalSections + a)*2*7 + 4] = c[b].G;
+            vertices[(b*verticalSections + a)*2*7 + 5] = c[b].B;
+            vertices[(b*verticalSections + a)*2*7 + 6] = c[b].A;
+			vertices[(b*verticalSections + a)*2*7 + 10] = c[b].R;
+            vertices[(b*verticalSections + a)*2*7 + 11] = c[b].G;
+            vertices[(b*verticalSections + a)*2*7 + 12] = c[b].B;
+            vertices[(b*verticalSections + a)*2*7 + 13] = c[b].A;
 		}
 	}
-    colors[horizontalSections*verticalSections*2*4] = c[horizontalSections].R;
-    colors[horizontalSections*verticalSections*2*4+1] = c[horizontalSections].G;
-    colors[horizontalSections*verticalSections*2*4+2] = c[horizontalSections].B;
-    colors[horizontalSections*verticalSections*2*4+3] = c[horizontalSections].A;
+    vertices[horizontalSections*verticalSections*2*7+3] = c[horizontalSections].R;
+    vertices[horizontalSections*verticalSections*2*7+4] = c[horizontalSections].G;
+    vertices[horizontalSections*verticalSections*2*7+5] = c[horizontalSections].B;
+    vertices[horizontalSections*verticalSections*2*7+6] = c[horizontalSections].A;
     attribMutex.unlock();
 }
 

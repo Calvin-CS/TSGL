@@ -40,6 +40,10 @@ void imageFunction(Canvas& can) {
     Image * image6 = new Image(ww,-0.5 * hh,0,"./assets/pics/cow.jpg", ww,hh, 0,0,0);
     can.add(image6);
 
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&image6]() {
+        image6->changeFile("./assets/pics/colorfulKeyboard.jpg");
+    });
+
     // image->setHeight((GLfloat)image->getPixelHeight());
     // image->setWidth((GLfloat)image->getPixelWidth());
 

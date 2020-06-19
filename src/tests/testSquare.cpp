@@ -10,7 +10,7 @@
 using namespace tsgl;
 
 void squareFunction(Canvas& can) {
-    ColorFloat colors[] = { ColorFloat(0,0,0,0.8), ColorFloat(0,0,1,0.8),
+    ColorFloat colors[] = { ColorFloat(1,0,0,0.8), ColorFloat(0,0,1,0.8),
         ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
         ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8),
         ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0.5,0.5,1,0.8),

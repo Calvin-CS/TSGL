@@ -141,17 +141,17 @@ void Arrow::changeWidthBy(GLfloat delta) {
  */
 void Arrow::setColor(ColorFloat c[]) {
     for(int i = 0; i < 7; i++) {
-        colors[i*4] = c[i/5].R;
-        colors[i*4 + 1] = c[i/5].G;
-        colors[i*4 + 2] = c[i/5].B;
-        colors[i*4 + 3] = c[i/5].A;
+        vertices[i*7 + 3] = c[i/5].R;
+        vertices[i*7 + 4] = c[i/5].G;
+        vertices[i*7 + 5] = c[i/5].B;
+        vertices[i*7 + 6] = c[i/5].A;
     }
     if (isDoubleArrow) {
         for(int i = 7; i < 10; i++) {
-            colors[i*4] = c[1].R;
-            colors[i*4 + 1] = c[1].G;
-            colors[i*4 + 2] = c[1].B;
-            colors[i*4 + 3] = c[1].A;
+            vertices[i*7 + 3] = c[1].R;
+            vertices[i*7 + 4] = c[1].G;
+            vertices[i*7 + 5] = c[1].B;
+            vertices[i*7 + 6] = c[1].A;
         }
     }
 }

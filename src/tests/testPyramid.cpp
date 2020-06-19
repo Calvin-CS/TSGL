@@ -17,7 +17,7 @@ void pyramidFunction(Canvas& can) {
         ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1) };
     Pyramid * testPyramid = new Pyramid(0.0, 0.0, 0.0, 3, 100, 100, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
     Pyramid * testPyramid2 = new Pyramid(-300, 0.0, 0.0, 5, 100, 100, 0.0, 0.0, 45.0, colors);
-    Pyramid * testPyramid3 = new Pyramid(300, 0.0, 0.0, 8, 100, 100, 0.0, 0.0, 45.0, colors);
+    Pyramid * testPyramid3 = new Pyramid(300, 0.0, 0.0, 10, 100, 100, 0.0, 0.0, 45.0, RED);
     can.add(testPyramid);
     can.add(testPyramid2);
     can.add(testPyramid3);

@@ -13,7 +13,7 @@ void arrowFunction(Canvas& c) {
 	// doubleArrow->setCenterX(100);
 	// doubleArrow->setRotationPoint(0,0,0);
 	// doubleArrow->setYaw(45);
-	doubleArrow->setColor(colors);
+	doubleArrow->setColor(RED);
     float floatVal = 0.0f;
     GLfloat delta = 5;
 	while( c.isOpen() ) {

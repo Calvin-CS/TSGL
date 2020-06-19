@@ -30,7 +30,7 @@ class ConcavePolygon : public Shape {
 
     ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]);
 
-    virtual void draw();
+    virtual void draw(Shader * shader);
 };
 
 }

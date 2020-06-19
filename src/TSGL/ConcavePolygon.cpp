@@ -15,8 +15,7 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     numberOfVertices = numVertices;
     numberOfOutlineVertices = numVertices;
     outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfOutlineVertices * 3];
-    colors = new GLfloat[numberOfOutlineVertices * 4];
+    vertices = new GLfloat[numberOfOutlineVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();   
 }
@@ -39,8 +38,7 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     numberOfVertices = numVertices;
     numberOfOutlineVertices = numVertices;
     outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfOutlineVertices * 3];
-    colors = new GLfloat[numberOfOutlineVertices * 4];
+    vertices = new GLfloat[numberOfOutlineVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
@@ -66,8 +64,7 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     numberOfVertices = numVertices;
     numberOfOutlineVertices = numVertices;
     outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfOutlineVertices * 3];
-    colors = new GLfloat[numberOfOutlineVertices * 4];
+    vertices = new GLfloat[numberOfOutlineVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
@@ -80,21 +77,24 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
  * \details This function actually draws the ConcavePolygon to the Canvas.
  * \note This function overrides Drawable::draw()
  * \note This function does nothing if the vertex buffer is not yet full.
- * \note A message indicating that the Drawable cannot be drawn yet will be given
+ * \note A message indicating that the ConcavePolygon cannot be drawn yet will be given
  *   if the above condition is met (vertex buffer = not full).
  */
-void ConcavePolygon::draw() {
+void ConcavePolygon::draw(Shader * shader) {
     if (!init) {
         TsglDebug("Vertex buffer is not full.");
         return;
     }
-    glPushMatrix();
-    glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
-    glRotatef(myCurrentYaw, 0, 0, 1);
-    glRotatef(myCurrentPitch, 0, 1, 0);
-    glRotatef(myCurrentRoll, 1, 0, 0); 
-    glTranslatef(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ);
-    glScalef(myXScale, myYScale, myZScale);
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(myRotationPointX, myRotationPointY, myRotationPointZ));
+    model = glm::rotate(model, glm::radians(myCurrentYaw), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(myCurrentPitch), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(myCurrentRoll), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ));
+    model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
+
+    unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
     /* extra stencil buffer stuff, because it's concave */
     glClearStencil(0);
@@ -105,12 +105,7 @@ void ConcavePolygon::draw() {
     glStencilOp(GL_INVERT, GL_INVERT, GL_INVERT);
     /* end */
 
-    /* We have a color array and a vertex array */
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
-    glColorPointer(4, GL_FLOAT, 0, colors);
-
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(geometryType, 0, numberOfVertices);
 
     /* extra stencil buffer stuff, because it's concave */
@@ -118,25 +113,17 @@ void ConcavePolygon::draw() {
     glStencilFunc(GL_EQUAL, 1, 1);
     glStencilOp(GL_ZERO, GL_ZERO, GL_ZERO);
 
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
-    glColorPointer(4, GL_FLOAT, 0, colors);
-
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(geometryType, 0, numberOfVertices);
 
     glDisable(GL_STENCIL_TEST);
     /* end */
 
-    if (edgesOutlined) {
-        glVertexPointer(3, GL_FLOAT, outlineStride*sizeof(GLfloat)*3, vertices);
-        glColorPointer(4, GL_FLOAT, 0, outlineArray);
+    // if (edgesOutlined) {
+    //     glVertexPointer(3, GL_FLOAT, outlineStride*sizeof(GLfloat)*3, vertices);
+    //     glColorPointer(4, GL_FLOAT, 0, outlineArray);
 
-        glDrawArrays(outlineGeometryType, 0, numberOfOutlineVertices);
-    }
-
-    glPopMatrix();
-
-    /* Cleanup states */
-    glDisableClientState(GL_COLOR_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
+    //     glDrawArrays(outlineGeometryType, 0, numberOfOutlineVertices);
+    // }
 }
 }

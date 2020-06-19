@@ -41,15 +41,15 @@ void ellipseFunction(Canvas& can) {
         //     delta *= -1;
         // }
         // ellipse->changeXRadiusBy(delta);
-        // if (ellipse->getYRadius() > 300 || ellipse->getYRadius() < 100) {
-        //     delta *= -1;
-        // }
-        // ellipse->changeYRadiusBy(delta);
-        // if (delta > 0) {
-        //     ellipse->setColor(colors);
-        // } else {
-        //     ellipse->setColor(RED);
-        // }
+        if (ellipse->getYRadius() > 300 || ellipse->getYRadius() < 100) {
+            delta *= -1;
+        }
+        ellipse->changeYRadiusBy(delta);
+        if (delta > 0) {
+            ellipse->setColor(colors);
+        } else {
+            ellipse->setColor(RED);
+        }
         floatVal += 1;
     }
 

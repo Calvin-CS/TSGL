@@ -18,7 +18,7 @@ namespace tsgl {
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  : Shape(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0 ||  height <= 0 || sides < 3) {
         TsglDebug("Cannot have a Prism with non-positive height or radius or fewer than 3 sides");
     }
@@ -34,8 +34,7 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     outlineStride = 2;
     numberOfOutlineVertices = mySides * 6;
     outlineGeometryType = GL_LINES;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), c);
@@ -72,7 +71,7 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
   * \warning An invariant is held where if all points in vertices are not in the same plane then an error message is given.
   * \return A new Prism with a buffer for storing the specified numbered of vertices.
   */
-Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
+Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[])  : Shape(x, y, z, yaw, pitch, roll)  {
     if (radius <= 0 ||  height <= 0 || sides < 3) {
         TsglDebug("Cannot have a Prism with non-positive height or radius or fewer than 3 sides");
     }
@@ -88,8 +87,7 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     outlineStride = 2;
     numberOfOutlineVertices = mySides * 6;
     outlineGeometryType = GL_LINES;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), c[1]);
@@ -180,35 +178,35 @@ void Prism::changeRadiusBy(GLfloat delta) {
 void Prism::setColor(ColorFloat c[]) {
     attribMutex.lock();
     for (int i = 0; i < mySides; i++) {
-        colors[i*48] = c[1].R;
-        colors[i*48+1] = c[1].G;
-        colors[i*48+2] = c[1].B;
-        colors[i*48+3] = c[1].A;
+        vertices[i*84+3] = c[1].R;
+        vertices[i*84+4] = c[1].G;
+        vertices[i*84+5] = c[1].B;
+        vertices[i*84+6] = c[1].A;
 
-        colors[i*48+4] = c[0].R;
-        colors[i*48+5] = c[0].G;
-        colors[i*48+6] = c[0].B;
-        colors[i*48+7] = c[0].A;
+        vertices[i*84+10] = c[0].R;
+        vertices[i*84+11] = c[0].G;
+        vertices[i*84+12] = c[0].B;
+        vertices[i*84+13] = c[0].A;
 
-        colors[i*48+8] = c[1].R;
-        colors[i*48+9] = c[1].G;
-        colors[i*48+10] = c[1].B;
-        colors[i*48+11] = c[1].A;
+        vertices[i*84+17] = c[1].R;
+        vertices[i*84+18] = c[1].G;
+        vertices[i*84+19] = c[1].B;
+        vertices[i*84+20] = c[1].A;
 
-        colors[i*48+12] = colors[i*48+16] = colors[i*48+20] = colors[i*48+24] = colors[i*48+28] = colors[i*48+32] = c[2].R;
-        colors[i*48+13] = colors[i*48+17] = colors[i*48+21] = colors[i*48+25] = colors[i*48+29] = colors[i*48+33] = c[2].G;
-        colors[i*48+14] = colors[i*48+18] = colors[i*48+22] = colors[i*48+26] = colors[i*48+30] = colors[i*48+34] = c[2].B;
-        colors[i*48+15] = colors[i*48+19] = colors[i*48+23] = colors[i*48+27] = colors[i*48+31] = colors[i*48+35] = c[2].A;
+        vertices[i*84+24] = vertices[i*84+31] = vertices[i*84+38] = vertices[i*84+45] = vertices[i*84+52] = vertices[i*84+59] = c[2].R;
+        vertices[i*84+25] = vertices[i*84+32] = vertices[i*84+39] = vertices[i*84+46] = vertices[i*84+53] = vertices[i*84+60] = c[2].G;
+        vertices[i*84+26] = vertices[i*84+33] = vertices[i*84+40] = vertices[i*84+47] = vertices[i*84+54] = vertices[i*84+61] = c[2].B;
+        vertices[i*84+27] = vertices[i*84+34] = vertices[i*84+41] = vertices[i*84+48] = vertices[i*84+55] = vertices[i*84+62] = c[2].A;
 
-        colors[i*48+36] = colors[i*48+40] = c[3].R;
-        colors[i*48+37] = colors[i*48+41] = c[3].G;
-        colors[i*48+38] = colors[i*48+42] = c[3].B;
-        colors[i*48+39] = colors[i*48+43] = c[3].A;
+        vertices[i*84+66] = vertices[i*84+73] = c[3].R;
+        vertices[i*84+67] = vertices[i*84+74] = c[3].G;
+        vertices[i*84+68] = vertices[i*84+75] = c[3].B;
+        vertices[i*84+69] = vertices[i*84+76] = c[3].A;
 
-        colors[i*48+44] = c[4].R;
-        colors[i*48+45] = c[4].G;
-        colors[i*48+46] = c[4].B;
-        colors[i*48+47] = c[4].A;
+        vertices[i*84+80] = c[4].R;
+        vertices[i*84+81] = c[4].G;
+        vertices[i*84+82] = c[4].B;
+        vertices[i*84+83] = c[4].A;
     }
     attribMutex.unlock();
 }

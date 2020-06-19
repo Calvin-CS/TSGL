@@ -42,7 +42,7 @@ class Ellipse : public ConvexPolygon {
     */
     GLfloat getYRadius() { return myYRadius; }
     
-    void setColor(ColorFloat c) { Drawable::setColor(c); }
+    void setColor(ColorFloat c) { Shape::setColor(c); }
 
     void setColor(ColorFloat c[]);
 

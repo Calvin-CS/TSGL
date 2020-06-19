@@ -5,7 +5,7 @@
 #ifndef CUBOID_H_
 #define CUBOID_H_
 
-#include "Drawable.h"       // For extending our Prism object
+#include "Shape.h"       // For extending our Prism object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -13,9 +13,9 @@ namespace tsgl {
 /*! \class Cuboid
  *  \brief Draw an arbitrary Cuboid with colored vertices.
  *  \details Cuboid is a class for holding vertex data for a Cuboid.
- *  \details Cuboid is a 6-sided subclass of Drawable with all rectangular faces.
+ *  \details Cuboid is a 6-sided subclass of Shape with all rectangular faces.
  */
-class Cuboid : public Drawable {
+class Cuboid : public Shape {
 protected:
     GLfloat myLength, myWidth, myHeight;
 public:
@@ -53,7 +53,7 @@ public:
     */
     virtual GLfloat getWidth() { return myWidth; }
 
-    virtual void setColor(ColorFloat c) { Drawable::setColor(c); }
+    virtual void setColor(ColorFloat c) { Shape::setColor(c); }
 
     virtual void setColor(ColorFloat c[]);
 

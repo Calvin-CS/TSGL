@@ -10,10 +10,10 @@
 using namespace tsgl;
 
 void cubeFunction(Canvas& can) {
-    ColorFloat colors[] = { ColorFloat(0,0,0,0.8), ColorFloat(0,0,1,0.8),
+    ColorFloat colors[] = { ColorFloat(1,0,0,0.8), ColorFloat(0,0,1,0.8),
         ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
         ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8) };
-    Cube * testCube = new Cube(0.0, 0.0, 0.0, 200, 0.0, 45.0, 45.0, ColorFloat(1,0,0,1));
+    Cube * testCube = new Cube(0.0, 0.0, 0.0, 200, 0.0, 45.0, 45.0, RED);
     Cube * testCube2 = new Cube(-300, 0.0, 0.0, 200, 0.0, 45.0, 45.0, colors);
     can.add(testCube);
     can.add(testCube2);

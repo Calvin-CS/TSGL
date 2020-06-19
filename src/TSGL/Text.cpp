@@ -1,226 +1,210 @@
-// #include "Text.h"
-// #include "iostream"
+#include "Text.h"
+#include "iostream"
 
-// namespace tsgl {
+namespace tsgl {
 
-// /*!
-//  * \brief Explicitly constructs a new Text instance.
-//  * \details This is the constructor for the Text class.
-//  *      \param text The string to draw.
-//  *      \param loader A reference pointer to the TextureHandler with which to load the font.
-//  *      \param x The x coordinate.
-//  *      \param y The y coordinate.
-//  *      \param fontsize The size of the text in pixels.
-//  *      \param color A reference to the ColorFloat to use.
-//  * \return A new Text instance with the specified string, position, and color.
-//  */
-// Text::Text(std::wstring text, float x, float y, unsigned int fontsize, const ColorFloat &color) {
-//     isTextured = true;  // Let the Canvas know we're a textured object
-//     myString = text;
-//     myLoader = new TextureHandler();
-//     myX = x;
-//     myY = y;
-//     myFontSize = fontsize;
-//     myColor = color;
-//     myRotation = 0;
-//     myCenterX = 0;
-//     myCenterY = 0;
-//     vertices = new float[32];                                        // Allocate the vertices
-//     myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
+/*!
+ * \brief Explicitly constructs a new Text instance.
+ * \details This is the constructor for the Text class.
+ *      \param text The string to draw.
+ *      \param loader A reference pointer to the TextureHandler with which to load the font.
+ *      \param x The x coordinate.
+ *      \param y The y coordinate.
+ *      \param fontsize The size of the text in pixels.
+ *      \param color A reference to the ColorFloat to use.
+ * \return A new Text instance with the specified string, position, and color.
+ */
+Text::Text(float x, float y, float z, std::string text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color)
+ : Drawable(x,y,z,yaw,pitch,roll) {
+    shaderType = TEXT_SHADER_TYPE;
+    myString = text;
+    myFont = fontFilename;
+    myFontSize = fontsize;
+    myColor = color;
 
-//     setRotationPoint(myCenterX, myCenterY);
-// }
+    // FreeType
+    // --------
+    // All functions return a value different than 0 whenever an error occurred
+    if (FT_Init_FreeType(&ft))
+        std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
 
-// /*!
-//  * \brief Draw the Text.
-//  * \details This function actually draws the Text to the Canvas. 
-//  */
-// void Text::draw() {
-//     vertices[0]  = myX;                                                     // Pre-init the array with the start coords
-//     vertices[1]  = myY;
+    // load font as face
+    if (FT_New_Face(ft, fontFilename.c_str(), 0, &face))
+        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
-//     vertices[2] = vertices[10] = vertices[18] = vertices[26] = myColor.R;   // Texture color of the coords
-//     vertices[3] = vertices[11] = vertices[19] = vertices[27] = myColor.G;   // (Default to opaque white)
-//     vertices[4] = vertices[12] = vertices[20] = vertices[28] = myColor.B;
-//     vertices[5] = vertices[13] = vertices[21] = vertices[29] = myColor.A;
+    // set size to load glyphs as
+    FT_Set_Pixel_Sizes(face, 0, myFontSize);
 
-//     vertices[6]  = vertices[7] = 0.0f;          // Texture coords of top left
-//     vertices[14] = 1.0f, vertices[15] = 0.0f;   // Texture coords of top right
-//     vertices[22] = 0.0f, vertices[23] = 1.0f;   // Texture coords of bottom left
-//     vertices[30] = vertices[31] = 1.0f;         // Texture coords of bottom right
+    // disable byte-alignment restriction
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
 
-//     myLoader->drawText(myString, myFontSize, vertices, myCenterX, myCenterY, myRotation);
-// }
+    myWidth = 0;
+    myHeight = 0;
 
-// /*!
-//  * \brief Alter the Text's string
-//  * \details This function changes myString to the parameter text
-//  *  \param text The text to change myString to.
-//  * \warning This will also alter the Text's rotation point to the new center if and only if 
-//  *          the old rotation point was at the Text's old center.
-//  */
-// void Text::setText(std::wstring text) {
-//     myString = text;
-//     bool shiftRotationPoint = false;
-//     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
-//         shiftRotationPoint = true;
-//     }
-//     myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
-//     if(shiftRotationPoint) {
-//         setRotationPoint(myCenterX, myCenterY);
-//     }
-// }
+    // load first 128 characters of ASCII set
+    // for (unsigned char c = 0; c < 128; c++) {
+    std::string::const_iterator c;
+    for (c = myString.begin(); c != myString.end(); c++) {
+        // Load character glyph 
+        if (FT_Load_Char(face, *c, FT_LOAD_RENDER))
+        {
+            std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+            continue;
+        }
+        // now store character for later use
+        Character character = {
+            face->glyph->bitmap.buffer,
+            glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+            glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+            face->glyph->advance.x
+        };
+        Characters.insert(std::pair<char, Character>(*c, character));
+        myWidth += face->glyph->advance.x >> 6;
+        if (face->glyph->bitmap.rows > myHeight)
+            myHeight = face->glyph->bitmap.rows;
+    }
 
-// /*!
-//  * \brief Alter the Text's font size
-//  * \details This function changes myFontSize to the parameter fontsize.
-//  *  \param fontsize The new fontsize.
-//  * \warning This will also alter the Text's rotation point to the new center if and only if 
-//  *          the old rotation point was at the Text's old center.
-//  */
-// void Text::setFontSize(int fontsize) {
-//     myFontSize = fontsize;
-//     bool shiftRotationPoint = false;
-//     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
-//         shiftRotationPoint = true;
-//     }
-//     myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
-//     if(shiftRotationPoint) {
-//         setRotationPoint(myCenterX, myCenterY);
-//     }
-// }
+    vertices = new float[30];                                        // Allocate the vertices
 
-// /*!
-//  * \brief Alter the Text's font
-//  * \details This function changes myLoader's font to the parameter font.
-//  *  \param filename The new font file name.
-//  * \warning This will also alter the Text's rotation point to the new center if and only if 
-//  *          the old rotation point was at the Text's old center.
-//  */
-// void Text::setFont(std::string filename) {
-//     myLoader->loadFont(filename);
-//     bool shiftRotationPoint = false;
-//     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
-//         shiftRotationPoint = true;
-//     }
-//     myLoader->calculateTextCenter(myString, myFontSize, myX, myY, myCenterX, myCenterY);
-//     if(shiftRotationPoint) {
-//         setRotationPoint(myCenterX, myCenterY);
-//     }
-// }
+    // z and texture coordinates never change
+    vertices[2] = 0; vertices[3] = vertices[4] = 0.0f;
+    vertices[7] = 0; vertices[8] = 0.0f; vertices[9] = 1.0f;
+    vertices[12] = 0; vertices[13] = vertices[14] = 1.0f;
+    vertices[17] = 0; vertices[18] = vertices[19] = 0.0f;
+    vertices[22] = 0; vertices[23] = vertices[24] = 1.0f;
+    vertices[27] = 0; vertices[28] = 1.0f; vertices[29] = 0.0f;
 
-// /*!
-//  * \brief Alter the Text's lower left hand corner location
-//  * \details This function changes myX and myY to the parameter x and y.
-//  *  \param x The new x-coordinate for myX.
-//  *  \param y The new y-coordinate for myY.
-//  * \warning This will also alter the Text's rotation point to the new center if and only if 
-//  *          the old rotation point was at the Text's old center.
-//  */
-// void Text::setBottomLeftCorner(float x, float y) {
-//     float deltaX = x - myX;
-//     float deltaY = y - myY;
-//     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
-//         myRotationPointX += deltaX;
-//         myRotationPointY += deltaY;
-//     }
-//     myCenterX += deltaX;
-//     myCenterY += deltaY;
-//     myX = x;
-//     myY = y;
-// }
+    printf("%f, %f\n", myWidth, myHeight);
+    init = true;
+}
 
-// /*!
-//  * \brief Alter the Text's lower left hand corner location
-//  * \details This function changes myX and myY to the parameter x and y.
-//  *  \param x The new x-coordinate for myX.
-//  *  \param y The new y-coordinate for myY.
-//  * \warning This will also alter the Text's rotation point to the new center if and only if 
-//  *          the old rotation point was at the Text's old center.
-//  */
-// void Text::setCenter(float x, float y) {
-//     float deltaX = x - myCenterX;
-//     float deltaY = y - myCenterY;
-//     myX += deltaX;
-//     myY += deltaY;
-//     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
-//         setRotationPoint(x, y);
-//     }
-//     myCenterX = x;
-//     myCenterY = y;
-// }
+/*!
+ * \brief Draw the Text.
+ * \details This function actually draws the Text to the Canvas. 
+ */
+void Text::draw(Shader * shader) {
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(myRotationPointX, myRotationPointY, myRotationPointZ));
+    model = glm::rotate(model, glm::radians(myCurrentYaw), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(myCurrentPitch), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(myCurrentRoll), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ));
+    model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
 
-// /*!
-//  * \brief Alter the Text's location by deltaX and deltaY.
-//  * \details This function changes all coordinate variables by the parameter deltaX and deltaY
-//  *  \param deltaX The amount to change x-coordinates by.
-//  *  \param deltaY The amount to change y-coordinates by.
-//  * \warning This will also alter the Text's rotation point to the new center if and only if 
-//  *          the old rotation point was at the Text's old center.
-//  */
-// void Text::moveTextBy(float deltaX, float deltaY) {
-//     myX += deltaX;
-//     myY += deltaY;
-//     if(myCenterX == myRotationPointX && myCenterY == myRotationPointY) {
-//         myRotationPointX += deltaX;
-//         myRotationPointY += deltaY;
-//     }
-//     myCenterX += deltaX;
-//     myCenterY += deltaY;
-// }
+    unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-// /*!
-//  * \brief Mutator for the rotation of the Text.
-//  * \details Rotates the Text vertices around centerX, centerY.
-//  * \param radians Float value denoting how many radians to rotate the Text.
-//  */
-// void Text::setRotation(float radians) {
-//     // myRotation = radians;
-//   if(radians != myRotation) {
-//     attribMutex.lock();
+    glUniform4f(glGetUniformLocation(shader->ID, "textColor"), myColor.R, myColor.G, myColor.B, myColor.A);
 
-//     // distance between myCenter and bottom left corner
-//     float deltaX = std::roundf(myCenterX - myX);
-//     float deltaY = std::roundf(myCenterY - myY);
+    glEnable(GL_TEXTURE_2D);
+    glActiveTexture(GL_TEXTURE0);
 
-//     //deal with rotation variables
-//     float s = sin(radians - myRotation);
-//     float c = cos(radians - myRotation);
-//     myRotation = radians;
+    float mouseX = -myWidth / 2;
+    float mouseY = -myHeight / 2;
+    std::string::const_iterator c;
+    for (c = myString.begin(); c != myString.end(); c++) {
+        Character ch = Characters[*c];
 
-//     //rotate myCenter around myRotationPoint
-//     float x = myCenterX;
-//     float y = myCenterY;
-//     x -= myRotationPointX;
-//     y -= myRotationPointY;
-//     float xnew = x * c - y * s;
-//     float ynew = x * s + y * c;
-//     x = xnew + myRotationPointX;
-//     y = ynew + myRotationPointY;
-//     myCenterX = x;
-//     myCenterY = y;
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
 
-//     //calculate new location of bottom left corner
-//     myX = myCenterX - deltaX;
-//     myY = myCenterY - deltaY;
-//     attribMutex.unlock();
-//   }
-// }
+        GLuint texture;
+        glGenTextures(1, &texture);
+        // create and render a new texture based off the data in Characters
+        glBindTexture(GL_TEXTURE_2D, texture);
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            0,
+            GL_RED,
+            ch.Size.x,
+            ch.Size.y,
+            0,
+            GL_RED,
+            GL_UNSIGNED_BYTE,
+            ch.Data
+        );
 
-// /*!
-//  * \brief Alter the Text's color
-//  * \details This function changes myColor to the parameter ColorFloat
-//  *  \param color The ColorFloat to change myColor to.
-//  */
-// void Text::setColor(const ColorFloat& color) {
-//     myColor = color;
-// }
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-// Text::~Text() {
-//     delete myLoader;
-//     delete[] vertices;
-// }
+        // update vertices for each character
+        float xpos = mouseX + ch.Bearing.x * 1.0f;
+        float ypos = mouseY - (ch.Size.y - ch.Bearing.y) * 1.0f;
+
+        float w = ch.Size.x * 1.0f;
+        float h = ch.Size.y * 1.0f;
+
+        //triangle 1
+        vertices[0] = xpos; vertices[1] = ypos + h;
+        vertices[5] = xpos; vertices[6] = ypos; 
+        vertices[10] = xpos + w; vertices[11] = ypos;
+        //triangle 2
+        vertices[15] = xpos; vertices[16] = ypos + h;
+        vertices[20] = xpos + w; vertices[21] = ypos;
+        vertices[25] = xpos + w; vertices[26] = ypos + h;
+
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 5, vertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        glDeleteTextures(1, &texture);
+
+        // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+        mouseX += (ch.Advance >> 6); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+    }
+    glDisable(GL_TEXTURE_2D);
+}
+
+/*!
+ * \brief Alter the Text's string
+ * \details This function changes myString to the parameter text
+ *  \param text The text to change myString to.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
+ */
+void Text::setText(std::string text) {
+
+}
+
+/*!
+ * \brief Alter the Text's font size
+ * \details This function changes myFontSize to the parameter fontsize.
+ *  \param fontsize The new fontsize.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
+ */
+void Text::setFontSize(int fontsize) {
+
+}
+
+/*!
+ * \brief Alter the Text's font
+ * \details This function changes myLoader's font to the parameter font.
+ *  \param filename The new font file name.
+ * \warning This will also alter the Text's rotation point to the new center if and only if 
+ *          the old rotation point was at the Text's old center.
+ */
+void Text::setFont(std::string filename) {
+
+}
+
+/*!
+ * \brief Alter the Text's color
+ * \details This function changes myColor to the parameter ColorFloat
+ *  \param color The ColorFloat to change myColor to.
+ */
+void Text::setColor(const ColorFloat& color) {
+    myColor = color;
+}
+
+Text::~Text() {
+    // destroy FreeType once we're finished
+    FT_Done_Face(face);
+    FT_Done_FreeType(ft);
+}
 
 
 
-// }
+}

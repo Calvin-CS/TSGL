@@ -32,7 +32,7 @@ public:
     */
     GLfloat getRadius() { return myRadius; }
 
-    void setColor(ColorFloat c) { Drawable::setColor(c); }
+    void setColor(ColorFloat c) { Shape::setColor(c); }
 
     void setColor(ColorFloat c[]);
 

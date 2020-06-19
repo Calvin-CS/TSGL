@@ -14,9 +14,9 @@ void cuboidFunction(Canvas& can) {
         ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
         ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8) };
     Cuboid * testCuboid = new Cuboid(0.0, 0.0, 0.0, 100, 400, 200, 0.0, 45.0, 0.0, ColorFloat(1,0,0,1));
-    // Cuboid * testCuboid2 = new Cuboid(-300, 0.0, 0.0, 100, 300, 200, 0.0, 0.0, 0.0, colors);
+    Cuboid * testCuboid2 = new Cuboid(-300, 0.0, 0.0, 100, 400, 200, 0.0, 0.0, 0.0, colors);
     can.add(testCuboid);
-    // can.add(testCuboid2);
+    can.add(testCuboid2);
     float rotation = 0.0f;
     GLfloat delta = 0.05;
     bool boolean = false;;
@@ -67,6 +67,7 @@ void cuboidFunction(Canvas& can) {
     }
 
     delete testCuboid;
+    delete testCuboid2;
 }
 
 int main(int argc, char* argv[]) {

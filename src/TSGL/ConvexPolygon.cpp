@@ -12,11 +12,10 @@ namespace tsgl {
   */
 ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, float yaw, float pitch, float roll) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
-    geometryType = GL_POLYGON;
+    geometryType = GL_TRIANGLE_FAN;
     numberOfVertices = numberOfOutlineVertices = numVertices;
     outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();    
 }
@@ -34,11 +33,10 @@ ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int n
   */
 ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorFloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
-    geometryType = GL_POLYGON;
+    geometryType = GL_TRIANGLE_FAN;
     numberOfVertices = numberOfOutlineVertices = numVertices;
     outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();    
     for (int i = 0; i < numVertices; i++) {
@@ -59,11 +57,10 @@ ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int n
   */
 ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorFloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
-    geometryType = GL_POLYGON;
+    geometryType = GL_TRIANGLE_FAN;
     numberOfVertices = numberOfOutlineVertices = numVertices;
     outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();    
     for (int i = 0; i < numVertices; i++) {

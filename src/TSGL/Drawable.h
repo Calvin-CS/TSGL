@@ -6,6 +6,10 @@
 #define DRAWABLE_H_
 
 #include "Color.h"      // Needed for color type
+#include "shader_s.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <mutex>        // Needed for locking the attribute mutex for thread-safety
 
 namespace tsgl {
@@ -26,25 +30,13 @@ namespace tsgl {
 class Drawable {
  protected:
     std::mutex      attribMutex; ///< Protects the attributes of the Drawable from being accessed while simultaneously being changed
-    bool isTextured = false;
-    bool edgesOutlined = true;
-    int numberOfVertices;
-    int numberOfOutlineVertices;
-    GLsizei outlineStride = 0;
     GLfloat* vertices;
-    GLfloat* colors;
-    GLfloat* outlineArray;
-    int currentVertex = 0;
-    int currentColor = 0;
     float myCurrentYaw, myCurrentPitch, myCurrentRoll;
     float myXScale, myYScale, myZScale;
     float myRotationPointX, myRotationPointY, myRotationPointZ;
     float myCenterX, myCenterY, myCenterZ;
-    GLenum geometryType;
-    GLenum outlineGeometryType;
     bool init = false;
-    virtual void addVertex(float x, float y, float z, const ColorFloat &color = WHITE);
-
+    unsigned int shaderType = SHAPE_SHADER_TYPE;
     /*!
         * \brief Protected helper method that determines if the Drawable's center matches its rotation point.
         * \details Checks to see if myCenterX == myRotationPointX, myCenterY == myRotationPointY, myCenterZ == myRotationPointZ
@@ -58,16 +50,7 @@ class Drawable {
 
     virtual ~Drawable();
 
-    virtual void draw();
-
-    virtual void setColor(ColorFloat c);
-    /**
-     * \brief Pure virtual mutator. Sets the Drawable to a new array of colors.
-     * \param c An array of the new ColorFloats.
-     * \warning Inheriting subclasses MUST define an override method for this method.
-     */
-    virtual void setColor(ColorFloat c[]) = 0;
-    virtual void setEdgeColor(ColorFloat c);
+    virtual void draw(Shader * shader) = 0;
 
     virtual void changeXBy(float deltaX);
     virtual void changeYBy(float deltaY);
@@ -93,7 +76,6 @@ class Drawable {
     virtual void setRotationPointY(float y);
     virtual void setRotationPointZ(float z);
     virtual void setRotationPoint(float x, float y, float z);
-
 
     virtual float getCenterX();
     virtual float getCenterY();
@@ -135,21 +117,13 @@ class Drawable {
     */
     virtual float getRotationPointZ() { return myRotationPointZ; }
 
-   /*
-    * \brief Mutator that determines if the edges of the Drawable should be highlighted.
-    * \details Updates the value of the edgesOutlined instance variable. Defaults to true.
-    */
-    virtual void displayOutlineEdges(bool on=true) { edgesOutlined=on; }
-    
-
-
    /*!
     * \brief Accessor that returns if Drawable is processed and ready to be drawn
     * \details This function returns true only if all vertices have been inserted into an array.
     */
     virtual bool isProcessed() { return init; }
 
-    virtual bool getIsTextured() { return isTextured; }
+    virtual unsigned int getShaderType() { return shaderType; }
 };
 
 }

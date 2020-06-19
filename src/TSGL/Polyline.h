@@ -19,11 +19,9 @@ namespace tsgl {
  *  \note Calling Drawable::draw() before all vertices have been added will do nothing.
  */
 class Polyline : public Shape {
- private:
-
- public:
-
+ protected:
     Polyline(float x, float y, float z, int numVertices, float yaw, float pitch, float roll);
+ public:
 
     Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color);
 

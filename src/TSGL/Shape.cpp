@@ -13,17 +13,80 @@ namespace tsgl {
  */
 Shape::Shape(float x, float y, float z, float yaw, float pitch, float roll) : Drawable(x,y,z,yaw,pitch,roll) { }
 
+/*!
+ * \brief Draw the Shape.
+ * \details This function actually draws the Shape to the Canvas.
+ * \note This function does nothing if the vertex buffer is not yet full.
+ * \note A message indicating that the Shape cannot be drawn yet will be given
+ *   if the above condition is met (vertex buffer = not full).
+ */
+void Shape::draw(Shader * shader) {
+    if (!init) {
+        TsglDebug("Vertex buffer is not full.");
+        return;
+    }
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(myRotationPointX, myRotationPointY, myRotationPointZ));
+    model = glm::rotate(model, glm::radians(myCurrentYaw), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(myCurrentPitch), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(myCurrentRoll), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ));
+    model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
+
+    unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
+    glDrawArrays(geometryType, 0, numberOfVertices);
+}
+
+ /*!
+  * \brief Adds another vertex to a Shape.
+  * \details This function initializes the next vertex in the Shape and adds it to a Shape buffer.
+  *      \param x The x position of the vertex.
+  *      \param y The y position of the vertex.
+  *      \param z The z position of the vertex.
+  *      \param color The reference variable of the color of the vertex.
+  * \note This function does nothing if the vertex buffer is already full.
+  * \note A message is given indicating that the vertex buffer is full.
+  */
+void Shape::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color) {
+    if (init) {
+        TsglDebug("Cannot add anymore vertices.");
+        return;
+    }
+    attribMutex.lock();
+    vertices[currentVertex] = x;
+    vertices[currentVertex + 1] = y;
+    vertices[currentVertex + 2] = z;
+    vertices[currentVertex + 3] = color.R;
+    vertices[currentVertex + 4] = color.G;
+    vertices[currentVertex + 5] = color.B;
+    vertices[currentVertex + 6] = color.A;
+    currentVertex += 7;
+    attribMutex.unlock();
+    if (currentVertex == numberOfVertices*7) {
+        attribMutex.lock();
+        // outlineArray = new GLfloat[numberOfOutlineVertices*4];
+        // std::fill_n(outlineArray, numberOfOutlineVertices*4, 0.75);
+        init = true;
+        attribMutex.unlock();
+    }
+}
+
 /**
  * \brief Sets the Shape to a new color.
  * \param c The new ColorFloat.
  */
 void Shape::setColor(ColorFloat c) {
+    attribMutex.lock();
     for(int i = 0; i < numberOfVertices; i++) {
-        colors[i*4] = c.R;
-        colors[i*4 + 1] = c.G;
-        colors[i*4 + 2] = c.B;
-        colors[i*4 + 3] = c.A;
+        vertices[i*7 + 3] = c.R;
+        vertices[i*7 + 4] = c.G;
+        vertices[i*7 + 5] = c.B;
+        vertices[i*7 + 6] = c.A;
     }
+    attribMutex.unlock();
 }
 
 /**
@@ -32,11 +95,24 @@ void Shape::setColor(ColorFloat c) {
  */
 void Shape::setColor(ColorFloat c[]) {
     for(int i = 0; i < numberOfVertices; i++) {
-        colors[i*4] = c[i].R;
-        colors[i*4 + 1] = c[i].G;
-        colors[i*4 + 2] = c[i].B;
-        colors[i*4 + 3] = c[i].A;
+        vertices[i*7 + 3] = c[i].R;
+        vertices[i*7 + 4] = c[i].G;
+        vertices[i*7 + 5] = c[i].B;
+        vertices[i*7 + 6] = c[i].A;
     }
+}
+
+/**
+ * \brief Sets the Shape's outline/edges to a new color
+ * \param c The new ColorFloat.
+ */
+void Shape::setEdgeColor(ColorFloat c) {
+    // for (int i = 0; i < numberOfOutlineVertices; i++) {
+    //     outlineArray[4*i] = c.R;
+    //     outlineArray[4*i+1] = c.G;
+    //     outlineArray[4*i+2] = c.B;
+    //     outlineArray[4*i+3] = c.A;
+    // }
 }
 
 }

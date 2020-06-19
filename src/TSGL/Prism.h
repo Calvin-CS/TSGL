@@ -1,11 +1,11 @@
 /*
- * Prism.h extends Drawable and provides a class for drawing a prism.
+ * Prism.h extends Shape and provides a class for drawing a prism.
  */
 
 #ifndef PRISM_H_
 #define PRISM_H_
 
-#include "Drawable.h"       // For extending our Drawable object
+#include "Shape.h"       // For extending our Shape object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -14,7 +14,7 @@ namespace tsgl {
  *  \brief Draw an arbitrary Prism with colored vertices.
  *  \details Prism is a class for holding vertex data for a Prism with a base with at least 3 sides.
  */
-class Prism : public Drawable {
+class Prism : public Shape {
 protected:
     GLfloat myHeight;
     GLfloat myRadius;
@@ -46,7 +46,7 @@ public:
     */
     virtual GLfloat getHeight() { return myHeight; }
 
-    virtual void setColor(ColorFloat c) { Drawable::setColor(c); }
+    virtual void setColor(ColorFloat c) { Shape::setColor(c); }
 
     virtual void setColor(ColorFloat c[]);
 };

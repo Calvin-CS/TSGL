@@ -19,7 +19,7 @@ namespace tsgl {
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Pyramid with a buffer for storing the specified numbered of vertices.
   */
-Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  : Drawable(x, y, z, yaw, pitch, roll)  {
+Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  : Shape(x, y, z, yaw, pitch, roll)  {
     if (sides < 3) {
         TsglDebug("Cannot have a Pyramid with fewer than 3 sides.");
     }
@@ -38,8 +38,7 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     outlineStride = 2;
     outlineGeometryType = GL_LINE_LOOP;
     numberOfOutlineVertices = mySides * 3;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c);
@@ -69,7 +68,7 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
   * \warning An invariant is held where if radius isn't positive then an error message is given.
   * \return A new Pyramid with a buffer for storing the specified numbered of vertices.
   */
-Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[])  : Drawable(x, y, z, yaw, pitch, roll)  {
+Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[])  : Shape(x, y, z, yaw, pitch, roll)  {
     if (sides < 3) {
         TsglDebug("Cannot have a Pyramid with fewer than 3 sides.");
     }
@@ -88,17 +87,16 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     outlineStride = 2;
     outlineGeometryType = GL_LINE_LOOP;
     numberOfOutlineVertices = mySides * 3;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[i+1]);
         addVertex(0,-0.5,0, c[mySides+2]);
-        addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[i+2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[(i+1) % mySides + 1]);
 
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[i+1]);    
         addVertex(0,0.5,0, c[0]);
-        addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[i+2]);
+        addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[(i+1) % mySides + 1]);
     }
 }
 
@@ -173,15 +171,15 @@ void Pyramid::changeHeightBy(float delta) {
 void Pyramid::setColor(ColorFloat c) {
     attribMutex.lock();
     for(int i = 0; i < mySides; i++) {
-        colors[i*24] = colors[i*24 + 4] = colors[i*24 + 8] = colors[i*24 + 12] = colors[i*24 + 20] = c.R;
-        colors[i*24 + 1] = colors[i*24 + 5] = colors[i*24 + 9] = colors[i*24 + 13] = colors[i*24 + 21] = c.G;
-        colors[i*24 + 2] = colors[i*24 + 6] = colors[i*24 + 10] = colors[i*24 + 14] = colors[i*24 + 22] = c.B;
-        colors[i*24 + 3] = colors[i*24 + 7] = colors[i*24 + 11] = colors[i*24 + 15] = colors[i*24 + 23] = c.A;
+        vertices[i*42 + 3] = vertices[i*42 + 10] = vertices[i*42 + 17] = vertices[i*42 + 24] = vertices[i*42 + 38] = c.R;
+        vertices[i*42 + 4] = vertices[i*42 + 11] = vertices[i*42 + 18] = vertices[i*42 + 25] = vertices[i*42 + 39] = c.G;
+        vertices[i*42 + 5] = vertices[i*42 + 12] = vertices[i*42 + 19] = vertices[i*42 + 26] = vertices[i*42 + 40] = c.B;
+        vertices[i*42 + 6] = vertices[i*42 + 13] = vertices[i*42 + 20] = vertices[i*42 + 27] = vertices[i*42 + 41] = c.A;
 
-        colors[i*24 + 16] = c.R *.5;
-        colors[i*24 + 17] = c.G *.5;
-        colors[i*24 + 18] = c.B *.5;
-        colors[i*24 + 19] = c.A;
+        vertices[i*42 + 31] = c.R *.5;
+        vertices[i*42 + 32] = c.G *.5;
+        vertices[i*42 + 33] = c.B *.5;
+        vertices[i*42 + 34] = c.A;
     }
     attribMutex.unlock();
 }
@@ -194,35 +192,35 @@ void Pyramid::setColor(ColorFloat c) {
 void Pyramid::setColor(ColorFloat c[]) {
     attribMutex.lock();
     for(int i = 0; i < mySides; i++) {
-        colors[i*24] = c[i+1].R;
-        colors[i*24 + 1] = c[i+1].G;
-        colors[i*24 + 2] = c[i+1].B;
-        colors[i*24 + 3] = c[i+1].A;
+        vertices[i*42 + 3] = c[i+1].R;
+        vertices[i*42 + 4] = c[i+1].G;
+        vertices[i*42 + 5] = c[i+1].B;
+        vertices[i*42 + 6] = c[i+1].A;
 
-        colors[i*24 + 4] = c[mySides+2].R;
-        colors[i*24 + 5] = c[mySides+2].G;
-        colors[i*24 + 6] = c[mySides+2].B;
-        colors[i*24 + 7] = c[mySides+2].A;
+        vertices[i*42 + 10] = c[mySides+2].R;
+        vertices[i*42 + 11] = c[mySides+2].G;
+        vertices[i*42 + 12] = c[mySides+2].B;
+        vertices[i*42 + 13] = c[mySides+2].A;
 
-        colors[i*24 + 8] = c[i+2].R;
-        colors[i*24 + 9] = c[i+2].G;
-        colors[i*24 + 10] = c[i+2].B;
-        colors[i*24 + 11] = c[i+2].A;
+        vertices[i*42 + 17] = c[(i+1) % mySides + 1].R;
+        vertices[i*42 + 18] = c[(i+1) % mySides + 1].G;
+        vertices[i*42 + 19] = c[(i+1) % mySides + 1].B;
+        vertices[i*42 + 20] = c[(i+1) % mySides + 1].A;
         
-        colors[i*24 + 12] = c[i+1].R;
-        colors[i*24 + 13] = c[i+1].G;
-        colors[i*24 + 14] = c[i+1].B;
-        colors[i*24 + 15] = c[i+1].A;
+        vertices[i*42 + 24] = c[i+1].R;
+        vertices[i*42 + 25] = c[i+1].G;
+        vertices[i*42 + 26] = c[i+1].B;
+        vertices[i*42 + 27] = c[i+1].A;
 
-        colors[i*24 + 16] = c[0].R;
-        colors[i*24 + 17] = c[0].G;
-        colors[i*24 + 18] = c[0].B;
-        colors[i*24 + 19] = c[0].A;
+        vertices[i*42 + 31] = c[0].R;
+        vertices[i*42 + 32] = c[0].G;
+        vertices[i*42 + 33] = c[0].B;
+        vertices[i*42 + 34] = c[0].A;
 
-        colors[i*24 + 20] = c[i+2].R;
-        colors[i*24 + 21] = c[i+2].G;
-        colors[i*24 + 22] = c[i+2].B;
-        colors[i*24 + 23] = c[i+2].A;
+        vertices[i*42 + 38] = c[(i+1) % mySides + 1].R;
+        vertices[i*42 + 39] = c[(i+1) % mySides + 1].G;
+        vertices[i*42 + 40] = c[(i+1) % mySides + 1].B;
+        vertices[i*42 + 41] = c[(i+1) % mySides + 1].A;
     }
     attribMutex.unlock();
 }

@@ -1,11 +1,11 @@
 /*
- * Sphere.h extends Drawable and provides a class for drawing a sphere.
+ * Sphere.h extends Shape and provides a class for drawing a sphere.
  */
 
 #ifndef SPHERE_H_
 #define SPHERE_H_
 
-#include "Drawable.h"       // For extending our Drawable object
+#include "Shape.h"       // For extending our Shape object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -14,7 +14,7 @@ namespace tsgl {
  *  \brief Draw an arbitrary Sphere with colored vertices.
  *  \details Sphere is a class for holding vertex data for a Sphere with non-negative radius.
  */
-class Sphere : public Drawable {
+class Sphere : public Shape {
 protected:
     GLfloat myRadius;
     int horizontalSections, verticalSections;

@@ -14,11 +14,11 @@ void starFunction(Canvas& c) {
 	}
 
 	Star * s1 = new Star(0, 0, 0, 200, 5, 0,0,0, colors, true);
-    // s1->setColor(ColorFloat(1,0,0,1));
+    // s1->setColor(RED);
 	c.add(s1);
 
     float floatVal = 0.0f;
-	GLfloat delta = 0.05;
+	GLfloat delta = 5;
     while (c.isOpen()) {
         c.sleep();
         // s1->setCenterX(sin(floatVal/90) * 100);
@@ -28,16 +28,16 @@ void starFunction(Canvas& c) {
         // s1->setPitch(floatVal);
         // s1->setRoll(floatVal);
         // s1->setRadius(sin(floatVal/90) * 100 + 300);
-        // if (s1->getRadius() > 300 || s1->getRadius() < 100) {
-        //     delta *= -1;
-        //     // s1->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
-        // }
-        // s1->changeRadiusBy(delta);
-        // if (delta > 0) {
-        //     s1->setColor(colors);
-        // } else {
-        //     s1->setColor(RED);
-        // }
+        if (s1->getRadius() > 300 || s1->getRadius() < 100) {
+            delta *= -1;
+            // s1->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
+        }
+        s1->changeRadiusBy(delta);
+        if (delta > 0) {
+            s1->setColor(colors);
+        } else {
+            s1->setColor(RED);
+        }
         floatVal += 1;
     }
 

@@ -23,10 +23,9 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
         TsglDebug("Cannot have an Image with width or height less than or equal to 0.");
         return;
     }
-    isTextured = true;  // Let the Canvas know we're a textured object
+    shaderType = IMAGE_SHADER_TYPE;
     myWidth = width; myHeight = height;
     myXScale = width; myYScale = height;
-    numberOfVertices = numberOfOutlineVertices = 4;
     myFile = filename;
 
 	// Load the image.
@@ -35,50 +34,48 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
     tsglAssert(data, "stbi_load(filename) failed.");
     glEnable(GL_TEXTURE_2D);
 
-    // create the Image's texture id
-    glGenTextures(1, &myTexture);
-
     // vertex allocation and assignment
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[30];
 
-    addVertex(-0.5,-0.5,0,RED);
-    addVertex(-0.5,0.5,0,BLUE);
-    addVertex(0.5,0.5,0,CYAN);
-    addVertex(0.5,-0.5,0,GREEN);
-    // vertices = new GLfloat[36];
-    // colors = nullptr;
-    // outlineArray = nullptr;
-
-    // // vertices = {
-    // // //   x  , y  ,z, R,G,B,A, txX,txY
-    // //     -0.5,-0.5,0, 1,1,1,1, 0.0,0.0,
-    // //     -0.5, 0.5,0, 1,1,1,1, 0.0,1.0,
-    // //      0.5, 0.5,0, 1,1,1,1, 1.0,1.0,
-    // //      0.5,-0.5,0, 1,1,1,1, 1.0,0.0
-    // // }
-    // vertices[0]  = vertices[1]  = vertices[9]  = vertices[28] = -0.5; // x + y
-    // vertices[10] = vertices[18] = vertices[19] = vertices[27] = 0.5; // x + y
-    // vertices[2] = vertices[11] = vertices[20] = vertices[29] = 0; // z
-    // vertices[3] = vertices[12] = vertices[21] = // R
-    // vertices[4] = vertices[13] = vertices[22] = // G
-    // vertices[5] = vertices[14] = vertices[23] = // B
-    // vertices[6] = vertices[15] = vertices[24] = 1;// A
-    // vertices[7]  = vertices[8]  = vertices[16] = vertices[35] = 0.0; // texture coord x + y
-    // vertices[17] = vertices[25] = vertices[26] = vertices[34] = 1.0; // texture coord x + y
-    // init = true;
+    // positions (x,y,z)    texture coords
+    // 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
+    // 0.5f, -0.5f, 0.0f,   1.0f, 0.0f, // bottom right
+    //-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
+    // second triangle
+    // 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, // top right
+    //-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
+    //-0.5f,  0.5f, 0.0f,   0.0f, 1.0f  // top left 
+    vertices[0]  = vertices[1]  = vertices[5]  = vertices[15] = vertices[16] = vertices[26] = 0.5; // x + y
+    vertices[6] = vertices[10] = vertices[11] = vertices[20] = vertices[21] = vertices[25] = -0.5; // x + y
+    vertices[2] = vertices[7] = vertices[12] = vertices[17] = vertices[22] = vertices[27] = 0; // z
+    vertices[3]  = vertices[4]  = vertices[8] = vertices[18] = vertices[19] = vertices[29] = 1.0; // texture coord x + y
+    vertices[9] = vertices[13] = vertices[14] = vertices[23] = vertices[24] = vertices[28] = 0.0; // texture coord x + y
+    init = true;
 }
 
  /*!
   * \brief Draw the Image.
   * \details This function actually draws the Image to the Canvas.
   */
-void Image::draw() {
+void Image::draw(Shader * shader) {
     if (!init) {
         TsglDebug("Vertex buffer is not full.");
         return;
     }
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(myRotationPointX, myRotationPointY, myRotationPointZ));
+    model = glm::rotate(model, glm::radians(myCurrentYaw), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(myCurrentPitch), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(myCurrentRoll), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ));
+    model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
+
+    unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
     glEnable(GL_TEXTURE_2D);
+    glGenTextures(1, &myTexture);
     // enable textures and bind the texture id
     glBindTexture(GL_TEXTURE_2D, myTexture);
 
@@ -96,49 +93,13 @@ void Image::draw() {
 	           	 GL_RGBA, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
-    // transformation matrix
-    glPushMatrix();
-    glTranslatef(myRotationPointX, myRotationPointY, myRotationPointZ);
-    glRotatef(myCurrentYaw, 0, 0, 1);
-    glRotatef(myCurrentPitch, 0, 1, 0);
-    glRotatef(myCurrentRoll, 1, 0, 0); 
-    glTranslatef(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ);
-    glScalef(myXScale, myYScale, myZScale);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 5, vertices, GL_DYNAMIC_DRAW);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 
-    // enable necessary states (vertex, color, and texture)
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-    // link arrays to their respective opengl pointers
-    glVertexPointer(3, GL_FLOAT, 0, vertices);
-    glColorPointer(4, GL_FLOAT, 0, colors);
-    glTexCoordPointer(2, GL_FLOAT, 0, texcoords);
-
-    // draw the image
-    // glBufferData(GL_ARRAY_BUFFER, 36 * sizeof(GLfloat), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_QUADS, 0, numberOfVertices);
-
-    // pop transformation matrix
-    glPopMatrix();
-
-    /* Cleanup states */
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glDisableClientState(GL_COLOR_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
+    glDeleteTextures(1, &myTexture);
 
     glDisable(GL_TEXTURE_2D);
 }
-
-void Image::setColor(ColorFloat c[]) {
-    for (int i = 0; i < numberOfVertices; i++) {
-        colors[i*4] = c[i].R;
-        colors[i*4+1] = c[i].G;
-        colors[i*4+2] = c[i].B;
-        colors[i*4+3] = c[i].A;
-    }
-}
-
 
 /**
  * \brief Mutates the distance from the left side of the Image base to its right side.
@@ -200,30 +161,24 @@ void Image::changeHeightBy(GLfloat delta) {
     attribMutex.unlock();
 }
 
-// /*!
-//  * \brief Alters the file the Image draws.
-//  * \details Alters the values of the myFile, myWidth, myHeight, and mutates vertices.
-//  * \param filename New string value for myFile.
-//  * \param width New width of the Image.
-//  * \param height New height of the Image.
-//  */
-// void Image::changeFileName(std::string filename, int width, int height) {
-//   attribMutex.lock();
-//   myFile = filename;
-//   myWidth = width; myHeight = height;
-//   if (myWidth <= 0 || myHeight <= 0) {
-//     TextureHandler::getDimensions(filename,myWidth,myHeight);
-//   }
-//   vertices[0] = myCenterX - myWidth/2;
-//   vertices[1] = myCenterY - myHeight/2;
-//   vertices[8] = myCenterX + myWidth/2;
-//   vertices[9] = myCenterY - myHeight/2;
-//   vertices[16] = myCenterX - myWidth/2;
-//   vertices[17] = myCenterY + myHeight/2;
-//   vertices[24] = myCenterX + myWidth/2;
-//   vertices[25] = myCenterY + myHeight/2;
-//   attribMutex.unlock();
-// }
+/*!
+ * \brief Alters the file the Image draws.
+ * \details Alters the values of the myFile, myWidth, myHeight, and mutates vertices.
+ * \param filename New string value for myFile.
+ * \param width New width of the Image.
+ * \param height New height of the Image.
+ */
+void Image::changeFile(std::string filename) {
+    attribMutex.lock();
+    init = false;
+    stbi_image_free(data); 
+	// Load the image.
+    stbi_set_flip_vertically_on_load(true);
+    data = stbi_load(filename.c_str(), &pixelWidth, &pixelHeight, 0, 4);
+    tsglAssert(data, "stbi_load(filename) failed.");
+    init = true;
+    attribMutex.unlock();
+}
 
 Image::~Image() { 
     glDeleteTextures(1, &myTexture);

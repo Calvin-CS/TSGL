@@ -97,6 +97,7 @@ BINARIES= \
 	bin/testSphere \
 	bin/testSquare \
 	bin/testStar \
+	bin/testText \
 	bin/testTriangle \
 	bin/testTriangleStrip \
 #  bin/test_specs \
@@ -132,7 +133,6 @@ BINARIES= \
 #	bin/testScreenshot \
 #	bin/testSpectrogram \
 #	bin/testSpectrum \
-#	bin/testText \
 #	bin/testTextCart \
 #	bin/testTextTwo \
 #	bin/testUnits \

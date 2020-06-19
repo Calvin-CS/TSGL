@@ -31,14 +31,10 @@ class Image : public Drawable {
     GLint pixelWidth, pixelHeight;
     std::string myFile;
     GLuint myTexture;
-    GLfloat texcoords[8] = 
-    {
-        0, 0,   0, 1,   1, 1,   1, 0
-    };
  public:
     Image(float x, float y, float z, std::string filename, GLfloat width, GLfloat height, float yaw, float pitch, float roll, float alpha = 1.0f);
 
-    virtual void draw();
+    virtual void draw(Shader * shader);
 
     /*!
      * \brief Accessor for the image's height.
@@ -60,11 +56,11 @@ class Image : public Drawable {
 
     void changeHeightBy(GLfloat delta);
 
+    void changeFile(std::string filename);
+
     GLint getPixelHeight() { return pixelHeight; }
 
     GLint getPixelWidth() { return pixelWidth; }
-
-    void setColor(ColorFloat c[]);
 
     ~Image();
 };

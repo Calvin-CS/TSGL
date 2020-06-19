@@ -27,6 +27,7 @@ Triangle::Triangle(float x1, float y1, float z1, float x2, float y2, float z2, f
     addVertex(x1 - xAverage, y1 - yAverage, z1 - zAverage, color);
     addVertex(x2 - xAverage, y2 - yAverage, z2 - zAverage, color);
     addVertex(x3 - xAverage, y3 - yAverage, z3 - zAverage, color);
+    geometryType = GL_TRIANGLES;
 }
 
 /*!
@@ -54,5 +55,6 @@ Triangle::Triangle(float x1, float y1, float z1, float x2, float y2, float z2, f
     addVertex(x1 - xAverage, y1 - yAverage, z1 - zAverage, color[0]);
     addVertex(x2 - xAverage, y2 - yAverage, z2 - zAverage, color[1]);
     addVertex(x3 - xAverage, y3 - yAverage, z3 - zAverage, color[2]);
+    geometryType = GL_TRIANGLES;
 }
 }

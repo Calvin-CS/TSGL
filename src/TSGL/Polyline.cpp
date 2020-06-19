@@ -23,8 +23,7 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float yaw, float 
     numberOfOutlineVertices = 0;
     edgesOutlined = false;
     myXScale = myYScale = myZScale = 1;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     geometryType = GL_LINE_STRIP;
     attribMutex.unlock();
 }
@@ -52,8 +51,7 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
     numberOfOutlineVertices = 0;
     edgesOutlined = false;
     myXScale = myYScale = myZScale = 1;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     geometryType = GL_LINE_STRIP;
     attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
@@ -84,8 +82,7 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
     numberOfOutlineVertices = 0;
     edgesOutlined = false;
     myXScale = myYScale = myZScale = 1;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     geometryType = GL_LINE_STRIP;
     attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {

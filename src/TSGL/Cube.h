@@ -5,7 +5,7 @@
 #ifndef CUBE_H_
 #define CUBE_H_
 
-#include "Drawable.h"       // For extending our Prism object
+#include "Shape.h"       // For extending our Shape object
 #include "TsglAssert.h"  // For unit testing purposes
 
 namespace tsgl {
@@ -13,9 +13,9 @@ namespace tsgl {
 /*! \class Cube
  *  \brief Draw an arbitrary Cube with colored vertices.
  *  \details Cube is a class for holding vertex data for a Cube.
- *  \details Cube is a 6-sided subclass of Drawable with all square faces.
+ *  \details Cube is a 6-sided subclass of Shape with all square faces.
  */
-class Cube : public Drawable {
+class Cube : public Shape {
 protected:
     GLfloat mySideLength;
 public:
@@ -33,7 +33,7 @@ public:
     */
     virtual GLfloat getSideLength() { return mySideLength; }
 
-    virtual void setColor(ColorFloat c) { Drawable::setColor(c); }
+    virtual void setColor(ColorFloat c) { Shape::setColor(c); }
 
     virtual void setColor(ColorFloat c[]);
 

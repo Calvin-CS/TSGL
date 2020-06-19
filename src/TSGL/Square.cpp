@@ -14,7 +14,6 @@ namespace tsgl {
  */
 Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
     attribMutex.lock();
-    geometryType = GL_QUADS;
     myXScale = myYScale = mySideLength = sideLength;
     myZScale = 1;
     attribMutex.unlock();
@@ -36,7 +35,6 @@ Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float p
  */
 Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
     attribMutex.lock();
-    geometryType = GL_QUADS;
     myXScale = myYScale = mySideLength = sideLength;
     myZScale = 1;
     attribMutex.unlock();

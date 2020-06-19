@@ -26,6 +26,10 @@ const double RAD = PI / 180;     // One radian in degrees
 const int FPS = 60;                // Frames per second
 const float FRAME = 1.0f/FPS;      // Number of seconds between frames
 
+const unsigned int TEXT_SHADER_TYPE = 0;
+const unsigned int SHAPE_SHADER_TYPE = 1;
+const unsigned int IMAGE_SHADER_TYPE = 2;
+
 /*!
  * \var typedef long double Decimal
  * \brief A type definition for a long double.

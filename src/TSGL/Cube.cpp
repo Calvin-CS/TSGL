@@ -17,48 +17,59 @@ namespace tsgl {
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat c)  
-: Drawable(x, y, z, yaw, pitch, roll)  { // FIXME vertices
+: Shape(x, y, z, yaw, pitch, roll)  {
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }
     attribMutex.lock();
-    geometryType = GL_QUADS;
+    geometryType = GL_TRIANGLES;
     mySideLength = sideLength;
     myXScale = sideLength;
     myYScale = sideLength;
     myZScale = sideLength;
-    numberOfVertices = numberOfOutlineVertices = 24;
+    numberOfVertices = numberOfOutlineVertices = 36;
     outlineGeometryType = GL_LINES;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];    
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c);
     addVertex(-0.5, -0.5, 0.5, c);
+    addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(-0.5, -0.5, -0.5, c);
     addVertex(-0.5, 0.5, 0.5, c);
     addVertex(-0.5, 0.5, -0.5, c);
     
     addVertex(0.5, -0.5, -0.5, c);
     addVertex(0.5, -0.5, 0.5, c);
     addVertex(0.5, 0.5, 0.5, c);
+    addVertex(0.5, -0.5, -0.5, c);
+    addVertex(0.5, 0.5, 0.5, c);
     addVertex(0.5, 0.5, -0.5, c);
 
     addVertex(0.5, -0.5, -0.5, c);
     addVertex(-0.5, -0.5, -0.5, c);
+    addVertex(-0.5, -0.5, 0.5, c);
+    addVertex(0.5, -0.5, -0.5, c);
     addVertex(-0.5, -0.5, 0.5, c);
     addVertex(0.5, -0.5, 0.5, c);
 
     addVertex(0.5, 0.5, -0.5, c);
     addVertex(-0.5, 0.5, -0.5, c);
     addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, -0.5, c);
+    addVertex(-0.5, 0.5, 0.5, c);
     addVertex(0.5, 0.5, 0.5, c);
 
     addVertex(-0.5, -0.5, -0.5, c);
     addVertex(-0.5, 0.5, -0.5, c);
     addVertex(0.5, 0.5, -0.5, c);
+    addVertex(-0.5, -0.5, -0.5, c);
+    addVertex(0.5, 0.5, -0.5, c);
     addVertex(0.5, -0.5, -0.5, c);
 
     addVertex(-0.5, -0.5, 0.5, c);
     addVertex(-0.5, 0.5, 0.5, c);
+    addVertex(0.5, 0.5, 0.5, c);
+    addVertex(-0.5, -0.5, 0.5, c);
     addVertex(0.5, 0.5, 0.5, c);
     addVertex(0.5, -0.5, 0.5, c);
 }
@@ -78,48 +89,59 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
   * \return A new Cube with a buffer for storing the specified numbered of vertices.
   */
 Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch, float roll, ColorFloat c[])  
-: Drawable(x, y, z, yaw, pitch, roll)  { // FIXME vertices
+: Shape(x, y, z, yaw, pitch, roll)  {
     if (sideLength <= 0) {
         TsglDebug("Cannot have a Cube with non-positive sidelength.");
     }
     attribMutex.lock();
-    geometryType = GL_QUADS;
+    geometryType = GL_TRIANGLES;
     mySideLength = sideLength;
     myXScale = sideLength;
     myYScale = sideLength;
     myZScale = sideLength;
-    numberOfVertices = numberOfOutlineVertices = 24;
+    numberOfVertices = numberOfOutlineVertices = 36;
     outlineGeometryType = GL_LINES;
-    vertices = new GLfloat[numberOfVertices * 3];
-    colors = new GLfloat[numberOfVertices * 4];
+    vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c[0]);
     addVertex(-0.5, -0.5, 0.5, c[1]);
+    addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(-0.5, -0.5, -0.5, c[0]);
     addVertex(-0.5, 0.5, 0.5, c[2]);
     addVertex(-0.5, 0.5, -0.5, c[3]);
     
     addVertex(0.5, -0.5, -0.5, c[4]);
     addVertex(0.5, -0.5, 0.5, c[5]);
     addVertex(0.5, 0.5, 0.5, c[6]);
+    addVertex(0.5, -0.5, -0.5, c[4]);
+    addVertex(0.5, 0.5, 0.5, c[6]);
     addVertex(0.5, 0.5, -0.5, c[7]);
 
     addVertex(0.5, -0.5, -0.5, c[4]);
     addVertex(-0.5, -0.5, -0.5, c[0]);
+    addVertex(-0.5, -0.5, 0.5, c[1]);
+    addVertex(0.5, -0.5, -0.5, c[4]);
     addVertex(-0.5, -0.5, 0.5, c[1]);
     addVertex(0.5, -0.5, 0.5, c[5]);
 
     addVertex(0.5, 0.5, -0.5, c[7]);
     addVertex(-0.5, 0.5, -0.5, c[3]);
     addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(0.5, 0.5, -0.5, c[7]);
+    addVertex(-0.5, 0.5, 0.5, c[2]);
     addVertex(0.5, 0.5, 0.5, c[6]);
 
     addVertex(-0.5, -0.5, -0.5, c[0]);
     addVertex(-0.5, 0.5, -0.5, c[3]);
     addVertex(0.5, 0.5, -0.5, c[7]);
+    addVertex(-0.5, -0.5, -0.5, c[0]);
+    addVertex(0.5, 0.5, -0.5, c[7]);
     addVertex(0.5, -0.5, -0.5, c[4]);
 
     addVertex(-0.5, -0.5, 0.5, c[1]);
     addVertex(-0.5, 0.5, 0.5, c[2]);
+    addVertex(0.5, 0.5, 0.5, c[6]);
+    addVertex(-0.5, -0.5, 0.5, c[1]);
     addVertex(0.5, 0.5, 0.5, c[6]);
     addVertex(0.5, -0.5, 0.5, c[5]);
 }
@@ -165,45 +187,45 @@ void Cube::changeSideLengthBy(GLfloat delta) {
  */
 void Cube::setColor(ColorFloat c[]) {
     attribMutex.lock();
-    colors[0] = colors[36] = colors[64] = c[0].R;
-    colors[1] = colors[37] = colors[65] = c[0].G;
-    colors[2] = colors[38] = colors[66] = c[0].B;
-    colors[3] = colors[39] = colors[67] = c[0].A;
+    vertices[3] = vertices[24] = vertices[94] = vertices[171] = vertices[192] = c[0].R;
+    vertices[4] = vertices[25] = vertices[95] = vertices[172] = vertices[193] = c[0].G;
+    vertices[5] = vertices[26] = vertices[96] = vertices[173] = vertices[194] = c[0].B;
+    vertices[6] = vertices[27] = vertices[97] = vertices[174] = vertices[195] = c[0].A;
 
-    colors[4] = colors[40] = colors[80] = c[1].R;
-    colors[5] = colors[41] = colors[81] = c[1].G;
-    colors[6] = colors[42] = colors[82] = c[1].B;
-    colors[7] = colors[43] = colors[83] = c[1].A;
+    vertices[10] = vertices[101] = vertices[115] = vertices[213] = vertices[234] = c[1].R;
+    vertices[11] = vertices[102] = vertices[116] = vertices[214] = vertices[235] = c[1].G;
+    vertices[12] = vertices[103] = vertices[117] = vertices[215] = vertices[236] = c[1].B;
+    vertices[13] = vertices[104] = vertices[118] = vertices[216] = vertices[237] = c[1].A;
 
-    colors[8] = colors[56] = colors[84] = c[2].R;
-    colors[9] = colors[57] = colors[85] = c[2].G;
-    colors[10] = colors[58] = colors[86] = c[2].B;
-    colors[11] = colors[59] = colors[87] = c[2].A;
+    vertices[17] = vertices[31] = vertices[143] = vertices[157] = vertices[220] = c[2].R;
+    vertices[18] = vertices[32] = vertices[144] = vertices[158] = vertices[221] = c[2].G;
+    vertices[19] = vertices[33] = vertices[145] = vertices[159] = vertices[222] = c[2].B;
+    vertices[20] = vertices[34] = vertices[146] = vertices[160] = vertices[223] = c[2].A;
 
-    colors[12] = colors[52] = colors[68] = c[3].R;
-    colors[13] = colors[53] = colors[69] = c[3].G;
-    colors[14] = colors[54] = colors[70] = c[3].B;
-    colors[15] = colors[55] = colors[71] = c[3].A;
+    vertices[38] = vertices[136] = vertices[178] = c[3].R;
+    vertices[39] = vertices[137] = vertices[179] = c[3].G;
+    vertices[40] = vertices[138] = vertices[180] = c[3].B;
+    vertices[41] = vertices[139] = vertices[181] = c[3].A;
 
-    colors[16] = colors[32] = colors[76] = c[4].R;
-    colors[17] = colors[33] = colors[77] = c[4].G;
-    colors[18] = colors[34] = colors[78] = c[4].B;
-    colors[19] = colors[35] = colors[79] = c[4].A;
+    vertices[45] = vertices[66] = vertices[87] = vertices[108] = vertices[206] = c[4].R;
+    vertices[46] = vertices[67] = vertices[88] = vertices[109] = vertices[207] = c[4].G;
+    vertices[47] = vertices[68] = vertices[89] = vertices[110] = vertices[208] = c[4].B;
+    vertices[48] = vertices[69] = vertices[90] = vertices[111] = vertices[209] = c[4].A;
 
-    colors[20] = colors[44] = colors[92] = c[5].R;
-    colors[21] = colors[45] = colors[93] = c[5].G;
-    colors[22] = colors[46] = colors[94] = c[5].B;
-    colors[23] = colors[47] = colors[95] = c[5].A;
+    vertices[52] = vertices[122] = vertices[248] = c[5].R;
+    vertices[53] = vertices[123] = vertices[249] = c[5].G;
+    vertices[54] = vertices[124] = vertices[250] = c[5].B;
+    vertices[55] = vertices[125] = vertices[251] = c[5].A;
 
-    colors[24] = colors[60] = colors[88] = c[6].R;
-    colors[25] = colors[61] = colors[89] = c[6].G;
-    colors[26] = colors[62] = colors[90] = c[6].B;
-    colors[27] = colors[63] = colors[91] = c[6].A;
+    vertices[59] = vertices[73] = vertices[164] = vertices[227] = vertices[241] = c[6].R;
+    vertices[60] = vertices[74] = vertices[165] = vertices[228] = vertices[242] = c[6].G;
+    vertices[61] = vertices[75] = vertices[166] = vertices[229] = vertices[243] = c[6].B;
+    vertices[62] = vertices[76] = vertices[167] = vertices[230] = vertices[244] = c[6].A;
 
-    colors[28] = colors[48] = colors[72] = c[7].R;
-    colors[29] = colors[49] = colors[73] = c[7].G;
-    colors[30] = colors[50] = colors[74] = c[7].B;
-    colors[31] = colors[51] = colors[75] = c[7].A;
+    vertices[80] = vertices[129] = vertices[150] = vertices[185] = vertices[199] = c[7].R;
+    vertices[81] = vertices[130] = vertices[151] = vertices[186] = vertices[200] = c[7].G;
+    vertices[82] = vertices[131] = vertices[152] = vertices[187] = vertices[201] = c[7].B;
+    vertices[83] = vertices[132] = vertices[153] = vertices[188] = vertices[202] = c[7].A;
     attribMutex.unlock();
 }
 

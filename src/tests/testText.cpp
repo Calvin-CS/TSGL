@@ -11,7 +11,6 @@ using namespace tsgl;
 /*!
  * \brief Draws some text on a Canvas.
  * \details
- * - We declare some colors to use for drawing.
  * - We changed it so that now a default text font is loaded if one is not specified.
  * - We draw a few lines of text in various colors using drawText().
  * .
@@ -19,22 +18,14 @@ using namespace tsgl;
  * \param font The font of the text.
  */
 void textFunction(Canvas& can, std::string font) {
-    ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
-    ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
-    ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
-
-    can.setFont(font);
-    can.drawText("A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
-    can.drawText("Something extraordinary happened.", 16, 150, 32, RED);
-    can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
-    can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
-                 32, BLUE);
-    can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
-    can.drawText("And to that I say...oh well.", 16, 550, 32, WHITE);
-    Text * text = new Text(L"Blergh", 0,0, 30, PURPLE);
-    text->setFont(font);
-    text->setCenter(can.getWindowWidth()/2, 4*can.getWindowHeight() /5);
-    text->setRotation(PI/8);
+    // can.drawText("A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
+    // can.drawText("Something extraordinary happened.", 16, 150, 32, RED);
+    // can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
+    // can.drawText("Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
+    //              32, BLUE);
+    // can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
+    // can.drawText("And to that I say...oh well.", 16, 550, 32, WHITE);
+    Text * text = new Text(0,0,0,"B", font, 100, 0,0,0, YELLOW);
     can.add(text);
     while(can.isOpen()) {
         can.sleep();
