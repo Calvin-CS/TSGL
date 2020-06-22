@@ -6,11 +6,15 @@ namespace tsgl {
 /*!
  * \brief Explicitly constructs a new Text instance.
  * \details This is the constructor for the Text class.
+ *      \param x The center x coordinate of the text.
+ *      \param y The center y coordinate of the text.
+ *      \param z The center z coordinate of the text.
  *      \param text The string to draw.
- *      \param loader A reference pointer to the TextureHandler with which to load the font.
- *      \param x The x coordinate.
- *      \param y The y coordinate.
+ *      \param fontFilename The path of the filename detailing the font the Text will use.
  *      \param fontsize The size of the text in pixels.
+ *      \param yaw The yaw of the Text in 3D space.
+ *      \param pitch The pitch of the Text in 3D space.
+ *      \param roll The roll of the Text in 3D space.
  *      \param color A reference to the ColorFloat to use.
  * \return A new Text instance with the specified string, position, and color.
  */
@@ -21,6 +25,7 @@ Text::Text(float x, float y, float z, std::string text, std::string fontFilename
     myFont = fontFilename;
     myFontSize = fontsize;
     myColor = color;
+    myXScale = myYScale = myZScale = 1;
 
     // FreeType
     // --------
@@ -35,34 +40,7 @@ Text::Text(float x, float y, float z, std::string text, std::string fontFilename
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
 
-    // disable byte-alignment restriction
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
-
-    myWidth = 0;
-    myHeight = 0;
-
-    // load first 128 characters of ASCII set
-    // for (unsigned char c = 0; c < 128; c++) {
-    std::string::const_iterator c;
-    for (c = myString.begin(); c != myString.end(); c++) {
-        // Load character glyph 
-        if (FT_Load_Char(face, *c, FT_LOAD_RENDER))
-        {
-            std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
-            continue;
-        }
-        // now store character for later use
-        Character character = {
-            face->glyph->bitmap.buffer,
-            glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-            glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-            face->glyph->advance.x
-        };
-        Characters.insert(std::pair<char, Character>(*c, character));
-        myWidth += face->glyph->advance.x >> 6;
-        if (face->glyph->bitmap.rows > myHeight)
-            myHeight = face->glyph->bitmap.rows;
-    }
+    calculateDimensions();
 
     vertices = new float[30];                                        // Allocate the vertices
 
@@ -74,13 +52,13 @@ Text::Text(float x, float y, float z, std::string text, std::string fontFilename
     vertices[22] = 0; vertices[23] = vertices[24] = 1.0f;
     vertices[27] = 0; vertices[28] = 1.0f; vertices[29] = 0.0f;
 
-    printf("%f, %f\n", myWidth, myHeight);
     init = true;
 }
 
 /*!
  * \brief Draw the Text.
  * \details This function actually draws the Text to the Canvas. 
+ *  \param shader Pointer to appropriate instance of Shader being used to render the Text.
  */
 void Text::draw(Shader * shader) {
     glm::mat4 model = glm::mat4(1.0f);
@@ -97,13 +75,17 @@ void Text::draw(Shader * shader) {
     glUniform4f(glGetUniformLocation(shader->ID, "textColor"), myColor.R, myColor.G, myColor.B, myColor.A);
 
     glEnable(GL_TEXTURE_2D);
-    glActiveTexture(GL_TEXTURE0);
 
     float mouseX = -myWidth / 2;
     float mouseY = -myHeight / 2;
     std::string::const_iterator c;
     for (c = myString.begin(); c != myString.end(); c++) {
-        Character ch = Characters[*c];
+        // Load character glyph 
+        if (FT_Load_Char(face, *c, FT_LOAD_RENDER))
+        {
+            std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+            continue;
+        }
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
 
@@ -115,12 +97,12 @@ void Text::draw(Shader * shader) {
             GL_TEXTURE_2D,
             0,
             GL_RED,
-            ch.Size.x,
-            ch.Size.y,
+            face->glyph->bitmap.width, 
+            face->glyph->bitmap.rows,
             0,
             GL_RED,
             GL_UNSIGNED_BYTE,
-            ch.Data
+            face->glyph->bitmap.buffer
         );
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -129,11 +111,11 @@ void Text::draw(Shader * shader) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         // update vertices for each character
-        float xpos = mouseX + ch.Bearing.x * 1.0f;
-        float ypos = mouseY - (ch.Size.y - ch.Bearing.y) * 1.0f;
+        float xpos = mouseX + face->glyph->bitmap_left;
+        float ypos = mouseY - (face->glyph->bitmap.rows - face->glyph->bitmap_top);
 
-        float w = ch.Size.x * 1.0f;
-        float h = ch.Size.y * 1.0f;
+        float w = face->glyph->bitmap.width;
+        float h = face->glyph->bitmap.rows;
 
         //triangle 1
         vertices[0] = xpos; vertices[1] = ypos + h;
@@ -144,15 +126,13 @@ void Text::draw(Shader * shader) {
         vertices[20] = xpos + w; vertices[21] = ypos;
         vertices[25] = xpos + w; vertices[26] = ypos + h;
 
-        glBindTexture(GL_TEXTURE_2D, texture);
-
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 5, vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glDeleteTextures(1, &texture);
 
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        mouseX += (ch.Advance >> 6); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+        mouseX += (face->glyph->advance.x >> 6); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
     }
     glDisable(GL_TEXTURE_2D);
 }
@@ -161,33 +141,58 @@ void Text::draw(Shader * shader) {
  * \brief Alter the Text's string
  * \details This function changes myString to the parameter text
  *  \param text The text to change myString to.
- * \warning This will also alter the Text's rotation point to the new center if and only if 
- *          the old rotation point was at the Text's old center.
+ * \warning The center of the text will not change despite any differences in rendered string length.
  */
 void Text::setText(std::string text) {
-
+    attribMutex.lock();
+    init = false;
+    myString = text;
+    calculateDimensions();
+    init = true;
+    attribMutex.unlock();
 }
 
 /*!
  * \brief Alter the Text's font size
  * \details This function changes myFontSize to the parameter fontsize.
  *  \param fontsize The new fontsize.
- * \warning This will also alter the Text's rotation point to the new center if and only if 
- *          the old rotation point was at the Text's old center.
+ * \warning The center of the text will not change despite any differences in rendered string length.
  */
-void Text::setFontSize(int fontsize) {
+void Text::setFontSize(unsigned int fontsize) {
+    attribMutex.lock();
+    init = false;
+    myFontSize = fontsize;
 
+    // set size to load glyphs as
+    FT_Set_Pixel_Sizes(face, 0, myFontSize);
+
+    calculateDimensions();
+    init = true;
+    attribMutex.unlock();
 }
 
 /*!
  * \brief Alter the Text's font
  * \details This function changes myLoader's font to the parameter font.
  *  \param filename The new font file name.
- * \warning This will also alter the Text's rotation point to the new center if and only if 
- *          the old rotation point was at the Text's old center.
+ * \warning The center of the text will not change despite any differences in rendered string length.
  */
 void Text::setFont(std::string filename) {
+    attribMutex.lock();
+    init = false;
+    FT_Done_Face(face);
+    myFont = filename;
+    // load font as face
 
+    if (FT_New_Face(ft, myFont.c_str(), 0, &face))
+        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+
+    // set size to load glyphs as
+    FT_Set_Pixel_Sizes(face, 0, myFontSize);
+
+    calculateDimensions();
+    init = true;
+    attribMutex.unlock();
 }
 
 /*!
@@ -197,6 +202,30 @@ void Text::setFont(std::string filename) {
  */
 void Text::setColor(const ColorFloat& color) {
     myColor = color;
+}
+
+/*!
+ * \brief Private helper method for calculating Text dimensions.
+ * \details This function assigns values to myWidth and myHeight based on 
+ *  the glyphs loaded based on myFontSize, myFont, and myString.
+ */
+void Text::calculateDimensions() {
+    myWidth = 0;
+    myHeight = 0;
+
+    std::string::const_iterator c;
+    for (c = myString.begin(); c != myString.end(); c++) {
+        // Load character glyph 
+        if (FT_Load_Char(face, *c, FT_LOAD_RENDER))
+        {
+            std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+            continue;
+        }
+
+        myWidth += face->glyph->advance.x >> 6;
+        if (face->glyph->bitmap.rows > myHeight)
+            myHeight = face->glyph->bitmap.rows;
+    }
 }
 
 Text::~Text() {

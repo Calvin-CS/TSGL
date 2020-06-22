@@ -25,10 +25,28 @@ void textFunction(Canvas& can, std::string font) {
     //              32, BLUE);
     // can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
     // can.drawText("And to that I say...oh well.", 16, 550, 32, WHITE);
-    Text * text = new Text(0,0,0,"B", font, 100, 0,0,0, YELLOW);
+    Text * text = new Text(0,0,0,"Blergh", font, 100, 0,0,0, YELLOW);
     can.add(text);
+    Rectangle * rec = new Rectangle(0,0,0,360,62,0,0,0, ColorFloat(1,1,1,0.2));
+    can.add(rec);
+
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&text]() {
+        // text->setText("Glorgaborg");
+        // text->setColor(RED);
+        // text->setFont("./assets/freefont/FreeSerifItalic.ttf");
+        text->setFontSize(50);
+    });
+
+    float rotation = 0.0f;
     while(can.isOpen()) {
         can.sleep();
+        // text->setCenterX(sin(rotation)*200);
+        // text->setCenterY(cos(rotation)*200);
+        // text->setCenterZ(sin(rotation)*100);
+        // text->setYaw(rotation*45);
+        // text->setPitch(rotation*45);
+        // text->setRoll(rotation*45);
+        rotation+=0.01;
     }
     delete text;
 

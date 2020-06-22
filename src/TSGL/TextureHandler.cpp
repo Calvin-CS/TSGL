@@ -212,8 +212,8 @@ void TextureHandler::drawGLtextureFromBuffer(GLubyte* buffer, int x, int y, unsi
  * \return True if successful, false otherwise.
  * \bug If the default font cannot be located, TSGL will crash.
  */
-bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* vertices, int centerX, int centerY, float rotation) {
-    const wchar_t* string = text.c_str();
+bool TextureHandler::drawText(std::string text, unsigned int font_size, float* vertices) {
+    // const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //If no font is set, load up a default one
       bool found = false;
       for (unsigned int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
@@ -244,7 +244,7 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
     bool use_kerning = FT_HAS_KERNING(fontFace);
 
     for (unsigned int i = 0; i < text.size(); i++) {
-        current_glyph_index = FT_Get_Char_Index(fontFace, string[i]);
+        current_glyph_index = FT_Get_Char_Index(fontFace, text[i]);
 
         if (use_kerning && previous_glyph_index && current_glyph_index) {
             FT_Vector delta;
@@ -285,33 +285,21 @@ bool TextureHandler::drawText(std::wstring text, unsigned int font_size, float* 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        vertices[0]  = vertices[16] = penX + glyph->bitmap_left;
-        vertices[8]  = vertices[24] = penX + glyph->bitmap_left + glyph->bitmap.width;
-        vertices[1]  = vertices[9]  = penY - glyph->bitmap_top;
-        vertices[25] = vertices[17] = penY - glyph->bitmap_top + glyph->bitmap.rows;
+        /* triangles:
+            bottom left-bottom right-top left
+            top right-top left-bottom right
+         */
 
-
-        float s = sin(rotation);
-        float c = cos(rotation);
-        for(int i = 0; i < 4; i++) {
-            float x = vertices[8*i];
-            float y = vertices[8*i+1];
-            x -= centerX;
-            y -= centerY;
-            float xnew = x * c - y * s;
-            float ynew = x * s + y * c;
-
-            x = xnew + centerX;
-            y = ynew + centerY;
-            vertices[8*i] = x;
-            vertices[8*i+1] = y;
-        }
+        vertices[0]  = vertices[10] = vertices[20] = penX + glyph->bitmap_left; // left
+        vertices[5]  = vertices[16] = vertices[25] = penX + glyph->bitmap_left + glyph->bitmap.width; //right
+        vertices[1]  = vertices[6]  = vertices[26] = penY - glyph->bitmap_top; // bottom
+        vertices[15] = vertices[11] = vertices[21] = penY - glyph->bitmap_top + glyph->bitmap.rows; // top
 
         penX += glyph->advance.x >> 6;
         penY += glyph->advance.y >> 6;
 
-        glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), vertices, GL_DYNAMIC_DRAW);  // Fill the buffer
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);                                         // Draw the character
+        glBufferData(GL_ARRAY_BUFFER, 30 * sizeof(float), vertices, GL_DYNAMIC_DRAW);  // Fill the buffer
+        glDrawArrays(GL_TRIANGLES, 0, 6);                                         // Draw the character
 
         glDeleteTextures(1, &texture);
     }
@@ -362,8 +350,8 @@ bool TextureHandler::loadFont(const std::string& filename) {
     return true;
 }
 
-void TextureHandler::calculateTextCenter(std::wstring text, unsigned int font_size, int leftX, int bottomY, float& centerX, float& centerY) {
-    const wchar_t* string = text.c_str();
+void TextureHandler::calculateTextDimensions(std::string text, unsigned int font_size, float& width, float& height) {
+    // const wchar_t* string = text.c_str();
     if(fontFace == nullptr) {   //If no font is set, load up a default one
       bool found = false;
       for (unsigned int i = 0; i < sizeof(DEFAULTFONTPATHS)/sizeof(*DEFAULTFONTPATHS); ++i) {
@@ -381,13 +369,13 @@ void TextureHandler::calculateTextCenter(std::wstring text, unsigned int font_si
     }
     FT_GlyphSlot glyph = fontFace->glyph;
     FT_UInt current_glyph_index, previous_glyph_index = 0;
-    int penX = leftX;
-    int penY = bottomY;
+    int penX = 0;
+    int penY = 0;
 
-    int minX = leftX;
-    int minY = bottomY;
-    int maxX = leftX;
-    int maxY = bottomY;
+    int minX = 0;
+    int minY = 0;
+    int maxX = 0;
+    int maxY = 0;
 
     int currentRightX, currentTopY, currentBottomY;
 
@@ -400,7 +388,7 @@ void TextureHandler::calculateTextCenter(std::wstring text, unsigned int font_si
     bool use_kerning = FT_HAS_KERNING(fontFace);
 
     for (unsigned int i = 0; i < text.size(); i++) {
-        current_glyph_index = FT_Get_Char_Index(fontFace, string[i]);
+        current_glyph_index = FT_Get_Char_Index(fontFace, text[i]);
 
         if (use_kerning && previous_glyph_index && current_glyph_index) {
             FT_Vector delta;
@@ -433,8 +421,8 @@ void TextureHandler::calculateTextCenter(std::wstring text, unsigned int font_si
         penY += glyph->advance.y >> 6;
     }
 
-    centerX = (minX + maxX) / 2;
-    centerY = (minY + maxY) / 2;
+    width = maxX - minX;
+    height = maxY - minY;
 }
 
 /*!
