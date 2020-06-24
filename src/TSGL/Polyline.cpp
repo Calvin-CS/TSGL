@@ -20,8 +20,6 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float yaw, float 
       TsglDebug("Cannot have a line with fewer than 2 vertices.");
     attribMutex.lock();
     numberOfVertices = numVertices;
-    numberOfOutlineVertices = 0;
-    edgesOutlined = false;
     myXScale = myYScale = myZScale = 1;
     vertices = new GLfloat[numberOfVertices * 7];
     geometryType = GL_LINE_STRIP;
@@ -48,8 +46,6 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
       TsglDebug("Cannot have a line with fewer than 2 vertices.");
     attribMutex.lock();
     numberOfVertices = numVertices;
-    numberOfOutlineVertices = 0;
-    edgesOutlined = false;
     myXScale = myYScale = myZScale = 1;
     vertices = new GLfloat[numberOfVertices * 7];
     geometryType = GL_LINE_STRIP;
@@ -79,8 +75,6 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
         TsglDebug("Cannot have a line with fewer than 2 vertices.");
     attribMutex.lock();
     numberOfVertices = numVertices;
-    numberOfOutlineVertices = 0;
-    edgesOutlined = false;
     myXScale = myYScale = myZScale = 1;
     vertices = new GLfloat[numberOfVertices * 7];
     geometryType = GL_LINE_STRIP;

@@ -47,7 +47,6 @@ void clockFunction(Canvas& can) {
 
     Rectangle * cord = new Rectangle(-110,80,100,220,5,90,0,0,BLACK);
     cord->setRotationPoint(0,80,10);
-    cord->displayOutlineEdges(false);
     can.add(cord);
 
     time_t t = time(NULL);

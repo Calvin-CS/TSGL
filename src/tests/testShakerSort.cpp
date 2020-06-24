@@ -50,7 +50,6 @@ void shakerSortFunction(Canvas& can) {
     for (int i = 0; i < SIZE; i++) {
         rectangles[i] = new Rectangle(start + i * rectangleWidth, 0, 0, rectangleWidth, saferand(1,can.getWindowHeight()*.9), 0, 0, 0, RED);
         numbers[i] = rectangles[i]->getHeight();
-        rectangles[i]->displayOutlineEdges(false);
         can.add(rectangles[i]);
     }
     can.setBackgroundColor(GRAY);

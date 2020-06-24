@@ -11,31 +11,24 @@ using namespace tsgl;
 
 void dioramaFunction(Canvas& can) {
     Square * blankCanvas = new Square(180,0,135,270,0,0,0,WHITE);
-    blankCanvas->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(blankCanvas);
 
     Rectangle * emptyDioramaLeft = new Rectangle(-45,0,0,270,270,0,90,0,ColorFloat(1,1,1,0));
-    emptyDioramaLeft->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaLeft);
     Rectangle * emptyDioramaRight = new Rectangle(-315,0,0,270,270,0,90,0,ColorFloat(1,1,1,0));
-    emptyDioramaRight->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaRight);
     Rectangle * emptyDioramaTop = new Rectangle(-180,135,0,270,270,0,0,90,ColorFloat(1,1,1,0));
-    emptyDioramaTop->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaTop);
     Rectangle * emptyDioramaBottom = new Rectangle(-180,-135,0,270,270,0,0,90,ColorFloat(1,1,1,0));
-    emptyDioramaBottom->setEdgeColor(ColorFloat(0.1,0.1,0.1,1));
     // can.add(emptyDioramaBottom);
 
     Cuboid * trunk = new Cuboid(-200,-30,0,25,200,25,0,0,0,ColorFloat(.6,.3,0,1));
-    trunk->displayOutlineEdges(false);
     // can.add(trunk);
 
     Ellipsoid * leaves = new Ellipsoid(-200,70,0,75,50,40,0,0,0,GREEN);
     // can.add(leaves);
 
     Rectangle * trunkFlat = new Rectangle(160,-30,135,25,200,0,0,0,ColorFloat(.6,.3,0,1));
-    trunkFlat->displayOutlineEdges(false);
     // can.add(trunkFlat);
 
     Ellipse * leavesFlat = new Ellipse(160,70,135,75,50,0,0,0,ColorFloat(0,0.8,0,1));

@@ -28,13 +28,9 @@ namespace tsgl {
  */
 class Shape : public Drawable {
  protected:
-    bool edgesOutlined = true;
     int numberOfVertices;
-    int numberOfOutlineVertices;
-    GLsizei outlineStride = 0;
     int currentVertex = 0;
     GLenum geometryType;
-    GLenum outlineGeometryType;
     virtual void addVertex(float x, float y, float z, const ColorFloat &color = WHITE);    
 
  public:
@@ -44,13 +40,6 @@ class Shape : public Drawable {
 
     virtual void setColor(ColorFloat c);
     virtual void setColor(ColorFloat c[]);
-    virtual void setEdgeColor(ColorFloat c);
-
-   /*
-    * \brief Mutator that determines if the edges of the Shape should be highlighted.
-    * \details Updates the value of the edgesOutlined instance variable. Defaults to true.
-    */
-    virtual void displayOutlineEdges(bool on=true) { edgesOutlined=on; }
 };
 
 }

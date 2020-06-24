@@ -47,7 +47,6 @@ void cylinderFunction(Canvas& can) {
         // }
         // testCylinder->changeRadiusBy(delta);
         // if (rotation*45 >= 360) {
-        //     testCylinder->displayOutlineEdges(boolean);
         //     boolean = !boolean;
         //     rotation = 0;
         // }

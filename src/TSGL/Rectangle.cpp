@@ -3,15 +3,17 @@
 namespace tsgl {
 
 /*!
- * \brief Explicitly constructs a Rectangle with monocolored fill or outline.
+ * \brief Explicitly constructs a Rectangle with monocolored fill.
  * \details This is the constructor for the Rectangle class.
- *   \param x The x coordinate of the Rectangle's left edge.
- *   \param y The y coordinate of the Rectangle's top edge.
+ *   \param x The x coordinate of the Rectangle's center.
+ *   \param y The y coordinate of the Rectangle's center.
+ *   \param z The z coordinate of the Rectangle's center.
  *   \param width The width of the Rectangle.
  *   \param height The height of the Rectangle.
+ *   \param yaw The Rectangle's yaw in 3D space.
+ *   \param pitch The Rectangle's pitch in 3D space.
+ *   \param roll The Rectangle's roll in 3D space.
  *   \param color The color of the Rectangle.
- *   \param filled Whether the Rectangle should be filled
- *     (set to true by default).
  * \return A new Rectangle with the specified top left corner, dimensions, and color.
  */
 Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {
@@ -31,15 +33,17 @@ Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, f
 }
 
 /*!
- * \brief Explicitly constructs a Rectangle with multicolored fill or outline.
+ * \brief Explicitly constructs a Rectangle with multicolored fill.
  * \details This is the constructor for the Rectangle class.
- *   \param x The x coordinate of the Rectangle's left edge.
- *   \param y The y coordinate of the Rectangle's top edge.
+ *   \param x The x coordinate of the Rectangle's center.
+ *   \param y The y coordinate of the Rectangle's center.
+ *   \param z The z coordinate of the Rectangle's center.
  *   \param width The width of the Rectangle.
  *   \param height The height of the Rectangle.
+ *   \param yaw The Rectangle's yaw in 3D space.
+ *   \param pitch The Rectangle's pitch in 3D space.
+ *   \param roll The Rectangle's roll in 3D space.
  *   \param color An array of colors for the vertices of the Rectangle.
- *   \param filled Whether the Rectangle should be filled
- *     (set to true by default).
  * \return A new Rectangle with the specified top left corner, dimensions, and colors.
  */
 Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,4,yaw,pitch,roll) {

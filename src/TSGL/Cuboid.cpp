@@ -31,8 +31,7 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     myXScale = width;
     myYScale = height;
     myZScale = length;
-    numberOfVertices = numberOfOutlineVertices = 36;
-    outlineGeometryType = GL_LINES;
+    numberOfVertices = 36;
     vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c);
@@ -107,8 +106,7 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     myXScale = width;
     myYScale = height;
     myZScale = length;
-    numberOfVertices = numberOfOutlineVertices = 36;
-    outlineGeometryType = GL_LINES;
+    numberOfVertices = 36;
     vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c[0]);

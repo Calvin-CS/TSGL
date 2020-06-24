@@ -25,9 +25,7 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     geometryType = GL_TRIANGLE_STRIP;
     verticalSections = 36;
     horizontalSections = 20;
-    numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2+1;
-    outlineGeometryType = GL_LINES;
-    edgesOutlined = false;
+    numberOfVertices = verticalSections*horizontalSections*2+1;
     vertices = new GLfloat[numberOfVertices * 7];
     myRadius = radius;
     myXScale = radius;
@@ -67,9 +65,7 @@ Sphere::Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch
     geometryType = GL_TRIANGLE_STRIP;
     verticalSections = 36;
     horizontalSections = 20;
-    numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2 + 1;
-    outlineGeometryType = GL_LINES;
-    edgesOutlined = false;
+    numberOfVertices = verticalSections*horizontalSections*2 + 1;
     vertices = new GLfloat[numberOfVertices * 7];
     myRadius = radius;
     myXScale = radius;

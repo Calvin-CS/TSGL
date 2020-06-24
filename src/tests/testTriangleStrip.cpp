@@ -41,7 +41,6 @@ void triangleStripFunction(Canvas& can) {
         //     ts->setColor(RED);
         //     if (floatVal > 400) {
         //         floatVal = 0;
-        //         ts->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
         //     }
         // }
         floatVal += 1;

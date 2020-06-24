@@ -3,22 +3,23 @@
 namespace tsgl {
 
 /*!
- * \brief Explicitly constructs a new monocolored filled or outlined Ellipse.
- * \details This function draws a Ellipse with the given center, radii, color, and outline color.
+ * \brief Explicitly constructs a new monocolored Ellipse.
+ * \details This function draws a Ellipse with the given center, radii, rotation, and color.
  *   \param x The x coordinate of the Ellipse's center.
  *   \param y The y coordinate of the Ellipse's center.
+ *   \param z The z coordinate of the Ellipse's center.
  *   \param xRadius The horizontal radius of the Ellipse in pixels.
  *   \param yRadius The vertical radius of the Ellipse in pixels.
- *   \param color The color of the Ellipse's fill or outline
- *   \param filled Whether the Ellipse should be filled
- *     (set to true by default).
+ *   \param yaw The Ellipse's yaw in 3D space.
+ *   \param pitch The Ellipse's pitch in 3D space.
+ *   \param roll The Ellipse's roll in 3D space.
+ *   \param color The color of the Ellipse's fill.
  */
 Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,(xRadius + yRadius) / 2 + 5 + 1,yaw,pitch,roll) {
     attribMutex.lock();
     myXScale = myXRadius = xRadius;
     myYScale = myYRadius = yRadius;
     myZScale = 1;
-    edgesOutlined = false;
     verticesPerColor = ((xRadius + yRadius) / 2 + 6) / 8;
     attribMutex.unlock();
     addVertex(0,0,0,color);
@@ -29,22 +30,23 @@ Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, fl
 }
 
 /*!
- * \brief Explicitly constructs a new multicolored filled or outlined Ellipse.
- * \details This function draws a Ellipse with the given center, radii, color, and outline color.
+ * \brief Explicitly constructs a new multicolored Ellipse.
+ * \details This function draws a Ellipse with the given center, radii, rotation, and color.
  *   \param x The x coordinate of the Ellipse's center.
  *   \param y The y coordinate of the Ellipse's center.
+ *   \param z The z coordinate of the Ellipse's center.
  *   \param xRadius The horizontal radius of the Ellipse in pixels.
  *   \param yRadius The vertical radius of the Ellipse in pixels.
- *   \param color An array of colors for the Ellipse's fill or outline
- *   \param filled Whether the Ellipse should be filled
- *     (set to true by default).
+ *   \param yaw The Ellipse's yaw in 3D space.
+ *   \param pitch The Ellipse's pitch in 3D space.
+ *   \param roll The Ellipse's roll in 3D space.
+ *   \param color An array of colors for the Ellipse's fill.
  */
 Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,(xRadius + yRadius) / 2 + 5 + 1,yaw,pitch,roll) {
     attribMutex.lock();
     myXScale = myXRadius = xRadius;
     myYScale = myYRadius = yRadius;
     myZScale = 1;
-    edgesOutlined = false;
     verticesPerColor = ((xRadius + yRadius) / 2 + 6) / 8;
     attribMutex.unlock();
     addVertex(0,0,0,color[0]);

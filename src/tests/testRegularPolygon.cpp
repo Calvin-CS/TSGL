@@ -35,7 +35,6 @@ void rpFunction(Canvas& can) {
         // rp->setRadius(sin(floatVal/90)*100 + 300);
         if (rp->getRadius() > 300 || rp->getRadius() < 100) {
             delta *= -1;
-            // rp->setEdgeColor(ColorFloat(randfloat(), randfloat(), randfloat(), 1));
         }
         rp->changeRadiusBy(delta);
         if (delta > 0) {

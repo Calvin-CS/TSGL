@@ -3,7 +3,7 @@
 namespace tsgl {
 
 /*!
- * \brief Explicitly constructs a new Triangle with monocolored fill or outline.
+ * \brief Explicitly constructs a new Triangle with monocolored fill.
  * \details This is the constructor for the Triangle class.
  *      \param x1 The x coordinate of the first endpoint.
  *      \param y1 The y coordinate of the first endpoint.
@@ -31,7 +31,7 @@ Triangle::Triangle(float x1, float y1, float z1, float x2, float y2, float z2, f
 }
 
 /*!
- * \brief Explicitly constructs a new Triangle with multicolored fill or outline.
+ * \brief Explicitly constructs a new Triangle with multicolored fill.
  * \details This is the constructor for the Triangle class.
  *      \param x1 The x coordinate of the first endpoint.
  *      \param y1 The y coordinate of the first endpoint.

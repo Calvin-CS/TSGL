@@ -62,7 +62,6 @@ void Philosopher3D::refreshColor() {
 void Philosopher3D::addMeal(float x, float y, float z) {
   numMeals++;
   meals.push_back(new Pyramid(x,y,z,3,8,4,0,0,90,ColorFloat(0.5,0.3,0,1)));
-  meals.back()->displayOutlineEdges(false);
 }
 
 Pyramid * Philosopher3D::getLastMeal() {

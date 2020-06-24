@@ -64,14 +64,10 @@ void Shape::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color) 
     vertices[currentVertex + 5] = color.B;
     vertices[currentVertex + 6] = color.A;
     currentVertex += 7;
-    attribMutex.unlock();
     if (currentVertex == numberOfVertices*7) {
-        attribMutex.lock();
-        // outlineArray = new GLfloat[numberOfOutlineVertices*4];
-        // std::fill_n(outlineArray, numberOfOutlineVertices*4, 0.75);
         init = true;
-        attribMutex.unlock();
     }
+    attribMutex.unlock();
 }
 
 /**
@@ -100,19 +96,6 @@ void Shape::setColor(ColorFloat c[]) {
         vertices[i*7 + 5] = c[i].B;
         vertices[i*7 + 6] = c[i].A;
     }
-}
-
-/**
- * \brief Sets the Shape's outline/edges to a new color
- * \param c The new ColorFloat.
- */
-void Shape::setEdgeColor(ColorFloat c) {
-    // for (int i = 0; i < numberOfOutlineVertices; i++) {
-    //     outlineArray[4*i] = c.R;
-    //     outlineArray[4*i+1] = c.G;
-    //     outlineArray[4*i+2] = c.B;
-    //     outlineArray[4*i+3] = c.A;
-    // }
 }
 
 }

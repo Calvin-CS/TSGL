@@ -54,7 +54,6 @@ void Philosopher::refreshColor() {
 void Philosopher::addMeal(float x, float y, float z) {
   numMeals++;
   meals.push_back(new RegularPolygon(x,y,z,3,3,0,0,0,ColorFloat(0.5,0.3,0,1)));
-  meals.back()->displayOutlineEdges(false);
 }
 
 RegularPolygon * Philosopher::getLastMeal() {

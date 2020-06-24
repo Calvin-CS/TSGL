@@ -26,9 +26,7 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
     geometryType = GL_TRIANGLE_STRIP;
     verticalSections = 36;
     horizontalSections = 20;
-    numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2 + 1;
-    outlineGeometryType = GL_LINES;
-    edgesOutlined = false;
+    numberOfVertices = verticalSections*horizontalSections*2 + 1;
     vertices = new GLfloat[numberOfVertices * 7];
     myXRadius = xRadius;
     myYRadius = yRadius;
@@ -72,9 +70,7 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
     geometryType = GL_TRIANGLE_STRIP;
     verticalSections = 36;
     horizontalSections = 20;
-    numberOfVertices = numberOfOutlineVertices = verticalSections*horizontalSections*2 + 1;
-    outlineGeometryType = GL_LINES;
-    edgesOutlined = false;
+    numberOfVertices = verticalSections*horizontalSections*2 + 1;
     vertices = new GLfloat[numberOfVertices * 7];
     myXRadius = xRadius;
     myYRadius = yRadius;

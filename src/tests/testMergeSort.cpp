@@ -118,7 +118,6 @@ void mergeSortFunction(Canvas& can, int threads, int size) {
     for (int i = 0; i < size; i++) {
         numbers[i] = saferand(1,can.getWindowHeight());
         rectangles[i] = new Rectangle(start + i * width, 0, 0, width, numbers[i], 0, 0, 0, RED);
-        rectangles[i]->displayOutlineEdges(false);
         can.add(rectangles[i]);
     }
 

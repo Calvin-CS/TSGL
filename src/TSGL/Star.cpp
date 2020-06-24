@@ -3,16 +3,18 @@
 namespace tsgl {
 
  /*!
-  * \brief Explicitly constructs a new Star with monocolored fill or outline.
+  * \brief Explicitly constructs a new Star with monocolored fill.
   * \details This function draws a star with the given center,
-  *   radius, points, and color.
+  *   radius, points, rotation, and color.
   *   \param x The x coordinate of the star's center.
   *   \param y The y coordinate of the star's center.
+  *   \param z The z coordinate of the star's center.
   *   \param radius The radius of the star in pixels.
+ *    \param yaw The star's yaw in 3D space.
+ *    \param pitch The star's pitch in 3D space.
+ *    \param roll The star's roll in 3D space.
   *   \param points The number of points to use in the star.
   *   \param color The color of the star.
-  *   \param filled Whether the star should be filled
-  *     (set to true by default).
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
   */
@@ -40,16 +42,18 @@ Star::Star(float x, float y, float z, GLfloat radius, int points, float yaw, flo
 }
 
  /*!
-  * \brief Explicitly constructs a new Star with multicolored fill or outline.
+  * \brief Explicitly constructs a new Star with multicolored fill.
   * \details This function draws a star with the given center,
-  *   radius, points, and color.
+  *   radius, points, rotation, and color.
   *   \param x The x coordinate of the star's center.
   *   \param y The y coordinate of the star's center.
+  *   \param z The z coordinate of the star's center.
   *   \param radius The radius of the star in pixels.
+ *    \param yaw The star's yaw in 3D space.
+ *    \param pitch The star's pitch in 3D space.
+ *    \param roll The star's roll in 3D space.
   *   \param points The number of points to use in the star.
   *   \param color An array of colors for the star.
-  *   \param filled Whether the star should be filled
-  *     (set to true by default).
   *   \param ninja The ninja setting of the star, making the star points spin differently if true
   *     (set to false by default).
   */

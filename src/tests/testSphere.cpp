@@ -40,7 +40,6 @@ void sphereFunction(Canvas& can) {
         // }
         // testSphere->changeRadiusBy(delta);
         // if (rotation*45 >= 360) {
-        //     testSphere->displayOutlineEdges(boolean);
         //     boolean = !boolean;
         //     rotation = 0;
         // }

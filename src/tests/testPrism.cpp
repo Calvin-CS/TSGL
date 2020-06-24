@@ -49,7 +49,6 @@ void prismFunction(Canvas& can) {
         // }
         // testPrism->changeRadiusBy(delta);
         // if (rotation*45 >= 360) {
-        //     testPrism->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
         //     rotation = 0;
         // }
         if (rotation*45 >= 360) {

@@ -27,8 +27,7 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
     myXScale = sideLength;
     myYScale = sideLength;
     myZScale = sideLength;
-    numberOfVertices = numberOfOutlineVertices = 36;
-    outlineGeometryType = GL_LINES;
+    numberOfVertices = 36;
     vertices = new GLfloat[numberOfVertices * 7];    
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c);
@@ -99,8 +98,7 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
     myXScale = sideLength;
     myYScale = sideLength;
     myZScale = sideLength;
-    numberOfVertices = numberOfOutlineVertices = 36;
-    outlineGeometryType = GL_LINES;
+    numberOfVertices = 36;
     vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c[0]);

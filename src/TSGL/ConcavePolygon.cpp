@@ -4,41 +4,45 @@ namespace tsgl {
 
  /*!
   * \brief Explicitly constructs a new ConcavePolygon.
-  * \details Explicit constructor for a ConcavePolygon object.
-  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
+  * \details Protected explicit constructor for a ConcavePolygon object. Used as a superclass constructor.
+ *   \param centerX The x coordinate of the ConcavePolygon's center.
+ *   \param centerY The y coordinate of the ConcavePolygon's center.
+ *   \param centerZ The z coordinate of the ConcavePolygon's center.
+ *   \param numVertices The number of vertices that make up the ConcavePolygon.
+ *   \param yaw The ConcavePolygon's yaw in 3D space.
+ *   \param pitch The ConcavePolygon's pitch in 3D space.
+ *   \param roll The ConcavePolygon's roll in 3D space.
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
 ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
-    edgesOutlined = false;
     geometryType = GL_TRIANGLE_FAN;
     numberOfVertices = numVertices;
-    numberOfOutlineVertices = numVertices;
-    outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfOutlineVertices * 7];
+    vertices = new GLfloat[numberOfVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();   
 }
 
  /*!
-  * \brief Explicitly constructs a new ConcavePolygon with monocolored fill or outline.
+  * \brief Explicitly constructs a new ConcavePolygon with monocolored fill.
   * \details Explicit constructor for a ConcavePolygon object.
-  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
-  *   \param x An array of x values for the vertices.
-  *   \param y An array of y values for the vertices.
-  *   \param color An array of colors for the ConcavePolygon's fill or outline.
-  *   \param filled Whether the ConcavePolygon should be filled
-  *     (set to true by default).
+ *   \param centerX The x coordinate of the ConcavePolygon's center.
+ *   \param centerY The y coordinate of the ConcavePolygon's center.
+ *   \param centerZ The z coordinate of the ConcavePolygon's center.
+ *   \param numVertices The number of vertices that make up the ConcavePolygon.
+ *   \param x An array of the ConcavePolygon's x vertices.
+ *   \param y An array of the ConcavePolygon's y vertices.
+ *   \param yaw The ConcavePolygon's yaw in 3D space.
+ *   \param pitch The ConcavePolygon's pitch in 3D space.
+ *   \param roll The ConcavePolygon's roll in 3D space.
+ *   \param color A ColorFloat, the ConcavePolygon's fill color.
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
 ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
-    edgesOutlined = false;
     geometryType = GL_TRIANGLE_FAN;
     numberOfVertices = numVertices;
-    numberOfOutlineVertices = numVertices;
-    outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfOutlineVertices * 7];
+    vertices = new GLfloat[numberOfVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
@@ -47,24 +51,25 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
 }
 
  /*!
-  * \brief Explicitly constructs a new ConcavePolygon with multicolored fill or outline.
+  * \brief Explicitly constructs a new ConcavePolygon with multicolored fill.
   * \details Explicit constructor for a ConcavePolygon object.
-  *   \param numVertices The number of vertices the complete ConcavePolygon will have.
-  *   \param x An array of x values for the vertices.
-  *   \param y An array of y values for the vertices.
-  *   \param color An array of colors for the ConcavePolygon's fill or outline.
-  *   \param filled Whether the ConcavePolygon should be filled
-  *     (set to true by default).
+ *   \param centerX The x coordinate of the ConcavePolygon's center.
+ *   \param centerY The y coordinate of the ConcavePolygon's center.
+ *   \param centerZ The z coordinate of the ConcavePolygon's center.
+ *   \param numVertices The number of vertices that make up the ConcavePolygon.
+ *   \param x An array of the ConcavePolygon's x vertices.
+ *   \param y An array of the ConcavePolygon's y vertices.
+ *   \param yaw The ConcavePolygon's yaw in 3D space.
+ *   \param pitch The ConcavePolygon's pitch in 3D space.
+ *   \param roll The ConcavePolygon's roll in 3D space.
+ *   \param color An array of ColorFloats, the ConcavePolygon's fill color.
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
 ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
-    edgesOutlined = false;
     geometryType = GL_TRIANGLE_FAN;
     numberOfVertices = numVertices;
-    numberOfOutlineVertices = numVertices;
-    outlineGeometryType = GL_LINE_LOOP;
-    vertices = new GLfloat[numberOfOutlineVertices * 7];
+    vertices = new GLfloat[numberOfVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
@@ -117,13 +122,5 @@ void ConcavePolygon::draw(Shader * shader) {
     glDrawArrays(geometryType, 0, numberOfVertices);
 
     glDisable(GL_STENCIL_TEST);
-    /* end */
-
-    // if (edgesOutlined) {
-    //     glVertexPointer(3, GL_FLOAT, outlineStride*sizeof(GLfloat)*3, vertices);
-    //     glColorPointer(4, GL_FLOAT, 0, outlineArray);
-
-    //     glDrawArrays(outlineGeometryType, 0, numberOfOutlineVertices);
-    // }
 }
 }

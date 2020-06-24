@@ -21,8 +21,6 @@ void ssFunction(Canvas& can) {
     Sphere * uranus = new Sphere(515, 0, 0, 25, 15, 0.0, 15.0, ColorFloat(.2,.6,1,1));
     Sphere * neptune = new Sphere(575, 0, 0, 20, 15, 0.0, 15.0, ColorFloat(.25,.65,1,1));
 
-    saturnRings->displayOutlineEdges(false);
-
     mercury->setRotationPoint(0,0,0);
     venus->setRotationPoint(0,0,0);
     earth->setRotationPoint(0,0,0);

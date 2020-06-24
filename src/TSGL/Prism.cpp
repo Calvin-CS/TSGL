@@ -31,9 +31,6 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     mySides = sides;
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 12;
-    outlineStride = 2;
-    numberOfOutlineVertices = mySides * 6;
-    outlineGeometryType = GL_LINES;
     vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
@@ -84,9 +81,6 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     mySides = sides;
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 12;
-    outlineStride = 2;
-    numberOfOutlineVertices = mySides * 6;
-    outlineGeometryType = GL_LINES;
     vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {

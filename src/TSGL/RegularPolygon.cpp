@@ -3,16 +3,18 @@
 namespace tsgl {
 
 /*!
- * \brief Explicitly constructs a new RegularPolygon with monocolored fill or outline.
- * \details This function draws a regular polygon with the given center, radius, resolution
+ * \brief Explicitly constructs a new RegularPolygon with monocolored fill.
+ * \details This function draws a regular polygon with the given center, sides, radius, rotation, and color.
  *   (number of sides), and color.
- *   \param x The x coordinate of the regular polygon's center.
- *   \param y The y coordinate of the regular polygon's center.
- *   \param radius The radius of the regular polygon in pixels.
- *   \param sides The number of sides to use in the regular polygon.
- *   \param color The color of the regular polygon.
- *   \param filled Whether the regular polygon should be filled
- *     (set to true by default).
+ *   \param x The x coordinate of the RegularPolygon's center.
+ *   \param y The y coordinate of the RegularPolygon's center.
+ *   \param z The z coordinate of the RegularPolygon's center.
+ *   \param radius The radius of the RegularPolygon in pixels.
+ *   \param sides The number of sides to use in the RegularPolygon.
+ *   \param yaw The RegularPolygon's yaw in 3D space.
+ *   \param pitch The RegularPolygon's pitch in 3D space.
+ *   \param roll The RegularPolygon's roll in 3D space.
+ *   \param color The color of the RegularPolygon.
  */
 RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorFloat color) : ConvexPolygon(x,y,z,sides,yaw,pitch,roll) {
     attribMutex.lock();
@@ -26,16 +28,18 @@ RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int si
 }
 
 /*!
- * \brief Explicitly constructs a new RegularPolygon with multicolored fill or outline.
- * \details This function draws a regular polygon with the given center, radius, resolution
+ * \brief Explicitly constructs a new RegularPolygon with multicolored fill.
+ * \details This function draws a regular polygon with the given center, sides, radius, rotation, and color.
  *   (number of sides), and coloring.
- *   \param x The x coordinate of the regular polygon's center.
- *   \param y The y coordinate of the regular polygon's center.
- *   \param radius The radius of the regular polygon in pixels.
- *   \param sides The number of sides to use in the regular polygon.
+ *   \param x The x coordinate of the RegularPolygon's center.
+ *   \param y The y coordinate of the RegularPolygon's center.
+ *   \param z The z coordinate of the RegularPolygon's center.
+ *   \param radius The radius of the RegularPolygon in pixels.
+ *   \param sides The number of sides to use in the RegularPolygon.
+ *   \param yaw The RegularPolygon's yaw in 3D space.
+ *   \param pitch The RegularPolygon's pitch in 3D space.
+ *   \param roll The RegularPolygon's roll in 3D space.
  *   \param color An array of colors for the regular polygon's vertices.
- *   \param filled Whether the regular polygon should be filled
- *     (set to true by default).
  */
 RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int sides, float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(x,y,z,sides,yaw,pitch,roll) {
     attribMutex.lock();

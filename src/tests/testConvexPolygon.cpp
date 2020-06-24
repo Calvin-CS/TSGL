@@ -39,7 +39,6 @@ void convexPolygonFunction(Canvas& can) {
         //     cp->setColor(RED);
         //     if (floatVal > 400) {
         //         floatVal = 0;
-        //         cp->setEdgeColor(ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1));
         //     }
         // }
         floatVal += 1;

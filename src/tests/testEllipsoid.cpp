@@ -67,7 +67,6 @@ void ellipsoidFunction(Canvas& can) {
         // }
         // testEllipsoid->changeZRadiusBy(delta);
         // if (rotation*45 >= 360) {
-        //     testEllipsoid->displayOutlineEdges(boolean);
         //     boolean = !boolean;
         //     rotation = 0;
         // }
