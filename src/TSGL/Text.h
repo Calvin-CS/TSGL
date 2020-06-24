@@ -7,8 +7,10 @@
 
 #include "Drawable.h"          // For extending our Shape object
 #include <iostream>
+#include <map>
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include FT_BITMAP_H
 // #include "TextureHandler.h"
 
 namespace tsgl {
@@ -32,7 +34,15 @@ class Text : public Drawable {
     FT_Face face;
     FT_Library ft;
 
-    void calculateDimensions();
+    struct Character {
+        FT_Bitmap    Bitmap;
+        glm::ivec2   Bearing;   // Offset from baseline to left/top of glyph
+        unsigned int Advance;   // Horizontal offset to advance to next glyph
+    };
+
+    std::map<GLchar, Character> Characters;
+
+    void populateCharacters();
  public:
     Text(float x, float y, float z, std::string text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color);
 
@@ -49,6 +59,9 @@ class Text : public Drawable {
     std::string getText() { return myString; }
 
     unsigned int getFontSize() { return myFontSize; }
+
+    GLfloat getWidth() { return myWidth; }
+    GLfloat getHeight() { return myHeight; }
 
     ~Text();
 };

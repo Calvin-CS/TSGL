@@ -211,7 +211,6 @@ void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
 
 void Canvas::draw()
 {
-    printf("Entered draw()\n");
     glfwMakeContextCurrent(window);
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
@@ -2164,7 +2163,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 }
 
 void Canvas::initGl() {
-    printf("Entered initGl.\n");
 #ifdef _WIN32
     initWindow();
     initGlew();
@@ -2199,7 +2197,6 @@ void Canvas::initGl() {
     hasBackbuffer = ((int)dbuff[0] > 0);
 
     glfwMakeContextCurrent(NULL);   // Reset the context
-    printf("Exiting initGl.\n");
 }
 
 void Canvas::initGlew() {
@@ -2252,6 +2249,15 @@ void Canvas::initGlew() {
     // glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)winWidth/(float)winHeight, 0.1f, 1000.0f);
     // glm::mat4 view          = glm::mat4(1.0f);
     // view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -((winHeight / 2) / tan(glm::pi<float>()/6))));
+
+    char buf[PATH_MAX]; /* PATH_MAX incudes the \0 so +1 is not required */
+    char *res = realpath(".", buf);
+    if (res) {
+        printf("This source is at %s.\n", buf);
+    } else {
+        perror("realpath");
+        exit(EXIT_FAILURE);
+    }
 
     textShader = new Shader("./assets/shaders/text.vs", "./assets/shaders/text.fs");
 
@@ -2318,7 +2324,6 @@ void Canvas::initGlfw() {
 }
 
 void Canvas::initWindow() {
-    printf("Entered initWindow.\n");
     glfwSetErrorCallback(errorCallback);
 
      // Create a Window and the Context
@@ -2367,7 +2372,6 @@ void Canvas::initWindow() {
     // Get info of GPU and supported OpenGL version
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
     printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
-    printf("Exiting initWindow.\n");
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

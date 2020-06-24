@@ -31,16 +31,16 @@ Text::Text(float x, float y, float z, std::string text, std::string fontFilename
     // --------
     // All functions return a value different than 0 whenever an error occurred
     if (FT_Init_FreeType(&ft))
-        std::cout << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
+        TsglErr("ERROR::FREETYPE: Could not init FreeType Library");
 
     // load font as face
     if (FT_New_Face(ft, fontFilename.c_str(), 0, &face))
-        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+        TsglErr("ERROR::FREETYPE: Failed to load font");
 
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
 
-    calculateDimensions();
+    populateCharacters();
 
     vertices = new float[30];                                        // Allocate the vertices
 
@@ -80,12 +80,7 @@ void Text::draw(Shader * shader) {
     float mouseY = -myHeight / 2;
     std::string::const_iterator c;
     for (c = myString.begin(); c != myString.end(); c++) {
-        // Load character glyph 
-        if (FT_Load_Char(face, *c, FT_LOAD_RENDER))
-        {
-            std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
-            continue;
-        }
+        Character ch = Characters[*c];
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
 
@@ -97,12 +92,12 @@ void Text::draw(Shader * shader) {
             GL_TEXTURE_2D,
             0,
             GL_RED,
-            face->glyph->bitmap.width, 
-            face->glyph->bitmap.rows,
+            ch.Bitmap.width, 
+            ch.Bitmap.rows,
             0,
             GL_RED,
             GL_UNSIGNED_BYTE,
-            face->glyph->bitmap.buffer
+            ch.Bitmap.buffer
         );
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -111,11 +106,11 @@ void Text::draw(Shader * shader) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         // update vertices for each character
-        float xpos = mouseX + face->glyph->bitmap_left;
-        float ypos = mouseY - (face->glyph->bitmap.rows - face->glyph->bitmap_top);
+        float xpos = mouseX + ch.Bearing.x;
+        float ypos = mouseY - (ch.Bitmap.rows - ch.Bearing.y);
 
-        float w = face->glyph->bitmap.width;
-        float h = face->glyph->bitmap.rows;
+        float w = ch.Bitmap.width;
+        float h = ch.Bitmap.rows;
 
         //triangle 1
         vertices[0] = xpos; vertices[1] = ypos + h;
@@ -126,13 +121,14 @@ void Text::draw(Shader * shader) {
         vertices[20] = xpos + w; vertices[21] = ypos;
         vertices[25] = xpos + w; vertices[26] = ypos + h;
 
+        // actually draw stuff
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 5, vertices, GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glDeleteTextures(1, &texture);
 
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
-        mouseX += (face->glyph->advance.x >> 6); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+        mouseX += (ch.Advance >> 6); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
     }
     glDisable(GL_TEXTURE_2D);
 }
@@ -146,8 +142,12 @@ void Text::draw(Shader * shader) {
 void Text::setText(std::string text) {
     attribMutex.lock();
     init = false;
+    std::string::const_iterator c;
+    for (c = myString.begin(); c != myString.end(); c++) {
+        FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
+    }
     myString = text;
-    calculateDimensions();
+    populateCharacters();
     init = true;
     attribMutex.unlock();
 }
@@ -160,13 +160,17 @@ void Text::setText(std::string text) {
  */
 void Text::setFontSize(unsigned int fontsize) {
     attribMutex.lock();
+    std::string::const_iterator c;
+    for (c = myString.begin(); c != myString.end(); c++) {
+        FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
+    }
     init = false;
     myFontSize = fontsize;
 
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
 
-    calculateDimensions();
+    populateCharacters();
     init = true;
     attribMutex.unlock();
 }
@@ -180,6 +184,10 @@ void Text::setFontSize(unsigned int fontsize) {
 void Text::setFont(std::string filename) {
     attribMutex.lock();
     init = false;
+    std::string::const_iterator c;
+    for (c = myString.begin(); c != myString.end(); c++) {
+        FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
+    }
     FT_Done_Face(face);
     myFont = filename;
     // load font as face
@@ -190,7 +198,7 @@ void Text::setFont(std::string filename) {
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
 
-    calculateDimensions();
+    populateCharacters();
     init = true;
     attribMutex.unlock();
 }
@@ -201,7 +209,9 @@ void Text::setFont(std::string filename) {
  *  \param color The ColorFloat to change myColor to.
  */
 void Text::setColor(const ColorFloat& color) {
+    attribMutex.lock();
     myColor = color;
+    attribMutex.unlock();
 }
 
 /*!
@@ -209,27 +219,47 @@ void Text::setColor(const ColorFloat& color) {
  * \details This function assigns values to myWidth and myHeight based on 
  *  the glyphs loaded based on myFontSize, myFont, and myString.
  */
-void Text::calculateDimensions() {
+void Text::populateCharacters() {
+    // note: this will leak memory if you don't free the bitmaps within first. see most mutators.
+    Characters.clear();
     myWidth = 0;
     myHeight = 0;
 
-    std::string::const_iterator c;
-    for (c = myString.begin(); c != myString.end(); c++) {
+    FT_Bitmap * ftbmps = new FT_Bitmap[myString.size()];
+
+    for (int i = 0; i < myString.size(); i++) {
         // Load character glyph 
-        if (FT_Load_Char(face, *c, FT_LOAD_RENDER))
+        if (FT_Load_Char(face, myString[i], FT_LOAD_RENDER))
         {
             std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
             continue;
         }
 
+        FT_Bitmap_Init(&ftbmps[i]);
+        FT_Bitmap_Copy(ft, &face->glyph->bitmap, &ftbmps[i]);
+
+        Character character = {
+            ftbmps[i],
+            glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+            face->glyph->advance.x
+        };
+        
+        Characters.insert(std::pair<char, Character>(myString[i], character));
+
         myWidth += face->glyph->advance.x >> 6;
         if (face->glyph->bitmap.rows > myHeight)
             myHeight = face->glyph->bitmap.rows;
     }
+
+    delete [] ftbmps;
 }
 
 Text::~Text() {
     // destroy FreeType once we're finished
+    std::string::const_iterator c;
+    for (c = myString.begin(); c != myString.end(); c++) {
+        FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
+    }
     FT_Done_Face(face);
     FT_Done_FreeType(ft);
 }

@@ -20,7 +20,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     forks[i].id = i;
     forks[i].setCanvas(myCan);
   }
-  spaghettis = new Image*[numPhils];
+  spaghettis = new Image*[numPhils]();
   float delta = 2.0f / numPhils * PI;
   for(int i = 0; i < numPhils; i++) {
     spaghettis[i] = new Image(120 * cos(i*delta), 140 * sin(i*delta), -0.5, "./assets/pics/spaghet.png", 100, 50, 0,0,0);
@@ -48,27 +48,55 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
       break;
   }
 
-  // myCan2 = new Canvas(0,0,300,300,"Legend");
-  // myCan2->start();
-  // myCan2->drawText("Method:",16,32,32,BLACK);
-  // myCan2->drawText("\"" + methodString + "\"",32,64,24,BLACK);
-  // myCan2->drawText("Legend:",16,96,24,BLACK);
-  // myCan2->drawText("Red: Hungry",32,128,24,RED);
-  // myCan2->drawText("Orange: Has Right Fork",32,160,24,ORANGE);
-  // myCan2->drawText("Yellow: Has Left Fork",32,192,24,YELLOW);
-  // myCan2->drawText("Green: Eating",32,224,24,GREEN);
-  // myCan2->drawText("Blue: Thinking",32,256,24,BLUE);
-  // myCan2->drawText("Meals eaten: ",32,288,24,BROWN);
-  // myCan2->drawCircle(165,281,3,BROWN);
+  myCan2 = new Canvas(0,0,300,300,"Legend");
+  myCan2->start();
+  myCan2->setBackgroundColor(GRAY);
+
+  legendTexts = new Text*[9]();
+  legendTexts[0] = new Text(-134,128,0,"Method:","./assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
+  legendTexts[0]->changeXBy(legendTexts[0]->getWidth() / 2);
+  myCan2->add(legendTexts[0]);
+  legendTexts[1] = new Text(-118,96,0,"\"" + methodString + "\"","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  legendTexts[1]->changeXBy(legendTexts[1]->getWidth() / 2);
+  myCan2->add(legendTexts[1]);
+  legendTexts[2] = new Text(-134,64,0,"Legend:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  legendTexts[2]->changeXBy(legendTexts[2]->getWidth() / 2);
+  myCan2->add(legendTexts[2]);
+  legendTexts[3] = new Text(-118,32,0,"Red: Hungry","./assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
+  legendTexts[3]->changeXBy(legendTexts[3]->getWidth() / 2);
+  myCan2->add(legendTexts[3]);
+  legendTexts[4] = new Text(-118,0,0,"Orange: Has Right Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
+  legendTexts[4]->changeXBy(legendTexts[4]->getWidth() / 2);
+  myCan2->add(legendTexts[4]);
+  legendTexts[5] = new Text(-118,-32,0,"Yellow: Has Left Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,YELLOW);
+  legendTexts[5]->changeXBy(legendTexts[5]->getWidth() / 2);
+  myCan2->add(legendTexts[5]);
+  legendTexts[6] = new Text(-118,-64,0,"Green: Eating","./assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
+  legendTexts[6]->changeXBy(legendTexts[6]->getWidth() / 2);
+  myCan2->add(legendTexts[6]);
+  legendTexts[7] = new Text(-118,-96,0,"Blue: Thinking","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
+  legendTexts[7]->changeXBy(legendTexts[7]->getWidth() / 2);
+  myCan2->add(legendTexts[7]);
+  legendTexts[8] = new Text(-118,-121,0,"Meals eaten:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
+  legendTexts[8]->changeXBy(legendTexts[8]->getWidth() / 2);
+  myCan2->add(legendTexts[8]);
+
+  exampleMeal = new RegularPolygon(15, -121,0,3,3,0,0,0, BROWN);
+  myCan2->add(exampleMeal);
 }
 
 /*!
  * \brief Destructor for Table.
  */
 Table::~Table() {
-  // if (myCan2->isOpen())
-  //   myCan2->stop();
-  // delete myCan2;
+  if (myCan2->isOpen())
+    myCan2->stop();
+  delete myCan2;
+  for (int i = 0; i < 9; i++) {
+    delete legendTexts[i];
+  }
+  delete[] legendTexts;
+  delete exampleMeal;
   for (int i = 0; i < numPhils; i++) {
     delete spaghettis[i];
   }
