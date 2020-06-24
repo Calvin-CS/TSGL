@@ -40,6 +40,8 @@ Text::Text(float x, float y, float z, std::string text, std::string fontFilename
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
 
+    FT_Select_Charmap(face , FT_ENCODING_UNICODE);
+
     populateCharacters();
 
     vertices = new float[30];                                        // Allocate the vertices
@@ -198,6 +200,8 @@ void Text::setFont(std::string filename) {
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
 
+    FT_Select_Charmap(face , FT_ENCODING_UNICODE);
+
     populateCharacters();
     init = true;
     attribMutex.unlock();
@@ -229,7 +233,8 @@ void Text::populateCharacters() {
 
     for (int i = 0; i < myString.size(); i++) {
         // Load character glyph 
-        if (FT_Load_Char(face, myString[i], FT_LOAD_RENDER))
+        unsigned long index = FT_Get_Char_Index(face, myString[i]);
+        if (FT_Load_Glyph(face, index, FT_LOAD_RENDER))
         {
             std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
             continue;

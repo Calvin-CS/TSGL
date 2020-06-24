@@ -11,49 +11,73 @@
 namespace tsgl {
 
 // Shader sources
-// static const GLchar* vertexSource =
-//     "#version 150 core\n"
-//     "in vec3 position;"
-//     "in vec4 color;"
-//     "out vec4 Color;"
-//     "uniform mat4 model;"
-//     "uniform mat4 view;"
-//     "uniform mat4 proj;"
-//     "void main() {"
-//     "   Color = color;"
-//     "   gl_Position = proj * view * model * vec4(position, 1.0);"
-//     "}";
-// static const GLchar* fragmentSource =
-//     "#version 150\n"
-//     "in vec4 Color;"
-//     "out vec4 outColor;"
-//     "void main() {"
-//     "    outColor = vec4(Color);"
-//     "}";
-// static const GLchar* textureVertexSource =
-//     "#version 150 core\n"
-//     "in vec3 position;"
-//     "in vec4 color;"
-//     "in vec2 texcoord;"
-//     "out vec4 Color;"
-//     "out vec2 Texcoord;"
-//     "uniform mat4 model;"
-//     "uniform mat4 view;"
-//     "uniform mat4 proj;"
-//     "void main() {"
-//     "   Texcoord = texcoord;"
-//     "   Color = color;"
-//     "   gl_Position = proj * view * model * vec4(position, 1.0);"
-//     "}";
-// static const GLchar* textureFragmentSource =
-//     "#version 150\n"
-//     "in vec4 Color;"
-//     "in vec2 Texcoord;"
-//     "out vec4 outColor;"
-//     "uniform sampler2D tex;"
-//     "void main() {"
-//     "    outColor = texture(tex, Texcoord) * vec4(Color);"
-//     "}";
+
+static const GLchar* shapeVertexShader = 
+  "#version 330 core\n"
+  "layout (location = 0) in vec3 aPos;"
+  "layout (location = 1) in vec4 aColor;"
+  "out vec4 color;"
+  "uniform mat4 projection;"
+  "uniform mat4 view;"
+  "uniform mat4 model;"
+  "void main() {"
+  "gl_Position = projection * view * model * vec4(aPos, 1.0);"
+	"color = aColor;"
+  "}";
+
+static const GLchar* shapeFragmentShader =
+  "#version 330 core\n"
+  "out vec4 FragColor;"
+  "in vec4 color;"
+  "void main() {"
+	"FragColor = color;"
+  "}";
+
+static const GLchar* textVertexShader = 
+  "#version 330 core\n"
+  "layout (location = 0) in vec3 aPos;"
+  "layout (location = 1) in vec2 aTexCoord;"
+  "out vec2 TexCoords;"
+  "uniform mat4 projection;"
+  "uniform mat4 view;"
+  "uniform mat4 model;"
+  "void main() {"
+  "gl_Position = projection * view * model * vec4(aPos, 1.0);"
+  "TexCoords = vec2(aTexCoord.x, aTexCoord.y);"
+  "}";
+
+static const GLchar* textFragmentShader =
+  "#version 330 core\n"
+  "in vec2 TexCoords;"
+  "out vec4 FragColor;"
+  "uniform sampler2D text;"
+  "uniform vec4 textColor;"
+  "void main() {"   
+  "vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);"
+  "FragColor = textColor * sampled;"
+  "}";
+
+static const GLchar* imageVertexShader = 
+  "#version 330 core\n"
+  "layout (location = 0) in vec3 aPos;"
+  "layout (location = 1) in vec2 aTexCoord;"
+  "out vec2 TexCoords;"
+  "uniform mat4 projection;"
+  "uniform mat4 view;"
+  "uniform mat4 model;"
+  "void main() {"
+	"gl_Position = projection * view * model * vec4(aPos, 1.0);"
+	"TexCoords = vec2(aTexCoord.x, aTexCoord.y);"
+  "}";
+
+static const GLchar* imageFragmentShader = 
+  "#version 330 core\n"
+  "out vec4 FragColor;"
+  "in vec2 TexCoords;"
+  "uniform sampler2D texture1;"
+  "void main() {"
+	"FragColor = texture(texture1, TexCoords);"
+  "}";
 
 int Canvas::drawBuffer = GL_FRONT_LEFT;
 bool Canvas::glfwIsReady = false;
@@ -2259,21 +2283,21 @@ void Canvas::initGlew() {
         exit(EXIT_FAILURE);
     }
 
-    textShader = new Shader("./assets/shaders/text.vs", "./assets/shaders/text.fs");
+    textShader = new Shader(textVertexShader, textFragmentShader);
 
     // textShader->use();
     // glUniformMatrix4fv(glGetUniformLocation(textShader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     // unsigned int viewLoc  = glGetUniformLocation(textShader->ID, "view");
     // glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
 
-    shapeShader = new Shader("./assets/shaders/shape.vs", "./assets/shaders/shape.fs");
+    shapeShader = new Shader(shapeVertexShader, shapeFragmentShader);
 
     // shapeShader->use();
     // glUniformMatrix4fv(glGetUniformLocation(shapeShader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     // viewLoc  = glGetUniformLocation(shapeShader->ID, "view");
     // glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]); 
 
-    imageShader = new Shader("./assets/shaders/texture_simple.vs", "./assets/shaders/texture_simple.fs");
+    imageShader = new Shader(imageVertexShader, imageFragmentShader);
 
     // imageShader->use();
     // glUniformMatrix4fv(glGetUniformLocation(imageShader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
