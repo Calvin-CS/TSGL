@@ -30,19 +30,19 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myMethod = m;
   switch(myMethod) {
     case forfeitWhenBlocked:
-      methodString = "forfeit when blocked";
+      methodString = L"forfeit when blocked";
       break;
     case waitWhenBlocked:
-      methodString = "wait when blocked";
+      methodString = L"wait when blocked";
       break;
     case nFrameRelease:
-      methodString = "release on nth frame";
+      methodString = L"release on nth frame";
       break;
     case resourceHierarchy:
-      methodString = "hierarchical resources";
+      methodString = L"hierarchical resources";
       break;
     case oddEven:
-      methodString = "odd-even check";
+      methodString = L"odd-even check";
       break;
     default:
       break;
@@ -53,31 +53,31 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myCan2->setBackgroundColor(GRAY);
 
   legendTexts = new Text*[9]();
-  legendTexts[0] = new Text(-134,128,0,"Method:","./assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
+  legendTexts[0] = new Text(-134,128,0,L"Method:","./assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
   legendTexts[0]->changeXBy(legendTexts[0]->getWidth() / 2);
   myCan2->add(legendTexts[0]);
-  legendTexts[1] = new Text(-118,96,0,"\"" + methodString + "\"","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  legendTexts[1] = new Text(-118,96,0,L"\"" + methodString + L"\"","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
   legendTexts[1]->changeXBy(legendTexts[1]->getWidth() / 2);
   myCan2->add(legendTexts[1]);
-  legendTexts[2] = new Text(-134,64,0,"Legend:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  legendTexts[2] = new Text(-134,64,0,L"Legend:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
   legendTexts[2]->changeXBy(legendTexts[2]->getWidth() / 2);
   myCan2->add(legendTexts[2]);
-  legendTexts[3] = new Text(-118,32,0,"Red: Hungry","./assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
+  legendTexts[3] = new Text(-118,32,0,L"Red: Hungry","./assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
   legendTexts[3]->changeXBy(legendTexts[3]->getWidth() / 2);
   myCan2->add(legendTexts[3]);
-  legendTexts[4] = new Text(-118,0,0,"Orange: Has Right Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
+  legendTexts[4] = new Text(-118,0,0,L"Orange: Has Right Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
   legendTexts[4]->changeXBy(legendTexts[4]->getWidth() / 2);
   myCan2->add(legendTexts[4]);
-  legendTexts[5] = new Text(-118,-32,0,"Yellow: Has Left Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,YELLOW);
+  legendTexts[5] = new Text(-118,-32,0,L"Yellow: Has Left Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,YELLOW);
   legendTexts[5]->changeXBy(legendTexts[5]->getWidth() / 2);
   myCan2->add(legendTexts[5]);
-  legendTexts[6] = new Text(-118,-64,0,"Green: Eating","./assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
+  legendTexts[6] = new Text(-118,-64,0,L"Green: Eating","./assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
   legendTexts[6]->changeXBy(legendTexts[6]->getWidth() / 2);
   myCan2->add(legendTexts[6]);
-  legendTexts[7] = new Text(-118,-96,0,"Blue: Thinking","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
+  legendTexts[7] = new Text(-118,-96,0,L"Blue: Thinking","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
   legendTexts[7]->changeXBy(legendTexts[7]->getWidth() / 2);
   myCan2->add(legendTexts[7]);
-  legendTexts[8] = new Text(-118,-121,0,"Meals eaten:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
+  legendTexts[8] = new Text(-118,-121,0,L"Meals eaten:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
   legendTexts[8]->changeXBy(legendTexts[8]->getWidth() / 2);
   myCan2->add(legendTexts[8]);
 

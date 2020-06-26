@@ -18,7 +18,7 @@ namespace tsgl {
  *      \param color A reference to the ColorFloat to use.
  * \return A new Text instance with the specified string, position, and color.
  */
-Text::Text(float x, float y, float z, std::string text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color)
+Text::Text(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color)
  : Drawable(x,y,z,yaw,pitch,roll) {
     shaderType = TEXT_SHADER_TYPE;
     myString = text;
@@ -37,10 +37,11 @@ Text::Text(float x, float y, float z, std::string text, std::string fontFilename
     if (FT_New_Face(ft, fontFilename.c_str(), 0, &face))
         TsglErr("ERROR::FREETYPE: Failed to load font");
 
+    // if(FT_Select_Charmap(face , ft_encoding_unicode))
+    //     TsglErr("ERROR::FREETYPE: Charmap selection");
+
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
-
-    FT_Select_Charmap(face , FT_ENCODING_UNICODE);
 
     populateCharacters();
 
@@ -80,9 +81,10 @@ void Text::draw(Shader * shader) {
 
     float mouseX = -myWidth / 2;
     float mouseY = -myHeight / 2;
-    std::string::const_iterator c;
-    for (c = myString.begin(); c != myString.end(); c++) {
-        Character ch = Characters[*c];
+    const wchar_t* wideText = myString.c_str();
+    // std::wstring::const_iterator c;
+    for (unsigned int i = 0; i < myString.size(); i++) {
+        Character ch = Characters[wideText[i]];
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1); 
 
@@ -141,10 +143,10 @@ void Text::draw(Shader * shader) {
  *  \param text The text to change myString to.
  * \warning The center of the text will not change despite any differences in rendered string length.
  */
-void Text::setText(std::string text) {
+void Text::setText(std::wstring text) {
     attribMutex.lock();
     init = false;
-    std::string::const_iterator c;
+    std::wstring::const_iterator c;
     for (c = myString.begin(); c != myString.end(); c++) {
         FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
     }
@@ -162,7 +164,7 @@ void Text::setText(std::string text) {
  */
 void Text::setFontSize(unsigned int fontsize) {
     attribMutex.lock();
-    std::string::const_iterator c;
+    std::wstring::const_iterator c;
     for (c = myString.begin(); c != myString.end(); c++) {
         FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
     }
@@ -186,7 +188,7 @@ void Text::setFontSize(unsigned int fontsize) {
 void Text::setFont(std::string filename) {
     attribMutex.lock();
     init = false;
-    std::string::const_iterator c;
+    std::wstring::const_iterator c;
     for (c = myString.begin(); c != myString.end(); c++) {
         FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
     }
@@ -195,12 +197,12 @@ void Text::setFont(std::string filename) {
     // load font as face
 
     if (FT_New_Face(ft, myFont.c_str(), 0, &face))
-        std::cout << "ERROR::FREETYPE: Failed to load font" << std::endl;
+        TsglErr("ERROR::FREETYPE: Failed to load font");
+
+    FT_Select_Charmap(face , ft_encoding_unicode);
 
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
-
-    FT_Select_Charmap(face , FT_ENCODING_UNICODE);
 
     populateCharacters();
     init = true;
@@ -219,41 +221,47 @@ void Text::setColor(const ColorFloat& color) {
 }
 
 /*!
- * \brief Private helper method for calculating Text dimensions.
+ * \brief Private helper method for populating Characters with characters based on myString
  * \details This function assigns values to myWidth and myHeight based on 
  *  the glyphs loaded based on myFontSize, myFont, and myString.
  */
 void Text::populateCharacters() {
-    // note: this will leak memory if you don't free the bitmaps within first. see most mutators.
-    Characters.clear();
+    const wchar_t* wideChar = myString.c_str();
+    Characters.clear(); // note: this will leak memory if you don't free the bitmaps within first. see most mutators.
     myWidth = 0;
     myHeight = 0;
 
     FT_Bitmap * ftbmps = new FT_Bitmap[myString.size()];
 
-    for (int i = 0; i < myString.size(); i++) {
+    // if(FT_Select_Charmap(face , ft_encoding_unicode))
+    //     TsglErr("ERROR::FREETYPE: Charmap selection");
+
+    FT_GlyphSlot glyph = face->glyph;
+    FT_UInt index;
+
+    for (unsigned int i = 0; i < myString.size(); i++) {
         // Load character glyph 
-        unsigned long index = FT_Get_Char_Index(face, myString[i]);
+        index = FT_Get_Char_Index(face, wideChar[i]);
         if (FT_Load_Glyph(face, index, FT_LOAD_RENDER))
         {
-            std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+            TsglErr("ERROR::FREETYTPE: Failed to load Glyph");
             continue;
         }
 
         FT_Bitmap_Init(&ftbmps[i]);
-        FT_Bitmap_Copy(ft, &face->glyph->bitmap, &ftbmps[i]);
+        FT_Bitmap_Copy(ft, &glyph->bitmap, &ftbmps[i]);
 
         Character character = {
             ftbmps[i],
-            glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-            face->glyph->advance.x
+            glm::ivec2(glyph->bitmap_left, glyph->bitmap_top),
+            glyph->advance.x
         };
         
-        Characters.insert(std::pair<char, Character>(myString[i], character));
+        Characters.insert(std::pair<wchar_t, Character>(wideChar[i], character));
 
-        myWidth += face->glyph->advance.x >> 6;
-        if (face->glyph->bitmap.rows > myHeight)
-            myHeight = face->glyph->bitmap.rows;
+        myWidth += glyph->advance.x >> 6;
+        if (glyph->bitmap.rows > myHeight)
+            myHeight = glyph->bitmap.rows;
     }
 
     delete [] ftbmps;
@@ -261,7 +269,7 @@ void Text::populateCharacters() {
 
 Text::~Text() {
     // destroy FreeType once we're finished
-    std::string::const_iterator c;
+    std::wstring::const_iterator c;
     for (c = myString.begin(); c != myString.end(); c++) {
         FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
     }

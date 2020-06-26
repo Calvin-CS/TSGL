@@ -25,25 +25,25 @@ void textFunction(Canvas& can, std::string font) {
     //              32, BLUE);
     // can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
     // can.drawText("And to that I say...oh well.", 16, 550, 32, WHITE);
-    Text * text = new Text(0,0,0,"C[i] = B[i] + A[i]", font, 100, 0,0,0, YELLOW);
+    // Text * text = new Text(0,0,0,L"C[i] = B[i] + A[i]", font, 100, 0,0,0, YELLOW);
     // can.add(text);
     // Rectangle * rec = new Rectangle(0,0,0,360,62,0,0,0, ColorFloat(1,1,1,0.2));
     // can.add(rec);
-    Text * lowercase = new Text(0,100,0,"abcdefghijklmnopqrstuvwxyz", font, 25, 0,0,0,WHITE);
-    can.add(lowercase);
-    Text * uppercase = new Text(0,50,0,"ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, 25, 0,0,0,WHITE);
-    can.add(uppercase);
-    Text * random = new Text(0,0,0,"!@#$%^&*()_-+=~`", font, 25, 0,0,0,WHITE);
+    // Text * lowercase = new Text(0,100,0,L"abcdefghijklmnopqrstuvwxyz", font, 25, 0,0,0,WHITE);
+    // can.add(lowercase);
+    // Text * uppercase = new Text(0,50,0,L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, 25, 0,0,0,WHITE);
+    // can.add(uppercase);
+    Text * random = new Text(0,0,0,L"bad*?<>~^letters!=", font, 48, 0,0,0,WHITE);
     can.add(random);
-    Text * random2 = new Text(0,-50,0,"{[   }] |\\';:<>,./?", font, 25, 0,0,0,WHITE);
-    can.add(random2);
+    // Text * random2 = new Text(0,-50,0,L"{[   }] |\\';:<>,./?", font, 25, 0,0,0,WHITE);
+    // can.add(random2);
 
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&text]() {
-        // text->setText("Glorgaborg");
-        // text->setColor(RED);
-        // text->setFont("./assets/freefont/FreeSerifItalic.ttf");
-        text->setFontSize(50);
-    });
+    // can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&text]() {
+    //     // text->setText("Glorgaborg");
+    //     // text->setColor(RED);
+    //     // text->setFont("./assets/freefont/FreeSerifItalic.ttf");
+    //     text->setFontSize(50);
+    // });
 
     float rotation = 0.0f;
     while(can.isOpen()) {
@@ -56,7 +56,11 @@ void textFunction(Canvas& can, std::string font) {
         // text->setRoll(rotation*45);
         rotation+=0.01;
     }
-    delete text;
+    // delete text;
+    // delete lowercase;
+    // delete uppercase;
+    delete random;
+    // delete random2;
 
 }
 

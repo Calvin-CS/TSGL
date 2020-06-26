@@ -42,7 +42,6 @@ void starFunction(Canvas& c) {
 
 	delete[] colors;
 	// delete s1; // not sure why this doesn't have to be deleted. But it doesn't.
-	return 0;
 }
 
 int main(int argc, char* argv[]) {

@@ -11,7 +11,6 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_BITMAP_H
-#include FT_GLYPH_H
 // #include "TextureHandler.h"
 
 namespace tsgl {
@@ -24,7 +23,7 @@ namespace tsgl {
  */
 class Text : public Drawable {
  private:
-    std::string myString;
+    std::wstring myString;
     unsigned int myFontSize;
     std::string myFont;
     ColorFloat myColor;
@@ -41,15 +40,15 @@ class Text : public Drawable {
         unsigned int Advance;   // Horizontal offset to advance to next glyph
     };
 
-    std::map<GLchar, Character> Characters;
+    std::map<wchar_t, Character> Characters;
 
     void populateCharacters();
  public:
-    Text(float x, float y, float z, std::string text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color);
+    Text(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color);
 
     virtual void draw(Shader * shader);
 
-    virtual void setText(std::string text);
+    virtual void setText(std::wstring text);
 
     virtual void setFontSize(unsigned int fontsize);
 
@@ -57,7 +56,7 @@ class Text : public Drawable {
 
     virtual void setColor(const ColorFloat& color);
 
-    std::string getText() { return myString; }
+    std::wstring getText() { return myString; }
 
     unsigned int getFontSize() { return myFontSize; }
 
