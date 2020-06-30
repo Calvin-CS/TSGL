@@ -33,10 +33,10 @@ void textFunction(Canvas& can, std::string font) {
     // can.add(lowercase);
     // Text * uppercase = new Text(0,50,0,L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, 25, 0,0,0,WHITE);
     // can.add(uppercase);
-    Text * random = new Text(0,0,0,L"bad*?<>~^letters!=", font, 48, 0,0,0,WHITE);
-    can.add(random);
-    // Text * random2 = new Text(0,-50,0,L"{[   }] |\\';:<>,./?", font, 25, 0,0,0,WHITE);
-    // can.add(random2);
+    // Text * random = new Text(0,0,0,L"Όȳ", font, 50, 0,0,0,WHITE);
+    // can.add(random);
+    Text * random2 = new Text(0,-50,0,L"{:<>,./?+=+^c", font, 25, 0,0,0,WHITE);
+    can.add(random2);
 
     // can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&text]() {
     //     // text->setText("Glorgaborg");
@@ -59,8 +59,8 @@ void textFunction(Canvas& can, std::string font) {
     // delete text;
     // delete lowercase;
     // delete uppercase;
-    delete random;
-    // delete random2;
+    // delete random;
+    delete random2;
 
 }
 
@@ -69,7 +69,7 @@ void textFunction(Canvas& can, std::string font) {
 int main(int argc, char * argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2f*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w - 330.0f;
-    std::string font = (argc > 3) ? argv[3] : "./assets/freefont/FreeMono.ttf";
+    std::string font = (argc > 3) ? argv[3] : "./assets/freefont/FreeMono.otf";
     if(w <= 0 || h <= 0) {  //Check validity of width and height
       w = 1.2f*Canvas::getDisplayHeight();
       h = 0.75f*w;

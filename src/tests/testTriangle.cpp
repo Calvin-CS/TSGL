@@ -18,10 +18,12 @@ void triangleFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Triangle * triangle = new Triangle(-50,-50,0,0,50,0,50,-50,0,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    Triangle * triangle = new Triangle(-50,-50,0,0,50,0,50,-50,0,0,0,0,colors);
+    Triangle * triangle2 = new Triangle(-150, -200,0,-200,100,0,-100,0,0,0,0,0,RED);
     // triangle->setCenterX(200);
     // triangle->setRotationPoint(0,0,0);
     can.add(triangle);
+    can.add(triangle2);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
     while (can.isOpen()) {
@@ -44,6 +46,7 @@ void triangleFunction(Canvas& can) {
     }
 
     delete triangle;
+    delete triangle2;
 }
 
 int main(int argc, char* argv[]) {

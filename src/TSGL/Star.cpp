@@ -34,10 +34,14 @@ Star::Star(float x, float y, float z, GLfloat radius, int points, float yaw, flo
     float delta = 2.0f / points * PI;
     for(int i = 0; i < points; ++i) {
         addVertex(0.5*cos(i*delta), 0.5*sin(i*delta), 0, color);
-        if( ninja )
+        addOutlineVertex(0.5*cos(i*delta), 0.5*sin(i*delta), 0, GRAY);
+        if( ninja ) {
             addVertex(cos(i*delta), sin(i*delta), 0, color);
-        else
+            addOutlineVertex(cos(i*delta), sin(i*delta), 0, GRAY);
+        } else {
             addVertex(cos((i+0.5)*delta), sin((i+0.5)*delta), 0, color);
+            addOutlineVertex(cos((i+0.5)*delta), sin((i+0.5)*delta), 0, GRAY);
+        }
     }
 }
 
@@ -73,10 +77,14 @@ Star::Star(float x, float y, float z, GLfloat radius, int points, float yaw, flo
     float delta = 2.0f / points * PI;
     for(int i = 0; i < points; ++i) {
         addVertex(0.5*cos(i*delta), 0.5*sin(i*delta), 0, color[i]);
-        if( ninja )
+        addOutlineVertex(0.5*cos(i*delta), 0.5*sin(i*delta), 0, GRAY);
+        if( ninja ) {
             addVertex(cos(i*delta), sin(i*delta), 0, color[i]);
-        else
+            addOutlineVertex(cos(i*delta), sin(i*delta), 0, GRAY);
+        } else {
             addVertex(cos(((float)i+0.5)*delta), sin(((float)i+0.5)*delta), 0, color[i]);
+            addOutlineVertex(cos(((float)i+0.5)*delta), sin(((float)i+0.5)*delta), 0, GRAY);
+        }
     }
 }
 

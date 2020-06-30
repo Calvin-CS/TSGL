@@ -36,8 +36,15 @@ void Shape::draw(Shader * shader) {
     unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(geometryType, 0, numberOfVertices);
+    if (isFilled) {
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(geometryType, 0, numberOfVertices);
+    }
+
+    if (isOutlined) {
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfOutlineVertices * 7, outlineVertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(outlineGeometryType, 0, numberOfOutlineVertices);
+    }
 }
 
  /*!
@@ -70,6 +77,37 @@ void Shape::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color) 
     attribMutex.unlock();
 }
 
+ /*!
+  * \brief Adds another outline vertex to a Shape.
+  * \details This function initializes the next vertex in the Shape and adds it to a Shape buffer.
+  *      \param x The x position of the vertex.
+  *      \param y The y position of the vertex.
+  *      \param z The z position of the vertex.
+  *      \param color The reference variable of the color of the vertex.
+  * \note This function does nothing if the vertex buffer is already full.
+  * \note A message is given indicating that the vertex buffer is full.
+  */
+void Shape::addOutlineVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color) {
+    if (outlineInit) {
+        TsglDebug("Cannot add anymore vertices.");
+        printf("added enough already tbh\n");
+        return;
+    }
+    attribMutex.lock();
+    outlineVertices[currentOutlineVertex] = x;
+    outlineVertices[currentOutlineVertex + 1] = y;
+    outlineVertices[currentOutlineVertex + 2] = z;
+    outlineVertices[currentOutlineVertex + 3] = color.R;
+    outlineVertices[currentOutlineVertex + 4] = color.G;
+    outlineVertices[currentOutlineVertex + 5] = color.B;
+    outlineVertices[currentOutlineVertex + 6] = color.A;
+    currentOutlineVertex += 7;
+    if (currentOutlineVertex == numberOfOutlineVertices*7) {
+        outlineInit = true;
+    }
+    attribMutex.unlock();
+}
+
 /**
  * \brief Sets the Shape to a new color.
  * \param c The new ColorFloat.
@@ -96,6 +134,21 @@ void Shape::setColor(ColorFloat c[]) {
         vertices[i*7 + 5] = c[i].B;
         vertices[i*7 + 6] = c[i].A;
     }
+}
+
+/**
+ * \brief Sets the Shape's outline to a new color.
+ * \param c The new ColorFloat.
+ */
+void Shape::setOutlineColor(ColorFloat c) {
+    attribMutex.lock();
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+        outlineVertices[i*7 + 3] = c.R;
+        outlineVertices[i*7 + 4] = c.G;
+        outlineVertices[i*7 + 5] = c.B;
+        outlineVertices[i*7 + 6] = c.A;
+    }
+    attribMutex.unlock();
 }
 
 }

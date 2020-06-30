@@ -18,7 +18,9 @@ namespace tsgl {
   * \return A new Cone with a buffer for storing the specified numbered of vertices.
   */
 Cone::Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c)  
-: Pyramid(x, y, z, 40, height, radius, yaw, pitch, roll, c)  { }
+: Pyramid(x, y, z, 40, height, radius, yaw, pitch, roll, c)  { 
+    numberOfOutlineVertices /= 2;
+}
 
  /*!
   * \brief Explicitly constructs a new Cone.
@@ -36,7 +38,9 @@ Cone::Cone(float x, float y, float z, float height, float radius, float yaw, flo
   * \return A new Cone with a buffer for storing the specified numbered of vertices.
   */
 Cone::Cone(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c[]) 
-: Pyramid(x, y, z, 40, height, radius, yaw, pitch, roll, c)  { }
+: Pyramid(x, y, z, 40, height, radius, yaw, pitch, roll, c)  {
+    numberOfOutlineVertices /= 2;
+}
 
 /*!
  * \brief Destructor for the Cone.

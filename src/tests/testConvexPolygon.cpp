@@ -20,7 +20,7 @@ void convexPolygonFunction(Canvas& can) {
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
     float x[] = { -50,-50, 0,25,50, 50, 25 };
     float y[] = { -50, 25,50,40,10,-10,-50 };
-    ConvexPolygon * cp = new ConvexPolygon(0,0,0,7,x,y,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    ConvexPolygon * cp = new ConvexPolygon(0,0,0,7,x,y,0,0,0,colors);
     // cp->setCenterX(2);
     // cp->setRotationPoint(0,0,0);
     can.add(cp);

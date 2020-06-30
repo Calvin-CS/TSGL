@@ -21,7 +21,8 @@ void triangleStripFunction(Canvas& can) {
     float x[] = { 0,-50,50,-50,50,0 };
     float y[] = { -100,-50,-50,50,50,100 };
     float z[] = { 0,50,50,50,50,0 };
-    TriangleStrip * ts = new TriangleStrip(0,0,0,6,x,y,z,0,0,0,colors/* RED */);
+    TriangleStrip * ts = new TriangleStrip(0,0,0,6,x,y,z,0,0,0,colors);
+    // ts->setIsOutlined(true);
     // ts->setCenterX(2);
     ts->setRotationPoint(0,0,0);
     can.add(ts);

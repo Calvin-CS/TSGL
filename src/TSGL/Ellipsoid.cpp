@@ -23,17 +23,21 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
         TsglDebug("Cannot have an Ellipsoid with any radius less than or equal to 0.");
     }
     attribMutex.lock();
-    geometryType = GL_TRIANGLE_STRIP;
-    verticalSections = 36;
-    horizontalSections = 20;
-    numberOfVertices = verticalSections*horizontalSections*2 + 1;
-    vertices = new GLfloat[numberOfVertices * 7];
     myXRadius = xRadius;
     myYRadius = yRadius;
     myZRadius = zRadius;
     myXScale = xRadius;
     myYScale = yRadius;
     myZScale = zRadius;
+    verticalSections = 36;
+    horizontalSections = 20;
+    geometryType = GL_TRIANGLE_STRIP;
+    numberOfVertices = verticalSections*horizontalSections*2 + 1;
+    vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = verticalSections*horizontalSections*4 + 1;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
+    isOutlined = false;
     attribMutex.unlock();
 	for(float b=0;b<horizontalSections;b++)
 	{
@@ -44,6 +48,27 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
 		}
 	}
     addVertex(0, 1, 0, c);
+
+    // horizontal outline
+	for(int b=0;b<horizontalSections;b++)
+	{
+		for(int a=0;a<verticalSections;a++)
+		{
+			addOutlineVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), GRAY);
+			addOutlineVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), GRAY);
+		}
+	}
+    
+    // vertical outline
+	for(int b=0;b<horizontalSections;b++)
+	{
+		for(int a=0;a<verticalSections;a++)
+		{
+			addOutlineVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), GRAY);
+			addOutlineVertex(sin(((a+1)*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos(((a+1)*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin(((a+1)*PI)/(verticalSections/2)), GRAY);
+		}
+	}
+    addOutlineVertex(0, 1, 0, GRAY);
 }
 
  /*!
@@ -67,17 +92,21 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
         TsglDebug("Cannot have an Ellipsoid with any radius less than or equal to 0.");
     }
     attribMutex.lock();
-    geometryType = GL_TRIANGLE_STRIP;
-    verticalSections = 36;
-    horizontalSections = 20;
-    numberOfVertices = verticalSections*horizontalSections*2 + 1;
-    vertices = new GLfloat[numberOfVertices * 7];
     myXRadius = xRadius;
     myYRadius = yRadius;
     myZRadius = zRadius;
     myXScale = xRadius;
     myYScale = yRadius;
     myZScale = zRadius;
+    verticalSections = 36;
+    horizontalSections = 20;
+    geometryType = GL_TRIANGLE_STRIP;
+    numberOfVertices = verticalSections*horizontalSections*2 + 1;
+    vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = verticalSections*horizontalSections*4 + 1;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
+    isOutlined = false;
     attribMutex.unlock();
 	for(int b=0;b<horizontalSections;b++)
 	{
@@ -88,6 +117,27 @@ Ellipsoid::Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius
 		}
 	}
     addVertex(0, 1, 0, c[horizontalSections-1]);
+
+    // horizontal outline
+	for(int b=0;b<horizontalSections;b++)
+	{
+		for(int a=0;a<verticalSections;a++)
+		{
+			addOutlineVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), GRAY);
+			addOutlineVertex(sin((a*PI)/(verticalSections/2))*sin(((b+1)*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos(((b+1)*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), GRAY);
+		}
+	}
+
+    // vertical outline
+	for(int b=0;b<horizontalSections;b++)
+	{
+		for(int a=0;a<verticalSections;a++)
+		{
+			addOutlineVertex(sin((a*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos((a*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin((a*PI)/(verticalSections/2)), GRAY);
+			addOutlineVertex(sin(((a+1)*PI)/(verticalSections/2))*sin((b*PI)/horizontalSections), cos(((a+1)*PI)/(verticalSections/2)), cos((b*PI)/horizontalSections)*sin(((a+1)*PI)/(verticalSections/2)), GRAY);
+		}
+	}
+    addOutlineVertex(0, 1, 0, GRAY);
 }
 
 /**

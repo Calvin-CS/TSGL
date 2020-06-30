@@ -37,8 +37,8 @@ Text::Text(float x, float y, float z, std::wstring text, std::string fontFilenam
     if (FT_New_Face(ft, fontFilename.c_str(), 0, &face))
         TsglErr("ERROR::FREETYPE: Failed to load font");
 
-    // if(FT_Select_Charmap(face , ft_encoding_unicode))
-    //     TsglErr("ERROR::FREETYPE: Charmap selection");
+    if(FT_Select_Charmap(face , FT_ENCODING_UNICODE))
+        TsglErr("ERROR::FREETYPE: Charmap selection");
 
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
@@ -199,7 +199,8 @@ void Text::setFont(std::string filename) {
     if (FT_New_Face(ft, myFont.c_str(), 0, &face))
         TsglErr("ERROR::FREETYPE: Failed to load font");
 
-    FT_Select_Charmap(face , ft_encoding_unicode);
+    if(FT_Select_Charmap(face , FT_ENCODING_UNICODE))
+        TsglErr("ERROR::FREETYPE: Charmap selection");
 
     // set size to load glyphs as
     FT_Set_Pixel_Sizes(face, 0, myFontSize);
@@ -232,9 +233,6 @@ void Text::populateCharacters() {
     myHeight = 0;
 
     FT_Bitmap * ftbmps = new FT_Bitmap[myString.size()];
-
-    // if(FT_Select_Charmap(face , ft_encoding_unicode))
-    //     TsglErr("ERROR::FREETYPE: Charmap selection");
 
     FT_GlyphSlot glyph = face->glyph;
     FT_UInt index;

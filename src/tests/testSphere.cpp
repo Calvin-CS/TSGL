@@ -18,8 +18,12 @@ void sphereFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Sphere * testSphere = new Sphere(0.0, 0.0, 0.0, 250, 0.0, 0.0, 0.0, colors);
+    Sphere * testSphere = new Sphere(225.0, 0.0, 0.0, 200, 0.0, 0.0, 0.0, colors);
+    Sphere * testSphere2 = new Sphere(-225.0, 0.0, 0.0, 200, 0.0, 0.0, 0.0, RED);
+    testSphere->setIsOutlined(true);
+    testSphere2->setIsOutlined(true);
     can.add(testSphere);
+    can.add(testSphere2);
     float rotation = 0.0f;
     // GLfloat delta = 5;
     bool boolean = true;
@@ -58,6 +62,7 @@ void sphereFunction(Canvas& can) {
     }
 
     delete testSphere;
+    delete testSphere2;
 }
 
 int main(int argc, char* argv[]) {

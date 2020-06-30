@@ -21,7 +21,7 @@ void ellipseFunction(Canvas& can) {
         ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0.5,0.5,1,0.8),
         ColorFloat(0.5,1,0.5,0.8), ColorFloat(0.5,1,1,0.8), ColorFloat(1,0.5,0.5,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Ellipse * ellipse = new Ellipse(0,0,0,100,200,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    Ellipse * ellipse = new Ellipse(0,0,0,100,200,0,0,0,colors);
     // ellipse->setCenterX(200);
     // ellipse->setRotationPoint(0,0,0);
     can.add(ellipse);

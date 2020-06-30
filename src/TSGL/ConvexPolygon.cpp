@@ -17,8 +17,10 @@ namespace tsgl {
 ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, float yaw, float pitch, float roll) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
     geometryType = GL_TRIANGLE_FAN;
-    numberOfVertices = numVertices;
+    outlineGeometryType = GL_LINE_LOOP;
+    numberOfVertices = numberOfOutlineVertices = numVertices;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();    
 }
@@ -41,12 +43,15 @@ ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int n
 ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorFloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
     geometryType = GL_TRIANGLE_FAN;
-    numberOfVertices = numVertices;
+    outlineGeometryType = GL_LINE_LOOP;
+    numberOfVertices = numberOfOutlineVertices = numVertices;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();    
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], 0, color);
+        addOutlineVertex(x[i], y[i], 0, GRAY);
     }
 }
 
@@ -68,12 +73,15 @@ ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int n
 ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int numVertices, GLfloat x[], GLfloat y[], float yaw, float pitch, float roll, ColorFloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
     geometryType = GL_TRIANGLE_FAN;
-    numberOfVertices = numVertices;
+    outlineGeometryType = GL_LINE_LOOP;
+    numberOfVertices = numberOfOutlineVertices = numVertices;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();    
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], 0, color[i]);
+        addOutlineVertex(x[i], y[i], 0, GRAY);
     }
 }
 

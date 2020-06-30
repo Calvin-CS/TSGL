@@ -23,6 +23,11 @@ Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float p
     addVertex(-0.5, -0.5, 0, color);
     addVertex(0.5, -0.5, 0, color);
     addVertex(0.5, 0.5, 0, color);
+
+    addOutlineVertex(-0.5, 0.5, 0, GRAY);
+    addOutlineVertex(-0.5, -0.5, 0, GRAY);
+    addOutlineVertex(0.5, -0.5, 0, GRAY);
+    addOutlineVertex(0.5, 0.5, 0, GRAY);
 }
 
 /*!
@@ -46,6 +51,11 @@ Square::Square(float x, float y, float z, GLfloat sideLength, float yaw, float p
     addVertex(-0.5, -0.5, 0, color[1]);
     addVertex(0.5, -0.5, 0, color[2]);
     addVertex(0.5, 0.5, 0, color[3]);
+    
+    addOutlineVertex(-0.5, 0.5, 0, GRAY);
+    addOutlineVertex(-0.5, -0.5, 0, GRAY);
+    addOutlineVertex(0.5, -0.5, 0, GRAY);
+    addOutlineVertex(0.5, 0.5, 0, GRAY);
 }
 
 /**

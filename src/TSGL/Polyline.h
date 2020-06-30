@@ -5,7 +5,7 @@
 #ifndef POLYLINE_H_
 #define POLYLINE_H_
 
-#include "Shape.h"  // For extending our Shape object
+#include "Drawable.h"  // For extending our Drawable object
 
 namespace tsgl {
 
@@ -18,14 +18,23 @@ namespace tsgl {
  *  \note Calling addVertex() after all vertices have been added will do nothing.
  *  \note Calling Drawable::draw() before all vertices have been added will do nothing.
  */
-class Polyline : public Shape {
+class Polyline : public Drawable {
  protected:
+    int numberOfVertices;
+    int currentVertex = 0;
+    virtual void addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color = WHITE);
+
     Polyline(float x, float y, float z, int numVertices, float yaw, float pitch, float roll);
  public:
 
     Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color);
 
     Polyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color[]);
+
+    virtual void draw(Shader * shader);
+
+    virtual void setColor(ColorFloat c);
+    virtual void setColor(ColorFloat c[]);
 
     bool isProcessed();
 };

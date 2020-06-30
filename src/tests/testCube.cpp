@@ -20,6 +20,12 @@ void cubeFunction(Canvas& can) {
     float rotation = 0.0f;
     GLfloat delta = 0.05;
     bool boolean = false;
+
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&testCube, &boolean]() {
+        testCube->setIsOutlined(boolean);
+        boolean = !boolean;
+    });
+
     while (can.isOpen()) {
         can.sleep();
         // testCube->setCenterX(sin(rotation)*200);
@@ -37,15 +43,15 @@ void cubeFunction(Canvas& can) {
         // }
         // testCube->changeSideLengthBy(delta);
         //testCube2->setRoll(rotation);
-        if (rotation*45 >= 360) {
-            if (boolean) {
-                testCube->setColor(RED);
-            } else {
-                testCube->setColor(colors);
-            }
-            boolean = !boolean;
-            rotation = 0;
-        }
+        // if (rotation*45 >= 360) {
+        //     if (boolean) {
+        //         testCube->setColor(RED);
+        //     } else {
+        //         testCube->setColor(colors);
+        //     }
+        //     boolean = !boolean;
+        //     rotation = 0;
+        // }
         rotation+=0.01;
     }
 

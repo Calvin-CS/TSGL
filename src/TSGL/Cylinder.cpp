@@ -19,6 +19,7 @@ namespace tsgl {
   */
 Cylinder::Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c)  
 : Prism(x, y, z, 40, height, radius, yaw, pitch, roll, c)  {
+    numberOfOutlineVertices = numberOfOutlineVertices * 2 / 3;
 }
 
  /*!
@@ -38,6 +39,7 @@ Cylinder::Cylinder(float x, float y, float z, GLfloat height, GLfloat radius, fl
   */
 Cylinder::Cylinder(float x, float y, float z, float height, float radius, float yaw, float pitch, float roll, ColorFloat c[])  
 : Prism(x, y, z, 40, height, radius, yaw, pitch, roll, c)  { 
+    numberOfOutlineVertices = numberOfOutlineVertices * 2 / 3;
 }
 
 /*!

@@ -18,7 +18,7 @@ void rpFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    RegularPolygon * rp = new RegularPolygon(0,0,0,100,7,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    RegularPolygon * rp = new RegularPolygon(0,0,0,100,7,0,0,0,colors);
     // rp->setCenterX(200);
     // rp->setRotationPoint(0,0,0);
     can.add(rp);

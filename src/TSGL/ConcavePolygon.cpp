@@ -17,8 +17,10 @@ namespace tsgl {
 ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float yaw, float pitch, float roll) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
     geometryType = GL_TRIANGLE_FAN;
-    numberOfVertices = numVertices;
+    outlineGeometryType = GL_LINE_LOOP;
+    numberOfVertices = numberOfOutlineVertices = numVertices;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();   
 }
@@ -44,9 +46,13 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     numberOfVertices = numVertices;
     vertices = new GLfloat[numberOfVertices * 7];
     myXScale = myYScale = myZScale = 1;
+    outlineGeometryType = GL_LINE_LOOP;
+    numberOfOutlineVertices = numVertices;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], 0, color);
+        addOutlineVertex(x[i], y[i], 0, GRAY);
     }
 }
 
@@ -71,9 +77,13 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     numberOfVertices = numVertices;
     vertices = new GLfloat[numberOfVertices * 7];
     myXScale = myYScale = myZScale = 1;
+    outlineGeometryType = GL_LINE_LOOP;
+    numberOfOutlineVertices = numVertices;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], 0, color[i]);
+        addOutlineVertex(x[i], y[i], 0, GRAY);
     }
 }
 
@@ -101,26 +111,33 @@ void ConcavePolygon::draw(Shader * shader) {
     unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-    /* extra stencil buffer stuff, because it's concave */
-    glClearStencil(0);
-    glEnable(GL_STENCIL_TEST);
-    glDisable(GL_CULL_FACE);
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-    glStencilFunc(GL_NEVER, 0, 1);
-    glStencilOp(GL_INVERT, GL_INVERT, GL_INVERT);
-    /* end */
+    if (isFilled) {
+        /* extra stencil buffer stuff, because it's concave */
+        glClearStencil(0);
+        glEnable(GL_STENCIL_TEST);
+        glDisable(GL_CULL_FACE);
+        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+        glStencilFunc(GL_NEVER, 0, 1);
+        glStencilOp(GL_INVERT, GL_INVERT, GL_INVERT);
+        /* end */
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(geometryType, 0, numberOfVertices);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(geometryType, 0, numberOfVertices);
 
-    /* extra stencil buffer stuff, because it's concave */
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-    glStencilFunc(GL_EQUAL, 1, 1);
-    glStencilOp(GL_ZERO, GL_ZERO, GL_ZERO);
+        /* extra stencil buffer stuff, because it's concave */
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        glStencilFunc(GL_EQUAL, 1, 1);
+        glStencilOp(GL_ZERO, GL_ZERO, GL_ZERO);
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(geometryType, 0, numberOfVertices);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(geometryType, 0, numberOfVertices);
 
-    glDisable(GL_STENCIL_TEST);
+        glDisable(GL_STENCIL_TEST);
+    }
+
+    if (isOutlined) {
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfOutlineVertices * 7, outlineVertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(outlineGeometryType, 0, numberOfOutlineVertices);
+    }
 }
 }

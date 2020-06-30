@@ -33,6 +33,9 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     myZScale = length;
     numberOfVertices = 36;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = 24;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c);
     addVertex(-0.5, -0.5, 0.5, c);
@@ -75,6 +78,33 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     addVertex(-0.5, -0.5, 0.5, c);
     addVertex(0.5, 0.5, 0.5, c);
     addVertex(0.5, -0.5, 0.5, c);
+
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
 }
 
  /*!
@@ -108,6 +138,9 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     myZScale = length;
     numberOfVertices = 36;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = 24;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c[0]);
     addVertex(-0.5, -0.5, 0.5, c[1]);
@@ -150,6 +183,33 @@ Cuboid::Cuboid(float x, float y, float z, GLfloat width, GLfloat height, GLfloat
     addVertex(-0.5, -0.5, 0.5, c[1]);
     addVertex(0.5, 0.5, 0.5, c[6]);
     addVertex(0.5, -0.5, 0.5, c[5]);
+
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
 }
 
 /**

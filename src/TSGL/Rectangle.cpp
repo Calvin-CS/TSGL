@@ -30,6 +30,11 @@ Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, f
     addVertex(-0.5, -0.5, 0, color);
     addVertex(0.5, -0.5, 0, color);
     addVertex(0.5, 0.5, 0, color);
+
+    addOutlineVertex(-0.5, 0.5, 0, GRAY);
+    addOutlineVertex(-0.5, -0.5, 0, GRAY);
+    addOutlineVertex(0.5, -0.5, 0, GRAY);
+    addOutlineVertex(0.5, 0.5, 0, GRAY);
 }
 
 /*!
@@ -60,6 +65,11 @@ Rectangle::Rectangle(float x, float y, float z, GLfloat width, GLfloat height, f
     addVertex(-0.5, -0.5, 0, color[1]);
     addVertex(0.5, -0.5, 0, color[2]);
     addVertex(0.5, 0.5, 0, color[3]);
+
+    addOutlineVertex(-0.5, 0.5, 0, GRAY);
+    addOutlineVertex(-0.5, -0.5, 0, GRAY);
+    addOutlineVertex(0.5, -0.5, 0, GRAY);
+    addOutlineVertex(0.5, 0.5, 0, GRAY);
 }
 
 /**

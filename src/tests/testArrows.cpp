@@ -7,15 +7,16 @@ using namespace tsgl;
 void arrowFunction(Canvas& c) {
 	ColorFloat colors[] = { ColorFloat(1,0,0,1), ColorFloat(0,1,0,1) };
 	Arrow* doubleArrow = new Arrow(0, 0, 0, 200, 5,0,0,0, colors, false);
-  Arrow* arrow2 = new Arrow(100 ,100 ,-1 ,200 ,5,0,0,0,ColorFloat(0,0,1,0.65), true);
+    Arrow* arrow2 = new Arrow(100 ,100 ,-1 ,200 ,5,0,0,0,ColorFloat(0,0,1,0.65), true);
 	c.add(doubleArrow);
-  c.add(arrow2);
+    c.add(arrow2);
 	// doubleArrow->setCenterX(100);
 	// doubleArrow->setRotationPoint(0,0,0);
 	// doubleArrow->setYaw(45);
-	doubleArrow->setColor(RED);
+	// doubleArrow->setColor(RED);
     float floatVal = 0.0f;
     GLfloat delta = 5;
+    bool boolean = true;
 	while( c.isOpen() ) {
 		c.sleep();
         // doubleArrow->setCenterX(sin(floatVal/90));
@@ -27,6 +28,9 @@ void arrowFunction(Canvas& c) {
         // doubleArrow->setLength(sin(floatVal/90) * 100 + 200);
         if (doubleArrow->getLength() > 300 || doubleArrow->getLength() < 100) {
             delta *= -1;
+            arrow2->setIsOutlined(boolean);
+            arrow2->setIsFilled(!boolean);
+            boolean = !boolean;
         }
         doubleArrow->changeLengthBy(delta);
         floatVal += 1;

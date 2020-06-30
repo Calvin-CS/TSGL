@@ -32,6 +32,9 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 12;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = mySides * 6;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), c);
@@ -49,6 +52,20 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
         addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c);
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c);
         addVertex(0,-0.5,0, c);
+    }
+
+    for (int i = 0; i < mySides; i++) {
+        addOutlineVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), GRAY);
+        addOutlineVertex(cos(TWOPI * (i + 1) / mySides), 0.5, sin(TWOPI * (i + 1) / mySides), GRAY);
+        currentOutlineVertex += numberOfOutlineVertices * 7 / 3 - 14;
+
+        addOutlineVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), GRAY);
+        addOutlineVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), GRAY);
+        currentOutlineVertex += numberOfOutlineVertices * 7 / 3 - 14;
+
+        addOutlineVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), GRAY);
+        addOutlineVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), GRAY);
+        currentOutlineVertex -= numberOfOutlineVertices * 7 * 2 / 3;
     }
 }
 
@@ -82,6 +99,9 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 12;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = mySides * 6;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), c[1]);
@@ -99,6 +119,20 @@ Prism::Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radiu
         addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[3]);
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[3]);
         addVertex(0,-0.5,0, c[4]);
+    }
+
+    for (int i = 0; i < mySides; i++) {
+        addOutlineVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), GRAY);
+        addOutlineVertex(cos(TWOPI * (i + 1) / mySides), 0.5, sin(TWOPI * (i + 1) / mySides), GRAY);
+        currentOutlineVertex += numberOfOutlineVertices * 7 / 3 - 14;
+
+        addOutlineVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), GRAY);
+        addOutlineVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), GRAY);
+        currentOutlineVertex += numberOfOutlineVertices * 7 / 3 - 14;
+
+        addOutlineVertex(cos(TWOPI * i / mySides), 0.5, sin(TWOPI * i / mySides), GRAY);
+        addOutlineVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), GRAY);
+        currentOutlineVertex -= numberOfOutlineVertices * 7 * 2 / 3;
     }
 }
 

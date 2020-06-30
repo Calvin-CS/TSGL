@@ -31,7 +31,17 @@ class Shape : public Drawable {
     int numberOfVertices;
     int currentVertex = 0;
     GLenum geometryType;
-    virtual void addVertex(float x, float y, float z, const ColorFloat &color = WHITE);    
+    virtual void addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color = WHITE);  
+    bool isFilled = true;  
+
+   int numberOfOutlineVertices;
+   int currentOutlineVertex = 0;
+   GLenum outlineGeometryType;
+   virtual void addOutlineVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color = WHITE);
+   GLfloat * outlineVertices;
+   bool isOutlined = true;
+
+   bool outlineInit = false;
 
  public:
     Shape(float x, float y, float z, float yaw, float pitch, float roll);
@@ -40,6 +50,25 @@ class Shape : public Drawable {
 
     virtual void setColor(ColorFloat c);
     virtual void setColor(ColorFloat c[]);
+    virtual void setOutlineColor(ColorFloat c);
+
+    virtual bool isProcessed() { return outlineInit && init; }
+
+    /*! \brief Set whether or not the Shape will be filled.
+     *  \details Sets the isFilled instance variable to the value of the parameter.
+     *  \param status Boolean value to which isFilled will be set equivalent.
+     *  \warning Disabling fill on some 3D Shapes, like Cone and Cylinder, can be awkward visually.
+     */
+    virtual void setIsFilled(bool status) { isFilled = status; }
+
+    /*! \brief Set whether or not the Shape will be outlined.
+     *  \details Sets the isOutlined instance variable to the value of the parameter.
+     *  \param status Boolean value to which isOutlined will be set equivalent.
+     *  \warning Disabling outlines on monocolored 3D Shapes can be awkward visually.
+     */
+    virtual void setIsOutlined(bool status) { isOutlined = status; }
+
+    ~Shape() { /* delete [] vertices; */ }
 };
 
 }

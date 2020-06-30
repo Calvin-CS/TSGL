@@ -18,10 +18,12 @@ void squareFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Square * square = new Square(0,0,0,200,0,0,0,colors/* RED */);
+    Square * square = new Square(0,0,0,200,0,0,0,colors);
+    Square * square2 = new Square(-250,0,0,200,0,0,0,RED);
     // square->setCenterX(200);
     // square->setRotationPoint(0,0,0);
     can.add(square);
+    can.add(square2);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
     while (can.isOpen()) {
@@ -46,6 +48,7 @@ void squareFunction(Canvas& can) {
     }
 
     delete square;
+    delete square2;
 }
 
 int main(int argc, char* argv[]) {

@@ -27,6 +27,7 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw
     myYScale = width;
     myWidth = width;
     isDoubleArrow = doubleArrow;
+    isOutlined = false;
     attribMutex.unlock();
     addVertex(-0.4, 0.4, 0, color);
     addVertex(-0.4, 1, 0, color);
@@ -34,15 +35,30 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw
     addVertex(-0.4, -1, 0, color);
     addVertex(-0.4, -0.4, 0, color);
 
+    addOutlineVertex(-0.4, 0.4, 0, GRAY);
+    addOutlineVertex(-0.4, 1, 0, GRAY);
+    addOutlineVertex(-0.5, 0, 0, GRAY);
+    addOutlineVertex(-0.4, -1, 0, GRAY);
+    addOutlineVertex(-0.4, -0.4, 0, GRAY);
+
     if( isDoubleArrow ) {
         addVertex(0.4, -0.4, 0, color);
         addVertex(0.4, -1, 0, color);
         addVertex(0.5, 0, 0, color);
         addVertex(0.4, 1, 0, color);
         addVertex(0.4, 0.4, 0, color);
+
+        addOutlineVertex(0.4, -0.4, 0, GRAY);
+        addOutlineVertex(0.4, -1, 0, GRAY);
+        addOutlineVertex(0.5, 0, 0, GRAY);
+        addOutlineVertex(0.4, 1, 0, GRAY);
+        addOutlineVertex(0.4, 0.4, 0, GRAY);
     } else {
         addVertex(0.5, -.4, 0, color);
         addVertex(0.5, .4, 0, color);
+    
+        addOutlineVertex(0.5, -.4, 0, GRAY);
+        addOutlineVertex(0.5, .4, 0, GRAY);
     }
 }
 
@@ -71,6 +87,7 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw
     myYScale = width;
     myWidth = width;
     isDoubleArrow = doubleArrow;
+    isOutlined = false;
     attribMutex.unlock();
     addVertex(-0.4, 0.4, 0, color[0]);
     addVertex(-0.4, 1, 0, color[0]);
@@ -78,15 +95,30 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw
     addVertex(-0.4, -1, 0, color[0]);
     addVertex(-0.4, -0.4, 0, color[0]);
 
+    addOutlineVertex(-0.4, 0.4, 0, GRAY);
+    addOutlineVertex(-0.4, 1, 0, GRAY);
+    addOutlineVertex(-0.5, 0, 0, GRAY);
+    addOutlineVertex(-0.4, -1, 0, GRAY);
+    addOutlineVertex(-0.4, -0.4, 0, GRAY);
+
     if( isDoubleArrow ) {
         addVertex(0.4, -0.4, 0, color[1]);
         addVertex(0.4, -1, 0, color[1]);
         addVertex(0.5, 0, 0, color[1]);
         addVertex(0.4, 1, 0, color[1]);
         addVertex(0.4, 0.4, 0, color[1]);
+
+        addOutlineVertex(0.4, -0.4, 0, GRAY);
+        addOutlineVertex(0.4, -1, 0, GRAY);
+        addOutlineVertex(0.5, 0, 0, GRAY);
+        addOutlineVertex(0.4, 1, 0, GRAY);
+        addOutlineVertex(0.4, 0.4, 0, GRAY);
     } else {
         addVertex(0.5, -0.4, 0, color[1]);
         addVertex(0.5, 0.4, 0, color[1]);
+
+        addOutlineVertex(0.5, -.4, 0, GRAY);
+        addOutlineVertex(0.5, .4, 0, GRAY);
     }
 }
 
@@ -140,6 +172,7 @@ void Arrow::changeWidthBy(GLfloat delta) {
  * \note Overrides Shape::setColor(ColorFloat c[]).
  */
 void Arrow::setColor(ColorFloat c[]) {
+    attribMutex.lock();
     for(int i = 0; i < 7; i++) {
         vertices[i*7 + 3] = c[i/5].R;
         vertices[i*7 + 4] = c[i/5].G;
@@ -154,6 +187,7 @@ void Arrow::setColor(ColorFloat c[]) {
             vertices[i*7 + 6] = c[1].A;
         }
     }
+    attribMutex.unlock();
 }
 
 }

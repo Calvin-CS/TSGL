@@ -18,13 +18,23 @@ void ellipsoidFunction(Canvas& can) {
         ColorFloat(1,0.5,1,0.8), ColorFloat(1,1,0.5,0.8), ColorFloat(0,0,0.5,0.8),
         ColorFloat(0,0.5,0,0.8), ColorFloat(0,0.5,0.5,0.8), ColorFloat(0.5,0,0,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Ellipsoid * testEllipsoid = new Ellipsoid(0.0, 0.0, 0.0, 200, 200, 200, 0.0, 0.0, 0.0, colors/* ColorFloat(1,0,0,1) */);
-    // Ellipsoid * testEllipsoid2 = new Ellipsoid(-2.0, 0.0, 0.0, 150, 150, 150, 0.0, 0.0, 0.0, colors);
+    Ellipsoid * testEllipsoid = new Ellipsoid(200.0, 0.0, 0.0, 200, 200, 200, 0.0, 0.0, 0.0, colors);
+    // testEllipsoid->setIsFilled(false);
+    Ellipsoid * testEllipsoid2 = new Ellipsoid(-200, 0.0, 0.0, 150, 200, 100, 0.0, 0.0, 0.0, RED);
+    testEllipsoid2->setOutlineColor(BLUE);
     can.add(testEllipsoid);
-    // can.add(testEllipsoid2);
+    can.add(testEllipsoid2);
     float rotation = 0.0f;
     // GLfloat delta = 0.05;
     bool boolean = true;
+    bool b2 = true;
+
+    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&testEllipsoid, &testEllipsoid2, &b2]() {
+        testEllipsoid->setIsOutlined(b2);
+        testEllipsoid2->setIsOutlined(b2);
+        b2 = !b2;
+    });
+
     // testEllipsoid->setXRadius(150);
     // testEllipsoid->setYRadius(150);
     // testEllipsoid->setZRadius(150);
@@ -38,7 +48,8 @@ void ellipsoidFunction(Canvas& can) {
         // testEllipsoid->setCenterZ(sin(rotation));
         // testEllipsoid->setYaw(rotation*45);
         testEllipsoid->setPitch(rotation*45);
-        // testEllipsoid2->setPitch(rotation*45);
+        testEllipsoid2->setPitch(rotation*45);
+        // if(boolean)
         // testEllipsoid->setRoll(rotation*45);
         // testEllipsoid->setXRadius(cos(rotation) * 100 +101);
         // testEllipsoid->setYRadius(sin(rotation) * 100 +201);

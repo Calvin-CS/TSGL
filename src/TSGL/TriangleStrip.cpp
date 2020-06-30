@@ -21,9 +21,13 @@ namespace tsgl {
 TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll,  ColorFloat color) : ConvexPolygon(centerX,centerY,centerZ,numVertices,yaw,pitch,roll) { 
     attribMutex.lock();
     geometryType = GL_TRIANGLE_STRIP;
+    outlineGeometryType = GL_LINE_STRIP;
+    numberOfOutlineVertices = numVertices;
+    isOutlined = false;
     attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], z[i], color);
+        addOutlineVertex(x[i], y[i], z[i], GRAY);
     }
 }
 
@@ -46,9 +50,13 @@ TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int nu
 TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color[]) : ConvexPolygon(centerX,centerY,centerZ,numVertices,yaw,pitch,roll) { 
     attribMutex.lock();
     geometryType = GL_TRIANGLE_STRIP;
+    outlineGeometryType = GL_LINE_STRIP;
+    numberOfOutlineVertices = numVertices;
+    isOutlined = false;
     attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
         addVertex(x[i], y[i], z[i], color[i]);
+        addOutlineVertex(x[i], y[i], z[i], GRAY);
     }
 }
 }

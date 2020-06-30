@@ -36,6 +36,9 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 6;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = mySides * 4;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c);
@@ -45,6 +48,16 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c);    
         addVertex(0,0.5,0, ColorFloat(c.R*.5,c.G*.5,c.B*.5,c.A));
         addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c);
+    }
+
+    for (int i = 0; i < mySides; i++) {
+        addOutlineVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), GRAY);
+        addOutlineVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), GRAY);
+        currentOutlineVertex += numberOfOutlineVertices * 7 / 2 - 14;
+
+        addOutlineVertex(0, 0.5, 0, GRAY);
+        addOutlineVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), GRAY);
+        currentOutlineVertex -= numberOfOutlineVertices * 7 / 2;
     }
 }
 
@@ -82,6 +95,9 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     geometryType = GL_TRIANGLES;
     numberOfVertices = mySides * 6;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = mySides * 4;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[i+1]);
@@ -91,6 +107,16 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[i+1]);    
         addVertex(0,0.5,0, c[0]);
         addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[(i+1) % mySides + 1]);
+    }
+
+    for (int i = 0; i < mySides; i++) {
+        addOutlineVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), GRAY);
+        addOutlineVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), GRAY);
+        currentOutlineVertex += numberOfOutlineVertices * 7 / 2 - 14;
+
+        addOutlineVertex(0, 0.5, 0, GRAY);
+        addOutlineVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), GRAY);
+        currentOutlineVertex -= numberOfOutlineVertices * 7 / 2;
     }
 }
 

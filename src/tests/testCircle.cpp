@@ -21,7 +21,7 @@ void circleFunction(Canvas& can) {
         ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0.5,0.5,1,0.8),
         ColorFloat(0.5,1,0.5,0.8), ColorFloat(0.5,1,1,0.8), ColorFloat(1,0.5,0.5,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
-    Circle * circle = new Circle(0,0,0,100,0,0,0,colors/* ColorFloat(1,0,0,1) */);
+    Circle * circle = new Circle(0,0,0,100,0,0,0,colors);
     // circle->setCenterX(200);
     // circle->setRotationPoint(0,0,0);
     can.add(circle);

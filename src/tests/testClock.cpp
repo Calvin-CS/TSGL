@@ -46,6 +46,7 @@ void clockFunction(Canvas& can) {
     can.add(pendulum);
 
     Rectangle * cord = new Rectangle(-110,80,100,220,5,90,0,0,BLACK);
+    cord->setIsOutlined(false);
     cord->setRotationPoint(0,80,10);
     can.add(cord);
 

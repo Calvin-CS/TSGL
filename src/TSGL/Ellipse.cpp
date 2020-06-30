@@ -21,11 +21,13 @@ Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, fl
     myYScale = myYRadius = yRadius;
     myZScale = 1;
     verticesPerColor = ((xRadius + yRadius) / 2 + 6) / 8;
+    numberOfOutlineVertices = numberOfVertices - 1;
     attribMutex.unlock();
     addVertex(0,0,0,color);
     float delta = 2.0f / (numberOfVertices - 2) * PI;
     for (int i = 0; i < numberOfVertices - 1; ++i) {
         addVertex(cos(i*delta), sin(i*delta), 0, color);
+        addOutlineVertex(cos(i*delta), sin(i*delta), 0, GRAY);
     }
 }
 
@@ -48,11 +50,13 @@ Ellipse::Ellipse(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, fl
     myYScale = myYRadius = yRadius;
     myZScale = 1;
     verticesPerColor = ((xRadius + yRadius) / 2 + 6) / 8;
+    numberOfOutlineVertices = numberOfVertices - 1;
     attribMutex.unlock();
     addVertex(0,0,0,color[0]);
     float delta = 2.0f / (numberOfVertices - 2) * PI;
     for (int i = 0; i < numberOfVertices - 1; ++i) {
         addVertex(cos(i*delta), sin(i*delta), 0, color[(int) ((float) i / verticesPerColor + 1)]);
+        addOutlineVertex(cos(i*delta), sin(i*delta), 0, GRAY);
     }
 }
 

@@ -24,6 +24,7 @@ RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int si
     float delta = 2.0f / sides * PI;
     for (int i = 0; i < sides; ++i) {
         addVertex(cos(i*delta), sin(i*delta), 0, color);
+        addOutlineVertex(cos(i*delta), sin(i*delta), 0, GRAY);
     }
 }
 
@@ -50,6 +51,7 @@ RegularPolygon::RegularPolygon(float x, float y, float z, GLfloat radius, int si
     float delta = 2.0f / sides * PI;
     for (int i = 0; i < sides; ++i) {
         addVertex(cos(i*delta), sin(i*delta), 0, color[i % (mySides - 1)]);
+        addOutlineVertex(cos(i*delta), sin(i*delta), 0, GRAY);
     }
 }
 

@@ -28,7 +28,10 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
     myYScale = sideLength;
     myZScale = sideLength;
     numberOfVertices = 36;
-    vertices = new GLfloat[numberOfVertices * 7];    
+    vertices = new GLfloat[numberOfVertices * 7];  
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = 24;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7];  
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c);
     addVertex(-0.5, -0.5, 0.5, c);
@@ -71,6 +74,33 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
     addVertex(-0.5, -0.5, 0.5, c);
     addVertex(0.5, 0.5, 0.5, c);
     addVertex(0.5, -0.5, 0.5, c);
+
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
 }
 
  /*!
@@ -100,6 +130,9 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
     myZScale = sideLength;
     numberOfVertices = 36;
     vertices = new GLfloat[numberOfVertices * 7];
+    outlineGeometryType = GL_LINES;
+    numberOfOutlineVertices = 24;
+    outlineVertices = new GLfloat[numberOfOutlineVertices * 7]; 
     attribMutex.unlock();
     addVertex(-0.5, -0.5, -0.5, c[0]);
     addVertex(-0.5, -0.5, 0.5, c[1]);
@@ -142,6 +175,33 @@ Cube::Cube(float x, float y, float z, GLfloat sideLength, float yaw, float pitch
     addVertex(-0.5, -0.5, 0.5, c[1]);
     addVertex(0.5, 0.5, 0.5, c[6]);
     addVertex(0.5, -0.5, 0.5, c[5]);
+
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+
+    addOutlineVertex(-0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5,  0.5, GRAY);
+    addOutlineVertex(-0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5,  0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5, -0.5, GRAY);
+    addOutlineVertex(-0.5, -0.5,  0.5, GRAY);
+    addOutlineVertex( 0.5, -0.5,  0.5, GRAY);
 }
 
 /**

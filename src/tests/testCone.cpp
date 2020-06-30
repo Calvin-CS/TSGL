@@ -32,9 +32,9 @@ void coneFunction(Canvas& can) {
         ColorFloat(0.5,0.5,0,1), ColorFloat(0,0.5,1,1), 
         ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,1) };
     Cone * testCone = new Cone(0.0, 0.0, 0.0, 100, 100, 0.0, 0.0, 0.0, colors);
-    // Cone * testCone2 = new Cone(-3.0, 0.0, 0.0, 2, 0.0, 45.0, 45.0, colors);
+    Cone * testCone2 = new Cone(-300.0, 0.0, 0.0, 200, 100.0, 0.0, 0.0, 90.0, RED);
     can.add(testCone);
-    // can.add(testCone2);
+    can.add(testCone2);
     float rotation = 0.0f;
     GLfloat delta = 0.05;
     bool boolean = false;
@@ -75,6 +75,7 @@ void coneFunction(Canvas& can) {
     }
 
     delete testCone;
+    delete testCone2;
 }
 
 int main(int argc, char* argv[]) {
