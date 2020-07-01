@@ -25,25 +25,19 @@ void textFunction(Canvas& can, std::string font) {
     //              32, BLUE);
     // can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
     // can.drawText("And to that I say...oh well.", 16, 550, 32, WHITE);
-    // Text * text = new Text(0,0,0,L"C[i] = B[i] + A[i]", font, 100, 0,0,0, YELLOW);
-    // can.add(text);
-    // Rectangle * rec = new Rectangle(0,0,0,360,62,0,0,0, ColorFloat(1,1,1,0.2));
-    // can.add(rec);
-    // Text * lowercase = new Text(0,100,0,L"abcdefghijklmnopqrstuvwxyz", font, 25, 0,0,0,WHITE);
-    // can.add(lowercase);
-    // Text * uppercase = new Text(0,50,0,L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, 25, 0,0,0,WHITE);
-    // can.add(uppercase);
-    // Text * random = new Text(0,0,0,L"Όȳ", font, 50, 0,0,0,WHITE);
-    // can.add(random);
-    Text * random2 = new Text(0,-50,0,L"{:<>,./?+=+^c", font, 25, 0,0,0,WHITE);
-    can.add(random2);
+    Text * lowercase = new Text(0,100,0,L"abcdefghijklmnopqrstuvwxyz", font, 40, 0,0,0,WHITE);
+    can.add(lowercase);
+    Text * uppercase = new Text(0,50,0,L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, 40, 0,0,0,WHITE);
+    can.add(uppercase);
+    Text * random = new Text(0,-50,0,L"{:<>,./?+=+^üc", font, 40, 0,0,0,WHITE);
+    can.add(random);
 
-    // can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&text]() {
-    //     // text->setText("Glorgaborg");
-    //     // text->setColor(RED);
-    //     // text->setFont("./assets/freefont/FreeSerifItalic.ttf");
-    //     text->setFontSize(50);
-    // });
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&random]() {
+        random->setText(L"Glorgaborg");
+        // random->setColor(RED);
+        // random->setFont("./assets/freefont/FreeSerifItalic.ttf");
+        // random->setFontSize(100);
+    });
 
     float rotation = 0.0f;
     while(can.isOpen()) {
@@ -56,11 +50,9 @@ void textFunction(Canvas& can, std::string font) {
         // text->setRoll(rotation*45);
         rotation+=0.01;
     }
-    // delete text;
-    // delete lowercase;
-    // delete uppercase;
-    // delete random;
-    delete random2;
+    delete lowercase;
+    delete uppercase;
+    delete random;
 
 }
 
@@ -69,7 +61,7 @@ void textFunction(Canvas& can, std::string font) {
 int main(int argc, char * argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2f*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w - 330.0f;
-    std::string font = (argc > 3) ? argv[3] : "./assets/freefont/FreeMono.otf";
+    std::string font = (argc > 3) ? argv[3] : "./assets/freefont/FreeMono.ttf";
     if(w <= 0 || h <= 0) {  //Check validity of width and height
       w = 1.2f*Canvas::getDisplayHeight();
       h = 0.75f*w;

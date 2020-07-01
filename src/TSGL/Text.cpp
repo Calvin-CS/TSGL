@@ -70,7 +70,7 @@ void Text::draw(Shader * shader) {
     model = glm::rotate(model, glm::radians(myCurrentPitch), glm::vec3(0.0f, 1.0f, 0.0f));
     model = glm::rotate(model, glm::radians(myCurrentRoll), glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::translate(model, glm::vec3(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ));
-    model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
+    // model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
 
     unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -111,7 +111,7 @@ void Text::draw(Shader * shader) {
 
         // update vertices for each character
         float xpos = mouseX + ch.Bearing.x;
-        float ypos = mouseY - (ch.Bitmap.rows - ch.Bearing.y);
+        float ypos = mouseY - ( (float) ch.Bitmap.rows - ch.Bearing.y);
 
         float w = ch.Bitmap.width;
         float h = ch.Bitmap.rows;
@@ -247,7 +247,11 @@ void Text::populateCharacters() {
         }
 
         FT_Bitmap_Init(&ftbmps[i]);
-        FT_Bitmap_Copy(ft, &glyph->bitmap, &ftbmps[i]);
+        
+        if (FT_Bitmap_Copy(ft, &glyph->bitmap, &ftbmps[i])) {
+            TsglErr("ERROR::FREETYTPE: Failed to copy Bitmap");
+            continue;
+        }
 
         Character character = {
             ftbmps[i],
