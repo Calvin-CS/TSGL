@@ -24,9 +24,9 @@ Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
  * randColor generates a new random ColorInt
  */
 ColorInt Producer::randColor() {
-	int red = rand() % 255;
-	int green = rand() % 255;
-	int blue = rand() % 255;
+	int red = safe_rand() % 255;
+	int green = safe_rand() % 255;
+	int blue = safe_rand() % 255;
 	return ColorInt(red, green, blue);
 }
 

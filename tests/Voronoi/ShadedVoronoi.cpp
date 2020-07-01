@@ -13,8 +13,8 @@ ShadedVoronoi::ShadedVoronoi(RasterCanvas& can) : Voronoi(can) {
   myX = new int[MY_POINTS]();                             // Initialize an array for POINTS x coords
   myY = new int[MY_POINTS]();                             // Do the same for y coords
   for (int i = 0; i < MY_POINTS; i++) {                   // Randomize the control points
-    myX[i] = rand() % WW;
-    myY[i] = rand() % WH;
+    myX[i] = safe_rand() % WW;
+    myY[i] = safe_rand() % WH;
   }
   myKValue = new int[WW * WH]();                          // Create a mapping of control point values
   myKValue2 = new int[WW * WH]();                         // Create a mapping of more control point values

@@ -123,11 +123,11 @@ void alphaRectangleFunction(Canvas& can) {
         can.sleep();
 
         // Some random widths and heights
-        a = rand() % WW; b = rand() % WH;
-        c = rand() % WW; d = rand() % WH;
+        a = safe_rand() % WW; b = safe_rand() % WH;
+        c = safe_rand() % WW; d = safe_rand() % WH;
 
         // Make the new rectangle and get the pointer
-        Rectangle* myRectangle = new Rectangle(a, b, abs(a-c), abs(b-d), ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 50));
+        Rectangle* myRectangle = new Rectangle(a, b, abs(a-c), abs(b-d), ColorInt(safe_rand()%MAX_COLOR, safe_rand()%MAX_COLOR, safe_rand()%MAX_COLOR, 50));
         myRectangle->setHasOutline(false);
 
         // Push the rectangle onto the queue and onto the canvas so it can render
@@ -151,7 +151,7 @@ void alphaRectangleFunction(Canvas& can) {
         // printf("R: %d G: %d B: %d A: %d \n", pixTest.R,pixTest.G,pixTest.B,pixTest.A);
 
         // int i = 0;
-        // for (i=0; i<20; i++) can.drawPoint((float)(rand()%400), (float)(rand()%400), PURPLE, 10.0);
+        // for (i=0; i<20; i++) can.drawPoint((float)(safe_rand()%400), (float)(safe_rand()%400), PURPLE, 10.0);
 
         // ColorInt testPoint = can.getPoint(100,100);
         // printf("R: %d, G: %d, B: %d, A: %d\n", testPoint.R, testPoint.G, testPoint.B, testPoint.A);

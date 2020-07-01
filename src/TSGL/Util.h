@@ -7,6 +7,9 @@
 
 #include <string>
 #include <cmath>  //To determine M_PI and is also used for math operations
+#include <omp.h> // safe_rand()
+#include <random> // safe_rand()
+#include <cstdlib> // safe_rand()
 
 namespace tsgl {
 
@@ -128,6 +131,20 @@ inline bool fileExists (const std::string& name) {
 			return false;
 	  }
 	#endif
+}
+
+/*!
+ * \brief Return a random int in a thread safe way.
+ * \details This function provides an alternative to rand() so tha tthe visualizations can use random numbers and be thread safe.
+ */
+inline int safe_rand() {
+	static std::mt19937* generator = nullptr;
+	#pragma omp threadprivate(generator)
+	if (!generator) {
+		unsigned seed = clock() + omp_get_thread_num();
+		generator = new std::mt19937(seed);
+	}
+	return (*generator)()/2;
 }
 
 }

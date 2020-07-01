@@ -319,8 +319,8 @@ ColorFloat Colors::divideIntoChromaticSections(unsigned int totalSections, unsig
 ColorFloat Colors::randomColor(float alpha) {
     if (clamp(alpha,0,1))
       TsglDebug("Alpha must be between 0 and 1 inclusive");
-    if (alpha == 0.0f) alpha = rand() % 255 / 255.0f;
-    return ColorFloat(rand() % 255 / 255.0f, rand() % 255 / 255.0f, rand() % 255 / 255.0f, alpha);
+    if (alpha == 0.0f) alpha = safe_rand() % 255 / 255.0f;
+    return ColorFloat(safe_rand() % 255 / 255.0f, safe_rand() % 255 / 255.0f, safe_rand() % 255 / 255.0f, alpha);
 }
 
 ColorFloat Colors::blend(ColorFloat c1, ColorFloat c2, float bias) {

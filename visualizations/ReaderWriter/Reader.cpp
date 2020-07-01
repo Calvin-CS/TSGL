@@ -47,7 +47,7 @@ void Reader::lock() {
 //TODO: comment
 void Reader::act() {
 	//Read
-	Rectangle * rec = data->read(rand()%data->getItemCount()); //Get the color
+	Rectangle * rec = data->read(safe_rand()%data->getItemCount()); //Get the color
 	myCircle->setColor( rec->getColor() );
 
 	//Draw and erase the arrow

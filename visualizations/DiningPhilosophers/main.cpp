@@ -25,7 +25,6 @@
 
 #include <omp.h>
 #include <tsgl.h>
-#include <random>
 #include "Table.h"
 #include "Philosopher.h"
 
@@ -59,8 +58,6 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
 
   Table t(can,philosophers,method);
 
-  srand(time(NULL)); // seed the random number generator for thinking steps
-
   bool stepThrough = step; // Flag that determines whether the animation pauses between steps
   bool paused = false; // Flag that determines whether the animation is paused
   bool philPauses[philosophers];
@@ -81,7 +78,7 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
         if(stepThrough) { philPauses[omp_get_thread_num()] = true; }
       	t.checkStep();
       	can.pauseDrawing();
-        if(method == forfeitWhenBlocked || method == waitWhenBlocked) { //Synchronize to see Livelock and Deadlock
+        if(method == forfeitWhenBlocked) { //Synchronize to see Livelock
         #pragma omp barrier               //Barrier for optional synchronization
         }
       	t.actStep();

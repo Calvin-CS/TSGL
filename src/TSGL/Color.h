@@ -7,7 +7,6 @@
 
 #include <cmath>        // Needed for conversions
 #include <stdexcept>    // Needed for exceptions
-#include <cstdlib>      // Needed for rand()
 #include <sstream>      // Needed for Windows integer / float to string conversion
 
 #include "Util.h"       // Clamp()
@@ -331,7 +330,7 @@ class Colors {
 
     /*!
      * \brief Generates a random color.
-     * \details This function uses rand() to generate a random ColorFloat with an optional specified alpha value.
+     * \details This function uses safe_rand() to generate a random ColorFloat with an optional specified alpha value.
      *   \param alpha Alpha of the random color to generate. An alpha of 0 will set the alpha to a random
      *     legal value (set to 0.0f by default).
      * \warning An invariant is held for the alpha value where if its greater than 1 or less than 0

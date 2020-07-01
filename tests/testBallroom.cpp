@@ -224,8 +224,8 @@ public:
           delete b;
           return;
         }
-        b->pos.x = 25 + rand() % (width-50);
-        b->pos.y = 25 + rand() % (height-50);
+        b->pos.x = 25 + safe_rand() % (width-50);
+        b->pos.y = 25 + safe_rand() % (height-50);
       }
     }
     balls.push_back(b);
@@ -293,9 +293,9 @@ void ballroomFunction(Canvas& can) {
     srand(time(NULL)); // seed the random number generator
     for (int i = 0; i < 100; ++ i) {
       float speed = 5.0f;
-      float dir = 2 * 3.14159f * (rand() % 100) / 100.0f;
-      b.addBall(25 + rand() % (WW-50),25 + rand() % (WH-50),speed*cos(dir),speed*sin(dir),10,
-        ColorInt(64 + rand() % 192,64 + rand() % 192,64 + rand() % 192,255));
+      float dir = 2 * 3.14159f * (safe_rand() % 100) / 100.0f;
+      b.addBall(25 + safe_rand() % (WW-50),25 + safe_rand() % (WH-50),speed*cos(dir),speed*sin(dir),10,
+        ColorInt(64 + safe_rand() % 192,64 + safe_rand() % 192,64 + safe_rand() % 192,255));
     }
 
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&b]() {

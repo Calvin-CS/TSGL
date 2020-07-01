@@ -14,8 +14,8 @@ Voronoi::Voronoi(RasterCanvas& can) {
   myY = new int[MY_POINTS]();
   myKValue = new int[NEW_WINDOW_W * NEW_WINDOW_H]();
   for (int i = 0; i < MY_POINTS; i++) {              // Randomize the control points
-    myX[i] = rand() % NEW_WINDOW_W;
-    myY[i] = rand() % NEW_WINDOW_H;
+    myX[i] = safe_rand() % NEW_WINDOW_W;
+    myY[i] = safe_rand() % NEW_WINDOW_H;
   }
   srand(time(NULL));
   myTC = Colors::randomColor(1.0f);                            // Randomize the axis colors

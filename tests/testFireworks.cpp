@@ -72,7 +72,7 @@ public:
     myX = x;
     myY = y;
     for (int i = 0; i < 10; ++i)
-      myDots[i] = new Dot(can, myX,myY,(rand() % 10000)/10000.0f,(rand() % 10000)/10000.0f * 2 * PI, 0.99f);
+      myDots[i] = new Dot(can, myX,myY,(safe_rand() % 10000)/10000.0f,(safe_rand() % 10000)/10000.0f * 2 * PI, 0.99f);
   }
 
   /*!
@@ -117,10 +117,10 @@ public:
     f = NULL;
     myLife = 0;
     myCan = &can;
-    myX = rand() % myCan->getWindowWidth();
-    myY = rand() % myCan->getWindowHeight();
-    myAngle = ((rand() % 32000) / 32000.0f) * 2.0f*PI;
-    myRad = 20 + rand() % 180;
+    myX = safe_rand() % myCan->getWindowWidth();
+    myY = safe_rand() % myCan->getWindowHeight();
+    myAngle = ((safe_rand() % 32000) / 32000.0f) * 2.0f*PI;
+    myRad = 20 + safe_rand() % 180;
     computeStepSize();
     myColor = ColorHSV(0.0f,1.0f,1.0f,1.0f);
   }
@@ -147,7 +147,7 @@ public:
 
   inline void computeStepSize() {
     myStepSize = 1.0f/myRad;
-    if (rand() % 2 == 0) {
+    if (safe_rand() % 2 == 0) {
       myStepSize = -myStepSize;
       myAngle = -myAngle;
     }
@@ -155,11 +155,11 @@ public:
   }
 
   inline void relocate() {
-    myRad = 20 + rand() % 180;
-    myAngle = ((rand() % 32000) / 32000.0f) * 2.0f*PI;
+    myRad = 20 + safe_rand() % 180;
+    myAngle = ((safe_rand() % 32000) / 32000.0f) * 2.0f*PI;
     while (outOfBounds() || onBlackPixel()) {
-      myX = rand() % myCan->getWindowWidth();
-      myY = rand() % myCan->getWindowHeight();
+      myX = safe_rand() % myCan->getWindowWidth();
+      myY = safe_rand() % myCan->getWindowHeight();
     }
     computeStepSize();
   }
@@ -167,7 +167,7 @@ public:
   inline void step() {
     if (f != NULL)
       f->step();
-    if (rand() % 100 < 2) {
+    if (safe_rand() % 100 < 2) {
       ++myRad;
       myStepSize = 1.0f/(myRad);
     }

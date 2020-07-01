@@ -40,7 +40,7 @@ void Ball::move() {
 }
 
 float Ball::randfloat(int divisor) {
-    return (rand() % divisor) / (float) divisor;
+    return (safe_rand() % divisor) / (float) divisor;
 }
 
 void Ball::reset(Canvas& can) {

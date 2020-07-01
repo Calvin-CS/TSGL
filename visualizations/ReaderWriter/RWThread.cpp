@@ -60,5 +60,5 @@ void RWThread::run() {
 }
 
 void RWThread::wait() {
-	myCan->sleepFor( (rand()%RWThread::WAIT_RANGE+RWThread::WAIT_MIN)/10.0 ); //Wait for a random time
+	myCan->sleepFor( (safe_rand()%RWThread::WAIT_RANGE+RWThread::WAIT_MIN)/10.0 ); //Wait for a random time
 }

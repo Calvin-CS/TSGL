@@ -34,7 +34,7 @@ LifeFarm::LifeFarm(int w, int h, RasterCanvas* c, bool randomize) {
     for (int i = 9*h/10; i > h/10; --i) {
       bool newrow = true;
       for (int j = 9*w/10; j > w/10; --j) {
-        if ((rand() % 2) > 0) {
+        if ((safe_rand() % 2) > 0) {
           if (newrow) {
             *currentstate = (i + 1);
             ++currentstate;

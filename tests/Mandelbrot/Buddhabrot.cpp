@@ -5,7 +5,7 @@
 #include "Buddhabrot.h"
 
 #ifdef _WIN32 //Windows doesn't like numbers higher than RAND_MAX (32767)
-  #define rand() (rand() | rand() << 16)
+  #define safe_rand() (safe_rand() | safe_rand() << 16)
 #endif
 
 Buddhabrot::Buddhabrot(unsigned threads, unsigned depth = 1000) : Mandelbrot(threads, depth) {
@@ -50,8 +50,8 @@ void Buddhabrot::draw(CartesianRasterCanvas& can) {
       Decimal col, row;
       for (unsigned long i = tid; i < MAXITS; i+= threads) {
         if (myRedraw) break;
-        col = cMinx+wscale*(rand() % RPREC);    //Between cMinx and cMaxx
-        row = offset+hscale*(rand() % RPREC);    //Between cMiny and cMaxy
+        col = cMinx+wscale*(safe_rand() % RPREC);    //Between cMinx and cMaxx
+        row = offset+hscale*(safe_rand() % RPREC);    //Between cMiny and cMaxy
         complex c(col,row);
         complex z = c;
         unsigned its = 0;

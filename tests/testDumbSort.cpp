@@ -42,7 +42,7 @@ void dumbSortFunction(Canvas& can) {
     bool goingUp = true;
     srand(time(NULL)); // seed the random number generator
     for (int i = 0; i < SIZE; i++)
-        numbers[i] = rand() % (can.getWindowHeight() - 40);
+        numbers[i] = safe_rand() % (can.getWindowHeight() - 40);
 
     can.setBackgroundColor(GRAY);
 

@@ -9,7 +9,7 @@
 using namespace tsgl;
 
 float randfloat(int divisor = 10000) {
-    return (rand() % divisor) / (float) divisor;
+    return (safe_rand() % divisor) / (float) divisor;
 }
 
 /*!
@@ -62,10 +62,10 @@ void forestFireFunction(RasterCanvas& can) {
     }
     //"Lakes"
     for (int reps = 0; reps < 32; reps++) {
-        int x = rand() % WINDOW_W;
-        int y = rand() % WINDOW_H;
-        int w = rand() % (WINDOW_W - x);
-        int h = rand() % (WINDOW_H - y);
+        int x = safe_rand() % WINDOW_W;
+        int y = safe_rand() % WINDOW_H;
+        int w = safe_rand() % (WINDOW_W - x);
+        int h = safe_rand() % (WINDOW_H - y);
         if (w > 32) w = 32;
         if (h > 32) h = 32;
         for (int i = 0; i < w; i++) {

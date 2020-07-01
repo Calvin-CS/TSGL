@@ -116,7 +116,7 @@ void smartSortFunction(Canvas& can, int threads, int size) {
     int* numbers = new int[size];       // Array to store the data
     srand(time(NULL)); // seed the random number generator
     for (int i = 0; i < size; i++)
-      numbers[i] = rand() % (can.getWindowHeight() - MARGIN);
+      numbers[i] = safe_rand() % (can.getWindowHeight() - MARGIN);
 
     int bs = size / threads;
     int ex = size % threads;

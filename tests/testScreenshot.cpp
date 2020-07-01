@@ -36,7 +36,7 @@ void screenShotFunction(Cart& can) {
         //Choose coordinates for a new Triangle
         xOld = xMid; yOld = yMid;
         xMid = xNew; yMid = yNew;
-        xNew = rand() % can.getWindowWidth(); yNew = rand() % can.getWindowHeight();
+        xNew = safe_rand() % can.getWindowWidth(); yNew = safe_rand() % can.getWindowHeight();
 
         //Add the new Triangle
         Triangle * tri = new Triangle(xOld, yOld, xMid, yMid, xNew, yNew, Colors::randomColor());

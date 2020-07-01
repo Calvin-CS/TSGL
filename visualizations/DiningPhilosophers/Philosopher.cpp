@@ -2,7 +2,7 @@
 
 Philosopher::Philosopher() {
   setId(0,1);
-  myState = hasNone;
+  myState = thinking;
   myAction = doNothing;
   myCircle = NULL;
 }
@@ -94,7 +94,7 @@ bool Philosopher::release(Fork& f) {
  * Thinks and switches to hungry state if a random number is a multiple of 3.
  */
 void Philosopher::think() {
-  if(rand()%3 == 0) { // 1/3 probability to go to hungry state
+  if(safe_rand()%3 == 0) { // 1/3 probability to go to hungry state
     setState(hasNone);
     setAction(doNothing);
   }

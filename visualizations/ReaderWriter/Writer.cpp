@@ -43,9 +43,9 @@ void Writer::drawArrow(int x, int y) {
  * \brief newColor() generates a new random color for writing.
  */
 ColorInt Writer::randColor() {
-	int red = rand() % 255;
-	int green = rand() % 255;
-	int blue = rand() % 255;
+	int red = safe_rand() % 255;
+	int green = safe_rand() % 255;
+	int blue = safe_rand() % 255;
 	return ColorInt(red, green, blue);
 }
 
@@ -53,7 +53,7 @@ ColorInt Writer::randColor() {
  * \brief randIndex() generates an index number to add a new item
  */
 int Writer::randIndex() {
-	int i = rand()%(data->getMaxCapacity()); //Random index between 0 and the max number of items in data
+	int i = safe_rand()%(data->getMaxCapacity()); //Random index between 0 and the max number of items in data
 		if( i > data->getItemCount() ) //Max index is next empty index
 			i = data->getItemCount();
 	return i;
