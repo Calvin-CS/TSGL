@@ -4,7 +4,7 @@
 
 namespace tsgl {
 
-  Text::Text(std::string t, int x, int y, unsigned int font_size, const ColorFloat &c, std::string fname = "assets/freefont/FreeSans.ttf") {
+  Text::Text(std::string t, int x, int y, unsigned int font_size, const ColorFloat &c, std::string fname) {
 
     discreteRender = true;
 
