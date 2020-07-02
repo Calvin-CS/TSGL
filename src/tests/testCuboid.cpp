@@ -15,6 +15,11 @@ void cuboidFunction(Canvas& can) {
         ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8) };
     Cuboid * testCuboid = new Cuboid(0.0, 0.0, 0.0, 100, 400, 200, 0.0, 45.0, 0.0, ColorFloat(1,0,0,1));
     Cuboid * testCuboid2 = new Cuboid(-300, 0.0, 0.0, 100, 400, 200, 0.0, 0.0, 0.0, colors);
+    // printf("%f\n", testCuboid2->getAlpha());
+	// testCuboid2->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", testCuboid2->getAlpha());
+	// testCuboid2->setColor(colors);
+    // printf("%f\n", testCuboid2->getAlpha());    
     can.add(testCuboid);
     can.add(testCuboid2);
     float rotation = 0.0f;

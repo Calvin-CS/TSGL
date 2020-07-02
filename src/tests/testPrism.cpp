@@ -18,6 +18,12 @@ void prismFunction(Canvas& can) {
     Prism * testPrism = new Prism(0.0, 0.0, 0.0, 3, 100, 100, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
     Prism * testPrism2 = new Prism(-300, 0.0, 0.0, 5, 100, 100, 0.0, 0.0, 45.0, colors);
     Prism * testPrism3 = new Prism(300, 0.0, 0.0, 8, 100, 100, 0.0, 0.0, 45.0, colors);
+
+    // printf("%f\n", testPrism2->getAlpha());
+	// testPrism2->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", testPrism2->getAlpha());
+	// testPrism2->setColor(colors);
+    // printf("%f\n", testPrism2->getAlpha()); 
     can.add(testPrism);
     can.add(testPrism2);
     can.add(testPrism3);

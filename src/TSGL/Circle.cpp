@@ -100,10 +100,13 @@ void Circle::changeRadiusBy(GLfloat delta) {
  * \param c An array of the new ColorFloats.
  */
 void Circle::setColor(ColorFloat c[]) {
+    attribMutex.lock();
+    myAlpha = 0.0f;
     vertices[3] = c[0].R;
     vertices[4] = c[0].G;
     vertices[5] = c[0].B;
     vertices[6] = c[0].A;
+    myAlpha += c[0].A;
     int colorIndex;
     for (int i = 1; i < numberOfVertices; ++i) {
         colorIndex = (int) ((float) (i - 1) / verticesPerColor + 1);
@@ -111,7 +114,10 @@ void Circle::setColor(ColorFloat c[]) {
         vertices[i*7 + 4] = c[colorIndex].G;
         vertices[i*7 + 5] = c[colorIndex].B;
         vertices[i*7 + 6] = c[colorIndex].A;
+        myAlpha += c[colorIndex].A;
     }
+    myAlpha /= numberOfVertices;
+    attribMutex.unlock();
 }
 
 }

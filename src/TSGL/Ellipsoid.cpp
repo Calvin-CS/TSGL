@@ -236,6 +236,7 @@ void Ellipsoid::changeZRadiusBy(GLfloat delta) {
  */
 void Ellipsoid::setColor(ColorFloat c) {
     attribMutex.lock();
+    myAlpha = c.A;
 	for(int b=0;b<horizontalSections;b++)
 	{
 		for(int a=0;a<verticalSections;a++)
@@ -264,6 +265,7 @@ void Ellipsoid::setColor(ColorFloat c) {
  */
 void Ellipsoid::setColor(ColorFloat c[]) {
     attribMutex.lock();
+    myAlpha = 0.0;
 	for(int b=0;b<horizontalSections;b++)
 	{
 		for(int a=0;a<verticalSections;a++)
@@ -276,12 +278,15 @@ void Ellipsoid::setColor(ColorFloat c[]) {
             vertices[(b*verticalSections + a)*2*7 + 11] = c[b].G;
             vertices[(b*verticalSections + a)*2*7 + 12] = c[b].B;
             vertices[(b*verticalSections + a)*2*7 + 13] = c[b].A;
+            myAlpha += c[b].A * 2;
 		}
 	}
     vertices[horizontalSections*verticalSections*2*7+3] = c[horizontalSections-1].R;
     vertices[horizontalSections*verticalSections*2*7+4] = c[horizontalSections-1].G;
     vertices[horizontalSections*verticalSections*2*7+5] = c[horizontalSections-1].B;
     vertices[horizontalSections*verticalSections*2*7+6] = c[horizontalSections-1].A;
+    myAlpha += c[horizontalSections-1].A;
+    myAlpha /= numberOfVertices;
     attribMutex.unlock();
 }
 

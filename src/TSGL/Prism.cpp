@@ -205,6 +205,7 @@ void Prism::changeRadiusBy(GLfloat delta) {
  */
 void Prism::setColor(ColorFloat c[]) {
     attribMutex.lock();
+    myAlpha = 0.0;
     for (int i = 0; i < mySides; i++) {
         vertices[i*84+3] = c[1].R;
         vertices[i*84+4] = c[1].G;
@@ -235,7 +236,10 @@ void Prism::setColor(ColorFloat c[]) {
         vertices[i*84+81] = c[4].G;
         vertices[i*84+82] = c[4].B;
         vertices[i*84+83] = c[4].A;
+
+        myAlpha += c[0].A + c[1].A * 2 + c[2].A * 6 + c[3].A * 2 + c[4].A;
     }
+    myAlpha /= numberOfVertices;
     attribMutex.unlock();
 }
 

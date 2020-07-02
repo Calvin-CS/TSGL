@@ -31,7 +31,7 @@ void concavePolygonFunction(Canvas& can) {
   float yy[PSIZE];
   ColorFloat color[PSIZE];
   for (unsigned i = 0; i < PSIZE; ++i)
-    color[i] = ColorFloat(float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), float(rand())/float((RAND_MAX)), 1);
+    color[i] = ColorFloat(randfloat(RAND_MAX), randfloat(RAND_MAX), randfloat(RAND_MAX), randfloat(RAND_MAX));
 
   color[1] = color[PSIZE-1];
 
@@ -58,8 +58,11 @@ void concavePolygonFunction(Canvas& can) {
   // }
 
   ConcavePolygon * c2 = new ConcavePolygon(0,0,0,PSIZE, xx, yy, 0,0,0,color);
-  // c2->setColor(color);
-  // c2->setColor(RED);
+  // printf("%f\n", c2->getAlpha());
+	// c2->setColor(ColorFloat(1,0,0,0.9));
+  // printf("%f\n", c2->getAlpha());
+	// c2->setColor(color);
+  // printf("%f\n", c2->getAlpha());
   can.add(c2);
 
   float floatVal = 0.0f;

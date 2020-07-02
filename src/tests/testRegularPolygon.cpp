@@ -21,6 +21,11 @@ void rpFunction(Canvas& can) {
     RegularPolygon * rp = new RegularPolygon(0,0,0,100,7,0,0,0,colors);
     // rp->setCenterX(200);
     // rp->setRotationPoint(0,0,0);
+    // printf("%f\n", rp->getAlpha());
+	// rp->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", rp->getAlpha());
+	// rp->setColor(colors);
+    // printf("%f\n", rp->getAlpha()); 
     can.add(rp);
     float floatVal = 0.0f;
     GLfloat delta = 5;

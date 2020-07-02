@@ -25,6 +25,7 @@ Text::Text(float x, float y, float z, std::wstring text, std::string fontFilenam
     myFont = fontFilename;
     myFontSize = fontsize;
     myColor = color;
+    myAlpha = color.A;
     myXScale = myYScale = myZScale = 1;
 
     // FreeType
@@ -218,6 +219,7 @@ void Text::setFont(std::string filename) {
 void Text::setColor(const ColorFloat& color) {
     attribMutex.lock();
     myColor = color;
+    myAlpha = color.A;
     attribMutex.unlock();
 }
 

@@ -348,6 +348,7 @@ void Cuboid::setColor(ColorFloat c[]) {
     vertices[81] = vertices[130] = vertices[151] = vertices[186] = vertices[200] = c[7].G;
     vertices[82] = vertices[131] = vertices[152] = vertices[187] = vertices[201] = c[7].B;
     vertices[83] = vertices[132] = vertices[153] = vertices[188] = vertices[202] = c[7].A;
+    myAlpha = (c[0].A + c[1].A + c[2].A + c[3].A + c[4].A + c[5].A + c[6].A + c[7].A) / 8;
     attribMutex.unlock();
 }
 

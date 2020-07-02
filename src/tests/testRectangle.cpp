@@ -10,8 +10,8 @@
 using namespace tsgl;
 
 void rectangleFunction(Canvas& can) {
-    ColorFloat colors[] = { ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0,0,1,0.8),
-        ColorFloat(0,1,0,0.8), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
+    ColorFloat colors[] = { ColorFloat(0.5,0.5,0.5,1), ColorFloat(0,0,1,0.5),
+        ColorFloat(0,1,0,0.6), ColorFloat(0,1,1,0.8), ColorFloat(1,0,0,0.8),
         ColorFloat(1,0,1,0.8), ColorFloat(1,1,0,0.8), ColorFloat(1,1,1,0.8),
         ColorFloat(0.5,0.5,0.5,0.8), ColorFloat(0.5,0.5,1,0.8),
         ColorFloat(0.5,1,0.5,0.8), ColorFloat(0.5,1,1,0.8), ColorFloat(1,0.5,0.5,0.8),
@@ -21,6 +21,11 @@ void rectangleFunction(Canvas& can) {
     Rectangle * rectangle = new Rectangle(0,0,0,100,200,0,0,0,colors/* ColorFloat(1,0,0,1) */);
     // rectangle->setCenterX(200);
     // rectangle->setRotationPoint(0,0,0);
+    // printf("%f\n", rectangle->getAlpha());
+	// rectangle->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", rectangle->getAlpha());
+	// rectangle->setColor(colors);
+    // printf("%f\n", rectangle->getAlpha()); 
     can.add(rectangle);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;

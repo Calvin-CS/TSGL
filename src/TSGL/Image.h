@@ -58,6 +58,8 @@ class Image : public Drawable {
 
     void changeFile(std::string filename);
 
+    void setAlpha(float newAlpha);
+
     GLint getPixelHeight() { return pixelHeight; }
 
     GLint getPixelWidth() { return pixelWidth; }

@@ -16,6 +16,12 @@ void cubeFunction(Canvas& can) {
     Cube * testCube = new Cube(0.0, 0.0, 0.0, 200, 0.0, 45.0, 45.0, RED);
     Cube * testCube2 = new Cube(-300, 0.0, 0.0, 200, 0.0, 45.0, 45.0, colors);
     can.add(testCube);
+
+    // printf("%f\n", testCube2->getAlpha());
+	// testCube2->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", testCube2->getAlpha());
+	// testCube2->setColor(colors);
+    // printf("%f\n", testCube2->getAlpha());    
     can.add(testCube2);
     float rotation = 0.0f;
     GLfloat delta = 0.05;

@@ -22,6 +22,11 @@ void sphereFunction(Canvas& can) {
     Sphere * testSphere2 = new Sphere(-225.0, 0.0, 0.0, 200, 0.0, 0.0, 0.0, RED);
     testSphere->setIsOutlined(true);
     testSphere2->setIsOutlined(true);
+    // printf("%f\n", testSphere->getAlpha());
+	// testSphere->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", testSphere->getAlpha());
+	// testSphere->setColor(colors);
+    // printf("%f\n", testSphere->getAlpha()); 
     can.add(testSphere);
     can.add(testSphere2);
     float rotation = 0.0f;

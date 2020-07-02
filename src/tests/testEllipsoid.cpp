@@ -22,6 +22,12 @@ void ellipsoidFunction(Canvas& can) {
     // testEllipsoid->setIsFilled(false);
     Ellipsoid * testEllipsoid2 = new Ellipsoid(-200, 0.0, 0.0, 150, 200, 100, 0.0, 0.0, 0.0, RED);
     testEllipsoid2->setOutlineColor(BLUE);
+
+    // printf("%f\n", testEllipsoid->getAlpha());
+	// testEllipsoid->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", testEllipsoid->getAlpha());
+	// testEllipsoid->setColor(colors);
+    // printf("%f\n", testEllipsoid->getAlpha()); 
     can.add(testEllipsoid);
     can.add(testEllipsoid2);
     float rotation = 0.0f;

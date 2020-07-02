@@ -52,8 +52,10 @@ static const GLchar* textFragmentShader =
   "out vec4 FragColor;"
   "uniform sampler2D text;"
   "uniform vec4 textColor;"
-  "void main() {"   
+  "void main() {"
   "vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);"
+  "if(sampled.a < 0.5)"
+  "discard;" 
   "FragColor = textColor * sampled;"
   "}";
 
@@ -197,9 +199,6 @@ void Canvas::add(Drawable * shapePtr) {
   objectMutex.lock();
   objectBuffer.push_back(shapePtr);
   objectBufferEmpty = false;
-  std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
-    return (a->getCenterZ() < b->getCenterZ());  // true if A's layer is higher than B's layer
-  });
   objectMutex.unlock();
 }
 
@@ -284,6 +283,16 @@ void Canvas::draw()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         if (objectBuffer.size() > 0) {
+          // sort between opaques and transparents and then sort by center z. not perfect, but pretty good.
+          // depth buffer takes care of the rest.
+          std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
+            if (a->getAlpha() == 1.0 && b->getAlpha() != 1.0)
+              return true;
+            else if (a->getAlpha() != 1.0 && b->getAlpha() == 1.0)
+              return false;
+            else
+              return (a->getCenterZ() < b->getCenterZ());
+          });
           for (unsigned int i = 0; i < objectBuffer.size(); i++) {
             Drawable* d = objectBuffer[i];
             if(d->isProcessed()) {

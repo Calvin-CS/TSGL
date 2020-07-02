@@ -24,6 +24,11 @@ void ellipseFunction(Canvas& can) {
     Ellipse * ellipse = new Ellipse(0,0,0,100,200,0,0,0,colors);
     // ellipse->setCenterX(200);
     // ellipse->setRotationPoint(0,0,0);
+    // printf("%f\n", ellipse->getAlpha());
+	// ellipse->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", ellipse->getAlpha());
+	// ellipse->setColor(colors);
+    // printf("%f\n", ellipse->getAlpha());    
     can.add(ellipse);
     float floatVal = 0.0f;
     GLfloat delta = 5;

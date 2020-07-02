@@ -23,6 +23,11 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
         TsglDebug("Cannot have an Image with width or height less than or equal to 0.");
         return;
     }
+    if (alpha < 0.0 || alpha > 1.0) {
+        TsglDebug("Cannot have an Image with alpha not between 0.0 and 1.0.");
+        return;
+    }
+    attribMutex.lock();
     shaderType = IMAGE_SHADER_TYPE;
     myWidth = width; myHeight = height;
     myXScale = width; myYScale = height;
@@ -32,7 +37,11 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
     stbi_set_flip_vertically_on_load(true);
     data = stbi_load(filename.c_str(), &pixelWidth, &pixelHeight, 0, 4);
     tsglAssert(data, "stbi_load(filename) failed.");
+    attribMutex.unlock();
     glEnable(GL_TEXTURE_2D);
+
+    myAlpha = alpha;
+    setAlpha(myAlpha);
 
     // vertex allocation and assignment
     vertices = new GLfloat[30];
@@ -176,7 +185,28 @@ void Image::changeFile(std::string filename) {
     stbi_set_flip_vertically_on_load(true);
     data = stbi_load(filename.c_str(), &pixelWidth, &pixelHeight, 0, 4);
     tsglAssert(data, "stbi_load(filename) failed.");
+    setAlpha(myAlpha);
     init = true;
+    attribMutex.unlock();
+}
+
+/**
+ *  \brief Alters the Image's transparency
+ *  \param delta The Image's new alpha value.
+ *  \note If parameter not 0.0 < alpha < 1.0 then this method will have no effect.
+ */
+void Image::setAlpha(float alpha) {
+    if (alpha < 0.0 || alpha > 1.0) {
+        TsglDebug("Cannot have an Image with alpha not between 0.0 and 1.0.");
+        return;
+    }
+    attribMutex.lock();
+    myAlpha = alpha;
+    for (int i = 0; i < pixelHeight; i++) {
+        for (int j = 0; j < pixelWidth; j++) {
+            data[i * pixelWidth * 4 + j * 4 + 3] = (int) (alpha * 255);
+        }
+    }
     attribMutex.unlock();
 }
 

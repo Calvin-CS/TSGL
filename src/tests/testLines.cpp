@@ -5,11 +5,11 @@
 using namespace tsgl;
 
 void lineFunction(Canvas& c) {
-	ColorFloat colors[] = { ColorFloat(1,0,0,1), ColorFloat(0,1,0,1),
-                            ColorFloat(0,0,1,1), ColorFloat(1,0,1,1), 
-                            ColorFloat(1,1,0,1), ColorFloat(0,1,1,1), 
-                            ColorFloat(0,0,1,1) };
-    Line * l = new Line(0,0,0,200,0,0,0,RED);
+	ColorFloat colors[] = { ColorFloat(1,0,0,1), ColorFloat(0,1,0,0.6),
+                            ColorFloat(0,0,1,0.9), ColorFloat(1,0,1,0.5), 
+                            ColorFloat(1,1,0,0.8), ColorFloat(0,1,1,0.4), 
+                            ColorFloat(0,0,1,0.7) };
+    Line * l = new Line(0,0,0,200,0,0,0,ColorFloat(1,0,0,0.5));
 
     // l->setColor(RED);
     l->setColor(colors);
@@ -22,7 +22,10 @@ void lineFunction(Canvas& c) {
                         100,-100,100, 
                         150,-100,-100 };
 
-    Polyline * p = new Polyline(0,0,0,7,vertices,0,0,0,BLUE);
+    Polyline * p = new Polyline(0,0,0,7,vertices,0,0,0,colors);
+
+    // printf("Line: %f\n", l->getAlpha());
+    // printf("Pline: %f\n", p->getAlpha());
 
     // p->setColor(BLUE);
     p->setColor(colors);

@@ -98,6 +98,7 @@ BINARIES= \
 	bin/testSquare \
 	bin/testStar \
 	bin/testText \
+	bin/testTransparency \
 	bin/testTriangle \
 	bin/testTriangleStrip \
 #  bin/test_specs \

@@ -173,6 +173,7 @@ void Sphere::changeRadiusBy(float delta) {
  */
 void Sphere::setColor(ColorFloat c) {
     attribMutex.lock();
+    myAlpha = c.A;
 	for(int b=0;b<horizontalSections;b++)
 	{
 		for(int a=0;a<verticalSections;a++)
@@ -201,6 +202,7 @@ void Sphere::setColor(ColorFloat c) {
  */
 void Sphere::setColor(ColorFloat c[]) {
     attribMutex.lock();
+    myAlpha = 0.0;
 	for(int b=0;b<horizontalSections;b++)
 	{
 		for(int a=0;a<verticalSections;a++)
@@ -213,12 +215,15 @@ void Sphere::setColor(ColorFloat c[]) {
             vertices[(b*verticalSections + a)*2*7 + 11] = c[b].G;
             vertices[(b*verticalSections + a)*2*7 + 12] = c[b].B;
             vertices[(b*verticalSections + a)*2*7 + 13] = c[b].A;
+            myAlpha += c[b].A * 2;
 		}
 	}
     vertices[horizontalSections*verticalSections*2*7+3] = c[horizontalSections].R;
     vertices[horizontalSections*verticalSections*2*7+4] = c[horizontalSections].G;
     vertices[horizontalSections*verticalSections*2*7+5] = c[horizontalSections].B;
     vertices[horizontalSections*verticalSections*2*7+6] = c[horizontalSections].A;
+    myAlpha += c[horizontalSections].A;
+    myAlpha /= numberOfVertices;
     attribMutex.unlock();
 }
 

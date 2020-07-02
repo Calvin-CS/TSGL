@@ -52,11 +52,12 @@ void imageFunction(Canvas& can) {
     bool ss = false;
     while (can.isOpen()) {
         can.sleep();
+        image->setAlpha((sin(floatVal) + 1) / 2);
         // image->setCenterX(sin(floatVal/90) * 100);
         // image->setCenterY(sin(floatVal/90) * 100);
         // image->setCenterZ(sin(floatVal/90) * 100);
         // image->setYaw(floatVal);
-        image->setPitch(floatVal);
+        image->setPitch(floatVal * 100);
         // image->setRoll(floatVal);
         // image->setWidth(sin(floatVal/90) * 100 + 400);
         // image->setHeight(sin(floatVal/90) * 100 + 400);
@@ -75,7 +76,7 @@ void imageFunction(Canvas& can) {
         // }
         // ColorInt point = can.getPoint(can.getWindowWidth()/2,can.getWindowHeight()/2);
         // printf("%d, %d, %d, %d\n", point.R, point.G, point.B, point.A);
-        floatVal += 1;
+        floatVal += 0.01;
     }
 
     // can.drawImage("../assets/pics/background.jpg", ww/2, 0, ww*2, hh*2, 0.25f); //Overlay

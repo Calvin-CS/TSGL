@@ -22,6 +22,12 @@ void circleFunction(Canvas& can) {
         ColorFloat(0.5,1,0.5,0.8), ColorFloat(0.5,1,1,0.8), ColorFloat(1,0.5,0.5,0.8),
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
     Circle * circle = new Circle(0,0,0,100,0,0,0,colors);
+
+    // printf("%f\n", circle->getAlpha());
+	// circle->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", circle->getAlpha());
+	// circle->setColor(colors);
+    // printf("%f\n", circle->getAlpha());
     // circle->setCenterX(200);
     // circle->setRotationPoint(0,0,0);
     can.add(circle);

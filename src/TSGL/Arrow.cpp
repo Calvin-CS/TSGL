@@ -120,6 +120,9 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw
         addOutlineVertex(0.5, -.4, 0, GRAY);
         addOutlineVertex(0.5, .4, 0, GRAY);
     }
+    attribMutex.lock();
+    myAlpha = (color[0].A + color[1].A) / 2;
+    attribMutex.unlock();
 }
 
 void Arrow::setLength(GLfloat length) {
@@ -173,6 +176,7 @@ void Arrow::changeWidthBy(GLfloat delta) {
  */
 void Arrow::setColor(ColorFloat c[]) {
     attribMutex.lock();
+    myAlpha = (c[0].A + c[1].A) / 2;
     for(int i = 0; i < 7; i++) {
         vertices[i*7 + 3] = c[i/5].R;
         vertices[i*7 + 4] = c[i/5].G;

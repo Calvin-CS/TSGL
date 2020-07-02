@@ -190,6 +190,7 @@ void Pyramid::changeHeightBy(float delta) {
  */
 void Pyramid::setColor(ColorFloat c) {
     attribMutex.lock();
+    myAlpha = c.A;
     for(int i = 0; i < mySides; i++) {
         vertices[i*42 + 3] = vertices[i*42 + 10] = vertices[i*42 + 17] = vertices[i*42 + 24] = vertices[i*42 + 38] = c.R;
         vertices[i*42 + 4] = vertices[i*42 + 11] = vertices[i*42 + 18] = vertices[i*42 + 25] = vertices[i*42 + 39] = c.G;
@@ -211,6 +212,7 @@ void Pyramid::setColor(ColorFloat c) {
  */
 void Pyramid::setColor(ColorFloat c[]) {
     attribMutex.lock();
+    myAlpha = 0.0;
     for(int i = 0; i < mySides; i++) {
         vertices[i*42 + 3] = c[i+1].R;
         vertices[i*42 + 4] = c[i+1].G;
@@ -241,7 +243,10 @@ void Pyramid::setColor(ColorFloat c[]) {
         vertices[i*42 + 39] = c[(i+1) % mySides + 1].G;
         vertices[i*42 + 40] = c[(i+1) % mySides + 1].B;
         vertices[i*42 + 41] = c[(i+1) % mySides + 1].A;
+
+        myAlpha += c[i+1].A * 2 + c[0].A + c[(i+1) % mySides + 1].A * 2 + c[mySides+2].A; 
     }
+    myAlpha /= numberOfVertices;
     attribMutex.unlock();
 }
 

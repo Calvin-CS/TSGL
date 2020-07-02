@@ -18,6 +18,11 @@ void pyramidFunction(Canvas& can) {
     Pyramid * testPyramid = new Pyramid(0.0, 0.0, 0.0, 3, 100, 100, 0.0, 0.0, 45.0, ColorFloat(1,0,0,1));
     Pyramid * testPyramid2 = new Pyramid(-300, 0.0, 0.0, 5, 100, 100, 0.0, 0.0, 45.0, colors);
     Pyramid * testPyramid3 = new Pyramid(300, 0.0, 0.0, 10, 100, 100, 0.0, 0.0, 45.0, RED);
+    // printf("%f\n", testPyramid2->getAlpha());
+	// testPyramid2->setColor(ColorFloat(1,0,0,0.9));
+    // printf("%f\n", testPyramid2->getAlpha());
+	// testPyramid2->setColor(colors);
+    // printf("%f\n", testPyramid2->getAlpha());
     can.add(testPyramid);
     can.add(testPyramid2);
     can.add(testPyramid3);

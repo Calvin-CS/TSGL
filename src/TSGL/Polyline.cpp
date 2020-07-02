@@ -132,7 +132,9 @@ void Polyline::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &colo
     vertices[currentVertex + 5] = color.B;
     vertices[currentVertex + 6] = color.A;
     currentVertex += 7;
+    myAlpha += color.A;
     if (currentVertex == numberOfVertices*7) {
+        myAlpha /= numberOfVertices;
         init = true;
     }
     attribMutex.unlock();
@@ -150,6 +152,7 @@ void Polyline::setColor(ColorFloat c) {
         vertices[i*7 + 5] = c.B;
         vertices[i*7 + 6] = c.A;
     }
+    myAlpha = c.A;
     attribMutex.unlock();
 }
 
@@ -158,12 +161,17 @@ void Polyline::setColor(ColorFloat c) {
  * \param c The new array of ColorFloats.
  */
 void Polyline::setColor(ColorFloat c[]) {
+    attribMutex.lock();
+    myAlpha = 0.0;
     for(int i = 0; i < numberOfVertices; i++) {
         vertices[i*7 + 3] = c[i].R;
         vertices[i*7 + 4] = c[i].G;
         vertices[i*7 + 5] = c[i].B;
         vertices[i*7 + 6] = c[i].A;
+        myAlpha += c[i].A;
     }
+    myAlpha /= numberOfVertices;
+    attribMutex.unlock();
 }
 
 /*!
