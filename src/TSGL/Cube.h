@@ -1,5 +1,5 @@
 /*
- * Cube.h extends Prism and provides a class for drawing a Cube.
+ * Cube.h extends Shape and provides a class for drawing a Cube.
  */
 
 #ifndef CUBE_H_
@@ -28,8 +28,8 @@ public:
     virtual void changeSideLengthBy(float delta);
 
     /*!
-    * \brief Accessor for the radius of the Prism.
-    * \details Returns the value of the myRadius private variable, a GLfloat.
+    * \brief Accessor for the side length of the Cube.
+    * \details Returns the value of the mySideLength private variable, a GLfloat.
     */
     virtual GLfloat getSideLength() { return mySideLength; }
 

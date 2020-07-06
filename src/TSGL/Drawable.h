@@ -37,7 +37,7 @@ class Drawable {
     float myCenterX, myCenterY, myCenterZ;
     bool init = false;
     unsigned int shaderType = SHAPE_SHADER_TYPE;
-    float myAlpha = 0.0;
+    GLfloat myAlpha = 0.0;
     /*!
         * \brief Protected helper method that determines if the Drawable's center matches its rotation point.
         * \details Checks to see if myCenterX == myRotationPointX, myCenterY == myRotationPointY, myCenterZ == myRotationPointZ

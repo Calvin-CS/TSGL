@@ -69,6 +69,7 @@ BINARIES= \
 	bin/test3DRotation \
 	bin/test3DPhilosophers \
 	bin/testArrows \
+	bin/testBackground \
 	bin/testBallroom \
 	bin/testCircle \
 	bin/testClock \
@@ -106,7 +107,6 @@ BINARIES= \
 #	bin/testAura \
 #	bin/testBlurImage \
 #	bin/testCalcPi \
-#	bin/testColorPoints \
 #	bin/testColorWheel \
 #	bin/testConstructors \
 #	bin/testConway \

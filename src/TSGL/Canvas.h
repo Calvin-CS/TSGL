@@ -37,6 +37,7 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
+#include "Background.h"     // Our own class for drawing a background
 #include "TextureHandler.h" // Currently used for screenshots, might change this
 #include "Util.h"           // Needed constants and has cmath for performing math operations
 
@@ -131,7 +132,7 @@ private:
     //                 shaderVertex;                                       // Address of the vertex shader
     Shader *        textShader;
     Shader *        shapeShader;
-    Shader *        imageShader;
+    Shader *        textureShader;
     std::mutex      shapesMutex;                                        // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
@@ -187,7 +188,7 @@ private:
   #else
     static void  startDrawing(Canvas *c);                               // Static method that is called by the render thread
   #endif
-    void         textureShaders(unsigned int choice);                            // Turn textures on or off
+    void         selectShaders(unsigned int choice);                            // Turn textures on or off
     // static bool  testFilledDraw(Canvas& can);                           // Unit test for drawing shapes and determining if fill works
     // static bool testLine(Canvas& can);                                  // Unit tester for lines
     static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods

@@ -28,21 +28,17 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
         return;
     }
     attribMutex.lock();
-    shaderType = IMAGE_SHADER_TYPE;
+    shaderType = TEXTURE_SHADER_TYPE;
     myWidth = width; myHeight = height;
     myXScale = width; myYScale = height;
     myFile = filename;
+    myAlpha = alpha;
 
 	// Load the image.
     stbi_set_flip_vertically_on_load(true);
     data = stbi_load(filename.c_str(), &pixelWidth, &pixelHeight, 0, 4);
     tsglAssert(data, "stbi_load(filename) failed.");
-    attribMutex.unlock();
     glEnable(GL_TEXTURE_2D);
-
-    myAlpha = alpha;
-    setAlpha(myAlpha);
-
     // vertex allocation and assignment
     vertices = new GLfloat[30];
 
@@ -60,6 +56,7 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
     vertices[3]  = vertices[4]  = vertices[8] = vertices[18] = vertices[19] = vertices[29] = 1.0; // texture coord x + y
     vertices[9] = vertices[13] = vertices[14] = vertices[23] = vertices[24] = vertices[28] = 0.0; // texture coord x + y
     init = true;
+    attribMutex.unlock();
 }
 
  /*!
@@ -82,6 +79,9 @@ void Image::draw(Shader * shader) {
 
     unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+    unsigned int alphaLoc = glGetUniformLocation(shader->ID, "alpha");
+    glUniform1f(alphaLoc, myAlpha);
 
     glEnable(GL_TEXTURE_2D);
     glGenTextures(1, &myTexture);
@@ -185,7 +185,6 @@ void Image::changeFile(std::string filename) {
     stbi_set_flip_vertically_on_load(true);
     data = stbi_load(filename.c_str(), &pixelWidth, &pixelHeight, 0, 4);
     tsglAssert(data, "stbi_load(filename) failed.");
-    setAlpha(myAlpha);
     init = true;
     attribMutex.unlock();
 }
@@ -193,20 +192,15 @@ void Image::changeFile(std::string filename) {
 /**
  *  \brief Alters the Image's transparency
  *  \param delta The Image's new alpha value.
- *  \note If parameter not 0.0 < alpha < 1.0 then this method will have no effect.
+ *  \note If parameter not 0.0 <= alpha <= 1.0 then this method will have no effect.
  */
 void Image::setAlpha(float alpha) {
     if (alpha < 0.0 || alpha > 1.0) {
-        TsglDebug("Cannot have an Image with alpha not between 0.0 and 1.0.");
+        TsglDebug("Cannot have an Image with alpha not 0.0 <= alpha <= 1.0.");
         return;
     }
     attribMutex.lock();
     myAlpha = alpha;
-    for (int i = 0; i < pixelHeight; i++) {
-        for (int j = 0; j < pixelWidth; j++) {
-            data[i * pixelWidth * 4 + j * 4 + 3] = (int) (alpha * 255);
-        }
-    }
     attribMutex.unlock();
 }
 

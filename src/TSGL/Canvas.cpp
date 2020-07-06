@@ -59,7 +59,7 @@ static const GLchar* textFragmentShader =
   "FragColor = textColor * sampled;"
   "}";
 
-static const GLchar* imageVertexShader = 
+static const GLchar* textureVertexShader = 
   "#version 330 core\n"
   "layout (location = 0) in vec3 aPos;"
   "layout (location = 1) in vec2 aTexCoord;"
@@ -72,13 +72,14 @@ static const GLchar* imageVertexShader =
 	"TexCoords = vec2(aTexCoord.x, aTexCoord.y);"
   "}";
 
-static const GLchar* imageFragmentShader = 
+static const GLchar* textureFragmentShader = 
   "#version 330 core\n"
   "out vec4 FragColor;"
   "in vec2 TexCoords;"
   "uniform sampler2D texture1;"
+  "uniform float alpha;"
   "void main() {"
-	"FragColor = texture(texture1, TexCoords);"
+	"FragColor = texture(texture1, TexCoords) * vec4(1.0,1.0,1.0,alpha);"
   "}";
 
 int Canvas::drawBuffer = GL_FRONT_LEFT;
@@ -296,11 +297,11 @@ void Canvas::draw()
           for (unsigned int i = 0; i < objectBuffer.size(); i++) {
             Drawable* d = objectBuffer[i];
             if(d->isProcessed()) {
-              textureShaders(d->getShaderType());
+              selectShaders(d->getShaderType());
               if (d->getShaderType() == SHAPE_SHADER_TYPE) {
                 d->draw(shapeShader);
-              } else if (d->getShaderType() == IMAGE_SHADER_TYPE) {
-                d->draw(imageShader);
+              } else if (d->getShaderType() == TEXTURE_SHADER_TYPE) {
+                d->draw(textureShader);
               } else if (d->getShaderType() == TEXT_SHADER_TYPE) {
                 d->draw(textShader);
               }
@@ -332,7 +333,7 @@ void Canvas::draw()
         // glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
         // glDrawBuffer(drawBuffer);
 
-        // textureShaders(true);
+        // selectShaders(true);
         // const float vertices[36] = {
         //   0,       0,        0,1,1,1,1,0,1,
         //   winWidth,0,        0,1,1,1,1,1,1,
@@ -352,7 +353,7 @@ void Canvas::draw()
         // glFlush();                                   // Flush buffer data to the actual draw buffer
         // glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
 
-        // textureShaders(false);
+        // selectShaders(false);
 
         // Update Screen
         glfwSwapBuffers(window);
@@ -442,9 +443,9 @@ void Canvas::draw()
           if (frame == 0 || !objectBufferEmpty) {
             glClear(GL_COLOR_BUFFER_BIT);
             if(frame > 1) {
-              textureShaders(true);
+              selectShaders(true);
               loader.drawGLtextureFromBuffer(proceduralBuffer, leftWindowIndex, 0, winWidth, winHeight, GL_RGB);
-              textureShaders(false);
+              selectShaders(false);
             }
           }
 
@@ -456,9 +457,9 @@ void Canvas::draw()
                 if (!d->getIsTextured()) {
                   d->draw();
                 } else {
-                  textureShaders(true);
+                  selectShaders(true);
                   d->draw();
-                  textureShaders(false);
+                  selectShaders(false);
                 }
               }
             }
@@ -499,9 +500,9 @@ void Canvas::draw()
                 if (!d->getIsTextured()) {
                   d->draw();
                 } else {
-                  textureShaders(true);
+                  selectShaders(true);
                   d->draw();
-                  textureShaders(false);
+                  selectShaders(false);
                 }
               }
             }
@@ -535,7 +536,7 @@ void Canvas::draw()
         // apparently not very vital at all
         glDrawBuffer(drawBuffer);
 
-        textureShaders(true);
+        selectShaders(true);
         const float vertices[32] = {
           0,       0,        1,1,1,1,0,1,
           winWidth,0,        1,1,1,1,1,1,
@@ -555,7 +556,7 @@ void Canvas::draw()
         glFlush();                                   // Flush buffer data to the actual draw buffer
         glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
 
-        textureShaders(false);
+        selectShaders(false);
 
       #ifndef __APPLE__
         glfwPollEvents();                            // Handle any I/O
@@ -2096,7 +2097,7 @@ void Canvas::glDestroy() {
     // glDeleteProgram(textureShaderProgram);
     delete textShader;
     delete shapeShader;
-    delete imageShader;
+    delete textureShader;
     glDeleteBuffers(1, &VBO);
     glDeleteVertexArrays(1, &VAO);
 }
@@ -2279,10 +2280,6 @@ void Canvas::initGlew() {
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-    // glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)winWidth/(float)winHeight, 0.1f, 1000.0f);
-    // glm::mat4 view          = glm::mat4(1.0f);
-    // view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -((winHeight / 2) / tan(glm::pi<float>()/6))));
-
     char buf[PATH_MAX]; /* PATH_MAX incudes the \0 so +1 is not required */
     char *res = realpath(".", buf);
     if (res) {
@@ -2294,26 +2291,9 @@ void Canvas::initGlew() {
 
     textShader = new Shader(textVertexShader, textFragmentShader);
 
-    // textShader->use();
-    // glUniformMatrix4fv(glGetUniformLocation(textShader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    // unsigned int viewLoc  = glGetUniformLocation(textShader->ID, "view");
-    // glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+    shapeShader = new Shader(shapeVertexShader, shapeFragmentShader); 
 
-    shapeShader = new Shader(shapeVertexShader, shapeFragmentShader);
-
-    // shapeShader->use();
-    // glUniformMatrix4fv(glGetUniformLocation(shapeShader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    // viewLoc  = glGetUniformLocation(shapeShader->ID, "view");
-    // glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]); 
-
-    imageShader = new Shader(imageVertexShader, imageFragmentShader);
-
-    // imageShader->use();
-    // glUniformMatrix4fv(glGetUniformLocation(imageShader->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    // viewLoc  = glGetUniformLocation(imageShader->ID, "view");
-    // glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
-
-
+    textureShader = new Shader(textureVertexShader, textureFragmentShader);
 
     /****** NEW ******/
     // Create a framebuffer
@@ -2401,6 +2381,14 @@ void Canvas::initWindow() {
     glfwSetMouseButtonCallback(window, buttonCallback);
     glfwSetKeyCallback(window, keyCallback);
     glfwSetScrollCallback(window, scrollCallback);
+
+    // Scale to window size
+    GLint windowWidth, windowHeight;
+    glfwGetWindowSize(window, &windowWidth, &windowHeight);
+    glViewport(0, 0, windowWidth, windowHeight);
+    winWidth = windowWidth;
+    winHeight = windowHeight;
+    
     // Get info of GPU and supported OpenGL version
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
     printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
@@ -2644,21 +2632,21 @@ void Canvas::setShowFPS(bool b) {
 }
 
 void Canvas::setupCamera() {
-    // Set up camera positioning
-    // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
-    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
-      -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f, 1 };
-//    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
-//      -(winWidth-1) / 2.0f, (winHeight+0.5f) / 2.0f, -(winHeight-0.5f) / 2.0f, 1 };
-    glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
+//     // Set up camera positioning
+//     // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
+//     float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
+//       -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f, 1 };
+// //    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
+// //      -(winWidth-1) / 2.0f, (winHeight+0.5f) / 2.0f, -(winHeight-0.5f) / 2.0f, 1 };
+//     glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
 
-    // Set up camera zooming
-    float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
-    glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
+//     // Set up camera zooming
+//     float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
+//     glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
 
-    // Set up camera transformation
-    float modelF[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-    glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
+//     // Set up camera transformation
+//     float modelF[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+//     glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
 }
 
  /*!
@@ -2752,7 +2740,7 @@ void Canvas::takeScreenShot() {
     if (toRecord == 0) toRecord = 1;
 }
 
-void Canvas::textureShaders(unsigned int sType) {
+void Canvas::selectShaders(unsigned int sType) {
     Shader * program;
     if (sType == TEXT_SHADER_TYPE) {
         program = textShader;
@@ -2774,13 +2762,13 @@ void Canvas::textureShaders(unsigned int sType) {
         GLint colAttrib = glGetAttribLocation(shapeShader->ID, "aColor");
         glEnableVertexAttribArray(colAttrib);
         glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
-    } else if (sType == IMAGE_SHADER_TYPE) {
-        program = imageShader;
-        GLint posAttrib = glGetAttribLocation(imageShader->ID, "aPos");
+    } else if (sType == TEXTURE_SHADER_TYPE) {
+        program = textureShader;
+        GLint posAttrib = glGetAttribLocation(textureShader->ID, "aPos");
         glEnableVertexAttribArray(posAttrib);
         glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
         // texture coord attribute
-        GLint texAttrib = glGetAttribLocation(imageShader->ID, "aTexCoord");
+        GLint texAttrib = glGetAttribLocation(textureShader->ID, "aTexCoord");
         glEnableVertexAttribArray(texAttrib);
         glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     }

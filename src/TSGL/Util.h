@@ -28,7 +28,7 @@ const float FRAME = 1.0f/FPS;      // Number of seconds between frames
 
 const unsigned int TEXT_SHADER_TYPE = 0;
 const unsigned int SHAPE_SHADER_TYPE = 1;
-const unsigned int IMAGE_SHADER_TYPE = 2;
+const unsigned int TEXTURE_SHADER_TYPE = 2;
 
 /*!
  * \var typedef long double Decimal
