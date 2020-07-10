@@ -38,7 +38,6 @@ Image::Image(float x, float y, float z, std::string filename, GLfloat width, GLf
     stbi_set_flip_vertically_on_load(true);
     data = stbi_load(filename.c_str(), &pixelWidth, &pixelHeight, 0, 4);
     tsglAssert(data, "stbi_load(filename) failed.");
-    glEnable(GL_TEXTURE_2D);
     // vertex allocation and assignment
     vertices = new GLfloat[30];
 
@@ -83,7 +82,6 @@ void Image::draw(Shader * shader) {
     unsigned int alphaLoc = glGetUniformLocation(shader->ID, "alpha");
     glUniform1f(alphaLoc, myAlpha);
 
-    glEnable(GL_TEXTURE_2D);
     glGenTextures(1, &myTexture);
     // enable textures and bind the texture id
     glBindTexture(GL_TEXTURE_2D, myTexture);
@@ -106,8 +104,6 @@ void Image::draw(Shader * shader) {
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
     glDeleteTextures(1, &myTexture);
-
-    glDisable(GL_TEXTURE_2D);
 }
 
 /**

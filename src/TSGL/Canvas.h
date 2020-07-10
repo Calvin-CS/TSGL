@@ -97,10 +97,9 @@ private:
     unsigned        bufferSize;                                         // Size of the screen buffer
     std::string     defaultFontFileName;
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
-    // GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
+    GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
-    // bool            hasEXTFramebuffer;                                  // Whether or not the hard supports EXT FBOs
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
@@ -126,10 +125,7 @@ private:
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     GLubyte*        proceduralBuffer;                                   // Array that is a copy of just the procedural portion of the window
     unsigned        proceduralBufferSize;
-    doubleFunction  scrollFunction;                                     // Single function object for scrolling
-    // GLtexture       shaderFragment,                                     // Address of the fragment shader
-    //                 shaderProgram,                                      // Addres of the shader program to send to the GPU
-    //                 shaderVertex;                                       // Address of the vertex shader
+    doubleFunction  scrollFunction;                                     // Single function object for scrolling                                    // Address of the vertex shader
     Shader *        textShader;
     Shader *        shapeShader;
     Shader *        textureShader;
@@ -138,10 +134,7 @@ private:
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
     std::mutex      syncMutex;                                          // Mutex for syncing the rendering thread with a computational thread
     int             syncMutexLocked;                                    // Whether the syncMutex is currently locked
-	  int             syncMutexOwner;                                     // Thread ID of the owner of the syncMutex
-    // GLtexture       textureShaderFragment,                              // Address of the textured fragment shader
-    //                 textureShaderProgram,                               // Addres of the textured shader program to send to the GPU
-    //                 textureShaderVertex;                                // Address of the textured vertex shader
+	  int             syncMutexOwner;                                     // Thread ID of the owner of the syncMutex                               // Address of the textured vertex shader
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
     GLint           uniModel,                                           // Model perspective of the camera
@@ -163,6 +156,8 @@ private:
     static std::mutex   glfwMutex;                                      // Keeps GLFW createWindow from getting called at the same time in multiple threads
     static displayInfo  monInfo;                                        // Info about our display
     static unsigned     openCanvases;                                   // Total number of open Canvases
+
+    Background * myBackground;
 
     static void  buttonCallback(GLFWwindow* window, int key,
                    int action, int mods);                               // GLFW callback for mouse buttons
@@ -450,6 +445,8 @@ public:
     int wait();
 
     // static void runTests();
+
+    void setBackground(Background * background);
 };
 
 }

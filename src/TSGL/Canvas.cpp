@@ -241,14 +241,18 @@ void Canvas::draw()
 
     // Get actual framebuffer size and adjust scaling accordingly
     // NOTE: framebuffer stuff seems purposeless, at least with pure OO on MacOS.
-    // int fbw, fbh;
-    // glfwGetFramebufferSize(window, &fbw, &fbh);
-    // int scaling = round((1.0f*fbw)/winWidth);
+    int fbw, fbh;
+    glfwGetFramebufferSize(window, &fbw, &fbh);
+    int scaling = round((1.0f*fbw)/winWidth);
 
     if (hasStereo)
       Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
     else
       Canvas::setDrawBuffer(hasBackbuffer ? GL_LEFT : GL_FRONT_LEFT);
+
+    setBackgroundColor(bgcolor); //Set our initial clear / background color
+    glClear(GL_COLOR_BUFFER_BIT);
+    glfwSwapBuffers(window);
 
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++)
     {
@@ -267,10 +271,8 @@ void Canvas::draw()
         std::cout.flush();
 
         // set it up so draw calls write into the framebuffer
-        // if (hasEXTFramebuffer)
-        //   glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-        // else
-        //   glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frameBuffer);
+        glEnable(GL_DEPTH_TEST);
         // glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
         // Scale to window size
@@ -312,14 +314,11 @@ void Canvas::draw()
         }
 
         // Update our screenBuffer copy with the screen
-        // glViewport(0,0,winWidth*scaling,winHeight*scaling);
+        glViewport(0,0,winWidth*scaling,winHeight*scaling);
 
         // set it up so TSGL reads from the framebuffer
-        // if (hasEXTFramebuffer)
-        //   glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-        // else
-        //   glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-        // glReadBuffer(GL_COLOR_ATTACHMENT0);
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer);
+        glReadBuffer(GL_COLOR_ATTACHMENT0);
 
         // screenshots and testing
         // read from the framebuffer into the screenbuffer
@@ -330,30 +329,34 @@ void Canvas::draw()
         }
 
         // actually render everything in the framebuffer to the screen
-        // glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
+        glDisable(GL_DEPTH_TEST);
         // glDrawBuffer(drawBuffer);
 
-        // selectShaders(true);
-        // const float vertices[36] = {
-        //   0,       0,        0,1,1,1,1,0,1,
-        //   winWidth,0,        0,1,1,1,1,1,1,
-        //   0,       winHeight,0,1,1,1,1,0,0,
-        //   winWidth,winHeight,0,1,1,1,1,1,0
-        // };
-        // glBindTexture(GL_TEXTURE_2D,renderedTexture);
-        // /* these 5 lines don't seem to do anything */
-        // glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        // glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-        // /* next two lines are very essential */
-        // glBufferData(GL_ARRAY_BUFFER,36*sizeof(float),vertices,GL_DYNAMIC_DRAW);
-        // glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-        // glFlush();                                   // Flush buffer data to the actual draw buffer
-        // glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
+        selectShaders(TEXTURE_SHADER_TYPE);
 
-        // selectShaders(false);
+        unsigned int alphaLoc = glGetUniformLocation(textureShader->ID, "alpha");
+        glUniform1f(alphaLoc, 1.0f);
+
+        const float vertices[30] = {
+          -winWidth/2,-winHeight/2,0,0,0,
+           winWidth/2,-winHeight/2,0,1,0,
+          -winWidth/2, winHeight/2,0,0,1,
+           winWidth/2,-winHeight/2,0,1,0,
+          -winWidth/2, winHeight/2,0,0,1,
+           winWidth/2, winHeight/2,0,1,1
+        };
+        glBindTexture(GL_TEXTURE_2D,renderedTexture);
+        /* these 5 lines don't seem to do anything */
+        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+        /* next two lines are very essential */
+        glBufferData(GL_ARRAY_BUFFER,30*sizeof(float),vertices,GL_DYNAMIC_DRAW);
+        glDrawArrays(GL_TRIANGLES,0,6);
+        glFlush();                                   // Flush buffer data to the actual draw buffer
 
         // Update Screen
         glfwSwapBuffers(window);
@@ -2085,16 +2088,6 @@ int Canvas::getWindowY() {
 
 void Canvas::glDestroy() {
     // Free up our resources
-    // glDetachShader(shaderProgram, shaderFragment);
-    // glDetachShader(shaderProgram, shaderVertex);
-    // glDeleteShader(shaderFragment);
-    // glDeleteShader(shaderVertex);
-    // glDeleteProgram(shaderProgram);
-    // glDetachShader(textureShaderProgram, textureShaderFragment);
-    // glDetachShader(textureShaderProgram, textureShaderVertex);
-    // glDeleteShader(textureShaderFragment);
-    // glDeleteShader(textureShaderVertex);
-    // glDeleteProgram(textureShaderProgram);
     delete textShader;
     delete shapeShader;
     delete textureShader;
@@ -2205,12 +2198,9 @@ void Canvas::initGl() {
     glfwSetWindowUserPointer(window, this);
 #endif
 
-    // Specify how texture values combine with current surface color values.
-    // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); // GL_REPLACE
-
-    glEnable(GL_TEXTURE_2D);
     // Enable and disable necessary stuff
-    glEnable(GL_DEPTH_TEST); // Depth Testing
+    // glEnable(GL_DEPTH_TEST); // Depth Testing
+    glDisable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     glDisable(GL_CULL_FACE);
     // glCullFace(GL_BACK);
@@ -2243,17 +2233,6 @@ void Canvas::initGlew() {
         exit(102);
     }
 
-    // hasEXTFramebuffer = false;
-
-    // GLint n, i;
-    // glGetIntegerv(GL_NUM_EXTENSIONS, &n);
-    // for (i = 0; i < n; i++) {
-    //   std::string s = reinterpret_cast< char const * >(glGetStringi(GL_EXTENSIONS, i));
-    //   if (s == "GL_EXT_framebuffer_object") {
-    //     hasEXTFramebuffer = true;
-    //     break;
-    //   }
-    // }
     const GLubyte* gfxVendor = glGetString(GL_VENDOR);
     std::string gfx(gfxVendor, gfxVendor + strlen((char*)gfxVendor));
     atiCard = (gfx.find("ATI") != std::string::npos);
@@ -2265,11 +2244,7 @@ void Canvas::initGlew() {
         printf("GL Extension: ");
         for (i = 0; i < n; i++)
           printf("%s, ", glGetStringi(GL_EXTENSIONS, i));
-        // if (hasEXTFramebuffer)
-        //   TsglDebug("EXT Framebuffer available");
     #endif
-
-    // GLint status;
 
     // Create our Vertex Array Object
     glGenVertexArrays(1, &VAO);
@@ -2297,35 +2272,35 @@ void Canvas::initGlew() {
 
     /****** NEW ******/
     // Create a framebuffer
-    // frameBuffer = 0;
-    // glGenFramebuffersEXT(1, &frameBuffer);
-    // if (hasEXTFramebuffer)
-    //   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, frameBuffer);
-    // else
-    //   glBindFramebuffer(GL_FRAMEBUFFER_EXT, frameBuffer);
-    // std::cout << glGetError() << std::endl;
-    // // The texture we're going to render to
-    // glGenTextures(1, &renderedTexture);
-    // // "Bind" the newly created texture : all future texture functions will modify this texture
-    // glBindTexture(GL_TEXTURE_2D, renderedTexture);
-    // // Give an empty image to OpenGL ( the last "0" )
-    // // Note: Using RGBA here creates a texture with alpha, which causes weird redrawing problems
-    // glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, winWidth+1, winHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
-    // // Poor filtering. Needed !
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    // // Set "renderedTexture" as our colour attachement #0
-    // glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D,renderedTexture, 0);
-    // // Set the list of draw buffers.
-    // GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-    // glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
-    // // Always check that our framebuffer is ok
-    // if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-    //   TsglErr("FRAMEBUFFER CREATION FAILED");
+    frameBuffer = 0;
+    glGenFramebuffers(1, &frameBuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    // The texture we're going to render to
+    glGenTextures(1, &renderedTexture);
+    // "Bind" the newly created texture : all future texture functions will modify this texture
+    glBindTexture(GL_TEXTURE_2D, renderedTexture);
+    // Give an empty image to OpenGL ( the last "0" )
+    // Note: Using RGBA here creates a texture with alpha, which causes weird redrawing problems
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, winWidth+1, winHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
+    // Poor filtering. Needed !
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    // Set "renderedTexture" as our colour attachement #0
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,renderedTexture, 0);
+    // Set the list of draw buffers.
 
-    // glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    unsigned int rbo;
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, winWidth, winHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
+    // Always check that our framebuffer is ok
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+      TsglErr("FRAMEBUFFER CREATION FAILED");
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void Canvas::initGlfw() {
@@ -2351,6 +2326,7 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
   #endif
     // glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
+    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
@@ -2741,7 +2717,7 @@ void Canvas::takeScreenShot() {
 }
 
 void Canvas::selectShaders(unsigned int sType) {
-    Shader * program;
+    Shader * program = 0;
     if (sType == TEXT_SHADER_TYPE) {
         program = textShader;
         // position attribute
@@ -2808,6 +2784,11 @@ int Canvas::wait() {
   #endif
 
   return 0;
+}
+
+void Canvas::setBackground(Background * background) {
+  myBackground = background;
+  background->defineShaders(shapeShader, textShader, textureShader);
 }
 
 //-----------------Unit testing-------------------------------------------------------

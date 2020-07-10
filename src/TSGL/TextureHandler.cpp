@@ -441,7 +441,6 @@ GLtexture TextureHandler::loadPicture(std::string filename, unsigned int &width,
         // stbi_set_flip_vertically_on_load(true);
         // unsigned char * data = stbi_load(filename.c_str(), width, height, 0, 4);
         // tsglAssert(data, "stbi_load(filename) failed.");
-        // glEnable(GL_TEXTURE_2D);
         // // create the Image's texture id
         // glGenTextures(1, &texture);
         // glBindTexture(GL_TEXTURE_2D, texture);

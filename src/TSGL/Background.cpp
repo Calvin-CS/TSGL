@@ -26,21 +26,17 @@ Background::Background(float x, float y, float z, GLint width, GLint height, flo
     myXScale = myWidth = width;
     myYScale = myHeight = height;
     vertices = new GLfloat[30];
-    buffer = new uint8_t[myWidth * myHeight * 4];
     vertices[0]  = vertices[1] = vertices[6] = vertices[10] = vertices[16]  = vertices[20] = -0.5; // x + y
     vertices[5] = vertices[11] = vertices[15] = vertices[21] = vertices[25] = vertices[26] = 0.5; // x + y
     vertices[2] = vertices[7] = vertices[12] = vertices[17] = vertices[22] = vertices[27] = 0; // z
     vertices[3]  = vertices[13]  = vertices[14] = vertices[23] = vertices[24] = vertices[29] = 0.0; // texture coord x + y
     vertices[4] = vertices[8] = vertices[9] = vertices[18] = vertices[19] = vertices[28] = 1.0; // texture coord x + y
 
-    // make original background monocolor
-    for (int j = 0; j < myHeight; j++) 
-        for (int i = 0; i < myWidth; i++) {
-            buffer[i * myHeight * 4 + j * 4] = (int) (c.R * 255);
-            buffer[i * myHeight * 4 + j * 4 + 1] = (int) (c.G * 255);
-            buffer[i * myHeight * 4 + j * 4 + 2] = (int) (c.B * 255);
-            buffer[i * myHeight * 4 + j * 4 + 3] = (int) (c.A * 255);
-        }
+    myDrawables = new Array<Drawable*>(myWidth * myHeight * 2);
+
+    myAlpha = 1.0;
+
+    // glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     init = true;  
     attribMutex.unlock();
@@ -56,6 +52,55 @@ void Background::draw(Shader * shader) {
         return;
     }
 
+    // gen framebuffer
+    glGenFramebuffers(1, &myFramebuffer);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, myFramebuffer);
+    glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+    glViewport(0,0,myWidth,myHeight);
+
+    // gen texture, attach to framebuffer
+    glGenTextures(1, &myTexture);
+    glBindTexture(GL_TEXTURE_2D, myTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, myWidth, myHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, myTexture, 0);
+
+    // render buffer object
+    // glGenRenderbuffers(1, &myRenderbufferObject);
+    // glBindRenderbuffer(GL_RENDERBUFFER, myRenderbufferObject);
+    // glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, myWidth, myHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
+    // glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, myRenderbufferObject); // now actually attach it
+
+    GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+    glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        TsglErr("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
+    glClearColor(1,0,0,1.0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+
+    for (unsigned int i = 0; i < myDrawables->size(); i++)
+    {
+        Drawable* d = (*myDrawables)[i];
+        if(d->isProcessed()) {
+            selectShaders(d->getShaderType());
+            if (d->getShaderType() == SHAPE_SHADER_TYPE) {
+                d->draw(shapeShader);
+            } else if (d->getShaderType() == TEXTURE_SHADER_TYPE) {
+                d->draw(textureShader);
+            } else if (d->getShaderType() == TEXT_SHADER_TYPE) {
+                d->draw(textShader);
+            }
+        }
+    }
+    
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+    selectShaders(TEXTURE_SHADER_TYPE);
+
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(myRotationPointX, myRotationPointY, myRotationPointZ));
     model = glm::rotate(model, glm::radians(myCurrentYaw), glm::vec3(0.0f, 0.0f, 1.0f));
@@ -67,34 +112,20 @@ void Background::draw(Shader * shader) {
     unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-    unsigned int alphaLoc = glGetUniformLocation(shader->ID, "alpha");
-    glUniform1f(alphaLoc, 1.0f);
-
-    glEnable(GL_TEXTURE_2D);
-    glGenTextures(1, &myTexture);
-    // enable textures and bind the texture id
-    glBindTexture(GL_TEXTURE_2D, myTexture);
-
-    // Set texture parameters for wrapping.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-    // Set texture parameters for filtering.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-    // actually generate the texture + mipmaps
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);	
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, myWidth, myHeight, 0,
-	           	 GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, myTexture);	// use the color attachment texture as the texture of the quad plane
+    glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 5, vertices, GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+    glFlush();                                   // Flush buffer data to the actual draw buffer
+
 
     glDeleteTextures(1, &myTexture);
-
-    glDisable(GL_TEXTURE_2D);
+    glDeleteFramebuffers(1, &myFramebuffer);
 }
 
  /*!
@@ -105,14 +136,7 @@ void Background::draw(Shader * shader) {
   * \return A ColorInt containing the color of the pixel at (col,row).
   */
 ColorInt Background::getPixel(int row, int col) {
-    ColorInt c;
-    attribMutex.lock();
-    c = ColorInt(buffer[(row * myWidth + col) * 4],
-                    buffer[(row * myWidth + col) * 4 + 1],
-                    buffer[(row * myWidth + col) * 4 + 2],
-                    buffer[(row * myWidth + col) * 4 + 3]);
-    attribMutex.unlock();
-    return c;
+    return ColorInt(0,0,0,255);
 }
 
  /*!
@@ -125,18 +149,74 @@ ColorInt Background::getPixel(int row, int col) {
   */
 void Background::drawPixel(int row, int col, ColorInt c) {
     attribMutex.lock();
-    buffer[(row * myWidth + col) * 4] = c.R;
-    buffer[(row * myWidth + col) * 4 + 1] = c.G;
-    buffer[(row * myWidth + col) * 4 + 2] = c.B;
-    buffer[(row * myWidth + col) * 4 + 3] = c.A;
+
     attribMutex.unlock();
+}
+
+void Background::selectShaders(unsigned int sType) {
+    Shader * program = 0;
+    if (sType == TEXT_SHADER_TYPE) {
+        program = textShader;
+        // position attribute
+        GLint posAttrib = glGetAttribLocation(textShader->ID, "aPos");
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+        // texture coord attribute
+        GLint texAttrib = glGetAttribLocation(textShader->ID, "aTexCoord");
+        glEnableVertexAttribArray(texAttrib);
+        glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    } else if (sType == SHAPE_SHADER_TYPE)  {
+        program = shapeShader;
+        // position attribute
+        GLint posAttrib = glGetAttribLocation(shapeShader->ID, "aPos");
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)0);
+        // texture coord attribute
+        GLint colAttrib = glGetAttribLocation(shapeShader->ID, "aColor");
+        glEnableVertexAttribArray(colAttrib);
+        glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
+    } else if (sType == TEXTURE_SHADER_TYPE) {
+        program = textureShader;
+        GLint posAttrib = glGetAttribLocation(textureShader->ID, "aPos");
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+        // texture coord attribute
+        GLint texAttrib = glGetAttribLocation(textureShader->ID, "aTexCoord");
+        glEnableVertexAttribArray(texAttrib);
+        glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    }
+ 
+    program->use();
+    
+    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)myWidth/(float)myHeight, 0.1f, 1000.0f);
+    glm::mat4 view          = glm::mat4(1.0f);
+    view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -((myHeight / 2) / tan(glm::pi<float>()/6))));
+    glm::mat4 model = glm::mat4(1.0f);
+
+    glUniformMatrix4fv(glGetUniformLocation(program->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(program->ID, "view"), 1, GL_FALSE, &view[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(program->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+}
+
+void Background::defineShaders(Shader * shapeS, Shader * textS, Shader * textureS) {
+    attribMutex.lock();
+    shapeShader = shapeS;
+    textShader = textS;
+    textureShader = textureS;
+    attribMutex.unlock();
+}
+
+void Background::drawSquare(float z) {
+    Square * s = new Square(0,0,z,200,0,0,0,BLUE);
+    myDrawables->push(s);  // Push it onto our drawing buffer
 }
 
 /*!
 * \brief Destructor for the Background.
 */
 Background::~Background() {
-    delete [] buffer;
+    myDrawables->clear();
+    delete myDrawables;
 }
 
 }

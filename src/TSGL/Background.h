@@ -6,6 +6,9 @@
 #define BACKGROUND_H_
 
 #include "Drawable.h"       // For extending our Shape object
+#include "Array.h"          // Our own array for buffering drawing operations
+#include "Square.h"
+#include "Util.h"           // Needed constants and has cmath for performing math operations
 
 namespace tsgl {
 
@@ -17,7 +20,12 @@ class Background : public Drawable {
 protected:
     GLint myWidth, myHeight;
     GLuint myTexture;
-    uint8_t * buffer;
+    GLuint myFramebuffer;
+    GLuint myRenderbufferObject;
+    Array<Drawable*> * myDrawables;
+    Shader * textShader;
+    Shader * shapeShader;
+    Shader * textureShader;
 public:
     Background(float x, float y, float z, GLint width, GLint height, float yaw, float pitch, float roll, const ColorFloat &c = WHITE);
 
@@ -38,6 +46,12 @@ public:
     virtual ColorInt getPixel(int row, int col);
 
     virtual void drawPixel(int row, int col, ColorInt c);
+
+    virtual void selectShaders(unsigned int sType);
+
+    virtual void defineShaders(Shader * shapeS, Shader * textS, Shader * textureS);
+
+    virtual void drawSquare(float z);
 
     virtual ~Background();
 };

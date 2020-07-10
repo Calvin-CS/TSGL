@@ -57,7 +57,7 @@ void imageFunction(Canvas& can) {
         // image->setCenterY(sin(floatVal/90) * 100);
         // image->setCenterZ(sin(floatVal/90) * 100);
         // image->setYaw(floatVal);
-        // image->setPitch(floatVal * 100);
+        image->setPitch(floatVal * 100);
         // image->setRoll(floatVal);
         // image->setWidth(sin(floatVal/90) * 100 + 400);
         // image->setHeight(sin(floatVal/90) * 100 + 400);

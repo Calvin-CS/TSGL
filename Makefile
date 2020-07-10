@@ -70,6 +70,7 @@ BINARIES= \
 	bin/test3DPhilosophers \
 	bin/testArrows \
 	bin/testBackground \
+	bin/testBG \
 	bin/testBallroom \
 	bin/testCircle \
 	bin/testClock \

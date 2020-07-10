@@ -32,6 +32,7 @@ void cubeFunction(Canvas& can) {
         boolean = !boolean;
     });
 
+    bool ss = false;
     while (can.isOpen()) {
         can.sleep();
         // testCube->setCenterX(sin(rotation)*200);
@@ -57,6 +58,10 @@ void cubeFunction(Canvas& can) {
         //     }
         //     boolean = !boolean;
         //     rotation = 0;
+        // }
+        // if (can.getFrameNumber() > 50 && !ss) {
+        //     can.takeScreenShot();
+        //     ss = true;
         // }
         rotation+=0.01;
     }

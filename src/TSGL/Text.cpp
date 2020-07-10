@@ -78,8 +78,6 @@ void Text::draw(Shader * shader) {
 
     glUniform4f(glGetUniformLocation(shader->ID, "textColor"), myColor.R, myColor.G, myColor.B, myColor.A);
 
-    glEnable(GL_TEXTURE_2D);
-
     float mouseX = -myWidth / 2;
     float mouseY = -myHeight / 2;
     const wchar_t* wideText = myString.c_str();
@@ -135,7 +133,6 @@ void Text::draw(Shader * shader) {
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
         mouseX += (ch.Advance >> 6); // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
     }
-    glDisable(GL_TEXTURE_2D);
 }
 
 /*!

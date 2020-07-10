@@ -26,6 +26,7 @@ void squareFunction(Canvas& can) {
     can.add(square2);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
+    bool ss = false;
     while (can.isOpen()) {
         can.sleep();
         // square->setCenterX(sin(floatVal/90) * 100);
@@ -43,6 +44,10 @@ void squareFunction(Canvas& can) {
         //     square->setColor(colors);
         // } else {
         //     square->setColor(RED);
+        // }
+        // if (can.getFrameNumber() > 50 && !ss) {
+        //     can.takeScreenShot();
+        //     ss = true;
         // }
         floatVal += 1;
     }
