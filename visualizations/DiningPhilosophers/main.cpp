@@ -1,6 +1,6 @@
 /*
  * testPhilosophers.cpp runs the Dining Philosphers Problem animation using the TSGL library and OpenMP.
- * This file includes a main method, Philospher class, Fork class, and Table class.
+ * This file includes a main method.
  *
  * The program provides a visualization of the Dining Philosophers Problem
  *  in which philosophers sit around a table, think for a random amount of time, and then want to eat.
@@ -25,7 +25,7 @@
 
 #include <omp.h>
 #include <tsgl.h>
-#include "Table.h"
+#include "Simulation.h"
 #include "Philosopher.h"
 
 using namespace tsgl;
@@ -56,7 +56,7 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
       break;
   }
 
-  Table t(can,philosophers,method);
+  Simulation t(can,philosophers,method);
 
   bool stepThrough = step; // Flag that determines whether the animation pauses between steps
   bool paused = false; // Flag that determines whether the animation is paused

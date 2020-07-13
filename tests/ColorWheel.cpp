@@ -1,7 +1,7 @@
 /*
- * testColorWheel.cpp
+ * ColorWheel.cpp
  *
- * Usage: ./testColorWheel <width> <height> <numThreads>
+ * Usage: ./ColorWheel <width> <height> <numThreads>
  */
 
 #include <omp.h>

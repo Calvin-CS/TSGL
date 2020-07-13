@@ -47,7 +47,7 @@ public:
    *    \param can Reference to the CartesianCanvas to draw on.
    * \note This method overrides the draw() method from Mandelbrot.
    */
-  void draw(CartesianRasterCanvas& can);
+  void draw(RasterCanvas& can);
 };
 
 #endif /* BUDDHABROT_H_ */

@@ -6,6 +6,7 @@
 
 namespace tsgl {
 
+//TODO: drawPoint makes a point cover multiple pixels, which is relevant for getPoint() and makes points look clunkier/less precise than old version. Decreasing pointSize does not change this. (Also issue in CartesianRasterCanvas)
     void RasterCanvas::drawPoint(float x, float y, ColorInt c, float pointSize){
 
       // printf("RasterCanvas drawPoint\n");

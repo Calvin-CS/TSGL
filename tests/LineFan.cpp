@@ -1,7 +1,7 @@
 /*
- * testLineFan.cpp
+ * LineFan.cpp
  *
- * Usage: ./testLineFan <width> <height> <numThreads>
+ * Usage: ./LineFan <width> <height> <numThreads>
  */
 
 #include <omp.h>

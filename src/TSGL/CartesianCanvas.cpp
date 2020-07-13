@@ -253,8 +253,8 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     maxY = yMax;
     cartWidth = maxX - minX;
     cartHeight = maxY - minY;
-    pixelWidth = cartWidth / (getWindowWidth() - 1);
-    pixelHeight = cartHeight / (getWindowHeight() - 1);  //Minor hacky fix
+    pixelWidth = cartWidth / getWindowWidth();
+    pixelHeight = cartHeight / getWindowHeight();
 }
 
 void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&) ) {
@@ -286,7 +286,7 @@ void CartesianCanvas::sleep() {
     Canvas::sleep();
 }
 
-void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
+void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) { //TODO: document or resolve floating point issues when zooming in too far
     Decimal newWidth = cartWidth * scale;
     Decimal newHeight = cartHeight * scale;
     recomputeDimensions(x - .5 * newWidth, y - .5 * newHeight, x + .5 * newWidth, y + .5 * newHeight);

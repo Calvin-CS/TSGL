@@ -31,7 +31,7 @@ private:
 public:
     LangtonAnt** ants;
     int width, height, size, cap;
-    Canvas* can;
+    RasterCanvas* can;
 
     /*!
      * \brief Explicitly constructs an AntFarm object.
@@ -39,9 +39,9 @@ public:
      * \param w The width of the AntFarm object.
      * \param h The height of the AntFarm object.
      * \param s The size of the AntFarm object (how many ants are going to be in the AntFarm object).
-     * \param can Pointer to the Canvas to draw to.
+     * \param can Pointer to the RasterCanvas to draw to.
      */
-    AntFarm(int w, int h, int s, Canvas* can);
+    AntFarm(int w, int h, int s, RasterCanvas* can);
 
     /*!
      * \brief Destroy an AntFarm object.

@@ -1,7 +1,7 @@
 /*
- * testSmartSort.cpp
+ * SmartSort.cpp
  *
- * Usage: ./testSmartSort <numElements> <numThreads>
+ * Usage: ./SmartSort <numElements> <numThreads>
  */
 
 #include <tsgl.h>

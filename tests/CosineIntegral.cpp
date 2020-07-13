@@ -1,7 +1,7 @@
 /*
- * testCosineIntegral.cpp
+ * CosineIntegral.cpp
  *
- * Usage: ./testCosineIntegral <width> <height> <numThreads>
+ * Usage: ./CosineIntegral <width> <height> <numThreads>
  */
 
 #include <complex>
@@ -51,11 +51,11 @@ void cosineIntegralFunction(Cart& can, int numberOfThreads) {
   can.drawFunction(function1);
 
   //\u03C0 = π
-  can.setFont("../assets/freefont/FreeSerif.ttf");
-  can.drawText(L"-1.5\u03C0", -1.5 * PI - .1, .25, 20);  // Note the important capital L, used to support Unicode.
-  can.drawText(L"1.5\u03C0", 1.5 * PI - .2, .25, 20);
-  can.drawText(L"1", .1, 1.05, 20);
-  can.drawText(L"-1", .1, -1.1, 20);
+  can.setFont("../assets/freefont/FreeSerif.ttf"); //TODO: make these work both with new library and pi symbol
+  can.drawText("-1.5 pi", -1.5 * PI - .1, .25, 20);  // Note the important capital L, used to support Unicode.
+  can.drawText("1.5 pi", 1.5 * PI - .2, .25, 20);
+  can.drawText("1", .1, 1.05, 20);
+  can.drawText("-1", .1, -1.1, 20);
 
 #pragma omp parallel num_threads(threads)
   {

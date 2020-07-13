@@ -1,7 +1,7 @@
 /*
- * testNewtonPendulum.cpp
+ * NewtonPendulum.cpp
  *
- * Usage: ./testNewtonPendulum <width> <height> <numBalls>
+ * Usage: ./NewtonPendulum <width> <height> <numBalls>
  */
 
 #include "tsgl.h"

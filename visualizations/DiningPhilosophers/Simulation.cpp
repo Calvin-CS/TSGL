@@ -1,6 +1,6 @@
-#include "Table.h"
+#include "Simulation.h"
 
-Table::Table(Canvas& can, int p, PhilMethod m) {
+Simulation::Simulation(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
   counter = 0;
@@ -36,26 +36,40 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
       break;
   }
 
-  myCan2 = new Canvas(0,0,350,300,"Legend");
+  myCan2 = new Canvas(0,0,350,550,"Legend");
   myCan2->setBackgroundColor(WHITE);
   myCan2->start();
+  int offset = 45;
   Text * methodText = new Text("Method:",16,32,24,BLACK);
   Text * methodText2 = new Text(methodString,32,64,24,BLACK);
-  Text * legendText = new Text("Legend:",16,96,24,BLACK);
-  Text * redText = new Text("Red: Hungry",32,128,24,RED);
-  Text * orangeText = new Text("Orange: Has Right Fork",32,160,24,ORANGE);
-  Text * purpleText = new Text("Purple: Has Left Fork",32,192,24,PURPLE);
-  Text * greenText = new Text("Green: Eating",32,224,24,GREEN);
-  Text * blueText = new Text("Blue: Thinking",32,256,24,BLUE);
-  Text * mealsText = new Text("Meals eaten",57,288,24,BROWN);
+  Text * legendText = new Text("Meals:",16,96,24,BLACK);
+  Text * mealsText = new Text("= one meal",85,120,24,BROWN);
+  RegularPolygon * mealExample = new RegularPolygon(66,115,3,8,BROWN); myCan2->add( mealExample );\
+  Text * philText = new Text("Philosophers:", 16, 143, 24, BLACK);
+  Text * blueText = new Text("Thinking",85,150+offset,24,BLUE);
+  Text * orangeText = new Text("With Right Fork",85,225+offset,24,ORANGE);
+  Text * purpleText = new Text("With Left Fork",85,300+offset,24,PURPLE);
+  Text * greenText = new Text("Eating",85,375+offset,24,GREEN);
+  Text * redText = new Text("Hungry",85,450+offset,24,RED);
+  myCan2->add( philText );
   myCan2->add( methodText ); myCan2->add( methodText2 ); myCan2->add( legendText );
   myCan2->add( redText ); myCan2->add( orangeText ); myCan2->add( purpleText );
   myCan2->add( greenText ); myCan2->add( blueText ); myCan2->add( mealsText );
 
-  RegularPolygon * mealExample = new RegularPolygon(41,279,3,8,BROWN); myCan2->add( mealExample ); //TODO: delete in destructor?
+  Circle * hungryPhil = new Circle(48, 440+offset, 30, RED);
+  Circle * rightPhil = new Circle(48, 215+offset, 30, ORANGE);
+  Circle * leftPhil = new Circle(48, 290+offset, 30, PURPLE);
+  Circle * eatPhil = new Circle(48, 365+offset, 30, GREEN);
+  Circle * thinkPhil = new Circle(48, 140+offset, 30, BLUE);
+  myCan2->add( hungryPhil ); myCan2->add( rightPhil ); myCan2->add( leftPhil ); myCan2->add( eatPhil ); myCan2->add( thinkPhil );
+
+  legendShapes.push_back(methodText); legendShapes.push_back(methodText2); legendShapes.push_back(legendText); legendShapes.push_back(redText);
+  legendShapes.push_back(orangeText); legendShapes.push_back(purpleText); legendShapes.push_back(greenText); legendShapes.push_back(blueText);
+  legendShapes.push_back(mealsText); legendShapes.push_back(mealExample); legendShapes.push_back(hungryPhil); legendShapes.push_back(rightPhil);
+  legendShapes.push_back(leftPhil); legendShapes.push_back(eatPhil); legendShapes.push_back(thinkPhil);
 }
 
-Table::~Table() {
+Simulation::~Simulation() {
   if (myCan2->isOpen())
     myCan2->stop();
   else
@@ -64,6 +78,9 @@ Table::~Table() {
   delete myCircle;
   delete [] phils;
   delete [] forks;
+  for(unsigned i = 0; i < legendShapes.size(); i++) {
+    delete legendShapes[i];
+  }
 }
 
 /*!
@@ -92,7 +109,7 @@ Table::~Table() {
  * \param id The id number of the current Philosopher.
  * \note This is an example of Livelock amongst threads.
  */
-void Table::forfeitWhenBlockedMethod(int id) {
+void Simulation::forfeitWhenBlockedMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -152,7 +169,7 @@ void Table::forfeitWhenBlockedMethod(int id) {
  * \param id The id number of the current Philosopher.
  * \note This is an example of Deadlock amongst threads.
  */
-void Table::waitWhenBlockedMethod(int id) {
+void Simulation::waitWhenBlockedMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -215,7 +232,7 @@ void Table::waitWhenBlockedMethod(int id) {
  * .
  * \param id The id number of the current Philosopher.
  */
-void Table::nCountReleaseMethod(int id) {
+void Simulation::nCountReleaseMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -285,7 +302,7 @@ void Table::nCountReleaseMethod(int id) {
  * .
  * \param id The id number of the current Philosopher.
  */
-void Table::hierarchyMethod(int id) {
+void Simulation::hierarchyMethod(int id) {
   int left = id, right = (id+numPhils-1)%numPhils;
   switch(phils[id].state()) {
     case hasNone:
@@ -349,7 +366,7 @@ void Table::hierarchyMethod(int id) {
  * \param id The id number of the current Philosopher.
  * \note This method is the one that works best.
  */
-void Table::oddEvenMethod(int id) {
+void Simulation::oddEvenMethod(int id) {
   switch(phils[id].state()) {
     case hasNone:
       if ((id % 2) == (counter % 2))
@@ -384,7 +401,7 @@ void Table::oddEvenMethod(int id) {
 /*!
  * \brief Method for determining which method of resolution the philosopher is using.
  */
-void Table::checkStep() {
+void Simulation::checkStep() {
   int i = omp_get_thread_num();
   if (phils[i].state() == isFull) {
     phils[i].eat();
@@ -415,7 +432,7 @@ void Table::checkStep() {
 /*!
  * \brief Method for philosopher to act based on myAction.
  */
-void Table::actStep() {
+void Simulation::actStep() {
   int i = omp_get_thread_num();
   int left = i, right = (i+numPhils-1)%numPhils;
   switch(phils[i].action()) {
@@ -447,7 +464,7 @@ void Table::actStep() {
 /*!
  * \brief Method calculating angles calling draw methods of a philosopher and its fork or forks.
  */
-void Table::drawStep() {
+void Simulation::drawStep() {
   const int RAD = 250;
   int FORK_RAD = 200;
   const float ARC =2*PI/numPhils;
@@ -459,7 +476,7 @@ void Table::drawStep() {
   ColorFloat fcolor = BLACK; //Fork color
   float fangle = (i+0.5f)*ARC; //Fork angle
 
-  if( !myCircle ) { //If Table not already created
+  if( !myCircle ) { //If Simulation not already created
     myCircle = new Circle(tabX,tabY,RAD-48,DARKGRAY);
     myCan->add(myCircle);
   }
@@ -469,6 +486,12 @@ void Table::drawStep() {
   phils[i].refreshColor(); //Update the color of philosopher
   if( phils[i].state() == isFull ) { //Draw the next meal if philosopher eating
       float angle = pangle+(phils[i].getMeals()/10)*2*PI/RAD, dist = BASEDIST+8*(phils[i].getMeals()%10);
+      if(angle > (pangle+2*PI/numPhils)) {
+        for(int n = 0; n < numPhils; n++) {
+          phils[n].clearMeals(*myCan);
+        }
+        angle = pangle+(phils[i].getMeals()/10)*2*PI/RAD, dist = BASEDIST+8*(phils[i].getMeals()%10);
+      }
       RegularPolygon * meal = new RegularPolygon(tabX+dist*cos(angle), tabY+dist*sin(angle), 3,8,BROWN);
       phils[i].addMeal(*myCan, meal);
   }

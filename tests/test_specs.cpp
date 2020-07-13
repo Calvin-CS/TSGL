@@ -1,4 +1,4 @@
-#include "tsgl.h"
+#include "tsgl.h" //TODO: delete?
 
 int main(int argc, char* argv[]) {
   glfwInit();

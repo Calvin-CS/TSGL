@@ -8,9 +8,6 @@ ThreadMandelbrot::ThreadMandelbrot(unsigned threads, unsigned depth) : Mandelbro
 
 void ThreadMandelbrot::draw(CartesianRasterCanvas& can) {
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
-  const int XBRD = 10;                    //Border for out progress bar
-  const int YBRD = 40;                    //Border for out progress bar
-  const int PBWIDTH = 800;
   while(myRedraw) {
     myRedraw = false;
     can.reset();
@@ -21,9 +18,9 @@ void ThreadMandelbrot::draw(CartesianRasterCanvas& can) {
       ColorFloat tcolor = Colors::highContrastColor(tid);
       double blocksize = can.getCartHeight() / nthreads;
       double blockheight = CH / nthreads;
-      long double startrow = blocksize * tid + can.getMinY();
+      long double startrow = can.getMaxY() - blocksize * tid;
       for(unsigned int k = 0; k <= blockheight && can.isOpen(); k++) {  // As long as we aren't trying to render off of the screen...
-        long double row = startrow + can.getPixelHeight() * k;
+        long double row = startrow - can.getPixelHeight() * k;
         for(long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex originalComplex(col, row);
           complex c(col, row);
@@ -44,8 +41,8 @@ void ThreadMandelbrot::draw(CartesianRasterCanvas& can) {
         if (myRedraw) break;
       }
     }
-//    shadeCanvas(can);  Optional shading
-    std::cout << can.getTime() << std::endl;
+    printf("%f seconds to draw\n", can.getTime());
+    printf("%Lfx scale\n", 1/(can.getCartHeight()/2));
     while (can.isOpen() && !myRedraw) {
       can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
     }

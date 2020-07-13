@@ -1,7 +1,7 @@
 /**
- * testProjectiles.cpp
+ * Projectiles.cpp
  *
- * Usage: ./testProjectiles <width> <height>
+ * Usage: ./Projectiles <width> <height>
  */
 
 #include "tsgl.h"

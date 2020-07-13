@@ -1,7 +1,7 @@
 /*
- * testFireworks.cpp
+ * Fireworks.cpp
  *
- * Usage: ./testFireworks <width> <height> <numThreads> <numFireworks> <speed>
+ * Usage: ./Fireworks <width> <height> <numThreads> <numFireworks> <speed>
  */
 
 #include <tsgl.h>

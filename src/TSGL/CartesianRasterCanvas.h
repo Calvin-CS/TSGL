@@ -13,7 +13,7 @@ namespace tsgl { //TODO: resolve issue that it doesn't close without ^C
   * \class CartesianRasterCanvas
   * \brief CartesianCanvas extended for point drawing in Cartesian coordinates.
   * \details CartesianRasterCanvas combines the Cartesian coordinate system with point drawing ability.
-  * \note On the CartesianRasterCanvas, drawPoint() and getPixel() are according to the Cartesian coordinates, but all shapes are rendered with the standard coordinates.
+  * \note On the CartesianRasterCanvas, drawPoint() are according to the Cartesian coordinates, but all shapes are rendered with the standard coordinates.
   */
   class CartesianRasterCanvas : public CartesianCanvas {
   public:

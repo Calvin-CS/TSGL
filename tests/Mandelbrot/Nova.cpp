@@ -17,7 +17,7 @@ void Nova::draw(CartesianRasterCanvas& can) {
       unsigned int iterations;
       double smooth;
       for (unsigned int k = 0; k <= (can.getWindowHeight() / nthreads) && can.isOpen(); k++) {  // As long as we aren't trying to render off of the screen...
-        long double row = blockstart * omp_get_thread_num() + can.getMinY() + can.getPixelHeight() * k;
+        long double row = can.getMaxY() - blockstart * omp_get_thread_num() - can.getPixelHeight() * k;
         for (long double col = can.getMinX(); col <= can.getMaxX(); col += can.getPixelWidth()) {
           complex c(col, row);
           complex z(1, 0);
@@ -36,7 +36,6 @@ void Nova::draw(CartesianRasterCanvas& can) {
           if (smooth != smooth || smooth < 0)  // Check to see if smooth is NAN
             smooth = 0;
           smooth = smooth - (int)smooth;
-          float mult = iterations/(float)myDepth;
           if (iterations == myDepth)
             can.drawPoint(col, row, BLACK);
           else
@@ -47,6 +46,7 @@ void Nova::draw(CartesianRasterCanvas& can) {
       }
     }
     manhattanShading(can);
+    std::cout << "Shading done" << std::endl;
     while (can.isOpen() && !myRedraw)
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
   }
