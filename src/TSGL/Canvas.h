@@ -97,7 +97,8 @@ private:
     unsigned        bufferSize;                                         // Size of the screen buffer
     std::string     defaultFontFileName;
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
-    GLuint          frameBuffer;                                        // Target buffer for rendering to renderedTexture
+    GLuint          multisampledFBO;                                    // Multisampled target buffer for rendering to renderedTexture
+    GLuint          intermediateFBO;                                    // Intermediate framebuffer into which multisampledFBO will be blitted
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
     bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
@@ -116,7 +117,8 @@ private:
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	  bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
     int             realFPS;                                            // Actual FPS of drawing
-    GLuint          renderedTexture;                                    // Texture to which we render to every frame
+    GLuint          renderedTexture;                                    // Texture to which we render to every frame. Attached to intermediateFBO
+    GLuint          multisampledTexture;                                // Texture attached to the multisampled framebuffer
   #ifdef __APPLE__
     pthread_t     renderThread;                                         // Thread dedicated to rendering the Canvas
   #else

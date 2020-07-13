@@ -271,9 +271,9 @@ void Canvas::draw()
         std::cout.flush();
 
         // set it up so draw calls write into the framebuffer
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frameBuffer);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, multisampledFBO);
         glEnable(GL_DEPTH_TEST);
-        // glDrawBuffer(GL_COLOR_ATTACHMENT0);
+        glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
         // Scale to window size
         GLint windowWidth, windowHeight;
@@ -313,10 +313,13 @@ void Canvas::draw()
           objectBufferEmpty = true;
         }
 
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, multisampledFBO);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
+        glBlitFramebuffer(0, 0, winWidth, winHeight, 0, 0, winWidth, winHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
         // actually render everything in the framebuffer to the screen
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
         glDisable(GL_DEPTH_TEST);
-        // glDrawBuffer(drawBuffer);
 
         selectShaders(TEXTURE_SHADER_TYPE);
 
@@ -2269,32 +2272,34 @@ void Canvas::initGlew() {
 
     textureShader = new Shader(textureVertexShader, textureFragmentShader);
 
-    /****** NEW ******/
-    // Create a framebuffer
-    frameBuffer = 0;
-    glGenFramebuffers(1, &frameBuffer);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    // The texture we're going to render to
-    glGenTextures(1, &renderedTexture);
-    // "Bind" the newly created texture : all future texture functions will modify this texture
-    glBindTexture(GL_TEXTURE_2D, renderedTexture);
-    // Give an empty image to OpenGL ( the last "0" )
-    // Note: Using RGBA here creates a texture with alpha, which causes weird redrawing problems
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, winWidth+1, winHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
-    // Poor filtering. Needed !
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    // Set "renderedTexture" as our colour attachement #0
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,renderedTexture, 0);
-    // Set the list of draw buffers.
-
+    // configure MSAA framebuffer
+    // --------------------------
+    glGenFramebuffers(1, &multisampledFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, multisampledFBO);
+    // create a multisampled color attachment texture
+    glGenTextures(1, &multisampledTexture);
+    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, multisampledTexture);
+    glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, winWidth, winHeight, GL_TRUE);
+    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, multisampledTexture, 0);
+    // create multisampled renderbuffer object
     unsigned int rbo;
     glGenRenderbuffers(1, &rbo);
     glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, winWidth, winHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, winWidth, winHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
+
+    // Create a second framebuffer
+    intermediateFBO = 0;
+    glGenFramebuffers(1, &intermediateFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, intermediateFBO);
+    // The texture we're going to render to
+    glGenTextures(1, &renderedTexture);
+    glBindTexture(GL_TEXTURE_2D, renderedTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, winWidth, winHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
+    // Set "renderedTexture" as our colour attachement #0
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,renderedTexture, 0);
+
     // Always check that our framebuffer is ok
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
       TsglErr("FRAMEBUFFER CREATION FAILED");
