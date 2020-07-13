@@ -59,10 +59,10 @@ void cubeFunction(Canvas& can) {
         //     boolean = !boolean;
         //     rotation = 0;
         // }
-        // if (can.getFrameNumber() > 50 && !ss) {
-        //     can.takeScreenShot();
-        //     ss = true;
-        // }
+        if (can.getFrameNumber() > 50 && !ss) {
+            can.takeScreenShot();
+            ss = true;
+        }
         rotation+=0.01;
     }
 

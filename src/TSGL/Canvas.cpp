@@ -313,21 +313,6 @@ void Canvas::draw()
           objectBufferEmpty = true;
         }
 
-        // Update our screenBuffer copy with the screen
-        glViewport(0,0,winWidth*scaling,winHeight*scaling);
-
-        // set it up so TSGL reads from the framebuffer
-        glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer);
-        glReadBuffer(GL_COLOR_ATTACHMENT0);
-
-        // screenshots and testing
-        // read from the framebuffer into the screenbuffer
-        glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-        if (toRecord > 0) {
-          screenShot();
-          --toRecord;
-        }
-
         // actually render everything in the framebuffer to the screen
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
         glDisable(GL_DEPTH_TEST);
@@ -357,6 +342,20 @@ void Canvas::draw()
         glBufferData(GL_ARRAY_BUFFER,30*sizeof(float),vertices,GL_DYNAMIC_DRAW);
         glDrawArrays(GL_TRIANGLES,0,6);
         glFlush();                                   // Flush buffer data to the actual draw buffer
+
+        // Update our screenBuffer copy with the screen
+        glViewport(0,0,winWidth*scaling,winHeight*scaling);
+
+        // set it up so TSGL reads from the framebuffer
+        glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+
+        // screenshots and testing
+        // read from the framebuffer into the screenbuffer
+        glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+        if (toRecord > 0) {
+          screenShot();
+          --toRecord;
+        }
 
         // Update Screen
         glfwSwapBuffers(window);
