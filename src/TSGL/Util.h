@@ -17,6 +17,9 @@ class CartesianCanvas;  //Forward declaration for typedef
 #ifdef _WIN32
 const double PI = 3.14159265358979323846;
 const double TWOPI = PI * 2;
+#elif __CYGWIN__
+const double PI = 3.14159265358979323846;
+const double TWOPI = PI * 2;
 #else
 const double PI = M_PI;
 const double TWOPI = PI * 2;
