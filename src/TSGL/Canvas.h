@@ -97,28 +97,23 @@ private:
     unsigned        bufferSize;                                         // Size of the screen buffer
     std::string     defaultFontFileName;
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
-    GLuint          multisampledFBO;                                    // Multisampled target buffer for rendering to renderedTexture
-    GLuint          intermediateFBO;                                    // Intermediate framebuffer into which multisampledFBO will be blitted
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
-    bool            hasBackbuffer;                                      // Whether or not the hardware supports double-buffering
-    bool            hasStereo;                                          // Whether or not the hardware supports stereoscopic rendering
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
     TextureHandler  loader;                                             // The TextureHandler that holds all our already loaded textures
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
+    GLuint          multisampledFBO;                                    // Multisampled target buffer for rendering to multisampledTexture
+    GLuint          multisampledTexture;                                // Texture attached to the multisampled framebuffer
     Array<Drawable*> * myDrawables;                                     // Our buffer of drawables to draw
     std::vector<Drawable*> objectBuffer;                                    // Holds a list of pointers to objects drawn each frame
-    bool            objectBufferEmpty;                                  // States whether the object buffer is empty/has been recently cleared
     std::mutex	    objectMutex;
     Array<Drawable*> * drawableBuffer;                                  // Our buffer of drawables that the can be pushed to, and will later be flushed to the shapes array
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	  bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
     int             realFPS;                                            // Actual FPS of drawing
-    GLuint          renderedTexture;                                    // Texture to which we render to every frame. Attached to intermediateFBO
-    GLuint          multisampledTexture;                                // Texture attached to the multisampled framebuffer
   #ifdef __APPLE__
     pthread_t     renderThread;                                         // Thread dedicated to rendering the Canvas
   #else
@@ -142,8 +137,8 @@ private:
     GLint           uniModel,                                           // Model perspective of the camera
                     uniView,                                            // View perspective of the camera
                     uniProj;                                            // Projection of the camera
-    GLuint           VAO,                                        // Address of GL's array buffer object
-                    VBO;                                       // Address of GL's vertex buffer object
+    GLuint          VAO,                                                // Address of GL's array buffer object
+                    VBO;                                                // Address of GL's vertex buffer object
     float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     bool            windowClosed;                                       // Whether we've closed the Canvas' window or not

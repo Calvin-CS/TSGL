@@ -130,6 +130,8 @@ Canvas::~Canvas() {
     delete drawTimer;
     delete[] vertexData;
     delete [] screenBuffer;
+    glDeleteTextures(1, &multisampledTexture);
+    glDeleteFramebuffers(1, &multisampledFBO);
     if (--openCanvases == 0) {
         glfwIsReady = false;
         glfwTerminate();  // Terminate GLFW
@@ -199,7 +201,6 @@ void Canvas::close() {
 void Canvas::add(Drawable * shapePtr) {
   objectMutex.lock();
   objectBuffer.push_back(shapePtr);
-  objectBufferEmpty = false;
   objectMutex.unlock();
 }
 
@@ -245,15 +246,6 @@ void Canvas::draw()
     glfwGetFramebufferSize(window, &fbw, &fbh);
     int scaling = round((1.0f*fbw)/winWidth);
 
-    if (hasStereo)
-      Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
-    else
-      Canvas::setDrawBuffer(hasBackbuffer ? GL_LEFT : GL_FRONT_LEFT);
-
-    setBackgroundColor(bgcolor); //Set our initial clear / background color
-    glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(window);
-
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++)
     {
         drawTimer->sleep(true);
@@ -261,19 +253,22 @@ void Canvas::draw()
         syncMutex.lock();
 
       #ifdef __APPLE__
-        // leftWindowIndex = 0;
         windowMutex.lock();
       #endif
         glfwMakeContextCurrent(window);
+        glfwWindowHint(GLFW_SAMPLES,0);
 
         realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
         std::cout.flush();
 
-        // set it up so draw calls write into the framebuffer
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, multisampledFBO);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // draw scene as normal in multisampled buffers
+        glBindFramebuffer(GL_FRAMEBUFFER, multisampledFBO);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
-        glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
         // Scale to window size
         GLint windowWidth, windowHeight;
@@ -282,12 +277,8 @@ void Canvas::draw()
         winWidth = windowWidth;
         winHeight = windowHeight;
 
-        // Draw stuff
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         if (objectBuffer.size() > 0) {
-          // sort between opaques and transparents and then sort by center z. not perfect, but pretty good.
-          // depth buffer takes care of the rest.
+          // sort between opaques and transparents and then sort by center z. depth buffer takes care of the rest. not perfect, but good.
           std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
             if (a->getAlpha() == 1.0 && b->getAlpha() != 1.0)
               return true;
@@ -309,52 +300,21 @@ void Canvas::draw()
               }
             }
           }
-        } else {
-          objectBufferEmpty = true;
         }
 
         glBindFramebuffer(GL_READ_FRAMEBUFFER, multisampledFBO);
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
         glBlitFramebuffer(0, 0, winWidth, winHeight, 0, 0, winWidth, winHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-        // actually render everything in the framebuffer to the screen
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
-        glDisable(GL_DEPTH_TEST);
+        // swap back to 4x MSAA in order to render object oriented Drawables.
+        glfwWindowHint(GLFW_SAMPLES,4);
 
-        selectShaders(TEXTURE_SHADER_TYPE);
-
-        unsigned int alphaLoc = glGetUniformLocation(textureShader->ID, "alpha");
-        glUniform1f(alphaLoc, 1.0f);
-
-        const float vertices[30] = {
-          -winWidth/2,-winHeight/2,0,0,0,
-           winWidth/2,-winHeight/2,0,1,0,
-          -winWidth/2, winHeight/2,0,0,1,
-           winWidth/2,-winHeight/2,0,1,0,
-          -winWidth/2, winHeight/2,0,0,1,
-           winWidth/2, winHeight/2,0,1,1
-        };
-        glBindTexture(GL_TEXTURE_2D,renderedTexture);
-        /* these 5 lines don't seem to do anything */
-        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-        /* next two lines are very essential */
-        glBufferData(GL_ARRAY_BUFFER,30*sizeof(float),vertices,GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_TRIANGLES,0,6);
-        glFlush();                                   // Flush buffer data to the actual draw buffer
-
-        // Update our screenBuffer copy with the screen
+        // Update our screenBuffer copy with the default framebuffer
         glViewport(0,0,winWidth*scaling,winHeight*scaling);
-
-        // set it up so TSGL reads from the framebuffer
         glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-
-        // screenshots and testing
-        // read from the framebuffer into the screenbuffer
         glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+        // glFlush(); // this should hopefully fix the lines in screenshot() bug. If not here, one line up.
         if (toRecord > 0) {
           screenShot();
           --toRecord;
@@ -377,206 +337,6 @@ void Canvas::draw()
         if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
     }
 }
-
-/* void Canvas::draw() {
-    // Reset the window
-    glfwSetWindowShouldClose(window, GL_FALSE);
-
-    // Get actual framebuffer size and adjust scaling accordingly
-    int fbw, fbh;
-    glfwGetFramebufferSize(window, &fbw, &fbh);
-    int scaling = round((1.0f*fbw)/winWidth);
-
-    if (hasStereo)
-      Canvas::setDrawBuffer(hasBackbuffer ? GL_FRONT_AND_BACK : GL_FRONT);
-    else
-      Canvas::setDrawBuffer(hasBackbuffer ? GL_LEFT : GL_FRONT_LEFT);
-
-
-    setBackgroundColor(bgcolor); //Set our initial clear / background color
-    // glClear(GL_COLOR_BUFFER_BIT);
-    glfwSwapBuffers(window);
-    readyToDraw = true;
-    bool newThingDrawn = true;  //Always draw the first frame
-    int frame = 0;
-
-    // Start the drawing loop
-    for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++) {
-        drawTimer->sleep(true);
-
-        syncMutex.lock();
-
-        int leftWindowIndex;
-
-      #ifdef __APPLE__
-        leftWindowIndex = 0;
-        windowMutex.lock();
-      #else
-        leftWindowIndex = -1;
-      #endif
-        glfwMakeContextCurrent(window);  // We're drawing to window as soon as it's created
-
-        realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
-        if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
-        std::cout.flush();
-
-        bufferMutex.lock();  // Time to flush our buffer
-        if (drawableBuffer->size() > 0) {     // But only if there is anything to flush
-          newThingDrawn = true;
-          for (unsigned int i = 0; i < drawableBuffer->size(); i++)
-            myDrawables->push((*drawableBuffer)[i]);
-          drawableBuffer->shallowClear();  // We want to clear the buffer but not delete those objects as we still need to draw them
-        }
-        bufferMutex.unlock();
-
-        int pos = pointBufferPosition;
-        int posLast = pointLastPosition;
-
-        if (loopAround || pos != posLast)
-          newThingDrawn = true;
-
-        if (newThingDrawn || !objectBufferEmpty) {
-
-          if (hasEXTFramebuffer)
-            glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-          else
-            glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, frameBuffer);
-          glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-          glViewport(0,0,winWidth,winHeight);
-
-          if (frame == 0 || !objectBufferEmpty) {
-            glClear(GL_COLOR_BUFFER_BIT);
-            if(frame > 1) {
-              selectShaders(true);
-              loader.drawGLtextureFromBuffer(proceduralBuffer, leftWindowIndex, 0, winWidth, winHeight, GL_RGB);
-              selectShaders(false);
-            }
-          }
-
-          if(frame > 0) {
-            unsigned int size = myDrawables->size();
-            for (unsigned int i = 0; i < size; i++) {
-              Drawable* d = (*myDrawables)[i];
-              if(d->isProcessed()) {
-                if (!d->getIsTextured()) {
-                  d->draw();
-                } else {
-                  selectShaders(true);
-                  d->draw();
-                  selectShaders(false);
-                }
-              }
-            }
-
-            if (loopAround) {
-              newThingDrawn = true;
-              int toend = myDrawables->capacity() - posLast;
-              glBufferData(GL_ARRAY_BUFFER, toend * 6 * sizeof(float),
-                    &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-              glDrawArrays(GL_POINTS, 0, toend);
-              posLast = 0;
-              loopAround = false;
-            }
-            int pbsize = pos - posLast;
-            if (pbsize > 0) {
-              newThingDrawn = true;
-              glBufferData(GL_ARRAY_BUFFER, pbsize * 6 * sizeof(float), &vertexData[posLast * 6], GL_DYNAMIC_DRAW);
-              glDrawArrays(GL_POINTS, 0, pbsize);
-            }
-            pointLastPosition = pos;
-          }
-
-          if(frame > 0) {
-            if(newThingDrawn) {
-              glReadPixels(0, 0, winWidth, winHeight, GL_RGB, GL_UNSIGNED_BYTE, proceduralBuffer);
-            }
-            // Reset drawn status for the next frame
-            newThingDrawn = false;
-            frame = 2;
-          } else {
-            frame = 1;
-          }
-
-          if (objectBuffer.size() > 0) {
-            for (unsigned int i = 0; i < objectBuffer.size(); i++) {
-              Drawable* d = objectBuffer[i];
-              if(d->isProcessed()) {
-                if (!d->getIsTextured()) {
-                  d->draw();
-                } else {
-                  selectShaders(true);
-                  d->draw();
-                  selectShaders(false);
-                }
-              }
-            }
-          } else {
-            objectBufferEmpty = true;
-          }
-        }
-
-        // Update our screenBuffer copy with the screen
-        glViewport(0,0,winWidth*scaling,winHeight*scaling);
-        if(frame > 1) {
-          myDrawables->clear();                           // Clear our buffer of shapes to be drawn
-        }
-
-        // not sure what the point of this chunk is. 
-        if (hasEXTFramebuffer)
-          glBindFramebufferEXT(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-        else
-          glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, frameBuffer);
-        glReadBuffer(GL_COLOR_ATTACHMENT0);
-
-        // screenshots and testing
-        glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-        if (toRecord > 0) {
-          screenShot();
-          --toRecord;
-        }
-
-        // very vital
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
-        // apparently not very vital at all
-        glDrawBuffer(drawBuffer);
-
-        selectShaders(true);
-        const float vertices[32] = {
-          0,       0,        1,1,1,1,0,1,
-          winWidth,0,        1,1,1,1,1,1,
-          0,       winHeight,1,1,1,1,0,0,
-          winWidth,winHeight,1,1,1,1,1,0
-        };
-        glBindTexture(GL_TEXTURE_2D,renderedTexture);
-        // these 5 lines don't seem to do anything
-        glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-        // next two lines are very essential
-        glBufferData(GL_ARRAY_BUFFER,32*sizeof(float),vertices,GL_DYNAMIC_DRAW);
-        glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-        glFlush();                                   // Flush buffer data to the actual draw buffer
-        glfwSwapBuffers(window);                     // Swap out GL's back buffer and actually draw to the window
-
-        selectShaders(false);
-
-      #ifndef __APPLE__
-        glfwPollEvents();                            // Handle any I/O
-      #endif
-        glfwGetCursorPos(window, &mouseX, &mouseY);
-        glfwMakeContextCurrent(NULL);                // We're drawing to window as soon as it's created
-      #ifdef __APPLE__
-        windowMutex.unlock();
-      #endif
-
-        syncMutex.unlock();
-
-        if (toClose) glfwSetWindowShouldClose(window, GL_TRUE);
-    }
-} */
 
 //  /*!
 //   * \brief Draws a monocolored arrow.
@@ -2171,7 +1931,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     pointBufferPosition = pointLastPosition = 0;
     loopAround = false;
     toRecord = 0;
-    objectBufferEmpty = true;
 
     bgcolor = GRAY;
     window = nullptr;
@@ -2213,14 +1972,6 @@ void Canvas::initGl() {
         glfwSetWindowShouldClose(window, GL_TRUE);
         toClose = true;
     });
-
-    unsigned char stereo[1] = {5}, dbuff[1] = {5};
-    int aux[1] = {5};
-    glGetBooleanv(GL_STEREO,stereo);
-    glGetBooleanv(GL_DOUBLEBUFFER,dbuff);
-    glGetIntegerv(GL_AUX_BUFFERS,aux);
-    hasStereo = ((int)stereo[0] > 0);
-    hasBackbuffer = ((int)dbuff[0] > 0);
 
     glfwMakeContextCurrent(NULL);   // Reset the context
 }
@@ -2289,17 +2040,6 @@ void Canvas::initGlew() {
     glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, winWidth, winHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
 
-    // Create a second framebuffer
-    intermediateFBO = 0;
-    glGenFramebuffers(1, &intermediateFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, intermediateFBO);
-    // The texture we're going to render to
-    glGenTextures(1, &renderedTexture);
-    glBindTexture(GL_TEXTURE_2D, renderedTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, winWidth, winHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
-    // Set "renderedTexture" as our colour attachement #0
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,renderedTexture, 0);
-
     // Always check that our framebuffer is ok
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
       TsglErr("FRAMEBUFFER CREATION FAILED");
@@ -2330,10 +2070,10 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
   #endif
     // glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
-    glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
+    // glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
-    glfwWindowHint(GLFW_SAMPLES,4);
+    glfwWindowHint(GLFW_SAMPLES,0);
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, winTitle.c_str(), NULL, NULL);  // Windowed
