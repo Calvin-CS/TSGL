@@ -1,0 +1,16 @@
+#!/bin/sh
+
+#make clean
+make clean
+
+#Take out the lib and bin folders
+rm -rf bin lib
+
+#Take out the TSGL lib.a and lib.so files
+rm /usr/local/lib/libtsgl.*
+
+#Take out the TSGL folder containing the .h files
+rm -rf /usr/local/include/TSGL
+
+#Done.
+echo "\n Uninstall complete!\n"
