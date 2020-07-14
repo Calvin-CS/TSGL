@@ -1,57 +1,43 @@
 #!/bin/bash
 
+# Note: tests must be run from the main TSGL directory, otherwise fonts and images won't load.
+
 run () {
-  echo "$@"
+  echo ""
+  tput setaf 2
+  echo "Running $@"
+  tput sgr0
+  echo ""
   $@
 }
 
-export LD_LIBRARY_PATH=../lib       #Make sure we load the TSGL library
-cd bin                              #CD into our binary directory
+TESTS_PATH=src/tests
+export LD_LIBRARY_PATH=../lib       # Make sure we load the TSGL library
+cd src/tests && make                # CD into test directory and call test Makefile
+cd ../..							# CD back to main TSGL directory
 
-run ./testAlphaRectangle 640 480                                   #Width, Height
-run ./testArrows
-run ./testAura 1200 900 8                                          #Width, Height, Segments
-run ./testBallroom 640 640                                         #Width, Height
-run ./testBlurImage 36 ../assets/pics/HDR_landscape.jpg            #Threads, Image
-run ./testCalcPi 100 4                                             #Segments, Threads
-run ./testColorPoints 1000 1000 4                                    #Width, Height, Threads
-run ./testColorWheel 640 640 64                                    #Width, Height, Threads
-run ./testConcavePolygon                                           #Width, Height
-run ./testConstructors
-run ./testConway 640 640                                           #Width, Height
-run ./testCosineIntegral 640 480 32                                #Width, Height, Threads
-run ./testDumbSort 1200 600                                        #Width, Height
-run ./testFireworks 800 800 4 50 10                                #Width, Height, Threads, Fireworks, Speed
-run ./testForestFire 800 600                                       #Width, Height
-run ./testFunction 640 480                                         #Width, Height
-run ./testGetPixels 4                                              #Threads
-run ./testGradientWheel 640 640 256                                #Width, Height, Threads
-run ./testGraydient 400 400 8                                      #Width, Height, Threads
-run ./testGreyscale 640 480 8                                      #Width, Height, Threads
-run ./testHighData 1200 900 4                                      #Width, Height, Threads
-run ./testImage 1200 600                                           #Width, Height
-run ./testImageCart 1200 600                                       #Width, Height
-run ./testInverter 8                                               #Threads
-run ./testLangton 640 640                                          #Width, Height
-run ./testLineChain 400 400 8                                      #Width, Height, Threads
-run ./testLineFan 800 800 16                                       #Width, Height, Threads
-run ./testMandelbrot 1200 900 8 255                                #Width, Height, Threads, Depth
-run ./testMouse 900 900 5                                          #Width, Height, Threads
-run ./testNewtonPendulum 900 400 11                                #Width, Height, Number Of Balls
-run ./testPhilosophers 5 10                                        #Philosophers, Speed
-run ./testPong 7 4                                                 #Ball Speed, Paddle Speed
-run ./testProducerConsumer 5 5					   #Producers, Consumers
-run ./testProgressBar 7					   	   #Threads
-run ./testProjectiles 400 400                                      #Width, Height
-run ./testReaderWriter 6 6 					   #Readers, Writers, Priority, Starved
-run ./testRotation 800 800					   #Width, Height 
-run ./testSeaUrchin 16                                             #Threads
-run ./testScreenshot 900 650                                       #Width, Height
-run ./testSmartSort 1024                                           #Elements, Threads
-run ./testSpectrogram ../assets/pics/test.png                      #Image
-run ./testSpectrum 8                                               #Threads
-run ./testStar
-run ./testText 1200 900 ../assets/freefont/FreeSerif.ttf           #Width, Height, Font
-run ./testTextCart 1200 900 ../assets/freefont/FreeSerifItalic.ttf #Width, Height, Font
-run ./testTextTwo 1200 900                                         #Width, Height
-run ./testVoronoi 640 480 8                                        #Width, Height, Threads
+# RUN TESTS
+run ./$TESTS_PATH/test3DRotation/test3DRotation
+run ./$TESTS_PATH/testArrows/testArrows
+run ./$TESTS_PATH/testCircle/testCircle
+run ./$TESTS_PATH/testConcavePolygon/testConcavePolygon
+run ./$TESTS_PATH/testCone/testCone
+run ./$TESTS_PATH/testConvexPolygon/testConvexPolygon
+run ./$TESTS_PATH/testCube/testCube
+run ./$TESTS_PATH/testCuboid/testCuboid
+run ./$TESTS_PATH/testCylinder/testCylinder
+run ./$TESTS_PATH/testEllipse/testEllipse
+run ./$TESTS_PATH/testEllipsoid/testEllipsoid
+run ./$TESTS_PATH/testImage/testImage 1200 600                                           #Width, Height
+run ./$TESTS_PATH/testLines/testLines
+run ./$TESTS_PATH/testPrism/testPrism
+run ./$TESTS_PATH/testPyramid/testPyramid
+run ./$TESTS_PATH/testRectangle/testRectangle
+run ./$TESTS_PATH/testRegularPolygon/testRegularPolygon
+run ./$TESTS_PATH/testSphere/testSphere
+run ./$TESTS_PATH/testSquare/testSquare
+run ./$TESTS_PATH/testStar/testStar
+run ./$TESTS_PATH/testText/testText 1200 600                                           	 #Width, Height
+run ./$TESTS_PATH/testTransparency/testTransparency
+run ./$TESTS_PATH/testTriangle/testTriangle
+run ./$TESTS_PATH/testTriangleStrip/testTriangleStrip

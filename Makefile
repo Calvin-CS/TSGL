@@ -1,3 +1,8 @@
+# Master Makefile for TSGL
+
+# *****************************************************
+# Variables to control Makefile operation
+
 AR=ar
 CC=g++
 RM=rm -f
@@ -6,14 +11,13 @@ PREFIX=/usr/local
 
 SRC_PATH=src/TSGL/
 TESTS_PATH=src/tests/
+EXAMPLES_PATH=src/examples/
 OBJ_PATH=build/
 VPATH=SRC_PATH:TESTS_PATH:OBJ_PATH
 
 HEADERS  := $(wildcard src/TSGL/*.h)
 SOURCES  := $(wildcard src/TSGL/*.cpp)
-TESTS    := $(wildcard src/tests/*.cpp)
 OBJS     := $(patsubst src/TSGL/%.cpp,build/TSGL/%.o,${SOURCES})
-TESTOBJS := $(patsubst src/tests/%.cpp,build/tests/%.o,${TESTS})
 NOWARN   := -Wno-unused-parameter -Wno-unused-function -Wno-narrowing
 UNAME    := $(shell uname)
 
@@ -21,16 +25,27 @@ ifeq ($(UNAME), Linux)
 	OS_LFLAGS := -lpthread
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
 	OS_EXTRA_LIB := -L/usr/lib
-	OS_GLFW := glfw
 	OS_GL := -lGL
+	OS_OMP := -fopenmp -lomp
+	OS_COMPILER := -std=c++0x
+endif
+
+ifeq ($(UNAME), CYGWIN_NT-10.0)
+	OS_LFLAGS := -lpthread
+	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
+	OS_EXTRA_LIB := -L/usr/lib
+	OS_GL := -lGL
+	OS_OMP := -lgomp -fopenmp
+	OS_COMPILER := -std=gnu++11
 endif
 
 ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_LDIRS :=
 	OS_EXTRA_LIB := 
-	OS_GLFW := glfw
 	OS_GL :=
+	OS_OMP := -fopenmp -lomp
+	OS_COMPILER := -std=c++0x
 endif
 
 CXXFLAGS=-O3 -g3 -ggdb3 \
@@ -49,7 +64,7 @@ CXXFLAGS=-O3 -g3 -ggdb3 \
 	-I/usr/include/freetype2  \
 	-I/usr/include/freetype2/freetype  \
 	-I./ \
-  -std=c++0x -fopenmp \
+  $(OS_COMPILER) -fopenmp \
   ${NOWARN} -fpermissive
   # -pedantic-errors
 
@@ -58,99 +73,44 @@ LFLAGS=-Llib/ \
 	${OS_EXTRA_LIB} \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
-	-ltsgl -lfreetype -lGLEW -lglfw -l${OS_GLFW} \
-	-lX11 ${OS_GL} -lXrandr -Xpreprocessor -fopenmp -lomp -I"$(brew --prefix libomp)/include" \
+	-ltsgl -lfreetype -lGLEW -lglfw \
+	-lX11 ${OS_GL} -lXrandr -Xpreprocessor $(OS_OMP) -I"$(brew --prefix libomp)/include" \
 	${OS_LFLAGS} 
 
 DEPFLAGS=-MMD -MP
 
-BINARIES= \
-	bin/test2Dvs3D \
-	bin/test3DRotation \
-	bin/test3DPhilosophers \
-	bin/testArrows \
-	bin/testBackground \
-	bin/testBG \
-	bin/testBallroom \
-	bin/testCircle \
-	bin/testClock \
-	bin/testCone \
-	bin/testConvexPolygon \
-	bin/testConcavePolygon \
-	bin/testCube \
-	bin/testCuboid \
-	bin/testCylinder \
-	bin/testDiorama \
-	bin/testEllipse \
-	bin/testEllipsoid \
-	bin/testImage \
-	bin/testLines \
-	bin/testMergeSort \
-	bin/testNewtonPendulum \
-	bin/testPhilosophers \
-	bin/testPong \
-	bin/testPrism \
-	bin/testPyramid \
-	bin/testRectangle \
-	bin/testRegularPolygon \
-	bin/testShakerSort \
-	bin/testSeaUrchin \
-	bin/testSolarSystem \
-	bin/testSphere \
-	bin/testSquare \
-	bin/testStar \
-	bin/testText \
-	bin/testTransparency \
-	bin/testTriangle \
-	bin/testTriangleStrip \
-#  bin/test_specs \
-#	bin/testAlphaRectangle \
-#	bin/testAura \
-#	bin/testBlurImage \
-#	bin/testCalcPi \
-#	bin/testColorWheel \
-#	bin/testConstructors \
-#	bin/testConway \
-#	bin/testCosineIntegral \
-#	bin/testDice \
-#	bin/testFireworks \
-#	bin/testForestFire \
-#	bin/testFunction \
-#	bin/testGetPixels \
-#	bin/testGradientWheel \
-#	bin/testGraydient \
-#	bin/testGreyscale \
-#	bin/testHighData \
-#	bin/testImageCart \
-#	bin/testInverter \
-#	bin/testLangton \
-#	bin/testLineChain \
-#	bin/testLineFan \
-#	bin/testMandelbrot \
-#	bin/testMouse \
-#	bin/testProducerConsumer \
-#	bin/testProgressBar \
-#	bin/testProjectiles \
-#	bin/testReaderWriter \
-#	bin/testScreenshot \
-#	bin/testSpectrogram \
-#	bin/testSpectrum \
-#	bin/testTextCart \
-#	bin/testTextTwo \
-#	bin/testUnits \
-#	bin/testVoronoi
+TESTFLAGS = -lsrc/TSGL/
+
+# ****************************************************
+# Targets needed to bring all files up to date
 
 #Use make tsgl to make only the library files
-all: dif tsgl tests docs tutorial
+all: dif tsgl docs tutorial
 
 debug: dif tsgl tests
 
 dif: build/build
 
 #This may change (for the Mac installer)!
+#tsgl
+ifeq ($(UNAME), Linux)
 tsgl: lib/libtsgl.a lib/libtsgl.so
+endif
+ifeq ($(UNAME), CYGWIN_NT-10.0)
+tsgl: lib/libtsgl.a lib/libtsgl.dll
+endif
+ifeq ($(UNAME), Darwin)
+tsgl: lib/libtsgl.a lib/libtsgl.so
+endif
 
-tests: ${BINARIES}
+# must run 'make' before 'make tests' and 'make examples'
+tests: $(TESTS_PATH) lib/libtsgl.a
+	$(MAKE) -C $<
+	@touch build/build
+
+examples: $(EXAMPLES_PATH) lib/libtsgl.a
+	$(MAKE) -C $<
+	@touch build/build
 
 docs: docs/html/index.html
 
@@ -160,12 +120,16 @@ cleanall: clean cleandocs
 
 clean:
 	$(RM) -r bin/* build/* lib/* tutorial/docs/html/* *~ *# *.tmp
+	(cd $(TESTS_PATH) && $(MAKE) clean)
+	(cd $(EXAMPLES_PATH) && $(MAKE) clean)
 
 cleandocs:
 	$(RM) -r docs/html/*
 
 # -include build/*.d
 
+#install
+ifeq ($(UNAME), Linux)
 install:
 	test -d $(PREFIX) || mkdir $(PREFIX)
 	test -d $(PREFIX)/lib || mkdir $(PREFIX)
@@ -173,18 +137,43 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
+endif
+ifeq ($(UNAME), CYGWIN_NT-10.0)
+install:
+	test -d $(PREFIX) || mkdir $(PREFIX)
+	test -d $(PREFIX)/lib || mkdir $(PREFIX)
+	test -d $(PREFIX)/include || mkdir $(PREFIX)
+	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
+	install -m 0755 lib/libtsgl.dll $(PREFIX)/lib
+	cp -r src/TSGL $(PREFIX)/include
+endif
+ifeq ($(UNAME), Darwin)
+install:
+	test -d $(PREFIX) || mkdir $(PREFIX)
+	test -d $(PREFIX)/lib || mkdir $(PREFIX)
+	test -d $(PREFIX)/include || mkdir $(PREFIX)
+	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
+	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
+	cp -r src/TSGL $(PREFIX)/include
+endif
 
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
 	@echo 'Files that changed:'
 	@echo $(patsubst src/%,%,$?)
 
+#lib/libtsgl.*
 ifeq ($(UNAME), Linux)
 lib/libtsgl.so: ${OBJS}
 	@echo 'Building $(patsubst lib/%,%,$@)'
 	$(CC) -shared -o $@ $?
 	@touch build/build
 endif
-
+ifeq ($(UNAME), CYGWIN_NT-10.0)
+lib/libtsgl.dll: ${OBJS}
+	@echo 'Building $(patsubst lib/%,%,$@)'
+	$(CC) -shared -o $@ $? $(LFLAGS)
+	@touch build/build
+endif
 ifeq ($(UNAME), Darwin)
 lib/libtsgl.so: ${OBJS}
 	@echo 'Building $(pathsubst lib/%,%,$@)'
@@ -198,46 +187,6 @@ lib/libtsgl.a: ${OBJS}
 	$(AR) -r $@ $?
 	@touch build/build
 
-#List additional dependencies for test binaries
-bin/test3DPhilosophers: build/tests/DiningPhilosophers3D/Philosopher3D.o \
-	build/tests/DiningPhilosophers3D/Table3D.o
-bin/testConway: build/tests/Conway/LifeFarm.o
-bin/testFireworks: build/tests/Fireworks/Arc.o \
-		   build/tests/Fireworks/Dot.o \
-		   build/tests/Fireworks/Firework.o
-bin/testInverter: build/tests/ImageInverter/ImageInverter.o
-bin/testLangton: build/tests/Langton/AntFarm.o build/tests/Langton/LangtonAnt.o
-bin/testMandelbrot: build/tests/Mandelbrot/Mandelbrot.o \
-	build/tests/Mandelbrot/GradientMandelbrot.o \
-	build/tests/Mandelbrot/Buddhabrot.o \
-	build/TSGL/VisualTaskQueue.o \
-	build/tests/Mandelbrot/Julia.o \
-	build/tests/Mandelbrot/Nova.o
-bin/testPhilosophers: build/tests/DiningPhilosophers/Philosopher.o \
-	build/tests/DiningPhilosophers/Table.o
-bin/testPong: build/tests/Pong/Pong.o build/tests/Pong/Paddle.o build/tests/Pong/Ball.o
-bin/testProducerConsumer: build/tests/ProducerConsumer/Producer.o \
-	build/tests/ProducerConsumer/Consumer.o \
-	build/tests/ProducerConsumer/Thread.o \
-	build/tests/ProducerConsumer/PCThread.o
-bin/testReaderWriter: build/tests/ReaderWriter/FLock.o \
-	build/tests/ReaderWriter/Lock.o \
-	build/tests/ReaderWriter/Reader.o \
-	build/tests/ReaderWriter/RLock.o \
-	build/tests/ReaderWriter/RWThread.o \
-	build/tests/ReaderWriter/Thread.o \
-	build/tests/ReaderWriter/WLock.o \
-	build/tests/ReaderWriter/Writer.o
-bin/testSeaUrchin: build/tests/SeaUrchin/SeaUrchin.o
-bin/testVoronoi: build/tests/Voronoi/Voronoi.o build/tests/Voronoi/ShadedVoronoi.o
-
-#General compilation recipes for test binaries (appended to earlier dependencies)
-bin/test%: build/tests/test%.o lib/libtsgl.a
-	mkdir -p bin
-	@echo 'Building $(patsubst bin/%,%,$@)'
-	$(CC) $^ -o $@ $(LFLAGS)
-	@touch build/build
-
 build/%.o: src/%.cpp
 	@echo ""
 	@tput setaf 3;
@@ -246,7 +195,6 @@ build/%.o: src/%.cpp
 	@echo ""
 	mkdir -p ${@D}
 	$(CC) -c -fpic $(CXXFLAGS) $(DEPFLAGS) -o "$@" "$<"
-
 
 
 #Doxygen stuff
@@ -268,5 +216,5 @@ tutorial/docs/html/index.html: ${HEADERS} tutDoxyFile
 	mkdir -p tutorial/docs
 	doxygen tutDoxyFile
 
-.PHONY: all debug clean tsgl tests docs tutorial dif
+.PHONY: all debug clean tsgl docs tutorial dif
 .SECONDARY: ${OBJS} ${TESTOBJS} $(OBJS:%.o=%.d)
