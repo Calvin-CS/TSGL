@@ -7,7 +7,9 @@ Person::Person(float x, float y, GLfloat radius, char status){
     myY = y;
     myCircleRadius = radius;
     myStatus = status;
+    numInfectedNearby = 0;
 
+    // Determine color
     switch(myStatus){
         case susceptible :
             myColor = ColorFloat(1,1,0,1);
@@ -25,6 +27,7 @@ Person::Person(float x, float y, GLfloat radius, char status){
             myColor = ColorFloat(0,0,0,1);
     }
 
+    // Create visual representation
     myCircle = new Circle(myX, myY, 0.0, myCircleRadius, 0.0, 0.0, 0.0, myColor);
 
 }
@@ -37,6 +40,11 @@ void Person::draw(Canvas& can){
     can.add(myCircle);
 }
 
+
+void Person::setStatus(char status){
+    myStatus = status;
+}
+
 /**
  * \brief Sets the radius of the Person's Circle to a new radius.
  * \param radius The new radius.
@@ -45,15 +53,32 @@ void Person::setCircleRadius(GLfloat radius){
     myCircle->setRadius(radius);
 }
 
-// /**
-//  * \brief Sets the Person's Cubes to a new color.
-//  * \param color The new ColorFloat.
-//  */
-// void Person::setColor(ColorFloat color){
-//     for (Cube * c : myCubes){
-//         c->setColor(color);
-//     }
-// }
+void Person::changeXYBy(float x, float y){
+    myCircle->changeXBy(x); myCircle->changeYBy(y);
+}
+
+/**
+ * \brief Sets the Person's Cubes to a new color.
+ */
+void Person::updateColor(){
+    switch(myStatus){
+        case susceptible :
+            myColor = ColorFloat(1,1,0,1);
+            break;
+        case infected :
+            myColor = ColorFloat(1,0,0,1);
+            break;
+        case immune :
+            myColor = ColorFloat(0,1,0,1);
+            break;
+        case dead :
+            myColor = ColorFloat(0.5,0.5,0.5,1);
+            break;
+        default:
+            myColor = ColorFloat(0,0,0,1);
+    }
+    myCircle->setColor(myColor);
+}
 
 // /**
 //  * \brief Sets the Person's Cubes to new colors.

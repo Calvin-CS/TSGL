@@ -31,17 +31,22 @@ protected:
     std::vector<int> infected_x_locations;
     std::vector<int> infected_y_locations;
     // state
-    std::vector<char> states;
+    // std::vector<char> states;
     // infected time
-    std::vector<unsigned> num_days_infected;
+    // std::vector<unsigned> num_days_infected;
+
+    // window dimensions
+    float max_x;
+    float max_y;
     
     // stats
+    unsigned contagiousness_factor;
     unsigned num_infections;
     unsigned num_infection_attempts;
     unsigned num_deaths;
     unsigned num_recoveries;
 public:
-    Pandemic(Canvas& can, unsigned numPeople);
+    Pandemic(Canvas& can, unsigned numPeople, unsigned numToInfect, unsigned infectionRate);
 
     void draw(Canvas& can);
     
@@ -70,17 +75,23 @@ public:
 
     int getInfectedYLocation(unsigned i) { return infected_y_locations[i]; }
 
-    int getState(unsigned i) { return states[i]; }
-
-    int getNumDaysInfected(unsigned i) { return num_days_infected[i]; }
-
-    unsigned numInfections() { return num_infections; }
+    unsigned getNumInfections() { return num_infections; }
 
     unsigned getNumInfectionAttempts() { return num_infection_attempts; }
 
     unsigned getNumDeaths() { return num_deaths; }
 
     unsigned getNumRecoveries() { return num_recoveries; }
+
+
+    // Utility
+    void updateStatuses();
+
+    // void findInfected();
+
+    void movePersons(Canvas& can);
+
+    void checkForInfection();
 
     virtual ~Pandemic();
 };

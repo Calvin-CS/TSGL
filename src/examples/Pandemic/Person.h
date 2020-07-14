@@ -17,6 +17,7 @@ protected:
 
     // Pandemic data
     char myStatus;
+    unsigned numInfectedNearby;
     unsigned numDaysInfected;
 public:
     // Person();
@@ -41,9 +42,13 @@ public:
     
 
     // // Mutators
-    // int& operator[](unsigned i) { return myData[i]; }
+    void setStatus(char status);
 
     void setCircleRadius(GLfloat radius);
+
+    void changeXYBy(float x, float y);
+
+    void updateColor();
     
     // void setColor(ColorFloat c);
     
