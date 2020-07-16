@@ -41,7 +41,7 @@
 #include "TextureHandler.h" // Currently used for screenshots, might change this
 #include "Util.h"           // Needed constants and has cmath for performing math operations
 
-#include "shader_s.h"
+#include "Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -90,11 +90,12 @@ private:
     typedef std::function<void(double, double)>     doubleFunction;
     typedef std::function<void()>                   voidFunction;
 
-    float           aspect;                                             // Aspect ratio used for setting up the window
-    ColorFloat      bgcolor;                                            // Color of the Canvas' clearRectangle
+    // float           aspect;                                             // Aspect ratio used for setting up the window
+    Background *    myBackground;
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
     unsigned        bufferSize;                                         // Size of the screen buffer
+    bool            defaultBackground;                                  // Boolean indicating whether myBackground has been set by an external source
     std::string     defaultFontFileName;
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
@@ -104,12 +105,8 @@ private:
     bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    GLuint          multisampledFBO;                                    // Multisampled target buffer for rendering to multisampledTexture
-    GLuint          multisampledTexture;                                // Texture attached to the multisampled framebuffer
-    Array<Drawable*> * myDrawables;                                     // Our buffer of drawables to draw
     std::vector<Drawable*> objectBuffer;                                    // Holds a list of pointers to objects drawn each frame
     std::mutex	    objectMutex;
-    Array<Drawable*> * drawableBuffer;                                  // Our buffer of drawables that the can be pushed to, and will later be flushed to the shapes array
     std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
     unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
 	  bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
@@ -120,12 +117,10 @@ private:
     std::thread   renderThread;                                         // Thread dedicated to rendering the Canvas
   #endif
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
-    GLubyte*        proceduralBuffer;                                   // Array that is a copy of just the procedural portion of the window
-    unsigned        proceduralBufferSize;
     doubleFunction  scrollFunction;                                     // Single function object for scrolling                                    // Address of the vertex shader
-    Shader *        textShader;
-    Shader *        shapeShader;
-    Shader *        textureShader;
+    Shader *        textShader;                                         // Shader for Text class
+    Shader *        shapeShader;                                        // Shader for Shape class
+    Shader *        textureShader;                                      // Shader for Background and Image classes
     std::mutex      shapesMutex;                                        // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
@@ -137,7 +132,7 @@ private:
     GLint           uniModel,                                           // Model perspective of the camera
                     uniView,                                            // View perspective of the camera
                     uniProj;                                            // Projection of the camera
-    GLuint          VAO,                                                // Address of GL's array buffer object
+    GLuint          VAO,                                                // Address of GL's vertex array object
                     VBO;                                                // Address of GL's vertex buffer object
     float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
@@ -154,16 +149,15 @@ private:
     static displayInfo  monInfo;                                        // Info about our display
     static unsigned     openCanvases;                                   // Total number of open Canvases
 
-    Background * myBackground;
-
     static void  buttonCallback(GLFWwindow* window, int key,
                    int action, int mods);                               // GLFW callback for mouse buttons
     void         draw();                                                // Draw loop for the Canvas
     static void  errorCallback(int error, const char* string);          // Display where an error is coming from
     void         glDestroy();                                           // Destroys the GL and GLFW things that are specific for this canvas
     void         init(int xx,int yy,int ww,int hh,
-                   unsigned int b, std::string title,
-                   double timerLength);                                 // Method for initializing the canvas
+                   unsigned int b, std::string title, 
+                   ColorFloat backgroundColor, double timerLength);     // Method for initializing the canvas
+    void         initBackground(ColorFloat bgcolor);                    // Initializes myBackground
     void         initGl();                                              // Initializes the GL things specific to the Canvas
     void         initGlew();                                            // Initialized the GLEW things specific to the Canvas
     static void  initGlfw();                                            // Initalizes GLFW for all future canvases.
@@ -180,7 +174,7 @@ private:
   #else
     static void  startDrawing(Canvas *c);                               // Static method that is called by the render thread
   #endif
-    void         selectShaders(unsigned int choice);                            // Turn textures on or off
+    void         selectShaders(unsigned int choice);                    // Select appropriate shader for type of Drawable
     // static bool  testFilledDraw(Canvas& can);                           // Unit test for drawing shapes and determining if fill works
     // static bool testLine(Canvas& can);                                  // Unit tester for lines
     static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods
@@ -193,7 +187,7 @@ public:
 
     Canvas(double timerLength = 0.0f);
 
-    Canvas(int x, int y, int width, int height, std::string title, double timerLength = 0.0f);
+    Canvas(int x, int y, int width, int height, std::string title, ColorFloat backgroundColor = GRAY, double timerLength = 0.0f);
 
     virtual ~Canvas();
 
@@ -201,13 +195,11 @@ public:
 
     void bindToScroll(std::function<void(double, double)> function);
 
-    // void clearProcedural();
-
-    void close();
-
     void add(Drawable * shapePtr);
 
-    void remove(Drawable * shapePtr);
+    void clearBackground();
+
+    void close();
 
     void clearObjectBuffer(bool shouldFreeMemory = false);
 
@@ -355,6 +347,8 @@ public:
 
     // virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
+    Background * getBackground();
+
     ColorFloat getBackgroundColor();
 
     static int getDisplayHeight();
@@ -364,8 +358,6 @@ public:
     int getFrameNumber();
 
     float getFPS();
-
-    bool isOpen();
 
     int getMouseX();
 
@@ -393,9 +385,13 @@ public:
 
     void handleIO();
 
+    bool isOpen();
+
     void pauseDrawing();
 
     void recordForNumFrames(unsigned int num_frames);
+
+    void remove(Drawable * shapePtr);
 
     void reset();
 
@@ -421,6 +417,8 @@ public:
 
     virtual void run(void (*myFunction)(Canvas&, int, std::string, bool), int i, std::string s, bool b);
 
+    void setBackground(Background * background, bool previouslySet = false);
+
     void setBackgroundColor(ColorFloat color);
 
     void setFont(std::string filename);
@@ -442,8 +440,6 @@ public:
     int wait();
 
     // static void runTests();
-
-    void setBackground(Background * background);
 };
 
 }

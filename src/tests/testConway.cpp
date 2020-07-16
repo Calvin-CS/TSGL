@@ -84,7 +84,6 @@ void conwayFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : 0.9*Canvas::getDisplayHeight();
   int h = (argc > 2) ? atoi(argv[2]) : w;
-  Canvas c(-1, -1, w, h, "Conway's Game of Life");
-  c.setBackgroundColor(BLACK);
+  Canvas c(-1, -1, w, h, "Conway's Game of Life", BLACK);
   c.run(conwayFunction);
 }

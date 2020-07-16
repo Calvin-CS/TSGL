@@ -106,7 +106,6 @@ int main(int argc, char* argv[]) {
   int w = (argc > 1) ? atoi(argv[1]) : -1;
   int h = (argc > 2) ? atoi(argv[2]) : w;
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs()*2;
-  Canvas c(-1, -1, w, h, "Aura");
-  c.setBackgroundColor(BLACK);
+  Canvas c(-1, -1, w, h, "Aura", BLACK);
   c.run(auraFunction,t);
 }

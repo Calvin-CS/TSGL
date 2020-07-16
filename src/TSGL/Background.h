@@ -1,5 +1,5 @@
 /*
- * Background.h extends Drawable and provides a class for drawing a background.
+ * Background.h extends Drawable and provides a class for drawing TSGL primitives procedurally onto a background.
  */
 
 #ifndef BACKGROUND_H_
@@ -16,20 +16,30 @@ namespace tsgl {
  *  \brief Draw a Background for the Canvas with colored pixels.
  *  \details Background is a class for holding colored pixel data.
  */
-class Background : public Drawable {
+class Background {
 protected:
     GLint myWidth, myHeight;
-    GLuint myTexture;
-    GLuint myFramebuffer;
-    GLuint myRenderbufferObject;
+    GLuint multisampledTexture;
+    GLuint multisampledFBO;
+    GLuint RBO;
     Array<Drawable*> * myDrawables;
     Shader * textShader;
     Shader * shapeShader;
     Shader * textureShader;
-public:
-    Background(float x, float y, float z, GLint width, GLint height, float yaw, float pitch, float roll, const ColorFloat &c = WHITE);
+    ColorFloat baseColor;
+    bool complete;
+    bool toClear;
+    std::mutex attribMutex;
 
-    virtual void draw(Shader * shader); 
+    virtual void selectShaders(unsigned int sType);
+public:
+    Background(GLint width, GLint height, const ColorFloat &c = WHITE);
+
+    virtual void init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwindow * window);
+
+    virtual bool isInitialized() { return complete; }
+
+    virtual void draw(); 
 
     /*!
     * \brief Accessor for the width of the Background.
@@ -47,11 +57,13 @@ public:
 
     virtual void drawPixel(int row, int col, ColorInt c);
 
-    virtual void selectShaders(unsigned int sType);
+    virtual void drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color);
 
-    virtual void defineShaders(Shader * shapeS, Shader * textS, Shader * textureS);
+    virtual void clear() { toClear = true; }
 
-    virtual void drawSquare(float z);
+    virtual void setClearColor(ColorFloat c);
+
+    virtual ColorFloat getClearColor() { return baseColor; }
 
     virtual ~Background();
 };

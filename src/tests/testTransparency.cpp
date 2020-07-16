@@ -26,7 +26,6 @@ void transparencyFunction(Canvas& can) {
 }
 
 int main(int argc, char* argv[]) {
-    Canvas c(-1, -1, 1024, 620, "Transparency");
-    c.setBackgroundColor(BLACK);
+    Canvas c(-1, -1, 1024, 620, "Transparency", BLACK);
     c.run(transparencyFunction);
 }

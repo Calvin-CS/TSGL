@@ -96,7 +96,6 @@ int main(int argc, char * argv[]) {
     if(w <= 0 || h <= 0) { //Check width and height validity
       w = 1.2*Canvas::getDisplayHeight(); h = 0.5*w;
     }
-    Canvas c(-1, -1, w, h ,"Images");
-    c.setBackgroundColor(WHITE);
+    Canvas c(-1, -1, w, h ,"Images", WHITE);
     c.run(imageFunction);
 }

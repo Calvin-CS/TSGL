@@ -91,7 +91,6 @@ void contrastFunction(Canvas& can) {
 }
 
 int main(int argc, char* argv[]) {
-    Canvas c(-1, -1, 1024, 620, "3D Drawing vs. 2D Drawing");
-    c.setBackgroundColor(BLACK);
+    Canvas c(-1, -1, 1024, 620, "3D Drawing vs. 2D Drawing", BLACK);
     c.run(contrastFunction);
 }

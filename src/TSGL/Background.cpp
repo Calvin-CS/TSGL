@@ -16,29 +16,17 @@ namespace tsgl {
   * \warning An invariant is held where if width or height isn't positive then an error message is given.
   * \return A new Background with a buffer for storing the specified numbered of vertices.
   */
-Background::Background(float x, float y, float z, GLint width, GLint height, float yaw, float pitch, float roll, const ColorFloat &c)  
-: Drawable(x, y, z, yaw, pitch, roll)  {
+Background::Background(GLint width, GLint height, const ColorFloat &clearColor)  {
     if (width <= 0 || height <= 0) {
         TsglDebug("Cannot have a Background with non-positive width or height.");
     }
     attribMutex.lock();
-    shaderType = TEXTURE_SHADER_TYPE;
-    myXScale = myWidth = width;
-    myYScale = myHeight = height;
-    vertices = new GLfloat[30];
-    vertices[0]  = vertices[1] = vertices[6] = vertices[10] = vertices[16]  = vertices[20] = -0.5; // x + y
-    vertices[5] = vertices[11] = vertices[15] = vertices[21] = vertices[25] = vertices[26] = 0.5; // x + y
-    vertices[2] = vertices[7] = vertices[12] = vertices[17] = vertices[22] = vertices[27] = 0; // z
-    vertices[3]  = vertices[13]  = vertices[14] = vertices[23] = vertices[24] = vertices[29] = 0.0; // texture coord x + y
-    vertices[4] = vertices[8] = vertices[9] = vertices[18] = vertices[19] = vertices[28] = 1.0; // texture coord x + y
-
+    myWidth = width;
+    myHeight = height;
     myDrawables = new Array<Drawable*>(myWidth * myHeight * 2);
-
-    myAlpha = 1.0;
-
-    // glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    init = true;  
+    baseColor = clearColor;
+    toClear = false;
+    complete = false;
     attribMutex.unlock();
 }
 
@@ -46,41 +34,21 @@ Background::Background(float x, float y, float z, GLint width, GLint height, flo
   * \brief Draw the Background.
   * \details This function actually draws the Background to the Canvas.
   */
-void Background::draw(Shader * shader) {
-    if (!init) {
-        TsglDebug("Vertex buffer is not full.");
+void Background::draw() {
+    if (!complete) {
+        TsglDebug("Shaders have not been defined for this background.");
         return;
     }
 
-    // gen framebuffer
-    glGenFramebuffers(1, &myFramebuffer);
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, myFramebuffer);
-    glDrawBuffer(GL_COLOR_ATTACHMENT0);
+    glBindFramebuffer(GL_FRAMEBUFFER, multisampledFBO);
+    glEnable(GL_DEPTH_TEST);
 
-    glViewport(0,0,myWidth,myHeight);
-
-    // gen texture, attach to framebuffer
-    glGenTextures(1, &myTexture);
-    glBindTexture(GL_TEXTURE_2D, myTexture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, myWidth, myHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, myTexture, 0);
-
-    // render buffer object
-    // glGenRenderbuffers(1, &myRenderbufferObject);
-    // glBindRenderbuffer(GL_RENDERBUFFER, myRenderbufferObject);
-    // glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, myWidth, myHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
-    // glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, myRenderbufferObject); // now actually attach it
-
-    GLenum DrawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-    glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
-
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-        TsglErr("ERROR::FRAMEBUFFER:: Framebuffer is not complete!");
-    glClearColor(1,0,0,1.0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+    if (toClear) {
+        attribMutex.lock();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        toClear = false;
+        attribMutex.unlock();
+    }
 
     for (unsigned int i = 0; i < myDrawables->size(); i++)
     {
@@ -97,35 +65,12 @@ void Background::draw(Shader * shader) {
         }
     }
     
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, multisampledFBO);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    glBlitFramebuffer(0, 0, myWidth, myHeight, 0, 0, myWidth, myHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-    selectShaders(TEXTURE_SHADER_TYPE);
-
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(myRotationPointX, myRotationPointY, myRotationPointZ));
-    model = glm::rotate(model, glm::radians(myCurrentYaw), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::rotate(model, glm::radians(myCurrentPitch), glm::vec3(0.0f, 1.0f, 0.0f));
-    model = glm::rotate(model, glm::radians(myCurrentRoll), glm::vec3(1.0f, 0.0f, 0.0f));
-    model = glm::translate(model, glm::vec3(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ));
-    model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
-
-    unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-    glBindTexture(GL_TEXTURE_2D, myTexture);	// use the color attachment texture as the texture of the quad plane
-    glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 5, vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glFlush();                                   // Flush buffer data to the actual draw buffer
-
-
-    glDeleteTextures(1, &myTexture);
-    glDeleteFramebuffers(1, &myFramebuffer);
+    myDrawables->clear();
 }
 
  /*!
@@ -148,9 +93,7 @@ ColorInt Background::getPixel(int row, int col) {
   *   \param color The color of the point.
   */
 void Background::drawPixel(int row, int col, ColorInt c) {
-    attribMutex.lock();
 
-    attribMutex.unlock();
 }
 
 void Background::selectShaders(unsigned int sType) {
@@ -198,17 +141,53 @@ void Background::selectShaders(unsigned int sType) {
     glUniformMatrix4fv(glGetUniformLocation(program->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
 }
 
-void Background::defineShaders(Shader * shapeS, Shader * textS, Shader * textureS) {
+void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwindow * window) {
+    glfwMakeContextCurrent(window);
+    // configure MSAA framebuffer
+    // --------------------------
+    glGenFramebuffers(1, &multisampledFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, multisampledFBO);
+    // create a multisampled color attachment texture
+    glGenTextures(1, &multisampledTexture);
+    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, multisampledTexture);
+    glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, myWidth, myHeight, GL_TRUE);
+    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, multisampledTexture, 0);
+    // create multisampled renderbuffer object
+    glGenRenderbuffers(1, &RBO);
+    glBindRenderbuffer(GL_RENDERBUFFER, RBO);
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, myWidth, myHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO); // now actually attach it
+
+    // Always check that our framebuffer is ok
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+      TsglErr("FRAMEBUFFER CREATION FAILED");
+
+    glClearColor(baseColor.R, baseColor.G, baseColor.B, baseColor.A);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     attribMutex.lock();
     shapeShader = shapeS;
     textShader = textS;
-    textureShader = textureS;
+    textureShader = textureS;    
+    complete = true;
+    attribMutex.unlock();
+    glfwMakeContextCurrent(0);
+}
+
+void Background::drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color) {
+    Square * s = new Square(x,y,z,sidelength,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(s);  // Push it onto our drawing buffer
     attribMutex.unlock();
 }
 
-void Background::drawSquare(float z) {
-    Square * s = new Square(0,0,z,200,0,0,0,BLUE);
-    myDrawables->push(s);  // Push it onto our drawing buffer
+void Background::setClearColor(ColorFloat c) {
+    attribMutex.lock();
+    baseColor = c;
+    glClearColor(baseColor.R, baseColor.G, baseColor.B, baseColor.A);
+    attribMutex.unlock();
 }
 
 /*!
@@ -217,6 +196,8 @@ void Background::drawSquare(float z) {
 Background::~Background() {
     myDrawables->clear();
     delete myDrawables;
+    glDeleteTextures(1, &multisampledTexture);
+    glDeleteFramebuffers(1, &multisampledFBO);
 }
 
 }

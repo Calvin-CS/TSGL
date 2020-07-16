@@ -73,7 +73,6 @@ void pyramidFunction(Canvas& can) {
 }
 
 int main(int argc, char* argv[]) {
-    Canvas c(-1, -1, 1024, 620, "Basic Pyramid");
-    c.setBackgroundColor(BLACK);
+    Canvas c(-1, -1, 1024, 620, "Basic Pyramid", BLACK);
     c.run(pyramidFunction);
 }

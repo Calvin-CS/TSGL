@@ -60,7 +60,6 @@ int main(int argc, char* argv[]) {
   if (w <= 0 || h <= 0)     // Checked the passed width and height if they are valid
     w = h = 960;            // If not, set the width and height to a default value
   int t = (argc > 3) ? atoi(argv[3]) : 256;
-  Canvas c(-1, -1, w, h, "Gradient Color Wheel");
-  c.setBackgroundColor(BLACK);
+  Canvas c(-1, -1, w, h, "Gradient Color Wheel", BLACK);
   c.run(gradientWheelFunction,t);
 }

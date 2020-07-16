@@ -198,7 +198,6 @@ int main(int argc, char* argv[]) {
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(0, 0, w, h, "Bottom-up Merge Sort");
-    c.setBackgroundColor(BLACK);
+    Canvas c(0, 0, w, h, "Bottom-up Merge Sort", BLACK);
     c.run(mergeSortFunction, threads, s);
 }

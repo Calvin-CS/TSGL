@@ -77,7 +77,6 @@ int main(int argc, char* argv[]) {
     unsigned t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();    //Get the number of threads to use
     if (t == 0)
       t = omp_get_num_procs();
-    Canvas c(-1, -1, w, h, "Spirograph");
-    c.setBackgroundColor(BLACK);
+    Canvas c(-1, -1, w, h, "Spirograph", BLACK);
     c.run(lineChainFunction,t);
 }

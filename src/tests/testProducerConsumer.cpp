@@ -20,7 +20,7 @@ const int INNERRAD = 75;  // radius of the inner circle
 const int OUTERRAD = 150; // radius of the outercircle
 const int CAPACITY = 8;
 const int WINDOW_WIDTH = 600, WINDOW_HEIGHT = 550, MAX_DATA = 8; //Size of Canvas and limit on amount of data to be stored in Queue
-Canvas queueDisplay(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Producer-Consumer", FRAME );  //Canvas to draw on
+Canvas queueDisplay(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Producer-Consumer", WHITE, FRAME );  //Canvas to draw on
 Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored data)
 
 
@@ -74,7 +74,6 @@ int main(int argc, char * argv[]) {
 	srand(time(NULL)); // seed the random number generator
 
 	//Fire up the visualization
-	queueDisplay.setBackgroundColor(WHITE);
   	queueDisplay.start();
 
 	queueDisplay.bindToButton(TSGL_SPACE, TSGL_PRESS, []() { // toggle pause when spacebar is pressed

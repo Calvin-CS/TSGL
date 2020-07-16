@@ -48,9 +48,8 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
       break;
   }
 
-  myCan2 = new Canvas(0,0,300,300,"Legend");
+  myCan2 = new Canvas(0,0,300,300,"Legend", GRAY);
   myCan2->start();
-  myCan2->setBackgroundColor(GRAY);
 
   legendTexts = new Text*[9]();
   legendTexts[0] = new Text(-134,128,0,L"Method:","./assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);

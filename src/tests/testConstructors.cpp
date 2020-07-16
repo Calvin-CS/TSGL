@@ -299,7 +299,6 @@ void constructorFunction(Canvas& can) {
 int main(int argc, char* argv[]) {
     int w = 0.9*Canvas::getDisplayHeight();
     int h = w;
-    Canvas c(-1, -1, w, h, "Constructors");
-    c.setBackgroundColor(WHITE);
+    Canvas c(-1, -1, w, h, "Constructors", WHITE);
     c.run(constructorFunction);
 }

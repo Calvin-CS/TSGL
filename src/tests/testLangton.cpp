@@ -163,8 +163,7 @@ int main(int argc, char* argv[]) {
       w = h = 960;              //If not, set the width and height to a default value
     //Alpha Langton
     std::cout << "Alpha Langton's Ant" << std::endl;
-    Canvas c1(-1, -1, w, h, "Langton's Ant w/Alpha (enter to pause)");
-    c1.setBackgroundColor(BLACK);
+    Canvas c1(-1, -1, w, h, "Langton's Ant w/Alpha (enter to pause)", BLACK);
     c1.run(alphaLangtonFunction);
 
     //Regular Langton
@@ -179,7 +178,6 @@ int main(int argc, char* argv[]) {
 
     //Colorful Langton
     std::cout << "Dynamically Colored Langton's Ants" << std::endl;
-    Canvas c4(-1, -1, w, h, "Colorful Langton's Ants");
-    c4.setBackgroundColor(BLACK);
+    Canvas c4(-1, -1, w, h, "Colorful Langton's Ants", BLACK);
     c4.run(langtonRainbowFunction);
 }

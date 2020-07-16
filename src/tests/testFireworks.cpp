@@ -54,7 +54,6 @@ int main(int argc, char* argv[]) {
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
   int f = (argc > 4) ? atoi(argv[4]) : 50;
   int s = (argc > 5) ? atoi(argv[5]) : 10;
-  Canvas c(-1, -1, w, h, "Fireworks!");
-  c.setBackgroundColor(BLACK);
+  Canvas c(-1, -1, w, h, "Fireworks!", BLACK);
   c.run(fireworkFunction,t,f,s);
 }

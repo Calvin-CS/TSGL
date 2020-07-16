@@ -98,7 +98,7 @@ unsigned Canvas::openCanvases = 0;
   *   have a 4:3 aspect ratio.
   */
 Canvas::Canvas(double timerLength) {
-    init(-1, -1, -1, -1, -1, "", timerLength);
+    init(-1, -1, -1, -1, -1, "", GRAY, timerLength);
 }
 
  /*!
@@ -113,8 +113,8 @@ Canvas::Canvas(double timerLength) {
   *     A value less than or equal to 0 sets it to automatic.
   * \return A new Canvas with the specified position, dimensions, title, and draw cycle length.
   */
-Canvas::Canvas(int x, int y, int width, int height, std::string title, double timerLength) {
-    init(x, y, width, height, width*height*2, title, timerLength);
+Canvas::Canvas(int x, int y, int width, int height, std::string title, ColorFloat backgroundColor, double timerLength) {
+    init(x, y, width, height, width*height*2, title, backgroundColor, timerLength);
 }
 
  /*!
@@ -124,14 +124,12 @@ Canvas::Canvas(int x, int y, int width, int height, std::string title, double ti
   */
 Canvas::~Canvas() {
     // Free our pointer memory
-    delete myDrawables;
-    delete drawableBuffer;
-    delete[] proceduralBuffer;
     delete drawTimer;
     delete[] vertexData;
     delete [] screenBuffer;
-    glDeleteTextures(1, &multisampledTexture);
-    glDeleteFramebuffers(1, &multisampledFBO);
+    if (defaultBackground) {
+      delete myBackground;
+    }
     if (--openCanvases == 0) {
         glfwIsReady = false;
         glfwTerminate();  // Terminate GLFW
@@ -173,9 +171,9 @@ void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods
   * \brief Clears the Canvas.
   * \details This function clears the screen to the color specified in setBackgroundColor().
   */
-// void Canvas::clearProcedural() {
-//     drawRectangle(0,0,getWindowWidth(),getWindowHeight(),getBackgroundColor());
-// }
+void Canvas::clearBackground() {
+  myBackground->clear();
+}
 
  /*!
   * \brief Closes the Canvas window.
@@ -262,13 +260,14 @@ void Canvas::draw()
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
         std::cout.flush();
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        // clear default framebuffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // draw scene as normal in multisampled buffers
-        glBindFramebuffer(GL_FRAMEBUFFER, multisampledFBO);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
+        // if background initialized draw it using its multisampled framebuffer
+        if (myBackground)
+          if (myBackground->isInitialized()) {
+            myBackground->draw();
+          }
 
         // Scale to window size
         GLint windowWidth, windowHeight;
@@ -276,6 +275,9 @@ void Canvas::draw()
         glViewport(0, 0, windowWidth, windowHeight);
         winWidth = windowWidth;
         winHeight = windowHeight;
+
+        // swap back to 4x MSAA in order to render object oriented Drawables.
+        glfwWindowHint(GLFW_SAMPLES,4);
 
         if (objectBuffer.size() > 0) {
           // sort between opaques and transparents and then sort by center z. depth buffer takes care of the rest. not perfect, but good.
@@ -301,14 +303,6 @@ void Canvas::draw()
             }
           }
         }
-
-        glBindFramebuffer(GL_READ_FRAMEBUFFER, multisampledFBO);
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-        glBlitFramebuffer(0, 0, winWidth, winHeight, 0, 0, winWidth, winHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-        // swap back to 4x MSAA in order to render object oriented Drawables.
-        glfwWindowHint(GLFW_SAMPLES,4);
 
         // Update our screenBuffer copy with the default framebuffer
         glViewport(0,0,winWidth*scaling,winHeight*scaling);
@@ -1675,11 +1669,19 @@ void Canvas::errorCallback(int error, const char* string) {
 }
 
  /*!
+  * \brief Accessor for the current background.
+  * \return The Background that the Canvas draws when draw() is called.
+  */
+Background * Canvas::getBackground() {
+  return myBackground;
+}
+
+ /*!
   * \brief Accessor for the current background color.
   * \return The color that the Canvas clears to when clear() is called.
   */
 ColorFloat Canvas::getBackgroundColor() {
-  return bgcolor;
+  return myBackground->getClearColor();
 }
 
  /*!
@@ -1715,14 +1717,6 @@ int Canvas::getFrameNumber() {
   */
 float Canvas::getFPS() {
     return realFPS;
-}
-
- /*!
-  * \brief Accessor for window's closed status.
-  * \return Whether the window is still open (that is, the user has not closed it).
-  */
-bool Canvas::isOpen() {
-    return !isFinished;
 }
 
  /*!
@@ -1884,7 +1878,7 @@ void Canvas::handleIO() {
   #endif
 }
 
-void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, double timerLength) {
+void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, ColorFloat backgroundColor, double timerLength) {
     ++openCanvases;
 
     if (ww == -1)
@@ -1895,7 +1889,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
 
     winTitle = title;
     winWidth = ww, winHeight = hh;
-    aspect = (float) winWidth / winHeight;
+    // aspect = (float) winWidth / winHeight;
     keyDown = false;
     toClose = false;
     windowClosed = false;
@@ -1909,22 +1903,14 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
        padwidth = 4-padwidth;
     winWidthPadded = winWidth + padwidth;
     bufferSize = 3 * (winWidthPadded+1) * winHeight;
-    proceduralBufferSize = 4 * winWidth * winHeight;
     screenBuffer = new uint8_t[bufferSize];
-    proceduralBuffer = new GLubyte[proceduralBufferSize];
     for (unsigned i = 0; i < bufferSize; ++i) {
       screenBuffer[i] = 0;
-    }
-    for (unsigned i = 0; i < proceduralBufferSize; i++) {
-      proceduralBuffer[i] = 255;
     }
 
     started = false;                  // We haven't started the window yet
     monitorX = xx;
     monitorY = yy;
-    myDrawables = new Array<Drawable*>(b);  // Initialize myDrawables
-    drawableBuffer = new Array<Drawable*>(b);
-    // objectBuffer = new Array<Drawable*>(b);
     vertexData = new float[6 * b];    // Buffer for vertexes for points
     showFPS = false;                  // Set debugging FPS to false
     isFinished = false;               // We're not done rendering
@@ -1932,8 +1918,10 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     loopAround = false;
     toRecord = 0;
 
-    bgcolor = GRAY;
     window = nullptr;
+
+    defaultBackground = true;
+    myBackground = nullptr;
 
     drawTimer = new Timer((timerLength > 0.0f) ? timerLength : FRAME);
 
@@ -1948,6 +1936,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     initGlew();
     glfwMakeContextCurrent(NULL);   // Reset the context
 #endif
+    initGl();
+    initBackground(backgroundColor);
 }
 
 void Canvas::initGl() {
@@ -2008,6 +1998,12 @@ void Canvas::initGlew() {
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
+    textShader = new Shader(textVertexShader, textFragmentShader);
+
+    shapeShader = new Shader(shapeVertexShader, shapeFragmentShader); 
+
+    textureShader = new Shader(textureVertexShader, textureFragmentShader);
+
     char buf[PATH_MAX]; /* PATH_MAX incudes the \0 so +1 is not required */
     char *res = realpath(".", buf);
     if (res) {
@@ -2016,35 +2012,6 @@ void Canvas::initGlew() {
         perror("realpath");
         exit(EXIT_FAILURE);
     }
-
-    textShader = new Shader(textVertexShader, textFragmentShader);
-
-    shapeShader = new Shader(shapeVertexShader, shapeFragmentShader); 
-
-    textureShader = new Shader(textureVertexShader, textureFragmentShader);
-
-    // configure MSAA framebuffer
-    // --------------------------
-    glGenFramebuffers(1, &multisampledFBO);
-    glBindFramebuffer(GL_FRAMEBUFFER, multisampledFBO);
-    // create a multisampled color attachment texture
-    glGenTextures(1, &multisampledTexture);
-    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, multisampledTexture);
-    glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, 4, GL_RGB, winWidth, winHeight, GL_TRUE);
-    glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, multisampledTexture, 0);
-    // create multisampled renderbuffer object
-    unsigned int rbo;
-    glGenRenderbuffers(1, &rbo);
-    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-    glRenderbufferStorageMultisample(GL_RENDERBUFFER, 4, GL_DEPTH24_STENCIL8, winWidth, winHeight); // use a single renderbuffer object for both a depth AND stencil buffer.
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
-
-    // Always check that our framebuffer is ok
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-      TsglErr("FRAMEBUFFER CREATION FAILED");
-
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void Canvas::initGlfw() {
@@ -2053,6 +2020,13 @@ void Canvas::initGlfw() {
     monInfo = glfwGetVideoMode(glfwGetPrimaryMonitor());
     glfwIsReady = true;
   }
+}
+
+void Canvas::initBackground(ColorFloat bgcolor) {
+    if (!myBackground) {
+      myBackground = new Background(winWidth, winHeight, bgcolor);
+      myBackground->init(shapeShader, textShader, textureShader, window);
+    }
 }
 
 void Canvas::initWindow() {
@@ -2112,6 +2086,14 @@ void Canvas::initWindow() {
     // Get info of GPU and supported OpenGL version
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
     printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
+}
+
+ /*!
+  * \brief Accessor for window's closed status.
+  * \return Whether the window is still open (that is, the user has not closed it).
+  */
+bool Canvas::isOpen() {
+    return !isFinished;
 }
 
 void Canvas::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -2314,16 +2296,31 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
 }
 
  /*!
+  * \brief Mutator for the Canvas Background.
+  * \details This function sets the Background which Canvas will draw.
+  *   \param background A pointer to the new Background value which will be assigned to myBackground.
+  *   \param previouslySet Boolean indicating if background has been previously set for this Canvas.
+  */
+void Canvas::setBackground(Background * background, bool previouslySet) {
+  if (myBackground != background) {
+    defaultBackground = false;
+    myBackground = background;
+    if (!previouslySet) {
+      background->init(shapeShader, textShader, textureShader, window);
+    }
+  }
+}
+
+ /*!
   * \brief Mutator for the background color.
   * \details This function sets the clear color for when Canvas::clear() is called.
   *   \param color The color to clear to.
   * \note The alpha channel of the color is ignored.
   */
 void Canvas::setBackgroundColor(ColorFloat color) {
-    bgcolor = color;
     if (window != nullptr) {
       glfwMakeContextCurrent(window);
-      glClearColor(color.R,color.G,color.B,color.A);
+      myBackground->setClearColor(color);
       glfwMakeContextCurrent(NULL);
     }
 }
@@ -2416,14 +2413,12 @@ int Canvas::start() {
 #ifdef __APPLE__
 void* Canvas::startDrawing(void* cPtr) {
     Canvas* c = (Canvas*)cPtr;
-    c->initGl();
     c->draw();
     c->isFinished = true;
     pthread_exit(NULL);
 }
 #else
 void Canvas::startDrawing(Canvas *c) {
-    c->initGl();
     c->draw();
     c->isFinished = true;
     glfwDestroyWindow(c->window);
@@ -2528,11 +2523,6 @@ int Canvas::wait() {
   #endif
 
   return 0;
-}
-
-void Canvas::setBackground(Background * background) {
-  myBackground = background;
-  background->defineShaders(shapeShader, textShader, textureShader);
 }
 
 //-----------------Unit testing-------------------------------------------------------

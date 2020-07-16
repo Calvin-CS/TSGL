@@ -6,7 +6,7 @@
 #define DRAWABLE_H_
 
 #include "Color.h"      // Needed for color type
-#include "shader_s.h"
+#include "Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

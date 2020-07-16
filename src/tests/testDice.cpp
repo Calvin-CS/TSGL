@@ -175,6 +175,5 @@ int main(int argc, char* argv[]) {
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;            //If not, set the width and height to a default value
     Canvas c(-1, -1, 1024, 620, "Dice Rolling");
-    c.setBackgroundColor(GRAY);
     c.run(diceFunction);
 }
