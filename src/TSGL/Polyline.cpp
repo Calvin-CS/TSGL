@@ -49,7 +49,7 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
     vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
-        addVertex(lineVertices[3*i], lineVertices[3*i + 1], lineVertices[3*i + 2], color);
+        addVertex(lineVertices[3*i] - x, lineVertices[3*i + 1] - y, lineVertices[3*i + 2] - z, color);
     }
 }
 
@@ -77,7 +77,7 @@ Polyline::Polyline(float x, float y, float z, int numVertices, float lineVertice
     vertices = new GLfloat[numberOfVertices * 7];
     attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
-        addVertex(lineVertices[3*i], lineVertices[3*i + 1], lineVertices[3*i + 2], color[i]);
+        addVertex(lineVertices[3*i] - x, lineVertices[3*i + 1] - y, lineVertices[3*i + 2] - z, color[i]);
     }
 }
 

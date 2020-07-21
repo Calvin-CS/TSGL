@@ -90,6 +90,7 @@ BINARIES= \
 	bin/testPong \
 	bin/testPixels \
 	bin/testPrism \
+	bin/testProcedural \
 	bin/testPyramid \
 	bin/testRectangle \
 	bin/testRegularPolygon \

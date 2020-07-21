@@ -176,10 +176,199 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwi
     glfwMakeContextCurrent(0);
 }
 
+void Background::drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color, bool doubleArrow) {
+    Arrow * a = new Arrow(x,y,z,length,width,yaw,pitch,roll,color,doubleArrow);
+    attribMutex.lock();
+    myDrawables->push(a);
+    attribMutex.unlock();
+}
+
+void Background::drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color[], bool doubleArrow) {
+    Arrow * a = new Arrow(x,y,z,length,width,yaw,pitch,roll,color,doubleArrow);
+    attribMutex.lock();
+    myDrawables->push(a);
+    attribMutex.unlock();
+}
+
+void Background::drawCircle(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat color) {
+    Circle * c = new Circle(x,y,z,radius,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(c);
+    attribMutex.unlock();
+}
+
+void Background::drawCircle(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat color[]) {
+    Circle * c = new Circle(x,y,z,radius,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(c);
+    attribMutex.unlock();
+}
+
+void Background::drawConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color) {
+    ConcavePolygon * c = new ConcavePolygon(centerX,centerY,centerZ,numVertices,x,y,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(c);
+    attribMutex.unlock();
+}
+
+void Background::drawConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]) {
+    ConcavePolygon * c = new ConcavePolygon(centerX,centerY,centerZ,numVertices,x,y,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(c);
+    attribMutex.unlock();
+}
+
+void Background::drawConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color) {
+    ConvexPolygon * c = new ConvexPolygon(centerX,centerY,centerZ,numVertices,x,y,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(c);
+    attribMutex.unlock();
+}
+
+void Background::drawConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]) {
+    ConvexPolygon * c = new ConvexPolygon(centerX,centerY,centerZ,numVertices,x,y,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(c);
+    attribMutex.unlock();
+}
+
+void Background::drawEllipse(float x, float y, float z, float xRadius, float yRadius, float yaw, float pitch, float roll, ColorFloat color) {
+    Ellipse * e = new Ellipse(x,y,z,xRadius,yRadius,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(e);
+    attribMutex.unlock();
+}
+
+void Background::drawEllipse(float x, float y, float z, float xRadius, float yRadius, float yaw, float pitch, float roll, ColorFloat color[]) {
+    Ellipse * e = new Ellipse(x,y,z,xRadius,yRadius,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(e);
+    attribMutex.unlock();
+}
+
+void Background::drawImage(float x, float y, float z, std::string filename, float width, float height, float yaw, float pitch, float roll, float alpha) {
+    Image * i = new Image(x,y,z,filename,width,height,yaw,pitch,roll,alpha);
+    attribMutex.lock();
+    myDrawables->push(i);
+    attribMutex.unlock();
+}
+
+void Background::drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color) {
+    Line * l = new Line(x,y,z,length,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(l);
+    attribMutex.unlock();
+}
+
+void Background::drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color[]) {
+    Line * l = new Line(x,y,z,length,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(l);
+    attribMutex.unlock();
+}
+
+void Background::drawPolyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color) {
+    Polyline * p = new Polyline(x,y,z,numVertices,lineVertices,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(p);
+    attribMutex.unlock();
+}
+
+void Background::drawPolyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color[]) {
+    Polyline * p = new Polyline(x,y,z,numVertices,lineVertices,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(p);
+    attribMutex.unlock();
+}
+
+void Background::drawRectangle(float x, float y, float z, float width, float height, float yaw, float pitch, float roll, ColorFloat color) {
+    Rectangle * r = new Rectangle(x,y,z,width,height,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(r);
+    attribMutex.unlock();
+}
+
+void Background::drawRectangle(float x, float y, float z, float width, float height, float yaw, float pitch, float roll, ColorFloat color[]) {
+    Rectangle * r = new Rectangle(x,y,z,width,height,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(r);
+    attribMutex.unlock();
+}
+
+void Background::drawRegularPolygon(float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, ColorFloat color) {
+    RegularPolygon * r = new RegularPolygon(x,y,z,radius,sides,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(r);
+    attribMutex.unlock();
+}
+
+void Background::drawRegularPolygon(float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, ColorFloat color[]) {
+    RegularPolygon * r = new RegularPolygon(x,y,z,radius,sides,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(r);
+    attribMutex.unlock();
+}
+
 void Background::drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color) {
     Square * s = new Square(x,y,z,sidelength,yaw,pitch,roll,color);
     attribMutex.lock();
     myDrawables->push(s);  // Push it onto our drawing buffer
+    attribMutex.unlock();
+}
+
+void Background::drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color[]) {
+    Square * s = new Square(x,y,z,sidelength,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(s);  // Push it onto our drawing buffer
+    attribMutex.unlock();
+}
+
+void Background::drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color, bool ninja) {
+    Star * s = new Star(x,y,z,radius,points,yaw,pitch,roll,color,ninja);
+    attribMutex.lock();
+    myDrawables->push(s);  // Push it onto our drawing buffer
+    attribMutex.unlock();   
+}
+
+void Background::drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja) {
+    Star * s = new Star(x,y,z,radius,points,yaw,pitch,roll,color,ninja);
+    attribMutex.lock();
+    myDrawables->push(s);  // Push it onto our drawing buffer
+    attribMutex.unlock();   
+}
+
+void Background::drawText(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color) {
+    Text * t = new Text(x,y,z,text,fontFilename,fontsize,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(t);  // Push it onto our drawing buffer
+    attribMutex.unlock();
+}
+
+void Background::drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color) {
+    Triangle * t = new Triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(t);  // Push it onto our drawing buffer
+    attribMutex.unlock();
+}
+
+void Background::drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color[]) {
+    Triangle * t = new Triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(t);  // Push it onto our drawing buffer
+    attribMutex.unlock();
+}
+
+void Background::drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color) {
+    TriangleStrip * t = new TriangleStrip(centerX,centerY,centerZ,numVertices,x,y,z,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(t);  // Push it onto our drawing buffer
+    attribMutex.unlock();
+}
+
+void Background::drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color[]) {
+    TriangleStrip * t = new TriangleStrip(centerX,centerY,centerZ,numVertices,x,y,z,yaw,pitch,roll,color);
+    attribMutex.lock();
+    myDrawables->push(t);  // Push it onto our drawing buffer
     attribMutex.unlock();
 }
 

@@ -39,6 +39,7 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
  *   \param roll The ConcavePolygon's roll in 3D space.
  *   \param color A ColorFloat, the ConcavePolygon's fill color.
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  * \warning Can sometimes incorrectly render; if this occurs, try shifting your last vertex to be your first vertex, or otherwise adjusting vertex order.
   */
 ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
@@ -51,8 +52,8 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], 0, color);
-        addOutlineVertex(x[i], y[i], 0, GRAY);
+        addVertex(x[i] - centerX, y[i] - centerY, 0, color);
+        addOutlineVertex(x[i] - centerX, y[i] - centerY, 0, GRAY);
     }
 }
 
@@ -70,6 +71,7 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
  *   \param roll The ConcavePolygon's roll in 3D space.
  *   \param color An array of ColorFloats, the ConcavePolygon's fill color.
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  * \warning Can sometimes incorrectly render; if this occurs, try shifting your last vertex to be your first vertex, or otherwise adjusting vertex order.
   */
 ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
@@ -82,8 +84,8 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], 0, color[i]);
-        addOutlineVertex(x[i], y[i], 0, GRAY);
+        addVertex(x[i] - centerX, y[i] - centerY, 0, color[i]);
+        addOutlineVertex(x[i] - centerX, y[i] - centerY, 0, GRAY);
     }
 }
 
