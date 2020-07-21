@@ -254,7 +254,6 @@ void Canvas::draw()
         windowMutex.lock();
       #endif
         glfwMakeContextCurrent(window);
-        glfwWindowHint(GLFW_SAMPLES,0);
 
         realFPS = round(1 / drawTimer->getTimeBetweenSleeps());
         if (showFPS) std::cout << realFPS << "/" << FPS << std::endl;
@@ -275,10 +274,7 @@ void Canvas::draw()
         glViewport(0, 0, windowWidth, windowHeight);
         winWidth = windowWidth;
         winHeight = windowHeight;
-
-        // swap back to 4x MSAA in order to render object oriented Drawables.
-        glfwWindowHint(GLFW_SAMPLES,4);
-
+        
         if (objectBuffer.size() > 0) {
           // sort between opaques and transparents and then sort by center z. depth buffer takes care of the rest. not perfect, but good.
           std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
@@ -2047,7 +2043,7 @@ void Canvas::initWindow() {
     // glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
-    glfwWindowHint(GLFW_SAMPLES,0);
+    glfwWindowHint(GLFW_SAMPLES,4);
 
     glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
     window = glfwCreateWindow(winWidth, winHeight, winTitle.c_str(), NULL, NULL);  // Windowed

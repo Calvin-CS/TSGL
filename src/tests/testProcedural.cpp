@@ -67,7 +67,7 @@ void testSuite2(Background * bg) {
         ColorFloat(0.5,0,0.5,0.8), ColorFloat(0.5,0.5,0,0.8), ColorFloat(0.5,0.5,0.5,0.8)};
     bg->clear();
     bg->drawStar(-400,225,0,50,5,0,0,0,RED,false);
-    bg->drawStar(-400,100,0,50,7,0,0,0,colors,true);
+    bg->drawStar(-400,100,0,50,7,0,0,0,colors,false);
     float x1[6] = { -450,-400,-375,-350,-400,-450 };
     float y1[6] = {  -50, -50, -60,-150,-150,-100 };
     bg->drawConcavePolygon(-400,-100,0,6,x1,y1,0,0,0,RED);
@@ -90,6 +90,9 @@ void proceduralFunction(Canvas& can) {
     float y1[6] = {  275, 275, 225, 175, 175, 225 };
     ConcavePolygon * c = new ConcavePolygon(0,0,0,6,x1,y1,0,0,0,RED);
     can.add(c);
+
+    Star * s = new Star(0,0,0,50,7,0,0,0,RED,false);
+    can.add(s);
 
     can.bindToButton(TSGL_RIGHT, TSGL_PRESS, [&c]() {
         c->changeXBy(10);

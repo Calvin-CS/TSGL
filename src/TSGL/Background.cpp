@@ -66,9 +66,35 @@ void Background::draw() {
     }
     
     glBindFramebuffer(GL_READ_FRAMEBUFFER, multisampledFBO);
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
     glBlitFramebuffer(0, 0, myWidth, myHeight, 0, 0, myWidth, myHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    glDisable(GL_DEPTH_TEST);
+    selectShaders(TEXTURE_SHADER_TYPE);
+
+    unsigned int alphaLoc = glGetUniformLocation(textureShader->ID, "alpha");
+    glUniform1f(alphaLoc, 1.0f);
+
+    const float vertices[30] = {
+        -myWidth/2,-myHeight/2,0,0,0,
+        myWidth/2,-myHeight/2,0,1,0,
+        -myWidth/2, myHeight/2,0,0,1,
+        myWidth/2,-myHeight/2,0,1,0,
+        -myWidth/2, myHeight/2,0,0,1,
+        myWidth/2, myHeight/2,0,1,1
+    };
+    glBindTexture(GL_TEXTURE_2D,intermediateTexture);
+    /* these 5 lines don't seem to do anything */
+    glPixelStorei(GL_UNPACK_ALIGNMENT,4);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    /* next two lines are very essential */
+    glBufferData(GL_ARRAY_BUFFER,30*sizeof(float),vertices,GL_DYNAMIC_DRAW);
+    glDrawArrays(GL_TRIANGLES,0,6);
+    glEnable(GL_DEPTH_TEST);
 
     myDrawables->clear();
 }
@@ -167,6 +193,24 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwi
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    // Create a second framebuffer
+    intermediateFBO = 0;
+    glGenFramebuffers(1, &intermediateFBO);
+    glBindFramebuffer(GL_FRAMEBUFFER, intermediateFBO);
+    glGenTextures(1, &intermediateTexture);
+    glBindTexture(GL_TEXTURE_2D, intermediateTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, myWidth, myHeight, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,intermediateTexture, 0);
+
+    // Always check that our framebuffer is ok
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+      TsglErr("FRAMEBUFFER CREATION FAILED");
+
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
     attribMutex.lock();
     shapeShader = shapeS;
     textShader = textS;

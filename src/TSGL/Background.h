@@ -33,8 +33,8 @@ namespace tsgl {
 class Background {
 protected:
     GLint myWidth, myHeight;
-    GLuint multisampledTexture;
-    GLuint multisampledFBO;
+    GLuint multisampledTexture, intermediateTexture;
+    GLuint multisampledFBO, intermediateFBO;
     GLuint RBO;
     Array<Drawable*> * myDrawables;
     Shader * textShader;
