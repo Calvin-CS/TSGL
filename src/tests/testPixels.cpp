@@ -37,65 +37,57 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
     Background * background = can.getBackground();
 
     /* this is the part of the test for drawPixel */
-    #pragma omp parallel num_threads(numberOfThreads)
-    {
-        int nthreads = omp_get_num_threads();  //Actual number of threads to use
-        // note: allocating rows pixels to threads like this is only perfect if can.getWindowHeight() % # of threads = 0.
-        // but I'm too lazy to make it work perfectly always, since it's "good enough" and this is really just a drawPixel test.
-        int myPart = can.getWindowHeight() / nthreads;
-        int myStart = myPart * omp_get_thread_num();
-        for (int i = myStart; i < myStart + myPart; i++) {
-        for (int j = 0; j < can.getWindowWidth(); j++) {
-            // int id = omp_get_thread_num();
-            if (i % 2 == 0) {
-            background->drawPixel(i, j, BLACK);
-            } else {
-            background->drawPixel(i, j, ColorInt(i % 255, j % 255, (i*j) % 255));
-            }
-        }
-        if (!can.isOpen()) break;
-        }
-    }
+    // #pragma omp parallel num_threads(numberOfThreads)
+    // {
+    //     int nthreads = omp_get_num_threads();  //Actual number of threads to use
+    //     // note: allocating rows pixels to threads like this is only perfect if can.getWindowHeight() % # of threads = 0.
+    //     // but I'm too lazy to make it work perfectly always, since it's "good enough" and this is really just a drawPixel test.
+    //     int myPart = can.getWindowHeight() / nthreads;
+    //     int myStart = myPart * omp_get_thread_num();
+    //     for (int i = myStart; i < myStart + myPart; i++) {
+    //     for (int j = 0; j < can.getWindowWidth(); j++) {
+    //         // int id = omp_get_thread_num();
+    //         if (i % 2 == 0) {
+    //         background->drawPixel(j, i, BLACK);
+    //         } else {
+    //         background->drawPixel(j, i, ColorInt(i % 255, j % 255, (i*j) % 255));
+    //         }
+    //     }
+    //     if (!can.isOpen()) break;
+    //     }
+    // }
+
     /* end drawPixel. while loop only contains can.sleep() */
 
     /* the getPixel portion of the test */
-    // bool print = false;
-    // int mouseX = 0;
-    // int mouseY = 0;
+    bool print = false;
+    int mouseX = 0;
+    int mouseY = 0;
 
-    // ColorInt colors[] = { ColorInt(255,255,255,255),
-    //                     ColorInt(255,0,0,255), ColorInt(0,255,0,255), 
-    //                     ColorInt(0,0,255,255), ColorInt(255,255,0,255),
-    //                     ColorInt(255,0,255,255), ColorInt(0,255,255,255),
-    //                     ColorInt(0,0,0,255)};
-    // for (int k = 0; k < 8; k++)
-    //     for (int j = k * background->getHeight() / 8; j < (k+1) * background->getHeight() / 8; j++) 
-    //         for (int i = 0; i < background->getWidth(); i++)
-    //                 if (k * background->getWidth() / 8 <= i && i < (k+1) * background->getWidth() / 8)
-    //                     background->drawPixel(j, i, ColorInt(123,123,123,255));
-    //                 else
-    //                     background->drawPixel(j, i, colors[k]);
+    background->drawSquare(-100,100,0,100,0,0,0,RED);
+    background->drawSquare(-100,-100,0,100,0,0,0,GREEN);
+    background->drawSquare(100,100,0,100,0,0,0,BLUE);
+    background->drawSquare(100,-100,0,100,0,0,0,ORANGE);
 
+    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&print] () {
+        print = true;
+    });
 
-    // can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&print] () {
-    //     print = true;
-    // });
-
-    // ColorInt c;
-    /* end getPixel(). uncomment entirety of while loop */
+    ColorInt c;
+    /* end getPixel(). uncomment entirety of while loop besides can.sleep */
 
     while (can.isOpen()) {
         can.sleep();
-        // mouseX = can.getMouseX();
-        // mouseY = can.getMouseY();
-        // if (print) {
-        //     c = background->getPixel(mouseY, mouseX);  // mouse Y is ROW. mouse X is COLUMN. Think about it.
-        //     printf("%d, %d; ", mouseY, mouseX);
-        //     printf("%d:%d:%d:%d\n", c.R, c.G, c.B, c.A);
-        //     print = false;
-        // }
+        mouseX = can.getMouseX();
+        mouseY = can.getMouseY();
+        if (print) {
+            background->drawPixel(mouseY, mouseX, RED);
+            c = background->getPixel(mouseY, mouseX);  // mouse Y is ROW. mouse X is COLUMN. Think about it.
+            printf("%d, %d - ", mouseY, mouseX);
+            printf("%d:%d:%d:%d\n", c.R, c.G, c.B, c.A);
+            print = false;
+        }
     }
-    delete background;
 }
 
 //Takes in command line arguments for the window width and height as well
@@ -106,6 +98,6 @@ int main(int argc, char* argv[]) {
   if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
     w = h = 960;            //If not, set the width and height to a default value
   int t = (argc > 3) ? atoi(argv[3]) : omp_get_num_procs();
-  Canvas c(-1, -1, w, h, "Dithered Points", RED);
+  Canvas c(-1, -1, w, h, "Dithered Points", BLACK);
   c.run(colorPointsFunction,t);
 }

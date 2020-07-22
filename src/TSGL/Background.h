@@ -44,6 +44,9 @@ protected:
     bool complete;
     bool toClear;
     std::mutex attribMutex;
+    std::mutex pointArrayMutex;
+    uint8_t* pixelBuffer;
+    GLfloat * vertexData;
 
     virtual void selectShaders(unsigned int sType);
 public:
@@ -71,7 +74,7 @@ public:
     virtual ColorInt getPixel(int row, int col);
 
     // broken
-    virtual void drawPixel(int row, int col, ColorInt c);
+    virtual void drawPixel(int x, int y, ColorInt c);
 
     virtual void drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color, bool doubleArrow = false);
 

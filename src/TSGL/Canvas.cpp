@@ -274,7 +274,7 @@ void Canvas::draw()
         glViewport(0, 0, windowWidth, windowHeight);
         winWidth = windowWidth;
         winHeight = windowHeight;
-        
+
         if (objectBuffer.size() > 0) {
           // sort between opaques and transparents and then sort by center z. depth buffer takes care of the rest. not perfect, but good.
           std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {

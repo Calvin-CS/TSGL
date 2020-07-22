@@ -27,6 +27,10 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
     baseColor = clearColor;
     toClear = false;
     complete = false;
+    pixelBuffer = new uint8_t[myWidth * myHeight * 3];
+    for (int i = 0; i < myWidth * myHeight * 3; ++i) {
+      pixelBuffer[i] = 0;
+    }
     attribMutex.unlock();
 }
 
@@ -96,6 +100,9 @@ void Background::draw() {
     glDrawArrays(GL_TRIANGLES,0,6);
     glEnable(GL_DEPTH_TEST);
 
+    glViewport(0,0,myWidth,myHeight);
+    glReadPixels(0, 0, myWidth, myHeight, GL_RGB, GL_UNSIGNED_BYTE, pixelBuffer);
+
     myDrawables->clear();
 }
 
@@ -107,7 +114,9 @@ void Background::draw() {
   * \return A ColorInt containing the color of the pixel at (col,row).
   */
 ColorInt Background::getPixel(int row, int col) {
-    return ColorInt(0,0,0,255);
+    int yy = (myHeight-1) - row;
+    int off = 3 * (yy * myWidth + col);
+    return ColorInt(pixelBuffer[off], pixelBuffer[off + 1], pixelBuffer[off + 2], 255);
 }
 
  /*!
@@ -118,8 +127,10 @@ ColorInt Background::getPixel(int row, int col) {
   *   \param col The column (x-position) of the pixel.
   *   \param color The color of the point.
   */
-void Background::drawPixel(int row, int col, ColorInt c) {
+void Background::drawPixel(int x, int y, ColorInt c) {
+    pointArrayMutex.lock();
 
+    pointArrayMutex.unlock();
 }
 
 void Background::selectShaders(unsigned int sType) {
@@ -428,7 +439,10 @@ void Background::setClearColor(ColorFloat c) {
 */
 Background::~Background() {
     myDrawables->clear();
+    delete [] pixelBuffer;
     delete myDrawables;
+    glDeleteTextures(1, &intermediateFBO);
+    glDeleteFramebuffers(1, &intermediateTexture);
     glDeleteTextures(1, &multisampledTexture);
     glDeleteFramebuffers(1, &multisampledFBO);
 }
