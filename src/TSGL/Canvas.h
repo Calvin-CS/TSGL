@@ -91,25 +91,18 @@ private:
     typedef std::function<void()>                   voidFunction;
 
     // float           aspect;                                             // Aspect ratio used for setting up the window
-    Background *    myBackground;
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
-    std::mutex      bufferMutex;                                        // Mutex for locking the render buffer so that only one thread can read/write at a time
-    unsigned        bufferSize;                                         // Size of the screen buffer
     bool            defaultBackground;                                  // Boolean indicating whether myBackground has been set by an external source
-    std::string     defaultFontFileName;
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
     TextureHandler  loader;                                             // The TextureHandler that holds all our already loaded textures
-    bool            loopAround;                                         // Whether our point buffer has looped back to the beginning this
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
-    std::vector<Drawable*> objectBuffer;                                    // Holds a list of pointers to objects drawn each frame
+    Background *    myBackground;                                       // Pointer to the Background drawn each frame
+    std::vector<Drawable*> objectBuffer;                                // Holds a list of pointers to objects drawn each frame
     std::mutex	    objectMutex;
-    std::mutex      pointArrayMutex;                                    // Mutex for the allPoints array
-    unsigned int    pointBufferPosition, pointLastPosition;             // Holds the position of the allPoints array
-	  bool            readyToDraw;                                        // Whether a Canvas is ready to start drawing
     int             realFPS;                                            // Actual FPS of drawing
   #ifdef __APPLE__
     pthread_t     renderThread;                                         // Thread dedicated to rendering the Canvas
@@ -121,7 +114,6 @@ private:
     Shader *        textShader;                                         // Shader for Text class
     Shader *        shapeShader;                                        // Shader for Shape class
     Shader *        textureShader;                                      // Shader for Background and Image classes
-    std::mutex      shapesMutex;                                        // Mutex for locking the render array so that only one thread can read/write at a time
     bool            showFPS;                                            // Flag to show DEBUGGING FPS
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
     std::mutex      syncMutex;                                          // Mutex for syncing the rendering thread with a computational thread
@@ -134,7 +126,6 @@ private:
                     uniProj;                                            // Projection of the camera
     GLuint          VAO,                                                // Address of GL's vertex array object
                     VBO;                                                // Address of GL's vertex buffer object
-    float*          vertexData;                                         // The allPoints array
     GLFWwindow*     window;                                             // GLFW window that we will draw to
     bool            windowClosed;                                       // Whether we've closed the Canvas' window or not
     std::mutex      windowMutex;                                        // (OS X) Mutex for handling window contexts
@@ -143,7 +134,6 @@ private:
     GLint           winWidth;                                           // Width of the Canvas' window
     GLint           winWidthPadded;                                     // Window width padded to a multiple of 4 (necessary for taking screenshots)
 
-    static int          drawBuffer;                                     // Buffer to use for drawing (set to GL_LEFT or GL_RIGHT)
     static bool         glfwIsReady;                                    // Whether or not we have info about our monitor
     static std::mutex   glfwMutex;                                      // Keeps GLFW createWindow from getting called at the same time in multiple threads
     static displayInfo  monInfo;                                        // Info about our display
@@ -175,11 +165,6 @@ private:
     static void  startDrawing(Canvas *c);                               // Static method that is called by the render thread
   #endif
     void         selectShaders(unsigned int choice);                    // Select appropriate shader for type of Drawable
-    // static bool  testFilledDraw(Canvas& can);                           // Unit test for drawing shapes and determining if fill works
-    // static bool testLine(Canvas& can);                                  // Unit tester for lines
-    static bool testAccessors(Canvas& can);                             // Unit tester for accessor methods
-    // static bool testDrawImage(Canvas& can);                             // Unit tester for drawing images (simultaneously a Unit test for Image)
-
 protected:
     bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
     void        drawDrawable(Drawable* s);                              // Draw a drawable type
@@ -202,150 +187,6 @@ public:
     void close();
 
     void clearObjectBuffer(bool shouldFreeMemory = false);
-
-    // virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color, bool doubleArrow = false);
-
-    // virtual void drawArrow(float x1, float y1, float x2, float y2, const ColorFloat color[], bool doubleArrow = false);
-
-    // virtual void drawCircle(int x, int y, int radius, ColorFloat color, bool filled = true);
-
-    // virtual void drawCircle(int x, int y, int radius, ColorFloat color[], bool filled = true);
-
-    // virtual void drawCircle(int x, int y, int radius, ColorFloat fillColor, ColorFloat outlineColor);
-
-    // virtual void drawCircle(int x, int y, int radius, ColorFloat fillColor[], ColorFloat outlineColor);
-
-    // virtual void drawCircle(int x, int y, int radius, ColorFloat fillColor, ColorFloat outlineColor[]);
-
-    // virtual void drawCircle(int x, int y, int radius, ColorFloat fillColor[], ColorFloat outlineColor[]);
-
-    // virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color, bool filled = true, float rotation = 0);
-
-    // virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true, float rotation = 0);
-
-    // virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawConcavePolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color, bool filled = true, float rotation = 0);
-
-    // virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat color[], bool filled = true, float rotation = 0);
-
-    // virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawConvexPolygon(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color, bool filled, float rotation = 0);
-
-    // virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat color[], bool filled, float rotation = 0);
-
-    // virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawEllipse(int x, int y, int xRadius, int yRadius, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawImage(std::string filename, int x, int y, int width, int height, float alpha = 1.0f, float rotation = 0);
-
-    // virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color = BLACK, float rotation = 0);
-
-    // virtual void drawLine(int x1, int y1, int x2, int y2, ColorFloat color[], float rotation = 0);
-
-    // virtual void drawPixel(int row, int col, ColorFloat color = BLACK);
-
-    // virtual void drawPoint(int x, int y, ColorFloat color = BLACK);
-
-    // virtual void drawPolyline(int size, int x[], int y[], ColorFloat color, float rotation = 0);
-
-    // virtual void drawPolyline(int size, int x[], int y[], ColorFloat color[], float rotation = 0);
-
-    // virtual void drawProgress(ProgressBar* p);
-
-    // virtual void drawRectangle(float x, float y, float w, float h, ColorFloat color, bool filled = true, float rotation = 0);
-
-    // virtual void drawRectangle(float x, float y, float w, float h, ColorFloat color[], bool filled = true, float rotation = 0);
-
-    // virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawRectangle(float x, float y, float w, float h, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color = BLACK, bool filled = true, float rotation = 0);
-
-    // virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat color[], bool filled = true, float rotation = 0);
-
-    // virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
-    
-    // virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawRegularPolygon(int x, int y, int radius, int sides, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat color, bool filled = true, float rotation = 0);
-
-    // virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat color[], bool filled = true, float rotation = 0);
-
-    // virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawSquare(int x1, int y1, int sideLength, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
-    
-    // virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color, bool filled = true, bool ninja = false, float rotation = 0);
-
-    // virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat color[], bool filled = true, bool ninja = false, float rotation = 0);
-
-    // virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja = false, float rotation = 0);
-
-    // virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja = false, float rotation = 0);
-
-    // virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja = false, float rotation = 0);
-
-    // virtual void drawStar(int x1, int y1, int radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja = false, float rotation = 0);
-
-    // virtual void drawText(std::string text, int x, int y, unsigned size, ColorFloat color = BLACK, std::string fontFileName = "", float rotation = 0);
-
-    // virtual void drawText(std::wstring text, int x, int y, unsigned int size, ColorFloat color = BLACK, std::string fontFileName = "", float rotation = 0);
-
-    // virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color, bool filled = true, float rotation = 0);
-
-    // virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat color[], bool filled = true, float rotation = 0);
-
-    // virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color, bool filled = true, float rotation = 0);
-
-    // virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat color[], bool filled = true, float rotation = 0);
-
-    // virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor, float rotation = 0);
-
-    // virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[], float rotation = 0);
-
-    // virtual void drawTriangleStrip(int size, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[], float rotation = 0);
 
     Background * getBackground();
 
@@ -438,8 +279,6 @@ public:
     void takeScreenShot();
 
     int wait();
-
-    // static void runTests();
 };
 
 }

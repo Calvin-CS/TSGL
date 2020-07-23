@@ -23,17 +23,18 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void alphaRectangleFunction(Canvas& can) {
+    Background * bg = can.getBackground();
     const int WW = can.getWindowWidth(), WH = can.getWindowHeight();
     int a, b, c, d, x, y, w, h;
     while (can.isOpen()) {
         can.sleep();
-        a = rand() % WW; b = rand() % WH;
-        c = rand() % WW; d = rand() % WH;
-        x = (a > c ? c : a);
-        y = (b > d ? d : b);
+        a = saferand(-WW/2,WW/2); b = saferand(-WH/2, WH/2);
+        c = saferand(-WW/2,WW/2); d = saferand(-WH/2, WH/2);
+        x = (a + c) / 2;
+        y = (b + d) / 2;
         w = abs(c - a);
         h = abs(d - b);
-        can.drawRectangle(x, y, w, h, ColorInt(rand()%MAX_COLOR, rand()%MAX_COLOR, rand()%MAX_COLOR, 16), true);
+        bg->drawRectangle(x, y, 0, w, h, 0,0,0, ColorFloat(randfloat(), randfloat(), randfloat(), (float) 16/255));
     }
 }
 

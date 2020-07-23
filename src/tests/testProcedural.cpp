@@ -70,9 +70,11 @@ void testSuite2(Background * bg) {
     bg->drawStar(-400,100,0,50,7,0,0,0,colors,false);
     float x1[6] = { -450,-400,-375,-350,-400,-450 };
     float y1[6] = {  -50, -50, -60,-150,-150,-100 };
+    // renders incorrectly
     bg->drawConcavePolygon(-400,-100,0,6,x1,y1,0,0,0,RED);
     float x2[6] = { -450,-400,-375,-350,-400,-450 };
     float y2[6] = { -175,-175,-185,-275,-275,-225 };
+    // renders correctly, due to shifted vertices
     bg->drawConcavePolygon(-400,-225,0,6,x2,y2,0,0,0,colors);
     float x3[6] = { -275,-175,-200,-175,-275,-250 };
     float y3[6] = {  275, 275, 225, 175, 175, 225 };
@@ -86,17 +88,17 @@ void testSuite2(Background * bg) {
 
 void proceduralFunction(Canvas& can) {
     Background * bg = can.getBackground();
-    float x1[6] = { -275,-175,-200,-175,-275,-250 };
-    float y1[6] = {  275, 275, 225, 175, 175, 225 };
-    ConcavePolygon * c = new ConcavePolygon(0,0,0,6,x1,y1,0,0,0,RED);
-    can.add(c);
+    // float x1[6] = { -275,-175,-200,-175,-275,-250 };
+    // float y1[6] = {  275, 275, 225, 175, 175, 225 };
+    // ConcavePolygon * c = new ConcavePolygon(0,0,0,6,x1,y1,0,0,0,RED);
+    // can.add(c);
 
-    Star * s = new Star(0,0,0,50,7,0,0,0,RED,false);
-    can.add(s);
+    // Star * s = new Star(0,0,0,50,7,0,0,0,RED,false);
+    // can.add(s);
 
-    can.bindToButton(TSGL_RIGHT, TSGL_PRESS, [&c]() {
-        c->changeXBy(10);
-    });
+    // can.bindToButton(TSGL_RIGHT, TSGL_PRESS, [&c]() {
+    //     c->changeXBy(10);
+    // });
 
     bool flip = true;
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&bg, &flip]() {

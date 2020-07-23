@@ -68,6 +68,7 @@ BINARIES= \
 	bin/test2Dvs3D \
 	bin/test3DRotation \
 	bin/test3DPhilosophers \
+	bin/testAlphaRectangle \
 	bin/testArrows \
 	bin/testBackground \
 	bin/testBallroom \
@@ -105,7 +106,6 @@ BINARIES= \
 	bin/testTriangle \
 	bin/testTriangleStrip \
 #  bin/test_specs \
-#	bin/testAlphaRectangle \
 #	bin/testAura \
 #	bin/testBlurImage \
 #	bin/testCalcPi \

@@ -54,7 +54,7 @@ void backgroundFunction(Canvas& can) {
         can.sleep();
         // bg->clear();
         x = 200 * sin( (float) can.getFrameNumber()/90);
-        bg->drawSquare(x,0,0,200,0,0,0,RED);
+        bg->drawSquare(x,0,0,200,0,0,0,RED, true);
         // cube->setCenterZ(500 * cos((float) can.getFrameNumber()/50));
     }
     delete cube;

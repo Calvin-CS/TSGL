@@ -66,41 +66,29 @@ public:
 
     virtual bool isInitialized() { return complete; }
 
+    virtual void clear() { toClear = true; }
+
     virtual void draw(); 
 
-    /*!
-    * \brief Accessor for the width of the Background.
-    * \details Returns the value of the myWidth private variable, a GLint.
-    */
-    virtual GLint getWidth() { return myWidth; }
+    virtual void drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color, bool doubleArrow = false, bool outlined = false);
 
-    /*!
-    * \brief Accessor for the height of the Background.
-    * \details Returns the value of the myHeight private variable, a GLint.
-    */
-    virtual GLint getHeight() { return myHeight; }
+    virtual void drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color[], bool doubleArrow = false, bool outlined = false);
 
-    virtual ColorInt getPixel(int row, int col);
+    virtual void drawCircle(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color, bool doubleArrow = false);
+    virtual void drawCircle(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
-    virtual void drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color[], bool doubleArrow = false);
+    virtual void drawConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawCircle(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat color);
+    virtual void drawConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
-    virtual void drawCircle(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat color[]);
+    virtual void drawConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color);
+    virtual void drawConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
-    virtual void drawConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]);
+    virtual void drawEllipse(float x, float y, float z, float xRadius, float yRadius, float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color);
-
-    virtual void drawConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]);
-
-    virtual void drawEllipse(float x, float y, float z, float xRadius, float yRadius, float yaw, float pitch, float roll, ColorFloat color);
-
-    virtual void drawEllipse(float x, float y, float z, float xRadius, float yRadius, float yaw, float pitch, float roll, ColorFloat color[]);
+    virtual void drawEllipse(float x, float y, float z, float xRadius, float yRadius, float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
     virtual void drawImage(float x, float y, float z, std::string filename, float width, float height, float yaw, float pitch, float roll, float alpha = 1.0f);
 
@@ -114,37 +102,53 @@ public:
 
     virtual void drawPolyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color[]);
 
-    virtual void drawRectangle(float x, float y, float z, float width, float height, float yaw, float pitch, float roll, ColorFloat color);
+    virtual void drawRectangle(float x, float y, float z, float width, float height, float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawRectangle(float x, float y, float z, float width, float height, float yaw, float pitch, float roll, ColorFloat color[]);
+    virtual void drawRectangle(float x, float y, float z, float width, float height, float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
-    virtual void drawRegularPolygon(float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, ColorFloat color);
+    virtual void drawRegularPolygon(float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawRegularPolygon(float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, ColorFloat color[]);  
+    virtual void drawRegularPolygon(float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);  
 
-    virtual void drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color);
+    virtual void drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color[]);
+    virtual void drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
-    virtual void drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color, bool ninja = false);
+    virtual void drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color, bool ninja = false, bool outlined = false);
 
-    virtual void drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja = false);
+    virtual void drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja = false, bool outlined = false);
 
     virtual void drawText(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color);
 
-    virtual void drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color);
+    virtual void drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color[]);
+    virtual void drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
-    virtual void drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color);
+    virtual void drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
-    virtual void drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color[]);
+    virtual void drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
-    virtual void clear() { toClear = true; }
+    /*!
+    * \brief Accessor for the width of the Background.
+    * \details Returns the value of the myWidth private variable, a GLint.
+    */
+    virtual GLint getWidth() { return myWidth; }
+
+    /*!
+    * \brief Accessor for the height of the Background.
+    * \details Returns the value of the myHeight private variable, a GLint.
+    */
+    virtual GLint getHeight() { return myHeight; }
+
+    virtual ColorInt getPixel(int x, int y);
+
+    /*!
+    * \brief Accessor for color which is used to clear the Background when clear() is called.
+    * \details Returns a ColorInt corresponding to the clear color of the Background.
+    */
+    virtual ColorFloat getClearColor() { return baseColor; }
 
     virtual void setClearColor(ColorFloat c);
-
-    virtual ColorFloat getClearColor() { return baseColor; }
 
     virtual ~Background();
 };
