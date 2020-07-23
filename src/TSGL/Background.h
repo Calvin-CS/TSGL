@@ -33,20 +33,30 @@ namespace tsgl {
 class Background {
 protected:
     GLint myWidth, myHeight;
+
     GLuint multisampledTexture, intermediateTexture;
     GLuint multisampledFBO, intermediateFBO;
     GLuint RBO;
+
     Array<Drawable*> * myDrawables;
+
     Shader * textShader;
     Shader * shapeShader;
     Shader * textureShader;
+
     ColorFloat baseColor;
-    bool complete;
     bool toClear;
+
+    uint8_t* readPixelBuffer;
+
+    std::mutex pixelBufferMutex;
+    GLuint pixelTexture;
+    uint8_t* pixelTextureBuffer;
+    bool newPixelsDrawn;
+
+    bool complete;
     std::mutex attribMutex;
-    std::mutex pointArrayMutex;
-    uint8_t* pixelBuffer;
-    GLfloat * vertexData;
+    GLfloat * vertices;
 
     virtual void selectShaders(unsigned int sType);
 public:
@@ -70,11 +80,7 @@ public:
     */
     virtual GLint getHeight() { return myHeight; }
 
-    // broken
     virtual ColorInt getPixel(int row, int col);
-
-    // broken
-    virtual void drawPixel(int x, int y, ColorInt c);
 
     virtual void drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color, bool doubleArrow = false);
 
@@ -101,6 +107,8 @@ public:
     virtual void drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color);
 
     virtual void drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color[]);
+
+    virtual void drawPixel(int x, int y, ColorInt c);
 
     virtual void drawPolyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color);
 

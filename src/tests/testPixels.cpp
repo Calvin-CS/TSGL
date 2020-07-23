@@ -37,56 +37,56 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
     Background * background = can.getBackground();
 
     /* this is the part of the test for drawPixel */
-    // #pragma omp parallel num_threads(numberOfThreads)
-    // {
-    //     int nthreads = omp_get_num_threads();  //Actual number of threads to use
-    //     // note: allocating rows pixels to threads like this is only perfect if can.getWindowHeight() % # of threads = 0.
-    //     // but I'm too lazy to make it work perfectly always, since it's "good enough" and this is really just a drawPixel test.
-    //     int myPart = can.getWindowHeight() / nthreads;
-    //     int myStart = myPart * omp_get_thread_num();
-    //     for (int i = myStart; i < myStart + myPart; i++) {
-    //     for (int j = 0; j < can.getWindowWidth(); j++) {
-    //         // int id = omp_get_thread_num();
-    //         if (i % 2 == 0) {
-    //         background->drawPixel(j, i, BLACK);
-    //         } else {
-    //         background->drawPixel(j, i, ColorInt(i % 255, j % 255, (i*j) % 255));
-    //         }
-    //     }
-    //     if (!can.isOpen()) break;
-    //     }
-    // }
+    #pragma omp parallel num_threads(numberOfThreads)
+    {
+        int nthreads = omp_get_num_threads();  //Actual number of threads to use
+        // note: allocating rows pixels to threads like this is only perfect if can.getWindowHeight() % # of threads = 0.
+        // but I'm too lazy to make it work perfectly always, since it's "good enough" and this is really just a drawPixel test.
+        int myPart = can.getWindowHeight() / nthreads;
+        int myStart = myPart * omp_get_thread_num();
+        for (int i = myStart; i < myStart + myPart; i++) {
+        for (int j = 0; j < can.getWindowWidth(); j++) {
+            // int id = omp_get_thread_num();
+            if (i % 2 == 0) {
+            background->drawPixel(j - can.getWindowWidth()/2, i - can.getWindowHeight()/2, BLACK);
+            } else {
+            background->drawPixel(j - can.getWindowWidth()/2, i - can.getWindowHeight()/2, ColorInt(i % 255, j % 255, (i*j) % 255));
+            }
+        }
+        if (!can.isOpen()) break;
+        }
+    }
 
     /* end drawPixel. while loop only contains can.sleep() */
 
     /* the getPixel portion of the test */
-    bool print = false;
-    int mouseX = 0;
-    int mouseY = 0;
+    // bool print = false;
+    // int mouseX = 0;
+    // int mouseY = 0;
 
-    background->drawSquare(-100,100,0,100,0,0,0,RED);
-    background->drawSquare(-100,-100,0,100,0,0,0,GREEN);
-    background->drawSquare(100,100,0,100,0,0,0,BLUE);
-    background->drawSquare(100,-100,0,100,0,0,0,ORANGE);
+    // background->drawSquare(-100,100,0,100,0,0,0,RED);
+    // background->drawSquare(-100,-100,0,100,0,0,0,GREEN);
+    // background->drawSquare(100,100,0,100,0,0,0,BLUE);
+    // background->drawSquare(100,-100,0,100,0,0,0,ORANGE);
 
-    can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&print] () {
-        print = true;
-    });
+    // can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&print] () {
+    //     print = true;
+    // });
 
-    ColorInt c;
+    // ColorInt c;
     /* end getPixel(). uncomment entirety of while loop besides can.sleep */
 
     while (can.isOpen()) {
         can.sleep();
-        mouseX = can.getMouseX();
-        mouseY = can.getMouseY();
-        if (print) {
-            background->drawPixel(mouseY, mouseX, RED);
-            c = background->getPixel(mouseY, mouseX);  // mouse Y is ROW. mouse X is COLUMN. Think about it.
-            printf("%d, %d - ", mouseY, mouseX);
-            printf("%d:%d:%d:%d\n", c.R, c.G, c.B, c.A);
-            print = false;
-        }
+        // mouseX = can.getMouseX();
+        // mouseY = can.getMouseY();
+        // if (print) {
+        //     background->drawPixel(mouseY, mouseX, RED);
+        //     c = background->getPixel(mouseY, mouseX);  // mouse Y is ROW. mouse X is COLUMN. Think about it.
+        //     printf("%d, %d - ", mouseY, mouseX);
+        //     printf("%d:%d:%d:%d\n", c.R, c.G, c.B, c.A);
+        //     print = false;
+        // }
     }
 }
 
