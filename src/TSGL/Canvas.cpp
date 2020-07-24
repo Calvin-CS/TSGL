@@ -298,12 +298,12 @@ void Canvas::draw()
           }
         }
 
-        // Update our screenBuffer copy with the default framebuffer
-        glViewport(0,0,winWidth*scaling,winHeight*scaling);
-        glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-        glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
         // glFlush(); // this should hopefully fix the lines in screenshot() bug. If not here, one line up.
         if (toRecord > 0) {
+          // Update our screenBuffer copy with the default framebuffer
+          glViewport(0,0,winWidth*scaling,winHeight*scaling);
+          glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+          glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
           screenShot();
           --toRecord;
         }
@@ -544,7 +544,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
        padwidth = 4-padwidth;
     winWidthPadded = winWidth + padwidth;
     screenBuffer = new uint8_t[3 * (winWidthPadded+1) * winHeight];
-    for (unsigned i = 0; i < 3 * (winWidthPadded+1) * winHeight; ++i) {
+    for (int i = 0; i < 3 * (winWidthPadded+1) * winHeight; ++i) {
       screenBuffer[i] = 0;
     }
 
