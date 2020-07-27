@@ -17,8 +17,12 @@ cd src/tests && make                # CD into test directory and call test Makef
 cd ../..							# CD back to main TSGL directory
 
 # RUN TESTS
+run ./$TESTS_PATH/test_specs/test_specs
+run ./$TESTS_PATH/test2Dvs3D/test2Dvs3D
 run ./$TESTS_PATH/test3DRotation/test3DRotation
+run ./$TESTS_PATH/testAlphaRectangle/testAlphaRectangle
 run ./$TESTS_PATH/testArrows/testArrows
+run ./$TESTS_PATH/testBackground/testBackground
 run ./$TESTS_PATH/testCircle/testCircle
 run ./$TESTS_PATH/testConcavePolygon/testConcavePolygon
 run ./$TESTS_PATH/testCone/testCone
@@ -26,14 +30,20 @@ run ./$TESTS_PATH/testConvexPolygon/testConvexPolygon
 run ./$TESTS_PATH/testCube/testCube
 run ./$TESTS_PATH/testCuboid/testCuboid
 run ./$TESTS_PATH/testCylinder/testCylinder
+run ./$TESTS_PATH/testDice/testDice
+run ./$TESTS_PATH/testDiorama/testDiorama
 run ./$TESTS_PATH/testEllipse/testEllipse
 run ./$TESTS_PATH/testEllipsoid/testEllipsoid
+# run ./$TESTS_PATH/testGetPixels/testGetPixels
 run ./$TESTS_PATH/testImage/testImage 1200 600                                           #Width, Height
 run ./$TESTS_PATH/testLines/testLines
 run ./$TESTS_PATH/testPrism/testPrism
+run ./$TESTS_PATH/testProcedural/testProcedural
+# run ./$TESTS_PATH/testProgressBar/testProgressBar
 run ./$TESTS_PATH/testPyramid/testPyramid
 run ./$TESTS_PATH/testRectangle/testRectangle
 run ./$TESTS_PATH/testRegularPolygon/testRegularPolygon
+# run ./$TESTS_PATH/testScreenshot/testScreenshot
 run ./$TESTS_PATH/testSphere/testSphere
 run ./$TESTS_PATH/testSquare/testSquare
 run ./$TESTS_PATH/testStar/testStar

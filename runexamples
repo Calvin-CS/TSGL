@@ -17,17 +17,27 @@ cd ../..							# CD back to main TSGL directory
 EXAMPLES_PATH=src/examples
 
 # RUN EXAMPLES
+run ./$EXAMPLES_PATH/ArrayBubbleSort/testArrayBubbleSort
+run ./$EXAMPLES_PATH/ArrayShakerSort/testArrayShakerSort
 run ./$EXAMPLES_PATH/Ballroom/testBallroom
 run ./$EXAMPLES_PATH/Clock/testClock
+# run ./$EXAMPLES_PATH/Conway/testConway
+run ./$EXAMPLES_PATH/CubeRun/testCubeRun
 run ./$EXAMPLES_PATH/DiningPhilosophers/testPhilosophers
 run ./$EXAMPLES_PATH/DiningPhilosophers3D/test3DPhilosophers
+# run ./$EXAMPLES_PATH/Fireworks/testFireworks
+# run ./$EXAMPLES_PATH/ForestFire/testForestFire
+# run ./$EXAMPLES_PATH/Langton/testLangton
+# run ./$EXAMPLES_PATH/Mandelbrot/testMandelbrot
 run ./$EXAMPLES_PATH/MergeSort/testMergeSort
 run ./$EXAMPLES_PATH/NewtonPendulum/testNewtonPendulum 900 400 11                   # Width, Height, Number Of Balls
 run ./$EXAMPLES_PATH/Pong/testPong
+# run ./$EXAMPLES_PATH/ProducerConsumer/testProducerConsumer
+# run ./$EXAMPLES_PATH/ReaderWriter/testReaderWriter
 run ./$EXAMPLES_PATH/SeaUrchin/testSeaUrchin 16                                     # Threads
 run ./$EXAMPLES_PATH/ShakerSort/testShakerSort
 run ./$EXAMPLES_PATH/SolarSystem/testSolarSystem
-run ./$EXAMPLES_PATH/ArrayBubbleSort/testArrayBubbleSort
-run ./$EXAMPLES_PATH/ArrayShakerSort/testArrayShakerSort
 run ./$EXAMPLES_PATH/ThreadedArrayAddition/testThreadedArrayAddition
+run ./$EXAMPLES_PATH/ThreadedArrayBubbleSort/testThreadedArrayBubbleSort
 run ./$EXAMPLES_PATH/ThreadedArrayOperations/testThreadedArrayOperations
+run ./$EXAMPLES_PATH/ThreadedSolarSystem/testThreadedSolarSystem
