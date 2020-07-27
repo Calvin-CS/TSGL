@@ -47,6 +47,5 @@ int main(int argc, char* argv[]) {
   int w = 1000;
   int h = 1000;
   Canvas c(-1, -1, w, h, "Arrows");
-  c.setBackgroundColor(BLACK);
   c.run(arrowFunction);
 }

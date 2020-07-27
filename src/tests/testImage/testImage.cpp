@@ -27,7 +27,7 @@ void imageFunction(Canvas& can) {
     // Image * image = new Image(0,0,0,"./assets/pics/Messier51.jpg", 4,3, 0,0,0);
     // can.add(image);
 
-    Image * image = new Image(-ww,0.5 * hh,0,"./assets/pics/test.png", ww,hh, 0,0,0);
+    Image * image = new Image(-ww,0.5 * hh,0,"./assets/pics/ball.png", ww,hh, 0,0,0);
     can.add(image);
     Image * image2 = new Image(0,0.5 * hh,0,"./assets/pics/ship.bmp", ww,hh, 0,0,0);
     can.add(image2);
@@ -96,6 +96,6 @@ int main(int argc, char * argv[]) {
     if(w <= 0 || h <= 0) { //Check width and height validity
       w = 1.2*Canvas::getDisplayHeight(); h = 0.5*w;
     }
-    Canvas c(-1, -1, w, h ,"Images");
+    Canvas c(-1, -1, w, h ,"Images", WHITE);
     c.run(imageFunction);
 }
