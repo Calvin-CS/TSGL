@@ -49,10 +49,7 @@ void getPixelsFunction(Canvas& can, int threads) {
       for (int y = row; y < row + blocksize; y++) {
         for (int x = -(width/2); x < width/2; x++) {
           ColorInt c = bg->getPixel(x,y);
-          printf("1. %d:%d:%d\n", c.R, c.G, c.B);
           bg->drawPixel(x, y, ColorInt((1+c.R) % NUM_COLORS, (1+c.G) % NUM_COLORS, (1+c.B) % NUM_COLORS));
-          c = bg->getPixel(x,y);
-          printf("2. %d:%d:%d\n", c.R, c.G, c.B);
         }
       }
     }
