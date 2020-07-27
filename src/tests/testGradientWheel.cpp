@@ -22,6 +22,7 @@ using namespace tsgl;
  * \param threads Number of threads to use.
  */
 void gradientWheelFunction(Canvas& can, int threads) {
+  Background * background = can.getBackground();
   const int CW = can.getWindowWidth() / 2,         // Half the window's width
             CH = can.getWindowHeight() / 2;        // Half the window's height
   const float RADIUS = (CH < CW ? CH : CW) * .95,  // Radius of wheel
@@ -33,7 +34,8 @@ void gradientWheelFunction(Canvas& can, int threads) {
     int delta = (NUM_COLORS / threads);            // Distance between threads to compute
     float shading = 1 - (float)tid / threads;      // Shading based on thread ID
     ColorFloat color[3];                           // RGB color to build
-    int start, end, xx[3], yy[3];                  // Setup the arrays of values for vertices
+    int start, end;
+    float xx[3], yy[3], zz[3];                  // Setup the arrays of values for vertices
     while (can.isOpen()) {
       can.sleep();
       start = (NUM_COLORS - (can.getReps() % NUM_COLORS) + tid*delta) % NUM_COLORS; // Starting hue of the segment
@@ -42,13 +44,14 @@ void gradientWheelFunction(Canvas& can, int threads) {
       color[1] = ColorHSV(start / (float)NUM_COLORS * 6, 1.0f, shading, 1.0f);
       color[2] = ColorHSV(end   / (float)NUM_COLORS * 6, 1.0f, shading, 1.0f);
 
-      xx[0] = CW; yy[0] = CH;                           // Set first vertex to center of screen
-      xx[1] = CW + RADIUS * sin(ARCLENGTH * start);     // Add the next two vertices around the circle
-      yy[1] = CH + RADIUS * cos(ARCLENGTH * start);
-      xx[2] = CW + RADIUS * sin(ARCLENGTH * (start + 1));
-      yy[2] = CH + RADIUS * cos(ARCLENGTH * (start + 1));
+      xx[0] = 0; yy[0] = 0;                           // Set first vertex to center of screen
+      xx[1] = RADIUS * sin(ARCLENGTH * start);     // Add the next two vertices around the circle
+      yy[1] = RADIUS * cos(ARCLENGTH * start);
+      xx[2] = RADIUS * sin(ARCLENGTH * (start + 1));
+      yy[2] = RADIUS * cos(ARCLENGTH * (start + 1));
+      zz[0] = zz[1] = zz[2] = 0;
 
-      can.drawTriangleStrip(3, xx, yy, color, true);
+      background->drawTriangleStrip(0,0,0,3,xx,yy,zz,0,0,0,color);
     }
   }
 }

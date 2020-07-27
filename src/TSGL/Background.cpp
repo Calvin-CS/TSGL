@@ -23,8 +23,13 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
     toClear = false;
     complete = false;
     newPixelsDrawn = false;
+
+    int padwidth = myWidth % 4;
+    if (padwidth > 0)
+       padwidth = 4-padwidth;
+    myWidthPadded = myWidth + padwidth;
     readPixelMutex.lock();
-    readPixelBuffer = new uint8_t[myWidth * myHeight * 3];
+    readPixelBuffer = new uint8_t[myWidthPadded * myHeight * 3];
     for (int i = 0; i < myWidth * myHeight * 3; ++i) {
       readPixelBuffer[i] = 0;
     }
@@ -214,7 +219,7 @@ void Background::draw() {
 
     glViewport(0,0,myWidth,myHeight);
     readPixelMutex.lock();
-    glReadPixels(0, 0, myWidth, myHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
+    glReadPixels(0, 0, myWidthPadded, myHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
     readPixelMutex.unlock();
 }
 
@@ -895,7 +900,7 @@ ColorInt Background::getPixel(int x, int y) {
     readPixelMutex.lock();
     x += myWidth/2;
     y += myHeight/2;
-    int off = 3 * (y * myWidth + x);
+    int off = 3 * (y * myWidthPadded + x);
     ColorInt c = ColorInt(readPixelBuffer[off], readPixelBuffer[off + 1], readPixelBuffer[off + 2], 255);
     readPixelMutex.unlock();
     return c;

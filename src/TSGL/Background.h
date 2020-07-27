@@ -32,7 +32,7 @@ namespace tsgl {
  */
 class Background {
 protected:
-    GLint myWidth, myHeight;
+    GLint myWidth, myHeight, myWidthPadded;
 
     GLuint multisampledTexture, intermediateTexture;
     GLuint multisampledFBO, intermediateFBO;

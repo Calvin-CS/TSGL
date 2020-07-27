@@ -24,20 +24,21 @@ using namespace tsgl;
  * \param threads Number of threads to use.
  */
 void highData(Canvas& can, unsigned threads) {
+  Background * background = can.getBackground();
   const float HVAL = 6.0f/255.0f;  // For converting integer hues to floating point values
-  const unsigned int width = can.getWindowWidth(), height = can.getWindowHeight();
+  const int width = can.getWindowWidth(), height = can.getWindowHeight();
   #pragma omp parallel num_threads(threads)
   {
     float tid = omp_get_thread_num(), nthreads = omp_get_num_threads();
     int offset = (MAX_COLOR*tid)/nthreads;
-    unsigned bstart = tid*(width/nthreads);
-    unsigned bend = (tid==nthreads) ? width-1 : bstart + width/nthreads;
+    int bstart = tid*(width/nthreads) - width/2;
+    int bend = (tid==nthreads) ? width-1 : bstart + width/nthreads;
     ColorHSV tcol= Colors::highContrastColor(tid);
     while (can.isOpen()) {
       tcol.H = HVAL * ((can.getReps() + offset) % MAX_COLOR);
-      for (unsigned i = bstart; i <= bend; i++)
-        for (unsigned int j = 0; j < height; j++)
-          can.drawPoint(i, j, tcol);
+      for (int i = bstart; i <= bend; i++)
+        for (int j = -height/2; j < height/2; j++)
+          background->drawPixel(i, j, tcol);
       can.handleIO();
     }
   }

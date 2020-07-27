@@ -89,7 +89,12 @@ BINARIES= \
 	bin/testFireworks \
 	bin/testForestFire \
 	bin/testGetPixels \
+	bin/testGradientWheel \
+	bin/testGraydient \
+	bin/testGreyscale \
+	bin/testHighData \
 	bin/testImage \
+	bin/testInverter \
 	bin/testLines \
 	bin/testMergeSort \
 	bin/testNewtonPendulum \
@@ -117,12 +122,7 @@ BINARIES= \
 #	bin/testCosineIntegral \
 #	bin/testDice \
 #	bin/testFunction \
-#	bin/testGradientWheel \
-#	bin/testGraydient \
-#	bin/testGreyscale \
-#	bin/testHighData \
 #	bin/testImageCart \
-#	bin/testInverter \
 #	bin/testLangton \
 #	bin/testLineChain \
 #	bin/testLineFan \
