@@ -1,43 +1,82 @@
-# Master Makefile for Examples
+# Master Makefile for Tests
 
 # *****************************************************
 
-SUBDIRS := $(wildcard test*/.)
+# SUBDIRS_TO_BUILD := $(wildcard test*/.)							# Used to build the tests
+SUBDIRS_TO_BUILD := test_specs \
+			test2Dvs3D \
+			test3DRotation \
+			testAlphaRectangle \
+			testArrows \
+			testBackground \
+			testCircle \
+			testConcavePolygon \
+			testCone \
+			testConvexPolygon \
+			testCube \
+			testCuboid \
+			testCylinder \
+			testDice \
+			testDiorama \
+			testEllipse \
+			testEllipsoid \
+			testImage \
+			testLines \
+			testPrism \
+			testProcedural \
+			testPyramid \
+			testRectangle \
+			testRegularPolygon \
+			testSphere \
+			testSquare \
+			testStar \
+			testText \
+			testTransparency \
+			testTriangle \
+			testTriangleStrip \
+# 			testAura \
+# 			testBlurImage \
+# 			testCalcPi \
+# 			testColorWheel \
+# 			testConstructors \
+# 			testCosineIntegral \
+# 			testFunction \
+# 			testGetPixels \
+# 			testGradientWheel \
+# 			testGraydient \
+# 			testGreyscale \
+# 			testHighData \
+# 			testImageCart \
+# 			testInverter \
+# 			testLineChain \
+# 			testLineFan \
+# 			testMouse \
+# 			testPixels \
+# 			testProgressBar \
+# 			testProjectiles \
+# 			testScreenshot \
+# 			testSpectrogram \
+# 			testSpectrum \
+# 			testTextCart \
+# 			testTextTwo \
+# 			testUnits \
 
-all: $(SUBDIRS)
+SUBDIRS_TO_CLEAN := $(subst test,..., $(SUBDIRS_TO_BUILD))	# Used to clean the tests
 
-$(SUBDIRS):
+
+all: $(SUBDIRS_TO_BUILD)
+
+$(SUBDIRS_TO_BUILD):
 	@echo ""
 	@tput setaf 3;
-	@echo "+++++++++++++++++ Generating Binaries for$(subst /., , $@)+++++++++++++++++"
+	@echo "+++++++++++++++++ Generating Binaries for$(subst /., , $@) +++++++++++++++++"
 	@tput sgr0;
 	@echo ""
 	$(MAKE) -C $@
 
-.PHONY: all $(SUBDIRS)
+.PHONY: all $(SUBDIRS_TO_BUILD) clean $(SUBDIRS_TO_CLEAN)
 
-clean:
-	(cd test3DRotation && $(MAKE) clean)
-	(cd testArrows && $(MAKE) clean)
-	(cd testCircle && $(MAKE) clean)
-	(cd testConcavePolygon && $(MAKE) clean)
-	(cd testCone && $(MAKE) clean)
-	(cd testConvexPolygon && $(MAKE) clean)
-	(cd testCube && $(MAKE) clean)
-	(cd testCuboid && $(MAKE) clean)
-	(cd testCylinder && $(MAKE) clean)
-	(cd testEllipse && $(MAKE) clean)
-	(cd testEllipsoid && ${MAKE} clean)
-	(cd testImage && $(MAKE) clean)
-	(cd testLines && $(MAKE) clean)
-	(cd testPrism && $(MAKE) clean)
-	(cd testPyramid && $(MAKE) clean)
-	(cd testRectangle && $(MAKE) clean)
-	(cd testRegularPolygon && $(MAKE) clean)
-	(cd testSphere && $(MAKE) clean)
-	(cd testSquare && $(MAKE) clean)
-	(cd testStar && $(MAKE) clean)
-	(cd testText && $(MAKE) clean)
-	(cd testTransparency && ${MAKE} clean)
-	(cd testTriangle && $(MAKE) clean)
-	(cd testTriangleStrip && ${MAKE} clean)
+clean: $(SUBDIRS_TO_CLEAN)
+
+$(SUBDIRS_TO_CLEAN):
+	cd $(subst ...,test,$@) && $(MAKE) clean

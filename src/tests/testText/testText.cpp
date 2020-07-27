@@ -30,9 +30,9 @@ void textFunction(Canvas& can, std::string font) {
     Text * uppercase = new Text(0,50,0,L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, 40, 0,0,0,WHITE);
     can.add(uppercase);
     Text * random = new Text(0,-50,0,L"{:<>,./?+=+^üc", font, 40, 0,0,0,WHITE);
-    Rectangle * rec = new Rectangle(0,-53,0,random->getWidth(),random->getHeight(),0,0,0,GRAY);
+    // Rectangle * rec = new Rectangle(0,-53,0,random->getWidth(),random->getHeight(),0,0,0,GRAY);
     can.add(random);
-    can.add(rec);
+    // can.add(rec);
 
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&random]() {
         random->setText(L"Glorgaborg");
@@ -41,9 +41,14 @@ void textFunction(Canvas& can, std::string font) {
         // random->setFontSize(100);
     });
 
+    bool ss = false;
     float rotation = 0.0f;
     while(can.isOpen()) {
         can.sleep();
+        // if (can.getFrameNumber() > 50 && !ss) {
+        //     can.takeScreenShot();
+        //     ss = true;
+        // }
         // random->setCenterX(sin(rotation)*200);
         // random->setCenterY(cos(rotation)*200);
         // random->setCenterZ(sin(rotation)*100);
@@ -69,6 +74,5 @@ int main(int argc, char * argv[]) {
       h = 0.75f*w;
     }
     Canvas c(-1, -1, w, h, "Text on a Canvas");
-    c.setBackgroundColor(BLACK);
     c.run(textFunction, font);
 }

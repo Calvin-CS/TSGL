@@ -26,6 +26,7 @@ void squareFunction(Canvas& can) {
     can.add(square2);
     float floatVal = 0.0f;
     GLfloat delta = 0.05;
+    bool ss = false;
     while (can.isOpen()) {
         can.sleep();
         // square->setCenterX(sin(floatVal/90) * 100);
@@ -44,6 +45,10 @@ void squareFunction(Canvas& can) {
         // } else {
         //     square->setColor(RED);
         // }
+        // if (can.getFrameNumber() > 50 && !ss) {
+        //     can.takeScreenShot();
+        //     ss = true;
+        // }
         floatVal += 1;
     }
 
@@ -56,7 +61,6 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;            //If not, set the width and height to a default value
-    Canvas c(-1, -1, 1024, 620, "Basic Square");
-    c.setBackgroundColor(BLACK);
+    Canvas c(-1, -1, 1024, 620, "Basic Square", BLACK);
     c.run(squareFunction);
 }
