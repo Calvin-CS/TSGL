@@ -1,156 +1,187 @@
 #include "Pandemic.h"
 
-#define RADIUS 5        // radius for the Person circles
-#define infection_radius 30
+// person constants
+#define PERSON_RADIUS 5         // the size of each person on screen
+// text constants
+#define FONT "./assets/freefont/FreeSansBold.ttf"   // font for all text
+#define FONT_SIZE 20                                // font size for all text
+#define TEXT_COLOR ColorFloat(0.2,1,1,1)            // color for all text (light blue)
 
 using namespace tsgl;
 
-// Initializes the pandemic
-Pandemic::Pandemic(Canvas& can, unsigned numPeople, unsigned numToInfect, unsigned infectionRate){
-    // current day
-    current_day = 0;
-    // people counters
-    number_of_people = numPeople;
-    num_initially_infected = numToInfect;
-    // states counters
-    num_infected = numToInfect;
-    num_susceptible = numPeople - numToInfect;
-    num_immune = 0;
-    num_dead = 0;
-    
-    // stats
-    contagiousness_factor = infectionRate;
-    num_infections = numToInfect;
-    num_infection_attempts = 0;
-    num_deaths = 0;
-    num_recoveries = 0;
+// To parse command line for custom program options
+cxxopts::ParseResult parse(int argc, char* argv[]) {
+  try {
+    cxxopts::Options options("Pandemic Simulation", "- command line options");
 
-    // window dimensions
-    max_x = can.getWindowWidth()/2;
-    max_y = can.getWindowHeight()/2;
+    options.positional_help("[optional args]").show_positional_help();
 
-    // Generate random seed
-    srand( time(0) );
-    // Fill vectors with infected
-    for(unsigned i = 0; i < num_infected; ++i){
-        myPersons.push_back(new Person(rand()%(can.getWindowWidth())-max_x, 
-                                        rand()%(can.getWindowHeight())-max_y,
-                                        RADIUS, infected)); // myPersons
-        x_locations.push_back(myPersons[i]->getX());               // x_locations
-        y_locations.push_back(myPersons[i]->getY());               // y_locations
-        infected_x_locations.push_back(myPersons[i]->getX());      // infected_x_locations
-        infected_y_locations.push_back(myPersons[i]->getY());      // infected_y_locations
-        // states.push_back(infected);                                // states
-        // num_days_infected.push_back(0);                            // num_days_infected
+    options.allow_unrecognised_options().add_options()("help", "Print help")(
+      "n, num", "the number of people in the model", cxxopts::value<int>()->default_value("50"))(
+      "i, initial", "the number of initially infected people", cxxopts::value<int>()->default_value("5"))(
+      "D, days", "the number of time days in the model", cxxopts::value<int>()->default_value("60"))(
+      "T, sicktime", "the duration of the disease (in days)", cxxopts::value<int>()->default_value("5"))(
+      "c, contagiousness" , "the contagiousness factor of the disease (0-100)", cxxopts::value<int>()->default_value("50"))(
+      "r, radius", "the infection radius of the disease", cxxopts::value<int>()->default_value("35"))(
+      "d, deadliness", "the deadliness factor of the disease (0-100)", cxxopts::value<int>()->default_value("2"))(
+      "h, canvas-height", "TSGL canvas height", cxxopts::value<int>()->default_value("600"))(
+      "w, canvas-width", "TSGL canvas width", cxxopts::value<int>()->default_value("600"));
+
+    auto results = options.parse(argc, argv);
+
+    if (results.count("help")) {
+      std::cout << options.help({"", "Group"}) << std::endl;
+      exit(0);
     }
-    // Fill vectors with susceptible
-    for(unsigned i = num_infected; i < number_of_people; ++i){
-        myPersons.push_back(new Person(rand()%(can.getWindowWidth())-max_x, 
-                                        rand()%(can.getWindowHeight())-max_y,
-                                        RADIUS, susceptible)); // myPersons
-        x_locations.push_back(myPersons[i]->getX());                        // x_locations
-        y_locations.push_back(myPersons[i]->getY());                        // y_locations
-        infected_x_locations.push_back(0);                                  // infected_x_locations
-        infected_y_locations.push_back(0);                                  // infected_y_locations
-        // states.push_back(susceptible);                                      // states
-        // num_days_infected.push_back(0);                                     // num_days_infected
+
+    return results;
+
+  } catch (const cxxopts::OptionSpecException& e) {
+    std::cout << "error parsing options: " << e.what() << std::endl;
+    exit(1);
+  }
+}
+
+
+Pandemic::Pandemic(Canvas& can, int argc, char* argv[]){
+    // Parse command line
+    auto result = parse(argc, argv);
+
+    // Set options   TODO: add upper bounds on options, check options for validity
+    if (result["num"].as<int>() > 0) {
+        myNumPersons = result["num"].as<int>();
     }
+    if (result["initial"].as<int>() > 0) {
+        my_num_initially_infected = result["initial"].as<int>();
+    }
+    if (result["days"].as<int>() > 0) {
+        myNumDays = result["days"].as<int>();
+    }
+    if (result["sicktime"].as<int>() > 0) {
+        mySickDuration = result["sicktime"].as<int>();
+    }
+    if (result["contagiousness"].as<int>() >= 0) {
+        myContagiousFactor = result["contagiousness"].as<int>();
+    }
+    if (result["radius"].as<int>() > 0) {
+        myInfectionRadius = result["radius"].as<int>();
+    }
+    if (result["deadliness"].as<int>() >= 0) {
+        myDeadlinessFactor = result["deadliness"].as<int>();
+    }
+    if (result["canvas-width"].as<int>() > 0) {
+        myWidth = result["canvas-width"].as<int>();
+    }
+    if (result["canvas-height"].as<int>() > 0) {
+        myHeight = result["canvas-height"].as<int>();
+    }
+
+    my_num_currently_infected = my_num_initially_infected;
+    my_num_susceptible = myNumPersons - my_num_initially_infected;
+    my_total_num_infections = my_num_initially_infected;
+    my_total_num_infection_attempts = my_num_initially_infected;
+
+    my_max_x = myWidth - PERSON_RADIUS;
+    my_max_y = myHeight - PERSON_RADIUS - FONT_SIZE;
+
+
+    // random number generator
+    std::uniform_int_distribution<int> init_x_distr(-my_max_x, my_max_x);
+    std::uniform_int_distribution<int> init_y_distr(-my_max_y, my_max_y);
+    std::uniform_int_distribution<int> move_distr(-20, 20);
+    std::uniform_int_distribution<int> chance_distr(1, 100);
+
+    // Insert infected into array
+    for(int i = 0; i < my_num_initially_infected; ++i){
+        myPeople.push_back(new Person(init_x_distr(generator), init_y_distr(generator),
+                                    PERSON_RADIUS, infected, true));
+        myPeople[i]->draw(can);
+    }
+    // Insert susceptible into array
+    for(int i = my_num_initially_infected; i < myNumPersons; ++i){
+        myPeople.push_back(new Person(init_x_distr(generator), init_y_distr(generator),
+                                    PERSON_RADIUS, susceptible, true));
+        myPeople[i]->draw(can);
+    }
+
+    // Create text to display the current day
+    Text * myDayText = new Text(0, 300, 0, L"Day 1", FONT, FONT_SIZE, 0, 0, 0, TEXT_COLOR);
+
+    myCan = &can;
+    // Create canvas for real-time data
+    myCan2 = new Canvas(0, 0, myWidth, myHeight,"Pandemic Data");
+    myCan2->start();
+    myCan2->setBackgroundColor(BLACK);
 
 }
 
-void Pandemic::draw(Canvas& can){
-    for(unsigned i = 0; i < number_of_people; ++i){
-        myPersons[i]->draw(can);
+
+/**
+ * \brief Adds the Pandemic to the canvas.
+ * \param can The Canvas on which the Pandemic is to be drawn.
+ */
+void Pandemic::draw(){
+    myCan->add(myDayText);
+    for(unsigned i = 0; i < myNumPersons; ++i){
+        myPeople[i]->draw(*myCan);
     }
 }
 
-void Pandemic::updateStatuses(){
-    for(unsigned i = 0; i < number_of_people; ++i){
-        myPersons[i]->updateColor();
-    }
+void Pandemic::printInitialInfo(){
+    printf("\n***********************\
+            \n* Initial information *\
+            \n***********************\
+            \n\
+            \nChance of infection: %d%%\
+            \nDaily chance of death: %d%%\
+            \n\
+            \nStarting number of people infected: %d\
+            \nTotal number of people: %d\
+            \n\n", myContagiousFactor, myDeadlinessFactor, my_num_initially_infected, myNumPersons);
 }
 
-// void Pandemic::findInfected(){
-//     for(unsigned i = 0; i < number_of_people; ++i){
-//         if(myPersons[i]->getStatus() == infected){
-//             infected_x_locations[i] = myPersons[i]->getX();
-//             infected_y_locations[i] = myPersons[i]->getY();
-//         }
-//     }
-// }
-
-void Pandemic::movePersons(Canvas& can){
-    float x_move_direction, y_move_direction;
-    for(unsigned i = 0; i < number_of_people; ++i){
-        if(myPersons[i]->getStatus() != dead){
-            // x_move_direction = ((rand()%3) - 1) * 10;
-            // y_move_direction = ((rand()%3) - 1) * 10;
-            x_move_direction = ((rand()%301)-150)/10;
-            y_move_direction = ((rand()%301)-150)/10;
-
-            // Check if move is valid (within the window)
-            if((x_locations[i] + x_move_direction > -max_x) &&
-                (x_locations[i] + x_move_direction < max_x) &&
-                (y_locations[i] + y_move_direction > -max_y) &&
-                (y_locations[i] + y_move_direction < max_y))
-            {
-                // Move Person
-                myPersons[i]->changeXYBy(x_move_direction, y_move_direction);
-                // Update locations
-                x_locations[i] += x_move_direction;
-                y_locations[i] += y_move_direction;
-                // findInfected();
-            }
-        }
+void Pandemic::printFinalInfo(){
+    // To avoid a divide-by-zero error (in case there were no infection attempts)
+    if(my_total_num_infection_attempts != 0){
+        my_true_contagiousness = (my_total_num_infections/static_cast<float>(my_total_num_infection_attempts)) * 100.0;
     }
-}
+    my_true_mortality = (my_total_num_deaths/static_cast<float>(my_total_num_death_attempts)) * 100.0;
 
-void Pandemic::checkForInfection(){
-    // For all people
-    for(unsigned i = 0; i < number_of_people; ++i){
-        if(myPersons[i]->getStatus() == susceptible){
-            // For those that are susceptible, check if there are any infected nearby
-            for(unsigned j = 0; j < number_of_people; ++j){
-                if(myPersons[j]->getStatus() == infected){
-                    // Check if susceptible person is in infection radius
-                    // printf("X: %f  %f   Y: %f  %f\n", myPersons[i]->getX(), myPersons[j]->getX(), myPersons[i]->getY(), myPersons[j]->getY());
-                    if((myPersons[i]->getX() > myPersons[j]->getX() - infection_radius) &&
-                        (myPersons[i]->getX() < myPersons[j]->getX() + infection_radius) &&
-                        (myPersons[i]->getY() > myPersons[j]->getY() - infection_radius) &&
-                        (myPersons[i]->getY() < myPersons[j]->getY() + infection_radius))
-                    {   // ISSUE IS WITH THE FOR LOOPS: SOMEHOW NOT EVERYTHING IS GETTING CHECKED, OR AT LEAST NOT GETTING CHECKED CORRECTLY
-                        printf("AT RISK: PERSON %d\n", i);
-                        ++num_infection_attempts;
-                        // // Determine if person gets infected
-                        // printf("RandNum: %d\n", randNum);
-                        if(rand()%101 <= contagiousness_factor){
-                            printf("PERSON %d INFECTED\n", i);
-                            myPersons[i]->setStatus(infected);
-                            myPersons[i]->updateColor();
-                            ++num_infected;
-                            // printf("num_infected increased to %d\n", num_infected);
-                            --num_susceptible;
-                            break;          // to break out of the j for loop
-                        }
-                    }
-                }
-            }
-        }
-    }
+    printf("\n***********************\
+            \n* Statistics and data *\
+            \n***********************\
+            \n\
+            \n*** Population after %d days ***\
+            \nSusceptible: %d\
+            \nInfected: %d\
+            \nImmune: %d\
+            \nDead: %d\
+            \n", myNumDays, my_num_susceptible, my_num_currently_infected, 
+                 my_total_num_recoveries, my_total_num_deaths);
+    printf("\n*** Statistics ***\
+            \nTotal number of infections: %d\
+            \nTotal number of deaths: %d\
+            \nTotal number of recoveries: %d\
+            \nTrue contagiousness: %.2f%%\
+            \nTrue mortality rate: %.2f%%\
+            \n", my_total_num_infections, my_total_num_deaths, my_total_num_recoveries,
+                    my_true_contagiousness, my_true_mortality);
 }
 
 /*!
  * \brief Destructor for Pandemic.
  */
 Pandemic::~Pandemic(){
-    for(unsigned i = 0; i < number_of_people; ++i){
-        delete myPersons[i];
+    for(unsigned i = 0; i < myPeople.size(); ++i){
+        delete myPeople[i];
     }
-    myPersons.clear();
-    x_locations.clear();
-    y_locations.clear();
-    infected_x_locations.clear();
-    infected_y_locations.clear();
-    // states.clear();
-    // num_days_infected.clear();
+    for(unsigned i = 0; i < myDataText.size(); ++i){
+        delete myDataText[i];
+    }
+    delete myDayText;
+    if (myCan2->isOpen())
+        myCan2->stop();
+    delete myCan2;
+    myPeople.clear();
+    myDataText.clear();
 }

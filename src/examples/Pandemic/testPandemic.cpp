@@ -1,100 +1,94 @@
 /*
  * testPandemic.cpp
  *
- * Usage: ./testPandemic [numPersons] [infectionRate]
+ * Usage: ./testPandemic [numPersons] [contagiousFactor]
             1 <= numPersons <= 200, defaults to 50
-            0 <= infectionRate <= 100, defaults to 20
+            0 <= contagiousFactor <= 100, defaults to 50
  */
 
-#include <tsgl.h>
-#include <cmath>
-#include "Person.h"
 #include "Pandemic.h"
-
-// disease constants
-#define INFECTION_RADIUS 10
-#define NUM_TO_INFECT 10
-// #define DURATION_OF_DISEASE
-// #define contagiousness_factor;
-// #define deadliness_factor;  // 
-// time constants
-#define NUM_DAYS 365         // total number of days for pandemic
-#define MS_PER_DAY 200000;  // microseconds per day
 
 using namespace tsgl;
 
-void pandemicFunction(Canvas& can, unsigned numPersons, unsigned infectionRate) {
-    // Generate random seed
-    srand( time(0) );
+void pandemicFunction(Canvas& can, int argc, char* argv[]) {
+    
+    Pandemic p(can, argc, argv);
 
-    // Create Pandemic
-    Pandemic * p = new Pandemic(can, numPersons, NUM_TO_INFECT, infectionRate);
+    p.draw();
 
-    float sleepTime = 0.03125;      // initial number of seconds to sleep 0.03125
+    float sleepTime = 1;      // initial number of seconds to sleep 0.03125
 
     // Key bindings to speed up/slow down animation
-    can.bindToButton(TSGL_UP, TSGL_PRESS, [&sleepTime](){
-        sleepTime /= 2;
-    });
-    can.bindToButton(TSGL_DOWN, TSGL_PRESS, [&sleepTime](){
-        if(sleepTime < 1){
-            sleepTime *= 2;
-        }
-    });
+    // can.bindToButton(TSGL_UP, TSGL_PRESS, [&sleepTime](){
+    //     sleepTime /= 2;
+    // });
+    // can.bindToButton(TSGL_DOWN, TSGL_PRESS, [&sleepTime](){
+    //     if(sleepTime < 1){
+    //         sleepTime *= 2;
+    //     }
+    // });
 
-    p->draw(can);
-
-    unsigned complete = 0;  // ensures simulation only runs once
-    printf("%d\n", infectionRate);
+    int complete = 0;  // ensures simulation only runs once
     while (can.isOpen()) {
-        if(complete == 0){
-            for(unsigned currentDay = 0; currentDay < NUM_DAYS; ++currentDay){
-                printf("********Day %d********\n", currentDay+1);
-                p->updateStatuses();
-                // p->findInfected();
-                can.sleepFor(sleepTime);
-                p->movePersons(can);
-                can.sleepFor(sleepTime);
-                p->checkForInfection();
-            }
-            complete = 1;
-        }
-    }
+        // if(complete == 0){
+        //     for(unsigned currentDay = 0; currentDay < numDays; ++currentDay){
+        //         // Update day number
+        //         dayText->setText(L"Day " + std::to_wstring(currentDay+1));
 
-    // Output
-    printf("\n***********************\
-            \n* Statistics and data *\
-            \n***********************\
-            \n\
-            \nInfection rate: %.2f\
-            \n\
-            \nSusceptible: %d\
-            \nInfected: %d\
-            \nImmune: %d\
-            \nDead: %d\
-            \n", infectionRate/100.0, p->getNumSusceptible(), p->getNumInfected(), p->getNumImmune(), p->getNumDead());
+        //         #pragma omp parallel num_threads(numPersons)
+        //         {
+        //             int id = omp_get_thread_num();
+                    
+        //             if(personVec[id]->getStatus() != dead){
+        //                 // Move people
+        //                 personVec[id]->moveBy(move_distr(generator), move_distr(generator), max_x, max_y);    
+        //                 can.sleepFor(sleepTime);
+                    
+        //                 // If person is infected
+        //                 if(personVec[id]->getStatus() == infected){
+        //                     ++total_num_death_attempts;
+        //                     // Check if the person has died
+        //                     if(personVec[id]->determineIfDead(can, deadlinessFactor, chance_distr(generator))){
+        //                             --num_currently_infected;
+        //                             ++total_num_deaths;
+        //                             // printf("Person %d dead.\n", id);
+        //                     }
+        //                     // Check if person has been infected for the duration of the disease
+        //                     else if(personVec[id]->getNumDaysInfected() >= sickDuration){
+        //                         --num_currently_infected;
+        //                         ++total_num_recoveries;
+        //                         personVec[id]->recover(can);
+        //                     }
+        //                     // If not dead or recovered, increase number of days infected by 1
+        //                     else{
+        //                         personVec[id]->increaseNumDaysInfected();
+        //                     }
+        //                 }
 
-    // Deallocate all object memory
-    delete p;
+        //                 // If person is susceptible
+        //                 if(personVec[id]->getStatus() == susceptible){
+        //                     // Check if the person is within an infected radius
+        //                     if(personVec[id]->checkIfInfectedNearby(personVec, infectionRadius)){
+        //                         ++total_num_infection_attempts;
+        //                         // Determine if the person has been infected
+        //                         if(personVec[id]->determineIfInfected(can, contagiousFactor, chance_distr(generator))){
+        //                             --num_susceptible;
+        //                             ++num_currently_infected;
+        //                             ++total_num_infections;
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //          } // end pragma
+        //     }   // end the 'days' for loop
+        //     complete = 1;
+        // }
+    }   // end main while loop
 
 }
 
 int main(int argc, char* argv[]){
-    int numPersons = (argc > 1) ? atoi(argv[1]) : 50;
-    int infectionRate = (argc > 2) ? atoi(argv[2]) : 100;
-
-    // Checks validity of numPersons and infectionRate; if invalid, set to default
-    if((numPersons <= 0 or numPersons > 200) || (infectionRate < 0 or infectionRate > 100)){
-        printf("Invalid argument(s).\
-                \nUsage: ./testPandemic [numPersons] [infectionRate]\n \
-                1 <= numPersons <= 200\
-                0 <= infectionRate <= 100 \
-                \nUsing default parameters...\n");
-        numPersons = 50;
-        infectionRate = 20;
-    }
-
     Canvas c(0, -1, 620, 620, "Pandemic Simulation");
     c.setBackgroundColor(BLACK);
-    c.run(pandemicFunction, numPersons, infectionRate);
+    c.run(pandemicFunction, argc, argv);
 }

@@ -1,6 +1,8 @@
 #ifndef PERSON_H_
 #define PERSON_H_
 
+#include <cmath>
+#include <tsgl.h>
 #include <random>
 #include "Circle.h"
 #include "statusEnums.h"
@@ -9,28 +11,38 @@ using namespace tsgl;
 
 class Person {
 protected:
-    // int myID;
+    // location
     float myX, myY;
+    // radius
     GLfloat myCircleRadius;
+    float myInfectionRadius;
+    bool hasInfectionRadius;
+    // TSGL shapes/objects
     Circle* myCircle;
-    Square* myInfectionCircle;
+    Circle* myInfectionCircle;
     ColorFloat myColor;
-    bool hasInfectedRadius;
-
-    // Pandemic data
+    // infection data
     char myStatus;
     int numInfectedNearby;
     int numDaysInfected;
+    bool isToDie;
+    int myNumDaysTillDead;
 public:
+    // Constructors //
+
     Person();
 
-    Person(float x, float y, GLfloat radius, char status, bool hasInfectedRadius);
+    Person(float x, float y, GLfloat radius, float infectionRadius, char status, bool hasInfectedRadius);
+
+    // Draw //
 
     void draw(Canvas& can);
 
+    // Accessors//
 
-    // Accessors
     GLfloat getCircleRadius() { return myCircleRadius; }
+
+    float getInfectionRadius() { return myInfectionRadius; }
         
     Circle * getCircle() { return myCircle; }
 
@@ -41,24 +53,32 @@ public:
     char getStatus() { return myStatus; }
 
     int getNumDaysInfected() { return numDaysInfected; }
-    
 
-    // // Mutators
+    bool willDie() { return isToDie; }
+    
+    int getNumDaysTillDead() { return myNumDaysTillDead; }
+
+    // Mutators //
+
     void setStatus(char status);
 
-    // void setCircleRadius(GLfloat radius);
+    void setColor(ColorFloat c);
 
     void moveBy(float x, float y, float max_x, float max_y);
 
-    // void updateColor();
+    // Checking/updating functions //
 
-    bool checkIfInfectedNearby(std::vector<Person*> personVec, float infectionRadius);
+    bool checkIfInfectedNearby(std::vector<Person*> personVec);
 
     void increaseNumDaysInfected() { numDaysInfected += 1; }
 
     bool determineIfInfected(Canvas& can, int contagiousFactor, int randNum);
     
-    bool determineIfDead(Canvas& can, int deadlinessFactor, int randNum);
+    // bool determineIfDead(Canvas& can, int deadlinessFactor, int randNum);
+
+    void determineIsToDie(int deadlinessFactor, int randNum, int daysTillDead);
+
+    void die(Canvas& can);
 
     void recover(Canvas& can);
 
