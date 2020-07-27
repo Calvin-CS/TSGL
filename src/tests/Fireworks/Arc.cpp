@@ -15,10 +15,11 @@ Arc::Arc(Canvas& can) {
   f = NULL;
   myLife = 0;
   myCan = &can;
-  myX = rand() % myCan->getWindowWidth();
-  myY = rand() % myCan->getWindowHeight();
-  myAngle = ((rand() % 32000) / 32000.0f) * 2.0f*PI;
-  myRad = 20 + rand() % 180;
+  myBackground = myCan->getBackground();
+  myX = saferand(-myCan->getWindowWidth()/2,myCan->getWindowWidth()/2);
+  myY = saferand(-myCan->getWindowHeight()/2,myCan->getWindowHeight()/2);
+  myAngle = (randfloat(32000)) * 2.0f*PI;
+  myRad = 20 + saferand(0,179);
   computeStepSize();
   myColor = ColorHSV(0.0f,1.0f,1.0f,1.0f);
 }
@@ -44,7 +45,7 @@ Arc::Arc(Canvas* can, int x, int y, int rad, float angle) {
  * \details Returns if myX and myY are between 0 and the Canvas' width and height respectively.
  */
 bool Arc::outOfBounds() {
-  return (myX < 0 || myY < 0 || myX > myCan->getWindowWidth() || myY > myCan->getWindowHeight());
+  return (myX < -myCan->getWindowWidth()/2 || myY < -myCan->getWindowHeight()/2 || myX > myCan->getWindowWidth()/2 || myY > myCan->getWindowHeight()/2);
 }
 
 /*!
@@ -52,7 +53,7 @@ bool Arc::outOfBounds() {
  */
 bool Arc::onBlackPixel() {
   const int LET = 14;
-  ColorInt col = myCan->getPoint(myX,myY);
+  ColorInt col = myCan->getBackground()->getPixel(myX,myY);
   return !(col.R<LET && col.G<LET && col.B<LET);
 }
 
@@ -61,7 +62,7 @@ bool Arc::onBlackPixel() {
  */
 void Arc::computeStepSize() {
   myStepSize = 1.0f/myRad;
-  if (rand() % 2 == 0) {
+  if (saferand(0,1) == 0) {
     myStepSize = -myStepSize;
     myAngle = -myAngle;
   }
@@ -75,8 +76,8 @@ void Arc::relocate() {
   myRad = 20 + rand() % 180;
   myAngle = ((rand() % 32000) / 32000.0f) * 2.0f*PI;
   while (outOfBounds() || onBlackPixel()) {
-    myX = rand() % myCan->getWindowWidth();
-    myY = rand() % myCan->getWindowHeight();
+    myX = saferand(-myCan->getWindowWidth()/2,myCan->getWindowWidth()/2);
+    myY = saferand(-myCan->getWindowHeight()/2,myCan->getWindowHeight()/2);
   }
   computeStepSize();
 }
@@ -87,7 +88,7 @@ void Arc::relocate() {
 void Arc::step() {
   if (f != NULL)
     f->step();
-  if (rand() % 100 < 2) {
+  if (saferand(0,99) < 2) {
     ++myRad;
     myStepSize = 1.0f/(myRad);
   }
@@ -100,7 +101,7 @@ void Arc::step() {
     f = new Firework(*myCan,myX,myY);
     relocate();
   }
-  myCan->drawPoint(myX,myY,myColor);
+  myBackground->drawPixel(myX,myY,myColor);
 }
 
 Arc::~Arc() {

@@ -36,19 +36,23 @@ using namespace tsgl;
  * \param threads Number of threads to use.
  */
 void getPixelsFunction(Canvas& can, int threads) {
-  unsigned width = can.getWindowWidth(), height = can.getWindowHeight();
-  can.drawImage("../assets/pics/test.png", 0, 0, width, height);
+  Background * bg = can.getBackground();
+  int width = can.getWindowWidth(), height = can.getWindowHeight();
+  bg->drawImage(0,0,0,"./assets/pics/test.png",width, height, 0,0,0);
   can.sleepFor(0.5f);
   #pragma omp parallel num_threads(threads)
   {
-    unsigned blocksize = (double)height / omp_get_num_threads();
-    unsigned row = blocksize * omp_get_thread_num();
+    int blocksize = (double)height / omp_get_num_threads();
+    int row = blocksize * omp_get_thread_num() - can.getWindowHeight()/2;
     while (can.isOpen()) {
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-      for (unsigned y = row; y < row + blocksize; y++) {
-        for (unsigned x = 0; x < width; x++) {
-          ColorInt c = can.getPoint(x,y);
-          can.drawPoint(x, y, ColorInt((1+c.R) % NUM_COLORS, (1+c.G) % NUM_COLORS, (1+c.B) % NUM_COLORS));
+      for (int y = row; y < row + blocksize; y++) {
+        for (int x = -(width/2); x < width/2; x++) {
+          ColorInt c = bg->getPixel(x,y);
+          printf("1. %d:%d:%d\n", c.R, c.G, c.B);
+          bg->drawPixel(x, y, ColorInt((1+c.R) % NUM_COLORS, (1+c.G) % NUM_COLORS, (1+c.B) % NUM_COLORS));
+          c = bg->getPixel(x,y);
+          printf("2. %d:%d:%d\n", c.R, c.G, c.B);
         }
       }
     }

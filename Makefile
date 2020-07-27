@@ -69,20 +69,26 @@ BINARIES= \
 	bin/test3DRotation \
 	bin/test3DPhilosophers \
 	bin/testAlphaRectangle \
+	bin/testAura \
 	bin/testArrows \
 	bin/testBackground \
 	bin/testBallroom \
 	bin/testCircle \
 	bin/testClock \
+	bin/testColorWheel \
 	bin/testCone \
-	bin/testConvexPolygon \
 	bin/testConcavePolygon \
+	bin/testConvexPolygon \
+	bin/testConway \
 	bin/testCube \
 	bin/testCuboid \
 	bin/testCylinder \
 	bin/testDiorama \
 	bin/testEllipse \
 	bin/testEllipsoid \
+	bin/testFireworks \
+	bin/testForestFire \
+	bin/testGetPixels \
 	bin/testImage \
 	bin/testLines \
 	bin/testMergeSort \
@@ -106,18 +112,11 @@ BINARIES= \
 	bin/testTriangle \
 	bin/testTriangleStrip \
 #  bin/test_specs \
-#	bin/testAura \
 #	bin/testBlurImage \
 #	bin/testCalcPi \
-#	bin/testColorWheel \
-#	bin/testConstructors \
-#	bin/testConway \
 #	bin/testCosineIntegral \
 #	bin/testDice \
-#	bin/testFireworks \
-#	bin/testForestFire \
 #	bin/testFunction \
-#	bin/testGetPixels \
 #	bin/testGradientWheel \
 #	bin/testGraydient \
 #	bin/testGreyscale \

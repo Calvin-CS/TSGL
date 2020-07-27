@@ -13,6 +13,7 @@ using namespace tsgl;
 class Arc {
 private:
   Canvas* myCan;
+  Background * myBackground;
   int myLife;
   float myX, myY, myRad;
   float myAngle, myStepSize;

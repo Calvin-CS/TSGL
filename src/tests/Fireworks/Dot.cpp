@@ -16,6 +16,7 @@
  */
 Dot::Dot(Canvas& can, float x, float y, float s, float d, float f) {
   myCan = &can;
+  myBackground = myCan->getBackground();
   dead = false;
   myX = x; myY = y; mySpeed = s;
   myDir = d; myFric = f;
@@ -29,8 +30,8 @@ void Dot::step() {
   myX += mySpeed*cos(myDir);
   myY += mySpeed*sin(myDir);
   mySpeed *= myFric;
-  if (!dead)
-    myCan->drawPoint(myX,myY,WHITE);
+  if (!dead && abs(myX) < myCan->getWindowWidth() / 2 && abs(myY) < myCan->getWindowHeight() / 2)
+    myBackground->drawPixel(myX,myY,WHITE);
   if (mySpeed < 0.5f)
     dead = true;
 }

@@ -41,6 +41,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas to draw to.
  */
 void conwayFunction(Canvas& can) {
+  Background * bg = can.getBackground();
   const int IPF = 100,                   // Iterations per frame
             WW = can.getWindowWidth(),    // Window width
             WH = can.getWindowHeight();   // Window height
@@ -68,14 +69,14 @@ void conwayFunction(Canvas& can) {
       for (int i = 0; i < IPF; i++) {
         if(mouseDown) {
           farm.addAnt(can.getMouseX(), can.getMouseY());
-          can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
+          bg->drawPixel(can.getMouseX() - WW/2, WH/2 - can.getMouseY(), WHITE);
         }
         farm.moveAnts();
       }
     }
     if(mouseDown) {
       farm.addAnt(can.getMouseX(), can.getMouseY());
-      can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
+      bg->drawPixel(can.getMouseX() - WW/2, WH/2 - can.getMouseY(), WHITE);
     }
   }
 }

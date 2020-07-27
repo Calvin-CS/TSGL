@@ -21,6 +21,7 @@ inline void scatter(float& f, float max) {
  *
  */
 void auraFunction(Canvas& can, int segs) {
+  Background * bg = can.getBackground();
   const float SR2 = sqrt(2);
   const int CW = can.getWindowWidth(), CH = can.getWindowHeight();
   const int ccw = CW/2, cch = CH/2;
@@ -48,8 +49,8 @@ void auraFunction(Canvas& can, int segs) {
     scatter(mangle,0.02f);
     scatter(mdist,2.0f);
     if (mdist > 100) mdist *= 0.99f;
-    mx = can.getMouseX()+mdist*cos(mangle);
-    my = can.getMouseY()+mdist*sin(mangle);
+    mx = can.getMouseX()+mdist*cos(mangle) - can.getWindowWidth()/2;
+    my = can.getWindowHeight()/2 - can.getMouseY()+mdist*sin(mangle);
 
     //Update positions of the edges of the triangles
     float ang = START + ROT*can.getFrameNumber();
@@ -58,11 +59,11 @@ void auraFunction(Canvas& can, int segs) {
         if (cf[i].H > 6.0f) cf[i].H = 0.0f;
       float sang = sin(ang), cang = cos(ang);
       if (fabs(cang) > fabs(sang)) {
-        x1[i] = (cang > 0) ? CW : 0;
-        y1[i] = cch+cch*sang*SR2;
+        x1[i] = (cang > 0) ? ccw : -ccw;
+        y1[i] = cch*sang*SR2;
       } else {
-        y1[i] = (sang > 0) ? CH : 0;
-        x1[i] = ccw+ccw*cang*SR2;
+        y1[i] = (sang > 0) ? cch : -cch;
+        x1[i] = ccw*cang*SR2;
       }
       ang += OFF;
     }
@@ -88,7 +89,7 @@ void auraFunction(Canvas& can, int segs) {
         }
       }
 	  if (next >= 0) {
-		can.drawTriangle(mx,my,x1[next],y1[next],x2[next],y2[next],cf[next],true);
+		bg->drawTriangle(mx,my,0,x1[next],y1[next],0,x2[next],y2[next],0,0,0,0,cf[next],false);
 		drawn[next] = true;
 	  }
     }

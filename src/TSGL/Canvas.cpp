@@ -298,12 +298,12 @@ void Canvas::draw()
           }
         }
 
-        // glFlush(); // this should hopefully fix the lines in screenshot() bug. If not here, one line up.
         if (toRecord > 0) {
           // Update our screenBuffer copy with the default framebuffer
           glViewport(0,0,winWidth*scaling,winHeight*scaling);
           glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
           glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+          // glFlush(); // this should hopefully fix the lines in screenshot() bug. If not here, one line up.
           screenShot();
           --toRecord;
         }
@@ -402,7 +402,7 @@ float Canvas::getFPS() {
   * \return The x coordinates of the mouse on the Canvas.
   */
 int Canvas::getMouseX() {
-    return mouseX;
+    return mouseX - winWidth/2;
 }
 
  /*!
@@ -410,7 +410,7 @@ int Canvas::getMouseX() {
   * \return The y coordinates of the mouse on the Canvas.
   */
 int Canvas::getMouseY() {
-    return mouseY;
+    return winHeight/2 - mouseY;
 }
 
  /*!
@@ -678,7 +678,7 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // We're using the standard GL Profile
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Don't use methods that are deprecated in the target version
   #endif
-    // glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);                       // Do not let the user resize the window
     // glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);                    // Disable the back buffer
     glfwWindowHint(GLFW_STEREO, GL_FALSE);                          // Disable the right buffer
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first

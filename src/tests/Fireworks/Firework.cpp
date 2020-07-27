@@ -17,7 +17,7 @@ Firework::Firework(Canvas& can, int x, int y) {
   myX = x;
   myY = y;
   for (int i = 0; i < 10; ++i) {
-    myDots[i] = new Dot(can, myX,myY,(rand() % 10000)/10000.0f,(rand() % 10000)/10000.0f * 2 * PI, 0.99f);
+    myDots[i] = new Dot(can, myX,myY,randfloat(),randfloat() * 2 * PI, 0.99f);
   }
 }
 

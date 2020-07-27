@@ -18,6 +18,7 @@ using namespace tsgl;
  *  \param speed How fast the fireworks move. 
  */
 void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
+  Background * bg = can.getBackground();
   Arc** arcs = new Arc*[numFireworks];
   for (int i = 0; i < numFireworks; i++) {
     arcs[i] = new Arc(can);
@@ -35,7 +36,7 @@ void fireworkFunction(Canvas& can, int threads, int numFireworks, int speed) {
         for (int i = tid; i < numFireworks; i += nthreads)
           arcs[i]->step();
         if (tid == 0)
-          can.drawRectangle(0,0,CWW,CWH,col);
+          bg->drawRectangle(0,0,0,CWW,CWH,0,0,0,col);
         #pragma omp barrier
       }
     }

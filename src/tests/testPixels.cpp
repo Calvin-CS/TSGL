@@ -81,9 +81,9 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
         // mouseX = can.getMouseX();
         // mouseY = can.getMouseY();
         // if (print) {
-        //     background->drawPixel(mouseY, mouseX, RED);
-        //     c = background->getPixel(mouseY, mouseX);  // mouse Y is ROW. mouse X is COLUMN. Think about it.
-        //     printf("%d, %d - ", mouseY, mouseX);
+        //     c = background->getPixel(mouseX, mouseY);
+        //     background->drawPixel(mouseX, mouseY, RED);
+        //     printf("%d, %d - ", mouseX, mouseY);
         //     printf("%d:%d:%d:%d\n", c.R, c.G, c.B, c.A);
         //     print = false;
         // }

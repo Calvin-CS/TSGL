@@ -23,14 +23,18 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
     toClear = false;
     complete = false;
     newPixelsDrawn = false;
+    readPixelMutex.lock();
     readPixelBuffer = new uint8_t[myWidth * myHeight * 3];
     for (int i = 0; i < myWidth * myHeight * 3; ++i) {
       readPixelBuffer[i] = 0;
     }
+    readPixelMutex.unlock();
+    pixelBufferMutex.lock();
     pixelTextureBuffer = new uint8_t[myWidth * myHeight * 4];
     for (int i = 0; i < myWidth * myHeight * 4; ++i) {
       pixelTextureBuffer[i] = 0;
     }
+    pixelBufferMutex.unlock();
 
     vertices = new GLfloat[30];
     vertices[0]  = vertices[11] = vertices[21] = vertices[10] = vertices[26]  = vertices[20] = -0.5; // x + y
@@ -49,6 +53,7 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
  *  \param window GLFWwindow * within whose context the framebuffers will be initialized.
  */
 void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwindow * window) {
+    attribMutex.lock();
     glfwMakeContextCurrent(window);
     // configure MSAA framebuffer
     // --------------------------
@@ -107,7 +112,6 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwi
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    attribMutex.lock();
     shapeShader = shapeS;
     textShader = textS;
     textureShader = textureS;    
@@ -137,6 +141,7 @@ void Background::draw() {
         attribMutex.unlock();
     }
 
+    drawableMutex.lock();
     for (unsigned int i = 0; i < myDrawables->size(); i++)
     {
         Drawable* d = (*myDrawables)[i];
@@ -151,6 +156,8 @@ void Background::draw() {
             }
         }
     }
+    myDrawables->clear();
+    drawableMutex.unlock();
 
     // setting up texture shaders for both pixel drawing and post-blit render
     selectShaders(TEXTURE_SHADER_TYPE);
@@ -206,33 +213,9 @@ void Background::draw() {
     glEnable(GL_DEPTH_TEST);
 
     glViewport(0,0,myWidth,myHeight);
+    readPixelMutex.lock();
     glReadPixels(0, 0, myWidth, myHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
-
-    myDrawables->clear();
-}
-
- /*!
-  * \brief Draws a single pixel, specified in row,column format.
-  * \details This function alters the value at the specified row, column offset within the Background's buffer variable.
-  * \note (0,0) signifies the <b>top-left</b> of the Background.
-  *   \param row The row (y-position) of the pixel.
-  *   \param col The column (x-position) of the pixel.
-  *   \param color The color of the point.
-  */
-void Background::drawPixel(int x, int y, ColorInt c) {
-    if (abs(x) > myWidth / 2 || abs(y) > myHeight / 2) {
-        TsglErr("Pixel x and y coordinates must be within Background dimensions.");
-        return;
-    }
-    pixelBufferMutex.lock();
-    x += myWidth / 2;
-    y += myHeight / 2;
-    pixelTextureBuffer[(y * myWidth + x) * 4] = c.R;
-    pixelTextureBuffer[(y * myWidth + x) * 4 + 1] = c.G;
-    pixelTextureBuffer[(y * myWidth + x) * 4 + 2] = c.B;
-    pixelTextureBuffer[(y * myWidth + x) * 4 + 3] = c.A;
-    newPixelsDrawn = true;
-    pixelBufferMutex.unlock();
+    readPixelMutex.unlock();
 }
 
 /*! \brief Activates the corresponding Shader for a given Drawable.
@@ -299,9 +282,9 @@ void Background::selectShaders(unsigned int sType) {
 void Background::drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color, bool doubleArrow, bool outlined) {
     Arrow * a = new Arrow(x,y,z,length,width,yaw,pitch,roll,color,doubleArrow);
     a->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(a);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws an Arrow to the Background.
@@ -320,9 +303,9 @@ void Background::drawArrow(float x, float y, float z, float length, float width,
 void Background::drawArrow(float x, float y, float z, float length, float width, float yaw, float pitch, float roll, ColorFloat color[], bool doubleArrow, bool outlined) {
     Arrow * a = new Arrow(x,y,z,length,width,yaw,pitch,roll,color,doubleArrow);
     a->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(a);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Circle to the Background.
@@ -340,9 +323,9 @@ void Background::drawArrow(float x, float y, float z, float length, float width,
 void Background::drawCircle(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     Circle * c = new Circle(x,y,z,radius,yaw,pitch,roll,color);
     c->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(c);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Circle to the Background.
@@ -360,9 +343,9 @@ void Background::drawCircle(float x, float y, float z, float radius, float yaw, 
 void Background::drawCircle(float x, float y, float z, float radius, float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     Circle * c = new Circle(x,y,z,radius,yaw,pitch,roll,color);
     c->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(c);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a ConcavePolygon to the Background.
@@ -383,9 +366,9 @@ void Background::drawCircle(float x, float y, float z, float radius, float yaw, 
 void Background::drawConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     ConcavePolygon * c = new ConcavePolygon(centerX,centerY,centerZ,numVertices,x,y,yaw,pitch,roll,color);
     c->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(c);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a ConcavePolygon to the Background.
@@ -406,9 +389,9 @@ void Background::drawConcavePolygon(float centerX, float centerY, float centerZ,
 void Background::drawConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     ConcavePolygon * c = new ConcavePolygon(centerX,centerY,centerZ,numVertices,x,y,yaw,pitch,roll,color);
     c->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(c);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a ConvexPolygon to the Background.
@@ -428,9 +411,9 @@ void Background::drawConcavePolygon(float centerX, float centerY, float centerZ,
 void Background::drawConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     ConvexPolygon * c = new ConvexPolygon(centerX,centerY,centerZ,numVertices,x,y,yaw,pitch,roll,color);
     c->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(c);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a ConvexPolygon to the Background.
@@ -450,9 +433,9 @@ void Background::drawConvexPolygon(float centerX, float centerY, float centerZ, 
 void Background::drawConvexPolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     ConvexPolygon * c = new ConvexPolygon(centerX,centerY,centerZ,numVertices,x,y,yaw,pitch,roll,color);
     c->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(c);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws an Ellipse to the Background.
@@ -471,9 +454,9 @@ void Background::drawConvexPolygon(float centerX, float centerY, float centerZ, 
 void Background::drawEllipse(float x, float y, float z, float xRadius, float yRadius, float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     Ellipse * e = new Ellipse(x,y,z,xRadius,yRadius,yaw,pitch,roll,color);
     e->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(e);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws an Ellipse to the Background.
@@ -492,9 +475,9 @@ void Background::drawEllipse(float x, float y, float z, float xRadius, float yRa
 void Background::drawEllipse(float x, float y, float z, float xRadius, float yRadius, float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     Ellipse * e = new Ellipse(x,y,z,xRadius,yRadius,yaw,pitch,roll,color);
     e->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(e);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws an Image to the Background.
@@ -510,9 +493,9 @@ void Background::drawEllipse(float x, float y, float z, float xRadius, float yRa
  */
 void Background::drawImage(float x, float y, float z, std::string filename, float width, float height, float yaw, float pitch, float roll, float alpha) {
     Image * i = new Image(x,y,z,filename,width,height,yaw,pitch,roll,alpha);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(i);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Line to the Background.
@@ -528,9 +511,9 @@ void Background::drawImage(float x, float y, float z, std::string filename, floa
  */
 void Background::drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color) {
     Line * l = new Line(x,y,z,length,yaw,pitch,roll,color);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(l);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Line to the Background.
@@ -546,9 +529,33 @@ void Background::drawLine(float x, float y, float z, float length, float yaw, fl
  */
 void Background::drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color[]) {
     Line * l = new Line(x,y,z,length,yaw,pitch,roll,color);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(l);
-    attribMutex.unlock();
+    drawableMutex.unlock();
+}
+
+ /*!
+  * \brief Draws a single pixel, specified in x,y format.
+  * \details This function alters the value at the specified x, y offset within the Background's buffer variable.
+  * \note (0,0) signifies the <b>center</b> of the Background.
+  *   \param x The x-position of the pixel.
+  *   \param y The y-position of the pixel.
+  *   \param color The color of the point.
+  */
+void Background::drawPixel(int x, int y, ColorInt c) {
+    if (abs(x) > (myWidth / 2) || abs(y) > (myHeight / 2)) {
+        TsglErr("Pixel x and y coordinates must be within Background dimensions.");
+        return;
+    }
+    pixelBufferMutex.lock();
+    x += myWidth / 2;
+    y += myHeight / 2;
+    pixelTextureBuffer[(y * myWidth + x) * 4] = c.R;
+    pixelTextureBuffer[(y * myWidth + x) * 4 + 1] = c.G;
+    pixelTextureBuffer[(y * myWidth + x) * 4 + 2] = c.B;
+    pixelTextureBuffer[(y * myWidth + x) * 4 + 3] = c.A;
+    newPixelsDrawn = true;
+    pixelBufferMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Polyline to the Background.
@@ -565,9 +572,9 @@ void Background::drawLine(float x, float y, float z, float length, float yaw, fl
  */
 void Background::drawPolyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color) {
     Polyline * p = new Polyline(x,y,z,numVertices,lineVertices,yaw,pitch,roll,color);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(p);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Polyline to the Background.
@@ -584,9 +591,9 @@ void Background::drawPolyline(float x, float y, float z, int numVertices, float 
  */
 void Background::drawPolyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color[]) {
     Polyline * p = new Polyline(x,y,z,numVertices,lineVertices,yaw,pitch,roll,color);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(p);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Rectangle to the Background.
@@ -605,9 +612,9 @@ void Background::drawPolyline(float x, float y, float z, int numVertices, float 
 void Background::drawRectangle(float x, float y, float z, float width, float height, float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     Rectangle * r = new Rectangle(x,y,z,width,height,yaw,pitch,roll,color);
     r->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(r);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Rectangle to the Background.
@@ -626,9 +633,9 @@ void Background::drawRectangle(float x, float y, float z, float width, float hei
 void Background::drawRectangle(float x, float y, float z, float width, float height, float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     Rectangle * r = new Rectangle(x,y,z,width,height,yaw,pitch,roll,color);
     r->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(r);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a RegularPolygon to the Background.
@@ -647,9 +654,9 @@ void Background::drawRectangle(float x, float y, float z, float width, float hei
 void Background::drawRegularPolygon(float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     RegularPolygon * r = new RegularPolygon(x,y,z,radius,sides,yaw,pitch,roll,color);
     r->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(r);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a RegularPolygon to the Background.
@@ -668,9 +675,9 @@ void Background::drawRegularPolygon(float x, float y, float z, float radius, int
 void Background::drawRegularPolygon(float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     RegularPolygon * r = new RegularPolygon(x,y,z,radius,sides,yaw,pitch,roll,color);
     r->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(r);
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Square to the Background.
@@ -688,9 +695,9 @@ void Background::drawRegularPolygon(float x, float y, float z, float radius, int
 void Background::drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     Square * s = new Square(x,y,z,sidelength,yaw,pitch,roll,color);
     s->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(s);  // Push it onto our drawing buffer
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Square to the Background.
@@ -708,9 +715,9 @@ void Background::drawSquare(float x, float y, float z, float sidelength, float y
 void Background::drawSquare(float x, float y, float z, float sidelength, float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     Square * s = new Square(x,y,z,sidelength,yaw,pitch,roll,color);
     s->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(s);  // Push it onto our drawing buffer
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Star to the Background.
@@ -730,9 +737,9 @@ void Background::drawSquare(float x, float y, float z, float sidelength, float y
 void Background::drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color, bool ninja, bool outlined) {
     Star * s = new Star(x,y,z,radius,points,yaw,pitch,roll,color,ninja);
     s->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(s);  // Push it onto our drawing buffer
-    attribMutex.unlock();   
+    drawableMutex.unlock();   
 }
 
 /*!\brief Procedurally draws a Star to the Background.
@@ -752,9 +759,9 @@ void Background::drawStar(float x, float y, float z, float radius, int points, f
 void Background::drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja, bool outlined) {
     Star * s = new Star(x,y,z,radius,points,yaw,pitch,roll,color,ninja);
     s->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(s);  // Push it onto our drawing buffer
-    attribMutex.unlock();   
+    drawableMutex.unlock();   
 }
 
 /*!\brief Procedurally draws Text to the Background.
@@ -772,9 +779,9 @@ void Background::drawStar(float x, float y, float z, float radius, int points, f
  */
 void Background::drawText(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color) {
     Text * t = new Text(x,y,z,text,fontFilename,fontsize,yaw,pitch,roll,color);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(t);  // Push it onto our drawing buffer
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Triangle to the Background.
@@ -797,9 +804,9 @@ void Background::drawText(float x, float y, float z, std::wstring text, std::str
 void Background::drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     Triangle * t = new Triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3,yaw,pitch,roll,color);
     t->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(t);  // Push it onto our drawing buffer
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a Triangle to the Background.
@@ -822,9 +829,9 @@ void Background::drawTriangle(float x1, float y1, float z1, float x2, float y2, 
 void Background::drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     Triangle * t = new Triangle(x1,y1,z1,x2,y2,z2,x3,y3,z3,yaw,pitch,roll,color);
     t->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(t);  // Push it onto our drawing buffer
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a TriangleStrip to the Background.
@@ -845,9 +852,9 @@ void Background::drawTriangle(float x1, float y1, float z1, float x2, float y2, 
 void Background::drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color, bool outlined) {
     TriangleStrip * t = new TriangleStrip(centerX,centerY,centerZ,numVertices,x,y,z,yaw,pitch,roll,color);
     t->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(t);  // Push it onto our drawing buffer
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
 /*!\brief Procedurally draws a TriangleStrip to the Background.
@@ -868,9 +875,9 @@ void Background::drawTriangleStrip(float centerX, float centerY, float centerZ, 
 void Background::drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color[], bool outlined) {
     TriangleStrip * t = new TriangleStrip(centerX,centerY,centerZ,numVertices,x,y,z,yaw,pitch,roll,color);
     t->setIsOutlined(outlined);
-    attribMutex.lock();
+    drawableMutex.lock();
     myDrawables->push(t);  // Push it onto our drawing buffer
-    attribMutex.unlock();
+    drawableMutex.unlock();
 }
 
  /*!
@@ -880,10 +887,18 @@ void Background::drawTriangleStrip(float centerX, float centerY, float centerZ, 
   *      \param y The y-position of the pixel to grab.
   * \return A ColorInt containing the color of the pixel at (col,row).
   */
-ColorInt Background::getPixel(int row, int col) {
-    int yy = (myHeight-1) - row;
-    int off = 3 * (yy * myWidth + col);
-    return ColorInt(readPixelBuffer[off], readPixelBuffer[off + 1], readPixelBuffer[off + 2], 255);
+ColorInt Background::getPixel(int x, int y) {
+    if (abs(x) > (myWidth/2) || abs(y) > (myHeight/2)) {
+        TsglErr("Accessor x and y must be within Canvas parameters.");
+        return ColorInt(0,0,0,0);
+    }
+    readPixelMutex.lock();
+    x += myWidth/2;
+    y += myHeight/2;
+    int off = 3 * (y * myWidth + x);
+    ColorInt c = ColorInt(readPixelBuffer[off], readPixelBuffer[off + 1], readPixelBuffer[off + 2], 255);
+    readPixelMutex.unlock();
+    return c;
 }
 
 /*! \brief Mutator for the color used to clear the Background when clear() is called.

@@ -47,6 +47,7 @@ protected:
     ColorFloat baseColor;
     bool toClear;
 
+    std::mutex readPixelMutex;
     uint8_t* readPixelBuffer;
 
     std::mutex pixelBufferMutex;
@@ -56,6 +57,7 @@ protected:
 
     bool complete;
     std::mutex attribMutex;
+    std::mutex drawableMutex;
     GLfloat * vertices;
 
     virtual void selectShaders(unsigned int sType);
