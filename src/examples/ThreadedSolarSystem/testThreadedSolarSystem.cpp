@@ -1,13 +1,33 @@
 /*
- * testSolarSystem.cpp
+ * testThreadedSolarSystem.cpp
  *
- * Usage: ./testSolarSystem
+ * Usage: ./testThreadedSolarSystem
  */
 
+#include <iostream>
 #include <tsgl.h>
 #include <cmath>
 
 using namespace tsgl;
+
+class ThreadData{
+private:
+    unsigned myThreadID;
+    Drawable * myPlanet;      // the Drawable object the thread is responsible for
+    float myPitchDelta;
+
+public:
+    ThreadData(unsigned tid, Drawable * object, float pitch){
+        myThreadID = tid;
+        myPlanet = object;
+        myPitchDelta = pitch;
+    }
+
+    void changePitch(){
+        myPlanet->changePitchBy(myPitchDelta);
+    }
+};
+
 
 void ssFunction(Canvas& can) {
     Sphere * sun = new Sphere(0, 0, 0, 75, 15, 0.0, 15.0, YELLOW);
@@ -21,6 +41,8 @@ void ssFunction(Canvas& can) {
     Sphere * uranus = new Sphere(515, 0, 0, 25, 15, 0.0, 15.0, ColorFloat(.2,.6,1,1));
     Sphere * neptune = new Sphere(575, 0, 0, 20, 15, 0.0, 15.0, ColorFloat(.25,.65,1,1));
 
+    // saturnRings->displayOutlineEdges(false);
+
     mercury->setRotationPoint(0,0,0);
     venus->setRotationPoint(0,0,0);
     earth->setRotationPoint(0,0,0);
@@ -30,6 +52,10 @@ void ssFunction(Canvas& can) {
     saturnRings->setRotationPoint(0,0,0);
     uranus->setRotationPoint(0,0,0);
     neptune->setRotationPoint(0,0,0);
+
+    // Items in planetArray have the same index as their corresponding rotation speeds in rotationArray
+    Drawable * planetArray[] = {mercury, venus, earth, mars, jupiter, saturn, saturnRings, uranus, neptune};
+    float rotationArray[] = {4.0, 3.0/2.0, 1.0, 1.0/2.0, 1.0/12.0, 1.0/30.0, 1.0/30.0, 1.0/90.0, 1.0/180.0};
 
     can.add(sun);
     can.add(mercury);
@@ -41,20 +67,21 @@ void ssFunction(Canvas& can) {
     can.add(saturnRings);
     can.add(uranus);
     can.add(neptune);
-    float rotation = 0.0f;
+
     while (can.isOpen()) {
         can.sleep();
-        sun->setPitch(rotation);
-        mercury->setPitch(rotation * 4);
-        venus->setPitch(rotation * 3 / 2);
-        earth->setPitch(rotation);
-        mars->setPitch(rotation/2);
-        jupiter->setPitch(rotation/12);
-        saturn->setPitch(rotation/30);
-        saturnRings->setPitch(rotation/30);
-        uranus->setPitch(rotation/90);
-        neptune->setPitch(rotation/180);
-        rotation += 1;
+        #pragma omp parallel
+        {
+            unsigned tid = omp_get_thread_num();
+            unsigned numThreads = omp_get_num_threads();
+
+            for(unsigned i = tid; i < 9; i += numThreads){
+                ThreadData * td = new ThreadData(tid, planetArray[i], rotationArray[i]);
+                // printf("Thread %d out of %d running planet %d\n", 
+                //         tid, numThreads - 1, i);
+                td->changePitch();
+            }
+        }
     }
 
     delete sun;
@@ -70,6 +97,7 @@ void ssFunction(Canvas& can) {
 }
 
 int main(int argc, char* argv[]) {
-    Canvas c(0, -1, 1800, 620, "Solar System", BLACK);
+    Canvas c(0, -1, 1800, 620, "Solar System");
+    c.setBackgroundColor(BLACK);
     c.run(ssFunction);
 }

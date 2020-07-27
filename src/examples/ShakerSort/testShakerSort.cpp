@@ -52,7 +52,6 @@ void shakerSortFunction(Canvas& can) {
         numbers[i] = rectangles[i]->getHeight();
         can.add(rectangles[i]);
     }
-    can.setBackgroundColor(GRAY);
     while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
         if (min >= max) { // We are done sorting.
