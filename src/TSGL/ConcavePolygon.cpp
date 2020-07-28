@@ -28,16 +28,16 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
  /*!
   * \brief Explicitly constructs a new ConcavePolygon with monocolored fill.
   * \details Explicit constructor for a ConcavePolygon object.
- *   \param centerX The x coordinate of the ConcavePolygon's center.
- *   \param centerY The y coordinate of the ConcavePolygon's center.
- *   \param centerZ The z coordinate of the ConcavePolygon's center.
- *   \param numVertices The number of vertices that make up the ConcavePolygon.
- *   \param x An array of the ConcavePolygon's x vertices.
- *   \param y An array of the ConcavePolygon's y vertices.
- *   \param yaw The ConcavePolygon's yaw in 3D space.
- *   \param pitch The ConcavePolygon's pitch in 3D space.
- *   \param roll The ConcavePolygon's roll in 3D space.
- *   \param color A ColorFloat, the ConcavePolygon's fill color.
+  *   \param centerX The x coordinate of the ConcavePolygon's center.
+  *   \param centerY The y coordinate of the ConcavePolygon's center.
+  *   \param centerZ The z coordinate of the ConcavePolygon's center.
+  *   \param numVertices The number of vertices that make up the ConcavePolygon.
+  *   \param x An array of the ConcavePolygon's x vertices.
+  *   \param y An array of the ConcavePolygon's y vertices.
+  *   \param yaw The ConcavePolygon's yaw in 3D space.
+  *   \param pitch The ConcavePolygon's pitch in 3D space.
+  *   \param roll The ConcavePolygon's roll in 3D space.
+  *   \param color A ColorFloat, the ConcavePolygon's fill color.
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
   */
 ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
@@ -51,25 +51,26 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], 0, color);
-        addOutlineVertex(x[i], y[i], 0, GRAY);
+        addVertex(x[i] - centerX, y[i] - centerY, 0, color);
+        addOutlineVertex(x[i] - centerX, y[i] - centerY, 0, GRAY);
     }
 }
 
  /*!
   * \brief Explicitly constructs a new ConcavePolygon with multicolored fill.
   * \details Explicit constructor for a ConcavePolygon object.
- *   \param centerX The x coordinate of the ConcavePolygon's center.
- *   \param centerY The y coordinate of the ConcavePolygon's center.
- *   \param centerZ The z coordinate of the ConcavePolygon's center.
- *   \param numVertices The number of vertices that make up the ConcavePolygon.
- *   \param x An array of the ConcavePolygon's x vertices.
- *   \param y An array of the ConcavePolygon's y vertices.
- *   \param yaw The ConcavePolygon's yaw in 3D space.
- *   \param pitch The ConcavePolygon's pitch in 3D space.
- *   \param roll The ConcavePolygon's roll in 3D space.
- *   \param color An array of ColorFloats, the ConcavePolygon's fill color.
+  *   \param centerX The x coordinate of the ConcavePolygon's center.
+  *   \param centerY The y coordinate of the ConcavePolygon's center.
+  *   \param centerZ The z coordinate of the ConcavePolygon's center.
+  *   \param numVertices The number of vertices that make up the ConcavePolygon.
+  *   \param x An array of the ConcavePolygon's x vertices.
+  *   \param y An array of the ConcavePolygon's y vertices.
+  *   \param yaw The ConcavePolygon's yaw in 3D space.
+  *   \param pitch The ConcavePolygon's pitch in 3D space.
+  *   \param roll The ConcavePolygon's roll in 3D space.
+  *   \param color An array of ColorFloats, the ConcavePolygon's fill color.
   * \return A new ConcavePolygon with a buffer for storing the specified number of vertices.
+  * \warning Can sometimes incorrectly render; if this occurs, try shifting your last vertex to be your first vertex, or otherwise adjusting vertex order.
   */
 ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float yaw, float pitch, float roll, ColorFloat color[]) : Shape(centerX,centerY,centerZ,yaw,pitch,roll) {
     attribMutex.lock();
@@ -82,8 +83,8 @@ ConcavePolygon::ConcavePolygon(float centerX, float centerY, float centerZ, int 
     outlineVertices = new GLfloat[numberOfOutlineVertices * 7];
     attribMutex.unlock(); 
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], 0, color[i]);
-        addOutlineVertex(x[i], y[i], 0, GRAY);
+        addVertex(x[i] - centerX, y[i] - centerY, 0, color[i]);
+        addOutlineVertex(x[i] - centerX, y[i] - centerY, 0, GRAY);
     }
 }
 

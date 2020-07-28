@@ -29,36 +29,36 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw
     isDoubleArrow = doubleArrow;
     isOutlined = false;
     attribMutex.unlock();
-    addVertex(-0.4, 0.4, 0, color);
-    addVertex(-0.4, 1, 0, color);
+    addVertex(-0.4, 0.2, 0, color);
+    addVertex(-0.4, 0.5, 0, color);
     addVertex(-0.5, 0, 0, color);
-    addVertex(-0.4, -1, 0, color);
-    addVertex(-0.4, -0.4, 0, color);
+    addVertex(-0.4, -0.5, 0, color);
+    addVertex(-0.4, -0.2, 0, color);
 
-    addOutlineVertex(-0.4, 0.4, 0, GRAY);
-    addOutlineVertex(-0.4, 1, 0, GRAY);
+    addOutlineVertex(-0.4, 0.2, 0, GRAY);
+    addOutlineVertex(-0.4, 0.5, 0, GRAY);
     addOutlineVertex(-0.5, 0, 0, GRAY);
-    addOutlineVertex(-0.4, -1, 0, GRAY);
-    addOutlineVertex(-0.4, -0.4, 0, GRAY);
+    addOutlineVertex(-0.4, -0.5, 0, GRAY);
+    addOutlineVertex(-0.4, -0.2, 0, GRAY);
 
     if( isDoubleArrow ) {
-        addVertex(0.4, -0.4, 0, color);
-        addVertex(0.4, -1, 0, color);
+        addVertex(0.4, -0.2, 0, color);
+        addVertex(0.4, -0.5, 0, color);
         addVertex(0.5, 0, 0, color);
-        addVertex(0.4, 1, 0, color);
-        addVertex(0.4, 0.4, 0, color);
+        addVertex(0.4, 0.5, 0, color);
+        addVertex(0.4, 0.2, 0, color);
 
-        addOutlineVertex(0.4, -0.4, 0, GRAY);
-        addOutlineVertex(0.4, -1, 0, GRAY);
+        addOutlineVertex(0.4, -0.2, 0, GRAY);
+        addOutlineVertex(0.4, -0.5, 0, GRAY);
         addOutlineVertex(0.5, 0, 0, GRAY);
-        addOutlineVertex(0.4, 1, 0, GRAY);
-        addOutlineVertex(0.4, 0.4, 0, GRAY);
+        addOutlineVertex(0.4, 0.5, 0, GRAY);
+        addOutlineVertex(0.4, 0.2, 0, GRAY);
     } else {
-        addVertex(0.5, -.4, 0, color);
-        addVertex(0.5, .4, 0, color);
+        addVertex(0.5, -.2, 0, color);
+        addVertex(0.5, .2, 0, color);
     
-        addOutlineVertex(0.5, -.4, 0, GRAY);
-        addOutlineVertex(0.5, .4, 0, GRAY);
+        addOutlineVertex(0.5, -.2, 0, GRAY);
+        addOutlineVertex(0.5, .2, 0, GRAY);
     }
 }
 
@@ -89,36 +89,36 @@ Arrow::Arrow(float x, float y, float z, GLfloat length, GLfloat width, float yaw
     isDoubleArrow = doubleArrow;
     isOutlined = false;
     attribMutex.unlock();
-    addVertex(-0.4, 0.4, 0, color[0]);
-    addVertex(-0.4, 1, 0, color[0]);
+    addVertex(-0.4, 0.2, 0, color[0]);
+    addVertex(-0.4, 0.5, 0, color[0]);
     addVertex(-0.5, 0, 0, color[0]);
-    addVertex(-0.4, -1, 0, color[0]);
-    addVertex(-0.4, -0.4, 0, color[0]);
+    addVertex(-0.4, -0.5, 0, color[0]);
+    addVertex(-0.4, -0.2, 0, color[0]);
 
-    addOutlineVertex(-0.4, 0.4, 0, GRAY);
-    addOutlineVertex(-0.4, 1, 0, GRAY);
+    addOutlineVertex(-0.4, 0.2, 0, GRAY);
+    addOutlineVertex(-0.4, 0.5, 0, GRAY);
     addOutlineVertex(-0.5, 0, 0, GRAY);
-    addOutlineVertex(-0.4, -1, 0, GRAY);
-    addOutlineVertex(-0.4, -0.4, 0, GRAY);
+    addOutlineVertex(-0.4, -0.5, 0, GRAY);
+    addOutlineVertex(-0.4, -0.2, 0, GRAY);
 
     if( isDoubleArrow ) {
-        addVertex(0.4, -0.4, 0, color[1]);
-        addVertex(0.4, -1, 0, color[1]);
+        addVertex(0.4, -0.2, 0, color[1]);
+        addVertex(0.4, -0.5, 0, color[1]);
         addVertex(0.5, 0, 0, color[1]);
-        addVertex(0.4, 1, 0, color[1]);
-        addVertex(0.4, 0.4, 0, color[1]);
+        addVertex(0.4, 0.5, 0, color[1]);
+        addVertex(0.4, 0.2, 0, color[1]);
 
-        addOutlineVertex(0.4, -0.4, 0, GRAY);
-        addOutlineVertex(0.4, -1, 0, GRAY);
+        addOutlineVertex(0.4, -0.2, 0, GRAY);
+        addOutlineVertex(0.4, -0.5, 0, GRAY);
         addOutlineVertex(0.5, 0, 0, GRAY);
-        addOutlineVertex(0.4, 1, 0, GRAY);
-        addOutlineVertex(0.4, 0.4, 0, GRAY);
+        addOutlineVertex(0.4, 0.5, 0, GRAY);
+        addOutlineVertex(0.4, 0.2, 0, GRAY);
     } else {
-        addVertex(0.5, -0.4, 0, color[1]);
-        addVertex(0.5, 0.4, 0, color[1]);
+        addVertex(0.5, -0.2, 0, color[1]);
+        addVertex(0.5, 0.2, 0, color[1]);
 
-        addOutlineVertex(0.5, -.4, 0, GRAY);
-        addOutlineVertex(0.5, .4, 0, GRAY);
+        addOutlineVertex(0.5, -.2, 0, GRAY);
+        addOutlineVertex(0.5, .2, 0, GRAY);
     }
     attribMutex.lock();
     myAlpha = (color[0].A + color[1].A) / 2;
