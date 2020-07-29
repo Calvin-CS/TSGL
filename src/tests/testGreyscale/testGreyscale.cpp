@@ -45,31 +45,32 @@ using namespace tsgl;
  * \param numberOfThreads Reference to the number of threads to use.
  */
 void greyScaleFunction(Canvas& can, int numberOfThreads) {
+  Background * background = can.getBackground();
   int threads = numberOfThreads;
   clamp(threads,1,30);
   const unsigned thickness = 3;
-  const unsigned WW = can.getWindowWidth(),WH = can.getWindowHeight();
-  can.drawImage("../assets/pics/colorful_cars.jpg", 0, 0, WW, WH);
+  const int WW = can.getWindowWidth(),WH = can.getWindowHeight();
+  background->drawImage(0,0,0,"./assets/pics/colorful_cars.jpg", WW, WH, 0,0,0);
   can.sleepFor(0.25f);
   #pragma omp parallel num_threads(threads)
   {
     int nthreads = omp_get_num_threads();
-    unsigned int blocksize = WH / nthreads;
-    unsigned int row = blocksize * omp_get_thread_num();
-    ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
-    for (unsigned int y = row; y < row + blocksize; y++) {
-      for (unsigned int x = 0; x < WW; x++) {
-		    ColorInt pixelColor = can.getPoint(x, y);
+    int blocksize = WH / nthreads;
+    int row = blocksize * omp_get_thread_num() - WH / 2;
+    // ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
+    for (int y = row; y < row + blocksize; y++) {
+      for (int x = -WW / 2; x < WW / 2; x++) {
+		    ColorInt pixelColor = background->getPixel(x, y);
         int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
-        can.drawPoint(x, y, ColorInt(gray, gray, gray));
+        background->drawPixel(x, y, ColorInt(gray, gray, gray));
       }
       if (! can.isOpen()) break;
       can.sleep();
     }
-    for (unsigned int i = 0; i < thickness; i++) {
-      can.drawRectangle(i, row + i, WW - 1 - i, blocksize - i*2, color, false);
-      // can.drawRectangle(column + i, i, column + blocksize - i, WH - 1 - i, color, false);
-    }
+    // for (unsigned int i = 0; i < thickness; i++) {
+    //   bg->drawRectangle(i, row + i, WW - 1 - i, blocksize - i*2, color, false);
+    //   // can.drawRectangle(column + i, i, column + blocksize - i, WH - 1 - i, color, false);
+    // }
   }
 }
 

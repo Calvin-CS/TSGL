@@ -96,7 +96,7 @@ void philosopherFunction(Canvas& can,int philosophers, std::string RM, bool step
 int main(int argc, char* argv[]) {
   if( argc == 1) {
     std::cout << "\nTo run the program with different values, use the format:\n\t./DiningPhilosophers <numPhilosophers> <speed> <resolutionMethodChar>"
-    << "\nwhere <resolutionMethodChar> is a character specifying conflict resolution of the philosophers. Find options in Table.h" << std::endl;
+    << "\nwhere <resolutionMethodChar> is a character specifying conflict resolution of the philosophers. Find options in DiningPhilosophers/main.cpp" << std::endl;
   }
   int  nphil = (argc > 1) ? atoi(argv[1]) : 5;  //Number of philosophers defaults to 5
   int  speed = (argc > 2 && atoi(argv[2]) > 0) ? atoi(argv[2]) : 10; //Speed defaults to 5

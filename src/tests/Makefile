@@ -7,20 +7,28 @@ SUBDIRS_TO_BUILD := test2Dvs3D \
 			test3DRotation \
 			testAlphaRectangle \
 			testArrows \
+ 			testAura \
 			testBackground \
 			testCircle \
+ 			testColorWheel \
 			testConcavePolygon \
 			testCone \
 			testConvexPolygon \
 			testCube \
 			testCuboid \
 			testCylinder \
-			testDice \
 			testDiorama \
 			testEllipse \
 			testEllipsoid \
+ 			testGetPixels \
+ 			testGradientWheel \
+ 			testGraydient \
+ 			testGreyscale \
+ 			testHighData \
 			testImage \
+ 			testInverter \
 			testLines \
+ 			testPixels \
 			testPrism \
 			testProcedural \
 			testPyramid \
@@ -34,24 +42,15 @@ SUBDIRS_TO_BUILD := test2Dvs3D \
 			testTriangle \
 			testTriangleStrip \
 #			test_specs \
-# 			testAura \
 # 			testBlurImage \
 # 			testCalcPi \
-# 			testColorWheel \
-# 			testConstructors \
 # 			testCosineIntegral \
+#			testDice \
 # 			testFunction \
-# 			testGetPixels \
-# 			testGradientWheel \
-# 			testGraydient \
-# 			testGreyscale \
-# 			testHighData \
 # 			testImageCart \
-# 			testInverter \
 # 			testLineChain \
 # 			testLineFan \
 # 			testMouse \
-# 			testPixels \
 # 			testProgressBar \
 # 			testProjectiles \
 # 			testScreenshot \

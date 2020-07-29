@@ -9,13 +9,13 @@
 //#include <omp.h>
 #include <tsgl.h>
 #include <unistd.h>
-#include "ReaderWriter/Reader.h"
-#include "ReaderWriter/Writer.h"
-#include "ReaderWriter/RWDatabase.h"
-#include "ReaderWriter/Lock.h"
-#include "ReaderWriter/RLock.h"
-#include "ReaderWriter/WLock.h"
-#include "ReaderWriter/FLock.h"
+#include "Reader.h"
+#include "Writer.h"
+#include "RWDatabase.h"
+#include "Lock.h"
+#include "RLock.h"
+#include "WLock.h"
+#include "FLock.h"
 using namespace tsgl;
 
 //Constants

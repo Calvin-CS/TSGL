@@ -48,7 +48,7 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
         for (int j = 0; j < can.getWindowWidth(); j++) {
             // int id = omp_get_thread_num();
             if (i % 2 == 0) {
-            background->drawPixel(j - can.getWindowWidth()/2, i - can.getWindowHeight()/2, BLACK);
+            background->drawPixel(j - can.getWindowWidth()/2, i - can.getWindowHeight()/2, ColorInt(0,0,0,255));
             } else {
             background->drawPixel(j - can.getWindowWidth()/2, i - can.getWindowHeight()/2, ColorInt(i % 255, j % 255, (i*j) % 255));
             }
@@ -81,9 +81,9 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
         // mouseX = can.getMouseX();
         // mouseY = can.getMouseY();
         // if (print) {
-        //     background->drawPixel(mouseY, mouseX, RED);
-        //     c = background->getPixel(mouseY, mouseX);  // mouse Y is ROW. mouse X is COLUMN. Think about it.
-        //     printf("%d, %d - ", mouseY, mouseX);
+        //     c = background->getPixel(mouseX, mouseY);
+        //     background->drawPixel(mouseX, mouseY, RED);
+        //     printf("%d, %d - ", mouseX, mouseY);
         //     printf("%d:%d:%d:%d\n", c.R, c.G, c.B, c.A);
         //     print = false;
         // }

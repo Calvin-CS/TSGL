@@ -1,4 +1,4 @@
-# Makefile for testAlphaRectangle
+# Makefile for testGetPixels
 
 # *****************************************************
 # Variables to control Makefile operation
@@ -14,7 +14,7 @@ DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
 _DEPS = \
 
 # Main source file
-TARGET = testAlphaRectangle
+TARGET = testGetPixels
 
 # Object files
 ODIR = obj

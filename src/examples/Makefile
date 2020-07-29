@@ -7,9 +7,12 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
 			ArrayShakerSort/. \
 			Ballroom/. \
 			Clock/. \
+ 			Conway/. \
 			CubeRun/. \
 			DiningPhilosophers/. \
 			DiningPhilosophers3D/. \
+ 			Fireworks/. \
+ 			ForestFire/. \
 			MergeSort/. \
 			NewtonPendulum/. \
 			Pong/. \
@@ -20,9 +23,6 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
 			ThreadedArrayBubbleSort/. \
 			ThreadedArrayOperations/. \
 			ThreadedSolarSystem/. \
-# 			Conway/. \
-# 			Fireworks/. \
-# 			ForestFire/. \
 # 			Langton/. \
 # 			Mandelbrot/. \
 # 			ParallelPandemic/. \

@@ -5,7 +5,7 @@
  */
 
 #include <tsgl.h>
-#include "Conway/LifeFarm.h"
+#include "LifeFarm.h"
 
 using namespace tsgl;
 
@@ -41,6 +41,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas to draw to.
  */
 void conwayFunction(Canvas& can) {
+  Background * bg = can.getBackground();
   const int IPF = 100,                   // Iterations per frame
             WW = can.getWindowWidth(),    // Window width
             WH = can.getWindowHeight();   // Window height
@@ -67,15 +68,15 @@ void conwayFunction(Canvas& can) {
     if(!paused) {
       for (int i = 0; i < IPF; i++) {
         if(mouseDown) {
-          farm.addAnt(can.getMouseX(), can.getMouseY());
-          can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
+          farm.addAnt(can.getMouseX() + WW/2, can.getMouseY() + WH/2);
+          bg->drawPixel(can.getMouseX(), can.getMouseY(), ColorInt(255,255,255,255));
         }
         farm.moveAnts();
       }
     }
     if(mouseDown) {
-      farm.addAnt(can.getMouseX(), can.getMouseY());
-      can.drawPoint(can.getMouseX(), can.getMouseY(), WHITE);
+      farm.addAnt(can.getMouseX() + WW/2, can.getMouseY() + WH/2);
+      bg->drawPixel(can.getMouseX(), can.getMouseY(), ColorInt(255,255,255,255));
     }
   }
 }

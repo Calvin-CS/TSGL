@@ -34,7 +34,7 @@ LifeFarm::LifeFarm(int w, int h, Canvas* c, bool randomize) {
     for (int i = 9*h/10; i > h/10; --i) {
       bool newrow = true;
       for (int j = 9*w/10; j > w/10; --j) {
-        if ((rand() % 2) > 0) {
+        if ((saferand(1,100) % 2) > 0) {
           if (newrow) {
             *currentstate = (i + 1);
             ++currentstate;
@@ -61,6 +61,7 @@ LifeFarm::LifeFarm(int w, int h, Canvas* c, bool randomize) {
 
 void LifeFarm::initGun() {
   int w = width/2, h = height/2;
+  // int w = 0, h = 0;
   currentstart = currentstate;
   *currentstate++ = h+1;
   *currentstate++ = -(w+25);
@@ -212,6 +213,8 @@ void LifeFarm::moveAntsOld() {
   //Reset the end of the list for the next iteration
   listend = 0;
 
+  Background * bg = can->getBackground();
+
   //Redraw any cell whose living status has changed, and repopulate the living list
   bool lives, lived;
   for (int row = 0; row < height; ++row) {
@@ -220,11 +223,11 @@ void LifeFarm::moveAntsOld() {
       lives = ( (neighbors[row][col] == 3) || ( lived && (neighbors[row][col] == 2) ));
       if (lives != lived) {
         if (lives) {
-          can->drawPoint(col, row, fcolor);
+          bg->drawPixel(col - width/2, height/2 - row, fcolor);
           addAnt(col,row);
         }
         else if (drawdead)
-          can->drawPoint(col, row, bgcolor);
+          bg->drawPixel(col - width/2,  height/2 - row, bgcolor);
         alive[row][col] = lives;
       } else if (lives)
         addAnt(col,row);
@@ -346,7 +349,7 @@ void LifeFarm::life(int *current, int *fresh) {
         /* what does this bitmap indicate? */
         if(state[bitmap] && !(y > height-3 || y < 3) && !((-x) > width-3 || (-x) < 3)) { //If our bitmap is now alive
           *(++fresh) = x - 1;         //Increment the cell pointer of our new board, and set the next value to the current x-coordinate minus 1
-          can->drawPoint(-(x), y, fcolor); //Draw it
+          can->getBackground()->drawPixel(-(x), height / 2 - y, fcolor); //Draw it
         }
         else if(bitmap == 000)    //If our bitmap is now empty...
           break;                  //No more consecutive living cells; move on to the next explicitly stored pointer

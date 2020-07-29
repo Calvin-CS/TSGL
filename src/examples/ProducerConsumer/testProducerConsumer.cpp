@@ -10,8 +10,8 @@
 #include <unistd.h>
 #include <tsgl.h>
 #include <exception> //for try-catch debugging
-#include "ProducerConsumer/Producer.h"
-#include "ProducerConsumer/Consumer.h"
+#include "Producer.h"
+#include "Consumer.h"
 using namespace tsgl;
 
 

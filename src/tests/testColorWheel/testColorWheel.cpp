@@ -39,6 +39,7 @@ using namespace tsgl;
  * \param threads Number of threads to use.
  */
 void colorWheelFunction(Canvas& can, int threads) {
+    Background * bg = can.getBackground();
     const int CW = can.getWindowWidth() / 2,          // Half the window's width
               CH = can.getWindowHeight() / 2;         // Half the window's height
     const float RADIUS = (CH < CW ? CH : CW) * .95,   // Radius of wheel
@@ -52,12 +53,12 @@ void colorWheelFunction(Canvas& can, int threads) {
         while (can.isOpen()) {
             can.sleep();
             int start = (NUM_COLORS - (can.getReps() % NUM_COLORS) + delta) % NUM_COLORS;
-            x2 = CW + RADIUS * sin(GRADIENT * start);
-            y2 = CH + RADIUS * cos(GRADIENT * start);
-            x3 = CW + RADIUS * sin(GRADIENT * (start + 1));
-            y3 = CH + RADIUS * cos(GRADIENT * (start + 1));
-            can.drawTriangle(CW, CH, x2, y2, x3, y3,
-                             ColorHSV(start * 6.0f / NUM_COLORS, 1.0f, shading), true);
+            x2 = RADIUS * sin(GRADIENT * start);
+            y2 = RADIUS * cos(GRADIENT * start);
+            x3 = RADIUS * sin(GRADIENT * (start + 1));
+            y3 = RADIUS * cos(GRADIENT * (start + 1));
+            bg->drawTriangle(0,0,0, x2,y2,0, x3,y3,0, 0,0,0,
+                             ColorHSV(start * 6.0f / NUM_COLORS, 1.0f, shading), false);
         }
     }
 }

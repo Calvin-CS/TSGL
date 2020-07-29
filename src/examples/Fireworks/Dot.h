@@ -13,6 +13,7 @@ class Dot {
 private:
   bool dead;
   Canvas* myCan;
+  Background * myBackground;
   float myX, myY, mySpeed, myDir, myFric;
 public:
   Dot(Canvas& can, float x, float y, float s, float d, float f);

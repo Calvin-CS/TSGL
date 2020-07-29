@@ -8,10 +8,6 @@
 
 using namespace tsgl;
 
-float randfloat(int divisor = 10000) {
-    return (rand() % divisor) / (float) divisor;
-}
-
 /*!
  * \brief Pseudo-simulates a forest fire using a lot of probability and randomness.
  * \details
@@ -41,12 +37,13 @@ float randfloat(int divisor = 10000) {
  * \param can Reference to the Canvas being drawn to.
  */
 void forestFireFunction(Canvas& can) {
+    Background * bg = can.getBackground();
     const int WINDOW_W = can.getWindowWidth(),  // Set the screen sizes
               WINDOW_H = can.getWindowHeight();
     const float LIFE = 10,
                 STRENGTH = 0.03,
                 MAXDIST = sqrt(WINDOW_W * WINDOW_W + WINDOW_H * WINDOW_H) / 2;
-    srand(time(NULL));  // Seed the random number generator
+    // srand(time(NULL));  // Seed the random number generator
     bool* onFire = new bool[WINDOW_W * WINDOW_H]();
     float* flammability = new float[WINDOW_W * WINDOW_H]();
     //Setting each pixel's flammablity
@@ -57,21 +54,22 @@ void forestFireFunction(Canvas& can) {
             float tdist = (MAXDIST - sqrt(xi * xi + yi * yi)) / MAXDIST;
             float f = 0.01 + (i * j % 100) / 100.0 * randfloat(100) / 2 * tdist;
             flammability[i * WINDOW_H + j] = f;
-            can.drawPoint(i, j, ColorFloat(0.0f, f, 0.0f, 1.0f));
+            bg->drawPixel(i - WINDOW_W/2, WINDOW_H/2 - j, ColorFloat(0.0f, f, 0.0f, 1.0f));
         }
     }
+    can.sleep(); // sleep in order to get all the pixels rendered before lakes
     //"Lakes"
     for (int reps = 0; reps < 32; reps++) {
-        int x = rand() % WINDOW_W;
-        int y = rand() % WINDOW_H;
-        int w = rand() % (WINDOW_W - x);
-        int h = rand() % (WINDOW_H - y);
+        int x = saferand(-WINDOW_W/2, WINDOW_W/2);
+        int y = saferand(-WINDOW_H/2, WINDOW_H/2);
+        int w = saferand(0, WINDOW_W/2 - abs(x)) * 2;
+        int h = saferand(0, WINDOW_H/2 - abs(y)) * 2;
         if (w > 32) w = 32;
         if (h > 32) h = 32;
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                flammability[(x + i) * WINDOW_H + (y + j)] = 0.01;
-                can.drawPoint(x + i, y + j, ColorFloat(0.0f, 0.0f, 1.0f, 0.25f));
+        for (int i = -w/2; i < w/2; i++) {
+            for (int j = -h/2; j < h/2; j++) {
+                flammability[(x + i + WINDOW_W/2) * WINDOW_H + (y + j + WINDOW_H/2)] = 0.01;
+                bg->drawPixel(x + i, y + j, ColorFloat(0.0f, 0.0f, 1.0f, 0.25f));
             }
         }
     }
@@ -86,11 +84,9 @@ void forestFireFunction(Canvas& can) {
         for (int j = 0; j < 2; j++) {
             firePoint fire = { WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, LIFE, STRENGTH };
             fires.push(fire);
-            can.drawPoint(WINDOW_W / 2 - 1 + i, WINDOW_H / 2 - 1 + j, ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH));
+            bg->drawPixel(0 - 1 + i, 0 - 1 + j, ColorFloat(1.0f, 0.0f, 0.0f, STRENGTH));
         }
     }
-    Rectangle *rec = new Rectangle(10,10,10,10,BLUE);
-    can.add(rec);
     while (can.isOpen()) {
         can.sleep();
         int l = fires.size();
@@ -103,30 +99,29 @@ void forestFireFunction(Canvas& can) {
                 firePoint fire = { f.x - 1, f.y, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell - WINDOW_H] = true;
-                can.drawPoint(f.x - 1, f.y, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
+                bg->drawPixel(f.x - WINDOW_W/2 - 1, f.y - WINDOW_H/2, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
             }
             if (f.x < WINDOW_W - 1 && !onFire[myCell + WINDOW_H]
                 && randfloat() < flammability[myCell + WINDOW_H]) {
                 firePoint fire = { f.x + 1, f.y, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell + WINDOW_H] = true;
-                can.drawPoint(f.x + 1, f.y, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
+                bg->drawPixel(f.x - WINDOW_W/2 + 1, f.y - WINDOW_H/2, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
             }
             if (f.y > 0 && !onFire[myCell - 1] && randfloat() < flammability[myCell - 1]) {
                 firePoint fire = { f.x, f.y - 1, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell - 1] = true;
-                can.drawPoint(f.x, f.y - 1, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
+                bg->drawPixel(f.x - WINDOW_W/2, f.y - WINDOW_H/2 - 1, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
             }
             if (f.y < WINDOW_H && !onFire[myCell + 1] && randfloat() < flammability[myCell + 1]) {
                 firePoint fire = { f.x, f.y + 1, LIFE, f.strength };
                 fires.push(fire);
                 onFire[myCell + 1] = true;
-                can.drawPoint(f.x, f.y + 1, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
+                bg->drawPixel(f.x - WINDOW_W/2, f.y - WINDOW_H/2 + 1, ColorFloat(f.life / LIFE, 0.0f, 0.0f, f.life / LIFE));
             }
         }
     }
-    delete rec;
     delete[] onFire;
     delete[] flammability;
 }
