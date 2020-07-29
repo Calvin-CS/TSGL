@@ -50,8 +50,8 @@ ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int n
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();    
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], 0, color);
-        addOutlineVertex(x[i], y[i], 0, GRAY);
+        addVertex(x[i] - centerX, y[i] - centerY, 0, color);
+        addOutlineVertex(x[i] - centerX, y[i] - centerY, 0, GRAY);
     }
 }
 
@@ -80,8 +80,8 @@ ConvexPolygon::ConvexPolygon(float centerX, float centerY, float centerZ,  int n
     myXScale = myYScale = myZScale = 1;
     attribMutex.unlock();    
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], 0, color[i]);
-        addOutlineVertex(x[i], y[i], 0, GRAY);
+        addVertex(x[i] - centerX, y[i] - centerY, 0, color[i]);
+        addOutlineVertex(x[i] - centerX, y[i] - centerY, 0, GRAY);
     }
 }
 

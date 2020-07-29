@@ -78,7 +78,7 @@ void contrastFunction(Canvas& can) {
                 stepsTaken++;
             }
         }
-    }
+    }  
 
     delete testPyramid;
     delete triangle1;

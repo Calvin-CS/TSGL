@@ -28,17 +28,32 @@ dummy_build_folder := $(shell mkdir -p $(ODIR))
 NOWARN = -Wno-unused-parameter -Wno-unused-function -Wno-narrowing \
 			-Wno-sizeof-array-argument -Wno-sign-compare -Wno-unused-variable
 
+ifeq ($(UNAME), Linux)
+GL_FLAGS = -lGLU -lglut -lGL
+BREW :=
+endif
+ifeq ($(UNAME), CYGWIN_NT-10.0)
+GL_FLAGS = -lGLU -lglut -lGL
+BREW :=
+endif
+ifeq ($(UNAME), Darwin)
+GL_FLAGS = -framework OpenGL -lglut
+BREW := -lomp -I"$(brew --prefix libomp)/include" 
+endif
+
 CXXFLAGS = -Wall -g\
 			-I/usr/local/include/TSGL \
 			-I/usr/local/include \
+			-I/usr/local/include/freetype2 \
+			-I/usr/local/include/freetype2/freetype \
 			$(NOWARN)\
 			-std=c++11\
 			-Wc++11-compat\
 			-I/usr/include \
 			-I/usr/include/freetype2 \
 
-LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw -lGLU -lglut -lGL -fopenmp \
-			-L/usr/local/lib \
+LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
+			$(BREW) -L/usr/local/lib \
 
 
 # ****************************************************

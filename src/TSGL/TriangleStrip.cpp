@@ -26,8 +26,8 @@ TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int nu
     isOutlined = false;
     attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], z[i], color);
-        addOutlineVertex(x[i], y[i], z[i], GRAY);
+        addVertex(x[i] - centerX, y[i] - centerY, z[i] - centerZ, color);
+        addOutlineVertex(x[i] - centerX, y[i] - centerY, z[i] - centerZ, GRAY);
     }
 }
 
@@ -55,8 +55,8 @@ TriangleStrip::TriangleStrip(float centerX, float centerY, float centerZ, int nu
     isOutlined = false;
     attribMutex.unlock();
     for (int i = 0; i < numVertices; i++) {
-        addVertex(x[i], y[i], z[i], color[i]);
-        addOutlineVertex(x[i], y[i], z[i], GRAY);
+        addVertex(x[i] - centerX, y[i] - centerY, z[i] - centerZ, color[i]);
+        addOutlineVertex(x[i] - centerX, y[i] - centerY, z[i] - centerZ, GRAY);
     }
 }
 }

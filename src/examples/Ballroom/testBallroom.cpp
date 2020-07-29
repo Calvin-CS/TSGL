@@ -228,7 +228,7 @@ public:
     balls.push_back(b);
   }
   void step(Canvas* c) {
-    int mx = c->getMouseX() - c->getWindowWidth()/2, my = c->getWindowHeight()/2 - c->getMouseY();
+    int mx = c->getMouseX(), my = c->getMouseY();
     Vector2 mvec(mx,my);
     mouseCircle->setCenter(mx, my, 0);
     if (attract) {

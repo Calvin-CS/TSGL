@@ -42,7 +42,7 @@ endif
 ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
 	OS_LDIRS :=
-	OS_EXTRA_LIB := 
+	OS_EXTRA_LIB :=
 	OS_GL :=
 	OS_OMP := -fopenmp -lomp
 	OS_COMPILER := -std=c++0x
@@ -116,11 +116,17 @@ docs: docs/html/index.html
 
 tutorial: tutorial/docs/html/index.html
 
-cleanall: clean cleandocs
+cleanall: clean cleantests cleanexamples cleandocs
 
 clean:
 	$(RM) -r bin/* build/* lib/* tutorial/docs/html/* *~ *# *.tmp
+	$(MAKE) cleantests
+	$(MAKE) cleanexamples
+
+cleantests:
 	(cd $(TESTS_PATH) && $(MAKE) clean)
+
+cleanexamples:
 	(cd $(EXAMPLES_PATH) && $(MAKE) clean)
 
 cleandocs:
@@ -155,6 +161,7 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
+	cp -r stb $(PREFIX)/include
 endif
 
 build/build: ${HEADERS} ${SOURCES} ${TESTS}

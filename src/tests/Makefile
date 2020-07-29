@@ -3,8 +3,7 @@
 # *****************************************************
 
 # SUBDIRS_TO_BUILD := $(wildcard test*/.)							# Used to build the tests
-SUBDIRS_TO_BUILD := test_specs \
-			test2Dvs3D \
+SUBDIRS_TO_BUILD := test2Dvs3D \
 			test3DRotation \
 			testAlphaRectangle \
 			testArrows \
@@ -34,6 +33,7 @@ SUBDIRS_TO_BUILD := test_specs \
 			testTransparency \
 			testTriangle \
 			testTriangleStrip \
+#			test_specs \
 # 			testAura \
 # 			testBlurImage \
 # 			testCalcPi \

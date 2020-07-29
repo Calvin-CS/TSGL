@@ -7,8 +7,11 @@ make clean
 #Remove the bin and lib folders
 rm -rf bin lib
 
+#Remove the copy of stb from /usr/local/include
+sudo rm -rf /usr/local/include/stb
+
 #Take out the TSGL header files
-rm -rf /usr/local/include/TSGL
+sudo rm -rf /usr/local/include/TSGL
 
 #Take out the TSGL lib files
 rm /usr/local/lib/libtsgl.*
