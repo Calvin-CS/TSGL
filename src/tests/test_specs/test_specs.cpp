@@ -1,4 +1,6 @@
-#include "tsgl.h"
+#include <tsgl.h>
+
+using namespace tsgl;
 
 int main(int argc, char* argv[]) {
   glfwInit();
