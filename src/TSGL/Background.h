@@ -32,6 +32,7 @@ namespace tsgl {
  */
 class Background {
 protected:
+
     GLint myWidth, myHeight, myWidthPadded;
 
     GLuint multisampledTexture, intermediateTexture;
@@ -58,6 +59,7 @@ protected:
     bool complete;
     std::mutex attribMutex;
     std::mutex drawableMutex;
+  
     GLfloat * vertices;
 
     virtual void selectShaders(unsigned int sType);

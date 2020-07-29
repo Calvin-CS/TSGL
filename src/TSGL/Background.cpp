@@ -110,7 +110,6 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwi
     // Set texture parameters for wrapping.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
     // Set texture parameters for filtering.
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -621,7 +620,6 @@ void Background::drawRectangle(float x, float y, float z, float width, float hei
     myDrawables->push(r);
     drawableMutex.unlock();
 }
-
 /*!\brief Procedurally draws a Rectangle to the Background.
  * \details Initializes a new Rectangle based on the parameter values, and then adds it to the Array of Drawables to be rendered.
  * \param x The x coordinate of the Rectangle's center location.
