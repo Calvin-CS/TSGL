@@ -49,8 +49,8 @@ void auraFunction(Canvas& can, int segs) {
     scatter(mangle,0.02f);
     scatter(mdist,2.0f);
     if (mdist > 100) mdist *= 0.99f;
-    mx = can.getMouseX()+mdist*cos(mangle) - can.getWindowWidth()/2;
-    my = can.getWindowHeight()/2 - can.getMouseY()+mdist*sin(mangle);
+    mx = can.getMouseX()+mdist*cos(mangle);
+    my = can.getMouseY()+mdist*sin(mangle);
 
     //Update positions of the edges of the triangles
     float ang = START + ROT*can.getFrameNumber();

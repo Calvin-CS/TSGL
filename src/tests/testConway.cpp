@@ -68,15 +68,15 @@ void conwayFunction(Canvas& can) {
     if(!paused) {
       for (int i = 0; i < IPF; i++) {
         if(mouseDown) {
-          farm.addAnt(can.getMouseX(), can.getMouseY());
-          bg->drawPixel(can.getMouseX() - WW/2, WH/2 - can.getMouseY(), WHITE);
+          farm.addAnt(can.getMouseX() + WW/2, can.getMouseY() + WH/2);
+          bg->drawPixel(can.getMouseX(), can.getMouseY(), WHITE);
         }
         farm.moveAnts();
       }
     }
     if(mouseDown) {
-      farm.addAnt(can.getMouseX(), can.getMouseY());
-      bg->drawPixel(can.getMouseX() - WW/2, WH/2 - can.getMouseY(), WHITE);
+      farm.addAnt(can.getMouseX() + WW/2, can.getMouseY() + WH/2);
+      bg->drawPixel(can.getMouseX(), can.getMouseY(), WHITE);
     }
   }
 }
