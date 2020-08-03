@@ -82,7 +82,7 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
         // mouseY = can.getMouseY();
         // if (print) {
         //     c = background->getPixel(mouseX, mouseY);
-        //     background->drawPixel(mouseX, mouseY, RED);
+        //     background->drawPixel(mouseX, mouseY, ColorInt(255,0,0,255));
         //     printf("%d, %d - ", mouseX, mouseY);
         //     printf("%d:%d:%d:%d\n", c.R, c.G, c.B, c.A);
         //     print = false;
