@@ -29,14 +29,15 @@ using namespace tsgl;
  * \param t The number of threads to use in the function.
  */
 void lineFanFunction(Canvas& can, int t) {
+    Background * bg = can.getBackground();
     const double ARC = 7.11;  //(Arbitrary) spacing between arcs of the fan
     while (can.isOpen()) {
         #pragma omp parallel num_threads(t)
         {
             can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
             int a, b, c, d, red, green, blue;
-            double angle, offset = omp_get_thread_num() * ARC;
-            angle = offset + can.getReps() * RAD;
+            double angle, offset = omp_get_thread_num() * ARC * 180 / PI;
+            angle = offset + can.getReps();
             a = can.getWindowWidth() / 2 * (1 + sin(angle));
             b = can.getWindowHeight() / 2 * (1 + cos(angle));
             c = can.getWindowWidth() / 2 * (1 - sin(angle));
@@ -44,7 +45,7 @@ void lineFanFunction(Canvas& can, int t) {
             red = (a + can.getReps()) % NUM_COLORS;
             green = (b + can.getReps()) % NUM_COLORS;
             blue = (a * b + can.getReps()) % NUM_COLORS;
-            can.drawLine(a, b, c, d, ColorInt(red, green, blue));
+            bg->drawLine(0, 0, 0, can.getWindowHeight() * 0.9, angle, 0,0, ColorInt(red, green, blue));
         }
     }
 }

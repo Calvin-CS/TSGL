@@ -498,6 +498,48 @@ void Background::drawImage(float x, float y, float z, std::string filename, floa
     drawableMutex.unlock();
 }
 
+/*!
+ * \brief Procedurally draws a Line to the Background.
+ * \details Initializes a new Line based on the parameter values, and then adds it to the Array of Drawables to be rendered.
+ *      \param x1 The x coordinate of the first endpoint of the line.
+ *      \param y1 The y coordinate of the first endpoint of the line.
+ *      \param z1 The z coordinate of the first endpoint of the line.
+ *      \param x2 The x coordinate of the second endpoint of the line.
+ *      \param y2 The y coordinate of the second endpoint of the line.
+ *      \param z2 The z coordinate of the second endpoint of the line.
+ *      \param yaw The yaw of the line.
+ *      \param pitch The pitch of the line.
+ *      \param roll The roll of the line.
+ *      \param color The reference variable to the color of the Line.
+ */
+void Background::drawLine(float x1, float y1, float z1, float x2, float y2, float z2, float yaw, float pitch, float roll, ColorFloat color) {
+    Line * l = new Line(x1,y1,z1,x2,y2,z2,yaw,pitch,roll,color);
+    drawableMutex.lock();
+    myDrawables->push(l);
+    drawableMutex.unlock();
+}
+
+/*!
+ * \brief Procedurally draws a Line to the Background.
+ * \details Initializes a new Line based on the parameter values, and then adds it to the Array of Drawables to be rendered.
+ *      \param x1 The x coordinate of the first endpoint of the line.
+ *      \param y1 The y coordinate of the first endpoint of the line.
+ *      \param z1 The z coordinate of the first endpoint of the line.
+ *      \param x2 The x coordinate of the second endpoint of the line.
+ *      \param y2 The y coordinate of the second endpoint of the line.
+ *      \param z2 The z coordinate of the second endpoint of the line.
+ *      \param yaw The yaw of the line.
+ *      \param pitch The pitch of the line.
+ *      \param roll The roll of the line.
+ *      \param color Array of ColorFloats for the Line's vertices.
+ */
+void Background::drawLine(float x1, float y1, float z1, float x2, float y2, float z2, float yaw, float pitch, float roll, ColorFloat color[]) {
+    Line * l = new Line(x1,y1,z1,x2,y2,z2,yaw,pitch,roll,color);
+    drawableMutex.lock();
+    myDrawables->push(l);
+    drawableMutex.unlock();
+}
+
 /*!\brief Procedurally draws a Line to the Background.
  * \details Initializes a new Line based on the parameter values, and then adds it to the Array of Drawables to be rendered.
  * \param x The x coordinate of the Line's center location.

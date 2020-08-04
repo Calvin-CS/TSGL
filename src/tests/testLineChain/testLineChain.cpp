@@ -39,6 +39,7 @@ using namespace tsgl;
  * \param t The number of threads to use in the function.
  */
 void lineChainFunction(Canvas& can, int t) {
+  Background * bg = can.getBackground();
   const int IPF = 3;
   const int CWW = can.getWindowWidth() / 2, CWH = can.getWindowHeight() / 2;
   const float ARC = 2.3f, SPIN = 0.01f;
@@ -47,7 +48,7 @@ void lineChainFunction(Canvas& can, int t) {
     const float NTHREADS = omp_get_num_threads();
     const float FADERATE = (NTHREADS < 200) ? 1.0f*NTHREADS/200 : 1;
     const int TID = omp_get_thread_num();
-    int xOld, yOld, xNew = CWW*2, yNew = CWH;
+    int xOld, yOld, xNew = CWW, yNew = 0;
     float next = (ARC*TID)/NTHREADS, s = next;
     ColorFloat c = Colors::highContrastColor(TID);
     while (can.isOpen()) {  // Checks to see if the window has been closed
@@ -56,12 +57,12 @@ void lineChainFunction(Canvas& can, int t) {
         next += ARC; s += SPIN;
         xOld = xNew; yOld = yNew;
         float size = cos(s);
-        xNew = CWW + CWW*size*cos(next);
-        yNew = CWH + CWH*size*sin(next);
-        can.drawLine(xOld, yOld, xNew, yNew, c);
+        xNew = CWW*size*cos(next);
+        yNew = CWH*size*sin(next);
+        bg->drawLine(xOld, yOld, 0, xNew, yNew, 0, 0,0,0, c);
       }
       if (TID == 0)
-        can.drawRectangle(0,0,CWW*2,CWH*2,ColorFloat(0,0,0,FADERATE));
+        bg->drawRectangle(0,0,0,CWW*2,CWH*2,0,0,0,ColorFloat(0,0,0,FADERATE));
       #pragma omp barrier
     }
   }

@@ -27,6 +27,8 @@ SUBDIRS_TO_BUILD := test2Dvs3D \
  			testHighData \
 			testImage \
  			testInverter \
+ 			testLineChain \
+ 			testLineFan \
 			testLines \
  			testPixels \
 			testPrism \
@@ -48,8 +50,6 @@ SUBDIRS_TO_BUILD := test2Dvs3D \
 #			testDice \
 # 			testFunction \
 # 			testImageCart \
-# 			testLineChain \
-# 			testLineFan \
 # 			testMouse \
 # 			testProgressBar \
 # 			testProjectiles \

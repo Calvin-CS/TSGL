@@ -98,6 +98,10 @@ public:
 
     virtual void drawImage(float x, float y, float z, std::string filename, float width, float height, float yaw, float pitch, float roll, float alpha = 1.0f);
 
+    virtual void drawLine(float x1, float y1, float z1, float x2, float y2, float z2, float yaw, float pitch, float roll, ColorFloat color);
+
+    virtual void drawLine(float x1, float y1, float z1, float x2, float y2, float z2, float yaw, float pitch, float roll, ColorFloat color[]);
+
     virtual void drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color);
 
     virtual void drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color[]);

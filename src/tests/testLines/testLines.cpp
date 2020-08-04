@@ -24,15 +24,22 @@ void lineFunction(Canvas& c) {
 
     Polyline * p = new Polyline(0,0,0,7,vertices,0,0,0,colors);
 
+    Line * l2 = new Line(-250, -250, -100, -150, 200, 100, 0,0,0, colors);
     // printf("Line: %f\n", l->getAlpha());
     // printf("Pline: %f\n", p->getAlpha());
 
+    c.bindToButton(TSGL_SPACE, TSGL_PRESS, [&l2] () {
+       // l2->setFirstEndpoint(-250, -250, -100);
+       printf("%f\n", l2->getLength());
+    });
+
     // p->setColor(BLUE);
-    p->setColor(colors);
+    // p->setColor(colors);
     c.add(l);
     c.add(p);
+    c.add(l2);
     float floatVal = 0.0f;
-    GLfloat delta = 0.05;
+    GLfloat delta = 5;
 	while( c.isOpen() ) {
 		c.sleep();
         // l->setCenterX(sin(floatVal/90));
@@ -41,8 +48,8 @@ void lineFunction(Canvas& c) {
         // l->setYaw(floatVal);
         // l->setPitch(floatVal);
         // l->setRoll(floatVal);
-        // l->setLength(sin(floatVal/90) + 2);
-        // if (l->getLength() > 3 || l->getLength() < 1) {
+        // l->setLength(100 * sin(floatVal/90) + 200);
+        // if (l->getLength() > 300 || l->getLength() < 100) {
         //     delta *= -1;
         // }
         // l->changeLengthBy(delta);
@@ -51,17 +58,26 @@ void lineFunction(Canvas& c) {
         // p->setCenterZ(sin(floatVal/90));
         // p->setYaw(floatVal);
         // p->setPitch(floatVal);
-        p->setRoll(floatVal);
+        // p->setRoll(floatVal);
+        // l2->setFirstEndpoint(-250,-250 * cos((float) c.getFrameNumber()/180),-100);
+        // l2->setSecondEndpoint(-150,200 * cos((float) c.getFrameNumber()/180),100);
+        // l2->setLength(350 + 150 * cos(floatVal/90));
+        // if (l2->getLength() > 500 || l2->getLength() < 300) {
+        //     delta *= -1;
+        // }
+        // l2->changeLengthBy(delta);
+        // printf("%f, %f, %f - %f, %f, %f\n",l2->getFirstEndpointX(),l2->getFirstEndpointY(),l2->getFirstEndpointZ(),l2->getSecondEndpointX(),l2->getSecondEndpointY(),l2->getSecondEndpointZ());
         floatVal += 1;
 	}
 
 	delete l;
     delete p;
+    delete l2;
 }
 
 int main(int argc, char* argv[]) {
   int w = 1000;
-  int h = 1000;
+  int h = 600;
   Canvas c(-1, -1, w, h, "Lines");
   c.run(lineFunction);
 }
