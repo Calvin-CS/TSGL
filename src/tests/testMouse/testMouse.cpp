@@ -16,13 +16,13 @@ inline float angle(float x1, float y1, float x2, float y2) {
   return atan2(y1 - y2, x1 - x2);
 }
 
-inline void rotate(float cx, float cy, int& xx, int& yy, float rot) {
+inline void rotate(float cx, float cy, float& xx, float& yy, float rot) {
   float scale = cy/cx;
-  float stretchy = cy + yy/scale - cx;
-  float mydist = dist(xx,stretchy,cx,cy);
-  float newang = angle(xx,stretchy,cx,cy)+rot;
-  xx = cx + mydist*cos(newang);
-  yy = cy + mydist*sin(newang)*scale;
+  float stretchy = yy/scale;
+  float mydist = dist(xx,stretchy,0,0);
+  float newang = angle(xx,stretchy,0,0)+rot;
+  xx = mydist*cos(newang);
+  yy = mydist*sin(newang)*scale;
 }
 
 /*!
@@ -53,13 +53,14 @@ inline void rotate(float cx, float cy, int& xx, int& yy, float rot) {
  * \param threads Number of threads to use.
  */
 void mouseFunction(Canvas& can, int threads) {
-  const int CX = can.getWindowWidth() / 2, CY = can.getWindowHeight() / 2;
+  Background * bg = can.getBackground();
+  const int CX = can.getWindowWidth(), CY = can.getWindowHeight();
   int x[3], y[3], index = 0;
   bool mouseDown = false;
   ColorFloat color[3];
 
-  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-      can.clearProcedural();
+  can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&bg]() {
+      bg->clear();
   });
   can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&mouseDown, &can, &index, &x, &y, &color]() {
       x[0] = can.getMouseX();
@@ -82,12 +83,15 @@ void mouseFunction(Canvas& can, int threads) {
         #pragma omp parallel num_threads (threads)
         {
           float tdelta = (2*PI*omp_get_thread_num())/omp_get_num_threads();
-          int myx[3], myy[3];
+          float myx[3], myy[3];
+          float cx = 0, cy = 0, cz = 0;
           for (int i = 0; i < 3; ++i) {
             myx[i] = x[i]; myy[i] = y[i];
             rotate(CX,CY,myx[i],myy[i],tdelta);
+            cx += myx[i]; cy += myy[i];
           }
-          can.drawConvexPolygon(3,myx,myy,color,true);
+          cx /= 3; cy /= 3;
+          bg->drawConvexPolygon(cx,cy,0,3,myx,myy,0,0,0,color);
         }
     }
     can.sleep();

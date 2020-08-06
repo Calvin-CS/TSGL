@@ -39,19 +39,19 @@ void blurImageFunction(Canvas& can, std::string fpath, int threads) {
   Background * bg = can.getBackground();
   int cww = can.getWindowWidth(), cwh = can.getWindowHeight();
   bg->drawImage(0,0,0,fpath,cww,cwh,0,0,0,1.0);
-  // int side = sqrt(threads);  //Square root of the number of threads, rounded down
-  // can.sleepFor(0.5f);
-  // #pragma omp parallel num_threads (side*side) //Make sure the actual number of threads is a square
-  // {
-	// side=sqrt(omp_get_num_threads());  //Verify we actually have a workable number of threads
-  //   int tid = omp_get_thread_num();
-  //   int ndrawn = 0, xblock = cww/side, yblock = cwh/side;
-  //   int xmin = (tid%side)*xblock - cww/2, ymin = (tid/side)*yblock - cwh/2;
-  //   int xmax = xmin+xblock; clamp(xmax,0,cww-1);
-  //   int ymax = ymin+yblock; clamp(ymax,0,cwh-1);
-  //   int depth = depthtest(xmin, ymin, xmin+xblock, ymin+yblock);
-  //   for (bool d = false; !d && can.isOpen(); d = blur(bg, xmin, ymin, xmax, ymax, ndrawn, depth--));
-  // }
+  int side = sqrt(threads);  //Square root of the number of threads, rounded down
+  can.sleepFor(0.5f);
+  #pragma omp parallel num_threads (side*side) //Make sure the actual number of threads is a square
+  {
+	side=sqrt(omp_get_num_threads());  //Verify we actually have a workable number of threads
+    int tid = omp_get_thread_num();
+    int ndrawn = 0, xblock = cww/side, yblock = cwh/side;
+    int xmin = (tid%side)*xblock - cww/2, ymin = (tid/side)*yblock - cwh/2;
+    int xmax = xmin+xblock; clamp(xmax,0,cww-1);
+    int ymax = ymin+yblock; clamp(ymax,0,cwh-1);
+    int depth = depthtest(xmin, ymin, xmin+xblock, ymin+yblock);
+    for (bool d = false; !d && can.isOpen(); d = blur(bg, xmin, ymin, xmax, ymax, ndrawn, depth--));
+  }
 }
 
 int main(int argc, char* argv[]) {

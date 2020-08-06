@@ -32,6 +32,7 @@ using namespace tsgl;
  * \param numberOfThreads Reference to the number of threads to use.
  */
 void spectrumFunction(Canvas& can, int numberOfThreads) {
+    Background * bg = can.getBackground();
     #pragma omp parallel num_threads(omp_get_num_procs())
     {
       int holder = omp_get_num_threads();   //Temp variable
@@ -45,9 +46,9 @@ void spectrumFunction(Canvas& can, int numberOfThreads) {
         }
         while (can.isOpen()) {
             can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
-            for (int i = omp_get_thread_num(); i < NUM_COLORS; i += nthreads)
-                for (int j = 0; j < NUM_COLORS; j++)
-                    can.drawPoint(i, j, ColorInt(i, j, can.getReps() % NUM_COLORS));
+            for (int i = -NUM_COLORS/2 + omp_get_thread_num(); i < NUM_COLORS/2; i += nthreads)
+                for (int j = -NUM_COLORS/2; j < NUM_COLORS/2; j++)
+                    bg->drawPixel(i, j, ColorInt(i + NUM_COLORS/2, j + NUM_COLORS/2, can.getReps() % NUM_COLORS));
         }
     }
 }
@@ -55,7 +56,7 @@ void spectrumFunction(Canvas& can, int numberOfThreads) {
 //Takes command-line arguments for the number of threads to use
 int main(int argc, char* argv[]) {
     int t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();   //Number of threads to use
-    Canvas c(-1,-1,255,255,"The Color Spectrum");
+    Canvas c(-1,-1,256,256,"The Color Spectrum");
     c.run(spectrumFunction, t);
 }
 

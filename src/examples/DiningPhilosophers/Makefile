@@ -9,6 +9,7 @@ RM = rm -f -r
 # Directory this example is contained in
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
+UNAME    := $(shell uname)
 
 # Dependencies
 _DEPS = Fork.h philEnums.h \
@@ -29,15 +30,15 @@ NOWARN = -Wno-unused-parameter -Wno-unused-function -Wno-narrowing \
 			-Wno-sizeof-array-argument -Wno-sign-compare -Wno-unused-variable
 
 ifeq ($(UNAME), Linux)
-GL_FLAGS = -lGLU -lglut -lGL
+GL_FLAGS := -lGLU -lglut -lGL
 BREW :=
 endif
 ifeq ($(UNAME), CYGWIN_NT-10.0)
-GL_FLAGS = -lGLU -lglut -lGL
+GL_FLAGS := -lGLU -lglut -lGL
 BREW :=
 endif
 ifeq ($(UNAME), Darwin)
-GL_FLAGS = -framework OpenGL -lglut
+GL_FLAGS := -framework OpenGL -lglut
 BREW := -lomp -I"$(brew --prefix libomp)/include" 
 endif
 

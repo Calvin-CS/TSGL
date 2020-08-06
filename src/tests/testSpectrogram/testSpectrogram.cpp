@@ -40,8 +40,9 @@ using namespace tsgl;
  * \param fname The name of the file to get the image from.
  */
 void spectrogramFunction(Canvas& can, std::string fname) {
+    Background * bg = can.getBackground();
     const int cww = can.getWindowWidth(), cwh = can.getWindowHeight();
-    can.drawImage(fname, 0, 0, cww, cwh);
+    bg->drawImage(0,0,0,fname,cww, cwh,0,0,0);
     Spectrogram sp(VERTICAL,500);
     can.sleepFor(0.1f);
 //    can.recordForNumFrames(FPS);
@@ -50,19 +51,19 @@ void spectrogramFunction(Canvas& can, std::string fname) {
     {
       int tid = omp_get_thread_num(), nthreads = omp_get_num_threads();
       int blockSize = cwh / nthreads;
-      int start = tid * blockSize;
-      int end = (tid == (nthreads-1)) ? cwh : (tid+1) * blockSize;
+      int start = tid * blockSize - cwh / 2;
+      int end = (tid == (nthreads-1)) ? cwh / 2 : start + blockSize;
       for (int j = start; j < end; ++j) {
         if (can.isOpen()) {
           can.sleep();
           ColorHSV hsv;
-          for (int i = 0; i < cww; ++i) {
-            hsv = can.getPoint(i,j);
+          for (int i = -cww/2; i < cww/2; ++i) {
+            hsv = bg->getPixel(i,j);
             if (hsv.H == hsv.H) { //Check for NAN
               sp.updateLocked(MAX_COLOR*hsv.H/6,1.0f,0.8f);
               sp.updateCritical(MAX_COLOR*hsv.H/6,1.0f,0.8f);
             }
-            can.drawPoint(i,j,ColorHSV(0.0f,0.0f,hsv.V));
+            bg->drawPixel(i,j,ColorHSV(0.0f,0.0f,hsv.V));
           }
           #pragma omp atomic
             ++numChecked;
@@ -71,13 +72,14 @@ void spectrogramFunction(Canvas& can, std::string fname) {
       }
     }
     // can.sleepFor(FRAME);
-    can.drawImage(fname, 0, 0, cww, cwh);
+    bg->drawImage(0,0,0,fname,cww, cwh,0,0,0);
     sp.finish();
+    can.wait();
 }
 
 //Takes command-line arguments for the file name of the picture to use in the spectrogram function
 int main(int argc, char* argv[]) {
-    std::string fname = argc > 1 ? argv[1] : "../assets/pics/colorful_cars.jpg";
+    std::string fname = argc > 1 ? argv[1] : "./assets/pics/colorful_cars.jpg";
     int w, h;
     TextureHandler::getDimensions(fname,w,h);
     Canvas c(-1, Canvas::getDisplayHeight()-h, w, h ,"Spectrogram");

@@ -29,17 +29,21 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void progressBarFunction(Canvas& can, int numThreads) {
-    const int X = 100, Y = X, W = can.getWindowWidth()-X*2, H = 20, MIN = 0, MAX = 1000, SEGS = numThreads;
-    ProgressBar pb(X,Y,W,H,MIN,MAX,SEGS);
+    Background * bg = can.getBackground();
+    const int X = 0, Y = X, W = can.getWindowWidth()-200, H = 20, MIN = 0, MAX = 1000, SEGS = numThreads;
+    ProgressBar * pb = new ProgressBar(0,0,0,W,H,MIN,MAX,SEGS,0,0,0);
     int progress = 0;
-    for (int i = 0; i < SEGS; ++i)
-      can.drawText(to_string(i),pb.getSegX(i)+8,pb.getSegY()-8,32,BLACK);
+    can.add(pb);
+    for (int i = 0; i < SEGS; ++i) {
+        float w = pb->getWidth();
+        bg->drawText(pb->getCenterX() - w/2 + i*w/SEGS + 10, pb->getCenterY() + pb->getHeight()+8, 0, std::to_wstring(i), "./assets/freefont/FreeSerif.ttf", 36, 0,0,0, BLACK);
+    }
     while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
         ++progress;
         for (int i = 0; i < SEGS; ++i)
-          pb.update(progress+i*(MAX/SEGS),i);
-        can.drawProgress(&pb);
+          pb->update(progress+i*(MAX/SEGS),i);
+        // pb->setPitch(can.getFrameNumber());
     }
 }
 

@@ -32,15 +32,16 @@ void AntFarm::addAnt(int x, int y, int r, int g, int b, int d) {
 }
 
 inline void AntFarm::moveAnt(int j) {
-  if (filled[ants[j]->myX + width * ants[j]->myY]) {
+  Background * bg = can->getBackground();
+  if (filled[(ants[j]->myX + width/2) + width * (ants[j]->myY + height/2)]) {
       ants[j]->myDir = (ants[j]->myDir + 1) % 4;
       if (shading)
-        can->drawPoint(ants[j]->myX, ants[j]->myY, ColorInt(ants[j]->myRed/2, ants[j]->myGreen/2, ants[j]->myBlue/2, ants[j]->myAlpha));
+        bg->drawPixel(ants[j]->myX, ants[j]->myY, ColorInt(ants[j]->myRed/2, ants[j]->myGreen/2, ants[j]->myBlue/2, ants[j]->myAlpha));
       else
-        can->drawPoint(ants[j]->myX, ants[j]->myY, ColorInt(MAX_COLOR / 2, MAX_COLOR / 2, MAX_COLOR / 2, ants[j]->myAlpha));
+        bg->drawPixel(ants[j]->myX, ants[j]->myY, ColorInt(MAX_COLOR / 2, MAX_COLOR / 2, MAX_COLOR / 2, ants[j]->myAlpha));
   } else {
       ants[j]->myDir = (ants[j]->myDir + 3) % 4;
-      can->drawPoint(ants[j]->myX, ants[j]->myY, ColorInt(ants[j]->myRed, ants[j]->myGreen, ants[j]->myBlue, ants[j]->myAlpha));
+      bg->drawPixel(ants[j]->myX, ants[j]->myY, ColorInt(ants[j]->myRed, ants[j]->myGreen, ants[j]->myBlue, ants[j]->myAlpha));
   }
 }
 
@@ -58,7 +59,7 @@ void AntFarm::moveAnts() {
       moveAnt(j);
   }
   for (int j = 0; j < size; j++) {
-      filled[ants[j]->myX + width * ants[j]->myY] ^= true;
+      filled[(ants[j]->myX + width/2) + width * (ants[j]->myY + height/2)] ^= true;
       ants[j]->move();
   }
 }

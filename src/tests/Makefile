@@ -9,6 +9,7 @@ SUBDIRS_TO_BUILD := test2Dvs3D \
 			testArrows \
  			testAura \
 			testBackground \
+ 			testBlurImage \
 			testCircle \
  			testColorWheel \
 			testConcavePolygon \
@@ -30,34 +31,33 @@ SUBDIRS_TO_BUILD := test2Dvs3D \
  			testLineChain \
  			testLineFan \
 			testLines \
+ 			testMouse \
  			testPixels \
 			testPrism \
 			testProcedural \
+ 			testProgressBar \
+ 			testProjectiles \
 			testPyramid \
 			testRectangle \
 			testRegularPolygon \
+ 			testScreenshot \
+ 			testSpectrogram \
+ 			testSpectrum \
 			testSphere \
 			testSquare \
 			testStar \
 			testText \
+ 			testTextTwo \
 			testTransparency \
 			testTriangle \
 			testTriangleStrip \
 #			test_specs \
-# 			testBlurImage \
 # 			testCalcPi \
 # 			testCosineIntegral \
 #			testDice \
 # 			testFunction \
 # 			testImageCart \
-# 			testMouse \
-# 			testProgressBar \
-# 			testProjectiles \
-# 			testScreenshot \
-# 			testSpectrogram \
-# 			testSpectrum \
 # 			testTextCart \
-# 			testTextTwo \
 # 			testUnits \
 
 SUBDIRS_TO_CLEAN := $(subst test,..., $(SUBDIRS_TO_BUILD))	# Used to clean the tests

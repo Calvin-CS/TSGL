@@ -34,11 +34,13 @@ void alphaLangtonFunction(Canvas& can) {
               R = WH / 6;                   // How far apart to space the ants
     bool paused = false;
 
+    Background * bg = can.getBackground();
+
     AntFarm farm(WW,WH,4,&can);
-    farm.addAnt(WW / 2 - R,WH / 2,MAX_COLOR,0,0,0);
-    farm.addAnt(WW / 2,WH / 2 - R,0,0,MAX_COLOR,1);
-    farm.addAnt(WW / 2 + R,WH / 2,0,MAX_COLOR,0,2);
-    farm.addAnt(WW / 2,WH / 2 + R,MAX_COLOR,0,MAX_COLOR,3);
+    farm.addAnt(-R,0,MAX_COLOR,0,0,0);
+    farm.addAnt(0,R,0,0,MAX_COLOR,1);
+    farm.addAnt(R,0,0,MAX_COLOR,0,2);
+    farm.addAnt(0,-R,MAX_COLOR,0,MAX_COLOR,3);
 
     Timer pulse(28.72 / 60);
     double time = pulse.getTime();
@@ -52,8 +54,8 @@ void alphaLangtonFunction(Canvas& can) {
     can.bindToButton(TSGL_ENTER, TSGL_PRESS, [&paused]() {
         paused = !paused;
     });
-    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can]() {
-        can.clearProcedural();
+    can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&bg]() {
+        bg->clear();
     });
 
     while (can.isOpen()) {
@@ -62,7 +64,7 @@ void alphaLangtonFunction(Canvas& can) {
         for (int i = 0; i < IPF; i++)
             farm.moveAnts();
         if (pulse.pastPeriod())
-            can.clearProcedural();
+            bg->clear();
       }
     }
 }
@@ -88,7 +90,7 @@ void langtonFunction(Canvas& can) {
               WH = can.getWindowHeight();   // Window height
     AntFarm farm(WW,WH,4,&can);
     farm.setParallel(false);
-    farm.addAnt(WW / 2,WH / 2,MAX_COLOR,0,0,0);
+    farm.addAnt(0,0,MAX_COLOR,0,0,0);
     while (can.isOpen()) {
         can.sleep(); //Removed the timer and replaced it with an internal timer in the Canvas class
         for (int i = 0; i < IPF; i++) {
@@ -114,10 +116,10 @@ void langtonColonyFunction(Canvas& can) {
               R = WH / 6;                   // How far apart to space the ants
 
     AntFarm farm(WW,WH,4,&can);
-    farm.addAnt(WW / 2 - R,WH / 2,MAX_COLOR,0,0,0);
-    farm.addAnt(WW / 2,WH / 2 - R,0,0,MAX_COLOR,1);
-    farm.addAnt(WW / 2 + R,WH / 2,0,MAX_COLOR,0,2);
-    farm.addAnt(WW / 2,WH / 2 + R,MAX_COLOR,0,MAX_COLOR,3);
+    farm.addAnt(-R,0,MAX_COLOR,0,0,0);
+    farm.addAnt(0,R,0,0,MAX_COLOR,1);
+    farm.addAnt(R,0,0,MAX_COLOR,0,2);
+    farm.addAnt(0,-R,MAX_COLOR,0,MAX_COLOR,3);
     farm.setShading(true);
     while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
@@ -138,10 +140,10 @@ void langtonRainbowFunction(Canvas& can) {
               R = WH / 6;                   // How far apart to space the ants
 
     AntFarm farm(WW,WH,4,&can);
-    farm.addAnt(WW / 2 - R,WH / 2,MAX_COLOR,0,0,0);
-    farm.addAnt(WW / 2,WH / 2 - R,0,0,MAX_COLOR,1);
-    farm.addAnt(WW / 2 + R,WH / 2,0,MAX_COLOR,0,2);
-    farm.addAnt(WW / 2,WH / 2 + R,MAX_COLOR,0,MAX_COLOR,3);
+    farm.addAnt(-R,0,MAX_COLOR,0,0,0);
+    farm.addAnt(0,R,0,0,MAX_COLOR,1);
+    farm.addAnt(R,0,0,MAX_COLOR,0,2);
+    farm.addAnt(0,-R,MAX_COLOR,0,MAX_COLOR,3);
     farm.setShading(true);
     for (int j = 0; j < 4; j++)
       farm.ants[j]->setAlpha(64);

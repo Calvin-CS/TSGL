@@ -1,60 +1,61 @@
-// /*
-//  * ProgressBar.h extends Shape and provides a class for drawing a progress bar to a Canvas.
-//  */
+/*
+ * ProgressBar.h extends Shape and provides a class for drawing a progress bar to a Canvas.
+ */
 
-// #ifndef PROGRESSBAR_H
-// #define PROGRESSBAR_H
+#ifndef PROGRESSBAR_H
+#define PROGRESSBAR_H
 
-// #include <omp.h>
+#include <omp.h>
 
-// #include "Polyline.h"
-// #include "Rectangle.h"
+#include "Polyline.h"
+#include "Rectangle.h"
+#include "Drawable.h"
 
-// namespace tsgl {
+namespace tsgl {
 
-// /*! \class ProgressBar
-//  *  \brief Draws and updates a progress bar.
-//  *  \details ProgressBar is a class for holding vertex data for multiple rectangles forming a progress bar.
-//  *    ProgressBar is formed of multiple segments, each of which is thread-safe and updated individually
-//  *    with the update() method.  A ProgressBar can be drawn to the screen using Canvas::drawProgress().
-//  */
-// class ProgressBar {
-//  private:
-//    float *startX, *endX;
-//    float min, max;
-//    int xx, yy, myWidth, myHeight, segs;
-//  public:
+/*! \class ProgressBar
+ *  \brief Draws and updates a progress bar.
+ *  \details ProgressBar is a class for holding vertex data for multiple rectangles forming a progress bar.
+ *    ProgressBar is formed of multiple segments, each of which is thread-safe and updated individually
+ *    with the update() method.  A ProgressBar can be drawn to the screen using Canvas::drawProgress().
+ */
+class ProgressBar : public Drawable {
+ private:
+    Rectangle ** segRecs;
+    Polyline ** segBorders;
+    float *startX, *endX;
+    float min, max;
+    float myWidth, myHeight;
+    int segs;
+ public:
 
-//     ProgressBar(int x, int y, int width, int height, float minValue, float maxValue, unsigned numSegments);
+    ProgressBar(float x, float y, float z, float width, float height, float minValue, float maxValue, unsigned numSegments, float yaw, float pitch, float roll);
 
-//     ~ProgressBar();
+    ~ProgressBar();
 
-//     void update(float newValue, int segnum = -1);
+    void draw(Shader * shader);
 
-//     Polyline* getBorder(int index);
+    void update(float newValue, int segnum = -1);
 
-//     Rectangle* getRect(int index);
+    /*!
+     * \brief Accessor for the ProgressBar's number of segments
+     * \return The number of segments in the ProgressBar.
+     */
+    int getSegs() { return segs; }
 
-//     /*!
-//      * \brief Accessor for the ProgressBar's number of segments
-//      * \return The number of segments in the ProgressBar.
-//      */
-//     int getSegs() { return segs; }
+    /*!
+     * \brief Accessor for the ProgressBar's width in pixels
+     * \return The pixel width of the ProgressBar.
+     */
+    float getWidth() { return myWidth; }
 
-//     /*!
-//      * \brief Accessor for a segment's x position
-//      *   \param i Index of the segment
-//      * \return The x-coordinate of the left edge of segment <code>i</code> in the ProgressBar.
-//      */
-//     int getSegX(int i) { return startX[i]; }
+    /*!
+     * \brief Accessor for the ProgressBar's height in pixels
+     * \return The pixel height of the ProgressBar.
+     */
+    float getHeight() { return myHeight; }
+};
 
-//     /*!
-//      * \brief Accessor for a segment's y position
-//      * \return The y-coordinate of the top edge of the ProgressBar.
-//      */
-//     int getSegY() { return yy; }
-// };
+}
 
-// }
-
-// #endif /* PROGRESSBAR_H */
+#endif /* PROGRESSBAR_H */

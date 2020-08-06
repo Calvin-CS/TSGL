@@ -14,17 +14,15 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  */
 void textFunctionTwo(Canvas& can) {
-    ColorFloat RED = ColorFloat(1.0, 0.0, 0.0, 1.0);
-    ColorFloat GREEN = ColorFloat(0.0, 1.0, 0.0, 1.0);
-    ColorFloat BLUE = ColorFloat(0.0, 0.0, 1.0, 1.0);
-
-    can.drawText(L"A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
-    can.drawText(L"Something extraordinary happened.", 16, 150, 32, RED);
-    can.drawText(L"Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
-    can.drawText(L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", 16, 350,
-                 32, BLUE);
-    can.drawText(L"Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
-    can.drawText(L"And to that I say...oh well.", 16, 550, 32, WHITE);
+    Background * bg = can.getBackground();
+    float WW = can.getWindowWidth() / 2; float WH = can.getWindowHeight() / 2;
+    std::string font = "./assets/freefont/FreeMonoBold.ttf";
+    bg->drawText(0, WH * 5/6, 0, L"A long time ago, in a galaxy far, far away.", font, 16, 0,0,0, BLACK);
+    bg->drawText(0, WH * 3/6, 0, L"Something extraordinary happened.", font, 16, 0,0,0, RED);
+    bg->drawText(0, WH * 1/6, 0,L"Something far more extraordinary than anything mankind has ever seen.", font, 16, 0,0,0, GREEN);
+    bg->drawText(0,-WH * 1/6, 0,L"Unfortunately, as nobody was around to witness the event, we are largely ignorant", font, 16, 0,0,0, BLUE);
+    bg->drawText(0,-WH * 3/6, 0,L"Of *what* exactly that extraordinary event was.", font, 16, 0,0,0, PURPLE);
+    bg->drawText(0,-WH * 5/6, 0,L"And to that I say...oh well.", font, 16, 0,0,0, WHITE);
 }
 
 //Takes command-line arguments for the width and height of the screen

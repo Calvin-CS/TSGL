@@ -48,8 +48,9 @@ using namespace tsgl;
  */
 void projectileFunction(Canvas& can) {
   const int WINDOW_W = can.getWindowWidth();
-  int targetX = 0, targetY = WINDOW_W / 2, coordinateChangerY = 1, coordinateChangerX = 3;  //Used to control target motion
-  int centerX = WINDOW_W / 2;// centerY = WINDOW_H / 2;   //Center of screen
+  const int WINDOW_H = can.getWindowHeight();
+  int centerX = 0, centerY = 0;   //Center of screen
+  int targetX = -WINDOW_W/2, targetY = centerY, coordinateChangerY = 1, coordinateChangerX = 3;  //Used to control target motion
   int numberOfTargets = 10;   //Number of targets
   bool hit = false;  //Determine if the target has been hit
   int score = 0;   //Score
@@ -64,22 +65,24 @@ void projectileFunction(Canvas& can) {
   });
 
   //Create circles of target and add to Canvas
-  Circle * blueCircle = new Circle(targetX, targetY, 50, BLUE);   //Outer circle
-  Circle * redCircle = new Circle(targetX, targetY, 30, RED);  //Middle
-  Circle * yellowCircle = new Circle(targetX, targetY, 10, YELLOW); //Inner
+  Circle * blueCircle = new Circle(targetX,targetY,0, 50, 0,0,0, BLUE);   //Outer circle
+  Circle * redCircle = new Circle(targetX,targetY,0, 30, 0,0,0, RED);  //Middle
+  Circle * yellowCircle = new Circle(targetX,targetY,0, 10, 0,0,0, YELLOW); //Inner
   can.add(blueCircle); can.add(redCircle); can.add(yellowCircle);
+  
+  Background * bg = can.getBackground();
 
   //Draw loop
   while(can.isOpen()) {
     can.sleep();
-    can.clearProcedural();
+    bg->clear();
 
     targetX += coordinateChangerX;  //Horizontal movement
-    targetY -= coordinateChangerY; //Vertical movement
+    targetY += coordinateChangerY; //Vertical movement
 
     if(hit) {   //If we hit a target....
       score++;
-      targetX = WINDOW_W + 60;
+      targetX = WINDOW_W / 2 + 60;
       hit = false;
     }
     if(targetX >= centerX) { //If it hits the middle of the screen, invert the vertical direction
@@ -87,17 +90,17 @@ void projectileFunction(Canvas& can) {
     }
     if(targetX > WINDOW_W + 60) {  //If the target is off the screen
       numberOfTargets--;  //Decrement the number of targets left
-      targetX = 0;  //Reset the target and inverter
-      targetY = 200;
+      targetX = -WINDOW_W / 2;  //Reset the target and inverter
+      targetY = centerY;
       coordinateChangerY = 1;
     }
     if(numberOfTargets <= 5) {   //Mix it up if there are only five targets left (speed up the targets)
       coordinateChangerX = 6;
     }
     //Move each circle to the target's location
-    blueCircle->setCenter(targetX, targetY);
-    redCircle->setCenter(targetX, targetY);
-    yellowCircle->setCenter(targetX, targetY);
+    blueCircle->setCenter(targetX, targetY,0);
+    redCircle->setCenter(targetX, targetY,0);
+    yellowCircle->setCenter(targetX, targetY,0);
     if(numberOfTargets == 0) {   //End game
       std::cout << "Your score: " << score << std::endl;
       can.remove(redCircle);
