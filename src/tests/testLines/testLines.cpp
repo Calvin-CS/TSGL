@@ -48,6 +48,8 @@ void lineFunction(Canvas& c) {
         // l->setYaw(floatVal);
         // l->setPitch(floatVal);
         // l->setRoll(floatVal);
+        // printf("1: %f, %f, %f\n", l->getFirstEndpointX(),l->getFirstEndpointY(),l->getFirstEndpointZ());
+        // printf("2: %f, %f, %f\n", l->getSecondEndpointX(),l->getSecondEndpointY(),l->getSecondEndpointZ());
         // l->setLength(100 * sin(floatVal/90) + 200);
         // if (l->getLength() > 300 || l->getLength() < 100) {
         //     delta *= -1;

@@ -21,12 +21,12 @@ Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, fl
         TsglDebug("Cannot have a line with length less than or equal to 0.");
     attribMutex.lock();
     myLength = length;
-    endpointX1 = -length/2 + x;
-    endpointY1 = y;
-    endpointZ1 = z;
-    endpointX2 = -length/2 + x;
-    endpointY2 = y;
-    endpointZ2 = z;
+    myEndpointX1 = -length/2 + x;
+    myEndpointY1 = y;
+    myEndpointZ1 = z;
+    myEndpointX2 = -length/2 + x;
+    myEndpointY2 = y;
+    myEndpointZ2 = z;
     attribMutex.unlock();
     addVertex(-length/2, 0, 0, color);
     addVertex(length/2, 0, 0, color);
@@ -51,12 +51,12 @@ Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, fl
         TsglDebug("Cannot have a line with length less than or equal to 0.");
     attribMutex.lock();
     myLength = length;
-    endpointX1 = -length/2 + x;
-    endpointY1 = y;
-    endpointZ1 = z;
-    endpointX2 = -length/2 + x;
-    endpointY2 = y;
-    endpointZ2 = z;
+    myEndpointX1 = -length/2 + x;
+    myEndpointY1 = y;
+    myEndpointZ1 = z;
+    myEndpointX2 = -length/2 + x;
+    myEndpointY2 = y;
+    myEndpointZ2 = z;
     attribMutex.unlock();
     addVertex(-length/2, 0, 0, color[0]);
     addVertex(length/2, 0, 0, color[1]);
@@ -80,12 +80,12 @@ Line::Line(float x, float y, float z, GLfloat length, float yaw, float pitch, fl
 Line::Line(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, float yaw, float pitch, float roll, ColorFloat color) : Polyline((x2 + x1) / 2, (y2 + y1) / 2, (z2 + z1) / 2, 2, yaw, pitch, roll) {
     attribMutex.lock();
     myLength = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) + pow(z2 - z1, 2));   
-    endpointX1 = x1;
-    endpointY1 = y1;
-    endpointZ1 = z1;
-    endpointX2 = x2;
-    endpointY2 = y2;
-    endpointZ2 = z2; 
+    myEndpointX1 = x1;
+    myEndpointY1 = y1;
+    myEndpointZ1 = z1;
+    myEndpointX2 = x2;
+    myEndpointY2 = y2;
+    myEndpointZ2 = z2; 
     attribMutex.unlock();
     addVertex(x1 - myCenterX, y1 - myCenterY, z1 - myCenterZ, color);
     addVertex(x2 - myCenterX, y2 - myCenterY, z2 - myCenterZ, color);
@@ -109,12 +109,12 @@ Line::Line(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z
 Line::Line(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, float yaw, float pitch, float roll, ColorFloat color[]) : Polyline((x2 + x1) / 2, (y2 + y1) / 2, (z2 + z1) / 2, 2, yaw, pitch, roll) {
     attribMutex.lock();
     myLength = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) + pow(z2 - z1, 2));  
-    endpointX1 = x1;
-    endpointY1 = y1;
-    endpointZ1 = z1;
-    endpointX2 = x2;
-    endpointY2 = y2;
-    endpointZ2 = z2;
+    myEndpointX1 = x1;
+    myEndpointY1 = y1;
+    myEndpointZ1 = z1;
+    myEndpointX2 = x2;
+    myEndpointY2 = y2;
+    myEndpointZ2 = z2;
     attribMutex.unlock();
     addVertex(x1 - myCenterX, y1 - myCenterY, z1 - myCenterZ, color[0]);
     addVertex(x2 - myCenterX, y2 - myCenterY, z2 - myCenterZ, color[1]);
@@ -131,29 +131,29 @@ Line::Line(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z
  */
 void Line::setFirstEndpoint(float x, float y, float z) {
     attribMutex.lock();
-    endpointX1 = x; endpointY1 = y; endpointZ1 = z;
-    myLength = sqrt(pow(endpointX2 - endpointX1, 2) + pow(endpointY2 - endpointY1, 2) + pow(endpointZ2 - endpointZ1, 2));
+    myEndpointX1 = x; myEndpointY1 = y; myEndpointZ1 = z;
+    myLength = sqrt(pow(myEndpointX2 - myEndpointX1, 2) + pow(myEndpointY2 - myEndpointY1, 2) + pow(myEndpointZ2 - myEndpointZ1, 2));
     if (centerMatchesRotationPoint()) {
-        myRotationPointX = (endpointX2 + endpointX1) / 2;
-        myRotationPointY = (endpointY2 + endpointY1) / 2;
-        myRotationPointZ = (endpointZ2 + endpointZ1) / 2;
+        myRotationPointX = (myEndpointX2 + myEndpointX1) / 2;
+        myRotationPointY = (myEndpointY2 + myEndpointY1) / 2;
+        myRotationPointZ = (myEndpointZ2 + myEndpointZ1) / 2;
         myCenterX = myRotationPointX;
         myCenterY = myRotationPointY;
         myCenterZ = myRotationPointZ;
     } else {
-        myCenterX = (endpointX2 + endpointX1) / 2;
-        myCenterY = (endpointY2 + endpointY1) / 2;
-        myCenterZ = (endpointZ2 + endpointZ1) / 2;
+        myCenterX = (myEndpointX2 + myEndpointX1) / 2;
+        myCenterY = (myEndpointY2 + myEndpointY1) / 2;
+        myCenterZ = (myEndpointZ2 + myEndpointZ1) / 2;
     }
     myCurrentYaw = 0;
     myCurrentPitch = 0;
     myCurrentRoll = 0;
-    vertices[0] = endpointX1 - myCenterX;
-    vertices[1] = endpointY1 - myCenterY;
-    vertices[2] = endpointZ1 - myCenterZ;
-    vertices[7] = endpointX2 - myCenterX;
-    vertices[8] = endpointY2 - myCenterY;
-    vertices[9] = endpointZ2 - myCenterZ;
+    vertices[0] = myEndpointX1 - myCenterX;
+    vertices[1] = myEndpointY1 - myCenterY;
+    vertices[2] = myEndpointZ1 - myCenterZ;
+    vertices[7] = myEndpointX2 - myCenterX;
+    vertices[8] = myEndpointY2 - myCenterY;
+    vertices[9] = myEndpointZ2 - myCenterZ;
     attribMutex.unlock();
 }
 
@@ -168,29 +168,29 @@ void Line::setFirstEndpoint(float x, float y, float z) {
  */
 void Line::setSecondEndpoint(float x, float y, float z) {
     attribMutex.lock();
-    endpointX2 = x; endpointY2 = y; endpointZ2 = z;
-    myLength = sqrt(pow(endpointX2 - endpointX1, 2) + pow(endpointY2 - endpointY1, 2) + pow(endpointZ2 - endpointZ1, 2));
+    myEndpointX2 = x; myEndpointY2 = y; myEndpointZ2 = z;
+    myLength = sqrt(pow(myEndpointX2 - myEndpointX1, 2) + pow(myEndpointY2 - myEndpointY1, 2) + pow(myEndpointZ2 - myEndpointZ1, 2));
     if (centerMatchesRotationPoint()) {
-        myRotationPointX = (endpointX2 + endpointX1) / 2;
-        myRotationPointY = (endpointY2 + endpointY1) / 2;
-        myRotationPointZ = (endpointZ2 + endpointZ1) / 2;
+        myRotationPointX = (myEndpointX2 + myEndpointX1) / 2;
+        myRotationPointY = (myEndpointY2 + myEndpointY1) / 2;
+        myRotationPointZ = (myEndpointZ2 + myEndpointZ1) / 2;
         myCenterX = myRotationPointX;
         myCenterY = myRotationPointY;
         myCenterZ = myRotationPointZ;
     } else {
-        myCenterX = (endpointX2 + endpointX1) / 2;
-        myCenterY = (endpointY2 + endpointY1) / 2;
-        myCenterZ = (endpointZ2 + endpointZ1) / 2;
+        myCenterX = (myEndpointX2 + myEndpointX1) / 2;
+        myCenterY = (myEndpointY2 + myEndpointY1) / 2;
+        myCenterZ = (myEndpointZ2 + myEndpointZ1) / 2;
     }
     myCurrentYaw = 0;
     myCurrentPitch = 0;
     myCurrentRoll = 0;
-    vertices[0] = endpointX1 - myCenterX;
-    vertices[1] = endpointY1 - myCenterY;
-    vertices[2] = endpointZ1 - myCenterZ;
-    vertices[7] = endpointX2 - myCenterX;
-    vertices[8] = endpointY2 - myCenterY;
-    vertices[9] = endpointZ2 - myCenterZ;
+    vertices[0] = myEndpointX1 - myCenterX;
+    vertices[1] = myEndpointY1 - myCenterY;
+    vertices[2] = myEndpointZ1 - myCenterZ;
+    vertices[7] = myEndpointX2 - myCenterX;
+    vertices[8] = myEndpointY2 - myCenterY;
+    vertices[9] = myEndpointZ2 - myCenterZ;
     attribMutex.unlock();
 }
 
@@ -235,6 +235,180 @@ void Line::changeLengthBy(GLfloat delta) {
     vertices[8] *= ratio;
     vertices[9] *= ratio;
     attribMutex.unlock();
+}
+
+/**
+ * \brief Returns the x-coordinate of the line's first endpoint.
+ * \details Returns the value of the endpointX1 instance variable.
+ * \return x-coordinate of the Line's first endpoint.
+ */
+GLfloat Line::getFirstEndpointX() { 
+    attribMutex.lock();
+    float ex1;
+    if (myEndpointX1 == myRotationPointX && myEndpointY1 == myRotationPointY && myEndpointZ1 == myRotationPointZ) {
+        ex1 = myEndpointX1;
+        attribMutex.unlock();
+        return ex1;
+    }
+    if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
+        ex1 = myEndpointX1;
+        attribMutex.unlock();
+        return ex1;
+    }
+    float cosYaw = cos(myCurrentYaw * PI / 180);
+    float sinYaw = sin(myCurrentYaw * PI / 180);
+    float cosPitch = cos(myCurrentPitch * PI / 180);
+    float sinPitch = sin(myCurrentPitch * PI / 180);
+    float cosRoll = cos(myCurrentPitch * PI / 180);
+    float sinRoll = sin(myCurrentRoll * PI / 180);
+    ex1 = cosYaw * cosPitch * (myEndpointX1 - myRotationPointX) + (cosYaw * sinPitch * sinRoll - sinYaw * cosRoll) * (myEndpointY1 - myRotationPointY) + (cosYaw * sinPitch * cosRoll + sinYaw * sinRoll) * (myEndpointZ1 - myRotationPointZ) + myRotationPointX;
+    attribMutex.unlock();
+    return ex1;
+}
+
+/**
+ * \brief Returns the y-coordinate of the line's first endpoint.
+ * \details Returns the value of the endpointY1 instance variable.
+ * \return y-coordinate of the Line's first endpoint.
+ */
+GLfloat Line::getFirstEndpointY() { 
+    attribMutex.lock();
+    float ey1;
+    if (myEndpointX1 == myRotationPointX && myEndpointY1 == myRotationPointY && myEndpointZ1 == myRotationPointZ) {
+        ey1 = myEndpointY1;
+        attribMutex.unlock();
+        return ey1;
+    }
+    if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
+        ey1 = myEndpointY1;
+        attribMutex.unlock();
+        return ey1;
+    }
+    float cosYaw = cos(myCurrentYaw * PI / 180);
+    float sinYaw = sin(myCurrentYaw * PI / 180);
+    float cosPitch = cos(myCurrentPitch * PI / 180);
+    float sinPitch = sin(myCurrentPitch * PI / 180);
+    float cosRoll = cos(myCurrentPitch * PI / 180);
+    float sinRoll = sin(myCurrentRoll * PI / 180);
+    ey1 = sinYaw * cosPitch * (myEndpointX1 - myRotationPointX) + (sinYaw * sinPitch * sinRoll + cosYaw * cosRoll) * (myEndpointY1 - myRotationPointY) + (sinYaw * sinPitch * cosRoll - cosYaw * sinRoll) * (myEndpointZ1 - myRotationPointZ)  + myRotationPointY;
+    attribMutex.unlock();
+    return ey1;
+}
+
+/**
+ * \brief Returns the z-coordinate of the line's first endpoint.
+ * \details Returns the value of the endpointZ1 instance variable.
+ * \return z-coordinate of the Line's first endpoint.
+ */
+GLfloat Line::getFirstEndpointZ() { 
+    attribMutex.lock();
+    float ez1;
+    if (myEndpointX1 == myRotationPointX && myEndpointY1 == myRotationPointY && myEndpointZ1 == myRotationPointZ) {
+        ez1 = myEndpointZ1;
+        attribMutex.unlock();
+        return ez1;
+    }
+    if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
+        ez1 = myEndpointZ1;
+        attribMutex.unlock();
+        return ez1;
+    }
+    float cosYaw = cos(myCurrentYaw * PI / 180);
+    float sinYaw = sin(myCurrentYaw * PI / 180);
+    float cosPitch = cos(myCurrentPitch * PI / 180);
+    float sinPitch = sin(myCurrentPitch * PI / 180);
+    float cosRoll = cos(myCurrentPitch * PI / 180);
+    float sinRoll = sin(myCurrentRoll * PI / 180);
+    ez1 = -sinPitch * (myEndpointX1 - myRotationPointX) + cosPitch * sinRoll * (myEndpointY1 - myRotationPointY) + cosPitch * cosRoll * (myEndpointZ1 - myRotationPointZ) + myRotationPointZ;
+    attribMutex.unlock();
+    return ez1; 
+}
+
+/**
+ * \brief Returns the x-coordinate of the line's second endpoint.
+ * \details Returns the value of the endpointX2 instance variable.
+ * \return x-coordinate of the Line's second endpoint.
+ */
+GLfloat Line::getSecondEndpointX() { 
+    attribMutex.lock();
+    float ex2;
+    if (myEndpointX2 == myRotationPointX && myEndpointY2 == myRotationPointY && myEndpointZ2 == myRotationPointZ) {
+        ex2 = myEndpointX2;
+        attribMutex.unlock();
+        return ex2;
+    }
+    if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
+        ex2 = myEndpointX2;
+        attribMutex.unlock();
+        return ex2;
+    }
+    float cosYaw = cos(myCurrentYaw * PI / 180);
+    float sinYaw = sin(myCurrentYaw * PI / 180);
+    float cosPitch = cos(myCurrentPitch * PI / 180);
+    float sinPitch = sin(myCurrentPitch * PI / 180);
+    float cosRoll = cos(myCurrentPitch * PI / 180);
+    float sinRoll = sin(myCurrentRoll * PI / 180);
+    ex2 = cosYaw * cosPitch * (myEndpointX2 - myRotationPointX) + (cosYaw * sinPitch * sinRoll - sinYaw * cosRoll) * (myEndpointY2 - myRotationPointY) + (cosYaw * sinPitch * cosRoll + sinYaw * sinRoll) * (myEndpointZ2 - myRotationPointZ) + myRotationPointX;
+    attribMutex.unlock();
+    return ex2; 
+}
+
+/**
+ * \brief Returns the y-coordinate of the line's second endpoint.
+ * \details Returns the value of the endpointY2 instance variable.
+ * \return y-coordinate of the Line's second endpoint.
+ */
+GLfloat Line::getSecondEndpointY() { 
+    attribMutex.lock();
+    float ey2;
+    if (myEndpointX2 == myRotationPointX && myEndpointY2 == myRotationPointY && myEndpointZ2 == myRotationPointZ) {
+        ey2 = myEndpointY2;
+        attribMutex.unlock();
+        return ey2;
+    }
+    if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
+        ey2 = myEndpointY2;
+        attribMutex.unlock();
+        return ey2;
+    }
+    float cosYaw = cos(myCurrentYaw * PI / 180);
+    float sinYaw = sin(myCurrentYaw * PI / 180);
+    float cosPitch = cos(myCurrentPitch * PI / 180);
+    float sinPitch = sin(myCurrentPitch * PI / 180);
+    float cosRoll = cos(myCurrentPitch * PI / 180);
+    float sinRoll = sin(myCurrentRoll * PI / 180);
+    ey2 = sinYaw * cosPitch * (myEndpointX2 - myRotationPointX) + (sinYaw * sinPitch * sinRoll + cosYaw * cosRoll) * (myEndpointY2 - myRotationPointY) + (sinYaw * sinPitch * cosRoll - cosYaw * sinRoll) * (myEndpointZ2 - myRotationPointZ)  + myRotationPointY;
+    attribMutex.unlock();
+    return ey2; 
+}
+
+/**
+ * \brief Returns the z-coordinate of the line's second endpoint.
+ * \details Returns the value of the endpointZ2 instance variable.
+ * \return z-coordinate of the Line's second endpoint.
+ */
+GLfloat Line::getSecondEndpointZ() { 
+    attribMutex.lock();
+    float ez2;
+    if (myEndpointX2 == myRotationPointX && myEndpointY2 == myRotationPointY && myEndpointZ2 == myRotationPointZ) {
+        ez2 = myEndpointZ2;
+        attribMutex.unlock();
+        return ez2;
+    }
+    if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
+        ez2 = myEndpointZ2;
+        attribMutex.unlock();
+        return ez2;
+    }
+    float cosYaw = cos(myCurrentYaw * PI / 180);
+    float sinYaw = sin(myCurrentYaw * PI / 180);
+    float cosPitch = cos(myCurrentPitch * PI / 180);
+    float sinPitch = sin(myCurrentPitch * PI / 180);
+    float cosRoll = cos(myCurrentPitch * PI / 180);
+    float sinRoll = sin(myCurrentRoll * PI / 180);
+    ez2 = -sinPitch * (myEndpointX2 - myRotationPointX) + cosPitch * sinRoll * (myEndpointY2 - myRotationPointY) + cosPitch * cosRoll * (myEndpointZ2 - myRotationPointZ) + myRotationPointZ;
+    attribMutex.unlock();
+    return ez2;
 }
 
 }

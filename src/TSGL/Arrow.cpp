@@ -415,11 +415,17 @@ void Arrow::setSecondEndpoint(GLfloat x, GLfloat y, GLfloat z) {
  * \note See Drawable::getCenterX() documentation for more info.
  */
 float Arrow::getFirstEndpointX() {
+    attribMutex.lock();
+    float ex1;
     if (myEndpointX1 == myRotationPointX && myEndpointY1 == myRotationPointY && myEndpointZ1 == myRotationPointZ) {
-        return myEndpointX1;
+        ex1 = myEndpointX1;
+        attribMutex.unlock();
+        return ex1;
     }
     if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
-        return myEndpointX1;
+        ex1 = myEndpointX1;
+        attribMutex.unlock();
+        return ex1;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -427,7 +433,8 @@ float Arrow::getFirstEndpointX() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    float ex1 = cosYaw * cosPitch * (myEndpointX1 - myRotationPointX) + (cosYaw * sinPitch * sinRoll - sinYaw * cosRoll) * (myEndpointY1 - myRotationPointY) + (cosYaw * sinPitch * cosRoll + sinYaw * sinRoll) * (myEndpointZ1 - myRotationPointZ) + myRotationPointX;
+    ex1 = cosYaw * cosPitch * (myEndpointX1 - myRotationPointX) + (cosYaw * sinPitch * sinRoll - sinYaw * cosRoll) * (myEndpointY1 - myRotationPointY) + (cosYaw * sinPitch * cosRoll + sinYaw * sinRoll) * (myEndpointZ1 - myRotationPointZ) + myRotationPointX;
+    attribMutex.unlock();
     return ex1;
 }
 
@@ -437,11 +444,17 @@ float Arrow::getFirstEndpointX() {
  * \note See Drawable::getCenterY() documentation for more info.
  */
 float Arrow::getFirstEndpointY() {
+    attribMutex.lock();
+    float ey1;
     if (myEndpointX1 == myRotationPointX && myEndpointY1 == myRotationPointY && myEndpointZ1 == myRotationPointZ) {
-        return myEndpointY1;
+        ey1 = myEndpointY1;
+        attribMutex.unlock();
+        return ey1;
     }
     if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
-        return myEndpointY1;
+        ey1 = myEndpointY1;
+        attribMutex.unlock();
+        return ey1;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -449,7 +462,8 @@ float Arrow::getFirstEndpointY() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    float ey1 = sinYaw * cosPitch * (myEndpointX1 - myRotationPointX) + (sinYaw * sinPitch * sinRoll + cosYaw * cosRoll) * (myEndpointY1 - myRotationPointY) + (sinYaw * sinPitch * cosRoll - cosYaw * sinRoll) * (myEndpointZ1 - myRotationPointZ)  + myRotationPointY;
+    ey1 = sinYaw * cosPitch * (myEndpointX1 - myRotationPointX) + (sinYaw * sinPitch * sinRoll + cosYaw * cosRoll) * (myEndpointY1 - myRotationPointY) + (sinYaw * sinPitch * cosRoll - cosYaw * sinRoll) * (myEndpointZ1 - myRotationPointZ)  + myRotationPointY;
+    attribMutex.unlock();
     return ey1;
 }
 
@@ -459,11 +473,17 @@ float Arrow::getFirstEndpointY() {
  * \note See Drawable::getCenterZ() documentation for more info.
  */
 float Arrow::getFirstEndpointZ() {
+    attribMutex.lock();
+    float ez1;
     if (myEndpointX1 == myRotationPointX && myEndpointY1 == myRotationPointY && myEndpointZ1 == myRotationPointZ) {
-        return myEndpointZ1;
+        ez1 = myEndpointZ1;
+        attribMutex.unlock();
+        return ez1;
     }
     if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
-        return myEndpointZ1;
+        ez1 = myEndpointZ1;
+        attribMutex.unlock();
+        return ez1;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -471,7 +491,8 @@ float Arrow::getFirstEndpointZ() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    float ez1 = -sinPitch * (myEndpointX1 - myRotationPointX) + cosPitch * sinRoll * (myEndpointY1 - myRotationPointY) + cosPitch * cosRoll * (myEndpointZ1 - myRotationPointZ) + myRotationPointZ;
+    ez1 = -sinPitch * (myEndpointX1 - myRotationPointX) + cosPitch * sinRoll * (myEndpointY1 - myRotationPointY) + cosPitch * cosRoll * (myEndpointZ1 - myRotationPointZ) + myRotationPointZ;
+    attribMutex.unlock();
     return ez1;
 }
 
@@ -481,11 +502,17 @@ float Arrow::getFirstEndpointZ() {
  * \note See Drawable::getCenterX() documentation for more info.
  */
 float Arrow::getSecondEndpointX() {
+    attribMutex.lock();
+    float ex2;
     if (myEndpointX2 == myRotationPointX && myEndpointY2 == myRotationPointY && myEndpointZ2 == myRotationPointZ) {
-        return myEndpointX2;
+        ex2 = myEndpointX2;
+        attribMutex.unlock();
+        return ex2;
     }
     if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
-        return myEndpointX2;
+        ex2 = myEndpointX2;
+        attribMutex.unlock();
+        return ex2;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -493,7 +520,8 @@ float Arrow::getSecondEndpointX() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    float ex2 = cosYaw * cosPitch * (myEndpointX2 - myRotationPointX) + (cosYaw * sinPitch * sinRoll - sinYaw * cosRoll) * (myEndpointY2 - myRotationPointY) + (cosYaw * sinPitch * cosRoll + sinYaw * sinRoll) * (myEndpointZ2 - myRotationPointZ) + myRotationPointX;
+    ex2 = cosYaw * cosPitch * (myEndpointX2 - myRotationPointX) + (cosYaw * sinPitch * sinRoll - sinYaw * cosRoll) * (myEndpointY2 - myRotationPointY) + (cosYaw * sinPitch * cosRoll + sinYaw * sinRoll) * (myEndpointZ2 - myRotationPointZ) + myRotationPointX;
+    attribMutex.unlock();
     return ex2;
 }
 
@@ -503,11 +531,17 @@ float Arrow::getSecondEndpointX() {
  * \note See Drawable::getCenterY() documentation for more info.
  */
 float Arrow::getSecondEndpointY() {
+    attribMutex.lock();
+    float ey2;
     if (myEndpointX2 == myRotationPointX && myEndpointY2 == myRotationPointY && myEndpointZ2 == myRotationPointZ) {
-        return myEndpointY2;
+        ey2 = myEndpointY2;
+        attribMutex.unlock();
+        return ey2;
     }
     if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
-        return myEndpointY2;
+        ey2 = myEndpointY2;
+        attribMutex.unlock();
+        return ey2;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -515,7 +549,8 @@ float Arrow::getSecondEndpointY() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    float ey2 = sinYaw * cosPitch * (myEndpointX2 - myRotationPointX) + (sinYaw * sinPitch * sinRoll + cosYaw * cosRoll) * (myEndpointY2 - myRotationPointY) + (sinYaw * sinPitch * cosRoll - cosYaw * sinRoll) * (myEndpointZ2 - myRotationPointZ)  + myRotationPointY;
+    ey2 = sinYaw * cosPitch * (myEndpointX2 - myRotationPointX) + (sinYaw * sinPitch * sinRoll + cosYaw * cosRoll) * (myEndpointY2 - myRotationPointY) + (sinYaw * sinPitch * cosRoll - cosYaw * sinRoll) * (myEndpointZ2 - myRotationPointZ)  + myRotationPointY;
+    attribMutex.unlock();
     return ey2;
 }
 
@@ -525,11 +560,17 @@ float Arrow::getSecondEndpointY() {
  * \note See Drawable::getCenterZ() documentation for more info.
  */
 float Arrow::getSecondEndpointZ() {
+    attribMutex.lock();
+    float ez2;
     if (myEndpointX2 == myRotationPointX && myEndpointY2 == myRotationPointY && myEndpointZ2 == myRotationPointZ) {
-        return myEndpointZ2;
+        ez2 = myEndpointZ2;
+        attribMutex.unlock();
+        return ez2;
     }
     if (myCurrentYaw == 0 && myCurrentPitch == 0 && myCurrentRoll == 0) {
-        return myEndpointZ2;
+        ez2 = myEndpointZ2;
+        attribMutex.unlock();
+        return ez2;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -537,7 +578,8 @@ float Arrow::getSecondEndpointZ() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    float ez2 = -sinPitch * (myEndpointX2 - myRotationPointX) + cosPitch * sinRoll * (myEndpointY2 - myRotationPointY) + cosPitch * cosRoll * (myEndpointZ2 - myRotationPointZ) + myRotationPointZ;
+    ez2 = -sinPitch * (myEndpointX2 - myRotationPointX) + cosPitch * sinRoll * (myEndpointY2 - myRotationPointY) + cosPitch * cosRoll * (myEndpointZ2 - myRotationPointZ) + myRotationPointZ;
+    attribMutex.unlock();
     return ez2;
 }
 

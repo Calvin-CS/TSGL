@@ -302,8 +302,12 @@ void Drawable::setRotationPoint(float x, float y, float z) {
  * \note and http://planning.cs.uiuc.edu/node102.html for more more understanding.
  */
 float Drawable::getCenterX() {
+    attribMutex.lock();
+    float cx;
     if (centerMatchesRotationPoint()) {
-        return myCenterX;
+        cx = myCenterX;
+        attribMutex.unlock();
+        return cx;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -311,7 +315,9 @@ float Drawable::getCenterX() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    return cosYaw * cosPitch * (myCenterX - myRotationPointX) + (cosYaw * sinPitch * sinRoll - sinYaw * cosRoll) * (myCenterY - myRotationPointY) + (cosYaw * sinPitch * cosRoll + sinYaw * sinRoll) * (myCenterZ - myRotationPointZ) + myRotationPointX;
+    cx = cosYaw * cosPitch * (myCenterX - myRotationPointX) + (cosYaw * sinPitch * sinRoll - sinYaw * cosRoll) * (myCenterY - myRotationPointY) + (cosYaw * sinPitch * cosRoll + sinYaw * sinRoll) * (myCenterZ - myRotationPointZ) + myRotationPointX;
+    attribMutex.unlock();
+    return cx;
 }
 
 /*!
@@ -321,8 +327,12 @@ float Drawable::getCenterX() {
  * \note and http://planning.cs.uiuc.edu/node102.html for more more understanding.
  */
 float Drawable::getCenterY() {
+    attribMutex.lock();
+    float cy;
     if (centerMatchesRotationPoint()) {
-        return myCenterY;
+        cy = myCenterY;
+        attribMutex.unlock();
+        return cy;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -330,7 +340,9 @@ float Drawable::getCenterY() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    return sinYaw * cosPitch * (myCenterX - myRotationPointX) + (sinYaw * sinPitch * sinRoll + cosYaw * cosRoll) * (myCenterY - myRotationPointY) + (sinYaw * sinPitch * cosRoll - cosYaw * sinRoll) * (myCenterZ - myRotationPointZ)  + myRotationPointY;
+    cy = sinYaw * cosPitch * (myCenterX - myRotationPointX) + (sinYaw * sinPitch * sinRoll + cosYaw * cosRoll) * (myCenterY - myRotationPointY) + (sinYaw * sinPitch * cosRoll - cosYaw * sinRoll) * (myCenterZ - myRotationPointZ)  + myRotationPointY;
+    attribMutex.unlock();
+    return cy;
 }
 
 /*!
@@ -340,8 +352,12 @@ float Drawable::getCenterY() {
  * \note and http://planning.cs.uiuc.edu/node102.html for more more understanding.
  */
 float Drawable::getCenterZ() {
+    attribMutex.lock();
+    float cz;
     if (centerMatchesRotationPoint()) {
-        return myCenterZ;
+        cz = myCenterZ;
+        attribMutex.unlock();
+        return cz;
     }
     float cosYaw = cos(myCurrentYaw * PI / 180);
     float sinYaw = sin(myCurrentYaw * PI / 180);
@@ -349,7 +365,9 @@ float Drawable::getCenterZ() {
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
     float sinRoll = sin(myCurrentRoll * PI / 180);
-    return -sinPitch * (myCenterX - myRotationPointX) + cosPitch * sinRoll * (myCenterY - myRotationPointY) + cosPitch * cosRoll * (myCenterZ - myRotationPointZ) + myRotationPointZ;
+    cz = -sinPitch * (myCenterX - myRotationPointX) + cosPitch * sinRoll * (myCenterY - myRotationPointY) + cosPitch * cosRoll * (myCenterZ - myRotationPointZ) + myRotationPointZ;
+    attribMutex.unlock();
+    return cz;
 }
 
 Drawable::~Drawable() {

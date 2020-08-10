@@ -16,7 +16,7 @@ namespace tsgl {
 class Line : public Polyline {
  private:
     GLfloat myLength;
-    GLfloat endpointX1, endpointY1, endpointZ1, endpointX2, endpointY2, endpointZ2;
+    GLfloat myEndpointX1, myEndpointY1, myEndpointZ1, myEndpointX2, myEndpointY2, myEndpointZ2;
  public:
     Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorFloat color);
 
@@ -41,47 +41,17 @@ class Line : public Polyline {
      */
     GLfloat getLength() { return myLength; }
 
-    /**
-     * \brief Returns the x-coordinate of the line's first endpoint.
-     * \details Returns the value of the endpointX1 instance variable.
-     * \return x-coordinate of the Line's first endpoint.
-     */
-    GLfloat getFirstEndpointX() { return endpointX1; }
+    GLfloat getFirstEndpointX();
 
-    /**
-     * \brief Returns the y-coordinate of the line's first endpoint.
-     * \details Returns the value of the endpointY1 instance variable.
-     * \return y-coordinate of the Line's first endpoint.
-     */
-    GLfloat getFirstEndpointY() { return endpointY1; }
+    GLfloat getFirstEndpointY();
 
-    /**
-     * \brief Returns the z-coordinate of the line's first endpoint.
-     * \details Returns the value of the endpointZ1 instance variable.
-     * \return z-coordinate of the Line's first endpoint.
-     */
-    GLfloat getFirstEndpointZ() { return endpointZ1; }
+    GLfloat getFirstEndpointZ();
 
-    /**
-     * \brief Returns the x-coordinate of the line's second endpoint.
-     * \details Returns the value of the endpointX2 instance variable.
-     * \return x-coordinate of the Line's second endpoint.
-     */
-    GLfloat getSecondEndpointX() { return endpointX2; }
+    GLfloat getSecondEndpointX();
 
-    /**
-     * \brief Returns the y-coordinate of the line's second endpoint.
-     * \details Returns the value of the endpointY2 instance variable.
-     * \return y-coordinate of the Line's second endpoint.
-     */
-    GLfloat getSecondEndpointY() { return endpointY2; }
+    GLfloat getSecondEndpointY();
 
-    /**
-     * \brief Returns the z-coordinate of the line's second endpoint.
-     * \details Returns the value of the endpointZ2 instance variable.
-     * \return z-coordinate of the Line's second endpoint.
-     */
-    GLfloat getSecondEndpointZ() { return endpointZ2; }
+    GLfloat getSecondEndpointZ();
 };
 
 }

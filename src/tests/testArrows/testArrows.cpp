@@ -22,7 +22,7 @@ void arrowFunction(Canvas& c) {
 
     Arrow * a3 = new Arrow(-250, 250, 150, -150, -150, -150, 10, 0,0,0, colors, true);
     c.add(a3);
-    // a3->setLength(a3->getLength() / 2);
+    a3->setLength(a3->getLength() / 2);
 	// doubleArrow->setCenterX(100);
 	// doubleArrow->setRotationPoint(0,0,0);
 	// doubleArrow->setYaw(45);
