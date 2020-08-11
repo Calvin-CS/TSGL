@@ -23,8 +23,6 @@ public:
 
     Ellipsoid(float x, float y, float z, GLfloat xRadius, GLfloat yRadius, GLfloat zRadius, float yaw, float pitch, float roll, ColorFloat c[]);
 
-    virtual ~Ellipsoid();
-
     virtual void setXRadius(GLfloat radiusX);
 
     virtual void changeXRadiusBy(GLfloat delta);
@@ -46,6 +44,8 @@ public:
     virtual void setColor(ColorFloat c);
 
     virtual void setColor(ColorFloat c[]);
+
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 };
 
 }

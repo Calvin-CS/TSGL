@@ -57,7 +57,7 @@ public:
 
     virtual void setColor(ColorFloat c[]);
 
-    virtual ~Cuboid();
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 };
 
 }

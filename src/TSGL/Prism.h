@@ -24,8 +24,6 @@ public:
 
     Prism(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[]);
 
-    virtual ~Prism();
-
     virtual void setHeight(GLfloat height);
 
     virtual void changeHeightBy(GLfloat delta);
@@ -49,6 +47,8 @@ public:
     virtual void setColor(ColorFloat c) { Shape::setColor(c); }
 
     virtual void setColor(ColorFloat c[]);
+
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 };
 
 }

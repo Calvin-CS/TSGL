@@ -37,10 +37,6 @@ public:
     void setRadius(GLfloat radius);
 
     void changeRadiusBy(GLfloat delta);
-
-    void setColor(ColorFloat c) { Shape::setColor(c); }
-
-    void setColor(ColorFloat c[]);
 };
 
 }

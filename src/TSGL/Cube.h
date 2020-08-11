@@ -37,7 +37,12 @@ public:
 
     virtual void setColor(ColorFloat c[]);
 
-    virtual ~Cube();
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
+
+    /*!
+     * \brief Destructor for the Cube.
+     */
+    virtual ~Cube() {}
 };
 
 }

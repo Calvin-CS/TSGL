@@ -23,8 +23,6 @@ public:
 
     Sphere(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[]);
 
-    virtual ~Sphere();
-
     virtual void setRadius(float radius);
 
     virtual void changeRadiusBy(float delta);
@@ -34,6 +32,8 @@ public:
     virtual void setColor(ColorFloat c);
 
     virtual void setColor(ColorFloat c[]);
+
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 };
 
 }

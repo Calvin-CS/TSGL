@@ -101,7 +101,7 @@ Pyramid::Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat r
     attribMutex.unlock();
     for (int i = 0; i < mySides; i++) {
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[i+1]);
-        addVertex(0,-0.5,0, c[mySides+2]);
+        addVertex(0,-0.5,0, c[mySides+1]);
         addVertex(cos(TWOPI * (i + 1) / mySides), -0.5, sin(TWOPI * (i + 1) / mySides), c[(i+1) % mySides + 1]);
 
         addVertex(cos(TWOPI * i / mySides), -0.5, sin(TWOPI * i / mySides), c[i+1]);    
@@ -219,10 +219,10 @@ void Pyramid::setColor(ColorFloat c[]) {
         vertices[i*42 + 5] = c[i+1].B;
         vertices[i*42 + 6] = c[i+1].A;
 
-        vertices[i*42 + 10] = c[mySides+2].R;
-        vertices[i*42 + 11] = c[mySides+2].G;
-        vertices[i*42 + 12] = c[mySides+2].B;
-        vertices[i*42 + 13] = c[mySides+2].A;
+        vertices[i*42 + 10] = c[mySides+1].R;
+        vertices[i*42 + 11] = c[mySides+1].G;
+        vertices[i*42 + 12] = c[mySides+1].B;
+        vertices[i*42 + 13] = c[mySides+1].A;
 
         vertices[i*42 + 17] = c[(i+1) % mySides + 1].R;
         vertices[i*42 + 18] = c[(i+1) % mySides + 1].G;
@@ -250,9 +250,20 @@ void Pyramid::setColor(ColorFloat c[]) {
     attribMutex.unlock();
 }
 
-/*!
- * \brief Destructor for the Pyramid.
+/**
+ * \brief Accessor for Arrow's colors.
+ * \details Populates the reference parameter vector with a ColorFloat for each end of Arrow.
+ * \param colorVec A vector of ColorFloats to which the ColorFloats associated with Arrow will be pushed.
+ * \note Overrides Shape::getColors().
  */
-Pyramid::~Pyramid() { }
+void Pyramid::getColors(std::vector<ColorFloat> &colorVec) {
+    attribMutex.lock();
+    colorVec.push_back(ColorFloat(vertices[31],vertices[32],vertices[33],vertices[34]));
+    for (int i = 0; i < mySides; i++) {
+        colorVec.push_back(ColorFloat(vertices[42*i+3],vertices[42*i+4],vertices[42*i+5],vertices[42*i+6]));
+    }
+    colorVec.push_back(ColorFloat(vertices[10],vertices[11],vertices[12],vertices[13]));
+    attribMutex.unlock();
+}
 
 }

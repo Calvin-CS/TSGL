@@ -243,9 +243,20 @@ void Prism::setColor(ColorFloat c[]) {
     attribMutex.unlock();
 }
 
-/*!
- * \brief Destructor for the Prism.
+/**
+ * \brief Accessor for Arrow's colors.
+ * \details Populates the reference parameter vector with a ColorFloat for each end of Arrow.
+ * \param colorVec A vector of ColorFloats to which the ColorFloats associated with Arrow will be pushed.
+ * \note Overrides Shape::getColors().
  */
-Prism::~Prism() { }
+void Prism::getColors(std::vector<ColorFloat> &colorVec) {
+    attribMutex.lock();
+    colorVec.push_back(ColorFloat(vertices[10],vertices[11],vertices[12],vertices[13]));
+    colorVec.push_back(ColorFloat(vertices[3],vertices[4],vertices[5],vertices[6]));
+    colorVec.push_back(ColorFloat(vertices[24],vertices[25],vertices[26],vertices[27]));
+    colorVec.push_back(ColorFloat(vertices[66],vertices[67],vertices[68],vertices[69]));
+    colorVec.push_back(ColorFloat(vertices[80],vertices[81],vertices[82],vertices[83]));
+    attribMutex.unlock();
+}
 
 }

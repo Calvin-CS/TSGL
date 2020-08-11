@@ -35,6 +35,8 @@ public:
     void setColor(ColorFloat c) { Shape::setColor(c); }
 
     void setColor(ColorFloat c[]);
+
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
   };
 
 }

@@ -290,9 +290,23 @@ void Ellipsoid::setColor(ColorFloat c[]) {
     attribMutex.unlock();
 }
 
-/*!
- * \brief Destructor for the Ellipsoid.
+/**
+ * \brief Accessor for Ellipsoid's colors.
+ * \details Populates the reference parameter vector with a ColorFloat for each section of Ellipsoid.
+ * \param colorVec A vector of ColorFloats to which the ColorFloats associated with Ellipsoid will be pushed.
+ * \note Overrides Shape::getColors().
  */
-Ellipsoid::~Ellipsoid() { }
+void Ellipsoid::getColors(std::vector<ColorFloat> &colorVec) {
+    attribMutex.lock();
+    for(int b=0;b<horizontalSections;b++) {
+        colorVec.push_back(ColorFloat(
+            vertices[(b*verticalSections)*2*7 + 3],
+            vertices[(b*verticalSections)*2*7 + 4],
+            vertices[(b*verticalSections)*2*7 + 5],
+            vertices[(b*verticalSections)*2*7 + 6])
+            );
+    }
+    attribMutex.unlock();
+}
 
 }

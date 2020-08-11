@@ -65,9 +65,11 @@ class Arrow : public ConcavePolygon {
 
     GLfloat getSecondEndpointZ();
 
-    void setColor(ColorFloat c) { Shape::setColor(c); }
+    virtual void setColor(ColorFloat c) { Shape::setColor(c); }
 
-    void setColor(ColorFloat c[]);
+    virtual void setColor(ColorFloat c[]);
+
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 };
 
 }

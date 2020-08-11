@@ -608,6 +608,19 @@ void Arrow::setColor(ColorFloat c[]) {
     attribMutex.unlock();
 }
 
+/**
+ * \brief Accessor for Arrow's colors.
+ * \details Populates the reference parameter vector with a ColorFloat for each end of Arrow.
+ * \param colorVec A vector of ColorFloats to which the ColorFloats associated with Arrow will be pushed.
+ * \note Overrides Shape::getColors().
+ */
+void Arrow::getColors(std::vector<ColorFloat> &colorVec) {
+    attribMutex.lock();
+    colorVec.push_back(ColorFloat(vertices[3],vertices[4],vertices[5],vertices[6]));
+    colorVec.push_back(ColorFloat(vertices[38],vertices[39],vertices[40],vertices[41]));
+    attribMutex.unlock();
+}
+
 /*! \brief Private helper method that recalculates vertices array whenever endpoints are altered.
  *  \details Assigns new values to coordinates section of vertices[], principally based on myEndpoint and myWidth.
  */

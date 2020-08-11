@@ -145,5 +145,18 @@ void Ellipse::setColor(ColorFloat c[]) {
     attribMutex.unlock();
 }
 
+/**
+ * \brief Accessor for Ellipse's colors.
+ * \details Populates the reference parameter vector with a ColorFloat for each section of Ellipse.
+ * \param colorVec A vector of ColorFloats to which the ColorFloats associated with Ellipse will be pushed.
+ * \note Overrides Shape::getColors().
+ */
+void Ellipse::getColors(std::vector<ColorFloat> &colorVec) { 
+    attribMutex.lock();
+    for (int i = 0; i < numberOfVertices; i+=verticesPerColor) {
+        colorVec.push_back(ColorFloat(vertices[i*7+3],vertices[i*7+4],vertices[i*7+5],vertices[i*7+6]));
+    }
+    attribMutex.unlock();
+}
 
 }

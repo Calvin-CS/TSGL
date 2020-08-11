@@ -289,9 +289,23 @@ void Cube::setColor(ColorFloat c[]) {
     attribMutex.unlock();
 }
 
-/*!
- * \brief Destructor for the Cube.
+/**
+ * \brief Accessor for Cube's colors.
+ * \details Populates the reference parameter vector with a ColorFloat for each corner of Cube.
+ * \param colorVec A vector of ColorFloats to which the ColorFloats associated with Cube will be pushed.
+ * \note Overrides Shape::getColors().
  */
-Cube::~Cube() { }
+void Cube::getColors(std::vector<ColorFloat> &colorVec) {
+    attribMutex.lock();
+    colorVec.push_back(ColorFloat(vertices[3],vertices[4],vertices[5],vertices[6]));
+    colorVec.push_back(ColorFloat(vertices[10],vertices[11],vertices[12],vertices[13]));
+    colorVec.push_back(ColorFloat(vertices[17],vertices[18],vertices[19],vertices[20]));
+    colorVec.push_back(ColorFloat(vertices[38],vertices[39],vertices[40],vertices[41]));
+    colorVec.push_back(ColorFloat(vertices[45],vertices[46],vertices[47],vertices[48]));
+    colorVec.push_back(ColorFloat(vertices[52],vertices[53],vertices[54],vertices[55]));
+    colorVec.push_back(ColorFloat(vertices[59],vertices[60],vertices[61],vertices[62]));
+    colorVec.push_back(ColorFloat(vertices[80],vertices[81],vertices[82],vertices[83]));
+    attribMutex.unlock();
+}
 
 }

@@ -21,6 +21,7 @@ SUBDIRS_TO_BUILD := test2Dvs3D \
 			testDiorama \
 			testEllipse \
 			testEllipsoid \
+			testGetColors \
  			testGetPixels \
  			testGradientWheel \
  			testGraydient \

@@ -24,8 +24,6 @@ public:
 
     Pyramid(float x, float y, float z, int sides, GLfloat height, GLfloat radius, float yaw, float pitch, float roll, ColorFloat c[]);
 
-    virtual ~Pyramid();
-
     virtual void setRadius(float radius);
 
     virtual void changeRadiusBy(float delta);
@@ -49,6 +47,8 @@ public:
     virtual void setColor(ColorFloat c);
 
     virtual void setColor(ColorFloat c[]);
+
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 };
 
 }
