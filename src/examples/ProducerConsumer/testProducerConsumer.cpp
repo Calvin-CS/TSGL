@@ -27,24 +27,22 @@ Queue<Star*> sharedBuffer(MAX_DATA, queueDisplay);  //Shared buffer (has colored
 /**
  * displayLegend helps the main method by controlling the legendDisplay
  */
-void displayLegend(Circle *waitingCircle, Rectangle *waitingSquare, Canvas *queueDisplay) {
+void displayLegend(Circle *waitingCircle, Square *waitingSquare, Canvas *queueDisplay) {
 	Star** bufferArray = sharedBuffer.getArray();
 	int produceIndex;
 	int cap = sharedBuffer.getCapacity();
 	int oldFirstIndex = 0;
-	ColorFloat* prodFillColor;
-	ColorFloat* consFillColor;
+	ColorFloat prodColor;
+	ColorFloat consColor;
 	while( queueDisplay->isOpen() ) {
 		if(!sharedBuffer.isEmpty()) {
 			produceIndex = (sharedBuffer.getLastIndex() + cap - 1) % cap;
-			prodFillColor = bufferArray[produceIndex]->getFillColor();
-			waitingCircle->setColor( prodFillColor[0], BLACK );
-			delete[] prodFillColor;
+			prodColor = bufferArray[produceIndex]->getColor();
+			waitingCircle->setColor( prodColor );
 		}
 		if(oldFirstIndex != sharedBuffer.getFirstIndex()) {
-			consFillColor = bufferArray[oldFirstIndex]->getFillColor();
-			waitingSquare->setColor( consFillColor[0], BLACK );
-			delete[] consFillColor;
+			consColor = bufferArray[oldFirstIndex]->getColor();
+			waitingSquare->setColor( consColor );
 			oldFirstIndex = sharedBuffer.getFirstIndex();
 		}
 	}
@@ -73,6 +71,8 @@ int main(int argc, char * argv[]) {
 
 	srand(time(NULL)); // seed the random number generator
 
+	Background * queueBackground = queueDisplay.getBackground();
+	float centerY = WINDOW_HEIGHT/2 - 175;
 	//Fire up the visualization
   	queueDisplay.start();
 
@@ -80,40 +80,40 @@ int main(int argc, char * argv[]) {
 		PCThread::paused = !PCThread::paused;
 	});
 
+	queueBackground->drawRegularPolygon(0, centerY, 0, OUTERRAD, CAPACITY, 0,0,0, WHITE, true);
+	queueBackground->drawRegularPolygon(0, centerY, 0, INNERRAD, CAPACITY, 0,0,0, WHITE, true);
+
 	//Prepare the display with background items
-	int centerY = 175;
-	int centerX = 300;
 	for(int i = 0; i < CAPACITY; i++) {
 		float langle = (i*2*PI)/CAPACITY; // line angle
-		queueDisplay.drawLine(-INNERRAD*sin(langle)+centerX, INNERRAD*cos(langle)+centerY, -OUTERRAD*sin(langle)+centerX, OUTERRAD*cos(langle)+centerY, BLACK);
+		queueBackground->drawLine(-INNERRAD*sin(langle), INNERRAD*cos(langle) + centerY,0, -OUTERRAD*sin(langle), OUTERRAD*cos(langle)+centerY,0, 0,0,0, BLACK);
 	}
 
-	queueDisplay.drawRegularPolygon(centerX, centerY, OUTERRAD, CAPACITY, BLACK, false);
-	queueDisplay.drawRegularPolygon(centerX, centerY, INNERRAD, CAPACITY, BLACK, false);
+	const std::string FONT = "./assets/freefont/FreeSerif.ttf";
 
 	//Add notes to bottom of main Canvas
-	queueDisplay.drawText("*Numbers indicate counts of items produced and consumed", WINDOW_WIDTH-370, WINDOW_HEIGHT-20, 12, BLACK);
+	queueBackground->drawText(0,-WINDOW_HEIGHT/2+20, 0, L"*Numbers indicate counts of items produced and consumed", FONT, 20, 0,0,0, BLACK);
 	// Label Readers and Writers
-	queueDisplay.drawText("Producers", 30, 20, 24, BLACK);
-	queueDisplay.drawText("Consumers", WINDOW_WIDTH-150, 20, 24, BLACK);
+	queueBackground->drawText(-WINDOW_WIDTH/2 + 60, WINDOW_HEIGHT/2-10,0, L"Producers", FONT, 24, 0,0,0, BLACK);
+	queueBackground->drawText(WINDOW_WIDTH/2 - 60, WINDOW_HEIGHT/2-10,0, L"Consumers", FONT, 24, 0,0,0, BLACK);
 
-	int LEGENDOFFSET = 300;
+	int LEGENDOFFSET = -25;
 
 	//Text labels
-	queueDisplay.drawText("producing",100,70+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("waiting for lock",100,130+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("holding lock",100,190+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("consuming",350,70+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("waiting for lock",350,130+LEGENDOFFSET,24,BLACK);
-	queueDisplay.drawText("holding lock",350,190+LEGENDOFFSET,24,BLACK);
+	queueBackground->drawText(-140,LEGENDOFFSET-60,0,L"producing",FONT,24, 0,0,0, BLACK);
+	queueBackground->drawText(-140,LEGENDOFFSET-120,0,L"waiting for lock",FONT,24, 0,0,0, BLACK);
+	queueBackground->drawText(-140,LEGENDOFFSET-180,0,L"holding lock",FONT,24, 0,0,0, BLACK);
+	queueBackground->drawText(140,LEGENDOFFSET-60,0,L"consuming",FONT,24, 0,0,0, BLACK);
+	queueBackground->drawText(140,LEGENDOFFSET-120,0,L"waiting for lock",FONT,24, 0,0,0, BLACK);
+	queueBackground->drawText(140,LEGENDOFFSET-180,0,L"holding lock",FONT,24, 0,0,0, BLACK);
 
 	//Create legend items
-	Circle waitingCircle(50, 60+LEGENDOFFSET, 20, BLACK, BLACK); //waiting for lock
-	Circle thinkingCircle(50, 120+LEGENDOFFSET, 20, BLACK, true); //waiting, not seeking lock
-	Circle lockCircle(50, 180+LEGENDOFFSET, 20, BLACK, false); //has lock
-	Rectangle waitingSquare(WINDOW_WIDTH-70, 40+LEGENDOFFSET, 40, 40, BLACK, BLACK);
-	Rectangle thinkingSquare(WINDOW_WIDTH-70, 100+LEGENDOFFSET, 40, 40, BLACK, true);
-	Rectangle lockSquare(WINDOW_WIDTH-70, 160+LEGENDOFFSET, 40, 40, BLACK, false);
+	Circle waitingCircle(-WINDOW_WIDTH/2 + 50, LEGENDOFFSET-60, 0, 20, 0,0,0, BLACK); //waiting for lock
+	Circle thinkingCircle(-WINDOW_WIDTH/2 + 50, LEGENDOFFSET-120, 0, 20, 0,0,0, BLACK); //waiting, not seeking lock
+	Circle lockCircle(-WINDOW_WIDTH/2 + 50, LEGENDOFFSET-180, 0, 20, 0,0,0, BLACK); //has lock
+	Square waitingSquare(WINDOW_WIDTH/2-50, LEGENDOFFSET-60, 0, 40, 0,0,0, BLACK);
+	Square thinkingSquare(WINDOW_WIDTH/2-50, LEGENDOFFSET-120, 0, 40, 0,0,0, BLACK);
+	Square lockSquare(WINDOW_WIDTH/2-50, LEGENDOFFSET-180, 0, 40, 0,0,0, BLACK);
 	queueDisplay.add( &waitingCircle ); 	queueDisplay.add( &thinkingCircle );
 	queueDisplay.add( &lockCircle ); 		queueDisplay.add( &waitingSquare );
 	queueDisplay.add( &thinkingSquare );	queueDisplay.add( &lockSquare );
@@ -146,21 +146,23 @@ int main(int argc, char * argv[]) {
 
 	queueDisplay.wait();
 
-	//Now join them
-	for(int p = 0; p < numProducers; p++) {	//Join the pthreads for the Producers
-		pro[p]->join();
-	}
-
-	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
-		con[c]->join();
-	}
-
-	legendUpdater.join();
-
 	while( !sharedBuffer.isEmpty() ) {
 		Star * tempPtr = sharedBuffer.remove();
 		delete tempPtr;
 	}
+
+	//Now join them
+	for(int p = 0; p < numProducers; p++) {	//Join the pthreads for the Producers
+		pro[p]->join();
+		delete pro[p];
+	}
+
+	for(int c = 0; c < numConsumers; c++) {   //Join the pthreads for the Consumers
+		con[c]->join();
+		delete con[c];
+	}
+
+	legendUpdater.join();
 
 	delete [] pro;
 	delete [] con;

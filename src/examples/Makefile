@@ -17,6 +17,7 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
 			MergeSort/. \
 			NewtonPendulum/. \
 			Pong/. \
+ 			ProducerConsumer/. \
 			SeaUrchin/. \
 			ShakerSort/. \
 			SolarSystem/. \
@@ -26,7 +27,6 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
 			ThreadedSolarSystem/. \
 # 			Mandelbrot/. \
 # 			ParallelPandemic/. \
-# 			ProducerConsumer/. \
 # 			ReaderWriter/. \
 
 

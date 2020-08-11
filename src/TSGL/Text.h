@@ -63,6 +63,8 @@ class Text : public Drawable {
     GLfloat getWidth() { return myWidth; }
     GLfloat getHeight() { return myHeight; }
 
+    ColorFloat getColor() { return myColor; }
+
     ~Text();
 };
 

@@ -28,19 +28,18 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	count = 0;
 	buffer = &sharedBuffer;	//Get the handle to the Queue
 	myCan = &can;			//Get the handle to the Canvas
-	myY = 50 * (id + 1);
+	myY = can.getWindowHeight()/2 - 50 * (id + 1);
 	myX = 0; //Set in subclass constructor
 	myItem = NULL;
 	myArrow = NULL;
-	myCountLabel = new Text( std::to_wstring(count), myX, myY+5, 24, WHITE);
-	myCountLabel->setFont("../assets/freefont/FreeSans.ttf");
+	myCountLabel = new Text( 0,0,1, std::to_wstring(count), "./assets/freefont/FreeSans.ttf", 24, 0,0,0, WHITE);
 	// myCountLabel->setLayer(3);
 	myCan->add( myCountLabel );
 }
 
 //TODO: comment and improve
 void PCThread::wait() {
-	myCan->sleepFor( (rand()%10+3.0)/5.0 );
+	myCan->sleepFor( (saferand(0, RAND_MAX)%10+3.0)/5.0 );
 	while( paused ) {}
 }
 
@@ -58,31 +57,24 @@ void PCThread::animateItem(int endX, int endY) {
 	const float timeInterval = 0.7;
 	int startX = myItem->getCenterX(), startY = myItem->getCenterY();
 
-	myArrow = new Arrow (startX, startY, endX, endY, BLACK, false);
+	myArrow = new Arrow (endX, endY, 1, startX, startY, 1, 5, 0,0,0, BLACK, false);
 	myCan->add(myArrow);
 
 	float deltaX = (endX - startX) / float(steps); //Change in x each step
 	float deltaY = (endY - startY) / float(steps); //Change in y each step
 
 	for(int i = 0; i <= steps; i++) {
-		myItem->setCenter( round( startX+ i*deltaX ), round(startY+i*deltaY));
+		myItem->setCenter( round( startX+ i*deltaX ), round(startY+i*deltaY), 0);
 		myCan->sleepFor( timeInterval / steps );
 		while( paused ) {}
 	}
 	myCan->remove(myArrow);
 	delete myArrow;
-	myArrow = NULL;
 }
 
 PCThread::~PCThread() {
 	delete myCountLabel;
 	delete myShape;
-	if(myItem) {
-		delete myItem;
-		myItem = NULL;
-	}
-	if(myArrow) {
-		delete myArrow;
-		myArrow = NULL;
-	}
+	delete myItem;
+	delete myArrow;
 }

@@ -174,6 +174,32 @@ void Polyline::setColor(ColorFloat c[]) {
     attribMutex.unlock();
 }
 
+/**
+ * \brief Accessor for Shape's color.
+ * \details Returns the color of Shape's first vertex.
+ * \note For multicolored Shapes, use getColors() to access a vector of all relevant colors.
+ */
+ColorFloat Polyline::getColor() {
+    attribMutex.lock();
+    ColorFloat c = ColorFloat(vertices[3], vertices[4], vertices[5], vertices[6]);
+    attribMutex.unlock();
+    return c;
+}
+
+/**
+ * \brief Accessor for Shape's colors.
+ * \details Populates the reference parameter vector with a ColorFloat for each vertex of Shape.
+ * \param colorVec A vector of ColorFloats to which the ColorFloats associated with Shape will be pushed.
+ */
+void Polyline::getColors(std::vector<ColorFloat> &colorVec) {
+    attribMutex.lock();
+    for (int i = 0; i < numberOfVertices; i++) {
+        colorVec.push_back(ColorFloat(vertices[i*7+3],vertices[i*7+4],vertices[i*7+5],vertices[i*7+6]));
+    }
+    attribMutex.unlock();
+}
+
+
 /*!
  *  \brief Overrides isProcessed() in Drawable.h
  *  \details Overrides Drawable::isProcessed() to include invariant.

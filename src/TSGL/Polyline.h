@@ -35,6 +35,8 @@ class Polyline : public Drawable {
 
     virtual void setColor(ColorFloat c);
     virtual void setColor(ColorFloat c[]);
+    virtual ColorFloat getColor();
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 
     bool isProcessed();
 };

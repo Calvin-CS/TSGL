@@ -14,12 +14,10 @@ Consumer::Consumer() : PCThread() { }
  * return: The constructed Consumer object.
  */
 Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
-	myX = can.getWindowWidth() - 50;
-	myShape = new Rectangle(myX, myY, 40, 40, ColorInt(0, 0, 0), BLACK);
-	myShape->setCenter(myX, myY);
-	myShape->setLayer(1);
-	myCountLabel->setCenter(myX, myY);
-	myCountLabel->setLayer(2);
+	myX = can.getWindowWidth()/2 - 50;
+	myShape = new Square(myX, myY, 0, 40, 0,0,0, ColorInt(0, 0, 0));
+	myShape->setCenter(myX, myY, 0);
+	myCountLabel->setCenter(myX, myY, 1);
 	myCan->add(myShape);
 }
 
@@ -28,16 +26,12 @@ Consumer::Consumer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
  */
 void Consumer::lock() {
 	//Show waiting status
-	myShape->setColor( BLACK, WHITE );
+	myShape->setColor( BLACK );
 	myCountLabel->setColor(WHITE);
-	if( myItem ) {
-		myCan->remove( myItem );
-		delete myItem;
-		myItem = NULL;
-	}
-
+	myCan->remove( myItem );
+	delete myItem;
 	buffer->consumerLock(); //Request lock
-	myShape->setColor( WHITE, BLACK );
+	myShape->setColor( WHITE );
 	myCountLabel->setColor(BLACK);
 	while( paused ) {}
 }
@@ -50,15 +44,14 @@ void Consumer::act() {
 	int endX = myShape->getCenterX()-50, endY = myShape->getCenterY();
 	animateItem(endX, endY);
 	while( paused ) {}
-	ColorFloat* fillColor = myItem->getFillColor();
-	myShape->setColor( fillColor, BLACK ); //Change Consumer color to Item color
-	myCountLabel->setColor(fillColor->getContrast());
-	delete[] fillColor;
+	ColorFloat c = myItem->getColor();
+	myShape->setColor( c ); //Change Consumer color to Item color
+	myCountLabel->setColor(c.getContrast());
 	count++; myCountLabel->setText( std::to_wstring(count) );
-	if(count == 10) myCountLabel->setCenter(myX, myY);
+	if(count == 10) myCountLabel->setCenter(myX, myY, 1);
 	if(count == 100) {
 		myCountLabel->setFontSize(22);
-		myCountLabel->setCenter(myX, myY);
+		myCountLabel->setCenter(myX, myY, 1);
 	}
 }
 
@@ -68,14 +61,14 @@ void Consumer::act() {
 void Consumer::unlock() {
 	// myCan->remove(myItem);
 	// delete myItem;
-	// myItem = NULL;
 	buffer->consumerUnlock();
 	while( paused ) {}
 }
 
 Consumer::~Consumer() {
-	if(myItem) {
-		delete myItem;
-		myItem = NULL;
-	}
+	// buffer->consumerUnlock();
+	// if(myItem) {
+	// 	delete myItem;
+	// 	myItem = NULL;
+	// }
 }

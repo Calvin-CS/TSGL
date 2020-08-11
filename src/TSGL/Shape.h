@@ -51,6 +51,8 @@ class Shape : public Drawable {
     virtual void setColor(ColorFloat c);
     virtual void setColor(ColorFloat c[]);
     virtual void setOutlineColor(ColorFloat c);
+    virtual ColorFloat getColor();
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 
     virtual bool isProcessed() { return outlineInit && init; }
 

@@ -115,6 +115,7 @@ void ConcavePolygon::draw(Shader * shader) {
     if (isFilled) {
         /* extra stencil buffer stuff, because it's concave */
         glClearStencil(0);
+        glClear(GL_STENCIL_BUFFER);
         glEnable(GL_STENCIL_TEST);
         glDisable(GL_CULL_FACE);
         glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);

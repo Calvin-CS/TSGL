@@ -14,11 +14,9 @@ Producer::Producer() : PCThread() { }
  * @return: The constructed Producer object.
  */
 Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) : PCThread(sharedBuffer, id, can) {
-	myX = 50; //Set the x-coordinate to 50
-	myShape = new Circle(myX, myY, 20, ColorInt(0, 0, 0), BLACK);
-	myShape->setLayer(1);
-	myCountLabel->setBottomLeftCorner(myX - 5, myY + 10);
-	myCountLabel->setLayer(2);
+	myX = -can.getWindowWidth()/2 + 50; //Set the x-coordinate to 50
+	myShape = new Circle(myX, myY, 0, 20, 0,0,0, ColorInt(0, 0, 0));
+	myCountLabel->setCenter(myX, myY, 1);
 	myCan->add(myShape);
 }
 
@@ -26,9 +24,9 @@ Producer::Producer(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
  * randColor generates a new random ColorInt
  */
 ColorInt Producer::randColor() {
-	int red = rand() % 255;
-	int green = rand() % 255;
-	int blue = rand() % 255;
+	int red = saferand(0,255);
+	int green = saferand(0,255);
+	int blue = saferand(0,255);
 	return ColorInt(red, green, blue);
 }
 
@@ -36,7 +34,7 @@ ColorInt Producer::randColor() {
  * nextItem generates a new Star with a random color
  */
 Star* Producer::nextItem() {
-	return new Star(myX+50, myY, 20, 5, randColor() );
+	return new Star(myX+50, myY, 0, 20, 5, 0,0,0, randColor() );
 }
 
 /**
@@ -44,10 +42,9 @@ Star* Producer::nextItem() {
  */
 void Producer::wait() {
 	myItem = nextItem();
-	ColorFloat * fillColor = myItem->getFillColor();
-	myShape->setColor( fillColor, BLACK );
-	myCountLabel->setColor(fillColor->getContrast());
-	delete[] fillColor;
+	ColorFloat c = myItem->getColor();
+	myShape->setColor( c );
+	myCountLabel->setColor(c.getContrast());
 	PCThread::wait();
 }
 
@@ -56,10 +53,10 @@ void Producer::wait() {
  */
 void Producer::lock() {
 	myCan->add( myItem );
-	myShape->setColor( BLACK, WHITE );
+	myShape->setColor( BLACK );
 	myCountLabel->setColor(WHITE);
 	buffer->producerLock();
-	myShape->setColor( WHITE, BLACK );
+	myShape->setColor( WHITE );
 	myCountLabel->setColor(BLACK);
 	while( paused ) {}
 }
@@ -74,16 +71,15 @@ void Producer::act() {
 	buffer->append(myItem, getId());  //Append something and pass your id along too
 	//Show Item added to Queue
 	float itAngle = (i*2*PI + PI)/8; // angle of item
-	int endX = 100*cos(itAngle)+300, endY = 100*sin(itAngle)+175;
+	int endX = 100*cos(itAngle), endY = 100 - 100*sin(itAngle);
 	animateItem(endX, endY);
 
 	count++; myCountLabel->setText( std::to_wstring(count) );
-	if(count == 10) myCountLabel->setCenter(myX, myY);
+	if(count == 10) myCountLabel->setCenter(myX, myY, 1);
 	if(count == 100) {
 		myCountLabel->setFontSize(22);
-		myCountLabel->setCenter(myX, myY);
+		myCountLabel->setCenter(myX, myY, 1);
 	}
-	myItem = NULL;
 }
 
 /**
@@ -95,8 +91,8 @@ void Producer::unlock() {
 }
 
 Producer::~Producer() {
-	if(myItem) {
-		delete myItem;
-		myItem = NULL;
-	}
+	// if(myItem) {
+	// 	delete myItem;
+	// 	myItem = NULL;
+	// }
 }
