@@ -15,14 +15,12 @@ Writer::Writer() : RWThread() { dataLabel = NULL; }
  * \return: The constructed Writer object.
  */
 Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can) : RWThread(sharedDatabase, lock, id, can) {
-	myX = 50; //Set the x-coordinate to 50
-	myCircle->setCenter(myX, myY);
-	myCountLabel->setCenter(myX, myY);
+	myX = -can.getWindowWidth()/2 + 50; //Set the x-coordinate to 50
+	myCircle->setCenter(myX, myY, 0);
+	myCountLabel->setCenter(myX, myY, 1);
 	if( !dataLabel ) {
-		dataLabel = new Text(L"0/300", RWThread::dataX-40, RWThread::dataY-RWThread::dataHeight-20, 16, BLACK);
-		dataLabel->setCenter(RWThread::dataX - 20, RWThread::dataY-RWThread::dataHeight-15);
+		dataLabel = new Text(RWThread::dataX - 20, RWThread::dataY+RWThread::dataHeight+15, 1, L"0/300", "./assets/freefont/FreeSans.ttf", 16, 0,0,0, BLACK);
 		myCan->add( dataLabel );
-		dataLabel->setLayer(3);
 	}
 }
 
@@ -32,8 +30,7 @@ Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned lon
  * \details Includes a half second pause
  */
 void Writer::drawArrow(int x, int y) {
-	Arrow arrow(myCircle->getCenterX()+20, myY, x, y, BLACK);
-	arrow.setLayer(5);
+	Arrow arrow(x, y, 2, myCircle->getCenterX()+20, myY, 2, 8, 0,0,0, BLACK);
 	myCan->add(&arrow);
 	myCan->sleepFor(0.5);
 	while( paused ) {}
@@ -44,9 +41,9 @@ void Writer::drawArrow(int x, int y) {
  * \brief newColor() generates a new random color for writing.
  */
 ColorInt Writer::randColor() {
-	int red = rand() % 255;
-	int green = rand() % 255;
-	int blue = rand() % 255;
+	int red = saferand(0,255);
+	int green = saferand(0,255);
+	int blue = saferand(0,255);
 	return ColorInt(red, green, blue);
 }
 
@@ -54,7 +51,7 @@ ColorInt Writer::randColor() {
  * \brief randIndex() generates an index number to add a new item
  */
 int Writer::randIndex() {
-	int i = rand()%(data->getMaxCapacity()); //Random index between 0 and the max number of items in data
+	int i = saferand(0,data->getMaxCapacity()); //Random index between 0 and the max number of items in data
 		if( i > data->getItemCount() ) //Max index is next empty index
 			i = data->getItemCount();
 	return i;
@@ -67,13 +64,13 @@ Rectangle * Writer::makeRec(int index) {
 	int x = dataX + index%(200/RWThread::width) * RWThread::width; // start of data + column
 	int y = dataY - (index/(200/RWThread::width) + 1) * RWThread::width; // start of data + row
 
-	return new Rectangle(x, y, RWThread::width, RWThread::width, randColor());
+	return new Rectangle(x, y, 0, RWThread::width, RWThread::width, 0,0,0, randColor());
 }
 
 //TODO: comment
 void Writer::lock() {
-	myCircle->setCenter(myX+75, myY);  //Move in toward data
-	myCountLabel->setCenter(myX+75, myY);
+	myCircle->setCenter(myX+75, myY, 0);  //Move in toward data
+	myCountLabel->setCenter(myX+75, myY, 1);
 	monitor->writeLock(); //Lock data for writing
 	myCan->sleepFor(RWThread::access_wait);
 }
@@ -82,8 +79,8 @@ void Writer::lock() {
 void Writer::act() {
 	while( paused ) {}
 	int id = randIndex();
-	myCircle->setCenter(myX+127, myY); //Move inside data
-	myCountLabel->setCenter(myX+127, myY);
+	myCircle->setCenter(myX+127, myY, 0); //Move inside data
+	myCountLabel->setCenter(myX+127, myY, 1);
 	Rectangle * rec;
 	if( id < data->getItemCount() ) { //Change the color of an item
 		rec = data->read(id);
@@ -91,14 +88,12 @@ void Writer::act() {
 	} else { //Create a new item
 		rec = makeRec(id); //Make random color at random index
 		data->write(rec, id);  // Write the item to the data
-		rec->setLayer(3);
 		myCan->add(rec);
 		dataLabel->setText( to_wstring( data->getItemCount() ) + L"/" + to_wstring( data->getMaxCapacity() ) );
 	}
-	ColorFloat* fillColor = rec->getFillColor();
-	myCircle->setColor( fillColor[0] );
-	myCountLabel->setColor(fillColor[0].getContrast());
-	delete[] fillColor;
+	ColorFloat c = rec->getColor();
+	myCircle->setColor( c );
+	myCountLabel->setColor(c.getContrast());
 
 	//Draw an arrow down to the item
 	drawArrow(rec->getCenterX(), rec->getCenterY());
@@ -112,7 +107,7 @@ void Writer::unlock() {
 		myCountLabel->setFontSize(22);
 	}
 	while( paused ) {}
-	myCircle->setCenter(myX, myY); 	//Return to home location
-	myCountLabel->setCenter(myX, myY);
+	myCircle->setCenter(myX, myY, 0); 	//Return to home location
+	myCountLabel->setCenter(myX, myY, 1);
 	monitor->writeUnlock(); 	//Unlock the data for writing
 }

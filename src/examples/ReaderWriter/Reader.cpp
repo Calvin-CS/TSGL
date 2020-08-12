@@ -14,9 +14,9 @@ Reader::Reader() : RWThread() { }
  * \return: The constructed Reader object.
  */
 Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can) : RWThread(sharedDatabase, lock, id, can) {
-	myX = can.getWindowWidth()-50;
-	myCircle->setCenter(myX, myY);
-	myCountLabel->setCenter(myX, myY);
+	myX = can.getWindowWidth()/2-50;
+	myCircle->setCenter(myX, myY, 0);
+	myCountLabel->setCenter(myX, myY, 1);
 }
 
 /**
@@ -25,8 +25,7 @@ Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned lon
  * \details Includes a half second pause
  */
 void Reader::drawArrow(int x, int y) {
-	Arrow arrow(myCircle->getCenterX()-20, myY, x, y, BLACK, false);
-	arrow.setLayer(5);
+	Arrow arrow(x, y, 2, myCircle->getCenterX()-20, myY, 2, 20, 0,0,0, BLACK, false);
 	myCan->add(&arrow);
 	myCan->sleepFor(0.5);
 	while( paused ) {}
@@ -35,23 +34,22 @@ void Reader::drawArrow(int x, int y) {
 
 //TODO: comment
 void Reader::lock() {
-	myCircle->setCenter(myX-75, myY); //Move towards data
-	myCountLabel->setCenter(myX-75, myY);
+	myCircle->setCenter(myX-75, myY, 0); //Move towards data
+	myCountLabel->setCenter(myX-75, myY, 1);
 	monitor->readLock();  //Lock data for reading
 	myCan->sleepFor(RWThread::access_wait);
 	while( paused ) {}
-	myCircle->setCenter(myX-127, myY); //Move inside data
-	myCountLabel->setCenter(myX-127, myY);
+	myCircle->setCenter(myX-127, myY, 0); //Move inside data
+	myCountLabel->setCenter(myX-127, myY, 1);
 }
 
 //TODO: comment
 void Reader::act() {
 	//Read
-	Rectangle * rec = data->read(rand()%data->getItemCount()); //Get the color
-	ColorFloat* fillColor = rec->getFillColor();
-	myCircle->setColor( fillColor[0] );
-	myCountLabel->setColor( fillColor[0].getContrast() );
-	delete[] fillColor;
+	Rectangle * rec = data->read(saferand(0, data->getItemCount())); //Get the color
+	ColorFloat c = rec->getColor();
+	myCircle->setColor( c );
+	myCountLabel->setColor( c.getContrast() );
 
 	//Draw and erase the arrow
 	drawArrow(rec->getCenterX(), rec->getCenterY());
@@ -65,7 +63,7 @@ void Reader::unlock() {
 		myCountLabel->setFontSize(22);
 	}
 	while( paused ) {}
-	myCircle->setCenter(myX, myY); 	//Return to home location
-	myCountLabel->setCenter(myX, myY);
+	myCircle->setCenter(myX, myY, 0); 	//Return to home location
+	myCountLabel->setCenter(myX, myY, 1);
 	monitor->readUnlock(); 	//Unlock the data
 }

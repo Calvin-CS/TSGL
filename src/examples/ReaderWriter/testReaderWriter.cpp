@@ -60,23 +60,26 @@ int main(int argc, char* argv[]) {
 	Reader ** readers = new Reader*[numReaders]; //Array of Readers
 	Writer ** writers = new Writer*[numWriters]; //Array of Writers
 
-	//Create labels
-	can.drawRectangle(RWThread::dataX-MARGIN, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, GRAY);
-	can.drawRectangle(RWThread::dataX, RWThread::dataY-RWThread::dataHeight, RWThread::dataWidth, RWThread::dataHeight, DARKGRAY); // draw data area
-	can.drawLine(RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY, BLACK);
-	can.drawLine(RWThread::dataX-MARGIN*2.5, RWThread::dataY-RWThread::dataHeight, RWThread::dataX-MARGIN*2.5, RWThread::dataY, BLACK);
-	can.drawText(lockString, 100, RWThread::dataY + 40, 20, BLACK);
-	can.drawText(L"Numbers indicate", WINDOW_WIDTH-200, RWThread::dataY + 40, 20, BLACK);
-	can.drawText(L"counts of reads/writes", WINDOW_WIDTH-200, RWThread::dataY + 60, 20, BLACK);
-	can.drawText(L"Writers", 72, 60, 24, BLACK);
-	can.drawText(L"Readers", WINDOW_WIDTH-140, 60, 24, BLACK);
-	can.drawText(L"Shared Data Store", 226, 692, 20, BLACK);
+	std::string FONT = "./assets/freefont/FreeSerif.ttf";
 
-	//Create and rotate more labels
-	can.drawText(L"Thinking", 484, 127, 28, GRAY, "", PI/2);
-	can.drawText(L"Waiting", 423, 127, 28, GRAY, "", PI/2);
-	can.drawText(L"Thinking", 14, 127, 28, GRAY, "", -PI/2);
-	can.drawText(L"Waiting", 88, 127, 28, GRAY, "", -PI/2);
+	Background * bg = can.getBackground();
+	//Create labels
+	bg->drawRectangle(0, RWThread::dataY + RWThread::dataHeight/2, 0, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, 0,0,0, GRAY);
+	bg->drawRectangle(0, RWThread::dataY + RWThread::dataHeight/2, 0, RWThread::dataWidth, RWThread::dataHeight, 0,0,0, DARKGRAY); // draw data area
+	bg->drawLine(RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY+RWThread::dataHeight, 0, RWThread::dataX+RWThread::dataWidth+MARGIN*2.5, RWThread::dataY, 0, 0,0,0, BLACK);
+	bg->drawLine(RWThread::dataX-MARGIN*2.5, RWThread::dataY+RWThread::dataHeight, 0, RWThread::dataX-MARGIN*2.5, RWThread::dataY, 0, 0,0,0, BLACK);
+	bg->drawText(-RWThread::dataWidth/2-MARGIN*2.5, RWThread::dataY - 20, 0, lockString, FONT, 20, 0,0,0, BLACK);
+	bg->drawText(RWThread::dataWidth/2+MARGIN*2.4, RWThread::dataY - 20, 0, L"Numbers indicate", FONT, 20, 0,0,0, BLACK);
+	bg->drawText(RWThread::dataWidth/2+MARGIN*2.4, RWThread::dataY - 40, 0, L"counts of reads/writes", FONT, 20, 0,0,0, BLACK);
+	bg->drawText(-RWThread::dataWidth/2-MARGIN*2.5, WINDOW_HEIGHT/2-55, 0, L"Writers", FONT, 24, 0,0,0, BLACK);
+	bg->drawText( RWThread::dataWidth/2+MARGIN*2.5, WINDOW_HEIGHT/2-55, 0, L"Readers", FONT, 24, 0,0,0, BLACK);
+	bg->drawText(0, -285, 0, L"Shared Data Store", FONT, 20, 0,0,0, BLACK);
+
+	// //Create and rotate more labels
+	bg->drawText(RWThread::dataX-MARGIN*1.75, 275, 0, L"Thinking", FONT, 28, 90,0,0, GRAY);
+	bg->drawText(RWThread::dataX-MARGIN*3.25, 275, 0, L"Waiting", FONT, 28, 90,0,0, GRAY);
+	bg->drawText(RWThread::dataWidth/2+MARGIN*1.75, 275, 0, L"Thinking", FONT, 28, -90,0,0, GRAY);
+	bg->drawText(RWThread::dataWidth/2+MARGIN*3.25, 275, 0, L"Waiting", FONT, 28, -90,0,0, GRAY);
 
 	//Fill the Reader and Writer arrays with their objects
 	for(int i = 0; i < numReaders; i++) {
