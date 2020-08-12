@@ -25,7 +25,7 @@ Reader::Reader(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned lon
  * \details Includes a half second pause
  */
 void Reader::drawArrow(int x, int y) {
-	Arrow arrow(x, y, 2, myCircle->getCenterX()-20, myY, 2, 20, 0,0,0, BLACK, false);
+	Arrow arrow(x, y, 2, myCircle->getCenterX()-20, myY, 2, 8, 0,0,0, BLACK, false);
 	myCan->add(&arrow);
 	myCan->sleepFor(0.5);
 	while( paused ) {}
@@ -46,7 +46,7 @@ void Reader::lock() {
 //TODO: comment
 void Reader::act() {
 	//Read
-	Rectangle * rec = data->read(saferand(0, data->getItemCount())); //Get the color
+	Rectangle * rec = data->read(saferand(0, data->getItemCount()-1)); //Get the color
 	ColorFloat c = rec->getColor();
 	myCircle->setColor( c );
 	myCountLabel->setColor( c.getContrast() );

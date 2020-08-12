@@ -21,6 +21,7 @@ class RWThread : public Thread {
 public:
 	RWThread(); //Default constructor
 	RWThread(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned long id, Canvas & can);  //Explicit constructor
+	virtual ~RWThread();
 	void run();
 	void wait();
 	virtual void lock() = 0; //Must be implemented by subclass

@@ -92,7 +92,7 @@ private:
 
     // float           aspect;                                             // Aspect ratio used for setting up the window
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
-    // std::mutex      backgroundMutex;                                    // Mutex for myBackground
+    std::mutex      backgroundMutex;                                    // Mutex for myBackground
     bool            defaultBackground;                                  // Boolean indicating whether myBackground has been set by an external source
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
@@ -111,7 +111,7 @@ private:
     std::thread   renderThread;                                         // Thread dedicated to rendering the Canvas
   #endif
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
-    // std::mutex      screenBufferMutex;                                  // mutex for the screenbuffer
+    std::mutex      screenBufferMutex;                                  // mutex for the screenbuffer
     doubleFunction  scrollFunction;                                     // Single function object for scrolling                                    // Address of the vertex shader
     Shader *        textShader;                                         // Shader for Text class
     Shader *        shapeShader;                                        // Shader for Shape class

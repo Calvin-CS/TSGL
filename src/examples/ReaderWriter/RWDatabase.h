@@ -27,6 +27,7 @@ public:
 	int getMaxCapacity() { return maxCapacity; }//Get maximum items in vector
 	Item read(unsigned index);						//Access item at index
 	void write(Item it, unsigned index);				//Set item at index
+	~RWDatabase();
 
 protected:
 	std::vector<Item> vec;
@@ -79,6 +80,13 @@ void RWDatabase<Item>::write(Item it, unsigned index) {
 			vec.push_back(it);
 	} else {
 		vec[index] = it;
+	}
+}
+
+template<class Item>
+RWDatabase<Item>::~RWDatabase() {
+	for (int i = 0; i < vec.size(); i++) {
+		delete vec[i];
 	}
 }
 

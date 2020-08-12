@@ -61,8 +61,8 @@ int Writer::randIndex() {
  * \brief makeRec() creates a new Rectangle representing a random color
  */
 Rectangle * Writer::makeRec(int index) {
-	int x = dataX + index%(200/RWThread::width) * RWThread::width; // start of data + column
-	int y = dataY - (index/(200/RWThread::width) + 1) * RWThread::width; // start of data + row
+	int x = dataX + index%(200/RWThread::width) * RWThread::width + RWThread::width/2; // start of data + column
+	int y = dataY + (index/(200/RWThread::width) + 1) * RWThread::width - RWThread::width/2; // start of data + row
 
 	return new Rectangle(x, y, 0, RWThread::width, RWThread::width, 0,0,0, randColor());
 }

@@ -168,9 +168,9 @@ void Canvas::buttonCallback(GLFWwindow* window, int button, int action, int mods
   * \details This function clears the screen to the color specified in setBackgroundColor().
   */
 void Canvas::clearBackground() {
-  // backgroundMutex.lock();
+  backgroundMutex.lock();
   myBackground->clear();
-  // backgroundMutex.unlock();
+  backgroundMutex.unlock();
 }
 
  /*!
@@ -261,12 +261,12 @@ void Canvas::draw()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // if background initialized draw it using its multisampled framebuffer
-        // backgroundMutex.lock();
+        backgroundMutex.lock();
         if (myBackground)
           if (myBackground->isInitialized()) {
             myBackground->draw();
           }
-        // backgroundMutex.unlock();
+        backgroundMutex.unlock();
 
         // Scale to window size
         GLint windowWidth, windowHeight;
@@ -275,7 +275,7 @@ void Canvas::draw()
         winWidth = windowWidth;
         winHeight = windowHeight;
 
-        // objectMutex.lock();
+        objectMutex.lock();
         if (objectBuffer.size() > 0) {
           // sort between opaques and transparents and then sort by center z. depth buffer takes care of the rest. not perfect, but good.
           std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
@@ -300,15 +300,15 @@ void Canvas::draw()
             }
           }
         }
-        // objectMutex.unlock();
+        objectMutex.unlock();
 
         if (toRecord > 0) {
           // Update our screenBuffer copy with the default framebuffer
           glViewport(0,0,winWidth*scaling,winHeight*scaling);
           glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-          // screenBufferMutex.lock();
+          screenBufferMutex.lock();
           glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
-          // screenBufferMutex.unlock();
+          screenBufferMutex.unlock();
           // glFlush(); // this should hopefully fix the lines in screenshot() bug. If not here, one line up.
           screenShot();
           --toRecord;
@@ -549,12 +549,12 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     if (padwidth > 0)
        padwidth = 4-padwidth;
     winWidthPadded = winWidth + padwidth;
-    // screenBufferMutex.lock();
+    screenBufferMutex.lock();
     screenBuffer = new uint8_t[3 * (winWidthPadded+1) * winHeight];
     for (int i = 0; i < 3 * (winWidthPadded+1) * winHeight; ++i) {
       screenBuffer[i] = 0;
     }
-    // screenBufferMutex.unlock();
+    screenBufferMutex.unlock();
 
     started = false;                  // We haven't started the window yet
     monitorX = xx;
@@ -666,12 +666,12 @@ void Canvas::initGlfw() {
 }
 
 void Canvas::initBackground(ColorFloat bgcolor) {
-    // backgroundMutex.lock();
+    backgroundMutex.lock();
     if (!myBackground) {
       myBackground = new Background(winWidth, winHeight, bgcolor);
       myBackground->init(shapeShader, textShader, textureShader, window);
     }
-    // backgroundMutex.unlock();
+    backgroundMutex.unlock();
 }
 
 void Canvas::initWindow() {
@@ -932,9 +932,9 @@ void Canvas::screenShot() {
     char filename[25];
     sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
 
-    // screenBufferMutex.lock();
+    screenBufferMutex.lock();
     loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
-    // screenBufferMutex.unlock();
+    screenBufferMutex.unlock();
 }
 
 void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
@@ -949,7 +949,7 @@ void Canvas::scrollCallback(GLFWwindow* window, double xpos, double ypos) {
   *   \param previouslySet Boolean indicating if background has been previously set for this Canvas.
   */
 void Canvas::setBackground(Background * background, bool previouslySet) {
-  // backgroundMutex.lock();
+  backgroundMutex.lock();
   if (myBackground != background) {
     defaultBackground = false;
     myBackground = background;
@@ -957,7 +957,7 @@ void Canvas::setBackground(Background * background, bool previouslySet) {
       background->init(shapeShader, textShader, textureShader, window);
     }
   }
-  // backgroundMutex.unlock();
+  backgroundMutex.unlock();
 }
 
  /*!
@@ -969,9 +969,9 @@ void Canvas::setBackground(Background * background, bool previouslySet) {
 void Canvas::setBackgroundColor(ColorFloat color) {
     if (window != nullptr) {
       glfwMakeContextCurrent(window);
-      // backgroundMutex.lock();
+      backgroundMutex.lock();
       myBackground->setClearColor(color);
-      // backgroundMutex.unlock();
+      backgroundMutex.unlock();
       glfwMakeContextCurrent(NULL);
     }
 }

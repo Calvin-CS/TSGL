@@ -124,14 +124,18 @@ int main(int argc, char* argv[]) {
 	//End threads
 	for(int i = 0; i < numReaders; i++) {
 		readers[i]->join();
+		delete readers[i];
 	}
 	for(int i = 0; i < numWriters; i++) {
 		writers[i]->join();
+		delete writers[i];
 	}
 
 	//Cleanup
 	delete [] readers;
 	delete [] writers;
+	delete database;
+	delete lock;
 	readers = NULL;
 	writers = NULL;
 

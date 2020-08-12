@@ -48,6 +48,11 @@ RWThread::RWThread(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned
 	myCan->add( myCountLabel );
 }
 
+RWThread::~RWThread() {
+	delete myCountLabel;
+	delete myCircle;
+}
+
 void RWThread::run() {
 	while( myCan->isOpen() ) {
 		lock();
