@@ -57,7 +57,6 @@ void forestFireFunction(Canvas& can) {
             bg->drawPixel(i - WINDOW_W/2, WINDOW_H/2 - j, ColorFloat(0.0f, f, 0.0f, 1.0f));
         }
     }
-    can.sleep(); // sleep in order to get all the pixels rendered before lakes
     //"Lakes"
     for (int reps = 0; reps < 32; reps++) {
         int x = saferand(-WINDOW_W/2, WINDOW_W/2);

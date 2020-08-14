@@ -34,13 +34,10 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
       readPixelBuffer[i] = 0;
     }
     readPixelMutex.unlock();
-    pixelBufferMutex.lock();
-    pixelBufferCapacity = myWidth * myHeight * 7 * 2; 
-    pixelBuffer = new GLfloat[pixelBufferCapacity];
-    for (int i = 0; i < pixelBufferCapacity; ++i) {
-      pixelBuffer[i] = 0;
+    pixelTextureBuffer = new uint8_t[myWidth * myHeight * 4];
+    for (int i = 0; i < myWidth * myHeight * 4; ++i) {
+        pixelTextureBuffer[i] = 0;
     }
-    pixelBufferPosition = pixelLastPosition = 0;
     pixelBufferMutex.unlock();
 
     vertices = new GLfloat[30];
@@ -105,6 +102,19 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwi
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+    // generate a texture for the pixels
+    // --------------------------
+    glGenTextures(1, &pixelTexture);
+    glBindTexture(GL_TEXTURE_2D, pixelTexture);
+    // Set texture parameters for wrapping.
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // Set texture parameters for filtering.
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+
     shapeShader = shapeS;
     textShader = textS;
     textureShader = textureS;    
@@ -152,53 +162,46 @@ void Background::draw() {
     myDrawables->clear();
     drawableMutex.unlock();
 
-    // draw new pixels to non-MSAA framebuffer
-    if (newPixelsDrawn) {
-        selectShaders(SHAPE_SHADER_TYPE);
-        glDisable(GL_MULTISAMPLE);
-        pixelBufferMutex.lock();
-        int pos = pixelBufferPosition;
-        int posLast = pixelLastPosition;
-        newPixelsDrawn = false;
-        pixelBufferMutex.unlock();
-        if (loopAround) {
-            int toend = pixelBufferCapacity - posLast;
-            glBufferData(GL_ARRAY_BUFFER, toend * sizeof(float), &pixelBuffer[posLast], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, toend);
-            posLast = 0;
-            loopAround = false;
-        }        
-        int pbsize = pos - posLast;
-        if (pbsize > 0) {
-            glBufferData(GL_ARRAY_BUFFER, pbsize * sizeof(float), &pixelBuffer[posLast], GL_DYNAMIC_DRAW);
-            glDrawArrays(GL_POINTS, 0, pbsize/7);
-            pixelLastPosition = pos;
-        }
-        glEnable(GL_MULTISAMPLE);
-    }
-    
-    // blit MSAA framebuffer to non-MSAA framebuffer's texture
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, multisampledFBO);
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
-    glBlitFramebuffer(0, 0, myWidth, myHeight, 0, 0, myWidth, myHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-     
-    // glBindFramebuffer(GL_FRAMEBUFFER, intermediateFBO);
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    glDisable(GL_DEPTH_TEST);
-
-    // setting up texture shaders for post-blit render
+    // setting up texture shaders for both pixel drawing and post-blit render
     selectShaders(TEXTURE_SHADER_TYPE);
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::scale(model, glm::vec3(myWidth, myHeight, 1));
-    
+
     unsigned int modelLoc = glGetUniformLocation(textureShader->ID, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
     unsigned int alphaLoc = glGetUniformLocation(textureShader->ID, "alpha");
     glUniform1f(alphaLoc, 1.0f);
+
+    // check for new pixels being drawn
+    pixelBufferMutex.lock();
+    if (newPixelsDrawn) {
+        glBindTexture(GL_TEXTURE_2D, pixelTexture);
+
+        // actually generate the texture + mipmaps
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 4);	
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, myWidth, myHeight, 0,
+                    GL_RGBA, GL_UNSIGNED_BYTE, pixelTextureBuffer);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 5, vertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        for (int i = 0; i < myWidth * myHeight * 4; ++i) {
+            pixelTextureBuffer[i] = 0;
+        }
+    }
+    pixelBufferMutex.unlock();
+    
+    // blit MSAA framebuffer to non-MSAA framebuffer's texture
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, multisampledFBO);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
+    glBlitFramebuffer(0, 0, myWidth, myHeight, 0, 0, myWidth, myHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    glDisable(GL_DEPTH_TEST);
 
     // render non-MSAA framebuffer's texture to default framebuffer
     glBindTexture(GL_TEXTURE_2D,intermediateTexture);
@@ -590,18 +593,33 @@ void Background::drawPixel(int x, int y, ColorInt c) {
         return;
     }
     pixelBufferMutex.lock();
-    if (pixelBufferPosition >= pixelBufferCapacity) {
-        loopAround = true;
-        pixelBufferPosition = 0;
+    x += myWidth / 2;
+    y += myHeight / 2;
+    int outR;
+    int outG;
+    int outB;
+    int outA;
+    // first, if pixel hasn't been written since last draw cycle, just draw
+    if (pixelTextureBuffer[(y * myWidth + x) * 4] == 0 && pixelTextureBuffer[(y * myWidth + x) * 4 + 1] == 0 && pixelTextureBuffer[(y * myWidth + x) * 4 + 2] == 0 && pixelTextureBuffer[(y * myWidth + x) * 4 + 3] == 0) {
+        outR = c.R; outG = c.G; outB = c.B; outA = c.A;
+    } else {
+        // if new alpha is 255, just replace. otherwise, alpha blend
+        if (c.A == 255) {
+            outR = c.R; outG = c.G; outB = c.B; outA = 255;
+        } else {
+            int destA = pixelTextureBuffer[(y * myWidth + x) * 4 + 3];
+            outR = (c.R * ((float)c.A / 255) + pixelTextureBuffer[(y * myWidth + x) * 4] * (float) destA / 255 * (1 - (float)c.A/255));
+            outG = (c.G * ((float)c.A / 255) + pixelTextureBuffer[(y * myWidth + x) * 4 + 1] * (float) destA / 255 * (1 - (float)c.A/255));
+            outB = (c.B * ((float)c.A / 255) + pixelTextureBuffer[(y * myWidth + x) * 4 + 2] * (float) destA / 255 * (1 - (float)c.A/255));
+            outA = 255;
+        }
     }
-    pixelBuffer[pixelBufferPosition] = x;
-    pixelBuffer[pixelBufferPosition + 1] = y;
-    pixelBuffer[pixelBufferPosition + 2] = 0;
-    pixelBuffer[pixelBufferPosition + 3] = (float) c.R / 255;
-    pixelBuffer[pixelBufferPosition + 4] = (float) c.G / 255;
-    pixelBuffer[pixelBufferPosition + 5] = (float) c.B / 255;
-    pixelBuffer[pixelBufferPosition + 6] = (float) c.A / 255;
-    pixelBufferPosition += 7;
+
+    pixelTextureBuffer[(y * myWidth + x) * 4] = outR;
+    pixelTextureBuffer[(y * myWidth + x) * 4 + 1] = outG;
+    pixelTextureBuffer[(y * myWidth + x) * 4 + 2] = outB;
+    pixelTextureBuffer[(y * myWidth + x) * 4 + 3] = outA;
+
     newPixelsDrawn = true;
     pixelBufferMutex.unlock();
 }
@@ -965,7 +983,7 @@ void Background::setClearColor(ColorFloat c) {
 Background::~Background() {
     myDrawables->clear();
     delete [] readPixelBuffer;
-    delete [] pixelBuffer;
+    delete [] pixelTextureBuffer;
     delete [] vertices;
     delete myDrawables;
     glDeleteTextures(1, &intermediateFBO);

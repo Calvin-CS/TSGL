@@ -190,8 +190,7 @@ void Canvas::close() {
 
 /**
  * \brief Adds a Drawable to the Canvas.
- * \details If the Drawable's layer has not been set, it will default to <code>currentNewShapeLayerDefault</code>,
- * which can be set through <code>setDefaultLayer()</code>.
+ * \details Adds the parameter drawable to objectBuffer.
  *    \param shapePtr Pointer to the Drawable to add to this Canvas.
  */
 void Canvas::add(Drawable * shapePtr) {

@@ -24,6 +24,7 @@ class Lock {
 public:
 	Lock();																//Default constructor
 	Lock(RWDatabase<tsgl::Rectangle*>* data);		//Explicit constructor
+	virtual ~Lock() {}
 	virtual void readLock()    = 0;					//Must be defined by subclass
 	virtual void readUnlock()  = 0;				//Must be defined by subclass
 	virtual void writeLock()   = 0;					//Must be defined by subclass

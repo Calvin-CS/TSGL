@@ -52,11 +52,9 @@ protected:
     uint8_t* readPixelBuffer;
 
     std::mutex pixelBufferMutex;
-    GLfloat* pixelBuffer;
+    GLuint pixelTexture;
+    uint8_t* pixelTextureBuffer;
     bool newPixelsDrawn;
-    bool loopAround;
-    int pixelBufferPosition, pixelLastPosition;
-    int pixelBufferCapacity;
 
     bool complete;
     std::mutex attribMutex;
