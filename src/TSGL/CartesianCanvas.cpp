@@ -13,7 +13,7 @@ namespace tsgl {
   *   have a 4:3 aspect ratio.
   */
 CartesianCanvas::CartesianCanvas(double timerLength)
-    : Canvas(timerLength) {
+    : Canvas(timerLength, new CartesianBackground(1.2*Canvas::getDisplayHeight(), 0.7*1.2*Canvas::getDisplayHeight(), -400, -300, 400, 300)) {
     recomputeDimensions(-400, -300, 400, 300);
 }
 
@@ -35,1048 +35,10 @@ CartesianCanvas::CartesianCanvas(double timerLength)
   *   and timer length.
   */
 CartesianCanvas::CartesianCanvas(int x, int y, int width, int height, Decimal xMin, Decimal yMin, Decimal xMax,
-                                 Decimal yMax, std::string t, double timerLength)
-    : Canvas(x, y, width, height, t, timerLength) {
+                                 Decimal yMax, std::string t, ColorFloat backgroundColor, double timerLength)
+    : Canvas(x, y, width, height, t, backgroundColor, new CartesianBackground(width, height, xMin, yMin, xMax, yMax, backgroundColor), timerLength) {
     recomputeDimensions(xMin, yMin, xMax, yMax);
 }
-
-//  /*!
-//   * \brief Draws axes on the Cartesian Canvas.
-//   * \details This function draws axes (with tick marks) on the CartesianCanvas, centered at the
-//   *  given (Cartesian) coordinates
-//   *    \param originX The horizontal location of the y-axis line.
-//   *    \param originY The vertical location of the x-axis line.
-//   *    \param spacingX The distance between marks on the x-axis.
-//   *    \param spacingY The distance between marks on the y-axis.
-//   */
-// void CartesianCanvas::drawAxes(Decimal originX, Decimal originY, Decimal spacingX, Decimal spacingY) {
-//     drawLine(maxX, originY, minX, originY);  // Make the two axes
-//     drawLine(originX, maxY, originX, minY);
-
-//     if (spacingX != 0.0) {
-//         if (spacingX < 0.0) spacingX = -spacingX;
-
-//         for (Decimal x_ = originX + spacingX; x_ < maxX; x_ += spacingX) {
-//             drawLine(x_, originY + 8 * pixelHeight, x_, originY - 8 * pixelHeight);
-//         }
-//         for (Decimal x_ = originX - spacingX; x_ > minX; x_ -= spacingX) {
-//             drawLine(x_, originY + 8 * pixelHeight, x_, originY - 8 * pixelHeight);
-//         }
-//     }
-//     if (spacingY != 0.0) {
-//         if (spacingY < 0.0) spacingY = -spacingY;
-
-//         for (Decimal y_ = originY + spacingY; y_ < maxY; y_ += spacingY) {
-//             drawLine(originX + 8 * pixelWidth, y_, originX - 8 * pixelWidth, y_);
-//         }
-//         for (Decimal y_ = originY - spacingY; y_ > minY; y_ -= spacingY) {
-//             drawLine(originX + 8 * pixelWidth, y_, originX - 8 * pixelWidth, y_);
-//         }
-//     }
-// }
-
-//  /*!
-//   * \brief Draws a circle with monocolored fill or outline.
-//   * \details This function draws a circle with the given center, radius, color, and fill status.
-//   *   \param x The x coordinate of the circle's center.
-//   *   \param y The y coordinate of the circle's center.
-//   *   \param radius The radius of the circle in pixels.
-//   *   \param color The color of the circle
-//   *   \param filled Whether the circle should be filled
-//   *     (set to true by default).
-//   */
-// void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat color, bool filled) {
-//     int actualX, actualY, actualR;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x+radius,y,actualR,actualY);
-//     actualR -= actualX;
-//     Canvas::drawCircle(actualX, actualY, actualR, color, filled);
-// }
-
-//  /*!
-//   * \brief Draws a circle with multicolored fill or outline.
-//   * \details This function draws a circle with the given center, radius, color, and fill status.
-//   *   \param x The x coordinate of the circle's center.
-//   *   \param y The y coordinate of the circle's center.
-//   *   \param radius The radius of the circle in pixels.
-//   *   \param color An array of colors for the circle
-//   *   \param filled Whether the circle should be filled
-//   *     (set to true by default).
-//   */
-// void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat color[], bool filled) {
-//     int actualX, actualY, actualR;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x+radius,y,actualR,actualY);
-//     actualR -= actualX;
-//     Canvas::drawCircle(actualX, actualY, actualR, color, filled);
-// }
-
-//  /*!
-//   * \brief Draws a circle with different monocolored fill and outline.
-//   * \details This function draws a circle with the given center, radius, coloring.
-//   *   \param x The x coordinate of the circle's center.
-//   *   \param y The y coordinate of the circle's center.
-//   *   \param radius The radius of the circle in pixels.
-//   *   \param fillColor A color for the circle's fill.
-//   *   \param outlineColor A color for the circle's outline.
-//   */
-// void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat fillColor, ColorFloat outlineColor) {
-//     int actualX, actualY, actualR;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x+radius,y,actualR,actualY);
-//     actualR -= actualX;
-//     Canvas::drawCircle(actualX, actualY, actualR, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draws a circle with multicolored fill and monocolored outline.
-//   * \details This function draws a circle with the given center, radius, coloring.
-//   *   \param x The x coordinate of the circle's center.
-//   *   \param y The y coordinate of the circle's center.
-//   *   \param radius The radius of the circle in pixels.
-//   *   \param fillColor An array of colors for the circle's fill.
-//   *   \param outlineColor A color for the circle's outline.
-//   */
-// void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat fillColor[], ColorFloat outlineColor) {
-//     int actualX, actualY, actualR;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x+radius,y,actualR,actualY);
-//     actualR -= actualX;
-//     Canvas::drawCircle(actualX, actualY, actualR, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draws a circle with monocolored fill and multicolored outline.
-//   * \details This function draws a circle with the given center, radius, coloring.
-//   *   \param x The x coordinate of the circle's center.
-//   *   \param y The y coordinate of the circle's center.
-//   *   \param radius The radius of the circle in pixels.
-//   *   \param fillColor A color for the circle's fill.
-//   *   \param outlineColor An array of colors for the circle's outline.
-//   */
-// void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat fillColor, ColorFloat outlineColor[]) {
-//     int actualX, actualY, actualR;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x+radius,y,actualR,actualY);
-//     actualR -= actualX;
-//     Canvas::drawCircle(actualX, actualY, actualR, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draws a circle with different multicolored fill and outline.
-//   * \details This function draws a circle with the given center, radius, coloring.
-//   *   \param x The x coordinate of the circle's center.
-//   *   \param y The y coordinate of the circle's center.
-//   *   \param radius The radius of the circle in pixels.
-//   *   \param fillColor An array of color for the circle's fill.
-//   *   \param outlineColor An array of color for the circle's outline.
-//   */
-// void CartesianCanvas::drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat fillColor[], ColorFloat outlineColor[]) {
-//     int actualX, actualY, actualR;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x+radius,y,actualR,actualY);
-//     actualR -= actualX;
-//     Canvas::drawCircle(actualX, actualY, actualR, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draws a Concave polygon with monocolored fill or outline.
-//   * \details This function draws a ConcavePolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of said vertices.
-//   *   \param yverts An array of y positions of said vertices.
-//   *   \param color A color for the said vertices.
-//   *   \param filled Whether the Concave polygon should be filled in or not
-//   *     (set to true by default).
-//   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
-//   *   that you draw Convex polygons with this function.
-//   */
-// void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color, bool filled) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConcavePolygon(size, int_x, int_y, color, filled);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a Concave polygon with multicolored fill or outline.
-//   * \details This function draws a ConcavePolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of said vertices.
-//   *   \param yverts An array of y positions of said vertices.
-//   *   \param color An array of colors for the said vertices.
-//   *   \param filled Whether the Concave polygon should be filled in or not
-//   *     (set to true by default).
-//   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
-//   *   that you draw Convex polygons with this function.
-//   */
-// void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConcavePolygon(size, int_x, int_y, color, filled);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a Concave polygon with different monocolored fill and outline.
-//   * \details This function draws a ConcavePolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of said vertices.
-//   *   \param yverts An array of y positions of said vertices.
-//   *   \param fillColor A color for the concave polygon's fill.
-//   *   \param outlineColor A color for the concave polygon's outline.
-//   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
-//   *   that you draw Convex polygons with this function.
-//   */
-// void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConcavePolygon(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a Concave polygon with multicolored fill and monocolored outline.
-//   * \details This function draws a ConcavePolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of said vertices.
-//   *   \param yverts An array of y positions of said vertices.
-//   *   \param fillColor An array of colors for the concave polygon's fill.
-//   *   \param outlineColor A color for the concave polygon's outline.
-//   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
-//   *   that you draw Convex polygons with this function.
-//   */
-// void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConcavePolygon(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a Concave polygon with monocolored fill and multicolored outline.
-//   * \details This function draws a ConcavePolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of said vertices.
-//   *   \param yverts An array of y positions of said vertices.
-//   *   \param fillColor A color for the concave polygon's fill.
-//   *   \param outlineColor An array of colors for the concave polygon's outline.
-//   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
-//   *   that you draw Convex polygons with this function.
-//   */
-// void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor[]) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConcavePolygon(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a Concave polygon with different multicolored fill and outline.
-//   * \details This function draws a ConcavePolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of said vertices.
-//   *   \param yverts An array of y positions of said vertices.
-//   *   \param fillColor An array of colors for the concave polygon's fill.
-//   *   \param outlineColor An array of colors for the concave polygon's outline.
-//   * \warning <b>This function is significantly slower than drawConvexPolygon(). It is not recommended
-//   *   that you draw Convex polygons with this function.
-//   */
-// void CartesianCanvas::drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor[]) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConcavePolygon(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a convex polygon with monocolored fill or outline.
-//   * \details This function draws a ConvexPolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of the x positions of said vertices.
-//   *   \param yverts An array of the y positions of said vertices.
-//   *   \param color A color for the said vertices.
-//   *   \param filled Whether the ConvexPolygon should be filled in or not
-//   *     (set to true by default).
-//   * \note The difference between a convex polygon and a concave polygon
-//   *   is that a convex polygon has all interior angles less than
-//   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
-//   */
-// void CartesianCanvas::drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color, bool filled) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConvexPolygon(size, int_x, int_y, color, filled);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a convex polygon with multicolored fill or outline.
-//   * \details This function draws a ConvexPolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of the x positions of said vertices.
-//   *   \param yverts An array of the y positions of said vertices.
-//   *   \param color An array of colors for the said vertices.
-//   *   \param filled Whether the ConvexPolygon should be filled in or not
-//   *     (set to true by default).
-//   * \note The difference between a convex polygon and a concave polygon
-//   *   is that a convex polygon has all interior angles less than
-//   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
-//   */
-// void CartesianCanvas::drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConvexPolygon(size, int_x, int_y, color, filled);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a convex polygon with different monocolored fill and outline.
-//   * \details This function draws a ConvexPolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of the x positions of said vertices.
-//   *   \param yverts An array of the y positions of said vertices.
-//   *   \param fillColor A color for the polygon's fill.
-//   *   \param outlineColor A color for the polygon's outline.
-//   * \note The difference between a convex polygon and a concave polygon
-//   *   is that a convex polygon has all interior angles less than
-//   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
-//   */
-// void CartesianCanvas::drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConvexPolygon(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a convex polygon with multicolored fill and monocoloredoutline.
-//   * \details This function draws a ConvexPolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of the x positions of said vertices.
-//   *   \param yverts An array of the y positions of said vertices.
-//   *   \param fillColor An array of colors for the polygon's fill.
-//   *   \param outlineColor A color for the polygon's outline.
-//   * \note The difference between a convex polygon and a concave polygon
-//   *   is that a convex polygon has all interior angles less than
-//   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
-//   */
-// void CartesianCanvas::drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConvexPolygon(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a convex polygon with monocolored fill and multicolored outline.
-//   * \details This function draws a ConvexPolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of the x positions of said vertices.
-//   *   \param yverts An array of the y positions of said vertices.
-//   *   \param fillColor A color for the polygon's fill.
-//   *   \param outlineColor An array of colors for the polygon's outline.
-//   * \note The difference between a convex polygon and a concave polygon
-//   *   is that a convex polygon has all interior angles less than
-//   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
-//   */
-// void CartesianCanvas::drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor[]) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConvexPolygon(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws a convex polygon with different multicolored fill and outline.
-//   * \details This function draws a ConvexPolygon with the given vertex data, specified as the
-//   *   outer perimeter of the polygon.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of the x positions of said vertices.
-//   *   \param yverts An array of the y positions of said vertices.
-//   *   \param fillColor An array of colors for the polygon's fill.
-//   *   \param outlineColor An array of colors for the polygon's outline.
-//   * \note The difference between a convex polygon and a concave polygon
-//   *   is that a convex polygon has all interior angles less than
-//   *   180 degrees ( see http://www.mathopenref.com/polygonconvex.html ).
-//   */
-// void CartesianCanvas::drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor[]) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawConvexPolygon(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Plots a function on the screen.
-//   * \details This function receives a TSGL Function instance as a parameter and plots the function on the CartesianCanvas.
-//   *   \param function Reference to the Function to plot.
-//   *   \param sleepTime Time to sleep between plotting points
-//   *   \param color The color of the vertices of the plotted function (set to BLACK by default).
-//   */
-// void CartesianCanvas::drawFunction(const Function &function, float sleepTime, ColorFloat color) {
-//   if (sleepTime > 0.0f) {
-//     bool first = true;
-//     Decimal lastX, lastY, y;
-//     for (Decimal x = minX; x < maxX; x += pixelWidth) {
-//         if (!isOpen()) break;
-//         y = function.valueAt(x);
-//         if (!first)
-//           drawLine(lastX,lastY,x,y,color);
-//         first = false;
-//         lastX = x;
-//         lastY = y;
-//         if (y > minY && y < maxY)  //Don't waste time if it's offscreen
-//           sleepFor(sleepTime);
-//     }
-//   } else {
-//     int screenX = 0, screenY = 0;
-//     int size = (maxX - minX) / pixelWidth;
-//     Polyline *p = new Polyline(size);
-//     Decimal x = minX;
-//     for (int i = 0; i < size; ++i) {
-//         getScreenCoordinates(x, function.valueAt(x), screenX, screenY);
-//         p->addVertex(screenX, screenY, color);
-//         x += pixelWidth;
-//     }
-//     drawDrawable(p);
-//   }
-// }
-
-//  /*!
-//   * \brief Plots a function on the screen.
-//   * \details This function receives a pointer to a function method as a parameter and plots the function on
-//   *   the CartesianCanvas.
-//   *   \param function Pointer to the function-drawing method to plot.
-//   *   \param sleepTime Time to sleep between plotting points
-//   *   \param color The color of the vertices of the plotted function (set to BLACK by default).
-//   * \note <code>function</code> must receive exactly one Decimal x parameter, and return a Decimal y parameter.
-//   */
-// void CartesianCanvas::drawFunction(functionPointer &function, float sleepTime, ColorFloat color) {
-//   drawPartialFunction(function,minX,maxX,sleepTime,color);
-// }
-
-//  /*!
-//   * \brief Draws an image.
-//   * \details This function draws an Image with the given coordinates and dimensions.
-//   *   \param function The name of the file to load the image from.
-//   *   \param x The x coordinate of the Image's left edge.
-//   *   \param y The y coordinate of the Image's top edge.
-//   *   \param w The width of the Image.
-//   *   \param h The height of the Image.
-//   *   \param a The alpha with which to draw the Image
-//   *     (set to 1.0f by default).
-//   * \note Identical to Canvas::drawImage().
-//   */
-// void CartesianCanvas::drawImage(std::string function, Decimal x, Decimal y, Decimal w, Decimal h, float a) {
-//     int actualX1, actualY1, actualX2, actualY2;
-//     getScreenCoordinates(x, y, actualX1, actualY1);
-//     getScreenCoordinates(x + w, y - h, actualX2, actualY2);
-
-//     Canvas::drawImage(function, actualX1, actualY1, actualX2 - actualX1, actualY2 - actualY1, a);
-// }
-
-//  /*!
-//   * \brief Draws a monocolored line.
-//   * \details This function draws a Line at the given coordinates with the given color.
-//   *   \param x1 The x position of the start of the line.
-//   *   \param y1 The y position of the start of the line.
-//   *   \param x2 The x position of the end of the line.
-//   *   \param y2 The y position of the end of the line.
-//   *   \param color The color of the line
-//   *     (set to BLACK by default).
-//   *  \note Identical to Canvas::drawLine().
-//   */
-// void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color) {
-//     int actualX1, actualY1, actualX2, actualY2;
-//     getScreenCoordinates(x1, y1, actualX1, actualY1);
-//     getScreenCoordinates(x2, y2, actualX2, actualY2);
-
-//     Canvas::drawLine(actualX1, actualY1, actualX2, actualY2, color);
-// }
-
-//  /*!
-//   * \brief Draws a multicolored line.
-//   * \details This function draws a Line at the given coordinates with the given coloring.
-//   *   \param x1 The x position of the start of the line.
-//   *   \param y1 The y position of the start of the line.
-//   *   \param x2 The x position of the end of the line.
-//   *   \param y2 The y position of the end of the line.
-//   *   \param color An array of colors of the line endpoints
-//   *     (set to BLACK by default).
-//   *  \note Identical to Canvas::drawLine().
-//   */
-// void CartesianCanvas::drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color[]) {
-//     int actualX1, actualY1, actualX2, actualY2;
-//     getScreenCoordinates(x1, y1, actualX1, actualY1);
-//     getScreenCoordinates(x2, y2, actualX2, actualY2);
-
-//     Canvas::drawLine(actualX1, actualY1, actualX2, actualY2, color);
-// }
-
-//  /*!
-//   * \brief Plots part of a function on the screen.
-//   * \details This function receives a pointer to a function method as a parameter and plots the function on
-//   *   the CartesianCanvas between the specified minimum and maximum coordinates.
-//   *   \param function Pointer to the function-drawing method to plot.
-//   *   \param min Minimum x value to evaluate and plot
-//   *   \param max Maximum x value to evaluate and plot
-//   *   \param sleepTime Time to sleep between plotting points
-//   *   \param color The color of the vertices of the plotted function (set to BLACK by default).
-//   * \note <code>function</code> must receive exactly one Decimal x parameter, and return a Decimal y parameter.
-//   */
-// void CartesianCanvas::drawPartialFunction(functionPointer &function, Decimal min, Decimal max, float sleepTime, ColorFloat color) {
-//   if (sleepTime > 0.0f) {
-//     bool first = true;
-//     Decimal lastX, lastY, y;
-//     for (Decimal x = min; x < max; x += pixelWidth) {
-//         if (!isOpen()) break;
-//         y = (function)(x);
-//         if (!first)
-//           drawLine(lastX,lastY,x,y,color);
-//         first = false;
-//         lastX = x;
-//         lastY = y;
-//         if (y > minY && y < maxY)  //Don't waste time if it's offscreen
-//           sleepFor(sleepTime);
-//     }
-//   } else {
-//     int screenX = 0, screenY = 0;
-//     int size = 1 + ceil((max - min) / pixelWidth);
-//     Polyline *p = new Polyline(size);
-//     Decimal x = min;
-//     for (int i = 0; i < size; ++i) {
-//         getScreenCoordinates(x, (function)(x), screenX, screenY);
-//         p->addVertex(screenX, screenY, color);
-//         x += pixelWidth;
-//     }
-//     drawDrawable(p);
-//   }
-// }
-
-//  /*!
-//   * \brief Draws a single pixel, specified in row,column format.
-//   * \details This function draws a pixel at the given screen coordinates with the given color.
-//   * \note (0,0) signifies the <b>top-left</b> of the screen when working with a Canvas object.
-//   * \note (0,0) signifies the <b>bottom-left</b> of the screen when working with a CartesianCanvas object.
-//   *   \param row The row (y-position) of the pixel.
-//   *   \param col The column (x-position) of the pixel.
-//   *   \param color The color of the point (set to BLACK by default).
-//   * \see drawPixel()
-//   * \note Identical to Canvas::drawPixel().
-//   */
-// void CartesianCanvas::drawPixel(Decimal row, Decimal col, ColorFloat color) {
-//     drawPoint(col, row, color);
-// }
-
-//  /*!
-//   * \brief Draws a single pixel, specified in x,y format.
-//   * \details This function draws a pixel at the given Cartesian coordinates with the given color.
-//   * \note (0,0) signifies the <b>left-top</b> of the screen when working with a Canvas object.
-//   * \note (0,0) signifies the <b>left-bottom</b> of the screen when working with a CartesianCanvas object.
-//   *   \param x The x position of the point.
-//   *   \param y The y position of the point.
-//   *   \param color The color of the point (set to BLACK by default).
-//   * \see drawPoint()
-//   * \note Identical to Canvas::drawPoint().
-//   */
-// void CartesianCanvas::drawPoint(Decimal x, Decimal y, ColorFloat color) {
-//     int actualX, actualY;
-//     getScreenCoordinates(x, y, actualX, actualY);
-
-//     if (atiCard)
-//       Canvas::drawPoint(actualX, actualY-1, color);
-//     else
-//       Canvas::drawPoint(actualX, actualY, color);
-// }
-
-//  /*!
-//   * \brief Draws a rectangle with monocolored fill or outline.
-//   * \details This function draws a Rectangle with the given coordinates, dimensions, and color.
-//   *   \param x The x coordinate of the Rectangle's left edge.
-//   *   \param y The y coordinate of the Rectangle's BOTTOM edge.
-//   *   \param w The Rectangle's width.
-//   *   \param h The Rectangle's height.
-//   *   \param color The color of the rectangle
-//   *     (set to BLACK by default).
-//   *   \param filled Whether the rectangle should be filled
-//   *     (set to true by default).
-//   * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
-//   */
-// void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color, bool filled) {
-//     int actualX, actualY, actualX2, actualY2;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x + w, y + h, actualX2, actualY2);
-//     Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY- actualY2, color, filled);
-// }
-
-//  /*!
-//   * \brief Draws a rectangle with multicolored fill or outline.
-//   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-//   *   \param x The x coordinate of the Rectangle's left edge.
-//   *   \param y The y coordinate of the Rectangle's BOTTOM edge.
-//   *   \param w The Rectangle's width.
-//   *   \param h The Rectangle's height.
-//   *   \param color An array of colors for the rectangle
-//   *     (set to BLACK by default).
-//   *   \param filled Whether the rectangle should be filled
-//   *     (set to true by default).
-//   * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
-//   */
-// void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color[], bool filled) {
-//     int actualX, actualY, actualX2, actualY2;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x + w, y + h, actualX2, actualY2);
-//     Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY- actualY2, color, filled);
-// }
-
-//  /*!
-//   * \brief Draws a rectangle with different monocolored fill and outline.
-//   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-//   *   \param x The x coordinate of the Rectangle's left edge.
-//   *   \param y The y coordinate of the Rectangle's BOTTOM edge.
-//   *   \param w The Rectangle's width.
-//   *   \param h The Rectangle's height.
-//   *   \param fillColor A color for the Rectangle's fill
-//   *   \param outlineColor A color for the Rectangle's outline
-//   * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
-//   */
-// void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor, ColorFloat outlineColor) {
-//     int actualX, actualY, actualX2, actualY2;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x + w, y + h, actualX2, actualY2);
-//     Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY2 - actualY, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draws a rectangle with multicolored fill and monocolored outline.
-//   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-//   *   \param x The x coordinate of the Rectangle's left edge.
-//   *   \param y The y coordinate of the Rectangle's BOTTOM edge.
-//   *   \param w The Rectangle's width.
-//   *   \param h The Rectangle's height.
-//   *   \param fillColor An array of colors for the Rectangle's fill
-//   *   \param outlineColor A color for the Rectangle's outline
-//   * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
-//   */
-// void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor) {
-//     int actualX, actualY, actualX2, actualY2;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x + w, y + h, actualX2, actualY2);
-//     Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY2 - actualY, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draws a rectangle with monocolored fill and multicolored outline.
-//   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-//   *   \param x The x coordinate of the Rectangle's left edge.
-//   *   \param y The y coordinate of the Rectangle's BOTTOM edge.
-//   *   \param w The Rectangle's width.
-//   *   \param h The Rectangle's height.
-//   *   \param fillColor A color for the Rectangle's fill
-//   *   \param outlineColor An array of colors for the Rectangle's outline
-//   * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
-//   */
-// void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor, ColorFloat outlineColor[]) {
-//     int actualX, actualY, actualX2, actualY2;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x + w, y + h, actualX2, actualY2);
-//     Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY2 - actualY, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draws a rectangle with different multicolored fill and outline.
-//   * \details This function draws a Rectangle with the given coordinates, dimensions, and coloring.
-//   *   \param x The x coordinate of the Rectangle's left edge.
-//   *   \param y The y coordinate of the Rectangle's BOTTOM edge.
-//   *   \param w The Rectangle's width.
-//   *   \param h The Rectangle's height.
-//   *   \param fillColor An array of colors for the Rectangle's fill
-//   *   \param outlineColor An array of colors for the Rectangle's outline
-//   * \warning This method's x and y parameters are NOT the same as the x and y of Canvas::drawRectangle.
-//   */
-// void CartesianCanvas::drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor[]) {
-//     int actualX, actualY, actualX2, actualY2;
-//     getScreenCoordinates(x, y, actualX, actualY);
-//     getScreenCoordinates(x + w, y + h, actualX2, actualY2);
-//     Canvas::drawRectangle(actualX, actualY, actualX2 - actualX, actualY2 - actualY, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draw a string of text.
-//   * \details This function draws a given string of Text at the given coordinates with the given color.
-//   *   \paramtexts The string to draw.
-//   *   \param x The x coordinate of the text's left bound.
-//   *   \param y The y coordinate of the text's left bound.
-//   *   \param size The size of the text in pixels.
-//   *   \param color The color of the Text (set to BLACK by default).
-//   * \note Identical to Canvas::drawText(std::string,..).
-//   */
-// void CartesianCanvas::drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color, const std::string& fontFileName) {
-//     int actualX, actualY;
-//     getScreenCoordinates(x, y, actualX, actualY);
-
-//     Canvas::drawText(text, actualX, actualY, size, color, fontFileName);
-// }
-
-//  /*!
-//   * \brief Draw a string of text.
-//   * \details This function draws a given string of Text at the given coordinates with the given color.
-//   *   \param text The UTF8-encoded string to draw.
-//   *   \param x The x coordinate of the text's left bound.
-//   *   \param y The y coordinate of the text's left bound.
-//   *   \param size The size of the text in pixels.
-//   *   \param color The color of the Text (set to BLACK by default).
-//   * \note Identical to Canvas::drawText(std::wstring,..).
-//   */
-// void CartesianCanvas::drawText(std::wstring text, Decimal x, Decimal y, unsigned size, ColorFloat color, const std::string& fontFileName) {
-//     int actualX, actualY;
-//     getScreenCoordinates(x, y, actualX, actualY);
-
-//     Canvas::drawText(text, actualX, actualY, size, color, fontFileName);
-// }
-
-//  /*!
-//   * \brief Draw a triangle with monocolored fill or outline.
-//   * \details This function draws a Triangle with the given vertices.
-//   *      \param x1 The x coordinate of the first vertex of the Triangle.
-//   *      \param y1 The y coordinate of the first vertex of the Triangle.
-//   *      \param x2 The x coordinate of the second vertex of the Triangle.
-//   *      \param y2 The y coordinate of the second vertex of the Triangle.
-//   *      \param x3 The x coordinate of the third vertex of the Triangle.
-//   *      \param y3 The y coordinate of the third vertex of the Triangle.
-//   *      \param color A color for the Triangle (set to BLACK by default).
-//   *      \param filled Whether the Triangle should be filled (set to true by default).
-//   */
-// void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color, bool filled) {
-//     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
-//     getScreenCoordinates(x1, y1, actualX1, actualY1);
-//     getScreenCoordinates(x2, y2, actualX2, actualY2);
-//     getScreenCoordinates(x3, y3, actualX3, actualY3);
-//     Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, color, filled);
-// }
-
-//  /*!
-//   * \brief Draw a triangle with multicolored fill or outline.
-//   * \details This function draws a Triangle with the given vertices.
-//   *      \param x1 The x coordinate of the first vertex of the Triangle.
-//   *      \param y1 The y coordinate of the first vertex of the Triangle.
-//   *      \param x2 The x coordinate of the second vertex of the Triangle.
-//   *      \param y2 The y coordinate of the second vertex of the Triangle.
-//   *      \param x3 The x coordinate of the third vertex of the Triangle.
-//   *      \param y3 The y coordinate of the third vertex of the Triangle.
-//   *      \param color An array of colors for the Triangle.
-//   *      \param filled Whether the Triangle should be filled (set to true by default).
-//   */
-// void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color[], bool filled) {
-//     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
-//     getScreenCoordinates(x1, y1, actualX1, actualY1);
-//     getScreenCoordinates(x2, y2, actualX2, actualY2);
-//     getScreenCoordinates(x3, y3, actualX3, actualY3);
-//     Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, color, filled);
-// }
-
-//  /*!
-//   * \brief Draw a triangle with different monocolored fill and outline.
-//   * \details This function draws a Triangle with the given vertices.
-//   *      \param x1 The x coordinate of the first vertex of the Triangle.
-//   *      \param y1 The y coordinate of the first vertex of the Triangle.
-//   *      \param x2 The x coordinate of the second vertex of the Triangle.
-//   *      \param y2 The y coordinate of the second vertex of the Triangle.
-//   *      \param x3 The x coordinate of the third vertex of the Triangle.
-//   *      \param y3 The y coordinate of the third vertex of the Triangle.
-//   *      \param fillColor A color for the Triangle's fill.
-//   *      \param outlineColor A color for the Triangle's outline.
-//   */
-// void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat fillColor, ColorFloat outlineColor) {
-//     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
-//     getScreenCoordinates(x1, y1, actualX1, actualY1);
-//     getScreenCoordinates(x2, y2, actualX2, actualY2);
-//     getScreenCoordinates(x3, y3, actualX3, actualY3);
-//     Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draw a triangle with multicolored fill and monocolored outline.
-//   * \details This function draws a Triangle with the given vertices.
-//   *      \param x1 The x coordinate of the first vertex of the Triangle.
-//   *      \param y1 The y coordinate of the first vertex of the Triangle.
-//   *      \param x2 The x coordinate of the second vertex of the Triangle.
-//   *      \param y2 The y coordinate of the second vertex of the Triangle.
-//   *      \param x3 The x coordinate of the third vertex of the Triangle.
-//   *      \param y3 The y coordinate of the third vertex of the Triangle.
-//   *      \param fillColor An array of colors for the Triangle's fill.
-//   *      \param outlineColor A color for the Triangle's outline.
-//   */
-// void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat fillColor[], ColorFloat outlineColor) {
-//     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
-//     getScreenCoordinates(x1, y1, actualX1, actualY1);
-//     getScreenCoordinates(x2, y2, actualX2, actualY2);
-//     getScreenCoordinates(x3, y3, actualX3, actualY3);
-//     Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draw a triangle with monocolored fill and multicolored outline.
-//   * \details This function draws a Triangle with the given vertices.
-//   *      \param x1 The x coordinate of the first vertex of the Triangle.
-//   *      \param y1 The y coordinate of the first vertex of the Triangle.
-//   *      \param x2 The x coordinate of the second vertex of the Triangle.
-//   *      \param y2 The y coordinate of the second vertex of the Triangle.
-//   *      \param x3 The x coordinate of the third vertex of the Triangle.
-//   *      \param y3 The y coordinate of the third vertex of the Triangle.
-//   *      \param fillColor A color for the Triangle's fill.
-//   *      \param outlineColor An array of colors for the Triangle's outline.
-//   */
-// void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat fillColor, ColorFloat outlineColor[]) {
-//     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
-//     getScreenCoordinates(x1, y1, actualX1, actualY1);
-//     getScreenCoordinates(x2, y2, actualX2, actualY2);
-//     getScreenCoordinates(x3, y3, actualX3, actualY3);
-//     Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draw a triangle with different multicolored fill and outline.
-//   * \details This function draws a Triangle with the given vertices.
-//   *      \param x1 The x coordinate of the first vertex of the Triangle.
-//   *      \param y1 The y coordinate of the first vertex of the Triangle.
-//   *      \param x2 The x coordinate of the second vertex of the Triangle.
-//   *      \param y2 The y coordinate of the second vertex of the Triangle.
-//   *      \param x3 The x coordinate of the third vertex of the Triangle.
-//   *      \param y3 The y coordinate of the third vertex of the Triangle.
-//   *      \param fillColor An array of colors for the Triangle's fill.
-//   *      \param outlineColor An array of colors for the Triangle's outline.
-//   */
-// void CartesianCanvas::drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat fillColor[], ColorFloat outlineColor[]) {
-//     int actualX1, actualY1, actualX2, actualY2, actualX3, actualY3;
-//     getScreenCoordinates(x1, y1, actualX1, actualY1);
-//     getScreenCoordinates(x2, y2, actualX2, actualY2);
-//     getScreenCoordinates(x3, y3, actualX3, actualY3);
-//     Canvas::drawTriangle(actualX1, actualY1, actualX2, actualY2, actualX3, actualY3, fillColor, outlineColor);
-// }
-
-//  /*!
-//   * \brief Draws an arbitrary triangle strip with monocolored fill or outline.
-//   * \details This function draws a TriangleStrip with the given vertex data, specified as
-//   *   a triangle strip.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of the vertices.
-//   *   \param yverts An array of y positions of the vertices.
-//   *   \param color A color for the vertices.
-//   *   \param filled Whether the triangle strip should be filled (true) or not (false)
-//   *     (set to true by default).
-//   */
-// void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color, bool filled) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawTriangleStrip(size, int_x, int_y, color, filled);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws an arbitrary triangle strip with multicolored fill or outline.
-//   * \details This function draws a TriangleStrip with the given vertex data, specified as
-//   *   a triangle strip.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of the vertices.
-//   *   \param yverts An array of y positions of the vertices.
-//   *   \param color An array of colors for the vertices.
-//   *   \param filled Whether the triangle strip should be filled (true) or not (false)
-//   *     (set to true by default).
-//   */
-// void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawTriangleStrip(size, int_x, int_y, color, filled);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws an arbitrary triangle strip with different monocolored fill and outline.
-//   * \details This function draws a TriangleStrip with the given vertex data, specified as
-//   *   a triangle strip.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of the vertices.
-//   *   \param yverts An array of y positions of the vertices.
-//   *   \param fillColor A color for the triangle strip's fill.
-//   *   \param outlineColor A color for the triangle strip's outline.
-//   */
-// void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawTriangleStrip(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws an arbitrary triangle strip with multicolored fill and monocolored outline.
-//   * \details This function draws a TriangleStrip with the given vertex data, specified as
-//   *   a triangle strip.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of the vertices.
-//   *   \param yverts An array of y positions of the vertices.
-//   *   \param fillColor An array of colors for the triangle strip's fill.
-//   *   \param outlineColor A color for the triangle strip's outline.
-//   */
-// void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawTriangleStrip(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws an arbitrary triangle strip with monocolored fill and multicolored outline.
-//   * \details This function draws a TriangleStrip with the given vertex data, specified as
-//   *   a triangle strip.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of the vertices.
-//   *   \param yverts An array of y positions of the vertices.
-//   *   \param fillColor A color for the triangle strip's fill.
-//   *   \param outlineColor An array of colors for the triangle strip's outline.
-//   */
-// void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor[]) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawTriangleStrip(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
-
-//  /*!
-//   * \brief Draws an arbitrary triangle strip with different multicolored fill and outline.
-//   * \details This function draws a TriangleStrip with the given vertex data, specified as
-//   *   a triangle strip.
-//   *   \param size The number of vertices in the polygon.
-//   *   \param xverts An array of x positions of the vertices.
-//   *   \param yverts An array of y positions of the vertices.
-//   *   \param fillColor An array of colors for the triangle strip's fill.
-//   *   \param outlineColor An array of colors for the triangle strip's outline.
-//   */
-// void CartesianCanvas::drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor[]) {
-//     int* int_x = new int[size];
-//     int* int_y = new int[size];
-
-//     for (int i = 0; i < size; i++) {
-//         getScreenCoordinates(xverts[i], yverts[i], int_x[i], int_y[i]);
-//     }
-//     Canvas::drawTriangleStrip(size, int_x, int_y, fillColor, outlineColor);
-
-//     delete int_x;
-//     delete int_y;
-// }
 
  /*!
   * \brief Translates Cartesian coordinates into window coordinates.
@@ -1090,70 +52,6 @@ CartesianCanvas::CartesianCanvas(int x, int y, int width, int height, Decimal xM
 void CartesianCanvas::getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY) {
     cartX = (screenX * cartWidth) / getWindowWidth() + minX;
     cartY = minY - (screenY - getWindowHeight()) * cartHeight / getWindowHeight();
-}
-
- /*!
-  * \brief Accessor for the CartesianCanvas's Cartesian height.
-  * \return The Cartesian height of the CartesianCanvas.
-  */
-Decimal CartesianCanvas::getCartHeight() {
-    return cartHeight;
-}
-
- /*!
-  * \brief Accessor for the CartesianCanvas's Cartesian width.
-  * \return The Cartesian width of the CartesianCanvas.
-  */
-Decimal CartesianCanvas::getCartWidth() {
-    return cartWidth;
-}
-
- /*!
-  * \brief Accessor for the CartesianCanvas's effective pixel height.
-  * \return The height corresponding to a single pixel in the current CartesianCanvas.
-  */
-Decimal CartesianCanvas::getPixelHeight() {
-    return pixelHeight;
-}
-
- /*!
-  * \brief Accessor for the CartesianCanvas's effective pixel width.
-  * \return The width corresponding to a single pixel in the current CartesianCanvas.
-  */
-Decimal CartesianCanvas::getPixelWidth() {
-    return pixelWidth;
-}
-
- /*!
-  * \brief Accessor for the CartesianCanvas's right bound.
-  * \return The real number corresponding the right of the CartesianCanvas.
-  */
-Decimal CartesianCanvas::getMaxX() {
-    return maxX;
-}
-
- /*!
-  * \brief Accessor for the CartesianCanvas's top bound.
-  * \return The real number corresponding the top of the CartesianCanvas.
-  */
-Decimal CartesianCanvas::getMaxY() {
-    return maxY;
-}
-
- /*!
-  * \brief Accessor for the CartesianCanvas's left bound.
-  * \return The real number corresponding the left of the CartesianCanvas.
-  */
-Decimal CartesianCanvas::getMinX() {
-    return minX;
-}
-
- /*!
-  * \brief Accessor for the CartesianCanvas's bottom bound.
-  * \return The real number corresponding the bottom of the CartesianCanvas.
-  */
-Decimal CartesianCanvas::getMinY() {
-    return minY;
 }
 
  /*!
@@ -1174,6 +72,24 @@ void CartesianCanvas::getScreenCoordinates(Decimal cartX, Decimal cartY, int &sc
 }
 
  /*!
+  * \brief Accessor for the mouse's x-position in Cartesian coordinates.
+  * \return The Cartesian x coordinates of the mouse on the CartesianCanvas.
+  */
+float CartesianCanvas::getMouseX() {
+    float mx = (mouseX * cartWidth) / winWidth + minX;
+    return mx;
+}
+
+ /*!
+  * \brief Accessor for the mouse's y-position in Cartesian coordinates.
+  * \return The Cartesian y coordinates of the mouse on the CartesianCanvas.
+  */
+float CartesianCanvas::getMouseY() {
+    float my = -((mouseY * cartHeight) / winHeight + minY);
+    return my;
+}
+
+ /*!
   * \brief Recomputes the CartesianCanvas's bounds.
   * \details This function recomputes the size variables of CartesianCanvas according to new bounds.
   *   \param xMin A real number corresponding to the new left edge of the CartesianCanvas.
@@ -1190,6 +106,61 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     cartHeight = maxY - minY;
     pixelWidth = cartWidth / (getWindowWidth() - 1);
     pixelHeight = cartHeight / (getWindowHeight() - 1);  //Minor hacky fix
+    backgroundMutex.lock();
+    backgroundMutex.unlock();
+}
+
+/*! \brief Activates the corresponding Shader for a given Drawable.
+ *  \param sType Unsigned int with a corresponding value for each type of Shader.
+ */
+void CartesianCanvas::selectShaders(unsigned int sType) {
+    Shader * program = 0;
+    if (sType == TEXT_SHADER_TYPE) {
+        program = textShader;
+        // position attribute
+        GLint posAttrib = glGetAttribLocation(textShader->ID, "aPos");
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+        // texture coord attribute
+        GLint texAttrib = glGetAttribLocation(textShader->ID, "aTexCoord");
+        glEnableVertexAttribArray(texAttrib);
+        glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
+        unsigned int aspectLoc = glGetUniformLocation(program->ID, "aspect");
+        glm::mat4 aspect = glm::mat4(1.0f);
+        aspect = glm::scale(aspect, glm::vec3( (cartWidth/cartHeight) / ((float) winWidth/winHeight), 1.0f, 1.0f));
+        glUniformMatrix4fv(aspectLoc, 1, GL_FALSE, glm::value_ptr(aspect));
+    } else if (sType == SHAPE_SHADER_TYPE)  {
+        program = shapeShader;
+        // position attribute
+        GLint posAttrib = glGetAttribLocation(shapeShader->ID, "aPos");
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)0);
+        // texture coord attribute
+        GLint colAttrib = glGetAttribLocation(shapeShader->ID, "aColor");
+        glEnableVertexAttribArray(colAttrib);
+        glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
+    } else if (sType == TEXTURE_SHADER_TYPE) {
+        program = textureShader;
+        GLint posAttrib = glGetAttribLocation(textureShader->ID, "aPos");
+        glEnableVertexAttribArray(posAttrib);
+        glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+        // texture coord attribute
+        GLint texAttrib = glGetAttribLocation(textureShader->ID, "aTexCoord");
+        glEnableVertexAttribArray(texAttrib);
+        glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
+    }
+    
+    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)cartWidth/(float)cartHeight, 0.1f, 1000.0f);
+    glm::mat4 view          = glm::mat4(1.0f);
+    view  = glm::translate(view, glm::vec3((float) (maxX + minX) / -2, (float) (maxY + minY) / -2, -(((float)cartHeight / 2) / tan(glm::pi<float>()/6))));
+    glm::mat4 model = glm::mat4(1.0f);
+
+    glUniformMatrix4fv(glGetUniformLocation(program->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(program->ID, "view"), 1, GL_FALSE, &view[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(program->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
 }
 
  /*!
@@ -1279,16 +250,6 @@ void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, std::string, int)
 }
 
  /*!
-  * \brief Sleeps the internal drawing timer of a CartesianCanvas object.
-  * \details A timer is put to sleep until a subsequent event is ready to occur.
-  * \details The drawing timer is put to sleep until the next drawing frame is ready to occur.
-  * \note Identical to Canvas::sleep().
-  */
-void CartesianCanvas::sleep() {
-    Canvas::sleep();
-}
-
- /*!
   * \brief Zoom the CartesianCanvas with a given center.
   * \details This function will re-center the CartesianCanvas at the given coordinates, then zoom with
   *   respect to the given scale.
@@ -1297,11 +258,11 @@ void CartesianCanvas::sleep() {
   *   \param scale The zoom scale compared to the original. Less than 1 zooms in, greater than 1 zooms out.
   * \note This function will automatically maintain the current aspect ratio.
   */
-void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
-    Decimal newWidth = cartWidth * scale;
-    Decimal newHeight = cartHeight * scale;
-    recomputeDimensions(x - .5 * newWidth, y - .5 * newHeight, x + .5 * newWidth, y + .5 * newHeight);
-}
+// void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
+//     Decimal newWidth = cartWidth * scale;
+//     Decimal newHeight = cartHeight * scale;
+//     recomputeDimensions(x - .5 * newWidth, y - .5 * newHeight, x + .5 * newWidth, y + .5 * newHeight);
+// }
 
  /*!
   * \brief Zoom the CartesianCanvas with the given bounding (Cartesian) coordinates.
@@ -1315,10 +276,10 @@ void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
   * \warning This function will *NOT* automatically maintain the previous aspect ratio.
   * \warning Change the aspect ratio on-the-fly only with caution.
   */
-void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
-    Decimal scale = (std::abs(x2 - x1) / cartWidth + std::abs(y2 - y1) / cartHeight) / 2.0;
-    zoom((x2 + x1) / 2, (y2 + y1) / 2, scale);
-}
+// void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
+//     Decimal scale = (std::abs(x2 - x1) / cartWidth + std::abs(y2 - y1) / cartHeight) / 2.0;
+//     zoom((x2 + x1) / 2, (y2 + y1) / 2, scale);
+// }
 
 //-----------------------Unit testing-------------------------------------------------
  /*!

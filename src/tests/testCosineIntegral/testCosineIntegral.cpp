@@ -40,22 +40,34 @@ using namespace tsgl;
  * \param numberOfThreads Reference to the number of threads to use.
  */
 void cosineIntegralFunction(Cart& can, int numberOfThreads) {
+  CartesianBackground * bg = can.getBackground();
   int threads = numberOfThreads;
   if (threads <= 0) {
     threads = 1;
   }
 
-  can.drawAxes(0, 0, PI/4, .5);
+  // can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&can, &bg] () {
+  //   float mouseX, mouseY;
+  //   ColorFloat c;
+  //   mouseX = can.getMouseX();
+  //   mouseY = can.getMouseY();
+  //   printf("%f, %f\n", mouseX, mouseY);
+  //   bg->drawPixel(mouseX, mouseY, ColorInt(255,0,0,255));
+  //   c = bg->getPixel(mouseX, mouseY);
+  //   printf("%f, %f, %f, %f\n", c.R, c.G, c.B, c.A);
+  // });
+
+  bg->drawAxes(0, 0, PI/4, .5);
   long double pw = can.getPixelWidth();
   CosineFunction function1;
-  can.drawFunction(function1);
+  bg->drawFunction(function1, 0.1f);
 
   //\u03C0 = π
-  can.setFont("../assets/freefont/FreeSerif.ttf");
-  can.drawText(L"-1.5\u03C0", -1.5 * PI - .1, .25, 20);  // Note the important capital L, used to support Unicode.
-  can.drawText(L"1.5\u03C0", 1.5 * PI - .2, .25, 20);
-  can.drawText(L"1", .1, 1.05, 20);
-  can.drawText(L"-1", .1, -1.1, 20);
+  std::string font = "./assets/freefont/FreeSerif.ttf";
+  bg->drawText( 1.5 * PI - .2, .4, 0, L"1.5\u03C0", font, 0.15, 0,0,0, BLACK);
+  bg->drawText(-1.4 * PI - .1, .4, 0, L"-1.5\u03C0", font, 0.15, 0,0,0, BLACK);  // Note the important capital L, used to support Unicode.
+  bg->drawText(.15, 1.1, 0, L"1", font, 0.15, 0,0,0, BLACK);
+  bg->drawText(.18, -1, 0, L"-1", font, 0.15, 0,0,0, BLACK);
 
 #pragma omp parallel num_threads(threads)
   {
@@ -66,8 +78,12 @@ void cosineIntegralFunction(Cart& can, int numberOfThreads) {
     for (long double i = start; i < stop; i += pw) {
       if (!can.isOpen()) break;
       can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class
-      can.drawLine(i, 0, i, function1.valueAt(i), Colors::highContrastColor(omp_get_thread_num()));
+      bg->drawLine(i, 0, 0, i, function1.valueAt(i), 0, 0,0,0, Colors::highContrastColor(omp_get_thread_num()));
     }
+  }
+
+  while (can.isOpen()) {
+    can.sleep();
   }
 }
 

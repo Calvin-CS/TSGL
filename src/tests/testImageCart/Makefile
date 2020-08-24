@@ -60,6 +60,7 @@ CXXFLAGS = -O3 -g3 -ggdb3 \
 	-I/usr/include \
 	-I/usr/include/freetype2 \
 	-I/usr/include/freetype2/freetype  \
+
 LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
 			$(BREW) -L/usr/local/lib \
 

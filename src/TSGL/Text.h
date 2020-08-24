@@ -24,7 +24,7 @@ namespace tsgl {
 class Text : public Drawable {
  private:
     std::wstring myString;
-    unsigned int myFontSize;
+    float mySize;
     std::string myFont;
     ColorFloat myColor;
 
@@ -44,13 +44,13 @@ class Text : public Drawable {
 
     void populateCharacters();
  public:
-    Text(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color);
+    Text(float x, float y, float z, std::wstring text, std::string fontFilename, float size, float yaw, float pitch, float roll, const ColorFloat &color);
 
     virtual void draw(Shader * shader);
 
     virtual void setText(std::wstring text);
 
-    virtual void setFontSize(unsigned int fontsize);
+    virtual void setSize(float size);
 
     virtual void setFont(std::string filename);
 
@@ -58,7 +58,7 @@ class Text : public Drawable {
 
     std::wstring getText() { return myString; }
 
-    unsigned int getFontSize() { return myFontSize; }
+    float getSize() { return mySize; }
 
     GLfloat getWidth() { return myWidth; }
     GLfloat getHeight() { return myHeight; }

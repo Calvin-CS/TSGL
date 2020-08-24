@@ -61,8 +61,8 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
 
     /* the getPixel portion of the test */
     // bool print = false;
-    // int mouseX = 0;
-    // int mouseY = 0;
+    // float mouseX = 0;
+    // float mouseY = 0;
 
     // background->drawSquare(-100,100,0,100,0,0,0,RED);
     // background->drawSquare(-100,-100,0,100,0,0,0,GREEN);
@@ -83,7 +83,7 @@ void colorPointsFunction(Canvas& can, int numberOfThreads) {
         // if (print) {
         //     c = background->getPixel(mouseX, mouseY);
         //     background->drawPixel(mouseX, mouseY, ColorInt(255,0,0,255));
-        //     printf("%d, %d - ", mouseX, mouseY);
+        //     printf("%f, %f - ", mouseX, mouseY);
         //     printf("%d:%d:%d:%d\n", c.R, c.G, c.B, c.A);
         //     print = false;
         // }

@@ -6,12 +6,8 @@
 #define CARTESIANCANVAS_H_
 
 #include "Canvas.h"     // We extend Canvas
-#include "Function.h"   // For drawing math functions on the screen
-#include "Util.h"
 
 namespace tsgl {
-
-typedef Decimal (*functionPointer)(Decimal x);
 
 /*!
  * \class CartesianCanvas
@@ -34,124 +30,69 @@ public:
     CartesianCanvas(double timerLength = 0.0);
 
     CartesianCanvas(int x, int y, int width, int height, Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax,
-                    std::string t, double timerLength = 0.0);
+                    std::string t, ColorFloat backgroundColor = GRAY, double timerLength = 0.0);
 
-    // void drawAxes(Decimal originX, Decimal originY, Decimal spacingX, Decimal spacingY);
-
-    // void drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat color, bool filled = true);
-
-    // void drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat color[], bool filled = true);
-
-    // void drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat fillColor, ColorFloat outlineColor);
-
-    // void drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat fillColor[], ColorFloat outlineColor);
-
-    // void drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat fillColor, ColorFloat outlineColor[]);
-
-    // void drawCircle(Decimal x, Decimal y, Decimal radius, ColorFloat fillColor[], ColorFloat outlineColor[]);
-
-    // void drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color, bool filled = true);
-
-    // void drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
-
-    // void drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor);
-
-    // void drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor);
-
-    // void drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor[]);
-
-    // void drawConcavePolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor[]);
-
-    // void drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color, bool filled = true);
-
-    // void drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
-
-    // void drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor);
-    
-    // void drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor);
-
-    // void drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor[]);
-
-    // void drawConvexPolygon(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor[]);
-
-    // void drawFunction(const Function &function, float sleepTime = 0.0f, ColorFloat color = BLACK);
-
-    // void drawFunction(functionPointer &function, float sleepTime = 0.0f, ColorFloat color = BLACK);
-
-    // void drawImage(std::string filename, Decimal x, Decimal y, Decimal w, Decimal h, float a = 1.0f);
-
-    // void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color = BLACK);
-
-    // void drawLine(Decimal x1, Decimal y1, Decimal x2, Decimal y2, ColorFloat color[]);
-
-    // void drawPartialFunction(functionPointer &function, Decimal min, Decimal max,
-    //                          float sleepTime = 0.0f, ColorFloat color = BLACK);
-
-    // void drawPixel(Decimal row, Decimal col, ColorFloat color = BLACK);
-
-    // void drawPoint(Decimal x, Decimal y, ColorFloat color = BLACK);
-
-    // void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color = BLACK, bool filled = true);
-
-    // void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat color[], bool filled = true);
-
-    // void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor, ColorFloat outlineColor);
-
-    // void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor);
-
-    // void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor, ColorFloat outlineColor[]);
-
-    // void drawRectangle(Decimal x, Decimal y, Decimal w, Decimal h, ColorFloat fillColor[], ColorFloat outlineColor[]);
-
-    // void drawText(std::string text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK, const std::string& fontFileName = "");
-
-    // void drawText(std::wstring text, Decimal x, Decimal y, unsigned size, ColorFloat color = BLACK, const std::string& fontFileName = "");
-
-    // void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color = BLACK, bool filled = true);
-
-    // void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat color[], bool filled = true);
-
-    // void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat fillColor, ColorFloat outlineColor);
-
-    // void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat fillColor[], ColorFloat outlineColor);
-
-    // void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat fillColor, ColorFloat outlineColor[]);
-
-    // void drawTriangle(Decimal x1, Decimal y1, Decimal x2, Decimal y2, Decimal x3, Decimal y3, ColorFloat fillColor[], ColorFloat outlineColor[]);
-
-    // void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color, bool filled = true);
-
-    // void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat color[], bool filled = true);
-
-    // void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor);
-
-    // void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor);
-
-    // void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor, ColorFloat outlineColor[]);
-
-    // void drawTriangleStrip(int size, Decimal xverts[], Decimal yverts[], ColorFloat fillColor[], ColorFloat outlineColor[]);
+    virtual CartesianBackground * getBackground() override { return (CartesianBackground *) myBackground; }
 
     void getCartesianCoordinates(int screenX, int screenY, Decimal &cartX, Decimal &cartY);
 
-    Decimal getCartHeight();
+    /*!
+     * \brief Accessor for the CartesianCanvas's Cartesian height.
+     * \return The Cartesian height of the CartesianCanvas.
+     */
+    Decimal getCartHeight() { return cartHeight; }
 
-    Decimal getCartWidth();
+    /*!
+     * \brief Accessor for the CartesianCanvas's Cartesian width.
+     * \return The Cartesian width of the CartesianCanvas.
+     */
+    Decimal getCartWidth() { return cartWidth; }
 
-    Decimal getPixelHeight();
+    virtual float getMouseX();
 
-    Decimal getPixelWidth();
+    virtual float getMouseY();
 
-    Decimal getMaxX();
+    /*!
+     * \brief Accessor for the CartesianCanvas's effective pixel height.
+     * \return The height corresponding to a single pixel in the current CartesianCanvas.
+     */
+    Decimal getPixelHeight() { return pixelHeight; }
 
-    Decimal getMaxY();
+    /*!
+     * \brief Accessor for the CartesianCanvas's effective pixel width.
+     * \return The width corresponding to a single pixel in the current CartesianCanvas.
+     */
+    Decimal getPixelWidth() { return pixelWidth; }
 
-    Decimal getMinX();
+    /*!
+     * \brief Accessor for the CartesianCanvas's right bound.
+     * \return The real number corresponding the right of the CartesianCanvas.
+     */
+    Decimal getMaxX() { return maxX; }
 
-    Decimal getMinY();
+    /*!
+     * \brief Accessor for the CartesianCanvas's top bound.
+     * \return The real number corresponding the top of the CartesianCanvas.
+     */
+    Decimal getMaxY() { return maxY; }
+
+    /*!
+     * \brief Accessor for the CartesianCanvas's left bound.
+     * \return The real number corresponding the left of the CartesianCanvas.
+     */
+    Decimal getMinX() { return minX; }
+
+    /*!
+     * \brief Accessor for the CartesianCanvas's bottom bound.
+     * \return The real number corresponding the bottom of the CartesianCanvas.
+     */
+    Decimal getMinY()  { return minY; }
 
     void getScreenCoordinates(Decimal cartX, Decimal cartY, int &screenX, int &screenY);
 
     void recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xMax, Decimal yMax);
+
+    virtual void selectShaders(unsigned int sType) override;
 
     void run(void (*myFunction)(CartesianCanvas&));
 
@@ -169,11 +110,9 @@ public:
 
     void run(void (*myFunction)(CartesianCanvas&, std::string, int), std::string s, int i);
 
-    void sleep();
+    // void zoom(Decimal x, Decimal y, Decimal scale);
 
-    void zoom(Decimal x, Decimal y, Decimal scale);
-
-    void zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
+    // void zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
 
     // static void runTests();
 };

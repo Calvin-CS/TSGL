@@ -181,7 +181,7 @@ void CubeArray::update(unsigned index){
 void CubeArray::setCubeSideLength(GLfloat length){
     for(unsigned i = 0; i < mySize; ++i){
         myCubes[i]->setSideLength(length);
-        myText[i]->setFontSize(length/2.5);
+        myText[i]->setSize(length/2.5);
         myText[i]->setCenterZ(myCubes[i]->getSideLength()/2.0);
     }
 }
@@ -228,12 +228,12 @@ void CubeArray::setFont(std::string filename){
 }
 
 /**
- * \brief Sets the font size of the CubeArray's Text/numbers to a new size.
- * \param fontsize The new font size.
+ * \brief Sets the size of the CubeArray's Text/numbers to a new size.
+ * \param size The new size.
  */
-void CubeArray::setFontSize(unsigned int fontsize){
+void CubeArray::setTextSize(float size){
     for(Text * t : myText){
-        t->setFontSize(fontsize);
+        t->setSize(size);
     }
 }
 

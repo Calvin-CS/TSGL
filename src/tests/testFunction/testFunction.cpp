@@ -21,13 +21,14 @@ using namespace tsgl;
  * \param can Reference to the CartesianCanvas being drawn to.
  */
 void functionFunction(CartesianCanvas& can) {
-    can.drawAxes(0, 0, 1, 5);
+    CartesianBackground * cart = can.getBackground();
+    cart->drawAxes(0, 0, 1, 5);
 
     CosineFunction function1;
-    can.drawFunction(function1,FRAME/5);
+    cart->drawFunction(function1);
 
     PowerFunction function2(2);
-    can.drawFunction(function2,FRAME/5);
+    cart->drawFunction(function2);
 
     class myFunction : public Function {
      public:
@@ -37,7 +38,7 @@ void functionFunction(CartesianCanvas& can) {
     };
 
     myFunction function3;
-    can.drawFunction(function3,FRAME/5);
+    cart->drawFunction(function3);
 }
 
 //Takes command line arguments for the window width and height

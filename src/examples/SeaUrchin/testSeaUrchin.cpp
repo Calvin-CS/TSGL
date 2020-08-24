@@ -58,7 +58,7 @@ void seaUrchinFunction(Canvas& can, int threads) {
 int main(int argc, char * argv[]) {
   int nthreads = (argc > 1) ? atoi(argv[1]) : 16;  //Number of threads
   clamp(nthreads,1,16);                            //Max number of threads is 16
-  Canvas c(-1, -1, 885, 230, "Sea Urchins!", BLACK, FRAME * 2);
+  Canvas c(-1, -1, 885, 230, "Sea Urchins!", BLACK, nullptr, FRAME * 2);
   c.run(seaUrchinFunction, nthreads);
 }
 

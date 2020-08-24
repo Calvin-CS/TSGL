@@ -57,7 +57,7 @@ public:
 
     void setFont(std::string filename);
 
-    void setFontSize(unsigned int fontsize);
+    void setTextSize(float size);
 
 
     void changeYawBy(GLfloat yaw);

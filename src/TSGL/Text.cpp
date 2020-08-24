@@ -11,19 +11,19 @@ namespace tsgl {
  *      \param z The center z coordinate of the text.
  *      \param text The string to draw.
  *      \param fontFilename The path of the filename detailing the font the Text will use.
- *      \param fontsize The size of the text in pixels.
+ *      \param size The height of the text (will be relative to Canvas).
  *      \param yaw The yaw of the Text in 3D space.
  *      \param pitch The pitch of the Text in 3D space.
  *      \param roll The roll of the Text in 3D space.
  *      \param color A reference to the ColorFloat to use.
  * \return A new Text instance with the specified string, position, and color.
  */
-Text::Text(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color)
+Text::Text(float x, float y, float z, std::wstring text, std::string fontFilename, float size, float yaw, float pitch, float roll, const ColorFloat &color)
  : Drawable(x,y,z,yaw,pitch,roll) {
     shaderType = TEXT_SHADER_TYPE;
     myString = text;
     myFont = fontFilename;
-    myFontSize = fontsize;
+    mySize = size;
     myColor = color;
     myAlpha = color.A;
     myXScale = myYScale = myZScale = 1;
@@ -42,7 +42,7 @@ Text::Text(float x, float y, float z, std::wstring text, std::string fontFilenam
         TsglErr("ERROR::FREETYPE: Charmap selection");
 
     // set size to load glyphs as
-    FT_Set_Pixel_Sizes(face, 0, myFontSize);
+    FT_Set_Pixel_Sizes(face, 0, 100);
 
     populateCharacters();
 
@@ -71,7 +71,7 @@ void Text::draw(Shader * shader) {
     model = glm::rotate(model, glm::radians(myCurrentPitch), glm::vec3(0.0f, 1.0f, 0.0f));
     model = glm::rotate(model, glm::radians(myCurrentRoll), glm::vec3(1.0f, 0.0f, 0.0f));
     model = glm::translate(model, glm::vec3(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ));
-    // model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
+    model = glm::scale(model, glm::vec3(mySize / 100, mySize / 100, myZScale));
 
     unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -156,24 +156,13 @@ void Text::setText(std::wstring text) {
 
 /*!
  * \brief Alter the Text's font size
- * \details This function changes myFontSize to the parameter fontsize.
- *  \param fontsize The new fontsize.
+ * \details This function changes mySize to the parameter size.
+ *  \param size The new size.
  * \warning The center of the text will not change despite any differences in rendered string length.
  */
-void Text::setFontSize(unsigned int fontsize) {
+void Text::setSize(float size) {
     attribMutex.lock();
-    std::wstring::const_iterator c;
-    for (c = myString.begin(); c != myString.end(); c++) {
-        FT_Bitmap_Done(ft, &Characters[*c].Bitmap);
-    }
-    init = false;
-    myFontSize = fontsize;
-
-    // set size to load glyphs as
-    FT_Set_Pixel_Sizes(face, 0, myFontSize);
-
-    populateCharacters();
-    init = true;
+    mySize = size;
     attribMutex.unlock();
 }
 
@@ -201,7 +190,7 @@ void Text::setFont(std::string filename) {
         TsglErr("ERROR::FREETYPE: Charmap selection");
 
     // set size to load glyphs as
-    FT_Set_Pixel_Sizes(face, 0, myFontSize);
+    FT_Set_Pixel_Sizes(face, 0, 100);
 
     populateCharacters();
     init = true;
@@ -223,7 +212,7 @@ void Text::setColor(const ColorFloat& color) {
 /*!
  * \brief Private helper method for populating Characters with characters based on myString
  * \details This function assigns values to myWidth and myHeight based on 
- *  the glyphs loaded based on myFontSize, myFont, and myString.
+ *  the glyphs loaded based on myFont and myString.
  */
 void Text::populateCharacters() {
     const wchar_t* wideChar = myString.c_str();

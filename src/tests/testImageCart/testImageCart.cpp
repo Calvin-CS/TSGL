@@ -14,14 +14,26 @@ using namespace tsgl;
  * \param can Reference to the CartesianCanvas being drawn to (Cart is a typedef for CartesianCanvas).
  */
 void imageCartFunction(Cart& can) {
-    can.drawImage("../assets/pics/test.png", 0, 3, 2, 1.5);
-    can.drawImage("../assets/pics/ship.bmp", 2, 3, 2, 1.5); // possibly lost
-    can.drawImage("../assets/pics/shiprgb.bmp", 4, 3, 2, 1.5); // definitely lost
-    can.drawImage("../assets/pics/sky_main.jpg", 0, 1.5, 2, 1.5);
-    can.drawImage("../assets/pics/cow.jpg", 2, 1.5, 2, 1.5);
-    can.drawImage("../assets/pics/colorfulKeyboard.jpg", 4, 1.5, 2, 1.5);
+    CartesianBackground * cart = can.getBackground();
+    cart->drawImage(1, 2.25, 0, "./assets/pics/test.png", 2, 1.5, 0,0,0);
+    cart->drawImage(3, 2.25, 0, "./assets/pics/ship.bmp", 2, 1.5, 0,0,0); // possibly lost
+    cart->drawImage(5, 2.25, 0, "./assets/pics/shiprgb.bmp", 2, 1.5, 0,0,0); // definitely lost
+    cart->drawImage(1, 0.75, 0, "./assets/pics/sky_main.jpg", 2, 1.5, 0,0,0);
+    cart->drawImage(3, 0.75, 0, "./assets/pics/cow.jpg", 2, 1.5, 0,0,0);
+    cart->drawImage(5, 0.75, 0, "./assets/pics/colorfulKeyboard.jpg", 2, 1.5, 0,0,0);
 
-    can.drawImage("../assets/pics/colorful-cars-circle.jpg", 1, 3, 4, 3, 0.25f); //Overlay
+    Image * image = new Image(3, 1.5, 0, "./assets/pics/colorful-cars-circle.jpg", 4, 3, 0,0,0, 0.25f);
+    can.add(image);
+
+    // Arrow * a = new Arrow(1, 2, 0, 5, 1, 0, 0.1, 0,0,0, BLUE);
+    // can.add(a);
+
+    while (can.isOpen()) {
+        can.sleep();
+    }
+
+    delete image;
+    // delete a;
 }
 
 //Takes command-line arguments for the width and height of the screen

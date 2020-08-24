@@ -48,9 +48,8 @@ void Consumer::act() {
 	myShape->setColor( c ); //Change Consumer color to Item color
 	myCountLabel->setColor(c.getContrast());
 	count++; myCountLabel->setText( std::to_wstring(count) );
-	if(count == 10) myCountLabel->setCenter(myX, myY, 1);
 	if(count == 100) {
-		myCountLabel->setFontSize(22);
+		myCountLabel->setSize(22);
 		myCountLabel->setCenter(myX, myY, 1);
 	}
 }

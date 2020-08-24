@@ -38,11 +38,12 @@ static const GLchar* textVertexShader =
   "layout (location = 0) in vec3 aPos;"
   "layout (location = 1) in vec2 aTexCoord;"
   "out vec2 TexCoords;"
+  "uniform mat4 aspect;"
   "uniform mat4 projection;"
   "uniform mat4 view;"
   "uniform mat4 model;"
   "void main() {"
-  "gl_Position = projection * view * model * vec4(aPos, 1.0);"
+  "gl_Position = projection * view * model * aspect * vec4(aPos, 1.0);"
   "TexCoords = vec2(aTexCoord.x, aTexCoord.y);"
   "}";
 
@@ -94,8 +95,8 @@ unsigned Canvas::openCanvases = 0;
   *   The created Canvas will take up approximately 90% of the monitor's height, and will
   *   have a 4:3 aspect ratio.
   */
-Canvas::Canvas(double timerLength) {
-    init(-1, -1, -1, -1, -1, "", GRAY, timerLength);
+Canvas::Canvas(double timerLength, Background * bg) {
+    init(-1, -1, -1, -1, -1, "", GRAY, bg, timerLength);
 }
 
  /*!
@@ -110,8 +111,8 @@ Canvas::Canvas(double timerLength) {
   *     A value less than or equal to 0 sets it to automatic.
   * \return A new Canvas with the specified position, dimensions, title, and draw cycle length.
   */
-Canvas::Canvas(int x, int y, int width, int height, std::string title, ColorFloat backgroundColor, double timerLength) {
-    init(x, y, width, height, width*height*2, title, backgroundColor, timerLength);
+Canvas::Canvas(int x, int y, int width, int height, std::string title, ColorFloat backgroundColor, Background * background, double timerLength) {
+    init(x, y, width, height, width*height*2, title, backgroundColor, background, timerLength);
 }
 
  /*!
@@ -231,6 +232,7 @@ void Canvas::clearObjectBuffer(bool shouldFreeMemory) {
 
 void Canvas::draw()
 {
+    windowMutex.lock();
     glfwMakeContextCurrent(window);
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
@@ -240,6 +242,8 @@ void Canvas::draw()
     int fbw, fbh;
     glfwGetFramebufferSize(window, &fbw, &fbh);
     int scaling = round((1.0f*fbw)/winWidth);
+    glfwMakeContextCurrent(NULL);
+    windowMutex.unlock();
 
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++)
     {
@@ -312,7 +316,7 @@ void Canvas::draw()
           screenShot();
           --toRecord;
         }
-
+      
         // Update Screen
         glfwSwapBuffers(window);
 
@@ -406,7 +410,7 @@ float Canvas::getFPS() {
   * \brief Accessor for the mouse's x-position.
   * \return The x coordinates of the mouse on the Canvas.
   */
-int Canvas::getMouseX() {
+float Canvas::getMouseX() {
     return mouseX - winWidth/2;
 }
 
@@ -414,8 +418,8 @@ int Canvas::getMouseX() {
   * \brief Accessor for the mouse's y-position.
   * \return The y coordinates of the mouse on the Canvas.
   */
-int Canvas::getMouseY() {
-    return winHeight/2 - mouseY;
+float Canvas::getMouseY() {
+    return (float) winHeight/2 - mouseY;
 }
 
  /*!
@@ -525,7 +529,7 @@ void Canvas::handleIO() {
   #endif
 }
 
-void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, ColorFloat backgroundColor, double timerLength) {
+void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, ColorFloat backgroundColor, Background * background, double timerLength) {
     ++openCanvases;
 
     if (ww == -1)
@@ -572,6 +576,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
 
+    windowMutex.lock();
     initGlfw();
 #ifndef _WIN32
     initWindow();
@@ -579,7 +584,8 @@ void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string ti
     glfwMakeContextCurrent(NULL);   // Reset the context
 #endif
     initGl();
-    initBackground(backgroundColor);
+    initBackground(background, backgroundColor);
+    windowMutex.unlock();
 }
 
 void Canvas::initGl() {
@@ -664,12 +670,15 @@ void Canvas::initGlfw() {
   }
 }
 
-void Canvas::initBackground(ColorFloat bgcolor) {
+void Canvas::initBackground(Background * background, ColorFloat bgcolor) {
     backgroundMutex.lock();
-    if (!myBackground) {
+    if (!background) {
       myBackground = new Background(winWidth, winHeight, bgcolor);
-      myBackground->init(shapeShader, textShader, textureShader, window);
+    } else {
+      myBackground = background;
+      background->setClearColor(bgcolor);
     }
+    myBackground->init(shapeShader, textShader, textureShader, window);
     backgroundMutex.unlock();
 }
 
@@ -953,7 +962,9 @@ void Canvas::setBackground(Background * background, bool previouslySet) {
     defaultBackground = false;
     myBackground = background;
     if (!previouslySet) {
+      windowMutex.lock();
       background->init(shapeShader, textShader, textureShader, window);
+      windowMutex.unlock();
     }
   }
   backgroundMutex.unlock();
@@ -966,6 +977,7 @@ void Canvas::setBackground(Background * background, bool previouslySet) {
   * \note The alpha channel of the color is ignored.
   */
 void Canvas::setBackgroundColor(ColorFloat color) {
+    windowMutex.lock();
     if (window != nullptr) {
       glfwMakeContextCurrent(window);
       backgroundMutex.lock();
@@ -973,6 +985,7 @@ void Canvas::setBackgroundColor(ColorFloat color) {
       backgroundMutex.unlock();
       glfwMakeContextCurrent(NULL);
     }
+    windowMutex.unlock();
 }
 
  /*!
@@ -1102,6 +1115,9 @@ void Canvas::selectShaders(unsigned int sType) {
         GLint texAttrib = glGetAttribLocation(textShader->ID, "aTexCoord");
         glEnableVertexAttribArray(texAttrib);
         glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
+        GLint aspectLoc = glGetUniformLocation(textShader->ID, "aspect");
+        glUniformMatrix4fv(aspectLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
     } else if (sType == SHAPE_SHADER_TYPE)  {
         program = shapeShader;
         // position attribute
@@ -1112,6 +1128,7 @@ void Canvas::selectShaders(unsigned int sType) {
         GLint colAttrib = glGetAttribLocation(shapeShader->ID, "aColor");
         glEnableVertexAttribArray(colAttrib);
         glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
     } else if (sType == TEXTURE_SHADER_TYPE) {
         program = textureShader;
         GLint posAttrib = glGetAttribLocation(textureShader->ID, "aPos");
@@ -1121,10 +1138,9 @@ void Canvas::selectShaders(unsigned int sType) {
         GLint texAttrib = glGetAttribLocation(textureShader->ID, "aTexCoord");
         glEnableVertexAttribArray(texAttrib);
         glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
     }
  
-    program->use();
-
     // Recompute the camera matrices
     uniModel = glGetUniformLocation(program->ID, "model");
     uniView = glGetUniformLocation(program->ID, "view");

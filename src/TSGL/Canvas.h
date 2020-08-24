@@ -12,6 +12,8 @@
 
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Arrow.h"	    // Our own array for drawing arrows
+#include "Background.h"     // Our own class for drawing a background
+#include "CartesianBackground.h" // Our own class for drawing a cartesian background
 #include "Color.h"          // Our own interface for converting color types
 #include "Cone.h"           // Our own class for drawing cones
 #include "Cube.h"           // Our own class for drawing cubes
@@ -37,7 +39,6 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
-#include "Background.h"     // Our own class for drawing a background
 #include "TextureHandler.h" // Currently used for screenshots, might change this
 #include "Util.h"           // Needed constants and has cmath for performing math operations
 
@@ -85,14 +86,15 @@ namespace tsgl {
  *  \bug <b>Linux:</b> X forwarding does not work properly with TSGL.
  */
 class Canvas {
-private:
+protected:
     typedef GLFWvidmode const*                      displayInfo;
     typedef std::function<void(double, double)>     doubleFunction;
     typedef std::function<void()>                   voidFunction;
 
     // float           aspect;                                             // Aspect ratio used for setting up the window
-    voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
+    bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
     std::mutex      backgroundMutex;                                    // Mutex for myBackground
+    voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
     bool            defaultBackground;                                  // Boolean indicating whether myBackground has been set by an external source
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
@@ -112,7 +114,7 @@ private:
   #endif
     uint8_t*        screenBuffer;                                       // Array that is a copy of the screen
     std::mutex      screenBufferMutex;                                  // mutex for the screenbuffer
-    doubleFunction  scrollFunction;                                     // Single function object for scrolling                                    // Address of the vertex shader
+    doubleFunction  scrollFunction;                                     // Single function object for scrolling
     Shader *        textShader;                                         // Shader for Text class
     Shader *        shapeShader;                                        // Shader for Shape class
     Shader *        textureShader;                                      // Shader for Background and Image classes
@@ -120,7 +122,7 @@ private:
     bool            started;                                            // Whether our canvas is running and the frame counter is counting
     std::mutex      syncMutex;                                          // Mutex for syncing the rendering thread with a computational thread
     int             syncMutexLocked;                                    // Whether the syncMutex is currently locked
-	  int             syncMutexOwner;                                     // Thread ID of the owner of the syncMutex                               // Address of the textured vertex shader
+	  int             syncMutexOwner;                                     // Thread ID of the owner of the syncMutex
     bool            toClose;                                            // If the Canvas has been asked to close
     unsigned int    toRecord;                                           // To record the screen each frame
     GLint           uniModel,                                           // Model perspective of the camera
@@ -148,8 +150,10 @@ private:
     void         glDestroy();                                           // Destroys the GL and GLFW things that are specific for this canvas
     void         init(int xx,int yy,int ww,int hh,
                    unsigned int b, std::string title, 
-                   ColorFloat backgroundColor, double timerLength);     // Method for initializing the canvas
-    void         initBackground(ColorFloat bgcolor);                    // Initializes myBackground
+                   ColorFloat backgroundColor, Background * background, 
+                   double timerLength);                                 // Method for initializing the canvas
+    void         initBackground(Background * background, 
+                                ColorFloat bgcolor);                    // Initializes myBackground
     void         initGl();                                              // Initializes the GL things specific to the Canvas
     void         initGlew();                                            // Initialized the GLEW things specific to the Canvas
     static void  initGlfw();                                            // Initalizes GLFW for all future canvases.
@@ -166,15 +170,12 @@ private:
   #else
     static void  startDrawing(Canvas *c);                               // Static method that is called by the render thread
   #endif
-    void         selectShaders(unsigned int choice);                    // Select appropriate shader for type of Drawable
-protected:
-    bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
-    void        drawDrawable(Drawable* s);                              // Draw a drawable type
+    virtual void         selectShaders(unsigned int choice);            // Select appropriate shader for type of Drawable
 public:
 
-    Canvas(double timerLength = 0.0f);
+    Canvas(double timerLength = 0.0f, Background * background = nullptr);
 
-    Canvas(int x, int y, int width, int height, std::string title, ColorFloat backgroundColor = GRAY, double timerLength = 0.0f);
+    Canvas(int x, int y, int width, int height, std::string title, ColorFloat backgroundColor = GRAY, Background * background = nullptr, double timerLength = 0.0f);
 
     virtual ~Canvas();
 
@@ -190,7 +191,7 @@ public:
 
     void clearObjectBuffer(bool shouldFreeMemory = false);
 
-    Background * getBackground();
+    virtual Background * getBackground();
 
     ColorFloat getBackgroundColor();
 
@@ -202,13 +203,9 @@ public:
 
     float getFPS();
 
-    int getMouseX();
+    virtual float getMouseX();
 
-    int getMouseY();
-
-    ColorInt getPixel(int row, int col);
-
-    ColorInt getPoint(int x, int y);
+    virtual float getMouseY();
 
     unsigned int getReps() const;
 

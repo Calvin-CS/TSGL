@@ -38,7 +38,7 @@ void textFunction(Canvas& can, std::string font) {
         random->setText(L"Glorgaborg");
         // random->setColor(RED);
         // random->setFont("./assets/freefont/FreeSerifItalic.ttf");
-        // random->setFontSize(100);
+        // random->setSize(100);
     });
 
     bool ss = false;

@@ -60,7 +60,7 @@ void Reader::unlock() {
 	//Release lock
 	count++; myCountLabel->setText( to_wstring(count) ); //Finished another read
 	if( count == 100 ) {
-		myCountLabel->setFontSize(22);
+		myCountLabel->setSize(22);
 	}
 	while( paused ) {}
 	myCircle->setCenter(myX, myY, 0); 	//Return to home location

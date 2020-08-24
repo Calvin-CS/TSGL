@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 
   //Setup
   omp_set_num_threads(numThreads);
-  IntegralViewer i1(&unitCircleFunction, 800, 800, 0.0l, 1.0l, 0.0l, 1.0l, "unit circle");
+  IntegralViewer i1(&unitCircleFunction, 600, 600, 0.0l, 1.0l, 0.0l, 1.0l, "unit circle");
 
   //Go!
   printf("Reference pi:  3.141592653589793238462643383279...)\n");
@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
   printf("Trapezoids pi: %32.30Lf in %f secs\n", trapezoidsPi, i1.getTrapTime() );
 
   //Bonus!
-  IntegralViewer i2(&sineFunction, 1200, 800, -1.1l, 1.2l, -1.3l, 1.4l, "cosine");
+  IntegralViewer i2(&sineFunction, 900, 600, -1.1l, 1.2l, -1.3l, 1.4l, "cosine");
   i2.rectangleEvaluate(numIntervals);
   i2.trapezoidEvaluate(numIntervals);
 }

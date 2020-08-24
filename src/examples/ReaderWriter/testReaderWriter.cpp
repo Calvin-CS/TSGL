@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 	int numWriters = ( (argc > 2) && (atoi(argv[2]) > 0) && (atoi(argv[2]) <= 9) ) ? atoi(argv[2]) : 6;
 
 	//Start Reader-Writer visualization
-	Canvas can(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Reader-Writer", WHITE, 1.0f/2);  //Canvas to draw on
+	Canvas can(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, "Reader-Writer", WHITE, nullptr, 1.0f/2);  //Canvas to draw on
 
 	//Start the visualization
 	can.start();

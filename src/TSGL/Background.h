@@ -32,7 +32,6 @@ namespace tsgl {
  */
 class Background {
 protected:
-
     GLint myWidth, myHeight, myWidthPadded;
 
     GLuint multisampledTexture, intermediateTexture;
@@ -104,7 +103,7 @@ public:
 
     virtual void drawLine(float x, float y, float z, float length, float yaw, float pitch, float roll, ColorFloat color[]);
 
-    virtual void drawPixel(int x, int y, ColorInt c);
+    virtual void drawPixel(float x, float y, ColorInt c);
 
     virtual void drawPolyline(float x, float y, float z, int numVertices, float lineVertices[], float yaw, float pitch, float roll, ColorFloat color);
 
@@ -126,7 +125,9 @@ public:
 
     virtual void drawStar(float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja = false, bool outlined = false);
 
-    virtual void drawText(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color);
+    virtual void drawText(float x, float y, float z, std::string text, std::string fontFilename, float size, float yaw, float pitch, float roll, const ColorFloat &color);
+
+    virtual void drawText(float x, float y, float z, std::wstring text, std::string fontFilename, float size, float yaw, float pitch, float roll, const ColorFloat &color);
 
     virtual void drawTriangle(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, ColorFloat color, bool outlined = false);
 
@@ -137,18 +138,18 @@ public:
     virtual void drawTriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color[], bool outlined = false);
 
     /*!
-    * \brief Accessor for the width of the Background.
+    * \brief Accessor for the pixel width of the Background.
     * \details Returns the value of the myWidth private variable, a GLint.
     */
     virtual GLint getWidth() { return myWidth; }
 
     /*!
-    * \brief Accessor for the height of the Background.
+    * \brief Accessor for the pixel height of the Background.
     * \details Returns the value of the myHeight private variable, a GLint.
     */
     virtual GLint getHeight() { return myHeight; }
 
-    virtual ColorInt getPixel(int x, int y);
+    virtual ColorInt getPixel(float x, float y);
 
     /*!
     * \brief Accessor for color which is used to clear the Background when clear() is called.

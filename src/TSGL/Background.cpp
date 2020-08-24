@@ -22,7 +22,7 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
     baseColor = clearColor;
     toClear = false;
     complete = false;
-    newPixelsDrawn = false;
+    newPixelsDrawn = true;
 
     int padwidth = myWidth % 4;
     if (padwidth > 0)
@@ -119,8 +119,8 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwi
     textShader = textS;
     textureShader = textureS;    
     complete = true;
-    attribMutex.unlock();
     glfwMakeContextCurrent(0);
+    attribMutex.unlock();
 }
 
  /*!
@@ -191,6 +191,7 @@ void Background::draw() {
         for (int i = 0; i < myWidth * myHeight * 4; ++i) {
             pixelTextureBuffer[i] = 0;
         }
+        newPixelsDrawn = false;
     }
     pixelBufferMutex.unlock();
     
@@ -236,6 +237,9 @@ void Background::selectShaders(unsigned int sType) {
         GLint texAttrib = glGetAttribLocation(textShader->ID, "aTexCoord");
         glEnableVertexAttribArray(texAttrib);
         glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
+        unsigned int aspectLoc = glGetUniformLocation(program->ID, "aspect");
+        glUniformMatrix4fv(aspectLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
     } else if (sType == SHAPE_SHADER_TYPE)  {
         program = shapeShader;
         // position attribute
@@ -246,6 +250,7 @@ void Background::selectShaders(unsigned int sType) {
         GLint colAttrib = glGetAttribLocation(shapeShader->ID, "aColor");
         glEnableVertexAttribArray(colAttrib);
         glVertexAttribPointer(colAttrib, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
     } else if (sType == TEXTURE_SHADER_TYPE) {
         program = textureShader;
         GLint posAttrib = glGetAttribLocation(textureShader->ID, "aPos");
@@ -255,10 +260,9 @@ void Background::selectShaders(unsigned int sType) {
         GLint texAttrib = glGetAttribLocation(textureShader->ID, "aTexCoord");
         glEnableVertexAttribArray(texAttrib);
         glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+        program->use();
     }
- 
-    program->use();
-    
+     
     glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)myWidth/(float)myHeight, 0.1f, 1000.0f);
     glm::mat4 view          = glm::mat4(1.0f);
     view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -((myHeight / 2) / tan(glm::pi<float>()/6))));
@@ -587,38 +591,38 @@ void Background::drawLine(float x, float y, float z, float length, float yaw, fl
   *   \param y The y-position of the pixel.
   *   \param color The color of the point.
   */
-void Background::drawPixel(int x, int y, ColorInt c) {
+void Background::drawPixel(float x, float y, ColorInt c) {
     if (abs(x) > (myWidth / 2) || abs(y) > (myHeight / 2)) {
         TsglErr("Pixel x and y coordinates must be within Background dimensions.");
         return;
     }
     pixelBufferMutex.lock();
-    x += myWidth / 2;
-    y += myHeight / 2;
+    int intX = (int) x + myWidth / 2;
+    int intY = (int) y + myHeight / 2;
     int outR;
     int outG;
     int outB;
     int outA;
     // first, if pixel hasn't been written since last draw cycle, just draw
-    if (pixelTextureBuffer[(y * myWidth + x) * 4] == 0 && pixelTextureBuffer[(y * myWidth + x) * 4 + 1] == 0 && pixelTextureBuffer[(y * myWidth + x) * 4 + 2] == 0 && pixelTextureBuffer[(y * myWidth + x) * 4 + 3] == 0) {
+    if (pixelTextureBuffer[(intY * myWidth + intX) * 4] == 0 && pixelTextureBuffer[(intY * myWidth + intX) * 4 + 1] == 0 && pixelTextureBuffer[(intY * myWidth + intX) * 4 + 2] == 0 && pixelTextureBuffer[(intY * myWidth + intX) * 4 + 3] == 0) {
         outR = c.R; outG = c.G; outB = c.B; outA = c.A;
     } else {
         // if new alpha is 255, just replace. otherwise, alpha blend
         if (c.A == 255) {
             outR = c.R; outG = c.G; outB = c.B; outA = 255;
         } else {
-            int destA = pixelTextureBuffer[(y * myWidth + x) * 4 + 3];
-            outR = (c.R * ((float)c.A / 255) + pixelTextureBuffer[(y * myWidth + x) * 4] * (float) destA / 255 * (1 - (float)c.A/255));
-            outG = (c.G * ((float)c.A / 255) + pixelTextureBuffer[(y * myWidth + x) * 4 + 1] * (float) destA / 255 * (1 - (float)c.A/255));
-            outB = (c.B * ((float)c.A / 255) + pixelTextureBuffer[(y * myWidth + x) * 4 + 2] * (float) destA / 255 * (1 - (float)c.A/255));
+            int destA = pixelTextureBuffer[(intY * myWidth + intX) * 4 + 3];
+            outR = (c.R * ((float)c.A / 255) + pixelTextureBuffer[(intY * myWidth + intX) * 4] * (float) destA / 255 * (1 - (float)c.A/255));
+            outG = (c.G * ((float)c.A / 255) + pixelTextureBuffer[(intY * myWidth + intX) * 4 + 1] * (float) destA / 255 * (1 - (float)c.A/255));
+            outB = (c.B * ((float)c.A / 255) + pixelTextureBuffer[(intY * myWidth + intX) * 4 + 2] * (float) destA / 255 * (1 - (float)c.A/255));
             outA = 255;
         }
     }
 
-    pixelTextureBuffer[(y * myWidth + x) * 4] = outR;
-    pixelTextureBuffer[(y * myWidth + x) * 4 + 1] = outG;
-    pixelTextureBuffer[(y * myWidth + x) * 4 + 2] = outB;
-    pixelTextureBuffer[(y * myWidth + x) * 4 + 3] = outA;
+    pixelTextureBuffer[(intY * myWidth + intX) * 4] = outR;
+    pixelTextureBuffer[(intY * myWidth + intX) * 4 + 1] = outG;
+    pixelTextureBuffer[(intY * myWidth + intX) * 4 + 2] = outB;
+    pixelTextureBuffer[(intY * myWidth + intX) * 4 + 3] = outA;
 
     newPixelsDrawn = true;
     pixelBufferMutex.unlock();
@@ -834,16 +838,35 @@ void Background::drawStar(float x, float y, float z, float radius, int points, f
  * \param x The x coordinate of the Text's center location.
  * \param y The y coordinate of the Text's center location.
  * \param z The z coordinate of the Text's center location.
- * \param text Wide string containing the characters to be rendered.
+ * \param text String containing the characters to be rendered.
  * \param fontFilename String containing the filename for the font with which the Text will be rendered.
- * \param fontsize The Text's fontsize in pixels.
+ * \param size The Text's size, relative to worldspace.
  * \param yaw The Text's yaw rotation.
  * \param pitch The Text's pitch rotation.
  * \param roll The Text's roll rotation.
  * \param color ColorFloat for the Text.
  */
-void Background::drawText(float x, float y, float z, std::wstring text, std::string fontFilename, unsigned int fontsize, float yaw, float pitch, float roll, const ColorFloat &color) {
-    Text * t = new Text(x,y,z,text,fontFilename,fontsize,yaw,pitch,roll,color);
+void Background::drawText(float x, float y, float z, std::string text, std::string fontFilename, float size, float yaw, float pitch, float roll, const ColorFloat &color) {
+    std::wstring wsTmp(text.begin(), text.end());
+    std::wstring ws = wsTmp;
+    drawText(x,y,z,ws,fontFilename,size,yaw,pitch,roll,color);
+}
+
+/*!\brief Procedurally draws Text to the Background.
+ * \details Initializes a new Text based on the parameter values, and then adds it to the Array of Drawables to be rendered.
+ * \param x The x coordinate of the Text's center location.
+ * \param y The y coordinate of the Text's center location.
+ * \param z The z coordinate of the Text's center location.
+ * \param text Wide string containing the characters to be rendered.
+ * \param fontFilename String containing the filename for the font with which the Text will be rendered.
+ * \param size The Text's size, relative to worldspace.
+ * \param yaw The Text's yaw rotation.
+ * \param pitch The Text's pitch rotation.
+ * \param roll The Text's roll rotation.
+ * \param color ColorFloat for the Text.
+ */
+void Background::drawText(float x, float y, float z, std::wstring text, std::string fontFilename, float size, float yaw, float pitch, float roll, const ColorFloat &color) {
+    Text * t = new Text(x,y,z,text,fontFilename,size,yaw,pitch,roll,color);
     drawableMutex.lock();
     myDrawables->push(t);  // Push it onto our drawing buffer
     drawableMutex.unlock();
@@ -950,17 +973,17 @@ void Background::drawTriangleStrip(float centerX, float centerY, float centerZ, 
   * \note (0,0) signifies the <b>center</b> of the Background's texture.
   *      \param x The x-position of the pixel to grab.
   *      \param y The y-position of the pixel to grab.
-  * \return A ColorInt containing the color of the pixel at (col,row).
+  * \return A ColorInt containing the color of the pixel at (x,y).
   */
-ColorInt Background::getPixel(int x, int y) {
+ColorInt Background::getPixel(float x, float y) {
     if (abs(x) > (myWidth/2) || abs(y) > (myHeight/2)) {
         TsglErr("Accessor x and y must be within Canvas parameters.");
         return ColorInt(0,0,0,0);
     }
     readPixelMutex.lock();
-    x += myWidth/2;
-    y += myHeight/2;
-    int off = 3 * (y * myWidthPadded + x);
+    int intX = (int) x + myWidth/2;
+    int intY = (int) y + myHeight/2;
+    int off = 3 * (intY * myWidthPadded + intX);
     ColorInt c = ColorInt(readPixelBuffer[off], readPixelBuffer[off + 1], readPixelBuffer[off + 2], 255);
     readPixelMutex.unlock();
     return c;
