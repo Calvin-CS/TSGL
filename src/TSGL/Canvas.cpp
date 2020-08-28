@@ -182,6 +182,7 @@ void Canvas::clearBackground() {
   */
 void Canvas::close() {
     glfwSetWindowShouldClose(window, GL_TRUE);
+    toClose = true;
     TsglDebug("Window closed successfully.");
 }
 
@@ -652,14 +653,14 @@ void Canvas::initGlew() {
 
     textureShader = new Shader(textureVertexShader, textureFragmentShader);
 
-    char buf[PATH_MAX]; /* PATH_MAX incudes the \0 so +1 is not required */
-    char *res = realpath(".", buf);
-    if (res) {
-        printf("This source is at %s.\n", buf);
-    } else {
-        perror("realpath");
-        exit(EXIT_FAILURE);
-    }
+    // char buf[PATH_MAX]; /* PATH_MAX incudes the \0 so +1 is not required */
+    // char *res = realpath(".", buf);
+    // if (res) {
+    //     printf("This source is at %s.\n", buf);
+    // } else {
+    //     perror("realpath");
+    //     exit(EXIT_FAILURE);
+    // }
 }
 
 void Canvas::initGlfw() {
@@ -702,7 +703,7 @@ void Canvas::initWindow() {
     glfwWindowHint(GLFW_VISIBLE, GL_FALSE);                         // Don't show the window at first
     glfwWindowHint(GLFW_SAMPLES,4);
 
-    glfwMutex.lock();                                  // GLFW crashes if you try to make more than once window at once
+    glfwMutex.lock();                                  // GLFW crashes if you try to make more than one window at once
     window = glfwCreateWindow(winWidth, winHeight, winTitle.c_str(), NULL, NULL);  // Windowed
  //   window = glfwCreateWindow(monInfo->width, monInfo->height, title_.c_str(), glfwGetPrimaryMonitor(), NULL);  // Fullscreen
     if (!window) {
@@ -737,8 +738,8 @@ void Canvas::initWindow() {
     winHeight = windowHeight;
     
     // Get info of GPU and supported OpenGL version
-    printf("Renderer: %s\n", glGetString(GL_RENDERER));
-    printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
+    // printf("Renderer: %s\n", glGetString(GL_RENDERER));
+    // printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
 }
 
  /*!

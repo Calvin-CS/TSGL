@@ -45,6 +45,7 @@ void progressBarFunction(Canvas& can, int numThreads) {
           pb->update(progress+i*(MAX/SEGS),i);
         // pb->setPitch(can.getFrameNumber());
     }
+    delete pb;
 }
 
 //Takes in the number of threads to use as a command line argument for the Canvas, defaulting to 8.

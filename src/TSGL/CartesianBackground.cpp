@@ -76,6 +76,7 @@ void CartesianBackground::draw() {
     selectShaders(TEXTURE_SHADER_TYPE);
 
     glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3((float) -(myXMax + myXMin) / -2, (float) -(myYMax + myYMin) / -2, 0));
     model = glm::scale(model, glm::vec3((float)myCartWidth, (float)myCartHeight, 1));
 
     unsigned int modelLoc = glGetUniformLocation(textureShader->ID, "model");
@@ -113,6 +114,12 @@ void CartesianBackground::draw() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     glDisable(GL_DEPTH_TEST);
+
+    model = glm::mat4(1.0f);
+    model = glm::scale(model, glm::vec3((float)myCartWidth, (float)myCartHeight, 1));
+
+    modelLoc = glGetUniformLocation(textureShader->ID, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
     glm::mat4 view          = glm::mat4(1.0f);
     view  = glm::translate(view, glm::vec3(0, 0, -(((float)myCartHeight / 2) / tan(glm::pi<float>()/6))));
@@ -312,6 +319,45 @@ void CartesianBackground::selectShaders(unsigned int sType) {
     glUniformMatrix4fv(glGetUniformLocation(program->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniformMatrix4fv(glGetUniformLocation(program->ID, "view"), 1, GL_FALSE, &view[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(program->ID, "model"), 1, GL_FALSE, glm::value_ptr(model));
+}
+
+ /*!
+  * \brief Zoom the CartesianCanvas with a given center.
+  * \details This function will re-center the CartesianCanvas at the given coordinates, then zoom with
+  *   respect to the given scale.
+  *   \param x The coordinate to re-center the screen on.
+  *   \param y The coordinate to re-center the screen on.
+  *   \param scale The zoom scale compared to the original. Less than 1 zooms in, greater than 1 zooms out.
+  * \note This function will automatically maintain the current aspect ratio.
+  */
+void CartesianBackground::zoom(Decimal x, Decimal y, Decimal scale) {
+    Decimal newWidth = myCartWidth * scale;
+    Decimal newHeight = myCartHeight * scale;
+    myXMin = x - .5 * newWidth;
+    myXMax = x + .5 * newWidth;
+    myYMin = y - .5 * newHeight;
+    myYMax = y + .5 * newHeight;
+    myCartWidth = myXMax - myXMin;
+    myCartHeight = myYMax - myYMin;
+    pixelWidth = myCartWidth / (myWidth - 1);
+    pixelHeight = myCartHeight / (myHeight - 1);  //Minor hacky fix
+}
+
+ /*!
+  * \brief Zoom the CartesianCanvas with the given bounding (Cartesian) coordinates.
+  * \details This function will zoom the CartesianCanvas with respect to the given bounding coordinates.
+  *   \param x1 The left Cartesian bound.
+  *   \param y1 The bottom Cartesian bound.
+  *   \param x2 The right Cartesian bound.
+  *   \param y2 The top Cartesian bound.
+  * \note Setting the right bound lower than the left bound or the top lower than the bottom will just
+  *   swap the variables.
+  * \warning This function will *NOT* automatically maintain the previous aspect ratio.
+  * \warning Change the aspect ratio on-the-fly only with caution.
+  */
+void CartesianBackground::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
+    Decimal scale = (std::abs(x2 - x1) / myCartWidth + std::abs(y2 - y1) / myCartHeight) / 2.0;
+    zoom((x2 + x1) / 2, (y2 + y1) / 2, scale);
 }
 
 }

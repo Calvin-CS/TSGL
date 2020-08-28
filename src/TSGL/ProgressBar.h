@@ -23,7 +23,8 @@ class ProgressBar : public Drawable {
  private:
     Rectangle ** segRecs;
     Polyline ** segBorders;
-    float *startX, *endX;
+    float *startX;
+    float *endX;
     float min, max;
     float myWidth, myHeight;
     int segs;

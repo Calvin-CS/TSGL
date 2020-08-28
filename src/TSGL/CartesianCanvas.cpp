@@ -258,11 +258,13 @@ void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, std::string, int)
   *   \param scale The zoom scale compared to the original. Less than 1 zooms in, greater than 1 zooms out.
   * \note This function will automatically maintain the current aspect ratio.
   */
-// void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
-//     Decimal newWidth = cartWidth * scale;
-//     Decimal newHeight = cartHeight * scale;
-//     recomputeDimensions(x - .5 * newWidth, y - .5 * newHeight, x + .5 * newWidth, y + .5 * newHeight);
-// }
+void CartesianCanvas::zoom(Decimal x, Decimal y, Decimal scale) {
+    Decimal newWidth = cartWidth * scale;
+    Decimal newHeight = cartHeight * scale;
+    recomputeDimensions(x - .5 * newWidth, y - .5 * newHeight, x + .5 * newWidth, y + .5 * newHeight);
+    CartesianBackground* c = (CartesianBackground*) myBackground;
+    c->zoom(x, y, scale);
+}
 
  /*!
   * \brief Zoom the CartesianCanvas with the given bounding (Cartesian) coordinates.
@@ -276,10 +278,10 @@ void CartesianCanvas::run(void (*myFunction)(CartesianCanvas&, std::string, int)
   * \warning This function will *NOT* automatically maintain the previous aspect ratio.
   * \warning Change the aspect ratio on-the-fly only with caution.
   */
-// void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
-//     Decimal scale = (std::abs(x2 - x1) / cartWidth + std::abs(y2 - y1) / cartHeight) / 2.0;
-//     zoom((x2 + x1) / 2, (y2 + y1) / 2, scale);
-// }
+void CartesianCanvas::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
+    Decimal scale = (std::abs(x2 - x1) / cartWidth + std::abs(y2 - y1) / cartHeight) / 2.0;
+    zoom((x2 + x1) / 2, (y2 + y1) / 2, scale);
+}
 
 //-----------------------Unit testing-------------------------------------------------
  /*!

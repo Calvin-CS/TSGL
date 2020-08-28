@@ -13,11 +13,12 @@ ShadedVoronoi::ShadedVoronoi(Canvas& can) : Voronoi(can) {
 }
 
 void ShadedVoronoi::draw(Canvas& can) {
+  Background * bg = can.getBackground();
   const int WW = can.getWindowWidth(),                    // Set the screen sizes
             WH = can.getWindowHeight();
   #pragma omp parallel for
-  for (int i = 0; i < WW; i++) {                          // For each individual point...
-    for (int j = 0; j < WH; j++) {
+  for (int i = -WW/2; i < WW/2; i++) {                          // For each individual point...
+    for (int j = -WH/2; j < WH/2; j++) {
       int myBestK = -1, myNextBestK = -1;
       float myBDist = 9999, myNBDist = 9999;              // Reset the best distance
       for (int k = 0; k < MY_POINTS; k++) {               // Find the closest control point
@@ -33,16 +34,16 @@ void ShadedVoronoi::draw(Canvas& can) {
           myNextBestK = k;
         }
       }
-      myKValue[i * WH + j] = myBestK;
-      myKValue2[i * WH + j] = myNextBestK;
-      can.drawPoint(i, j, myColor[myBestK]);              // Draw the point with the closest control's color
+      myKValue[(i + WW/2) * WH + (j + WH/2)] = myBestK;
+      myKValue2[(i + WW/2) * WH + (j + WH/2)] = myNextBestK;
+      bg->drawPixel(i, j, myColor[myBestK]);              // Draw the point with the closest control's color
     }
   }
   #pragma omp parallel for
-  for (int i = 0; i < WW; i++) {                          // For each individual point...
-    for (int j = 0; j < WH; j++) {
-      int k = myKValue[i * WH + j];                       // Find its closest control point
-      int nk = myKValue2[i * WH + j];                     // Then find its second closest
+  for (int i = -WW/2; i < WW/2; i++) {                          // For each individual point...
+    for (int j = -WH/2; j < WH/2; j++) {
+      int k = myKValue[(i + WW/2) * WH + (j+WH/2)];                       // Find its closest control point
+      int nk = myKValue2[(i + WW/2) * WH + (j+WH/2)];                     // Then find its second closest
       float xd1 = i - myX[k];
       float yd1 = j - myY[k];
       float d1 = xd1 * xd1 + yd1 * yd1;                   // Find the distance to it closest
@@ -51,7 +52,7 @@ void ShadedVoronoi::draw(Canvas& can) {
       float kd = xkd * xkd + ykd * ykd;                   // Find the distance between the CPs themselves
       float shading = sqrt(d1 / kd);
       clamp(shading,0,1);
-      can.drawPoint(i, j, ColorFloat(0, 0, 0, shading));  // Draw the point with the closest control's color
+      bg->drawPixel(i, j, ColorFloat(0, 0, 0, shading));  // Draw the point with the closest control's color
     }
   }
 }

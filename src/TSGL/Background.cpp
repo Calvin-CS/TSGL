@@ -611,11 +611,13 @@ void Background::drawPixel(float x, float y, ColorInt c) {
         if (c.A == 255) {
             outR = c.R; outG = c.G; outB = c.B; outA = 255;
         } else {
-            int destA = pixelTextureBuffer[(intY * myWidth + intX) * 4 + 3];
-            outR = (c.R * ((float)c.A / 255) + pixelTextureBuffer[(intY * myWidth + intX) * 4] * (float) destA / 255 * (1 - (float)c.A/255));
-            outG = (c.G * ((float)c.A / 255) + pixelTextureBuffer[(intY * myWidth + intX) * 4 + 1] * (float) destA / 255 * (1 - (float)c.A/255));
-            outB = (c.B * ((float)c.A / 255) + pixelTextureBuffer[(intY * myWidth + intX) * 4 + 2] * (float) destA / 255 * (1 - (float)c.A/255));
-            outA = 255;
+            int destA = (float) pixelTextureBuffer[(intY * myWidth + intX) * 4 + 3] / 255;
+            float srcA = (float) c.A / 255;
+            float oA = srcA + (destA * (1 - srcA));
+            outR = (c.R * srcA + pixelTextureBuffer[(intY * myWidth + intX) * 4] * destA * (1 - srcA)) / oA;
+            outG = (c.G * srcA + pixelTextureBuffer[(intY * myWidth + intX) * 4 + 1] * destA * (1 - srcA)) / oA;
+            outB = (c.B * srcA + pixelTextureBuffer[(intY * myWidth + intX) * 4 + 2] * destA * (1 - srcA)) / oA;
+            outA = (int) (oA * 255);
         }
     }
 

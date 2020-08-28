@@ -7,6 +7,7 @@
 Julia::Julia(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
 void Julia::draw(Cart& can) {
+  CartesianBackground * cart = can.getBackground();
   const int CH = can.getWindowHeight();   //Height of our Mandelbrot canvas
   VisualTaskQueue vq(CH);
   while(myRedraw) {
@@ -16,7 +17,9 @@ void Julia::draw(Cart& can) {
     vq.reset();
     #pragma omp parallel num_threads(myThreads)
     {
-      vq.showLegend();
+      if (omp_get_thread_num() == 0) // showLegend creates a Canvas, which should ONLY be done by thread 0
+        vq.showLegend();
+      #pragma omp barrier
       int myNext;
       while(true) {  // As long as we aren't trying to render off of the screen...
         #pragma omp critical
@@ -36,10 +39,10 @@ void Julia::draw(Cart& can) {
             c = c * c + z;
           }
           if(iterations == myDepth) { // If the point never escaped, draw it black
-            can.drawPoint(col, row, BLACK);
+            cart->drawPixel(col, row, ColorInt(0,0,0,255));
           } else { // Otherwise, draw it with color based on how long it took
             float mult = iterations/(float)myDepth;
-            can.drawPoint(col, row, Colors::blend(BLACK,WHITE,0.25f+0.5f*mult)*mult);
+            cart->drawPixel(col, row, Colors::blend(BLACK,WHITE,0.25f+0.5f*mult)*mult);
           }
           if (!can.isOpen() || myRedraw) break;
         }
@@ -56,4 +59,5 @@ void Julia::draw(Cart& can) {
     }
   }
   vq.close();
+  can.close();
 }

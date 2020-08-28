@@ -7,6 +7,7 @@
 Nova::Nova(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
 void Nova::draw(Cart& can) {
+  CartesianBackground * cart = can.getBackground();
   const long double R = 1.0l;
   while (myRedraw) {
     myRedraw= false;
@@ -37,10 +38,14 @@ void Nova::draw(Cart& can) {
             smooth = 0;
           smooth = smooth - (int)smooth;
           //float mult = iterations/(float)myDepth;
-          if (iterations == myDepth)
-            can.drawPoint(col, row, BLACK);
-          else
-            can.drawPoint(col, row, ColorHSV((float) smooth * 6.0f, 1.0f, (float) smooth, 1.0f));
+          if (row <= can.getMaxY()) {
+            if (iterations == myDepth) {
+              cart->drawPixel(col, row, ColorInt(0,0,0,255));
+            }
+            else {
+              cart->drawPixel(col, row, ColorHSV((float) smooth * 6.0f, 1.0f, (float) smooth, 1.0f));
+            }
+          }
         }
         can.handleIO();
         if (myRedraw) break;

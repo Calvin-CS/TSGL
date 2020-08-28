@@ -7,6 +7,7 @@
 GradientMandelbrot::GradientMandelbrot(unsigned threads, unsigned depth) : Mandelbrot(threads, depth) {}
 
 void GradientMandelbrot::draw(Cart& can) {
+  CartesianBackground * cart = can.getBackground();
   while (myRedraw) {
     myRedraw = false;
     #pragma omp parallel num_threads(myThreads)
@@ -29,7 +30,8 @@ void GradientMandelbrot::draw(Cart& can) {
           }
           smooth /= (myDepth + 1);
           float value = (float)iterations/myDepth;
-          can.drawPoint(col, row, ColorHSV((float)smooth * 6.0f, 1.0f, value, 1.0f));
+          if (row < cart->getMaxY())
+            cart->drawPixel(col, row, ColorHSV((float)smooth * 6.0f, 1.0f, value, 1.0f));
           if (myRedraw) break;
         }
         can.handleIO();

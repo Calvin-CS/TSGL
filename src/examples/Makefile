@@ -14,6 +14,7 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
  			Fireworks/. \
  			ForestFire/. \
  			Langton/. \
+ 			Mandelbrot/. \
 			MergeSort/. \
 			NewtonPendulum/. \
 			Pong/. \
@@ -26,10 +27,8 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
 			ThreadedArrayBubbleSort/. \
 			ThreadedArrayOperations/. \
 			ThreadedSolarSystem/. \
-# 			Mandelbrot/. \
+			Voronoi/. \
 # 			ParallelPandemic/. \
-#			Voronoi/. \
-
 
 SUBDIRS_TO_CLEAN := $(subst /.,..., $(SUBDIRS_TO_BUILD))	# Used to clean the examples
 

@@ -21,6 +21,7 @@ Buddhabrot::~Buddhabrot() {
 }
 
 void Buddhabrot::draw(Cart& can) {
+  CartesianBackground * cart = can.getBackground();
   cww = can.getWindowWidth(), cwh = can.getWindowHeight();
   const unsigned long MAXITS = cww*cwh*10;
   ColorFloat tcolor(1.0f,1.0f,1.0f,0.1f);
@@ -30,7 +31,7 @@ void Buddhabrot::draw(Cart& can) {
     counter[i] = new int[cww];
   while (myRedraw) {
     myRedraw = false;
-    can.clearProcedural();
+    cart->clear();
     for (int i = 0; i < cwh; ++i)
       for (int j = 0; j < cww; ++j)
         counter[i][j] = 0;
@@ -71,7 +72,7 @@ void Buddhabrot::draw(Cart& can) {
             int boxX = (znums[its].real()-cMinx)/cpw;
             #pragma omp atomic
               ++(counter[boxY][boxX]);
-            can.Canvas::drawPixel(boxY, boxX, tcolor);
+            cart->Background::drawPixel(boxX - cww/2, cwh/2 - boxY, tcolor);
           }
         }
         #pragma omp atomic
@@ -99,7 +100,7 @@ void Buddhabrot::draw(Cart& can) {
       for (int i = omp_get_thread_num(); i < cwh; i += omp_get_num_threads())
         for (int j = 0; j < cww; ++j) {
           float normalize = sqrt((float)counter[i][j]/maxIts);
-          can.Canvas::drawPixel(i, j, (ColorFloat)can.getPixel(i,j) * normalize);
+          cart->Background::drawPixel(j - cww/2, cwh/2 - i, (ColorFloat)cart->Background::getPixel(j - cww/2,cwh/2 - i) * normalize);
         }
     }
     while (can.isOpen() && !myRedraw)

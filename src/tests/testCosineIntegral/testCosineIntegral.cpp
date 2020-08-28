@@ -53,8 +53,8 @@ void cosineIntegralFunction(Cart& can, int numberOfThreads) {
   //   mouseY = can.getMouseY();
   //   printf("%f, %f\n", mouseX, mouseY);
   //   bg->drawPixel(mouseX, mouseY, ColorInt(255,0,0,255));
-  //   c = bg->getPixel(mouseX, mouseY);
-  //   printf("%f, %f, %f, %f\n", c.R, c.G, c.B, c.A);
+  //   // c = bg->getPixel(mouseX, mouseY);
+  //   // printf("%f, %f, %f, %f\n", c.R, c.G, c.B, c.A);
   // });
 
   bg->drawAxes(0, 0, PI/4, .5);

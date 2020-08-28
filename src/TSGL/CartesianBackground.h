@@ -76,6 +76,10 @@ public:
     Decimal getMinY()  { return myYMin; }
 
     virtual ColorInt getPixel(float x, float y);
+
+    void zoom(Decimal x, Decimal y, Decimal scale);
+
+    void zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
 };
 
 }

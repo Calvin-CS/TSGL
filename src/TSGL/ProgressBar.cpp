@@ -31,11 +31,12 @@ ProgressBar::ProgressBar(float x, float y, float z, float width, float height, f
     }
 
     // all Polylines can have the same vertices; different locations will be handled with draw()
-    float vertices[15] = { -(myWidth/segs)/2,myHeight/2,0,
-                            -(myWidth/segs)/2,-myHeight/2,0,
-                            (myWidth/segs)/2,-myHeight/2,0,
-                            (myWidth/segs)/2,myHeight/2,0,
-                            -(myWidth/segs)/2,myHeight/2,0 };
+    vertices = new float[15];
+    vertices[0] = -(myWidth/segs)/2; vertices[1] = myHeight/2; vertices[2] = 0;
+    vertices[3] = -(myWidth/segs)/2; vertices[4] = -myHeight/2; vertices[5] = 0;
+    vertices[6] = (myWidth/segs)/2; vertices[7] = -myHeight/2; vertices[8] = 0;
+    vertices[9] = (myWidth/segs)/2; vertices[10] = myHeight/2; vertices[11] = 0;
+    vertices[12] = -(myWidth/segs)/2; vertices[13] = myHeight/2; vertices[14] = 0;
     for (int i = 0; i < segs; i++) {
         segBorders[i] = new Polyline(0,0,0,5,vertices,yaw,pitch,roll,BLACK);
         segRecs[i] = new Rectangle(0,0,0,myWidth/segs,myHeight-2,yaw,pitch,roll,Colors::highContrastColor(i));

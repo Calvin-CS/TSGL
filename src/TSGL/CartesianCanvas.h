@@ -110,9 +110,9 @@ public:
 
     void run(void (*myFunction)(CartesianCanvas&, std::string, int), std::string s, int i);
 
-    // void zoom(Decimal x, Decimal y, Decimal scale);
+    void zoom(Decimal x, Decimal y, Decimal scale);
 
-    // void zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
+    void zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2);
 
     // static void runTests();
 };
