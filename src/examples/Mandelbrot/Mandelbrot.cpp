@@ -65,33 +65,45 @@ void Mandelbrot::manhattanShading(CartesianCanvas& can) {
 }
 
 void Mandelbrot::bindings(Cart& can) {
+    can.bindToButton(TSGL_ENTER, TSGL_PRESS, [&can, this]() {
+      can.zoom(can.getMouseX(), can.getMouseY(), 0.5);
+      can.getBackground()->clear();
+      this->myRedraw = true;
+    });
     can.bindToButton(TSGL_SPACE, TSGL_PRESS, [&can, this]() {
       can.getBackground()->clear();
       this->myRedraw = true;
     });
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&can, this]() {
-      can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), this->myFirstX, this->myFirstY);
+      this->myFirstX = can.getMouseX();
+      this->myFirstY = can.getMouseY();
     });
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_RELEASE, [&can, this]() {
-      can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), this->mySecondX, this->mySecondY);
+      this->mySecondX = can.getMouseX();
+      this->mySecondY = can.getMouseY();
       if (!(this->myFirstX == this->mySecondX || this->myFirstY == this->mySecondY)) {
-        // can.zoom(this->myFirstX, this->myFirstY, this->mySecondX, this->mySecondY);
+        can.zoom(this->myFirstX, this->myFirstY, this->mySecondX, this->mySecondY);
+        can.getBackground()->clear();
         this->myRedraw = true;
       }
     });
     can.bindToButton(TSGL_MOUSE_RIGHT, TSGL_PRESS, [&can, this]() {
       Decimal x, y;
-      can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
-      // can.zoom(x, y, 1.5);
+      x = can.getMouseX();
+      y = can.getMouseY();
+      can.zoom(x, y, 1.5);
+      can.getBackground()->clear();
       this->myRedraw = true;
     });
     can.bindToScroll([&can, this](double dx, double dy) {
       Decimal x, y;
-      can.getCartesianCoordinates(can.getMouseX(), can.getMouseY(), x, y);
+      x = can.getMouseX();
+      y = can.getMouseY();
       Decimal scale;
       if (dy == 1) scale = .5;
       else scale = 1.5;
-      // can.zoom(x, y, scale);
+      can.zoom(x, y, scale);
+      can.getBackground()->clear();
       this->myRedraw = true;
     });
   }

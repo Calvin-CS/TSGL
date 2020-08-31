@@ -38,7 +38,7 @@ public:
 private:
     Paddle *leftPaddle, *rightPaddle;
     Ball *pongBall;
-  // Text *leftScore, *rightScore;
+    Text *leftScore, *rightScore;
 };
 
 #endif /* PONG_H_ */

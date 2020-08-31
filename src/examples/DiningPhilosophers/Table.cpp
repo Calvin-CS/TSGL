@@ -10,9 +10,8 @@
 Table::Table(Canvas& can, int p, PhilMethod m) {
   numPhils = p;
   myCan = &can;
-  myTable = new Circle(0,0,-1,175,0,0,0,ColorFloat(0.5,0.5,0.5,1));
-  can.add(myTable);
-  // can.drawCircle(0,0,1,ColorFloat(0.5,0.5,0.5,1));
+  Background * bg = can.getBackground();
+  bg->drawCircle(0,0,0,175,0,0,0,ColorFloat(0.5,0.5,0.5,1));
   phils = new Philosopher[numPhils];
   forks = new Fork[numPhils];
   for (int i = 0; i < numPhils; ++i) {
@@ -20,12 +19,9 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
     forks[i].id = i;
     forks[i].setCanvas(myCan);
   }
-  spaghettis = new Image*[numPhils]();
   float delta = 2.0f / numPhils * PI;
   for(int i = 0; i < numPhils; i++) {
-    spaghettis[i] = new Image(120 * cos(i*delta), 140 * sin(i*delta), -0.5, "./assets/pics/spaghet.png", 100, 50, 0,0,0);
-    can.add(spaghettis[i]);
-    // myCan->drawImage("../assets/pics/spaghet.png", -50+(200)*cos(i*delta), -25+(215)*sin(i*delta), 100, 50, 1.0f);
+    bg->drawImage(120 * cos(i*delta), 140 * sin(i*delta), 0, "./assets/pics/spaghet.png", 100, 50, 0,0,0);
   }
   myMethod = m;
   switch(myMethod) {
@@ -50,38 +46,19 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
 
   myCan2 = new Canvas(0,0,300,300,"Legend", GRAY);
   myCan2->start();
+  Background * bg2 = myCan2->getBackground();
 
-  legendTexts = new Text*[9]();
-  legendTexts[0] = new Text(-134,128,0,L"Method:","./assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
-  legendTexts[0]->changeXBy(legendTexts[0]->getWidth() / 2);
-  myCan2->add(legendTexts[0]);
-  legendTexts[1] = new Text(-118,96,0,L"\"" + methodString + L"\"","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
-  legendTexts[1]->changeXBy(legendTexts[1]->getWidth() / 2);
-  myCan2->add(legendTexts[1]);
-  legendTexts[2] = new Text(-134,64,0,L"Legend:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
-  legendTexts[2]->changeXBy(legendTexts[2]->getWidth() / 2);
-  myCan2->add(legendTexts[2]);
-  legendTexts[3] = new Text(-118,32,0,L"Red: Hungry","./assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
-  legendTexts[3]->changeXBy(legendTexts[3]->getWidth() / 2);
-  myCan2->add(legendTexts[3]);
-  legendTexts[4] = new Text(-118,0,0,L"Orange: Has Right Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
-  legendTexts[4]->changeXBy(legendTexts[4]->getWidth() / 2);
-  myCan2->add(legendTexts[4]);
-  legendTexts[5] = new Text(-118,-32,0,L"Yellow: Has Left Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,YELLOW);
-  legendTexts[5]->changeXBy(legendTexts[5]->getWidth() / 2);
-  myCan2->add(legendTexts[5]);
-  legendTexts[6] = new Text(-118,-64,0,L"Green: Eating","./assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
-  legendTexts[6]->changeXBy(legendTexts[6]->getWidth() / 2);
-  myCan2->add(legendTexts[6]);
-  legendTexts[7] = new Text(-118,-96,0,L"Blue: Thinking","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
-  legendTexts[7]->changeXBy(legendTexts[7]->getWidth() / 2);
-  myCan2->add(legendTexts[7]);
-  legendTexts[8] = new Text(-118,-121,0,L"Meals eaten:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
-  legendTexts[8]->changeXBy(legendTexts[8]->getWidth() / 2);
-  myCan2->add(legendTexts[8]);
+  bg2->drawText(0,128,0,L"Method:","./assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
+  bg2->drawText(0,96,0,L"\"" + methodString + L"\"","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  bg2->drawText(0,64,0,L"Legend:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  bg2->drawText(0,32,0,L"Red: Hungry","./assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
+  bg2->drawText(0,0,0,L"Orange: Has Right Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
+  bg2->drawText(0,-32,0,L"Yellow: Has Left Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,YELLOW);
+  bg2->drawText(0,-64,0,L"Green: Eating","./assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
+  bg2->drawText(0,-96,0,L"Blue: Thinking","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
+  bg2->drawText(0,-121,0,L"Meals eaten:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
 
-  exampleMeal = new RegularPolygon(15, -121,0,3,3,0,0,0, BROWN);
-  myCan2->add(exampleMeal);
+  bg2->drawRegularPolygon(65, -121,0,3,3,0,0,0, BROWN);
 }
 
 /*!
@@ -91,16 +68,6 @@ Table::~Table() {
   if (myCan2->isOpen())
     myCan2->stop();
   delete myCan2;
-  for (int i = 0; i < 9; i++) {
-    delete legendTexts[i];
-  }
-  delete[] legendTexts;
-  delete exampleMeal;
-  for (int i = 0; i < numPhils; i++) {
-    delete spaghettis[i];
-  }
-  delete [] spaghettis;
-  delete myTable;
   delete [] phils;
   delete [] forks;
 }
@@ -505,9 +472,8 @@ void Table::drawStep() {
   if( phils[i].state() == isFull ) {
     int meals = phils[i].getMeals();
     float angle = pangle+(meals/10)*2*PI/(RAD), dist = BASEDIST+8*(meals%10);
-    // myCan->drawRegularPolygon(dist*cos(angle), dist*sin(angle), 3, 10 ,BROWN, BLACK);
-    phils[i].addMeal(dist*cos(angle), dist*sin(angle),0);
-    myCan->add(phils[i].getLastMeal());
+    phils[i].addMeal();
+    myCan->getBackground()->drawRegularPolygon(dist*cos(angle),dist*sin(angle),0,3,3,0,0,0,ColorFloat(0.5,0.3,0,1));
   }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;

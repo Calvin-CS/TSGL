@@ -24,12 +24,12 @@ class Table3D {
 private:
   int numPhils;
   PhilMethod myMethod;
-  std::string methodString;
-  Canvas *myCan/* , *myCan2 */;
+  std::wstring methodString;
+  Canvas *myCan, *myCan2;
   Philosopher3D *phils;
   Fork3D *forks;
   Cylinder * myTable;
-  // TextureHandler loader;
+  Image ** spaghettis;
 public:
   Table3D(Canvas& can, int p, PhilMethod m);
 

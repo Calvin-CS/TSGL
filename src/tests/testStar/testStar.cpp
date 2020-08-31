@@ -45,8 +45,8 @@ void starFunction(Canvas& c) {
 }
 
 int main(int argc, char* argv[]) {
-  int w = 1000;
-  int h = 1000;
+  int w = 700;
+  int h = 700;
   Canvas c(-1, -1, w, h, "Stars");
   c.run(starFunction);
 }

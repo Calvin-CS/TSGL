@@ -592,7 +592,7 @@ void Background::drawLine(float x, float y, float z, float length, float yaw, fl
   *   \param color The color of the point.
   */
 void Background::drawPixel(float x, float y, ColorInt c) {
-    if (abs(x) > (myWidth / 2) || abs(y) > (myHeight / 2)) {
+    if (abs((int)x) > (myWidth / 2) || abs((int)y) > (myHeight / 2)) {
         TsglErr("Pixel x and y coordinates must be within Background dimensions.");
         return;
     }
@@ -604,7 +604,7 @@ void Background::drawPixel(float x, float y, ColorInt c) {
     int outB;
     int outA;
     // first, if pixel hasn't been written since last draw cycle, just draw
-    if (pixelTextureBuffer[(intY * myWidth + intX) * 4] == 0 && pixelTextureBuffer[(intY * myWidth + intX) * 4 + 1] == 0 && pixelTextureBuffer[(intY * myWidth + intX) * 4 + 2] == 0 && pixelTextureBuffer[(intY * myWidth + intX) * 4 + 3] == 0) {
+    if (pixelTextureBuffer[(intY * myWidth + intX) * 4 + 3] == 0) {
         outR = c.R; outG = c.G; outB = c.B; outA = c.A;
     } else {
         // if new alpha is 255, just replace. otherwise, alpha blend

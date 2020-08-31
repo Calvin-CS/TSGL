@@ -28,11 +28,6 @@ private:
   Canvas *myCan, *myCan2;
   Philosopher *phils;
   Fork *forks;
-  Circle * myTable;
-  Image ** spaghettis;
-  Text ** legendTexts;
-  RegularPolygon * exampleMeal;
-  // TextureHandler loader;
 public:
   Table(Canvas& can, int p, PhilMethod m);
 

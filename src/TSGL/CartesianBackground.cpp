@@ -331,16 +331,18 @@ void CartesianBackground::selectShaders(unsigned int sType) {
   * \note This function will automatically maintain the current aspect ratio.
   */
 void CartesianBackground::zoom(Decimal x, Decimal y, Decimal scale) {
+    attribMutex.lock();
     Decimal newWidth = myCartWidth * scale;
     Decimal newHeight = myCartHeight * scale;
     myXMin = x - .5 * newWidth;
     myXMax = x + .5 * newWidth;
     myYMin = y - .5 * newHeight;
     myYMax = y + .5 * newHeight;
-    myCartWidth = myXMax - myXMin;
-    myCartHeight = myYMax - myYMin;
+    myCartWidth = newWidth;
+    myCartHeight = newHeight;
     pixelWidth = myCartWidth / (myWidth - 1);
     pixelHeight = myCartHeight / (myHeight - 1);  //Minor hacky fix
+    attribMutex.unlock();
 }
 
  /*!
@@ -356,7 +358,9 @@ void CartesianBackground::zoom(Decimal x, Decimal y, Decimal scale) {
   * \warning Change the aspect ratio on-the-fly only with caution.
   */
 void CartesianBackground::zoom(Decimal x1, Decimal y1, Decimal x2, Decimal y2) {
+    attribMutex.lock();
     Decimal scale = (std::abs(x2 - x1) / myCartWidth + std::abs(y2 - y1) / myCartHeight) / 2.0;
+    attribMutex.unlock();
     zoom((x2 + x1) / 2, (y2 + y1) / 2, scale);
 }
 

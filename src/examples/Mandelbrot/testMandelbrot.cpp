@@ -213,10 +213,11 @@ int main(int argc, char* argv[]) {
   //Nova
   std::cout << "Nova" << std::endl;
   Cart c5(x, -1, w, h, -1.0, -0.5, 0, 0.5, "Nova (Newton Fractal)", GRAY, FRAME / 2);
-  // c5.zoom(-0.361883,-0.217078,0.1f);
+  c5.zoom(-0.361883,-0.217078,0.12f);
+  // c5.zoom(-0.5, 0, 0.15);
   c5.run(novaFunction,t,32);
 
-  //Julia #FIXME requires a different library path
+  //Julia
   std::cout << "Julia set" << std::endl;
   Cart c4(x, -1, w2, h2, -2, -1.125, 1, 1.125, "Julia Set", GRAY, FRAME / 2);
   c4.run(juliaFunction,t,d3);

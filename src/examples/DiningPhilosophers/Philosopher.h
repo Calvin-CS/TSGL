@@ -22,14 +22,12 @@ private:
   int id, myLeft, myRight;
   unsigned int numMeals;
   Circle *myCircle;
-  std::vector<RegularPolygon *> meals;
 public:
   Philosopher();
   ~Philosopher();
   void draw(Canvas& can, float x, float y);
   void refreshColor();
-  void addMeal(float x, float y, float z);
-  RegularPolygon * getLastMeal();
+  void addMeal();
   bool acquire(Fork& f);
   bool release(Fork& f);
   void think();

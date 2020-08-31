@@ -57,7 +57,8 @@ void greyScaleFunction(Canvas& can, int numberOfThreads) {
     int nthreads = omp_get_num_threads();
     int blocksize = WH / nthreads;
     int row = blocksize * omp_get_thread_num() - WH / 2;
-    // ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
+    ColorFloat color = Colors::highContrastColor(omp_get_thread_num());
+    color.A = 0.6;
     for (int y = row; y < row + blocksize; y++) {
       for (int x = -WW / 2; x < WW / 2; x++) {
 		    ColorInt pixelColor = background->getPixel(x, y);
@@ -67,10 +68,10 @@ void greyScaleFunction(Canvas& can, int numberOfThreads) {
       if (! can.isOpen()) break;
       can.sleep();
     }
-    // for (unsigned int i = 0; i < thickness; i++) {
-    //   bg->drawRectangle(i, row + i, WW - 1 - i, blocksize - i*2, color, false);
-    //   // can.drawRectangle(column + i, i, column + blocksize - i, WH - 1 - i, color, false);
-    // }
+    background->drawRectangle(0, row + (float)thickness/2, 1, WW, thickness, 0,0,0, color);
+    background->drawRectangle(0, row + blocksize - (float)thickness/2, 1, WW, thickness, 0,0,0, color);
+    background->drawRectangle(-WW/2 + (float)thickness/2, row + blocksize/2, 1, thickness, blocksize, 0,0,0, color);
+    background->drawRectangle(WW/2 - (float)thickness/2, row + blocksize/2, 1, thickness, blocksize, 0,0,0, color);
   }
 }
 

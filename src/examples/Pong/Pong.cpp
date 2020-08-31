@@ -21,9 +21,9 @@ Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
     leftPaddle->bindings(can, -1);  // W & S keys
     rightPaddle->bindings(can, 1);  // Up and Down arrow keys
     pongBall = new Ball(can, ballSpeed);
-    // leftScore = new Text(L"0", can.getWindowWidth() / 2-64, 40, 32, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
-    // rightScore = new Text(L"0", can.getWindowWidth()/2+64, 40, 32, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
-    // can.add(leftScore); can.add(rightScore);
+    leftScore = new Text(-64, can.getWindowHeight()/2 - 40, 0, L"0", "./assets/freefont/FreeSerif.ttf", 32, 0,0,0, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
+    rightScore = new Text(64, can.getWindowHeight()/2 - 40, 0, L"0", "./assets/freefont/FreeSerif.ttf", 32, 0,0,0, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
+    can.add(leftScore); can.add(rightScore);
 }
 
  /*!
@@ -42,11 +42,11 @@ void Pong::draw(Canvas& can) {
         // Handle ball boundary collisions
         if (pongBall->getX() > can.getWindowWidth() / 2 + 8) {
             leftPaddle->increment();   // Increment the points
-            // leftScore->setText( std::to_wstring(leftPaddle->getPoints()));
+            leftScore->setText( std::to_wstring(leftPaddle->getPoints()));
             pongBall->reset(can);   // Reset the ball's position
         } else if (pongBall->getX() < -can.getWindowWidth() / 2 -8) {
             rightPaddle->increment();
-            // rightScore->setText( std::to_wstring(rightPaddle->getPoints()));
+            rightScore->setText( std::to_wstring(rightPaddle->getPoints()));
             pongBall->reset(can);
         } else if (pongBall->getY() > can.getWindowHeight() / 2 - 8 || pongBall->getY() < -can.getWindowHeight() / 2 + 8) pongBall->invert(0); //Invert the ball's y-coordinate changer
         // Handle ball paddle collisions
@@ -79,6 +79,6 @@ Pong::~Pong() {
     delete pongBall;
     delete leftPaddle;
     delete rightPaddle;
-    // delete leftScore;
-    // delete rightScore;
+    delete leftScore;
+    delete rightScore;
 }
