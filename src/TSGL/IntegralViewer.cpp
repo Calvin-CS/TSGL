@@ -137,7 +137,6 @@ long double IntegralViewer::trapezoidEvaluate(long long numTrapezoids) {
         Decimal centerX, centerY;
         ColorFloat tcol = Colors::highContrastColor(omp_get_thread_num());
         tcol.A = 0.7;
-        ColorFloat colorValues[4] = {tcol, tcol, tcol, tcol};
 
         #pragma omp for
         for (long long i = 0; i < numTrapezoids; ++i) {

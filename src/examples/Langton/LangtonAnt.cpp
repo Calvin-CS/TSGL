@@ -12,7 +12,7 @@ LangtonAnt::LangtonAnt(int x, int y, int r, int g, int b, int d, AntFarm* p) {
   myBlue = b;
   myDir = d;
   myFarm = p;
-  myAlpha = 16;
+  myAlpha = 48;
 }
 
 void LangtonAnt::move() {

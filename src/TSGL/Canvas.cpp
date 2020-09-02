@@ -96,7 +96,7 @@ unsigned Canvas::openCanvases = 0;
   *   have a 4:3 aspect ratio.
   */
 Canvas::Canvas(double timerLength, Background * bg) {
-    init(-1, -1, -1, -1, -1, "", GRAY, bg, timerLength);
+    init(-1, -1, -1, -1, "", GRAY, bg, timerLength);
 }
 
  /*!
@@ -112,7 +112,7 @@ Canvas::Canvas(double timerLength, Background * bg) {
   * \return A new Canvas with the specified position, dimensions, title, and draw cycle length.
   */
 Canvas::Canvas(int x, int y, int width, int height, std::string title, ColorFloat backgroundColor, Background * background, double timerLength) {
-    init(x, y, width, height, width*height*2, title, backgroundColor, background, timerLength);
+    init(x, y, width, height, title, backgroundColor, background, timerLength);
 }
 
  /*!
@@ -246,8 +246,15 @@ void Canvas::draw()
     glfwMakeContextCurrent(NULL);
     windowMutex.unlock();
 
+    bool captureScreen = false;
+
     for (frameCounter = 0; !glfwWindowShouldClose(window); frameCounter++)
     {
+        // this if, and the capturescreen variable, are necessary for screenshots to be 100% correct.
+        if (toRecord > 0) {
+          captureScreen = true;
+          --toRecord;
+        }
         drawTimer->sleep(true);
 
         syncMutex.lock();
@@ -306,16 +313,15 @@ void Canvas::draw()
         }
         objectMutex.unlock();
 
-        if (toRecord > 0) {
+        if (captureScreen) {
           // Update our screenBuffer copy with the default framebuffer
+          screenBufferMutex.lock();
           glViewport(0,0,winWidth*scaling,winHeight*scaling);
           glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-          screenBufferMutex.lock();
           glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
           screenBufferMutex.unlock();
-          // glFlush(); // this should hopefully fix the lines in screenshot() bug. If not here, one line up.
           screenShot();
-          --toRecord;
+          captureScreen = false;
         }
       
         // Update Screen
@@ -530,14 +536,13 @@ void Canvas::handleIO() {
   #endif
 }
 
-void Canvas::init(int xx, int yy, int ww, int hh, unsigned int b, std::string title, ColorFloat backgroundColor, Background * background, double timerLength) {
+void Canvas::init(int xx, int yy, int ww, int hh, std::string title, ColorFloat backgroundColor, Background * background, double timerLength) {
     ++openCanvases;
 
     if (ww == -1)
       ww = 1.2*Canvas::getDisplayHeight();
     if (hh == -1)
       hh = 0.75*ww;
-    b = ww*hh*2;
 
     winTitle = title;
     winWidth = ww, winHeight = hh;

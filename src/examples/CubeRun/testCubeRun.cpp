@@ -72,7 +72,7 @@ void decreaseX() {
 }
 
 float genXDelta(Cube * obstacle){
-    float num;
+    float num = 0;
     if(obstacle->getCenterZ() > -4000.0){
         num = (rand() % 101) / 100.0 - 0.5;      // generate random number between -0.5 and 0.5
     }

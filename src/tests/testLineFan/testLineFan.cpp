@@ -35,13 +35,11 @@ void lineFanFunction(Canvas& can, int t) {
         #pragma omp parallel num_threads(t)
         {
             can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
-            int a, b, c, d, red, green, blue;
+            int a, b, red, green, blue;
             double angle, offset = omp_get_thread_num() * ARC * 180 / PI;
             angle = offset + can.getReps();
             a = can.getWindowWidth() / 2 * (1 + sin(angle));
             b = can.getWindowHeight() / 2 * (1 + cos(angle));
-            c = can.getWindowWidth() / 2 * (1 - sin(angle));
-            d = can.getWindowHeight() / 2 * (1 - cos(angle));
             red = (a + can.getReps()) % NUM_COLORS;
             green = (b + can.getReps()) % NUM_COLORS;
             blue = (a * b + can.getReps()) % NUM_COLORS;

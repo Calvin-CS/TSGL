@@ -149,7 +149,7 @@ protected:
     static void  errorCallback(int error, const char* string);          // Display where an error is coming from
     void         glDestroy();                                           // Destroys the GL and GLFW things that are specific for this canvas
     void         init(int xx,int yy,int ww,int hh,
-                   unsigned int b, std::string title, 
+                   std::string title, 
                    ColorFloat backgroundColor, Background * background, 
                    double timerLength);                                 // Method for initializing the canvas
     void         initBackground(Background * background, 

@@ -146,7 +146,7 @@ void langtonRainbowFunction(Canvas& can) {
     farm.addAnt(0,-R,MAX_COLOR,0,MAX_COLOR,3);
     farm.setShading(true);
     for (int j = 0; j < 4; j++)
-      farm.ants[j]->setAlpha(64);
+      farm.ants[j]->setAlpha(64*3);
 
     while (can.isOpen()) {
         can.sleep();  //Removed the timer and replaced it with an internal timer in the Canvas class

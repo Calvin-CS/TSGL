@@ -313,8 +313,6 @@ GLfloat Line::getFirstEndpointZ() {
         attribMutex.unlock();
         return ez1;
     }
-    float cosYaw = cos(myCurrentYaw * PI / 180);
-    float sinYaw = sin(myCurrentYaw * PI / 180);
     float cosPitch = cos(myCurrentPitch * PI / 180);
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
@@ -400,8 +398,6 @@ GLfloat Line::getSecondEndpointZ() {
         attribMutex.unlock();
         return ez2;
     }
-    float cosYaw = cos(myCurrentYaw * PI / 180);
-    float sinYaw = sin(myCurrentYaw * PI / 180);
     float cosPitch = cos(myCurrentPitch * PI / 180);
     float sinPitch = sin(myCurrentPitch * PI / 180);
     float cosRoll = cos(myCurrentPitch * PI / 180);
