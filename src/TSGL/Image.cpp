@@ -200,6 +200,20 @@ void Image::setAlpha(float alpha) {
     attribMutex.unlock();
 }
 
+/*!
+ * \brief Gets the dimensions of an image
+ * \details Loads the header of a .png, .jpeg, or .bmp image to read their dimensions.
+ *   \param filename The file name of the picture.
+ *   \param width A reference variable for holding the width of the picture.
+ *   \param height A reference variable for holding the height of the picture.
+ * \return The texture that created from the loaded image.
+ */
+void Image::getFileResolution(std::string filename, int &width, int &height) {
+    int w = 0, h = 0;
+    stbi_info(filename.c_str(), &w, &h, 0);
+    width = w; height = h;
+}
+
 Image::~Image() { 
     glDeleteTextures(1, &myTexture);
     stbi_image_free(data); 

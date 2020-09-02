@@ -81,7 +81,7 @@ void spectrogramFunction(Canvas& can, std::string fname) {
 int main(int argc, char* argv[]) {
     std::string fname = argc > 1 ? argv[1] : "./assets/pics/colorful_cars.jpg";
     int w, h;
-    TextureHandler::getDimensions(fname,w,h);
+    Image::getFileResolution(fname,w,h);
     Canvas c(-1, Canvas::getDisplayHeight()-h, w, h ,"Spectrogram");
     c.run(spectrogramFunction, fname);
 }

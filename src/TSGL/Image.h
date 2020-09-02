@@ -9,7 +9,6 @@
 
 #include "Drawable.h"           // For extending our Drawable object
 #include <stb/stb_image.h>
-// #include "TextureHandler.h"
 #include "TsglAssert.h"      // For unit testing purposes
 
 namespace tsgl {
@@ -25,7 +24,6 @@ namespace tsgl {
  */
 class Image : public Drawable {
  private:
-    // TextureHandler myTH;
     unsigned char * data = 0;
     GLfloat myWidth, myHeight;
     GLint pixelWidth, pixelHeight;
@@ -63,6 +61,8 @@ class Image : public Drawable {
     GLint getPixelHeight() { return pixelHeight; }
 
     GLint getPixelWidth() { return pixelWidth; }
+
+    static void getFileResolution(std::string filename, int &width, int &height);
 
     ~Image();
 };

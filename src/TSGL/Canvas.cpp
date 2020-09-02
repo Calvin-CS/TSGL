@@ -4,9 +4,13 @@
 // Do this:
 //   #define STB_IMAGE_IMPLEMENTATION
 // before you include this file in *one* C or C++ file to create the implementation.
-// If TextureHandler is no longer useful, uncomment the two lines below.
-// #define STB_IMAGE_IMPLEMENTATION
-// #include "stb/stb_image.h"
+  #ifndef STB_DEFINE
+    #define STB_IMAGE_WRITE_IMPLEMENTATION
+    #include "stb/stb_image_write.h"
+    #define STB_IMAGE_IMPLEMENTATION
+    #include "stb/stb_image.h"
+    #define STB_DEFINE
+  #endif
 
 namespace tsgl {
 
@@ -947,7 +951,17 @@ void Canvas::screenShot() {
     sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
 
     screenBufferMutex.lock();
-    loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
+    // loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
+    for (int j = 0; j < winHeight - (winHeight / 2); j++) {
+        for (int i = 0; i <  3 * winWidthPadded; i++) {
+            int s1 =  3 * winWidthPadded * j + i;
+            int s2 =  3 * winWidthPadded * (winHeight - 1 - j) + i;  // This needs to be height *MINUS ONE* minus j
+            char tmp = screenBuffer[s1];
+            screenBuffer[s1] = screenBuffer[s2];
+            screenBuffer[s2] = tmp;
+        }
+    }
+    stbi_write_png(filename, winWidthPadded, winHeight, 3, screenBuffer, 0);
     screenBufferMutex.unlock();
 }
 

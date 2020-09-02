@@ -39,7 +39,6 @@
 #include "Text.h"           // Our own class for drawing text
 #include "Timer.h"          // Our own timer for steady FPS
 #include "Triangle.h"       // Our own class for drawing triangles
-#include "TextureHandler.h" // Currently used for screenshots, might change this
 #include "Util.h"           // Needed constants and has cmath for performing math operations
 
 #include "Shader.h"
@@ -100,7 +99,6 @@ protected:
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
-    TextureHandler  loader;                                             // The TextureHandler that holds all our already loaded textures
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Background *    myBackground;                                       // Pointer to the Background drawn each frame

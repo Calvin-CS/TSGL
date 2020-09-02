@@ -29,7 +29,6 @@ public:
 private:
 	ColorInt randColor();
 	int randIndex();
-	TextureHandler loader;
 	void drawArrow(int x, int y);
 	Rectangle * makeRec(int index);
 	static Text * dataLabel;

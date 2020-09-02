@@ -57,7 +57,7 @@ void blurImageFunction(Canvas& can, std::string fpath, int threads) {
 int main(int argc, char* argv[]) {
   int w, h, t = (argc > 1) ? atoi(argv[1]) : omp_get_num_procs();
   std::string fname = (argc > 2) ? argv[2] : "./assets/pics/HDR_landscape.jpg";
-  TextureHandler::getDimensions(fname,w,h);
+  Image::getFileResolution(fname,w,h);
   w*=0.6;
   h*=0.6;
   printf("%d, %d\n", w, h);
