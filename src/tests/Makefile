@@ -11,6 +11,7 @@ SUBDIRS_TO_BUILD := test2Dvs3D \
 			testBackground \
  			testBlurImage \
  			testCalcPi \
+			testCamera \
 			testCircle \
  			testColorWheel \
 			testConcavePolygon \

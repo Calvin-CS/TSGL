@@ -206,7 +206,6 @@ void Image::setAlpha(float alpha) {
  *   \param filename The file name of the picture.
  *   \param width A reference variable for holding the width of the picture.
  *   \param height A reference variable for holding the height of the picture.
- * \return The texture that created from the loaded image.
  */
 void Image::getFileResolution(std::string filename, int &width, int &height) {
     int w = 0, h = 0;

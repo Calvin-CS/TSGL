@@ -41,6 +41,7 @@
 #include "Triangle.h"       // Our own class for drawing triangles
 #include "Util.h"           // Needed constants and has cmath for performing math operations
 
+#include "Camera.h"
 #include "Shader.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -94,6 +95,7 @@ protected:
     bool        atiCard;                                                // Whether the vendor of the graphics card is ATI
     std::mutex      backgroundMutex;                                    // Mutex for myBackground
     voidFunction    boundKeys    [(GLFW_KEY_LAST+1)*2];                 // Array of function objects for key binding
+    Camera*         camera;
     bool            defaultBackground;                                  // Boolean indicating whether myBackground has been set by an external source
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
@@ -162,7 +164,6 @@ protected:
     static void  scrollCallback(GLFWwindow* window, double xpos,
                    double ypos);                                        // GLFW callback for scrolling
     static void  setDrawBuffer(int buffer);                             // Sets the buffer used for drawing
-    void         setupCamera();                                         // Setup the 2D camera for smooth rendering
   #ifdef __APPLE__
     static void* startDrawing(void* cPtr);
   #else
@@ -192,6 +193,8 @@ public:
     virtual Background * getBackground();
 
     ColorFloat getBackgroundColor();
+
+    Camera * getCamera() { return camera; }
 
     static int getDisplayHeight();
 

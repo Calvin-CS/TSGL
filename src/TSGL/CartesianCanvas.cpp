@@ -106,8 +106,7 @@ void CartesianCanvas::recomputeDimensions(Decimal xMin, Decimal yMin, Decimal xM
     cartHeight = maxY - minY;
     pixelWidth = cartWidth / (getWindowWidth() - 1);
     pixelHeight = cartHeight / (getWindowHeight() - 1);  //Minor hacky fix
-    backgroundMutex.lock();
-    backgroundMutex.unlock();
+    camera->setPosition((float) (maxX + minX) / 2, (float) (maxY + minY) / 2, ((float)cartHeight / 2) / tan(glm::pi<float>()/6));
 }
 
 /*! \brief Activates the corresponding Shader for a given Drawable.
@@ -154,8 +153,7 @@ void CartesianCanvas::selectShaders(unsigned int sType) {
     }
     
     glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)cartWidth/(float)cartHeight, 0.1f, 1000.0f);
-    glm::mat4 view          = glm::mat4(1.0f);
-    view  = glm::translate(view, glm::vec3((float) (maxX + minX) / -2, (float) (maxY + minY) / -2, -(((float)cartHeight / 2) / tan(glm::pi<float>()/6))));
+    glm::mat4 view = camera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
 
     glUniformMatrix4fv(glGetUniformLocation(program->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));

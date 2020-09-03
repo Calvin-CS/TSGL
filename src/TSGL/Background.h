@@ -1,5 +1,5 @@
 /*
- * Background.h extends Drawable and provides a class for drawing TSGL primitives procedurally onto a background.
+ * Background.h provides a class for drawing TSGL primitives procedurally onto a background.
  */
 
 #ifndef BACKGROUND_H_

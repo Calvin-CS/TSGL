@@ -127,6 +127,7 @@ Canvas::Canvas(int x, int y, int width, int height, std::string title, ColorFloa
 Canvas::~Canvas() {
     // Free our pointer memory
     delete drawTimer;
+    delete camera;
     delete [] screenBuffer;
     if (defaultBackground) {
       delete myBackground;
@@ -582,6 +583,7 @@ void Canvas::init(int xx, int yy, int ww, int hh, std::string title, ColorFloat 
     myBackground = nullptr;
 
     drawTimer = new Timer((timerLength > 0.0f) ? timerLength : FRAME);
+    camera = new Camera(glm::vec3(0.0f, 0.0f, (winHeight / 2) / tan(glm::pi<float>()/6)),glm::vec3(0.0f,1.0f,0.0f),glm::vec3(0.0f,0.0f,0.0f));
 
     for (int i = 0; i <= GLFW_KEY_LAST * 2 + 1; i++)
         boundKeys[i++] = nullptr;
@@ -1016,24 +1018,6 @@ void Canvas::setShowFPS(bool b) {
     showFPS = b;
 }
 
-void Canvas::setupCamera() {
-//     // Set up camera positioning
-//     // Note: (winWidth-1) is a dark voodoo magic fix for some camera issues
-//     float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
-//       -(winWidth-1) / 2.0f, (winHeight) / 2.0f, -(winHeight) / 2.0f, 1 };
-// //    float viewF[] = { 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0,
-// //      -(winWidth-1) / 2.0f, (winHeight+0.5f) / 2.0f, -(winHeight-0.5f) / 2.0f, 1 };
-//     glUniformMatrix4fv(uniView, 1, GL_FALSE, &viewF[0]);
-
-//     // Set up camera zooming
-//     float projF[] = { 1.0f / aspect, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.0f, -1, 0, 0, -0.02f, 0 };
-//     glUniformMatrix4fv(uniProj, 1, GL_FALSE, &projF[0]);
-
-//     // Set up camera transformation
-//     float modelF[] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-//     glUniformMatrix4fv(uniModel, 1, GL_FALSE, &modelF[0]);
-}
-
  /*!
   * \brief Sleeps the calling thread to sync with the Canvas.
   * \details Tells the calling thread to sleep until the Canvas' drawTimer expires.
@@ -1167,8 +1151,7 @@ void Canvas::selectShaders(unsigned int sType) {
     uniProj = glGetUniformLocation(program->ID, "projection");
 
     glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)winWidth/(float)winHeight, 0.1f, 1000.0f);
-    glm::mat4 view          = glm::mat4(1.0f);
-    view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -((winHeight / 2) / tan(glm::pi<float>()/6))));
+    glm::mat4 view = camera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
 
     glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(projection));

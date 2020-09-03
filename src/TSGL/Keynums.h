@@ -147,12 +147,13 @@ enum Key {
 };
 
 /*! \brief Enum for keyboard key / mouse button states.
- *  \details Action is an enum for whether a keyboard / mouse button is pressed or released.
- *  \note These are directly mapped to GLFW's integer definitions GLFW_PRESS and GLFW_RELEASE.
+ *  \details Action is an enum for whether a keyboard / mouse button is pressed, released, or held until it repeats.
+ *  \note These are directly mapped to GLFW's integer definitions GLFW_PRESS, GLFW_RELEASE, and GLFW_REPEAT.
  */
 enum Action {
     TSGL_PRESS          = GLFW_PRESS,
-    TSGL_RELEASE        = GLFW_RELEASE
+    TSGL_RELEASE        = GLFW_RELEASE,
+    TSGL_REPEAT         = GLFW_REPEAT
 };
 
 }
