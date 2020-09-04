@@ -30,6 +30,8 @@ CartesianBackground::CartesianBackground(GLint width, GLint height, Decimal xMin
     myCartHeight = yMax - yMin;
     pixelWidth = myCartWidth / (myWidth - 1);
     pixelHeight = myCartHeight / (myHeight - 1);  //Minor hacky fix
+    vertices[0]  = vertices[11] = vertices[21] = vertices[10] = vertices[26]  = vertices[20] = -0.5 * ((myCartHeight / 2) / tan(glm::pi<float>()/6) + myWorldZ) / ((myCartHeight / 2) / tan(glm::pi<float>()/6)); // x + y
+    vertices[5] = vertices[1] = vertices[15] = vertices[6] = vertices[25] = vertices[16] = 0.5 * ((myCartHeight / 2) / tan(glm::pi<float>()/6) + myWorldZ) / ((myCartHeight / 2) / tan(glm::pi<float>()/6)); // x + y
     attribMutex.unlock();
 }
 
@@ -76,7 +78,7 @@ void CartesianBackground::draw() {
     selectShaders(TEXTURE_SHADER_TYPE);
 
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3((float) -(myXMax + myXMin) / -2, (float) -(myYMax + myYMin) / -2, 0));
+    model = glm::translate(model, glm::vec3((float) (myXMax + myXMin) / 2, (float) (myYMax + myYMin) / 2, 0));
     model = glm::scale(model, glm::vec3((float)myCartWidth, (float)myCartHeight, 1));
 
     unsigned int modelLoc = glGetUniformLocation(textureShader->ID, "model");
@@ -84,6 +86,8 @@ void CartesianBackground::draw() {
 
     unsigned int alphaLoc = glGetUniformLocation(textureShader->ID, "alpha");
     glUniform1f(alphaLoc, 1.0f);
+
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     // check for new pixels being drawn
     pixelBufferMutex.lock();
@@ -122,7 +126,7 @@ void CartesianBackground::draw() {
     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
     glm::mat4 view          = glm::mat4(1.0f);
-    view  = glm::translate(view, glm::vec3(0, 0, -(((float)myCartHeight / 2) / tan(glm::pi<float>()/6))));
+    view  = glm::translate(view, glm::vec3(0, 0, (((float)myCartHeight / 2) / tan(glm::pi<float>()/6))));
 
     glUniformMatrix4fv(glGetUniformLocation(textureShader->ID, "view"), 1, GL_FALSE, &view[0][0]);
 
@@ -311,9 +315,8 @@ void CartesianBackground::selectShaders(unsigned int sType) {
         program->use();
     }
      
-    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)myCartWidth/(float)myCartHeight, 0.1f, 1000.0f);
-    glm::mat4 view          = glm::mat4(1.0f);
-    view  = glm::translate(view, glm::vec3((float) (myXMax + myXMin) / -2, (float) (myYMax + myYMin) / -2, -(((float)myCartHeight / 2) / tan(glm::pi<float>()/6))));
+    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)myCartWidth/(float)myCartHeight, 0.1f, 5000.0f);
+    glm::mat4 view = myCamera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
 
     glUniformMatrix4fv(glGetUniformLocation(program->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
@@ -322,8 +325,8 @@ void CartesianBackground::selectShaders(unsigned int sType) {
 }
 
  /*!
-  * \brief Zoom the CartesianCanvas with a given center.
-  * \details This function will re-center the CartesianCanvas at the given coordinates, then zoom with
+  * \brief Zoom the CartesianBackground with a given center.
+  * \details This function will re-center the CartesianBackground at the given coordinates, then zoom with
   *   respect to the given scale.
   *   \param x The coordinate to re-center the screen on.
   *   \param y The coordinate to re-center the screen on.
@@ -342,12 +345,14 @@ void CartesianBackground::zoom(Decimal x, Decimal y, Decimal scale) {
     myCartHeight = newHeight;
     pixelWidth = myCartWidth / (myWidth - 1);
     pixelHeight = myCartHeight / (myHeight - 1);  //Minor hacky fix
+    vertices[0]  = vertices[11] = vertices[21] = vertices[10] = vertices[26]  = vertices[20] = -0.5 * ((myCartHeight / 2) / tan(glm::pi<float>()/6) + myWorldZ) / ((myCartHeight / 2) / tan(glm::pi<float>()/6)); // x + y
+    vertices[5] = vertices[1] = vertices[15] = vertices[6] = vertices[25] = vertices[16] = 0.5 * ((myCartHeight / 2) / tan(glm::pi<float>()/6) + myWorldZ) / ((myCartHeight / 2) / tan(glm::pi<float>()/6)); // x + y
     attribMutex.unlock();
 }
 
  /*!
-  * \brief Zoom the CartesianCanvas with the given bounding (Cartesian) coordinates.
-  * \details This function will zoom the CartesianCanvas with respect to the given bounding coordinates.
+  * \brief Zoom the CartesianBackground with the given bounding (Cartesian) coordinates.
+  * \details This function will zoom the CartesianBackground with respect to the given bounding coordinates.
   *   \param x1 The left Cartesian bound.
   *   \param y1 The bottom Cartesian bound.
   *   \param x2 The right Cartesian bound.

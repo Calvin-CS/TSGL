@@ -40,10 +40,11 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
     }
     pixelBufferMutex.unlock();
 
+    myWorldZ = 4000;
     vertices = new GLfloat[30];
-    vertices[0]  = vertices[11] = vertices[21] = vertices[10] = vertices[26]  = vertices[20] = -0.5; // x + y
-    vertices[5] = vertices[1] = vertices[15] = vertices[6] = vertices[25] = vertices[16] = 0.5; // x + y
-    vertices[2] = vertices[7] = vertices[12] = vertices[17] = vertices[22] = vertices[27] = 0; // z
+    vertices[0]  = vertices[11] = vertices[21] = vertices[10] = vertices[26]  = vertices[20] = -0.5 * ((myHeight / 2) / tan(glm::pi<float>()/6) + myWorldZ) / ((myHeight / 2) / tan(glm::pi<float>()/6)); // x + y
+    vertices[5] = vertices[1] = vertices[15] = vertices[6] = vertices[25] = vertices[16] = 0.5 * ((myHeight / 2) / tan(glm::pi<float>()/6) + myWorldZ) / ((myHeight / 2) / tan(glm::pi<float>()/6)); // x + y
+    vertices[2] = vertices[7] = vertices[12] = vertices[17] = vertices[22] = vertices[27] = -myWorldZ; // z
     vertices[3]  = vertices[13]  = vertices[14] = vertices[23] = vertices[24] = vertices[29] = 0.0; // texture coord x + y
     vertices[4] = vertices[8] = vertices[9] = vertices[18] = vertices[19] = vertices[28] = 1.0; // texture coord x + y
     attribMutex.unlock();
@@ -56,7 +57,7 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
  *  \param textureS Pointer to a shader for texture rendering.
  *  \param window GLFWwindow * within whose context the framebuffers will be initialized.
  */
-void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwindow * window) {
+void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, Camera * camera, GLFWwindow * window) {
     attribMutex.lock();
     glfwMakeContextCurrent(window);
     // configure MSAA framebuffer
@@ -117,7 +118,8 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwi
 
     shapeShader = shapeS;
     textShader = textS;
-    textureShader = textureS;    
+    textureShader = textureS;  
+    myCamera = camera;  
     complete = true;
     glfwMakeContextCurrent(0);
     attribMutex.unlock();
@@ -137,12 +139,12 @@ void Background::draw() {
     glBindFramebuffer(GL_FRAMEBUFFER, multisampledFBO);
     glEnable(GL_DEPTH_TEST);
 
+    attribMutex.lock();
     if (toClear) {
-        attribMutex.lock();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         toClear = false;
-        attribMutex.unlock();
     }
+    attribMutex.unlock();
 
     drawableMutex.lock();
     for (unsigned int i = 0; i < myDrawables->size(); i++)
@@ -173,6 +175,8 @@ void Background::draw() {
 
     unsigned int alphaLoc = glGetUniformLocation(textureShader->ID, "alpha");
     glUniform1f(alphaLoc, 1.0f);
+
+    glClear(GL_DEPTH_BUFFER_BIT);
 
     // check for new pixels being drawn
     pixelBufferMutex.lock();
@@ -263,9 +267,8 @@ void Background::selectShaders(unsigned int sType) {
         program->use();
     }
      
-    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)myWidth/(float)myHeight, 0.1f, 1000.0f);
-    glm::mat4 view          = glm::mat4(1.0f);
-    view  = glm::translate(view, glm::vec3(0.0f, 0.0f, -((myHeight / 2) / tan(glm::pi<float>()/6))));
+    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)myWidth/(float)myHeight, 0.1f, 5000.0f);
+    glm::mat4 view = myCamera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
 
     glUniformMatrix4fv(glGetUniformLocation(program->ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));

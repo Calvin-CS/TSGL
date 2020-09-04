@@ -10,7 +10,10 @@
 using namespace tsgl;
 
 void cameraFunction(Canvas& can) {
+    Background * bg = can.getBackground();
     Camera * camera = can.getCamera();
+
+    bg->drawSquare(0, 0, 0, can.getWindowHeight(), 0,0,0, RED);
 
     ColorFloat colors[8] = { ColorFloat(1,0,0,1), ColorFloat(0,1,0,1),
                              ColorFloat(0,0,1,1), ColorFloat(1,1,0,1),
@@ -18,6 +21,9 @@ void cameraFunction(Canvas& can) {
                              ColorFloat(0.25,1,0.25,1), ColorFloat(0.25,0.25,1,1)};
     Cube * cube = new Cube(0,0,0,200,0,0,0,colors);
     can.add(cube);
+
+    Square * square = new Square(250,250,-250,100,0,0,0,BLUE);
+    can.add(square);
 
     can.bindToButton(TSGL_RIGHT, TSGL_PRESS, [&camera]() {
         camera->moveRight(25);

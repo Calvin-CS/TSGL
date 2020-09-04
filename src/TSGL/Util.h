@@ -172,6 +172,20 @@ inline float randfloat(int divisor = 10000) {
     return (float) saferand(0, divisor) / divisor;
 }
 
+/*!
+ * \brief Calculates distance between two points in 3D space.
+ * \details Applies the distance formula to the corresponding parameters.
+ * \param x1 x-coordinate of the first point.
+ * \param y1 y-coordinate of the first point.
+ * \param z1 z-coordinate of the first point.
+ * \param x2 x-coordinate of the second point.
+ * \param y2 y-coordinate of the second point.
+ * \param z2 z-coordinate of the second point.
+ */
+inline float distanceBetween(float x1, float y1, float z1, float x2, float y2, float z2) {
+  return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2) + pow (z2 - z1, 2));
+}
+
 }
 
 #endif /* SRC_TSGL_UTIL_H_ */

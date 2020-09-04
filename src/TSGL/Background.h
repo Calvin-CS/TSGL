@@ -5,7 +5,8 @@
 #ifndef BACKGROUND_H_
 #define BACKGROUND_H_
 
-#include "Drawable.h"       // For extending our Shape object
+#include "Camera.h"
+
 #include "Array.h"          // Our own array for buffering drawing operations
 #include "Arrow.h"
 #include "Circle.h"
@@ -33,12 +34,15 @@ namespace tsgl {
 class Background {
 protected:
     GLint myWidth, myHeight, myWidthPadded;
+    GLfloat myWorldZ;
 
     GLuint multisampledTexture, intermediateTexture;
     GLuint multisampledFBO, intermediateFBO;
     GLuint RBO;
 
     Array<Drawable*> * myDrawables;
+
+    Camera * myCamera;
 
     Shader * textShader;
     Shader * shapeShader;
@@ -65,11 +69,11 @@ protected:
 public:
     Background(GLint width, GLint height, const ColorFloat &c = WHITE);
 
-    virtual void init(Shader * shapeS, Shader * textS, Shader * textureS, GLFWwindow * window);
+    virtual void init(Shader * shapeS, Shader * textS, Shader * textureS, Camera * camera, GLFWwindow * window);
 
     virtual bool isInitialized() { return complete; }
 
-    virtual void clear() { toClear = true; }
+    virtual void clear() { attribMutex.lock(); toClear = true; attribMutex.unlock(); }
 
     virtual void draw(); 
 

@@ -152,7 +152,7 @@ void CartesianCanvas::selectShaders(unsigned int sType) {
         program->use();
     }
     
-    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)cartWidth/(float)cartHeight, 0.1f, 1000.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)cartWidth/(float)cartHeight, 0.1f, 5000.0f);
     glm::mat4 view = camera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
 

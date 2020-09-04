@@ -294,13 +294,14 @@ void Canvas::draw()
         objectMutex.lock();
         if (objectBuffer.size() > 0) {
           // sort between opaques and transparents and then sort by center z. depth buffer takes care of the rest. not perfect, but good.
-          std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [](Drawable * a, Drawable * b)->bool {
+          std::stable_sort(objectBuffer.begin(), objectBuffer.end(), [this](Drawable * a, Drawable * b)->bool {
             if (a->getAlpha() == 1.0 && b->getAlpha() != 1.0)
               return true;
             else if (a->getAlpha() != 1.0 && b->getAlpha() == 1.0)
               return false;
             else
-              return (a->getCenterZ() < b->getCenterZ());
+              return (distanceBetween(a->getCenterX(), a->getCenterY(), a->getCenterZ(), camera->getPositionX(), camera->getPositionY(), camera->getPositionZ())
+                    > distanceBetween(b->getCenterX(), b->getCenterY(), b->getCenterZ(), camera->getPositionX(), camera->getPositionY(), camera->getPositionZ()));
           });
           for (unsigned int i = 0; i < objectBuffer.size(); i++) {
             Drawable* d = objectBuffer[i];
@@ -690,7 +691,7 @@ void Canvas::initBackground(Background * background, ColorFloat bgcolor) {
       myBackground = background;
       background->setClearColor(bgcolor);
     }
-    myBackground->init(shapeShader, textShader, textureShader, window);
+    myBackground->init(shapeShader, textShader, textureShader, camera, window);
     backgroundMutex.unlock();
 }
 
@@ -985,7 +986,7 @@ void Canvas::setBackground(Background * background, bool previouslySet) {
     myBackground = background;
     if (!previouslySet) {
       windowMutex.lock();
-      background->init(shapeShader, textShader, textureShader, window);
+      background->init(shapeShader, textShader, textureShader, camera, window);
       windowMutex.unlock();
     }
   }
@@ -1150,7 +1151,7 @@ void Canvas::selectShaders(unsigned int sType) {
     uniView = glGetUniformLocation(program->ID, "view");
     uniProj = glGetUniformLocation(program->ID, "projection");
 
-    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)winWidth/(float)winHeight, 0.1f, 1000.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)winWidth/(float)winHeight, 0.1f, 5000.0f);
     glm::mat4 view = camera->getViewMatrix();
     glm::mat4 model = glm::mat4(1.0f);
 
