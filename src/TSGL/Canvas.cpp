@@ -949,6 +949,10 @@ void Canvas::run(void (*myFunction)(Canvas&, int, std::string, bool), int i, std
   start(); myFunction(*this, i, s, b); wait();
 }
 
+void Canvas::run(void (*myFunction)(Canvas&, int, char**), int argc, char* argv[]) {
+  start(); myFunction(*this, argc, argv); wait();
+}
+
 void Canvas::screenShot() {
     char filename[25];
     sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root

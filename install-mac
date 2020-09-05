@@ -66,6 +66,10 @@ brew install freetype
 echo "Installing Doxygen..."
 brew install doxygen
 
+#cxxopts
+echo "Installing cxxopts..."
+brew install cxxopts
+
 #g++
 gVers=$(g++ -v 2>&1)
 gVeres=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
@@ -91,7 +95,7 @@ if grep --quiet clang check.txt; then
 	sudo ln -s /usr/local/Cellar/gcc/10.2.0/bin/gcc-10 /usr/local/bin/gcc
 	sudo ln -s /usr/local/Cellar/gcc/10.2.0/bin/g++-10 /usr/local/bin/g++
 else
-	echo "Installing g++...this may take a while!2"
+	echo "Installing g++...this may take a while!"
 	brew install gcc
   sudo rm /usr/local/bin/gcc
   sudo rm /usr/local/bin/g++

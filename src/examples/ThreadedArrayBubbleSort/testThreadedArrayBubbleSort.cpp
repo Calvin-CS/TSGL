@@ -203,7 +203,8 @@ int main(int argc, char* argv[]){
         sizeOfArrays = 10;
     }
 
-    Canvas c(0, -1, 1820, 620, "Threaded Array Bubble Sort");
-    c.setBackgroundColor(BLACK);
+    printf("Use the up and down arrow keys to speed up and slow down the animation, respectively.\n");
+
+    Canvas c(0, -1, Canvas::getDisplayWidth(), 620, "Threaded Array Bubble Sort", BLACK);
     c.run(sortVisualizationFunction, numberOfThreads, sizeOfArrays);
 }

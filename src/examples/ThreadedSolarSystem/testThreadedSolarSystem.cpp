@@ -97,7 +97,6 @@ void ssFunction(Canvas& can) {
 }
 
 int main(int argc, char* argv[]) {
-    Canvas c(0, -1, Canvas::getDisplayWidth(), 620, "Solar System");
-    c.setBackgroundColor(BLACK);
+    Canvas c(0, -1, Canvas::getDisplayWidth(), 620, "Solar System", BLACK);
     c.run(ssFunction);
 }

@@ -258,6 +258,8 @@ public:
 
     virtual void run(void (*myFunction)(Canvas&, int, std::string, bool), int i, std::string s, bool b);
 
+    virtual void run(void (*myFunction)(Canvas&, int, char**), int argc, char* argv[]);
+
     void setBackground(Background * background, bool previouslySet = false);
 
     void setBackgroundColor(ColorFloat color);

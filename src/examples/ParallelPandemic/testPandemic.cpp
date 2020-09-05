@@ -320,7 +320,6 @@ void pandemicFunction(Canvas& can, int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]){
-    Canvas c(0, -1, 620, 620, "Pandemic Simulation");
-    c.setBackgroundColor(BLACK);
+    Canvas c(0, -1, 620, 620, "Pandemic Simulation", BLACK);
     c.run(pandemicFunction, argc, argv);
 }

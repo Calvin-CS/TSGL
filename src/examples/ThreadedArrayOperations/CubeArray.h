@@ -26,8 +26,6 @@ public:
     CubeArray(float x, float y, float z, GLfloat sideLength, unsigned size, Item dataArray[], unsigned dataArraySize,
                  float yaw, float pitch, float roll, ColorFloat c1, ColorFloat c2);
 
-    // CubeArray(float x, float y, float z, unsigned size, GLfloat sideLength, Item* dataArray, float yaw, float pitch, float roll, ColorFloat c[]);
-
     void draw(Canvas& can);
 
     void update();
@@ -59,21 +57,14 @@ public:
 
     void setTextSize(float size);
 
-
     void changeYawBy(GLfloat yaw);
 
     void changePitchBy(GLfloat pitch);
 
     void changeRollBy(GLfloat roll);
 
-    void visualSplit(unsigned index);
-
-    void visualRegroupAll(float x);
-
     // Operations
     CubeArray operator+ (CubeArray& c2);
-
-    // bool operator==(CubeArray& a2);
     
     virtual ~CubeArray();
 };

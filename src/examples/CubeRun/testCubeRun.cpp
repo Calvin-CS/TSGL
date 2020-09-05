@@ -83,7 +83,7 @@ float genXDelta(Cube * obstacle){
 }
 
 // Main function to run animation and gameplay
-void environmentFunction(Canvas& can) {
+void gameFunction(Canvas& can) {
     srand( time(0) );       // initialize random seed
 
     ColorFloat colorArray[] = {RED, ORANGE, YELLOW, GREEN, BLUE, PURPLE, GRAY, WHITE};
@@ -134,9 +134,6 @@ void environmentFunction(Canvas& can) {
                 if(td->getObstacle()->getCenterZ() >= td->getInitialZ() + (numObstacles * interObstacleDistance) + 500.0){
                     td->resetLocation();
                     xDeltaArray[i] = genXDelta(td->getObstacle());
-                    // scoreArray[0] = scoreArray[0]->setText(std::to_string(can.getFrameNumber()));
-                    // printf(to_string(can.getFrameNumber()) + "\n");
-
                 }
                 // Lose conditions (if player cube collides with obstacle)
                 if(playerCube->getCenterZ() <= td->getObstacle()->getCenterZ() + SIDE_LENGTH and
@@ -163,12 +160,9 @@ void environmentFunction(Canvas& can) {
         delete obstacleArray[i];
     }
     delete scoreText;
-
-    // printf("All objects deleted!\n");
 }
 
 int main(int argc, char* argv[]) {
-    Canvas c(-1, -1, 620, 620, "Cube Run");
-    c.setBackgroundColor(BLACK);
-    c.run(environmentFunction);
+    Canvas c(-1, -1, 620, 620, "Cube Run", BLACK);
+    c.run(gameFunction);
 }
