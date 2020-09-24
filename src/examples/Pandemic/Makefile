@@ -19,7 +19,7 @@ TARGET = testPandemic
 
 # Object files
 ODIR = obj
-_OBJ = Pandemic.o Person.o $(TARGET).o
+_OBJ = Person.o $(TARGET).o
 OBJ = $(patsubst %, $(ODIR)/%, $(_OBJ))
 
 # To create obj directory

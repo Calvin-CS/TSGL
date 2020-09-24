@@ -43,7 +43,7 @@ cxxopts::ParseResult parse(int argc, char* argv[]) {
             ("a, attendance", "include to print out the thread attendance (to see if all threads are running)",
                 cxxopts::value<bool>()->default_value("false"));
 
-        auto results = options.parse(argc, const_cast<const char**&>(argv));
+        auto results = options.parse(argc, argv);
 
         if(results.count("help") || results.count("h")){
             std::cout << options.help({"", "Group"}) << std::endl;
@@ -124,8 +124,9 @@ void pandemicFunction(Canvas& can, int argc, char* argv[]) {
     float max_x = can.getWindowWidth()/2 - personRadius;
     float max_y = can.getWindowHeight()/2 - personRadius - FONT_SIZE;
 
-    // random number generator
-    std::default_random_engine generator;
+    // random number generator, seed, and distributions
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
     std::uniform_int_distribution<int> init_x_distr(-max_x, max_x);
     std::uniform_int_distribution<int> init_y_distr(-max_y, max_y);
     std::uniform_int_distribution<int> move_distr(-20, 20);
@@ -206,6 +207,7 @@ void pandemicFunction(Canvas& can, int argc, char* argv[]) {
                 ++numDays;
                 // Update day number
                 dayText->setText(L"Day " + std::to_wstring(numDays));
+                can.sleepFor(sleepTime);
 
                 //------------------------------------- Parallel Block ------------------------------------------
                 #pragma omp parallel num_threads(numPersons)
@@ -220,8 +222,11 @@ void pandemicFunction(Canvas& can, int argc, char* argv[]) {
                     // No actions apply to people who are dead
                     if(personVec[id]->getStatus() != dead){
                         // Move people
-                        personVec[id]->moveBy(move_distr(generator), move_distr(generator), max_x, max_y);    
-                        can.sleepFor(sleepTime);
+                        personVec[id]->moveBy(move_distr(generator), move_distr(generator), max_x, max_y);
+                        // #ifdef _WIN32
+                       	// can.sleepFor(sleepTime);
+						// #elif __CYGWIN__
+                        // can.sleepFor(sleepTime);
                     
                         // INFECTED
                         if(personVec[id]->getStatus() == infected){
@@ -317,12 +322,15 @@ void pandemicFunction(Canvas& can, int argc, char* argv[]) {
                     }
                     printf("\n");
                 }
+
                 printInfo = false;
             }   // end output
-        }
+
+        }	// end "complete" if
+
+        can.sleep();
+
     }   // end Canvas while loop
-
-
 
     // DEALLOCATION OF OBJECT MEMORY //
     for(int i = 0; i < numPersons; ++i){

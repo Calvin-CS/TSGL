@@ -17,8 +17,8 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
  			Mandelbrot/. \
 			MergeSort/. \
 			NewtonPendulum/. \
+			Pandemic/. \
 			Pong/. \
- 			ParallelPandemic/. \
  			ProducerConsumer/. \
  			ReaderWriter/. \
 			SeaUrchin/. \
