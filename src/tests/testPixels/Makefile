@@ -30,15 +30,15 @@ NOWARN = -Wno-unused-parameter -Wno-unused-function -Wno-narrowing \
 			-Wno-sizeof-array-argument -Wno-sign-compare -Wno-unused-variable
 
 ifeq ($(UNAME), Linux)
-GL_FLAGS := -lGLU -lglut -lGL
+GL_FLAGS := -lGLU   -lGL
 BREW :=
 endif
 ifeq ($(UNAME), CYGWIN_NT-10.0)
-GL_FLAGS := -lGLU -lglut -lGL
+GL_FLAGS := -lGLU   -lGL
 BREW :=
 endif
 ifeq ($(UNAME), Darwin)
-GL_FLAGS := -framework OpenGL -lglut
+GL_FLAGS := -framework OpenGL  
 BREW := -lomp -I"$(brew --prefix libomp)/include" 
 endif
 
