@@ -134,8 +134,14 @@ void CartesianBackground::draw() {
 
     glUniformMatrix4fv(glGetUniformLocation(textureShader->ID, "view"), 1, GL_FALSE, &view[0][0]);
 
-    // render non-MSAA framebuffer's texture to default framebuffer
     glBindTexture(GL_TEXTURE_2D,intermediateTexture);
+
+    // read pixels into buffer for Background::getPixel()
+    readPixelMutex.lock();
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
+    readPixelMutex.unlock();
+
+    // render non-MSAA framebuffer's texture to default framebuffer
     glPixelStorei(GL_UNPACK_ALIGNMENT,4);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
@@ -145,11 +151,6 @@ void CartesianBackground::draw() {
     glBufferData(GL_ARRAY_BUFFER,30*sizeof(float),vertices,GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLES,0,6);
     glEnable(GL_DEPTH_TEST);
-
-    // glViewport(myXMin,myYMin,myCartWidth,myCartHeight);
-    readPixelMutex.lock();
-    glReadPixels(0, 0, framebufferWidthPadded, framebufferHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
-    readPixelMutex.unlock();
 }
 
  /*!

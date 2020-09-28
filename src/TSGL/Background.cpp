@@ -51,13 +51,13 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, Camera
     attribMutex.lock();
     glfwMakeContextCurrent(window);
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
-    int padwidth = framebufferWidth % 4;
+    int padwidth = myWidth % 4;
     if (padwidth > 0)
        padwidth = 4-padwidth;
-    framebufferWidthPadded = framebufferWidth + padwidth;
+    myWidthPadded = myWidth + padwidth;
     readPixelMutex.lock();
-    readPixelBuffer = new uint8_t[framebufferWidthPadded * framebufferHeight * 3];
-    for (int i = 0; i < framebufferWidthPadded * framebufferHeight * 3; ++i) {
+    readPixelBuffer = new uint8_t[myWidthPadded * myHeight * 3];
+    for (int i = 0; i < myWidthPadded * myHeight * 3; ++i) {
       readPixelBuffer[i] = 0;
     }
     readPixelMutex.unlock();
@@ -206,15 +206,21 @@ void Background::draw() {
     glBindFramebuffer(GL_READ_FRAMEBUFFER, multisampledFBO);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, intermediateFBO);
     glBlitFramebuffer(0, 0, myWidth, myHeight, 0, 0, myWidth, myHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-    
+
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     glViewport(0,0,framebufferWidth,framebufferHeight);
 
     glDisable(GL_DEPTH_TEST);
 
-    // render non-MSAA framebuffer's texture to default framebuffer
     glBindTexture(GL_TEXTURE_2D,intermediateTexture);
+
+    // read pixels into buffer for Background::getPixel()
+    readPixelMutex.lock();
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
+    readPixelMutex.unlock();
+
+    // render non-MSAA framebuffer's texture to default framebuffer
     glPixelStorei(GL_UNPACK_ALIGNMENT,4);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
@@ -224,11 +230,6 @@ void Background::draw() {
     glBufferData(GL_ARRAY_BUFFER,30*sizeof(float),vertices,GL_DYNAMIC_DRAW);
     glDrawArrays(GL_TRIANGLES,0,6);
     glEnable(GL_DEPTH_TEST);
-
-    // glViewport(0,0,myWidth,myHeight);
-    readPixelMutex.lock();
-    glReadPixels(0, 0, framebufferWidthPadded, framebufferHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
-    readPixelMutex.unlock();
 }
 
 /*! \brief Activates the corresponding Shader for a given Drawable.
@@ -991,9 +992,9 @@ ColorInt Background::getPixel(float x, float y) {
         return ColorInt(0,0,0,0);
     }
     readPixelMutex.lock();
-    int intX = (int) x * (framebufferWidth / myWidth) + framebufferWidth/2;
-    int intY = (int) y * (framebufferWidth / myWidth) + framebufferHeight/2;
-    int off = 3 * (intY * framebufferWidthPadded + intX);
+    int intX = (int) x + myWidth/2;
+    int intY = (int) y + myHeight/2;
+    int off = 3 * (intY * myWidthPadded + intX);
     ColorInt c = ColorInt(readPixelBuffer[off], readPixelBuffer[off + 1], readPixelBuffer[off + 2], 255);
     readPixelMutex.unlock();
     return c;
@@ -1019,8 +1020,8 @@ Background::~Background() {
     delete [] pixelTextureBuffer;
     delete [] vertices;
     delete myDrawables;
-    glDeleteTextures(1, &intermediateFBO);
-    glDeleteFramebuffers(1, &intermediateTexture);
+    glDeleteTextures(1, &intermediateTexture);
+    glDeleteFramebuffers(1, &intermediateFBO);
     glDeleteTextures(1, &multisampledTexture);
     glDeleteFramebuffers(1, &multisampledFBO);
 }
