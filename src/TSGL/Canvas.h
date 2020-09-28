@@ -98,6 +98,9 @@ protected:
     Camera*         camera;
     bool            defaultBackground;                                  // Boolean indicating whether myBackground has been set by an external source
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
+    GLint           framebufferWidth;
+    GLint           framebufferWidthPadded;
+    GLint           framebufferHeight;
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
     bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
@@ -136,7 +139,6 @@ protected:
     int             winHeight;                                          // Height of the Canvas' window
     std::string     winTitle;                                           // Title of the window
     GLint           winWidth;                                           // Width of the Canvas' window
-    GLint           winWidthPadded;                                     // Window width padded to a multiple of 4 (necessary for taking screenshots)
 
     static bool         glfwIsReady;                                    // Whether or not we have info about our monitor
     static std::mutex   glfwMutex;                                      // Keeps GLFW createWindow from getting called at the same time in multiple threads

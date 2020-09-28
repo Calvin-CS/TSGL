@@ -24,16 +24,6 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
     complete = false;
     newPixelsDrawn = true;
 
-    int padwidth = myWidth % 4;
-    if (padwidth > 0)
-       padwidth = 4-padwidth;
-    myWidthPadded = myWidth + padwidth;
-    readPixelMutex.lock();
-    readPixelBuffer = new uint8_t[myWidthPadded * myHeight * 3];
-    for (int i = 0; i < myWidth * myHeight * 3; ++i) {
-      readPixelBuffer[i] = 0;
-    }
-    readPixelMutex.unlock();
     pixelTextureBuffer = new uint8_t[myWidth * myHeight * 4];
     for (int i = 0; i < myWidth * myHeight * 4; ++i) {
         pixelTextureBuffer[i] = 0;
@@ -60,6 +50,17 @@ Background::Background(GLint width, GLint height, const ColorFloat &clearColor) 
 void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, Camera * camera, GLFWwindow * window) {
     attribMutex.lock();
     glfwMakeContextCurrent(window);
+    glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
+    int padwidth = framebufferWidth % 4;
+    if (padwidth > 0)
+       padwidth = 4-padwidth;
+    framebufferWidthPadded = framebufferWidth + padwidth;
+    readPixelMutex.lock();
+    readPixelBuffer = new uint8_t[framebufferWidthPadded * framebufferHeight * 3];
+    for (int i = 0; i < framebufferWidthPadded * framebufferHeight * 3; ++i) {
+      readPixelBuffer[i] = 0;
+    }
+    readPixelMutex.unlock();
     // configure MSAA framebuffer
     // --------------------------
     glGenFramebuffers(1, &multisampledFBO);
@@ -146,6 +147,8 @@ void Background::draw() {
     }
     attribMutex.unlock();
 
+    glViewport(0,0,myWidth,myHeight);
+
     drawableMutex.lock();
     for (unsigned int i = 0; i < myDrawables->size(); i++)
     {
@@ -206,6 +209,8 @@ void Background::draw() {
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+    glViewport(0,0,framebufferWidth,framebufferHeight);
+
     glDisable(GL_DEPTH_TEST);
 
     // render non-MSAA framebuffer's texture to default framebuffer
@@ -220,9 +225,9 @@ void Background::draw() {
     glDrawArrays(GL_TRIANGLES,0,6);
     glEnable(GL_DEPTH_TEST);
 
-    glViewport(0,0,myWidth,myHeight);
+    // glViewport(0,0,myWidth,myHeight);
     readPixelMutex.lock();
-    glReadPixels(0, 0, myWidthPadded, myHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
+    glReadPixels(0, 0, framebufferWidthPadded, framebufferHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
     readPixelMutex.unlock();
 }
 
@@ -986,9 +991,9 @@ ColorInt Background::getPixel(float x, float y) {
         return ColorInt(0,0,0,0);
     }
     readPixelMutex.lock();
-    int intX = (int) x + myWidth/2;
-    int intY = (int) y + myHeight/2;
-    int off = 3 * (intY * myWidthPadded + intX);
+    int intX = (int) x * (framebufferWidth / myWidth) + framebufferWidth/2;
+    int intY = (int) y * (framebufferWidth / myWidth) + framebufferHeight/2;
+    int off = 3 * (intY * framebufferWidthPadded + intX);
     ColorInt c = ColorInt(readPixelBuffer[off], readPixelBuffer[off + 1], readPixelBuffer[off + 2], 255);
     readPixelMutex.unlock();
     return c;

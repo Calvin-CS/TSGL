@@ -56,6 +56,8 @@ void CartesianBackground::draw() {
         attribMutex.unlock();
     }
 
+    glViewport(0,0,myWidth,myHeight);
+
     drawableMutex.lock();
     for (unsigned int i = 0; i < myDrawables->size(); i++)
     {
@@ -117,6 +119,8 @@ void CartesianBackground::draw() {
     
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+    glViewport(0,0,framebufferWidth,framebufferHeight);
+
     glDisable(GL_DEPTH_TEST);
 
     model = glm::mat4(1.0f);
@@ -142,9 +146,9 @@ void CartesianBackground::draw() {
     glDrawArrays(GL_TRIANGLES,0,6);
     glEnable(GL_DEPTH_TEST);
 
-    glViewport(myXMin,myYMin,myCartWidth,myCartHeight);
+    // glViewport(myXMin,myYMin,myCartWidth,myCartHeight);
     readPixelMutex.lock();
-    glReadPixels(0, 0, myWidthPadded, myHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
+    glReadPixels(0, 0, framebufferWidthPadded, framebufferHeight, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
     readPixelMutex.unlock();
 }
 

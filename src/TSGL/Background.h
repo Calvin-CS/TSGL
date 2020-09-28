@@ -33,7 +33,8 @@ namespace tsgl {
  */
 class Background {
 protected:
-    GLint myWidth, myHeight, myWidthPadded;
+    GLint myWidth, myHeight;
+    GLint framebufferWidth, framebufferHeight, framebufferWidthPadded;
     GLfloat myWorldZ;
 
     GLuint multisampledTexture, intermediateTexture;

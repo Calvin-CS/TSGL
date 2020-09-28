@@ -242,12 +242,6 @@ void Canvas::draw()
     glfwMakeContextCurrent(window);
     // Reset the window
     glfwSetWindowShouldClose(window, GL_FALSE);
-
-    // Get actual framebuffer size and adjust scaling accordingly
-    // NOTE: framebuffer stuff seems purposeless, at least with pure OO on MacOS.
-    int fbw, fbh;
-    glfwGetFramebufferSize(window, &fbw, &fbh);
-    int scaling = round((1.0f*fbw)/winWidth);
     glfwMakeContextCurrent(NULL);
     windowMutex.unlock();
 
@@ -285,11 +279,9 @@ void Canvas::draw()
         backgroundMutex.unlock();
 
         // Scale to window size
-        GLint windowWidth, windowHeight;
-        glfwGetWindowSize(window, &windowWidth, &windowHeight);
-        glViewport(0, 0, windowWidth, windowHeight);
-        winWidth = windowWidth;
-        winHeight = windowHeight;
+        glViewport(0, 0, framebufferWidth, framebufferHeight);
+        // winWidth = windowWidth;
+        // winHeight = windowHeight;
 
         objectMutex.lock();
         if (objectBuffer.size() > 0) {
@@ -322,9 +314,9 @@ void Canvas::draw()
         if (captureScreen) {
           // Update our screenBuffer copy with the default framebuffer
           screenBufferMutex.lock();
-          glViewport(0,0,winWidth*scaling,winHeight*scaling);
+          glViewport(0,0,framebufferWidth,framebufferHeight);
           glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-          glReadPixels(0, 0, winWidthPadded, winHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+          glReadPixels(0, 0, framebufferWidthPadded, framebufferHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
           screenBufferMutex.unlock();
           screenShot();
           captureScreen = false;
@@ -560,17 +552,6 @@ void Canvas::init(int xx, int yy, int ww, int hh, std::string title, ColorFloat 
     syncMutexLocked = 0;
 	  syncMutexOwner = -1;
 
-    int padwidth = winWidth % 4;
-    if (padwidth > 0)
-       padwidth = 4-padwidth;
-    winWidthPadded = winWidth + padwidth;
-    screenBufferMutex.lock();
-    screenBuffer = new uint8_t[3 * (winWidthPadded+1) * winHeight];
-    for (int i = 0; i < 3 * (winWidthPadded+1) * winHeight; ++i) {
-      screenBuffer[i] = 0;
-    }
-    screenBufferMutex.unlock();
-
     started = false;                  // We haven't started the window yet
     monitorX = xx;
     monitorY = yy;
@@ -748,6 +729,19 @@ void Canvas::initWindow() {
     glViewport(0, 0, windowWidth, windowHeight);
     winWidth = windowWidth;
     winHeight = windowHeight;
+
+    glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
+
+    int padwidth = framebufferWidth % 4;
+    if (padwidth > 0)
+       padwidth = 4-padwidth;
+    framebufferWidthPadded = framebufferWidth + padwidth;
+    screenBufferMutex.lock();
+    screenBuffer = new uint8_t[3 * (framebufferWidthPadded+1) * framebufferHeight];
+    for (int i = 0; i < 3 * (framebufferWidthPadded+1) * framebufferHeight; ++i) {
+      screenBuffer[i] = 0;
+    }
+    screenBufferMutex.unlock();
     
     // Get info of GPU and supported OpenGL version
     // printf("Renderer: %s\n", glGetString(GL_RENDERER));
@@ -958,17 +952,17 @@ void Canvas::screenShot() {
     sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
 
     screenBufferMutex.lock();
-    // loader.saveImageToFile(filename, screenBuffer, winWidthPadded, winHeight);
-    for (int j = 0; j < winHeight - (winHeight / 2); j++) {
-        for (int i = 0; i <  3 * winWidthPadded; i++) {
-            int s1 =  3 * winWidthPadded * j + i;
-            int s2 =  3 * winWidthPadded * (winHeight - 1 - j) + i;  // This needs to be height *MINUS ONE* minus j
+    // loader.saveImageToFile(filename, screenBuffer, framebufferWidthPadded, winHeight);
+    for (int j = 0; j < framebufferHeight - (framebufferHeight / 2); j++) {
+        for (int i = 0; i <  3 * framebufferWidthPadded; i++) {
+            int s1 =  3 * framebufferWidthPadded * j + i;
+            int s2 =  3 * framebufferWidthPadded * (framebufferHeight - 1 - j) + i;  // This needs to be height *MINUS ONE* minus j
             char tmp = screenBuffer[s1];
             screenBuffer[s1] = screenBuffer[s2];
             screenBuffer[s2] = tmp;
         }
     }
-    stbi_write_png(filename, winWidthPadded, winHeight, 3, screenBuffer, 0);
+    stbi_write_png(filename, framebufferWidthPadded, framebufferHeight, 3, screenBuffer, 0);
     screenBufferMutex.unlock();
 }
 

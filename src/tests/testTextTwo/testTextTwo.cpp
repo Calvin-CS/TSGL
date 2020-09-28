@@ -28,12 +28,8 @@ void textFunctionTwo(Canvas& can) {
 //Takes command-line arguments for the width and height of the screen
 int main(int argc, char * argv[]) {
     //Width and height
-    int w = (argc > 1) ? atoi(argv[1]) : 1.2f*Canvas::getDisplayHeight();
-    int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w - 300.0f;
-    if(w <= 0 || h <= 0) { //Check the validity of the width and height
-      w = 1.2f*Canvas::getDisplayHeight();
-      h = 0.75f*w;
-    }
+    int w = 960;
+    int h = 420;
     Canvas c(-1, -1, w, h, "More Text on a Canvas");
     c.run(textFunctionTwo);
 }

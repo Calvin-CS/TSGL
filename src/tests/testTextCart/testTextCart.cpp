@@ -35,13 +35,9 @@ void textCartFunction(Cart& can, std::string font) {
 //as well as for the font file for the text
 int main(int argc, char * argv[]) {
     //Width and height
-    int w = (argc > 1) ? atoi(argv[1]) : 1.2f*Canvas::getDisplayHeight();
-    int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w - 300.0f;
+    int w = 960;
+    int h = 420;
     std::string font = "./assets/freefont/FreeSerif.ttf";// argv[3]; //Font
-    if(w <= 0 || h <= 0) {  //Check validity of width and height
-      w = 1.2 * Canvas::getDisplayHeight();
-      h = 0.75 * w;
-    }
     Cart c(-1, -1, w, h, 0, 0, 4, 3, "Text on a Cartesian Canvas");
     c.run(textCartFunction, font);
 }

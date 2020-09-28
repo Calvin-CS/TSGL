@@ -17,37 +17,57 @@ cd src/tests && make                # CD into test directory and call test Makef
 cd ../..							# CD back to main TSGL directory
 
 # RUN TESTS
-run ./$TESTS_PATH/test_specs/test_specs
+# run ./$TESTS_PATH/test_specs/test_specs
 run ./$TESTS_PATH/test2Dvs3D/test2Dvs3D
 run ./$TESTS_PATH/test3DRotation/test3DRotation
 run ./$TESTS_PATH/testAlphaRectangle/testAlphaRectangle
 run ./$TESTS_PATH/testArrows/testArrows
+run ./$TESTS_PATH/testAura/testAura
 run ./$TESTS_PATH/testBackground/testBackground
+run ./$TESTS_PATH/testBlurImage/testBlurImage
+run ./$TESTS_PATH/testCalcPi/testCalcPi 100 4
+run ./$TESTS_PATH/testCamera/testCamera
 run ./$TESTS_PATH/testCircle/testCircle
+run ./$TESTS_PATH/testColorWheel/testColorWheel
 run ./$TESTS_PATH/testConcavePolygon/testConcavePolygon
 run ./$TESTS_PATH/testCone/testCone
 run ./$TESTS_PATH/testConvexPolygon/testConvexPolygon
 run ./$TESTS_PATH/testCube/testCube
 run ./$TESTS_PATH/testCuboid/testCuboid
 run ./$TESTS_PATH/testCylinder/testCylinder
-run ./$TESTS_PATH/testDice/testDice
+# run ./$TESTS_PATH/testDice/testDice
 run ./$TESTS_PATH/testDiorama/testDiorama
 run ./$TESTS_PATH/testEllipse/testEllipse
 run ./$TESTS_PATH/testEllipsoid/testEllipsoid
-# run ./$TESTS_PATH/testGetPixels/testGetPixels
-run ./$TESTS_PATH/testImage/testImage 1200 600                                           #Width, Height
+run ./$TESTS_PATH/testGetPixels/testGetPixels
+run ./$TESTS_PATH/testGradientWheel/testGradientWheel
+run ./$TESTS_PATH/testGraydient/testGraydient
+run ./$TESTS_PATH/testGreyscale/testGreyscale
+run ./$TESTS_PATH/testHighData/testHighData
+run ./$TESTS_PATH/testImage/testImage
+run ./$TESTS_PATH/testImageCart/testImageCart
+run ./$TESTS_PATH/testInverter/testInverter
+run ./$TESTS_PATH/testLineChain/testLineChain
+run ./$TESTS_PATH/testLineFan/testLineFan
 run ./$TESTS_PATH/testLines/testLines
+run ./$TESTS_PATH/testMouse/testMouse
+run ./$TESTS_PATH/testPixels/testPixels
 run ./$TESTS_PATH/testPrism/testPrism
 run ./$TESTS_PATH/testProcedural/testProcedural
-# run ./$TESTS_PATH/testProgressBar/testProgressBar
+run ./$TESTS_PATH/testProgressBar/testProgressBar
+run ./$TESTS_PATH/testProjectiles/testProjectiles
 run ./$TESTS_PATH/testPyramid/testPyramid
 run ./$TESTS_PATH/testRectangle/testRectangle
 run ./$TESTS_PATH/testRegularPolygon/testRegularPolygon
-# run ./$TESTS_PATH/testScreenshot/testScreenshot
+run ./$TESTS_PATH/testScreenshot/testScreenshot
+run ./$TESTS_PATH/testSpectrogram/testSpectrogram
+run ./$TESTS_PATH/testSpectrum/testSpectrum
 run ./$TESTS_PATH/testSphere/testSphere
 run ./$TESTS_PATH/testSquare/testSquare
 run ./$TESTS_PATH/testStar/testStar
-run ./$TESTS_PATH/testText/testText 1200 600                                           	 #Width, Height
+run ./$TESTS_PATH/testText/testText
+run ./$TESTS_PATH/testTextCart/testTextCart
+run ./$TESTS_PATH/testTextTwo/testTextTwo
 run ./$TESTS_PATH/testTransparency/testTransparency
 run ./$TESTS_PATH/testTriangle/testTriangle
 run ./$TESTS_PATH/testTriangleStrip/testTriangleStrip
