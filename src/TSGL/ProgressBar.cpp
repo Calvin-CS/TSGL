@@ -39,7 +39,7 @@ ProgressBar::ProgressBar(float x, float y, float z, float width, float height, f
     vertices[12] = -(myWidth/segs)/2; vertices[13] = myHeight/2; vertices[14] = 0;
     for (int i = 0; i < segs; i++) {
         segBorders[i] = new Polyline(0,0,0,5,vertices,yaw,pitch,roll,BLACK);
-        segRecs[i] = new Rectangle(0,0,0,myWidth/segs,myHeight-2,yaw,pitch,roll,Colors::highContrastColor(i));
+        segRecs[i] = new Rectangle(0,0,0,myWidth/segs,myHeight,yaw,pitch,roll,Colors::highContrastColor(i));
         segRecs[i]->setIsOutlined(false);
     }
 

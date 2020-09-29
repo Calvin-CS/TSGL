@@ -99,7 +99,6 @@ protected:
     bool            defaultBackground;                                  // Boolean indicating whether myBackground has been set by an external source
     Timer*          drawTimer;                                          // Timer to regulate drawing frequency
     GLint           framebufferWidth;
-    GLint           framebufferWidthPadded;
     GLint           framebufferHeight;
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close

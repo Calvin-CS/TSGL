@@ -28,7 +28,7 @@ using namespace tsgl;
  */
 void screenShotFunction(Cart& can) {
     Background * bg = can.getBackground();
-    int xNew = can.getWindowWidth() / 2, yNew = can.getWindowHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
+    int xNew = can.getCartWidth() / 2, yNew = can.getCartHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
     can.recordForNumFrames(FPS * 30);
     while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();
@@ -36,20 +36,14 @@ void screenShotFunction(Cart& can) {
         yOld = yMid;
         xMid = xNew;
         yMid = yNew;
-        xNew = saferand(-can.getWindowWidth() / 2, can.getWindowWidth() / 2);
-        yNew = saferand(-can.getWindowHeight() / 2, can.getWindowHeight() / 2);
+        xNew = saferand(0, can.getCartWidth());
+        yNew = saferand(0, can.getCartHeight());
         bg->drawTriangle(xOld,yOld,0, xMid,yMid,0, xNew, yNew,0, 0,0,0, Colors::randomColor());
     }
 }
 
 //Takes command-line arguments for the width and height of the screen
 int main(int argc, char * argv[]) {
-    int w = (argc > 1) ? atoi(argv[1]) : 800; //Width and height
-    int h = (argc > 2) ? atoi(argv[2]) : 600;
-    if(w <= 0 || h <= 0) { //Check validity of width and height
-      w = 800;
-      h = 600;
-    }
-    Cart c(-1, -1, w, h, 0, 0, 800, 600,"Screenshot Test");
+    Cart c(-1, -1, 800, 600, 0, 0, 800, 600,"Screenshot Test");
     c.run(screenShotFunction);
 }

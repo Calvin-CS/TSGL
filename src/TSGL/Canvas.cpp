@@ -316,7 +316,8 @@ void Canvas::draw()
           screenBufferMutex.lock();
           glViewport(0,0,framebufferWidth,framebufferHeight);
           glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-          glReadPixels(0, 0, framebufferWidthPadded, framebufferHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
+          glPixelStorei(GL_PACK_ALIGNMENT, 1);
+          glReadPixels(0, 0, framebufferWidth, framebufferHeight, GL_RGB, GL_UNSIGNED_BYTE, screenBuffer);
           screenBufferMutex.unlock();
           screenShot();
           captureScreen = false;
@@ -732,13 +733,9 @@ void Canvas::initWindow() {
 
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
 
-    int padwidth = framebufferWidth % 4;
-    if (padwidth > 0)
-       padwidth = 4-padwidth;
-    framebufferWidthPadded = framebufferWidth + padwidth;
     screenBufferMutex.lock();
-    screenBuffer = new uint8_t[3 * (framebufferWidthPadded+1) * framebufferHeight];
-    for (int i = 0; i < 3 * (framebufferWidthPadded+1) * framebufferHeight; ++i) {
+    screenBuffer = new uint8_t[3 * (framebufferWidth) * framebufferHeight];
+    for (int i = 0; i < 3 * (framebufferWidth) * framebufferHeight; ++i) {
       screenBuffer[i] = 0;
     }
     screenBufferMutex.unlock();
@@ -952,17 +949,17 @@ void Canvas::screenShot() {
     sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
 
     screenBufferMutex.lock();
-    // loader.saveImageToFile(filename, screenBuffer, framebufferWidthPadded, winHeight);
+    // loader.saveImageToFile(filename, screenBuffer, framebufferWidth, winHeight);
     for (int j = 0; j < framebufferHeight - (framebufferHeight / 2); j++) {
-        for (int i = 0; i <  3 * framebufferWidthPadded; i++) {
-            int s1 =  3 * framebufferWidthPadded * j + i;
-            int s2 =  3 * framebufferWidthPadded * (framebufferHeight - 1 - j) + i;  // This needs to be height *MINUS ONE* minus j
+        for (int i = 0; i <  3 * framebufferWidth; i++) {
+            int s1 =  3 * framebufferWidth * j + i;
+            int s2 =  3 * framebufferWidth * (framebufferHeight - 1 - j) + i;  // This needs to be height *MINUS ONE* minus j
             char tmp = screenBuffer[s1];
             screenBuffer[s1] = screenBuffer[s2];
             screenBuffer[s2] = tmp;
         }
     }
-    stbi_write_png(filename, framebufferWidthPadded, framebufferHeight, 3, screenBuffer, 0);
+    stbi_write_png(filename, framebufferWidth, framebufferHeight, 3, screenBuffer, 0);
     screenBufferMutex.unlock();
 }
 

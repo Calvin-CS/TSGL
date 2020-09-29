@@ -462,7 +462,7 @@ void Table3D::drawStep() {
   float FORK_RAD = 130;
   const float ARC =2*PI/numPhils;
   const float CLOSE = 0.15f;
-  const float BASEDIST = RAD+58;
+  const float BASEDIST = RAD+100;
 
   int i = omp_get_thread_num();
   float pangle = (i*2*PI)/numPhils;
@@ -476,7 +476,7 @@ void Table3D::drawStep() {
   phils[i].refreshColor();
   if( phils[i].state() == isFull ) {
     int meals = phils[i].getMeals();
-    float angle = pangle+(meals/10)*2*PI/(100*RAD), dist = BASEDIST+8*(meals%10);
+    float angle = pangle+(meals/10)*2*PI/(RAD), dist = BASEDIST+8*(meals%10);
     phils[i].addMeal(dist*cos(angle), dist*sin(angle),0);
     Pyramid * p = phils[i].getLastMeal();
     p->setIsOutlined(false);

@@ -51,13 +51,10 @@ void Background::init(Shader * shapeS, Shader * textS, Shader * textureS, Camera
     attribMutex.lock();
     glfwMakeContextCurrent(window);
     glfwGetFramebufferSize(window, &framebufferWidth, &framebufferHeight);
-    int padwidth = myWidth % 4;
-    if (padwidth > 0)
-       padwidth = 4-padwidth;
-    myWidthPadded = myWidth + padwidth;
+
     readPixelMutex.lock();
-    readPixelBuffer = new uint8_t[myWidthPadded * myHeight * 3];
-    for (int i = 0; i < myWidthPadded * myHeight * 3; ++i) {
+    readPixelBuffer = new uint8_t[myWidth * myHeight * 3];
+    for (int i = 0; i < myWidth * myHeight * 3; ++i) {
       readPixelBuffer[i] = 0;
     }
     readPixelMutex.unlock();
@@ -217,7 +214,9 @@ void Background::draw() {
 
     // read pixels into buffer for Background::getPixel()
     readPixelMutex.lock();
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
     glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_UNSIGNED_BYTE, readPixelBuffer);
+    // glPixelStorei(GL_PACK_ALIGNMENT, 4);
     readPixelMutex.unlock();
 
     // render non-MSAA framebuffer's texture to default framebuffer
@@ -994,7 +993,7 @@ ColorInt Background::getPixel(float x, float y) {
     readPixelMutex.lock();
     int intX = (int) x + myWidth/2;
     int intY = (int) y + myHeight/2;
-    int off = 3 * (intY * myWidthPadded + intX);
+    int off = 3 * (intY * myWidth + intX);
     ColorInt c = ColorInt(readPixelBuffer[off], readPixelBuffer[off + 1], readPixelBuffer[off + 2], 255);
     readPixelMutex.unlock();
     return c;
