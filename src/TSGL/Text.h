@@ -1,12 +1,16 @@
 /*
- * Text.h extends Shape and provides a class for drawing a string of text to the Canvas.
+ * Text.h extends Drawable and provides a class for drawing a string of text to the Canvas.
  */
 
 #ifndef TEXT_H_
 #define TEXT_H_
 
 #include "Drawable.h"          // For extending our Shape object
-#include "TextureHandler.h"
+#include <iostream>
+#include <map>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include FT_BITMAP_H
 
 namespace tsgl {
 
@@ -18,33 +22,47 @@ namespace tsgl {
  */
 class Text : public Drawable {
  private:
-    ColorFloat myColor;
-    unsigned int myFontSize;
-    TextureHandler* myLoader;
-    float * vertices;
     std::wstring myString;
-    float myX, myY;
-    float myRotation;
- public:
-    Text(std::wstring text, float x, float y, unsigned int fontsize, const ColorFloat &color);
+    float mySize;
+    std::string myFont;
+    ColorFloat myColor;
 
-    virtual void draw();
+    GLfloat myWidth;
+    GLfloat myHeight;
+
+    FT_Face face;
+    FT_Library ft;
+
+    struct Character {
+        FT_Bitmap    Bitmap;
+        glm::ivec2   Bearing;   // Offset from baseline to left/top of glyph
+        unsigned int Advance;   // Horizontal offset to advance to next glyph
+    };
+
+    std::map<wchar_t, Character> Characters;
+
+    void populateCharacters();
+ public:
+    Text(float x, float y, float z, std::wstring text, std::string fontFilename, float size, float yaw, float pitch, float roll, const ColorFloat &color);
+
+    virtual void draw(Shader * shader);
 
     virtual void setText(std::wstring text);
 
-    virtual void setFontSize(int fontsize);
+    virtual void setSize(float size);
 
     virtual void setFont(std::string filename);
 
-    virtual void setBottomLeftCorner(float x, float y);
-
-    virtual void setCenter(float x, float y);
-
-    virtual void moveTextBy(float deltaX, float deltaY);
-
-    virtual void setRotation(float radians);
-
     virtual void setColor(const ColorFloat& color);
+
+    std::wstring getText() { return myString; }
+
+    float getSize() { return mySize; }
+
+    GLfloat getWidth() { return myWidth; }
+    GLfloat getHeight() { return myHeight; }
+
+    ColorFloat getColor() { return myColor; }
 
     ~Text();
 };

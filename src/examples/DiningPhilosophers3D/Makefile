@@ -9,6 +9,7 @@ RM = rm -f -r
 # Directory this example is contained in
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 DIR := $(notdir $(patsubst %/,%,$(dir $(MKFILE_PATH))))
+UNAME    := $(shell uname)
 
 # Dependencies
 _DEPS = Fork3D.h philEnums.h \
@@ -28,17 +29,40 @@ dummy_build_folder := $(shell mkdir -p $(ODIR))
 NOWARN = -Wno-unused-parameter -Wno-unused-function -Wno-narrowing \
 			-Wno-sizeof-array-argument -Wno-sign-compare -Wno-unused-variable
 
-CXXFLAGS = -Wall -g\
-			-I/usr/local/include/TSGL \
-			-I/usr/local/include \
-			$(NOWARN)\
-			-std=c++11\
-			-Wc++11-compat\
-			-I/usr/include \
-			-I/usr/include/freetype2 \
+ifeq ($(UNAME), Linux)
+GL_FLAGS := -lGLU  -lGL
+BREW :=
+endif
+ifeq ($(UNAME), CYGWIN_NT-10.0)
+GL_FLAGS := -lGLU  -lGL
+BREW :=
+endif
+ifeq ($(UNAME), Darwin)
+GL_FLAGS := -framework OpenGL 
+BREW := -lomp -I"$(brew --prefix libomp)/include" 
+endif
 
-LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw -lGLU -lglut -lGL -fopenmp \
-			-L/usr/local/lib \
+CXXFLAGS = -O3 -g3 -ggdb3 \
+	-Wall -Wextra \
+	-D__GXX_EXPERIMENTAL_CXX0X__ \
+	-I/usr/local/include/Cellar/glfw3/3.3/include/ \
+	-I/usr/local/include/TSGL \
+	-I/usr/local/include \
+	-I/usr/local/include/freetype2 \
+	-I/usr/local/include/freetype2/freetype \
+	$(NOWARN)\
+	-std=c++11\
+	-Wc++11-compat\
+	-I/opt/AMDAPP/include/ \
+	-I/usr/include/c++/4.6/ \
+	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
+	-I/usr/lib/gcc/x86_64-linux-gnu/9/include/ \
+	-I/usr/include \
+	-I/usr/include/freetype2 \
+	-I/usr/include/freetype2/freetype  \
+
+LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
+			$(BREW) -L/usr/local/lib \
 
 
 # ****************************************************

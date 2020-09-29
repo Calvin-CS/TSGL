@@ -15,21 +15,18 @@ namespace tsgl {
  */
 class Star : public ConcavePolygon {
 private:
-  float myRadius;
-  int myPoints;
+    GLfloat myRadius;
+    int myPoints;
 public:
-  Star(float x, float y, float radius, int points, ColorFloat color, bool filled = true, bool ninja = false);
+    Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorFloat color, bool ninja = false);
 
-  Star(float x, float y, float radius, int points, ColorFloat color[], bool filled = true, bool ninja = false);
+    Star(float x, float y, float z, GLfloat radius, int points, float yaw, float pitch, float roll, ColorFloat color[], bool ninja = false);
 
-  Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor, bool ninja = false);
+    void setRadius(GLfloat radius);
 
-  Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor, bool ninja = false);
-  
-  Star(float x, float y, float radius, int points, ColorFloat fillColor, ColorFloat outlineColor[], bool ninja = false);
+    void changeRadiusBy(GLfloat delta);
 
-  Star(float x, float y, float radius, int points, ColorFloat fillColor[], ColorFloat outlineColor[], bool ninja = false);
-
+    GLfloat getRadius() { return myRadius; }
 };
 
 }

@@ -15,17 +15,43 @@ namespace tsgl {
  */
 class Line : public Polyline {
  private:
- 
+    GLfloat myLength;
+    GLfloat myEndpointX1, myEndpointY1, myEndpointZ1, myEndpointX2, myEndpointY2, myEndpointZ2;
  public:
-    Line(int x1, int y1, int x2, int y2, const ColorFloat color);
+    Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorFloat color);
 
-    Line(int x1, int y1, int x2, int y2, const ColorFloat color[]);
+    Line(float x, float y, float z, GLfloat length, float yaw, float pitch, float roll, ColorFloat color[]);
 
-    void setFirstEnd(float x, float y);
+    Line(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, float yaw, float pitch, float roll, ColorFloat color);
 
-    void setSecondEnd(float x, float y);
+    Line(GLfloat x1, GLfloat y1, GLfloat z1, GLfloat x2, GLfloat y2, GLfloat z2, float yaw, float pitch, float roll, ColorFloat color[]);
 
-    float getLength();
+    void setFirstEndpoint(float x, float y, float z);
+
+    void setSecondEndpoint(float x, float y, float z);
+
+    void setLength(GLfloat length);
+
+    void changeLengthBy(GLfloat delta);
+
+    /**
+     * \brief Returns the length of the line.
+     * \details Returns the value of the myLength instance variable.
+     * \return Length of the Line.
+     */
+    GLfloat getLength() { return myLength; }
+
+    GLfloat getFirstEndpointX();
+
+    GLfloat getFirstEndpointY();
+
+    GLfloat getFirstEndpointZ();
+
+    GLfloat getSecondEndpointX();
+
+    GLfloat getSecondEndpointY();
+
+    GLfloat getSecondEndpointZ();
 };
 
 }

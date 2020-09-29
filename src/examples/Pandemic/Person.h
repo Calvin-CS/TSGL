@@ -1,7 +1,9 @@
 #ifndef PERSON_H_
 #define PERSON_H_
 
+#include <cmath>
 #include <tsgl.h>
+#include <random>
 #include "Circle.h"
 #include "statusEnums.h"
 
@@ -9,25 +11,38 @@ using namespace tsgl;
 
 class Person {
 protected:
+    // location
     float myX, myY;
+    // radius
     GLfloat myCircleRadius;
+    float myInfectionRadius;
+    bool hasInfectionRadius;
+    // TSGL shapes/objects
     Circle* myCircle;
-    // Circle* myCircle[1];
+    Circle* myInfectionCircle;
     ColorFloat myColor;
-
-    // Pandemic data
+    // infection data
     char myStatus;
-    unsigned numDaysInfected;
+    int numInfectedNearby;
+    int numDaysInfected;
+    bool isToDie;
+    int myNumDaysTillDead;
 public:
-    // Person();
+    // Constructors //
 
-    Person(float x, float y, GLfloat radius, char status);
+    Person();
+
+    Person(float x, float y, GLfloat radius, float infectionRadius, char status, bool hasInfectedRadius);
+
+    // Draw //
 
     void draw(Canvas& can);
 
+    // Accessors //
 
-    // Accessors
     GLfloat getCircleRadius() { return myCircleRadius; }
+
+    float getInfectionRadius() { return myInfectionRadius; }
         
     Circle * getCircle() { return myCircle; }
 
@@ -37,40 +52,34 @@ public:
 
     char getStatus() { return myStatus; }
 
-    unsigned getNumDaysInfected() { return numDaysInfected; }
+    int getNumDaysInfected() { return numDaysInfected; }
+
+    bool willDie() { return isToDie; }
     
+    int getNumDaysTillDead() { return myNumDaysTillDead; }
 
-    // // Mutators
-    // int& operator[](unsigned i) { return myData[i]; }
+    // Mutators //
 
-    void setCircleRadius(GLfloat radius);
-    
-    // void setColor(ColorFloat c);
-    
-    // void setColor(ColorFloat c[], unsigned size);
-    
-    // void setTextColor(ColorFloat c);
+    void setStatus(char status);
 
-    // void setFont(std::string filename);
+    void setColor(ColorFloat c);
 
-    // void setFontSize(unsigned int fontsize);
+    void moveBy(float x, float y, float max_x, float max_y);
 
+    // Checking/updating functions //
 
-    // void changeYawBy(GLfloat yaw);
+    bool checkIfInfectedNearby(std::vector<Person*> personVec);
 
-    // void changePitchBy(GLfloat pitch);
+    void increaseNumDaysInfected() { numDaysInfected += 1; }
 
-    // void changeRollBy(GLfloat roll);
+    bool determineIfInfected(Canvas& can, int contagiousFactor, int randNum);
 
-    // void visualSplit(unsigned index);
+    void determineIsToDie(int deadlinessFactor, int randNum, int daysTillDead);
 
-    // void visualRegroupAll(float x);
+    void die(Canvas& can);
 
-    // // Operations
-    // CubeArray operator+ (CubeArray& c2);
+    void recover(Canvas& can);
 
-    // bool operator==(CubeArray& a2);
-    
     virtual ~Person();
 };
 

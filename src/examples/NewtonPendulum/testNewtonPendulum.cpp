@@ -128,7 +128,6 @@ int main(int argc, char * argv[]) {
   } else if(numberOfBalls % 2 == 0) { //If even, add 1
     numberOfBalls++;
   }
-  Canvas c(-1, -1, w, h, "Newton's Pendulum");
-  c.setBackgroundColor(WHITE);
+  Canvas c(-1, -1, w, h, "Newton's Pendulum", WHITE);
   c.run(newtonPendulumFunction,numberOfBalls);
 }

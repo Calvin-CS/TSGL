@@ -223,7 +223,6 @@ int main(int argc, char* argv[]){
         sizeOfArrays = 10;
     }
 
-    Canvas c(0, -1, 1820, 620, "Threaded Array Addition");
-    c.setBackgroundColor(BLACK);
+    Canvas c(0, -1, Canvas::getDisplayWidth(), 620, "Threaded Array Addition", BLACK);
     c.run(arrayFunction, threadingType, numberOfThreads, sizeOfArrays);
 }

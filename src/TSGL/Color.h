@@ -9,6 +9,7 @@
 #include <stdexcept>    // Needed for exceptions
 #include <cstdlib>      // Needed for rand()
 #include <sstream>      // Needed for Windows integer / float to string conversion
+#include <gl_includes.h>
 
 #include "Util.h"       // Clamp()
 #include "Error.h"      // TsglErr() / TsglDebug()
@@ -18,6 +19,7 @@ namespace tsgl {
 struct ColorFloat;  //Forward declarations
 struct ColorInt;
 struct ColorHSV;
+struct ColorFloat;
 
 /*!
  * \brief Floating point RGBA color struct.
@@ -29,13 +31,13 @@ struct ColorHSV;
  */
 struct ColorFloat {
  public:
-    float R, G, B, A;
+    GLfloat R, G, B, A;
 
     ColorFloat();
 
-    ColorFloat(float v, float a = 1.0f);
+    ColorFloat(GLfloat v, GLfloat a = 1.0f);
 
-    ColorFloat(float r, float g, float b, float a = 1.0f);
+    ColorFloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a = 1.0f);
 
     std::string asString();
 

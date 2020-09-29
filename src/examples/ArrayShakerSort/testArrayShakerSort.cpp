@@ -38,17 +38,12 @@ void swap(int& a, int& b){
 }
 
 void sortVisualizationFunction(Canvas& can, int arraySize) {
-    // Generate random seed
-    srand( time(0) );
-
     // Create arrays to perform operation on
     int originalArray[arraySize];
-    // int sortedArray[] = {40, 35, 80, 62, 60, 74, 36, 10, 19, 5};
 
     // Fill numerical array with random numbers between 0 and 99
     for(unsigned i = 0; i < arraySize; i++){
-        originalArray[i] = rand() % (RAND_UPPER + 1);
-        // originalArray[i] = i + 90;
+        originalArray[i] = saferand(0, RAND_UPPER + 1);
     }
 
     printf("Before shaker sort: ");
@@ -63,21 +58,13 @@ void sortVisualizationFunction(Canvas& can, int arraySize) {
     // Create text labels
     Text * titleLabel = new Text(0.0, TITLE_Y, TEXT_Z,
                                  L"Array Shaker Sort", FONT, FONT_SIZE + 10, YAW, PITCH, ROLL, YELLOW);
-    // Text * speedLabel = new Text(0.0, ARRAY_Y - 100.0, TEXT_Z,
-    //                              "Speed: x" + std::to_string(sleepTime/250000), FONT, FONT_SIZE, YAW, PITCH, ROLL, YELLOW);
     Text * sortedLabel = new Text(0.0, ARRAY_Y - 200.0, TEXT_Z,
                                  L"Sorted!", FONT, FONT_SIZE, YAW, PITCH, ROLL, YELLOW);
 
-    // Create arrays to store labels
-    Text * labelArray[] = {titleLabel};
-    unsigned numLabels = sizeof(labelArray)/sizeof(labelArray[0]);
-
     // Draw arrays on canvas
     arrayA.draw(can);
-    // Draw labels on canvas
-    for(unsigned i = 0; i < numLabels; i++){
-        can.add(labelArray[i]);
-    }
+    // Draw label on canvas
+    can.add(titleLabel);
 
     float sleepTime = 0.5;   // number of seconds to sleep
 
@@ -164,9 +151,7 @@ void sortVisualizationFunction(Canvas& can, int arraySize) {
     printf("\n\n");
 
     // Deallocate all object memory
-    for (unsigned i = 0; i < numLabels; i++){
-        delete labelArray[i];
-    }
+    delete titleLabel;
     delete sortedLabel;
 
 }
@@ -185,8 +170,7 @@ int main(int argc, char* argv[]){
 
     printf("Use the up and down arrow keys to speed up and slow down animation, respectfully.\n");
 
-    Canvas c(0, -1, 1820, 620, "Array Shaker Sort");
-    c.setBackgroundColor(BLACK);
+    Canvas c(0, -1, Canvas::getDisplayWidth(), 620, "Array Shaker Sort", BLACK);
     c.run(sortVisualizationFunction, sizeOfArray);
 }
 

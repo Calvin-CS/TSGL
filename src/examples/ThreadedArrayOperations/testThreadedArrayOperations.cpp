@@ -235,7 +235,6 @@ int main(int argc, char* argv[]){
         sizeOfArray = 10;
     }
 
-    Canvas c(0, -1, 1820, 620, "Threaded Array Scalar Operations");
-    c.setBackgroundColor(BLACK);
+    Canvas c(0, -1, Canvas::getDisplayWidth(), 620, "Threaded Array Scalar Operations", BLACK);
     c.run(operationVisualization, operation, numberOfThreads, sizeOfArray);
 }

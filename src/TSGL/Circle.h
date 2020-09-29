@@ -1,32 +1,42 @@
 /*
-* Circle.h extends Ellipse and provides a class for drawing a circle to a Canvas.
+* Circle.h extends ConvexPolygon and provides a class for drawing a circle to a Canvas.
 */
 
 #ifndef CIRCLE_H_
 #define CIRCLE_H_
 
-#include "Ellipse.h" // For extending our Ellipse object
+#include "ConvexPolygon.h" // For extending our ConvexPolygon object
 
 namespace tsgl {
 
-  /*! \class Circle
-  *  \brief Draw a circle.
-  *  \details Circle is a class for holding Shape data for a circle.
-  */
-  class Circle : public Ellipse {
-  public:
-    Circle(float x, float y, float radius, const ColorFloat color, bool filled = true);
+/*! \class Circle
+*  \brief Draw a circle.
+*  \details Circle is a class for holding Shape data for a circle.
+*/
+class Circle : public ConvexPolygon {
+protected:
+	GLfloat myRadius;
+    GLfloat verticesPerColor;
+public:
+    Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color);
 
-    Circle(float x, float y, float radius, const ColorFloat color[], bool filled = true);
+    Circle(float x, float y, float z, GLfloat radius, float yaw, float pitch, float roll, ColorFloat color[]);
 
-    Circle(float x, float y, float radius, const ColorFloat fillColor, const ColorFloat outlineColor);
+    void setRadius(GLfloat radius);
 
-    Circle(float x, float y, float radius, const ColorFloat fillColor[], const ColorFloat outlineColor);
+    void changeRadiusBy(GLfloat delta);
 
-    Circle(float x, float y, float radius, const ColorFloat fillColor, const ColorFloat outlineColor[]);
+    /*!
+    * \brief Accessor for the radius of the Circle.
+    * \details Returns the value of the myRadius private variable, a GLfloat.
+    */
+    GLfloat getRadius() { return myRadius; }
 
-    Circle(float x, float y, float radius, const ColorFloat fillColor[], const ColorFloat outlineColor[]);
+    void setColor(ColorFloat c) { Shape::setColor(c); }
 
+    void setColor(ColorFloat c[]);
+
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
   };
 
 }

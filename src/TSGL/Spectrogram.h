@@ -31,8 +31,9 @@ private:
 
   omp_lock_t writelock[NUM_COLORS], masterlock;
   int myHeight, myWidth;
+  float centerX, centerY;
   float maxCount;
-  int xx[NUM_COLORS+1], yy[NUM_COLORS+1], maxx[NUM_COLORS+1], maxy[NUM_COLORS+1];
+  float xx[NUM_COLORS+1], yy[NUM_COLORS+1], maxx[NUM_COLORS+1], maxy[NUM_COLORS+1];
   float count[NUM_COLORS+1];
   ColorFloat col[NUM_COLORS+1], black[NUM_COLORS+1];
   SpectrogramDrawmode myDrawMode;

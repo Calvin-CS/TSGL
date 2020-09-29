@@ -1,5 +1,5 @@
 /*
- * Image.h extends Shape and provides a class for drawing an image to a Canvas.
+ * Image.h extends Drawable and provides a class for drawing an image to a Canvas.
  */
 
 #ifndef IMAGE_H_
@@ -7,8 +7,8 @@
 
 #include <string>
 
-#include "Drawable.h"           // For extending our Shape object
-#include "TextureHandler.h"  // For loading images
+#include "Drawable.h"           // For extending our Drawable object
+#include <stb/stb_image.h>
 #include "TsglAssert.h"      // For unit testing purposes
 
 namespace tsgl {
@@ -20,46 +20,51 @@ namespace tsgl {
  *  \note For the time being, there is no way to measure the size of an image once it's loaded.
  *   Therefore, the width and height must be specified manually, and stretching may occur if the
  *   input dimensions don't match the images actual dimensions.
- *  \note Additionally, an ImageLoader must be passed as an argument. This ImageLoader is automatically
- *   constructed with the Canvas as the private *loader* variable. At the moment, there is no way to
- *   extend Canvas::drawImage() function due to this privatization.
  *  \warning Aside from an error message output to stderr, Image gives no indication if an image failed to load.
  */
 class Image : public Drawable {
  private:
-    int myWidth, myHeight;
-    float currentRotation;
-    float *vertices;
+    unsigned char * data = 0;
+    GLfloat myWidth, myHeight;
+    GLint pixelWidth, pixelHeight;
     std::string myFile;
-    GLtexture myTexture;
-    TextureHandler* myLoader;
+    GLuint myTexture;
  public:
-    Image(std::string filename, TextureHandler &loader, int x, int y, int width, int height, float alpha = 1.0f);
+    Image(float x, float y, float z, std::string filename, GLfloat width, GLfloat height, float yaw, float pitch, float roll, float alpha = 1.0f);
 
-    virtual void draw();
+    virtual void draw(Shader * shader);
 
     /*!
      * \brief Accessor for the image's height.
      * \return The height of the Image.
      */
-    int getHeight() { return myHeight; }
+    GLfloat getHeight() { return myHeight; }
 
     /*!
      * \brief Accessor for the image's width.
      * \return The width of the Image.
      */
-    int getWidth() { return myWidth; }
+    GLfloat getWidth() { return myWidth; }
 
-    void setCenter(float x, float y);
+    void setWidth(GLfloat width);
 
-    void moveImageBy(float deltaX, float deltaY);
+    void setHeight(GLfloat height);
 
-    virtual void setRotation(float radians);
+    void changeWidthBy(GLfloat delta);
 
-    void changeFileName(std::string filename, int width = 0, int height = 0);
+    void changeHeightBy(GLfloat delta);
 
-    ~Image() { delete[] vertices; }
+    void changeFile(std::string filename);
 
+    void setAlpha(float newAlpha);
+
+    GLint getPixelHeight() { return pixelHeight; }
+
+    GLint getPixelWidth() { return pixelWidth; }
+
+    static void getFileResolution(std::string filename, int &width, int &height);
+
+    ~Image();
 };
 
 }

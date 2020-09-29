@@ -11,11 +11,7 @@ namespace tsgl {
  * \warning <b>You <i>must</i> inherit the parent's constructor if you are extending Shape.</b>
  * \note Refer to the Shape class description for more details.
  */
-Shape::Shape() : Drawable() {
-    isTextured = false;
-    currentRotation = 0;
-    myCenterX = myCenterY = 0;
-}
+Shape::Shape(float x, float y, float z, float yaw, float pitch, float roll) : Drawable(x,y,z,yaw,pitch,roll) { }
 
 /*!
  * \brief Draw the Shape.
@@ -24,9 +20,31 @@ Shape::Shape() : Drawable() {
  * \note A message indicating that the Shape cannot be drawn yet will be given
  *   if the above condition is met (vertex buffer = not full).
  */
-void Shape::draw() {
-    glBufferData(GL_ARRAY_BUFFER, numberOfVertices * 6 * sizeof(float), vertices, GL_DYNAMIC_DRAW);
-    glDrawArrays(geometryType, 0, numberOfVertices);
+void Shape::draw(Shader * shader) {
+    if (!init) {
+        TsglDebug("Vertex buffer is not full.");
+        return;
+    }
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(myRotationPointX, myRotationPointY, myRotationPointZ));
+    model = glm::rotate(model, glm::radians(myCurrentYaw), glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(myCurrentPitch), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, glm::radians(myCurrentRoll), glm::vec3(1.0f, 0.0f, 0.0f));
+    model = glm::translate(model, glm::vec3(myCenterX - myRotationPointX, myCenterY - myRotationPointY, myCenterZ - myRotationPointZ));
+    model = glm::scale(model, glm::vec3(myXScale, myYScale, myZScale));
+
+    unsigned int modelLoc = glGetUniformLocation(shader->ID, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+    if (isFilled) {
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfVertices * 7, vertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(geometryType, 0, numberOfVertices);
+    }
+
+    if (isOutlined) {
+        glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numberOfOutlineVertices * 7, outlineVertices, GL_DYNAMIC_DRAW);
+        glDrawArrays(outlineGeometryType, 0, numberOfOutlineVertices);
+    }
 }
 
  /*!
@@ -34,52 +52,62 @@ void Shape::draw() {
   * \details This function initializes the next vertex in the Shape and adds it to a Shape buffer.
   *      \param x The x position of the vertex.
   *      \param y The y position of the vertex.
+  *      \param z The z position of the vertex.
   *      \param color The reference variable of the color of the vertex.
   * \note This function does nothing if the vertex buffer is already full.
   * \note A message is given indicating that the vertex buffer is full.
   */
-void Shape::addVertex(float x, float y, const ColorFloat &color) {
+void Shape::addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color) {
     if (init) {
         TsglDebug("Cannot add anymore vertices.");
         return;
     }
-    vertices[current] = x;
-    vertices[current + 1] = y;
-    vertices[current + 2] = color.R;
-    vertices[current + 3] = color.G;
-    vertices[current + 4] = color.B;
-    vertices[current + 5] = color.A;
-    current += 6;
-    if (current == numberOfVertices*6) {
+    attribMutex.lock();
+    vertices[currentVertex] = x;
+    vertices[currentVertex + 1] = y;
+    vertices[currentVertex + 2] = z;
+    vertices[currentVertex + 3] = color.R;
+    vertices[currentVertex + 4] = color.G;
+    vertices[currentVertex + 5] = color.B;
+    vertices[currentVertex + 6] = color.A;
+    currentVertex += 7;
+    myAlpha += color.A;
+    if (currentVertex == numberOfVertices*7) {
+        myAlpha /= numberOfVertices;
         init = true;
-        attribMutex.lock();
-
-        float minX, maxX;
-        minX = maxX = vertices[0];
-        //Find min and max X
-        for(int i = 0; i < numberOfVertices; i++) {
-            if( vertices[i*6] < minX )
-            minX = vertices[i*6];
-            else if( vertices[i*6] > maxX )
-            maxX = vertices[i*6];
-        }
-        myCenterX = (minX+maxX)/2;
-
-        float minY, maxY;
-        minY = maxY = vertices[1];
-        //Find min and max X
-        for(int i = 0; i < numberOfVertices; i++) {
-            if( vertices[i*6+1] < minY )
-            minY = vertices[i*6+1];
-            else if( vertices[i*6+1] > maxY )
-            maxY = vertices[i*6+1];
-        }
-        myCenterY = (minY+maxY)/2;
-
-        setRotationPoint(myCenterX, myCenterY);
-
-        attribMutex.unlock();
     }
+    attribMutex.unlock();
+}
+
+ /*!
+  * \brief Adds another outline vertex to a Shape.
+  * \details This function initializes the next vertex in the Shape and adds it to a Shape buffer.
+  *      \param x The x position of the vertex.
+  *      \param y The y position of the vertex.
+  *      \param z The z position of the vertex.
+  *      \param color The reference variable of the color of the vertex.
+  * \note This function does nothing if the vertex buffer is already full.
+  * \note A message is given indicating that the vertex buffer is full.
+  */
+void Shape::addOutlineVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color) {
+    if (outlineInit) {
+        TsglDebug("Cannot add anymore vertices.");
+        printf("added enough already tbh\n");
+        return;
+    }
+    attribMutex.lock();
+    outlineVertices[currentOutlineVertex] = x;
+    outlineVertices[currentOutlineVertex + 1] = y;
+    outlineVertices[currentOutlineVertex + 2] = z;
+    outlineVertices[currentOutlineVertex + 3] = color.R;
+    outlineVertices[currentOutlineVertex + 4] = color.G;
+    outlineVertices[currentOutlineVertex + 5] = color.B;
+    outlineVertices[currentOutlineVertex + 6] = color.A;
+    currentOutlineVertex += 7;
+    if (currentOutlineVertex == numberOfOutlineVertices*7) {
+        outlineInit = true;
+    }
+    attribMutex.unlock();
 }
 
 /**
@@ -87,12 +115,15 @@ void Shape::addVertex(float x, float y, const ColorFloat &color) {
  * \param c The new ColorFloat.
  */
 void Shape::setColor(ColorFloat c) {
+    attribMutex.lock();
+    myAlpha = c.A;
     for(int i = 0; i < numberOfVertices; i++) {
-        vertices[i*6 + 2] = c.R;
-        vertices[i*6 + 3] = c.G;
-        vertices[i*6 + 4] = c.B;
-        vertices[i*6 + 5] = c.A;
+        vertices[i*7 + 3] = c.R;
+        vertices[i*7 + 4] = c.G;
+        vertices[i*7 + 5] = c.B;
+        vertices[i*7 + 6] = c.A;
     }
+    attribMutex.unlock();
 }
 
 /**
@@ -100,90 +131,57 @@ void Shape::setColor(ColorFloat c) {
  * \param c The new array of ColorFloats.
  */
 void Shape::setColor(ColorFloat c[]) {
-    for(int i = 0; i < numberOfVertices; i++) {
-        vertices[i*6 + 2] = c[i].R;
-        vertices[i*6 + 3] = c[i].G;
-        vertices[i*6 + 4] = c[i].B;
-        vertices[i*6 + 5] = c[i].A;
-    }
-}
-
-/**
- * \brief Alters the Shape's vertex locations.
- * \param deltaX The difference between the new and old vertex X coordinates.
- * \param deltaY The difference between the new and old vertex Y coordinates.
- * \warning This will also alter the Shape's rotation point if and only if the 
- *          old rotation point was at the Shape's old center.
- */
-void Shape::moveShapeBy(float deltaX, float deltaY) {
     attribMutex.lock();
+    myAlpha = 0.0;
     for(int i = 0; i < numberOfVertices; i++) {
-      vertices[i*6]     += deltaX; //Transpose x
-      vertices[(i*6)+1] += deltaY; //Transpose y
+        vertices[i*7 + 3] = c[i].R;
+        vertices[i*7 + 4] = c[i].G;
+        vertices[i*7 + 5] = c[i].B;
+        vertices[i*7 + 6] = c[i].A;
+        myAlpha += c[i].A;
     }
-    if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
-        myRotationPointX += deltaX;
-        myRotationPointY += deltaY;
-    }
-    myCenterX += deltaX;
-    myCenterY += deltaY;
+    myAlpha /= numberOfVertices;
     attribMutex.unlock();
 }
 
 /**
- * \brief Moves the Shape to new coordinates.
- * \param x The new center x coordinate.
- * \param y The new center y coordinate.
- * \warning This will also alter the Shape's rotation point if and only if the 
- *          old rotation point was at the Shape's old center.
+ * \brief Sets the Shape's outline to a new color.
+ * \param c The new ColorFloat.
  */
-void Shape::setCenter(float x, float y) {
-    float deltaX = x - myCenterX; //Change for x
-    float deltaY = y - myCenterY; //Change for y
+void Shape::setOutlineColor(ColorFloat c) {
     attribMutex.lock();
-    if(myRotationPointX == myCenterX && myRotationPointY == myCenterY) {
-        myRotationPointX = x;
-        myRotationPointY = y;
-    }
-
-    myCenterX = x;
-    myCenterY = y;
-
-    for(int i = 0; i < numberOfVertices; i++) {
-      vertices[i*6]     += deltaX; //Transpose x
-      vertices[(i*6)+1] += deltaY; //Transpose y
+    for(int i = 0; i < numberOfOutlineVertices; i++) {
+        outlineVertices[i*7 + 3] = c.R;
+        outlineVertices[i*7 + 4] = c.G;
+        outlineVertices[i*7 + 5] = c.B;
+        outlineVertices[i*7 + 6] = c.A;
     }
     attribMutex.unlock();
 }
 
-/*!
- * \brief Mutator for the rotation of the Shape.
- * \details Rotates the Shape vertices around myRotationPointX, myRotationPointY.
- * \param radians Float value denoting how many radians to rotate the Shape.
+/**
+ * \brief Accessor for Shape's color.
+ * \details Returns the color of Shape's first vertex.
+ * \note For multicolored Shapes, use getColors() to access a vector of all relevant colors.
  */
-void Shape::setRotation(float radians) {
-  if(radians != currentRotation) {
+ColorFloat Shape::getColor() {
     attribMutex.lock();
-    float pivotX = myRotationPointX;
-    float pivotY = myRotationPointY;
-    float s = sin(radians - currentRotation);
-    float c = cos(radians - currentRotation);
-    currentRotation = radians;
-    for(int i = 0; i < numberOfVertices; i++) {
-        float x = vertices[6*i];
-        float y = vertices[6*i+1];
-        x -= pivotX;
-        y -= pivotY;
-        float xnew = x * c - y * s;
-        float ynew = x * s + y * c;
+    ColorFloat c = ColorFloat(vertices[3], vertices[4], vertices[5], vertices[6]);
+    attribMutex.unlock();
+    return c;
+}
 
-        x = xnew + pivotX;
-        y = ynew + pivotY;
-        vertices[6*i] = x;
-        vertices[6*i+1] = y;
+/**
+ * \brief Accessor for Shape's colors.
+ * \details Populates the reference parameter vector with a ColorFloat for each vertex of Shape.
+ * \param colorVec A vector of ColorFloats to which the ColorFloats associated with Shape will be pushed.
+ */
+void Shape::getColors(std::vector<ColorFloat> &colorVec) {
+    attribMutex.lock();
+    for (int i = 0; i < numberOfVertices; i++) {
+        colorVec.push_back(ColorFloat(vertices[i*7+3],vertices[i*7+4],vertices[i*7+5],vertices[i*7+6]));
     }
     attribMutex.unlock();
-  }
 }
 
 }

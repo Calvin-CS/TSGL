@@ -29,33 +29,48 @@ namespace tsgl {
 class Shape : public Drawable {
  protected:
     int numberOfVertices;
-    float* vertices;
+    int currentVertex = 0;
     GLenum geometryType;
-    bool init = false;
-    int current = 0;
-    float currentRotation;
+    virtual void addVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color = WHITE);  
+    bool isFilled = true;  
+
+   int numberOfOutlineVertices;
+   int currentOutlineVertex = 0;
+   GLenum outlineGeometryType;
+   virtual void addOutlineVertex(GLfloat x, GLfloat y, GLfloat z, const ColorFloat &color = WHITE);
+   GLfloat * outlineVertices;
+   bool isOutlined = true;
+
+   bool outlineInit = false;
+
  public:
-    Shape();
+    Shape(float x, float y, float z, float yaw, float pitch, float roll);
 
-    virtual void draw();
-
-    virtual void addVertex(float x, float y, const ColorFloat &color = BLACK);
+    virtual void draw(Shader * shader);
 
     virtual void setColor(ColorFloat c);
-
     virtual void setColor(ColorFloat c[]);
+    virtual void setOutlineColor(ColorFloat c);
+    virtual ColorFloat getColor();
+    virtual void getColors(std::vector<ColorFloat> &colorVec);
 
-    virtual void moveShapeBy(float deltaX, float deltaY);
+    virtual bool isProcessed() { return outlineInit && init; }
 
-    virtual void setCenter(float x, float y);
+    /*! \brief Set whether or not the Shape will be filled.
+     *  \details Sets the isFilled instance variable to the value of the parameter.
+     *  \param status Boolean value to which isFilled will be set equivalent.
+     *  \warning Disabling fill on some 3D Shapes, like Cone and Cylinder, can be awkward visually.
+     */
+    virtual void setIsFilled(bool status) { isFilled = status; }
 
-    virtual void setRotation(float radians);
+    /*! \brief Set whether or not the Shape will be outlined.
+     *  \details Sets the isOutlined instance variable to the value of the parameter.
+     *  \param status Boolean value to which isOutlined will be set equivalent.
+     *  \warning Disabling outlines on monocolored 3D Shapes can be awkward visually.
+     */
+    virtual void setIsOutlined(bool status) { isOutlined = status; }
 
-   /*!
-    * \brief Accessor that returns if Shape is processed and ready to be drawn
-    * \details This function returns true only if all vertices have been inserted into an array.
-    */
-    virtual bool isProcessed() { return init; }
+    ~Shape() { /* delete [] vertices; */ }
 };
 
 }

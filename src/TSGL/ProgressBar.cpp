@@ -14,18 +14,36 @@ namespace tsgl {
   *   \param numSegments The number of segments in the progress bar
   * \return A new ProgressBar with the specified coordinates, maximum dimensions, value range, and segments.
   */
-ProgressBar::ProgressBar(int x, int y, int width, int height, float minValue, float maxValue, unsigned numSegments) {
+ProgressBar::ProgressBar(float x, float y, float z, float width, float height, float minValue, float maxValue, unsigned numSegments, float yaw, float pitch, float roll)
+: Drawable(x, y, z, yaw, pitch, roll) {
+    shaderType = SHAPE_SHADER_TYPE;
+    segRecs = new Rectangle*[numSegments];
+    segBorders = new Polyline*[numSegments];
     startX = new float[numSegments];
     endX = new float[numSegments];
     min = minValue; max = maxValue;
-    xx = x; yy = y;
     myWidth = width; myHeight = height;
     segs = numSegments;
-    startX[0] = x; endX[0] = x + myWidth/segs;
+    startX[0] = -myWidth / 2; endX[0] = startX[0] + myWidth/segs;
     for (int i = 1; i < segs; ++i) {
       startX[i] = endX[i-1];
       endX[i] = startX[i] + myWidth/segs;
     }
+
+    // all Polylines can have the same vertices; different locations will be handled with draw()
+    vertices = new float[15];
+    vertices[0] = -(myWidth/segs)/2; vertices[1] = myHeight/2; vertices[2] = 0;
+    vertices[3] = -(myWidth/segs)/2; vertices[4] = -myHeight/2; vertices[5] = 0;
+    vertices[6] = (myWidth/segs)/2; vertices[7] = -myHeight/2; vertices[8] = 0;
+    vertices[9] = (myWidth/segs)/2; vertices[10] = myHeight/2; vertices[11] = 0;
+    vertices[12] = -(myWidth/segs)/2; vertices[13] = myHeight/2; vertices[14] = 0;
+    for (int i = 0; i < segs; i++) {
+        segBorders[i] = new Polyline(0,0,0,5,vertices,yaw,pitch,roll,BLACK);
+        segRecs[i] = new Rectangle(0,0,0,myWidth/segs,myHeight,yaw,pitch,roll,Colors::highContrastColor(i));
+        segRecs[i]->setIsOutlined(false);
+    }
+
+    init = true;
 }
 
  /*!
@@ -35,6 +53,24 @@ ProgressBar::ProgressBar(int x, int y, int width, int height, float minValue, fl
   */
 ProgressBar::~ProgressBar() {
   delete [] startX; delete [] endX;
+  for (int i = 0; i < segs; i++) {
+      delete segBorders[i];
+      delete segRecs[i];
+  }
+  delete [] segBorders; delete [] segRecs;
+}
+
+void ProgressBar::draw(Shader * shader) {
+    for (int i = 0; i < segs; i++) {
+        segBorders[i]->setCenter(myCenterX + (myWidth/segs) * ( (float)i - (float)(segs-1)/2), myCenterY, myCenterZ);
+        segRecs[i]->setCenter(myCenterX + (myWidth/segs) * ( (float)i - (float)(segs)/2) + segRecs[i]->getWidth()/2, myCenterY, myCenterZ);
+        segBorders[i]->setRotationPoint(myCenterX, myCenterY, myCenterZ);
+        segRecs[i]->setRotationPoint(myCenterX, myCenterY, myCenterZ);
+        segBorders[i]->setYawPitchRoll(myCurrentYaw, myCurrentPitch, myCurrentRoll);
+        segRecs[i]->setYawPitchRoll(myCurrentYaw, myCurrentPitch, myCurrentRoll);
+        segRecs[i]->draw(shader);
+        segBorders[i]->draw(shader);
+    }
 }
 
  /*!
@@ -56,32 +92,8 @@ void ProgressBar::update(float newValue, int segnum) {
   float end = start + d/segs;
   clamp(newValue,start,end);
   float percent = (newValue-start) / (end-start);
-  endX[segnum] = startX[segnum]+percent*(myWidth/segs);
+  segRecs[segnum]->setWidth(percent*(myWidth/segs));
 }
 
- /*!
-  * \brief Accessor for the ProgressBar's representative Polyline array.
-  *   \param index Index of the segment to access.
-  * \return A pointer to the Polyline array representing segment border <code>i</code>  of the ProgressBar.
-  */
-Polyline* ProgressBar::getBorder(int index) {
-  int y2 = yy+myHeight;
-  Polyline* p = new Polyline(5);
-    p->addVertex(startX[index],yy,BLACK);
-    p->addVertex(startX[index]+myWidth/segs,yy,BLACK);
-    p->addVertex(startX[index]+myWidth/segs,y2,BLACK);
-    p->addVertex(startX[index],y2,BLACK);
-    p->addVertex(startX[index],yy,BLACK);
-  return p;
-}
-
- /*!
-  * \brief Accessor for the ProgressBar's representative Rectangle array.
-  *   \param index Index of the segment to access.
-  * \return A pointer to the Rectangle array representing segment <code>i</code> of the ProgressBar.
-  */
-Rectangle* ProgressBar::getRect(int index) {
-  return new Rectangle(startX[index], yy, endX[index]-startX[index], myHeight, Colors::highContrastColor(index));
-}
 
 }

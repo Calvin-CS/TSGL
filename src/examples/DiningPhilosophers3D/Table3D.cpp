@@ -19,52 +19,59 @@ Table3D::Table3D(Canvas& can, int p, PhilMethod m) {
     forks[i].id = i;
     forks[i].setCanvas(myCan);
   }
-  // float delta = 2.0f / numPhils * PI;
-  // for(int i = 0; i < numPhils; i++) {
-  //   myCan->drawImage("../assets/pics/spaghet.png", tabX-50+(200)*cos(i*delta), tabY-25+(215)*sin(i*delta), 100, 50, 1.0f);
-  // }
+  spaghettis = new Image*[numPhils]();
+  float delta = 2.0f / numPhils * PI;
+  for(int i = 0; i < numPhils; i++) {
+    spaghettis[i] = new Image(95 * cos(i*delta), 105 * sin(i*delta), -1, "./assets/pics/spaghet.png", 100, 50, 0,0,0);
+    can.add(spaghettis[i]);
+  }
   myMethod = m;
   switch(myMethod) {
     case forfeitWhenBlocked:
-      methodString = "forfeit when blocked";
+      methodString = L"forfeit when blocked";
       break;
     case waitWhenBlocked:
-      methodString = "wait when blocked";
+      methodString = L"wait when blocked";
       break;
     case nFrameRelease:
-      methodString = "release on nth frame";
+      methodString = L"release on nth frame";
       break;
     case resourceHierarchy:
-      methodString = "hierarchical resources";
+      methodString = L"hierarchical resources";
       break;
     case oddEven:
-      methodString = "odd-even check";
+      methodString = L"odd-even check";
       break;
     default:
       break;
   }
 
-  // myCan2 = new Canvas(0,0,300,300,"Legend");
-  // myCan2->start();
-  // myCan2->drawText("Method:",16,32,32,BLACK);
-  // myCan2->drawText("\"" + methodString + "\"",32,64,24,BLACK);
-  // myCan2->drawText("Legend:",16,96,24,BLACK);
-  // myCan2->drawText("Red: Hungry",32,128,24,RED);
-  // myCan2->drawText("Orange: Has Right Fork",32,160,24,ORANGE);
-  // myCan2->drawText("Yellow: Has Left Fork",32,192,24,YELLOW);
-  // myCan2->drawText("Green: Eating",32,224,24,GREEN);
-  // myCan2->drawText("Blue: Thinking",32,256,24,BLUE);
-  // myCan2->drawText("Meals eaten: ",32,288,24,BROWN);
-  // myCan2->drawCircle(165,281,3,BROWN);
+  myCan2 = new Canvas(0,0,300,300,"Legend");
+  myCan2->start();
+  Background * bg2 = myCan2->getBackground();
+
+  bg2->drawText(0,128,0,L"Method:","./assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
+  bg2->drawText(0,96,0,L"\"" + methodString + L"\"","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  bg2->drawText(0,64,0,L"Legend:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  bg2->drawText(0,32,0,L"Red: Hungry","./assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
+  bg2->drawText(0,0,0,L"Orange: Has Right Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
+  bg2->drawText(0,-32,0,L"Yellow: Has Left Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,YELLOW);
+  bg2->drawText(0,-64,0,L"Green: Eating","./assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
+  bg2->drawText(0,-96,0,L"Blue: Thinking","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
+  bg2->drawText(0,-121,0,L"Meals eaten:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
+
+  bg2->drawRegularPolygon(65, -121,0,3,3,0,0,0, BROWN);
 }
 
 /*!
  * \brief Destructor for Table3D.
  */
 Table3D::~Table3D() {
-  // if (myCan2->isOpen())
-  //   myCan2->stop();
-  // delete myCan2;
+  if (myCan2->isOpen())
+    myCan2->stop();
+  delete myCan2;
+  for (int i = 0; i < numPhils; i++)
+    delete spaghettis[i];
   delete myTable;
   delete [] phils;
   delete [] forks;
@@ -455,7 +462,7 @@ void Table3D::drawStep() {
   float FORK_RAD = 130;
   const float ARC =2*PI/numPhils;
   const float CLOSE = 0.15f;
-  const float BASEDIST = RAD+58;
+  const float BASEDIST = RAD+100;
 
   int i = omp_get_thread_num();
   float pangle = (i*2*PI)/numPhils;
@@ -469,10 +476,11 @@ void Table3D::drawStep() {
   phils[i].refreshColor();
   if( phils[i].state() == isFull ) {
     int meals = phils[i].getMeals();
-    float angle = pangle+(meals/10)*2*PI/(100*RAD), dist = BASEDIST+8*(meals%10);
-    // myCan->drawRegularPolygon(dist*cos(angle), dist*sin(angle), 3, 10 ,BROWN, BLACK);
+    float angle = pangle+(meals/10)*2*PI/(RAD), dist = BASEDIST+8*(meals%10);
     phils[i].addMeal(dist*cos(angle), dist*sin(angle),0);
-    myCan->add(phils[i].getLastMeal());
+    Pyramid * p = phils[i].getLastMeal();
+    p->setIsOutlined(false);
+    myCan->add(p);
   }
   if (forks[i].user == i) {
     fangle = i*ARC + CLOSE;

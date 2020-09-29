@@ -90,7 +90,6 @@ public:
     color = c;
     bounced = false;
     circle = new Circle(x,y,0,r,0,0,0,c);
-    // circle->setLayer(1);
     can->add(circle);
   }
   BouncingBall(int x, int y, float vx, float vy, int r, int w, int h, ColorFloat c, Canvas * canvas) {
@@ -106,7 +105,6 @@ public:
     bounced = false;
     can = canvas;
     circle = new Circle(x,y,0,r,0,0,0,c);
-    // circle->setLayer(1);
     can->add(circle);
   }
   ~BouncingBall() {
@@ -198,7 +196,6 @@ public:
     attract = true;
     can = canvas;
     mouseCircle = new Circle(0,0,0,20,0,0,0,ColorFloat(1.0,0.5,0.5,0.5));
-    // mouseCircle->setLayer(2);
     can->add(mouseCircle);
   }
   ~BallRoom() {
@@ -228,7 +225,7 @@ public:
     balls.push_back(b);
   }
   void step(Canvas* c) {
-    int mx = c->getMouseX() - c->getWindowWidth()/2, my = c->getWindowHeight()/2 - c->getMouseY();
+    int mx = c->getMouseX(), my = c->getMouseY();
     Vector2 mvec(mx,my);
     mouseCircle->setCenter(mx, my, 0);
     if (attract) {
@@ -313,7 +310,6 @@ int main(int argc, char* argv[]) {
     int h = (argc > 2) ? atoi(argv[2]) : w;
     if (w <= 0 || h <= 0)     //Checked the passed width and height if they are valid
       w = h = 960;            //If not, set the width and height to a default value
-    Canvas c(-1, -1, w, h, "The Ballroom");
-    c.setBackgroundColor(BLACK);
+    Canvas c(-1, -1, w, h, "The Ballroom", BLACK);
     c.run(ballroomFunction);
 }

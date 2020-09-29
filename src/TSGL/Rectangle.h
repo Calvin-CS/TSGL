@@ -15,20 +15,31 @@ namespace tsgl {
  */
 class Rectangle : public ConvexPolygon {
  private:
- 
+    GLfloat myWidth, myHeight;
  public:
+    Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorFloat color);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat color, bool filled = true);
+    Rectangle(float x, float y, float z, GLfloat width, GLfloat height, float yaw, float pitch, float roll, ColorFloat color[]);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat color[], bool filled = true);
+    /*!
+    * \brief Accessor for the width of the Rectangle.
+    * \details Returns the value of the myWidth private variable, a GLfloat.
+    */
+    GLfloat getWidth() { return myWidth; }
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor);
+    /*!
+    * \brief Accessor for the height of the Rectangle.
+    * \details Returns the value of the myHeight private variable, a GLfloat.
+    */
+    GLfloat getHeight() { return myHeight; }
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor);
+    void setWidth(GLfloat width);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor, const ColorFloat outlineColor[]);
+    void setHeight(GLfloat height);
 
-    Rectangle(float x, float y, float width, float height, const ColorFloat fillColor[], const ColorFloat outlineColor[]);
+    void changeWidthBy(GLfloat delta);
+
+    void changeHeightBy(GLfloat delta);
 };
 
 }

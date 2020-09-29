@@ -118,6 +118,7 @@ void mergeSortFunction(Canvas& can, int threads, int size) {
     for (int i = 0; i < size; i++) {
         numbers[i] = saferand(1,can.getWindowHeight());
         rectangles[i] = new Rectangle(start + i * width, 0, 0, width, numbers[i], 0, 0, 0, RED);
+        rectangles[i]->setIsOutlined(false);
         can.add(rectangles[i]);
     }
 
@@ -198,7 +199,6 @@ int main(int argc, char* argv[]) {
     int threads, t = (argc > 2) ? atoi(argv[2]) : omp_get_num_procs();
     for (threads = 1; threads < t; threads *=2);  //Force threads to be a power of 2
 
-    Canvas c(0, 0, w, h, "Bottom-up Merge Sort");
-    c.setBackgroundColor(BLACK);
+    Canvas c(0, 0, w, h, "Bottom-up Merge Sort", BLACK);
     c.run(mergeSortFunction, threads, s);
 }

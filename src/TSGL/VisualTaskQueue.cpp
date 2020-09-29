@@ -25,7 +25,7 @@ VisualTaskQueue::VisualTaskQueue(int elements, int sideLength, float aspect, int
   blockSize = sideLength;
   vcan = new Canvas(0,-1,2*border+(blockSize+space)*rowLength,2*border+(blockSize+space)*elements/rowLength,"Thread colors");
   vcan->start();
-  reset();
+  // reset();
 }
 
  /*!
@@ -46,51 +46,41 @@ VisualTaskQueue::~VisualTaskQueue() {
   *   \param threads The number of threads the VisualTaskQueue is using.
   */
 void VisualTaskQueue::showLegend(int threads) {
-  bool canContinue = false;
-  #pragma omp critical
-  {
-    if (!showingLegend) {
-      showingLegend = true;
-      canContinue = true;
-    }
-  }
-  if (canContinue) {
-    const int TEXTW = 24, GAP = 4;
-    if (threads == -1)
-      threads = omp_get_num_threads();
+  showingLegend = true;
+  const int TEXTW = 24, GAP = 4;
+  if (threads == -1)
+    threads = omp_get_num_threads();
 
-    //Ugly calculations :(
-    int offset = border+space;
-    int xStart = border;
-    int xDelta = TEXTW*2;
-    int yStart = TEXTW + offset;
-    int yDelta = blockSize+space;
-    int oheight = vcan->getWindowHeight();
-    int myHeight = TEXTW + (threads+1) * yDelta;
-    if (myHeight > oheight)
-      myHeight = oheight;
-    int perColumn = (myHeight-yStart)/yDelta;
-    int yCutoff = yStart + yDelta*perColumn-blockSize;
-    int myWidth = 2*border + ((threads)/perColumn)*xDelta+blockSize+TEXTW;
-  #ifdef _WIN32
-	if (myWidth < 116);  //Magic number for Windows windows...
-	myWidth = 116;
-  #endif
+  //Ugly calculations :(
+  int offset = border+space;
+  int xStart = border;
+  int xDelta = TEXTW*2;
+  int yStart = TEXTW + offset;
+  int yDelta = blockSize+space;
+  int oheight = vcan->getWindowHeight();
+  int myHeight = TEXTW + (threads+1) * yDelta;
+  if (myHeight > oheight)
+    myHeight = oheight;
+  int perColumn = (myHeight-yStart)/yDelta;
+  int yCutoff = yStart + yDelta*perColumn-blockSize;
+  int myWidth = 2*border + ((threads)/perColumn)*xDelta+blockSize+TEXTW;
+#ifdef _WIN32
+if (myWidth < 116);  //Magic number for Windows windows...
+myWidth = 116;
+#endif
 
-    //Actually draw things
-    lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
-	std::cout << lcan->getWindowWidth();
-    lcan->start();
-    lcan->drawText("Legend:",TEXTW/2,TEXTW,TEXTW,BLACK);
-    int xx = xStart, yy = yStart;
-    for (int i = 0; i < threads; ++i) {
-      lcan->drawRectangle(xx,yy,blockSize,blockSize,Colors::highContrastColor(i));
-      lcan->drawText(to_string(i),xx+blockSize+GAP,yy+blockSize,TEXTW/2);
-      yy += yDelta;
-      if (yy > yCutoff) {
-        yy = yStart;
-        xx += xDelta;
-      }
+//   //Actually draw things
+  lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
+  lcan->start();
+  lcan->getBackground()->drawText(0,lcan->getWindowHeight()/2-TEXTW/2,0,"Legend:","./assets/freefont/FreeSerif.ttf",TEXTW,0,0,0,BLACK);
+  int xx = -lcan->getWindowWidth()/2 + xStart, yy = lcan->getWindowHeight()/2 - yStart;
+  for (int i = 0; i < threads; ++i) {
+    lcan->getBackground()->drawSquare(xx,yy,0,blockSize,0,0,0,Colors::highContrastColor(i));
+    lcan->getBackground()->drawText(xx+blockSize+GAP,yy,0,std::to_wstring(i),"./assets/freefont/FreeSerif.ttf",TEXTW/2,0,0,0,BLACK);
+    yy -= yDelta;
+    if (yy > yCutoff) {
+      yy = yStart;
+      xx += xDelta;
     }
   }
 }
@@ -104,12 +94,13 @@ void VisualTaskQueue::showLegend(int threads) {
 void VisualTaskQueue::update(int index, VQState state) {
   int x = index % rowLength;
   int y = index / rowLength;
-  vcan->drawRectangle(
-    border+x*(blockSize+space),border+y*(blockSize+space),
-    blockSize,blockSize,
+  vcan->getBackground()->drawSquare(
+    border*2+x*(blockSize+space)-vcan->getWindowWidth()/2,vcan->getWindowHeight()/2 - (border * 1.5+y*(blockSize+space)),0,
+    blockSize,
+    0,0,0,
     Colors::blend(
       Colors::highContrastColor(omp_get_thread_num()),(state == RUNNING) ? BLACK : WHITE,0.5f
-    ),true
+    )
   );
 }
 
@@ -121,10 +112,11 @@ void VisualTaskQueue::reset() {
   for (int i = 0; i < totalElements; ++i) {
     int x = i % rowLength;
     int y = i / rowLength;
-    vcan->drawRectangle(
-      border+x*(blockSize+space),border+y*(blockSize+space),
-      blockSize,blockSize,
-      WHITE,true
+    vcan->getBackground()->drawSquare(
+      border*2+x*(blockSize+space)-vcan->getWindowWidth()/2,vcan->getWindowHeight()/2 - (border * 1.5+y*(blockSize+space)),0,
+      blockSize,
+      0,0,0,
+      WHITE
     );
   }
 }
@@ -135,18 +127,19 @@ void VisualTaskQueue::reset() {
   * \warning <b> Do not attempt to reset() or update() the VisualTaskQueue after closing it.</b>
   */
 void VisualTaskQueue::close() {
-  if (lcan->isOpen())
-    lcan->close();
-  lcan->wait();
   if (showingLegend) {
-    if (vcan->isOpen())
-      vcan->close();
-    vcan->wait();
-  }
+    if (lcan->isOpen())
+      lcan->close();
+    lcan->wait();
+  } 
+  if (vcan->isOpen())
+    vcan->close();
+  vcan->wait();
 }
 
 void VisualTaskQueue::sleep() {
-  lcan->sleep();
+  if (showingLegend)
+    lcan->sleep();
   vcan->sleep();
 }
 

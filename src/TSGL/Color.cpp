@@ -102,7 +102,7 @@ ColorFloat::ColorFloat() {
  * \return A ColorFloat struct with equal R, G, and B values set to <code>v</code>,
  *    and the specified A value.
  */
-ColorFloat::ColorFloat(float v, float a) {
+ColorFloat::ColorFloat(GLfloat v, GLfloat a) {
     if (clamp(v,0,1))
       TsglDebug("Out of range parameter specified for ColorFloat");
     R = v; G = v; B = v; A = a;
@@ -119,7 +119,7 @@ ColorFloat::ColorFloat(float v, float a) {
  *    is out of the range 0 - 1 inclusive then an error message is given.
  * \return A ColorFloat struct with the specified R, G, B, and A values.
  */
-ColorFloat::ColorFloat(float r, float g, float b, float a) {
+ColorFloat::ColorFloat(GLfloat r, GLfloat g, GLfloat b, GLfloat a) {
     bool oor = false;
     oor |= clamp(r,0,1);
     oor |= clamp(g,0,1);

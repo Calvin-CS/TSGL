@@ -24,17 +24,9 @@ class TriangleStrip : public ConvexPolygon {
  private:
 
  public:
-    TriangleStrip(int numVertices, int x[], int y[], ColorFloat color, bool filled = true);
+    TriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll,  ColorFloat color);
 
-    TriangleStrip(int numVertices, int x[], int y[], ColorFloat color[], bool filled = true);
-
-    TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor);
-
-    TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor);
-
-    TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor, ColorFloat outlineColor[]);
-
-    TriangleStrip(int numVertices, int x[], int y[], ColorFloat fillColor[], ColorFloat outlineColor[]);
+    TriangleStrip(float centerX, float centerY, float centerZ, int numVertices, float x[], float y[], float z[], float yaw, float pitch, float roll, ColorFloat color[]);
 };
 
 }

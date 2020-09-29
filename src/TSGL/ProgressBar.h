@@ -9,6 +9,7 @@
 
 #include "Polyline.h"
 #include "Rectangle.h"
+#include "Drawable.h"
 
 namespace tsgl {
 
@@ -18,22 +19,24 @@ namespace tsgl {
  *    ProgressBar is formed of multiple segments, each of which is thread-safe and updated individually
  *    with the update() method.  A ProgressBar can be drawn to the screen using Canvas::drawProgress().
  */
-class ProgressBar {
+class ProgressBar : public Drawable {
  private:
-   float *startX, *endX;
-   float min, max;
-   int xx, yy, myWidth, myHeight, segs;
+    Rectangle ** segRecs;
+    Polyline ** segBorders;
+    float *startX;
+    float *endX;
+    float min, max;
+    float myWidth, myHeight;
+    int segs;
  public:
 
-    ProgressBar(int x, int y, int width, int height, float minValue, float maxValue, unsigned numSegments);
+    ProgressBar(float x, float y, float z, float width, float height, float minValue, float maxValue, unsigned numSegments, float yaw, float pitch, float roll);
 
     ~ProgressBar();
 
+    void draw(Shader * shader);
+
     void update(float newValue, int segnum = -1);
-
-    Polyline* getBorder(int index);
-
-    Rectangle* getRect(int index);
 
     /*!
      * \brief Accessor for the ProgressBar's number of segments
@@ -42,17 +45,16 @@ class ProgressBar {
     int getSegs() { return segs; }
 
     /*!
-     * \brief Accessor for a segment's x position
-     *   \param i Index of the segment
-     * \return The x-coordinate of the left edge of segment <code>i</code> in the ProgressBar.
+     * \brief Accessor for the ProgressBar's width in pixels
+     * \return The pixel width of the ProgressBar.
      */
-    int getSegX(int i) { return startX[i]; }
+    float getWidth() { return myWidth; }
 
     /*!
-     * \brief Accessor for a segment's y position
-     * \return The y-coordinate of the top edge of the ProgressBar.
+     * \brief Accessor for the ProgressBar's height in pixels
+     * \return The pixel height of the ProgressBar.
      */
-    int getSegY() { return yy; }
+    float getHeight() { return myHeight; }
 };
 
 }

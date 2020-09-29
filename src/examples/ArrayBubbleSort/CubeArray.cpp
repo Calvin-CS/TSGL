@@ -5,21 +5,9 @@ using namespace tsgl;
 // typedef Item int;
 
 /*!
- * \brief Explicitly constructs a new CubeArray.
- * \details This is the constructor for the CubeArray class.
- *      \param x The x coordinate of the center of the CubeArray.
- *      \param y The y coordinate of the center of the CubeArray.
- *      \param z The z coordinate of the center of the CubeArray.
- *      \param sideLength The side length of the CubeArray's Cubes.
- *      \param size The number of Cubes in the CubeArray.
- *      \param dataArray The array of values that CubeArray copies.
- *      \param dataArraySize The size of the array passed to CubeArray.
- *      \param yaw The yaw of the CubeArray.
- *      \param pitch The pitch of the CubeArray.
- *      \param roll The roll of the CubeArray.
- *      \param c1 A ColorFloat for the color of the CubeArray's Cubes.
- *      \param c2 A ColorFloat for the color of the CubeArray's Text/numbers.
- * \return A new CubeArray with the specified size, values, and colors.
+ * \brief Default constructor for CubeArray.
+ * \details This is the default constructor for the CubeArray class.
+ * \return A new CubeArray with a default size, values, and colors.
  */
 CubeArray::CubeArray(){
     myX = 0.0;
@@ -108,37 +96,6 @@ CubeArray::CubeArray(float x, float y, float z, GLfloat sideLength, unsigned siz
     //TODO: Simplify above code
 }
 
-// CubeArray::CubeArray(float x, float y, float z, unsigned size, GLfloat sideLength, Item* dataArray, float yaw, float pitch, float roll, ColorFloat c[]){
-//     myX = x;
-//     myY = y;
-//     myZ = z;
-//     mySize = size;
-//     myCubeSideLength = sideLength;
-//     myYaw = yaw;
-//     myPitch = pitch;
-//     myRoll = roll;
-
-//     for(unsigned i = 0; i < size; ++i){
-//         myCubes.push_back(new Cube((-(int)(size-1)*(sideLength/2.0)) + (i * sideLength), y, z, sideLength, yaw, pitch, roll, c[0]));
-//         myCubes[i]->setRotationPoint(0,0,0);
-//         myCubes[i]->setColor(c[i%(sizeof(c[0])/sizeof(c))]);
-//     }
-// }
-
-// bool CubeArray::operator==(CubeArray& a2){
-//     printf("Equality entered.\n");
-//     if(mySize != a2.getSize()){
-//         printf("Sizes are different.\n");
-//         return false;
-//     }
-//     for(unsigned i = 0; i < mySize; ++i){
-//         if(myCubes[i] != a2.get(i)){
-//             printf("Index %d is different.\n", i);
-//             return false;
-//         }
-//     }
-//     return true;
-// }
 
 /**
  * \brief Adds the CubeArray to the canvas.
@@ -175,13 +132,13 @@ void CubeArray::update(unsigned index){
 /**
  * \brief Sets the side length of the CubeArray's Cubes to a new side length,
  *          resizes the text to retain the Cube/Text size proportion, and
- *          moves the Text so that the resized Cube does not overlap and hid it
+ *          moves the Text so that the resized Cube does not overlap and hide it
  * \param length The new side length.
  */
 void CubeArray::setCubeSideLength(GLfloat length){
     for(unsigned i = 0; i < mySize; ++i){
         myCubes[i]->setSideLength(length);
-        myText[i]->setFontSize(length/2.5);
+        myText[i]->setSize(length/2.5);
         myText[i]->setCenterZ(myCubes[i]->getSideLength()/2.0);
     }
 }
@@ -228,16 +185,19 @@ void CubeArray::setFont(std::string filename){
 }
 
 /**
- * \brief Sets the font size of the CubeArray's Text/numbers to a new size.
- * \param fontsize The new font size.
+ * \brief Sets the size of the CubeArray's Text/numbers to a new size.
+ * \param size The new size.
  */
-void CubeArray::setFontSize(unsigned int fontsize){
+void CubeArray::setTextSize(float size){
     for(Text * t : myText){
-        t->setFontSize(fontsize);
+        t->setSize(size);
     }
 }
 
-
+/**
+ * \brief Changes the CubeArray's yaw by a given value.
+ * \param yaw The yaw to add to the CubeArray's current yaw.
+ */
 void CubeArray::changeYawBy(GLfloat yaw){
     for(unsigned i = 0; i < mySize; ++i){
         myCubes[i]->changeYawBy(yaw);
@@ -245,6 +205,10 @@ void CubeArray::changeYawBy(GLfloat yaw){
     }
 }
 
+/**
+ * \brief Changes the CubeArray's pitch by a given value.
+ * \param pitch The pitch to add to the CubeArray's current pitch.
+ */
 void CubeArray::changePitchBy(GLfloat pitch){
     for(unsigned i = 0; i < mySize; ++i){
         myCubes[i]->changePitchBy(pitch);
@@ -252,35 +216,16 @@ void CubeArray::changePitchBy(GLfloat pitch){
     }
 }
 
+/**
+ * \brief Changes the CubeArray's roll by a given value.
+ * \param roll The roll to add to the CubeArray's current roll.
+ */
 void CubeArray::changeRollBy(GLfloat roll){
     for(unsigned i = 0; i < mySize; ++i){
         myCubes[i]->changeRollBy(roll);
         myText[i]->changeRollBy(roll);
     }
 }
-
-void CubeArray::visualSplit(unsigned index){
-    for(unsigned i = 0; i < index; ++i){
-        myCubes[i]->changeXBy(-myCubeSideLength/2.0);
-        myText[i]->changeXBy(-myCubeSideLength/2.0);
-    }
-    for(unsigned i = index; i < mySize; ++i){
-        myCubes[i]->changeXBy(myCubeSideLength/2.0);
-        myText[i]->changeXBy(myCubeSideLength/2.0);
-    }
-}
-
-// void CubeArray::visualRegroup(unsigned index){
-
-// }
-
-void CubeArray::visualRegroupAll(float x){
-    for(unsigned i = 0; i < mySize; i++){
-        myCubes[i]->setCenterX((x-(int)(mySize-1)*(myCubeSideLength/2.0)) + (i * myCubeSideLength));
-        myText[i]->setCenterX((x-(int)(mySize-1)*(myCubeSideLength/2.0)) + (i * myCubeSideLength));
-    }
-}
-
 
 /**
  * \brief If the sizes are equal, adds the values of two CubeArrays and returns 

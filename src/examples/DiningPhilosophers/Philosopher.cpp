@@ -14,11 +14,6 @@ Philosopher::Philosopher() {
 
 Philosopher::~Philosopher() {
   delete myCircle;
-  for (RegularPolygon * meal : meals)
-  {
-    delete meal;
-  } 
-  meals.clear();
 }
 
 /**
@@ -51,13 +46,8 @@ void Philosopher::refreshColor() {
 /**
  * Adds a meal representation to meals and the Canvas
  */
-void Philosopher::addMeal(float x, float y, float z) {
+void Philosopher::addMeal() {
   numMeals++;
-  meals.push_back(new RegularPolygon(x,y,z,3,3,0,0,0,ColorFloat(0.5,0.3,0,1)));
-}
-
-RegularPolygon * Philosopher::getLastMeal() {
-  return meals.back();
 }
 
 /**
