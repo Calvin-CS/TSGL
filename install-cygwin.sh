@@ -31,7 +31,8 @@ echo "**************************************************************************
 echo "Checking for dependencies..."
 glfwFile=/usr/lib/libglfw.dll.a
 
-if test -f "$glfwFile"; then
+if [ -f "$glfwFile" ]
+then
         echo "glfw dependency resolved"
 else
         #clone the repository and install glfw
@@ -55,13 +56,9 @@ else
 
         echo "glfw dependecy resolved"
 fi
-
-
 echo "All necessary dependencies resolved"
 
-
 echo "Installing TSGL..."
-
 echo
 
 #Clean install = remove the TSGL folder and lib files if they already exist
