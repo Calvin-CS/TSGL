@@ -7,7 +7,7 @@ AR=ar
 CC=g++
 RM=rm -f
 INSTALL=/usr/bin/install
-PREFIX=/usr/local
+PREFIX=/usr
 
 SRC_PATH=src/TSGL/
 TESTS_PATH=src/tests/
@@ -51,12 +51,12 @@ endif
 CXXFLAGS=-O3 -g3 -ggdb3 \
 	-Wall -Wextra \
 	-D__GXX_EXPERIMENTAL_CXX0X__ \
-	-I/usr/local/include/Cellar/glfw3/3.3/include/ \
+	-I/usr/include/Cellar/glfw3/3.3/include/ \
 	-I${SRC_PATH}/ \
 	-I/usr/include/ \
-	-I/usr/local/include/ \
-	-I/usr/local/include/freetype2 \
-	-I/usr/local/include/freetype2/freetype \
+	-I/usr/include/ \
+	-I/usr/include/freetype2 \
+	-I/usr/include/freetype2/freetype \
 	-I/opt/AMDAPP/include/ \
 	-I/usr/include/c++/4.6/ \
 	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
@@ -69,7 +69,7 @@ CXXFLAGS=-O3 -g3 -ggdb3 \
   # -pedantic-errors
 
 LFLAGS=-Llib/ \
-	-L/usr/local/lib \
+	-L/usr/lib \
 	${OS_EXTRA_LIB} \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
@@ -143,6 +143,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
+	cp -r assets/ /usr/include/TSGL
+	cp -r stb/ /usr/include
+	cp src/TSGL/tsgl.h /usr/include
 endif
 ifeq ($(UNAME), CYGWIN_NT-10.0)
 install:
@@ -152,6 +155,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.dll $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
+	cp -r assets/ /usr/include/TSGL
+	cp -r stb/ /usr/include
+	cp src/TSGL/tsgl.h /usr/include
 endif
 ifeq ($(UNAME), Darwin)
 install:
@@ -162,6 +168,9 @@ install:
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
 	cp -r stb $(PREFIX)/include
+	cp -r assets/ /usr/include/TSGL
+	cp -r stb/ /usr/include
+	cp src/TSGL/tsgl.h /usr/include
 endif
 
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
