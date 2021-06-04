@@ -32,7 +32,7 @@ PCThread::PCThread(Queue<Star*> & sharedBuffer, unsigned long id, Canvas & can) 
 	myX = 0; //Set in subclass constructor
 	myItem = NULL;
 	myArrow = NULL;
-	myCountLabel = new Text( 0,0,1, std::to_wstring(count), "./assets/freefont/FreeSans.ttf", 24, 0,0,0, WHITE);
+	myCountLabel = new Text( 0,0,1, std::to_wstring(count), "/usr/include/TSGL/assets/freefont/FreeSans.ttf", 24, 0,0,0, WHITE);
 	// myCountLabel->setLayer(3);
 	myCan->add( myCountLabel );
 }

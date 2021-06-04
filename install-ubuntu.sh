@@ -169,97 +169,6 @@ echo
 echo "Checking for necessary dependencies..."
 echo
 
-#Check for the following libraries: 
-glfw=0   #glfw
-GL=0  #OpenGL
-freetype=0  #Freetype
-GLEW=0  #And GLEW
-
-#To do so, use the ldconfig command and pipe it to grep with the following keywords:
-ldconfig -p | grep glfw > glfw.txt   #'glfw'
-ldconfig -p | grep GL > opengl.txt  #'GL'
-ldconfig -p | grep freetype > freetype.txt  #'freetype'
-ldconfig -p | grep GLEW > glew.txt  #and 'GLEW'
-
-#Based off of the piping above, if any of the keywords were found, then the corresponding text files will have 
-#information about the libraries currently installed. 
-#If they aren't found, then the text files will be blank.
-#If that is the case, then the library shouldn't be on the machine. (A missing dependency).
-
-#Check the text files to see if there are any missing libraries.
-
-#If the text file exists, then that just means the check went through with no problems.
-if [ -e glfw.txt ]
-then
-	#Checking for dependencies now...
-	#If the text file contains the name of the library that we are looking 
-	#for, then it must be installed. 
-	if grep "libglfw.so.3" glfw.txt > holder.txt
-	then
-		#Which means, it's not missing. 
-		glfw=1
-		echo
-	fi
-fi
-
-#Continue to do that for the next three libraries
-
-#GL
-if [ -e opengl.txt ]
-then
-	if grep "libGL.so" opengl.txt > holder.txt
-	then
-		GL=1
-		echo
-	fi	
-fi
-
-#freetype
-if [ -e freetype.txt ]
-then
-	if grep "libfreetype.so" freetype.txt > holder.txt
-	then
-		freetype=1
-		echo
-	fi	
-fi
-
-#GLEW
-if [ -e glew.txt ]
-then
-	if grep "libGLEW.so" glew.txt > holder.txt
-	then
-		GLEW=1
-		echo
-	fi	
-fi
-
-#Alright, we're done checking. 
-#Clean up the text files, we no longer need them.
-rm glfw.txt
-rm glew.txt
-rm opengl.txt
-rm freetype.txt
-rm holder.txt
-
-#Now, determine if any of the dependencies are missing.
-if [ $glfw == 0 ]
-then
-	echo "glfw not found! (Will be resolved shortly)" #Even if it's not installed, it will be with the install script.
-elif [ $GL == 0 ]
-then
-	echo "GL not found! Please see the 'Library Versions' section of our wiki pages for a link to download and install this library."
-	echo "(You may also have to update your drivers!)"
-	exit 1 
-elif [ $freetype == 0 ]
-then
-	echo "Freetype not found! (Will be resolved shortly)."
-	exit 1
-elif [ $GLEW == 0 ]
-then
-	echo "GLEW not found! (Will be resolved shortly)"  #Same with GLEW
-fi
-
 #Alright, now get glfw and GLEW (freetype can be gained through the wiki as well as OpenGL).
 echo "Getting other dependencies (or updating if all found)..."
 
@@ -269,8 +178,12 @@ sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev li
 echo 
 
 #Get the glfw library
-if [ $glfw == 0 ]
+glfwFile=/usr/lib/libglfw.so
+
+if [ -f "$glfwFile" ]
 then
+	echo "glfw depenency found"
+else
 	echo "Resolving missing glfw dependency..."
 	git clone https://github.com/glfw/glfw.git || exit 1
 	
@@ -287,12 +200,20 @@ then
 	cd ..
 
 	sudo rm -rf glfw
+	
+	cd /usr/lib
+	
+	#create a symbolic link
+	sudo ln -s /usr/local/lib/libglfw.so
 fi
 
 #Check if we have to install freetype from source...
-if [ $freetype == 0 ]
-then
+freetypeFile=/usr/lib/libfreetype.so
 
+if [ -f "$freetypeFile" ]
+then
+	echo "freetype depenency found"
+else
 	echo "Resolving missing freetype dependency..."
 	
 	#We do, so get the freetype source
@@ -313,8 +234,35 @@ then
 	
 	#Remove the freetype folders from the TSGL folder
 	rm -rf freetype*
+	
+	cd /usr/lib
+	
+	#create a symbolic link
+	sudo ln -s /usr/local/lib/libfreetype.so
 fi
 
+#Check if we have to clone cxxopts ...
+cxxoptsFile=/usr/include/cxxopts.hpp
+
+if [ -f "$cxxoptsFile" ]
+then
+	echo "cxxopts dependency found"
+else
+	echo "Resolving missing cxxopts dependency..."
+	
+	#We do, so clone the repository
+	git clone https://github.com/jarro2783/cxxopts.git || exit 1
+
+	#copy the necessary file 
+	cd cxxopts/include
+
+	sudo cp cxxopts.hpp /usr/include
+
+	cd ../..
+	
+	#Remove the freetype folders from the TSGL folder
+	rm -rf cxxopts*
+fi
 echo 
 
 echo
