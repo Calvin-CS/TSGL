@@ -178,9 +178,9 @@ sudo apt-get install --yes --force-yes build-essential libtool cmake xorg-dev li
 echo 
 
 #Get the glfw library
-glfwFile=/usr/lib/libglfw.so.3
+glfwFile=/usr/lib/libglfw.so
 
-if tesf -f "$glfwFile
+if [ -f "$glfwFile" ]
 then
 	echo "glfw depenency found"
 else
@@ -200,12 +200,17 @@ else
 	cd ..
 
 	sudo rm -rf glfw
+	
+	cd /usr/lib
+	
+	#create a symbolic link
+	sudo ln -s /usr/local/lib/libglfw.so
 fi
 
 #Check if we have to install freetype from source...
 freetypeFile=/usr/lib/libfreetype.so
 
-if [ test -f "$freetypeFile" ]
+if [ -f "$freetypeFile" ]
 then
 	echo "freetype depenency found"
 else
@@ -229,14 +234,19 @@ else
 	
 	#Remove the freetype folders from the TSGL folder
 	rm -rf freetype*
+	
+	cd /usr/lib
+	
+	#create a symbolic link
+	sudo ln -s /usr/local/lib/libfreetype.so
 fi
 
 #Check if we have to clone cxxopts ...
 cxxoptsFile=/usr/include/cxxopts.hpp
 
-if [ test -f "$cxxoptsFile" ]
+if [ -f "$cxxoptsFile" ]
 then
-	echo "cxxopts depenency found"
+	echo "cxxopts dependency found"
 else
 	echo "Resolving missing cxxopts dependency..."
 	
