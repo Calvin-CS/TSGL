@@ -48,25 +48,9 @@ ifeq ($(UNAME), Darwin)
 	OS_COMPILER := -std=c++0x
 endif
 
-CXXFLAGS=-O3 -g3 -ggdb3 \
-	-Wall -Wextra \
-	-D__GXX_EXPERIMENTAL_CXX0X__ \
-	-I/usr/include/Cellar/glfw3/3.3/include/ \
-	-I${SRC_PATH}/ \
-	-I/usr/include/ \
-	-I/usr/include/ \
-	-I/usr/include/freetype2 \
-	-I/usr/include/freetype2/freetype \
-	-I/opt/AMDAPP/include/ \
-	-I/usr/include/c++/4.6/ \
-	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
-	-I/usr/lib/gcc/x86_64-linux-gnu/9/include/ \
-	-I/usr/include/freetype2  \
-	-I/usr/include/freetype2/freetype  \
-	-I./ \
-  $(OS_COMPILER) -fopenmp \
-  ${NOWARN} -fpermissive
-  # -pedantic-errors
+CXXFLAGS = -O3 -g3 -ggdb3 \
+        -I/usr/include/TSGL \
+        -I/usr/include/freetype2 \
 
 LFLAGS=-Llib/ \
 	-L/usr/lib \
