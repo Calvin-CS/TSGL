@@ -17,7 +17,7 @@
 - Run `xeyes` in the terminal
 - You should see a new window with a pair of eyes
 
-![me](https://github.com/samuelth47/TSGL/blob/master/Cygwin.gif)
+![me](https://github.com/samuelth47/TSGL/blob/fix-cygwin-ubuntu/NewWindows/Cygwin.gif)
 
 ### Installing TSGL
 
