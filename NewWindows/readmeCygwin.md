@@ -1,9 +1,7 @@
-TSGL installation on Windows using Cygwin
-=========================================
+# TSGL installation on Windows using Cygwin
 
 
-Installing Cygwin
------------------
+### Installing Cygwin
 
 1. Download [Cygwin](https://www.cygwin.com/)
 2. Install the setup file; Continue until you get to the "Select Packages" window
@@ -12,7 +10,7 @@ Installing Cygwin
 5. Do the same for `dos2unix`
 6. Click "Next" and finish the installation
 
-Check
+##### Check
 
 - Open a cygwin terminal and run `startxwin`
 - On another terminal run `export DISPLAY=:0.0`
@@ -21,8 +19,7 @@ Check
 
 ![me](https://github.com/samuelth47/TSGL/blob/master/Cygwin.gif)
 
-Installing TSGL
----------------
+### Installing TSGL
 
 1. Clone the [TSGL repository](https://github.com/Calvin-CS/TSGL.git) inside a cygwin terminal
 2. Run the install-cygwin.sh file ( `./install-cygwin.sh` )
