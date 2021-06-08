@@ -24,4 +24,4 @@
 ##### Check
 * cd to src/examples
 * run `make`
-* cd to one of the examples and run the /test... file (`./test...`)
+* cd to one of the examples and run the test files (`./test...`)
