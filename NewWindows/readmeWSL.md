@@ -8,7 +8,7 @@
    - It is downloaded as `XLaunch`
    - When starting XLaunch **disable** the `Native opengl` and **enable** `Disable access control`
 
-<img src="https://github.com/samuelth47/TSGL/blob/fix-cygwin-ubuntu/xlaunch.gif" width="500" height="600"/>
+<img src="https://github.com/samuelth47/TSGL/blob/master/NewWindows/xlaunch.gif" width="500" height="600"/>
 
 ##### Check
 * Start XLaunch
@@ -24,4 +24,4 @@
 ##### Check
 * cd to src/examples
 * run `make`
-* cd to one of the examples and run the /test... file (`./test...`)
+* cd to one of the examples and run the test files (`./test...`)

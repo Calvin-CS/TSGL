@@ -182,7 +182,7 @@ glfwFile=/usr/lib/libglfw.so
 
 if [ -f "$glfwFile" ]
 then
-	echo "glfw depenency found"
+	echo "glfw dependency found"
 else
 	echo "Resolving missing glfw dependency..."
 	git clone https://github.com/glfw/glfw.git || exit 1
@@ -212,7 +212,7 @@ freetypeFile=/usr/lib/libfreetype.so
 
 if [ -f "$freetypeFile" ]
 then
-	echo "freetype depenency found"
+	echo "freetype dependency found"
 else
 	echo "Resolving missing freetype dependency..."
 	
