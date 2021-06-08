@@ -50,7 +50,8 @@ endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
         -I/usr/include/TSGL \
-        -I/usr/include/freetype2 \
+	-I${SRC_PATH}/ \
+	-I/usr/include/freetype2 \
 
 LFLAGS=-Llib/ \
 	-L/usr/lib \
