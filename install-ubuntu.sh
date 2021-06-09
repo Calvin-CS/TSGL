@@ -299,4 +299,25 @@ sudo ldconfig
 echo "Installation complete! Execute the runtests bash script to verify that everything works!"
 
 echo
+echo
+echo
+#checking update
+echo "Checking for updates..."
+
+TSGL_VERSION=$(git describe --tags --abbrev=0)
+TSGL_LATEST_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
+
+if [ $TSGL_VERSION < $TSGL_LATEST_VERSION ]
+then
+        echo "Latest version $TSGL_LATEST_VERSION found. WARNING, If you have changed anything in the TSGL folder it may be overwritten during update. To keep your changes, please commit them before updating."
+        read -p "Do you want to install the update? This will replace all the files with the updated ones (y/n): " INPUT
+	if [ $INPUT == y ] || [ $INPUT == Y ]
+        then
+                echo "Updating TSGL..."
+                git remote add tsgl https://github.com/Calvin-CS/TSGL.git
+                git pull tsgl master
+        fi
+else
+        echo "Latest version already installed"
+fi
 
