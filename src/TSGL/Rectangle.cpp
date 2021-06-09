@@ -112,7 +112,7 @@ void Rectangle::setHeight(GLfloat height) {
         return;
     }
     attribMutex.lock();
-    myWidth = height;
+    myHeight = height;
     myYScale = height;
     attribMutex.unlock();
 }
