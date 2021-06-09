@@ -1,0 +1,103 @@
+\hypertarget{class_producer}{}\section{Producer Class Reference}
+\label{class_producer}\index{Producer@{Producer}}
+
+
+{\ttfamily \#include $<$Producer.\+h$>$}
+
+Inheritance diagram for Producer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_producer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_producer_ab79ff8b19e682d144e40044485cb81b8}{Producer} ()
+\item 
+\hyperlink{class_producer_abfb6f8afcc08bdd27e6451c8ae5b0129}{Producer} (\hyperlink{class_queue}{Queue}$<$ \hyperlink{classtsgl_1_1_star}{Star} $\ast$$>$ \&shared\+Buffer, unsigned long id, \hyperlink{classtsgl_1_1_canvas}{Canvas} \&can)
+\item 
+void \hyperlink{class_producer_ac669b046bc8254d43b7ccc4e3e7a1a8b}{wait} ()
+\item 
+void \hyperlink{class_producer_aba582d5889728f3d4eb6399a5788ab9f}{lock} ()
+\item 
+void \hyperlink{class_producer_a40820fecb39439fac7a4f7b4227d4d1d}{act} ()
+\item 
+void \hyperlink{class_producer_a9a3ce835478573c67a6c8d928ccbf8f0}{unlock} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_producer}{Producer} class creates a \hyperlink{class_producer}{Producer} object and inherits from the \hyperlink{class_thread}{Thread} class. Inheritance\+: \hyperlink{class_thread}{Thread} class. Implements the abstract run() method from the \hyperlink{class_thread}{Thread} class so that the pthread runs the produce() method. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_producer_ab79ff8b19e682d144e40044485cb81b8}\label{class_producer_ab79ff8b19e682d144e40044485cb81b8}} 
+\index{Producer@{Producer}!Producer@{Producer}}
+\index{Producer@{Producer}!Producer@{Producer}}
+\subsubsection{\texorpdfstring{Producer()}{Producer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Producer\+::\+Producer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default-\/constructor for the \hyperlink{class_producer}{Producer} class. \begin{DoxyReturn}{Returns}
+\+: The constructed \hyperlink{class_producer}{Producer} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_producer_abfb6f8afcc08bdd27e6451c8ae5b0129}\label{class_producer_abfb6f8afcc08bdd27e6451c8ae5b0129}} 
+\index{Producer@{Producer}!Producer@{Producer}}
+\index{Producer@{Producer}!Producer@{Producer}}
+\subsubsection{\texorpdfstring{Producer()}{Producer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Producer\+::\+Producer (\begin{DoxyParamCaption}\item[{\hyperlink{class_queue}{Queue}$<$ \hyperlink{classtsgl_1_1_star}{Star} $\ast$$>$ \&}]{shared\+Buffer,  }\item[{unsigned long}]{id,  }\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} \&}]{can }\end{DoxyParamCaption})}
+
+Explicit-\/constructor for the \hyperlink{class_producer}{Producer} class. 
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_producer_a40820fecb39439fac7a4f7b4227d4d1d}\label{class_producer_a40820fecb39439fac7a4f7b4227d4d1d}} 
+\index{Producer@{Producer}!act@{act}}
+\index{act@{act}!Producer@{Producer}}
+\subsubsection{\texorpdfstring{act()}{act()}}
+{\footnotesize\ttfamily void Producer\+::act (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+act goes through the process of adding a produced item to \hyperlink{class_queue}{Queue} 
+
+Implements \hyperlink{class_p_c_thread}{P\+C\+Thread}.
+
+\mbox{\Hypertarget{class_producer_aba582d5889728f3d4eb6399a5788ab9f}\label{class_producer_aba582d5889728f3d4eb6399a5788ab9f}} 
+\index{Producer@{Producer}!lock@{lock}}
+\index{lock@{lock}!Producer@{Producer}}
+\subsubsection{\texorpdfstring{lock()}{lock()}}
+{\footnotesize\ttfamily void Producer\+::lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+locks the \hyperlink{class_queue}{Queue} for production 
+
+Implements \hyperlink{class_p_c_thread}{P\+C\+Thread}.
+
+\mbox{\Hypertarget{class_producer_a9a3ce835478573c67a6c8d928ccbf8f0}\label{class_producer_a9a3ce835478573c67a6c8d928ccbf8f0}} 
+\index{Producer@{Producer}!unlock@{unlock}}
+\index{unlock@{unlock}!Producer@{Producer}}
+\subsubsection{\texorpdfstring{unlock()}{unlock()}}
+{\footnotesize\ttfamily void Producer\+::unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+unlocks the \hyperlink{class_queue}{Queue} after production 
+
+Implements \hyperlink{class_p_c_thread}{P\+C\+Thread}.
+
+\mbox{\Hypertarget{class_producer_ac669b046bc8254d43b7ccc4e3e7a1a8b}\label{class_producer_ac669b046bc8254d43b7ccc4e3e7a1a8b}} 
+\index{Producer@{Producer}!wait@{wait}}
+\index{wait@{wait}!Producer@{Producer}}
+\subsubsection{\texorpdfstring{wait()}{wait()}}
+{\footnotesize\ttfamily void Producer\+::wait (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+wait takes some time to find the next color 
+
+Reimplemented from \hyperlink{class_p_c_thread}{P\+C\+Thread}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Producer.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Producer.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,231 @@
+\hypertarget{class_philosopher}{}\section{Philosopher Class Reference}
+\label{class_philosopher}\index{Philosopher@{Philosopher}}
+
+
+Object representing a philosopher in the Dining Philosophers\textquotesingle{} problem.  
+
+
+
+
+{\ttfamily \#include $<$Philosopher.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_philosopher_affffff67acd52b945fb91277c52af8a3}{Philosopher} ()
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{class_philosopher}{Philosopher}. \end{DoxyCompactList}\item 
+void \hyperlink{class_philosopher_a0b49a5a22cd608ce3ac73211df0d3f45}{draw} (\hyperlink{classtsgl_1_1_canvas}{Canvas} \&can, float x, float y)
+\item 
+void \hyperlink{class_philosopher_ae0d341934c25f1303ea0c16228e9eeae}{refresh\+Color} ()
+\item 
+void \hyperlink{class_philosopher_a5e5cfa25abdbca70a5d9ae725d8df7ea}{add\+Meal} ()
+\item 
+bool \hyperlink{class_philosopher_a7658c8e95d7895246251b494b033d2e3}{acquire} (\hyperlink{struct_fork}{Fork} \&f)
+\item 
+bool \hyperlink{class_philosopher_a0d229ee7b31b4ccd530fced5424f84a9}{release} (\hyperlink{struct_fork}{Fork} \&f)
+\item 
+void \hyperlink{class_philosopher_adb8c98df2b7cf8f2d2cde2daa18c731a}{think} ()
+\item 
+\mbox{\Hypertarget{class_philosopher_a0115c91983e00c09663f36a7b275e1bd}\label{class_philosopher_a0115c91983e00c09663f36a7b275e1bd}} 
+void \hyperlink{class_philosopher_a0115c91983e00c09663f36a7b275e1bd}{eat} ()
+\begin{DoxyCompactList}\small\item\em Resets the \hyperlink{class_philosopher}{Philosopher} to thinking after he eats. \end{DoxyCompactList}\item 
+void \hyperlink{class_philosopher_ad17179822ef90cea812252fa11709ad7}{set\+State} (Phil\+State s)
+\begin{DoxyCompactList}\small\item\em Mutator for my\+State. \end{DoxyCompactList}\item 
+void \hyperlink{class_philosopher_afbeb831cc699beac308607e43ca0693d}{set\+Action} (Phil\+Action a)
+\begin{DoxyCompactList}\small\item\em Mutator for my\+Action. \end{DoxyCompactList}\item 
+void \hyperlink{class_philosopher_a052dca3c30eb699b594aa0c086554a30}{set\+Id} (int i, int nphil)
+\begin{DoxyCompactList}\small\item\em Mutator for id. \end{DoxyCompactList}\item 
+int \hyperlink{class_philosopher_aec2c6ca7096a9ae51f35e0f68b167345}{get\+Meals} ()
+\item 
+Phil\+State \hyperlink{class_philosopher_a04862832ab8b79fd45ddec5e0546775a}{state} ()
+\item 
+Phil\+Action \hyperlink{class_philosopher_a0e6078cacfe93f71cc7f027e0b3a8971}{action} ()
+\item 
+int \hyperlink{class_philosopher_adea5fd87303d0365985cb87c7666e452}{get\+Id} ()
+\item 
+bool \hyperlink{class_philosopher_a3718addd7037cd1266435e7c91e84388}{has\+Circle} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Object representing a philosopher in the Dining Philosophers\textquotesingle{} problem. 
+
+The \hyperlink{class_philosopher}{Philosopher} class contains variables and methods necessary for representing a philosopher at a table. Each \hyperlink{class_philosopher}{Philosopher} may acquire or release the fork to his left or to his right (or both), with his state changing accordingly. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_philosopher_affffff67acd52b945fb91277c52af8a3}\label{class_philosopher_affffff67acd52b945fb91277c52af8a3}} 
+\index{Philosopher@{Philosopher}!Philosopher@{Philosopher}}
+\index{Philosopher@{Philosopher}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{Philosopher()}{Philosopher()}}
+{\footnotesize\ttfamily Philosopher\+::\+Philosopher (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{class_philosopher}{Philosopher}. 
+
+Explicit constructor for a new \hyperlink{class_philosopher}{Philosopher} object. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_philosopher_a7658c8e95d7895246251b494b033d2e3}\label{class_philosopher_a7658c8e95d7895246251b494b033d2e3}} 
+\index{Philosopher@{Philosopher}!acquire@{acquire}}
+\index{acquire@{acquire}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{acquire()}{acquire()}}
+{\footnotesize\ttfamily bool Philosopher\+::acquire (\begin{DoxyParamCaption}\item[{\hyperlink{struct_fork}{Fork} \&}]{f }\end{DoxyParamCaption})}
+
+Picks up a fork specified by its reference 
+
+Referenced by Table\+::act\+Step().
+
+\mbox{\Hypertarget{class_philosopher_a0e6078cacfe93f71cc7f027e0b3a8971}\label{class_philosopher_a0e6078cacfe93f71cc7f027e0b3a8971}} 
+\index{Philosopher@{Philosopher}!action@{action}}
+\index{action@{action}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{action()}{action()}}
+{\footnotesize\ttfamily Phil\+Action Philosopher\+::action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for \hyperlink{class_philosopher}{Philosopher}\textquotesingle{}s action. \mbox{\Hypertarget{class_philosopher_a5e5cfa25abdbca70a5d9ae725d8df7ea}\label{class_philosopher_a5e5cfa25abdbca70a5d9ae725d8df7ea}} 
+\index{Philosopher@{Philosopher}!add\+Meal@{add\+Meal}}
+\index{add\+Meal@{add\+Meal}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{add\+Meal()}{addMeal()}}
+{\footnotesize\ttfamily void Philosopher\+::add\+Meal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Adds a meal representation to meals and the Canvas 
+
+Referenced by Table\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher_a0b49a5a22cd608ce3ac73211df0d3f45}\label{class_philosopher_a0b49a5a22cd608ce3ac73211df0d3f45}} 
+\index{Philosopher@{Philosopher}!draw@{draw}}
+\index{draw@{draw}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Philosopher\+::draw (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} \&}]{can,  }\item[{float}]{x,  }\item[{float}]{y }\end{DoxyParamCaption})}
+
+Adds \hyperlink{class_philosopher}{Philosopher} to Canvas or refreshes its color. 
+
+Referenced by Table\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher_adea5fd87303d0365985cb87c7666e452}\label{class_philosopher_adea5fd87303d0365985cb87c7666e452}} 
+\index{Philosopher@{Philosopher}!get\+Id@{get\+Id}}
+\index{get\+Id@{get\+Id}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{get\+Id()}{getId()}}
+{\footnotesize\ttfamily int Philosopher\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for \hyperlink{class_philosopher}{Philosopher}\textquotesingle{}s id. \mbox{\Hypertarget{class_philosopher_aec2c6ca7096a9ae51f35e0f68b167345}\label{class_philosopher_aec2c6ca7096a9ae51f35e0f68b167345}} 
+\index{Philosopher@{Philosopher}!get\+Meals@{get\+Meals}}
+\index{get\+Meals@{get\+Meals}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{get\+Meals()}{getMeals()}}
+{\footnotesize\ttfamily int Philosopher\+::get\+Meals (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for number of meals \hyperlink{class_philosopher}{Philosopher} has consumed. 
+
+Referenced by Table\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher_a3718addd7037cd1266435e7c91e84388}\label{class_philosopher_a3718addd7037cd1266435e7c91e84388}} 
+\index{Philosopher@{Philosopher}!has\+Circle@{has\+Circle}}
+\index{has\+Circle@{has\+Circle}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{has\+Circle()}{hasCircle()}}
+{\footnotesize\ttfamily bool Philosopher\+::has\+Circle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for \hyperlink{class_philosopher}{Philosopher}\textquotesingle{}s circle. \mbox{\Hypertarget{class_philosopher_ae0d341934c25f1303ea0c16228e9eeae}\label{class_philosopher_ae0d341934c25f1303ea0c16228e9eeae}} 
+\index{Philosopher@{Philosopher}!refresh\+Color@{refresh\+Color}}
+\index{refresh\+Color@{refresh\+Color}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{refresh\+Color()}{refreshColor()}}
+{\footnotesize\ttfamily void Philosopher\+::refresh\+Color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Updates the \hyperlink{class_philosopher}{Philosopher}\textquotesingle{}s color based on its state 
+
+Referenced by Table\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher_a0d229ee7b31b4ccd530fced5424f84a9}\label{class_philosopher_a0d229ee7b31b4ccd530fced5424f84a9}} 
+\index{Philosopher@{Philosopher}!release@{release}}
+\index{release@{release}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily bool Philosopher\+::release (\begin{DoxyParamCaption}\item[{\hyperlink{struct_fork}{Fork} \&}]{f }\end{DoxyParamCaption})}
+
+Releases a fork specified by its reference 
+
+Referenced by Table\+::act\+Step().
+
+\mbox{\Hypertarget{class_philosopher_afbeb831cc699beac308607e43ca0693d}\label{class_philosopher_afbeb831cc699beac308607e43ca0693d}} 
+\index{Philosopher@{Philosopher}!set\+Action@{set\+Action}}
+\index{set\+Action@{set\+Action}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{set\+Action()}{setAction()}}
+{\footnotesize\ttfamily void Philosopher\+::set\+Action (\begin{DoxyParamCaption}\item[{Phil\+Action}]{a }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Mutator for my\+Action. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Phil\+Action to set my\+Action to. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Table\+::forfeit\+When\+Blocked\+Method(), Table\+::hierarchy\+Method(), Table\+::n\+Frame\+Release\+Method(), Table\+::odd\+Even\+Method(), think(), and Table\+::wait\+When\+Blocked\+Method().
+
+\mbox{\Hypertarget{class_philosopher_a052dca3c30eb699b594aa0c086554a30}\label{class_philosopher_a052dca3c30eb699b594aa0c086554a30}} 
+\index{Philosopher@{Philosopher}!set\+Id@{set\+Id}}
+\index{set\+Id@{set\+Id}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{set\+Id()}{setId()}}
+{\footnotesize\ttfamily void Philosopher\+::set\+Id (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{nphil }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Mutator for id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Which philosopher id to mutate \\
+\hline
+{\em nphil} & Total number of philosophers. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Philosopher(), and Table\+::\+Table().
+
+\mbox{\Hypertarget{class_philosopher_ad17179822ef90cea812252fa11709ad7}\label{class_philosopher_ad17179822ef90cea812252fa11709ad7}} 
+\index{Philosopher@{Philosopher}!set\+State@{set\+State}}
+\index{set\+State@{set\+State}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{set\+State()}{setState()}}
+{\footnotesize\ttfamily void Philosopher\+::set\+State (\begin{DoxyParamCaption}\item[{Phil\+State}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Mutator for my\+State. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Phil\+State to set my\+State to. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Table\+::forfeit\+When\+Blocked\+Method(), and think().
+
+\mbox{\Hypertarget{class_philosopher_a04862832ab8b79fd45ddec5e0546775a}\label{class_philosopher_a04862832ab8b79fd45ddec5e0546775a}} 
+\index{Philosopher@{Philosopher}!state@{state}}
+\index{state@{state}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{state()}{state()}}
+{\footnotesize\ttfamily Phil\+State Philosopher\+::state (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for \hyperlink{class_philosopher}{Philosopher}\textquotesingle{}s state. 
+
+Referenced by Table\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher_adb8c98df2b7cf8f2d2cde2daa18c731a}\label{class_philosopher_adb8c98df2b7cf8f2d2cde2daa18c731a}} 
+\index{Philosopher@{Philosopher}!think@{think}}
+\index{think@{think}!Philosopher@{Philosopher}}
+\subsubsection{\texorpdfstring{think()}{think()}}
+{\footnotesize\ttfamily void Philosopher\+::think (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Thinks and switches to hungry state if a random number is a multiple of 3. 
+
+Referenced by Table\+::hierarchy\+Method(), Table\+::n\+Frame\+Release\+Method(), Table\+::odd\+Even\+Method(), and Table\+::wait\+When\+Blocked\+Method().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Dining\+Philosophers/Philosopher.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Dining\+Philosophers/Philosopher.\+cpp\end{DoxyCompactItemize}

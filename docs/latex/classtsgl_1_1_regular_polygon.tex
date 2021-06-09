@@ -1,0 +1,179 @@
+\hypertarget{classtsgl_1_1_regular_polygon}{}\section{tsgl\+:\+:Regular\+Polygon Class Reference}
+\label{classtsgl_1_1_regular_polygon}\index{tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}}
+
+
+Draw a regular polygon.  
+
+
+
+
+{\ttfamily \#include $<$Regular\+Polygon.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Regular\+Polygon\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_regular_polygon}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_regular_polygon_a084a058facd0ce8576c908227c912f72}{Regular\+Polygon} (float x, float y, float z, G\+Lfloat radius, int sides, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} with monocolored fill. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_regular_polygon_aba7efbdad969dcd3a176b55bd8b545b0}{Regular\+Polygon} (float x, float y, float z, G\+Lfloat radius, int sides, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} with multicolored fill. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_regular_polygon_ac3f500be681b6d43f75ec00bf5434be0}{get\+Sides} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the number of sides of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. \end{DoxyCompactList}\item 
+G\+Lfloat \hyperlink{classtsgl_1_1_regular_polygon_a97e19ebc76f1f22f5fee795d4d633aa0}{get\+Radius} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the radius of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_regular_polygon_a3c4240fc8d95e6875fc716b26504000e}{set\+Radius} (G\+Lfloat radius)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the center of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} base to its vertices. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_regular_polygon_af115ff2fbff6075dc965af51f7507bc9}{change\+Radius\+By} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the center of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} to its vertices by the parameter amount. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_regular_polygon_a11297204087159c74683b7ba92b703b8}\label{classtsgl_1_1_regular_polygon_a11297204087159c74683b7ba92b703b8}} 
+G\+Lfloat {\bfseries my\+Radius}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_regular_polygon_af84c48c2e6ff8a6d389e73c4185655b7}\label{classtsgl_1_1_regular_polygon_af84c48c2e6ff8a6d389e73c4185655b7}} 
+int {\bfseries my\+Sides}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw a regular polygon. 
+
+\hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} is a class for holding \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} data for a regular polygon. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_regular_polygon_a084a058facd0ce8576c908227c912f72}\label{classtsgl_1_1_regular_polygon_a084a058facd0ce8576c908227c912f72}} 
+\index{tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}!Regular\+Polygon@{Regular\+Polygon}}
+\index{Regular\+Polygon@{Regular\+Polygon}!tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}}
+\subsubsection{\texorpdfstring{Regular\+Polygon()}{RegularPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Regular\+Polygon\+::\+Regular\+Polygon (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{radius,  }\item[{int}]{sides,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} with monocolored fill. 
+
+This function draws a regular polygon with the given center, sides, radius, rotation, and color. (number of sides), and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em radius} & The radius of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} in pixels. \\
+\hline
+{\em sides} & The number of sides to use in the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & The color of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_regular_polygon_aba7efbdad969dcd3a176b55bd8b545b0}\label{classtsgl_1_1_regular_polygon_aba7efbdad969dcd3a176b55bd8b545b0}} 
+\index{tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}!Regular\+Polygon@{Regular\+Polygon}}
+\index{Regular\+Polygon@{Regular\+Polygon}!tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}}
+\subsubsection{\texorpdfstring{Regular\+Polygon()}{RegularPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Regular\+Polygon\+::\+Regular\+Polygon (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{radius,  }\item[{int}]{sides,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} with multicolored fill. 
+
+This function draws a regular polygon with the given center, sides, radius, rotation, and color. (number of sides), and coloring. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em radius} & The radius of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} in pixels. \\
+\hline
+{\em sides} & The number of sides to use in the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & An array of colors for the regular polygon\textquotesingle{}s vertices. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_regular_polygon_af115ff2fbff6075dc965af51f7507bc9}\label{classtsgl_1_1_regular_polygon_af115ff2fbff6075dc965af51f7507bc9}} 
+\index{tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}!change\+Radius\+By@{change\+Radius\+By}}
+\index{change\+Radius\+By@{change\+Radius\+By}!tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}}
+\subsubsection{\texorpdfstring{change\+Radius\+By()}{changeRadiusBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Regular\+Polygon\+::change\+Radius\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the center of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} to its vertices by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the radius of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by get\+Radius().
+
+\mbox{\Hypertarget{classtsgl_1_1_regular_polygon_a97e19ebc76f1f22f5fee795d4d633aa0}\label{classtsgl_1_1_regular_polygon_a97e19ebc76f1f22f5fee795d4d633aa0}} 
+\index{tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}!get\+Radius@{get\+Radius}}
+\index{get\+Radius@{get\+Radius}!tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}}
+\subsubsection{\texorpdfstring{get\+Radius()}{getRadius()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Regular\+Polygon\+::get\+Radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the radius of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. 
+
+Returns the value of the my\+Radius private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_regular_polygon_ac3f500be681b6d43f75ec00bf5434be0}\label{classtsgl_1_1_regular_polygon_ac3f500be681b6d43f75ec00bf5434be0}} 
+\index{tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}!get\+Sides@{get\+Sides}}
+\index{get\+Sides@{get\+Sides}!tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}}
+\subsubsection{\texorpdfstring{get\+Sides()}{getSides()}}
+{\footnotesize\ttfamily int tsgl\+::\+Regular\+Polygon\+::get\+Sides (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the number of sides of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. 
+
+Returns the value of the my\+Sides private variable, an int. \mbox{\Hypertarget{classtsgl_1_1_regular_polygon_a3c4240fc8d95e6875fc716b26504000e}\label{classtsgl_1_1_regular_polygon_a3c4240fc8d95e6875fc716b26504000e}} 
+\index{tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}!set\+Radius@{set\+Radius}}
+\index{set\+Radius@{set\+Radius}!tsgl\+::\+Regular\+Polygon@{tsgl\+::\+Regular\+Polygon}}
+\subsubsection{\texorpdfstring{set\+Radius()}{setRadius()}}
+{\footnotesize\ttfamily void tsgl\+::\+Regular\+Polygon\+::set\+Radius (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{radius }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the center of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} base to its vertices. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em radius} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s new radius. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by get\+Radius().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Regular\+Polygon.\+h\item 
+Regular\+Polygon.\+cpp\end{DoxyCompactItemize}

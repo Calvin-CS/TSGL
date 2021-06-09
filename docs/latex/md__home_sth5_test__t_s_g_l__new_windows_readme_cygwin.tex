@@ -1,0 +1,43 @@
+\subsubsection*{Installing Cygwin}
+
+
+\begin{DoxyEnumerate}
+\item Download \href{https://www.cygwin.com/}{\tt Cygwin}
+\item Install the setup file; Continue until you get to the \char`\"{}\+Select Packages\char`\"{} window
+\begin{DoxyItemize}
+\item {\bfseries N\+O\+TE}\+: If the window crashes, open the setup file and follow the steps again
+\end{DoxyItemize}
+\item Click View $>$ Not Installed
+\item In the search box type {\ttfamily lynx} and click the dropdown next to \char`\"{}\+Skip\char`\"{} and select the last one
+\item Do the same for {\ttfamily dos2unix} and {\ttfamily wget}
+\item Click \char`\"{}\+Next\char`\"{} and finish the installation
+\end{DoxyEnumerate}
+
+
+
+\subsubsection*{Installing T\+S\+GL}
+
+
+\begin{DoxyEnumerate}
+\item Clone the \href{https://github.com/Calvin-CS/TSGL.git}{\tt T\+S\+GL repository} inside a cygwin terminal
+\item Run the install-\/cygwin.\+sh file ( {\ttfamily ./install-\/cygwin.sh} )
+\begin{DoxyItemize}
+\item If it doesn\textquotesingle{}t work run {\ttfamily dos2unix install-\/cygwin.\+sh} and try it again
+\item It may take a while so please be patient
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+\subparagraph*{Check}
+
+
+\begin{DoxyItemize}
+\item Open a new cygwin terminal and run {\ttfamily startxwin}
+\item On another terminal run {\ttfamily export D\+I\+S\+P\+L\+AY=\+:0.\+0}
+\item Run {\ttfamily xeyes}
+\item You should see a new window with a pair of eyes
+\end{DoxyItemize}
+
+cd to src/examples and run {\ttfamily make}
+\begin{DoxyEnumerate}
+\item cd to one of the examples and run the test files 
+\end{DoxyEnumerate}

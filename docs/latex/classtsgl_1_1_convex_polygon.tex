@@ -1,0 +1,157 @@
+\hypertarget{classtsgl_1_1_convex_polygon}{}\section{tsgl\+:\+:Convex\+Polygon Class Reference}
+\label{classtsgl_1_1_convex_polygon}\index{tsgl\+::\+Convex\+Polygon@{tsgl\+::\+Convex\+Polygon}}
+
+
+Draw an arbitrary Convex polygon with colored vertices.  
+
+
+
+
+{\ttfamily \#include $<$Convex\+Polygon.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Convex\+Polygon\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.370370cm]{classtsgl_1_1_convex_polygon}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_convex_polygon_a4a126a4fd77521f702f8907d7c5cd5df}{Convex\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, G\+Lfloat x\mbox{[}$\,$\mbox{]}, G\+Lfloat y\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} with monocolored fill. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_convex_polygon_a7985006dd2658733dd693aa30b37ca21}{Convex\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, G\+Lfloat x\mbox{[}$\,$\mbox{]}, G\+Lfloat y\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} with multicolored fill. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_convex_polygon_a24507f367aec93ffba00f1c50167362f}{Convex\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, float yaw, float pitch, float roll)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw an arbitrary Convex polygon with colored vertices. 
+
+\hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} is a class for holding vertex data for a triangle strip with colored vertices.
+
+Vertices are drawn in triangle strip format, where the first three vertices make up the first triangle, the next vertex plus the previous two make up the second triangle, and so on.
+
+This method is optimized for long lists and offers a marked improvement over drawing individual \hyperlink{classtsgl_1_1_triangle}{Triangle} instances. \begin{DoxyNote}{Note}
+The \hyperlink{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}{add\+Vertex()} method must be called the same number of times as specified in the constructor. 
+
+Calling \hyperlink{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}{add\+Vertex()} after all vertices have been added will do nothing. 
+
+Calling \hyperlink{classtsgl_1_1_shape_ae0905e73f1652d92cef9c7f2c38572f3}{draw()} before all vertices have been added will do nothing. 
+\end{DoxyNote}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_convex_polygon_a24507f367aec93ffba00f1c50167362f}\label{classtsgl_1_1_convex_polygon_a24507f367aec93ffba00f1c50167362f}} 
+\index{tsgl\+::\+Convex\+Polygon@{tsgl\+::\+Convex\+Polygon}!Convex\+Polygon@{Convex\+Polygon}}
+\index{Convex\+Polygon@{Convex\+Polygon}!tsgl\+::\+Convex\+Polygon@{tsgl\+::\+Convex\+Polygon}}
+\subsubsection{\texorpdfstring{Convex\+Polygon()}{ConvexPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Convex\+Polygon\+::\+Convex\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}. 
+
+Protected explicit constructor for a Convex Polygon object. Used as superclass constructor. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em num\+Vertices} & The number of vertices that make up the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s roll in 3D space.. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_convex_polygon_a4a126a4fd77521f702f8907d7c5cd5df}\label{classtsgl_1_1_convex_polygon_a4a126a4fd77521f702f8907d7c5cd5df}} 
+\index{tsgl\+::\+Convex\+Polygon@{tsgl\+::\+Convex\+Polygon}!Convex\+Polygon@{Convex\+Polygon}}
+\index{Convex\+Polygon@{Convex\+Polygon}!tsgl\+::\+Convex\+Polygon@{tsgl\+::\+Convex\+Polygon}}
+\subsubsection{\texorpdfstring{Convex\+Polygon()}{ConvexPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Convex\+Polygon\+::\+Convex\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{G\+Lfloat}]{x\mbox{[}$\,$\mbox{]},  }\item[{G\+Lfloat}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} with monocolored fill. 
+
+Explicit constructor for a Convex Polygon object. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em num\+Vertices} & The number of vertices that make up the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}. \\
+\hline
+{\em x} & An array of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & An array of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s y vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & A \hyperlink{structtsgl_1_1_color_float}{Color\+Float}, the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s fill color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} with the specified vertices and color. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_convex_polygon_a7985006dd2658733dd693aa30b37ca21}\label{classtsgl_1_1_convex_polygon_a7985006dd2658733dd693aa30b37ca21}} 
+\index{tsgl\+::\+Convex\+Polygon@{tsgl\+::\+Convex\+Polygon}!Convex\+Polygon@{Convex\+Polygon}}
+\index{Convex\+Polygon@{Convex\+Polygon}!tsgl\+::\+Convex\+Polygon@{tsgl\+::\+Convex\+Polygon}}
+\subsubsection{\texorpdfstring{Convex\+Polygon()}{ConvexPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Convex\+Polygon\+::\+Convex\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{G\+Lfloat}]{x\mbox{[}$\,$\mbox{]},  }\item[{G\+Lfloat}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} with multicolored fill. 
+
+Explicit constructor for a Convex Polygon object. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em num\+Vertices} & The number of vertices that make up the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}. \\
+\hline
+{\em x} & An array of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & An array of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s y vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & An array of Color\+Floats, the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s fill color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} with the specified vertices and color. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Convex\+Polygon.\+h\item 
+Convex\+Polygon.\+cpp\end{DoxyCompactItemize}
