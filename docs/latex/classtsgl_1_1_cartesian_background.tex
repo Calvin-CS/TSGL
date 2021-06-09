@@ -1,0 +1,466 @@
+\hypertarget{classtsgl_1_1_cartesian_background}{}\section{tsgl\+:\+:Cartesian\+Background Class Reference}
+\label{classtsgl_1_1_cartesian_background}\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+
+
+Draw a procedurally drawn \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} for the \hyperlink{classtsgl_1_1_canvas}{Canvas}.  
+
+
+
+
+{\ttfamily \#include $<$Cartesian\+Background.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Cartesian\+Background\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_cartesian_background}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_cartesian_background_aff44104863ff24b333e599e03a837318}{Cartesian\+Background} (G\+Lint width, G\+Lint height, Decimal x\+Min, Decimal y\+Min, Decimal x\+Max, Decimal y\+Max, const \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&c=W\+H\+I\+TE)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_cartesian_background_a4cdb6866a066e6647af9dbdae738b9b2}{draw} ()
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_cartesian_background_ad6b87579d02c1ed138d7ace809e705a8}{draw\+Axes} (Decimal originX, Decimal originY, Decimal spacingX, Decimal spacingY)
+\begin{DoxyCompactList}\small\item\em Draws axes on the Cartesian \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_background_ae494eed2e3277ddc0506d382054f22c3}{draw\+Function} (const \hyperlink{classtsgl_1_1_function}{Function} \&function, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+CK)
+\begin{DoxyCompactList}\small\item\em Plots a function on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_background_a8c7be40429c42d0e4504eeb6b0057a95}{draw\+Function} (function\+Pointer \&function, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+CK)
+\begin{DoxyCompactList}\small\item\em Plots a function on the screen. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_background_a315ee79b872d8fc612749795f4bbb6d9}{draw\+Partial\+Function} (function\+Pointer \&function, Decimal min, Decimal max, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color=B\+L\+A\+CK)
+\begin{DoxyCompactList}\small\item\em Plots part of a function on the screen. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_cartesian_background_a3a5a05134a9cfd0569efe2fd66d30e6a}{draw\+Pixel} (float x, float y, \hyperlink{structtsgl_1_1_color_int}{Color\+Int} c)
+\begin{DoxyCompactList}\small\item\em Draws a single pixel, specified in x,y format, at the given Cartesian coordinates. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_background_a93d3f5f05ad533a5ec1f896477182aff}{get\+Cart\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s Cartesian height. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_background_a7bede4180193c61fcaf01c9f3cc6aca1}{get\+Cart\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s Cartesian width. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_background_af8131853b72c0ff370b1b558bf2c8073}{get\+MaxX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s right bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_background_a6f0d1852411eae2fe0a2822a6da29d7d}{get\+MaxY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s top bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_background_a8bc9825516fb188932a992a5ad6baf49}{get\+MinX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s left bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_background_a732052e2af266586179855eea5b45361}{get\+MinY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s bottom bound. \end{DoxyCompactList}\item 
+virtual \hyperlink{structtsgl_1_1_color_int}{Color\+Int} \hyperlink{classtsgl_1_1_cartesian_background_a36a3e803d2ffe16e2e1639359f7c7be5}{get\+Pixel} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_background}{Background} at the given x and y Cartesian coordinates. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_background_afd50b54bbeeace2a72e39363f76a460f}{zoom} (Decimal x, Decimal y, Decimal scale)
+\begin{DoxyCompactList}\small\item\em Zoom the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} with a given center. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_background_a7f4464f03382151b767387a0f7befd72}{zoom} (Decimal x1, Decimal y1, Decimal x2, Decimal y2)
+\begin{DoxyCompactList}\small\item\em Zoom the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} with the given bounding (Cartesian) coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classtsgl_1_1_cartesian_background_a3d898bf3fe826c563e74c72e93cd3c74}{select\+Shaders} (unsigned int s\+Type) override
+\begin{DoxyCompactList}\small\item\em Activates the corresponding Shader for a given \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_ab7a5f86531e3ca87a11efb8600fb4e03}\label{classtsgl_1_1_cartesian_background_ab7a5f86531e3ca87a11efb8600fb4e03}} 
+Decimal {\bfseries my\+Cart\+Width}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_ae93d4a1074cb5285406cd753733e48ed}\label{classtsgl_1_1_cartesian_background_ae93d4a1074cb5285406cd753733e48ed}} 
+Decimal {\bfseries my\+Cart\+Height}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a0d22e13bc40c8d99103170d9386d5de8}\label{classtsgl_1_1_cartesian_background_a0d22e13bc40c8d99103170d9386d5de8}} 
+Decimal {\bfseries my\+X\+Min}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_add335e91ed82c520b28369cd93067618}\label{classtsgl_1_1_cartesian_background_add335e91ed82c520b28369cd93067618}} 
+Decimal {\bfseries my\+X\+Max}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a16510f597bc529fbc2e96bce3d7bbac5}\label{classtsgl_1_1_cartesian_background_a16510f597bc529fbc2e96bce3d7bbac5}} 
+Decimal {\bfseries my\+Y\+Min}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a3afa7fc438538c504347349d9ff8d85c}\label{classtsgl_1_1_cartesian_background_a3afa7fc438538c504347349d9ff8d85c}} 
+Decimal {\bfseries my\+Y\+Max}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a1c44de7a723be16561717eec0afb7916}\label{classtsgl_1_1_cartesian_background_a1c44de7a723be16561717eec0afb7916}} 
+Decimal {\bfseries pixel\+Width}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a0d1f3d876b9876467691498a28e1fcce}\label{classtsgl_1_1_cartesian_background_a0d1f3d876b9876467691498a28e1fcce}} 
+Decimal {\bfseries pixel\+Height}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Draw a procedurally drawn \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} for the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+\hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} is a class for holding a framebuffer of color data. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_aff44104863ff24b333e599e03a837318}\label{classtsgl_1_1_cartesian_background_aff44104863ff24b333e599e03a837318}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!Cartesian\+Background@{Cartesian\+Background}}
+\index{Cartesian\+Background@{Cartesian\+Background}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{Cartesian\+Background()}{CartesianBackground()}}
+{\footnotesize\ttfamily tsgl\+::\+Cartesian\+Background\+::\+Cartesian\+Background (\begin{DoxyParamCaption}\item[{G\+Lint}]{width,  }\item[{G\+Lint}]{height,  }\item[{Decimal}]{x\+Min,  }\item[{Decimal}]{y\+Min,  }\item[{Decimal}]{x\+Max,  }\item[{Decimal}]{y\+Max,  }\item[{const \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&}]{clear\+Color = {\ttfamily WHITE} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. 
+
+Creates a \hyperlink{classtsgl_1_1_background}{Background} whose world dimensions don\textquotesingle{}t have to match its pixel dimensions. 
+\begin{DoxyParams}{Parameters}
+{\em width} & \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s width in pixels. \\
+\hline
+{\em height} & \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s height in pixels. \\
+\hline
+{\em x\+Min} & x value of the left side of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} in world coordinates. \\
+\hline
+{\em x\+Max} & x value of the right side of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} in world coordinates. \\
+\hline
+{\em y\+Min} & y value of the bottom side of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} in world coordinates. \\
+\hline
+{\em y\+Max} & y value of the top side of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} in world coordinates. \\
+\hline
+{\em c} & A \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s original color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if x\+Max or x\+Min isn\textquotesingle{}t greater than its respective min then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} to which Drawables and Pixels can be drawn procedurally. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a4cdb6866a066e6647af9dbdae738b9b2}\label{classtsgl_1_1_cartesian_background_a4cdb6866a066e6647af9dbdae738b9b2}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!draw@{draw}}
+\index{draw@{draw}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. 
+
+This function actually draws the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \begin{DoxyNote}{Note}
+On each draw cycle, first any Drawables that have been newly added to the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} will be rendered, and then any new calls to draw\+Pixel will be processed. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_background_a62314d455c7b09b2686ba46fd1e5c663}{tsgl\+::\+Background}.
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_ad6b87579d02c1ed138d7ace809e705a8}\label{classtsgl_1_1_cartesian_background_ad6b87579d02c1ed138d7ace809e705a8}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!draw\+Axes@{draw\+Axes}}
+\index{draw\+Axes@{draw\+Axes}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{draw\+Axes()}{drawAxes()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::draw\+Axes (\begin{DoxyParamCaption}\item[{Decimal}]{originX,  }\item[{Decimal}]{originY,  }\item[{Decimal}]{spacingX,  }\item[{Decimal}]{spacingY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draws axes on the Cartesian \hyperlink{classtsgl_1_1_background}{Background}. 
+
+This function draws axes (with tick marks) on the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}, centered at the given (Cartesian) coordinates 
+\begin{DoxyParams}{Parameters}
+{\em originX} & The horizontal location of the y-\/axis line. \\
+\hline
+{\em originY} & The vertical location of the x-\/axis line. \\
+\hline
+{\em spacingX} & The distance between marks on the x-\/axis. \\
+\hline
+{\em spacingY} & The distance between marks on the y-\/axis. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_ae494eed2e3277ddc0506d382054f22c3}\label{classtsgl_1_1_cartesian_background_ae494eed2e3277ddc0506d382054f22c3}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!draw\+Function@{draw\+Function}}
+\index{draw\+Function@{draw\+Function}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{draw\+Function()}{drawFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::draw\+Function (\begin{DoxyParamCaption}\item[{const \hyperlink{classtsgl_1_1_function}{Function} \&}]{function,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color = {\ttfamily BLACK} }\end{DoxyParamCaption})}
+
+
+
+Plots a function on the screen. 
+
+This function receives a T\+S\+GL \hyperlink{classtsgl_1_1_function}{Function} instance as a parameter and plots the function on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\begin{DoxyParams}{Parameters}
+{\em function} & Reference to the \hyperlink{classtsgl_1_1_function}{Function} to plot. \\
+\hline
+{\em color} & The color of the vertices of the plotted function (set to B\+L\+A\+CK by default). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a8c7be40429c42d0e4504eeb6b0057a95}\label{classtsgl_1_1_cartesian_background_a8c7be40429c42d0e4504eeb6b0057a95}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!draw\+Function@{draw\+Function}}
+\index{draw\+Function@{draw\+Function}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{draw\+Function()}{drawFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::draw\+Function (\begin{DoxyParamCaption}\item[{function\+Pointer \&}]{function,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color = {\ttfamily BLACK} }\end{DoxyParamCaption})}
+
+
+
+Plots a function on the screen. 
+
+This function receives a pointer to a function method as a parameter and plots the function on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\begin{DoxyParams}{Parameters}
+{\em function} & Pointer to the function-\/drawing method to plot. \\
+\hline
+{\em color} & The color of the vertices of the plotted function (set to B\+L\+A\+CK by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+{\ttfamily function} must receive exactly one Decimal x parameter, and return a Decimal y parameter. 
+\end{DoxyNote}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a315ee79b872d8fc612749795f4bbb6d9}\label{classtsgl_1_1_cartesian_background_a315ee79b872d8fc612749795f4bbb6d9}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!draw\+Partial\+Function@{draw\+Partial\+Function}}
+\index{draw\+Partial\+Function@{draw\+Partial\+Function}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{draw\+Partial\+Function()}{drawPartialFunction()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::draw\+Partial\+Function (\begin{DoxyParamCaption}\item[{function\+Pointer \&}]{function,  }\item[{Decimal}]{min,  }\item[{Decimal}]{max,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color = {\ttfamily BLACK} }\end{DoxyParamCaption})}
+
+
+
+Plots part of a function on the screen. 
+
+This function receives a pointer to a function method as a parameter and plots the function on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} between the specified minimum and maximum coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em function} & Pointer to the function-\/drawing method to plot. \\
+\hline
+{\em min} & Minimum x value to evaluate and plot \\
+\hline
+{\em max} & Maximum x value to evaluate and plot \\
+\hline
+{\em color} & The color of the vertices of the plotted function (set to B\+L\+A\+CK by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+{\ttfamily function} must receive exactly one Decimal x parameter, and return a Decimal y parameter. 
+\end{DoxyNote}
+
+
+Referenced by draw\+Function(), and tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a3a5a05134a9cfd0569efe2fd66d30e6a}\label{classtsgl_1_1_cartesian_background_a3a5a05134a9cfd0569efe2fd66d30e6a}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!draw\+Pixel@{draw\+Pixel}}
+\index{draw\+Pixel@{draw\+Pixel}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{draw\+Pixel()}{drawPixel()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::draw\+Pixel (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draws a single pixel, specified in x,y format, at the given Cartesian coordinates. 
+
+This function alters the value at the specified x, y offset within the \hyperlink{classtsgl_1_1_background}{Background}\textquotesingle{}s buffer variable. \begin{DoxyNote}{Note}
+x and y must be given in world (Cartesian coordinates). 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The Cartesian x-\/position of the pixel. \\
+\hline
+{\em y} & The Cartesian y-\/position of the pixel. \\
+\hline
+{\em color} & The color of the point. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_background_acfeec27c6bcc851652725ddd9cc3d3c9}{tsgl\+::\+Background}.
+
+
+
+Referenced by Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), and Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a93d3f5f05ad533a5ec1f896477182aff}\label{classtsgl_1_1_cartesian_background_a93d3f5f05ad533a5ec1f896477182aff}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!get\+Cart\+Height@{get\+Cart\+Height}}
+\index{get\+Cart\+Height@{get\+Cart\+Height}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{get\+Cart\+Height()}{getCartHeight()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Background\+::get\+Cart\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s Cartesian height. 
+
+\begin{DoxyReturn}{Returns}
+The Cartesian height of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a7bede4180193c61fcaf01c9f3cc6aca1}\label{classtsgl_1_1_cartesian_background_a7bede4180193c61fcaf01c9f3cc6aca1}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!get\+Cart\+Width@{get\+Cart\+Width}}
+\index{get\+Cart\+Width@{get\+Cart\+Width}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{get\+Cart\+Width()}{getCartWidth()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Background\+::get\+Cart\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s Cartesian width. 
+
+\begin{DoxyReturn}{Returns}
+The Cartesian width of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_af8131853b72c0ff370b1b558bf2c8073}\label{classtsgl_1_1_cartesian_background_af8131853b72c0ff370b1b558bf2c8073}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!get\+MaxX@{get\+MaxX}}
+\index{get\+MaxX@{get\+MaxX}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{get\+Max\+X()}{getMaxX()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Background\+::get\+MaxX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s right bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the right of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. 
+\end{DoxyReturn}
+
+
+Referenced by Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a6f0d1852411eae2fe0a2822a6da29d7d}\label{classtsgl_1_1_cartesian_background_a6f0d1852411eae2fe0a2822a6da29d7d}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!get\+MaxY@{get\+MaxY}}
+\index{get\+MaxY@{get\+MaxY}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{get\+Max\+Y()}{getMaxY()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Background\+::get\+MaxY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s top bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the top of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a8bc9825516fb188932a992a5ad6baf49}\label{classtsgl_1_1_cartesian_background_a8bc9825516fb188932a992a5ad6baf49}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!get\+MinX@{get\+MinX}}
+\index{get\+MinX@{get\+MinX}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{get\+Min\+X()}{getMinX()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Background\+::get\+MinX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s left bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the left of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. 
+\end{DoxyReturn}
+
+
+Referenced by Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a732052e2af266586179855eea5b45361}\label{classtsgl_1_1_cartesian_background_a732052e2af266586179855eea5b45361}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!get\+MinY@{get\+MinY}}
+\index{get\+MinY@{get\+MinY}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{get\+Min\+Y()}{getMinY()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Background\+::get\+MinY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}\textquotesingle{}s bottom bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the bottom of the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a36a3e803d2ffe16e2e1639359f7c7be5}\label{classtsgl_1_1_cartesian_background_a36a3e803d2ffe16e2e1639359f7c7be5}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!get\+Pixel@{get\+Pixel}}
+\index{get\+Pixel@{get\+Pixel}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{get\+Pixel()}{getPixel()}}
+{\footnotesize\ttfamily \hyperlink{structtsgl_1_1_color_int}{Color\+Int} tsgl\+::\+Cartesian\+Background\+::get\+Pixel (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_background}{Background} at the given x and y Cartesian coordinates. 
+
+\begin{DoxyNote}{Note}
+x and y must be given in world (Cartesian coordinates). 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The Cartesian x-\/position of the pixel to grab. \\
+\hline
+{\em y} & The Cartesian y-\/position of the pixel to grab. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} containing the color of the pixel at (x,y). 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_background_a09d91731095fd0839eaf6e46c3d279b5}{tsgl\+::\+Background}.
+
+
+
+Referenced by get\+Min\+Y().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a3d898bf3fe826c563e74c72e93cd3c74}\label{classtsgl_1_1_cartesian_background_a3d898bf3fe826c563e74c72e93cd3c74}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!select\+Shaders@{select\+Shaders}}
+\index{select\+Shaders@{select\+Shaders}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{select\+Shaders()}{selectShaders()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::select\+Shaders (\begin{DoxyParamCaption}\item[{unsigned int}]{s\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Activates the corresponding Shader for a given \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+Type} & Unsigned int with a corresponding value for each type of Shader. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_background_a5207bcb45daafed4d6a739a8a0a0829e}{tsgl\+::\+Background}.
+
+
+
+Referenced by draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_afd50b54bbeeace2a72e39363f76a460f}\label{classtsgl_1_1_cartesian_background_afd50b54bbeeace2a72e39363f76a460f}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!zoom@{zoom}}
+\index{zoom@{zoom}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{zoom()}{zoom()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::zoom (\begin{DoxyParamCaption}\item[{Decimal}]{x,  }\item[{Decimal}]{y,  }\item[{Decimal}]{scale }\end{DoxyParamCaption})}
+
+
+
+Zoom the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} with a given center. 
+
+This function will re-\/center the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} at the given coordinates, then zoom with respect to the given scale. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The coordinate to re-\/center the screen on. \\
+\hline
+{\em y} & The coordinate to re-\/center the screen on. \\
+\hline
+{\em scale} & The zoom scale compared to the original. Less than 1 zooms in, greater than 1 zooms out. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function will automatically maintain the current aspect ratio. 
+\end{DoxyNote}
+
+
+Referenced by get\+Min\+Y(), zoom(), and tsgl\+::\+Cartesian\+Canvas\+::zoom().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_background_a7f4464f03382151b767387a0f7befd72}\label{classtsgl_1_1_cartesian_background_a7f4464f03382151b767387a0f7befd72}} 
+\index{tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}!zoom@{zoom}}
+\index{zoom@{zoom}!tsgl\+::\+Cartesian\+Background@{tsgl\+::\+Cartesian\+Background}}
+\subsubsection{\texorpdfstring{zoom()}{zoom()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Background\+::zoom (\begin{DoxyParamCaption}\item[{Decimal}]{x1,  }\item[{Decimal}]{y1,  }\item[{Decimal}]{x2,  }\item[{Decimal}]{y2 }\end{DoxyParamCaption})}
+
+
+
+Zoom the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} with the given bounding (Cartesian) coordinates. 
+
+This function will zoom the \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} with respect to the given bounding coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The left Cartesian bound. \\
+\hline
+{\em y1} & The bottom Cartesian bound. \\
+\hline
+{\em x2} & The right Cartesian bound. \\
+\hline
+{\em y2} & The top Cartesian bound. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Setting the right bound lower than the left bound or the top lower than the bottom will just swap the variables. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+This function will {\itshape N\+OT} automatically maintain the previous aspect ratio. 
+
+Change the aspect ratio on-\/the-\/fly only with caution. 
+\end{DoxyWarning}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Cartesian\+Background.\+h\item 
+Cartesian\+Background.\+cpp\end{DoxyCompactItemize}

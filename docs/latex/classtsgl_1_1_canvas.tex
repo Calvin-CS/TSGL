@@ -1,0 +1,1353 @@
+\hypertarget{classtsgl_1_1_canvas}{}\section{tsgl\+:\+:Canvas Class Reference}
+\label{classtsgl_1_1_canvas}\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+
+
+A GL window with numerous built-\/in, thread-\/safe drawing operations.  
+
+
+
+
+{\ttfamily \#include $<$Canvas.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Canvas\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_canvas}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_canvas_a7954ec07ba18f72024b388cdba965015}{Canvas} (double timer\+Length=0.\+0f, Background $\ast$background=nullptr)
+\begin{DoxyCompactList}\small\item\em Default \hyperlink{classtsgl_1_1_canvas}{Canvas} constructor method. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_canvas_ae1b6c345bb9abbd46a11a6b30975711c}{Canvas} (int x, int y, int width, int height, std\+::string title, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} background\+Color=G\+R\+AY, \hyperlink{classtsgl_1_1_background}{Background} $\ast$background=nullptr, double timer\+Length=0.\+0f)
+\begin{DoxyCompactList}\small\item\em Explicit \hyperlink{classtsgl_1_1_canvas}{Canvas} constructor method. \end{DoxyCompactList}\item 
+virtual \hyperlink{classtsgl_1_1_canvas_ab976c3999c68347818d64010b641e14f}{$\sim$\+Canvas} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{classtsgl_1_1_canvas}{Canvas} destructor method. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a26f2f1acf2b80eee95e42bc13dbc7600}{bind\+To\+Button} (Key button, Action action, void\+Function function)
+\begin{DoxyCompactList}\small\item\em Binds a key or button to a function. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_aecd3d94790d2e660db380a5e951ae394}{bind\+To\+Scroll} (std\+::function$<$ void(double, double)$>$ function)
+\begin{DoxyCompactList}\small\item\em Binds the mouse wheel to a function. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_ab8bc6862497ae8c93c03185e96c0ae9a}{add} (\hyperlink{classtsgl_1_1_drawable}{Drawable} $\ast$shape\+Ptr)
+\begin{DoxyCompactList}\small\item\em Adds a \hyperlink{classtsgl_1_1_drawable}{Drawable} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_af1f7728d3f65494fe463bf6e8fcb28cc}{clear\+Background} ()
+\begin{DoxyCompactList}\small\item\em Clears the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close} ()
+\begin{DoxyCompactList}\small\item\em Closes the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_aae3223aa585a9992924e7aba16eb1fd8}{clear\+Object\+Buffer} (bool should\+Free\+Memory=false)
+\begin{DoxyCompactList}\small\item\em Removes all Drawables from the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+virtual \hyperlink{classtsgl_1_1_background}{Background} $\ast$ \hyperlink{classtsgl_1_1_canvas_a905c38881402fe1d53cab427b93aab2f}{get\+Background} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the current background. \end{DoxyCompactList}\item 
+\hyperlink{structtsgl_1_1_color_float}{Color\+Float} \hyperlink{classtsgl_1_1_canvas_a2b39e50888d61e88527a66ac0f6ac880}{get\+Background\+Color} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the current background color. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a7118df5293e875a919467d93c01e98d7}\label{classtsgl_1_1_canvas_a7118df5293e875a919467d93c01e98d7}} 
+\hyperlink{classtsgl_1_1_camera}{Camera} $\ast$ {\bfseries get\+Camera} ()
+\item 
+int \hyperlink{classtsgl_1_1_canvas_af4f8f2b1abd27316a4a39ae097407d37}{get\+Frame\+Number} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the current frame number. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_canvas_a1c8ac321138948650a3006f325dfb886}{get\+F\+PS} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the current F\+PS. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_canvas_aae30eddfb15b6a549dc162e4a11a149d}{get\+MouseX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the mouse\textquotesingle{}s x-\/position. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_canvas_a5e86e0938a5c228c1c947f995389bd45}{get\+MouseY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the mouse\textquotesingle{}s y-\/position. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{classtsgl_1_1_canvas_a7340a669569360e83a4b431dea91d400}{get\+Reps} () const
+\begin{DoxyCompactList}\small\item\em Accessor for the number of theoretical draw cycles that have elapsed. \end{DoxyCompactList}\item 
+uint8\+\_\+t $\ast$ \hyperlink{classtsgl_1_1_canvas_a71f072dd82ca3b5cecfd65cde6d8a226}{get\+Screen\+Buffer} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s currently drawn image. \end{DoxyCompactList}\item 
+double \hyperlink{classtsgl_1_1_canvas_aef462ab48e59571b9c88076bbdc8f0b3}{get\+Time} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the time since the \hyperlink{classtsgl_1_1_canvas}{Canvas} was initialized. \end{DoxyCompactList}\item 
+double \hyperlink{classtsgl_1_1_canvas_a17e0bf3aaa8e73e6808fbe053c31a8a7}{get\+Time\+Between\+Sleeps} () const
+\begin{DoxyCompactList}\small\item\em Accessor that gets the time between two sleep times of the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_ad740ebe5d6bd69ab79cde3e84f369f35}{get\+Window\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window height. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a086a0322f4a6ab27da6929b1aa0593af}{get\+Window\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window width. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a011ce2354d4565f9d2a323411a47d52d}{get\+WindowX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s x-\/position. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_ad6e98d17d3e43d79628a3bd05221ee8b}{get\+WindowY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s y-\/position. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+IO} ()
+\begin{DoxyCompactList}\small\item\em Manually handles keyboard/mouse I/O. \end{DoxyCompactList}\item 
+bool \hyperlink{classtsgl_1_1_canvas_ada31408e9a96ecb1639f552d8f0de475}{is\+Open} ()
+\begin{DoxyCompactList}\small\item\em Accessor for window\textquotesingle{}s closed status. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+Drawing} ()
+\begin{DoxyCompactList}\small\item\em Pauses the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}{record\+For\+Num\+Frames} (unsigned int num\+\_\+frames)
+\begin{DoxyCompactList}\small\item\em Records the \hyperlink{classtsgl_1_1_canvas}{Canvas} for a specified number of frames. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_abcd9695030cb5718ebf8973b44180d33}{remove} (\hyperlink{classtsgl_1_1_drawable}{Drawable} $\ast$shape\+Ptr)
+\begin{DoxyCompactList}\small\item\em Removes a \hyperlink{classtsgl_1_1_drawable}{Drawable} from the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}{reset} ()
+\begin{DoxyCompactList}\small\item\em Resets the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} instance. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing} ()
+\begin{DoxyCompactList}\small\item\em Resumes the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&))
+\begin{DoxyCompactList}\small\item\em Start the \hyperlink{classtsgl_1_1_canvas}{Canvas}, run a function on it, and wait for the user to close it. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a62ec8be88bea1905cdb6855138ef3cb1}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int), int i)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a67b341ead1fde0a692281d2b1f67be1e}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, unsigned), unsigned u)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a768c10737f9590a25d8e66dcc7137d9b}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, int), int i1, int i2)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a81220477d323e6e75ef77a4e47d4cd7e}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, int, int), int i1, int i2, int i3)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_ab146e6cf9f7f19a047c20c02a0eb30f9}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, unsigned, unsigned), unsigned u1, unsigned u2)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_a2eeece8d4c4453ec7b4b53e209004559}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, std\+::string), std\+::string s)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_ac507bbbf60328de2fc99f93cd37d04ec}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, std\+::string), int i, std\+::string s)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_aafed71cba89b059629647e77ba23ff2b}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, std\+::string, int), std\+::string s, int i)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_canvas_ae8de87e9e5c42cc8f1bf4e18cb8805e2}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, std\+::string, bool), int i, std\+::string s, bool b)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_adb1b2e1dedf4431d266aa3cc59c88637}\label{classtsgl_1_1_canvas_adb1b2e1dedf4431d266aa3cc59c88637}} 
+virtual void {\bfseries run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, char $\ast$$\ast$), int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+void \hyperlink{classtsgl_1_1_canvas_af03da8ddf3123c5d5bb2aa734d322b92}{set\+Background} (\hyperlink{classtsgl_1_1_background}{Background} $\ast$background, bool previously\+Set=false)
+\begin{DoxyCompactList}\small\item\em Mutator for the \hyperlink{classtsgl_1_1_canvas}{Canvas} \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}{set\+Background\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Mutator for the background color. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a692edf8e37c7714cdf2a58ea530c63e9}\label{classtsgl_1_1_canvas_a692edf8e37c7714cdf2a58ea530c63e9}} 
+void {\bfseries set\+Font} (std\+::string filename)
+\item 
+void \hyperlink{classtsgl_1_1_canvas_a8722c579dfa55a45e139bfeb269d73ff}{set\+Show\+F\+PS} (bool b)
+\begin{DoxyCompactList}\small\item\em Mutator for showing the F\+PS. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}{sleep} ()
+\begin{DoxyCompactList}\small\item\em Sleeps the calling thread to sync with the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a6674cc86b9a54b6a564021fddce47e36}{sleep\+For} (float seconds)
+\begin{DoxyCompactList}\small\item\em Sleeps the calling thread for a set amount of time. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start} ()
+\begin{DoxyCompactList}\small\item\em Opens the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop} ()
+\begin{DoxyCompactList}\small\item\em Begins the process of closing the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_ac6035d87aa3bf077031bc0bb6f419b17}{stop\+Recording} ()
+\begin{DoxyCompactList}\small\item\em Stops recording the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_canvas_ac035f43763b198f6915a0772973a5ea9}{take\+Screen\+Shot} ()
+\begin{DoxyCompactList}\small\item\em Takes a screenshot. \end{DoxyCompactList}\item 
+int \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait} ()
+\begin{DoxyCompactList}\small\item\em Waits for the user to close the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classtsgl_1_1_canvas_a664b101f972845eaf5fdc4d9e664e623}{get\+Display\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the height of the user\textquotesingle{}s primary monitor. \end{DoxyCompactList}\item 
+static int \hyperlink{classtsgl_1_1_canvas_abbe5c392cac2320fecf1f2751afb207c}{get\+Display\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the width of the user\textquotesingle{}s primary monitor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a95d585a23cb8e18fb2b13c80e7067747}\label{classtsgl_1_1_canvas_a95d585a23cb8e18fb2b13c80e7067747}} 
+typedef G\+L\+F\+Wvidmode const  $\ast$ {\bfseries display\+Info}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_accfc113faf9ee00124abbecd9a8177e8}\label{classtsgl_1_1_canvas_accfc113faf9ee00124abbecd9a8177e8}} 
+typedef std\+::function$<$ void(double, double)$>$ {\bfseries double\+Function}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aa72a71c102b09d0f71269ebea5034210}\label{classtsgl_1_1_canvas_aa72a71c102b09d0f71269ebea5034210}} 
+typedef std\+::function$<$ void()$>$ {\bfseries void\+Function}
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af8fd44003f7a8e5cba084ac2a326a7f9}\label{classtsgl_1_1_canvas_af8fd44003f7a8e5cba084ac2a326a7f9}} 
+void {\bfseries draw} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a20304b6428fbe7e163e0a001ea4fdd15}\label{classtsgl_1_1_canvas_a20304b6428fbe7e163e0a001ea4fdd15}} 
+void {\bfseries gl\+Destroy} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a8a7121a92b6ae93524fc40e65d077d0d}\label{classtsgl_1_1_canvas_a8a7121a92b6ae93524fc40e65d077d0d}} 
+void {\bfseries init} (int xx, int yy, int ww, int hh, std\+::string title, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} background\+Color, \hyperlink{classtsgl_1_1_background}{Background} $\ast$background, double timer\+Length)
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ae991e0c0d11e8b164c1123eb44163523}\label{classtsgl_1_1_canvas_ae991e0c0d11e8b164c1123eb44163523}} 
+void {\bfseries init\+Background} (\hyperlink{classtsgl_1_1_background}{Background} $\ast$background, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} bgcolor)
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ade2cdb839c67b8ae0331a320bacf2598}\label{classtsgl_1_1_canvas_ade2cdb839c67b8ae0331a320bacf2598}} 
+void {\bfseries init\+Gl} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aca33c84be781a4c858577626830819a2}\label{classtsgl_1_1_canvas_aca33c84be781a4c858577626830819a2}} 
+void {\bfseries init\+Glew} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a18f547a63c4cf3d3ee8c0d7964490450}\label{classtsgl_1_1_canvas_a18f547a63c4cf3d3ee8c0d7964490450}} 
+void {\bfseries init\+Window} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a33c11fb1b4772d929ca212cc56400fd4}\label{classtsgl_1_1_canvas_a33c11fb1b4772d929ca212cc56400fd4}} 
+void {\bfseries screen\+Shot} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a5357ca5aa8d38a8c0811893e45968aa1}\label{classtsgl_1_1_canvas_a5357ca5aa8d38a8c0811893e45968aa1}} 
+virtual void {\bfseries select\+Shaders} (unsigned int choice)
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_affafbd93ea7a8c8bbaeff7192603847d}\label{classtsgl_1_1_canvas_affafbd93ea7a8c8bbaeff7192603847d}} 
+static void {\bfseries button\+Callback} (G\+L\+F\+Wwindow $\ast$window, int key, int action, int mods)
+\item 
+static void \hyperlink{classtsgl_1_1_canvas_a8a737119caedf815918f10e7092ad824}{error\+Callback} (int error, const char $\ast$string)
+\begin{DoxyCompactList}\small\item\em Draw a string of text. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a8ceafa56589bb6802de6025bc0fffaba}\label{classtsgl_1_1_canvas_a8ceafa56589bb6802de6025bc0fffaba}} 
+static void {\bfseries init\+Glfw} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af4e9a35067b9eb9126a9843102f5c5d5}\label{classtsgl_1_1_canvas_af4e9a35067b9eb9126a9843102f5c5d5}} 
+static void {\bfseries key\+Callback} (G\+L\+F\+Wwindow $\ast$window, int key, int scancode, int action, int mods)
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aa33caed8c3ef05b1c89267c88abceea5}\label{classtsgl_1_1_canvas_aa33caed8c3ef05b1c89267c88abceea5}} 
+static void {\bfseries scroll\+Callback} (G\+L\+F\+Wwindow $\ast$window, double xpos, double ypos)
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af565a4f8a3c4afe406b697984b1519fc}\label{classtsgl_1_1_canvas_af565a4f8a3c4afe406b697984b1519fc}} 
+static void {\bfseries set\+Draw\+Buffer} (int buffer)
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af4aa55d690e64ad67f9850a9b9db032e}\label{classtsgl_1_1_canvas_af4aa55d690e64ad67f9850a9b9db032e}} 
+static void {\bfseries start\+Drawing} (\hyperlink{classtsgl_1_1_canvas}{Canvas} $\ast$c)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a1558f2f09228ccaf0d46cec233a2dac7}\label{classtsgl_1_1_canvas_a1558f2f09228ccaf0d46cec233a2dac7}} 
+bool {\bfseries ati\+Card}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a8d3e6035efe482c37a766dbc2dc204b0}\label{classtsgl_1_1_canvas_a8d3e6035efe482c37a766dbc2dc204b0}} 
+std\+::mutex {\bfseries background\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a2632acf75c73ec9b88282aaa25bfc0c5}\label{classtsgl_1_1_canvas_a2632acf75c73ec9b88282aaa25bfc0c5}} 
+void\+Function {\bfseries bound\+Keys} \mbox{[}(G\+L\+F\+W\+\_\+\+K\+E\+Y\+\_\+\+L\+A\+ST+1) $\ast$2\mbox{]}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a06ddbda2735ea3802e66c3dc5450173e}\label{classtsgl_1_1_canvas_a06ddbda2735ea3802e66c3dc5450173e}} 
+\hyperlink{classtsgl_1_1_camera}{Camera} $\ast$ {\bfseries camera}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ae28ae3d2f481f8c410f588f86382e3be}\label{classtsgl_1_1_canvas_ae28ae3d2f481f8c410f588f86382e3be}} 
+bool {\bfseries default\+Background}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aec3d0aedf4ea4e3eba8035528bdc963c}\label{classtsgl_1_1_canvas_aec3d0aedf4ea4e3eba8035528bdc963c}} 
+\hyperlink{classtsgl_1_1_timer}{Timer} $\ast$ {\bfseries draw\+Timer}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a7bd16b4d03b78574d3b4bb5b2d59cd10}\label{classtsgl_1_1_canvas_a7bd16b4d03b78574d3b4bb5b2d59cd10}} 
+G\+Lint {\bfseries framebuffer\+Width}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_afbafc7aea379e61893b63c75a6e00ac2}\label{classtsgl_1_1_canvas_afbafc7aea379e61893b63c75a6e00ac2}} 
+G\+Lint {\bfseries framebuffer\+Height}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a8b7ca443ca91536bc3181c7f8da8d4f4}\label{classtsgl_1_1_canvas_a8b7ca443ca91536bc3181c7f8da8d4f4}} 
+int {\bfseries frame\+Counter}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a2bb6f7694e68f7e9fd6ab4e1d75ac591}\label{classtsgl_1_1_canvas_a2bb6f7694e68f7e9fd6ab4e1d75ac591}} 
+bool {\bfseries is\+Finished}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a11ca1057dd0ac4a22299ec27359beda1}\label{classtsgl_1_1_canvas_a11ca1057dd0ac4a22299ec27359beda1}} 
+bool {\bfseries key\+Down}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a0b8d1dfdf834bee9b6329552dc54d2d9}\label{classtsgl_1_1_canvas_a0b8d1dfdf834bee9b6329552dc54d2d9}} 
+int {\bfseries monitorX}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a4024df92dc27620de7a1770184cf8a96}\label{classtsgl_1_1_canvas_a4024df92dc27620de7a1770184cf8a96}} 
+int {\bfseries monitorY}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af53e97be8e4562d92b5edd06fa8969cc}\label{classtsgl_1_1_canvas_af53e97be8e4562d92b5edd06fa8969cc}} 
+double {\bfseries mouseX}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a204a15bdf12485ee1019982f0aa78155}\label{classtsgl_1_1_canvas_a204a15bdf12485ee1019982f0aa78155}} 
+double {\bfseries mouseY}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ae046053082e91b91723ccbabaa59f896}\label{classtsgl_1_1_canvas_ae046053082e91b91723ccbabaa59f896}} 
+\hyperlink{classtsgl_1_1_background}{Background} $\ast$ {\bfseries my\+Background}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_afa78a0914a742067ffa0a0612ab947dd}\label{classtsgl_1_1_canvas_afa78a0914a742067ffa0a0612ab947dd}} 
+std\+::vector$<$ \hyperlink{classtsgl_1_1_drawable}{Drawable} $\ast$ $>$ {\bfseries object\+Buffer}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a5af34265949ab9777acc2cd2e0c188bc}\label{classtsgl_1_1_canvas_a5af34265949ab9777acc2cd2e0c188bc}} 
+std\+::mutex {\bfseries object\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a089def4ec8f38575a8ba779ce899fc9a}\label{classtsgl_1_1_canvas_a089def4ec8f38575a8ba779ce899fc9a}} 
+int {\bfseries real\+F\+PS}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ad4b53a7c274d1c2b5fdaa793e38ca849}\label{classtsgl_1_1_canvas_ad4b53a7c274d1c2b5fdaa793e38ca849}} 
+std\+::thread {\bfseries render\+Thread}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a8c110c0df90b2fb2ae2ee239d31aca0b}\label{classtsgl_1_1_canvas_a8c110c0df90b2fb2ae2ee239d31aca0b}} 
+uint8\+\_\+t $\ast$ {\bfseries screen\+Buffer}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a144385fc573bfeef680d168d4eeef0c0}\label{classtsgl_1_1_canvas_a144385fc573bfeef680d168d4eeef0c0}} 
+std\+::mutex {\bfseries screen\+Buffer\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ad55318654f3604f278d7e7789e467a7e}\label{classtsgl_1_1_canvas_ad55318654f3604f278d7e7789e467a7e}} 
+double\+Function {\bfseries scroll\+Function}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a32d8aa660e6eb5899eb336b2a892b4c4}\label{classtsgl_1_1_canvas_a32d8aa660e6eb5899eb336b2a892b4c4}} 
+Shader $\ast$ {\bfseries text\+Shader}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a2ccd14a0bea12cc2578669120388d9b6}\label{classtsgl_1_1_canvas_a2ccd14a0bea12cc2578669120388d9b6}} 
+Shader $\ast$ {\bfseries shape\+Shader}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a9ef7016686bd47f8005c919b8ab0e46e}\label{classtsgl_1_1_canvas_a9ef7016686bd47f8005c919b8ab0e46e}} 
+Shader $\ast$ {\bfseries texture\+Shader}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af184fb65f9eea48f5fb964adf4ef2448}\label{classtsgl_1_1_canvas_af184fb65f9eea48f5fb964adf4ef2448}} 
+bool {\bfseries show\+F\+PS}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_adc857c13c77dda90f0e7171b21eb0083}\label{classtsgl_1_1_canvas_adc857c13c77dda90f0e7171b21eb0083}} 
+bool {\bfseries started}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a80d9385a4e828c8ca4b6ff091605971a}\label{classtsgl_1_1_canvas_a80d9385a4e828c8ca4b6ff091605971a}} 
+std\+::mutex {\bfseries sync\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a4df60bfd15d7d48ce2d503207effa60e}\label{classtsgl_1_1_canvas_a4df60bfd15d7d48ce2d503207effa60e}} 
+int {\bfseries sync\+Mutex\+Locked}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a7d210becfdc9bb15da87d6070610a008}\label{classtsgl_1_1_canvas_a7d210becfdc9bb15da87d6070610a008}} 
+int {\bfseries sync\+Mutex\+Owner}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a7ab3e05b8ac386ed54d75c9d391fe5b8}\label{classtsgl_1_1_canvas_a7ab3e05b8ac386ed54d75c9d391fe5b8}} 
+bool {\bfseries to\+Close}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a757e075b4509e6a532de12158c98b927}\label{classtsgl_1_1_canvas_a757e075b4509e6a532de12158c98b927}} 
+unsigned int {\bfseries to\+Record}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ac4e1218a5f8b2e111eea14cd251544bc}\label{classtsgl_1_1_canvas_ac4e1218a5f8b2e111eea14cd251544bc}} 
+G\+Lint {\bfseries uni\+Model}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ac69975f132442237ef53511dda983a2d}\label{classtsgl_1_1_canvas_ac69975f132442237ef53511dda983a2d}} 
+G\+Lint {\bfseries uni\+View}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aac0885ee232fb93ee822211d52be6551}\label{classtsgl_1_1_canvas_aac0885ee232fb93ee822211d52be6551}} 
+G\+Lint {\bfseries uni\+Proj}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ab6995065f920ab91bc9d79fd0adb4808}\label{classtsgl_1_1_canvas_ab6995065f920ab91bc9d79fd0adb4808}} 
+G\+Luint {\bfseries V\+AO}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a7cc475859d54e4cee4220b2bf2d0f28c}\label{classtsgl_1_1_canvas_a7cc475859d54e4cee4220b2bf2d0f28c}} 
+G\+Luint {\bfseries V\+BO}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a6793e3cb376c7e693037586f5c746ba4}\label{classtsgl_1_1_canvas_a6793e3cb376c7e693037586f5c746ba4}} 
+G\+L\+F\+Wwindow $\ast$ {\bfseries window}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ac32b0b28c97f724b5c4876276400291d}\label{classtsgl_1_1_canvas_ac32b0b28c97f724b5c4876276400291d}} 
+bool {\bfseries window\+Closed}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ab0a0610d006cf538dd119e7180777825}\label{classtsgl_1_1_canvas_ab0a0610d006cf538dd119e7180777825}} 
+std\+::mutex {\bfseries window\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a82961c6ae241833567ad3207a4b85115}\label{classtsgl_1_1_canvas_a82961c6ae241833567ad3207a4b85115}} 
+int {\bfseries win\+Height}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aa9f503c6207794d5ff8b91eb947e0ac7}\label{classtsgl_1_1_canvas_aa9f503c6207794d5ff8b91eb947e0ac7}} 
+std\+::string {\bfseries win\+Title}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ad2baf430815abe7cad6489d43c6fa0ba}\label{classtsgl_1_1_canvas_ad2baf430815abe7cad6489d43c6fa0ba}} 
+G\+Lint {\bfseries win\+Width}
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a67ea3938e72415f16a803cd02d2ab56a}\label{classtsgl_1_1_canvas_a67ea3938e72415f16a803cd02d2ab56a}} 
+static bool {\bfseries glfw\+Is\+Ready} = false
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a6d4eee3bc63664cd993489d88353920c}\label{classtsgl_1_1_canvas_a6d4eee3bc63664cd993489d88353920c}} 
+static std\+::mutex {\bfseries glfw\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af2b8ccd7d0dbf505b17b2125ad6e9d21}\label{classtsgl_1_1_canvas_af2b8ccd7d0dbf505b17b2125ad6e9d21}} 
+static display\+Info {\bfseries mon\+Info}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aaedefa605af13db2578d1ce705d5b85b}\label{classtsgl_1_1_canvas_aaedefa605af13db2578d1ce705d5b85b}} 
+static unsigned {\bfseries open\+Canvases} = 0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A GL window with numerous built-\/in, thread-\/safe drawing operations. 
+
+\hyperlink{classtsgl_1_1_canvas}{Canvas} provides an easy-\/to-\/set-\/up, easy-\/to-\/use class for drawing various shapes.
+
+Using S\+TB, \hyperlink{classtsgl_1_1_canvas}{Canvas} also supports the drawing of images.
+
+On top of being easy to use, \hyperlink{classtsgl_1_1_canvas}{Canvas} is also thread-\/safe, so any number of images may be drawn at once. \begin{DoxyNote}{Note}
+{\bfseries OS X\+:} Due to the way OS X handles I/O, either \hyperlink{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}{sleep()} or \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} must be manually called whenever the user wants to handle any input/output events (keyboard/mouse presses). Whenever a window is created using Open\+GL, OS X requires the main thread to handle I/O calls. 
+
+{\bfseries OS X\+:} OS X also uses p\+\_\+thread instead of std\+::thread for threading. 
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000002}{Bug}]{\bfseries Linux\+:} X forwarding does not work properly with T\+S\+GL. \end{DoxyRefDesc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a7954ec07ba18f72024b388cdba965015}\label{classtsgl_1_1_canvas_a7954ec07ba18f72024b388cdba965015}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!Canvas@{Canvas}}
+\index{Canvas@{Canvas}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{Canvas()}{Canvas()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Canvas\+::\+Canvas (\begin{DoxyParamCaption}\item[{double}]{timer\+Length = {\ttfamily 0.0f},  }\item[{\hyperlink{classtsgl_1_1_background}{Background} $\ast$}]{bg = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+
+
+Default \hyperlink{classtsgl_1_1_canvas}{Canvas} constructor method. 
+
+This is the default constructor for the \hyperlink{classtsgl_1_1_canvas}{Canvas} class. 
+\begin{DoxyParams}{Parameters}
+{\em timer\+Length} & The minimum number of seconds between draw cycles for the \hyperlink{classtsgl_1_1_canvas}{Canvas}. A value less than or equal to 0 sets it to automatic. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_canvas}{Canvas} in the middle of the screen with no title. The created \hyperlink{classtsgl_1_1_canvas}{Canvas} will take up approximately 90\% of the monitor\textquotesingle{}s height, and will have a 4\+:3 aspect ratio. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ae1b6c345bb9abbd46a11a6b30975711c}\label{classtsgl_1_1_canvas_ae1b6c345bb9abbd46a11a6b30975711c}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!Canvas@{Canvas}}
+\index{Canvas@{Canvas}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{Canvas()}{Canvas()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Canvas\+::\+Canvas (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{std\+::string}]{title,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{background\+Color = {\ttfamily GRAY},  }\item[{\hyperlink{classtsgl_1_1_background}{Background} $\ast$}]{background = {\ttfamily nullptr},  }\item[{double}]{timer\+Length = {\ttfamily 0.0f} }\end{DoxyParamCaption})}
+
+
+
+Explicit \hyperlink{classtsgl_1_1_canvas}{Canvas} constructor method. 
+
+This is the explicit constructor for the \hyperlink{classtsgl_1_1_canvas}{Canvas} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \\
+\hline
+{\em y} & The y position of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \\
+\hline
+{\em width} & The x dimension of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \\
+\hline
+{\em height} & The y dimension of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. \\
+\hline
+{\em title} & The title of the window. \\
+\hline
+{\em timer\+Length} & The minimum number of seconds between draw cycles for the \hyperlink{classtsgl_1_1_canvas}{Canvas}. A value less than or equal to 0 sets it to automatic. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_canvas}{Canvas} with the specified position, dimensions, title, and draw cycle length. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ab976c3999c68347818d64010b641e14f}\label{classtsgl_1_1_canvas_ab976c3999c68347818d64010b641e14f}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!````~Canvas@{$\sim$\+Canvas}}
+\index{````~Canvas@{$\sim$\+Canvas}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{$\sim$\+Canvas()}{~Canvas()}}
+{\footnotesize\ttfamily tsgl\+::\+Canvas\+::$\sim$\+Canvas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\hyperlink{classtsgl_1_1_canvas}{Canvas} destructor method. 
+
+This is the destructor for the \hyperlink{classtsgl_1_1_canvas}{Canvas} class.
+
+Frees up memory that was allocated to a \hyperlink{classtsgl_1_1_canvas}{Canvas} instance. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ab8bc6862497ae8c93c03185e96c0ae9a}\label{classtsgl_1_1_canvas_ab8bc6862497ae8c93c03185e96c0ae9a}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!add@{add}}
+\index{add@{add}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{add()}{add()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::add (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_drawable}{Drawable} $\ast$}]{shape\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Adds a \hyperlink{classtsgl_1_1_drawable}{Drawable} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+Adds the parameter drawable to object\+Buffer. 
+\begin{DoxyParams}{Parameters}
+{\em shape\+Ptr} & Pointer to the \hyperlink{classtsgl_1_1_drawable}{Drawable} to add to this \hyperlink{classtsgl_1_1_canvas}{Canvas}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Ball\+::\+Ball(), Consumer\+::\+Consumer(), Philosopher\+::draw(), Philosopher3\+D\+::draw(), Mandelbrot\+::draw(), Table3\+D\+::draw\+Step(), Producer\+::lock(), Paddle\+::\+Paddle(), P\+C\+Thread\+::\+P\+C\+Thread(), Pong\+::\+Pong(), Producer\+::\+Producer(), Reader\+::\+Reader(), R\+W\+Thread\+::\+R\+W\+Thread(), Sea\+Urchin\+::\+Sea\+Urchin(), Table3\+D\+::\+Table3\+D(), and Writer\+::\+Writer().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a26f2f1acf2b80eee95e42bc13dbc7600}\label{classtsgl_1_1_canvas_a26f2f1acf2b80eee95e42bc13dbc7600}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!bind\+To\+Button@{bind\+To\+Button}}
+\index{bind\+To\+Button@{bind\+To\+Button}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{bind\+To\+Button()}{bindToButton()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::bind\+To\+Button (\begin{DoxyParamCaption}\item[{Key}]{button,  }\item[{Action}]{action,  }\item[{void\+Function}]{function }\end{DoxyParamCaption})}
+
+
+
+Binds a key or button to a function. 
+
+This function binds a key or mouse button to a function pointer.
+
+Upon pressing or releasing the given key, \hyperlink{classtsgl_1_1_canvas}{Canvas} will call the specified function. 
+\begin{DoxyParams}{Parameters}
+{\em button} & The key or button to bind, as specified in \hyperlink{_keynums_8h_source}{Keynums.\+h}. \\
+\hline
+{\em action} & The action to look out for (T\+S\+G\+L\+\_\+\+P\+R\+E\+SS or T\+S\+G\+L\+\_\+\+R\+E\+L\+E\+A\+SE). \\
+\hline
+{\em function} & The function to call upon action {\ttfamily a} on button. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\bfseries T\+S\+G\+L\+\_\+\+K\+E\+Y\+\_\+\+E\+S\+C\+A\+PE is automatically bound to closing the window. Overriding T\+S\+G\+L\+\_\+\+K\+E\+Y\+\_\+\+E\+S\+C\+A\+PE will likely make you unable to close the window through the escape key.} 
+\end{DoxyWarning}
+
+
+Referenced by Paddle\+::bindings(), Mandelbrot\+::bindings(), and handle\+I\+O().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aecd3d94790d2e660db380a5e951ae394}\label{classtsgl_1_1_canvas_aecd3d94790d2e660db380a5e951ae394}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!bind\+To\+Scroll@{bind\+To\+Scroll}}
+\index{bind\+To\+Scroll@{bind\+To\+Scroll}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{bind\+To\+Scroll()}{bindToScroll()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::bind\+To\+Scroll (\begin{DoxyParamCaption}\item[{std\+::function$<$ void(double, double)$>$}]{function }\end{DoxyParamCaption})}
+
+
+
+Binds the mouse wheel to a function. 
+
+This function binds the mouse wheel to a function pointer.
+
+Upon scrolling, \hyperlink{classtsgl_1_1_canvas}{Canvas} will call the specified function. 
+\begin{DoxyParams}{Parameters}
+{\em function} & A function taking x and y parameters to be called when the mouse is scrolled. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Mandelbrot\+::bindings().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af1f7728d3f65494fe463bf6e8fcb28cc}\label{classtsgl_1_1_canvas_af1f7728d3f65494fe463bf6e8fcb28cc}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!clear\+Background@{clear\+Background}}
+\index{clear\+Background@{clear\+Background}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{clear\+Background()}{clearBackground()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::clear\+Background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function clears the screen to the color specified in \hyperlink{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}{set\+Background\+Color()}. \mbox{\Hypertarget{classtsgl_1_1_canvas_aae3223aa585a9992924e7aba16eb1fd8}\label{classtsgl_1_1_canvas_aae3223aa585a9992924e7aba16eb1fd8}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!clear\+Object\+Buffer@{clear\+Object\+Buffer}}
+\index{clear\+Object\+Buffer@{clear\+Object\+Buffer}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{clear\+Object\+Buffer()}{clearObjectBuffer()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::clear\+Object\+Buffer (\begin{DoxyParamCaption}\item[{bool}]{should\+Free\+Memory = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Removes all Drawables from the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+Clears all Drawables from the drawing buffer. 
+\begin{DoxyParams}{Parameters}
+{\em should\+Free\+Memory} & Whether the pointers will be deleted as well as removed and free their memory. (Defaults to false.) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Setting should\+Free\+Memory to true will cause a segmentation fault if the user continues to access the pointer to a \hyperlink{classtsgl_1_1_drawable}{Drawable} that has been added to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+Setting should\+Free\+Memory to false will leak memory from any objects created in \hyperlink{classtsgl_1_1_canvas}{Canvas} draw methods. 
+\end{DoxyWarning}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}\label{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!close@{close}}
+\index{close@{close}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Closes the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. 
+
+This function tells the \hyperlink{classtsgl_1_1_canvas}{Canvas} to stop rendering and to close its rendering window.
+
+Any threads that have called \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} will continue. \begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop()}, \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::close(), Julia\+::draw(), Mandelbrot\+::draw(), and stop().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a8a737119caedf815918f10e7092ad824}\label{classtsgl_1_1_canvas_a8a737119caedf815918f10e7092ad824}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!error\+Callback@{error\+Callback}}
+\index{error\+Callback@{error\+Callback}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{error\+Callback()}{errorCallback()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::error\+Callback (\begin{DoxyParamCaption}\item[{int}]{error,  }\item[{const char $\ast$}]{string }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+Draw a string of text. 
+
+This function draws a given string of \hyperlink{classtsgl_1_1_text}{Text} at the given coordinates with the given color. 
+\begin{DoxyParams}{Parameters}
+{\em text} & The string to draw. \\
+\hline
+{\em x} & The x coordinate of the text\textquotesingle{}s left bound. \\
+\hline
+{\em y} & The y coordinate of the text\textquotesingle{}s left bound. \\
+\hline
+{\em size} & The size of the text in pixels. \\
+\hline
+{\em color} & The color of the \hyperlink{classtsgl_1_1_text}{Text} (set to B\+L\+A\+CK by default). \\
+\hline
+{\em rotation} & Rotation of the \hyperlink{classtsgl_1_1_text}{Text} in radians clockwise. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by handle\+I\+O().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a905c38881402fe1d53cab427b93aab2f}\label{classtsgl_1_1_canvas_a905c38881402fe1d53cab427b93aab2f}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Background@{get\+Background}}
+\index{get\+Background@{get\+Background}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Background()}{getBackground()}}
+{\footnotesize\ttfamily \hyperlink{classtsgl_1_1_background}{Background} $\ast$ tsgl\+::\+Canvas\+::get\+Background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for the current background. 
+
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classtsgl_1_1_background}{Background} that the \hyperlink{classtsgl_1_1_canvas}{Canvas} draws when draw() is called. 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classtsgl_1_1_cartesian_canvas_ad0833d6659071cae7c2ec80d784b1a67}{tsgl\+::\+Cartesian\+Canvas}.
+
+
+
+Referenced by Ant\+Farm\+::add\+Ant(), Shaded\+Voronoi\+::draw(), Voronoi\+::draw(), tsgl\+::\+Spectrogram\+::draw(), Mandelbrot\+::draw(), Table\+::draw\+Step(), Life\+Farm\+::life(), Life\+Farm\+::move\+Ants\+Old(), tsgl\+::\+Visual\+Task\+Queue\+::reset(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), Table\+::\+Table(), Table3\+D\+::\+Table3\+D(), and tsgl\+::\+Visual\+Task\+Queue\+::update().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a2b39e50888d61e88527a66ac0f6ac880}\label{classtsgl_1_1_canvas_a2b39e50888d61e88527a66ac0f6ac880}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Background\+Color@{get\+Background\+Color}}
+\index{get\+Background\+Color@{get\+Background\+Color}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Background\+Color()}{getBackgroundColor()}}
+{\footnotesize\ttfamily \hyperlink{structtsgl_1_1_color_float}{Color\+Float} tsgl\+::\+Canvas\+::get\+Background\+Color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the current background color. 
+
+\begin{DoxyReturn}{Returns}
+The color that the \hyperlink{classtsgl_1_1_canvas}{Canvas} clears to when clear() is called. 
+\end{DoxyReturn}
+
+
+Referenced by Life\+Farm\+::\+Life\+Farm().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a664b101f972845eaf5fdc4d9e664e623}\label{classtsgl_1_1_canvas_a664b101f972845eaf5fdc4d9e664e623}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Display\+Height@{get\+Display\+Height}}
+\index{get\+Display\+Height@{get\+Display\+Height}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Display\+Height()}{getDisplayHeight()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::get\+Display\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Accessor for the height of the user\textquotesingle{}s primary monitor. 
+
+\begin{DoxyReturn}{Returns}
+The height of the user\textquotesingle{}s primary monitor. 
+\end{DoxyReturn}
+
+
+Referenced by handle\+I\+O().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_abbe5c392cac2320fecf1f2751afb207c}\label{classtsgl_1_1_canvas_abbe5c392cac2320fecf1f2751afb207c}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Display\+Width@{get\+Display\+Width}}
+\index{get\+Display\+Width@{get\+Display\+Width}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Display\+Width()}{getDisplayWidth()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::get\+Display\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Accessor for the width of the user\textquotesingle{}s primary monitor. 
+
+\begin{DoxyReturn}{Returns}
+The width of the user\textquotesingle{}s primary monitor. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a1c8ac321138948650a3006f325dfb886}\label{classtsgl_1_1_canvas_a1c8ac321138948650a3006f325dfb886}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+F\+PS@{get\+F\+PS}}
+\index{get\+F\+PS@{get\+F\+PS}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+F\+P\+S()}{getFPS()}}
+{\footnotesize\ttfamily float tsgl\+::\+Canvas\+::get\+F\+PS (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the current F\+PS. 
+
+\begin{DoxyReturn}{Returns}
+The average number of frames being rendered per second. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af4f8f2b1abd27316a4a39ae097407d37}\label{classtsgl_1_1_canvas_af4f8f2b1abd27316a4a39ae097407d37}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Frame\+Number@{get\+Frame\+Number}}
+\index{get\+Frame\+Number@{get\+Frame\+Number}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Frame\+Number()}{getFrameNumber()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::get\+Frame\+Number (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the current frame number. 
+
+\begin{DoxyReturn}{Returns}
+The number of actual draw cycles / frames the \hyperlink{classtsgl_1_1_canvas}{Canvas} has rendered so far. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a7340a669569360e83a4b431dea91d400}{get\+Reps()} 
+\end{DoxySeeAlso}
+
+
+Referenced by Table\+::n\+Frame\+Release\+Method(), Table3\+D\+::n\+Frame\+Release\+Method(), Table\+::odd\+Even\+Method(), and Table3\+D\+::odd\+Even\+Method().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aae30eddfb15b6a549dc162e4a11a149d}\label{classtsgl_1_1_canvas_aae30eddfb15b6a549dc162e4a11a149d}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+MouseX@{get\+MouseX}}
+\index{get\+MouseX@{get\+MouseX}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Mouse\+X()}{getMouseX()}}
+{\footnotesize\ttfamily float tsgl\+::\+Canvas\+::get\+MouseX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for the mouse\textquotesingle{}s x-\/position. 
+
+\begin{DoxyReturn}{Returns}
+The x coordinates of the mouse on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classtsgl_1_1_cartesian_canvas_afd62dffbd1343ddecdd734a6954f6f87}{tsgl\+::\+Cartesian\+Canvas}.
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a5e86e0938a5c228c1c947f995389bd45}\label{classtsgl_1_1_canvas_a5e86e0938a5c228c1c947f995389bd45}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+MouseY@{get\+MouseY}}
+\index{get\+MouseY@{get\+MouseY}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Mouse\+Y()}{getMouseY()}}
+{\footnotesize\ttfamily float tsgl\+::\+Canvas\+::get\+MouseY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for the mouse\textquotesingle{}s y-\/position. 
+
+\begin{DoxyReturn}{Returns}
+The y coordinates of the mouse on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classtsgl_1_1_cartesian_canvas_a4513bbe2483ebf043aabb200c1a8d456}{tsgl\+::\+Cartesian\+Canvas}.
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a7340a669569360e83a4b431dea91d400}\label{classtsgl_1_1_canvas_a7340a669569360e83a4b431dea91d400}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Reps@{get\+Reps}}
+\index{get\+Reps@{get\+Reps}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Reps()}{getReps()}}
+{\footnotesize\ttfamily unsigned int tsgl\+::\+Canvas\+::get\+Reps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Accessor for the number of theoretical draw cycles that have elapsed. 
+
+This function returns the time elapsed since the \hyperlink{classtsgl_1_1_canvas}{Canvas} has been opened divided by the draw\+Timer\textquotesingle{}s period. \begin{DoxyReturn}{Returns}
+The number of times the draw\+Timer has expired since starting the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_af4f8f2b1abd27316a4a39ae097407d37}{get\+Frame\+Number()} 
+\end{DoxySeeAlso}
+
+
+Referenced by Sea\+Urchin\+::move().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a71f072dd82ca3b5cecfd65cde6d8a226}\label{classtsgl_1_1_canvas_a71f072dd82ca3b5cecfd65cde6d8a226}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Screen\+Buffer@{get\+Screen\+Buffer}}
+\index{get\+Screen\+Buffer@{get\+Screen\+Buffer}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Screen\+Buffer()}{getScreenBuffer()}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ tsgl\+::\+Canvas\+::get\+Screen\+Buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s currently drawn image. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to the R\+GB pixel buffer for the current \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+The array starts in the bottom left corner of the image, and is in row-\/major ordering. 
+\end{DoxyNote}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000001}{Deprecated}]{\bfseries This function returns a pointer directly to the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{} screen buffer. This function may be removed in future versions of T\+S\+GL. Please use get\+Pixel() or get\+Point() get individual pixels. }\end{DoxyRefDesc}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aef462ab48e59571b9c88076bbdc8f0b3}\label{classtsgl_1_1_canvas_aef462ab48e59571b9c88076bbdc8f0b3}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Time@{get\+Time}}
+\index{get\+Time@{get\+Time}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Time()}{getTime()}}
+{\footnotesize\ttfamily double tsgl\+::\+Canvas\+::get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the time since the \hyperlink{classtsgl_1_1_canvas}{Canvas} was initialized. 
+
+\begin{DoxyReturn}{Returns}
+The elapsed time in microseconds since the \hyperlink{classtsgl_1_1_canvas}{Canvas} has started drawing. 
+\end{DoxyReturn}
+
+
+Referenced by Julia\+::draw(), and Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a17e0bf3aaa8e73e6808fbe053c31a8a7}\label{classtsgl_1_1_canvas_a17e0bf3aaa8e73e6808fbe053c31a8a7}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Time\+Between\+Sleeps@{get\+Time\+Between\+Sleeps}}
+\index{get\+Time\+Between\+Sleeps@{get\+Time\+Between\+Sleeps}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Time\+Between\+Sleeps()}{getTimeBetweenSleeps()}}
+{\footnotesize\ttfamily double tsgl\+::\+Canvas\+::get\+Time\+Between\+Sleeps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Accessor that gets the time between two sleep times of the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} object. 
+
+\begin{DoxyReturn}{Returns}
+The time between two sleep cycles of the internal drawing timer. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ad740ebe5d6bd69ab79cde3e84f369f35}\label{classtsgl_1_1_canvas_ad740ebe5d6bd69ab79cde3e84f369f35}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+Height@{get\+Window\+Height}}
+\index{get\+Window\+Height@{get\+Window\+Height}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Window\+Height()}{getWindowHeight()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::get\+Window\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window height. 
+
+\begin{DoxyReturn}{Returns}
+The height in pixels of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. 
+\end{DoxyReturn}
+
+
+Referenced by Pong\+::draw(), Shaded\+Voronoi\+::draw(), Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), Voronoi\+::draw(), tsgl\+::\+Spectrogram\+::draw(), Buddhabrot\+::draw(), Mandelbrot\+::draw(), tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates(), tsgl\+::\+Cartesian\+Canvas\+::get\+Screen\+Coordinates(), Mandelbrot\+::manhattan\+Shading(), P\+C\+Thread\+::\+P\+C\+Thread(), Pong\+::\+Pong(), tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions(), tsgl\+::\+Visual\+Task\+Queue\+::reset(), Sea\+Urchin\+::\+Sea\+Urchin(), Shaded\+Voronoi\+::\+Shaded\+Voronoi(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), tsgl\+::\+Spectrogram\+::\+Spectrogram(), tsgl\+::\+Visual\+Task\+Queue\+::update(), and Voronoi\+::\+Voronoi().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a086a0322f4a6ab27da6929b1aa0593af}\label{classtsgl_1_1_canvas_a086a0322f4a6ab27da6929b1aa0593af}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+Window\+Width@{get\+Window\+Width}}
+\index{get\+Window\+Width@{get\+Window\+Width}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Window\+Width()}{getWindowWidth()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::get\+Window\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s window width. 
+
+\begin{DoxyReturn}{Returns}
+The width in pixels of the \hyperlink{classtsgl_1_1_canvas}{Canvas} window. 
+\end{DoxyReturn}
+
+
+Referenced by Consumer\+::\+Consumer(), Pong\+::draw(), Shaded\+Voronoi\+::draw(), Voronoi\+::draw(), tsgl\+::\+Spectrogram\+::draw(), Buddhabrot\+::draw(), Mandelbrot\+::draw(), tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates(), Mandelbrot\+::manhattan\+Shading(), Paddle\+::\+Paddle(), Producer\+::\+Producer(), Reader\+::\+Reader(), tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions(), tsgl\+::\+Visual\+Task\+Queue\+::reset(), Sea\+Urchin\+::\+Sea\+Urchin(), Shaded\+Voronoi\+::\+Shaded\+Voronoi(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), tsgl\+::\+Spectrogram\+::\+Spectrogram(), tsgl\+::\+Visual\+Task\+Queue\+::update(), Voronoi\+::\+Voronoi(), and Writer\+::\+Writer().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a011ce2354d4565f9d2a323411a47d52d}\label{classtsgl_1_1_canvas_a011ce2354d4565f9d2a323411a47d52d}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+WindowX@{get\+WindowX}}
+\index{get\+WindowX@{get\+WindowX}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Window\+X()}{getWindowX()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::get\+WindowX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s x-\/position. 
+
+\begin{DoxyReturn}{Returns}
+The x coordinate in pixels of the left of the \hyperlink{classtsgl_1_1_canvas}{Canvas} (0 = left of monitor). 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ad6e98d17d3e43d79628a3bd05221ee8b}\label{classtsgl_1_1_canvas_ad6e98d17d3e43d79628a3bd05221ee8b}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!get\+WindowY@{get\+WindowY}}
+\index{get\+WindowY@{get\+WindowY}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Window\+Y()}{getWindowY()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::get\+WindowY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s y-\/position. 
+
+\begin{DoxyReturn}{Returns}
+The y coordinate in pixels of the top of the \hyperlink{classtsgl_1_1_canvas}{Canvas} (0 = top of monitor). 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}\label{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!handle\+IO@{handle\+IO}}
+\index{handle\+IO@{handle\+IO}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{handle\+I\+O()}{handleIO()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::handle\+IO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Manually handles keyboard/mouse I/O. 
+
+\begin{DoxyNote}{Note}
+This function will return immediately if not called from the main thread. 
+
+{\bfseries OS X\+:} This function exists for OS X compatibility purposes. This function does nothing on Linux or Windows. 
+\end{DoxyNote}
+
+
+Referenced by Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), Buddhabrot\+::draw(), Mandelbrot\+::draw(), sleep(), and sleep\+For().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ada31408e9a96ecb1639f552d8f0de475}\label{classtsgl_1_1_canvas_ada31408e9a96ecb1639f552d8f0de475}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!is\+Open@{is\+Open}}
+\index{is\+Open@{is\+Open}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{is\+Open()}{isOpen()}}
+{\footnotesize\ttfamily bool tsgl\+::\+Canvas\+::is\+Open (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for window\textquotesingle{}s closed status. 
+
+\begin{DoxyReturn}{Returns}
+Whether the window is still open (that is, the user has not closed it). 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::close(), Pong\+::draw(), Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), Voronoi\+::draw(), Buddhabrot\+::draw(), Mandelbrot\+::draw(), P\+C\+Thread\+::\+P\+C\+Thread(), tsgl\+::\+Integral\+Viewer\+::rectangle\+Evaluate(), R\+W\+Thread\+::\+R\+W\+Thread(), tsgl\+::\+Integral\+Viewer\+::trapezoid\+Evaluate(), tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer(), Table\+::$\sim$\+Table(), and Table3\+D\+::$\sim$\+Table3\+D().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}\label{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!pause\+Drawing@{pause\+Drawing}}
+\index{pause\+Drawing@{pause\+Drawing}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{pause\+Drawing()}{pauseDrawing()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::pause\+Drawing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Pauses the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function forces the calling thread to wait until the \hyperlink{classtsgl_1_1_canvas}{Canvas} finishes its draw cycle, them prevents the \hyperlink{classtsgl_1_1_canvas}{Canvas} from rendering further updates until resume\+Drawing is called. \begin{DoxyNote}{Note}
+This method may be called from any number of threads, so long as a matching number of calls to \hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing()} are made. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+{\bfseries This function makes use of a mutex lock. Do not call this without later calling \hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing()}.} 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}{resume\+Drawing()} 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Spectrogram\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}\label{classtsgl_1_1_canvas_a47436daa39473ddb4044bac7b3b27151}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!record\+For\+Num\+Frames@{record\+For\+Num\+Frames}}
+\index{record\+For\+Num\+Frames@{record\+For\+Num\+Frames}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{record\+For\+Num\+Frames()}{recordForNumFrames()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::record\+For\+Num\+Frames (\begin{DoxyParamCaption}\item[{unsigned int}]{num\+\_\+frames }\end{DoxyParamCaption})}
+
+
+
+Records the \hyperlink{classtsgl_1_1_canvas}{Canvas} for a specified number of frames. 
+
+This function starts dumping screenshots of the \hyperlink{classtsgl_1_1_canvas}{Canvas} to the working directory every draw cycle.
+
+Images are saved as Image\+X\+X\+X\+X\+X\+X.\+png, where X\+X\+X\+X\+XX is the current frame number.
+
+The function automatically terminates after num\+\_\+frames cycles have completed. 
+\begin{DoxyParams}{Parameters}
+{\em num\+\_\+frames} & The number of frames to dump screenshots for. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_abcd9695030cb5718ebf8973b44180d33}\label{classtsgl_1_1_canvas_abcd9695030cb5718ebf8973b44180d33}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!remove@{remove}}
+\index{remove@{remove}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::remove (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_drawable}{Drawable} $\ast$}]{shape\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Removes a \hyperlink{classtsgl_1_1_drawable}{Drawable} from the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+Removes shape\+Ptr from the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{}s drawing buffer. 
+\begin{DoxyParams}{Parameters}
+{\em shape\+Ptr} & Pointer to the \hyperlink{classtsgl_1_1_drawable}{Drawable} to remove from this \hyperlink{classtsgl_1_1_canvas}{Canvas}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+The \hyperlink{classtsgl_1_1_drawable}{Drawable} being deleted or going out of scope before \hyperlink{classtsgl_1_1_canvas_abcd9695030cb5718ebf8973b44180d33}{remove()} is called will cause a segmentation fault. 
+
+If shape\+Ptr is not in the drawing buffer, behavior is undefined. 
+\end{DoxyWarning}
+
+
+Referenced by Consumer\+::lock(), P\+C\+Thread\+::\+P\+C\+Thread(), Reader\+::\+Reader(), and Writer\+::\+Writer().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}\label{classtsgl_1_1_canvas_ada6403439b583910d27e497148da5f2e}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!reset@{reset}}
+\index{reset@{reset}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Resets the internal drawing timer of a \hyperlink{classtsgl_1_1_canvas}{Canvas} instance. 
+
+This function resets the starting time of the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{} draw timer to the current time. 
+
+Referenced by Julia\+::draw(), and Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}\label{classtsgl_1_1_canvas_a56bf3c6e4eb7b06015d1c115aaa143f8}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!resume\+Drawing@{resume\+Drawing}}
+\index{resume\+Drawing@{resume\+Drawing}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{resume\+Drawing()}{resumeDrawing()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::resume\+Drawing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Resumes the rendering thread of the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function should be called after pause\+Drawing to let the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{} rendering thread know that it may resume rendering. \begin{DoxyNote}{Note}
+This method may be called from any number of threads, so long as a matching number of calls to \hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+Drawing()} are made. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+{\bfseries This function makes use of a mutex lock. Do not call this without having first called \hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+Drawing()}.} 
+\end{DoxyWarning}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_abe021ab5148cc1327523689bced0f35a}{pause\+Drawing()} 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Spectrogram\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}\label{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [1/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&)}]{my\+Function }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Start the \hyperlink{classtsgl_1_1_canvas}{Canvas}, run a function on it, and wait for the user to close it. 
+
+This function binds another function to the current \hyperlink{classtsgl_1_1_canvas}{Canvas}, waits until that function is complete, and waits for the user to close the \hyperlink{classtsgl_1_1_canvas}{Canvas}. This function effectively calls \hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, {\ttfamily my\+Function}(), and \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} in sequence. 
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by run().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a62ec8be88bea1905cdb6855138ef3cb1}\label{classtsgl_1_1_canvas_a62ec8be88bea1905cdb6855138ef3cb1}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [2/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int)}]{my\+Function,  }\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a67b341ead1fde0a692281d2b1f67be1e}\label{classtsgl_1_1_canvas_a67b341ead1fde0a692281d2b1f67be1e}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [3/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, unsigned)}]{my\+Function,  }\item[{unsigned}]{u }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em u} & An unsigned integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a768c10737f9590a25d8e66dcc7137d9b}\label{classtsgl_1_1_canvas_a768c10737f9590a25d8e66dcc7137d9b}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [4/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, int)}]{my\+Function,  }\item[{int}]{i1,  }\item[{int}]{i2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em i1} & An integer argument to my\+Function \\
+\hline
+{\em i2} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a81220477d323e6e75ef77a4e47d4cd7e}\label{classtsgl_1_1_canvas_a81220477d323e6e75ef77a4e47d4cd7e}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [5/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, int, int)}]{my\+Function,  }\item[{int}]{i1,  }\item[{int}]{i2,  }\item[{int}]{i3 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em i1} & An integer argument to my\+Function \\
+\hline
+{\em i2} & An integer argument to my\+Function \\
+\hline
+{\em i3} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ab146e6cf9f7f19a047c20c02a0eb30f9}\label{classtsgl_1_1_canvas_ab146e6cf9f7f19a047c20c02a0eb30f9}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [6/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, unsigned, unsigned)}]{my\+Function,  }\item[{unsigned}]{u1,  }\item[{unsigned}]{u2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em u1} & An unsigned integer argument to my\+Function \\
+\hline
+{\em u2} & An unsigned integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a2eeece8d4c4453ec7b4b53e209004559}\label{classtsgl_1_1_canvas_a2eeece8d4c4453ec7b4b53e209004559}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [7/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, std\+::string)}]{my\+Function,  }\item[{std\+::string}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ac507bbbf60328de2fc99f93cd37d04ec}\label{classtsgl_1_1_canvas_ac507bbbf60328de2fc99f93cd37d04ec}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [8/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, std\+::string)}]{my\+Function,  }\item[{int}]{i,  }\item[{std\+::string}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_aafed71cba89b059629647e77ba23ff2b}\label{classtsgl_1_1_canvas_aafed71cba89b059629647e77ba23ff2b}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [9/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, std\+::string, int)}]{my\+Function,  }\item[{std\+::string}]{s,  }\item[{int}]{i }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ae8de87e9e5c42cc8f1bf4e18cb8805e2}\label{classtsgl_1_1_canvas_ae8de87e9e5c42cc8f1bf4e18cb8805e2}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [10/10]}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_canvas}{Canvas} \&, int, std\+::string, bool)}]{my\+Function,  }\item[{int}]{i,  }\item[{std\+::string}]{s,  }\item[{bool}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_canvas_a5f3f00d6c380a662a239077456045502}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_canvas}{Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_canvas}{Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_canvas}{Canvas} to render to. \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+{\em b} & A boolean argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_af03da8ddf3123c5d5bb2aa734d322b92}\label{classtsgl_1_1_canvas_af03da8ddf3123c5d5bb2aa734d322b92}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!set\+Background@{set\+Background}}
+\index{set\+Background@{set\+Background}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{set\+Background()}{setBackground()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::set\+Background (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_background}{Background} $\ast$}]{background,  }\item[{bool}]{previously\+Set = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Mutator for the \hyperlink{classtsgl_1_1_canvas}{Canvas} \hyperlink{classtsgl_1_1_background}{Background}. 
+
+This function sets the \hyperlink{classtsgl_1_1_background}{Background} which \hyperlink{classtsgl_1_1_canvas}{Canvas} will draw. 
+\begin{DoxyParams}{Parameters}
+{\em background} & A pointer to the new \hyperlink{classtsgl_1_1_background}{Background} value which will be assigned to my\+Background. \\
+\hline
+{\em previously\+Set} & Boolean indicating if background has been previously set for this \hyperlink{classtsgl_1_1_canvas}{Canvas}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}\label{classtsgl_1_1_canvas_abb668fe42e2fe7f269b255152df959d8}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!set\+Background\+Color@{set\+Background\+Color}}
+\index{set\+Background\+Color@{set\+Background\+Color}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{set\+Background\+Color()}{setBackgroundColor()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::set\+Background\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})}
+
+
+
+Mutator for the background color. 
+
+This function sets the clear color for when Canvas\+::clear() is called. 
+\begin{DoxyParams}{Parameters}
+{\em color} & The color to clear to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The alpha channel of the color is ignored. 
+\end{DoxyNote}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a8722c579dfa55a45e139bfeb269d73ff}\label{classtsgl_1_1_canvas_a8722c579dfa55a45e139bfeb269d73ff}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!set\+Show\+F\+PS@{set\+Show\+F\+PS}}
+\index{set\+Show\+F\+PS@{set\+Show\+F\+PS}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{set\+Show\+F\+P\+S()}{setShowFPS()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::set\+Show\+F\+PS (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption})}
+
+
+
+Mutator for showing the F\+PS. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & Whether to print the F\+PS to stdout every draw cycle (for debugging purposes). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}\label{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!sleep@{sleep}}
+\index{sleep@{sleep}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{sleep()}{sleep()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::sleep (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sleeps the calling thread to sync with the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+Tells the calling thread to sleep until the \hyperlink{classtsgl_1_1_canvas}{Canvas}\textquotesingle{} draw\+Timer expires. \begin{DoxyNote}{Note}
+It is recommened that you call \hyperlink{classtsgl_1_1_canvas_a2604fa056d4541f918ccf447eda1f3cf}{sleep()} at least once before doing any drawing; otherwise, the \hyperlink{classtsgl_1_1_canvas}{Canvas} may not render the first frame of drawing. 
+
+{\bfseries OS X\+:} This function automatically calls \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} on OS X. 
+\end{DoxyNote}
+
+
+Referenced by Producer\+::act(), tsgl\+::\+Visual\+Task\+Queue\+::close(), Pong\+::draw(), Nova\+::draw(), Julia\+::draw(), Gradient\+Mandelbrot\+::draw(), Buddhabrot\+::draw(), Mandelbrot\+::draw(), tsgl\+::\+Integral\+Viewer\+::rectangle\+Evaluate(), and tsgl\+::\+Integral\+Viewer\+::trapezoid\+Evaluate().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a6674cc86b9a54b6a564021fddce47e36}\label{classtsgl_1_1_canvas_a6674cc86b9a54b6a564021fddce47e36}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!sleep\+For@{sleep\+For}}
+\index{sleep\+For@{sleep\+For}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{sleep\+For()}{sleepFor()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::sleep\+For (\begin{DoxyParamCaption}\item[{float}]{seconds }\end{DoxyParamCaption})}
+
+
+
+Sleeps the calling thread for a set amount of time. 
+
+Tells the calling thread to sleep for {\ttfamily seconds} seconds. 
+\begin{DoxyParams}{Parameters}
+{\em seconds} & Number of seconds to sleep for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+{\bfseries OS X\+:} This function automatically calls \hyperlink{classtsgl_1_1_canvas_aa499851e5e4b97bb99ca4fb3d633c17e}{handle\+I\+O()} on OS X. 
+\end{DoxyNote}
+
+
+Referenced by handle\+I\+O(), P\+C\+Thread\+::\+P\+C\+Thread(), Reader\+::\+Reader(), resume\+Drawing(), R\+W\+Thread\+::\+R\+W\+Thread(), wait(), and Writer\+::\+Writer().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}\label{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!start@{start}}
+\index{start@{start}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Opens the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function opens a GL window and tells the \hyperlink{classtsgl_1_1_canvas}{Canvas} to start rendering. \begin{DoxyReturn}{Returns}
+0 if start is successful, -\/1 if the canvas has already started. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()}, \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop()}, \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()} 
+\end{DoxySeeAlso}
+
+
+Referenced by Mandelbrot\+::draw(), tsgl\+::\+Cartesian\+Canvas\+::run(), run(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), tsgl\+::\+Spectrogram\+::\+Spectrogram(), Table\+::\+Table(), Table3\+D\+::\+Table3\+D(), tsgl\+::\+Visual\+Task\+Queue\+::\+Visual\+Task\+Queue(), and tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}\label{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!stop@{stop}}
+\index{stop@{stop}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Begins the process of closing the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function calls \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()} followed by \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} to gracefully close the \hyperlink{classtsgl_1_1_canvas}{Canvas} at the earliest available opportunity. \begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()}, \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()} 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer(), Table\+::$\sim$\+Table(), and Table3\+D\+::$\sim$\+Table3\+D().
+
+\mbox{\Hypertarget{classtsgl_1_1_canvas_ac6035d87aa3bf077031bc0bb6f419b17}\label{classtsgl_1_1_canvas_ac6035d87aa3bf077031bc0bb6f419b17}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!stop\+Recording@{stop\+Recording}}
+\index{stop\+Recording@{stop\+Recording}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{stop\+Recording()}{stopRecording()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::stop\+Recording (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Stops recording the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function tells the \hyperlink{classtsgl_1_1_canvas}{Canvas} to stop dumping images to the file system. \mbox{\Hypertarget{classtsgl_1_1_canvas_ac035f43763b198f6915a0772973a5ea9}\label{classtsgl_1_1_canvas_ac035f43763b198f6915a0772973a5ea9}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!take\+Screen\+Shot@{take\+Screen\+Shot}}
+\index{take\+Screen\+Shot@{take\+Screen\+Shot}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{take\+Screen\+Shot()}{takeScreenShot()}}
+{\footnotesize\ttfamily void tsgl\+::\+Canvas\+::take\+Screen\+Shot (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Takes a screenshot. 
+
+This function saves a screenshot of the current \hyperlink{classtsgl_1_1_canvas}{Canvas} to the working directory.
+
+Images are saved as Image\+X\+X\+X\+X\+X\+X.\+png, where X\+X\+X\+X\+XX is the current frame number. \begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000001}{Bug}]Multiple calls to this function in rapid succession render the F\+PS counter inaccurate. \end{DoxyRefDesc}
+\mbox{\Hypertarget{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}\label{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}} 
+\index{tsgl\+::\+Canvas@{tsgl\+::\+Canvas}!wait@{wait}}
+\index{wait@{wait}!tsgl\+::\+Canvas@{tsgl\+::\+Canvas}}
+\subsubsection{\texorpdfstring{wait()}{wait()}}
+{\footnotesize\ttfamily int tsgl\+::\+Canvas\+::wait (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Waits for the user to close the \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function blocks the calling thread until the user closes the \hyperlink{classtsgl_1_1_canvas}{Canvas} or until \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()} is called. This function has no effect if the \hyperlink{classtsgl_1_1_canvas}{Canvas} has not started. \begin{DoxyReturn}{Returns}
+0 if exit is successful, -\/1 if the \hyperlink{classtsgl_1_1_canvas}{Canvas} has not started yet. 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, end(), \hyperlink{classtsgl_1_1_canvas_afaa1250b1da6b48b9c170a0655191938}{close()}, \hyperlink{classtsgl_1_1_canvas_a46cd37a9f2a146e57b4e0273faf6485c}{stop()}. 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::close(), Mandelbrot\+::draw(), tsgl\+::\+Spectrogram\+::finish(), tsgl\+::\+Integral\+Viewer\+::rectangle\+Evaluate(), tsgl\+::\+Cartesian\+Canvas\+::run(), run(), stop(), and tsgl\+::\+Integral\+Viewer\+::trapezoid\+Evaluate().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Canvas.\+h\item 
+Canvas.\+cpp\end{DoxyCompactItemize}

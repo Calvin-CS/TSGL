@@ -1,0 +1,87 @@
+\hypertarget{class_writer}{}\section{Writer Class Reference}
+\label{class_writer}\index{Writer@{Writer}}
+
+
+A \hyperlink{class_thread}{Thread} that writes items in the visualization.  
+
+
+
+
+{\ttfamily \#include $<$Writer.\+h$>$}
+
+Inheritance diagram for Writer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_writer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_writer_aedc04cd5fb7b4b99d3ad906fef2116ce}{Writer} ()
+\begin{DoxyCompactList}\small\item\em Default-\/constructor for the \hyperlink{class_writer}{Writer} class. \end{DoxyCompactList}\item 
+\hyperlink{class_writer_a53cf1f8d2b8bee756303a54a9b05c04d}{Writer} (\hyperlink{class_r_w_database}{R\+W\+Database}$<$ \hyperlink{classtsgl_1_1_rectangle}{Rectangle} $\ast$$>$ \&shared\+Database, \hyperlink{class_lock}{Lock} \&lock, unsigned long id, \hyperlink{classtsgl_1_1_canvas}{Canvas} \&can)
+\begin{DoxyCompactList}\small\item\em Explicit-\/constructor for the \hyperlink{class_writer}{Writer} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_writer_a2095bf3c278d7bacc9ce9cc503319aa7}\label{class_writer_a2095bf3c278d7bacc9ce9cc503319aa7}} 
+void {\bfseries lock} ()
+\item 
+\mbox{\Hypertarget{class_writer_ae4c7b4e66afefb312d9ee516ad4fe776}\label{class_writer_ae4c7b4e66afefb312d9ee516ad4fe776}} 
+void {\bfseries act} ()
+\item 
+\mbox{\Hypertarget{class_writer_a2664d4ec9c64dff9acd3289cff666f9d}\label{class_writer_a2664d4ec9c64dff9acd3289cff666f9d}} 
+void {\bfseries unlock} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A \hyperlink{class_thread}{Thread} that writes items in the visualization. 
+
+\hyperlink{class_writer}{Writer} class creates a \hyperlink{class_writer}{Writer} object and inherits from the \hyperlink{class_r_w_thread}{R\+W\+Thread} class.
+
+Inheritance\+: \hyperlink{class_r_w_thread}{R\+W\+Thread} class.
+
+Implements the abstract run() method from the \hyperlink{class_thread}{Thread} class so that the pthread runs the write() method. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_writer_aedc04cd5fb7b4b99d3ad906fef2116ce}\label{class_writer_aedc04cd5fb7b4b99d3ad906fef2116ce}} 
+\index{Writer@{Writer}!Writer@{Writer}}
+\index{Writer@{Writer}!Writer@{Writer}}
+\subsubsection{\texorpdfstring{Writer()}{Writer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Writer\+::\+Writer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default-\/constructor for the \hyperlink{class_writer}{Writer} class. 
+
+\begin{DoxyReturn}{Returns}
+\+: The constructed \hyperlink{class_writer}{Writer} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_writer_a53cf1f8d2b8bee756303a54a9b05c04d}\label{class_writer_a53cf1f8d2b8bee756303a54a9b05c04d}} 
+\index{Writer@{Writer}!Writer@{Writer}}
+\index{Writer@{Writer}!Writer@{Writer}}
+\subsubsection{\texorpdfstring{Writer()}{Writer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Writer\+::\+Writer (\begin{DoxyParamCaption}\item[{\hyperlink{class_r_w_database}{R\+W\+Database}$<$ \hyperlink{classtsgl_1_1_rectangle}{Rectangle} $\ast$$>$ \&}]{shared\+Database,  }\item[{\hyperlink{class_lock}{Lock} \&}]{lock,  }\item[{unsigned long}]{id,  }\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} \&}]{can }\end{DoxyParamCaption})}
+
+
+
+Explicit-\/constructor for the \hyperlink{class_writer}{Writer} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em shared\+Database,a} & reference to the \hyperlink{class_r_w_database}{R\+W\+Database} object that is shared between the \hyperlink{class_reader}{Reader} and \hyperlink{class_writer}{Writer}. \\
+\hline
+{\em id,an} & unsigned long that will be passed to the \hyperlink{class_thread_a95c703fb8f2f27cb64f475a8c940864a}{Thread()} constructor that will act as the id for the \hyperlink{class_thread}{Thread} object. \\
+\hline
+{\em can,a} & handle to the Canvas that will be drawn on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The constructed \hyperlink{class_writer}{Writer} object. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/Writer.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/Writer.\+cpp\end{DoxyCompactItemize}

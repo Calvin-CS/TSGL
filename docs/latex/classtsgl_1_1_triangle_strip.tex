@@ -1,0 +1,126 @@
+\hypertarget{classtsgl_1_1_triangle_strip}{}\section{tsgl\+:\+:Triangle\+Strip Class Reference}
+\label{classtsgl_1_1_triangle_strip}\index{tsgl\+::\+Triangle\+Strip@{tsgl\+::\+Triangle\+Strip}}
+
+
+Draw an arbitrary triangle strip with colored vertices.  
+
+
+
+
+{\ttfamily \#include $<$Triangle\+Strip.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Triangle\+Strip\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_triangle_strip}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_triangle_strip_adea2ae457f504be5369f83d0b2852755}{Triangle\+Strip} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float z\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Explicitly construct a new \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} with monocolored fill. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_triangle_strip_a253d7c6f3f9bb2fcbba1d9f1b3e2ad8b}{Triangle\+Strip} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float z\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly construct a new \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} with multicolored fill. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw an arbitrary triangle strip with colored vertices. 
+
+\hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} is a class for holding vertex data for a triangle strip with colored vertices.
+
+Vertices are drawn in triangle strip format, where the first three vertices make up the first triangle, the next vertex plus the previous two make up the second triangle, and so on.
+
+This method is optimized for long lists and offers a marked improvement over drawing individual \hyperlink{classtsgl_1_1_triangle}{Triangle} instances. \begin{DoxyNote}{Note}
+The \hyperlink{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}{add\+Vertex()} method must be called the same number of times as specified in the constructor. 
+
+Calling \hyperlink{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}{add\+Vertex()} after all vertices have been added will do nothing. 
+
+Calling \hyperlink{classtsgl_1_1_shape_ae0905e73f1652d92cef9c7f2c38572f3}{draw()} before all vertices have been added will do nothing. 
+\end{DoxyNote}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_triangle_strip_adea2ae457f504be5369f83d0b2852755}\label{classtsgl_1_1_triangle_strip_adea2ae457f504be5369f83d0b2852755}} 
+\index{tsgl\+::\+Triangle\+Strip@{tsgl\+::\+Triangle\+Strip}!Triangle\+Strip@{Triangle\+Strip}}
+\index{Triangle\+Strip@{Triangle\+Strip}!tsgl\+::\+Triangle\+Strip@{tsgl\+::\+Triangle\+Strip}}
+\subsubsection{\texorpdfstring{Triangle\+Strip()}{TriangleStrip()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Triangle\+Strip\+::\+Triangle\+Strip (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{z\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly construct a new \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} with monocolored fill. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} object. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the center of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em centerY} & The y coordinate of the center of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em centerZ} & The z coordinate of the center of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em num\+Vertices} & The number of vertices. \\
+\hline
+{\em x} & An array of num\+Vertices x parameters for the vertices of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em y} & An array of num\+Vertices y parameters for the vertices of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em z} & An array of num\+Vertices z parameters for the vertices of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s yaw. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s pitch. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s roll. \\
+\hline
+{\em color} & The color of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} with the specified vertices and color. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_triangle_strip_a253d7c6f3f9bb2fcbba1d9f1b3e2ad8b}\label{classtsgl_1_1_triangle_strip_a253d7c6f3f9bb2fcbba1d9f1b3e2ad8b}} 
+\index{tsgl\+::\+Triangle\+Strip@{tsgl\+::\+Triangle\+Strip}!Triangle\+Strip@{Triangle\+Strip}}
+\index{Triangle\+Strip@{Triangle\+Strip}!tsgl\+::\+Triangle\+Strip@{tsgl\+::\+Triangle\+Strip}}
+\subsubsection{\texorpdfstring{Triangle\+Strip()}{TriangleStrip()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Triangle\+Strip\+::\+Triangle\+Strip (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{z\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly construct a new \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} with multicolored fill. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} object. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the center of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em centerY} & The y coordinate of the center of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em centerZ} & The z coordinate of the center of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em num\+Vertices} & The number of vertices. \\
+\hline
+{\em x} & An array of num\+Vertices x parameters for the vertices of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em y} & An array of num\+Vertices y parameters for the vertices of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em z} & An array of num\+Vertices z parameters for the vertices of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s yaw. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s pitch. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s roll. \\
+\hline
+{\em color} & An array of colors for the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} with the specified vertices and color. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Triangle\+Strip.\+h\item 
+Triangle\+Strip.\+cpp\end{DoxyCompactItemize}

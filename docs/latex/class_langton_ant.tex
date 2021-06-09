@@ -1,0 +1,167 @@
+\hypertarget{class_langton_ant}{}\section{Langton\+Ant Class Reference}
+\label{class_langton_ant}\index{Langton\+Ant@{Langton\+Ant}}
+
+
+Create one of Langton\textquotesingle{}s Ant!  
+
+
+
+
+{\ttfamily \#include $<$Langton\+Ant.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_langton_ant_ac3947796f9411f19c9dd547a1b89cf03}{Langton\+Ant} (int x, int y, int r, int g, int b, int d, \hyperlink{class_ant_farm}{Ant\+Farm} $\ast$p)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \hyperlink{class_langton_ant}{Langton\+Ant} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_langton_ant_acf17f14d78270a32b66273d83d8900c1}{move} ()
+\begin{DoxyCompactList}\small\item\em Move the \hyperlink{class_langton_ant}{Langton\+Ant} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_langton_ant_ab5d2f1dc402bd5c6aa6552aad1ca50ca}{change\+Color} (int r, int g, int b)
+\begin{DoxyCompactList}\small\item\em Change the color of a \hyperlink{class_langton_ant}{Langton\+Ant} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_langton_ant_a940dc3a5c0286ee91dd863ece7dc3998}{change\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} c)
+\begin{DoxyCompactList}\small\item\em Change the color of a \hyperlink{class_langton_ant}{Langton\+Ant} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_langton_ant_a5fd5b25e776cfe96abe70300d022e333}{set\+Alpha} (int a)
+\begin{DoxyCompactList}\small\item\em Set the alpha component of the color. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_langton_ant_afab907366d5000ba39ee0cded177110c}\label{class_langton_ant_afab907366d5000ba39ee0cded177110c}} 
+int {\bfseries myX}
+\item 
+\mbox{\Hypertarget{class_langton_ant_aa7f6eccf65908ef06dc2453a6f4f4063}\label{class_langton_ant_aa7f6eccf65908ef06dc2453a6f4f4063}} 
+int {\bfseries myY}
+\item 
+\mbox{\Hypertarget{class_langton_ant_abe7a992ac3e4a4ad14108dabc30c3ee2}\label{class_langton_ant_abe7a992ac3e4a4ad14108dabc30c3ee2}} 
+int {\bfseries my\+Red}
+\item 
+\mbox{\Hypertarget{class_langton_ant_aad3f03053456bee3956a8358de57f109}\label{class_langton_ant_aad3f03053456bee3956a8358de57f109}} 
+int {\bfseries my\+Green}
+\item 
+\mbox{\Hypertarget{class_langton_ant_a70481e24e34cbcaf46da72d5b9c13f56}\label{class_langton_ant_a70481e24e34cbcaf46da72d5b9c13f56}} 
+int {\bfseries my\+Blue}
+\item 
+\mbox{\Hypertarget{class_langton_ant_ab5795182669f202beacb4abe6682629b}\label{class_langton_ant_ab5795182669f202beacb4abe6682629b}} 
+int {\bfseries my\+Alpha}
+\item 
+\mbox{\Hypertarget{class_langton_ant_a62b83daa2325575e8079817fd8a416c5}\label{class_langton_ant_a62b83daa2325575e8079817fd8a416c5}} 
+int {\bfseries my\+Dir}
+\item 
+\mbox{\Hypertarget{class_langton_ant_a814b5625591925045665f93f08eef3f4}\label{class_langton_ant_a814b5625591925045665f93f08eef3f4}} 
+\hyperlink{class_ant_farm}{Ant\+Farm} $\ast$ {\bfseries my\+Farm}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Create one of Langton\textquotesingle{}s Ant! 
+
+Contains all of the data and method needed in order to simulate a \hyperlink{class_langton_ant}{Langton\+Ant}.
+
+You can change the color either by manually setting the red, green, and blue components or by passing a Color\+Float struct that contains those values.
+
+The movement of each \hyperlink{class_langton_ant}{Langton\+Ant} is determined by its direction; UP, D\+O\+WN, L\+E\+FT, or R\+I\+G\+HT.
+
+You can also set each \hyperlink{class_langton_ant}{Langton\+Ant} object to have an alpha value in order to make them transparent. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_langton_ant_ac3947796f9411f19c9dd547a1b89cf03}\label{class_langton_ant_ac3947796f9411f19c9dd547a1b89cf03}} 
+\index{Langton\+Ant@{Langton\+Ant}!Langton\+Ant@{Langton\+Ant}}
+\index{Langton\+Ant@{Langton\+Ant}!Langton\+Ant@{Langton\+Ant}}
+\subsubsection{\texorpdfstring{Langton\+Ant()}{LangtonAnt()}}
+{\footnotesize\ttfamily Langton\+Ant\+::\+Langton\+Ant (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{r,  }\item[{int}]{g,  }\item[{int}]{b,  }\item[{int}]{d,  }\item[{\hyperlink{class_ant_farm}{Ant\+Farm} $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \hyperlink{class_langton_ant}{Langton\+Ant} object. 
+
+Explicit constructor for the \hyperlink{class_langton_ant}{Langton\+Ant} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+{\em r} & Red component for the color of the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+{\em g} & Green component for the color of the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+{\em b} & Blue component for the color of the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+{\em d} & The direction of the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+{\em p} & Pointer to the \hyperlink{class_ant_farm}{Ant\+Farm} object that the \hyperlink{class_langton_ant}{Langton\+Ant} object belongs to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constructed \hyperlink{class_langton_ant}{Langton\+Ant} object. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_langton_ant_ab5d2f1dc402bd5c6aa6552aad1ca50ca}\label{class_langton_ant_ab5d2f1dc402bd5c6aa6552aad1ca50ca}} 
+\index{Langton\+Ant@{Langton\+Ant}!change\+Color@{change\+Color}}
+\index{change\+Color@{change\+Color}!Langton\+Ant@{Langton\+Ant}}
+\subsubsection{\texorpdfstring{change\+Color()}{changeColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Langton\+Ant\+::change\+Color (\begin{DoxyParamCaption}\item[{int}]{r,  }\item[{int}]{g,  }\item[{int}]{b }\end{DoxyParamCaption})}
+
+
+
+Change the color of a \hyperlink{class_langton_ant}{Langton\+Ant} object. 
+
+Specifying a new red, green, and blue component allows you to change the color of the \hyperlink{class_langton_ant}{Langton\+Ant} object. 
+\begin{DoxyParams}{Parameters}
+{\em r} & Red component of the new color for the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+{\em g} & Green component of the new color for the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+{\em b} & Blue component of the new color for the Lanton\+Ant object. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by change\+Color().
+
+\mbox{\Hypertarget{class_langton_ant_a940dc3a5c0286ee91dd863ece7dc3998}\label{class_langton_ant_a940dc3a5c0286ee91dd863ece7dc3998}} 
+\index{Langton\+Ant@{Langton\+Ant}!change\+Color@{change\+Color}}
+\index{change\+Color@{change\+Color}!Langton\+Ant@{Langton\+Ant}}
+\subsubsection{\texorpdfstring{change\+Color()}{changeColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Langton\+Ant\+::change\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{c }\end{DoxyParamCaption})}
+
+
+
+Change the color of a \hyperlink{class_langton_ant}{Langton\+Ant} object. 
+
+Same as change\+Color(r, g, b) but instead of passing the red, green, and blue components seperately you are passing a Color\+Float struct that contains all three. 
+\begin{DoxyParams}{Parameters}
+{\em c} & A Color\+Float struct containing the new red, green, and blue components for the new color of the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_langton_ant_acf17f14d78270a32b66273d83d8900c1}\label{class_langton_ant_acf17f14d78270a32b66273d83d8900c1}} 
+\index{Langton\+Ant@{Langton\+Ant}!move@{move}}
+\index{move@{move}!Langton\+Ant@{Langton\+Ant}}
+\subsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily void Langton\+Ant\+::move (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Move the \hyperlink{class_langton_ant}{Langton\+Ant} object. 
+
+Set to movement of the \hyperlink{class_langton_ant}{Langton\+Ant} object based off of its current direction (UP, D\+O\+WN, L\+E\+FT, or R\+I\+G\+HT). \mbox{\Hypertarget{class_langton_ant_a5fd5b25e776cfe96abe70300d022e333}\label{class_langton_ant_a5fd5b25e776cfe96abe70300d022e333}} 
+\index{Langton\+Ant@{Langton\+Ant}!set\+Alpha@{set\+Alpha}}
+\index{set\+Alpha@{set\+Alpha}!Langton\+Ant@{Langton\+Ant}}
+\subsubsection{\texorpdfstring{set\+Alpha()}{setAlpha()}}
+{\footnotesize\ttfamily void Langton\+Ant\+::set\+Alpha (\begin{DoxyParamCaption}\item[{int}]{a }\end{DoxyParamCaption})}
+
+
+
+Set the alpha component of the color. 
+
+Set the alpha component of the color for a \hyperlink{class_langton_ant}{Langton\+Ant} object. 
+\begin{DoxyParams}{Parameters}
+{\em a} & Alpha component to give to the \hyperlink{class_langton_ant}{Langton\+Ant} object. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Langton/Langton\+Ant.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Langton/Langton\+Ant.\+cpp\end{DoxyCompactItemize}

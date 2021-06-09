@@ -1,0 +1,93 @@
+\hypertarget{class_gradient_mandelbrot}{}\section{Gradient\+Mandelbrot Class Reference}
+\label{class_gradient_mandelbrot}\index{Gradient\+Mandelbrot@{Gradient\+Mandelbrot}}
+
+
+Draws a \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} set on a Cartesian\+Canvas.  
+
+
+
+
+{\ttfamily \#include $<$Gradient\+Mandelbrot.\+h$>$}
+
+Inheritance diagram for Gradient\+Mandelbrot\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_gradient_mandelbrot}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_gradient_mandelbrot_a4284747d6cef5b030fc82ffea41c850d}{Gradient\+Mandelbrot} (unsigned threads, unsigned depth)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} set. \end{DoxyCompactList}\item 
+void \hyperlink{class_gradient_mandelbrot_a1d4aa3e44d7d1c2241545b60c79985df}{draw} (\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&can)
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draws a \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} set on a Cartesian\+Canvas. 
+
+Similar to a normal \hyperlink{class_mandelbrot}{Mandelbrot} set but with a smoother shading.
+
+Extends the \hyperlink{class_mandelbrot}{Mandelbrot} class and overrides its \hyperlink{class_gradient_mandelbrot_a1d4aa3e44d7d1c2241545b60c79985df}{draw()} function and set\+Redraw() function.
+
+Can zoom in and out of the \hyperlink{class_mandelbrot}{Mandelbrot} set by scrolling up and down on the mouse wheel (respectively). \begin{DoxySeeAlso}{See also}
+\hyperlink{class_mandelbrot}{Mandelbrot} class 
+\end{DoxySeeAlso}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_gradient_mandelbrot_a4284747d6cef5b030fc82ffea41c850d}\label{class_gradient_mandelbrot_a4284747d6cef5b030fc82ffea41c850d}} 
+\index{Gradient\+Mandelbrot@{Gradient\+Mandelbrot}!Gradient\+Mandelbrot@{Gradient\+Mandelbrot}}
+\index{Gradient\+Mandelbrot@{Gradient\+Mandelbrot}!Gradient\+Mandelbrot@{Gradient\+Mandelbrot}}
+\subsubsection{\texorpdfstring{Gradient\+Mandelbrot()}{GradientMandelbrot()}}
+{\footnotesize\ttfamily Gradient\+Mandelbrot\+::\+Gradient\+Mandelbrot (\begin{DoxyParamCaption}\item[{unsigned}]{threads,  }\item[{unsigned}]{depth }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} set. 
+
+Explicit constructor for the Gradien\+Mandelbrot class. 
+\begin{DoxyParams}{Parameters}
+{\em threads} & The number of threads to use in the drawing of the \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} object. \\
+\hline
+{\em depth} & The number of iterations to go to in order to draw the \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} object ready to be drawn onto the Cartesian\+Canvas. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_gradient_mandelbrot_a1d4aa3e44d7d1c2241545b60c79985df}\label{class_gradient_mandelbrot_a1d4aa3e44d7d1c2241545b60c79985df}} 
+\index{Gradient\+Mandelbrot@{Gradient\+Mandelbrot}!draw@{draw}}
+\index{draw@{draw}!Gradient\+Mandelbrot@{Gradient\+Mandelbrot}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Gradient\+Mandelbrot\+::draw (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&}]{can }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} set. 
+
+Actually draws the \hyperlink{class_gradient_mandelbrot}{Gradient\+Mandelbrot} set onto the Cartesian\+Canvas. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Cartesian\+Canvas to draw to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This method overrides the \hyperlink{class_mandelbrot}{Mandelbrot} class\textquotesingle{} \hyperlink{class_gradient_mandelbrot_a1d4aa3e44d7d1c2241545b60c79985df}{draw()} method. 
+
+Cart is a typedef for a Cartesian\+Canvas object. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_mandelbrot_ab7918e4de8f00f73290f110ca7a6cffd}{Mandelbrot}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Gradient\+Mandelbrot.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Gradient\+Mandelbrot.\+cpp\end{DoxyCompactItemize}

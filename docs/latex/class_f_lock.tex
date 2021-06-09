@@ -1,0 +1,117 @@
+\hypertarget{class_f_lock}{}\section{F\+Lock Class Reference}
+\label{class_f_lock}\index{F\+Lock@{F\+Lock}}
+
+
+A lock giving equal priority to Readers and Writers.  
+
+
+
+
+{\ttfamily \#include $<$F\+Lock.\+h$>$}
+
+Inheritance diagram for F\+Lock\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_f_lock}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_f_lock_a7fbb4dfce8ff879b88ff77efd4b76a96}{F\+Lock} ()
+\item 
+\mbox{\Hypertarget{class_f_lock_a430e0591ef1927b64124cd11085c021b}\label{class_f_lock_a430e0591ef1927b64124cd11085c021b}} 
+{\bfseries F\+Lock} (\hyperlink{class_r_w_database}{R\+W\+Database}$<$ \hyperlink{classtsgl_1_1_rectangle}{tsgl\+::\+Rectangle} $\ast$$>$ $\ast$data)
+\item 
+void \hyperlink{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}{read\+Lock} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}{read\+Lock()} implements the abstract method in \hyperlink{class_lock}{Lock} \end{DoxyCompactList}\item 
+void \hyperlink{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}{read\+Unlock} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}{read\+Unlock()} implements the abstract method in \hyperlink{class_lock}{Lock} \end{DoxyCompactList}\item 
+void \hyperlink{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}{write\+Lock} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}{write\+Lock()} implements the abstract method in \hyperlink{class_lock}{Lock} \end{DoxyCompactList}\item 
+void \hyperlink{class_f_lock_afb22121c126a71c24e751ae7315e9a48}{write\+Unlock} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_f_lock_afb22121c126a71c24e751ae7315e9a48}{write\+Unlock()} implements the abstract method in \hyperlink{class_lock}{Lock} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+A lock giving equal priority to Readers and Writers. 
+
+\hyperlink{_f_lock_8h_source}{F\+Lock.\+h} provides the fair monitor for the Reader-\/\+Writer visualization that gives equal preference to the Readers and Writers. This class is a subclass of \hyperlink{class_lock}{Lock} and implements its locking and unlocking virtual methods. implements the \char`\"{}commonly known solution\char`\"{} presented in\+: \href{https://arxiv.org/pdf/1309.4507.pdf}{\tt https\+://arxiv.\+org/pdf/1309.\+4507.\+pdf}
+
+Inheritance\+: \hyperlink{class_lock}{Lock} class.
+
+Implements the locking and unlocking methods of a monitor. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_f_lock_a7fbb4dfce8ff879b88ff77efd4b76a96}\label{class_f_lock_a7fbb4dfce8ff879b88ff77efd4b76a96}} 
+\index{F\+Lock@{F\+Lock}!F\+Lock@{F\+Lock}}
+\index{F\+Lock@{F\+Lock}!F\+Lock@{F\+Lock}}
+\subsubsection{\texorpdfstring{F\+Lock()}{FLock()}}
+{\footnotesize\ttfamily F\+Lock\+::\+F\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+F\+Lock.\+cpp provides the monitor for the Reader-\/\+Writer visualization that gives a fair preference. This class is a subclass of \hyperlink{class_lock}{Lock} and implements its locking and unlocking virtual methods. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}\label{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}} 
+\index{F\+Lock@{F\+Lock}!read\+Lock@{read\+Lock}}
+\index{read\+Lock@{read\+Lock}!F\+Lock@{F\+Lock}}
+\subsubsection{\texorpdfstring{read\+Lock()}{readLock()}}
+{\footnotesize\ttfamily void F\+Lock\+::read\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\hyperlink{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}{read\+Lock()} implements the abstract method in \hyperlink{class_lock}{Lock} 
+
+Grants the calling thread access for reading 
+
+Implements \hyperlink{class_lock}{Lock}.
+
+\mbox{\Hypertarget{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}\label{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}} 
+\index{F\+Lock@{F\+Lock}!read\+Unlock@{read\+Unlock}}
+\index{read\+Unlock@{read\+Unlock}!F\+Lock@{F\+Lock}}
+\subsubsection{\texorpdfstring{read\+Unlock()}{readUnlock()}}
+{\footnotesize\ttfamily void F\+Lock\+::read\+Unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\hyperlink{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}{read\+Unlock()} implements the abstract method in \hyperlink{class_lock}{Lock} 
+
+Releases the calling thread\textquotesingle{}s read lock 
+
+Implements \hyperlink{class_lock}{Lock}.
+
+\mbox{\Hypertarget{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}\label{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}} 
+\index{F\+Lock@{F\+Lock}!write\+Lock@{write\+Lock}}
+\index{write\+Lock@{write\+Lock}!F\+Lock@{F\+Lock}}
+\subsubsection{\texorpdfstring{write\+Lock()}{writeLock()}}
+{\footnotesize\ttfamily void F\+Lock\+::write\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\hyperlink{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}{write\+Lock()} implements the abstract method in \hyperlink{class_lock}{Lock} 
+
+Grants the calling thread acces for writing 
+
+Implements \hyperlink{class_lock}{Lock}.
+
+\mbox{\Hypertarget{class_f_lock_afb22121c126a71c24e751ae7315e9a48}\label{class_f_lock_afb22121c126a71c24e751ae7315e9a48}} 
+\index{F\+Lock@{F\+Lock}!write\+Unlock@{write\+Unlock}}
+\index{write\+Unlock@{write\+Unlock}!F\+Lock@{F\+Lock}}
+\subsubsection{\texorpdfstring{write\+Unlock()}{writeUnlock()}}
+{\footnotesize\ttfamily void F\+Lock\+::write\+Unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\hyperlink{class_f_lock_afb22121c126a71c24e751ae7315e9a48}{write\+Unlock()} implements the abstract method in \hyperlink{class_lock}{Lock} 
+
+Releases the calling thread\textquotesingle{}s write lock 
+
+Implements \hyperlink{class_lock}{Lock}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/F\+Lock.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/F\+Lock.\+cpp\end{DoxyCompactItemize}
