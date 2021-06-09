@@ -42,7 +42,9 @@ GL_FLAGS := -framework OpenGL
 BREW := -lomp -I"$(brew --prefix libomp)/include" 
 endif
 
-
+CXXFLAGS = -O3 -g3 -ggdb3 \
+	-I/usr/include/TSGL \
+	-I/usr/include/freetype2 \
 
 LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
 			$(BREW) -L/usr/lib \
