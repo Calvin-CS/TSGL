@@ -21,7 +21,7 @@ echo "Installing necessary packages..."
 echo
 echo
 
-apt-cyg install wget make cmake gcc-g++ libXinerama-devel libXcursor-devel libXi-devel libfreetype-devel libfreetype-doc libfreetype6 libGL-devel libGL1 xorg-server xinit xeyes glm-devel libglut-devel libglut3 openmpi glew libGLEW-devel libXrandr-devel mingw64-i686-freetype2 mingw64-x86_64-freetype2 libopenmpi-devel libopenmpi12 libopenmpicxx1 doxygen-doxywizard dos2unix
+apt-cyg install make cmake gcc-g++ libXinerama-devel libXcursor-devel libXi-devel libfreetype-devel libfreetype-doc libfreetype6 libGL-devel libGL1 xorg-server xinit xeyes glm-devel libglut-devel libglut3 openmpi glew libGLEW-devel libXrandr-devel mingw64-i686-freetype2 mingw64-x86_64-freetype2 libopenmpi-devel libopenmpi12 libopenmpicxx1 doxygen-doxywizard dos2unix
 
 echo
 echo
