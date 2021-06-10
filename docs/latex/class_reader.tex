@@ -1,0 +1,78 @@
+\hypertarget{class_reader}{}\section{Reader Class Reference}
+\label{class_reader}\index{Reader@{Reader}}
+
+
+\hyperlink{class_reader}{Reader} class inherits from the \hyperlink{class_r_w_thread}{R\+W\+Thread} class in order to create a \hyperlink{class_reader}{Reader} object.  
+
+
+
+
+{\ttfamily \#include $<$Reader.\+h$>$}
+
+Inheritance diagram for Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_reader}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_reader_adcda31b507720ab44044d7a21686fba2}{Reader} ()
+\begin{DoxyCompactList}\small\item\em Default-\/constructor for the \hyperlink{class_reader}{Reader} class. \end{DoxyCompactList}\item 
+\hyperlink{class_reader_a5c2576afadd1be193f99fb6d54787b56}{Reader} (\hyperlink{class_r_w_database}{R\+W\+Database}$<$ \hyperlink{classtsgl_1_1_rectangle}{Rectangle} $\ast$$>$ \&shared\+Database, \hyperlink{class_lock}{Lock} \&lock, unsigned long id, \hyperlink{classtsgl_1_1_canvas}{Canvas} \&can)
+\begin{DoxyCompactList}\small\item\em Explicit-\/constructor for the \hyperlink{class_reader}{Reader} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_reader_a83d805383b755b46f43491f8a0c8f3f8}\label{class_reader_a83d805383b755b46f43491f8a0c8f3f8}} 
+void {\bfseries lock} ()
+\item 
+\mbox{\Hypertarget{class_reader_a89f5f3c7107185ac9a8d54c6464b7ee3}\label{class_reader_a89f5f3c7107185ac9a8d54c6464b7ee3}} 
+void {\bfseries act} ()
+\item 
+\mbox{\Hypertarget{class_reader_ae6fdb55ccd1f482824e64f72c65b83e0}\label{class_reader_ae6fdb55ccd1f482824e64f72c65b83e0}} 
+void {\bfseries unlock} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_reader}{Reader} class inherits from the \hyperlink{class_r_w_thread}{R\+W\+Thread} class in order to create a \hyperlink{class_reader}{Reader} object. 
+
+Inheritance\+: \hyperlink{class_r_w_thread}{R\+W\+Thread} class.
+
+Implements the run() method, which calls the read() method. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_reader_adcda31b507720ab44044d7a21686fba2}\label{class_reader_adcda31b507720ab44044d7a21686fba2}} 
+\index{Reader@{Reader}!Reader@{Reader}}
+\index{Reader@{Reader}!Reader@{Reader}}
+\subsubsection{\texorpdfstring{Reader()}{Reader()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Reader\+::\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default-\/constructor for the \hyperlink{class_reader}{Reader} class. 
+
+\begin{DoxyReturn}{Returns}
+\+: The constructed \hyperlink{class_reader}{Reader} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_reader_a5c2576afadd1be193f99fb6d54787b56}\label{class_reader_a5c2576afadd1be193f99fb6d54787b56}} 
+\index{Reader@{Reader}!Reader@{Reader}}
+\index{Reader@{Reader}!Reader@{Reader}}
+\subsubsection{\texorpdfstring{Reader()}{Reader()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Reader\+::\+Reader (\begin{DoxyParamCaption}\item[{\hyperlink{class_r_w_database}{R\+W\+Database}$<$ \hyperlink{classtsgl_1_1_rectangle}{Rectangle} $\ast$$>$ \&}]{shared\+Database,  }\item[{\hyperlink{class_lock}{Lock} \&}]{lock,  }\item[{unsigned long}]{id,  }\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} \&}]{can }\end{DoxyParamCaption})}
+
+
+
+Explicit-\/constructor for the \hyperlink{class_reader}{Reader} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/Reader.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/Reader.\+cpp\end{DoxyCompactItemize}

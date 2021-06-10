@@ -1,0 +1,83 @@
+\hypertarget{class_consumer}{}\section{Consumer Class Reference}
+\label{class_consumer}\index{Consumer@{Consumer}}
+
+
+{\ttfamily \#include $<$Consumer.\+h$>$}
+
+Inheritance diagram for Consumer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_consumer}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_consumer_a31a7b4bc675d04c877269a5da93b981a}{Consumer} ()
+\item 
+\hyperlink{class_consumer_a8297e8de091856b95132502fa4a4ab44}{Consumer} (\hyperlink{class_queue}{Queue}$<$ \hyperlink{classtsgl_1_1_star}{Star} $\ast$$>$ \&shared\+Buffer, unsigned long id, \hyperlink{classtsgl_1_1_canvas}{Canvas} \&can)
+\item 
+void \hyperlink{class_consumer_a58ab6de26dfe34d59c0522fff19f1abf}{lock} ()
+\item 
+void \hyperlink{class_consumer_a759bbf618e780c1cca3f7a5136d3c910}{act} ()
+\item 
+void \hyperlink{class_consumer_acf783a2789b071a237f7759ccf6bacaf}{unlock} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{class_consumer}{Consumer} class inherits from the \hyperlink{class_thread}{Thread} class in order to create a \hyperlink{class_consumer}{Consumer} object. Inheritance\+: \hyperlink{class_thread}{Thread} class. Implements the run() method, which calls the consume() method. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_consumer_a31a7b4bc675d04c877269a5da93b981a}\label{class_consumer_a31a7b4bc675d04c877269a5da93b981a}} 
+\index{Consumer@{Consumer}!Consumer@{Consumer}}
+\index{Consumer@{Consumer}!Consumer@{Consumer}}
+\subsubsection{\texorpdfstring{Consumer()}{Consumer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Consumer\+::\+Consumer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default-\/constructor for the \hyperlink{class_consumer}{Consumer} class. return\+: The constructed \hyperlink{class_consumer}{Consumer} object. \mbox{\Hypertarget{class_consumer_a8297e8de091856b95132502fa4a4ab44}\label{class_consumer_a8297e8de091856b95132502fa4a4ab44}} 
+\index{Consumer@{Consumer}!Consumer@{Consumer}}
+\index{Consumer@{Consumer}!Consumer@{Consumer}}
+\subsubsection{\texorpdfstring{Consumer()}{Consumer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Consumer\+::\+Consumer (\begin{DoxyParamCaption}\item[{\hyperlink{class_queue}{Queue}$<$ \hyperlink{classtsgl_1_1_star}{Star} $\ast$$>$ \&}]{shared\+Buffer,  }\item[{unsigned long}]{id,  }\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} \&}]{can }\end{DoxyParamCaption})}
+
+Explicit-\/constructor for the \hyperlink{class_consumer}{Consumer} class. param\+: shared\+Buffer, a reference to the \hyperlink{class_queue}{Queue} object that is shared between the \hyperlink{class_consumer}{Consumer} and \hyperlink{class_producer}{Producer}. param\+: id, an unsigned long that will be passed to the \hyperlink{class_thread_a95c703fb8f2f27cb64f475a8c940864a}{Thread()} constructor that will act as the id for the \hyperlink{class_thread}{Thread} object. param\+: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming object from the \hyperlink{class_queue}{Queue}. return\+: The constructed \hyperlink{class_consumer}{Consumer} object. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_consumer_a759bbf618e780c1cca3f7a5136d3c910}\label{class_consumer_a759bbf618e780c1cca3f7a5136d3c910}} 
+\index{Consumer@{Consumer}!act@{act}}
+\index{act@{act}!Consumer@{Consumer}}
+\subsubsection{\texorpdfstring{act()}{act()}}
+{\footnotesize\ttfamily void Consumer\+::act (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+act goes through the process of consuming an item from \hyperlink{class_queue}{Queue} 
+
+Implements \hyperlink{class_p_c_thread}{P\+C\+Thread}.
+
+\mbox{\Hypertarget{class_consumer_a58ab6de26dfe34d59c0522fff19f1abf}\label{class_consumer_a58ab6de26dfe34d59c0522fff19f1abf}} 
+\index{Consumer@{Consumer}!lock@{lock}}
+\index{lock@{lock}!Consumer@{Consumer}}
+\subsubsection{\texorpdfstring{lock()}{lock()}}
+{\footnotesize\ttfamily void Consumer\+::lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+locks the \hyperlink{class_queue}{Queue} for consumption 
+
+Implements \hyperlink{class_p_c_thread}{P\+C\+Thread}.
+
+\mbox{\Hypertarget{class_consumer_acf783a2789b071a237f7759ccf6bacaf}\label{class_consumer_acf783a2789b071a237f7759ccf6bacaf}} 
+\index{Consumer@{Consumer}!unlock@{unlock}}
+\index{unlock@{unlock}!Consumer@{Consumer}}
+\subsubsection{\texorpdfstring{unlock()}{unlock()}}
+{\footnotesize\ttfamily void Consumer\+::unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+unlocks the \hyperlink{class_queue}{Queue} after consuming an item 
+
+Implements \hyperlink{class_p_c_thread}{P\+C\+Thread}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Consumer.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Consumer.\+cpp\end{DoxyCompactItemize}

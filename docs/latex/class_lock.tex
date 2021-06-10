@@ -1,0 +1,114 @@
+\hypertarget{class_lock}{}\section{Lock Class Reference}
+\label{class_lock}\index{Lock@{Lock}}
+
+
+An abstract database protecting a vector of data.  
+
+
+
+
+{\ttfamily \#include $<$Lock.\+h$>$}
+
+Inheritance diagram for Lock\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_lock}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_lock_a9944623567d8138b95e74fadc7190adb}{Lock} ()
+\begin{DoxyCompactList}\small\item\em Default constructor for the \hyperlink{class_lock}{Lock} class. \end{DoxyCompactList}\item 
+\hyperlink{class_lock_a6e5be419fc8b9db7b8c599e805634083}{Lock} (\hyperlink{class_r_w_database}{R\+W\+Database}$<$ \hyperlink{classtsgl_1_1_rectangle}{tsgl\+::\+Rectangle} $\ast$$>$ $\ast$data)
+\begin{DoxyCompactList}\small\item\em Explicit constructor for the \hyperlink{class_lock}{Lock} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_lock_ac92ae45f564598eefd51798c516f061c}\label{class_lock_ac92ae45f564598eefd51798c516f061c}} 
+virtual void {\bfseries read\+Lock} ()=0
+\item 
+\mbox{\Hypertarget{class_lock_a6b58887c869c252cc4b396ea52770506}\label{class_lock_a6b58887c869c252cc4b396ea52770506}} 
+virtual void {\bfseries read\+Unlock} ()=0
+\item 
+\mbox{\Hypertarget{class_lock_a9c95a05d9c8f1ea00d9242d3a73e8469}\label{class_lock_a9c95a05d9c8f1ea00d9242d3a73e8469}} 
+virtual void {\bfseries write\+Lock} ()=0
+\item 
+\mbox{\Hypertarget{class_lock_a5940100b94c721324740c83669f0b322}\label{class_lock_a5940100b94c721324740c83669f0b322}} 
+virtual void {\bfseries write\+Unlock} ()=0
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_lock_ad69e84777545706182e74a890303fe86}\label{class_lock_ad69e84777545706182e74a890303fe86}} 
+int {\bfseries active\+Writers}
+\item 
+\mbox{\Hypertarget{class_lock_ab826b5e8650fb5028756b1b189470446}\label{class_lock_ab826b5e8650fb5028756b1b189470446}} 
+int {\bfseries active\+Readers}
+\item 
+\mbox{\Hypertarget{class_lock_aebab758da5c666817aa2a3cae2b7e7cc}\label{class_lock_aebab758da5c666817aa2a3cae2b7e7cc}} 
+int {\bfseries waiting\+Writers}
+\item 
+\mbox{\Hypertarget{class_lock_a6a79d1a4a2ca7c9a5db7150c2775b4b3}\label{class_lock_a6a79d1a4a2ca7c9a5db7150c2775b4b3}} 
+int {\bfseries waiting\+Readers}
+\item 
+\mbox{\Hypertarget{class_lock_a71ad42fa0f867c563c36d0e6fd265d66}\label{class_lock_a71ad42fa0f867c563c36d0e6fd265d66}} 
+pthread\+\_\+mutex\+\_\+t {\bfseries lock}
+\item 
+\mbox{\Hypertarget{class_lock_ad3f154d852d212a46697c9f1d4ec9c16}\label{class_lock_ad3f154d852d212a46697c9f1d4ec9c16}} 
+pthread\+\_\+cond\+\_\+t {\bfseries ok\+To\+Read}
+\item 
+\mbox{\Hypertarget{class_lock_a236095b855dabe05d173ee913bd9d876}\label{class_lock_a236095b855dabe05d173ee913bd9d876}} 
+pthread\+\_\+cond\+\_\+t {\bfseries ok\+To\+Write}
+\item 
+\mbox{\Hypertarget{class_lock_ac05707ecf7e23343a78add6be3212861}\label{class_lock_ac05707ecf7e23343a78add6be3212861}} 
+\hyperlink{class_r_w_database}{R\+W\+Database}$<$ \hyperlink{classtsgl_1_1_rectangle}{tsgl\+::\+Rectangle} $\ast$ $>$ $\ast$ {\bfseries data}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An abstract database protecting a vector of data. 
+
+Database has its locks
+
+Locking methods must be implemented in subclass, giving priority to different types of threads. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_lock_a9944623567d8138b95e74fadc7190adb}\label{class_lock_a9944623567d8138b95e74fadc7190adb}} 
+\index{Lock@{Lock}!Lock@{Lock}}
+\index{Lock@{Lock}!Lock@{Lock}}
+\subsubsection{\texorpdfstring{Lock()}{Lock()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Lock\+::\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor for the \hyperlink{class_lock}{Lock} class. 
+
+Lock.\+cpp provides a \hyperlink{class_lock}{Lock} class for the Reader-\/\+Writer visualization. This class provides a superclass for the monitors with \hyperlink{class_reader}{Reader} or \hyperlink{class_writer}{Writer} preference, which are used by the threads. \begin{DoxyReturn}{Returns}
+\+: The constructed \hyperlink{class_lock}{Lock} object. 
+\end{DoxyReturn}
+
+
+Referenced by F\+Lock\+::\+F\+Lock().
+
+\mbox{\Hypertarget{class_lock_a6e5be419fc8b9db7b8c599e805634083}\label{class_lock_a6e5be419fc8b9db7b8c599e805634083}} 
+\index{Lock@{Lock}!Lock@{Lock}}
+\index{Lock@{Lock}!Lock@{Lock}}
+\subsubsection{\texorpdfstring{Lock()}{Lock()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Lock\+::\+Lock (\begin{DoxyParamCaption}\item[{\hyperlink{class_r_w_database}{R\+W\+Database}$<$ \hyperlink{classtsgl_1_1_rectangle}{tsgl\+::\+Rectangle} $\ast$$>$ $\ast$}]{database }\end{DoxyParamCaption})}
+
+
+
+Explicit constructor for the \hyperlink{class_lock}{Lock} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data,the} & database being protected \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The constructed \hyperlink{class_lock}{Lock} object. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/Lock.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/Lock.\+cpp\end{DoxyCompactItemize}

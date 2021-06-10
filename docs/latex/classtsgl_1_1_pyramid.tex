@@ -1,0 +1,302 @@
+\hypertarget{classtsgl_1_1_pyramid}{}\section{tsgl\+:\+:Pyramid Class Reference}
+\label{classtsgl_1_1_pyramid}\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+
+
+Draw an arbitrary \hyperlink{classtsgl_1_1_pyramid}{Pyramid} with colored vertices.  
+
+
+
+
+{\ttfamily \#include $<$Pyramid.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Pyramid\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_pyramid}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_pyramid_ad980b2565031617f41a89d62a85f4c85}{Pyramid} (float x, float y, float z, int sides, G\+Lfloat height, G\+Lfloat radius, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} c)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_pyramid_aeefc2de2b046398e194fc8b041eedc95}{Pyramid} (float x, float y, float z, int sides, G\+Lfloat height, G\+Lfloat radius, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_pyramid_ac949cacc0db5fb112d92e2ec987cd5c3}{set\+Radius} (float radius)
+\begin{DoxyCompactList}\small\item\em Mutates the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base\textquotesingle{}s radius. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_pyramid_a91f86ca2ac58df9ac8d2ad00781b8442}{change\+Radius\+By} (float delta)
+\begin{DoxyCompactList}\small\item\em Mutates the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base\textquotesingle{}s radius by the parameter amount. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_pyramid_acb4db4a56452bb0e45dcd120ef517747}{set\+Height} (float height)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base to the tip. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_pyramid_af7a7b6f5a83b9f6b59a9c6ae0c6812d9}{change\+Height\+By} (float delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base to the tip by the parameter amount. \end{DoxyCompactList}\item 
+virtual G\+Lfloat \hyperlink{classtsgl_1_1_pyramid_a4511f7d6a89b061a83dc0fda00ff0c31}{get\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the height of the \hyperlink{classtsgl_1_1_prism}{Prism}. \end{DoxyCompactList}\item 
+virtual G\+Lfloat \hyperlink{classtsgl_1_1_pyramid_a778d993a925720d1db6edb17f92dd381}{get\+Radius} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the radius of the \hyperlink{classtsgl_1_1_prism}{Prism}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_pyramid_aef16d8830e2dfac0e8a30d091d099c30}{set\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} c)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_pyramid}{Pyramid} to a new color. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_pyramid_a83799687df3bdef698f9687da7a6c100}{set\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_pyramid}{Pyramid} to an array of new colors. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_pyramid_a9c93002e90ac1f3385c4d3154ca0321a}{get\+Colors} (std\+::vector$<$ \hyperlink{structtsgl_1_1_color_float}{Color\+Float} $>$ \&color\+Vec)
+\begin{DoxyCompactList}\small\item\em Accessor for \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s colors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_ae413ddfe4c3adb247b046c6322c569da}\label{classtsgl_1_1_pyramid_ae413ddfe4c3adb247b046c6322c569da}} 
+G\+Lfloat {\bfseries my\+Height}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_a290d3c2312d62f4573e4bd6aff3a8b00}\label{classtsgl_1_1_pyramid_a290d3c2312d62f4573e4bd6aff3a8b00}} 
+G\+Lfloat {\bfseries my\+Radius}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_a5c4f2b3063e23ae0492b6e00e8d9100a}\label{classtsgl_1_1_pyramid_a5c4f2b3063e23ae0492b6e00e8d9100a}} 
+int {\bfseries my\+Sides}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw an arbitrary \hyperlink{classtsgl_1_1_pyramid}{Pyramid} with colored vertices. 
+
+\hyperlink{classtsgl_1_1_pyramid}{Pyramid} is a class for holding vertex data for a pyramid with a base with at least 3 sides. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_ad980b2565031617f41a89d62a85f4c85}\label{classtsgl_1_1_pyramid_ad980b2565031617f41a89d62a85f4c85}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!Pyramid@{Pyramid}}
+\index{Pyramid@{Pyramid}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{Pyramid()}{Pyramid()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Pyramid\+::\+Pyramid (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{int}]{sides,  }\item[{G\+Lfloat}]{height,  }\item[{G\+Lfloat}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{c }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_pyramid}{Pyramid} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \\
+\hline
+{\em y} & The y coordinate of the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \\
+\hline
+{\em z} & The z coordinate of the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \\
+\hline
+{\em height} & The distance from the center of the base to tip of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \\
+\hline
+{\em radius} & The distance from the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base to each vertex of the base. \\
+\hline
+{\em sides} & The number of sides of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s yaw. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s pitch. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s roll. \\
+\hline
+{\em c} & A \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s vertex colors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if sides is less than 3 then an error message is given. 
+
+An invariant is held where if radius isn\textquotesingle{}t positive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_pyramid}{Pyramid} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_aeefc2de2b046398e194fc8b041eedc95}\label{classtsgl_1_1_pyramid_aeefc2de2b046398e194fc8b041eedc95}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!Pyramid@{Pyramid}}
+\index{Pyramid@{Pyramid}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{Pyramid()}{Pyramid()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Pyramid\+::\+Pyramid (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{int}]{sides,  }\item[{G\+Lfloat}]{height,  }\item[{G\+Lfloat}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_pyramid}{Pyramid} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \\
+\hline
+{\em y} & The y coordinate of the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \\
+\hline
+{\em z} & The z coordinate of the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \\
+\hline
+{\em height} & The distance from the center of the base to tip of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}. \\
+\hline
+{\em radius} & The distance from the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base to each vertex of the base. \\
+\hline
+{\em sides} & The number of sides of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s yaw. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s pitch. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s roll. \\
+\hline
+{\em c} & An array of Color\+Floats for the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s vertex colors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if sides is less than 3 then an error message is given. 
+
+An invariant is held where if radius isn\textquotesingle{}t positive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_pyramid}{Pyramid} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_af7a7b6f5a83b9f6b59a9c6ae0c6812d9}\label{classtsgl_1_1_pyramid_af7a7b6f5a83b9f6b59a9c6ae0c6812d9}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!change\+Height\+By@{change\+Height\+By}}
+\index{change\+Height\+By@{change\+Height\+By}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{change\+Height\+By()}{changeHeightBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Pyramid\+::change\+Height\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the distance from the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base to the tip by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the height of the pyramid. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_a91f86ca2ac58df9ac8d2ad00781b8442}\label{classtsgl_1_1_pyramid_a91f86ca2ac58df9ac8d2ad00781b8442}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!change\+Radius\+By@{change\+Radius\+By}}
+\index{change\+Radius\+By@{change\+Radius\+By}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{change\+Radius\+By()}{changeRadiusBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Pyramid\+::change\+Radius\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base\textquotesingle{}s radius by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the radius of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_a9c93002e90ac1f3385c4d3154ca0321a}\label{classtsgl_1_1_pyramid_a9c93002e90ac1f3385c4d3154ca0321a}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!get\+Colors@{get\+Colors}}
+\index{get\+Colors@{get\+Colors}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{get\+Colors()}{getColors()}}
+{\footnotesize\ttfamily void tsgl\+::\+Pyramid\+::get\+Colors (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \hyperlink{structtsgl_1_1_color_float}{Color\+Float} $>$ \&}]{color\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s colors. 
+
+Populates the reference parameter vector with a \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for each end of \hyperlink{classtsgl_1_1_arrow}{Arrow}. 
+\begin{DoxyParams}{Parameters}
+{\em color\+Vec} & A vector of Color\+Floats to which the Color\+Floats associated with \hyperlink{classtsgl_1_1_arrow}{Arrow} will be pushed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Overrides \hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{Shape\+::get\+Colors()}. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{tsgl\+::\+Shape}.
+
+
+
+Referenced by get\+Radius().
+
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_a4511f7d6a89b061a83dc0fda00ff0c31}\label{classtsgl_1_1_pyramid_a4511f7d6a89b061a83dc0fda00ff0c31}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!get\+Height@{get\+Height}}
+\index{get\+Height@{get\+Height}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{get\+Height()}{getHeight()}}
+{\footnotesize\ttfamily virtual G\+Lfloat tsgl\+::\+Pyramid\+::get\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the height of the \hyperlink{classtsgl_1_1_prism}{Prism}. 
+
+Returns the value of the my\+Height private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_pyramid_a778d993a925720d1db6edb17f92dd381}\label{classtsgl_1_1_pyramid_a778d993a925720d1db6edb17f92dd381}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!get\+Radius@{get\+Radius}}
+\index{get\+Radius@{get\+Radius}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{get\+Radius()}{getRadius()}}
+{\footnotesize\ttfamily virtual G\+Lfloat tsgl\+::\+Pyramid\+::get\+Radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the radius of the \hyperlink{classtsgl_1_1_prism}{Prism}. 
+
+Returns the value of the my\+Radius private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_pyramid_aef16d8830e2dfac0e8a30d091d099c30}\label{classtsgl_1_1_pyramid_aef16d8830e2dfac0e8a30d091d099c30}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!set\+Color@{set\+Color}}
+\index{set\+Color@{set\+Color}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{set\+Color()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Pyramid\+::set\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_pyramid}{Pyramid} to a new color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}{tsgl\+::\+Shape}.
+
+
+
+Referenced by get\+Radius(), and Philosopher3\+D\+::refresh\+Color().
+
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_a83799687df3bdef698f9687da7a6c100}\label{classtsgl_1_1_pyramid_a83799687df3bdef698f9687da7a6c100}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!set\+Color@{set\+Color}}
+\index{set\+Color@{set\+Color}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{set\+Color()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Pyramid\+::set\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_pyramid}{Pyramid} to an array of new colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & An array of new Color\+Floats.\\
+\hline
+\end{DoxyParams}
+The array should have my\+Sides+2 Color\+Floats minimum. 
+
+Reimplemented from \hyperlink{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}{tsgl\+::\+Shape}.
+
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_acb4db4a56452bb0e45dcd120ef517747}\label{classtsgl_1_1_pyramid_acb4db4a56452bb0e45dcd120ef517747}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!set\+Height@{set\+Height}}
+\index{set\+Height@{set\+Height}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{set\+Height()}{setHeight()}}
+{\footnotesize\ttfamily void tsgl\+::\+Pyramid\+::set\+Height (\begin{DoxyParamCaption}\item[{float}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the distance from the center of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base to the tip. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em height} & The \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s new height. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_pyramid_ac949cacc0db5fb112d92e2ec987cd5c3}\label{classtsgl_1_1_pyramid_ac949cacc0db5fb112d92e2ec987cd5c3}} 
+\index{tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}!set\+Radius@{set\+Radius}}
+\index{set\+Radius@{set\+Radius}!tsgl\+::\+Pyramid@{tsgl\+::\+Pyramid}}
+\subsubsection{\texorpdfstring{set\+Radius()}{setRadius()}}
+{\footnotesize\ttfamily void tsgl\+::\+Pyramid\+::set\+Radius (\begin{DoxyParamCaption}\item[{float}]{radius }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base\textquotesingle{}s radius. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em radius} & The new radius of the \hyperlink{classtsgl_1_1_pyramid}{Pyramid}\textquotesingle{}s base. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Pyramid.\+h\item 
+Pyramid.\+cpp\end{DoxyCompactItemize}

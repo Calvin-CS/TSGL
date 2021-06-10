@@ -1,0 +1,662 @@
+\hypertarget{classtsgl_1_1_camera}{}\section{tsgl\+:\+:Camera Class Reference}
+\label{classtsgl_1_1_camera}\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+
+
+Defines a movable, rotatable camera-\/like object and its corresponding view matrix.  
+
+
+
+
+{\ttfamily \#include $<$Camera.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_camera_ad55c777a783afe64666b22c4867a2ac0}{Camera} (glm\+::vec3 position, glm\+::vec3 up, glm\+::vec3 target)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_camera}{Camera}. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_camera_a3024adf593e6097eff73152305af9dee}{Camera} (float posX, float posY, float posZ, float upX, float upY, float upZ, float targetX, float targetY, float targetZ)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_camera}{Camera}. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_camera_a19bf2769862005ac36d7bacce3ec8400}{Camera} (glm\+::vec3 position, glm\+::vec3 up, float yaw, float pitch)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_camera}{Camera}. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_camera_ad4263c9f9805ab92dd3996a2738dad8b}{Camera} (float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_camera}{Camera}. \end{DoxyCompactList}\item 
+glm\+::mat4 \hyperlink{classtsgl_1_1_camera_acb98691025f9ea89b63b06ee184409b4}{get\+View\+Matrix} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the corresponding view matrix for the \hyperlink{classtsgl_1_1_camera}{Camera}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a011b8c82aff7e98b7c41aa6998006c56}{change\+X\+By} (float delta)
+\begin{DoxyCompactList}\small\item\em Mutator for \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s x-\/coordinate in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a9d6f2bd303dfd57068cbb35b4be0e78c}{change\+Y\+By} (float delta)
+\begin{DoxyCompactList}\small\item\em Mutator for \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s y-\/coordinate in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_ab9aa61c8939c23f31801028adc0b5b4d}{change\+Z\+By} (float delta)
+\begin{DoxyCompactList}\small\item\em Mutator for \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s z-\/coordinate in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_adda85f9211c54d33584cee240ed0ec47}{move\+Backward} (float delta)
+\begin{DoxyCompactList}\small\item\em Moves the \hyperlink{classtsgl_1_1_camera}{Camera} backward, relative to its orientation, by delta. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a9f8d73bb09703cfe3e46dea725dca49a}{move\+Forward} (float delta)
+\begin{DoxyCompactList}\small\item\em Moves the \hyperlink{classtsgl_1_1_camera}{Camera} forward, relative to its orientation, by delta. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_ac672a6337590083e320be253bfe38ba1}{move\+Down} (float delta)
+\begin{DoxyCompactList}\small\item\em Moves the \hyperlink{classtsgl_1_1_camera}{Camera} downward, relative to its orientation, by delta. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a60a565d006b727c305567d36b13e6e08}{move\+Up} (float delta)
+\begin{DoxyCompactList}\small\item\em Moves the \hyperlink{classtsgl_1_1_camera}{Camera} upward, relative to its orientation, by delta. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a9cd60e2a3e521263a548700d08c73cb3}{move\+Left} (float delta)
+\begin{DoxyCompactList}\small\item\em Moves the \hyperlink{classtsgl_1_1_camera}{Camera} left, relative to its orientation, by delta. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_ab69a0968bb1076b9303c6d10c07bbd75}{move\+Right} (float delta)
+\begin{DoxyCompactList}\small\item\em Moves the \hyperlink{classtsgl_1_1_camera}{Camera} right, relative to its orientation, by delta. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_aeb5d5fb50a80951a307b03d66e56eb17}{set\+Position} (glm\+::vec3 pos)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a6cb0b89abb559c839616c554554adfb4}{set\+Position} (float x, float y, float z)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a928177f16143b27b88de7ecf30d797ae}{set\+PositionX} (float x)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s x-\/coordinate in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_aa4b72d96ba1d802c6940fdd8f9f7f472}{set\+PositionY} (float y)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s y-\/coordinate co in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a87c83395dbde5a8fce49cba5200a0a5c}{set\+PositionZ} (float z)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s z-\/coordinate in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_a3228e5545b7f20bc39282ea9267acfda}{look\+At} (float x, float y, float z)
+\begin{DoxyCompactList}\small\item\em Alters the point at which the \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_ade60f005d962cde8397ea080251eba93}{change\+Yaw\+By} (float delta)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s yaw rotation. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_camera_af8df38d9efb33604af16c13e2a8446e0}{change\+Pitch\+By} (float delta)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s pitch rotation. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_camera_a73756ae570553923c70a084c11f1d225}{get\+Pitch} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s pitch. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_camera_ae66ea7ccf619657cf817e70c934a3d36}{get\+Yaw} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s yaw. \end{DoxyCompactList}\item 
+glm\+::vec3 \hyperlink{classtsgl_1_1_camera_a21d2c903c077e9a746cd150e2e2bc697}{get\+Position} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_camera_abd7723919bb264f1e4a9fd666a280c8d}{get\+PositionX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the x-\/coordinate of the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_camera_a14bb7fed2c2772b927dcd9f37807201e}{get\+PositionY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the y-\/coordinate of the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_camera_a73a1acb7ff3a1166e2d6a4be16874219}{get\+PositionZ} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the z-\/coordinate of the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. \end{DoxyCompactList}\item 
+glm\+::vec3 \hyperlink{classtsgl_1_1_camera_a8c6c19acef5dffc6dfc2aff31428d2e1}{get\+Target} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the point at which \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_camera_ad5778df0178d7926bdb2da22556b03b0}{get\+TargetX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the x-\/coordinate of the point at which \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_camera_ac06e3f420e82af5189f525881191031b}{get\+TargetY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the y-\/coordinate of the point at which \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. \end{DoxyCompactList}\item 
+float \hyperlink{classtsgl_1_1_camera_a1ceef7ca9535c701c7c70741c1170dea}{get\+TargetZ} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the z-\/coordinate of the point at which \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classtsgl_1_1_camera_ac2daf561e3b110fe4ec17b23e530c01e}{update\+Camera\+Angle} ()
+\begin{DoxyCompactList}\small\item\em Protected helper method that recalculates \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Front vector based on yaw and pitch. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_camera_ac8e69c5f97e19905b09b01c0bf876274}\label{classtsgl_1_1_camera_ac8e69c5f97e19905b09b01c0bf876274}} 
+glm\+::vec3 {\bfseries my\+Position}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_camera_a04dcfb1e8061ac4cf4b4ebb79ba1b5b0}\label{classtsgl_1_1_camera_a04dcfb1e8061ac4cf4b4ebb79ba1b5b0}} 
+glm\+::vec3 {\bfseries my\+Front}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_camera_a433e056f81c1b6488fed8fb314e2ea84}\label{classtsgl_1_1_camera_a433e056f81c1b6488fed8fb314e2ea84}} 
+glm\+::vec3 {\bfseries my\+Up}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_camera_aaf772a056a8c2e64056583158b472a38}\label{classtsgl_1_1_camera_aaf772a056a8c2e64056583158b472a38}} 
+glm\+::vec3 {\bfseries my\+Right}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_camera_a7da972a788e67ccbddb210aaafa05584}\label{classtsgl_1_1_camera_a7da972a788e67ccbddb210aaafa05584}} 
+glm\+::vec3 {\bfseries my\+World\+Up}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_camera_adf4f3c5959cda3bb47e7f20fcaca19a5}\label{classtsgl_1_1_camera_adf4f3c5959cda3bb47e7f20fcaca19a5}} 
+float {\bfseries my\+Yaw}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_camera_a037f7d3e8d5ddefe92e2d221fd585432}\label{classtsgl_1_1_camera_a037f7d3e8d5ddefe92e2d221fd585432}} 
+float {\bfseries my\+Pitch}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_camera_aa1b04e1f336367fed432b50a2539f4e5}\label{classtsgl_1_1_camera_aa1b04e1f336367fed432b50a2539f4e5}} 
+std\+::mutex {\bfseries attrib\+Mutex}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Defines a movable, rotatable camera-\/like object and its corresponding view matrix. 
+
+\hyperlink{classtsgl_1_1_camera}{Camera} is used within T\+S\+G\+L\+::\+Canvas to define the view matrix. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_camera_ad55c777a783afe64666b22c4867a2ac0}\label{classtsgl_1_1_camera_ad55c777a783afe64666b22c4867a2ac0}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{Camera()}{Camera()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily tsgl\+::\+Camera\+::\+Camera (\begin{DoxyParamCaption}\item[{glm\+::vec3}]{position,  }\item[{glm\+::vec3}]{up,  }\item[{glm\+::vec3}]{target }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_camera}{Camera}. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_camera}{Camera} object. 
+\begin{DoxyParams}{Parameters}
+{\em position} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s location in 3D space, a glm\+::vec3. \\
+\hline
+{\em up} & A 3D vector indicating the up direction in world space. \\
+\hline
+{\em target} & The point at which the \hyperlink{classtsgl_1_1_camera}{Camera} will look. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_camera}{Camera} object, used to represent and return a corresponding view matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a3024adf593e6097eff73152305af9dee}\label{classtsgl_1_1_camera_a3024adf593e6097eff73152305af9dee}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{Camera()}{Camera()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily tsgl\+::\+Camera\+::\+Camera (\begin{DoxyParamCaption}\item[{float}]{posX,  }\item[{float}]{posY,  }\item[{float}]{posZ,  }\item[{float}]{upX,  }\item[{float}]{upY,  }\item[{float}]{upZ,  }\item[{float}]{targetX,  }\item[{float}]{targetY,  }\item[{float}]{targetZ }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_camera}{Camera}. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_camera}{Camera} object. 
+\begin{DoxyParams}{Parameters}
+{\em posX} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s positional x-\/coordinate in 3D space, a float. \\
+\hline
+{\em posY} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s positional y-\/coordinate in 3D space, a float. \\
+\hline
+{\em posZ} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s positional z-\/coordinate in 3D space, a float. \\
+\hline
+{\em upX} & The x-\/component of a 3D vector indicating the up direction in world space. \\
+\hline
+{\em upY} & The y-\/component of a 3D vector indicating the up direction in world space. \\
+\hline
+{\em upZ} & The z-\/component of a 3D vector indicating the up direction in world space. \\
+\hline
+{\em targetX} & The x-\/coordinate of the point at which the \hyperlink{classtsgl_1_1_camera}{Camera} will look. \\
+\hline
+{\em targetY} & The y-\/coordinate of the point at which the \hyperlink{classtsgl_1_1_camera}{Camera} will look. \\
+\hline
+{\em targetZ} & The z-\/coordinate of the point at which the \hyperlink{classtsgl_1_1_camera}{Camera} will look. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_camera}{Camera} object, used to represent and return a corresponding view matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a19bf2769862005ac36d7bacce3ec8400}\label{classtsgl_1_1_camera_a19bf2769862005ac36d7bacce3ec8400}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{Camera()}{Camera()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily tsgl\+::\+Camera\+::\+Camera (\begin{DoxyParamCaption}\item[{glm\+::vec3}]{position,  }\item[{glm\+::vec3}]{up,  }\item[{float}]{yaw,  }\item[{float}]{pitch }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_camera}{Camera}. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_camera}{Camera} object. 
+\begin{DoxyParams}{Parameters}
+{\em position} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s location in 3D space, a glm\+::vec3. \\
+\hline
+{\em up} & A 3D vector indicating the up direction in world space. \\
+\hline
+{\em yaw} & The camera\textquotesingle{}s yaw rotation (horizontal) in degrees. \\
+\hline
+{\em pitch} & The camera\textquotesingle{}s pitch rotation (vertical) in degrees. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+With position.\+x and position.\+y equal to 0 and a positive position.\+z, a yaw of -\/90 degrees and pitch of 0 degrees will look at (0,0,0). 
+
+pitch is constrained between -\/89 and 89 degrees. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_camera}{Camera} object, used to represent and return a corresponding view matrix. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_camera_ad4263c9f9805ab92dd3996a2738dad8b}\label{classtsgl_1_1_camera_ad4263c9f9805ab92dd3996a2738dad8b}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{Camera()}{Camera()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily tsgl\+::\+Camera\+::\+Camera (\begin{DoxyParamCaption}\item[{float}]{posX,  }\item[{float}]{posY,  }\item[{float}]{posZ,  }\item[{float}]{upX,  }\item[{float}]{upY,  }\item[{float}]{upZ,  }\item[{float}]{yaw,  }\item[{float}]{pitch }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_camera}{Camera}. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_camera}{Camera} object. 
+\begin{DoxyParams}{Parameters}
+{\em posX} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s positional x-\/coordinate in 3D space, a float. \\
+\hline
+{\em posY} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s positional y-\/coordinate in 3D space, a float. \\
+\hline
+{\em posZ} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s positional z-\/coordinate in 3D space, a float. \\
+\hline
+{\em upX} & The x-\/component of a 3D vector indicating the up direction in world space. \\
+\hline
+{\em upY} & The y-\/component of a 3D vector indicating the up direction in world space. \\
+\hline
+{\em upZ} & The z-\/component of a 3D vector indicating the up direction in world space. \\
+\hline
+{\em yaw} & The camera\textquotesingle{}s yaw rotation (horizontal) in degrees. \\
+\hline
+{\em pitch} & The camera\textquotesingle{}s pitch rotation (vertical) in degrees. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+With posX and posY equal to 0 and a positive posZ, a yaw of -\/90 degrees and pitch of 0 degrees will look at (0,0,0). 
+
+pitch is constrained between -\/89 and 89 degrees. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_camera}{Camera} object, used to represent and return a corresponding view matrix. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_camera_af8df38d9efb33604af16c13e2a8446e0}\label{classtsgl_1_1_camera_af8df38d9efb33604af16c13e2a8446e0}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!change\+Pitch\+By@{change\+Pitch\+By}}
+\index{change\+Pitch\+By@{change\+Pitch\+By}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{change\+Pitch\+By()}{changePitchBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::change\+Pitch\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s pitch rotation. 
+
+Based on the original direction the \hyperlink{classtsgl_1_1_camera}{Camera} was set to face, the \hyperlink{classtsgl_1_1_camera}{Camera} is rotated according to the parameter. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s pitch, in degrees. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+pitch is constrained between -\/89 and 89 degrees. 
+\end{DoxyNote}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a011b8c82aff7e98b7c41aa6998006c56}\label{classtsgl_1_1_camera_a011b8c82aff7e98b7c41aa6998006c56}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!change\+X\+By@{change\+X\+By}}
+\index{change\+X\+By@{change\+X\+By}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{change\+X\+By()}{changeXBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::change\+X\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutator for \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s x-\/coordinate in world space. 
+
+Alters the x component of \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & The difference between camera\textquotesingle{}s new and old x-\/coordinates. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_ade60f005d962cde8397ea080251eba93}\label{classtsgl_1_1_camera_ade60f005d962cde8397ea080251eba93}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!change\+Yaw\+By@{change\+Yaw\+By}}
+\index{change\+Yaw\+By@{change\+Yaw\+By}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{change\+Yaw\+By()}{changeYawBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::change\+Yaw\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s yaw rotation. 
+
+Based on the original direction the \hyperlink{classtsgl_1_1_camera}{Camera} was set to face, the \hyperlink{classtsgl_1_1_camera}{Camera} is rotated according to the parameter. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s yaw, in degrees. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a9d6f2bd303dfd57068cbb35b4be0e78c}\label{classtsgl_1_1_camera_a9d6f2bd303dfd57068cbb35b4be0e78c}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!change\+Y\+By@{change\+Y\+By}}
+\index{change\+Y\+By@{change\+Y\+By}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{change\+Y\+By()}{changeYBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::change\+Y\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutator for \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s y-\/coordinate in world space. 
+
+Alters the y component of \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & The difference between camera\textquotesingle{}s new and old y-\/coordinates. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_ab9aa61c8939c23f31801028adc0b5b4d}\label{classtsgl_1_1_camera_ab9aa61c8939c23f31801028adc0b5b4d}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!change\+Z\+By@{change\+Z\+By}}
+\index{change\+Z\+By@{change\+Z\+By}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{change\+Z\+By()}{changeZBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::change\+Z\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutator for \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s z-\/coordinate in world space. 
+
+Alters the z component of \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & The difference between camera\textquotesingle{}s new and old z-\/coordinates. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a73756ae570553923c70a084c11f1d225}\label{classtsgl_1_1_camera_a73756ae570553923c70a084c11f1d225}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+Pitch@{get\+Pitch}}
+\index{get\+Pitch@{get\+Pitch}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Pitch()}{getPitch()}}
+{\footnotesize\ttfamily float tsgl\+::\+Camera\+::get\+Pitch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s pitch. 
+
+Returns the value of the my\+Pitch instance variable \mbox{\Hypertarget{classtsgl_1_1_camera_a21d2c903c077e9a746cd150e2e2bc697}\label{classtsgl_1_1_camera_a21d2c903c077e9a746cd150e2e2bc697}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+Position@{get\+Position}}
+\index{get\+Position@{get\+Position}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Position()}{getPosition()}}
+{\footnotesize\ttfamily glm\+::vec3 tsgl\+::\+Camera\+::get\+Position (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. 
+
+Returns the value of the my\+Position instance variable \mbox{\Hypertarget{classtsgl_1_1_camera_abd7723919bb264f1e4a9fd666a280c8d}\label{classtsgl_1_1_camera_abd7723919bb264f1e4a9fd666a280c8d}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+PositionX@{get\+PositionX}}
+\index{get\+PositionX@{get\+PositionX}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Position\+X()}{getPositionX()}}
+{\footnotesize\ttfamily float tsgl\+::\+Camera\+::get\+PositionX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the x-\/coordinate of the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. 
+
+Returns the x component of the my\+Position instance variable 
+
+Referenced by tsgl\+::\+Canvas\+::clear\+Object\+Buffer().
+
+\mbox{\Hypertarget{classtsgl_1_1_camera_a14bb7fed2c2772b927dcd9f37807201e}\label{classtsgl_1_1_camera_a14bb7fed2c2772b927dcd9f37807201e}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+PositionY@{get\+PositionY}}
+\index{get\+PositionY@{get\+PositionY}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Position\+Y()}{getPositionY()}}
+{\footnotesize\ttfamily float tsgl\+::\+Camera\+::get\+PositionY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the y-\/coordinate of the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. 
+
+Returns the y component of the my\+Position instance variable 
+
+Referenced by tsgl\+::\+Canvas\+::clear\+Object\+Buffer().
+
+\mbox{\Hypertarget{classtsgl_1_1_camera_a73a1acb7ff3a1166e2d6a4be16874219}\label{classtsgl_1_1_camera_a73a1acb7ff3a1166e2d6a4be16874219}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+PositionZ@{get\+PositionZ}}
+\index{get\+PositionZ@{get\+PositionZ}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Position\+Z()}{getPositionZ()}}
+{\footnotesize\ttfamily float tsgl\+::\+Camera\+::get\+PositionZ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the z-\/coordinate of the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. 
+
+Returns the z component of the my\+Position instance variable 
+
+Referenced by tsgl\+::\+Canvas\+::clear\+Object\+Buffer().
+
+\mbox{\Hypertarget{classtsgl_1_1_camera_a8c6c19acef5dffc6dfc2aff31428d2e1}\label{classtsgl_1_1_camera_a8c6c19acef5dffc6dfc2aff31428d2e1}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+Target@{get\+Target}}
+\index{get\+Target@{get\+Target}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Target()}{getTarget()}}
+{\footnotesize\ttfamily glm\+::vec3 tsgl\+::\+Camera\+::get\+Target (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the point at which \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. 
+
+Returns the sum of the my\+Position and my\+Front instance variables \mbox{\Hypertarget{classtsgl_1_1_camera_ad5778df0178d7926bdb2da22556b03b0}\label{classtsgl_1_1_camera_ad5778df0178d7926bdb2da22556b03b0}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+TargetX@{get\+TargetX}}
+\index{get\+TargetX@{get\+TargetX}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Target\+X()}{getTargetX()}}
+{\footnotesize\ttfamily float tsgl\+::\+Camera\+::get\+TargetX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the x-\/coordinate of the point at which \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. 
+
+Returns the x component of the sum of the my\+Position and my\+Front instance variables \mbox{\Hypertarget{classtsgl_1_1_camera_ac06e3f420e82af5189f525881191031b}\label{classtsgl_1_1_camera_ac06e3f420e82af5189f525881191031b}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+TargetY@{get\+TargetY}}
+\index{get\+TargetY@{get\+TargetY}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Target\+Y()}{getTargetY()}}
+{\footnotesize\ttfamily float tsgl\+::\+Camera\+::get\+TargetY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the y-\/coordinate of the point at which \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. 
+
+Returns the y component of the sum of the my\+Position and my\+Front instance variables \mbox{\Hypertarget{classtsgl_1_1_camera_a1ceef7ca9535c701c7c70741c1170dea}\label{classtsgl_1_1_camera_a1ceef7ca9535c701c7c70741c1170dea}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+TargetZ@{get\+TargetZ}}
+\index{get\+TargetZ@{get\+TargetZ}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Target\+Z()}{getTargetZ()}}
+{\footnotesize\ttfamily float tsgl\+::\+Camera\+::get\+TargetZ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the z-\/coordinate of the point at which \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. 
+
+Returns the z component of the sum of the my\+Position and my\+Front instance variables \mbox{\Hypertarget{classtsgl_1_1_camera_acb98691025f9ea89b63b06ee184409b4}\label{classtsgl_1_1_camera_acb98691025f9ea89b63b06ee184409b4}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+View\+Matrix@{get\+View\+Matrix}}
+\index{get\+View\+Matrix@{get\+View\+Matrix}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+View\+Matrix()}{getViewMatrix()}}
+{\footnotesize\ttfamily glm\+::mat4 tsgl\+::\+Camera\+::get\+View\+Matrix (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the corresponding view matrix for the \hyperlink{classtsgl_1_1_camera}{Camera}. 
+
+Returns a glm\+::mat4 based on \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position and orientation. \begin{DoxyReturn}{Returns}
+A glm\+::mat4 calculated by glm\+::look\+At(). 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Cartesian\+Background\+::select\+Shaders(), tsgl\+::\+Background\+::select\+Shaders(), tsgl\+::\+Cartesian\+Canvas\+::select\+Shaders(), and tsgl\+::\+Canvas\+::take\+Screen\+Shot().
+
+\mbox{\Hypertarget{classtsgl_1_1_camera_ae66ea7ccf619657cf817e70c934a3d36}\label{classtsgl_1_1_camera_ae66ea7ccf619657cf817e70c934a3d36}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!get\+Yaw@{get\+Yaw}}
+\index{get\+Yaw@{get\+Yaw}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{get\+Yaw()}{getYaw()}}
+{\footnotesize\ttfamily float tsgl\+::\+Camera\+::get\+Yaw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s yaw. 
+
+Returns the value of the my\+Yaw instance variable \mbox{\Hypertarget{classtsgl_1_1_camera_a3228e5545b7f20bc39282ea9267acfda}\label{classtsgl_1_1_camera_a3228e5545b7f20bc39282ea9267acfda}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!look\+At@{look\+At}}
+\index{look\+At@{look\+At}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{look\+At()}{lookAt()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::look\+At (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})}
+
+
+
+Alters the point at which the \hyperlink{classtsgl_1_1_camera}{Camera} looks in world space. 
+
+Sets \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Front vector, my\+Right vector, my\+Up vector, my\+Pitch, and my\+Yaw based on the parameters. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The new x-\/coordinate at which \hyperlink{classtsgl_1_1_camera}{Camera} looks, in world space. \\
+\hline
+{\em y} & The new y-\/coordinate at which \hyperlink{classtsgl_1_1_camera}{Camera} looks, in world space. \\
+\hline
+{\em z} & The new z-\/coordinate at which \hyperlink{classtsgl_1_1_camera}{Camera} looks, in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_adda85f9211c54d33584cee240ed0ec47}\label{classtsgl_1_1_camera_adda85f9211c54d33584cee240ed0ec47}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!move\+Backward@{move\+Backward}}
+\index{move\+Backward@{move\+Backward}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{move\+Backward()}{moveBackward()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::move\+Backward (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Moves the \hyperlink{classtsgl_1_1_camera}{Camera} backward, relative to its orientation, by delta. 
+
+Alters \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta, in the opposite direction of its my\+Front vector. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & How far backwards to move the \hyperlink{classtsgl_1_1_camera}{Camera}, in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_ac672a6337590083e320be253bfe38ba1}\label{classtsgl_1_1_camera_ac672a6337590083e320be253bfe38ba1}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!move\+Down@{move\+Down}}
+\index{move\+Down@{move\+Down}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{move\+Down()}{moveDown()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::move\+Down (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Moves the \hyperlink{classtsgl_1_1_camera}{Camera} downward, relative to its orientation, by delta. 
+
+Alters \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta, in the opposite direction of its my\+Up vector. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & How far downward to move the \hyperlink{classtsgl_1_1_camera}{Camera}, in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a9f8d73bb09703cfe3e46dea725dca49a}\label{classtsgl_1_1_camera_a9f8d73bb09703cfe3e46dea725dca49a}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!move\+Forward@{move\+Forward}}
+\index{move\+Forward@{move\+Forward}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{move\+Forward()}{moveForward()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::move\+Forward (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Moves the \hyperlink{classtsgl_1_1_camera}{Camera} forward, relative to its orientation, by delta. 
+
+Alters \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta, in the same direction as its my\+Front vector. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & How far forward to move the \hyperlink{classtsgl_1_1_camera}{Camera}, in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a9cd60e2a3e521263a548700d08c73cb3}\label{classtsgl_1_1_camera_a9cd60e2a3e521263a548700d08c73cb3}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!move\+Left@{move\+Left}}
+\index{move\+Left@{move\+Left}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{move\+Left()}{moveLeft()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::move\+Left (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Moves the \hyperlink{classtsgl_1_1_camera}{Camera} left, relative to its orientation, by delta. 
+
+Alters \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta, in the opposite direction of its my\+Right vector. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & How far left to move the \hyperlink{classtsgl_1_1_camera}{Camera}, in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_ab69a0968bb1076b9303c6d10c07bbd75}\label{classtsgl_1_1_camera_ab69a0968bb1076b9303c6d10c07bbd75}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!move\+Right@{move\+Right}}
+\index{move\+Right@{move\+Right}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{move\+Right()}{moveRight()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::move\+Right (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Moves the \hyperlink{classtsgl_1_1_camera}{Camera} right, relative to its orientation, by delta. 
+
+Alters \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta, in the same direction as its my\+Up vector. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & How far right to move the \hyperlink{classtsgl_1_1_camera}{Camera}, in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a60a565d006b727c305567d36b13e6e08}\label{classtsgl_1_1_camera_a60a565d006b727c305567d36b13e6e08}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!move\+Up@{move\+Up}}
+\index{move\+Up@{move\+Up}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{move\+Up()}{moveUp()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::move\+Up (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})}
+
+
+
+Moves the \hyperlink{classtsgl_1_1_camera}{Camera} upward, relative to its orientation, by delta. 
+
+Alters \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector by delta, in the same direction as its my\+Up vector. 
+\begin{DoxyParams}{Parameters}
+{\em delta} & How far upward to move the \hyperlink{classtsgl_1_1_camera}{Camera}, in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_aeb5d5fb50a80951a307b03d66e56eb17}\label{classtsgl_1_1_camera_aeb5d5fb50a80951a307b03d66e56eb17}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!set\+Position@{set\+Position}}
+\index{set\+Position@{set\+Position}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{set\+Position()}{setPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::set\+Position (\begin{DoxyParamCaption}\item[{glm\+::vec3}]{pos }\end{DoxyParamCaption})}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. 
+
+Sets the x, y, and z components of \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector according to the parameters. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & 3D vector containing \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s new x, y, and z positional coordinates. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions().
+
+\mbox{\Hypertarget{classtsgl_1_1_camera_a6cb0b89abb559c839616c554554adfb4}\label{classtsgl_1_1_camera_a6cb0b89abb559c839616c554554adfb4}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!set\+Position@{set\+Position}}
+\index{set\+Position@{set\+Position}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{set\+Position()}{setPosition()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::set\+Position (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s position in world space. 
+
+Sets the x, y, and z components of \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector according to the parameters. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s new x-\/coordinate in world space. \\
+\hline
+{\em y} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s new y-\/coordinate in world space. \\
+\hline
+{\em z} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s new z-\/coordinate in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a928177f16143b27b88de7ecf30d797ae}\label{classtsgl_1_1_camera_a928177f16143b27b88de7ecf30d797ae}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!set\+PositionX@{set\+PositionX}}
+\index{set\+PositionX@{set\+PositionX}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{set\+Position\+X()}{setPositionX()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::set\+PositionX (\begin{DoxyParamCaption}\item[{float}]{x }\end{DoxyParamCaption})}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s x-\/coordinate in world space. 
+
+Sets the x component of \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector equal to the parameter. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s new x-\/coordinate in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_aa4b72d96ba1d802c6940fdd8f9f7f472}\label{classtsgl_1_1_camera_aa4b72d96ba1d802c6940fdd8f9f7f472}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!set\+PositionY@{set\+PositionY}}
+\index{set\+PositionY@{set\+PositionY}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{set\+Position\+Y()}{setPositionY()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::set\+PositionY (\begin{DoxyParamCaption}\item[{float}]{y }\end{DoxyParamCaption})}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s y-\/coordinate co in world space. 
+
+Sets the y component of \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector equal to the parameter. 
+\begin{DoxyParams}{Parameters}
+{\em y} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s new y-\/coordinate in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_a87c83395dbde5a8fce49cba5200a0a5c}\label{classtsgl_1_1_camera_a87c83395dbde5a8fce49cba5200a0a5c}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!set\+PositionZ@{set\+PositionZ}}
+\index{set\+PositionZ@{set\+PositionZ}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{set\+Position\+Z()}{setPositionZ()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::set\+PositionZ (\begin{DoxyParamCaption}\item[{float}]{z }\end{DoxyParamCaption})}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s z-\/coordinate in world space. 
+
+Sets the z component of \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Position vector equal to the parameter. 
+\begin{DoxyParams}{Parameters}
+{\em z} & The \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s new z-\/coordinate in world space. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_camera_ac2daf561e3b110fe4ec17b23e530c01e}\label{classtsgl_1_1_camera_ac2daf561e3b110fe4ec17b23e530c01e}} 
+\index{tsgl\+::\+Camera@{tsgl\+::\+Camera}!update\+Camera\+Angle@{update\+Camera\+Angle}}
+\index{update\+Camera\+Angle@{update\+Camera\+Angle}!tsgl\+::\+Camera@{tsgl\+::\+Camera}}
+\subsubsection{\texorpdfstring{update\+Camera\+Angle()}{updateCameraAngle()}}
+{\footnotesize\ttfamily void tsgl\+::\+Camera\+::update\+Camera\+Angle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Protected helper method that recalculates \hyperlink{classtsgl_1_1_camera}{Camera}\textquotesingle{}s my\+Front vector based on yaw and pitch. 
+
+Alters my\+Front, my\+Right, and my\+Up according to yaw and pitch. 
+
+Referenced by Camera(), change\+Pitch\+By(), and change\+Yaw\+By().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Camera.\+h\item 
+Camera.\+cpp\end{DoxyCompactItemize}

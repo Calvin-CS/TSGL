@@ -1,0 +1,314 @@
+\hypertarget{class_table3_d}{}\section{Table3D Class Reference}
+\label{class_table3_d}\index{Table3D@{Table3D}}
+
+
+Object managing the forks and philosophers in the Dining Philosophers\textquotesingle{} problem.  
+
+
+
+
+{\ttfamily \#include $<$Table3\+D.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_table3_d_a25cc4fef80875c5b09bfc438a2f96549}{Table3D} (\hyperlink{classtsgl_1_1_canvas}{Canvas} \&can, int p, Phil\+Method m)
+\begin{DoxyCompactList}\small\item\em Creates a new 3D \hyperlink{class_table}{Table} of dining Philosopher3\+Ds. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table3_d_a6f9be8aa87f9354069aa40e7b634d462}\label{class_table3_d_a6f9be8aa87f9354069aa40e7b634d462}} 
+\hyperlink{class_table3_d_a6f9be8aa87f9354069aa40e7b634d462}{$\sim$\+Table3D} ()
+\begin{DoxyCompactList}\small\item\em Destructor for \hyperlink{class_table3_d}{Table3D}. \end{DoxyCompactList}\item 
+void \hyperlink{class_table3_d_abcbe27c7295a6ca53d8a6e479c3a258d}{forfeit\+When\+Blocked\+Method} (int id)
+\begin{DoxyCompactList}\small\item\em Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. \end{DoxyCompactList}\item 
+void \hyperlink{class_table3_d_aea2b67e82829dc28c5ba3b098ef7f57f}{wait\+When\+Blocked\+Method} (int id)
+\begin{DoxyCompactList}\small\item\em Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. \end{DoxyCompactList}\item 
+void \hyperlink{class_table3_d_a3f4c3035efbd707eb34ca3eef4e71340}{n\+Frame\+Release\+Method} (int id)
+\begin{DoxyCompactList}\small\item\em Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. \end{DoxyCompactList}\item 
+void \hyperlink{class_table3_d_a4fac6d05e99d37817b7f5e510d363e47}{hierarchy\+Method} (int id)
+\begin{DoxyCompactList}\small\item\em Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. \end{DoxyCompactList}\item 
+void \hyperlink{class_table3_d_acc4b9ab7a1110676580d64a67d4c1168}{odd\+Even\+Method} (int id)
+\begin{DoxyCompactList}\small\item\em Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table3_d_a224df9c2aa5031d34790bace97f017ac}\label{class_table3_d_a224df9c2aa5031d34790bace97f017ac}} 
+void \hyperlink{class_table3_d_a224df9c2aa5031d34790bace97f017ac}{check\+Step} ()
+\begin{DoxyCompactList}\small\item\em Method for determining which method of resolution the philosopher is using. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table3_d_a4c150347abc897cc4d8e6e6df8d72db6}\label{class_table3_d_a4c150347abc897cc4d8e6e6df8d72db6}} 
+void \hyperlink{class_table3_d_a4c150347abc897cc4d8e6e6df8d72db6}{act\+Step} ()
+\begin{DoxyCompactList}\small\item\em Method for philosopher to act based on my\+Action. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_table3_d_a14060acff36f9a3de159df41e072a086}\label{class_table3_d_a14060acff36f9a3de159df41e072a086}} 
+void \hyperlink{class_table3_d_a14060acff36f9a3de159df41e072a086}{draw\+Step} ()
+\begin{DoxyCompactList}\small\item\em Method calculating angles calling draw methods of a philosopher and its fork or forks. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Object managing the forks and philosophers in the Dining Philosophers\textquotesingle{} problem. 
+
+The \hyperlink{class_table3_d}{Table3D} class keeps track of the forks and philosophers in the Dining Philosophers\textquotesingle{} problem; it additionally manages the actions of the philosophers.
+
+Each step of the problem is broken up into two phases. In the checking phase, the philosophers look at the 3D table around them and, without communicating with the other philosophers, determine an action to take based on their state and the states of their adjacent forks.
+
+In the action phase, each philosopher attempts to execute the action previously determined in the checking phase. If unsuccessful, the philosopher does nothing; otherwise, the philosopher\textquotesingle{}s state changes depending on the action taken. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_table3_d_a25cc4fef80875c5b09bfc438a2f96549}\label{class_table3_d_a25cc4fef80875c5b09bfc438a2f96549}} 
+\index{Table3D@{Table3D}!Table3D@{Table3D}}
+\index{Table3D@{Table3D}!Table3D@{Table3D}}
+\subsubsection{\texorpdfstring{Table3\+D()}{Table3D()}}
+{\footnotesize\ttfamily Table3\+D\+::\+Table3D (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} \&}]{can,  }\item[{int}]{p,  }\item[{Phil\+Method}]{m }\end{DoxyParamCaption})}
+
+
+
+Creates a new 3D \hyperlink{class_table}{Table} of dining Philosopher3\+Ds. 
+
+Explicit constructor for a new \hyperlink{class_table3_d}{Table3D} object. 
+\begin{DoxyParams}{Parameters}
+{\em can} & The Canvas on which the \hyperlink{class_table3_d}{Table3D} is to be drawn. \\
+\hline
+{\em p} & Integer denoting the number of Philosopher3\+Ds at the \hyperlink{class_table3_d}{Table3D} \\
+\hline
+{\em m} & Phil\+Method denoting how the Philosopher3\+Ds should interact. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_table3_d_abcbe27c7295a6ca53d8a6e479c3a258d}\label{class_table3_d_abcbe27c7295a6ca53d8a6e479c3a258d}} 
+\index{Table3D@{Table3D}!forfeit\+When\+Blocked\+Method@{forfeit\+When\+Blocked\+Method}}
+\index{forfeit\+When\+Blocked\+Method@{forfeit\+When\+Blocked\+Method}!Table3D@{Table3D}}
+\subsubsection{\texorpdfstring{forfeit\+When\+Blocked\+Method()}{forfeitWhenBlockedMethod()}}
+{\footnotesize\ttfamily void Table3\+D\+::forfeit\+When\+Blocked\+Method (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. 
+
+
+\begin{DoxyItemize}
+\item Store the id numbers for the left and the right Philsopher\textquotesingle{}s state.
+\item Switch for the state of a \hyperlink{class_philosopher3_d}{Philosopher3D}\+:
+\begin{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has no fork\+:
+\begin{DoxyItemize}
+\item If the right fork is free, try to get that fork.
+\item Else, if the left fork is free, try to get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has right fork\+:
+\begin{DoxyItemize}
+\item If the left fork is free, try to get that fork.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has the left fork\+:
+\begin{DoxyItemize}
+\item If the right fork is free, try to get that fork.
+\item Else, release the left fork.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has both forks\+:
+\begin{DoxyItemize}
+\item Release both of them.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\begin{DoxyParams}{Parameters}
+{\em id} & The id number of the current \hyperlink{class_philosopher3_d}{Philosopher3D}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This is an example of Deadlock amongst threads. 
+\end{DoxyNote}
+
+
+Referenced by check\+Step().
+
+\mbox{\Hypertarget{class_table3_d_a4fac6d05e99d37817b7f5e510d363e47}\label{class_table3_d_a4fac6d05e99d37817b7f5e510d363e47}} 
+\index{Table3D@{Table3D}!hierarchy\+Method@{hierarchy\+Method}}
+\index{hierarchy\+Method@{hierarchy\+Method}!Table3D@{Table3D}}
+\subsubsection{\texorpdfstring{hierarchy\+Method()}{hierarchyMethod()}}
+{\footnotesize\ttfamily void Table3\+D\+::hierarchy\+Method (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. 
+
+
+\begin{DoxyItemize}
+\item Store the states for the left and right Philosopher3\+Ds.
+\item Switch statement for the state of the current \hyperlink{class_philosopher3_d}{Philosopher3D}.
+\begin{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has no forks\+:
+\begin{DoxyItemize}
+\item If the right \hyperlink{class_philosopher3_d}{Philosopher3D}\textquotesingle{}s id is less than the left Philsopher\textquotesingle{}s id\+:
+\begin{DoxyItemize}
+\item If the right fork is free, try to get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item Else, if the left fork is free then try and get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has the right fork\+:
+\begin{DoxyItemize}
+\item If the left fork is free, try and get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has the left fork\+:
+\begin{DoxyItemize}
+\item If the right fork is free, try and get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has both forks\+:
+\begin{DoxyItemize}
+\item Release both of them.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\begin{DoxyParams}{Parameters}
+{\em id} & The id number of the current \hyperlink{class_philosopher3_d}{Philosopher3D}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by check\+Step().
+
+\mbox{\Hypertarget{class_table3_d_a3f4c3035efbd707eb34ca3eef4e71340}\label{class_table3_d_a3f4c3035efbd707eb34ca3eef4e71340}} 
+\index{Table3D@{Table3D}!n\+Frame\+Release\+Method@{n\+Frame\+Release\+Method}}
+\index{n\+Frame\+Release\+Method@{n\+Frame\+Release\+Method}!Table3D@{Table3D}}
+\subsubsection{\texorpdfstring{n\+Frame\+Release\+Method()}{nFrameReleaseMethod()}}
+{\footnotesize\ttfamily void Table3\+D\+::n\+Frame\+Release\+Method (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. 
+
+
+\begin{DoxyItemize}
+\item Store the states of the left and right Philosopher3\+Ds.
+\item Switch statement for the current \hyperlink{class_philosopher3_d}{Philosopher3D}\+:
+\begin{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has no forks\+:
+\begin{DoxyItemize}
+\item If the right fork is free, try to get that fork.
+\item Else, if the left fork is free, try to get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has right fork\+:
+\begin{DoxyItemize}
+\item If the left fork is free, try to get that fork.
+\item Else, if the id of the current \hyperlink{class_philosopher3_d}{Philosopher3D} is equal to the frame number of the Canvas modulo the number of Philosopher3\+Ds+1, then release the right fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has the left fork\+:
+\begin{DoxyItemize}
+\item If the right fork is free, try and get that fork.
+\item Else, if the id of the current \hyperlink{class_philosopher3_d}{Philosopher3D} is equal to the frame number of the Canvas modulo the number of Philosopher3\+Ds+1, then release the left fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has both forks\+:
+\begin{DoxyItemize}
+\item Release both of them.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\begin{DoxyParams}{Parameters}
+{\em id} & The id number of the current \hyperlink{class_philosopher3_d}{Philosopher3D}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by check\+Step().
+
+\mbox{\Hypertarget{class_table3_d_acc4b9ab7a1110676580d64a67d4c1168}\label{class_table3_d_acc4b9ab7a1110676580d64a67d4c1168}} 
+\index{Table3D@{Table3D}!odd\+Even\+Method@{odd\+Even\+Method}}
+\index{odd\+Even\+Method@{odd\+Even\+Method}!Table3D@{Table3D}}
+\subsubsection{\texorpdfstring{odd\+Even\+Method()}{oddEvenMethod()}}
+{\footnotesize\ttfamily void Table3\+D\+::odd\+Even\+Method (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. 
+
+
+\begin{DoxyItemize}
+\item Switch statement for the current \hyperlink{class_philosopher3_d}{Philosopher3D}\+:
+\begin{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has no forks\+:
+\begin{DoxyItemize}
+\item If the \hyperlink{class_philosopher3_d}{Philosopher3D}\textquotesingle{}s id is even
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has right fork (odd id)\+:
+\begin{DoxyItemize}
+\item If the Philsopher\textquotesingle{}s id modulo 2 is equal to the Canvas\textquotesingle{} current frame number modulo 2, then try and get the left fork.
+\item Else, release the right fork.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has left fork (even id)\+:
+\begin{DoxyItemize}
+\item If the Philsopher\textquotesingle{}s id modulo 2 is equal to the Canvas\textquotesingle{} current frame number modulo 2, then try and get the right fork.
+\item Else, release the left fork.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has both forks\+:
+\begin{DoxyItemize}
+\item Release both of them.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\begin{DoxyParams}{Parameters}
+{\em id} & The id number of the current \hyperlink{class_philosopher3_d}{Philosopher3D}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This method is the one that works best. 
+\end{DoxyNote}
+
+
+Referenced by check\+Step().
+
+\mbox{\Hypertarget{class_table3_d_aea2b67e82829dc28c5ba3b098ef7f57f}\label{class_table3_d_aea2b67e82829dc28c5ba3b098ef7f57f}} 
+\index{Table3D@{Table3D}!wait\+When\+Blocked\+Method@{wait\+When\+Blocked\+Method}}
+\index{wait\+When\+Blocked\+Method@{wait\+When\+Blocked\+Method}!Table3D@{Table3D}}
+\subsubsection{\texorpdfstring{wait\+When\+Blocked\+Method()}{waitWhenBlockedMethod()}}
+{\footnotesize\ttfamily void Table3\+D\+::wait\+When\+Blocked\+Method (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+
+
+Method for determining which fork a \hyperlink{class_philosopher3_d}{Philosopher3D} should get. 
+
+
+\begin{DoxyItemize}
+\item Store the states of the left and right Philosopher3\+Ds.
+\item Switch for the state of the current \hyperlink{class_philosopher3_d}{Philosopher3D}\+:
+\begin{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has no forks\+:
+\begin{DoxyItemize}
+\item If the right fork is free, try to get that fork.
+\item Else if the left fork is free, try to get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has right fork\+:
+\begin{DoxyItemize}
+\item If the left fork is free, try to get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has the left fork\+:
+\begin{DoxyItemize}
+\item If the right fork is free, try to get that fork.
+\item Else, do nothing.
+\end{DoxyItemize}
+\item \hyperlink{class_philosopher3_d}{Philosopher3D} has both forks\+:
+\begin{DoxyItemize}
+\item Release both of them.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\begin{DoxyParams}{Parameters}
+{\em id} & The id number of the current \hyperlink{class_philosopher3_d}{Philosopher3D}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This is an example of Livelock amongst threads. 
+\end{DoxyNote}
+
+
+Referenced by check\+Step().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Dining\+Philosophers3\+D/Table3\+D.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Dining\+Philosophers3\+D/Table3\+D.\+cpp\end{DoxyCompactItemize}

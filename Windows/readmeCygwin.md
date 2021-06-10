@@ -11,7 +11,7 @@
 6. Do the same for `dos2unix` and `wget`
 7. Click "Next" and finish the installation
 
-![me](https://github.com/samuelth47/TSGL/blob/fix-cygwin-ubuntu/NewWindows/Cygwin.gif)
+![me](https://github.com/samuelth47/TSGL/blob/master/Windows/Cygwin.gif)
 
 ### Installing TSGL
 

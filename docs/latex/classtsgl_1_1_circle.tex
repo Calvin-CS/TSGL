@@ -1,0 +1,229 @@
+\hypertarget{classtsgl_1_1_circle}{}\section{tsgl\+:\+:Circle Class Reference}
+\label{classtsgl_1_1_circle}\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+
+
+Draw a circle.  
+
+
+
+
+{\ttfamily \#include $<$Circle.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Circle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_circle}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_circle_aed06fe2620b6fc81ecc3d6ed94e47aeb}{Circle} (float x, float y, float z, G\+Lfloat radius, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new monocolored filled \hyperlink{classtsgl_1_1_circle}{Circle}. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_circle_aeee2a7388c304fd8deb601d426dc0211}{Circle} (float x, float y, float z, G\+Lfloat radius, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new multicolored filled \hyperlink{classtsgl_1_1_circle}{Circle}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_circle_a515710a6bbec274a1b8686c0d427a0d5}{set\+Radius} (G\+Lfloat radius)
+\begin{DoxyCompactList}\small\item\em Mutates the radius of the \hyperlink{classtsgl_1_1_circle}{Circle}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_circle_a1778df77ca0903a9a4d3060b10ff7925}{change\+Radius\+By} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the radius of the \hyperlink{classtsgl_1_1_circle}{Circle} by the parameter amount. \end{DoxyCompactList}\item 
+G\+Lfloat \hyperlink{classtsgl_1_1_circle_ab6b2d16691b472d04972b1860856e7dd}{get\+Radius} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the radius of the \hyperlink{classtsgl_1_1_circle}{Circle}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_circle_a3e97ff653a534a606f0a3b3176c330b0}{set\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} c)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_shape}{Shape} to a new color. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_circle_aa25c336d07fb8216bd5d6f63f53a2271}{set\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_circle}{Circle} to a new array of colors. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_circle_af0e1ef7313bde5f66750b616de296f76}{get\+Colors} (std\+::vector$<$ \hyperlink{structtsgl_1_1_color_float}{Color\+Float} $>$ \&color\+Vec)
+\begin{DoxyCompactList}\small\item\em Accessor for \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s colors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_circle_a60107a7f25bc0216daf628e24264a7a5}\label{classtsgl_1_1_circle_a60107a7f25bc0216daf628e24264a7a5}} 
+G\+Lfloat {\bfseries my\+Radius}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_circle_a513d9c5e6e8b7b32c2e10756835a1612}\label{classtsgl_1_1_circle_a513d9c5e6e8b7b32c2e10756835a1612}} 
+G\+Lfloat {\bfseries vertices\+Per\+Color}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw a circle. 
+
+\hyperlink{classtsgl_1_1_circle}{Circle} is a class for holding \hyperlink{classtsgl_1_1_shape}{Shape} data for a circle. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_circle_aed06fe2620b6fc81ecc3d6ed94e47aeb}\label{classtsgl_1_1_circle_aed06fe2620b6fc81ecc3d6ed94e47aeb}} 
+\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}!Circle@{Circle}}
+\index{Circle@{Circle}!tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+\subsubsection{\texorpdfstring{Circle()}{Circle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Circle\+::\+Circle (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new monocolored filled \hyperlink{classtsgl_1_1_circle}{Circle}. 
+
+This function draws a circle with the given center, radius, 3D rotation, color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the circle\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the circle\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the circle\textquotesingle{}s center. \\
+\hline
+{\em radius} & The radius of the circle in pixels. \\
+\hline
+{\em yaw} & The circle\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The circle\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The circle\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & The color of the circle\textquotesingle{}s fill \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_circle_aeee2a7388c304fd8deb601d426dc0211}\label{classtsgl_1_1_circle_aeee2a7388c304fd8deb601d426dc0211}} 
+\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}!Circle@{Circle}}
+\index{Circle@{Circle}!tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+\subsubsection{\texorpdfstring{Circle()}{Circle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Circle\+::\+Circle (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new multicolored filled \hyperlink{classtsgl_1_1_circle}{Circle}. 
+
+This function draws a circle with the given center, radius, roation, and fill color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the circle\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the circle\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the circle\textquotesingle{}s center. \\
+\hline
+{\em radius} & The radius of the circle in pixels. \\
+\hline
+{\em yaw} & The circle\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The circle\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The circle\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & An array of colors for the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s fill \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_circle_a1778df77ca0903a9a4d3060b10ff7925}\label{classtsgl_1_1_circle_a1778df77ca0903a9a4d3060b10ff7925}} 
+\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}!change\+Radius\+By@{change\+Radius\+By}}
+\index{change\+Radius\+By@{change\+Radius\+By}!tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+\subsubsection{\texorpdfstring{change\+Radius\+By()}{changeRadiusBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Circle\+::change\+Radius\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the radius of the \hyperlink{classtsgl_1_1_circle}{Circle} by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the radius of the \hyperlink{classtsgl_1_1_circle}{Circle}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_circle_af0e1ef7313bde5f66750b616de296f76}\label{classtsgl_1_1_circle_af0e1ef7313bde5f66750b616de296f76}} 
+\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}!get\+Colors@{get\+Colors}}
+\index{get\+Colors@{get\+Colors}!tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+\subsubsection{\texorpdfstring{get\+Colors()}{getColors()}}
+{\footnotesize\ttfamily void tsgl\+::\+Circle\+::get\+Colors (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \hyperlink{structtsgl_1_1_color_float}{Color\+Float} $>$ \&}]{color\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s colors. 
+
+Populates the reference parameter vector with a \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for each section of \hyperlink{classtsgl_1_1_circle}{Circle}. 
+\begin{DoxyParams}{Parameters}
+{\em color\+Vec} & A vector of Color\+Floats to which the Color\+Floats associated with \hyperlink{classtsgl_1_1_circle}{Circle} will be pushed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Overrides \hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{Shape\+::get\+Colors()}. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{tsgl\+::\+Shape}.
+
+
+
+Referenced by set\+Color().
+
+\mbox{\Hypertarget{classtsgl_1_1_circle_ab6b2d16691b472d04972b1860856e7dd}\label{classtsgl_1_1_circle_ab6b2d16691b472d04972b1860856e7dd}} 
+\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}!get\+Radius@{get\+Radius}}
+\index{get\+Radius@{get\+Radius}!tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+\subsubsection{\texorpdfstring{get\+Radius()}{getRadius()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Circle\+::get\+Radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the radius of the \hyperlink{classtsgl_1_1_circle}{Circle}. 
+
+Returns the value of the my\+Radius private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_circle_a3e97ff653a534a606f0a3b3176c330b0}\label{classtsgl_1_1_circle_a3e97ff653a534a606f0a3b3176c330b0}} 
+\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}!set\+Color@{set\+Color}}
+\index{set\+Color@{set\+Color}!tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+\subsubsection{\texorpdfstring{set\+Color()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Circle\+::set\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_shape}{Shape} to a new color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}{tsgl\+::\+Shape}.
+
+
+
+Referenced by Reader\+::\+Reader(), Philosopher\+::refresh\+Color(), and Writer\+::\+Writer().
+
+\mbox{\Hypertarget{classtsgl_1_1_circle_aa25c336d07fb8216bd5d6f63f53a2271}\label{classtsgl_1_1_circle_aa25c336d07fb8216bd5d6f63f53a2271}} 
+\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}!set\+Color@{set\+Color}}
+\index{set\+Color@{set\+Color}!tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+\subsubsection{\texorpdfstring{set\+Color()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Circle\+::set\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_circle}{Circle} to a new array of colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & An array of the new Color\+Floats. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}{tsgl\+::\+Shape}.
+
+\mbox{\Hypertarget{classtsgl_1_1_circle_a515710a6bbec274a1b8686c0d427a0d5}\label{classtsgl_1_1_circle_a515710a6bbec274a1b8686c0d427a0d5}} 
+\index{tsgl\+::\+Circle@{tsgl\+::\+Circle}!set\+Radius@{set\+Radius}}
+\index{set\+Radius@{set\+Radius}!tsgl\+::\+Circle@{tsgl\+::\+Circle}}
+\subsubsection{\texorpdfstring{set\+Radius()}{setRadius()}}
+{\footnotesize\ttfamily void tsgl\+::\+Circle\+::set\+Radius (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{radius }\end{DoxyParamCaption})}
+
+
+
+Mutates the radius of the \hyperlink{classtsgl_1_1_circle}{Circle}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em radius} & The \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s new radius. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Circle.\+h\item 
+Circle.\+cpp\end{DoxyCompactItemize}

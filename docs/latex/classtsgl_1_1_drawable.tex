@@ -1,0 +1,808 @@
+\hypertarget{classtsgl_1_1_drawable}{}\section{tsgl\+:\+:Drawable Class Reference}
+\label{classtsgl_1_1_drawable}\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+
+
+A class for drawing objects onto a \hyperlink{classtsgl_1_1_canvas}{Canvas} or \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}.  
+
+
+
+
+{\ttfamily \#include $<$Drawable.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Drawable\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.887324cm]{classtsgl_1_1_drawable}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_drawable_a3a1394a83d01e3036b9eaf67dd5f56e6}{Drawable} (float x, float y, float z, float yaw, float pitch, float roll)
+\begin{DoxyCompactList}\small\item\em Constructs a new \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a0c1fc1a3588438c2884a489bbeba83c5}\label{classtsgl_1_1_drawable_a0c1fc1a3588438c2884a489bbeba83c5}} 
+virtual void {\bfseries draw} (Shader $\ast$shader)=0
+\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a5f3c278c5f0fb64ac285ee8326c87987}{change\+X\+By} (float deltaX)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s x position. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a4590b6d35aab302e59e9e7581ecd0997}{change\+Y\+By} (float deltaY)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s y position. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a4497615a4e1e03c40a745fd80c1f51e0}{change\+Z\+By} (float deltaZ)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s z position. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a5e93ed0fd3bd02ec1d77645666bfedb9}{change\+Center\+By} (float deltaX, float deltaY, float deltaZ)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s vertex locations. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a100ed2db1357cd6bae7f991fcc353b8a}{set\+CenterX} (float x)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s x position. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a389f768e42b01bf0553120c39e079a52}{set\+CenterY} (float y)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s y position. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a4fe0cabf3863d81fd9889975a0580b9b}{set\+CenterZ} (float z)
+\begin{DoxyCompactList}\small\item\em Sets the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s z position. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_aba0399448063c05ea6b01c63abf81a59}{set\+Center} (float x, float y, float z)
+\begin{DoxyCompactList}\small\item\em Moves the \hyperlink{classtsgl_1_1_drawable}{Drawable} to new coordinates. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_aaf7dbc52fdce998927f4459e6f235111}{set\+Yaw} (float yaw)
+\begin{DoxyCompactList}\small\item\em Mutator for the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s yaw. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a7857e9c90950854f76bf5967d0957367}{set\+Pitch} (float pitch)
+\begin{DoxyCompactList}\small\item\em Mutator for the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s pitch. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a7a99b21ab628ab11cdf5289ece1adf50}{set\+Roll} (float roll)
+\begin{DoxyCompactList}\small\item\em Mutator for the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s roll. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a127514372e6bd4b652fd384e27a944de}{set\+Yaw\+Pitch\+Roll} (float yaw, float pitch, float roll)
+\begin{DoxyCompactList}\small\item\em Mutator for the yaw, pitch, and roll of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a3a57e4a919a30931942d5f5f20f5647c}{change\+Yaw\+By} (float delta\+Yaw)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s yaw by a specified amount. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a5cf7b8412046388eec3e518e99991646}{change\+Pitch\+By} (float delta\+Pitch)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s pitch by a specified amount. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_add43efbe60acaab91cf425facc68363a}{change\+Roll\+By} (float delta\+Roll)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s roll by a specified amount. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_af8541a8069354d047580676c51fa6942}{change\+Yaw\+Pitch\+Roll\+By} (float delta\+Yaw, float delta\+Pitch, float delta\+Roll)
+\begin{DoxyCompactList}\small\item\em Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s yaw, pitch, and roll by a specified amount. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a7de462cb3293cba7beee25c8a0370891}{set\+Rotation\+PointX} (float x)
+\begin{DoxyCompactList}\small\item\em Virtual mutator that changes the rotation point of the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s x value. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a9576c059c277e1e936b5de228c0d59cf}{set\+Rotation\+PointY} (float y)
+\begin{DoxyCompactList}\small\item\em Virtual mutator that changes the rotation point of the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s y value. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a5293782ce59f1aff49defa38945ec6bb}{set\+Rotation\+PointZ} (float z)
+\begin{DoxyCompactList}\small\item\em Virtual mutator that changes the rotation point of the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s z value. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_drawable_a9f99fff756caeac2e9f0cfa9cf30354f}{set\+Rotation\+Point} (float x, float y, float z)
+\begin{DoxyCompactList}\small\item\em Sets the point around which \hyperlink{classtsgl_1_1_drawable}{Drawable} is rotated. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_a170ce95eaae8b19532420e42e9eb8abf}{get\+CenterX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the center x-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_ad78d781f078bab0f458892757f100e7f}{get\+CenterY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the center z-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_a6a6c0441d94ffebd149f88ae3ab87ced}{get\+CenterZ} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the center z-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_a9560ac32d0e19ee79b163c17f163cbb9}{get\+Yaw} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the Yaw of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_a124df4cd376a550dd52a2b8ed7dd3151}{get\+Pitch} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the Pitch of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_a311c8e3530138a5d377981cb759d06f3}{get\+Roll} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the Roll of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_a24835632306f5d78f4e4da96f48937da}{get\+Rotation\+PointX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the rotation x-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_a6a7876f0056f13aa3642c7beaf5949e3}{get\+Rotation\+PointY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the rotation y-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_a755bfd7fc04feb04f1932c0e0886c8e5}{get\+Rotation\+PointZ} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the rotation z-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classtsgl_1_1_drawable_a98562ec95c8621ba9b46d7bd0c0ffece}{is\+Processed} ()
+\begin{DoxyCompactList}\small\item\em Accessor that returns if \hyperlink{classtsgl_1_1_drawable}{Drawable} is processed and ready to be drawn. \end{DoxyCompactList}\item 
+virtual unsigned int \hyperlink{classtsgl_1_1_drawable_a2985b1872024a4c0469e9953c60db728}{get\+Shader\+Type} ()
+\begin{DoxyCompactList}\small\item\em Accessor that returns a value corresponding to a certain shader in \hyperlink{classtsgl_1_1_canvas}{Canvas}. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_drawable_aa153a0c0a4eaaa9bf4b7640508d58850}{get\+Alpha} ()
+\begin{DoxyCompactList}\small\item\em Accessor that returns \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s alpha value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classtsgl_1_1_drawable_a21c86457e72d4ce01309dff922e23ab5}{center\+Matches\+Rotation\+Point} ()
+\begin{DoxyCompactList}\small\item\em Protected helper method that determines if the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s center matches its rotation point. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a598f96849973e9cfdbf68d0e2826716b}\label{classtsgl_1_1_drawable_a598f96849973e9cfdbf68d0e2826716b}} 
+std\+::mutex \hyperlink{classtsgl_1_1_drawable_a598f96849973e9cfdbf68d0e2826716b}{attrib\+Mutex}
+\begin{DoxyCompactList}\small\item\em Protects the attributes of the \hyperlink{classtsgl_1_1_drawable}{Drawable} from being accessed while simultaneously being changed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a9521a664f36ac95c7cf4237fed0b6c6c}\label{classtsgl_1_1_drawable_a9521a664f36ac95c7cf4237fed0b6c6c}} 
+G\+Lfloat $\ast$ {\bfseries vertices}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a753f3abfce4fc9b5aa598e9dea3412d1}\label{classtsgl_1_1_drawable_a753f3abfce4fc9b5aa598e9dea3412d1}} 
+float {\bfseries my\+Current\+Yaw}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a22179a40f7d0c5470f7f2d81f38bf31b}\label{classtsgl_1_1_drawable_a22179a40f7d0c5470f7f2d81f38bf31b}} 
+float {\bfseries my\+Current\+Pitch}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_aed934d160d037c2f151b20a7a9b4896d}\label{classtsgl_1_1_drawable_aed934d160d037c2f151b20a7a9b4896d}} 
+float {\bfseries my\+Current\+Roll}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_ae77c6e6f8d1a05e9e33e9d81010b7ab7}\label{classtsgl_1_1_drawable_ae77c6e6f8d1a05e9e33e9d81010b7ab7}} 
+float {\bfseries my\+X\+Scale}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a06f06101db328c6eaa4be3eb5c24b171}\label{classtsgl_1_1_drawable_a06f06101db328c6eaa4be3eb5c24b171}} 
+float {\bfseries my\+Y\+Scale}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_aafb57cc94337b39bed9aed2f5985ae06}\label{classtsgl_1_1_drawable_aafb57cc94337b39bed9aed2f5985ae06}} 
+float {\bfseries my\+Z\+Scale}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a9b6135146dfb6d5afd51f14805088e85}\label{classtsgl_1_1_drawable_a9b6135146dfb6d5afd51f14805088e85}} 
+float {\bfseries my\+Rotation\+PointX}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_afc85968c03eb68cdc3a1648986d4539f}\label{classtsgl_1_1_drawable_afc85968c03eb68cdc3a1648986d4539f}} 
+float {\bfseries my\+Rotation\+PointY}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_ab18192d302c84c302ad4fa55248c1064}\label{classtsgl_1_1_drawable_ab18192d302c84c302ad4fa55248c1064}} 
+float {\bfseries my\+Rotation\+PointZ}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a2c45b9c3f4a2afba4270aa9f40eb82de}\label{classtsgl_1_1_drawable_a2c45b9c3f4a2afba4270aa9f40eb82de}} 
+float {\bfseries my\+CenterX}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a1d8726633a9303ca13530e8973662aff}\label{classtsgl_1_1_drawable_a1d8726633a9303ca13530e8973662aff}} 
+float {\bfseries my\+CenterY}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a59cf4ffb4550796ca2d2d1e29345b8de}\label{classtsgl_1_1_drawable_a59cf4ffb4550796ca2d2d1e29345b8de}} 
+float {\bfseries my\+CenterZ}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a3dd25b680812efbc48e4340cff5e6c67}\label{classtsgl_1_1_drawable_a3dd25b680812efbc48e4340cff5e6c67}} 
+bool {\bfseries init} = false
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a4983a31b4e53ff6fff025b7dd61ffdc8}\label{classtsgl_1_1_drawable_a4983a31b4e53ff6fff025b7dd61ffdc8}} 
+unsigned int {\bfseries shader\+Type} = S\+H\+A\+P\+E\+\_\+\+S\+H\+A\+D\+E\+R\+\_\+\+T\+Y\+PE
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_drawable_af54a92431f81300879dddc70e2673270}\label{classtsgl_1_1_drawable_af54a92431f81300879dddc70e2673270}} 
+G\+Lfloat {\bfseries my\+Alpha} = 0.\+0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A class for drawing objects onto a \hyperlink{classtsgl_1_1_canvas}{Canvas} or \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+
+\begin{DoxyWarning}{Warning}
+{\bfseries {\itshape Though extending this class must be allowed due to the way the code is set up, attempting to do so could potentially mess up the internal GL calls the library uses. Proceed with great caution.}}
+\end{DoxyWarning}
+\hyperlink{classtsgl_1_1_drawable}{Drawable} provides a base class for drawing 3D objects to a \hyperlink{classtsgl_1_1_canvas}{Canvas} or \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. \begin{DoxyNote}{Note}
+\hyperlink{classtsgl_1_1_drawable}{Drawable} is abstract, and must be extended by the user.
+\end{DoxyNote}
+{\ttfamily vertices} should be an array of floating point values in T\+S\+GL\textquotesingle{}s vertex format.
+
+{\ttfamily numberofvertices} should be the actual integer number of vertices to be drawn (e.\+g., {\itshape 36} for a cube).
+
+{\ttfamily geometry\+Type} should be one of GL\textquotesingle{}s primitive drawing modes. See \href{https://www.opengl.org/sdk/docs/man2/xhtml/glBegin.xml}{\tt https\+://www.\+opengl.\+org/sdk/docs/man2/xhtml/gl\+Begin.\+xml} for further information.
+
+Theoretically, you could potentially extend the \hyperlink{classtsgl_1_1_drawable}{Drawable} class so that you can create another \hyperlink{classtsgl_1_1_drawable}{Drawable} class that suits your needs.
+
+However, this is not recommended for normal use of the T\+S\+GL library. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a3a1394a83d01e3036b9eaf67dd5f56e6}\label{classtsgl_1_1_drawable_a3a1394a83d01e3036b9eaf67dd5f56e6}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!Drawable@{Drawable}}
+\index{Drawable@{Drawable}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{Drawable()}{Drawable()}}
+{\footnotesize\ttfamily tsgl\+::\+Drawable\+::\+Drawable (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll }\end{DoxyParamCaption})}
+
+
+
+Constructs a new \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+
+\begin{DoxyItemize}
+\item Usually {\ttfamily vertices} is filled with floating point values that represent the vertices of the \hyperlink{classtsgl_1_1_drawable}{Drawable} to be drawn.
+\item You may define other items in the constructor that pertain to the attributes of the subclass that is extending \hyperlink{classtsgl_1_1_drawable}{Drawable}.
+\item At a minimum, you {\itshape M\+U\+ST} fill an array of floating point values that pertain to the vertices of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. \begin{DoxyWarning}{Warning}
+{\bfseries You {\itshape must} inherit the parent\textquotesingle{}s constructor if you are extending \hyperlink{classtsgl_1_1_drawable}{Drawable}.} 
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Refer to the \hyperlink{classtsgl_1_1_drawable}{Drawable} class description for more details. 
+\end{DoxyNote}
+
+\end{DoxyItemize}
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a21c86457e72d4ce01309dff922e23ab5}\label{classtsgl_1_1_drawable_a21c86457e72d4ce01309dff922e23ab5}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!center\+Matches\+Rotation\+Point@{center\+Matches\+Rotation\+Point}}
+\index{center\+Matches\+Rotation\+Point@{center\+Matches\+Rotation\+Point}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{center\+Matches\+Rotation\+Point()}{centerMatchesRotationPoint()}}
+{\footnotesize\ttfamily bool tsgl\+::\+Drawable\+::center\+Matches\+Rotation\+Point (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}}
+
+
+
+Protected helper method that determines if the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s center matches its rotation point. 
+
+Checks to see if my\+CenterX == my\+Rotation\+PointX, my\+CenterY == my\+Rotation\+PointY, my\+CenterZ == my\+Rotation\+PointZ \begin{DoxyReturn}{Returns}
+True if all three coordinates match their respective others, false otherwise. 
+\end{DoxyReturn}
+
+
+Referenced by change\+Center\+By(), change\+X\+By(), change\+Y\+By(), change\+Z\+By(), get\+Center\+X(), get\+Center\+Y(), get\+Center\+Z(), set\+Center(), set\+Center\+X(), set\+Center\+Y(), set\+Center\+Z(), tsgl\+::\+Line\+::set\+First\+Endpoint(), tsgl\+::\+Arrow\+::set\+First\+Endpoint(), tsgl\+::\+Line\+::set\+Second\+Endpoint(), and tsgl\+::\+Arrow\+::set\+Second\+Endpoint().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a5e93ed0fd3bd02ec1d77645666bfedb9}\label{classtsgl_1_1_drawable_a5e93ed0fd3bd02ec1d77645666bfedb9}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!change\+Center\+By@{change\+Center\+By}}
+\index{change\+Center\+By@{change\+Center\+By}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{change\+Center\+By()}{changeCenterBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::change\+Center\+By (\begin{DoxyParamCaption}\item[{float}]{deltaX,  }\item[{float}]{deltaY,  }\item[{float}]{deltaZ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s vertex locations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em deltaX} & The difference between the new and old vertex x coordinates. \\
+\hline
+{\em deltaY} & The difference between the new and old vertex y coordinates. \\
+\hline
+{\em deltaZ} & The difference between the new and old vertex z coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This will also alter the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s rotation point similarly if and only if the old rotation point was at the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s old center. 
+\end{DoxyWarning}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a5cf7b8412046388eec3e518e99991646}\label{classtsgl_1_1_drawable_a5cf7b8412046388eec3e518e99991646}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!change\+Pitch\+By@{change\+Pitch\+By}}
+\index{change\+Pitch\+By@{change\+Pitch\+By}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{change\+Pitch\+By()}{changePitchBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::change\+Pitch\+By (\begin{DoxyParamCaption}\item[{float}]{delta\+Pitch }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s pitch by a specified amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+Pitch} & The change in pitch value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_add43efbe60acaab91cf425facc68363a}\label{classtsgl_1_1_drawable_add43efbe60acaab91cf425facc68363a}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!change\+Roll\+By@{change\+Roll\+By}}
+\index{change\+Roll\+By@{change\+Roll\+By}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{change\+Roll\+By()}{changeRollBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::change\+Roll\+By (\begin{DoxyParamCaption}\item[{float}]{delta\+Roll }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s roll by a specified amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+Roll} & The change in roll value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a5f3c278c5f0fb64ac285ee8326c87987}\label{classtsgl_1_1_drawable_a5f3c278c5f0fb64ac285ee8326c87987}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!change\+X\+By@{change\+X\+By}}
+\index{change\+X\+By@{change\+X\+By}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{change\+X\+By()}{changeXBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::change\+X\+By (\begin{DoxyParamCaption}\item[{float}]{deltaX }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s x position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em deltaX} & The difference between the new and old vertex x coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This will also alter the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s rotation point similarly if and only if the old rotation point was at the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s old center. 
+\end{DoxyWarning}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a3a57e4a919a30931942d5f5f20f5647c}\label{classtsgl_1_1_drawable_a3a57e4a919a30931942d5f5f20f5647c}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!change\+Yaw\+By@{change\+Yaw\+By}}
+\index{change\+Yaw\+By@{change\+Yaw\+By}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{change\+Yaw\+By()}{changeYawBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::change\+Yaw\+By (\begin{DoxyParamCaption}\item[{float}]{delta\+Yaw }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s yaw by a specified amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+Yaw} & The change in yaw value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_af8541a8069354d047580676c51fa6942}\label{classtsgl_1_1_drawable_af8541a8069354d047580676c51fa6942}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!change\+Yaw\+Pitch\+Roll\+By@{change\+Yaw\+Pitch\+Roll\+By}}
+\index{change\+Yaw\+Pitch\+Roll\+By@{change\+Yaw\+Pitch\+Roll\+By}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{change\+Yaw\+Pitch\+Roll\+By()}{changeYawPitchRollBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::change\+Yaw\+Pitch\+Roll\+By (\begin{DoxyParamCaption}\item[{float}]{delta\+Yaw,  }\item[{float}]{delta\+Pitch,  }\item[{float}]{delta\+Roll }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s yaw, pitch, and roll by a specified amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta\+Yaw} & The change in yaw value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+{\em delta\+Pitch} & The change in pitch value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+{\em delta\+Roll} & The change in roll value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a4590b6d35aab302e59e9e7581ecd0997}\label{classtsgl_1_1_drawable_a4590b6d35aab302e59e9e7581ecd0997}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!change\+Y\+By@{change\+Y\+By}}
+\index{change\+Y\+By@{change\+Y\+By}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{change\+Y\+By()}{changeYBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::change\+Y\+By (\begin{DoxyParamCaption}\item[{float}]{deltaY }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s y position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em deltaY} & The difference between the new and old vertex y coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This will also alter the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s rotation point similarly if and only if the old rotation point was at the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s old center. 
+\end{DoxyWarning}
+
+
+Referenced by center\+Matches\+Rotation\+Point(), and Paddle\+::move().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a4497615a4e1e03c40a745fd80c1f51e0}\label{classtsgl_1_1_drawable_a4497615a4e1e03c40a745fd80c1f51e0}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!change\+Z\+By@{change\+Z\+By}}
+\index{change\+Z\+By@{change\+Z\+By}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{change\+Z\+By()}{changeZBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::change\+Z\+By (\begin{DoxyParamCaption}\item[{float}]{deltaZ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alters the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s z position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em deltaZ} & The difference between the new and old vertex z coordinates. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This will also alter the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s rotation point similarly if and only if the old rotation point was at the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s old center. 
+\end{DoxyWarning}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_aa153a0c0a4eaaa9bf4b7640508d58850}\label{classtsgl_1_1_drawable_aa153a0c0a4eaaa9bf4b7640508d58850}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+Alpha@{get\+Alpha}}
+\index{get\+Alpha@{get\+Alpha}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Alpha()}{getAlpha()}}
+{\footnotesize\ttfamily virtual float tsgl\+::\+Drawable\+::get\+Alpha (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor that returns \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s alpha value. 
+
+Principally designed to be used within \hyperlink{classtsgl_1_1_canvas}{Canvas} for transparency sorting. 
+
+Referenced by tsgl\+::\+Canvas\+::clear\+Object\+Buffer().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a170ce95eaae8b19532420e42e9eb8abf}\label{classtsgl_1_1_drawable_a170ce95eaae8b19532420e42e9eb8abf}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+CenterX@{get\+CenterX}}
+\index{get\+CenterX@{get\+CenterX}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Center\+X()}{getCenterX()}}
+{\footnotesize\ttfamily float tsgl\+::\+Drawable\+::get\+CenterX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for the center x-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+CenterX private variable, rotated by my\+Current\+Yaw, my\+Current\+Pitch, and my\+Current\+Roll about my\+Rotation\+PointX; \begin{DoxyNote}{Note}
+See \href{https://math.stackexchange.com/questions/2093314/rotation-matrix-of-rotation-around-a-point-other-than-the-origin}{\tt https\+://math.\+stackexchange.\+com/questions/2093314/rotation-\/matrix-\/of-\/rotation-\/around-\/a-\/point-\/other-\/than-\/the-\/origin} 
+
+and \href{http://planning.cs.uiuc.edu/node102.html}{\tt http\+://planning.\+cs.\+uiuc.\+edu/node102.\+html} for more more understanding. 
+\end{DoxyNote}
+
+
+Referenced by Consumer\+::act(), center\+Matches\+Rotation\+Point(), tsgl\+::\+Canvas\+::clear\+Object\+Buffer(), Philosopher3\+D\+::draw(), P\+C\+Thread\+::\+P\+C\+Thread(), Reader\+::\+Reader(), and Writer\+::\+Writer().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_ad78d781f078bab0f458892757f100e7f}\label{classtsgl_1_1_drawable_ad78d781f078bab0f458892757f100e7f}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+CenterY@{get\+CenterY}}
+\index{get\+CenterY@{get\+CenterY}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Center\+Y()}{getCenterY()}}
+{\footnotesize\ttfamily float tsgl\+::\+Drawable\+::get\+CenterY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for the center z-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+CenterY private variable, rotated by my\+Current\+Yaw, my\+Current\+Pitch, and my\+Current\+Roll about my\+Rotation\+PointY; \begin{DoxyNote}{Note}
+See \href{https://math.stackexchange.com/questions/2093314/rotation-matrix-of-rotation-around-a-point-other-than-the-origin}{\tt https\+://math.\+stackexchange.\+com/questions/2093314/rotation-\/matrix-\/of-\/rotation-\/around-\/a-\/point-\/other-\/than-\/the-\/origin} 
+
+and \href{http://planning.cs.uiuc.edu/node102.html}{\tt http\+://planning.\+cs.\+uiuc.\+edu/node102.\+html} for more more understanding. 
+\end{DoxyNote}
+
+
+Referenced by Consumer\+::act(), center\+Matches\+Rotation\+Point(), tsgl\+::\+Canvas\+::clear\+Object\+Buffer(), Philosopher3\+D\+::draw(), P\+C\+Thread\+::\+P\+C\+Thread(), Reader\+::\+Reader(), and Writer\+::\+Writer().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a6a6c0441d94ffebd149f88ae3ab87ced}\label{classtsgl_1_1_drawable_a6a6c0441d94ffebd149f88ae3ab87ced}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+CenterZ@{get\+CenterZ}}
+\index{get\+CenterZ@{get\+CenterZ}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Center\+Z()}{getCenterZ()}}
+{\footnotesize\ttfamily float tsgl\+::\+Drawable\+::get\+CenterZ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for the center z-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+CenterZ private variable, rotated by my\+Current\+Yaw, my\+Current\+Pitch, and my\+Current\+Roll about my\+Rotation\+PointZ; \begin{DoxyNote}{Note}
+See \href{https://math.stackexchange.com/questions/2093314/rotation-matrix-of-rotation-around-a-point-other-than-the-origin}{\tt https\+://math.\+stackexchange.\+com/questions/2093314/rotation-\/matrix-\/of-\/rotation-\/around-\/a-\/point-\/other-\/than-\/the-\/origin} 
+
+and \href{http://planning.cs.uiuc.edu/node102.html}{\tt http\+://planning.\+cs.\+uiuc.\+edu/node102.\+html} for more more understanding. 
+\end{DoxyNote}
+
+
+Referenced by center\+Matches\+Rotation\+Point(), tsgl\+::\+Canvas\+::clear\+Object\+Buffer(), and Philosopher3\+D\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a124df4cd376a550dd52a2b8ed7dd3151}\label{classtsgl_1_1_drawable_a124df4cd376a550dd52a2b8ed7dd3151}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+Pitch@{get\+Pitch}}
+\index{get\+Pitch@{get\+Pitch}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Pitch()}{getPitch()}}
+{\footnotesize\ttfamily virtual float tsgl\+::\+Drawable\+::get\+Pitch (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the Pitch of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+Current\+Pitch private variable. \mbox{\Hypertarget{classtsgl_1_1_drawable_a311c8e3530138a5d377981cb759d06f3}\label{classtsgl_1_1_drawable_a311c8e3530138a5d377981cb759d06f3}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+Roll@{get\+Roll}}
+\index{get\+Roll@{get\+Roll}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Roll()}{getRoll()}}
+{\footnotesize\ttfamily virtual float tsgl\+::\+Drawable\+::get\+Roll (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the Roll of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+Current\+Roll private variable. \mbox{\Hypertarget{classtsgl_1_1_drawable_a24835632306f5d78f4e4da96f48937da}\label{classtsgl_1_1_drawable_a24835632306f5d78f4e4da96f48937da}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+Rotation\+PointX@{get\+Rotation\+PointX}}
+\index{get\+Rotation\+PointX@{get\+Rotation\+PointX}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Rotation\+Point\+X()}{getRotationPointX()}}
+{\footnotesize\ttfamily virtual float tsgl\+::\+Drawable\+::get\+Rotation\+PointX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the rotation x-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+Rotation\+PointX private variable. \mbox{\Hypertarget{classtsgl_1_1_drawable_a6a7876f0056f13aa3642c7beaf5949e3}\label{classtsgl_1_1_drawable_a6a7876f0056f13aa3642c7beaf5949e3}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+Rotation\+PointY@{get\+Rotation\+PointY}}
+\index{get\+Rotation\+PointY@{get\+Rotation\+PointY}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Rotation\+Point\+Y()}{getRotationPointY()}}
+{\footnotesize\ttfamily virtual float tsgl\+::\+Drawable\+::get\+Rotation\+PointY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the rotation y-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+Rotation\+PointY private variable. \mbox{\Hypertarget{classtsgl_1_1_drawable_a755bfd7fc04feb04f1932c0e0886c8e5}\label{classtsgl_1_1_drawable_a755bfd7fc04feb04f1932c0e0886c8e5}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+Rotation\+PointZ@{get\+Rotation\+PointZ}}
+\index{get\+Rotation\+PointZ@{get\+Rotation\+PointZ}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Rotation\+Point\+Z()}{getRotationPointZ()}}
+{\footnotesize\ttfamily virtual float tsgl\+::\+Drawable\+::get\+Rotation\+PointZ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the rotation z-\/coordinate of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+Rotation\+PointZ private variable. \mbox{\Hypertarget{classtsgl_1_1_drawable_a2985b1872024a4c0469e9953c60db728}\label{classtsgl_1_1_drawable_a2985b1872024a4c0469e9953c60db728}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+Shader\+Type@{get\+Shader\+Type}}
+\index{get\+Shader\+Type@{get\+Shader\+Type}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Shader\+Type()}{getShaderType()}}
+{\footnotesize\ttfamily virtual unsigned int tsgl\+::\+Drawable\+::get\+Shader\+Type (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor that returns a value corresponding to a certain shader in \hyperlink{classtsgl_1_1_canvas}{Canvas}. 
+
+This function returns the value of the shader\+Type instance variable. 
+
+Referenced by tsgl\+::\+Canvas\+::clear\+Object\+Buffer(), tsgl\+::\+Cartesian\+Background\+::draw(), and tsgl\+::\+Background\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a9560ac32d0e19ee79b163c17f163cbb9}\label{classtsgl_1_1_drawable_a9560ac32d0e19ee79b163c17f163cbb9}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!get\+Yaw@{get\+Yaw}}
+\index{get\+Yaw@{get\+Yaw}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{get\+Yaw()}{getYaw()}}
+{\footnotesize\ttfamily virtual float tsgl\+::\+Drawable\+::get\+Yaw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the Yaw of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+Returns the value of the my\+Current\+Yaw private variable. \mbox{\Hypertarget{classtsgl_1_1_drawable_a98562ec95c8621ba9b46d7bd0c0ffece}\label{classtsgl_1_1_drawable_a98562ec95c8621ba9b46d7bd0c0ffece}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!is\+Processed@{is\+Processed}}
+\index{is\+Processed@{is\+Processed}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{is\+Processed()}{isProcessed()}}
+{\footnotesize\ttfamily virtual bool tsgl\+::\+Drawable\+::is\+Processed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor that returns if \hyperlink{classtsgl_1_1_drawable}{Drawable} is processed and ready to be drawn. 
+
+This function returns true only if all vertices have been inserted into an array. 
+
+Reimplemented in \hyperlink{classtsgl_1_1_shape_adf7724c786882b2bd4375c1e4807ed5d}{tsgl\+::\+Shape}, and \hyperlink{classtsgl_1_1_polyline_a9ce8dd308664600c31ef0047908c31d5}{tsgl\+::\+Polyline}.
+
+
+
+Referenced by tsgl\+::\+Canvas\+::clear\+Object\+Buffer(), tsgl\+::\+Cartesian\+Background\+::draw(), and tsgl\+::\+Background\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_aba0399448063c05ea6b01c63abf81a59}\label{classtsgl_1_1_drawable_aba0399448063c05ea6b01c63abf81a59}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Center@{set\+Center}}
+\index{set\+Center@{set\+Center}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Center()}{setCenter()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Center (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Moves the \hyperlink{classtsgl_1_1_drawable}{Drawable} to new coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The new center x coordinate. \\
+\hline
+{\em y} & The new center y coordinate. \\
+\hline
+{\em z} & The new center z coordinate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This will also alter the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s rotation point similarly if and only if the old rotation point was at the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s old center. 
+\end{DoxyWarning}
+
+
+Referenced by Consumer\+::act(), Producer\+::act(), center\+Matches\+Rotation\+Point(), Consumer\+::\+Consumer(), Ball\+::move(), P\+C\+Thread\+::\+P\+C\+Thread(), Producer\+::\+Producer(), Reader\+::\+Reader(), Writer\+::\+Writer(), and tsgl\+::\+Progress\+Bar\+::$\sim$\+Progress\+Bar().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a100ed2db1357cd6bae7f991fcc353b8a}\label{classtsgl_1_1_drawable_a100ed2db1357cd6bae7f991fcc353b8a}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+CenterX@{set\+CenterX}}
+\index{set\+CenterX@{set\+CenterX}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Center\+X()}{setCenterX()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+CenterX (\begin{DoxyParamCaption}\item[{float}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s x position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The new center x coordinate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This will also alter the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s rotation point similarly if and only if the old rotation point was at the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s old center. 
+\end{DoxyWarning}
+
+
+Referenced by center\+Matches\+Rotation\+Point(), and Paddle\+::\+Paddle().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a389f768e42b01bf0553120c39e079a52}\label{classtsgl_1_1_drawable_a389f768e42b01bf0553120c39e079a52}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+CenterY@{set\+CenterY}}
+\index{set\+CenterY@{set\+CenterY}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Center\+Y()}{setCenterY()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+CenterY (\begin{DoxyParamCaption}\item[{float}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s y position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em y} & The new center y coordinate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This will also alter the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s rotation point similarly if and only if the old rotation point was at the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s old center. 
+\end{DoxyWarning}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a4fe0cabf3863d81fd9889975a0580b9b}\label{classtsgl_1_1_drawable_a4fe0cabf3863d81fd9889975a0580b9b}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+CenterZ@{set\+CenterZ}}
+\index{set\+CenterZ@{set\+CenterZ}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Center\+Z()}{setCenterZ()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+CenterZ (\begin{DoxyParamCaption}\item[{float}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s z position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em z} & The new center z coordinate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+This will also alter the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s rotation point similarly if and only if the old rotation point was at the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s old center. 
+\end{DoxyWarning}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a7857e9c90950854f76bf5967d0957367}\label{classtsgl_1_1_drawable_a7857e9c90950854f76bf5967d0957367}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Pitch@{set\+Pitch}}
+\index{set\+Pitch@{set\+Pitch}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Pitch()}{setPitch()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Pitch (\begin{DoxyParamCaption}\item[{float}]{pitch }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutator for the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s pitch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pitch} & The new pitch value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a7a99b21ab628ab11cdf5289ece1adf50}\label{classtsgl_1_1_drawable_a7a99b21ab628ab11cdf5289ece1adf50}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Roll@{set\+Roll}}
+\index{set\+Roll@{set\+Roll}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Roll()}{setRoll()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Roll (\begin{DoxyParamCaption}\item[{float}]{roll }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutator for the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s roll. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em roll} & The new roll value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a9f99fff756caeac2e9f0cfa9cf30354f}\label{classtsgl_1_1_drawable_a9f99fff756caeac2e9f0cfa9cf30354f}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Rotation\+Point@{set\+Rotation\+Point}}
+\index{set\+Rotation\+Point@{set\+Rotation\+Point}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Rotation\+Point()}{setRotationPoint()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Rotation\+Point (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the point around which \hyperlink{classtsgl_1_1_drawable}{Drawable} is rotated. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the new rotation point. \\
+\hline
+{\em y} & The y coordinate of the new rotation point. \\
+\hline
+{\em z} & The z coordinate of the new rotation point. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point(), Philosopher3\+D\+::draw(), and tsgl\+::\+Progress\+Bar\+::$\sim$\+Progress\+Bar().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a7de462cb3293cba7beee25c8a0370891}\label{classtsgl_1_1_drawable_a7de462cb3293cba7beee25c8a0370891}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Rotation\+PointX@{set\+Rotation\+PointX}}
+\index{set\+Rotation\+PointX@{set\+Rotation\+PointX}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Rotation\+Point\+X()}{setRotationPointX()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Rotation\+PointX (\begin{DoxyParamCaption}\item[{float}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Virtual mutator that changes the rotation point of the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s x value. 
+
+Alters my\+Rotation\+PointX; 
+\begin{DoxyParams}{Parameters}
+{\em z} & my\+Rotation\+PointX\textquotesingle{}s new float value. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a9576c059c277e1e936b5de228c0d59cf}\label{classtsgl_1_1_drawable_a9576c059c277e1e936b5de228c0d59cf}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Rotation\+PointY@{set\+Rotation\+PointY}}
+\index{set\+Rotation\+PointY@{set\+Rotation\+PointY}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Rotation\+Point\+Y()}{setRotationPointY()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Rotation\+PointY (\begin{DoxyParamCaption}\item[{float}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Virtual mutator that changes the rotation point of the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s y value. 
+
+Alters my\+Rotation\+PointY; 
+\begin{DoxyParams}{Parameters}
+{\em y} & my\+Rotation\+PointY\textquotesingle{}s new float value. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a5293782ce59f1aff49defa38945ec6bb}\label{classtsgl_1_1_drawable_a5293782ce59f1aff49defa38945ec6bb}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Rotation\+PointZ@{set\+Rotation\+PointZ}}
+\index{set\+Rotation\+PointZ@{set\+Rotation\+PointZ}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Rotation\+Point\+Z()}{setRotationPointZ()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Rotation\+PointZ (\begin{DoxyParamCaption}\item[{float}]{z }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Virtual mutator that changes the rotation point of the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s z value. 
+
+Alters my\+Rotation\+PointZ; 
+\begin{DoxyParams}{Parameters}
+{\em z} & my\+Rotation\+PointZ\textquotesingle{}s new float value. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_aaf7dbc52fdce998927f4459e6f235111}\label{classtsgl_1_1_drawable_aaf7dbc52fdce998927f4459e6f235111}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Yaw@{set\+Yaw}}
+\index{set\+Yaw@{set\+Yaw}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Yaw()}{setYaw()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Yaw (\begin{DoxyParamCaption}\item[{float}]{yaw }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutator for the \hyperlink{classtsgl_1_1_drawable}{Drawable}\textquotesingle{}s yaw. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em yaw} & The new yaw value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point().
+
+\mbox{\Hypertarget{classtsgl_1_1_drawable_a127514372e6bd4b652fd384e27a944de}\label{classtsgl_1_1_drawable_a127514372e6bd4b652fd384e27a944de}} 
+\index{tsgl\+::\+Drawable@{tsgl\+::\+Drawable}!set\+Yaw\+Pitch\+Roll@{set\+Yaw\+Pitch\+Roll}}
+\index{set\+Yaw\+Pitch\+Roll@{set\+Yaw\+Pitch\+Roll}!tsgl\+::\+Drawable@{tsgl\+::\+Drawable}}
+\subsubsection{\texorpdfstring{set\+Yaw\+Pitch\+Roll()}{setYawPitchRoll()}}
+{\footnotesize\ttfamily void tsgl\+::\+Drawable\+::set\+Yaw\+Pitch\+Roll (\begin{DoxyParamCaption}\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutator for the yaw, pitch, and roll of the \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em yaw} & The new yaw value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+{\em pitch} & The new pitch value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+{\em roll} & The new roll value for \hyperlink{classtsgl_1_1_drawable}{Drawable}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by center\+Matches\+Rotation\+Point(), and tsgl\+::\+Progress\+Bar\+::$\sim$\+Progress\+Bar().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Drawable.\+h\item 
+Drawable.\+cpp\end{DoxyCompactItemize}

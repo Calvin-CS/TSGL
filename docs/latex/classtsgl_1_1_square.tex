@@ -1,0 +1,160 @@
+\hypertarget{classtsgl_1_1_square}{}\section{tsgl\+:\+:Square Class Reference}
+\label{classtsgl_1_1_square}\index{tsgl\+::\+Square@{tsgl\+::\+Square}}
+
+
+Draw a square.  
+
+
+
+
+{\ttfamily \#include $<$Square.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Square\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_square}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_square_a1279be7f6ddfc10491c6d77ff9cc18bf}{Square} (float x, float y, float z, G\+Lfloat side\+Length, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_square}{Square} with monocolored fill. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_square_a9c8c6685801135adbb3ca4c94c0df4a3}{Square} (float x, float y, float z, G\+Lfloat side\+Length, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_square}{Square} with multicolored fill. \end{DoxyCompactList}\item 
+G\+Lfloat \hyperlink{classtsgl_1_1_square_adf0871e17342a6a44361463015c5bc46}{get\+Side\+Length} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the side length of the \hyperlink{classtsgl_1_1_square}{Square}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_square_a0517236849893cdf0ab097df69e3416d}{set\+Side\+Length} (G\+Lfloat side\+Length)
+\begin{DoxyCompactList}\small\item\em Mutates the distance between opposite sides of the \hyperlink{classtsgl_1_1_square}{Square}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_square_a9804eb52021958970ff482625682d0d0}{change\+Side\+Length\+By} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance between opposite sides of the \hyperlink{classtsgl_1_1_square}{Square} by the parameter amount. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_square_a501911f1f20111d504f756b437bccdaf}\label{classtsgl_1_1_square_a501911f1f20111d504f756b437bccdaf}} 
+G\+Lfloat {\bfseries my\+Side\+Length}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw a square. 
+
+\hyperlink{classtsgl_1_1_square}{Square} is a class for holding \hyperlink{classtsgl_1_1_shape}{Shape} data for a square. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_square_a1279be7f6ddfc10491c6d77ff9cc18bf}\label{classtsgl_1_1_square_a1279be7f6ddfc10491c6d77ff9cc18bf}} 
+\index{tsgl\+::\+Square@{tsgl\+::\+Square}!Square@{Square}}
+\index{Square@{Square}!tsgl\+::\+Square@{tsgl\+::\+Square}}
+\subsubsection{\texorpdfstring{Square()}{Square()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Square\+::\+Square (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{side\+Length,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_square}{Square} with monocolored fill. 
+
+This function draws a \hyperlink{classtsgl_1_1_square}{Square} with the given center, sidelength, rotation, and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center. \\
+\hline
+{\em side\+Length} & The side length of the \hyperlink{classtsgl_1_1_square}{Square} in pixels. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & The color of the \hyperlink{classtsgl_1_1_square}{Square}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_square_a9c8c6685801135adbb3ca4c94c0df4a3}\label{classtsgl_1_1_square_a9c8c6685801135adbb3ca4c94c0df4a3}} 
+\index{tsgl\+::\+Square@{tsgl\+::\+Square}!Square@{Square}}
+\index{Square@{Square}!tsgl\+::\+Square@{tsgl\+::\+Square}}
+\subsubsection{\texorpdfstring{Square()}{Square()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Square\+::\+Square (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{side\+Length,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_square}{Square} with multicolored fill. 
+
+This function draws a \hyperlink{classtsgl_1_1_square}{Square} with the given center, sidelength, rotation, and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center. \\
+\hline
+{\em side\+Length} & The side length of the \hyperlink{classtsgl_1_1_square}{Square} in pixels. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & An array of colors for the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s vertices. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_square_a9804eb52021958970ff482625682d0d0}\label{classtsgl_1_1_square_a9804eb52021958970ff482625682d0d0}} 
+\index{tsgl\+::\+Square@{tsgl\+::\+Square}!change\+Side\+Length\+By@{change\+Side\+Length\+By}}
+\index{change\+Side\+Length\+By@{change\+Side\+Length\+By}!tsgl\+::\+Square@{tsgl\+::\+Square}}
+\subsubsection{\texorpdfstring{change\+Side\+Length\+By()}{changeSideLengthBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Square\+::change\+Side\+Length\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance between opposite sides of the \hyperlink{classtsgl_1_1_square}{Square} by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the side length of the \hyperlink{classtsgl_1_1_square}{Square}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by get\+Side\+Length().
+
+\mbox{\Hypertarget{classtsgl_1_1_square_adf0871e17342a6a44361463015c5bc46}\label{classtsgl_1_1_square_adf0871e17342a6a44361463015c5bc46}} 
+\index{tsgl\+::\+Square@{tsgl\+::\+Square}!get\+Side\+Length@{get\+Side\+Length}}
+\index{get\+Side\+Length@{get\+Side\+Length}!tsgl\+::\+Square@{tsgl\+::\+Square}}
+\subsubsection{\texorpdfstring{get\+Side\+Length()}{getSideLength()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Square\+::get\+Side\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the side length of the \hyperlink{classtsgl_1_1_square}{Square}. 
+
+Returns the value of the my\+Side\+Length private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_square_a0517236849893cdf0ab097df69e3416d}\label{classtsgl_1_1_square_a0517236849893cdf0ab097df69e3416d}} 
+\index{tsgl\+::\+Square@{tsgl\+::\+Square}!set\+Side\+Length@{set\+Side\+Length}}
+\index{set\+Side\+Length@{set\+Side\+Length}!tsgl\+::\+Square@{tsgl\+::\+Square}}
+\subsubsection{\texorpdfstring{set\+Side\+Length()}{setSideLength()}}
+{\footnotesize\ttfamily void tsgl\+::\+Square\+::set\+Side\+Length (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{side\+Length }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance between opposite sides of the \hyperlink{classtsgl_1_1_square}{Square}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em side\+Length} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s new side length. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by get\+Side\+Length().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Square.\+h\item 
+Square.\+cpp\end{DoxyCompactItemize}
