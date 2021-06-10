@@ -295,8 +295,9 @@ sudo rm -rf /usr/lib/libtsgl.*
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir -p lib bin
 
-#Add TSGL dependancy
+#Add TSGL and stb dependency
 cp -r /src/TSGL /usr/include
+cp -r /stb /usr/include
 
 #Make the library
 make
