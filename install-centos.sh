@@ -245,7 +245,7 @@ git clone https://www.github.com/glfw/glfw.git
 
 cd glfw
 
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DBUILD_SHARED_LIBS=ON
 
 make
 
@@ -256,7 +256,7 @@ cd ../
 sudo rm -rf glfw/
 
 #Copy over the .so file into lib64/ (so it can be found...)
-sudo cp /usr/local/lib/libglfw.so.3 /usr/lib64
+sudo cp /usr/lib/libglfw.so.3 /usr/lib64
 
 echo "GLFW installed."
 
@@ -276,7 +276,7 @@ make
 sudo make install
 
 #Copy over files so TSGL can find most recent freetype files
-cd /usr/local/include/
+cd /usr/include/
 
 sudo cp -r freetype2/ ../../include/freetype2/
 
@@ -301,19 +301,19 @@ echo "Freetype installed."
 #Make a symlink to GL.so file (so it can be found...)
 if [ $glSymlink == 1 ]
 then
-	sudo ln -s /usr/lib64/libGL.so.1 /usr/local/lib/libGl.so
+	sudo ln -s /usr/lib64/libGL.so.1 /usr/lib/libGl.so
 fi
 
 #Edit the LD_LIBRARY_PATH variable
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/include:/usr/local/lib:/usr/lib:/usr/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/include:/usr/lib:/usr/lib:/usr/lib64
 
 #Now, make and install TSGL!
 echo "Installing TSGL..."
 
 cd $workingDir
 
-sudo rm -rf /usr/local/include/TSGL
-sudo rm -rf /usr/local/lib/libtsgl.*
+sudo rm -rf /usr/include/TSGL
+sudo rm -rf /usr/lib/libtsgl.*
 
 mkdir -p lib bin
 
@@ -321,7 +321,7 @@ make
 
 sudo make install
 
-sudo rm -rf /usr/local/include/TSGL/*.cpp
+sudo rm -rf /usr/include/TSGL/*.cpp
 
 sudo ldconfig
 
