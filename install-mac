@@ -36,10 +36,10 @@ fi
 if [ $(has brew) = 0 ]; then
   echo "Installing Homebrew..."
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  export PATH=/usr/local/bin:$PATH
+  export PATH=/usr/bin:$PATH
 else
   echo "Homebrew detected."
-  export PATH=/usr/local/bin:$PATH
+  export PATH=/usr/bin:$PATH
 fi
 
 echo
@@ -79,10 +79,10 @@ echo "$gVers" | grep "clang" > check.txt
 version=490
 
 #First, check if we need to move an existing g++ compiler
-if [ -e /usr/local/bin/g++ ] && [ ! -e /usr/local/Cellar/gcc49 ];
+if [ -e /usr/bin/g++ ] && [ ! -e /usr/Cellar/gcc49 ];
 then
-	sudo mv /usr/local/bin/g++ /usr/local/bin/g++old
-	sudo mv /usr/local/bin/gcc /usr/local/bin/gccold
+	sudo mv /usr/bin/g++ /usr/bin/g++old
+	sudo mv /usr/bin/gcc /usr/bin/gccold
 
 fi
 
@@ -90,17 +90,17 @@ fi
 if grep --quiet clang check.txt; then
 	echo "Installing g++...this may take a while!"
 	brew install gcc
-  sudo rm /usr/local/bin/gcc
-  sudo rm /usr/local/bin/g++
-	sudo ln -s /usr/local/Cellar/gcc/10.2.0/bin/gcc-10 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc/10.2.0/bin/g++-10 /usr/local/bin/g++
+  sudo rm /usr/bin/gcc
+  sudo rm /usr/bin/g++
+	sudo ln -s /usr/Cellar/gcc/10.2.0/bin/gcc-10 /usr/bin/gcc
+	sudo ln -s /usr/Cellar/gcc/10.2.0/bin/g++-10 /usr/bin/g++
 else
 	echo "Installing g++...this may take a while!"
 	brew install gcc
-  sudo rm /usr/local/bin/gcc
-  sudo rm /usr/local/bin/g++
-	sudo ln -s /usr/local/Cellar/gcc/10.2.0/bin/gcc-10 /usr/local/bin/gcc
-	sudo ln -s /usr/local/Cellar/gcc/10.2.0/bin/g++-10 /usr/local/bin/g++
+  sudo rm /usr/bin/gcc
+  sudo rm /usr/bin/g++
+	sudo ln -s /usr/Cellar/gcc/10.2.0/bin/gcc-10 /usr/bin/gcc
+	sudo ln -s /usr/Cellar/gcc/10.2.0/bin/g++-10 /usr/bin/g++
 fi
 
 #Symlinks
@@ -114,8 +114,8 @@ if [ ! -e /usr/X11/lib/libXrandr.dylib ]; then
 fi
 
 #Remove any broken symlinks before installing
-sudo rm -f /usr/local/lib/libtsgl.* 
-sudo rm -rf /usr/local/include/TSGL
+sudo rm -f /usr/lib/libtsgl.* 
+sudo rm -rf /usr/include/TSGL
 
 #Build TSGL and install
 echo "Building TSGL..."
