@@ -10,12 +10,12 @@ echo "Installing TSGL..."
 
 #Determine the OpenGL version (has to be 3.2 or higher)
 #(Use glxinfo, available in the mesa-utils package)
-sudo apt-get install mesa-utils
+sudo apt-get -y install mesa-utils
 
 echo 
 echo "Checking OpenGL version (must be 3.0 or higher)..."
 
-sudo apt-get install mesa-utils
+sudo apt-get -y install mesa-utils
 
 GLVersInfo=$(glxinfo | grep OpenGL)
 
