@@ -190,7 +190,7 @@ else
 	cd glfw
 
 	#Build shared lib from source
-	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DBUILD_SHARED_LIBS=ON
 
 	#Make and install
 	make
@@ -200,11 +200,6 @@ else
 	cd ..
 
 	sudo rm -rf glfw
-	
-	cd /usr/lib
-	
-	#create a symbolic link
-	sudo ln -s /usr/local/lib/libglfw.so
 fi
 
 #Check if we have to install freetype from source...
@@ -224,7 +219,7 @@ else
 
 	cd freetype-2.6.3
 
-	./configure
+	./configure --prefix=/usr
 
 	make 
 
@@ -234,11 +229,6 @@ else
 	
 	#Remove the freetype folders from the TSGL folder
 	rm -rf freetype*
-	
-	cd /usr/lib
-	
-	#create a symbolic link
-	sudo ln -s /usr/local/lib/libfreetype.so
 fi
 
 #Check if we have to clone cxxopts ...
@@ -263,8 +253,30 @@ else
 	#Remove the freetype folders from the TSGL folder
 	rm -rf cxxopts*
 fi
-echo 
 
+#check if we have to clone glm...
+glmFile=/usr/include/glm/glm.hpp
+
+if  [ -f "$glmFile" ]
+then
+        echo "glm dependency found"
+else
+        echo "Resolving missing glm dependency..."
+
+        #clone the repository
+        git clone https://github.com/g-truc/glm.git
+
+        #copy the folder to usr/include
+        cd glm
+
+        sudo cp -r glm /usr/include
+
+        cd ..
+
+        rm -rf glm
+fi
+
+echo 
 echo
 
 #Dependencies were installed! (GLEW and glfw, as well as g++)
