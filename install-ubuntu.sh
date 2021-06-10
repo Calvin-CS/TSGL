@@ -30,20 +30,20 @@ GLVersNum=$(echo "$GLVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
 #http://tldp.org/LDP/abs/html/comparison-ops.html
 #Check if the version is less than the threshold
-if [ "$GLVersNum" \< "3.0" ]
-then
-	echo "Your version of GL is: $GLVersNum."
-	echo "You need at least OpenGL version 3.0 or greater."
-	echo "Please update your drivers in order to continue."
-	echo "Try the following command to update your drivers:"
-	echo
-	echo "sudo ubuntu-drivers autoinstall"
-	echo  
-	echo "Abort."
-	exit 1
-else
-	echo "OpenGL version is sufficient to continue."
-fi
+#if [ "$GLVersNum" \< "3.0" ]
+#then
+#	echo "Your version of GL is: $GLVersNum."
+#	echo "You need at least OpenGL version 3.0 or greater."
+#	echo "Please update your drivers in order to continue."
+#	echo "Try the following command to update your drivers:"
+#	echo
+#	echo "sudo ubuntu-drivers autoinstall"
+#	echo  
+#	echo "Abort."
+#	exit 1
+#else
+#	echo "OpenGL version is sufficient to continue."
+#fi
 
 echo "Checking for g++..."
 
