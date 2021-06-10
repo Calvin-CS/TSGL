@@ -296,8 +296,8 @@ sudo rm -rf /usr/lib/libtsgl.*
 mkdir -p lib bin
 
 #Add TSGL and stb dependency
-cp -r /src/TSGL /usr/include
-cp -r /stb /usr/include
+sudo cp -r TSGL/src/TSGL /usr/include
+sudo cp -r TSGL/stb /usr/include
 
 #Make the library
 make
