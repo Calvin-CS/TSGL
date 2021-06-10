@@ -8,7 +8,7 @@
    - It is downloaded as `XLaunch`
    - When starting XLaunch **disable** the `Native opengl` and **enable** `Disable access control`
 
-<img src="https://github.com/samuelth47/TSGL/blob/master/NewWindows/xlaunch.gif" width="500" height="600"/>
+<img src="https://github.com/samuelth47/TSGL/blob/master/Windows/xlaunch.gif" width="500" height="600"/>
 
 ##### Check
 * Start XLaunch
@@ -17,8 +17,7 @@
 * You should see a pair of eyes on the VcXsrc server
 
 ### Installing TSGL
-1. clone the [TSGL repository](https://github.com/samuelth47/TSGL/blob/fix-cygwin-ubuntu/NewWindows/xlaunch.gif)
-2. cd to TSGL
+1. clone the [TSGL repository](https://github.com/Calvin-CS/TSGL.git)
 3. run the install-ubuntu.sh (`./install-ubuntu.sh`)
 
 ##### Check
