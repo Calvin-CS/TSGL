@@ -277,8 +277,8 @@ echo "Begin installation of TSGL..."
 echo
 
 #Clean install = remove the TSGL folder and lib files if they already exist
-sudo rm -rf /usr/local/include/TSGL
-sudo rm -rf /usr/local/lib/libtsgl.*
+sudo rm -rf /usr/include/TSGL
+sudo rm -rf /usr/lib/libtsgl.*
 
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir -p lib bin
@@ -290,7 +290,7 @@ make
 sudo make install
 
 #Take out the .cpp files from the TSGL library package folder
-sudo rm -rf /usr/local/include/TSGL/*.cpp
+sudo rm -rf /usr/include/TSGL/*.cpp
 
 #Final step (.so file won't be found unless I do this...)
 sudo ldconfig
