@@ -80,9 +80,11 @@ brew install glm
 echo "export PATH=/usr/local/bin:$PATH" >> ~/.bashrc
 source ~/.bashrc
 
-#change the call for assets
+#change the call for assets and LFLAG directory
 cd src/examples
 grep -rli '/usr/include/TSGL/assets' * | xargs perl -i -pe's|/usr/include/TSGL/assets|/usr/local/include/TSGL/assets|g'
+
+grep -rli 'L/usr/lib' * | xargs perl -pi -e 's|L/usr/lib|L/usr/local/lib|g'
 cd -
 
 #move stb to /usr/local/include
@@ -154,4 +156,26 @@ sudo make install
 echo
 
 echo "Installation complete!"
+
+echo
+#checking update
+echo "Checking for updates..."
+
+TSGL_VERSION=$(git describe --tags --abbrev=0)
+TSGL_LATEST_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
+
+if [ $TSGL_VERSION < $TSGL_LATEST_VERSION ]
+then
+        echo "Latest version $TSGL_LATEST_VERSION found. WARNING, If you have changed anything in the TSGL folder it may be overwritten during update. To keep your changes, please commit them before updating."
+        read -p "Do you want to install the update? This will replace all the files with the updated ones (y/n): " INPUT
+        if [ $INPUT == y ] || [ $INPUT == Y ]
+        then
+                echo "Updating TSGL..."
+                git remote add tsgl https://github.com/Calvin-CS/TSGL.git
+                git pull tsgl master
+        fi
+else
+        echo "Latest version already installed"
+fi
+
 echo "Run \"./runtests\" to verify everything is working."
