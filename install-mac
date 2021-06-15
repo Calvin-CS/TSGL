@@ -70,6 +70,26 @@ brew install doxygen
 echo "Installing cxxopts..."
 brew install cxxopts
 
+#glm
+echo "Installing glm..."
+brew install glm
+
+####################################################################################
+
+#redefine path variable and append to bashrc
+echo "export PATH=/usr/local/bin:$PATH" >> ~/.bashrc
+source ~/.bashrc
+
+#change the call for assets
+cd src/examples
+perl -i -pe's|/usr/include/TSGL/assets|/usr/local/include/TSGL/assets|g' *
+cd -
+
+#move stb to /usr/local/include
+#sudo cp -r stb /usr/local/include 
+
+####################################################################################
+
 #g++
 gVers=$(g++ -v 2>&1)
 gVeres=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
@@ -81,8 +101,8 @@ version=490
 #First, check if we need to move an existing g++ compiler
 if [ -e /usr/bin/g++ ] && [ ! -e /usr/Cellar/gcc49 ];
 then
-	sudo mv /usr/bin/g++ /usr/bin/g++old
-	sudo mv /usr/bin/gcc /usr/bin/gccold
+	#sudo mv /usr/bin/g++ /usr/bin/g++old
+	#sudo mv /usr/bin/gcc /usr/bin/gccold
 
 fi
 
@@ -90,17 +110,17 @@ fi
 if grep --quiet clang check.txt; then
 	echo "Installing g++...this may take a while!"
 	brew install gcc
-  sudo rm /usr/bin/gcc
-  sudo rm /usr/bin/g++
-	sudo ln -s /usr/Cellar/gcc/10.2.0/bin/gcc-10 /usr/bin/gcc
-	sudo ln -s /usr/Cellar/gcc/10.2.0/bin/g++-10 /usr/bin/g++
+	#sudo rm /usr/bin/gcc
+	#sudo rm /usr/bin/g++
+	#sudo ln -s /usr/Cellar/gcc/10.2.0/bin/gcc-10 /usr/bin/gcc
+	#sudo ln -s /usr/Cellar/gcc/10.2.0/bin/g++-10 /usr/bin/g++
 else
 	echo "Installing g++...this may take a while!"
 	brew install gcc
-  sudo rm /usr/bin/gcc
-  sudo rm /usr/bin/g++
-	sudo ln -s /usr/Cellar/gcc/10.2.0/bin/gcc-10 /usr/bin/gcc
-	sudo ln -s /usr/Cellar/gcc/10.2.0/bin/g++-10 /usr/bin/g++
+	#sudo rm /usr/bin/gcc
+	#sudo rm /usr/bin/g++
+	#sudo ln -s /usr/Cellar/gcc/10.2.0/bin/gcc-10 /usr/bin/gcc
+	#sudo ln -s /usr/Cellar/gcc/10.2.0/bin/g++-10 /usr/bin/g++
 fi
 
 #Symlinks

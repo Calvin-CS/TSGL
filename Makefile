@@ -45,16 +45,17 @@ ifeq ($(UNAME), Darwin)
 	OS_EXTRA_LIB :=
 	OS_GL :=
 	OS_OMP := -fopenmp -lomp
-	OS_COMPILER := -std=c++0x
+	OS_COMPILER := -std=c++11
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
         -I/usr/include/TSGL \
-	-I${SRC_PATH}/ \
+	-I${SRC_PATH} \
 	-I/usr/include/freetype2 \
 
 LFLAGS=-Llib/ \
 	-L/usr/lib \
+	-L/usr/local/lib \
 	${OS_EXTRA_LIB} \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
@@ -145,17 +146,18 @@ install:
 	cp src/TSGL/tsgl.h /usr/include
 endif
 ifeq ($(UNAME), Darwin)
+MAC_PREFIX=$(PREFIX)/local
 install:
-	test -d $(PREFIX) || mkdir $(PREFIX)
-	test -d $(PREFIX)/lib || mkdir $(PREFIX)
-	test -d $(PREFIX)/include || mkdir $(PREFIX)
-	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
-	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
-	cp -r src/TSGL $(PREFIX)/include
-	cp -r stb $(PREFIX)/include
-	cp -r assets/ /usr/include/TSGL
-	cp -r stb/ /usr/include
-	cp src/TSGL/tsgl.h /usr/include
+	test -d $(MAC_PREFIX) || mkdir $(MAC_PREFIX)
+	test -d $(MAC_PREFIX)/lib || mkdir $(MAC_PREFIX)
+	test -d $(MAC_PREFIX)/include || mkdir $(MAC_PREFIX)
+	sudo install -m 0644 lib/libtsgl.a $(MAC_PREFIX)/lib
+	sudo install -m 0755 lib/libtsgl.so $(MAC_PREFIX)/lib
+	cp -r src/TSGL $(MAC_PREFIX)/include
+	cp -r stb $(MAC_PREFIX)/include
+	cp -r assets/ $(MAC_PREFIX)/include/TSGL
+	cp -r stb/ $(MAC_PREFIX)/include
+	cp src/TSGL/tsgl.h $(MAC_PREFIX)/include
 endif
 
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
