@@ -45,7 +45,7 @@ ifeq ($(UNAME), Darwin)
 	OS_EXTRA_LIB :=
 	OS_GL :=
 	OS_OMP := -fopenmp -lomp
-	OS_COMPILER := -std=c++0x
+	OS_COMPILER := -std=c++11
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
