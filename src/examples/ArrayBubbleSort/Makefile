@@ -38,16 +38,18 @@ GL_FLAGS := -lGLU  -lGL
 BREW :=
 endif
 ifeq ($(UNAME), Darwin)
-GL_FLAGS := -framework OpenGL 
-BREW := -lomp -I"$(brew --prefix libomp)/include" 
+#GL_FLAGS := -framework OpenGL 
+#BREW := -lomp -I"$(brew --prefix libomp)/include" 
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
 	-I/usr/include/TSGL \
 	-I/usr/include/freetype2 \
+	-I/usr/local/include/TSGL \
+	-I/usr/local/include/freetype2 \
 
-LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
-			$(BREW) -L/usr/lib \
+LFLAGS = -g -L/usr/lib -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
+			$(BREW) \
 
 
 # ****************************************************

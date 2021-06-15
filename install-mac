@@ -82,7 +82,7 @@ source ~/.bashrc
 
 #change the call for assets
 cd src/examples
-perl -i -pe's|/usr/include/TSGL/assets|/usr/local/include/TSGL/assets|g' *
+grep -rli '/usr/include/TSGL/assets' * | xargs perl -i -pe's|/usr/include/TSGL/assets|/usr/local/include/TSGL/assets|g'
 cd -
 
 #move stb to /usr/local/include
@@ -101,9 +101,9 @@ version=490
 #First, check if we need to move an existing g++ compiler
 if [ -e /usr/bin/g++ ] && [ ! -e /usr/Cellar/gcc49 ];
 then
+	echo ""
 	#sudo mv /usr/bin/g++ /usr/bin/g++old
 	#sudo mv /usr/bin/gcc /usr/bin/gccold
-
 fi
 
 #Now check if we need to install gcc10
@@ -122,6 +122,9 @@ else
 	#sudo ln -s /usr/Cellar/gcc/10.2.0/bin/gcc-10 /usr/bin/gcc
 	#sudo ln -s /usr/Cellar/gcc/10.2.0/bin/g++-10 /usr/bin/g++
 fi
+
+#delete check.txt
+rm check.txt 
 
 #Symlinks
 echo "Fixing missing symlinks..."

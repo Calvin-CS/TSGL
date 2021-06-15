@@ -38,8 +38,8 @@ GL_FLAGS := -lGLU  -lGL
 BREW :=
 endif
 ifeq ($(UNAME), Darwin)
-GL_FLAGS := -framework OpenGL 
-BREW := -lomp -I"$(brew --prefix libomp)/include" 
+#GL_FLAGS := -framework OpenGL 
+#BREW := -lomp -I"$(brew --prefix libomp)/include" 
 endif
 CXXFLAGS = -O3 -g3 -ggdb3 \
 	-I/usr/include/TSGL \

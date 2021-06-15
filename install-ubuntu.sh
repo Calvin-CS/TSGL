@@ -282,6 +282,15 @@ echo
 #Dependencies were installed! (GLEW and glfw, as well as g++)
 echo "All dependencies resolved!"
 
+###################################################################################
+
+#change the call for assets
+cd src/examples
+grep -rli '/usr/local/include/TSGL/assets' * | xargs -i@ sed -i's|/usr/local/include/TSGL/assets|/usr/include/TSGL/assets|g' @
+cd -
+
+###################################################################################
+
 echo 
 
 echo "Begin installation of TSGL..."
