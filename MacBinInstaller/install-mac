@@ -77,15 +77,27 @@ brew install glm
 ####################################################################################
 
 #redefine path variable and append to bashrc
-echo "export PATH=/usr/local/bin:$PATH" >> ~/.bashrc
-source ~/.bashrc
+tsglFile=/usr/local/lib/libtsgl.so
 
+if [ -f "$tsglFile" ]
+then
+	echo "" 
+	echo "export PATH=/usr/local/bin:$PATH" >> ~/.bashrc
+	echo "export TSGL_HOME=/usr/local" >> ~/.bashrc
+	echo "export TSGL_DEFAULT_FONT=/include/TSGL/assets/freefont/FreeSansBold.ttf" >> ~/.bashrc
+
+	source ~/.profile
+else
+	echo ""
+fi
+
+source ~/.profile
 #change the call for assets and LFLAG directory
-cd src/examples
-grep -rli '/usr/include/TSGL/assets' * | xargs perl -i -pe's|/usr/include/TSGL/assets|/usr/local/include/TSGL/assets|g'
+#cd src/examples
+#grep -rli '/usr/include/TSGL/assets' * | xargs perl -i -pe's|/usr/include/TSGL/assets|/usr/local/include/TSGL/assets|g'
 
-grep -rli 'L/usr/lib' * | xargs perl -pi -e 's|L/usr/lib|L/usr/local/lib|g'
-cd -
+#grep -rli 'L/usr/lib' * | xargs perl -pi -e 's|L/usr/lib|L/usr/local/lib|g'
+#cd -
 
 #move stb to /usr/local/include
 #sudo cp -r stb /usr/local/include 
@@ -139,8 +151,8 @@ if [ ! -e /usr/X11/lib/libXrandr.dylib ]; then
 fi
 
 #Remove any broken symlinks before installing
-sudo rm -f /usr/lib/libtsgl.* 
-sudo rm -rf /usr/include/TSGL
+rm -f /usr/lib/libtsgl.* 
+rm -rf /usr/include/TSGL
 
 #Build TSGL and install
 echo "Building TSGL..."
@@ -166,7 +178,9 @@ TSGL_LATEST_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
 
 if [ $TSGL_VERSION < $TSGL_LATEST_VERSION ]
 then
-        echo "Latest version $TSGL_LATEST_VERSION found. WARNING, If you have changed anything in the TSGL folder it may be overwritten during update. To keep your changes, please commit them before updating."
+	echo ""
+else
+         echo "Latest version $TSGL_LATEST_VERSION found. WARNING, If you have changed anything in the TSGL folder it may be overwritten during update. To keep your changes, please commit them before updating."
         read -p "Do you want to install the update? This will replace all the files with the updated ones (y/n): " INPUT
         if [ $INPUT == y ] || [ $INPUT == Y ]
         then
@@ -174,8 +188,7 @@ then
                 git remote add tsgl https://github.com/Calvin-CS/TSGL.git
                 git pull tsgl master
         fi
-else
-        echo "Latest version already installed"
+       echo "Latest version already installed"
 fi
 
 echo "Run \"./runtests\" to verify everything is working."

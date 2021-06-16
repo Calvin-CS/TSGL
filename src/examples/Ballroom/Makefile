@@ -43,13 +43,10 @@ ifeq ($(UNAME), Darwin)
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
-        -I/usr/include/TSGL \
-        -I/usr/include/freetype2 \
-        -I/usr/local/include/TSGL \
-        -I/usr/local/include/freetype2 \
+        -I$(TSGL_HOME)/include/TSGL \
+        -I$(TSGL_HOME)/include/freetype2 \
 
-LFLAGS = -g -L/usr/local/lib -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS)  \
-			$(BREW) \
+LFLAGS = -g -L$(TSGL_HOME)/lib -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAG) -fopenmp
 
 
 # ****************************************************

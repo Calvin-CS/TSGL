@@ -7,6 +7,7 @@
 
 #include <cmath>
 #include "CubeArray.h"
+using namespace std;
 
 // Size constants
 #define SIDE_LENGTH 50      // side length of all array blocks
