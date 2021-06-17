@@ -191,3 +191,10 @@ else
 fi
 
 echo "Run \"./runtests\" to verify everything is working."
+
+if [ $1 == a ]
+then 
+	echo "Working"
+else
+	echo "Not working"
+fi

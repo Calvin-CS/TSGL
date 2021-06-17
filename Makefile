@@ -129,9 +129,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
-	cp -r assets/ /usr/include/TSGL
-	cp -r stb/ /usr/include
-	cp src/TSGL/tsgl.h /usr/include
+	cp -r assets/ $(PREFIX)/include/TSGL
+	cp -r stb/ $(PREFIX)/include
+	cp src/TSGL/tsgl.h $(PREFIX)/include
 endif
 ifeq ($(UNAME), CYGWIN_NT-10.0)
 install:
@@ -141,9 +141,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.dll $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
-	cp -r assets/ /usr/include/TSGL
-	cp -r stb/ /usr/include
-	cp src/TSGL/tsgl.h /usr/include
+	cp -r assets/ $(PREFIX)/include/TSGL
+	cp -r stb/ $(PREFIX)/include
+	cp src/TSGL/tsgl.h $(PREFIX)/include
 endif
 ifeq ($(UNAME), Darwin)
 MAC_PREFIX=$(PREFIX)/local
@@ -155,8 +155,7 @@ install:
 	sudo install -m 0755 lib/libtsgl.so $(MAC_PREFIX)/lib
 	cp -r src/TSGL $(MAC_PREFIX)/include
 	cp -r stb $(MAC_PREFIX)/include
-	cp -r assets/ $(MAC_PREFIX)/include/TSGL
-	cp -r stb/ $(MAC_PREFIX)/include
+	cp -r assets $(MAC_PREFIX)/include/TSGL
 	cp src/TSGL/tsgl.h $(MAC_PREFIX)/include
 endif
 
