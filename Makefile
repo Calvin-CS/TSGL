@@ -49,9 +49,9 @@ ifeq ($(UNAME), Darwin)
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
-        -I/usr/include/TSGL \
+        -I$(TSGL_HOME)/include/TSGL \
 	-I${SRC_PATH} \
-	-I/usr/include/freetype2 \
+	-I$(TSGL_HOME)/include/freetype2 \
 
 LFLAGS=-Llib/ \
 	-L/usr/lib \
@@ -156,7 +156,6 @@ install:
 	cp -r src/TSGL $(MAC_PREFIX)/include
 	cp -r stb $(MAC_PREFIX)/include
 	cp -r assets $(MAC_PREFIX)/include/TSGL
-	cp src/TSGL/tsgl.h $(MAC_PREFIX)/include
 endif
 
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
