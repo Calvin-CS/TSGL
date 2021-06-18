@@ -106,7 +106,7 @@ fi
 #cd -
 
 #move stb to /usr/local/include
-#sudo cp -r stb /usr/local/include 
+sudo cp -r stb /usr/local/include 
 
 ####################################################################################
 
