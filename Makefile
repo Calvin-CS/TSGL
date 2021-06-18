@@ -49,7 +49,7 @@ ifeq ($(UNAME), Darwin)
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
-        -I$(TSGL_HOME)/include/TSGL \
+        -I$(TSGL_HOME)/include \
 	-I${SRC_PATH} \
 	-I$(TSGL_HOME)/include/freetype2 \
 
@@ -131,7 +131,6 @@ install:
 	cp -r src/TSGL $(PREFIX)/include
 	cp -r assets/ $(PREFIX)/include/TSGL
 	cp -r stb/ $(PREFIX)/include
-	cp src/TSGL/tsgl.h $(PREFIX)/include
 endif
 ifeq ($(UNAME), CYGWIN_NT-10.0)
 install:
@@ -143,7 +142,6 @@ install:
 	cp -r src/TSGL $(PREFIX)/include
 	cp -r assets/ $(PREFIX)/include/TSGL
 	cp -r stb/ $(PREFIX)/include
-	cp src/TSGL/tsgl.h $(PREFIX)/include
 endif
 ifeq ($(UNAME), Darwin)
 MAC_PREFIX=$(PREFIX)/local
@@ -154,6 +152,7 @@ install:
 	sudo install -m 0644 lib/libtsgl.a $(MAC_PREFIX)/lib
 	sudo install -m 0755 lib/libtsgl.so $(MAC_PREFIX)/lib
 	cp -r src/TSGL $(MAC_PREFIX)/include
+
 	cp -r stb $(MAC_PREFIX)/include
 	cp -r assets $(MAC_PREFIX)/include/TSGL
 endif

@@ -5,8 +5,6 @@
 # -SUBJECT TO CHANGE-
 ###############################
 
-VER_XQ="XQuartz-2.7.11"
-
 #Function for checking command availability
 has () {
   (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
@@ -16,12 +14,15 @@ has () {
 #Print X11 warning
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   echo "Installing X11"
-  curl -L -O "http://xquartz.macosforge.org/downloads/SL/$VER_XQ.dmg"
-  open -W "$VER_XQ.dmg"
+  URL=$(curl -s https://api.github.com/repos/XQuartz/XQuartz/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
+  curl -L -O $URL 
+  open -W XQuartz*.dmg
   echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
   echo "Please enter to continue once XQuartz has finished installing."
   read
 fi
+
+rm XQuartz*.dmg
 
 #Install Xcode command line tools (will do nothing if already installed)
 if [ ! -e "/Library/Developer/CommandLineTools" ]; then
@@ -35,7 +36,8 @@ fi
 #Install brew
 if [ $(has brew) = 0 ]; then
   echo "Installing Homebrew..."
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   export PATH=/usr/bin:$PATH
 else
   echo "Homebrew detected."
@@ -81,14 +83,13 @@ tsglFile=/usr/local/lib/libtsgl.so
 
 if [ -f "$tsglFile" ]
 then
-	echo "" 
+	echo "Env is already updated!" 
+else
 	echo "export PATH=/usr/local/bin:$PATH" >> ~/.bashrc
 	echo "export TSGL_HOME=/usr/local" >> ~/.bashrc
 	echo "export TSGL_DEFAULT_FONT=/include/TSGL/assets/freefont/FreeSansBold.ttf" >> ~/.bashrc
 
 	source ~/.bashrc	
-else
-	echo ""
 fi
 
 #change the call for assets and LFLAG directory
@@ -191,10 +192,3 @@ else
 fi
 
 echo "Run \"./runtests\" to verify everything is working."
-
-if [ $1 == a ]
-then 
-	echo "Working"
-else
-	echo "Not working"
-fi
