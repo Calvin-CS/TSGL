@@ -51,11 +51,12 @@ endif
 CXXFLAGS = -O3 -g3 -ggdb3 \
         -I$(TSGL_HOME)/include \
 	-I${SRC_PATH} \
+	-Isrc \
 	-I$(TSGL_HOME)/include/freetype2 \
 
 LFLAGS=-Llib/ \
 	-L/usr/lib \
-	-L/usr/local/lib \
+	-L$(TSGL_HOME)/lib \
 	${OS_EXTRA_LIB} \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
@@ -144,15 +145,15 @@ install:
 	cp -r stb/ $(PREFIX)/include
 endif
 ifeq ($(UNAME), Darwin)
-MAC_PREFIX=$(PREFIX)/local
+MAC_PREFIX=/usr/local
 install:
 	test -d $(MAC_PREFIX) || mkdir $(MAC_PREFIX)
 	test -d $(MAC_PREFIX)/lib || mkdir $(MAC_PREFIX)
 	test -d $(MAC_PREFIX)/include || mkdir $(MAC_PREFIX)
-	sudo install -m 0644 lib/libtsgl.a $(MAC_PREFIX)/lib
-	sudo install -m 0755 lib/libtsgl.so $(MAC_PREFIX)/lib
+	install -m 0644 lib/libtsgl.a $(MAC_PREFIX)/lib
+	install -m 0755 lib/libtsgl.so $(MAC_PREFIX)/lib
 	cp -r src/TSGL $(MAC_PREFIX)/include
-
+	cp src/tsgl.h $(MAC_PREFIX)/include
 	cp -r stb $(MAC_PREFIX)/include
 	cp -r assets $(MAC_PREFIX)/include/TSGL
 endif

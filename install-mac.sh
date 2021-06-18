@@ -20,9 +20,9 @@ if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
   echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
   echo "Please enter to continue once XQuartz has finished installing."
   read
+  rm XQuartz*.dmg
 fi
 
-rm XQuartz*.dmg
 
 #Install Xcode command line tools (will do nothing if already installed)
 if [ ! -e "/Library/Developer/CommandLineTools" ]; then
@@ -84,6 +84,8 @@ tsglFile=/usr/local/lib/libtsgl.so
 if [ -f "$tsglFile" ]
 then
 	echo "Env is already updated!" 
+	source ~/.bashrc	
+	
 else
 	echo "export PATH=/usr/local/bin:$PATH" >> ~/.bashrc
 	echo "export TSGL_HOME=/usr/local" >> ~/.bashrc
@@ -91,6 +93,10 @@ else
 
 	source ~/.bashrc	
 fi
+
+#Move tsgl.h file to TSGL_HOME/include
+#sudo cp src/TSGL/tsgl.h /usr/local/include 
+
 
 #change the call for assets and LFLAG directory
 #cd src/examples
@@ -178,8 +184,6 @@ TSGL_LATEST_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
 
 if [ $TSGL_VERSION < $TSGL_LATEST_VERSION ]
 then
-	echo ""
-else
          echo "Latest version $TSGL_LATEST_VERSION found. WARNING, If you have changed anything in the TSGL folder it may be overwritten during update. To keep your changes, please commit them before updating."
         read -p "Do you want to install the update? This will replace all the files with the updated ones (y/n): " INPUT
         if [ $INPUT == y ] || [ $INPUT == Y ]
@@ -188,7 +192,7 @@ else
                 git remote add tsgl https://github.com/Calvin-CS/TSGL.git
                 git pull tsgl master
         fi
-       echo "Latest version already installed"
+else
+	echo "Latest update already installed!"
 fi
-
 echo "Run \"./runtests\" to verify everything is working."
