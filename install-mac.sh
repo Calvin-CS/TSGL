@@ -10,10 +10,9 @@ has () {
   (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
 }
 
-#FIXME: probably need to make it so X11 autoupdates. this currently seems super broken.
-#Print X11 warning
+#Install XQuartz
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
-  echo "Installing X11"
+  echo "Installing XQuartz..."
   URL=$(curl -s https://api.github.com/repos/XQuartz/XQuartz/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
   curl -L -O $URL 
   open -W XQuartz*.dmg
@@ -83,7 +82,8 @@ tsglFile=/usr/local/lib/libtsgl.so
 
 if [ -f "$tsglFile" ]
 then
-	echo "Env is already updated!" 
+	echo
+	echo "Environment variable is already updated!" 
 	source ~/.bashrc	
 	
 else
@@ -94,17 +94,6 @@ else
 	source ~/.bashrc	
 fi
 
-#Move tsgl.h file to TSGL_HOME/include
-#sudo cp src/TSGL/tsgl.h /usr/local/include 
-
-
-#change the call for assets and LFLAG directory
-#cd src/examples
-#grep -rli '/usr/include/TSGL/assets' * | xargs perl -i -pe's|/usr/include/TSGL/assets|/usr/local/include/TSGL/assets|g'
-
-#grep -rli 'L/usr/lib' * | xargs perl -pi -e 's|L/usr/lib|L/usr/local/lib|g'
-#cd -
-
 #move stb to /usr/local/include
 sudo cp -r stb /usr/local/include 
 
@@ -114,11 +103,16 @@ sudo cp -r stb /usr/local/include
 gVers=$(g++ -v 2>&1)
 gVeres=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
 
+#check the latest version of gcc
+gccLatest=$(brew list --versions gcc | cut -f 2 -d ' ')
+gcc_version_header=$(brew list --versions gcc | cut -f 2 -d ' ' | cut -f 1 -d .)
+
 echo "$gVers" | grep "clang" > check.txt
 
 version=490
 
 #First, check if we need to move an existing g++ compiler
+#Code not used but left just in case
 if [ -e /usr/bin/g++ ] && [ ! -e /usr/Cellar/gcc49 ];
 then
 	echo ""
@@ -130,10 +124,15 @@ fi
 if grep --quiet clang check.txt; then
 	echo "Installing g++...this may take a while!"
 	brew install gcc
-	rm /usr/local/bin/gcc
-	rm /usr/local/bin/g++
-	ln -s /usr/local/Cellar/gcc/11.1.0_1/bin/gcc-11 /usr/local/bin/gcc
-	ln -s /usr/local/Cellar/gcc/11.1.0_1/bin/g++-11 /usr/local/bin/g++
+
+	#check if gcc/g++ is installed in the right spot and create a sym links
+	if [ -e /usr/local/bin/g++] && [ -e /usr/local/bin/gcc]
+	then
+		rm /usr/local/bin/gcc
+		rm /usr/local/bin/g++
+	fi
+	ln -s /usr/local/Cellar/gcc/${gccLatest}/bin/gcc-${gcc_version_header}* /usr/local/bin/gcc
+	ln -s /usr/local/Cellar/gcc/${gccLatest}/bin/g++-${gcc_version_header}* /usr/local/bin/g++
 else
 	echo "Installing g++...this may take a while!"
 	brew install gcc
@@ -182,7 +181,7 @@ echo "Checking for updates..."
 TSGL_VERSION=$(git describe --tags --abbrev=0)
 TSGL_LATEST_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
 
-if [ $TSGL_VERSION < $TSGL_LATEST_VERSION ]
+if [[ $TSGL_VERSION < $TSGL_LATEST_VERSION ]]
 then
          echo "Latest version $TSGL_LATEST_VERSION found. WARNING, If you have changed anything in the TSGL folder it may be overwritten during update. To keep your changes, please commit them before updating."
         read -p "Do you want to install the update? This will replace all the files with the updated ones (y/n): " INPUT
@@ -195,4 +194,6 @@ then
 else
 	echo "Latest update already installed!"
 fi
+
+echo
 echo "Run \"./runtests\" to verify everything is working."
