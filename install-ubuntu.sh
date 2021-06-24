@@ -284,12 +284,15 @@ echo "All dependencies resolved!"
 
 ###################################################################################
 
-#change the call for assets and LFLAGS directory
-cd src/examples
-grep -rli '/usr/local/include/TSGL/assets' * | xargs -i@ sed -i's|/usr/local/include/TSGL/assets|/usr/include/TSGL/assets|g' @
+#Add export env variables to .bashrc!!!!!!!!!!!!!!!!!!!
 
-grep -rli 'L/usr/local/lib' * | xargs -i@ sed -i 's|L/usr/local/lib|L/usr/lib|g' @
-cd -
+
+#change the call for assets and LFLAGS directory
+#cd src/examples
+#grep -rli '/usr/local/include/TSGL/assets' * | xargs -i@ sed -i's|/usr/local/include/TSGL/assets|/usr/include/TSGL/assets|g' @
+
+#grep -rli 'L/usr/local/lib' * | xargs -i@ sed -i 's|L/usr/local/lib|L/usr/lib|g' @
+#cd -
 
 ###################################################################################
 
