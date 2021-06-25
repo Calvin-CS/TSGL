@@ -21,8 +21,8 @@ Pong::Pong(Canvas& can, int & ballSpeed, int & paddleSpeed) {
     leftPaddle->bindings(can, -1);  // W & S keys
     rightPaddle->bindings(can, 1);  // Up and Down arrow keys
     pongBall = new Ball(can, ballSpeed);
-    leftScore = new Text(-64, can.getWindowHeight()/2 - 40, 0, L"0", "/usr/include/TSGL/assets/freefont/FreeSerif.ttf", 32, 0,0,0, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
-    rightScore = new Text(64, can.getWindowHeight()/2 - 40, 0, L"0", "/usr/include/TSGL/assets/freefont/FreeSerif.ttf", 32, 0,0,0, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
+    leftScore = new Text(-64, can.getWindowHeight()/2 - 40, 0, L"0", "/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf", 32, 0,0,0, ColorFloat(0.0f, 0.0f, 1.0f, 1.0f));
+    rightScore = new Text(64, can.getWindowHeight()/2 - 40, 0, L"0", "/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf", 32, 0,0,0, ColorFloat(1.0f, 0.0f, 0.0f, 1.0f));
     can.add(leftScore); can.add(rightScore);
 }
 

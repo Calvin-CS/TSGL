@@ -58,6 +58,17 @@ else
 fi
 echo "All necessary dependencies resolved"
 
+###################################################################################
+
+#change the call for assets and LFLAGS directory
+cd src/examples/testABS
+#grep -rli '/usr/local/include/TSGL/assets' * | xargs -i@ sed -i's|/usr/local/include/TSGL/assets|/usr/include/TSGL/assets|g' @
+
+#grep -rli 'L/usr/local/lib' * | xargs -i@ sed -i 's|L/usr/local/lib|L/usr/lib|g' @
+#cd -
+
+###################################################################################
+
 echo "Installing TSGL..."
 echo
 

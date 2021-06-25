@@ -126,7 +126,7 @@ void Mandelbrot::draw(Cart& can) {
 
   for (int i = 0; i < myThreads; ++i) {
     float w = pb->getWidth();
-    pBack->drawText(-w/2 + i*w/myThreads + 10, pb->getHeight()+8, 0, std::to_wstring(i), "/usr/include/TSGL/assets/freefont/FreeSerif.ttf", 32, 0,0,0, BLACK);
+    pBack->drawText(-w/2 + i*w/myThreads + 10, pb->getHeight()+8, 0, std::to_wstring(i), "/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf", 32, 0,0,0, BLACK);
   }
   while(myRedraw) {
     myRedraw = false;

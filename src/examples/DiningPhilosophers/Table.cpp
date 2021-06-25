@@ -21,7 +21,7 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   }
   float delta = 2.0f / numPhils * PI;
   for(int i = 0; i < numPhils; i++) {
-    bg->drawImage(120 * cos(i*delta), 140 * sin(i*delta), 0, "/usr/include/TSGL/assets/pics/spaghet.png", 100, 50, 0,0,0);
+    bg->drawImage(120 * cos(i*delta), 140 * sin(i*delta), 0, "/usr/local/include/TSGL/assets/pics/spaghet.png", 100, 50, 0,0,0);
   }
   myMethod = m;
   switch(myMethod) {
@@ -48,15 +48,15 @@ Table::Table(Canvas& can, int p, PhilMethod m) {
   myCan2->start();
   Background * bg2 = myCan2->getBackground();
 
-  bg2->drawText(0,128,0,L"Method:","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
-  bg2->drawText(0,96,0,L"\"" + methodString + L"\"","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
-  bg2->drawText(0,64,0,L"Legend:","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
-  bg2->drawText(0,32,0,L"Red: Hungry","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
-  bg2->drawText(0,0,0,L"Orange: Has Right Fork","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
-  bg2->drawText(0,-32,0,L"Purple: Has Left Fork","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,PURPLE);
-  bg2->drawText(0,-64,0,L"Green: Eating","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
-  bg2->drawText(0,-96,0,L"Blue: Thinking","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
-  bg2->drawText(0,-121,0,L"Meals eaten:","/usr/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
+  bg2->drawText(0,128,0,L"Method:","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
+  bg2->drawText(0,96,0,L"\"" + methodString + L"\"","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  bg2->drawText(0,64,0,L"Legend:","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
+  bg2->drawText(0,32,0,L"Red: Hungry","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
+  bg2->drawText(0,0,0,L"Orange: Has Right Fork","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
+  bg2->drawText(0,-32,0,L"Purple: Has Left Fork","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,PURPLE);
+  bg2->drawText(0,-64,0,L"Green: Eating","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
+  bg2->drawText(0,-96,0,L"Blue: Thinking","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
+  bg2->drawText(0,-121,0,L"Meals eaten:","/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
 
   bg2->drawRegularPolygon(65, -121,0,3,3,0,0,0, BROWN);
 }

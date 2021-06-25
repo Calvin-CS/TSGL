@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 	Reader ** readers = new Reader*[numReaders]; //Array of Readers
 	Writer ** writers = new Writer*[numWriters]; //Array of Writers
 
-	std::string FONT = "/usr/include/TSGL/assets/freefont/FreeSerif.ttf";
+	std::string FONT = "/usr/local/include/TSGL/assets/freefont/FreeSerif.ttf";
 
 	Background * bg = can.getBackground();
 	//Create labels
