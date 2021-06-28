@@ -43,6 +43,7 @@ ifeq ($(UNAME), Darwin)
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
+	-I$(TSGL_HOME)/include \
 	-I$(TSGL_HOME)/include/TSGL \
 	-I$(TSGL_HOME)/include/freetype2 \
 
