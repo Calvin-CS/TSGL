@@ -161,6 +161,10 @@ echo "Building TSGL..."
 
 echo
 
+sudo make clean
+
+echo
+
 make prefix=$PREFIX
 
 echo "Installing..."
