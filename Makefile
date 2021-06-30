@@ -7,7 +7,6 @@ AR=ar
 CC=g++
 RM=rm -f
 INSTALL=/usr/bin/install
-PREFIX=/usr
 
 SRC_PATH=src/TSGL/
 TESTS_PATH=src/tests/
@@ -133,8 +132,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
+	cp src/tsgl.h $(PREFIX)/include
 	cp -r assets/ $(PREFIX)/include/TSGL
-	cp -r stb/ $(PREFIX)/include
+	cp -r src/stb/ $(PREFIX)/include
 endif
 ifeq ($(UNAME), CYGWIN_NT-10.0)
 install:
@@ -144,11 +144,11 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.dll $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
+	cp src/tsgl.h $(PREFIX)/include
 	cp -r assets/ $(PREFIX)/include/TSGL
-	cp -r stb/ $(PREFIX)/include
+	cp -r src/stb/ $(PREFIX)/include
 endif
 ifeq ($(UNAME), Darwin)
-PREFIX=/usr/local
 install:
 	test -d $(PREFIX) || mkdir $(PREFIX)
 	test -d $(PREFIX)/lib || mkdir $(PREFIX)
@@ -157,7 +157,7 @@ install:
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
 	cp src/tsgl.h $(PREFIX)/include
-	cp -r stb $(PREFIX)/include
+	cp -r src/stb $(PREFIX)/include
 	cp -r assets $(PREFIX)/include/TSGL
 endif
 
