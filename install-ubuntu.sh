@@ -200,6 +200,12 @@ else
 	cd ..
 
 	sudo rm -rf glfw
+
+	cd /usr/lib
+
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libglfw.so
+
+	cd -
 fi
 
 #Check if we have to install freetype from source...
@@ -276,16 +282,32 @@ else
         rm -rf glm
 fi
 
-echo 
 echo
-
 #Dependencies were installed! (GLEW and glfw, as well as g++)
 echo "All dependencies resolved!"
+echo
+
+###################################################################################
+
+#Add export env variables to bashrc file
+tsglFile=/usr/lib/libtsgl.so
+
+if [ -f "$tsglFile" ]
+then
+	echo ""
+else
+	echo "export TSGL_HOME=/usr" >> ~/.bashrc
+	source ~/.bashrc
+fi
+
+#Add TSGL and stb dependency
+sudo cp -r src/tsgl.h /usr/include
+sudo cp -r stb /usr/include
+
+###################################################################################
 
 echo 
-
 echo "Begin installation of TSGL..."
-
 echo
 
 #Clean install = remove the TSGL folder and lib files if they already exist
@@ -295,9 +317,6 @@ sudo rm -rf /usr/lib/libtsgl.*
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir -p lib bin
 
-#Add TSGL and stb dependency
-sudo cp -r TSGL/src/TSGL /usr/include
-sudo cp -r TSGL/stb /usr/include
 
 #Make the library
 make
