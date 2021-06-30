@@ -121,6 +121,9 @@ cleandocs:
 
 # -include build/*.d
 
+
+PREFIX=$(prefix)
+
 #install
 ifeq ($(UNAME), Linux)
 install:
@@ -145,17 +148,17 @@ install:
 	cp -r stb/ $(PREFIX)/include
 endif
 ifeq ($(UNAME), Darwin)
-MAC_PREFIX=/usr/local
+PREFIX=/usr/local
 install:
-	test -d $(MAC_PREFIX) || mkdir $(MAC_PREFIX)
-	test -d $(MAC_PREFIX)/lib || mkdir $(MAC_PREFIX)
-	test -d $(MAC_PREFIX)/include || mkdir $(MAC_PREFIX)
-	install -m 0644 lib/libtsgl.a $(MAC_PREFIX)/lib
-	install -m 0755 lib/libtsgl.so $(MAC_PREFIX)/lib
-	cp -r src/TSGL $(MAC_PREFIX)/include
-	cp src/tsgl.h $(MAC_PREFIX)/include
-	cp -r stb $(MAC_PREFIX)/include
-	cp -r assets $(MAC_PREFIX)/include/TSGL
+	test -d $(PREFIX) || mkdir $(PREFIX)
+	test -d $(PREFIX)/lib || mkdir $(PREFIX)
+	test -d $(PREFIX)/include || mkdir $(PREFIX)
+	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
+	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
+	cp -r src/TSGL $(PREFIX)/include
+	cp src/tsgl.h $(PREFIX)/include
+	cp -r stb $(PREFIX)/include
+	cp -r assets $(PREFIX)/include/TSGL
 endif
 
 build/build: ${HEADERS} ${SOURCES} ${TESTS}
