@@ -5,51 +5,66 @@
 # -SUBJECT TO CHANGE-
 ###############################
 
+if [[ $1 ]]
+then
+	PREFIX=$1
+	echo Install location $PREFIX
+else
+	echo Install location /usr/local
+	PREFIX=/usr/local
+fi
+
 #Function for checking command availability
 has () {
-  (command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
+	(command -v "$1" >/dev/null 2>&1 && echo 1) || echo 0
 }
 
 #Install XQuartz
 if [ $(ls /Applications/Utilities | grep XQuartz.app | wc -l) -eq 0 ]; then
-  echo "Installing XQuartz..."
-  URL=$(curl -s https://api.github.com/repos/XQuartz/XQuartz/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
-  curl -L -O $URL 
-  open -W XQuartz*.dmg
-  echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
-  echo "Please enter to continue once XQuartz has finished installing."
-  read
-  rm XQuartz*.dmg
+	echo "Installing XQuartz..."
+	URL=$(curl -s https://api.github.com/repos/XQuartz/XQuartz/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
+	curl -L -O $URL 
+	open -W XQuartz*.dmg
+ 	echo "Please continue the installation process by double-clicking XQuartz.pkg and following the instructions on screen."
+	echo "Please enter to continue once XQuartz has finished installing."
+	read
 fi
 
+if grep -s . XQuartz*.dmg
+then
+	rm XQuartz*.dmg
+fi
 
 #Install Xcode command line tools (will do nothing if already installed)
 if [ ! -e "/Library/Developer/CommandLineTools" ]; then
-  cmd="xcode-select --install"
-  $cmd # Fix for vim syntax highlighting bugginess
-  echo "Please select \"Install\" from the confirmation window that appears, and Agree to the license terms."
-  echo "Press enter to continue once Xcode command line tools has finished installing"
-  read
+	cmd="xcode-select --install"
+	$cmd # Fix for vim syntax highlighting bugginess
+	echo "Please select \"Install\" from the confirmation window that appears, and Agree to the license terms."
+	echo "Press enter to continue once Xcode command line tools has finished installing"
+	read
 fi
 
 #Install brew
 if [ $(has brew) = 0 ]; then
-  echo "Installing Homebrew..."
-  #ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  export PATH=/usr/bin:$PATH
+	echo "Installing Homebrew..."
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	#export PATH=/usr/bin:$PATH
 else
-  echo "Homebrew detected."
-  export PATH=/usr/bin:$PATH
+	echo "Homebrew detected."
+	#export PATH=/usr/bin:$PATH
 fi
 
 echo
+
 echo "Using Homebrew to install dependencies..."
+
 echo
 
 brew update
 
-#brew tap homebrew/versions
+#Install gcc
+echo "Installing gcc..."
+brew install gcc
 
 #Install glfw3 (will do nothing if already installed)
 echo "Installing GLFW..."
@@ -59,6 +74,10 @@ brew install glfw3
 echo "Installing GLEW..."
 brew install glew
 
+#glm
+echo "Installing glm..."
+brew install glm
+
 #Freetype
 echo "Installing Freetype2..."
 brew install freetype
@@ -67,13 +86,13 @@ brew install freetype
 echo "Installing Doxygen..."
 brew install doxygen
 
+#libomp
+echo "Installing libomp..."
+brew install libomp
+
 #cxxopts
 echo "Installing cxxopts..."
 brew install cxxopts
-
-#glm
-echo "Installing glm..."
-brew install glm
 
 ####################################################################################
 
@@ -94,88 +113,73 @@ else
 	source ~/.bashrc	
 fi
 
-#move stb to /usr/local/include
-sudo cp -r stb /usr/local/include 
+#move stb to $TSGL_HOME/include
+sudo cp -r stb $TSGL_HOME/include 
 
 ####################################################################################
-
-#g++
-gVers=$(g++ -v 2>&1)
-gVeres=$(g++ -v 2>&1 | grep "gcc version" | cut -f 3 -d ' ' | tr -d .)
 
 #check the latest version of gcc
 gccLatest=$(brew list --versions gcc | cut -f 2 -d ' ')
 gcc_version_header=$(brew list --versions gcc | cut -f 2 -d ' ' | cut -f 1 -d .)
 
-echo "$gVers" | grep "clang" > check.txt
+echo Latest gcc version ${gccLatest}
 
-version=490
+#First, check if we need to move an existing g++ / gcc compiler (in case we want to add code to do this)
 
-#First, check if we need to move an existing g++ compiler
-#Code not used but left just in case
-if [ -e /usr/bin/g++ ] && [ ! -e /usr/Cellar/gcc49 ];
+#Create symbolic links for g++ and gcc
+if brew list | grep -q 'gcc*'
 then
-	echo ""
-	#sudo mv /usr/bin/g++ /usr/bin/g++old
-	#sudo mv /usr/bin/gcc /usr/bin/gccold
-fi
-
-#Now check if we need to install gcc10
-if grep --quiet clang check.txt; then
-	echo "Installing g++...this may take a while!"
-	brew install gcc
-
 	#check if gcc/g++ is installed in the right spot and create a sym links
-	if [ -e /usr/local/bin/g++] && [ -e /usr/local/bin/gcc]
+	if [ -e /usr/local/bin/g++ ] && [ -e /usr/local/bin/gcc ]
 	then
+		echo "Updating g++ and gcc links!"
 		rm /usr/local/bin/gcc
 		rm /usr/local/bin/g++
 	fi
+
+	#Create the g++ and gcc links
 	ln -s /usr/local/Cellar/gcc/${gccLatest}/bin/gcc-${gcc_version_header}* /usr/local/bin/gcc
 	ln -s /usr/local/Cellar/gcc/${gccLatest}/bin/g++-${gcc_version_header}* /usr/local/bin/g++
-else
-	echo "Installing g++...this may take a while!"
-	brew install gcc
-	#sudo rm /usr/bin/gcc
-	#sudo rm /usr/bin/g++
-	#sudo ln -s /usr/Cellar/gcc/10.2.0/bin/gcc-10 /usr/bin/gcc
-	#sudo ln -s /usr/Cellar/gcc/10.2.0/bin/g++-10 /usr/bin/g++
 fi
-
-#delete check.txt
-rm check.txt 
 
 #Symlinks
 echo "Fixing missing symlinks..."
 if [ ! -e /usr/X11/lib/libX11.dylib ]; then
-  sudo ln -s /usr/X11/lib/libX11.6.dylib /usr/X11/lib/libX11.dylib
+	sudo ln -s /usr/X11/lib/libX11.6.dylib /usr/X11/lib/libX11.dylib
 fi
 
 if [ ! -e /usr/X11/lib/libXrandr.dylib ]; then
-  sudo ln -s /usr/X11/lib/libXrandr.2.dylib /usr/X11/lib/libXrandr.dylib
+	sudo ln -s /usr/X11/lib/libXrandr.2.dylib /usr/X11/lib/libXrandr.dylib
 fi
 
 #Remove any broken symlinks before installing
-rm -f /usr/lib/libtsgl.* 
-rm -rf /usr/include/TSGL
+sudo rm -f $TSGL_HOME/libtsgl.* 
+sudo rm -rf $TSGL_HOME/include/TSGL
 
 #Build TSGL and install
 echo "Building TSGL..."
+
 echo
 
-make
+sudo make clean
+
+echo
+
+make prefix=$PREFIX
 
 echo "Installing..."
+
 echo
 
-sudo make install
+sudo make install prefix=$PREFIX
 
 echo
 
 echo "Installation complete!"
 
 echo
-#checking update
+
+#Checking update
 echo "Checking for updates..."
 
 TSGL_VERSION=$(git describe --tags --abbrev=0)
@@ -196,4 +200,5 @@ else
 fi
 
 echo
+
 echo "Run \"./runtests\" to verify everything is working."
