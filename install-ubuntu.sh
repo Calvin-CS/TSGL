@@ -8,13 +8,12 @@
 
 echo "Installing TSGL..."
 
-#Determine the OpenGL version (has to be 3.2 or higher)
+#Determine the OpenGL version (has to be 3.0 or higher)
 #(Use glxinfo, available in the mesa-utils package)
-sudo apt-get -y install mesa-utils
-
 echo 
 echo "Checking OpenGL version (must be 3.0 or higher)..."
 
+sudo apt-get -y update
 sudo apt-get -y install mesa-utils
 
 GLVersInfo=$(glxinfo | grep OpenGL)
@@ -46,122 +45,41 @@ GLVersNum=$(echo "$GLVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 #fi
 
 echo "Checking for g++..."
-
 echo
 
-gVersCheck=$(g++ --version)
+#check if g++ is installed
+#g corresponds to g++ (not allowed to have ++ in a variable name)g++
 
-#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
-#Get a string containing the version number.
-gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
+echo "Checking g++ version"
+echo "You need at least g++ 4.8 in order to continue"
 
-#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-#Get the version number from the version string.
-gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+gVersion=$(g++ --version | grep GCC* | cut -d ' ' -f 5)
 
-#http://tldp.org/LDP/abs/html/comparison-ops.html
-#Check if the version number is null...
-if [ -z "$gVersNum" ]
+if [ -z "$gVersion" ]
 then
-	#Yep. g++ is NOT installed.
-	echo "g++ not installed!"
-	echo "Installing  g++..."
-	sudo apt-get install g++
-	
-	#Update versioning info
-	gVersCheck=$(g++ --version)
+	echo "g++ is not installed"
 
-	gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
-
-	#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-	#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-	gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-
+	sudo apt-get -y upgrade
+	sudo apt-get -y install g++
 else
-
-	echo "g++ already installed."
-
-	#No. Check the version.
-	if [ "$gVersNum" \< "4.8" ]
-	then
-		echo "The version of g++ is: $gVersNum."
-		echo "You need at least g++ 4.8 or greater in order to continue."
-		echo "I can install a greater version of g++ for you."
-		echo "Would you like me to do that? (1 = Yes, 2 = No)"
-		#Adapted from: http://stackoverflow.com/questions/226703/how-do-i-prompt-for-input-in-a-linux-shell-script
-		#Get the choice from the user.
-		select choice in "Yes" "No"; do		
-		case $choice in
-			Yes ) #Yes, so...
-				echo "Installing a greater version of g++ (4.9)..."
-
-				#Get g++-4.9 on the machine
-				sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
-				sudo apt-get update;
-				sudo apt-get install --yes --force-yes g++-4.9;		
-				sudo unlink /usr/bin/g++;   #Take out any symlink made before...	
-				sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;
-				
-				#Update version info
-				gVersCheck=$(g++ --version)
-
-				#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
-				gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
-
-				#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-				#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-				gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-
-				break;;
-			No ) #No, use the current version		
-				echo "Cannot continue without g++ 4.8 or greater."
-				echo "Abort."
-				exit 1
-			esac
-		done
-
-	else
-		#Version number is okay
-		echo "g++ version is sufficient to continue."
-
-		#Check if version number is NOT 4.9
-		if [ "$gVersNum" \< "4.9" ]
-		then
-			echo "You have $gVersNum installed."
-			echo "Would you like me to install g++-4.9? (1 = Yes, 2 = No)"		
-			select choice in "Yes" "No"; do		
-				case $choice in
-					Yes ) #Yes, so...
-
-						echo "Installing g++-4.9..."
-
-						#Get g++-4.9 on the machine
-						sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
-						sudo apt-get update;
-						sudo apt-get install --yes --force-yes g++-4.9;		
-						sudo unlink /usr/bin/g++;   #Take out any symlink made before...	
-						sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;
-						
-						#Update version info
-						gVersCheck=$(g++ --version)
-						
-						#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
-						gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
+	echo "g++ $gVersion detected"
 	
-						#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-						#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-						gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-
-						break;;
-					No ) #No, use the current version		
-						echo "Proceeding with $gVersNum."; 
-						break;;
-				esac
-			done 
+	if [ "$gVersion" \< "4.8" ]
+	then
+		echo "checking for g++ updates..."
+		
+		sudo apt-get -y install g++ 
+		gNewVersion=$(g++ --version | grep GCC* | cut -d ' ' -f 5 | cut -d '.' -f 1)
+		
+		if [ $gVersion \< $gNewVersion ]
+		then
+			sudo unlink /usr/bin/g++
+			sudo ln -s /usr/bin/g++-$gNewVersion* /usr/bin/g++
 		fi
+	else
+		echo ""
+	fi
 
-	fi 
 fi
 
 echo 
