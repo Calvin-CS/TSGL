@@ -99,9 +99,9 @@ int main(int argc, char* argv[]) {
     << "\nwhere <resolutionMethodChar> is a character specifying conflict resolution of the philosophers. Find options in DiningPhilosophers/main.cpp" << std::endl;
   }
   int  nphil = (argc > 1) ? atoi(argv[1]) : 5;  //Number of philosophers defaults to 5
-  int  speed = (argc > 2 && atoi(argv[2]) > 0) ? atoi(argv[2]) : 10; //Speed defaults to 5
+  int  speed = (argc > 2 && atoi(argv[2]) > 0) ? atoi(argv[2]) : 1; //Speed defaults to 1
   bool stepThrough = (argc > 2 && ((std::string(argv[2]) == "t") || (std::string(argv[2]) == "y")));
   std::string resM  = (argc > 3) ? argv[3] : "o"; //ResolutionMethod defaults to oddEven
-  Canvas c(-1, -1, Canvas::getDisplayWidth(), Canvas::getDisplayHeight(), "Dining Philosophers",1.0f/speed);
+  Canvas c(-1, -1, Canvas::getDisplayWidth(), Canvas::getDisplayHeight(), "Dining Philosophers", GRAY, nullptr, 1.0f/speed);
   c.run(philosopherFunction,nphil,resM,stepThrough);
 }
