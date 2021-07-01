@@ -53,7 +53,7 @@ echo
 echo "Checking g++ version"
 echo "You need at least g++ 4.8 in order to continue"
 
-gVersion=$(g++ --version | grep GCC* | cut -d ' ' -f 5)
+gVersion=$(g++ --version | grep Ubuntu* | cut -d ' ' -f 4)
 
 if [ -z "$gVersion" ]
 then
@@ -260,7 +260,7 @@ echo "Checking for updates..."
 TSGL_VERSION=$(git describe --tags --abbrev=0)
 TSGL_LATEST_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
 
-if [ $TSGL_VERSION < $TSGL_LATEST_VERSION ]
+if [ "$TSGL_VERSION" \< "$TSGL_LATEST_VERSION" ]
 then
         echo "Latest version $TSGL_LATEST_VERSION found. WARNING, If you have changed anything in the TSGL folder it may be overwritten during update. To keep your changes, please commit them before updating."
         read -p "Do you want to install the update? This will replace all the files with the updated ones (y/n): " INPUT
