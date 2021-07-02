@@ -6,6 +6,14 @@
 # -SUBJECT TO CHANGE-
 ################################################################
 
+if [[ $1 ]]
+then
+        PREFIX=$1
+        echo Install location $PREFIX
+else
+        echo Install location /usr
+        PREFIX=/usr
+fi
 echo "Installing TSGL..."
 
 #Determine the OpenGL version (has to be 3.0 or higher)
@@ -218,10 +226,6 @@ else
 	source ~/.bashrc
 fi
 
-#Add TSGL and stb dependency
-sudo cp -r src/tsgl.h /usr/include
-sudo cp -r stb /usr/include
-
 ###################################################################################
 
 echo 
@@ -235,12 +239,11 @@ sudo rm -rf /usr/lib/libtsgl.*
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir -p lib bin
 
-
 #Make the library
-make
+make prefix=$PREFIX
 
 #Install it
-sudo make install
+sudo make install prefix=$PREFIX
 
 #Take out the .cpp files from the TSGL library package folder
 sudo rm -rf /usr/include/TSGL/*.cpp
@@ -251,7 +254,6 @@ sudo ldconfig
 #Done
 echo "Installation complete! Execute the runtests bash script to verify that everything works!"
 
-echo
 echo
 echo
 #checking update
