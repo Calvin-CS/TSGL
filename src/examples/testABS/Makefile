@@ -1,4 +1,4 @@
-# Makefile for Ballroom
+# Makefile for ArrayBubbleSort
 
 # *****************************************************
 # Variables to control Makefile operation
@@ -15,11 +15,11 @@ UNAME    := $(shell uname)
 _DEPS = \
 
 # Main source file
-TARGET = testBallroom
+TARGET = testArrayBubbleSort
 
 # Object files
 ODIR = obj
-_OBJ = $(TARGET).o
+_OBJ = CubeArray.o $(TARGET).o
 OBJ = $(patsubst %, $(ODIR)/%, $(_OBJ))
 
 # To create obj directory
@@ -43,10 +43,12 @@ ifeq ($(UNAME), Darwin)
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
-        -I$(TSGL_HOME)/include/TSGL \
-        -I$(TSGL_HOME)/include/freetype2 \
+	-I$(TSGL_HOME)/include \
+	-I$(TSGL_HOME)/include/TSGL \
+	-I$(TSGL_HOME)/include/freetype2 \
 
-LFLAGS = -g -L$(TSGL_HOME)/lib -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAG) -fopenmp
+LFLAGS = -g -L$(TSGL_HOME)/lib -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
+			$(BREW) \
 
 
 # ****************************************************

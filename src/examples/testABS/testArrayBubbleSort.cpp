@@ -6,6 +6,9 @@
  */
 
 #include <cmath>
+#include <string>
+#include <iostream>
+#include <filesystem>
 #include "CubeArray.h"
 using namespace std;
 
@@ -26,7 +29,17 @@ using namespace std;
 #define ARRAY_COLOR ColorFloat(0.5, 0.5, 0.5, 1)    // color value for all arrays (gray)
 #define NUM_COLOR WHITE                             // color value for all numbers
 #define FINISHED_COLOR ColorFloat(0, 0.6, 0, 1)     // color value for sorted numbers (green)
-#define FONT "/usr/local/include/TSGL/assets/freefont/FreeSansBold.ttf"   // font for all text
+//#define TSGL_HOME std::getenv("TSGL_HOME") 
+
+const string TSGL_HOME_PATH=getenv("TSGL_HOME");
+const string TSGL_DEFAULT_FONT_PATH=getenv("TSGL_DEFAULT_FONT");
+//const string FONT = TSGL_HOME_PATH + TSGL_DEFAULT_FONT_PATH;
+
+const string curr_path = filesystem::current_path();
+int pos = curr_path.find("TSGL");
+const string FONT = curr_path.substr(0, pos) + "TSGL/assets/freefont/FreeSansBold.ttf";
+
+//#define FONT "/usr/local/include/TSGL/assets/freefont/FreeSansBold.ttf"  // font for all text
 #define FONT_SIZE 35                                // font size for all text
 
 using namespace tsgl;
@@ -122,6 +135,12 @@ void sortVisualizationFunction(Canvas& can, int arraySize) {
 }
 
 int main(int argc, char* argv[]){
+//	std::cout << std::getenv("TSGL_HOME") << std::endl;
+//	std::cout << TSGL_HOME << std::endl;
+	//std::cout << TEST << std::endl;
+	cout << FONT << endl;
+	cout <<  filesystem::current_path() << endl;
+	//cout << font_path << endl;
     int sizeOfArray = (argc > 1) ? atoi(argv[1]) : 10;
 
     // Checks validity of sizeOfArray; if invalid, set to default

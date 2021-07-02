@@ -33,7 +33,7 @@ glfwFile=/usr/lib/libglfw.dll.a
 
 if [ -f "$glfwFile" ]
 then
-        echo "glfw dependency resolved"
+        echo "glfw dependency found"
 else
         #clone the repository and install glfw
         git clone https://github.com/glfw/glfw.git
@@ -56,7 +56,46 @@ else
 
         echo "glfw dependecy resolved"
 fi
+
+cxxoptsFile=/usr/include/cxxopts.hpp
+
+if [ -f "$cxxoptsFile" ]
+then
+        echo "cxxopts dependency found"
+else
+        echo "Resolving missing cxxopts dependency..."
+
+        git clone https://github.com/jarro2783/cxxopts.git || exit 1
+
+        cd cxxopts/include
+
+        cp cxxopts.hpp /usr/include
+
+        cd ../..
+
+        rm -rf cxxopts*
+fi
 echo "All necessary dependencies resolved"
+
+###################################################################################
+
+tsglFile=/usr/lib/libtsgl.dll
+
+if [ -f "$tsglFile" ]
+then
+        echo ""
+        source ~/.bashrc
+else
+        echo "export TSGL_HOME=/usr" >> ~/.bashrc
+        echo "export DISPLAY=127.0.0.1:0.0" >> ~/.bashrc
+        source ~/.bashrc
+fi
+
+cp src/tsgl.h /usr/include
+cp -r stb /usr/include
+
+###################################################################################
+
 
 echo "Installing TSGL..."
 echo
