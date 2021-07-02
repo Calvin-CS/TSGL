@@ -114,7 +114,7 @@ else
 fi
 
 #move stb to $TSGL_HOME/include
-sudo cp -r stb $TSGL_HOME/include 
+#sudo cp -r stb $TSGL_HOME/include 
 
 ####################################################################################
 
