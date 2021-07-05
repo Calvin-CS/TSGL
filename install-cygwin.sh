@@ -88,14 +88,11 @@ then
 else
         echo "export TSGL_HOME=/usr" >> ~/.bashrc
         echo "export DISPLAY=127.0.0.1:0.0" >> ~/.bashrc
+	echo "export TSGL_DEFAULT_FONT=/include/TSGL/assets/freefont/FreeSansBold.ttf" >> ~/.bashrc
         source ~/.bashrc
 fi
 
-cp src/tsgl.h /usr/include
-cp -r stb /usr/include
-
 ###################################################################################
-
 
 echo "Installing TSGL..."
 echo
