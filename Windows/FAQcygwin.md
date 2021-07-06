@@ -6,8 +6,8 @@
 **A**: Sometimes Cygwin installation window crashes unexpectedly. If that happens open the setup file and follow the [steps](https://github.com/samuelth47/TSGL/blob/master/NewWindows/readmeCygwin.md) again
 <br />
 <br />
-**Q**: `./install-cygwin` is not working <br />
-**A**: Try running `dos2unix install-cygwin` and run `./install-cygwin` again
+**Q**: `source install-cygwin` is not working <br />
+**A**: Try running `dos2unix install-cygwin` and run `source install-cygwin` again
 <br />
 <br />
 **Q**: I am getting `wget is not installed, using lynx as fallback` error during installation <br />
