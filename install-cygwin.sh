@@ -6,9 +6,20 @@
 # -SUBJECT TO CHANGE-
 ################################################################
 
+if [[ $1 ]]
+then
+        PREFIX=$1
+        echo Install location $PREFIX
+else
+        echo Install location /usr
+        PREFIX=/usr
+fi
+
+
 #install apt-cyg using lynx to download packages
 lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
 install apt-cyg /bin
+rm -rf apt-cyg*
 
 #install apt-cyg using curl
 #curl https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg > /cygdrive/c/cygwin64/bin/apt-cyg
@@ -87,7 +98,7 @@ then
         source ~/.bashrc
 else
         echo "export TSGL_HOME=/usr" >> ~/.bashrc
-        echo "export DISPLAY=127.0.0.1:0.0" >> ~/.bashrc
+        echo "export DISPLAY=:0.0" >> ~/.bashrc
 	echo "export TSGL_DEFAULT_FONT=/include/TSGL/assets/freefont/FreeSansBold.ttf" >> ~/.bashrc
         source ~/.bashrc
 fi
@@ -105,10 +116,10 @@ rm -rf /usr/lib/libtsgl.*
 mkdir -p lib bin
 
 #Make the library
-make
+make prefix=$PREFIX
 
 #Install it
-make install
+make install prefix=$PREFIX
 
 #Take out the .cpp files from the TSGL library package folder
 rm -rf /usr/include/TSGL/*.cpp
