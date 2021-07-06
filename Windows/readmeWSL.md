@@ -18,9 +18,11 @@
 
 ### Installing TSGL
 1. clone the [TSGL repository](https://github.com/Calvin-CS/TSGL.git)
-3. run the install-ubuntu.sh (`./install-ubuntu.sh`)
+2. run the install-ubuntu.sh (`source install-ubuntu.sh`)
+   - `/usr` is the default and recommended installation directory for TSGL on Ubuntu
+   - If you want to change the installation directory from the default, you can append a path when running the installer(`source install-ubuntu.sh /usr`)
 
 ##### Check
 * cd to src/examples
 * run `make`
-* cd to one of the examples and run the test files (`./test...`)
+* cd to one of the examples and run the executable test files (`./test...`)
