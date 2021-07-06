@@ -15,14 +15,16 @@
 
 ### Installing TSGL
 
-1. Clone the [TSGL repository](https://github.com/Calvin-CS/TSGL.git) inside a cygwin terminal
-2. Run the install-cygwin.sh file ( `./install-cygwin.sh` )
-   - If it doesn't work run `dos2unix install-cygwin.sh` and try it again
+1. Open a Cygwin terminal
+2. Clone the [TSGL repository](https://github.com/Calvin-CS/TSGL.git) and cd into it
+3. Run the install-cygwin.sh file ( `source install-cygwin.sh` ) 
+   - If you want to change the installation directory from the default, you can append a path when running the installer(`source install-cygwin.sh /usr`)
+   - `/usr` is the default installation directory
+   - If running the install script doesn't work run `dos2unix install-cygwin.sh` and try it again
    - It may take a while so please be patient
 
       ##### Check
       - Open a new cygwin terminal and run `startxwin`
-      - On another terminal run `export DISPLAY=:0.0`
       - Run `xeyes`
       - You should see a new window with a pair of eyes
  
