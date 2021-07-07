@@ -29,7 +29,21 @@ using namespace std;
 #define ARRAY_COLOR ColorFloat(0.5, 0.5, 0.5, 1)    // color value for all arrays (gray)
 #define NUM_COLOR WHITE                             // color value for all numbers
 #define FINISHED_COLOR ColorFloat(0, 0.6, 0, 1)     // color value for sorted numbers (green)
-//#define TSGL_HOME std::getenv("TSGL_HOME") 
+
+#if defined(__CYGWIN__) && !defined(_WIN32)
+    #define PLATFORM_NAME "windows" // Windows
+#elif defined(__linux__)
+    #define PLATFORM_NAME "linux" // Debian, Ubuntu, Fedora, RedHat, Centos 
+#elif defined(__APPLE__) && defined(__MACH__) // Apple OSX and iOS (Darwin)
+    #include <TargetConditionals.h>
+    #if TARGET_OS_MAC == 1
+        #define PLATFORM_NAME "osx" // Apple OSX
+    #elif TARGET_OS_IPHONE == 1
+        #define PLATFORM_NAME "ios" // Apple iOS
+    #elif TARGET_IPHONE_SIMULATOR == 1
+        #define PLATFORM_NAME "ios" // Apple iOS
+    #endif
+#endif
 
 const string TSGL_HOME_PATH=getenv("TSGL_HOME");
 const string TSGL_DEFAULT_FONT_PATH=getenv("TSGL_DEFAULT_FONT");
@@ -139,6 +153,7 @@ int main(int argc, char* argv[]){
 //	std::cout << TSGL_HOME << std::endl;
 	//std::cout << TEST << std::endl;
 	cout << FONT << endl;
+	cout << PLATFORM_NAME << endl;
 	//cout <<  filesystem::current_path() << endl;
 	//cout << font_path << endl;
     int sizeOfArray = (argc > 1) ? atoi(argv[1]) : 10;
