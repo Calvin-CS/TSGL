@@ -51,6 +51,8 @@ else
         rm -rf glfw
 
         cd /usr/lib
+	
+	cd -
 
         ln -s /usr/lib/libglfw.dll.a
 
