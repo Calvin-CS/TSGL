@@ -29,7 +29,7 @@ CubeArray::CubeArray(){
     for(unsigned i = 0; i < mySize; ++i){
         myData.push_back(0);
         myText.push_back(new Text((myX-(int)(mySize-1)*(myCubeSideLength/2.0)) + (i * myCubeSideLength), myY, myZ+myCubeSideLength/2.0, 
-                                    std::to_wstring(myData[i]), "/usr/local/include/TSGL/assets/freefont/FreeSansBold.ttf", myCubeSideLength/2.25, 
+                                    std::to_wstring(myData[i]), FONT , myCubeSideLength/2.25, 
                                     myYaw, myPitch, myRoll, WHITE));
         myText[i]->setRotationPoint(0,0,0);
     }
@@ -75,13 +75,13 @@ CubeArray::CubeArray(float x, float y, float z, GLfloat sideLength, unsigned siz
         for(unsigned i = 0; i < dataArraySize; ++i){
             myData.push_back(dataArray[i]);
             myText.push_back(new Text((x-(int)(size-1)*(sideLength/2.0)) + (i * sideLength), y, z+sideLength/2.0, std::to_wstring(myData[i]),
-                                    "/usr/local/include/TSGL/assets/freefont/FreeSansBold.ttf", sideLength/2.25, yaw, pitch, roll, c2));
+                                    FONT , sideLength/2.25, yaw, pitch, roll, c2));
             myText[i]->setRotationPoint(0,0,0);
         }
         for(unsigned i = dataArraySize; i < size; ++i){
             myData.push_back(0);
             myText.push_back(new Text((x-(int)(size-1)*(sideLength/2.0)) + (i * sideLength), y, z+sideLength/2.0, L"",
-                                    "/usr/local/include/TSGL/assets/freefont/FreeSansBold.ttf", sideLength/2.25, yaw, pitch, roll, c2));
+                                    FONT , sideLength/2.25, yaw, pitch, roll, c2));
             myText[i]->setRotationPoint(0,0,0);
         }
     }
@@ -89,7 +89,7 @@ CubeArray::CubeArray(float x, float y, float z, GLfloat sideLength, unsigned siz
         for(unsigned i = 0; i < size; ++i){
             myData.push_back(dataArray[i]);
             myText.push_back(new Text((x-(int)(size-1)*(sideLength/2.0)) + (i * sideLength), y, z+sideLength/2.0, std::to_wstring(myData[i]),
-                                    "/usr/local/include/TSGL/assets/freefont/FreeSansBold.ttf", sideLength/2.25, yaw, pitch, roll, c2));
+                                    FONT , sideLength/2.25, yaw, pitch, roll, c2));
             myText[i]->setRotationPoint(0,0,0);
         }
     }
