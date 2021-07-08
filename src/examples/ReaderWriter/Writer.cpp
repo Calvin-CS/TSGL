@@ -19,7 +19,7 @@ Writer::Writer(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned lon
 	myCircle->setCenter(myX, myY, 0);
 	myCountLabel->setCenter(myX, myY, 1);
 	if( !dataLabel ) {
-		dataLabel = new Text(RWThread::dataX - 20, RWThread::dataY+RWThread::dataHeight+15, 1, L"0/300", "/usr/local/include/TSGL/assets/freefont/FreeSans.ttf", 16, 0,0,0, BLACK);
+		dataLabel = new Text(RWThread::dataX - 20, RWThread::dataY+RWThread::dataHeight+15, 1, L"0/300", FONT, 16, 0,0,0, BLACK);
 		myCan->add( dataLabel );
 	}
 }
