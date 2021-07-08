@@ -22,7 +22,7 @@ Table3D::Table3D(Canvas& can, int p, PhilMethod m) {
   spaghettis = new Image*[numPhils]();
   float delta = 2.0f / numPhils * PI;
   for(int i = 0; i < numPhils; i++) {
-    spaghettis[i] = new Image(95 * cos(i*delta), 105 * sin(i*delta), -1, "./assets/pics/spaghet.png", 100, 50, 0,0,0);
+    spaghettis[i] = new Image(95 * cos(i*delta), 105 * sin(i*delta), -1, "/usr/include/TSGL/assets/pics/spaghet.png", 100, 50, 0,0,0);
     can.add(spaghettis[i]);
   }
   myMethod = m;
@@ -50,15 +50,15 @@ Table3D::Table3D(Canvas& can, int p, PhilMethod m) {
   myCan2->start();
   Background * bg2 = myCan2->getBackground();
 
-  bg2->drawText(0,128,0,L"Method:","./assets/freefont/FreeSerif.ttf",32,0,0,0,BLACK);
-  bg2->drawText(0,96,0,L"\"" + methodString + L"\"","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
-  bg2->drawText(0,64,0,L"Legend:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLACK);
-  bg2->drawText(0,32,0,L"Red: Hungry","./assets/freefont/FreeSerif.ttf",24,0,0,0,RED);
-  bg2->drawText(0,0,0,L"Orange: Has Right Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,ORANGE);
-  bg2->drawText(0,-32,0,L"Yellow: Has Left Fork","./assets/freefont/FreeSerif.ttf",24,0,0,0,YELLOW);
-  bg2->drawText(0,-64,0,L"Green: Eating","./assets/freefont/FreeSerif.ttf",24,0,0,0,GREEN);
-  bg2->drawText(0,-96,0,L"Blue: Thinking","./assets/freefont/FreeSerif.ttf",24,0,0,0,BLUE);
-  bg2->drawText(0,-121,0,L"Meals eaten:","./assets/freefont/FreeSerif.ttf",24,0,0,0,BROWN);
+  bg2->drawText(0,128,0,L"Method:",FONT,32,0,0,0,BLACK);
+  bg2->drawText(0,96,0,L"\"" + methodString + L"\"",FONT,24,0,0,0,BLACK);
+  bg2->drawText(0,64,0,L"Legend:",FONT,24,0,0,0,BLACK);
+  bg2->drawText(0,32,0,L"Red: Hungry",FONT,24,0,0,0,RED);
+  bg2->drawText(0,0,0,L"Orange: Has Right Fork",FONT,24,0,0,0,ORANGE);
+  bg2->drawText(0,-32,0,L"Purple: Has Left Fork",FONT,24,0,0,0,PURPLE);
+  bg2->drawText(0,-64,0,L"Green: Eating",FONT,24,0,0,0,GREEN);
+  bg2->drawText(0,-96,0,L"Blue: Thinking",FONT,24,0,0,0,BLUE);
+  bg2->drawText(0,-121,0,L"Meals eaten:",FONT,24,0,0,0,BROWN);
 
   bg2->drawRegularPolygon(65, -121,0,3,3,0,0,0, BROWN);
 }

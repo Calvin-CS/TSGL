@@ -17,7 +17,7 @@ ifeq ($(UNAME), Linux)
 	OS_EXTRA_LIB := -L/usr/lib 
 	OS_GLFW := glfw
 	OS_GL := -lGL
-	OS_EXTRA_LINK := -Wl,-rpath=/usr/local/lib/
+	OS_EXTRA_LINK := -Wl,-rpath=/usr/lib/
 endif
 
 #Mac
@@ -35,10 +35,10 @@ endif
 CXXFLAGS=-c -O3 -g3 \
     -Wall -Wextra -pedantic-errors \
     -D__GXX_EXPERIMENTAL_CXX0X__ \
-    -I/usr/local/include/TSGL/ \
-    -I/usr/local/include/ \
-	-I/usr/local/include/freetype2 \
-	-I/usr/local/include/freetype2/freetype \
+    -I/usr/include/TSGL/ \
+    -I/usr/include/ \
+	-I/usr/include/freetype2 \
+	-I/usr/include/freetype2/freetype \
 	-I/usr/include/TSGL \
     -I/opt/AMDAPP/include/ \
     ${OS_INCLUDE} \
@@ -49,7 +49,7 @@ CXXFLAGS=-c -O3 -g3 \
 
 #Linking flags
 LFLAGS=-o $(TARGET) \
-    -L/usr/local/lib/ \
+    -L/usr/lib/ \
 	${OS_EXTRA_LIB} \
     -L/opt/X11/lib \
     ${OS_LDIRS} \

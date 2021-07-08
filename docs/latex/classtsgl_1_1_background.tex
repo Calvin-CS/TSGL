@@ -1,0 +1,1500 @@
+\hypertarget{classtsgl_1_1_background}{}\section{tsgl\+:\+:Background Class Reference}
+\label{classtsgl_1_1_background}\index{tsgl\+::\+Background@{tsgl\+::\+Background}}
+
+
+Draw a \hyperlink{classtsgl_1_1_background}{Background} for the \hyperlink{classtsgl_1_1_canvas}{Canvas} with colored pixels.  
+
+
+
+
+{\ttfamily \#include $<$Background.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Background\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_background}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_background_a2cdb442cc62469acc31f6707ba96bea2}{Background} (G\+Lint width, G\+Lint height, const \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&c=W\+H\+I\+TE)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_ae80545e3e31a4e5ec9d2796fc4f66ee8}{init} (Shader $\ast$shapeS, Shader $\ast$textS, Shader $\ast$textureS, \hyperlink{classtsgl_1_1_camera}{Camera} $\ast$camera, G\+L\+F\+Wwindow $\ast$window)
+\begin{DoxyCompactList}\small\item\em Assigns \hyperlink{classtsgl_1_1_drawable}{Drawable} shaders and initializes framebuffers within the parameter window\textquotesingle{}s context. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_ac2e5da31b6e5394f5986bc5b3092e541}\label{classtsgl_1_1_background_ac2e5da31b6e5394f5986bc5b3092e541}} 
+virtual bool {\bfseries is\+Initialized} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a7a5051f73ca960357676cb1c212db114}\label{classtsgl_1_1_background_a7a5051f73ca960357676cb1c212db114}} 
+virtual void {\bfseries clear} ()
+\item 
+virtual void \hyperlink{classtsgl_1_1_background_a62314d455c7b09b2686ba46fd1e5c663}{draw} ()
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_af25348ef85f3b242e754a5aaae497b77}{draw\+Arrow} (float x, float y, float z, float length, float width, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool double\+Arrow=false, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws an \hyperlink{classtsgl_1_1_arrow}{Arrow} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a25ed7bd2cbc1f2774011b3a08d04898c}{draw\+Arrow} (float x, float y, float z, float length, float width, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool double\+Arrow=false, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws an \hyperlink{classtsgl_1_1_arrow}{Arrow} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a1aea52948e19aa340cc6a38b294291e9}{draw\+Circle} (float x, float y, float z, float radius, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_circle}{Circle} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_aa9f5d0819442512216cbe6164501e306}{draw\+Circle} (float x, float y, float z, float radius, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_circle}{Circle} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a9ef2d3917e6a1a8187992c3e5d171639}{draw\+Concave\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_aa465cb473087a4dc984ce89a4ffc440d}{draw\+Concave\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_aefaf6bf296563f24592ae9cf60a3be4b}{draw\+Convex\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_aaeecfb241259ec42e90c95967cf394fb}{draw\+Convex\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a9b73a13b8dfaa222c52f80883de97437}{draw\+Ellipse} (float x, float y, float z, float x\+Radius, float y\+Radius, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws an \hyperlink{classtsgl_1_1_ellipse}{Ellipse} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a11fe9a41bbeba5d67c8c5b1672a0c3a8}{draw\+Ellipse} (float x, float y, float z, float x\+Radius, float y\+Radius, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws an \hyperlink{classtsgl_1_1_ellipse}{Ellipse} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_acb5d1bea937b29967a3b74b2f9787157}{draw\+Image} (float x, float y, float z, std\+::string filename, float width, float height, float yaw, float pitch, float roll, float alpha=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Procedurally draws an \hyperlink{classtsgl_1_1_image}{Image} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a66c00fa5df216c488437ff5dc21e7143}{draw\+Line} (float x1, float y1, float z1, float x2, float y2, float z2, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_line}{Line} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a861124dc8a8446257ca7c0e521bf51eb}{draw\+Line} (float x1, float y1, float z1, float x2, float y2, float z2, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_line}{Line} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a124bab5be013f6d00b08c5f33e1fc41e}{draw\+Line} (float x, float y, float z, float length, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_line}{Line} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_aacfe49f6cd5337abb4b52189c463ebd1}{draw\+Line} (float x, float y, float z, float length, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_line}{Line} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_acfeec27c6bcc851652725ddd9cc3d3c9}{draw\+Pixel} (float x, float y, \hyperlink{structtsgl_1_1_color_int}{Color\+Int} c)
+\begin{DoxyCompactList}\small\item\em Draws a single pixel, specified in x,y format. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_ad02a35859cd3d2d281f1edfaafe03cf7}{draw\+Polyline} (float x, float y, float z, int num\+Vertices, float line\+Vertices\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_polyline}{Polyline} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a04fda406cb24130cb15218923d0f29f5}{draw\+Polyline} (float x, float y, float z, int num\+Vertices, float line\+Vertices\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_polyline}{Polyline} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a000e0dae1eb8ce6f80aac8c4e5fb1e80}{draw\+Rectangle} (float x, float y, float z, float width, float height, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_rectangle}{Rectangle} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a3aa5208683cfeaafacabaebf751c6934}{draw\+Rectangle} (float x, float y, float z, float width, float height, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_rectangle}{Rectangle} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_ae795bb0037fa1bdab23d4499db2a917b}{draw\+Regular\+Polygon} (float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a6b5abcdfd723135876be9445e2d8de97}{draw\+Regular\+Polygon} (float x, float y, float z, float radius, int sides, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a90228388af2736c0d8ca13f3483caed1}{draw\+Square} (float x, float y, float z, float sidelength, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_square}{Square} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a1eed2db2c90aebeeeeff13b6e9a5b0e2}{draw\+Square} (float x, float y, float z, float sidelength, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_square}{Square} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_afe503c74d0c3e3b12e1be861ab1d4afb}{draw\+Star} (float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool ninja=false, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_star}{Star} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_aff95748282c3cb7f2dad401a34775a45}{draw\+Star} (float x, float y, float z, float radius, int points, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool ninja=false, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_star}{Star} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a89393fcf333bb982ea54e541a3adac90}{draw\+Text} (float x, float y, float z, std\+::string text, std\+::string font\+Filename, float size, float yaw, float pitch, float roll, const \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&color)
+\begin{DoxyCompactList}\small\item\em Procedurally draws \hyperlink{classtsgl_1_1_text}{Text} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_aa83f7bee164e0b07dbe6a6c7d74ec2c8}{draw\+Text} (float x, float y, float z, std\+::wstring text, std\+::string font\+Filename, float size, float yaw, float pitch, float roll, const \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&color)
+\begin{DoxyCompactList}\small\item\em Procedurally draws \hyperlink{classtsgl_1_1_text}{Text} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_adfeb2af747148f47412d5ce239b5b107}{draw\+Triangle} (float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_triangle}{Triangle} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a28e685d75184c2c631634be06ab9ebb3}{draw\+Triangle} (float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_triangle}{Triangle} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a3aa71c5d98fafc33701e22a7faee196b}{draw\+Triangle\+Strip} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float z\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a8698cc2d4b102b8e1b60b4a1f8ed677a}{draw\+Triangle\+Strip} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float z\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]}, bool outlined=false)
+\begin{DoxyCompactList}\small\item\em Procedurally draws a \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} to the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual G\+Lint \hyperlink{classtsgl_1_1_background_a7db981b1f06b6294200b115bf47846ec}{get\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the pixel width of the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual G\+Lint \hyperlink{classtsgl_1_1_background_aa6482a67b1feebc42989767823d87c07}{get\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the pixel height of the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\item 
+virtual \hyperlink{structtsgl_1_1_color_int}{Color\+Int} \hyperlink{classtsgl_1_1_background_a09d91731095fd0839eaf6e46c3d279b5}{get\+Pixel} (float x, float y)
+\begin{DoxyCompactList}\small\item\em Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_background}{Background} at the given x and y. \end{DoxyCompactList}\item 
+virtual \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \hyperlink{classtsgl_1_1_background_a96a6fe572a3a2c16da71fe3fc13a24af}{get\+Clear\+Color} ()
+\begin{DoxyCompactList}\small\item\em Accessor for color which is used to clear the \hyperlink{classtsgl_1_1_background}{Background} when clear() is called. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_background_a19c0f2c72e7b16be4554118995d894fa}{set\+Clear\+Color} (\hyperlink{structtsgl_1_1_color_float}{Color\+Float} c)
+\begin{DoxyCompactList}\small\item\em Mutator for the color used to clear the \hyperlink{classtsgl_1_1_background}{Background} when clear() is called. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a17dc3a892b0e774550d42eb753b24c9c}\label{classtsgl_1_1_background_a17dc3a892b0e774550d42eb753b24c9c}} 
+virtual \hyperlink{classtsgl_1_1_background_a17dc3a892b0e774550d42eb753b24c9c}{$\sim$\+Background} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \hyperlink{classtsgl_1_1_background}{Background}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classtsgl_1_1_background_a5207bcb45daafed4d6a739a8a0a0829e}{select\+Shaders} (unsigned int s\+Type)
+\begin{DoxyCompactList}\small\item\em Activates the corresponding Shader for a given \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a257fe37129c4a71a6770924b111fbc3e}\label{classtsgl_1_1_background_a257fe37129c4a71a6770924b111fbc3e}} 
+G\+Lint {\bfseries my\+Width}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a9ead5fb0213672c92d301f32f402942a}\label{classtsgl_1_1_background_a9ead5fb0213672c92d301f32f402942a}} 
+G\+Lint {\bfseries my\+Height}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_aabaedbd766b6ce2994456b49d4eecafc}\label{classtsgl_1_1_background_aabaedbd766b6ce2994456b49d4eecafc}} 
+G\+Lint {\bfseries framebuffer\+Width}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a29144b2247fe528794841472491eef26}\label{classtsgl_1_1_background_a29144b2247fe528794841472491eef26}} 
+G\+Lint {\bfseries framebuffer\+Height}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_ac59d631881366f4b427903abef9f63cd}\label{classtsgl_1_1_background_ac59d631881366f4b427903abef9f63cd}} 
+G\+Lfloat {\bfseries my\+WorldZ}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a28cc3019f1b69b4640baf732520f7a26}\label{classtsgl_1_1_background_a28cc3019f1b69b4640baf732520f7a26}} 
+G\+Luint {\bfseries multisampled\+Texture}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_aed1864391a6321c2bfe8fb17e9ef2a60}\label{classtsgl_1_1_background_aed1864391a6321c2bfe8fb17e9ef2a60}} 
+G\+Luint {\bfseries intermediate\+Texture}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_ab945ef3bcb53816c0735e350a4d652ef}\label{classtsgl_1_1_background_ab945ef3bcb53816c0735e350a4d652ef}} 
+G\+Luint {\bfseries multisampled\+F\+BO}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a4c778e9c28143825ec80234057648ca4}\label{classtsgl_1_1_background_a4c778e9c28143825ec80234057648ca4}} 
+G\+Luint {\bfseries intermediate\+F\+BO}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a8673121031beb28571454532a96862cc}\label{classtsgl_1_1_background_a8673121031beb28571454532a96862cc}} 
+G\+Luint {\bfseries R\+BO}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_ac8679903f5f23f3e3b4a04aa9619904e}\label{classtsgl_1_1_background_ac8679903f5f23f3e3b4a04aa9619904e}} 
+\hyperlink{classtsgl_1_1_array}{Array}$<$ \hyperlink{classtsgl_1_1_drawable}{Drawable} $\ast$ $>$ $\ast$ {\bfseries my\+Drawables}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a0edfa18a85d5d5f7127db566b2035d86}\label{classtsgl_1_1_background_a0edfa18a85d5d5f7127db566b2035d86}} 
+\hyperlink{classtsgl_1_1_camera}{Camera} $\ast$ {\bfseries my\+Camera}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a35eafe51bf8cf9218ae9c3e85a8957e9}\label{classtsgl_1_1_background_a35eafe51bf8cf9218ae9c3e85a8957e9}} 
+Shader $\ast$ {\bfseries text\+Shader}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a52d19ab2714f15f4b7ee27db1b71e922}\label{classtsgl_1_1_background_a52d19ab2714f15f4b7ee27db1b71e922}} 
+Shader $\ast$ {\bfseries shape\+Shader}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_ac92b500d320525484c5a429a6eac8c0a}\label{classtsgl_1_1_background_ac92b500d320525484c5a429a6eac8c0a}} 
+Shader $\ast$ {\bfseries texture\+Shader}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_adbc656ab4fc094e609169a7c4e9a4e96}\label{classtsgl_1_1_background_adbc656ab4fc094e609169a7c4e9a4e96}} 
+\hyperlink{structtsgl_1_1_color_float}{Color\+Float} {\bfseries base\+Color}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a59e179e71917c57024efc20d9a35536b}\label{classtsgl_1_1_background_a59e179e71917c57024efc20d9a35536b}} 
+bool {\bfseries to\+Clear}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a44406949248f1c50d12603ce1d024f61}\label{classtsgl_1_1_background_a44406949248f1c50d12603ce1d024f61}} 
+std\+::mutex {\bfseries read\+Pixel\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a1071964c0f1a69ed6921eb30b63ab7fc}\label{classtsgl_1_1_background_a1071964c0f1a69ed6921eb30b63ab7fc}} 
+uint8\+\_\+t $\ast$ {\bfseries read\+Pixel\+Buffer}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_ace3dd6203a39320dc5b719e17846cfba}\label{classtsgl_1_1_background_ace3dd6203a39320dc5b719e17846cfba}} 
+std\+::mutex {\bfseries pixel\+Buffer\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a24a20d9a3c3bea3c15547dab60b8792d}\label{classtsgl_1_1_background_a24a20d9a3c3bea3c15547dab60b8792d}} 
+G\+Luint {\bfseries pixel\+Texture}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a0d98dc7cc42c9a09f294d6451e222d71}\label{classtsgl_1_1_background_a0d98dc7cc42c9a09f294d6451e222d71}} 
+uint8\+\_\+t $\ast$ {\bfseries pixel\+Texture\+Buffer}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_a75bd96fec33a388120790ac00ce8e45a}\label{classtsgl_1_1_background_a75bd96fec33a388120790ac00ce8e45a}} 
+bool {\bfseries new\+Pixels\+Drawn}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_afc3f38be913b51a8f5045226f6431836}\label{classtsgl_1_1_background_afc3f38be913b51a8f5045226f6431836}} 
+bool {\bfseries complete}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_af3e580a9eda76f7322d0cf6919862628}\label{classtsgl_1_1_background_af3e580a9eda76f7322d0cf6919862628}} 
+std\+::mutex {\bfseries attrib\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_ae3d52b7265f1f06bb8d45357597be02d}\label{classtsgl_1_1_background_ae3d52b7265f1f06bb8d45357597be02d}} 
+std\+::mutex {\bfseries drawable\+Mutex}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_background_add899be17917f5a66479c8c884e73e5a}\label{classtsgl_1_1_background_add899be17917f5a66479c8c884e73e5a}} 
+G\+Lfloat $\ast$ {\bfseries vertices}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Draw a \hyperlink{classtsgl_1_1_background}{Background} for the \hyperlink{classtsgl_1_1_canvas}{Canvas} with colored pixels. 
+
+\hyperlink{classtsgl_1_1_background}{Background} is a class for holding colored pixel data. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_background_a2cdb442cc62469acc31f6707ba96bea2}\label{classtsgl_1_1_background_a2cdb442cc62469acc31f6707ba96bea2}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!Background@{Background}}
+\index{Background@{Background}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{Background()}{Background()}}
+{\footnotesize\ttfamily tsgl\+::\+Background\+::\+Background (\begin{DoxyParamCaption}\item[{G\+Lint}]{width,  }\item[{G\+Lint}]{height,  }\item[{const \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&}]{clear\+Color = {\ttfamily WHITE} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_background}{Background} object. 
+\begin{DoxyParams}{Parameters}
+{\em width} & \hyperlink{classtsgl_1_1_background}{Background}\textquotesingle{}s width in pixels. \\
+\hline
+{\em height} & \hyperlink{classtsgl_1_1_background}{Background}\textquotesingle{}s height in pixels. \\
+\hline
+{\em c} & A \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_background}{Background}\textquotesingle{}s original color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if width or height isn\textquotesingle{}t positive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_background}{Background} to which Drawables and Pixels can be drawn procedurally. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_background_a62314d455c7b09b2686ba46fd1e5c663}\label{classtsgl_1_1_background_a62314d455c7b09b2686ba46fd1e5c663}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw@{draw}}
+\index{draw@{draw}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+This function actually draws the \hyperlink{classtsgl_1_1_background}{Background} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \begin{DoxyNote}{Note}
+On each draw cycle, first any Drawables that have been newly added to the \hyperlink{classtsgl_1_1_background}{Background} will be rendered, and then any new calls to draw\+Pixel will be processed. 
+\end{DoxyNote}
+
+
+Reimplemented in \hyperlink{classtsgl_1_1_cartesian_background_a4cdb6866a066e6647af9dbdae738b9b2}{tsgl\+::\+Cartesian\+Background}.
+
+
+
+Referenced by tsgl\+::\+Canvas\+::clear\+Object\+Buffer().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_af25348ef85f3b242e754a5aaae497b77}\label{classtsgl_1_1_background_af25348ef85f3b242e754a5aaae497b77}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Arrow@{draw\+Arrow}}
+\index{draw\+Arrow@{draw\+Arrow}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Arrow()}{drawArrow()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Arrow (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{length,  }\item[{float}]{width,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{double\+Arrow = {\ttfamily false},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws an \hyperlink{classtsgl_1_1_arrow}{Arrow} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_arrow}{Arrow} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s center location. \\
+\hline
+{\em length} & Length of the \hyperlink{classtsgl_1_1_arrow}{Arrow}. \\
+\hline
+{\em width} & Width of the \hyperlink{classtsgl_1_1_arrow}{Arrow}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_arrow}{Arrow} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a25ed7bd2cbc1f2774011b3a08d04898c}\label{classtsgl_1_1_background_a25ed7bd2cbc1f2774011b3a08d04898c}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Arrow@{draw\+Arrow}}
+\index{draw\+Arrow@{draw\+Arrow}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Arrow()}{drawArrow()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Arrow (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{length,  }\item[{float}]{width,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{double\+Arrow = {\ttfamily false},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws an \hyperlink{classtsgl_1_1_arrow}{Arrow} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_arrow}{Arrow} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s center location. \\
+\hline
+{\em length} & Length of the \hyperlink{classtsgl_1_1_arrow}{Arrow}. \\
+\hline
+{\em width} & Width of the \hyperlink{classtsgl_1_1_arrow}{Arrow}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats for the \hyperlink{classtsgl_1_1_arrow}{Arrow}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_arrow}{Arrow} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a1aea52948e19aa340cc6a38b294291e9}\label{classtsgl_1_1_background_a1aea52948e19aa340cc6a38b294291e9}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Circle@{draw\+Circle}}
+\index{draw\+Circle@{draw\+Circle}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Circle()}{drawCircle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Circle (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_circle}{Circle} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_circle}{Circle} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s center location. \\
+\hline
+{\em radius} & Radius of the \hyperlink{classtsgl_1_1_circle}{Circle}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats for the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_circle}{Circle} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Table\+::\+Table().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_aa9f5d0819442512216cbe6164501e306}\label{classtsgl_1_1_background_aa9f5d0819442512216cbe6164501e306}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Circle@{draw\+Circle}}
+\index{draw\+Circle@{draw\+Circle}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Circle()}{drawCircle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Circle (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_circle}{Circle} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_circle}{Circle} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s center location. \\
+\hline
+{\em radius} & Radius of the \hyperlink{classtsgl_1_1_circle}{Circle}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_circle}{Circle}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_circle}{Circle} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a9ef2d3917e6a1a8187992c3e5d171639}\label{classtsgl_1_1_background_a9ef2d3917e6a1a8187992c3e5d171639}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Concave\+Polygon@{draw\+Concave\+Polygon}}
+\index{draw\+Concave\+Polygon@{draw\+Concave\+Polygon}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Concave\+Polygon()}{drawConcavePolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Concave\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em num\+Vertices} & The number of vertices to be drawn for the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. \\
+\hline
+{\em x} & Float array containing the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & Float array containing the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s y vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Can sometimes incorrectly render; if this occurs, try shifting your last vertex to be your first vertex, or otherwise adjusting vertex order. 
+\end{DoxyWarning}
+\mbox{\Hypertarget{classtsgl_1_1_background_aa465cb473087a4dc984ce89a4ffc440d}\label{classtsgl_1_1_background_aa465cb473087a4dc984ce89a4ffc440d}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Concave\+Polygon@{draw\+Concave\+Polygon}}
+\index{draw\+Concave\+Polygon@{draw\+Concave\+Polygon}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Concave\+Polygon()}{drawConcavePolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Concave\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em num\+Vertices} & The number of vertices to be drawn for the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. \\
+\hline
+{\em x} & Float array containing the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & Float array containing the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s y vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats for the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Can sometimes incorrectly render; if this occurs, try shifting your last vertex to be your first vertex, or otherwise adjusting vertex order. 
+\end{DoxyWarning}
+\mbox{\Hypertarget{classtsgl_1_1_background_aefaf6bf296563f24592ae9cf60a3be4b}\label{classtsgl_1_1_background_aefaf6bf296563f24592ae9cf60a3be4b}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Convex\+Polygon@{draw\+Convex\+Polygon}}
+\index{draw\+Convex\+Polygon@{draw\+Convex\+Polygon}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Convex\+Polygon()}{drawConvexPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Convex\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em num\+Vertices} & The number of vertices to be drawn for the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}. \\
+\hline
+{\em x} & Float array containing the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & Float array containing the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s y vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Spectrogram\+::draw(), and tsgl\+::\+Integral\+Viewer\+::trapezoid\+Evaluate().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_aaeecfb241259ec42e90c95967cf394fb}\label{classtsgl_1_1_background_aaeecfb241259ec42e90c95967cf394fb}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Convex\+Polygon@{draw\+Convex\+Polygon}}
+\index{draw\+Convex\+Polygon@{draw\+Convex\+Polygon}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Convex\+Polygon()}{drawConvexPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Convex\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em num\+Vertices} & The number of vertices to be drawn for the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}. \\
+\hline
+{\em x} & Float array containing the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & Float array containing the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s y vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats for the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a9b73a13b8dfaa222c52f80883de97437}\label{classtsgl_1_1_background_a9b73a13b8dfaa222c52f80883de97437}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Ellipse@{draw\+Ellipse}}
+\index{draw\+Ellipse@{draw\+Ellipse}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Ellipse()}{drawEllipse()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Ellipse (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{x\+Radius,  }\item[{float}]{y\+Radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws an \hyperlink{classtsgl_1_1_ellipse}{Ellipse} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_ellipse}{Ellipse} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s center location. \\
+\hline
+{\em x\+Radius} & Horizontal radius of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}. \\
+\hline
+{\em y\+Radius} & Vertical radius of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_ellipse}{Ellipse} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a11fe9a41bbeba5d67c8c5b1672a0c3a8}\label{classtsgl_1_1_background_a11fe9a41bbeba5d67c8c5b1672a0c3a8}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Ellipse@{draw\+Ellipse}}
+\index{draw\+Ellipse@{draw\+Ellipse}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Ellipse()}{drawEllipse()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Ellipse (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{x\+Radius,  }\item[{float}]{y\+Radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws an \hyperlink{classtsgl_1_1_ellipse}{Ellipse} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_ellipse}{Ellipse} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s center location. \\
+\hline
+{\em x\+Radius} & Horizontal radius of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}. \\
+\hline
+{\em y\+Radius} & Vertical radius of the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats for the \hyperlink{classtsgl_1_1_ellipse}{Ellipse}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_ellipse}{Ellipse} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_acb5d1bea937b29967a3b74b2f9787157}\label{classtsgl_1_1_background_acb5d1bea937b29967a3b74b2f9787157}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Image@{draw\+Image}}
+\index{draw\+Image@{draw\+Image}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Image()}{drawImage()}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Image (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{std\+::string}]{filename,  }\item[{float}]{width,  }\item[{float}]{height,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{float}]{alpha = {\ttfamily 1.0f} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws an \hyperlink{classtsgl_1_1_image}{Image} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_image}{Image} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s center location. \\
+\hline
+{\em filename} & String containing the file location of the \hyperlink{classtsgl_1_1_image}{Image}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s roll rotation. \\
+\hline
+{\em alpha} & Alpha value for the \hyperlink{classtsgl_1_1_image}{Image}\textquotesingle{}s transparency. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Table\+::\+Table().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a66c00fa5df216c488437ff5dc21e7143}\label{classtsgl_1_1_background_a66c00fa5df216c488437ff5dc21e7143}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Line@{draw\+Line}}
+\index{draw\+Line@{draw\+Line}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Line()}{drawLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Line (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{z1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{z2,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_line}{Line} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_line}{Line} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x coordinate of the first endpoint of the line. \\
+\hline
+{\em y1} & The y coordinate of the first endpoint of the line. \\
+\hline
+{\em z1} & The z coordinate of the first endpoint of the line. \\
+\hline
+{\em x2} & The x coordinate of the second endpoint of the line. \\
+\hline
+{\em y2} & The y coordinate of the second endpoint of the line. \\
+\hline
+{\em z2} & The z coordinate of the second endpoint of the line. \\
+\hline
+{\em yaw} & The yaw of the line. \\
+\hline
+{\em pitch} & The pitch of the line. \\
+\hline
+{\em roll} & The roll of the line. \\
+\hline
+{\em color} & The reference variable to the color of the \hyperlink{classtsgl_1_1_line}{Line}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Spectrogram\+::draw(), and tsgl\+::\+Cartesian\+Background\+::draw\+Axes().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a861124dc8a8446257ca7c0e521bf51eb}\label{classtsgl_1_1_background_a861124dc8a8446257ca7c0e521bf51eb}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Line@{draw\+Line}}
+\index{draw\+Line@{draw\+Line}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Line()}{drawLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Line (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{z1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{z2,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_line}{Line} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_line}{Line} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x coordinate of the first endpoint of the line. \\
+\hline
+{\em y1} & The y coordinate of the first endpoint of the line. \\
+\hline
+{\em z1} & The z coordinate of the first endpoint of the line. \\
+\hline
+{\em x2} & The x coordinate of the second endpoint of the line. \\
+\hline
+{\em y2} & The y coordinate of the second endpoint of the line. \\
+\hline
+{\em z2} & The z coordinate of the second endpoint of the line. \\
+\hline
+{\em yaw} & The yaw of the line. \\
+\hline
+{\em pitch} & The pitch of the line. \\
+\hline
+{\em roll} & The roll of the line. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats for the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s vertices. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a124bab5be013f6d00b08c5f33e1fc41e}\label{classtsgl_1_1_background_a124bab5be013f6d00b08c5f33e1fc41e}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Line@{draw\+Line}}
+\index{draw\+Line@{draw\+Line}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Line()}{drawLine()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Line (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{length,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_line}{Line} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_line}{Line} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s center location. \\
+\hline
+{\em length} & Length of the \hyperlink{classtsgl_1_1_line}{Line}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s vertices. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_aacfe49f6cd5337abb4b52189c463ebd1}\label{classtsgl_1_1_background_aacfe49f6cd5337abb4b52189c463ebd1}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Line@{draw\+Line}}
+\index{draw\+Line@{draw\+Line}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Line()}{drawLine()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Line (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{length,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_line}{Line} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_line}{Line} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s center location. \\
+\hline
+{\em length} & Length of the \hyperlink{classtsgl_1_1_line}{Line}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats for the \hyperlink{classtsgl_1_1_line}{Line}\textquotesingle{}s vertices. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_acfeec27c6bcc851652725ddd9cc3d3c9}\label{classtsgl_1_1_background_acfeec27c6bcc851652725ddd9cc3d3c9}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Pixel@{draw\+Pixel}}
+\index{draw\+Pixel@{draw\+Pixel}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Pixel()}{drawPixel()}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Pixel (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draws a single pixel, specified in x,y format. 
+
+This function alters the value at the specified x, y offset within the \hyperlink{classtsgl_1_1_background}{Background}\textquotesingle{}s buffer variable. \begin{DoxyNote}{Note}
+(0,0) signifies the {\bfseries center} of the \hyperlink{classtsgl_1_1_background}{Background}. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x-\/position of the pixel. \\
+\hline
+{\em y} & The y-\/position of the pixel. \\
+\hline
+{\em color} & The color of the point. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classtsgl_1_1_cartesian_background_a3a5a05134a9cfd0569efe2fd66d30e6a}{tsgl\+::\+Cartesian\+Background}.
+
+
+
+Referenced by Ant\+Farm\+::add\+Ant(), Shaded\+Voronoi\+::draw(), Voronoi\+::draw(), tsgl\+::\+Cartesian\+Background\+::draw\+Pixel(), Life\+Farm\+::life(), and Life\+Farm\+::move\+Ants\+Old().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_ad02a35859cd3d2d281f1edfaafe03cf7}\label{classtsgl_1_1_background_ad02a35859cd3d2d281f1edfaafe03cf7}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Polyline@{draw\+Polyline}}
+\index{draw\+Polyline@{draw\+Polyline}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Polyline()}{drawPolyline()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Polyline (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{int}]{num\+Vertices,  }\item[{float}]{line\+Vertices\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_polyline}{Polyline} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_polyline}{Polyline} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s center location. \\
+\hline
+{\em num\+Vertices} & The number of vertices to be drawn for the \hyperlink{classtsgl_1_1_polyline}{Polyline}. \\
+\hline
+{\em line\+Vertices} & Float array containing the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s vertices (x1,y1,z1,x2,y2,z2,x3...). \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s vertices. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Cartesian\+Background\+::draw\+Function(), and tsgl\+::\+Cartesian\+Background\+::draw\+Partial\+Function().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a04fda406cb24130cb15218923d0f29f5}\label{classtsgl_1_1_background_a04fda406cb24130cb15218923d0f29f5}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Polyline@{draw\+Polyline}}
+\index{draw\+Polyline@{draw\+Polyline}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Polyline()}{drawPolyline()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Polyline (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{int}]{num\+Vertices,  }\item[{float}]{line\+Vertices\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_polyline}{Polyline} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_polyline}{Polyline} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s center location. \\
+\hline
+{\em num\+Vertices} & The number of vertices to be drawn for the \hyperlink{classtsgl_1_1_polyline}{Polyline}. \\
+\hline
+{\em line\+Vertices} & Float array containing the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s vertices (x1,y1,z1,x2,y2,z2,x3...). \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats corresponding to the \hyperlink{classtsgl_1_1_polyline}{Polyline}\textquotesingle{}s vertices. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a000e0dae1eb8ce6f80aac8c4e5fb1e80}\label{classtsgl_1_1_background_a000e0dae1eb8ce6f80aac8c4e5fb1e80}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Rectangle@{draw\+Rectangle}}
+\index{draw\+Rectangle@{draw\+Rectangle}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Rectangle()}{drawRectangle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Rectangle (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{width,  }\item[{float}]{height,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_rectangle}{Rectangle} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_rectangle}{Rectangle} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s center location. \\
+\hline
+{\em width} & Width of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}. \\
+\hline
+{\em height} & Height of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_rectangle}{Rectangle} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Integral\+Viewer\+::rectangle\+Evaluate(), and tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a3aa5208683cfeaafacabaebf751c6934}\label{classtsgl_1_1_background_a3aa5208683cfeaafacabaebf751c6934}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Rectangle@{draw\+Rectangle}}
+\index{draw\+Rectangle@{draw\+Rectangle}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Rectangle()}{drawRectangle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Rectangle (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{width,  }\item[{float}]{height,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_rectangle}{Rectangle} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_rectangle}{Rectangle} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s center location. \\
+\hline
+{\em width} & Width of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}. \\
+\hline
+{\em height} & Height of the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats corresponding to the \hyperlink{classtsgl_1_1_rectangle}{Rectangle}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_rectangle}{Rectangle} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_ae795bb0037fa1bdab23d4499db2a917b}\label{classtsgl_1_1_background_ae795bb0037fa1bdab23d4499db2a917b}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Regular\+Polygon@{draw\+Regular\+Polygon}}
+\index{draw\+Regular\+Polygon@{draw\+Regular\+Polygon}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Regular\+Polygon()}{drawRegularPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Regular\+Polygon (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{radius,  }\item[{int}]{sides,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em radius} & Distance from the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center to each of its vertices. \\
+\hline
+{\em points} & Number of sides on the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Table\+::draw\+Step(), Table\+::\+Table(), and Table3\+D\+::\+Table3\+D().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a6b5abcdfd723135876be9445e2d8de97}\label{classtsgl_1_1_background_a6b5abcdfd723135876be9445e2d8de97}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Regular\+Polygon@{draw\+Regular\+Polygon}}
+\index{draw\+Regular\+Polygon@{draw\+Regular\+Polygon}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Regular\+Polygon()}{drawRegularPolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Regular\+Polygon (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{radius,  }\item[{int}]{sides,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center location. \\
+\hline
+{\em radius} & Distance from the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s center to each of its vertices. \\
+\hline
+{\em points} & Number of sides on the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats corresponding to the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_regular_polygon}{Regular\+Polygon} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a90228388af2736c0d8ca13f3483caed1}\label{classtsgl_1_1_background_a90228388af2736c0d8ca13f3483caed1}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Square@{draw\+Square}}
+\index{draw\+Square@{draw\+Square}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Square()}{drawSquare()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Square (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{sidelength,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_square}{Square} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_square}{Square} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center location. \\
+\hline
+{\em sidelength} & Length of each side of the \hyperlink{classtsgl_1_1_square}{Square}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_square}{Square} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Visual\+Task\+Queue\+::reset(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), and tsgl\+::\+Visual\+Task\+Queue\+::update().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a1eed2db2c90aebeeeeff13b6e9a5b0e2}\label{classtsgl_1_1_background_a1eed2db2c90aebeeeeff13b6e9a5b0e2}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Square@{draw\+Square}}
+\index{draw\+Square@{draw\+Square}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Square()}{drawSquare()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Square (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{sidelength,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_square}{Square} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_square}{Square} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s center location. \\
+\hline
+{\em sidelength} & Length of each side of the \hyperlink{classtsgl_1_1_square}{Square}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats corresponding to the \hyperlink{classtsgl_1_1_square}{Square}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_square}{Square} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_afe503c74d0c3e3b12e1be861ab1d4afb}\label{classtsgl_1_1_background_afe503c74d0c3e3b12e1be861ab1d4afb}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Star@{draw\+Star}}
+\index{draw\+Star@{draw\+Star}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Star()}{drawStar()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Star (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{radius,  }\item[{int}]{points,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{ninja = {\ttfamily false},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_star}{Star} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_star}{Star} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s center location. \\
+\hline
+{\em radius} & Distance from the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s center to each of its points. \\
+\hline
+{\em points} & Number of points on the \hyperlink{classtsgl_1_1_star}{Star}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s vertices. \\
+\hline
+{\em ninja} & Boolean indicating if the \hyperlink{classtsgl_1_1_star}{Star} should be mirror-\/symmetrical or just rotationally symmetrical. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_star}{Star} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_aff95748282c3cb7f2dad401a34775a45}\label{classtsgl_1_1_background_aff95748282c3cb7f2dad401a34775a45}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Star@{draw\+Star}}
+\index{draw\+Star@{draw\+Star}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Star()}{drawStar()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Star (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{radius,  }\item[{int}]{points,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{ninja = {\ttfamily false},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_star}{Star} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_star}{Star} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s center location. \\
+\hline
+{\em radius} & Distance from the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s center to each of its points. \\
+\hline
+{\em points} & Number of points on the \hyperlink{classtsgl_1_1_star}{Star}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats corresponding to the \hyperlink{classtsgl_1_1_star}{Star}\textquotesingle{}s vertices. \\
+\hline
+{\em ninja} & Boolean indicating if the \hyperlink{classtsgl_1_1_star}{Star} should be mirror-\/symmetrical or just rotationally symmetrical. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_star}{Star} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a89393fcf333bb982ea54e541a3adac90}\label{classtsgl_1_1_background_a89393fcf333bb982ea54e541a3adac90}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Text@{draw\+Text}}
+\index{draw\+Text@{draw\+Text}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Text()}{drawText()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Text (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{std\+::string}]{text,  }\item[{std\+::string}]{font\+Filename,  }\item[{float}]{size,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{const \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws \hyperlink{classtsgl_1_1_text}{Text} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_text}{Text} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s center location. \\
+\hline
+{\em text} & String containing the characters to be rendered. \\
+\hline
+{\em font\+Filename} & String containing the filename for the font with which the \hyperlink{classtsgl_1_1_text}{Text} will be rendered. \\
+\hline
+{\em size} & The \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s size, relative to worldspace. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_text}{Text}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Mandelbrot\+::draw(), tsgl\+::\+Visual\+Task\+Queue\+::show\+Legend(), Table\+::\+Table(), Table3\+D\+::\+Table3\+D(), and tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_aa83f7bee164e0b07dbe6a6c7d74ec2c8}\label{classtsgl_1_1_background_aa83f7bee164e0b07dbe6a6c7d74ec2c8}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Text@{draw\+Text}}
+\index{draw\+Text@{draw\+Text}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Text()}{drawText()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Text (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{std\+::wstring}]{text,  }\item[{std\+::string}]{font\+Filename,  }\item[{float}]{size,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{const \hyperlink{structtsgl_1_1_color_float}{Color\+Float} \&}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws \hyperlink{classtsgl_1_1_text}{Text} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_text}{Text} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s center location. \\
+\hline
+{\em y} & The y coordinate of the \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s center location. \\
+\hline
+{\em z} & The z coordinate of the \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s center location. \\
+\hline
+{\em text} & Wide string containing the characters to be rendered. \\
+\hline
+{\em font\+Filename} & String containing the filename for the font with which the \hyperlink{classtsgl_1_1_text}{Text} will be rendered. \\
+\hline
+{\em size} & The \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s size, relative to worldspace. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_text}{Text}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_text}{Text}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_adfeb2af747148f47412d5ce239b5b107}\label{classtsgl_1_1_background_adfeb2af747148f47412d5ce239b5b107}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Triangle@{draw\+Triangle}}
+\index{draw\+Triangle@{draw\+Triangle}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Triangle()}{drawTriangle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Triangle (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{z1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{z2,  }\item[{float}]{x3,  }\item[{float}]{y3,  }\item[{float}]{z3,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_triangle}{Triangle} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_triangle}{Triangle} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s first vertex location. \\
+\hline
+{\em y1} & The y coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s first vertex location. \\
+\hline
+{\em z1} & The z coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s first vertex location. \\
+\hline
+{\em x2} & The x coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s second vertex location. \\
+\hline
+{\em y2} & The y coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s second vertex location. \\
+\hline
+{\em z2} & The z coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s second vertex location. \\
+\hline
+{\em x3} & The x coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s third vertex location. \\
+\hline
+{\em y3} & The y coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s third vertex location. \\
+\hline
+{\em z3} & The z coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s third vertex location. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_triangle}{Triangle} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a28e685d75184c2c631634be06ab9ebb3}\label{classtsgl_1_1_background_a28e685d75184c2c631634be06ab9ebb3}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Triangle@{draw\+Triangle}}
+\index{draw\+Triangle@{draw\+Triangle}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Triangle()}{drawTriangle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Triangle (\begin{DoxyParamCaption}\item[{float}]{x1,  }\item[{float}]{y1,  }\item[{float}]{z1,  }\item[{float}]{x2,  }\item[{float}]{y2,  }\item[{float}]{z2,  }\item[{float}]{x3,  }\item[{float}]{y3,  }\item[{float}]{z3,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_triangle}{Triangle} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_triangle}{Triangle} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The x coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s first vertex location. \\
+\hline
+{\em y1} & The y coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s first vertex location. \\
+\hline
+{\em z1} & The z coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s first vertex location. \\
+\hline
+{\em x2} & The x coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s second vertex location. \\
+\hline
+{\em y2} & The y coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s second vertex location. \\
+\hline
+{\em z2} & The z coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s second vertex location. \\
+\hline
+{\em x3} & The x coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s third vertex location. \\
+\hline
+{\em y3} & The y coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s third vertex location. \\
+\hline
+{\em z3} & The z coordinate of the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s third vertex location. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats corresponding to the \hyperlink{classtsgl_1_1_triangle}{Triangle}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_triangle}{Triangle} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a3aa71c5d98fafc33701e22a7faee196b}\label{classtsgl_1_1_background_a3aa71c5d98fafc33701e22a7faee196b}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Triangle\+Strip@{draw\+Triangle\+Strip}}
+\index{draw\+Triangle\+Strip@{draw\+Triangle\+Strip}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Triangle\+Strip()}{drawTriangleStrip()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Triangle\+Strip (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{z\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color,  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s center location. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s center location. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s center location. \\
+\hline
+{\em num\+Vertices} & The number of vertices to be drawn for the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em x} & Float array containing the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & Float array containing the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s y vertices. \\
+\hline
+{\em z} & Float array containing the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s z vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} for the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a8698cc2d4b102b8e1b60b4a1f8ed677a}\label{classtsgl_1_1_background_a8698cc2d4b102b8e1b60b4a1f8ed677a}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!draw\+Triangle\+Strip@{draw\+Triangle\+Strip}}
+\index{draw\+Triangle\+Strip@{draw\+Triangle\+Strip}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{draw\+Triangle\+Strip()}{drawTriangleStrip()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::draw\+Triangle\+Strip (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{z\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{outlined = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Procedurally draws a \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} to the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Initializes a new \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} based on the parameter values, and then adds it to the \hyperlink{classtsgl_1_1_array}{Array} of Drawables to be rendered. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s center location. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s center location. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s center location. \\
+\hline
+{\em num\+Vertices} & The number of vertices to be drawn for the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}. \\
+\hline
+{\em x} & Float array containing the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & Float array containing the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s y vertices. \\
+\hline
+{\em z} & Float array containing the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s z vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s yaw rotation. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s pitch rotation. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s roll rotation. \\
+\hline
+{\em color} & \hyperlink{classtsgl_1_1_array}{Array} of Color\+Floats corresponding to the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip}\textquotesingle{}s vertices. \\
+\hline
+{\em outlined} & Boolean indicating if the \hyperlink{classtsgl_1_1_triangle_strip}{Triangle\+Strip} should be outlined or not, defaulting to not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_background_a96a6fe572a3a2c16da71fe3fc13a24af}\label{classtsgl_1_1_background_a96a6fe572a3a2c16da71fe3fc13a24af}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!get\+Clear\+Color@{get\+Clear\+Color}}
+\index{get\+Clear\+Color@{get\+Clear\+Color}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{get\+Clear\+Color()}{getClearColor()}}
+{\footnotesize\ttfamily virtual \hyperlink{structtsgl_1_1_color_float}{Color\+Float} tsgl\+::\+Background\+::get\+Clear\+Color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for color which is used to clear the \hyperlink{classtsgl_1_1_background}{Background} when clear() is called. 
+
+Returns a \hyperlink{structtsgl_1_1_color_int}{Color\+Int} corresponding to the clear color of the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Referenced by tsgl\+::\+Canvas\+::get\+Background\+Color().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_aa6482a67b1feebc42989767823d87c07}\label{classtsgl_1_1_background_aa6482a67b1feebc42989767823d87c07}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!get\+Height@{get\+Height}}
+\index{get\+Height@{get\+Height}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{get\+Height()}{getHeight()}}
+{\footnotesize\ttfamily virtual G\+Lint tsgl\+::\+Background\+::get\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the pixel height of the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Returns the value of the my\+Height private variable, a G\+Lint. \mbox{\Hypertarget{classtsgl_1_1_background_a09d91731095fd0839eaf6e46c3d279b5}\label{classtsgl_1_1_background_a09d91731095fd0839eaf6e46c3d279b5}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!get\+Pixel@{get\+Pixel}}
+\index{get\+Pixel@{get\+Pixel}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{get\+Pixel()}{getPixel()}}
+{\footnotesize\ttfamily \hyperlink{structtsgl_1_1_color_int}{Color\+Int} tsgl\+::\+Background\+::get\+Pixel (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Gets the color of the pixel drawn on the current \hyperlink{classtsgl_1_1_background}{Background} at the given x and y. 
+
+\begin{DoxyNote}{Note}
+(0,0) signifies the {\bfseries center} of the \hyperlink{classtsgl_1_1_background}{Background}\textquotesingle{}s texture. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x-\/position of the pixel to grab. \\
+\hline
+{\em y} & The y-\/position of the pixel to grab. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A \hyperlink{structtsgl_1_1_color_int}{Color\+Int} containing the color of the pixel at (x,y). 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classtsgl_1_1_cartesian_background_a36a3e803d2ffe16e2e1639359f7c7be5}{tsgl\+::\+Cartesian\+Background}.
+
+
+
+Referenced by get\+Height(), and tsgl\+::\+Cartesian\+Background\+::get\+Pixel().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a7db981b1f06b6294200b115bf47846ec}\label{classtsgl_1_1_background_a7db981b1f06b6294200b115bf47846ec}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!get\+Width@{get\+Width}}
+\index{get\+Width@{get\+Width}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{get\+Width()}{getWidth()}}
+{\footnotesize\ttfamily virtual G\+Lint tsgl\+::\+Background\+::get\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the pixel width of the \hyperlink{classtsgl_1_1_background}{Background}. 
+
+Returns the value of the my\+Width private variable, a G\+Lint. \mbox{\Hypertarget{classtsgl_1_1_background_ae80545e3e31a4e5ec9d2796fc4f66ee8}\label{classtsgl_1_1_background_ae80545e3e31a4e5ec9d2796fc4f66ee8}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!init@{init}}
+\index{init@{init}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{init()}{init()}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::init (\begin{DoxyParamCaption}\item[{Shader $\ast$}]{shapeS,  }\item[{Shader $\ast$}]{textS,  }\item[{Shader $\ast$}]{textureS,  }\item[{\hyperlink{classtsgl_1_1_camera}{Camera} $\ast$}]{camera,  }\item[{G\+L\+F\+Wwindow $\ast$}]{window }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Assigns \hyperlink{classtsgl_1_1_drawable}{Drawable} shaders and initializes framebuffers within the parameter window\textquotesingle{}s context. 
+
+Assigns shape\+Shader, text\+Shader, texture\+Shader to parameters and initializes two framebuffers\+: M\+S\+AA and non-\/\+M\+S\+AA. 
+\begin{DoxyParams}{Parameters}
+{\em shapeS} & Pointer to a shader for \hyperlink{classtsgl_1_1_shape}{Shape} Drawables. \\
+\hline
+{\em textS} & Pointer to a shader for \hyperlink{classtsgl_1_1_text}{Text} Drawables. \\
+\hline
+{\em textureS} & Pointer to a shader for texture rendering. \\
+\hline
+{\em window} & G\+L\+F\+Wwindow $\ast$ within whose context the framebuffers will be initialized. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Canvas\+::handle\+I\+O(), and tsgl\+::\+Canvas\+::set\+Background().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a5207bcb45daafed4d6a739a8a0a0829e}\label{classtsgl_1_1_background_a5207bcb45daafed4d6a739a8a0a0829e}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!select\+Shaders@{select\+Shaders}}
+\index{select\+Shaders@{select\+Shaders}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{select\+Shaders()}{selectShaders()}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::select\+Shaders (\begin{DoxyParamCaption}\item[{unsigned int}]{s\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Activates the corresponding Shader for a given \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+Type} & Unsigned int with a corresponding value for each type of Shader. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classtsgl_1_1_cartesian_background_a3d898bf3fe826c563e74c72e93cd3c74}{tsgl\+::\+Cartesian\+Background}.
+
+
+
+Referenced by draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_background_a19c0f2c72e7b16be4554118995d894fa}\label{classtsgl_1_1_background_a19c0f2c72e7b16be4554118995d894fa}} 
+\index{tsgl\+::\+Background@{tsgl\+::\+Background}!set\+Clear\+Color@{set\+Clear\+Color}}
+\index{set\+Clear\+Color@{set\+Clear\+Color}!tsgl\+::\+Background@{tsgl\+::\+Background}}
+\subsubsection{\texorpdfstring{set\+Clear\+Color()}{setClearColor()}}
+{\footnotesize\ttfamily void tsgl\+::\+Background\+::set\+Clear\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutator for the color used to clear the \hyperlink{classtsgl_1_1_background}{Background} when clear() is called. 
+
+Sets the clear color to the parameter \hyperlink{structtsgl_1_1_color_float}{Color\+Float}. 
+\begin{DoxyParams}{Parameters}
+{\em c} & \hyperlink{structtsgl_1_1_color_float}{Color\+Float} assigned to the clear color of the \hyperlink{classtsgl_1_1_background}{Background}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by get\+Clear\+Color(), tsgl\+::\+Canvas\+::handle\+I\+O(), and tsgl\+::\+Canvas\+::set\+Background\+Color().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Background.\+h\item 
+Background.\+cpp\end{DoxyCompactItemize}

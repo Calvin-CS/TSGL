@@ -1,0 +1,108 @@
+\hypertarget{class_buddhabrot}{}\section{Buddhabrot Class Reference}
+\label{class_buddhabrot}\index{Buddhabrot@{Buddhabrot}}
+
+
+Draw a \hyperlink{class_buddhabrot}{Buddhabrot}.  
+
+
+
+
+{\ttfamily \#include $<$Buddhabrot.\+h$>$}
+
+Inheritance diagram for Buddhabrot\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_buddhabrot}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_buddhabrot_a3785536aee5b43aac307c8c737d0a1bb}{Buddhabrot} (unsigned threads, unsigned depth)
+\begin{DoxyCompactList}\small\item\em Explicitly construct a \hyperlink{class_buddhabrot}{Buddhabrot} object. \end{DoxyCompactList}\item 
+\hyperlink{class_buddhabrot_ad54bede3c44cc5d9181bd6a28feb0dbd}{$\sim$\+Buddhabrot} ()
+\begin{DoxyCompactList}\small\item\em Destroys a \hyperlink{class_buddhabrot}{Buddhabrot} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_buddhabrot_a9e65eb7e2cac8737aedec56a7e2c274c}{draw} (\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&can)
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{class_buddhabrot}{Buddhabrot}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw a \hyperlink{class_buddhabrot}{Buddhabrot}. 
+
+Contains all of the information necessary in order to draw a \hyperlink{class_buddhabrot}{Buddhabrot}.
+
+Child class of the \hyperlink{class_mandelbrot}{Mandelbrot} class. \begin{DoxySeeAlso}{See also}
+\href{https://en.wikipedia.org/wiki/Buddhabrot}{\tt https\+://en.\+wikipedia.\+org/wiki/\+Buddhabrot} for details on what a \hyperlink{class_buddhabrot}{Buddhabrot} is. 
+
+\hyperlink{class_mandelbrot}{Mandelbrot} class 
+\end{DoxySeeAlso}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_buddhabrot_a3785536aee5b43aac307c8c737d0a1bb}\label{class_buddhabrot_a3785536aee5b43aac307c8c737d0a1bb}} 
+\index{Buddhabrot@{Buddhabrot}!Buddhabrot@{Buddhabrot}}
+\index{Buddhabrot@{Buddhabrot}!Buddhabrot@{Buddhabrot}}
+\subsubsection{\texorpdfstring{Buddhabrot()}{Buddhabrot()}}
+{\footnotesize\ttfamily Buddhabrot\+::\+Buddhabrot (\begin{DoxyParamCaption}\item[{unsigned}]{threads,  }\item[{unsigned}]{depth = {\ttfamily 1000} }\end{DoxyParamCaption})}
+
+
+
+Explicitly construct a \hyperlink{class_buddhabrot}{Buddhabrot} object. 
+
+Explicit constructor for the \hyperlink{class_buddhabrot}{Buddhabrot} class. 
+\begin{DoxyParams}{Parameters}
+{\em threads} & The number of threads to use when drawing the \hyperlink{class_buddhabrot}{Buddhabrot} object to the Cartesian\+Canvas. \\
+\hline
+{\em depth} & The number of iterations to go to in order to draw the \hyperlink{class_buddhabrot}{Buddhabrot} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constructed \hyperlink{class_buddhabrot}{Buddhabrot} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_buddhabrot_ad54bede3c44cc5d9181bd6a28feb0dbd}\label{class_buddhabrot_ad54bede3c44cc5d9181bd6a28feb0dbd}} 
+\index{Buddhabrot@{Buddhabrot}!````~Buddhabrot@{$\sim$\+Buddhabrot}}
+\index{````~Buddhabrot@{$\sim$\+Buddhabrot}!Buddhabrot@{Buddhabrot}}
+\subsubsection{\texorpdfstring{$\sim$\+Buddhabrot()}{~Buddhabrot()}}
+{\footnotesize\ttfamily Buddhabrot\+::$\sim$\+Buddhabrot (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroys a \hyperlink{class_buddhabrot}{Buddhabrot} object. 
+
+Destructor for the \hyperlink{class_buddhabrot}{Buddhabrot} class. \begin{DoxyReturn}{Returns}
+Frees up memory allocated to a \hyperlink{class_buddhabrot}{Buddhabrot} object. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_buddhabrot_a9e65eb7e2cac8737aedec56a7e2c274c}\label{class_buddhabrot_a9e65eb7e2cac8737aedec56a7e2c274c}} 
+\index{Buddhabrot@{Buddhabrot}!draw@{draw}}
+\index{draw@{draw}!Buddhabrot@{Buddhabrot}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Buddhabrot\+::draw (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&}]{can }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \hyperlink{class_buddhabrot}{Buddhabrot}. 
+
+Actually draws the \hyperlink{class_buddhabrot}{Buddhabrot} object to the Cartesian\+Canvas. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Cartesian\+Canvas to draw on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This method overrides the \hyperlink{class_buddhabrot_a9e65eb7e2cac8737aedec56a7e2c274c}{draw()} method from \hyperlink{class_mandelbrot}{Mandelbrot}. 
+
+Cart is a typedef for Cartesian\+Canvas. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_mandelbrot_ab7918e4de8f00f73290f110ca7a6cffd}{Mandelbrot}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Buddhabrot.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Buddhabrot.\+cpp\end{DoxyCompactItemize}

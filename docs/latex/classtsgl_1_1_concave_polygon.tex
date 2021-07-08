@@ -1,0 +1,186 @@
+\hypertarget{classtsgl_1_1_concave_polygon}{}\section{tsgl\+:\+:Concave\+Polygon Class Reference}
+\label{classtsgl_1_1_concave_polygon}\index{tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}}
+
+
+Draw an arbitrary Concave polygon with colored vertices.  
+
+
+
+
+{\ttfamily \#include $<$Concave\+Polygon.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Concave\+Polygon\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_concave_polygon}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_concave_polygon_afeb0acd4aaf557e8bcfe3fe33d713475}{Concave\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} with monocolored fill. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_concave_polygon_a2493df66ce7bc24495f748b882e0ba76}{Concave\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, float x\mbox{[}$\,$\mbox{]}, float y\mbox{[}$\,$\mbox{]}, float yaw, float pitch, float roll, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} with multicolored fill. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_concave_polygon_adf288a6b60873a7ae5e599f63868da82}{draw} (Shader $\ast$shader)
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_concave_polygon_a2440ccec9c6ece06b891b07bcf608868}{Concave\+Polygon} (float centerX, float centerY, float centerZ, int num\+Vertices, float yaw, float pitch, float roll)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draw an arbitrary Concave polygon with colored vertices. 
+
+\hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} is a class for holding vertex data for a triangle strip with colored vertices.
+
+Vertices are drawn in triangle strip format, where the first three vertices make up the first triangle, the next vertex plus the previous two make up the second triangle, and so on.
+
+This method is optimized for long lists and offers a marked improvement over drawing individual \hyperlink{classtsgl_1_1_triangle}{Triangle} instances. \begin{DoxyNote}{Note}
+The \hyperlink{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}{add\+Vertex()} method must be called the same number of times as specified in the constructor. 
+
+Calling \hyperlink{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}{add\+Vertex()} after all vertices have been added will do nothing. 
+
+Calling \hyperlink{classtsgl_1_1_concave_polygon_adf288a6b60873a7ae5e599f63868da82}{draw()} before all vertices have been added will do nothing. 
+\end{DoxyNote}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_concave_polygon_a2440ccec9c6ece06b891b07bcf608868}\label{classtsgl_1_1_concave_polygon_a2440ccec9c6ece06b891b07bcf608868}} 
+\index{tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}!Concave\+Polygon@{Concave\+Polygon}}
+\index{Concave\+Polygon@{Concave\+Polygon}!tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}}
+\subsubsection{\texorpdfstring{Concave\+Polygon()}{ConcavePolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Concave\+Polygon\+::\+Concave\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. 
+
+Protected explicit constructor for a \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} object. Used as a superclass constructor. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em num\+Vertices} & The number of vertices that make up the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s roll in 3D space. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} with a buffer for storing the specified number of vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_concave_polygon_afeb0acd4aaf557e8bcfe3fe33d713475}\label{classtsgl_1_1_concave_polygon_afeb0acd4aaf557e8bcfe3fe33d713475}} 
+\index{tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}!Concave\+Polygon@{Concave\+Polygon}}
+\index{Concave\+Polygon@{Concave\+Polygon}!tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}}
+\subsubsection{\texorpdfstring{Concave\+Polygon()}{ConcavePolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Concave\+Polygon\+::\+Concave\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} with monocolored fill. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} object. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em num\+Vertices} & The number of vertices that make up the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. \\
+\hline
+{\em x} & An array of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & An array of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s y vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & A \hyperlink{structtsgl_1_1_color_float}{Color\+Float}, the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s fill color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} with a buffer for storing the specified number of vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_concave_polygon_a2493df66ce7bc24495f748b882e0ba76}\label{classtsgl_1_1_concave_polygon_a2493df66ce7bc24495f748b882e0ba76}} 
+\index{tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}!Concave\+Polygon@{Concave\+Polygon}}
+\index{Concave\+Polygon@{Concave\+Polygon}!tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}}
+\subsubsection{\texorpdfstring{Concave\+Polygon()}{ConcavePolygon()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Concave\+Polygon\+::\+Concave\+Polygon (\begin{DoxyParamCaption}\item[{float}]{centerX,  }\item[{float}]{centerY,  }\item[{float}]{centerZ,  }\item[{int}]{num\+Vertices,  }\item[{float}]{x\mbox{[}$\,$\mbox{]},  }\item[{float}]{y\mbox{[}$\,$\mbox{]},  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} with multicolored fill. 
+
+Explicit constructor for a \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} object. 
+\begin{DoxyParams}{Parameters}
+{\em centerX} & The x coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerY} & The y coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em centerZ} & The z coordinate of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s center. \\
+\hline
+{\em num\+Vertices} & The number of vertices that make up the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. \\
+\hline
+{\em x} & An array of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s x vertices. \\
+\hline
+{\em y} & An array of the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s y vertices. \\
+\hline
+{\em yaw} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & An array of Color\+Floats, the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}\textquotesingle{}s fill color. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} with a buffer for storing the specified number of vertices. 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Can sometimes incorrectly render; if this occurs, try shifting your last vertex to be your first vertex, or otherwise adjusting vertex order. 
+\end{DoxyWarning}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_concave_polygon_adf288a6b60873a7ae5e599f63868da82}\label{classtsgl_1_1_concave_polygon_adf288a6b60873a7ae5e599f63868da82}} 
+\index{tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}!draw@{draw}}
+\index{draw@{draw}!tsgl\+::\+Concave\+Polygon@{tsgl\+::\+Concave\+Polygon}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void tsgl\+::\+Concave\+Polygon\+::draw (\begin{DoxyParamCaption}\item[{Shader $\ast$}]{shader }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}. 
+
+This function actually draws the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} to the \hyperlink{classtsgl_1_1_canvas}{Canvas}. \begin{DoxyNote}{Note}
+This function overrides Drawable\+::draw() 
+
+This function does nothing if the vertex buffer is not yet full. 
+
+A message indicating that the \hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon} cannot be drawn yet will be given if the above condition is met (vertex buffer = not full). 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_shape_ae0905e73f1652d92cef9c7f2c38572f3}{tsgl\+::\+Shape}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Concave\+Polygon.\+h\item 
+Concave\+Polygon.\+cpp\end{DoxyCompactItemize}

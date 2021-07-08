@@ -1,0 +1,45 @@
+{\bfseries For this to work you need to install a W\+SL and an Xserver}
+
+\subsubsection*{Installing W\+SL and Xserver}
+
+
+\begin{DoxyEnumerate}
+\item \href{https://docs.microsoft.com/en-us/windows/wsl/install-win10}{\tt Install W\+SL} ({\itshape Ubuntu recommended})
+\item Download and install \href{https://sourceforge.net/projects/vcxsrv/}{\tt Vc\+Xsrv}
+\begin{DoxyItemize}
+\item It is downloaded as {\ttfamily X\+Launch}
+\item When starting X\+Launch {\bfseries disable} the {\ttfamily Native opengl} and {\bfseries enable} {\ttfamily Disable access control}
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+
+
+\subparagraph*{Check}
+
+
+\begin{DoxyItemize}
+\item Start X\+Launch
+\item On your terminal run {\ttfamily xeyes}
+\begin{DoxyItemize}
+\item If it doesn\textquotesingle{}t work, run `export D\+I\+S\+P\+L\+AY=\$(awk \textquotesingle{}/nameserver / \{print \$2; exit\}\textquotesingle{} /etc/resolv.conf 2$>$/dev/null)\+:0` then try again
+\end{DoxyItemize}
+\item You should see a pair of eyes on the Vc\+Xsrc server
+\end{DoxyItemize}
+
+\subsubsection*{Installing T\+S\+GL}
+
+
+\begin{DoxyEnumerate}
+\item clone the \href{https://github.com/samuelth47/TSGL/blob/fix-cygwin-ubuntu/NewWindows/xlaunch.gif}{\tt T\+S\+GL repository}
+\item cd to T\+S\+GL
+\item run the install-\/ubuntu.\+sh ({\ttfamily ./install-\/ubuntu.sh})
+\end{DoxyEnumerate}
+
+\subparagraph*{Check}
+
+
+\begin{DoxyItemize}
+\item cd to src/examples
+\item run {\ttfamily make}
+\item cd to one of the examples and run the test files ({\ttfamily ./test...}) 
+\end{DoxyItemize}

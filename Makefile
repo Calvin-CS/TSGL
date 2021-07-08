@@ -7,7 +7,6 @@ AR=ar
 CC=g++
 RM=rm -f
 INSTALL=/usr/bin/install
-PREFIX=/usr/local
 
 SRC_PATH=src/TSGL/
 TESTS_PATH=src/tests/
@@ -45,31 +44,18 @@ ifeq ($(UNAME), Darwin)
 	OS_EXTRA_LIB :=
 	OS_GL :=
 	OS_OMP := -fopenmp -lomp
-	OS_COMPILER := -std=c++0x
+	OS_COMPILER := -std=c++11
 endif
 
-CXXFLAGS=-O3 -g3 -ggdb3 \
-	-Wall -Wextra \
-	-D__GXX_EXPERIMENTAL_CXX0X__ \
-	-I/usr/local/include/Cellar/glfw3/3.3/include/ \
-	-I${SRC_PATH}/ \
-	-I/usr/include/ \
-	-I/usr/local/include/ \
-	-I/usr/local/include/freetype2 \
-	-I/usr/local/include/freetype2/freetype \
-	-I/opt/AMDAPP/include/ \
-	-I/usr/include/c++/4.6/ \
-	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
-	-I/usr/lib/gcc/x86_64-linux-gnu/9/include/ \
-	-I/usr/include/freetype2  \
-	-I/usr/include/freetype2/freetype  \
-	-I./ \
-  $(OS_COMPILER) -fopenmp \
-  ${NOWARN} -fpermissive
-  # -pedantic-errors
+CXXFLAGS = -O3 -g3 -ggdb3 \
+        -I$(TSGL_HOME)/include \
+	-I${SRC_PATH} \
+	-Isrc \
+	-I$(TSGL_HOME)/include/freetype2 \
 
 LFLAGS=-Llib/ \
-	-L/usr/local/lib \
+	-L/usr/lib \
+	-L$(TSGL_HOME)/lib \
 	${OS_EXTRA_LIB} \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
@@ -134,6 +120,9 @@ cleandocs:
 
 # -include build/*.d
 
+
+PREFIX=$(prefix)
+
 #install
 ifeq ($(UNAME), Linux)
 install:
@@ -143,6 +132,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
+	cp src/tsgl.h $(PREFIX)/include
+	cp -r assets/ $(PREFIX)/include/TSGL
+	cp -r src/stb/ $(PREFIX)/include
 endif
 ifeq ($(UNAME), CYGWIN_NT-10.0)
 install:
@@ -152,6 +144,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.dll $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
+	cp src/tsgl.h $(PREFIX)/include
+	cp -r assets/ $(PREFIX)/include/TSGL
+	cp -r src/stb/ $(PREFIX)/include
 endif
 ifeq ($(UNAME), Darwin)
 install:
@@ -161,7 +156,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
-	cp -r stb $(PREFIX)/include
+	cp src/tsgl.h $(PREFIX)/include
+	cp -r src/stb $(PREFIX)/include
+	cp -r assets $(PREFIX)/include/TSGL
 endif
 
 build/build: ${HEADERS} ${SOURCES} ${TESTS}

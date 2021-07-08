@@ -1,0 +1,91 @@
+\hypertarget{class_nova}{}\section{Nova Class Reference}
+\label{class_nova}\index{Nova@{Nova}}
+
+
+Draws a \hyperlink{class_nova}{Nova} (Newton Fractal) set on a Cartesian\+Canvas.  
+
+
+
+
+{\ttfamily \#include $<$Nova.\+h$>$}
+
+Inheritance diagram for Nova\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_nova}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_nova_a9d171954a6dd98b125587be83ef04db5}{Nova} (unsigned threads, unsigned depth)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \hyperlink{class_nova}{Nova} set. \end{DoxyCompactList}\item 
+void \hyperlink{class_nova_a66935ba0814dfabcae2481c128c336ec}{draw} (\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&can)
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{class_nova}{Nova} set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Draws a \hyperlink{class_nova}{Nova} (Newton Fractal) set on a Cartesian\+Canvas. 
+
+Extends the \hyperlink{class_mandelbrot}{Mandelbrot} class and overrides its \hyperlink{class_nova_a66935ba0814dfabcae2481c128c336ec}{draw()} function and set\+Redraw() function.
+
+Can zoom in and out of the \hyperlink{class_nova}{Nova} set by scrolling up and down on the mouse wheel (respectively). \begin{DoxySeeAlso}{See also}
+\hyperlink{class_mandelbrot}{Mandelbrot} class 
+\end{DoxySeeAlso}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_nova_a9d171954a6dd98b125587be83ef04db5}\label{class_nova_a9d171954a6dd98b125587be83ef04db5}} 
+\index{Nova@{Nova}!Nova@{Nova}}
+\index{Nova@{Nova}!Nova@{Nova}}
+\subsubsection{\texorpdfstring{Nova()}{Nova()}}
+{\footnotesize\ttfamily Nova\+::\+Nova (\begin{DoxyParamCaption}\item[{unsigned}]{threads,  }\item[{unsigned}]{depth }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \hyperlink{class_nova}{Nova} set. 
+
+Explicit constructor for the \hyperlink{class_nova}{Nova} class. 
+\begin{DoxyParams}{Parameters}
+{\em threads} & The number of threads to use in the drawing of the \hyperlink{class_nova}{Nova} object. \\
+\hline
+{\em depth} & The number of iterations to go to in order to draw the \hyperlink{class_nova}{Nova} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \hyperlink{class_nova}{Nova} object ready to be drawn onto the Cartesian\+Canvas. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_nova_a66935ba0814dfabcae2481c128c336ec}\label{class_nova_a66935ba0814dfabcae2481c128c336ec}} 
+\index{Nova@{Nova}!draw@{draw}}
+\index{draw@{draw}!Nova@{Nova}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Nova\+::draw (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&}]{can }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \hyperlink{class_nova}{Nova} set. 
+
+Actually draws the \hyperlink{class_nova}{Nova} set onto the Cartesian\+Canvas. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Cartesian\+Canvas to draw to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This method overrides the \hyperlink{class_mandelbrot}{Mandelbrot} class\textquotesingle{} \hyperlink{class_nova_a66935ba0814dfabcae2481c128c336ec}{draw()} method. 
+
+Cart is a typedef for a Cartesian\+Canvas object. 
+\end{DoxyNote}
+
+
+Reimplemented from \hyperlink{class_mandelbrot_ab7918e4de8f00f73290f110ca7a6cffd}{Mandelbrot}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Nova.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Nova.\+cpp\end{DoxyCompactItemize}

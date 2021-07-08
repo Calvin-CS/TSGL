@@ -38,31 +38,16 @@ GL_FLAGS := -lGLU  -lGL
 BREW :=
 endif
 ifeq ($(UNAME), Darwin)
-GL_FLAGS := -framework OpenGL 
-BREW := -lomp -I"$(brew --prefix libomp)/include" 
+#GL_FLAGS := -framework OpenGL 
+#BREW := -lomp -I"$(brew --prefix libomp)/include" 
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
-	-Wall -Wextra \
-	-D__GXX_EXPERIMENTAL_CXX0X__ \
-	-I/usr/local/include/Cellar/glfw3/3.3/include/ \
-	-I/usr/local/include/TSGL \
-	-I/usr/local/include \
-	-I/usr/local/include/freetype2 \
-	-I/usr/local/include/freetype2/freetype \
-	$(NOWARN)\
-	-std=c++11\
-	-Wc++11-compat\
-	-I/opt/AMDAPP/include/ \
-	-I/usr/include/c++/4.6/ \
-	-I/usr/include/c++/4.6/x86_64-linux-gnu/ \
-	-I/usr/lib/gcc/x86_64-linux-gnu/9/include/ \
-	-I/usr/include \
-	-I/usr/include/freetype2 \
-	-I/usr/include/freetype2/freetype  \
+        -I$(TSGL_HOME)/include/TSGL \
+        -I$(TSGL_HOME)/include/freetype2 \
 
 LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
-			$(BREW) -L/usr/local/lib \
+			$(BREW) -L$(TSGL_HOME)/lib \
 
 
 # ****************************************************

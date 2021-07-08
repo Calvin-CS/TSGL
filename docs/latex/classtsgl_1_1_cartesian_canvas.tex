@@ -1,0 +1,643 @@
+\hypertarget{classtsgl_1_1_cartesian_canvas}{}\section{tsgl\+:\+:Cartesian\+Canvas Class Reference}
+\label{classtsgl_1_1_cartesian_canvas}\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+
+
+\hyperlink{classtsgl_1_1_canvas}{Canvas} extended with Cartesian drawing operations.  
+
+
+
+
+{\ttfamily \#include $<$Cartesian\+Canvas.\+h$>$}
+
+Inheritance diagram for tsgl\+:\+:Cartesian\+Canvas\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_cartesian_canvas}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classtsgl_1_1_cartesian_canvas_a4438f368eae3def6a70e0faa15d28daa}{Cartesian\+Canvas} (double timer\+Length=0.\+0)
+\begin{DoxyCompactList}\small\item\em Default \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} constructor method. \end{DoxyCompactList}\item 
+\hyperlink{classtsgl_1_1_cartesian_canvas_a15e3b3f68da5d76c2c8644ec8de8ab8f}{Cartesian\+Canvas} (int x, int y, int width, int height, Decimal x\+Min, Decimal y\+Min, Decimal x\+Max, Decimal y\+Max, std\+::string t, \hyperlink{structtsgl_1_1_color_float}{Color\+Float} background\+Color=G\+R\+AY, double timer\+Length=0.\+0)
+\begin{DoxyCompactList}\small\item\em Explicit \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} constructor method. \end{DoxyCompactList}\item 
+virtual \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background} $\ast$ \hyperlink{classtsgl_1_1_cartesian_canvas_ad0833d6659071cae7c2ec80d784b1a67}{get\+Background} () override
+\begin{DoxyCompactList}\small\item\em Accessor for the current background. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a736935074bb6d90bcc0c7af2edd8a4aa}{get\+Cartesian\+Coordinates} (int screenX, int screenY, Decimal \&cartX, Decimal \&cartY)
+\begin{DoxyCompactList}\small\item\em Translates Cartesian coordinates into window coordinates. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a66657636eaf20ff465898d3f932063ce}{get\+Cart\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s Cartesian height. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a829a97323261515097b7589bc96c109c}{get\+Cart\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s Cartesian width. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_cartesian_canvas_afd62dffbd1343ddecdd734a6954f6f87}{get\+MouseX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the mouse\textquotesingle{}s x-\/position in Cartesian coordinates. \end{DoxyCompactList}\item 
+virtual float \hyperlink{classtsgl_1_1_cartesian_canvas_a4513bbe2483ebf043aabb200c1a8d456}{get\+MouseY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the mouse\textquotesingle{}s y-\/position in Cartesian coordinates. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a699c2b41b3b46bfac8649fb38b24c901}{get\+Pixel\+Height} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s effective pixel height. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_ac9bb990b8c34a1575bcb861e4b819372}{get\+Pixel\+Width} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s effective pixel width. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_ae3cbac386f78ecff082b8c4cbd9081ed}{get\+MaxX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s right bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a68c0616f8180690423d39e9e83045b8c}{get\+MaxY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s top bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a4ab031c60f6fed675e8163c30c01e5d6}{get\+MinX} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s left bound. \end{DoxyCompactList}\item 
+Decimal \hyperlink{classtsgl_1_1_cartesian_canvas_a99c935c99c9a29f2cc918963d734d9a6}{get\+MinY} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s bottom bound. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a8fea34cfcee9bc577c1e1ab6d28a8185}{get\+Screen\+Coordinates} (Decimal cartX, Decimal cartY, int \&screenX, int \&screenY)
+\begin{DoxyCompactList}\small\item\em Translates window coordinates into Cartesian coordinates. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_ac833a44fe7367f6411292707de37beef}{recompute\+Dimensions} (Decimal x\+Min, Decimal y\+Min, Decimal x\+Max, Decimal y\+Max)
+\begin{DoxyCompactList}\small\item\em Recomputes the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s bounds. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classtsgl_1_1_cartesian_canvas_aecbcfe36e70b77e04ed9df68088b4ff5}{select\+Shaders} (unsigned int s\+Type) override
+\begin{DoxyCompactList}\small\item\em Activates the corresponding Shader for a given \hyperlink{classtsgl_1_1_drawable}{Drawable}. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&))
+\begin{DoxyCompactList}\small\item\em Start the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, run a function on it, and wait for the user to close it. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a4d50613e241cab83878aa4438f3db67e}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int), int i)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_ab18eee19a5a0c7011c4442b64d05f6cc}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, unsigned), unsigned u)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_aae4be78e02055eed3e6e85bb39411f21}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int, int), int i1, int i2)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a3351ccc624bb154dc910cafd9effe3cd}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, unsigned, unsigned), unsigned u1, unsigned u2)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a7d76ab9f68d8ce7f76b6be20305a5e95}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, std\+::string), std\+::string s)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_ab0bce76883df5ae48e368a7b7835aefd}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int, std\+::string), int i, std\+::string s)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_abf52fc46a6fdca1410db6feb3c67a3cd}{run} (void($\ast$my\+Function)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, std\+::string, int), std\+::string s, int i)
+\begin{DoxyCompactList}\small\item\em Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_a69a378f61868c4c880889c33ec33c992}{zoom} (Decimal x, Decimal y, Decimal scale)
+\begin{DoxyCompactList}\small\item\em Zoom the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} with a given center. \end{DoxyCompactList}\item 
+void \hyperlink{classtsgl_1_1_cartesian_canvas_adb1e999087c0ec7e4405d8ebd3ca9760}{zoom} (Decimal x1, Decimal y1, Decimal x2, Decimal y2)
+\begin{DoxyCompactList}\small\item\em Zoom the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} with the given bounding (Cartesian) coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+\hyperlink{classtsgl_1_1_canvas}{Canvas} extended with Cartesian drawing operations. 
+
+\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} provides a \hyperlink{classtsgl_1_1_canvas}{Canvas} with a Cartesian coordinate system for ease of plotting. \begin{DoxyNote}{Note}
+While on a regular \hyperlink{classtsgl_1_1_canvas}{Canvas}, pixels higher on the screen have a lower y-\/value, {\bfseries on a \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, pixels higher on the screen have a higher y-\/value.} 
+\end{DoxyNote}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a4438f368eae3def6a70e0faa15d28daa}\label{classtsgl_1_1_cartesian_canvas_a4438f368eae3def6a70e0faa15d28daa}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\index{Cartesian\+Canvas@{Cartesian\+Canvas}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{Cartesian\+Canvas()}{CartesianCanvas()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Cartesian\+Canvas\+::\+Cartesian\+Canvas (\begin{DoxyParamCaption}\item[{double}]{timer\+Length = {\ttfamily 0.0} }\end{DoxyParamCaption})}
+
+
+
+Default \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} constructor method. 
+
+This is the default constructor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} class. 
+\begin{DoxyParams}{Parameters}
+{\em timer\+Length} & The minimum number of seconds between draw cycles for the \hyperlink{classtsgl_1_1_canvas}{Canvas}. A value less than or equal to 0 sets it to automatic. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, stretching from -\/400 to +400 on the x axis and -\/300 to +300 on the y axis, in the middle of the screen with no title. The created \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} will take up approximately 90\% of the monitor\textquotesingle{}s height, and will have a 4\+:3 aspect ratio. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a15e3b3f68da5d76c2c8644ec8de8ab8f}\label{classtsgl_1_1_cartesian_canvas_a15e3b3f68da5d76c2c8644ec8de8ab8f}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!Cartesian\+Canvas@{Cartesian\+Canvas}}
+\index{Cartesian\+Canvas@{Cartesian\+Canvas}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{Cartesian\+Canvas()}{CartesianCanvas()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Cartesian\+Canvas\+::\+Cartesian\+Canvas (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{Decimal}]{x\+Min,  }\item[{Decimal}]{y\+Min,  }\item[{Decimal}]{x\+Max,  }\item[{Decimal}]{y\+Max,  }\item[{std\+::string}]{t,  }\item[{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}]{background\+Color = {\ttfamily GRAY},  }\item[{double}]{timer\+Length = {\ttfamily 0.0} }\end{DoxyParamCaption})}
+
+
+
+Explicit \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} constructor method. 
+
+This is an explicit constructor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} window. \\
+\hline
+{\em y} & The y position of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} window. \\
+\hline
+{\em width} & The x dimension of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} window. \\
+\hline
+{\em height} & The y dimension of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} window. \\
+\hline
+{\em x\+Min} & The Cartesian coordinates of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s left bound. \\
+\hline
+{\em y\+Min} & The Cartesian coordinates of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s bottom bound. \\
+\hline
+{\em x\+Max} & The Cartesian coordinates of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s right bound. \\
+\hline
+{\em y\+Max} & The Cartesian coordinates of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s top bound. \\
+\hline
+{\em title} & The title of the window. \\
+\hline
+{\em timer\+Length} & The minimum number of seconds between draw cycles for the \hyperlink{classtsgl_1_1_canvas}{Canvas}. A value less than or equal to 0 sets it to automatic. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} with the specified position, dimensions, scaling, title, and timer length. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_ad0833d6659071cae7c2ec80d784b1a67}\label{classtsgl_1_1_cartesian_canvas_ad0833d6659071cae7c2ec80d784b1a67}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+Background@{get\+Background}}
+\index{get\+Background@{get\+Background}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Background()}{getBackground()}}
+{\footnotesize\ttfamily virtual \hyperlink{classtsgl_1_1_cartesian_background}{Cartesian\+Background}$\ast$ tsgl\+::\+Cartesian\+Canvas\+::get\+Background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the current background. 
+
+\begin{DoxyReturn}{Returns}
+The \hyperlink{classtsgl_1_1_background}{Background} that the \hyperlink{classtsgl_1_1_canvas}{Canvas} draws when draw() is called. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_canvas_a905c38881402fe1d53cab427b93aab2f}{tsgl\+::\+Canvas}.
+
+
+
+Referenced by Mandelbrot\+::bindings(), Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), Buddhabrot\+::draw(), Mandelbrot\+::draw(), Mandelbrot\+::manhattan\+Shading(), tsgl\+::\+Integral\+Viewer\+::rectangle\+Evaluate(), tsgl\+::\+Integral\+Viewer\+::trapezoid\+Evaluate(), and tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a736935074bb6d90bcc0c7af2edd8a4aa}\label{classtsgl_1_1_cartesian_canvas_a736935074bb6d90bcc0c7af2edd8a4aa}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+Cartesian\+Coordinates@{get\+Cartesian\+Coordinates}}
+\index{get\+Cartesian\+Coordinates@{get\+Cartesian\+Coordinates}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Cartesian\+Coordinates()}{getCartesianCoordinates()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::get\+Cartesian\+Coordinates (\begin{DoxyParamCaption}\item[{int}]{screenX,  }\item[{int}]{screenY,  }\item[{Decimal \&}]{cartX,  }\item[{Decimal \&}]{cartY }\end{DoxyParamCaption})}
+
+
+
+Translates Cartesian coordinates into window coordinates. 
+
+\hyperlink{classtsgl_1_1_cartesian_canvas_a736935074bb6d90bcc0c7af2edd8a4aa}{get\+Cartesian\+Coordinates()} takes a pair of on-\/screen coordinates and translates them to Cartesian coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em screenX} & The window\textquotesingle{}s x coordinate. \\
+\hline
+{\em screenY} & The window\textquotesingle{}s y coordinate. \\
+\hline
+{\em cartX} & A reference variable to be filled with screenX\textquotesingle{}s Cartesian position. \\
+\hline
+{\em cartY} & A reference variable to be filled with screenY\textquotesingle{}s Cartesian position. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by get\+Background().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a66657636eaf20ff465898d3f932063ce}\label{classtsgl_1_1_cartesian_canvas_a66657636eaf20ff465898d3f932063ce}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+Cart\+Height@{get\+Cart\+Height}}
+\index{get\+Cart\+Height@{get\+Cart\+Height}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Cart\+Height()}{getCartHeight()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Canvas\+::get\+Cart\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s Cartesian height. 
+
+\begin{DoxyReturn}{Returns}
+The Cartesian height of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Referenced by Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), and Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a829a97323261515097b7589bc96c109c}\label{classtsgl_1_1_cartesian_canvas_a829a97323261515097b7589bc96c109c}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+Cart\+Width@{get\+Cart\+Width}}
+\index{get\+Cart\+Width@{get\+Cart\+Width}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Cart\+Width()}{getCartWidth()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Canvas\+::get\+Cart\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s Cartesian width. 
+
+\begin{DoxyReturn}{Returns}
+The Cartesian width of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_ae3cbac386f78ecff082b8c4cbd9081ed}\label{classtsgl_1_1_cartesian_canvas_ae3cbac386f78ecff082b8c4cbd9081ed}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+MaxX@{get\+MaxX}}
+\index{get\+MaxX@{get\+MaxX}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Max\+X()}{getMaxX()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Canvas\+::get\+MaxX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s right bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the right of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Referenced by Julia\+::draw(), Nova\+::draw(), and Gradient\+Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a68c0616f8180690423d39e9e83045b8c}\label{classtsgl_1_1_cartesian_canvas_a68c0616f8180690423d39e9e83045b8c}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+MaxY@{get\+MaxY}}
+\index{get\+MaxY@{get\+MaxY}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Max\+Y()}{getMaxY()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Canvas\+::get\+MaxY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s top bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the top of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Referenced by Nova\+::draw(), and Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a4ab031c60f6fed675e8163c30c01e5d6}\label{classtsgl_1_1_cartesian_canvas_a4ab031c60f6fed675e8163c30c01e5d6}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+MinX@{get\+MinX}}
+\index{get\+MinX@{get\+MinX}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Min\+X()}{getMinX()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Canvas\+::get\+MinX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s left bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the left of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Referenced by Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), and Buddhabrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a99c935c99c9a29f2cc918963d734d9a6}\label{classtsgl_1_1_cartesian_canvas_a99c935c99c9a29f2cc918963d734d9a6}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+MinY@{get\+MinY}}
+\index{get\+MinY@{get\+MinY}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Min\+Y()}{getMinY()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Canvas\+::get\+MinY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s bottom bound. 
+
+\begin{DoxyReturn}{Returns}
+The real number corresponding the bottom of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Referenced by Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), Buddhabrot\+::draw(), and Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_afd62dffbd1343ddecdd734a6954f6f87}\label{classtsgl_1_1_cartesian_canvas_afd62dffbd1343ddecdd734a6954f6f87}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+MouseX@{get\+MouseX}}
+\index{get\+MouseX@{get\+MouseX}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Mouse\+X()}{getMouseX()}}
+{\footnotesize\ttfamily float tsgl\+::\+Cartesian\+Canvas\+::get\+MouseX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for the mouse\textquotesingle{}s x-\/position in Cartesian coordinates. 
+
+\begin{DoxyReturn}{Returns}
+The Cartesian x coordinates of the mouse on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_canvas_aae30eddfb15b6a549dc162e4a11a149d}{tsgl\+::\+Canvas}.
+
+
+
+Referenced by Mandelbrot\+::bindings(), and get\+Cart\+Width().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a4513bbe2483ebf043aabb200c1a8d456}\label{classtsgl_1_1_cartesian_canvas_a4513bbe2483ebf043aabb200c1a8d456}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+MouseY@{get\+MouseY}}
+\index{get\+MouseY@{get\+MouseY}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Mouse\+Y()}{getMouseY()}}
+{\footnotesize\ttfamily float tsgl\+::\+Cartesian\+Canvas\+::get\+MouseY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for the mouse\textquotesingle{}s y-\/position in Cartesian coordinates. 
+
+\begin{DoxyReturn}{Returns}
+The Cartesian y coordinates of the mouse on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_canvas_a5e86e0938a5c228c1c947f995389bd45}{tsgl\+::\+Canvas}.
+
+
+
+Referenced by Mandelbrot\+::bindings(), and get\+Cart\+Width().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a699c2b41b3b46bfac8649fb38b24c901}\label{classtsgl_1_1_cartesian_canvas_a699c2b41b3b46bfac8649fb38b24c901}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+Pixel\+Height@{get\+Pixel\+Height}}
+\index{get\+Pixel\+Height@{get\+Pixel\+Height}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Pixel\+Height()}{getPixelHeight()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Canvas\+::get\+Pixel\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s effective pixel height. 
+
+\begin{DoxyReturn}{Returns}
+The height corresponding to a single pixel in the current \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Referenced by Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), Buddhabrot\+::draw(), Mandelbrot\+::draw(), and tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_ac9bb990b8c34a1575bcb861e4b819372}\label{classtsgl_1_1_cartesian_canvas_ac9bb990b8c34a1575bcb861e4b819372}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+Pixel\+Width@{get\+Pixel\+Width}}
+\index{get\+Pixel\+Width@{get\+Pixel\+Width}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Pixel\+Width()}{getPixelWidth()}}
+{\footnotesize\ttfamily Decimal tsgl\+::\+Cartesian\+Canvas\+::get\+Pixel\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s effective pixel width. 
+
+\begin{DoxyReturn}{Returns}
+The width corresponding to a single pixel in the current \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. 
+\end{DoxyReturn}
+
+
+Referenced by Julia\+::draw(), Nova\+::draw(), Gradient\+Mandelbrot\+::draw(), Buddhabrot\+::draw(), and Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a8fea34cfcee9bc577c1e1ab6d28a8185}\label{classtsgl_1_1_cartesian_canvas_a8fea34cfcee9bc577c1e1ab6d28a8185}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!get\+Screen\+Coordinates@{get\+Screen\+Coordinates}}
+\index{get\+Screen\+Coordinates@{get\+Screen\+Coordinates}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{get\+Screen\+Coordinates()}{getScreenCoordinates()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::get\+Screen\+Coordinates (\begin{DoxyParamCaption}\item[{Decimal}]{cartX,  }\item[{Decimal}]{cartY,  }\item[{int \&}]{screenX,  }\item[{int \&}]{screenY }\end{DoxyParamCaption})}
+
+
+
+Translates window coordinates into Cartesian coordinates. 
+
+\hyperlink{classtsgl_1_1_cartesian_canvas_a8fea34cfcee9bc577c1e1ab6d28a8185}{get\+Screen\+Coordinates()} takes a pair of Cartesian coordinates and translates them to on-\/screen coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em cartX} & The Cartesian x coordinate. \\
+\hline
+{\em cartY} & The Cartesian y coordinate. \\
+\hline
+{\em screenX} & A reference variable to be filled with cartX\textquotesingle{}s window position. \\
+\hline
+{\em screenY} & A reference variable to be filled with cartY\textquotesingle{}s window position. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by get\+Min\+Y().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_ac833a44fe7367f6411292707de37beef}\label{classtsgl_1_1_cartesian_canvas_ac833a44fe7367f6411292707de37beef}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!recompute\+Dimensions@{recompute\+Dimensions}}
+\index{recompute\+Dimensions@{recompute\+Dimensions}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{recompute\+Dimensions()}{recomputeDimensions()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::recompute\+Dimensions (\begin{DoxyParamCaption}\item[{Decimal}]{x\+Min,  }\item[{Decimal}]{y\+Min,  }\item[{Decimal}]{x\+Max,  }\item[{Decimal}]{y\+Max }\end{DoxyParamCaption})}
+
+
+
+Recomputes the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\textquotesingle{}s bounds. 
+
+This function recomputes the size variables of \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} according to new bounds. 
+\begin{DoxyParams}{Parameters}
+{\em x\+Min} & A real number corresponding to the new left edge of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. \\
+\hline
+{\em Y\+Min} & A real number corresponding to the new bottom edge of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. \\
+\hline
+{\em x\+Max} & A real number corresponding to the new right edge of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. \\
+\hline
+{\em x\+Max} & A real number corresponding to the new top edge of the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Cartesian\+Canvas(), get\+Min\+Y(), and zoom().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}\label{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [1/8]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&)}]{my\+Function }\end{DoxyParamCaption})}
+
+
+
+Start the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, run a function on it, and wait for the user to close it. 
+
+This function binds another function to the current \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}, waits until that function is complete, and waits for the user to close the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. This function effectively calls \hyperlink{classtsgl_1_1_canvas_a654315f9b08a9b3b072eebf4b4d8ae89}{start()}, {\ttfamily my\+Function}(), and \hyperlink{classtsgl_1_1_canvas_a39e69fd4d1ad8cf0e22ecea12f1ddf08}{wait()} in sequence. 
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by get\+Min\+Y().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a4d50613e241cab83878aa4438f3db67e}\label{classtsgl_1_1_cartesian_canvas_a4d50613e241cab83878aa4438f3db67e}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [2/8]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int)}]{my\+Function,  }\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_ab18eee19a5a0c7011c4442b64d05f6cc}\label{classtsgl_1_1_cartesian_canvas_ab18eee19a5a0c7011c4442b64d05f6cc}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [3/8]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, unsigned)}]{my\+Function,  }\item[{unsigned}]{u }\end{DoxyParamCaption})}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em u} & An unsigned integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_aae4be78e02055eed3e6e85bb39411f21}\label{classtsgl_1_1_cartesian_canvas_aae4be78e02055eed3e6e85bb39411f21}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [4/8]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int, int)}]{my\+Function,  }\item[{int}]{i1,  }\item[{int}]{i2 }\end{DoxyParamCaption})}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em i1} & An integer argument to my\+Function \\
+\hline
+{\em i2} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a3351ccc624bb154dc910cafd9effe3cd}\label{classtsgl_1_1_cartesian_canvas_a3351ccc624bb154dc910cafd9effe3cd}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [5/8]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, unsigned, unsigned)}]{my\+Function,  }\item[{unsigned}]{u1,  }\item[{unsigned}]{u2 }\end{DoxyParamCaption})}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em u1} & An unsigned integer argument to my\+Function \\
+\hline
+{\em u2} & An unsigned integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a7d76ab9f68d8ce7f76b6be20305a5e95}\label{classtsgl_1_1_cartesian_canvas_a7d76ab9f68d8ce7f76b6be20305a5e95}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [6/8]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, std\+::string)}]{my\+Function,  }\item[{std\+::string}]{s }\end{DoxyParamCaption})}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_ab0bce76883df5ae48e368a7b7835aefd}\label{classtsgl_1_1_cartesian_canvas_ab0bce76883df5ae48e368a7b7835aefd}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [7/8]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, int, std\+::string)}]{my\+Function,  }\item[{int}]{i,  }\item[{std\+::string}]{s }\end{DoxyParamCaption})}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_abf52fc46a6fdca1410db6feb3c67a3cd}\label{classtsgl_1_1_cartesian_canvas_abf52fc46a6fdca1410db6feb3c67a3cd}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!run@{run}}
+\index{run@{run}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{run()}{run()}\hspace{0.1cm}{\footnotesize\ttfamily [8/8]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::run (\begin{DoxyParamCaption}\item[{void($\ast$)(\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&, std\+::string, int)}]{my\+Function,  }\item[{std\+::string}]{s,  }\item[{int}]{i }\end{DoxyParamCaption})}
+
+
+
+Overload for \hyperlink{classtsgl_1_1_cartesian_canvas_a63a948af53582b713957b872a765dcdb}{run()} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Function} & The function to run on the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}. Must take exactly one parameter of type \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}\&, which is a reference to the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} to render to. \\
+\hline
+{\em s} & A string argument to my\+Function \\
+\hline
+{\em i} & An integer argument to my\+Function \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_aecbcfe36e70b77e04ed9df68088b4ff5}\label{classtsgl_1_1_cartesian_canvas_aecbcfe36e70b77e04ed9df68088b4ff5}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!select\+Shaders@{select\+Shaders}}
+\index{select\+Shaders@{select\+Shaders}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{select\+Shaders()}{selectShaders()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::select\+Shaders (\begin{DoxyParamCaption}\item[{unsigned int}]{s\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Activates the corresponding Shader for a given \hyperlink{classtsgl_1_1_drawable}{Drawable}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s\+Type} & Unsigned int with a corresponding value for each type of Shader. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \hyperlink{classtsgl_1_1_canvas}{tsgl\+::\+Canvas}.
+
+
+
+Referenced by get\+Min\+Y().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_a69a378f61868c4c880889c33ec33c992}\label{classtsgl_1_1_cartesian_canvas_a69a378f61868c4c880889c33ec33c992}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!zoom@{zoom}}
+\index{zoom@{zoom}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{zoom()}{zoom()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::zoom (\begin{DoxyParamCaption}\item[{Decimal}]{x,  }\item[{Decimal}]{y,  }\item[{Decimal}]{scale }\end{DoxyParamCaption})}
+
+
+
+Zoom the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} with a given center. 
+
+This function will re-\/center the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} at the given coordinates, then zoom with respect to the given scale. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The coordinate to re-\/center the screen on. \\
+\hline
+{\em y} & The coordinate to re-\/center the screen on. \\
+\hline
+{\em scale} & The zoom scale compared to the original. Less than 1 zooms in, greater than 1 zooms out. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function will automatically maintain the current aspect ratio. 
+\end{DoxyNote}
+
+
+Referenced by Mandelbrot\+::bindings(), get\+Min\+Y(), and zoom().
+
+\mbox{\Hypertarget{classtsgl_1_1_cartesian_canvas_adb1e999087c0ec7e4405d8ebd3ca9760}\label{classtsgl_1_1_cartesian_canvas_adb1e999087c0ec7e4405d8ebd3ca9760}} 
+\index{tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}!zoom@{zoom}}
+\index{zoom@{zoom}!tsgl\+::\+Cartesian\+Canvas@{tsgl\+::\+Cartesian\+Canvas}}
+\subsubsection{\texorpdfstring{zoom()}{zoom()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cartesian\+Canvas\+::zoom (\begin{DoxyParamCaption}\item[{Decimal}]{x1,  }\item[{Decimal}]{y1,  }\item[{Decimal}]{x2,  }\item[{Decimal}]{y2 }\end{DoxyParamCaption})}
+
+
+
+Zoom the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} with the given bounding (Cartesian) coordinates. 
+
+This function will zoom the \hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} with respect to the given bounding coordinates. 
+\begin{DoxyParams}{Parameters}
+{\em x1} & The left Cartesian bound. \\
+\hline
+{\em y1} & The bottom Cartesian bound. \\
+\hline
+{\em x2} & The right Cartesian bound. \\
+\hline
+{\em y2} & The top Cartesian bound. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Setting the right bound lower than the left bound or the top lower than the bottom will just swap the variables. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+This function will {\itshape N\+OT} automatically maintain the previous aspect ratio. 
+
+Change the aspect ratio on-\/the-\/fly only with caution. 
+\end{DoxyWarning}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Cartesian\+Canvas.\+h\item 
+Cartesian\+Canvas.\+cpp\end{DoxyCompactItemize}

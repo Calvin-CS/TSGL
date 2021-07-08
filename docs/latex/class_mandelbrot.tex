@@ -1,0 +1,157 @@
+\hypertarget{class_mandelbrot}{}\section{Mandelbrot Class Reference}
+\label{class_mandelbrot}\index{Mandelbrot@{Mandelbrot}}
+
+
+Draw a \hyperlink{class_mandelbrot}{Mandelbrot} set.  
+
+
+
+
+{\ttfamily \#include $<$Mandelbrot.\+h$>$}
+
+Inheritance diagram for Mandelbrot\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_mandelbrot}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_mandelbrot_ae0c71b1d8894206cb896412ae2fa1529}{Mandelbrot} (unsigned threads, unsigned depth)
+\begin{DoxyCompactList}\small\item\em Explicitly construct a \hyperlink{class_mandelbrot}{Mandelbrot} object. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_mandelbrot_a886df208f291f5d24d7f8f582962bb84}{$\sim$\+Mandelbrot} ()
+\begin{DoxyCompactList}\small\item\em Destroys a \hyperlink{class_mandelbrot}{Mandelbrot} object and any children of the \hyperlink{class_mandelbrot}{Mandelbrot} class. \end{DoxyCompactList}\item 
+void \hyperlink{class_mandelbrot_a4b50829db11e2642b616431ae4e2eacf}{bindings} (\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&can)
+\begin{DoxyCompactList}\small\item\em Binds buttons and/or mouse clicks. \end{DoxyCompactList}\item 
+virtual void \hyperlink{class_mandelbrot_ab7918e4de8f00f73290f110ca7a6cffd}{draw} (\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&can)
+\begin{DoxyCompactList}\small\item\em Draw the \hyperlink{class_mandelbrot}{Mandelbrot} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_mandelbrot_aef094f9bb9b2fd1107481b150205ff53}{manhattan\+Shading} (\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&can)
+\begin{DoxyCompactList}\small\item\em Shades the fractal using Manhattan distances. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_mandelbrot_a41edcc618b65717d6511afb9f6e6031a}\label{class_mandelbrot_a41edcc618b65717d6511afb9f6e6031a}} 
+int {\bfseries my\+Threads}
+\item 
+\mbox{\Hypertarget{class_mandelbrot_ae42189a68d6c97ba7614888eb20f07f0}\label{class_mandelbrot_ae42189a68d6c97ba7614888eb20f07f0}} 
+unsigned int {\bfseries my\+Depth}
+\item 
+\mbox{\Hypertarget{class_mandelbrot_a3c79bfb1dd830a8d4d8f766a5bec83a4}\label{class_mandelbrot_a3c79bfb1dd830a8d4d8f766a5bec83a4}} 
+bool {\bfseries my\+Redraw}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Draw a \hyperlink{class_mandelbrot}{Mandelbrot} set. 
+
+Contains the information necessary in order to draw a \hyperlink{class_mandelbrot}{Mandelbrot} set onto a Cartesian\+Canvas.
+
+Can zoom in and out of the screen by scrolling up and down on the mouse wheel (respectively).
+
+Same is true if you click on the left mouse button (zoom in) and right mouse button (zoom out). 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_mandelbrot_ae0c71b1d8894206cb896412ae2fa1529}\label{class_mandelbrot_ae0c71b1d8894206cb896412ae2fa1529}} 
+\index{Mandelbrot@{Mandelbrot}!Mandelbrot@{Mandelbrot}}
+\index{Mandelbrot@{Mandelbrot}!Mandelbrot@{Mandelbrot}}
+\subsubsection{\texorpdfstring{Mandelbrot()}{Mandelbrot()}}
+{\footnotesize\ttfamily Mandelbrot\+::\+Mandelbrot (\begin{DoxyParamCaption}\item[{unsigned}]{threads,  }\item[{unsigned}]{depth }\end{DoxyParamCaption})}
+
+
+
+Explicitly construct a \hyperlink{class_mandelbrot}{Mandelbrot} object. 
+
+Explicit constructor for the \hyperlink{class_mandelbrot}{Mandelbrot} class. 
+\begin{DoxyParams}{Parameters}
+{\em threads} & The number of threads to use in drawing the \hyperlink{class_mandelbrot}{Mandelbrot} object onto the Cartesian\+Canvas. \\
+\hline
+{\em depth} & The number of iterations to go to in order to draw the \hyperlink{class_mandelbrot}{Mandelbrot} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constructed \hyperlink{class_mandelbrot}{Mandelbrot} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_mandelbrot_a886df208f291f5d24d7f8f582962bb84}\label{class_mandelbrot_a886df208f291f5d24d7f8f582962bb84}} 
+\index{Mandelbrot@{Mandelbrot}!````~Mandelbrot@{$\sim$\+Mandelbrot}}
+\index{````~Mandelbrot@{$\sim$\+Mandelbrot}!Mandelbrot@{Mandelbrot}}
+\subsubsection{\texorpdfstring{$\sim$\+Mandelbrot()}{~Mandelbrot()}}
+{\footnotesize\ttfamily virtual Mandelbrot\+::$\sim$\+Mandelbrot (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Destroys a \hyperlink{class_mandelbrot}{Mandelbrot} object and any children of the \hyperlink{class_mandelbrot}{Mandelbrot} class. 
+
+Destructor for the \hyperlink{class_mandelbrot}{Mandelbrot} class and its children. \begin{DoxyNote}{Note}
+Does absolutely nothing. 
+\end{DoxyNote}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_mandelbrot_a4b50829db11e2642b616431ae4e2eacf}\label{class_mandelbrot_a4b50829db11e2642b616431ae4e2eacf}} 
+\index{Mandelbrot@{Mandelbrot}!bindings@{bindings}}
+\index{bindings@{bindings}!Mandelbrot@{Mandelbrot}}
+\subsubsection{\texorpdfstring{bindings()}{bindings()}}
+{\footnotesize\ttfamily void Mandelbrot\+::bindings (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&}]{can }\end{DoxyParamCaption})}
+
+
+
+Binds buttons and/or mouse clicks. 
+
+Binds buttons and/or mouse clicks needed for I/O capabilities.
+
+In this case\+: the mouse wheel, left and right mouse buttons. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Cartesian\+Canvas to have the buttons bound to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Cart is a typedef for Cartesian\+Canvas. 
+\end{DoxyNote}
+\mbox{\Hypertarget{class_mandelbrot_ab7918e4de8f00f73290f110ca7a6cffd}\label{class_mandelbrot_ab7918e4de8f00f73290f110ca7a6cffd}} 
+\index{Mandelbrot@{Mandelbrot}!draw@{draw}}
+\index{draw@{draw}!Mandelbrot@{Mandelbrot}}
+\subsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Mandelbrot\+::draw (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart} \&}]{can }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \hyperlink{class_mandelbrot}{Mandelbrot} object. 
+
+Actually draws the \hyperlink{class_mandelbrot}{Mandelbrot} object onto the Cartesian\+Canvas. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Cartesian\+Canvas to draw on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Can be inherited by children classes who extend the \hyperlink{class_mandelbrot}{Mandelbrot} class. 
+
+Cart is a typedef for Cartesian\+Canvas. 
+\end{DoxyNote}
+
+
+Reimplemented in \hyperlink{class_buddhabrot_a9e65eb7e2cac8737aedec56a7e2c274c}{Buddhabrot}, \hyperlink{class_gradient_mandelbrot_a1d4aa3e44d7d1c2241545b60c79985df}{Gradient\+Mandelbrot}, \hyperlink{class_julia_ab877233424159ca87da6dcf0f0f36e51}{Julia}, and \hyperlink{class_nova_a66935ba0814dfabcae2481c128c336ec}{Nova}.
+
+\mbox{\Hypertarget{class_mandelbrot_aef094f9bb9b2fd1107481b150205ff53}\label{class_mandelbrot_aef094f9bb9b2fd1107481b150205ff53}} 
+\index{Mandelbrot@{Mandelbrot}!manhattan\+Shading@{manhattan\+Shading}}
+\index{manhattan\+Shading@{manhattan\+Shading}!Mandelbrot@{Mandelbrot}}
+\subsubsection{\texorpdfstring{manhattan\+Shading()}{manhattanShading()}}
+{\footnotesize\ttfamily void Mandelbrot\+::manhattan\+Shading (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas} \&}]{can }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Shades the fractal using Manhattan distances. 
+
+This function may be called after the \hyperlink{class_mandelbrot}{Mandelbrot} has finished rendering to do some post-\/procecssing using the distances from non-\/escaped pixels to their nearest escaped pixels, using the average of their Manhattan distances. 
+
+Referenced by Nova\+::draw().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Mandelbrot.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Mandelbrot.\+cpp\end{DoxyCompactItemize}

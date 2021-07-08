@@ -28,7 +28,6 @@
 // Other constants
 #define ARRAY_COLOR ColorFloat(0.5, 0.5, 0.5, 1)    // color value for all arrays (gray)
 #define NUM_COLOR WHITE                             // color value for all numbers
-#define FONT "./assets/freefont/FreeSansBold.ttf"   // font for all text
 #define FONT_SIZE 25                                // font size for all text
 
 using namespace tsgl;

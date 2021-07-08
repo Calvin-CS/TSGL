@@ -1,0 +1,133 @@
+\hypertarget{class_r_w_database}{}\section{R\+W\+Database$<$ Item $>$ Class Template Reference}
+\label{class_r_w_database}\index{R\+W\+Database$<$ Item $>$@{R\+W\+Database$<$ Item $>$}}
+
+
+An abstract database protecting a vector of data.  
+
+
+
+
+{\ttfamily \#include $<$R\+W\+Database.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_r_w_database_ab6e78a49fcfe2e296b7d7695c1404dd5}{R\+W\+Database} ()
+\begin{DoxyCompactList}\small\item\em Default constructor for the \hyperlink{class_r_w_database}{R\+W\+Database} class. \end{DoxyCompactList}\item 
+\hyperlink{class_r_w_database_aed3ea810bc64b4fcb41a8660b3a583de}{R\+W\+Database} (int max)
+\begin{DoxyCompactList}\small\item\em Explicit constructor for the \hyperlink{class_r_w_database}{R\+W\+Database} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_r_w_database_aa09d7c17e7741dcb480f052ff3689299}\label{class_r_w_database_aa09d7c17e7741dcb480f052ff3689299}} 
+int {\bfseries get\+Item\+Count} ()
+\item 
+\mbox{\Hypertarget{class_r_w_database_a11a8f38b6a48e2ede789d0ed7081a737}\label{class_r_w_database_a11a8f38b6a48e2ede789d0ed7081a737}} 
+int {\bfseries get\+Max\+Capacity} ()
+\item 
+Item \hyperlink{class_r_w_database_acb53aad02a38e6e021ba61f63b35ba9a}{read} (unsigned index)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_r_w_database_acb53aad02a38e6e021ba61f63b35ba9a}{read()} returns the Item from the vector at an index \end{DoxyCompactList}\item 
+void \hyperlink{class_r_w_database_acfdb85c4ae5201e9997265c6d44a3111}{write} (Item it, unsigned index)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_r_w_database_acfdb85c4ae5201e9997265c6d44a3111}{write()} sets an item at an index \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_r_w_database_a27c74ad4eb0048078b6c395883fbf1e4}\label{class_r_w_database_a27c74ad4eb0048078b6c395883fbf1e4}} 
+std\+::vector$<$ Item $>$ {\bfseries vec}
+\item 
+\mbox{\Hypertarget{class_r_w_database_a219c4621156200ef43c1508e16ee672f}\label{class_r_w_database_a219c4621156200ef43c1508e16ee672f}} 
+unsigned {\bfseries max\+Capacity}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class Item$>$\newline
+class R\+W\+Database$<$ Item $>$}
+
+An abstract database protecting a vector of data. 
+
+Database has its locks and a vector
+
+Locking methods must be implemented in subclass, giving priority to different types of threads. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_r_w_database_ab6e78a49fcfe2e296b7d7695c1404dd5}\label{class_r_w_database_ab6e78a49fcfe2e296b7d7695c1404dd5}} 
+\index{R\+W\+Database@{R\+W\+Database}!R\+W\+Database@{R\+W\+Database}}
+\index{R\+W\+Database@{R\+W\+Database}!R\+W\+Database@{R\+W\+Database}}
+\subsubsection{\texorpdfstring{R\+W\+Database()}{RWDatabase()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+\hyperlink{class_r_w_database}{R\+W\+Database}$<$ Item $>$\+::\hyperlink{class_r_w_database}{R\+W\+Database} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default constructor for the \hyperlink{class_r_w_database}{R\+W\+Database} class. 
+
+\begin{DoxyReturn}{Returns}
+\+: The constructed \hyperlink{class_r_w_database}{R\+W\+Database} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_r_w_database_aed3ea810bc64b4fcb41a8660b3a583de}\label{class_r_w_database_aed3ea810bc64b4fcb41a8660b3a583de}} 
+\index{R\+W\+Database@{R\+W\+Database}!R\+W\+Database@{R\+W\+Database}}
+\index{R\+W\+Database@{R\+W\+Database}!R\+W\+Database@{R\+W\+Database}}
+\subsubsection{\texorpdfstring{R\+W\+Database()}{RWDatabase()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+\hyperlink{class_r_w_database}{R\+W\+Database}$<$ Item $>$\+::\hyperlink{class_r_w_database}{R\+W\+Database} (\begin{DoxyParamCaption}\item[{int}]{max }\end{DoxyParamCaption})}
+
+
+
+Explicit constructor for the \hyperlink{class_r_w_database}{R\+W\+Database} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em max,an} & int describing the maximum size of the contained vector \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The constructed \hyperlink{class_r_w_database}{R\+W\+Database} object. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_r_w_database_acb53aad02a38e6e021ba61f63b35ba9a}\label{class_r_w_database_acb53aad02a38e6e021ba61f63b35ba9a}} 
+\index{R\+W\+Database@{R\+W\+Database}!read@{read}}
+\index{read@{read}!R\+W\+Database@{R\+W\+Database}}
+\subsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+Item \hyperlink{class_r_w_database}{R\+W\+Database}$<$ Item $>$\+::read (\begin{DoxyParamCaption}\item[{unsigned}]{index }\end{DoxyParamCaption})}
+
+
+
+\hyperlink{class_r_w_database_acb53aad02a38e6e021ba61f63b35ba9a}{read()} returns the Item from the vector at an index 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index,an} & index in the vector to access a piece of data \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Reader\+::\+Reader(), and Writer\+::\+Writer().
+
+\mbox{\Hypertarget{class_r_w_database_acfdb85c4ae5201e9997265c6d44a3111}\label{class_r_w_database_acfdb85c4ae5201e9997265c6d44a3111}} 
+\index{R\+W\+Database@{R\+W\+Database}!write@{write}}
+\index{write@{write}!R\+W\+Database@{R\+W\+Database}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily template$<$class Item$>$ \\
+void \hyperlink{class_r_w_database}{R\+W\+Database}$<$ Item $>$\+::write (\begin{DoxyParamCaption}\item[{Item}]{it,  }\item[{unsigned}]{index }\end{DoxyParamCaption})}
+
+
+
+\hyperlink{class_r_w_database_acfdb85c4ae5201e9997265c6d44a3111}{write()} sets an item at an index 
+
+
+\begin{DoxyParams}{Parameters}
+{\em it,an} & Item to add to the vector \\
+\hline
+{\em index,the} & index to add the Item it \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Writer\+::\+Writer().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/R\+W\+Database.\+h\end{DoxyCompactItemize}

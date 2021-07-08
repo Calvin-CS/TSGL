@@ -89,8 +89,6 @@ int main(int argc, char * argv[]) {
 		queueBackground->drawLine(-INNERRAD*sin(langle), INNERRAD*cos(langle) + centerY,0, -OUTERRAD*sin(langle), OUTERRAD*cos(langle)+centerY,0, 0,0,0, BLACK);
 	}
 
-	const std::string FONT = "./assets/freefont/FreeSerif.ttf";
-
 	//Add notes to bottom of main Canvas
 	queueBackground->drawText(0,-WINDOW_HEIGHT/2+20, 0, L"*Numbers indicate counts of items produced and consumed", FONT, 20, 0,0,0, BLACK);
 	// Label Readers and Writers

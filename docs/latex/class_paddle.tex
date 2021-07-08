@@ -1,0 +1,137 @@
+\hypertarget{class_paddle}{}\section{Paddle Class Reference}
+\label{class_paddle}\index{Paddle@{Paddle}}
+
+
+How can you hit a ball without a paddle?  
+
+
+
+
+{\ttfamily \#include $<$Paddle.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_paddle_a5c98ebac2d944073072225b1bb11180a}{Paddle} (\hyperlink{classtsgl_1_1_canvas}{Canvas} \&can, int \&speed, int side)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \hyperlink{class_paddle}{Paddle} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_paddle_ab90901e8e4a4cbf0c99c537583b6ee30}{bindings} (\hyperlink{classtsgl_1_1_canvas}{Canvas} \&can, int side)
+\begin{DoxyCompactList}\small\item\em Binds the buttons. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_paddle_af18182f0940b764f8e47992f77d3c9dd}\label{class_paddle_af18182f0940b764f8e47992f77d3c9dd}} 
+void {\bfseries draw} (\hyperlink{classtsgl_1_1_canvas}{Canvas} \&can, int side)
+\item 
+\mbox{\Hypertarget{class_paddle_a05d45fe2ca65d7baade4162c56a478f0}\label{class_paddle_a05d45fe2ca65d7baade4162c56a478f0}} 
+void \hyperlink{class_paddle_a05d45fe2ca65d7baade4162c56a478f0}{increment} ()
+\begin{DoxyCompactList}\small\item\em Increments the \hyperlink{class_paddle}{Paddle} object\textquotesingle{}s score in the game of \hyperlink{class_pong}{Pong}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_paddle_af7552932092d5618b971cd67cefc485f}\label{class_paddle_af7552932092d5618b971cd67cefc485f}} 
+void \hyperlink{class_paddle_af7552932092d5618b971cd67cefc485f}{move} ()
+\begin{DoxyCompactList}\small\item\em Actually Moves the \hyperlink{class_paddle}{Paddle} object up or down. \end{DoxyCompactList}\item 
+int \hyperlink{class_paddle_a4425cbb3e6160de003c7fd364a9ad14b}{get\+Points} () const
+\begin{DoxyCompactList}\small\item\em Accessor for the score of the \hyperlink{class_paddle}{Paddle} object. \end{DoxyCompactList}\item 
+float \hyperlink{class_paddle_ab27981223156aa4a2b03203733514a6d}{getY} () const
+\begin{DoxyCompactList}\small\item\em Accessor for the current y-\/coordinate of the \hyperlink{class_paddle}{Paddle} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_paddle_a5f23f811b810d1f4a84b25357bc86e94}{set\+Dir} (int direction)
+\begin{DoxyCompactList}\small\item\em Mutator for the direction of the \hyperlink{class_paddle}{Paddle} object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_paddle_ac03c6b92f0b9cd2e67edff4c318ad030}\label{class_paddle_ac03c6b92f0b9cd2e67edff4c318ad030}} 
+\hyperlink{class_paddle_ac03c6b92f0b9cd2e67edff4c318ad030}{$\sim$\+Paddle} ()
+\begin{DoxyCompactList}\small\item\em Destroys the \hyperlink{class_paddle}{Paddle} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+How can you hit a ball without a paddle? 
+
+class \hyperlink{class_paddle}{Paddle}
+
+Creates a \hyperlink{class_paddle}{Paddle} in order to play the game, \hyperlink{class_pong}{Pong}.
+
+The W and S keys move the left paddle, the Up and Down arrow keys move the right paddle in the game.
+
+Collisions with the ball are not handled here; they are handled in the \hyperlink{class_pong}{Pong} class\textquotesingle{} draw() method.
+
+The left and right paddles in the game are created from this class; they are essentially the same object. However, there are side parameters in some of the methods that determine which side to place the \hyperlink{class_paddle}{Paddle} object on and how to treat the \hyperlink{class_paddle}{Paddle} object (either as the left or the right paddle in the game). The \hyperlink{class_pong}{Pong} class handles how to distribute points to the \hyperlink{class_paddle}{Paddle} objects in the game (the \hyperlink{class_paddle}{Paddle} class only has an \hyperlink{class_paddle_a05d45fe2ca65d7baade4162c56a478f0}{increment()} method that increments its score counter; the \hyperlink{class_pong}{Pong} class determines which object should call that method when a point is earned). \begin{DoxySeeAlso}{See also}
+\hyperlink{class_ball}{Ball} class, \hyperlink{class_pong}{Pong} class. 
+\end{DoxySeeAlso}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_paddle_a5c98ebac2d944073072225b1bb11180a}\label{class_paddle_a5c98ebac2d944073072225b1bb11180a}} 
+\index{Paddle@{Paddle}!Paddle@{Paddle}}
+\index{Paddle@{Paddle}!Paddle@{Paddle}}
+\subsubsection{\texorpdfstring{Paddle()}{Paddle()}}
+{\footnotesize\ttfamily Paddle\+::\+Paddle (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} \&}]{can,  }\item[{int \&}]{speed,  }\item[{int}]{side }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \hyperlink{class_paddle}{Paddle} object. 
+
+Explicit constructor for a \hyperlink{class_paddle}{Paddle} object. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Canvas to have the \hyperlink{class_paddle}{Paddle} object on. \\
+\hline
+{\em speed} & Reference to the speed of the \hyperlink{class_paddle}{Paddle} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constructed \hyperlink{class_paddle}{Paddle} object. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_paddle_ab90901e8e4a4cbf0c99c537583b6ee30}\label{class_paddle_ab90901e8e4a4cbf0c99c537583b6ee30}} 
+\index{Paddle@{Paddle}!bindings@{bindings}}
+\index{bindings@{bindings}!Paddle@{Paddle}}
+\subsubsection{\texorpdfstring{bindings()}{bindings()}}
+{\footnotesize\ttfamily void Paddle\+::bindings (\begin{DoxyParamCaption}\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} \&}]{can,  }\item[{int}]{side }\end{DoxyParamCaption})}
+
+
+
+Binds the buttons. 
+
+Binds the buttons with the Canvas. In this case, the keys that move the paddle up and down. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Canvas to bind the keys to. \\
+\hline
+{\em side} & The side that the \hyperlink{class_paddle}{Paddle} object is on (left = -\/1 and the W and S keys are bound, right = 1 and the Up and Down arrow keys are bound). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_paddle_a4425cbb3e6160de003c7fd364a9ad14b}\label{class_paddle_a4425cbb3e6160de003c7fd364a9ad14b}} 
+\index{Paddle@{Paddle}!get\+Points@{get\+Points}}
+\index{get\+Points@{get\+Points}!Paddle@{Paddle}}
+\subsubsection{\texorpdfstring{get\+Points()}{getPoints()}}
+{\footnotesize\ttfamily int Paddle\+::get\+Points (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Accessor for the score of the \hyperlink{class_paddle}{Paddle} object. 
+
+\begin{DoxyReturn}{Returns}
+my\+Points The current score of the \hyperlink{class_paddle}{Paddle} object in the game of \hyperlink{class_pong}{Pong}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_paddle_ab27981223156aa4a2b03203733514a6d}\label{class_paddle_ab27981223156aa4a2b03203733514a6d}} 
+\index{Paddle@{Paddle}!getY@{getY}}
+\index{getY@{getY}!Paddle@{Paddle}}
+\subsubsection{\texorpdfstring{get\+Y()}{getY()}}
+{\footnotesize\ttfamily float Paddle\+::getY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Accessor for the current y-\/coordinate of the \hyperlink{class_paddle}{Paddle} object. 
+
+\begin{DoxyReturn}{Returns}
+myY The y-\/coordinate of the \hyperlink{class_paddle}{Paddle} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_paddle_a5f23f811b810d1f4a84b25357bc86e94}\label{class_paddle_a5f23f811b810d1f4a84b25357bc86e94}} 
+\index{Paddle@{Paddle}!set\+Dir@{set\+Dir}}
+\index{set\+Dir@{set\+Dir}!Paddle@{Paddle}}
+\subsubsection{\texorpdfstring{set\+Dir()}{setDir()}}
+{\footnotesize\ttfamily void Paddle\+::set\+Dir (\begin{DoxyParamCaption}\item[{int}]{direction }\end{DoxyParamCaption})}
+
+
+
+Mutator for the direction of the \hyperlink{class_paddle}{Paddle} object. 
+
+Changes the current direction of the \hyperlink{class_paddle}{Paddle} object (up or down). 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Pong/Paddle.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Pong/Paddle.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,201 @@
+\hypertarget{class_life_farm}{}\section{Life\+Farm Class Reference}
+\label{class_life_farm}\index{Life\+Farm@{Life\+Farm}}
+
+
+Simulate Conway\textquotesingle{}s Game of Life!  
+
+
+
+
+{\ttfamily \#include $<$Life\+Farm.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_life_farm_a3efbe8593fe83e366118f3fd6c5c2602}{Life\+Farm} (int w, int h, \hyperlink{classtsgl_1_1_canvas}{Canvas} $\ast$can, bool randomize)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \hyperlink{class_life_farm}{Life\+Farm} object. \end{DoxyCompactList}\item 
+\hyperlink{class_life_farm_a364e73979cc9f09718273a65ab95fda1}{$\sim$\+Life\+Farm} ()
+\begin{DoxyCompactList}\small\item\em Destroy a \hyperlink{class_life_farm}{Life\+Farm} object. \end{DoxyCompactList}\item 
+void \hyperlink{class_life_farm_ac7ca1a0ae94a971bd04a699f99965b00}{add\+Ant} (int x, int y)
+\begin{DoxyCompactList}\small\item\em Add an ant. \end{DoxyCompactList}\item 
+void \hyperlink{class_life_farm_a3a7fdaa21bdc3d302960b3ea83be95df}{move\+Ants} ()
+\begin{DoxyCompactList}\small\item\em Move the ants. \end{DoxyCompactList}\item 
+void \hyperlink{class_life_farm_a4dce4424b7820fd64d7ec489a9606f87}{move\+Ants\+Old} ()
+\begin{DoxyCompactList}\small\item\em Move the ants. \end{DoxyCompactList}\item 
+void \hyperlink{class_life_farm_ab4dfccfcf0cb2ac83466223b8bb4c237}{move\+Ants\+New} ()
+\begin{DoxyCompactList}\small\item\em Move the ants. \end{DoxyCompactList}\item 
+void \hyperlink{class_life_farm_a90d784b157199edccf818ce3524a061a}{set\+Drawdead} (bool b)
+\begin{DoxyCompactList}\small\item\em Draw \char`\"{}dead\char`\"{} ants. \end{DoxyCompactList}\item 
+void \hyperlink{class_life_farm_aa23a45af1c6a7fd82d7fcca51d864487}{life} (int $\ast$current, int $\ast$fresh)
+\begin{DoxyCompactList}\small\item\em Give life to the ants! \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_life_farm_a2f484e44dc4df664a5f9a32761a19af9}\label{class_life_farm_a2f484e44dc4df664a5f9a32761a19af9}} 
+int {\bfseries width}
+\item 
+\mbox{\Hypertarget{class_life_farm_a63e58d91a3f7aee59886f89fd0230c2d}\label{class_life_farm_a63e58d91a3f7aee59886f89fd0230c2d}} 
+int {\bfseries height}
+\item 
+\mbox{\Hypertarget{class_life_farm_a1ef07c284a5a6c09670824a1feb258a0}\label{class_life_farm_a1ef07c284a5a6c09670824a1feb258a0}} 
+int {\bfseries size}
+\item 
+\mbox{\Hypertarget{class_life_farm_a06cc91dafd92d6487e416cbec539df38}\label{class_life_farm_a06cc91dafd92d6487e416cbec539df38}} 
+\hyperlink{classtsgl_1_1_canvas}{Canvas} $\ast$ {\bfseries can}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simulate Conway\textquotesingle{}s Game of Life! 
+
+Contains the data and methods needed in order to simulate Conway\textquotesingle{}s Game of Life.
+
+see \href{https://en.wikipedia.org/wiki/Conway's_Game_of_Life}{\tt https\+://en.\+wikipedia.\+org/wiki/\+Conway\textquotesingle{}s\+\_\+\+Game\+\_\+of\+\_\+\+Life} for more details on what Conway\textquotesingle{}s Game of Life is. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_life_farm_a3efbe8593fe83e366118f3fd6c5c2602}\label{class_life_farm_a3efbe8593fe83e366118f3fd6c5c2602}} 
+\index{Life\+Farm@{Life\+Farm}!Life\+Farm@{Life\+Farm}}
+\index{Life\+Farm@{Life\+Farm}!Life\+Farm@{Life\+Farm}}
+\subsubsection{\texorpdfstring{Life\+Farm()}{LifeFarm()}}
+{\footnotesize\ttfamily Life\+Farm\+::\+Life\+Farm (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h,  }\item[{\hyperlink{classtsgl_1_1_canvas}{Canvas} $\ast$}]{can,  }\item[{bool}]{randomize }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \hyperlink{class_life_farm}{Life\+Farm} object. 
+
+Explicit constructor for the \hyperlink{class_life_farm}{Life\+Farm} class. 
+\begin{DoxyParams}{Parameters}
+{\em w} & The width of the \hyperlink{class_life_farm}{Life\+Farm} object. \\
+\hline
+{\em h} & The height of the \hyperlink{class_life_farm}{Life\+Farm} object. \\
+\hline
+{\em can} & Pointer to the Canvas to draw to. \\
+\hline
+{\em randomize} & Determines if we should randomize the motion of the ants that are currently in the \hyperlink{class_life_farm}{Life\+Farm} object. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_life_farm_a364e73979cc9f09718273a65ab95fda1}\label{class_life_farm_a364e73979cc9f09718273a65ab95fda1}} 
+\index{Life\+Farm@{Life\+Farm}!````~Life\+Farm@{$\sim$\+Life\+Farm}}
+\index{````~Life\+Farm@{$\sim$\+Life\+Farm}!Life\+Farm@{Life\+Farm}}
+\subsubsection{\texorpdfstring{$\sim$\+Life\+Farm()}{~LifeFarm()}}
+{\footnotesize\ttfamily Life\+Farm\+::$\sim$\+Life\+Farm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy a \hyperlink{class_life_farm}{Life\+Farm} object. 
+
+Destructor for the \hyperlink{class_life_farm}{Life\+Farm} class. \begin{DoxyReturn}{Returns}
+Frees up any allocated memory to a \hyperlink{class_life_farm}{Life\+Farm} object. 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_life_farm_ac7ca1a0ae94a971bd04a699f99965b00}\label{class_life_farm_ac7ca1a0ae94a971bd04a699f99965b00}} 
+\index{Life\+Farm@{Life\+Farm}!add\+Ant@{add\+Ant}}
+\index{add\+Ant@{add\+Ant}!Life\+Farm@{Life\+Farm}}
+\subsubsection{\texorpdfstring{add\+Ant()}{addAnt()}}
+{\footnotesize\ttfamily void Life\+Farm\+::add\+Ant (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Add an ant. 
+
+Adds an ant to the \hyperlink{class_life_farm}{Life\+Farm} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the ant in the \hyperlink{class_life_farm}{Life\+Farm} object. \\
+\hline
+{\em y} & The y coordinate of the ant in the \hyperlink{class_life_farm}{Life\+Farm} object. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Life\+Farm(), and move\+Ants\+Old().
+
+\mbox{\Hypertarget{class_life_farm_aa23a45af1c6a7fd82d7fcca51d864487}\label{class_life_farm_aa23a45af1c6a7fd82d7fcca51d864487}} 
+\index{Life\+Farm@{Life\+Farm}!life@{life}}
+\index{life@{life}!Life\+Farm@{Life\+Farm}}
+\subsubsection{\texorpdfstring{life()}{life()}}
+{\footnotesize\ttfamily void Life\+Farm\+::life (\begin{DoxyParamCaption}\item[{int $\ast$}]{current,  }\item[{int $\ast$}]{fresh }\end{DoxyParamCaption})}
+
+
+
+Give life to the ants! 
+
+Makes the ants come alive by keeping track of their current positions and next state positions. 
+\begin{DoxyParams}{Parameters}
+{\em $\ast$current} & A pointer to an array of current states that the ants are in during the game. \\
+\hline
+{\em $\ast$fresh} & A pointer to an array of next states that the ants are going to be in during the game. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by move\+Ants\+New().
+
+\mbox{\Hypertarget{class_life_farm_a3a7fdaa21bdc3d302960b3ea83be95df}\label{class_life_farm_a3a7fdaa21bdc3d302960b3ea83be95df}} 
+\index{Life\+Farm@{Life\+Farm}!move\+Ants@{move\+Ants}}
+\index{move\+Ants@{move\+Ants}!Life\+Farm@{Life\+Farm}}
+\subsubsection{\texorpdfstring{move\+Ants()}{moveAnts()}}
+{\footnotesize\ttfamily void Life\+Farm\+::move\+Ants (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Move the ants. 
+
+Move the ants that are currently in the \hyperlink{class_life_farm}{Life\+Farm} object. \begin{DoxyNote}{Note}
+This method class \hyperlink{class_life_farm_a4dce4424b7820fd64d7ec489a9606f87}{move\+Ants\+Old()}. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\hyperlink{class_life_farm_a4dce4424b7820fd64d7ec489a9606f87}{move\+Ants\+Old()} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_life_farm_ab4dfccfcf0cb2ac83466223b8bb4c237}\label{class_life_farm_ab4dfccfcf0cb2ac83466223b8bb4c237}} 
+\index{Life\+Farm@{Life\+Farm}!move\+Ants\+New@{move\+Ants\+New}}
+\index{move\+Ants\+New@{move\+Ants\+New}!Life\+Farm@{Life\+Farm}}
+\subsubsection{\texorpdfstring{move\+Ants\+New()}{moveAntsNew()}}
+{\footnotesize\ttfamily void Life\+Farm\+::move\+Ants\+New (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Move the ants. 
+
+This method moves the ants around to new positions. \begin{DoxySeeAlso}{See also}
+\hyperlink{class_life_farm_a4dce4424b7820fd64d7ec489a9606f87}{move\+Ants\+Old()} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_life_farm_a4dce4424b7820fd64d7ec489a9606f87}\label{class_life_farm_a4dce4424b7820fd64d7ec489a9606f87}} 
+\index{Life\+Farm@{Life\+Farm}!move\+Ants\+Old@{move\+Ants\+Old}}
+\index{move\+Ants\+Old@{move\+Ants\+Old}!Life\+Farm@{Life\+Farm}}
+\subsubsection{\texorpdfstring{move\+Ants\+Old()}{moveAntsOld()}}
+{\footnotesize\ttfamily void Life\+Farm\+::move\+Ants\+Old (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Move the ants. 
+
+This method is called first in order to move the ants around in the \hyperlink{class_life_farm}{Life\+Farm} object. \begin{DoxySeeAlso}{See also}
+\hyperlink{class_life_farm_ab4dfccfcf0cb2ac83466223b8bb4c237}{move\+Ants\+New()} 
+\end{DoxySeeAlso}
+
+
+Referenced by move\+Ants().
+
+\mbox{\Hypertarget{class_life_farm_a90d784b157199edccf818ce3524a061a}\label{class_life_farm_a90d784b157199edccf818ce3524a061a}} 
+\index{Life\+Farm@{Life\+Farm}!set\+Drawdead@{set\+Drawdead}}
+\index{set\+Drawdead@{set\+Drawdead}!Life\+Farm@{Life\+Farm}}
+\subsubsection{\texorpdfstring{set\+Drawdead()}{setDrawdead()}}
+{\footnotesize\ttfamily void Life\+Farm\+::set\+Drawdead (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption})}
+
+
+
+Draw \char`\"{}dead\char`\"{} ants. 
+
+Determines if we should draw ants that have \char`\"{}died\char`\"{} in the game. 
+\begin{DoxyParams}{Parameters}
+{\em b} & A boolean that determines if we should draw the dead ants or not. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Conway/Life\+Farm.\+h\item 
+/home/sth5/test/\+T\+S\+G\+L/src/examples/\+Conway/Life\+Farm.\+cpp\end{DoxyCompactItemize}
