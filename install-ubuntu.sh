@@ -223,6 +223,8 @@ then
 	echo ""
 else
 	echo "export TSGL_HOME=/usr" >> ~/.bashrc
+	echo "export TSGL_DEFAULT_FONT=/include/TSGL/assets/freefont/FreeSansBold.ttf" >> ~/.bashrc
+	echo "export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0" >> ~/.bashrc
 	source ~/.bashrc
 fi
 
