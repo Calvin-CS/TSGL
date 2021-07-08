@@ -20,4 +20,11 @@
 #include <TSGL/Util.h>
 #include <TSGL/VisualTaskQueue.h>
 
+namespace tsgl {
+
+const std::string TSGL_HOME_PATH = std::getenv("TSGL_HOME");
+const std::string TSGL_DEFAULT_FONT_PATH = std::getenv("TSGL_DEFAULT_FONT");
+const std::string FONT = TSGL_HOME_PATH + TSGL_DEFAULT_FONT_PATH;
+
+}
 #endif /* TSGL_H_ */

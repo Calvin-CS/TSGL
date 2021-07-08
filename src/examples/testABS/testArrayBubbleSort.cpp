@@ -10,6 +10,7 @@
 #include <iostream>
 #include <filesystem>
 #include "CubeArray.h"
+#include <tsgl.h>
 using namespace std;
 
 // Size constants
@@ -31,15 +32,15 @@ using namespace std;
 #define FINISHED_COLOR ColorFloat(0, 0.6, 0, 1)     // color value for sorted numbers (green)
 //#define TSGL_HOME std::getenv("TSGL_HOME") 
 
-const string TSGL_HOME_PATH=getenv("TSGL_HOME");
-const string TSGL_DEFAULT_FONT_PATH=getenv("TSGL_DEFAULT_FONT");
-const string FONT = TSGL_HOME_PATH + TSGL_DEFAULT_FONT_PATH;
+//const string TSGL_HOME_PATH=getenv("TSGL_HOME");
+//const string TSGL_DEFAULT_FONT_PATH=getenv("TSGL_DEFAULT_FONT");
+//const string FONT = TSGL_HOME_PATH + TSGL_DEFAULT_FONT_PATH;
 
 //const string curr_path = filesystem::current_path();
 //int pos = curr_path.find("TSGL");
 //const string FONT = curr_path.substr(0, pos) + "TSGL/assets/freefont/FreeSansBold.ttf";
 
-//#define FONT "/usr/local/include/TSGL/assets/freefont/FreeSansBold.ttf"  // font for all text
+//#define FONT "/usr/include/TSGL/assets/freefont/FreeSansBold.ttf"  // font for all text
 #define FONT_SIZE 35                                // font size for all text
 
 using namespace tsgl;
