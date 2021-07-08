@@ -36,7 +36,7 @@ void progressBarFunction(Canvas& can, int numThreads) {
     can.add(pb);
     for (int i = 0; i < SEGS; ++i) {
         float w = pb->getWidth();
-        bg->drawText(pb->getCenterX() - w/2 + i*w/SEGS + 10, pb->getCenterY() + pb->getHeight()+8, 0, std::to_wstring(i), "./assets/freefont/FreeSerif.ttf", 36, 0,0,0, BLACK);
+        bg->drawText(pb->getCenterX() - w/2 + i*w/SEGS + 10, pb->getCenterY() + pb->getHeight()+8, 0, std::to_wstring(i), FONT, 36, 0,0,0, BLACK);
     }
     while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();   //Removed the timer and replaced it with an internal timer in the Canvas class
