@@ -7,7 +7,6 @@
 #include <tsgl.h>
 #include <cmath>
 #include <ctime>
-#define FONT "/usr/local/include/TSGL/assets/freefont/FreeSansBold.ttf"
 #define zDelta 10
 #define obRoll 45.0
 #define OBJECT_Y -53.0
