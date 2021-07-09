@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     int size = x2 - x1;
 
     // draw title and 2D grid (yellow) to canvas
-    bgp->drawText(-225,300,0,"0-1 Knapsack Problem",FONT,30,0,0,0,BLACK);
+    bgp->drawText(-125,300,0,"0-1 Knapsack Problem",FONT,30,0,0,0,BLACK);
     //c.drawRectangle(x1,y1,x2,y2,YELLOW,true);
 
     // set number of threads as a parameter from command line; default is 2

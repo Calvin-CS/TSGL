@@ -14,10 +14,10 @@ ifeq ($(UNAME), Linux)
 	OS_LFLAGS :=
 	OS_INCLUDE :=
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
-	OS_EXTRA_LIB := -L/usr/lib 
+	OS_EXTRA_LIB := -L$(TSGL_HOME)/lib 
 	OS_GLFW := glfw
 	OS_GL := -lGL
-	OS_EXTRA_LINK := -Wl,-rpath=/usr/lib/
+	OS_EXTRA_LINK := -Wl,-rpath=$(TSGL_HOME)/lib/
 endif
 
 #Mac
@@ -33,23 +33,13 @@ endif
 
 #Compiler flags
 CXXFLAGS=-c -O3 -g3 \
-    -Wall -Wextra -pedantic-errors \
-    -D__GXX_EXPERIMENTAL_CXX0X__ \
-    -I/usr/include/TSGL/ \
-    -I/usr/include/ \
-	-I/usr/include/freetype2 \
-	-I/usr/include/freetype2/freetype \
-	-I/usr/include/TSGL \
-    -I/opt/AMDAPP/include/ \
-    ${OS_INCLUDE} \
-	-I/usr/include/freetype2/freetype  \
-	-I/usr/include/freetype2/ \
-    -std=c++0x -fopenmp \
-    -Wno-unused-function #Supress warnings
+    -I$(TSGL_HOME)/include/TSGL/ \
+    -I$(TSGL_HOME)/include/freetype2 \
+    -std=c++0x -fopenmp
 
 #Linking flags
 LFLAGS=-o $(TARGET) \
-    -L/usr/lib/ \
+    -L$(TSGL_HOME)/lib/ \
 	${OS_EXTRA_LIB} \
     -L/opt/X11/lib \
     ${OS_LDIRS} \
