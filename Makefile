@@ -7,7 +7,6 @@ AR=ar
 CC=g++
 RM=rm -f
 INSTALL=/usr/bin/install
-PREFIX=/usr
 
 SRC_PATH=src/TSGL/
 TESTS_PATH=src/tests/
@@ -45,16 +44,18 @@ ifeq ($(UNAME), Darwin)
 	OS_EXTRA_LIB :=
 	OS_GL :=
 	OS_OMP := -fopenmp -lomp
-	OS_COMPILER := -std=c++0x
+	OS_COMPILER := -std=c++11
 endif
 
 CXXFLAGS = -O3 -g3 -ggdb3 \
-        -I/usr/include/TSGL \
-	-I${SRC_PATH}/ \
-	-I/usr/include/freetype2 \
+        -I$(TSGL_HOME)/include \
+	-I${SRC_PATH} \
+	-Isrc \
+	-I$(TSGL_HOME)/include/freetype2 \
 
 LFLAGS=-Llib/ \
 	-L/usr/lib \
+	-L$(TSGL_HOME)/lib \
 	${OS_EXTRA_LIB} \
 	-L/usr/X11/lib/ \
 	${OS_LDIRS} \
@@ -119,6 +120,9 @@ cleandocs:
 
 # -include build/*.d
 
+
+PREFIX=$(prefix)
+
 #install
 ifeq ($(UNAME), Linux)
 install:
@@ -128,9 +132,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
-	cp -r assets/ /usr/include/TSGL
-	cp -r stb/ /usr/include
-	cp src/TSGL/tsgl.h /usr/include
+	cp src/tsgl.h $(PREFIX)/include
+	cp -r assets/ $(PREFIX)/include/TSGL
+	cp -r src/stb/ $(PREFIX)/include
 endif
 ifeq ($(UNAME), CYGWIN_NT-10.0)
 install:
@@ -140,9 +144,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.dll $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
-	cp -r assets/ /usr/include/TSGL
-	cp -r stb/ /usr/include
-	cp src/TSGL/tsgl.h /usr/include
+	cp src/tsgl.h $(PREFIX)/include
+	cp -r assets/ $(PREFIX)/include/TSGL
+	cp -r src/stb/ $(PREFIX)/include
 endif
 ifeq ($(UNAME), Darwin)
 install:
@@ -152,10 +156,9 @@ install:
 	install -m 0644 lib/libtsgl.a $(PREFIX)/lib
 	install -m 0755 lib/libtsgl.so $(PREFIX)/lib
 	cp -r src/TSGL $(PREFIX)/include
-	cp -r stb $(PREFIX)/include
-	cp -r assets/ /usr/include/TSGL
-	cp -r stb/ /usr/include
-	cp src/TSGL/tsgl.h /usr/include
+	cp src/tsgl.h $(PREFIX)/include
+	cp -r src/stb $(PREFIX)/include
+	cp -r assets $(PREFIX)/include/TSGL
 endif
 
 build/build: ${HEADERS} ${SOURCES} ${TESTS}

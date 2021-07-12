@@ -6,16 +6,23 @@
 # -SUBJECT TO CHANGE-
 ################################################################
 
+if [[ $1 ]]
+then
+        PREFIX=$1
+        echo Install location $PREFIX
+else
+        echo Install location /usr
+        PREFIX=/usr
+fi
 echo "Installing TSGL..."
 
-#Determine the OpenGL version (has to be 3.2 or higher)
+#Determine the OpenGL version (has to be 3.0 or higher)
 #(Use glxinfo, available in the mesa-utils package)
-sudo apt-get install mesa-utils
-
 echo 
 echo "Checking OpenGL version (must be 3.0 or higher)..."
 
-sudo apt-get install mesa-utils
+sudo apt-get -y update
+sudo apt-get -y install mesa-utils
 
 GLVersInfo=$(glxinfo | grep OpenGL)
 
@@ -30,138 +37,57 @@ GLVersNum=$(echo "$GLVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
 #http://tldp.org/LDP/abs/html/comparison-ops.html
 #Check if the version is less than the threshold
-if [ "$GLVersNum" \< "3.0" ]
-then
-	echo "Your version of GL is: $GLVersNum."
-	echo "You need at least OpenGL version 3.0 or greater."
-	echo "Please update your drivers in order to continue."
-	echo "Try the following command to update your drivers:"
-	echo
-	echo "sudo ubuntu-drivers autoinstall"
-	echo  
-	echo "Abort."
-	exit 1
-else
-	echo "OpenGL version is sufficient to continue."
-fi
+#if [ "$GLVersNum" \< "3.0" ]
+#then
+#	echo "Your version of GL is: $GLVersNum."
+#	echo "You need at least OpenGL version 3.0 or greater."
+#	echo "Please update your drivers in order to continue."
+#	echo "Try the following command to update your drivers:"
+#	echo
+#	echo "sudo ubuntu-drivers autoinstall"
+#	echo  
+#	echo "Abort."
+#	exit 1
+#else
+#	echo "OpenGL version is sufficient to continue."
+#fi
 
 echo "Checking for g++..."
-
 echo
 
-gVersCheck=$(g++ --version)
+#check if g++ is installed
+#g corresponds to g++ (not allowed to have ++ in a variable name)g++
 
-#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
-#Get a string containing the version number.
-gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
+echo "Checking g++ version"
+echo "You need at least g++ 4.8 in order to continue"
 
-#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-#Get the version number from the version string.
-gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+gVersion=$(g++ --version | grep Ubuntu* | cut -d ' ' -f 4)
 
-#http://tldp.org/LDP/abs/html/comparison-ops.html
-#Check if the version number is null...
-if [ -z "$gVersNum" ]
+if [ -z "$gVersion" ]
 then
-	#Yep. g++ is NOT installed.
-	echo "g++ not installed!"
-	echo "Installing  g++..."
-	sudo apt-get install g++
-	
-	#Update versioning info
-	gVersCheck=$(g++ --version)
+	echo "g++ is not installed"
 
-	gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
-
-	#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-	#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-	gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-
+	sudo apt-get -y upgrade
+	sudo apt-get -y install g++
 else
-
-	echo "g++ already installed."
-
-	#No. Check the version.
-	if [ "$gVersNum" \< "4.8" ]
-	then
-		echo "The version of g++ is: $gVersNum."
-		echo "You need at least g++ 4.8 or greater in order to continue."
-		echo "I can install a greater version of g++ for you."
-		echo "Would you like me to do that? (1 = Yes, 2 = No)"
-		#Adapted from: http://stackoverflow.com/questions/226703/how-do-i-prompt-for-input-in-a-linux-shell-script
-		#Get the choice from the user.
-		select choice in "Yes" "No"; do		
-		case $choice in
-			Yes ) #Yes, so...
-				echo "Installing a greater version of g++ (4.9)..."
-
-				#Get g++-4.9 on the machine
-				sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
-				sudo apt-get update;
-				sudo apt-get install --yes --force-yes g++-4.9;		
-				sudo unlink /usr/bin/g++;   #Take out any symlink made before...	
-				sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;
-				
-				#Update version info
-				gVersCheck=$(g++ --version)
-
-				#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
-				gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
-
-				#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-				#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-				gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-
-				break;;
-			No ) #No, use the current version		
-				echo "Cannot continue without g++ 4.8 or greater."
-				echo "Abort."
-				exit 1
-			esac
-		done
-
-	else
-		#Version number is okay
-		echo "g++ version is sufficient to continue."
-
-		#Check if version number is NOT 4.9
-		if [ "$gVersNum" \< "4.9" ]
-		then
-			echo "You have $gVersNum installed."
-			echo "Would you like me to install g++-4.9? (1 = Yes, 2 = No)"		
-			select choice in "Yes" "No"; do		
-				case $choice in
-					Yes ) #Yes, so...
-
-						echo "Installing g++-4.9..."
-
-						#Get g++-4.9 on the machine
-						sudo add-apt-repository ppa:ubuntu-toolchain-r/test;
-						sudo apt-get update;
-						sudo apt-get install --yes --force-yes g++-4.9;		
-						sudo unlink /usr/bin/g++;   #Take out any symlink made before...	
-						sudo ln -s /usr/bin/g++-4.9 /usr/bin/g++;
-						
-						#Update version info
-						gVersCheck=$(g++ --version)
-						
-						#http://stackoverflow.com/questions/18147884/shell-variable-in-a-grep-regex
-						gVersString=$(echo "$gVersCheck" | grep "g++ (Ubuntu *")
+	echo "g++ $gVersion detected"
 	
-						#http://stackoverflow.com/questions/7516455/sed-extract-version-number-from-string-only-version-without-other-numbers
-						#http://superuser.com/questions/363865/how-to-extract-a-version-number-using-sed
-						gVersNum=$(echo "$gVersString" | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
-
-						break;;
-					No ) #No, use the current version		
-						echo "Proceeding with $gVersNum."; 
-						break;;
-				esac
-			done 
+	if [ "$gVersion" \< "4.8" ]
+	then
+		echo "checking for g++ updates..."
+		
+		sudo apt-get -y install g++ 
+		gNewVersion=$(g++ --version | grep GCC* | cut -d ' ' -f 5 | cut -d '.' -f 1)
+		
+		if [ $gVersion \< $gNewVersion ]
+		then
+			sudo unlink /usr/bin/g++
+			sudo ln -s /usr/bin/g++-$gNewVersion* /usr/bin/g++
 		fi
+	else
+		echo ""
+	fi
 
-	fi 
 fi
 
 echo 
@@ -190,7 +116,7 @@ else
 	cd glfw
 
 	#Build shared lib from source
-	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/local -DBUILD_SHARED_LIBS=ON
+	cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DBUILD_SHARED_LIBS=ON
 
 	#Make and install
 	make
@@ -200,11 +126,12 @@ else
 	cd ..
 
 	sudo rm -rf glfw
-	
+
 	cd /usr/lib
-	
-	#create a symbolic link
-	sudo ln -s /usr/local/lib/libglfw.so
+
+	sudo ln -s /usr/lib/x86_64-linux-gnu/libglfw.so
+
+	cd -
 fi
 
 #Check if we have to install freetype from source...
@@ -224,7 +151,7 @@ else
 
 	cd freetype-2.6.3
 
-	./configure
+	./configure --prefix=/usr
 
 	make 
 
@@ -234,11 +161,6 @@ else
 	
 	#Remove the freetype folders from the TSGL folder
 	rm -rf freetype*
-	
-	cd /usr/lib
-	
-	#create a symbolic link
-	sudo ln -s /usr/local/lib/libfreetype.so
 fi
 
 #Check if we have to clone cxxopts ...
@@ -263,34 +185,70 @@ else
 	#Remove the freetype folders from the TSGL folder
 	rm -rf cxxopts*
 fi
-echo 
+
+#check if we have to clone glm...
+glmFile=/usr/include/glm/glm.hpp
+
+if  [ -f "$glmFile" ]
+then
+        echo "glm dependency found"
+else
+        echo "Resolving missing glm dependency..."
+
+        #clone the repository
+        git clone https://github.com/g-truc/glm.git
+
+        #copy the folder to usr/include
+        cd glm
+
+        sudo cp -r glm /usr/include
+
+        cd ..
+
+        rm -rf glm
+fi
 
 echo
-
 #Dependencies were installed! (GLEW and glfw, as well as g++)
 echo "All dependencies resolved!"
+echo
+
+###################################################################################
+
+#Add export env variables to bashrc file
+tsglFile=/usr/lib/libtsgl.so
+
+if [ -f "$tsglFile" ]
+then
+	echo ""
+else
+	echo "export TSGL_HOME=/usr" >> ~/.bashrc
+	echo "export TSGL_DEFAULT_FONT=/include/TSGL/assets/freefont/FreeSansBold.ttf" >> ~/.bashrc
+	echo "export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0" >> ~/.bashrc
+	source ~/.bashrc
+fi
+
+###################################################################################
 
 echo 
-
 echo "Begin installation of TSGL..."
-
 echo
 
 #Clean install = remove the TSGL folder and lib files if they already exist
-sudo rm -rf /usr/local/include/TSGL
-sudo rm -rf /usr/local/lib/libtsgl.*
+sudo rm -rf /usr/include/TSGL
+sudo rm -rf /usr/lib/libtsgl.*
 
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir -p lib bin
 
 #Make the library
-make
+make prefix=$PREFIX
 
 #Install it
-sudo make install
+sudo make install prefix=$PREFIX
 
 #Take out the .cpp files from the TSGL library package folder
-sudo rm -rf /usr/local/include/TSGL/*.cpp
+sudo rm -rf /usr/include/TSGL/*.cpp
 
 #Final step (.so file won't be found unless I do this...)
 sudo ldconfig
@@ -299,4 +257,24 @@ sudo ldconfig
 echo "Installation complete! Execute the runtests bash script to verify that everything works!"
 
 echo
+echo
+#checking update
+echo "Checking for updates..."
+
+TSGL_VERSION=$(git describe --tags --abbrev=0)
+TSGL_LATEST_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
+
+if [ "$TSGL_VERSION" \< "$TSGL_LATEST_VERSION" ]
+then
+        echo "Latest version $TSGL_LATEST_VERSION found. WARNING, If you have changed anything in the TSGL folder it may be overwritten during update. To keep your changes, please commit them before updating."
+        read -p "Do you want to install the update? This will replace all the files with the updated ones (y/n): " INPUT
+	if [ $INPUT == y ] || [ $INPUT == Y ]
+        then
+                echo "Updating TSGL..."
+                git remote add tsgl https://github.com/Calvin-CS/TSGL.git
+                git pull tsgl master
+        fi
+else
+        echo "Latest version already installed"
+fi
 

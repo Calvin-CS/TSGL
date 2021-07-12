@@ -60,8 +60,6 @@ int main(int argc, char* argv[]) {
 	Reader ** readers = new Reader*[numReaders]; //Array of Readers
 	Writer ** writers = new Writer*[numWriters]; //Array of Writers
 
-	std::string FONT = "/usr/include/TSGL/assets/freefont/FreeSerif.ttf";
-
 	Background * bg = can.getBackground();
 	//Create labels
 	bg->drawRectangle(0, RWThread::dataY + RWThread::dataHeight/2, 0, RWThread::dataWidth+2*MARGIN, RWThread::dataHeight, 0,0,0, GRAY);

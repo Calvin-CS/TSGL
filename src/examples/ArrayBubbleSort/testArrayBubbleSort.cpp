@@ -7,6 +7,7 @@
 
 #include <cmath>
 #include "CubeArray.h"
+using namespace std;
 
 // Size constants
 #define SIDE_LENGTH 50      // side length of all array blocks
@@ -25,7 +26,6 @@
 #define ARRAY_COLOR ColorFloat(0.5, 0.5, 0.5, 1)    // color value for all arrays (gray)
 #define NUM_COLOR WHITE                             // color value for all numbers
 #define FINISHED_COLOR ColorFloat(0, 0.6, 0, 1)     // color value for sorted numbers (green)
-#define FONT "/usr/include/TSGL/assets/freefont/FreeSansBold.ttf"   // font for all text
 #define FONT_SIZE 35                                // font size for all text
 
 using namespace tsgl;

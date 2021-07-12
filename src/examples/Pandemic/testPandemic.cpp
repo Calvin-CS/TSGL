@@ -16,7 +16,6 @@
 // disease constants
 #define PERSON_RADIUS 5         // the size of each person on screen
 // text constants
-#define FONT "/usr/include/TSGL/assets/freefont/FreeSansBold.ttf"   // font for all text
 #define FONT_SIZE 20                                // font size for all text
 #define TEXT_COLOR ColorFloat(0.2,1,1,1)            // color for all text (light blue)
 
