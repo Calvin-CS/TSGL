@@ -45,6 +45,7 @@ endif
 CXXFLAGS = -O3 -g3 -ggdb3 \
         -I$(TSGL_HOME)/include/TSGL \
         -I$(TSGL_HOME)/include/freetype2 \
+	-std=c++0x -fopenmp \
 
 LFLAGS = -g -ltsgl -lfreetype -lGLEW -lglfw $(GL_FLAGS) -fopenmp  \
 			$(BREW) -L$(TSGL_HOME)/lib \
