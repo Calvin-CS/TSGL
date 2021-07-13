@@ -26,7 +26,7 @@ void testSuite1(Background * bg) {
     bg->drawEllipse(-225, 100, 0, 75,50, 0,0,0, colors);
     bg->drawRectangle(-225, -100, 0, 150,100, 0,0,0, RED);
     bg->drawRectangle(-225, -225, 0, 150,100, 0,0,0, colors);
-    bg->drawImage(0,225,0,"./assets/pics/launch.bmp",100,100,0,0,0);
+    bg->drawImage(0,225,0,"pics/launch.bmp",100,100,0,0,0);
     bg->drawText(0,100,0,L"ü^xdog",FONT,50,0,0,0,RED);
     bg->drawRegularPolygon(0,-100,0,50,5,0,0,0,RED);
     bg->drawRegularPolygon(0,-225,0,50,7,0,0,0,colors);
