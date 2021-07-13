@@ -68,7 +68,7 @@ void textFunction(Canvas& can, std::string font) {
 int main(int argc, char * argv[]) {
     int w = (argc > 1) ? atoi(argv[1]) : 1.2f*Canvas::getDisplayHeight();
     int h = (argc > 2) ? atoi(argv[2]) : 0.75f*w - 330.0f;
-    std::string font = (argc > 3) ? argv[3] : "./assets/freefont/FreeMono.ttf";
+    std::string font = (argc > 3) ? argv[3] : FONT;
     if(w <= 0 || h <= 0) {  //Check validity of width and height
       w = 1.2f*Canvas::getDisplayHeight();
       h = 0.75f*w;
