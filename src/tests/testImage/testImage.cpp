@@ -27,21 +27,21 @@ void imageFunction(Canvas& can) {
     // Image * image = new Image(0,0,0,"./assets/pics/Messier51.jpg", 4,3, 0,0,0);
     // can.add(image);
 
-    Image * image = new Image(-ww,0.5 * hh,0,"./assets/pics/ball.png", ww,hh, 0,0,0);
+    Image * image = new Image(-ww,0.5 * hh,0,"pics/ball.png", ww,hh, 0,0,0);
     can.add(image);
-    Image * image2 = new Image(0,0.5 * hh,0,"./assets/pics/ship.bmp", ww,hh, 0,0,0);
+    Image * image2 = new Image(0,0.5 * hh,0,"pics/ship.bmp", ww,hh, 0,0,0);
     can.add(image2);
-    Image * image3 = new Image(ww,0.5 * hh,0,"./assets/pics/shiprgb.bmp", ww,hh, 0,0,0);
+    Image * image3 = new Image(ww,0.5 * hh,0,"pics/shiprgb.bmp", ww,hh, 0,0,0);
     can.add(image3);
-    Image * image4 = new Image(-ww,-0.5 * hh,0,"./assets/pics/sky_main.jpg", ww,hh, 0,0,0);
+    Image * image4 = new Image(-ww,-0.5 * hh,0,"pics/sky_main.jpg", ww,hh, 0,0,0);
     can.add(image4);
-    Image * image5 = new Image(0,-0.5 * hh,0,"./assets/pics/colorfulKeyboard.jpg", ww,hh, 0,0,0);
+    Image * image5 = new Image(0,-0.5 * hh,0,"pics/colorfulKeyboard.jpg", ww,hh, 0,0,0);
     can.add(image5);
-    Image * image6 = new Image(ww,-0.5 * hh,0,"./assets/pics/cow.jpg", ww,hh, 0,0,0);
+    Image * image6 = new Image(ww,-0.5 * hh,0,"pics/cow.jpg", ww,hh, 0,0,0);
     can.add(image6);
 
     can.bindToButton(TSGL_MOUSE_LEFT, TSGL_PRESS, [&image6]() {
-        image6->changeFile("./assets/pics/colorfulKeyboard.jpg");
+        image6->changeFile("pics/colorfulKeyboard.jpg");
     });
 
     // image->setHeight((GLfloat)image->getPixelHeight());
