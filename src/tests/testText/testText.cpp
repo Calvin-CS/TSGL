@@ -17,7 +17,7 @@ using namespace tsgl;
  * \param can Reference to the Canvas being drawn to.
  * \param font The font of the text.
  */
-void textFunction(Canvas& can, std::string font) {
+void textFunction(Canvas& can, std::string FONT) {
     // can.drawText("A long time ago, in a galaxy far, far away.", 16, 50, 32, BLACK);
     // can.drawText("Something extraordinary happened.", 16, 150, 32, RED);
     // can.drawText("Something far more extraordinary than anything mankind has ever seen.", 16, 250, 32, GREEN);
@@ -25,11 +25,11 @@ void textFunction(Canvas& can, std::string font) {
     //              32, BLUE);
     // can.drawText("Of *what* exactly that extraordinary event was.", 16, 450, 32, GRAY);
     // can.drawText("And to that I say...oh well.", 16, 550, 32, WHITE);
-    Text * lowercase = new Text(0,100,0,L"abcdefghijklmnopqrstuvwxyz", font, 40, 0,0,0,WHITE);
+    Text * lowercase = new Text(0,100,0,L"abcdefghijklmnopqrstuvwxyz", FONT, 40, 0,0,0,WHITE);
     can.add(lowercase);
-    Text * uppercase = new Text(0,50,0,L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", font, 40, 0,0,0,WHITE);
+    Text * uppercase = new Text(0,50,0,L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", FONT, 40, 0,0,0,WHITE);
     can.add(uppercase);
-    Text * random = new Text(0,-50,0,L"{:<>,./?+=+^üc", font, 40, 0,0,0,WHITE);
+    Text * random = new Text(0,-50,0,L"{:<>,./?+=+^üc", FONT, 40, 0,0,0,WHITE);
     // Rectangle * rec = new Rectangle(0,-53,0,random->getWidth(),random->getHeight(),0,0,0,GRAY);
     can.add(random);
     // can.add(rec);
