@@ -3,5 +3,5 @@
 	url = git@github.com:Calvin-CS/TSGL.wiki.git
 [submodule "docs"]
 	path = docs
-	url = git@github.com:Calvin-CS/TSGL.git
-	branch = gh-pages
+	url = https://github.com/RyanVreeke/TSGL.git
+	branch = master
