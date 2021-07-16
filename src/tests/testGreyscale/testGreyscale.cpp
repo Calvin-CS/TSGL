@@ -50,7 +50,7 @@ void greyScaleFunction(Canvas& can, int numberOfThreads) {
   clamp(threads,1,30);
   const unsigned thickness = 3;
   const int WW = can.getWindowWidth(),WH = can.getWindowHeight();
-  background->drawImage(0,0,0,"./assets/pics/colorful_cars.jpg", WW, WH, 0,0,0);
+  background->drawImage(0,0,0,"pics/colorful_cars.jpg", WW, WH, 0,0,0);
   can.sleepFor(0.25f);
   #pragma omp parallel num_threads(threads)
   {
