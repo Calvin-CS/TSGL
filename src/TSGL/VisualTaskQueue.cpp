@@ -72,11 +72,11 @@ myWidth = 116;
 //   //Actually draw things
   lcan = new Canvas(vcan->getWindowX()+vcan->getWindowWidth(),vcan->getWindowY(),myWidth,myHeight,"");
   lcan->start();
-  lcan->getBackground()->drawText(0,lcan->getWindowHeight()/2-TEXTW/2,0,"Legend:","./assets/freefont/FreeSerif.ttf",TEXTW,0,0,0,BLACK);
+  lcan->getBackground()->drawText(0,lcan->getWindowHeight()/2-TEXTW/2,0,"Legend:",FONT,TEXTW,0,0,0,BLACK);
   int xx = -lcan->getWindowWidth()/2 + xStart, yy = lcan->getWindowHeight()/2 - yStart;
   for (int i = 0; i < threads; ++i) {
     lcan->getBackground()->drawSquare(xx,yy,0,blockSize,0,0,0,Colors::highContrastColor(i));
-    lcan->getBackground()->drawText(xx+blockSize+GAP,yy,0,std::to_wstring(i),"./assets/freefont/FreeSerif.ttf",TEXTW/2,0,0,0,BLACK);
+    lcan->getBackground()->drawText(xx+blockSize+GAP,yy,0,std::to_wstring(i),FONT,TEXTW/2,0,0,0,BLACK);
     yy -= yDelta;
     if (yy > yCutoff) {
       yy = yStart;

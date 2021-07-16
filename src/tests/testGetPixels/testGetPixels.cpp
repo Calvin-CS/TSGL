@@ -38,7 +38,7 @@ using namespace tsgl;
 void getPixelsFunction(Canvas& can, int threads) {
   Background * bg = can.getBackground();
   int width = can.getWindowWidth(), height = can.getWindowHeight();
-  bg->drawImage(0,0,0,"./assets/pics/test.png",width, height, 0,0,0);
+  bg->drawImage(0,0,0,"pics/test.png",width, height, 0,0,0);
   can.sleepFor(0.5f);
   #pragma omp parallel num_threads(threads)
   {

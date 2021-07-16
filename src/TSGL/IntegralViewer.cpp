@@ -58,12 +58,12 @@ void IntegralViewer::drawLabels(CartesianCanvas*& can) {
     std::string stopXString = to_string(myStopX);
     std::string stopYString = to_string(myStopY);
 
-    bg->drawText(cph * 10 + myStartX + cph * 2 * startXString.size(), myStartY-yoff, 0, startXString, "./assets/freefont/FreeSerif.ttf", FSIZE, 0,0,0, BLACK);
-    bg->drawText(-cph * 10 + myStopX + cph * 2 * stopXString.size(), myStartY-yoff, 0, stopXString, "./assets/freefont/FreeSerif.ttf", FSIZE, 0,0,0, BLACK);
+    bg->drawText(cph * 10 + myStartX + cph * 2 * startXString.size(), myStartY-yoff, 0, startXString, FONT, FSIZE, 0,0,0, BLACK);
+    bg->drawText(-cph * 10 + myStopX + cph * 2 * stopXString.size(), myStartY-yoff, 0, stopXString, FONT, FSIZE, 0,0,0, BLACK);
     if (!blorigin)
-        bg->drawText(cph * 10 + cph * 2 * startYString.size(), myStartY-yoff, 0, startYString, "./assets/freefont/FreeSerif.ttf", FSIZE, 0,0,0, BLACK);
+        bg->drawText(cph * 10 + cph * 2 * startYString.size(), myStartY-yoff, 0, startYString, FONT, FSIZE, 0,0,0, BLACK);
     if (!tlorigin)
-        bg->drawText(cph * 10 + cph * 2 * stopYString.size(), myStopY+yoff, 0, stopYString, "./assets/freefont/FreeSerif.ttf", FSIZE, 0,0,0, BLACK);
+        bg->drawText(cph * 10 + cph * 2 * stopYString.size(), myStopY+yoff, 0, stopYString, FONT, FSIZE, 0,0,0, BLACK);
 }
 
 void IntegralViewer::setupCanvas(CartesianCanvas*& can, const std::string& label, double delay) {
