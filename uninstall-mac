@@ -7,23 +7,23 @@ make clean
 #Remove the bin and lib folders
 rm -rf bin lib
 
-#Remove the copy of stb from /usr/local/include
-sudo rm -rf /usr/local/include/stb
+#Remove the copy of stb from /usr/include
+sudo rm -rf /usr/include/stb
 
 #Take out the TSGL header files
-sudo rm -rf /usr/local/include/TSGL
+sudo rm -rf /usr/include/TSGL
 
 #Take out the TSGL lib files
-rm /usr/local/lib/libtsgl.*
+rm /usr/lib/libtsgl.*
 
 #Check if we need to move the old g++ compiler back into place
-if [ -e /usr/local/bin/g++old ];
+if [ -e /usr/bin/g++old ];
 then
-	sudo unlink /usr/local/bin/g++
-	sudo unlink /usr/local/bin/gcc
+	sudo unlink /usr/bin/g++
+	sudo unlink /usr/bin/gcc
 
-	sudo mv /usr/local/bin/g++old /usr/local/bin/g++
-	sudo mv /usr/local/bin/gccold /usr/local/bin/gcc
+	sudo mv /usr/bin/g++old /usr/bin/g++
+	sudo mv /usr/bin/gccold /usr/bin/gcc
 
 fi
 

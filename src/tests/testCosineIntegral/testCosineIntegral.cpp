@@ -63,7 +63,7 @@ void cosineIntegralFunction(Cart& can, int numberOfThreads) {
   bg->drawFunction(function1, 0.1f);
 
   //\u03C0 = π
-  std::string font = "./assets/freefont/FreeSerif.ttf";
+  std::string font = FONT;
   bg->drawText( 1.5 * PI - .2, .4, 0, L"1.5\u03C0", font, 0.15, 0,0,0, BLACK);
   bg->drawText(-1.4 * PI - .1, .4, 0, L"-1.5\u03C0", font, 0.15, 0,0,0, BLACK);  // Note the important capital L, used to support Unicode.
   bg->drawText(.15, 1.1, 0, L"1", font, 0.15, 0,0,0, BLACK);

@@ -16,7 +16,7 @@ using namespace tsgl;
 void textFunctionTwo(Canvas& can) {
     Background * bg = can.getBackground();
     float WW = can.getWindowWidth() / 2; float WH = can.getWindowHeight() / 2;
-    std::string font = "./assets/freefont/FreeSerif.ttf";
+    std::string font = FONT;
     bg->drawText(0, WH * 5/6, 0, L"A long time ago, in a galaxy far, far away.", font, 30, 0,0,0, BLACK);
     bg->drawText(0, WH * 3/6, 0, L"Something extraordinary happened.", font, 30, 0,0,0, RED);
     bg->drawText(0, WH * 1/6, 0,L"Something far more extraordinary than anything mankind has ever seen.", font, 30, 0,0,0, GREEN);

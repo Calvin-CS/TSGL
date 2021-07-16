@@ -44,7 +44,7 @@ RWThread::RWThread(RWDatabase<Rectangle*> & sharedDatabase, Lock& lock, unsigned
 	myX = 0; //Set in subclass constructor
 	myCircle = new Circle(myX, myY, 0, 20, 0,0,0, GRAY); //Move based on new x in subclass
 	myCan->add(myCircle);
-	myCountLabel = new Text(  myX, myY+5, 1, to_wstring(count), "./assets/freefont/FreeSans.ttf", 24, 0,0,0, BLACK);
+	myCountLabel = new Text(  myX, myY+5, 1, to_wstring(count), FONT, 24, 0,0,0, BLACK);
 	myCan->add( myCountLabel );
 }
 
