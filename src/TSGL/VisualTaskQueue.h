@@ -9,6 +9,7 @@
 #include <omp.h>
 
 #include "Canvas.h"
+#include "tsgl.h"
 
 namespace tsgl {
 
