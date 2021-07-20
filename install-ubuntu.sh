@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# install-linux.sh is the installation script for TSGL on Linux.
+# install-ubuntu.sh is the installation script for TSGL on Linux Ubuntu.
 # Last updated: 06/30/26
 # 
 # -SUBJECT TO CHANGE-
@@ -240,6 +240,9 @@ sudo rm -rf /usr/lib/libtsgl.*
 
 #Create the following directories (Since they aren't included in github but are needed)
 mkdir -p lib bin
+
+#Make clean the library
+sudo make clean
 
 #Make the library
 make prefix=$PREFIX

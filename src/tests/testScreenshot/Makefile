@@ -65,6 +65,7 @@ $(TARGET): $(OBJ)
 
 clean:
 	$(RM) $(ODIR)/*.o $(ODIR) $(TARGET)
+	$(RM) *.png
 	@echo ""
 	@tput setaf 5;
 	@echo "*************** All output files removed from $(DIR)! ***************"

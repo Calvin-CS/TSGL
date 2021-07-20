@@ -102,7 +102,8 @@ protected:
     GLint           framebufferHeight;
     int             frameCounter;                                       // Counter for the number of frames that have elapsed in the current session (for animations)
     bool            isFinished;                                         // If the rendering is done, which will signal the window to close
-    bool            keyDown;                                            // If a key is being pressed. Prevents an action from happening twice
+    bool            keyDown;
+    std::string     capturePrefix = "Image";                                          // If a key is being pressed. Prevents an action from happening twice
     int             monitorX, monitorY;                                 // Monitor position for upper left corner
     double          mouseX, mouseY;                                     // Location of the mouse once HandleIO() has been called
     Background *    myBackground;                                       // Pointer to the Background drawn each frame
@@ -150,10 +151,10 @@ protected:
     static void  errorCallback(int error, const char* string);          // Display where an error is coming from
     void         glDestroy();                                           // Destroys the GL and GLFW things that are specific for this canvas
     void         init(int xx,int yy,int ww,int hh,
-                   std::string title, 
-                   ColorFloat backgroundColor, Background * background, 
+                   std::string title,
+                   ColorFloat backgroundColor, Background * background,
                    double timerLength);                                 // Method for initializing the canvas
-    void         initBackground(Background * background, 
+    void         initBackground(Background * background,
                                 ColorFloat bgcolor);                    // Initializes myBackground
     void         initGl();                                              // Initializes the GL things specific to the Canvas
     void         initGlew();                                            // Initialized the GLEW things specific to the Canvas
@@ -231,7 +232,7 @@ public:
 
     void pauseDrawing();
 
-    void recordForNumFrames(unsigned int num_frames);
+    void recordForNumFrames(unsigned int num_frames, const std::string& newCaputurePrefix = "");
 
     void remove(Drawable * shapePtr);
 
@@ -246,7 +247,7 @@ public:
     virtual void run(void (*myFunction)(Canvas&, unsigned), unsigned u);
 
     virtual void run(void (*myFunction)(Canvas&, int, int), int i1, int i2);
-    
+
     virtual void run(void (*myFunction)(Canvas&, int, int, int), int i1, int i2, int i3);
 
     virtual void run(void (*myFunction)(Canvas&, unsigned, unsigned), unsigned u1, unsigned u2);
@@ -279,7 +280,7 @@ public:
 
     void stopRecording();
 
-    void takeScreenShot();
+    void takeScreenShot(const std::string& newCapturePrefix = "");
 
     int wait();
 };
