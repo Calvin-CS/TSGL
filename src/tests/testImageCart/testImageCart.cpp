@@ -15,14 +15,14 @@ using namespace tsgl;
  */
 void imageCartFunction(Cart& can) {
     CartesianBackground * cart = can.getBackground();
-    cart->drawImage(1, 2.25, 0, "./assets/pics/test.png", 2, 1.5, 0,0,0);
-    cart->drawImage(3, 2.25, 0, "./assets/pics/ship.bmp", 2, 1.5, 0,0,0); // possibly lost
-    cart->drawImage(5, 2.25, 0, "./assets/pics/shiprgb.bmp", 2, 1.5, 0,0,0); // definitely lost
-    cart->drawImage(1, 0.75, 0, "./assets/pics/sky_main.jpg", 2, 1.5, 0,0,0);
-    cart->drawImage(3, 0.75, 0, "./assets/pics/cow.jpg", 2, 1.5, 0,0,0);
-    cart->drawImage(5, 0.75, 0, "./assets/pics/colorfulKeyboard.jpg", 2, 1.5, 0,0,0);
+    cart->drawImage(1, 2.25, 0, "pics/test.png", 2, 1.5, 0,0,0);
+    cart->drawImage(3, 2.25, 0, "pics/ship.bmp", 2, 1.5, 0,0,0); // possibly lost
+    cart->drawImage(5, 2.25, 0, "pics/shiprgb.bmp", 2, 1.5, 0,0,0); // definitely lost
+    cart->drawImage(1, 0.75, 0, "pics/sky_main.jpg", 2, 1.5, 0,0,0);
+    cart->drawImage(3, 0.75, 0, "pics/cow.jpg", 2, 1.5, 0,0,0);
+    cart->drawImage(5, 0.75, 0, "pics/colorfulKeyboard.jpg", 2, 1.5, 0,0,0);
 
-    Image * image = new Image(3, 1.5, 0, "./assets/pics/colorful-cars-circle.jpg", 4, 3, 0,0,0, 0.25f);
+    Image * image = new Image(3, 1.5, 0, "pics/colorful-cars-circle.jpg", 4, 3, 0,0,0, 0.25f);
     can.add(image);
 
     // Arrow * a = new Arrow(1, 2, 0, 5, 1, 0, 0.1, 0,0,0, BLUE);

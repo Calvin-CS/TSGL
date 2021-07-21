@@ -30,6 +30,9 @@ void screenShotFunction(Cart& can) {
     Background * bg = can.getBackground();
     int xNew = can.getCartWidth() / 2, yNew = can.getCartHeight() / 2, xMid = xNew, yMid = yNew, xOld, yOld;
     can.recordForNumFrames(FPS * 30);
+    // can.takeScreenShot();
+    // can.sleep();
+    // can.takeScreenShot();
     while (can.isOpen()) {  // Checks to see if the window has been closed
         can.sleep();
         xOld = xMid;

@@ -27,7 +27,9 @@ run ./$EXAMPLES_PATH/DiningPhilosophers/testPhilosophers
 run ./$EXAMPLES_PATH/DiningPhilosophers3D/test3DPhilosophers
 run ./$EXAMPLES_PATH/Fireworks/testFireworks
 run ./$EXAMPLES_PATH/ForestFire/testForestFire
+run ./$EXAMPLES_PATH/Knapsack/Knapsack 2 Yes
 run ./$EXAMPLES_PATH/Langton/testLangton
+run ./$EXAMPLES_PATH/LongestCommonSubstring/LCS 2 car racecardriver Yes 
 run ./$EXAMPLES_PATH/Mandelbrot/testMandelbrot
 run ./$EXAMPLES_PATH/MergeSort/testMergeSort
 run ./$EXAMPLES_PATH/NewtonPendulum/testNewtonPendulum 900 400 11                   # Width, Height, Number Of Balls

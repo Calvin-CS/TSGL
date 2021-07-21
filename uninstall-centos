@@ -4,10 +4,10 @@ sudo make clean
 
 sudo rm -rf bin lib
 
-sudo rm -rf /usr/local/include/TSGL
-sudo rm /usr/local/lib/libtsgl.*
+sudo rm -rf /usr/include/TSGL
+sudo rm /usr/lib/libtsgl.*
 
 #Remove the symlink made by install-centos
-sudo unlink /usr/local/lib/libGl.so
+sudo unlink /usr/lib/libGl.so
 
 echo "Uninstall complete! Please re-run install-centos.sh if you wish to install again!"

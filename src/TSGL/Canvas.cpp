@@ -1,4 +1,5 @@
 #include "Canvas.h"
+#include <stdlib.h>
 
 // From stb_image.h:
 // Do this:
@@ -16,7 +17,7 @@ namespace tsgl {
 
 // Shader sources
 
-static const GLchar* shapeVertexShader = 
+static const GLchar* shapeVertexShader =
   "#version 330 core\n"
   "layout (location = 0) in vec3 aPos;"
   "layout (location = 1) in vec4 aColor;"
@@ -37,7 +38,7 @@ static const GLchar* shapeFragmentShader =
 	"FragColor = color;"
   "}";
 
-static const GLchar* textVertexShader = 
+static const GLchar* textVertexShader =
   "#version 330 core\n"
   "layout (location = 0) in vec3 aPos;"
   "layout (location = 1) in vec2 aTexCoord;"
@@ -62,7 +63,7 @@ static const GLchar* textFragmentShader =
   "FragColor = textColor * sampled;"
   "}";
 
-static const GLchar* textureVertexShader = 
+static const GLchar* textureVertexShader =
   "#version 330 core\n"
   "layout (location = 0) in vec3 aPos;"
   "layout (location = 1) in vec2 aTexCoord;"
@@ -75,7 +76,7 @@ static const GLchar* textureVertexShader =
 	"TexCoords = vec2(aTexCoord.x, aTexCoord.y);"
   "}";
 
-static const GLchar* textureFragmentShader = 
+static const GLchar* textureFragmentShader =
   "#version 330 core\n"
   "out vec4 FragColor;"
   "in vec2 TexCoords;"
@@ -322,7 +323,7 @@ void Canvas::draw()
           screenShot();
           captureScreen = false;
         }
-      
+
         // Update Screen
         glfwSwapBuffers(window);
 
@@ -643,7 +644,7 @@ void Canvas::initGlew() {
 
     textShader = new Shader(textVertexShader, textFragmentShader);
 
-    shapeShader = new Shader(shapeVertexShader, shapeFragmentShader); 
+    shapeShader = new Shader(shapeVertexShader, shapeFragmentShader);
 
     textureShader = new Shader(textureVertexShader, textureFragmentShader);
 
@@ -739,7 +740,7 @@ void Canvas::initWindow() {
       screenBuffer[i] = 0;
     }
     screenBufferMutex.unlock();
-    
+
     // Get info of GPU and supported OpenGL version
     // printf("Renderer: %s\n", glGetString(GL_RENDERER));
     // printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
@@ -789,8 +790,11 @@ void Canvas::pauseDrawing() {
   * \details The function automatically terminates after num_frames cycles have completed.
   *   \param num_frames The number of frames to dump screenshots for.
   */
-void Canvas::recordForNumFrames(unsigned int num_frames) {
+void Canvas::recordForNumFrames(unsigned int num_frames, const std::string& newCapturePrefix) {
     toRecord = num_frames;
+    if(newCapturePrefix != "") {
+      capturePrefix = newCapturePrefix;
+    }
 }
 
  /*!
@@ -945,8 +949,9 @@ void Canvas::run(void (*myFunction)(Canvas&, int, char**), int argc, char* argv[
 }
 
 void Canvas::screenShot() {
-    char filename[25];
-    sprintf(filename, "Image%06d.png", frameCounter);  // TODO: Make this save somewhere not in root
+    char sufix[20];
+    sprintf(sufix, "%06d.png", frameCounter);
+    std::string filename = capturePrefix + sufix;
 
     screenBufferMutex.lock();
     // loader.saveImageToFile(filename, screenBuffer, framebufferWidth, winHeight);
@@ -959,7 +964,7 @@ void Canvas::screenShot() {
             screenBuffer[s2] = tmp;
         }
     }
-    stbi_write_png(filename, framebufferWidth, framebufferHeight, 3, screenBuffer, 0);
+    stbi_write_png(filename.c_str(), framebufferWidth, framebufferHeight, 3, screenBuffer, 0);
     screenBufferMutex.unlock();
 }
 
@@ -1099,8 +1104,11 @@ void Canvas::stopRecording() {
   * \details Images are saved as ImageXXXXXX.png, where XXXXXX is the current frame number.
   * \bug Multiple calls to this function in rapid succession render the FPS counter inaccurate.
   */
-void Canvas::takeScreenShot() {
+void Canvas::takeScreenShot(const std::string& newCapturePrefix) {
     if (toRecord == 0) toRecord = 1;
+    if(newCapturePrefix != "") {
+      capturePrefix = newCapturePrefix;
+    }
 }
 
 void Canvas::selectShaders(unsigned int sType) {
@@ -1140,7 +1148,7 @@ void Canvas::selectShaders(unsigned int sType) {
         glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
         program->use();
     }
- 
+
     // Recompute the camera matrices
     uniModel = glGetUniformLocation(program->ID, "model");
     uniView = glGetUniformLocation(program->ID, "view");

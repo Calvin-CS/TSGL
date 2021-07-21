@@ -4,4 +4,4 @@
 [submodule "docs"]
 	path = docs
 	url = git@github.com:Calvin-CS/TSGL.git
-	branch = gh-pages
+	branch = master

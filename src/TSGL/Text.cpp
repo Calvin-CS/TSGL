@@ -244,7 +244,7 @@ void Text::populateCharacters() {
         Character character = {
             ftbmps[i],
             glm::ivec2(glyph->bitmap_left, glyph->bitmap_top),
-            glyph->advance.x
+            (unsigned int)glyph->advance.x
         };
         
         Characters.insert(std::pair<wchar_t, Character>(wideChar[i], character));
