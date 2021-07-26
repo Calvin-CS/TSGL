@@ -7,10 +7,10 @@ make clean
 rm -rf bin lib
 
 #Take out the TSGL lib.a and lib.so files
-rm /usr/lib/libtsgl.*
+rm $(TSGL_HOME)/lib/libtsgl.*
 
 #Take out the TSGL folder containing the .h files
-rm -rf /usr/include/TSGL
+rm -rf $(TSGL_HOME)/include/TSGL
 
 #Done.
 echo "\n Uninstall complete!\n"

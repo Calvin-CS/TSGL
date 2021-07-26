@@ -4,10 +4,10 @@ sudo make clean
 
 sudo rm -rf bin lib
 
-sudo rm -rf /usr/include/TSGL
-sudo rm /usr/lib/libtsgl.*
+sudo rm -rf $(TSGL_HOME)/include/TSGL
+sudo rm $(TSGL_HOME)/lib/libtsgl.*
 
 #Remove the symlink made by install-fedora
-sudo unlink /usr/lib64/libGL.so
+sudo unlink $(TSGL_HOME)/lib64/libGL.so
 
-echo "Uninstall complete! Please re-run install-fedora.sh if you wish to install again!"
+echo "Uninstall complete!"

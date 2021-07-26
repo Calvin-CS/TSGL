@@ -8,13 +8,13 @@ make clean
 rm -rf bin lib
 
 #Remove the copy of stb from /usr/include
-sudo rm -rf /usr/include/stb
+sudo rm -rf $(TSGL_HOME)/include/stb
 
 #Take out the TSGL header files
-sudo rm -rf /usr/include/TSGL
+sudo rm -rf $(TSGL_HOME)/include/TSGL
 
 #Take out the TSGL lib files
-rm /usr/lib/libtsgl.*
+rm $(TSGL_HOME)/lib/libtsgl.*
 
 #Check if we need to move the old g++ compiler back into place
 if [ -e /usr/bin/g++old ];
