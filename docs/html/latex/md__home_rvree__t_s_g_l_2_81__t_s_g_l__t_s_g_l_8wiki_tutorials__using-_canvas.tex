@@ -1,0 +1,92 @@
+{\itshape {\bfseries{B\+E\+F\+O\+RE P\+R\+O\+C\+E\+E\+D\+I\+NG, P\+L\+E\+A\+SE S\+EE T\+HE \mbox{[}\mbox{[}Building Programs\mbox{]}\mbox{]} P\+A\+GE F\+OR M\+O\+RE I\+N\+F\+O\+R\+M\+A\+T\+I\+ON ON H\+OW TO C\+O\+M\+P\+I\+LE A\+ND R\+UN A P\+R\+O\+G\+R\+AM W\+I\+TH T\+S\+GL C\+O\+D\+E!!!}}}
+
+So, you\textquotesingle{}ve downloaded and installed T\+S\+GL. Congrats! Now what? Well, there\textquotesingle{}s a {\itshape lot} you can do with T\+S\+GL. For now, let\textquotesingle{}s start by making a simple Hello World program!
+
+{\itshape {\bfseries{Linux/\+Mac users}}}\+: Start off by creating a folder and name it \char`\"{}\+Tutorial1\char`\"{}. Create a file inside of Tutorial1 and name it \char`\"{}hello.\+cpp\char`\"{}. Then, navigate to the T\+S\+G\+L-\/master folder and into the generic\+Makefile folder. Copy the Makefile into Tutorial1 and change the \char`\"{}\+T\+A\+R\+G\+E\+T\char`\"{} line so that \char`\"{}program\char`\"{} is now \char`\"{}hello\char`\"{}.
+
+{\itshape {\bfseries{Windows users}}}\+: Create a new Solution folder and call it \char`\"{}\+Tutorial1\char`\"{}. Then, add a Visual Studio project to that folder and call it \char`\"{}\+Canvas\char`\"{}. Then, go to the Property Manager section and right click on the Canvas project. Click \char`\"{}\+Add existing Property sheet\char`\"{}, and navigate to the T\+S\+G\+L-\/master folder. Select \char`\"{}test\+Properties\char`\"{} and then go back to the Solution Explorer. Open up Tutorial1 and right click on Canvas. Add a .cpp file and name it \char`\"{}canvas.\+cpp\char`\"{}.
+
+{\itshape {\bfseries{All three platforms\+:}}} Follow the steps in the \mbox{[}\mbox{[}Building Programs\mbox{]}\mbox{]} page on how to compile and run the program (Linux/\+Mac users, this is a single-\/file program).
+
+Now, we\textquotesingle{}ll be writing in C++, so let\textquotesingle{}s place our \#include and using directives\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\end{DoxyCode}
+
+
+{\ttfamily \mbox{\hyperlink{tsgl_8h_source}{tsgl.\+h}}} contains \#include directives for all of the necessary header files needed in order to use the T\+S\+GL library. This includes vital class header files such as those for the Canvas class and the Timer class. T\+S\+GL also has its own namespace which must be used when using the T\+S\+GL library.
+
+Moving forward, let\textquotesingle{}s add some code that will create and initialize a Canvas. A Canvas is essentially a screen that draws and displays whatever it is that you want to draw and display. There\textquotesingle{}s a special kind of Canvas, the Cartesian\+Canvas, that we will look at later on.
+
+For now, let\textquotesingle{}s focus on the normal Canvas\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  Canvas c(0, 0, 600, 350, \textcolor{stringliteral}{"Hello World!"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+This is essentially the skeleton code for any T\+S\+GL program. Let\textquotesingle{}s break it down. In the main method, a Canvas object is created positioned at {\ttfamily (0, 0)} (on your monitor) with a width of {\ttfamily 600} and a height of {\ttfamily 350}. It has a title, {\ttfamily Hello World!}.
+
+The {\ttfamily c.\+start()} and {\ttfamily c.\+wait()} statements tell the Canvas to start drawing and then wait to close once it has completed drawing.
+
+In between the {\ttfamily c.\+start()} and {\ttfamily c.\+wait()} statements is where the magic happens. We will place a new statement which will draw a line to the Canvas\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, 600, 350, \textcolor{stringliteral}{"Hello World!"});}
+\DoxyCodeLine{  c.setBackgroundColor(WHITE);}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  \textcolor{comment}{//'H'}}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} h0(100, 50, 100, 300);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} h1(100, 150, 165, 150);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} h2(165, 50, 165, 300);}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{comment}{//'E'}}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} e0(200, 50, 280, 50);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} e1(200, 50, 200, 300);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} e2(200, 150, 280, 150);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} e3(200, 300, 280, 300);}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{comment}{//The two 'L's}}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} l0(300, 50, 300, 300);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} l1(300, 300, 320, 300);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} l2(350, 50, 350, 300);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_line}{Line}} l3(350, 300, 370, 300);}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{comment}{//'O'}}
+\DoxyCodeLine{  UnfilledEllipse o(400, 180, 30, 100);}
+\DoxyCodeLine{}
+\DoxyCodeLine{  \textcolor{comment}{//Add 'HELLO' to the Canvas}}
+\DoxyCodeLine{  c.add(\&h0); c.add(\&h1); c.add(\&h2);}
+\DoxyCodeLine{  c.add(\&e0); c.add(\&e1); c.add(\&e2); c.add(\&e3);}
+\DoxyCodeLine{  c.add(\&l0); c.add(\&l1); c.add(\&l2); c.add(\&l3);}
+\DoxyCodeLine{  c.add(\&o);}
+\DoxyCodeLine{}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+We will examine the {\ttfamily Line} and {\ttfamily Unfilled\+Ellipse} classes in the \mbox{[}\mbox{[}Using Shapes\mbox{]}\mbox{]} tutorial. For now, just know that {\ttfamily Line()} creates a Line, {\ttfamily Unfilled\+Ellipse()} creates the outline of an ellipse, and {\ttfamily add()} draws any Drawable object to the Canvas.
+
+Our code is now complete! Compile the code, and then once it has compiled correctly, run it. A window should pop up with \char`\"{}\+Hello\char`\"{} written on it. To close the window, press the E\+SC key or click the \textquotesingle{}x\textquotesingle{} in one of the corners.
+
+Please note that the {\ttfamily c.\+start()} and {\ttfamily c.\+wait()} methods {\itshape M\+U\+ST} be used at least once when working with the Canvas class. Bad things will happen if you do not have these methods and decide to draw something on a Canvas.
+
+There are also special types of Canvases for different situations. Cartesian\+Canvas also draws lines and circles, but using methods like {\ttfamily can.\+draw\+Line()} and {\ttfamily can.\+draw\+Circle()}, rather than the object oriented approach, and on a Cartesian coordinate system instead. Raster\+Canvas and Cartesian\+Raster\+Canvas are used like their non-\/\+Raster equivalents, but they render each object once and then it cannot be removed with {\ttfamily can.\+remove()}. Raster\+Canvas is particularly useful for drawing points. See the \mbox{\hyperlink{class_mandelbrot}{Mandelbrot}} example for a use of the Raster\+Canvas.
+
+You\textquotesingle{}ve just made your first T\+S\+GL project, congratulations!
+
+Next up, in \mbox{[}\mbox{[}Using Shapes\mbox{]}\mbox{]}, we take a look at how to draw shapes onto a Canvas. 

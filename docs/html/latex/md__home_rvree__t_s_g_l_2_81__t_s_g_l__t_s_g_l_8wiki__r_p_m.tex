@@ -1,0 +1,52 @@
+{\itshape {\bfseries{N\+O\+TE\+:}}} This page is for Fedora/\+Red\+Hat users. If you are an Ubuntu/\+Debian user, please see the \mbox{[}\mbox{[}Debian (Aptitude)\mbox{]}\mbox{]} section!
+
+{\itshape {\bfseries{N\+O\+TE\+:}}} These steps are for Fedora users only. Cent\+OS users can use the {\ttfamily install-\/centos} script.
+
+As of Summer 2016, an R\+PM package has been made for easy installation of T\+S\+GL.
+
+This means that you can use yum/dnf to install T\+S\+GL on your machine.
+
+Follow these steps in order to do so\+:
+
+1). Add the O\+BS repo.
+
+
+\begin{DoxyItemize}
+\item {\ttfamily cd} into the {\ttfamily /etc/yum.repos.\+d/} directory.
+\item Type {\ttfamily sudo su}.
+\item Create this file\+: {\ttfamily home\+\_\+\+T\+S\+G\+L\+\_\+\+Maker.\+repo}.
+\item Using your favorite text editor, add these changes to the {\ttfamily .repo} file\+:
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[home\_TSGL\_Maker]}
+\DoxyCodeLine{name=home:TSGL\_Maker (Fedora\_24)}
+\DoxyCodeLine{type=rpm-\/md}
+\DoxyCodeLine{baseurl=http://download.opensuse.org/repositories/home:/TSGL\_Maker/Fedora\_24/}
+\DoxyCodeLine{gpgcheck=1}
+\DoxyCodeLine{gpgkey=http://download.opensuse.org/repositories/home:/TSGL\_Maker/Fedora\_24//repodata/repomd.xml.key    }
+\DoxyCodeLine{enabled=1}
+\end{DoxyCode}
+
+
+2). Clean yum/dnf.
+
+
+\begin{DoxyItemize}
+\item Type {\ttfamily sudo dnf clean all} (or {\ttfamily sudo yum clean all} for Fedora versions earlier than 24).
+\item Type {\ttfamily sudo dnf update} (or {\ttfamily sudo yum update} for Fedora versions earlier than 24).
+\end{DoxyItemize}
+
+3). Install tsgl.
+
+
+\begin{DoxyItemize}
+\item Type {\ttfamily sudo dnf install tsgl} (or {\ttfamily sudo yum install tsgl} for Fedora versions earlier than 24).
+\end{DoxyItemize}
+
+The T\+S\+GL package will be installed on your machine along with a packaged version of G\+L\+FW.
+
+As a result of installing the T\+S\+GL package, the generic Makefile for building programs will be located in {\ttfamily /usr/include/\+T\+S\+G\+L\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+M\+A\+K\+E\+F\+I\+L\+E/}. Copy the Makefile over to your project directory in order to create applications that utilize the T\+S\+GL library.
+
+{\itshape {\bfseries{N\+O\+TE\+:}}} In order to receive updated T\+S\+GL packages from the O\+BS repo, you will have to repeat step 2. This ensures that the O\+BS repo appears as updated on your machine. 

@@ -1,0 +1,84 @@
+\hypertarget{class_pong}{}\doxysection{Pong Class Reference}
+\label{class_pong}\index{Pong@{Pong}}
+
+
+An old-\/school classic!  
+
+
+
+
+{\ttfamily \#include $<$Pong.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pong_afc1bb4388485aeb675c3d2a854c8baf6}{Pong}} (\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can, int \&ball\+Speed, int \&paddle\+Speed)
+\begin{DoxyCompactList}\small\item\em Explicitly construct the game, \mbox{\hyperlink{class_pong}{Pong}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_pong_a3c7242248be0e6980595faaa0a927866}{draw}} (\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can)
+\begin{DoxyCompactList}\small\item\em Draw the game of \mbox{\hyperlink{class_pong}{Pong}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_pong_a51b1a3feee45026071eaba47489e504a}\label{class_pong_a51b1a3feee45026071eaba47489e504a}} 
+\mbox{\hyperlink{class_pong_a51b1a3feee45026071eaba47489e504a}{$\sim$\+Pong}} ()
+\begin{DoxyCompactList}\small\item\em Destroys the \mbox{\hyperlink{class_pong}{Pong}} game object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An old-\/school classic! 
+
+Draw the interactive game of \mbox{\hyperlink{class_pong}{Pong}}. The two paddles are objects and the ball is also an object.
+
+The constructor constructs the two paddle objects and the ball object.
+
+Use the W and S keys in order to move the left paddle, the Up and Down arrow keys in order to move the right paddle.
+
+Everything else is handled in the \mbox{\hyperlink{class_pong_a3c7242248be0e6980595faaa0a927866}{draw()}} method (button bindings, score keeping, drawing the objects and the game itself, ball collisions with the paddles and the boundaries). \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_paddle}{Paddle}} class, \mbox{\hyperlink{class_ball}{Ball}} class. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_pong_afc1bb4388485aeb675c3d2a854c8baf6}\label{class_pong_afc1bb4388485aeb675c3d2a854c8baf6}} 
+\index{Pong@{Pong}!Pong@{Pong}}
+\index{Pong@{Pong}!Pong@{Pong}}
+\doxysubsubsection{\texorpdfstring{Pong()}{Pong()}}
+{\footnotesize\ttfamily Pong\+::\+Pong (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can,  }\item[{int \&}]{ball\+Speed,  }\item[{int \&}]{paddle\+Speed }\end{DoxyParamCaption})}
+
+
+
+Explicitly construct the game, \mbox{\hyperlink{class_pong}{Pong}}. 
+
+Explicit constructor for the game, \mbox{\hyperlink{class_pong}{Pong}}. It sets up the \mbox{\hyperlink{class_paddle}{Paddle}} objects and the \mbox{\hyperlink{class_ball}{Ball}} object in order to play. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Canvas to use when playing \mbox{\hyperlink{class_pong}{Pong}}. \\
+\hline
+{\em ball\+Speed} & Reference to the ball speed to use in the game. \\
+\hline
+{\em paddle\+Speed} & Reference to the paddle speed to use in the game. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_pong_a3c7242248be0e6980595faaa0a927866}\label{class_pong_a3c7242248be0e6980595faaa0a927866}} 
+\index{Pong@{Pong}!draw@{draw}}
+\index{draw@{draw}!Pong@{Pong}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Pong\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can }\end{DoxyParamCaption})}
+
+
+
+Draw the game of \mbox{\hyperlink{class_pong}{Pong}}. 
+
+Actually draws all of the necessary components in order to play \mbox{\hyperlink{class_pong}{Pong}}. This also includes any necessary button bindings in order to move the \mbox{\hyperlink{class_paddle}{Paddle}} objects. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Canvas to draw on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_paddle}{Paddle}} class, \mbox{\hyperlink{class_ball}{Ball}} class. 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Pong/Pong.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Pong/Pong.\+cpp\end{DoxyCompactItemize}

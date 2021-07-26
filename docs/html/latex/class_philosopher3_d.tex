@@ -1,0 +1,234 @@
+\hypertarget{class_philosopher3_d}{}\doxysection{Philosopher3D Class Reference}
+\label{class_philosopher3_d}\index{Philosopher3D@{Philosopher3D}}
+
+
+Object representing a 3D philosopher in the Dining Philosophers\textquotesingle{} problem.  
+
+
+
+
+{\ttfamily \#include $<$Philosopher3\+D.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_philosopher3_d_ac45678c5f33b97bcff814df559ea0ebb}{Philosopher3D}} ()
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_philosopher3_d_af9321231d363ade9c90bf381650bebb7}{draw}} (\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can, float x, float y)
+\item 
+void \mbox{\hyperlink{class_philosopher3_d_abadf81910034cbd6757d6fac2d1154a5}{refresh\+Color}} ()
+\item 
+void \mbox{\hyperlink{class_philosopher3_d_a536c633359c82402055c6264cc8f12cc}{add\+Meal}} (float x, float y, float z)
+\item 
+\mbox{\Hypertarget{class_philosopher3_d_aecd0b8eba2c5f672f4823b46759fd9d2}\label{class_philosopher3_d_aecd0b8eba2c5f672f4823b46759fd9d2}} 
+\mbox{\hyperlink{classtsgl_1_1_pyramid}{Pyramid}} $\ast$ {\bfseries get\+Last\+Meal} ()
+\item 
+bool \mbox{\hyperlink{class_philosopher3_d_a55a0b5fa883f9304e93e386d75b0cb2a}{acquire}} (\mbox{\hyperlink{struct_fork3_d}{Fork3D}} \&f)
+\item 
+bool \mbox{\hyperlink{class_philosopher3_d_ab6fcdb12fb04651f33005c891f89791e}{release}} (\mbox{\hyperlink{struct_fork3_d}{Fork3D}} \&f)
+\item 
+void \mbox{\hyperlink{class_philosopher3_d_a586456ca9cc859018aa47564f235c933}{think}} ()
+\item 
+\mbox{\Hypertarget{class_philosopher3_d_a0fd066c61fec3adfdcd80eea1793fba7}\label{class_philosopher3_d_a0fd066c61fec3adfdcd80eea1793fba7}} 
+void \mbox{\hyperlink{class_philosopher3_d_a0fd066c61fec3adfdcd80eea1793fba7}{eat}} ()
+\begin{DoxyCompactList}\small\item\em Resets the \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}} to thinking after he eats. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_philosopher3_d_ad9c54065af476b716f985c0ae3d4bd21}{set\+State}} (Phil\+State s)
+\begin{DoxyCompactList}\small\item\em Mutator for my\+State. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_philosopher3_d_ab261853f450bfb3bcd25eb397893dba2}{set\+Action}} (Phil\+Action a)
+\begin{DoxyCompactList}\small\item\em Mutator for my\+Action. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_philosopher3_d_a748b557b785461ca3e1b3d44e658f9af}{set\+Id}} (int i, int nphil)
+\begin{DoxyCompactList}\small\item\em Mutator for id. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_philosopher3_d_a7bff098afeb987e4fe4fab2dd6adcad6}{get\+Meals}} ()
+\item 
+Phil\+State \mbox{\hyperlink{class_philosopher3_d_a515fb48855cd2a9421c13d6097953a10}{state}} ()
+\item 
+Phil\+Action \mbox{\hyperlink{class_philosopher3_d_a4dc5329e128f072695d216af3867b4b4}{action}} ()
+\item 
+int \mbox{\hyperlink{class_philosopher3_d_aa1b77e0ee22ef9eb661cbc83b90d163b}{get\+Id}} ()
+\item 
+bool \mbox{\hyperlink{class_philosopher3_d_a85edb411abaa49e0cc6fb8f8791bdb8b}{has\+Cylinder}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Object representing a 3D philosopher in the Dining Philosophers\textquotesingle{} problem. 
+
+The \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}} class contains variables and methods necessary for representing a philosopher at a table. Each \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}} may acquire or release the fork to his left or to his right (or both), with his state changing accordingly. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_philosopher3_d_ac45678c5f33b97bcff814df559ea0ebb}\label{class_philosopher3_d_ac45678c5f33b97bcff814df559ea0ebb}} 
+\index{Philosopher3D@{Philosopher3D}!Philosopher3D@{Philosopher3D}}
+\index{Philosopher3D@{Philosopher3D}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{Philosopher3D()}{Philosopher3D()}}
+{\footnotesize\ttfamily Philosopher3\+D\+::\+Philosopher3D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}}. 
+
+Explicit constructor for a new \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}} object. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_philosopher3_d_a55a0b5fa883f9304e93e386d75b0cb2a}\label{class_philosopher3_d_a55a0b5fa883f9304e93e386d75b0cb2a}} 
+\index{Philosopher3D@{Philosopher3D}!acquire@{acquire}}
+\index{acquire@{acquire}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{acquire()}{acquire()}}
+{\footnotesize\ttfamily bool Philosopher3\+D\+::acquire (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_fork3_d}{Fork3D}} \&}]{f }\end{DoxyParamCaption})}
+
+Picks up a fork specified by its reference 
+
+Referenced by Table3\+D\+::act\+Step().
+
+\mbox{\Hypertarget{class_philosopher3_d_a4dc5329e128f072695d216af3867b4b4}\label{class_philosopher3_d_a4dc5329e128f072695d216af3867b4b4}} 
+\index{Philosopher3D@{Philosopher3D}!action@{action}}
+\index{action@{action}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{action()}{action()}}
+{\footnotesize\ttfamily Phil\+Action Philosopher3\+D\+::action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}}\textquotesingle{}s action. \mbox{\Hypertarget{class_philosopher3_d_a536c633359c82402055c6264cc8f12cc}\label{class_philosopher3_d_a536c633359c82402055c6264cc8f12cc}} 
+\index{Philosopher3D@{Philosopher3D}!addMeal@{addMeal}}
+\index{addMeal@{addMeal}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{addMeal()}{addMeal()}}
+{\footnotesize\ttfamily void Philosopher3\+D\+::add\+Meal (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z }\end{DoxyParamCaption})}
+
+Adds a meal representation to meals and the Canvas 
+
+Referenced by Table3\+D\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher3_d_af9321231d363ade9c90bf381650bebb7}\label{class_philosopher3_d_af9321231d363ade9c90bf381650bebb7}} 
+\index{Philosopher3D@{Philosopher3D}!draw@{draw}}
+\index{draw@{draw}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Philosopher3\+D\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can,  }\item[{float}]{x,  }\item[{float}]{y }\end{DoxyParamCaption})}
+
+Adds \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}} to Canvas or refreshes its color. 
+
+Referenced by Table3\+D\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher3_d_aa1b77e0ee22ef9eb661cbc83b90d163b}\label{class_philosopher3_d_aa1b77e0ee22ef9eb661cbc83b90d163b}} 
+\index{Philosopher3D@{Philosopher3D}!getId@{getId}}
+\index{getId@{getId}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily int Philosopher3\+D\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}}\textquotesingle{}s id. \mbox{\Hypertarget{class_philosopher3_d_a7bff098afeb987e4fe4fab2dd6adcad6}\label{class_philosopher3_d_a7bff098afeb987e4fe4fab2dd6adcad6}} 
+\index{Philosopher3D@{Philosopher3D}!getMeals@{getMeals}}
+\index{getMeals@{getMeals}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{getMeals()}{getMeals()}}
+{\footnotesize\ttfamily int Philosopher3\+D\+::get\+Meals (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for number of meals \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}} has consumed. 
+
+Referenced by Table3\+D\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher3_d_a85edb411abaa49e0cc6fb8f8791bdb8b}\label{class_philosopher3_d_a85edb411abaa49e0cc6fb8f8791bdb8b}} 
+\index{Philosopher3D@{Philosopher3D}!hasCylinder@{hasCylinder}}
+\index{hasCylinder@{hasCylinder}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{hasCylinder()}{hasCylinder()}}
+{\footnotesize\ttfamily bool Philosopher3\+D\+::has\+Cylinder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}}\textquotesingle{}s cylinder. \mbox{\Hypertarget{class_philosopher3_d_abadf81910034cbd6757d6fac2d1154a5}\label{class_philosopher3_d_abadf81910034cbd6757d6fac2d1154a5}} 
+\index{Philosopher3D@{Philosopher3D}!refreshColor@{refreshColor}}
+\index{refreshColor@{refreshColor}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{refreshColor()}{refreshColor()}}
+{\footnotesize\ttfamily void Philosopher3\+D\+::refresh\+Color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Updates the \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}}\textquotesingle{}s color based on its state 
+
+Referenced by Table3\+D\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher3_d_ab6fcdb12fb04651f33005c891f89791e}\label{class_philosopher3_d_ab6fcdb12fb04651f33005c891f89791e}} 
+\index{Philosopher3D@{Philosopher3D}!release@{release}}
+\index{release@{release}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{release()}{release()}}
+{\footnotesize\ttfamily bool Philosopher3\+D\+::release (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_fork3_d}{Fork3D}} \&}]{f }\end{DoxyParamCaption})}
+
+Releases a fork specified by its reference 
+
+Referenced by Table3\+D\+::act\+Step().
+
+\mbox{\Hypertarget{class_philosopher3_d_ab261853f450bfb3bcd25eb397893dba2}\label{class_philosopher3_d_ab261853f450bfb3bcd25eb397893dba2}} 
+\index{Philosopher3D@{Philosopher3D}!setAction@{setAction}}
+\index{setAction@{setAction}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{setAction()}{setAction()}}
+{\footnotesize\ttfamily void Philosopher3\+D\+::set\+Action (\begin{DoxyParamCaption}\item[{Phil\+Action}]{a }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Mutator for my\+Action. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Phil\+Action to set my\+Action to. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Table3\+D\+::forfeit\+When\+Blocked\+Method(), Table3\+D\+::hierarchy\+Method(), Table3\+D\+::n\+Frame\+Release\+Method(), Table3\+D\+::odd\+Even\+Method(), think(), and Table3\+D\+::wait\+When\+Blocked\+Method().
+
+\mbox{\Hypertarget{class_philosopher3_d_a748b557b785461ca3e1b3d44e658f9af}\label{class_philosopher3_d_a748b557b785461ca3e1b3d44e658f9af}} 
+\index{Philosopher3D@{Philosopher3D}!setId@{setId}}
+\index{setId@{setId}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{setId()}{setId()}}
+{\footnotesize\ttfamily void Philosopher3\+D\+::set\+Id (\begin{DoxyParamCaption}\item[{int}]{i,  }\item[{int}]{nphil }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Mutator for id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Which philosopher id to mutate \\
+\hline
+{\em nphil} & Total number of philosophers. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Philosopher3\+D(), and Table3\+D\+::\+Table3\+D().
+
+\mbox{\Hypertarget{class_philosopher3_d_ad9c54065af476b716f985c0ae3d4bd21}\label{class_philosopher3_d_ad9c54065af476b716f985c0ae3d4bd21}} 
+\index{Philosopher3D@{Philosopher3D}!setState@{setState}}
+\index{setState@{setState}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{setState()}{setState()}}
+{\footnotesize\ttfamily void Philosopher3\+D\+::set\+State (\begin{DoxyParamCaption}\item[{Phil\+State}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Mutator for my\+State. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Phil\+State to set my\+State to. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Table3\+D\+::forfeit\+When\+Blocked\+Method(), and think().
+
+\mbox{\Hypertarget{class_philosopher3_d_a515fb48855cd2a9421c13d6097953a10}\label{class_philosopher3_d_a515fb48855cd2a9421c13d6097953a10}} 
+\index{Philosopher3D@{Philosopher3D}!state@{state}}
+\index{state@{state}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{state()}{state()}}
+{\footnotesize\ttfamily Phil\+State Philosopher3\+D\+::state (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Accessor for \mbox{\hyperlink{class_philosopher3_d}{Philosopher3D}}\textquotesingle{}s state. 
+
+Referenced by Table3\+D\+::draw\+Step().
+
+\mbox{\Hypertarget{class_philosopher3_d_a586456ca9cc859018aa47564f235c933}\label{class_philosopher3_d_a586456ca9cc859018aa47564f235c933}} 
+\index{Philosopher3D@{Philosopher3D}!think@{think}}
+\index{think@{think}!Philosopher3D@{Philosopher3D}}
+\doxysubsubsection{\texorpdfstring{think()}{think()}}
+{\footnotesize\ttfamily void Philosopher3\+D\+::think (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Thinks and switches to hungry state if a random number is a multiple of 3. 
+
+Referenced by Table3\+D\+::hierarchy\+Method(), Table3\+D\+::n\+Frame\+Release\+Method(), Table3\+D\+::odd\+Even\+Method(), and Table3\+D\+::wait\+When\+Blocked\+Method().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Dining\+Philosophers3\+D/Philosopher3\+D.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Dining\+Philosophers3\+D/Philosopher3\+D.\+cpp\end{DoxyCompactItemize}

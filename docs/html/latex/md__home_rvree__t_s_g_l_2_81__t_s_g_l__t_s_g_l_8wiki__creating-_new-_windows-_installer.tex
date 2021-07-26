@@ -1,0 +1,21 @@
+{\itshape {\bfseries{W\+O\+RK IN P\+R\+O\+G\+R\+E\+S\+S!!!}}}
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_windows-_installer_autotoc_md76}{}\doxysubsection{$\vert$ C\+R\+E\+A\+T\+I\+N\+G N\+E\+W W\+I\+N\+D\+O\+W\+S I\+N\+S\+T\+A\+L\+L\+E\+R F\+O\+R T\+S\+G\+L (\+Last updated\+: 08/11/16) $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_windows-_installer_autotoc_md76}
+So, you need to create a new Windows installer for T\+S\+GL.
+
+This probably means that you also created a new Visual Studio solution for T\+S\+GL.
+
+If not, please see \mbox{[}\mbox{[}New Visual Studio Versions\mbox{]}\mbox{]} {\itshape before} continuing.
+
+Creating a new Windows installer isn\textquotesingle{}t particularly difficult.
+
+But it does require a tool called \char`\"{}\+Inno Setup\char`\"{}.
+
+You can download the installer for it \href{http://www.jrsoftware.org/isdl.php}{\texttt{ here}}.
+
+Be sure to download the {\ttfamily innosetup-\/\#.\#.\#.exe} file from that website!
+
+After downloading it, open it up.
+
+Rename the installer to \char`\"{}install-\/windows\+V\+S$\ast$$\ast$$\ast$$\ast$\char`\"{} and move it to the cloned T\+S\+GL workspace folder. Delete all files E\+X\+C\+E\+PT for the freetype6.\+dll and zlib.\+dll files. Rebuild Solution. 

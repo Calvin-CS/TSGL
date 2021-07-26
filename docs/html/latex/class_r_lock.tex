@@ -1,0 +1,108 @@
+\hypertarget{class_r_lock}{}\doxysection{R\+Lock Class Reference}
+\label{class_r_lock}\index{RLock@{RLock}}
+
+
+A lock giving priority to Readers.  
+
+
+
+
+{\ttfamily \#include $<$R\+Lock.\+h$>$}
+
+Inheritance diagram for R\+Lock\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_r_lock}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_r_lock_a0f8f16736dc868e2549a1abcfbc6c539}\label{class_r_lock_a0f8f16736dc868e2549a1abcfbc6c539}} 
+{\bfseries R\+Lock} (\mbox{\hyperlink{class_r_w_database}{R\+W\+Database}}$<$ \mbox{\hyperlink{classtsgl_1_1_rectangle}{tsgl\+::\+Rectangle}} $\ast$ $>$ $\ast$data)
+\item 
+void \mbox{\hyperlink{class_r_lock_a6445aacde1dc9a6f7769d1b1480d6162}{read\+Lock}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_r_lock_a6445aacde1dc9a6f7769d1b1480d6162}{read\+Lock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_r_lock_a0af51edce04598b0afe551d356cfe05b}{read\+Unlock}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_r_lock_a0af51edce04598b0afe551d356cfe05b}{read\+Unlock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_r_lock_ab04d415f49f28f6a8198f611d03e9bcd}{write\+Lock}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_r_lock_ab04d415f49f28f6a8198f611d03e9bcd}{write\+Lock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_r_lock_a4c69e6a1922b1aab3a84afeececad3fa}{write\+Unlock}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_r_lock_a4c69e6a1922b1aab3a84afeececad3fa}{write\+Unlock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+A lock giving priority to Readers. 
+
+\mbox{\hyperlink{_r_lock_8h_source}{R\+Lock.\+h}} provides the monitor for the Reader-\/\+Writer visualization that gives preference to the Readers. This class is a subclass of \mbox{\hyperlink{class_lock}{Lock}} and implements its locking and unlocking virtual methods.
+
+Inheritance\+: \mbox{\hyperlink{class_lock}{Lock}} class.
+
+Implements the locking and unlocking methods of a monitor. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_r_lock_a6445aacde1dc9a6f7769d1b1480d6162}\label{class_r_lock_a6445aacde1dc9a6f7769d1b1480d6162}} 
+\index{RLock@{RLock}!readLock@{readLock}}
+\index{readLock@{readLock}!RLock@{RLock}}
+\doxysubsubsection{\texorpdfstring{readLock()}{readLock()}}
+{\footnotesize\ttfamily void R\+Lock\+::read\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_r_lock_a6445aacde1dc9a6f7769d1b1480d6162}{read\+Lock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} 
+
+R\+Lock.\+cpp provides the monitor for the Reader-\/\+Writer visualization that gives preference to the Readers. This class is a subclass of \mbox{\hyperlink{class_lock}{Lock}} and implements its locking and unlocking virtual methods.
+
+Grants the calling thread access for reading, giving priority to readers 
+
+Implements \mbox{\hyperlink{class_lock}{Lock}}.
+
+\mbox{\Hypertarget{class_r_lock_a0af51edce04598b0afe551d356cfe05b}\label{class_r_lock_a0af51edce04598b0afe551d356cfe05b}} 
+\index{RLock@{RLock}!readUnlock@{readUnlock}}
+\index{readUnlock@{readUnlock}!RLock@{RLock}}
+\doxysubsubsection{\texorpdfstring{readUnlock()}{readUnlock()}}
+{\footnotesize\ttfamily void R\+Lock\+::read\+Unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_r_lock_a0af51edce04598b0afe551d356cfe05b}{read\+Unlock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} 
+
+Releases the calling thread\textquotesingle{}s read lock 
+
+Implements \mbox{\hyperlink{class_lock}{Lock}}.
+
+\mbox{\Hypertarget{class_r_lock_ab04d415f49f28f6a8198f611d03e9bcd}\label{class_r_lock_ab04d415f49f28f6a8198f611d03e9bcd}} 
+\index{RLock@{RLock}!writeLock@{writeLock}}
+\index{writeLock@{writeLock}!RLock@{RLock}}
+\doxysubsubsection{\texorpdfstring{writeLock()}{writeLock()}}
+{\footnotesize\ttfamily void R\+Lock\+::write\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_r_lock_ab04d415f49f28f6a8198f611d03e9bcd}{write\+Lock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} 
+
+Grants the calling thread acces for writing, giving priority to Readers 
+
+Implements \mbox{\hyperlink{class_lock}{Lock}}.
+
+\mbox{\Hypertarget{class_r_lock_a4c69e6a1922b1aab3a84afeececad3fa}\label{class_r_lock_a4c69e6a1922b1aab3a84afeececad3fa}} 
+\index{RLock@{RLock}!writeUnlock@{writeUnlock}}
+\index{writeUnlock@{writeUnlock}!RLock@{RLock}}
+\doxysubsubsection{\texorpdfstring{writeUnlock()}{writeUnlock()}}
+{\footnotesize\ttfamily void R\+Lock\+::write\+Unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_r_lock_a4c69e6a1922b1aab3a84afeececad3fa}{write\+Unlock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} 
+
+Releases the calling thread\textquotesingle{}s write lock 
+
+Implements \mbox{\hyperlink{class_lock}{Lock}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/R\+Lock.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/R\+Lock.\+cpp\end{DoxyCompactItemize}

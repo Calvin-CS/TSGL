@@ -1,0 +1,143 @@
+\hypertarget{structtsgl_1_1_color_h_s_v}{}\doxysection{tsgl\+::Color\+H\+SV Struct Reference}
+\label{structtsgl_1_1_color_h_s_v}\index{tsgl::ColorHSV@{tsgl::ColorHSV}}
+
+
+Floating point H\+S\+VA color struct.  
+
+
+
+
+{\ttfamily \#include $<$Color.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structtsgl_1_1_color_h_s_v_a36b4390ed6aba9f00ac9559ccca74f8a}{Color\+H\+SV}} ()
+\begin{DoxyCompactList}\small\item\em Constructs a \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtsgl_1_1_color_h_s_v_a9ff97b9a0434ab700883b24c3738645d}{Color\+H\+SV}} (float h, float s, float v, float a=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtsgl_1_1_color_h_s_v_acac3e7bf684bd8b518ab794ca8bedbf7}{operator Color\+Int}} ()
+\begin{DoxyCompactList}\small\item\em Implicit conversion from \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} to \mbox{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtsgl_1_1_color_h_s_v_a85a62f8d581801540717d3b3cd0ae782}{operator Color\+Float}} ()
+\begin{DoxyCompactList}\small\item\em Implicit conversion from \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} to \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{structtsgl_1_1_color_h_s_v_ab606504c5b0873b1cef707c523fe5eb1}{as\+String}} ()
+\begin{DoxyCompactList}\small\item\em Returns a string representation of the \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_afd87dfc2483324bddf502bf2ba5266b3}\label{structtsgl_1_1_color_h_s_v_afd87dfc2483324bddf502bf2ba5266b3}} 
+float {\bfseries H}
+\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_a70be2ef38632107a9756740bcca86b45}\label{structtsgl_1_1_color_h_s_v_a70be2ef38632107a9756740bcca86b45}} 
+float {\bfseries S}
+\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_a56a41d0935fedf853e0ead44c03d0626}\label{structtsgl_1_1_color_h_s_v_a56a41d0935fedf853e0ead44c03d0626}} 
+float {\bfseries V}
+\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_a188f4a1bb6de8bef57b6913be75e0534}\label{structtsgl_1_1_color_h_s_v_a188f4a1bb6de8bef57b6913be75e0534}} 
+float {\bfseries A}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Floating point H\+S\+VA color struct. 
+
+\mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} defines a color with floating point hue, saturation, value, and alpha components. 
+\begin{DoxyParams}{Parameters}
+{\em H} & Hue component, between 0 and 6 inclusive. \\
+\hline
+{\em S} & Saturation component, between 0 and 1 inclusive. \\
+\hline
+{\em V} & Value component, between 0 and 1 inclusive. \\
+\hline
+{\em A} & Alpha component, between 0 and 1 inclusive. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_a36b4390ed6aba9f00ac9559ccca74f8a}\label{structtsgl_1_1_color_h_s_v_a36b4390ed6aba9f00ac9559ccca74f8a}} 
+\index{tsgl::ColorHSV@{tsgl::ColorHSV}!ColorHSV@{ColorHSV}}
+\index{ColorHSV@{ColorHSV}!tsgl::ColorHSV@{tsgl::ColorHSV}}
+\doxysubsubsection{\texorpdfstring{ColorHSV()}{ColorHSV()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+H\+S\+V\+::\+Color\+H\+SV (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructs a \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. 
+
+Default constructor for a \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. \begin{DoxyNote}{Note}
+H is set to 0.\+0f by default. S, V, and A are set to 1.\+0f by default. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+A \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct with default H, S, V, and A values. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_a9ff97b9a0434ab700883b24c3738645d}\label{structtsgl_1_1_color_h_s_v_a9ff97b9a0434ab700883b24c3738645d}} 
+\index{tsgl::ColorHSV@{tsgl::ColorHSV}!ColorHSV@{ColorHSV}}
+\index{ColorHSV@{ColorHSV}!tsgl::ColorHSV@{tsgl::ColorHSV}}
+\doxysubsubsection{\texorpdfstring{ColorHSV()}{ColorHSV()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+H\+S\+V\+::\+Color\+H\+SV (\begin{DoxyParamCaption}\item[{float}]{h,  }\item[{float}]{s,  }\item[{float}]{v,  }\item[{float}]{a = {\ttfamily 1.0f} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. 
+
+Explicit constructor for a \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. 
+\begin{DoxyParams}{Parameters}
+{\em h} & Hue component of the \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. \\
+\hline
+{\em s} & Saturation component of the \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. \\
+\hline
+{\em v} & Value component of the \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct. \\
+\hline
+{\em a} & Alpha component of the \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct (set to 1.\+0f by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held for each of the components where if any of them are out of range then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} struct with specified H, S, V, and A values. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_ab606504c5b0873b1cef707c523fe5eb1}\label{structtsgl_1_1_color_h_s_v_ab606504c5b0873b1cef707c523fe5eb1}} 
+\index{tsgl::ColorHSV@{tsgl::ColorHSV}!asString@{asString}}
+\index{asString@{asString}!tsgl::ColorHSV@{tsgl::ColorHSV}}
+\doxysubsubsection{\texorpdfstring{asString()}{asString()}}
+{\footnotesize\ttfamily std\+::string tsgl\+::\+Color\+H\+S\+V\+::as\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns a string representation of the \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}. 
+
+This function returns a std\+::string representation of the \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}. \begin{DoxyReturn}{Returns}
+A string representation of the \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_a85a62f8d581801540717d3b3cd0ae782}\label{structtsgl_1_1_color_h_s_v_a85a62f8d581801540717d3b3cd0ae782}} 
+\index{tsgl::ColorHSV@{tsgl::ColorHSV}!operator ColorFloat@{operator ColorFloat}}
+\index{operator ColorFloat@{operator ColorFloat}!tsgl::ColorHSV@{tsgl::ColorHSV}}
+\doxysubsubsection{\texorpdfstring{operator ColorFloat()}{operator ColorFloat()}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+H\+S\+V\+::operator \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implicit conversion from \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} to \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. 
+
+This defines the implicit conversion operator from an H\+SV color type (\mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}) to a floating point color type (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}). \mbox{\Hypertarget{structtsgl_1_1_color_h_s_v_acac3e7bf684bd8b518ab794ca8bedbf7}\label{structtsgl_1_1_color_h_s_v_acac3e7bf684bd8b518ab794ca8bedbf7}} 
+\index{tsgl::ColorHSV@{tsgl::ColorHSV}!operator ColorInt@{operator ColorInt}}
+\index{operator ColorInt@{operator ColorInt}!tsgl::ColorHSV@{tsgl::ColorHSV}}
+\doxysubsubsection{\texorpdfstring{operator ColorInt()}{operator ColorInt()}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+H\+S\+V\+::operator \mbox{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implicit conversion from \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} to \mbox{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}}. 
+
+This defines the implicit conversion operator from an H\+SV color type (\mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}) to an integer color type (\mbox{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}}). 
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Color.\+h\item 
+Color.\+cpp\end{DoxyCompactItemize}

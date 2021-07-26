@@ -1,0 +1,140 @@
+\hypertarget{classtsgl_1_1_spectrogram}{}\doxysection{tsgl\+::Spectrogram Class Reference}
+\label{classtsgl_1_1_spectrogram}\index{tsgl::Spectrogram@{tsgl::Spectrogram}}
+
+
+Displays a spectrogram of a given data set.  
+
+
+
+
+{\ttfamily \#include $<$Spectrogram.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_spectrogram_a806d3244b086b9ed2c982b7178eb5139}{Spectrogram}} (Spectrogram\+Drawmode draw\+Mode, int width, int height=-\/1)
+\begin{DoxyCompactList}\small\item\em Explicit \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} constructor method. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_spectrogram_abf1ff8d5acade39017321d6a2006f0f1}{$\sim$\+Spectrogram}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} destructor method. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_spectrogram_a52be3a5f280c4fe6b82960283df7d91d}{update\+Locked}} (int index, float weight=1.\+0f, float decay=0.\+8f)
+\begin{DoxyCompactList}\small\item\em Updates a spectrogram with new data, using locks for thread safety. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_spectrogram_a671efc29173bc9c5578090c3d4ff331a}{update\+Critical}} (int index, float weight=1.\+0f, float decay=0.\+8f)
+\begin{DoxyCompactList}\small\item\em Updates a spectrogram with new data, using critical sections for thread safety. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_spectrogram_aef15257f0daa13a57d99cd621d402bd5}{draw}} (float ratio)
+\begin{DoxyCompactList}\small\item\em Updates the image on the spectrogram. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_spectrogram_a9e6eb0489ee0fb9f96b2a5202868a1c2}{finish}} ()
+\begin{DoxyCompactList}\small\item\em Finishes the spectrogram. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Displays a spectrogram of a given data set. 
+
+\mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} is a class for visualizing data as a color spectrum. This data will typically be hues, but \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} will accept any data mapping to an integer value between 0 and 255. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_spectrogram_a806d3244b086b9ed2c982b7178eb5139}\label{classtsgl_1_1_spectrogram_a806d3244b086b9ed2c982b7178eb5139}} 
+\index{tsgl::Spectrogram@{tsgl::Spectrogram}!Spectrogram@{Spectrogram}}
+\index{Spectrogram@{Spectrogram}!tsgl::Spectrogram@{tsgl::Spectrogram}}
+\doxysubsubsection{\texorpdfstring{Spectrogram()}{Spectrogram()}}
+{\footnotesize\ttfamily tsgl\+::\+Spectrogram\+::\+Spectrogram (\begin{DoxyParamCaption}\item[{Spectrogram\+Drawmode}]{draw\+Mode,  }\item[{int}]{width,  }\item[{int}]{height = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+
+Explicit \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} constructor method. 
+
+This is the explicit constructor for the \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} class. 
+\begin{DoxyParams}{Parameters}
+{\em draw\+Mode} & Method used for displaying spectral data. Can be one of C\+I\+R\+C\+U\+L\+AR or H\+O\+R\+I\+Z\+O\+N\+T\+AL. \\
+\hline
+{\em width} & The width of the \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} canvas. \\
+\hline
+{\em height} & The height of the \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} canvas. This value is ignored for H\+O\+R\+I\+Z\+O\+N\+T\+AL Spectrograms. Setting this to -\/1 sets the width automatically. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} with the specified drawing mode and size. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_spectrogram_abf1ff8d5acade39017321d6a2006f0f1}\label{classtsgl_1_1_spectrogram_abf1ff8d5acade39017321d6a2006f0f1}} 
+\index{tsgl::Spectrogram@{tsgl::Spectrogram}!````~Spectrogram@{$\sim$Spectrogram}}
+\index{````~Spectrogram@{$\sim$Spectrogram}!tsgl::Spectrogram@{tsgl::Spectrogram}}
+\doxysubsubsection{\texorpdfstring{$\sim$Spectrogram()}{~Spectrogram()}}
+{\footnotesize\ttfamily tsgl\+::\+Spectrogram\+::$\sim$\+Spectrogram (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} destructor method. 
+
+This is the destructor for the \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} class.
+
+Frees up memory that was allocated to a \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} instance. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_spectrogram_aef15257f0daa13a57d99cd621d402bd5}\label{classtsgl_1_1_spectrogram_aef15257f0daa13a57d99cd621d402bd5}} 
+\index{tsgl::Spectrogram@{tsgl::Spectrogram}!draw@{draw}}
+\index{draw@{draw}!tsgl::Spectrogram@{tsgl::Spectrogram}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void tsgl\+::\+Spectrogram\+::draw (\begin{DoxyParamCaption}\item[{float}]{ratio }\end{DoxyParamCaption})}
+
+
+
+Updates the image on the spectrogram. 
+
+This function updates the \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}}\textquotesingle{}s \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} with the data since the last call to update() and redraws it. 
+\begin{DoxyParams}{Parameters}
+{\em ratio} & The scaling of the visualizer. Accepts values between 0.\+0f and 1.\+0f. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_spectrogram_a9e6eb0489ee0fb9f96b2a5202868a1c2}\label{classtsgl_1_1_spectrogram_a9e6eb0489ee0fb9f96b2a5202868a1c2}} 
+\index{tsgl::Spectrogram@{tsgl::Spectrogram}!finish@{finish}}
+\index{finish@{finish}!tsgl::Spectrogram@{tsgl::Spectrogram}}
+\doxysubsubsection{\texorpdfstring{finish()}{finish()}}
+{\footnotesize\ttfamily void tsgl\+::\+Spectrogram\+::finish (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Finishes the spectrogram. 
+
+This function tells the \mbox{\hyperlink{classtsgl_1_1_spectrogram}{Spectrogram}} to free all of its memory and close down its \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. \mbox{\Hypertarget{classtsgl_1_1_spectrogram_a671efc29173bc9c5578090c3d4ff331a}\label{classtsgl_1_1_spectrogram_a671efc29173bc9c5578090c3d4ff331a}} 
+\index{tsgl::Spectrogram@{tsgl::Spectrogram}!updateCritical@{updateCritical}}
+\index{updateCritical@{updateCritical}!tsgl::Spectrogram@{tsgl::Spectrogram}}
+\doxysubsubsection{\texorpdfstring{updateCritical()}{updateCritical()}}
+{\footnotesize\ttfamily void tsgl\+::\+Spectrogram\+::update\+Critical (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{float}]{weight = {\ttfamily 1.0f},  }\item[{float}]{decay = {\ttfamily 0.8f} }\end{DoxyParamCaption})}
+
+
+
+Updates a spectrogram with new data, using critical sections for thread safety. 
+
+This function adds the value of {\ttfamily weight} to the hue specified by {\ttfamily index}, and adds the value ({\ttfamily decay}$^\wedge${\ttfamily n})$\ast$ {\ttfamily weight} to all hues {\ttfamily n} steps away from {\ttfamily index}. 
+\begin{DoxyParams}{Parameters}
+{\em index} & Index of the hue to update. Value is taken mod 256. \\
+\hline
+{\em weight} & The value to add to {\ttfamily index}. \\
+\hline
+{\em decay} & Falloff for {\ttfamily weight} upon adjacent values. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_spectrogram_a52be3a5f280c4fe6b82960283df7d91d}\label{classtsgl_1_1_spectrogram_a52be3a5f280c4fe6b82960283df7d91d}} 
+\index{tsgl::Spectrogram@{tsgl::Spectrogram}!updateLocked@{updateLocked}}
+\index{updateLocked@{updateLocked}!tsgl::Spectrogram@{tsgl::Spectrogram}}
+\doxysubsubsection{\texorpdfstring{updateLocked()}{updateLocked()}}
+{\footnotesize\ttfamily void tsgl\+::\+Spectrogram\+::update\+Locked (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{float}]{weight = {\ttfamily 1.0f},  }\item[{float}]{decay = {\ttfamily 0.8f} }\end{DoxyParamCaption})}
+
+
+
+Updates a spectrogram with new data, using locks for thread safety. 
+
+This function adds the value of {\ttfamily weight} to the hue specified by {\ttfamily index}, and adds the value ({\ttfamily decay}$^\wedge${\ttfamily n})$\ast$ {\ttfamily weight} to all hues {\ttfamily n} steps away from {\ttfamily index}. 
+\begin{DoxyParams}{Parameters}
+{\em index} & Index of the hue to update. Value is taken mod 256. \\
+\hline
+{\em weight} & The value to add to {\ttfamily index}. \\
+\hline
+{\em decay} & Falloff for {\ttfamily weight} upon adjacent values. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Spectrogram.\+h\item 
+Spectrogram.\+cpp\end{DoxyCompactItemize}

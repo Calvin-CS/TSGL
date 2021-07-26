@@ -1,0 +1,262 @@
+\hypertarget{classtsgl_1_1_ellipse}{}\doxysection{tsgl\+::Ellipse Class Reference}
+\label{classtsgl_1_1_ellipse}\index{tsgl::Ellipse@{tsgl::Ellipse}}
+
+
+Draw a simple ellipse.  
+
+
+
+
+{\ttfamily \#include $<$Ellipse.\+h$>$}
+
+Inheritance diagram for tsgl\+::Ellipse\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_ellipse}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_ellipse_a659436dbb6b37e117cbe98c3c7b23599}{Ellipse}} (float x, float y, float z, G\+Lfloat x\+Radius, G\+Lfloat y\+Radius, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new monocolored \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_ellipse_ac017f7eca9932720288bd261f4f1c9ba}{Ellipse}} (float x, float y, float z, G\+Lfloat x\+Radius, G\+Lfloat y\+Radius, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new multicolored \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_ellipse_a0bbb654f584ad6bb7a89c8fb6e1ecaf1}{set\+X\+Radius}} (G\+Lfloat x\+Radius)
+\begin{DoxyCompactList}\small\item\em Mutates the horizontal radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_ellipse_aca11daaf59dd05b15943597a5f0adfd6}{set\+Y\+Radius}} (G\+Lfloat y\+Radius)
+\begin{DoxyCompactList}\small\item\em Mutates the vertical radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_ellipse_aeee0a38af85a3d72ddef4d10579c2582}{change\+X\+Radius\+By}} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the horizontal radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} by the parameter amount. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_ellipse_a07c8ee9a4433de42a1b70f6a02385b91}{change\+Y\+Radius\+By}} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the vertical radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} by the parameter amount. \end{DoxyCompactList}\item 
+G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_ellipse_ad3e100cf6e0cb429a3be1e5162c4aa61}{get\+X\+Radius}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the x-\/radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. \end{DoxyCompactList}\item 
+G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_ellipse_ab4371a2fae21b7fb874a4f5232e92f40}{get\+Y\+Radius}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the y-\/radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_ellipse_afb71964e56fdd50e49ba46e8090aa858}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new color. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_ellipse_a052ef5a609d7e8516d973ddc9e549c89}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} to a new array of colors. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_ellipse_a3d92da146589fc58112945daefafe98f}{get\+Colors}} (std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&color\+Vec)
+\begin{DoxyCompactList}\small\item\em Accessor for \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s colors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw a simple ellipse. 
+
+\mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} is a class for holding vertex data for an ellipse. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_a659436dbb6b37e117cbe98c3c7b23599}\label{classtsgl_1_1_ellipse_a659436dbb6b37e117cbe98c3c7b23599}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!Ellipse@{Ellipse}}
+\index{Ellipse@{Ellipse}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{Ellipse()}{Ellipse()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Ellipse\+::\+Ellipse (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{x\+Radius,  }\item[{G\+Lfloat}]{y\+Radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new monocolored \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. 
+
+This function draws a \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} with the given center, radii, rotation, and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s center. \\
+\hline
+{\em x\+Radius} & The horizontal radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} in pixels. \\
+\hline
+{\em y\+Radius} & The vertical radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} in pixels. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & The color of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s fill. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_ac017f7eca9932720288bd261f4f1c9ba}\label{classtsgl_1_1_ellipse_ac017f7eca9932720288bd261f4f1c9ba}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!Ellipse@{Ellipse}}
+\index{Ellipse@{Ellipse}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{Ellipse()}{Ellipse()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Ellipse\+::\+Ellipse (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{x\+Radius,  }\item[{G\+Lfloat}]{y\+Radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new multicolored \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. 
+
+This function draws a \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} with the given center, radii, rotation, and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s center. \\
+\hline
+{\em x\+Radius} & The horizontal radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} in pixels. \\
+\hline
+{\em y\+Radius} & The vertical radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} in pixels. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & An array of colors for the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s fill. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_aeee0a38af85a3d72ddef4d10579c2582}\label{classtsgl_1_1_ellipse_aeee0a38af85a3d72ddef4d10579c2582}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!changeXRadiusBy@{changeXRadiusBy}}
+\index{changeXRadiusBy@{changeXRadiusBy}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{changeXRadiusBy()}{changeXRadiusBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Ellipse\+::change\+X\+Radius\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the horizontal radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the x-\/radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_a07c8ee9a4433de42a1b70f6a02385b91}\label{classtsgl_1_1_ellipse_a07c8ee9a4433de42a1b70f6a02385b91}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!changeYRadiusBy@{changeYRadiusBy}}
+\index{changeYRadiusBy@{changeYRadiusBy}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{changeYRadiusBy()}{changeYRadiusBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Ellipse\+::change\+Y\+Radius\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the vertical radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the y-\/radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_a3d92da146589fc58112945daefafe98f}\label{classtsgl_1_1_ellipse_a3d92da146589fc58112945daefafe98f}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!getColors@{getColors}}
+\index{getColors@{getColors}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{getColors()}{getColors()}}
+{\footnotesize\ttfamily void tsgl\+::\+Ellipse\+::get\+Colors (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&}]{color\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s colors. 
+
+Populates the reference parameter vector with a \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} for each section of \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. 
+\begin{DoxyParams}{Parameters}
+{\em color\+Vec} & A vector of Color\+Floats to which the Color\+Floats associated with \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} will be pushed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Overrides \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{Shape\+::get\+Colors()}}. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_ad3e100cf6e0cb429a3be1e5162c4aa61}\label{classtsgl_1_1_ellipse_ad3e100cf6e0cb429a3be1e5162c4aa61}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!getXRadius@{getXRadius}}
+\index{getXRadius@{getXRadius}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{getXRadius()}{getXRadius()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Ellipse\+::get\+X\+Radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the x-\/radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. 
+
+Returns the value of the my\+X\+Radius private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_ellipse_ab4371a2fae21b7fb874a4f5232e92f40}\label{classtsgl_1_1_ellipse_ab4371a2fae21b7fb874a4f5232e92f40}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!getYRadius@{getYRadius}}
+\index{getYRadius@{getYRadius}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{getYRadius()}{getYRadius()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Ellipse\+::get\+Y\+Radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the y-\/radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. 
+
+Returns the value of the my\+Y\+Radius private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_ellipse_afb71964e56fdd50e49ba46e8090aa858}\label{classtsgl_1_1_ellipse_afb71964e56fdd50e49ba46e8090aa858}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Ellipse\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_a052ef5a609d7e8516d973ddc9e549c89}\label{classtsgl_1_1_ellipse_a052ef5a609d7e8516d973ddc9e549c89}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Ellipse\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}} to a new array of colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & An array of the new Color\+Floats. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_a0bbb654f584ad6bb7a89c8fb6e1ecaf1}\label{classtsgl_1_1_ellipse_a0bbb654f584ad6bb7a89c8fb6e1ecaf1}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!setXRadius@{setXRadius}}
+\index{setXRadius@{setXRadius}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{setXRadius()}{setXRadius()}}
+{\footnotesize\ttfamily void tsgl\+::\+Ellipse\+::set\+X\+Radius (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{x\+Radius }\end{DoxyParamCaption})}
+
+
+
+Mutates the horizontal radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x\+Radius} & The \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s new x-\/radius. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_ellipse_aca11daaf59dd05b15943597a5f0adfd6}\label{classtsgl_1_1_ellipse_aca11daaf59dd05b15943597a5f0adfd6}} 
+\index{tsgl::Ellipse@{tsgl::Ellipse}!setYRadius@{setYRadius}}
+\index{setYRadius@{setYRadius}!tsgl::Ellipse@{tsgl::Ellipse}}
+\doxysubsubsection{\texorpdfstring{setYRadius()}{setYRadius()}}
+{\footnotesize\ttfamily void tsgl\+::\+Ellipse\+::set\+Y\+Radius (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{y\+Radius }\end{DoxyParamCaption})}
+
+
+
+Mutates the vertical radius of the \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Y\+Radius} & The \mbox{\hyperlink{classtsgl_1_1_ellipse}{Ellipse}}\textquotesingle{}s new y-\/radius. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Ellipse.\+h\item 
+Ellipse.\+cpp\end{DoxyCompactItemize}

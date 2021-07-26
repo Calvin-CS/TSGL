@@ -1,0 +1,23 @@
+{\itshape {\bfseries{W\+O\+RK IN P\+R\+O\+G\+R\+E\+SS}}}
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__updating-_mac_o_s-_x-_packages_autotoc_md135}{}\doxysubsection{$\vert$ U\+P\+D\+A\+T\+I\+N\+G M\+A\+C O\+S X P\+A\+C\+K\+A\+G\+E\+S (\+Last updated\+: 08/12/16) $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__updating-_mac_o_s-_x-_packages_autotoc_md135}
+{\itshape {\bfseries{N\+O\+TE\+:}}} This page does {\itshape N\+OT} teach you how to create a new Mac OS X package. It merely tells you how to update the one that we currently have. {\bfseries{If you would like to learn how to create new Mac\+OS X packages, please see \mbox{[}\mbox{[}Creating New Mac\+OS X Packages\mbox{]}\mbox{]}}}.
+
+{\itshape {\bfseries{N\+O\+TE\+:}}} You {\itshape M\+U\+ST} be on a Mac (with OS X 10.\+5 or greater) to continue.
+
+To update the Mac OS X package for T\+S\+GL without having to use \href{http://s.sudre.free.fr/Software/Packages/about.html}{\texttt{ Packages}}, mount the {\ttfamily .dmg} file from our repo, open up a Terminal and follow these steps\+:
+
+1). {\ttfamily cd} into {\ttfamily /\+Volumes/\+T\+S\+GL}. 2). Do a quick {\ttfamily ls}. You should see the {\ttfamily Install\+T\+S\+G\+L.\+pkg} file. 3). Type\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pkgutil -\/-\/expand InstallTSGL.pkg workspace }
+\end{DoxyCode}
+
+
+This command will open up the {\ttfamily .pkg} file and store the contents inside of {\ttfamily workspace}.
+
+Do a quick {\ttfamily ls}. You should now see the {\ttfamily workspace} folder.
+
+4). {\ttfamily cd} into {\ttfamily workspace}. 

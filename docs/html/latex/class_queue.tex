@@ -1,0 +1,248 @@
+\hypertarget{class_queue}{}\doxysection{Queue$<$ Item $>$ Class Template Reference}
+\label{class_queue}\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+
+
+{\ttfamily \#include $<$Queue.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_queue_a142ee0cc45f8650ef4c5bb7623a1147c}{Queue}} ()
+\item 
+\mbox{\hyperlink{class_queue_ab79f488d66116888a8879756f7116ffc}{Queue}} (int size, \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can)
+\item 
+void \mbox{\hyperlink{class_queue_af529bb8ea595f04a4e001235d9fa9500}{append}} (Item it, int pro\+Id)
+\item 
+Item \mbox{\hyperlink{class_queue_a5ebe3e112ee1abf233f113ed41e4df29}{remove}} ()
+\item 
+Item $\ast$ \mbox{\hyperlink{class_queue_ab1da66d1953215740872a16e8209b105}{get\+Array}} ()
+\item 
+int \mbox{\hyperlink{class_queue_af7cc83c36b93e41575dbe938d4ef3f2b}{get\+Count}} ()
+\item 
+Item \mbox{\hyperlink{class_queue_a15c3329a7420cae121756c940cee2dbd}{get\+First}} ()
+\item 
+Item \mbox{\hyperlink{class_queue_ae4235161a26b4452f7c56fcfff3866d2}{get\+Last}} ()
+\item 
+int \mbox{\hyperlink{class_queue_ae347bb155f5513bc330b354aeec625f8}{get\+Capacity}} ()
+\item 
+int $\ast$ \mbox{\hyperlink{class_queue_a3b4fdca4e9907c895f77557a9c928524}{get\+Pthread\+Ids}} ()
+\item 
+\mbox{\Hypertarget{class_queue_a2259d7acdc255b254b4b988d67eb8864}\label{class_queue_a2259d7acdc255b254b4b988d67eb8864}} 
+int {\bfseries get\+Last\+Index} ()
+\item 
+\mbox{\Hypertarget{class_queue_a86a52a4831e7c8cab4ef26be9afac318}\label{class_queue_a86a52a4831e7c8cab4ef26be9afac318}} 
+int {\bfseries get\+First\+Index} ()
+\item 
+bool \mbox{\hyperlink{class_queue_a8ce4be8838aeb2a8dd68f3bd96e78c94}{is\+Empty}} () const
+\item 
+bool \mbox{\hyperlink{class_queue_a6d5941cebd6fe01ceefbe7138ff7f048}{is\+Full}} () const
+\item 
+void \mbox{\hyperlink{class_queue_ad2a1705af1b52eb3a8ee18ce3cabb438}{producer\+Lock}} ()
+\item 
+void \mbox{\hyperlink{class_queue_ae4f04194e932f23edfda69a255b8aabc}{producer\+Unlock}} ()
+\item 
+void \mbox{\hyperlink{class_queue_aabd949416973cd50003caef588488ce5}{consumer\+Lock}} ()
+\item 
+void \mbox{\hyperlink{class_queue_af2fc30d17cd216e65174f81bf30077e7}{consumer\+Unlock}} ()
+\item 
+\mbox{\hyperlink{class_queue_abf6556b17de62227759af86ac8352765}{$\sim$\+Queue}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Item$>$\newline
+class Queue$<$ Item $>$}
+
+\mbox{\hyperlink{class_queue}{Queue}} class contains the data necessary in order to create a custom \mbox{\hyperlink{class_queue}{Queue}} object. Used as a shared buffer in the Producer-\/\+Consumer visualization. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_queue_a142ee0cc45f8650ef4c5bb7623a1147c}\label{class_queue_a142ee0cc45f8650ef4c5bb7623a1147c}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!Queue@{Queue}}
+\index{Queue@{Queue}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{Queue()}{Queue()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+\mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::\mbox{\hyperlink{class_queue}{Queue}}}
+
+Default constructor for the \mbox{\hyperlink{class_queue}{Queue}} class. \mbox{\Hypertarget{class_queue_ab79f488d66116888a8879756f7116ffc}\label{class_queue_ab79f488d66116888a8879756f7116ffc}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!Queue@{Queue}}
+\index{Queue@{Queue}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{Queue()}{Queue()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+\mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::\mbox{\hyperlink{class_queue}{Queue}} (\begin{DoxyParamCaption}\item[{int}]{size,  }\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can }\end{DoxyParamCaption})}
+
+Explicit-\/constructor for the \mbox{\hyperlink{class_queue}{Queue}} class. 
+\begin{DoxyParams}{Parameters}
+{\em } & size, the size of the \mbox{\hyperlink{class_queue}{Queue}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_queue_abf6556b17de62227759af86ac8352765}\label{class_queue_abf6556b17de62227759af86ac8352765}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!````~Queue@{$\sim$Queue}}
+\index{````~Queue@{$\sim$Queue}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$Queue()}{~Queue()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+\mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::$\sim$\mbox{\hyperlink{class_queue}{Queue}}}
+
+Destructor for the \mbox{\hyperlink{class_queue}{Queue}}. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_queue_af529bb8ea595f04a4e001235d9fa9500}\label{class_queue_af529bb8ea595f04a4e001235d9fa9500}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!append@{append}}
+\index{append@{append}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{append()}{append()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+void \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::append (\begin{DoxyParamCaption}\item[{Item}]{it,  }\item[{int}]{pro\+Id }\end{DoxyParamCaption})}
+
+\mbox{\hyperlink{class_queue_af529bb8ea595f04a4e001235d9fa9500}{append()}} puts an item into the \mbox{\hyperlink{class_queue}{Queue}}. 
+\begin{DoxyParams}{Parameters}
+{\em } & it, an Item to put into the \mbox{\hyperlink{class_queue}{Queue}}. \\
+\hline
+{\em } & pro\+Id, an int representing the pthread id. (Pthread condition variable logic adapted from T\+S\+\_\+\+Queue code given to me by Professor Joel Adams). \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Producer\+::act().
+
+\mbox{\Hypertarget{class_queue_aabd949416973cd50003caef588488ce5}\label{class_queue_aabd949416973cd50003caef588488ce5}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!consumerLock@{consumerLock}}
+\index{consumerLock@{consumerLock}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{consumerLock()}{consumerLock()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+void \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::consumer\+Lock}
+
+\mbox{\hyperlink{class_queue_aabd949416973cd50003caef588488ce5}{consumer\+Lock()}} locks the \mbox{\hyperlink{class_queue}{Queue}} for the thread to remove an item 
+
+Referenced by Consumer\+::lock().
+
+\mbox{\Hypertarget{class_queue_af2fc30d17cd216e65174f81bf30077e7}\label{class_queue_af2fc30d17cd216e65174f81bf30077e7}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!consumerUnlock@{consumerUnlock}}
+\index{consumerUnlock@{consumerUnlock}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{consumerUnlock()}{consumerUnlock()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+void \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::consumer\+Unlock}
+
+\mbox{\hyperlink{class_queue_af2fc30d17cd216e65174f81bf30077e7}{consumer\+Unlock()}} locks the \mbox{\hyperlink{class_queue}{Queue}} after the thread to removes an item 
+
+Referenced by Consumer\+::unlock().
+
+\mbox{\Hypertarget{class_queue_ab1da66d1953215740872a16e8209b105}\label{class_queue_ab1da66d1953215740872a16e8209b105}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!getArray@{getArray}}
+\index{getArray@{getArray}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{getArray()}{getArray()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+Item $\ast$ \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::get\+Array}
+
+\mbox{\hyperlink{class_queue_ab1da66d1953215740872a16e8209b105}{get\+Array()}} is the accessor method for the array of the \mbox{\hyperlink{class_queue}{Queue}}. \begin{DoxyReturn}{Returns}
+\+: array, the array of items in the \mbox{\hyperlink{class_queue}{Queue}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_queue_ae347bb155f5513bc330b354aeec625f8}\label{class_queue_ae347bb155f5513bc330b354aeec625f8}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!getCapacity@{getCapacity}}
+\index{getCapacity@{getCapacity}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{getCapacity()}{getCapacity()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+int \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::get\+Capacity}
+
+\mbox{\hyperlink{class_queue_ae347bb155f5513bc330b354aeec625f8}{get\+Capacity()}} is the accessor method for the size of the \mbox{\hyperlink{class_queue}{Queue}}. \begin{DoxyReturn}{Returns}
+\+: size, an int representing the size of the \mbox{\hyperlink{class_queue}{Queue}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_queue_af7cc83c36b93e41575dbe938d4ef3f2b}\label{class_queue_af7cc83c36b93e41575dbe938d4ef3f2b}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!getCount@{getCount}}
+\index{getCount@{getCount}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{getCount()}{getCount()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+int \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::get\+Count}
+
+\mbox{\hyperlink{class_queue_af7cc83c36b93e41575dbe938d4ef3f2b}{get\+Count()}} is the accessor method for the number of elements currently in the \mbox{\hyperlink{class_queue}{Queue}}. \begin{DoxyReturn}{Returns}
+\+: count, an int representing the current number of elements in the \mbox{\hyperlink{class_queue}{Queue}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_queue_a15c3329a7420cae121756c940cee2dbd}\label{class_queue_a15c3329a7420cae121756c940cee2dbd}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!getFirst@{getFirst}}
+\index{getFirst@{getFirst}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{getFirst()}{getFirst()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+Item \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::get\+First}
+
+\mbox{\hyperlink{class_queue_a15c3329a7420cae121756c940cee2dbd}{get\+First()}} is the accessor method for the first element in the \mbox{\hyperlink{class_queue}{Queue}}. \begin{DoxyReturn}{Returns}
+\+: first, an Item representing the first element in the \mbox{\hyperlink{class_queue}{Queue}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_queue_ae4235161a26b4452f7c56fcfff3866d2}\label{class_queue_ae4235161a26b4452f7c56fcfff3866d2}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!getLast@{getLast}}
+\index{getLast@{getLast}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{getLast()}{getLast()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+Item \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::get\+Last}
+
+\mbox{\hyperlink{class_queue_ae4235161a26b4452f7c56fcfff3866d2}{get\+Last()}} is the accessor method for the last element in the \mbox{\hyperlink{class_queue}{Queue}}. \begin{DoxyReturn}{Returns}
+\+: last, an Iteme representing the last element in the \mbox{\hyperlink{class_queue}{Queue}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_queue_a3b4fdca4e9907c895f77557a9c928524}\label{class_queue_a3b4fdca4e9907c895f77557a9c928524}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!getPthreadIds@{getPthreadIds}}
+\index{getPthreadIds@{getPthreadIds}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{getPthreadIds()}{getPthreadIds()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+int $\ast$ \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::get\+Pthread\+Ids}
+
+\mbox{\hyperlink{class_queue_a3b4fdca4e9907c895f77557a9c928524}{get\+Pthread\+Ids()}} is the accessor method for the stored pthread ids of the Producers. (They are used to determine the color of the Rectangle drawn around the circles in the visualization). \begin{DoxyReturn}{Returns}
+\+: ids, the array of stored pthread ids. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_queue_a8ce4be8838aeb2a8dd68f3bd96e78c94}\label{class_queue_a8ce4be8838aeb2a8dd68f3bd96e78c94}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!isEmpty@{isEmpty}}
+\index{isEmpty@{isEmpty}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{isEmpty()}{isEmpty()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+bool \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::is\+Empty}
+
+\mbox{\hyperlink{class_queue_a8ce4be8838aeb2a8dd68f3bd96e78c94}{is\+Empty()}} determines if the \mbox{\hyperlink{class_queue}{Queue}} is empty or not. \begin{DoxyReturn}{Returns}
+\+: my\+Count == 0, a boolean expression which evalutes to true or false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_queue_a6d5941cebd6fe01ceefbe7138ff7f048}\label{class_queue_a6d5941cebd6fe01ceefbe7138ff7f048}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!isFull@{isFull}}
+\index{isFull@{isFull}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{isFull()}{isFull()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+bool \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::is\+Full}
+
+\mbox{\hyperlink{class_queue_a6d5941cebd6fe01ceefbe7138ff7f048}{is\+Full()}} determines if the \mbox{\hyperlink{class_queue}{Queue}} is full or not. \begin{DoxyReturn}{Returns}
+\+: my\+Count == my\+Size, a boolean expression which evalutes to true or false. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_queue_ad2a1705af1b52eb3a8ee18ce3cabb438}\label{class_queue_ad2a1705af1b52eb3a8ee18ce3cabb438}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!producerLock@{producerLock}}
+\index{producerLock@{producerLock}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{producerLock()}{producerLock()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+void \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::producer\+Lock}
+
+\mbox{\hyperlink{class_queue_ad2a1705af1b52eb3a8ee18ce3cabb438}{producer\+Lock()}} locks the \mbox{\hyperlink{class_queue}{Queue}} for the thread to append an item 
+
+Referenced by Producer\+::lock().
+
+\mbox{\Hypertarget{class_queue_ae4f04194e932f23edfda69a255b8aabc}\label{class_queue_ae4f04194e932f23edfda69a255b8aabc}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!producerUnlock@{producerUnlock}}
+\index{producerUnlock@{producerUnlock}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{producerUnlock()}{producerUnlock()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+void \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::producer\+Unlock}
+
+\mbox{\hyperlink{class_queue_ae4f04194e932f23edfda69a255b8aabc}{producer\+Unlock()}} unlocks the \mbox{\hyperlink{class_queue}{Queue}} after the thread appends an item 
+
+Referenced by Producer\+::unlock().
+
+\mbox{\Hypertarget{class_queue_a5ebe3e112ee1abf233f113ed41e4df29}\label{class_queue_a5ebe3e112ee1abf233f113ed41e4df29}} 
+\index{Queue$<$ Item $>$@{Queue$<$ Item $>$}!remove@{remove}}
+\index{remove@{remove}!Queue$<$ Item $>$@{Queue$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily template$<$class Item $>$ \\
+Item \mbox{\hyperlink{class_queue}{Queue}}$<$ Item $>$\+::remove}
+
+\mbox{\hyperlink{class_queue_a5ebe3e112ee1abf233f113ed41e4df29}{remove()}} takes an Item out of the \mbox{\hyperlink{class_queue}{Queue}}. \begin{DoxyReturn}{Returns}
+\+: temp, an Item that was taken out of the \mbox{\hyperlink{class_queue}{Queue}}. (Pthread condition variable logic adapted from T\+S\+\_\+\+Queue code given to me by Professor Joel Adams). 
+\end{DoxyReturn}
+
+
+Referenced by Consumer\+::act().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Queue.\+h\end{DoxyCompactItemize}

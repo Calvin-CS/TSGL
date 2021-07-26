@@ -1,0 +1,90 @@
+\hypertarget{class_julia}{}\doxysection{Julia Class Reference}
+\label{class_julia}\index{Julia@{Julia}}
+
+
+Draw a \mbox{\hyperlink{class_julia}{Julia}} set.  
+
+
+
+
+{\ttfamily \#include $<$Julia.\+h$>$}
+
+Inheritance diagram for Julia\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_julia}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_julia_a8bc853f8129d8f2503bbda1236f64b36}{Julia}} (unsigned threads, unsigned depth)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \mbox{\hyperlink{class_julia}{Julia}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_julia_ab877233424159ca87da6dcf0f0f36e51}{draw}} (\mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart}} \&can)
+\begin{DoxyCompactList}\small\item\em Draw the \mbox{\hyperlink{class_julia}{Julia}} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw a \mbox{\hyperlink{class_julia}{Julia}} set. 
+
+Contains all of the information necessary in order to draw a \mbox{\hyperlink{class_julia}{Julia}} set onto a Cartesian\+Canvas.
+
+Can zoom in and out of the \mbox{\hyperlink{class_julia}{Julia}} set by scrolling the mouse wheel up and down (respectively).
+
+Same is true when clicking the left mouse button (zooming in) and the right mouse button (zooming out).
+
+Can also clear the screen by pressing the spacebar. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_julia_a8bc853f8129d8f2503bbda1236f64b36}\label{class_julia_a8bc853f8129d8f2503bbda1236f64b36}} 
+\index{Julia@{Julia}!Julia@{Julia}}
+\index{Julia@{Julia}!Julia@{Julia}}
+\doxysubsubsection{\texorpdfstring{Julia()}{Julia()}}
+{\footnotesize\ttfamily Julia\+::\+Julia (\begin{DoxyParamCaption}\item[{unsigned}]{threads,  }\item[{unsigned}]{depth }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \mbox{\hyperlink{class_julia}{Julia}} object. 
+
+Explicit constructor for the \mbox{\hyperlink{class_julia}{Julia}} class. 
+\begin{DoxyParams}{Parameters}
+{\em threads} & The number of threads to use in drawing the \mbox{\hyperlink{class_julia}{Julia}} object onto the Cartesian\+Canvas. \\
+\hline
+{\em depth} & The number of iterations to go to in order to draw the \mbox{\hyperlink{class_julia}{Julia}} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constructed \mbox{\hyperlink{class_julia}{Julia}} object. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_julia_ab877233424159ca87da6dcf0f0f36e51}\label{class_julia_ab877233424159ca87da6dcf0f0f36e51}} 
+\index{Julia@{Julia}!draw@{draw}}
+\index{draw@{draw}!Julia@{Julia}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Julia\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart}} \&}]{can }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \mbox{\hyperlink{class_julia}{Julia}} object. 
+
+Actually draws the \mbox{\hyperlink{class_julia}{Julia}} object to a Cartesian\+Canvas. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Cartesian\+Canvas to draw on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Cart is a typedef for a Cartesian\+Canvas object. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{class_mandelbrot_ab7918e4de8f00f73290f110ca7a6cffd}{Mandelbrot}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Julia.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Julia.\+cpp\end{DoxyCompactItemize}

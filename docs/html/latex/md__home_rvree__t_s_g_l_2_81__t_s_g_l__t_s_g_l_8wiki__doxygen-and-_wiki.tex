@@ -1,0 +1,81 @@
+{\itshape {\bfseries{N\+O\+TE\+:}}} This process is for people who have cloned the repository on Linux/\+Mac. Windows users may use \href{https://git-scm.com/download/win}{\texttt{ Git Bash}}, though that has not been tested.
+
+{\itshape {\bfseries{N\+O\+TE\+:}}} Before updating the Doxygen, please see the \href{https://github.com/Calvin-CS/TSGL/blob/master/READMEMISC.txt}{\texttt{ R\+E\+A\+D\+M\+E\+M\+I\+S\+C.\+txt}} file. {\bfseries{You will not be able to update the Doxygen correctly if you fail to read \href{https://github.com/Calvin-CS/TSGL/blob/master/READMEMISC.txt}{\texttt{ R\+E\+A\+D\+M\+E\+M\+I\+S\+C.\+txt}} first!}}
+
+{\itshape {\bfseries{B\+IG N\+O\+TE\+:}}} You {\itshape {\bfseries{N\+E\+ED}}} doxygen 1.\+8.\+6 in order to update the documentation correctly. Previous versions will cause a {\itshape {\bfseries{L\+OT}}} of problems.
+
+In order to provide an A\+PI and extensive documentation for the T\+S\+GL library, we rely on a tool known as \href{http://www.stack.nl/~dimitri/doxygen/}{\texttt{ Doxygen}}.
+
+We also use the \href{https://github.com/Calvin-CS/TSGL/wiki}{\texttt{ Wiki}} pages to provide important information about the T\+S\+GL library (Debian and R\+PM packages, F\+A\+Qs, etc...).
+
+If you take a look at our \href{http://calvin-cs.github.io/TSGL/html/pages.html}{\texttt{ Doxygen}} pages, you\textquotesingle{}ll notice that our Wiki pages also show up as well as the documentation for the T\+S\+GL code.
+
+Which means, in order to keep these two up-\/to-\/date, whenever you make a change to the Wiki pages, you\textquotesingle{}ll have to also update the Doxygen pages.
+
+If you only added new documentation to the T\+S\+GL source code, then you do {\itshape {\bfseries{N\+OT}}} have to update the Wiki pages. You simply have to update the Doxygen pages.
+
+We provide two different processes for each situation. Follow the one that matches closely to your situation.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__doxygen-and-_wiki_autotoc_md77}{}\doxysubsection{Updating the Doxygen pages only}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__doxygen-and-_wiki_autotoc_md77}
+1). Navigate into the T\+S\+GL root directory (where the Makefile is).
+
+2). Type \char`\"{}make cleandocs\char`\"{}.
+
+3). cd into the docs/ directory.
+
+4). Type \char`\"{}rm -\/r html\char`\"{}.
+
+5). cd back out of the docs/ directory (cd ../).
+
+6). Type \char`\"{}make docs\char`\"{}.
+
+7). cd into the docs/ directory again.
+
+8). Type \char`\"{}git add -\/-\/all\char`\"{} .
+
+9). Do a \char`\"{}git commit -\/m \char`\"{}\char`\"{} \char`\"{} inside of the docs/ directory.
+
+10). Type \char`\"{}git push origin gh-\/pages\char`\"{} . This should push the new Doxygen pages to our gh-\/pages branch (where our documentation {\itshape {\bfseries{S\+H\+O\+U\+LD}}} reside).
+
+11). cd back out of the docs/ directory (cd ../).
+
+12). Type \char`\"{}git add .\char`\"{} .
+
+13). Do a \char`\"{}git commit -\/m \char`\"{}\char`\"{} \char`\"{}.
+
+14). Type \char`\"{}git push origin master\char`\"{}. This should update the docs/ submodule inside of our main Git\+Hub branch.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__doxygen-and-_wiki_autotoc_md78}{}\doxysubsection{Updating the Wiki and Doxygen pages}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__doxygen-and-_wiki_autotoc_md78}
+1). Make any changes to the Wiki pages and save them.
+
+2). Navigate into the T\+S\+GL root directory (where the Makefile is).
+
+3). Type \char`\"{}git submodule update -\/-\/remote\char`\"{}. This should cause the docs-\/wiki/ submodule to update (and docs/ if it has been updated recently).
+
+4). Type \char`\"{}git add .\char`\"{} . This should add the docs-\/wiki/ submodule (and possibly the docs/ submodule if it has been updated recently).
+
+5). Do a \char`\"{}git commit -\/m \char`\"{}\char`\"{} \char`\"{}.
+
+6). Type \char`\"{}git push origin master\char`\"{} . This should push the changes to the main Git\+Hub branch.
+
+7). Type \char`\"{}make cleandocs\char`\"{}.
+
+8). cd into the docs/ directory.
+
+9). Type \char`\"{}rm -\/r html\char`\"{}.
+
+10). cd back out of the docs/ directory (cd ../).
+
+11). Type \char`\"{}make docs\char`\"{}.
+
+12). cd into the docs/ directory again.
+
+13). Type \char`\"{}git add -\/-\/all\char`\"{} .
+
+14). Do a \char`\"{}git commit -\/m \char`\"{}\char`\"{} \char`\"{} inside of the docs/ directory.
+
+15). Type \char`\"{}git push origin gh-\/pages\char`\"{} . This should push the new Doxygen pages to our gh-\/pages branch (where our documentation {\itshape {\bfseries{S\+H\+O\+U\+LD}}} reside).
+
+16). cd back out of the docs/ directory (cd ../).
+
+17). Type \char`\"{}git add .\char`\"{} .
+
+18). Do a \char`\"{}git commit -\/m \char`\"{}\char`\"{} \char`\"{}.
+
+19). Type \char`\"{}git push origin master\char`\"{}. This should update the docs/ submodule inside of our main Git\+Hub branch. 

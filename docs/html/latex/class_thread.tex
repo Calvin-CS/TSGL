@@ -1,0 +1,187 @@
+\hypertarget{class_thread}{}\doxysection{Thread Class Reference}
+\label{class_thread}\index{Thread@{Thread}}
+
+
+The \mbox{\hyperlink{class_thread}{Thread}} class encapsulates the details of creating a pthread.  
+
+
+
+
+{\ttfamily \#include $<$Thread.\+h$>$}
+
+Inheritance diagram for Thread\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_thread}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_thread_a95c703fb8f2f27cb64f475a8c940864a}{Thread}} ()
+\begin{DoxyCompactList}\small\item\em Default-\/constructor for a \mbox{\hyperlink{class_thread}{Thread}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_thread_a4b0b62961ddc8eedec7be379118d0588}{Thread}} (unsigned long id)
+\begin{DoxyCompactList}\small\item\em Explicit-\/constructor for a \mbox{\hyperlink{class_thread}{Thread}} object. \end{DoxyCompactList}\item 
+unsigned long \mbox{\hyperlink{class_thread_aca302203fb0d46f6ea42bb49f689f6a6}{get\+Id}} () const
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_thread_aca302203fb0d46f6ea42bb49f689f6a6}{get\+Id()}} is the accessor function for the id of the \mbox{\hyperlink{class_thread}{Thread}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_thread_a1f53ee62bd30a7924186ef26150ce262}{start}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_thread_a1f53ee62bd30a7924186ef26150ce262}{start()}} function creates the pthread inside of the \mbox{\hyperlink{class_thread}{Thread}} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_thread_aae90dfabab3e1776cf01a26e7ee3a620}\label{class_thread_aae90dfabab3e1776cf01a26e7ee3a620}} 
+virtual void {\bfseries run} ()=0
+\item 
+void \mbox{\hyperlink{class_thread_a4d9d788e98388a3217831a9046709deb}{join}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_thread_a4d9d788e98388a3217831a9046709deb}{join()}} function cancels the pthread inside of the \mbox{\hyperlink{class_thread}{Thread}} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_thread_a4b0b62961ddc8eedec7be379118d0588}\label{class_thread_a4b0b62961ddc8eedec7be379118d0588}} 
+{\bfseries Thread} (unsigned long id)
+\item 
+\mbox{\Hypertarget{class_thread_aca302203fb0d46f6ea42bb49f689f6a6}\label{class_thread_aca302203fb0d46f6ea42bb49f689f6a6}} 
+unsigned long {\bfseries get\+Id} () const
+\item 
+\mbox{\Hypertarget{class_thread_a1f53ee62bd30a7924186ef26150ce262}\label{class_thread_a1f53ee62bd30a7924186ef26150ce262}} 
+void {\bfseries start} ()
+\item 
+\mbox{\Hypertarget{class_thread_aae90dfabab3e1776cf01a26e7ee3a620}\label{class_thread_aae90dfabab3e1776cf01a26e7ee3a620}} 
+virtual void {\bfseries run} ()=0
+\item 
+\mbox{\Hypertarget{class_thread_a4d9d788e98388a3217831a9046709deb}\label{class_thread_a4d9d788e98388a3217831a9046709deb}} 
+void {\bfseries join} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void $\ast$ \mbox{\hyperlink{class_thread_ae54fcbb9f00b8356b23795ac477f9577}{thread\+Function}} (void $\ast$obj)
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_thread_ae54fcbb9f00b8356b23795ac477f9577}{thread\+Function()}} is the function that the pthread should run as soon as it is created. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_thread_a3834aa77aae8d6da1b6eaeeed2e40937}\label{class_thread_a3834aa77aae8d6da1b6eaeeed2e40937}} 
+static void $\ast$ {\bfseries thread\+Function} (void $\ast$obj)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_thread}{Thread}} class encapsulates the details of creating a pthread. 
+
+Thread.\+h contains the abstract class necessary in order to have pthreads for Producers and Consumers. Adapted from\+: \href{http://jrdodds.blogs.com/blog/2006/06/encapsulating_a.html}{\texttt{ http\+://jrdodds.\+blogs.\+com/blog/2006/06/encapsulating\+\_\+a.\+html}} \href{https://slworkthings.wordpress.com/2009/11/10/a-pthread-wrapper-class-part-1/}{\texttt{ https\+://slworkthings.\+wordpress.\+com/2009/11/10/a-\/pthread-\/wrapper-\/class-\/part-\/1/}} \href{https://cppcodetips.wordpress.com/2013/12/05/pthread-c-wrapper/}{\texttt{ https\+://cppcodetips.\+wordpress.\+com/2013/12/05/pthread-\/c-\/wrapper/}} \href{http://peter.bourgon.org/blog/2010/10/27/who-needs-boost-a-simple-pthreads-wrapper.html}{\texttt{ http\+://peter.\+bourgon.\+org/blog/2010/10/27/who-\/needs-\/boost-\/a-\/simple-\/pthreads-\/wrapper.\+html}} Practical Guide To Pthread Programming in C++ By Swaminathan Bhaskar (pdf) The \mbox{\hyperlink{class_thread}{Thread}} class encapsulates the details of creating a pthread. It is abstract; cannot be instantiated.
+
+Thread.\+h contains the abstract class necessary in order to have pthreads for Readers and Writers. Adapted from\+: \href{http://jrdodds.blogs.com/blog/2006/06/encapsulating_a.html}{\texttt{ http\+://jrdodds.\+blogs.\+com/blog/2006/06/encapsulating\+\_\+a.\+html}} \href{https://slworkthings.wordpress.com/2009/11/10/a-pthread-wrapper-class-part-1/}{\texttt{ https\+://slworkthings.\+wordpress.\+com/2009/11/10/a-\/pthread-\/wrapper-\/class-\/part-\/1/}} \href{https://cppcodetips.wordpress.com/2013/12/05/pthread-c-wrapper/}{\texttt{ https\+://cppcodetips.\+wordpress.\+com/2013/12/05/pthread-\/c-\/wrapper/}} \href{http://peter.bourgon.org/blog/2010/10/27/who-needs-boost-a-simple-pthreads-wrapper.html}{\texttt{ http\+://peter.\+bourgon.\+org/blog/2010/10/27/who-\/needs-\/boost-\/a-\/simple-\/pthreads-\/wrapper.\+html}} Practical Guide To Pthread Programming in C++ By Swaminathan Bhaskar (pdf)
+
+It is abstract; cannot be instantiated. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_thread_a95c703fb8f2f27cb64f475a8c940864a}\label{class_thread_a95c703fb8f2f27cb64f475a8c940864a}} 
+\index{Thread@{Thread}!Thread@{Thread}}
+\index{Thread@{Thread}!Thread@{Thread}}
+\doxysubsubsection{\texorpdfstring{Thread()}{Thread()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Thread\+::\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default-\/constructor for a \mbox{\hyperlink{class_thread}{Thread}} object. 
+
+Default-\/constructor for a \mbox{\hyperlink{class_thread}{Thread}} object. \begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_thread}{Thread}} object with id == 0.
+
+\+: The constructed \mbox{\hyperlink{class_thread}{Thread}} object with id == 0. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_thread_a4b0b62961ddc8eedec7be379118d0588}\label{class_thread_a4b0b62961ddc8eedec7be379118d0588}} 
+\index{Thread@{Thread}!Thread@{Thread}}
+\index{Thread@{Thread}!Thread@{Thread}}
+\doxysubsubsection{\texorpdfstring{Thread()}{Thread()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Thread\+::\+Thread (\begin{DoxyParamCaption}\item[{unsigned long}]{id }\end{DoxyParamCaption})}
+
+
+
+Explicit-\/constructor for a \mbox{\hyperlink{class_thread}{Thread}} object. 
+
+Explicit-\/constructor for a \mbox{\hyperlink{class_thread}{Thread}} object. 
+\begin{DoxyParams}{Parameters}
+{\em } & my\+Id, an unsigned long representing the id for the \mbox{\hyperlink{class_thread}{Thread}} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_thread}{Thread}} object with id == my\+Id.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em my\+Id,an} & unsigned long representing the id for the \mbox{\hyperlink{class_thread}{Thread}} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_thread}{Thread}} object with id == my\+Id. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_thread_aca302203fb0d46f6ea42bb49f689f6a6}\label{class_thread_aca302203fb0d46f6ea42bb49f689f6a6}} 
+\index{Thread@{Thread}!getId@{getId}}
+\index{getId@{getId}!Thread@{Thread}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily unsigned long Thread\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+\mbox{\hyperlink{class_thread_aca302203fb0d46f6ea42bb49f689f6a6}{get\+Id()}} is the accessor function for the id of the \mbox{\hyperlink{class_thread}{Thread}} object. 
+
+\mbox{\hyperlink{class_thread_aca302203fb0d46f6ea42bb49f689f6a6}{get\+Id()}} is the accessor function for the id of the \mbox{\hyperlink{class_thread}{Thread}} object. \begin{DoxyReturn}{Returns}
+\+: my\+Id, an unsigned long representing the id of the \mbox{\hyperlink{class_thread}{Thread}} object.
+
+\+: my\+Id, an unsigned long representing the id of the \mbox{\hyperlink{class_thread}{Thread}} object. 
+\end{DoxyReturn}
+
+
+Referenced by Producer\+::act().
+
+\mbox{\Hypertarget{class_thread_a4d9d788e98388a3217831a9046709deb}\label{class_thread_a4d9d788e98388a3217831a9046709deb}} 
+\index{Thread@{Thread}!join@{join}}
+\index{join@{join}!Thread@{Thread}}
+\doxysubsubsection{\texorpdfstring{join()}{join()}}
+{\footnotesize\ttfamily void Thread\+::join (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{class_thread_a4d9d788e98388a3217831a9046709deb}{join()}} function cancels the pthread inside of the \mbox{\hyperlink{class_thread}{Thread}} class. 
+
+\mbox{\hyperlink{class_thread_a4d9d788e98388a3217831a9046709deb}{join()}} function cancels the pthread inside of the \mbox{\hyperlink{class_thread}{Thread}} class. \mbox{\Hypertarget{class_thread_a1f53ee62bd30a7924186ef26150ce262}\label{class_thread_a1f53ee62bd30a7924186ef26150ce262}} 
+\index{Thread@{Thread}!start@{start}}
+\index{start@{start}!Thread@{Thread}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Thread\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{class_thread_a1f53ee62bd30a7924186ef26150ce262}{start()}} function creates the pthread inside of the \mbox{\hyperlink{class_thread}{Thread}} class. 
+
+\mbox{\hyperlink{class_thread_a1f53ee62bd30a7924186ef26150ce262}{start()}} function creates the pthread inside of the \mbox{\hyperlink{class_thread}{Thread}} class. \mbox{\Hypertarget{class_thread_ae54fcbb9f00b8356b23795ac477f9577}\label{class_thread_ae54fcbb9f00b8356b23795ac477f9577}} 
+\index{Thread@{Thread}!threadFunction@{threadFunction}}
+\index{threadFunction@{threadFunction}!Thread@{Thread}}
+\doxysubsubsection{\texorpdfstring{threadFunction()}{threadFunction()}}
+{\footnotesize\ttfamily void $\ast$ Thread\+::thread\+Function (\begin{DoxyParamCaption}\item[{void $\ast$}]{obj }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+
+
+\mbox{\hyperlink{class_thread_ae54fcbb9f00b8356b23795ac477f9577}{thread\+Function()}} is the function that the pthread should run as soon as it is created. 
+
+\mbox{\hyperlink{class_thread_ae54fcbb9f00b8356b23795ac477f9577}{thread\+Function()}} is the function that the pthread should run as soon as it is created. 
+\begin{DoxyParams}{Parameters}
+{\em } & obj, a void$\ast$ that will be statically casted into a \mbox{\hyperlink{class_thread}{Thread}} object. It will run the run() function, which will be defined by the inheriting subclass. $^\wedge$ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: N\+U\+LL.
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em obj,a} & void$\ast$ that will be statically casted into a \mbox{\hyperlink{class_thread}{Thread}} object. It will run the run() function, which will be defined by the inheriting subclass. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: N\+U\+LL. 
+\end{DoxyReturn}
+
+
+Referenced by start().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Thread.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Thread.\+cpp\end{DoxyCompactItemize}

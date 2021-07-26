@@ -1,0 +1,244 @@
+\hypertarget{structtsgl_1_1_color_float}{}\doxysection{tsgl\+::Color\+Float Struct Reference}
+\label{structtsgl_1_1_color_float}\index{tsgl::ColorFloat@{tsgl::ColorFloat}}
+
+
+Floating point R\+G\+BA color struct.  
+
+
+
+
+{\ttfamily \#include $<$Color.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structtsgl_1_1_color_float_a22e82c71a0feedbb7b3e3a7a73b80e30}{Color\+Float}} ()
+\begin{DoxyCompactList}\small\item\em Default \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} constructor method. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtsgl_1_1_color_float_a6984b10702d3c29324f63e3dee907687}{Color\+Float}} (G\+Lfloat v, G\+Lfloat a=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Basic explicit \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} constructor method. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtsgl_1_1_color_float_af52e422d50038bc2b516abb3826f2e17}{Color\+Float}} (G\+Lfloat r, G\+Lfloat g, G\+Lfloat b, G\+Lfloat a=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Full explicit \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} constructor method. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{structtsgl_1_1_color_float_a1048e8773d65fa1554bc8782e76527ed}{as\+String}} ()
+\begin{DoxyCompactList}\small\item\em Returns a string representation of the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtsgl_1_1_color_float_a4d74b061239eed7eb351422c18e33a37}{operator Color\+H\+SV}} ()
+\begin{DoxyCompactList}\small\item\em Implicit conversion from \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} to \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtsgl_1_1_color_float_a4ef5398fd1ee469dd9b1b43c9ce5c00d}{operator Color\+Int}} ()
+\begin{DoxyCompactList}\small\item\em Implicit conversion from \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} to \mbox{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \mbox{\hyperlink{structtsgl_1_1_color_float_a09d7cc47ac3d0e23ef7339ccf33111a5}{operator$\ast$}} (float f)
+\begin{DoxyCompactList}\small\item\em Multiplies the values of a \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} by a float. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structtsgl_1_1_color_float_ac29ecf4a36624050af433d691e65651c}{operator==}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&c2)
+\begin{DoxyCompactList}\small\item\em Determines if two Color\+Floats are equivalent. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{structtsgl_1_1_color_float_afd92fcf8743d931cfbcf405209c923fc}{operator!=}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&c2)
+\begin{DoxyCompactList}\small\item\em Determines if two Color\+Floats are {\itshape N\+OT} equivalent. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_float_ab4ba72dcb514b69290483569abec927e}\label{structtsgl_1_1_color_float_ab4ba72dcb514b69290483569abec927e}} 
+\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} {\bfseries get\+Contrast} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_float_afa4ea0b9a13ef9300bf9c5c4989d4ad0}\label{structtsgl_1_1_color_float_afa4ea0b9a13ef9300bf9c5c4989d4ad0}} 
+G\+Lfloat {\bfseries R}
+\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_float_a192da9a052df8e1a3939b9239a9e6a74}\label{structtsgl_1_1_color_float_a192da9a052df8e1a3939b9239a9e6a74}} 
+G\+Lfloat {\bfseries G}
+\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_float_afbd52234171f666ec461b17b2676246a}\label{structtsgl_1_1_color_float_afbd52234171f666ec461b17b2676246a}} 
+G\+Lfloat {\bfseries B}
+\item 
+\mbox{\Hypertarget{structtsgl_1_1_color_float_a6de5478e5e573c894ee5f85f2527d7e9}\label{structtsgl_1_1_color_float_a6de5478e5e573c894ee5f85f2527d7e9}} 
+G\+Lfloat {\bfseries A}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Floating point R\+G\+BA color struct. 
+
+\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} defines a color with floating point red, green, blue, and alpha components. 
+\begin{DoxyParams}{Parameters}
+{\em R} & Red component, between 0 and 1 inclusive. \\
+\hline
+{\em G} & Green component, between 0 and 1 inclusive. \\
+\hline
+{\em B} & Blue component, between 0 and 1 inclusive. \\
+\hline
+{\em A} & Alpha component, between 0 and 1 inclusive. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{structtsgl_1_1_color_float_a22e82c71a0feedbb7b3e3a7a73b80e30}\label{structtsgl_1_1_color_float_a22e82c71a0feedbb7b3e3a7a73b80e30}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!ColorFloat@{ColorFloat}}
+\index{ColorFloat@{ColorFloat}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{ColorFloat()}{ColorFloat()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+Float\+::\+Color\+Float (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} constructor method. 
+
+This is the default constructor for the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct. \begin{DoxyNote}{Note}
+R, G, B, and A are all set to 1.\+0f by default. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+A \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct with default R, G, B, and A values. 
+\end{DoxyReturn}
+
+
+Referenced by operator$\ast$().
+
+\mbox{\Hypertarget{structtsgl_1_1_color_float_a6984b10702d3c29324f63e3dee907687}\label{structtsgl_1_1_color_float_a6984b10702d3c29324f63e3dee907687}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!ColorFloat@{ColorFloat}}
+\index{ColorFloat@{ColorFloat}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{ColorFloat()}{ColorFloat()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+Float\+::\+Color\+Float (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{v,  }\item[{G\+Lfloat}]{a = {\ttfamily 1.0f} }\end{DoxyParamCaption})}
+
+
+
+Basic explicit \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} constructor method. 
+
+This is the basic explicit constructor for the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct. 
+\begin{DoxyParams}{Parameters}
+{\em v} & The value component of the color. \\
+\hline
+{\em a} & The alpha component of the struct (set to 1.\+0f by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is set where if any of the specified R, G, B, or A values is out of the range 0 -\/ 1 inclusive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct with equal R, G, and B values set to {\ttfamily v}, and the specified A value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structtsgl_1_1_color_float_af52e422d50038bc2b516abb3826f2e17}\label{structtsgl_1_1_color_float_af52e422d50038bc2b516abb3826f2e17}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!ColorFloat@{ColorFloat}}
+\index{ColorFloat@{ColorFloat}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{ColorFloat()}{ColorFloat()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+Float\+::\+Color\+Float (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{r,  }\item[{G\+Lfloat}]{g,  }\item[{G\+Lfloat}]{b,  }\item[{G\+Lfloat}]{a = {\ttfamily 1.0f} }\end{DoxyParamCaption})}
+
+
+
+Full explicit \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} constructor method. 
+
+This is the full explicit constructor for the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct. 
+\begin{DoxyParams}{Parameters}
+{\em r} & The red component of the struct. \\
+\hline
+{\em g} & The green component of the struct. \\
+\hline
+{\em b} & The blue component of the struct. \\
+\hline
+{\em a} & The alpha component of the struct (set to 1.\+0f by default). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is set where if any of the specified R, G, B, or A values is out of the range 0 -\/ 1 inclusive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct with the specified R, G, B, and A values. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{structtsgl_1_1_color_float_a1048e8773d65fa1554bc8782e76527ed}\label{structtsgl_1_1_color_float_a1048e8773d65fa1554bc8782e76527ed}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!asString@{asString}}
+\index{asString@{asString}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{asString()}{asString()}}
+{\footnotesize\ttfamily std\+::string tsgl\+::\+Color\+Float\+::as\+String (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns a string representation of the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. 
+
+This function returns a std\+::string representation of the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \begin{DoxyReturn}{Returns}
+A string representation of the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structtsgl_1_1_color_float_a4d74b061239eed7eb351422c18e33a37}\label{structtsgl_1_1_color_float_a4d74b061239eed7eb351422c18e33a37}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!operator ColorHSV@{operator ColorHSV}}
+\index{operator ColorHSV@{operator ColorHSV}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{operator ColorHSV()}{operator ColorHSV()}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+Float\+::operator \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implicit conversion from \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} to \mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}. 
+
+This defines the implicit conversion operator from a floating point color type (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}) to an H\+SV color type (\mbox{\hyperlink{structtsgl_1_1_color_h_s_v}{Color\+H\+SV}}). \mbox{\Hypertarget{structtsgl_1_1_color_float_a4ef5398fd1ee469dd9b1b43c9ce5c00d}\label{structtsgl_1_1_color_float_a4ef5398fd1ee469dd9b1b43c9ce5c00d}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!operator ColorInt@{operator ColorInt}}
+\index{operator ColorInt@{operator ColorInt}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{operator ColorInt()}{operator ColorInt()}}
+{\footnotesize\ttfamily tsgl\+::\+Color\+Float\+::operator \mbox{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Implicit conversion from \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} to \mbox{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}}. 
+
+This defines the implicit conversion operator from a floating point color type (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}) to an integer color type (\mbox{\hyperlink{structtsgl_1_1_color_int}{Color\+Int}}). \mbox{\Hypertarget{structtsgl_1_1_color_float_afd92fcf8743d931cfbcf405209c923fc}\label{structtsgl_1_1_color_float_afd92fcf8743d931cfbcf405209c923fc}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily bool tsgl\+::\+Color\+Float\+::operator!= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&}]{c2 }\end{DoxyParamCaption})}
+
+
+
+Determines if two Color\+Floats are {\itshape N\+OT} equivalent. 
+
+Inequality operator for two Color\+Floats. Determines if they are {\itshape N\+OT} equivalent. 
+\begin{DoxyParams}{Parameters}
+{\em c2} & Reference to the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct that is the second one in the inequality comparison. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function relies on ($\ast$this), which is a dereferenced pointer to the first \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct in the inequality comparison. (its the one on the left side of the != sign). 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+true if the two Color\+Floats are not equivalent, false if otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{structtsgl_1_1_color_float_a09d7cc47ac3d0e23ef7339ccf33111a5}\label{structtsgl_1_1_color_float_a09d7cc47ac3d0e23ef7339ccf33111a5}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!operator$\ast$@{operator$\ast$}}
+\index{operator$\ast$@{operator$\ast$}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{operator$\ast$()}{operator*()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} tsgl\+::\+Color\+Float\+::operator$\ast$ (\begin{DoxyParamCaption}\item[{float}]{f }\end{DoxyParamCaption})}
+
+
+
+Multiplies the values of a \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} by a float. 
+
+This operator multiplies each of the components of a \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} by amount {\ttfamily f}. 
+\begin{DoxyParams}{Parameters}
+{\em f} & Amount to multiply each component by \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} constructed as \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}(orig.\+R$\ast$f, orig.\+G$\ast$f, orig.\+b$\ast$f, orig.\+A$\ast$f) 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Individual channels are clamped between 0 and 1. 
+\end{DoxyNote}
+\mbox{\Hypertarget{structtsgl_1_1_color_float_ac29ecf4a36624050af433d691e65651c}\label{structtsgl_1_1_color_float_ac29ecf4a36624050af433d691e65651c}} 
+\index{tsgl::ColorFloat@{tsgl::ColorFloat}!operator==@{operator==}}
+\index{operator==@{operator==}!tsgl::ColorFloat@{tsgl::ColorFloat}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool tsgl\+::\+Color\+Float\+::operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&}]{c2 }\end{DoxyParamCaption})}
+
+
+
+Determines if two Color\+Floats are equivalent. 
+
+Equality operator for two Color\+Floats. Determines if they are equivalent. 
+\begin{DoxyParams}{Parameters}
+{\em c2} & Reference to the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct that is the second one in the equivalence comparison. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function relies on ($\ast$this), which is a dereferenced pointer to the first \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} struct in the comparison. (its the one on the left side of the == sign). 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+true if the two Color\+Floats are equivalent, false if otherwise. 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Color.\+h\item 
+Color.\+cpp\end{DoxyCompactItemize}

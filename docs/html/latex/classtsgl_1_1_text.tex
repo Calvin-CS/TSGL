@@ -1,0 +1,206 @@
+\hypertarget{classtsgl_1_1_text}{}\doxysection{tsgl\+::Text Class Reference}
+\label{classtsgl_1_1_text}\index{tsgl::Text@{tsgl::Text}}
+
+
+Draw a string of text.  
+
+
+
+
+{\ttfamily \#include $<$Text.\+h$>$}
+
+Inheritance diagram for tsgl\+::Text\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_text}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_text_a7c0ab1c94262edda688697561f155742}{Text}} (float x, float y, float z, std\+::wstring text, std\+::string font\+Filename, float size, float yaw, float pitch, float roll, const \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_text}{Text}} instance. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_text_ab2780341c59d000487759700c23bbf93}{draw}} (Shader $\ast$shader)
+\begin{DoxyCompactList}\small\item\em Draw the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_text_a16a95a57b45b6a95ad9962cf6aa63027}{set\+Text}} (std\+::wstring text)
+\begin{DoxyCompactList}\small\item\em Alter the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}\textquotesingle{}s string. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_text_aa3d3e609a29d46c6914e44fd64d18993}{set\+Size}} (float size)
+\begin{DoxyCompactList}\small\item\em Alter the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}\textquotesingle{}s font size. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_text_a221951e84eae892f10d818cbae6e8084}{set\+Font}} (std\+::string filename)
+\begin{DoxyCompactList}\small\item\em Alter the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}\textquotesingle{}s font. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_text_a524c1aa3044dea3c7f20f9aa67d223de}{set\+Color}} (const \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&color)
+\begin{DoxyCompactList}\small\item\em Alter the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}\textquotesingle{}s color. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_text_aa71ec240093b19748766127e33244c5c}\label{classtsgl_1_1_text_aa71ec240093b19748766127e33244c5c}} 
+std\+::wstring {\bfseries get\+Text} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_text_ae92cf624b4566f6e6de85171a8848bbc}\label{classtsgl_1_1_text_ae92cf624b4566f6e6de85171a8848bbc}} 
+float {\bfseries get\+Size} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_text_ad51009ec093fe0038c24a9dc5e02fe5e}\label{classtsgl_1_1_text_ad51009ec093fe0038c24a9dc5e02fe5e}} 
+G\+Lfloat {\bfseries get\+Width} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_text_a4f4f5beaa3889788c78afa70bdefe626}\label{classtsgl_1_1_text_a4f4f5beaa3889788c78afa70bdefe626}} 
+G\+Lfloat {\bfseries get\+Height} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_text_a7130ef2b63c0ae7802816d4fe87fc58c}\label{classtsgl_1_1_text_a7130ef2b63c0ae7802816d4fe87fc58c}} 
+\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} {\bfseries get\+Color} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw a string of text. 
+
+\mbox{\hyperlink{classtsgl_1_1_text}{Text}} is a class for holding the data necessary for rendering a string of text. \begin{DoxyNote}{Note}
+\mbox{\hyperlink{classtsgl_1_1_text}{Text}} is aligned by the upper-\/left corner. 
+
+Fonts supported by Free\+Type are also supported. 
+\end{DoxyNote}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_text_a7c0ab1c94262edda688697561f155742}\label{classtsgl_1_1_text_a7c0ab1c94262edda688697561f155742}} 
+\index{tsgl::Text@{tsgl::Text}!Text@{Text}}
+\index{Text@{Text}!tsgl::Text@{tsgl::Text}}
+\doxysubsubsection{\texorpdfstring{Text()}{Text()}}
+{\footnotesize\ttfamily tsgl\+::\+Text\+::\+Text (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{std\+::wstring}]{text,  }\item[{std\+::string}]{font\+Filename,  }\item[{float}]{size,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{const \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_text}{Text}} instance. 
+
+This is the constructor for the \mbox{\hyperlink{classtsgl_1_1_text}{Text}} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The center x coordinate of the text. \\
+\hline
+{\em y} & The center y coordinate of the text. \\
+\hline
+{\em z} & The center z coordinate of the text. \\
+\hline
+{\em text} & The string to draw. \\
+\hline
+{\em font\+Filename} & The path of the filename detailing the font the \mbox{\hyperlink{classtsgl_1_1_text}{Text}} will use. \\
+\hline
+{\em size} & The height of the text (will be relative to \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}). \\
+\hline
+{\em yaw} & The yaw of the \mbox{\hyperlink{classtsgl_1_1_text}{Text}} in 3D space. \\
+\hline
+{\em pitch} & The pitch of the \mbox{\hyperlink{classtsgl_1_1_text}{Text}} in 3D space. \\
+\hline
+{\em roll} & The roll of the \mbox{\hyperlink{classtsgl_1_1_text}{Text}} in 3D space. \\
+\hline
+{\em color} & A reference to the \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} to use. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_text}{Text}} instance with the specified string, position, and color. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_text_ab2780341c59d000487759700c23bbf93}\label{classtsgl_1_1_text_ab2780341c59d000487759700c23bbf93}} 
+\index{tsgl::Text@{tsgl::Text}!draw@{draw}}
+\index{draw@{draw}!tsgl::Text@{tsgl::Text}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void tsgl\+::\+Text\+::draw (\begin{DoxyParamCaption}\item[{Shader $\ast$}]{shader }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}. 
+
+This function actually draws the \mbox{\hyperlink{classtsgl_1_1_text}{Text}} to the \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. 
+\begin{DoxyParams}{Parameters}
+{\em shader} & Pointer to appropriate instance of Shader being used to render the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}. \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{classtsgl_1_1_drawable}{tsgl\+::\+Drawable}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_text_a524c1aa3044dea3c7f20f9aa67d223de}\label{classtsgl_1_1_text_a524c1aa3044dea3c7f20f9aa67d223de}} 
+\index{tsgl::Text@{tsgl::Text}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Text@{tsgl::Text}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}}
+{\footnotesize\ttfamily void tsgl\+::\+Text\+::set\+Color (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&}]{color }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alter the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}\textquotesingle{}s color. 
+
+This function changes my\+Color to the parameter \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} 
+\begin{DoxyParams}{Parameters}
+{\em color} & The \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} to change my\+Color to. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by Consumer\+::act(), Consumer\+::lock(), Producer\+::lock(), and Producer\+::wait().
+
+\mbox{\Hypertarget{classtsgl_1_1_text_a221951e84eae892f10d818cbae6e8084}\label{classtsgl_1_1_text_a221951e84eae892f10d818cbae6e8084}} 
+\index{tsgl::Text@{tsgl::Text}!setFont@{setFont}}
+\index{setFont@{setFont}!tsgl::Text@{tsgl::Text}}
+\doxysubsubsection{\texorpdfstring{setFont()}{setFont()}}
+{\footnotesize\ttfamily void tsgl\+::\+Text\+::set\+Font (\begin{DoxyParamCaption}\item[{std\+::string}]{filename }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alter the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}\textquotesingle{}s font. 
+
+This function changes my\+Loader\textquotesingle{}s font to the parameter font. 
+\begin{DoxyParams}{Parameters}
+{\em filename} & The new font file name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+The center of the text will not change despite any differences in rendered string length. 
+\end{DoxyWarning}
+\mbox{\Hypertarget{classtsgl_1_1_text_aa3d3e609a29d46c6914e44fd64d18993}\label{classtsgl_1_1_text_aa3d3e609a29d46c6914e44fd64d18993}} 
+\index{tsgl::Text@{tsgl::Text}!setSize@{setSize}}
+\index{setSize@{setSize}!tsgl::Text@{tsgl::Text}}
+\doxysubsubsection{\texorpdfstring{setSize()}{setSize()}}
+{\footnotesize\ttfamily void tsgl\+::\+Text\+::set\+Size (\begin{DoxyParamCaption}\item[{float}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alter the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}\textquotesingle{}s font size. 
+
+This function changes my\+Size to the parameter size. 
+\begin{DoxyParams}{Parameters}
+{\em size} & The new size. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+The center of the text will not change despite any differences in rendered string length. 
+\end{DoxyWarning}
+
+
+Referenced by Consumer\+::act(), and Producer\+::act().
+
+\mbox{\Hypertarget{classtsgl_1_1_text_a16a95a57b45b6a95ad9962cf6aa63027}\label{classtsgl_1_1_text_a16a95a57b45b6a95ad9962cf6aa63027}} 
+\index{tsgl::Text@{tsgl::Text}!setText@{setText}}
+\index{setText@{setText}!tsgl::Text@{tsgl::Text}}
+\doxysubsubsection{\texorpdfstring{setText()}{setText()}}
+{\footnotesize\ttfamily void tsgl\+::\+Text\+::set\+Text (\begin{DoxyParamCaption}\item[{std\+::wstring}]{text }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Alter the \mbox{\hyperlink{classtsgl_1_1_text}{Text}}\textquotesingle{}s string. 
+
+This function changes my\+String to the parameter text 
+\begin{DoxyParams}{Parameters}
+{\em text} & The text to change my\+String to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+The center of the text will not change despite any differences in rendered string length. 
+\end{DoxyWarning}
+
+
+Referenced by Consumer\+::act(), and Producer\+::act().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Text.\+h\item 
+Text.\+cpp\end{DoxyCompactItemize}

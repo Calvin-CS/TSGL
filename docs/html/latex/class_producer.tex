@@ -1,0 +1,110 @@
+\hypertarget{class_producer}{}\doxysection{Producer Class Reference}
+\label{class_producer}\index{Producer@{Producer}}
+
+
+{\ttfamily \#include $<$Producer.\+h$>$}
+
+Inheritance diagram for Producer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_producer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_producer_ab79ff8b19e682d144e40044485cb81b8}{Producer}} ()
+\item 
+\mbox{\hyperlink{class_producer_a9ca5b8cde16ea817d20a6484b021f614}{Producer}} (\mbox{\hyperlink{class_queue}{Queue}}$<$ \mbox{\hyperlink{classtsgl_1_1_star}{Star}} $\ast$ $>$ \&shared\+Buffer, unsigned long id, \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can)
+\item 
+void \mbox{\hyperlink{class_producer_ac669b046bc8254d43b7ccc4e3e7a1a8b}{wait}} ()
+\item 
+void \mbox{\hyperlink{class_producer_aba582d5889728f3d4eb6399a5788ab9f}{lock}} ()
+\item 
+void \mbox{\hyperlink{class_producer_a40820fecb39439fac7a4f7b4227d4d1d}{act}} ()
+\item 
+void \mbox{\hyperlink{class_producer_a9a3ce835478573c67a6c8d928ccbf8f0}{unlock}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_producer}{Producer}} class creates a \mbox{\hyperlink{class_producer}{Producer}} object and inherits from the \mbox{\hyperlink{class_thread}{Thread}} class. Inheritance\+: \mbox{\hyperlink{class_thread}{Thread}} class. Implements the abstract run() method from the \mbox{\hyperlink{class_thread}{Thread}} class so that the pthread runs the produce() method. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_producer_ab79ff8b19e682d144e40044485cb81b8}\label{class_producer_ab79ff8b19e682d144e40044485cb81b8}} 
+\index{Producer@{Producer}!Producer@{Producer}}
+\index{Producer@{Producer}!Producer@{Producer}}
+\doxysubsubsection{\texorpdfstring{Producer()}{Producer()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Producer\+::\+Producer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Default-\/constructor for the \mbox{\hyperlink{class_producer}{Producer}} class. \begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_producer}{Producer}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_producer_a9ca5b8cde16ea817d20a6484b021f614}\label{class_producer_a9ca5b8cde16ea817d20a6484b021f614}} 
+\index{Producer@{Producer}!Producer@{Producer}}
+\index{Producer@{Producer}!Producer@{Producer}}
+\doxysubsubsection{\texorpdfstring{Producer()}{Producer()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Producer\+::\+Producer (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_queue}{Queue}}$<$ \mbox{\hyperlink{classtsgl_1_1_star}{Star}} $\ast$ $>$ \&}]{shared\+Buffer,  }\item[{unsigned long}]{id,  }\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can }\end{DoxyParamCaption})}
+
+Explicit-\/constructor for the \mbox{\hyperlink{class_producer}{Producer}} class. 
+\begin{DoxyParams}{Parameters}
+{\em } & shared\+Buffer, a reference to the \mbox{\hyperlink{class_queue}{Queue}} object that is shared between the \mbox{\hyperlink{class_consumer}{Consumer}} and \mbox{\hyperlink{class_producer}{Producer}}. \\
+\hline
+{\em } & id, an unsigned long that will be passed to the \mbox{\hyperlink{class_thread_a95c703fb8f2f27cb64f475a8c940864a}{Thread()}} constructor that will act as the id for the \mbox{\hyperlink{class_thread}{Thread}} object. \\
+\hline
+{\em } & can, a handle to the Canvas that will be drawn on and will determine whether or not to continue producing object into the \mbox{\hyperlink{class_queue}{Queue}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_producer}{Producer}} object. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_producer_a40820fecb39439fac7a4f7b4227d4d1d}\label{class_producer_a40820fecb39439fac7a4f7b4227d4d1d}} 
+\index{Producer@{Producer}!act@{act}}
+\index{act@{act}!Producer@{Producer}}
+\doxysubsubsection{\texorpdfstring{act()}{act()}}
+{\footnotesize\ttfamily void Producer\+::act (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+act goes through the process of adding a produced item to \mbox{\hyperlink{class_queue}{Queue}} 
+
+Implements \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}}.
+
+\mbox{\Hypertarget{class_producer_aba582d5889728f3d4eb6399a5788ab9f}\label{class_producer_aba582d5889728f3d4eb6399a5788ab9f}} 
+\index{Producer@{Producer}!lock@{lock}}
+\index{lock@{lock}!Producer@{Producer}}
+\doxysubsubsection{\texorpdfstring{lock()}{lock()}}
+{\footnotesize\ttfamily void Producer\+::lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+locks the \mbox{\hyperlink{class_queue}{Queue}} for production 
+
+Implements \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}}.
+
+\mbox{\Hypertarget{class_producer_a9a3ce835478573c67a6c8d928ccbf8f0}\label{class_producer_a9a3ce835478573c67a6c8d928ccbf8f0}} 
+\index{Producer@{Producer}!unlock@{unlock}}
+\index{unlock@{unlock}!Producer@{Producer}}
+\doxysubsubsection{\texorpdfstring{unlock()}{unlock()}}
+{\footnotesize\ttfamily void Producer\+::unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+unlocks the \mbox{\hyperlink{class_queue}{Queue}} after production 
+
+Implements \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}}.
+
+\mbox{\Hypertarget{class_producer_ac669b046bc8254d43b7ccc4e3e7a1a8b}\label{class_producer_ac669b046bc8254d43b7ccc4e3e7a1a8b}} 
+\index{Producer@{Producer}!wait@{wait}}
+\index{wait@{wait}!Producer@{Producer}}
+\doxysubsubsection{\texorpdfstring{wait()}{wait()}}
+{\footnotesize\ttfamily void Producer\+::wait (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+wait takes some time to find the next color 
+
+Reimplemented from \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Producer.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/Producer.\+cpp\end{DoxyCompactItemize}

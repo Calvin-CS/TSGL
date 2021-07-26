@@ -1,0 +1,98 @@
+\hypertarget{class_sea_urchin}{}\doxysection{Sea\+Urchin Class Reference}
+\label{class_sea_urchin}\index{SeaUrchin@{SeaUrchin}}
+
+
+Who doesn\textquotesingle{}t love sea urchins?  
+
+
+
+
+{\ttfamily \#include $<$Sea\+Urchin.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_sea_urchin_a29fac511aa0967424cbfb0729ce06f2c}{Sea\+Urchin}} (\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can, int thread\+Id)
+\begin{DoxyCompactList}\small\item\em Explicitly construct a \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sea_urchin_aa0e038a0faecaead5928edc082dbc685}{move}} (\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can)
+\begin{DoxyCompactList}\small\item\em Draw the \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}}. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{class_sea_urchin_a30d580184797c2cf2b6f6eac21bc3b07}{$\sim$\+Sea\+Urchin}} ()
+\begin{DoxyCompactList}\small\item\em Destroy a \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Who doesn\textquotesingle{}t love sea urchins? 
+
+Draws a sea urchin onto the Canvas.
+
+Used as an example of what it means to put a process on a thread.
+
+The \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} objects are created in a parallel block, and each thread gets one \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}}.
+
+Then, the thread draws the \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} onto the Canvas.
+
+Each \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} object has its own color and plot data based off of the thread\textquotesingle{}s id number.
+
+\mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} objects are drawn similar to the line fan in test\+Line\+Fan. \begin{DoxySeeAlso}{See also}
+test\+Line\+Fan. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_sea_urchin_a29fac511aa0967424cbfb0729ce06f2c}\label{class_sea_urchin_a29fac511aa0967424cbfb0729ce06f2c}} 
+\index{SeaUrchin@{SeaUrchin}!SeaUrchin@{SeaUrchin}}
+\index{SeaUrchin@{SeaUrchin}!SeaUrchin@{SeaUrchin}}
+\doxysubsubsection{\texorpdfstring{SeaUrchin()}{SeaUrchin()}}
+{\footnotesize\ttfamily Sea\+Urchin\+::\+Sea\+Urchin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can,  }\item[{int}]{thread\+Id }\end{DoxyParamCaption})}
+
+
+
+Explicitly construct a \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} object. 
+
+Explicit constructor for a \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} object. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Canvas to draw to. \\
+\hline
+{\em thread\+Id} & The id of the thread that is currently creating a \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constructed \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_sea_urchin_a30d580184797c2cf2b6f6eac21bc3b07}\label{class_sea_urchin_a30d580184797c2cf2b6f6eac21bc3b07}} 
+\index{SeaUrchin@{SeaUrchin}!````~SeaUrchin@{$\sim$SeaUrchin}}
+\index{````~SeaUrchin@{$\sim$SeaUrchin}!SeaUrchin@{SeaUrchin}}
+\doxysubsubsection{\texorpdfstring{$\sim$SeaUrchin()}{~SeaUrchin()}}
+{\footnotesize\ttfamily Sea\+Urchin\+::$\sim$\+Sea\+Urchin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Destroy a \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}}. 
+
+Destructor for a \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} object. \begin{DoxyNote}{Note}
+This function does absolutely nothing. 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sea_urchin_aa0e038a0faecaead5928edc082dbc685}\label{class_sea_urchin_aa0e038a0faecaead5928edc082dbc685}} 
+\index{SeaUrchin@{SeaUrchin}!move@{move}}
+\index{move@{move}!SeaUrchin@{SeaUrchin}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily void Sea\+Urchin\+::move (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can }\end{DoxyParamCaption})}
+
+
+
+Draw the \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}}. 
+
+Actually draws the \mbox{\hyperlink{class_sea_urchin}{Sea\+Urchin}} object onto the Canvas. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Canvas object to draw to. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Sea\+Urchin/Sea\+Urchin.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Sea\+Urchin/Sea\+Urchin.\+cpp\end{DoxyCompactItemize}

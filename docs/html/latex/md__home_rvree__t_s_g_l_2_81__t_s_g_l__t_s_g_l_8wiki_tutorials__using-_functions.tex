@@ -1,0 +1,249 @@
+You can\textquotesingle{}t spell \char`\"{}functions\char`\"{} without \char`\"{}fun\char`\"{}!
+
+On a more serious note, T\+S\+GL has the capability to graph mathematical functions.
+
+We\textquotesingle{}ve been working with the standard Canvas class, but there\textquotesingle{}s also another type of Canvas that is very useful for this purpose.
+
+It\textquotesingle{}s affectionately called the {\itshape {\bfseries{Cartesian\+Canvas}}}.
+
+Its a subclass of the Canvas class and so inherits and overrides many of the Canvas methods as well as adds some of its own.
+
+This type of Canvas has an adjustable Cartesian coordinate system. What that means is that instead of the point {\ttfamily (0, 0)} being in the top-\/left corner of the screen like in the standard Canvas, you can now specify where you want the center to be.
+
+{\itshape {\bfseries{Linux/\+Mac users\+:}}} Follow the steps from the previous tutorials. See the video on multi file programs in \href{https://github.com/Calvin-CS/TSGL/wiki/Building-Programs}{\texttt{ Building Programs}} page. Name the folder \char`\"{}\+Tutorial6\char`\"{} and the file \char`\"{}cartesian.\+cpp\char`\"{}. Replace \char`\"{}program\char`\"{} in the \char`\"{}\+T\+A\+R\+G\+E\+T\char`\"{} line of the Makefile with \char`\"{}cartesian\char`\"{}.
+
+{\itshape {\bfseries{Windows users\+:}}} Follow the steps from the previous tutorials. Name the Solution folder \char`\"{}\+Tutorial6\char`\"{} and the Visual Studio project \char`\"{}\+Cartesian\char`\"{}. After adding the Property sheet, name the .cpp file \char`\"{}cartesian.\+cpp\char`\"{}.
+
+{\itshape {\bfseries{All three platforms\+:}}} Follow the steps in the \mbox{[}\mbox{[}Building Programs\mbox{]}\mbox{]} page on how to compile and run the program (Linux/\+Mac users, this is a multi-\/file program).
+
+Let\textquotesingle{}s start with a simple example\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{CartesianCanvas}} c(0, 0, 500, 500, -\/5.0, -\/5.0, 5.0, 50.0, \textcolor{stringliteral}{"Cartesian Example"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Compile the code and run it. A blank gray screen should pop up.
+
+Looking at the code, it looks eerily similar to how a Canvas is constructed but with a few added parameters The constructor creates a Cartesian\+Canvas whose upper left corner is at screen coordinate {\ttfamily (0, 0)}, with a width of {\ttfamily 500} and a height of {\ttfamily 500}. It then sets and scales the Cartesian\+Canvas’s axes and internal coordinate system so that the left edge of the canvas is {\ttfamily x = -\/5.\+0} in the Cartesian coordinate system, the bottom edge is {\ttfamily y = -\/5.\+0}, the right edge is {\ttfamily x = +5.\+0}, and the top edge is {\ttfamily y = +50.\+0}. It then gives the window a title, {\ttfamily Cartesian Example}, and uses the default timer length of {\ttfamily 0.\+0} (which you can set explicitly if you so desire, as described in our \mbox{[}\mbox{[}Animation Loops\mbox{]}\mbox{]} tutorial).
+
+If we wanted to instead center the Cartesian\+Canvas somewhere else, all we would have to do is change the first two parameters\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{CartesianCanvas}} c(300, 400, 500, 500, -\/5.0, -\/5.0, 5.0, 50.0, \textcolor{stringliteral}{"Cartesian Example"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+That should create a 500x500 Cartesian\+Canvas whose upper left corner is positioned at {\ttfamily (300, 400)} on your monitor.
+
+Notice how the Canvas has integer coordinates whereas the Cartesian\+Canvas has Decimal coordinates.
+
+Notice also how you can set the upper left corner of the Cartesian\+Canvas with the first two arguments. These arguments can be used to position the canvas arbitrarily. You can set it pretty much anywhere you want (within reason of course. It has to be within the range of the size of the screen.).
+
+You can use the 4th, 5th, 6th, and 7th arguments to set the bounds of the coordinate system within the Cartesian\+Canvas.
+
+As mentioned before, the Cartesian\+Canvas handles colors, shapes, and drawing loops in much the same way as a standard Canvas does.
+
+Now, how can we graph mathematical functions?
+
+Well, let\textquotesingle{}s first tell the Cartesian\+Canvas to draw axes\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{CartesianCanvas}} c(0, 0, 500, 500, -\/5, -\/5, 5, 50, \textcolor{stringliteral}{"Cartesian Example"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.setBackgroundColor(WHITE);  \textcolor{comment}{//Set the color to white to see the axes better}}
+\DoxyCodeLine{  c.drawAxes(0.0, 0.0, 1.0, 5.0);}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Recompile and run. The screen should pop up with a white background and axes drawn.
+
+The {\ttfamily draw\+Axes()} method takes in these parameters\+:
+\begin{DoxyItemize}
+\item x-\/coordinate of the center of the Cartesian\+Canvas ({\ttfamily 0.\+0}).
+\item y-\/coordinate of the center of the Cartesian\+Canvas ({\ttfamily 0.\+0}).
+\item The spacing between the tick marks along the x-\/axis ({\ttfamily 1.\+0}).
+\item The spacing between the tick marks along the y-\/axis ({\ttfamily 5.\+0}).
+\end{DoxyItemize}
+
+Now, let\textquotesingle{}s graph a function!
+
+Wait...how do we do that?
+
+It\textquotesingle{}s rather simple really. T\+S\+GL comes with a built in {\ttfamily Function} class, and Cartesian\+Canvas has a {\ttfamily draw\+Function()} method that draws the graph of a given {\ttfamily Function} {\itshape {\bfseries{OR}}} any subclass of {\ttfamily Function}.
+
+Before we continue, let us say a few notes that are platform dependent\+:
+
+{\itshape {\bfseries{Linux/\+Mac users\+:}}} Create two new files\+: Cotangent.\+h and Cotangent.\+cpp.
+
+{\itshape {\bfseries{Windows users\+:}}} Add a Cotangent.\+cpp and Cotangent.\+h file to your project.
+
+To draw a specific mathematical function, we must define it as a subclass of the {\ttfamily Function} class\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class }Cotangent : \textcolor{keyword}{public} \mbox{\hyperlink{classtsgl_1_1_function}{Function}} \{ }
+\DoxyCodeLine{\textcolor{comment}{//This is the .h file}}
+\DoxyCodeLine{\};}
+\end{DoxyCode}
+
+
+In order for {\ttfamily draw\+Function()} to draw it, the subclass, {\ttfamily Cotangent}, must supply a definition for the {\ttfamily value\+At()} method that is declared in the {\ttfamily Function} class. ~\newline
+
+
+Here is the declaration from class {\ttfamily Function}\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{virtual} Decimal valueAt(Decimal x) \textcolor{keyword}{const} = 0;}
+\end{DoxyCode}
+
+
+This method is called an "abstract method” or “pure virtual function”. It can\textquotesingle{}t be used on its own because there is no definition for it in the {\ttfamily Function} class.
+
+However, any subclass that inherits from the {\ttfamily Function} class can (and {\itshape M\+U\+ST}) provide a definition for this method.
+
+That\textquotesingle{}s exactly what we\textquotesingle{}re going to do in the {\ttfamily Cotangent} class\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class }Cotangent : \textcolor{keyword}{public} \mbox{\hyperlink{classtsgl_1_1_function}{Function}} \{}
+\DoxyCodeLine{ \textcolor{comment}{//This is the .h file}}
+\DoxyCodeLine{ \textcolor{keyword}{public}:}
+\DoxyCodeLine{    \textcolor{keyword}{virtual} Decimal valueAt(Decimal x) \textcolor{keyword}{const}; }
+\DoxyCodeLine{\};}
+\end{DoxyCode}
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include "Cotangent.h"}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//This is the .cpp file}}
+\DoxyCodeLine{Decimal Cotangent::valueAt(Decimal x)\textcolor{keyword}{ const }\{}
+\DoxyCodeLine{    \textcolor{keywordflow}{return} cos(x) / sin(x);}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+As you can see, we define the {\ttfamily value\+At(x)} function to return the cotangent of x.
+
+T\+S\+GL predefines the {\ttfamily Power}, {\ttfamily Square Root}, {\ttfamily Sine}, {\ttfamily Cosine}, {\ttfamily Tangent}, {\ttfamily Absolute Value}, {\ttfamily Exponential}, {\ttfamily Natural Log}, {\ttfamily Common Log}, {\ttfamily Ceiling}, {\ttfamily Floor}, and {\ttfamily Round} functions in a similar fashion.
+
+It does not predefine the {\ttfamily Cotangent} function, which is why we had to define it ourselves.
+
+Continuing forward, let\textquotesingle{}s add a change to our cartesian.\+cpp file\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include "Cotangent.h"} \textcolor{comment}{//Take out the \#include <tsgl.h> directive}}
+\DoxyCodeLine{                       \textcolor{comment}{//As well as the using namespace tsgl directive}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  CartesianCanvas c(0, 0, 500, 500, -\/5, -\/5, 5, 50, \textcolor{stringliteral}{"Cartesian Example"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.setBackgroundColor(WHITE); \textcolor{comment}{//Set the color to white to see the axes better}}
+\DoxyCodeLine{  c.drawAxes(0.0, 0.0, 1.0, 5.0);}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Now we are ready to graph the {\ttfamily Cotangent} function!
+
+To do so, simply create an instance of the {\ttfamily Cotangent} class and then pass it to the {\ttfamily draw\+Function()} method from the Cartesian\+Canvas object\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include "Cotangent.h"} \textcolor{comment}{//Take out the \#include <tsgl.h> directive}}
+\DoxyCodeLine{                       \textcolor{comment}{//As well as the using namespace tsgl directive}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//Main program}}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  CartesianCanvas c(0, 0, 500, 500, -\/5, -\/5, 5, 50, \textcolor{stringliteral}{"Cartesian Example"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.setBackgroundColor(WHITE);  \textcolor{comment}{//Set the color to white to see the axes better}}
+\DoxyCodeLine{  c.drawAxes(0.0, 0.0, 1.0, 5.0);}
+\DoxyCodeLine{  Cotangent cot;  \textcolor{comment}{//Create an instance of the Cotangent class}}
+\DoxyCodeLine{  \textcolor{comment}{//Drawing loop}}
+\DoxyCodeLine{  \textcolor{keywordflow}{while}(c.isOpen()) \{}
+\DoxyCodeLine{    c.sleep();}
+\DoxyCodeLine{    c.drawFunction(cot); \textcolor{comment}{//Draw it onto the CartesianCanvas}}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Recompile and run. The graph of the {\ttfamily Cotangent} function should be drawn!
+
+We didn\textquotesingle{}t see it being drawn though...
+
+That\textquotesingle{}s because we omitted a second parameter, which is the length of time that we should have the main thread sleep for so that it can be in sync with the Canvas.
+
+Omitting this parameter just draws the entire function “instantly" and so therefore, we can\textquotesingle{}t see it.
+
+We can change this, however, by not omitting the second parameter\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{c.drawFunction(cot, FRAME);}
+\end{DoxyCode}
+
+
+By placing {\ttfamily F\+R\+A\+ME} as the second parameter, we tell the main thread to sleep for {\ttfamily F\+R\+A\+ME} seconds (1/60th of a second) and then that syncs with the Canvas so that we can see the drawing actually occurring.
+
+It\textquotesingle{}s a little slow though, how can we speed it up?
+
+To make it go faster, simply change the second parameter\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{c.drawFunction(cot, FRAME/2);}
+\end{DoxyCode}
+
+
+This makes it so that the thread sleeps for every {\ttfamily F\+R\+A\+M\+E/2} of a second (or 1/120th of a second) and then a point is drawn on the Canvas.
+
+There\textquotesingle{}s also a third optional parameter which is the color of the function (set to {\ttfamily B\+L\+A\+CK} by default).
+
+See \href{http://calvin-cs.github.io/TSGL/html/classtsgl_1_1_function.html}{\texttt{ Function.\+h}} for more information on the predefined functions in T\+S\+GL.
+
+If you ever want to graph a mathematical function that is not predefined, you will have to define it yourself in the same way as we did for the {\ttfamily Cotangent} function.
+
+Please note\+: The standard Canvas is intended for drawing shapes and animation loops; the Cartesian\+Canvas is a specialized kind of Canvas for drawing mathematical functions.
+
+See \href{http://calvin-cs.github.io/TSGL/html/classtsgl_1_1_cartesian_canvas.html}{\texttt{ Cartesian\+Canvas}} in the T\+S\+GL A\+PI for more information on the special kind of Canvas.
+
+That completes this tutorial!
+
+In the next tutorial, \mbox{[}\mbox{[}Using Keyboard \&\& Mouse\mbox{]}\mbox{]}, we take a look at how to handle keyboard and mouse events! 

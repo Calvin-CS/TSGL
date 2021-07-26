@@ -1,0 +1,101 @@
+Welcome to the F\+AQ page! In here, we try to answer the most common questions that users may have in regards to T\+S\+GL.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md79}{}\doxyparagraph{Categories\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md79}
+\href{\#installing-tsgl}{\texttt{ Installing T\+S\+GL}}
+
+\href{\#errors-and-debugging}{\texttt{ Errors and Debugging}}
+
+\href{\#using-tsgl}{\texttt{ How do I...?}}\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md80}{}\doxysubsubsection{Errors and Debugging}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md80}
+{\itshape {\bfseries{Q\+:}}} A test keeps crashing with the error \char`\"{}the font file could not be opened and read\char`\"{}! What do I do?
+
+{\itshape {\bfseries{A\+:}}} Are you in the bin folder of the tsgl folder? Some tests won\textquotesingle{}t work unless you are in the bin folder. Specifically\+:
+
+{\ttfamily test\+Blur\+Image}, {\ttfamily test\+Calc\+Pi}, {\ttfamily test\+Cosine\+Integral}, {\ttfamily test\+Get\+Pixels}, {\ttfamily test\+Greyscale}, {\ttfamily test\+Image}, {\ttfamily test\+Image\+Cart}, {\ttfamily test\+Inverter}, {\ttfamily test\+Mandelbrot}, {\ttfamily test\+Philosophers}, {\ttfamily test\+Progress\+Bar}, {\ttfamily test\+Spectrogram}, {\ttfamily test\+Text}, {\ttfamily test\+Text\+Cart}, {\ttfamily test\+Text\+Two}, {\ttfamily test\+Units}
+
+If the test that keeps crashing is in the list above, go into the bin folder and execute it from there.
+
+{\itshape {\bfseries{Q\+:}}} Does T\+S\+GL have Debug messages in case things break?
+
+{\itshape {\bfseries{A\+:}}} In fact it does. Check out the \href{http://calvin-cs.github.io/TSGL/html/_error_8h_source.html}{\texttt{ Error.\+h}} file and you will see a commented out line\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\#define TSGL\_DEBUG}}
+\end{DoxyCode}
+
+
+Uncommenting out this line will turn on Debug messages for the T\+S\+GL library in case things break (font not loading, image not found, etc...).
+
+{\itshape {\bfseries{Q\+:}}} What if I want to tell you about a different problem?
+
+{\itshape {\bfseries{A\+:}}} You can bring up an issue in the \mbox{[}issues tab\mbox{]}(Isssues and Reviews).\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md81}{}\doxysubsubsection{Installing T\+S\+GL}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md81}
+{\itshape {\bfseries{Q\+:}}} With which operating systems does T\+S\+GL work?
+
+{\itshape {\bfseries{A\+:}}} Good question! T\+S\+GL has been successfully tested on\+:\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md82}{}\doxyparagraph{Linux}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md82}
+
+\begin{DoxyItemize}
+\item Ubuntu 14.\+04 (Trusty Tahr)
+\item Ubuntu 16.\+04 (Xenial Xerus)
+\item Arch Linux
+\end{DoxyItemize}
+
+(With g++-\/4.8, g++-\/4.9, g++-\/5.1).\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md83}{}\doxyparagraph{Red Hat}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md83}
+
+\begin{DoxyItemize}
+\item Cent\+OS 7
+\item Fedora 24
+\end{DoxyItemize}
+
+(With g++-\/4.8).\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md84}{}\doxyparagraph{Windows}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md84}
+
+\begin{DoxyItemize}
+\item Windows 7
+\item Windows 10
+\end{DoxyItemize}
+
+(With Visual Studio 2012, Visual Studio 2013, and Visual Studio 2015).\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md85}{}\doxyparagraph{Mac O\+S X}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md85}
+
+\begin{DoxyItemize}
+\item Mac\+OS 10.\+9.\+5 (Wrangler)
+\item Mac\+OS 10.\+10.\+x (Yosemite)
+\item Mac\+OS 10.\+11.\+x (El Capitan)
+\end{DoxyItemize}
+
+(With g++-\/4.8, g++4.9, g++-\/5).
+
+{\itshape {\bfseries{Q\+:}}} What is the maximum number of threads I can use in Windows?
+
+{\itshape {\bfseries{A\+:}}} You can only have up to 64 threads at a time in Windows.
+
+{\itshape {\bfseries{Q\+:}}} Why won\textquotesingle{}t my tsgl Solution build in Windows?
+
+{\itshape {\bfseries{A\+:}}} Have you built the tsgl project first? You must build that first in order to create the lib file for T\+S\+GL. Then, you can build the entire Solution.
+
+{\itshape {\bfseries{Q\+:}}} I\textquotesingle{}m an Ubuntu user. Is there a Debian package out there for T\+S\+GL?
+
+{\itshape {\bfseries{A\+:}}} Indeed there is! As of summer 2016, T\+S\+GL has a Debian package for easy installation. See the \mbox{[}\mbox{[}Debian (Aptitude)\mbox{]}\mbox{]} page.
+
+{\itshape {\bfseries{Q\+:}}} What about Red Hat users? Is there an R\+PM package?
+
+{\itshape {\bfseries{A\+:}}} Of course! See the \mbox{[}\mbox{[}R\+PM\mbox{]}\mbox{]} page!
+
+{\itshape {\bfseries{Q\+:}}} So, if T\+S\+GL has a Debian package, and an R\+PM package, how do I create new ones?
+
+{\itshape {\bfseries{A\+:}}} Take a look at our \mbox{[}\mbox{[}Creating New Deb Packages\mbox{]}\mbox{]} and \mbox{[}\mbox{[}Creating New R\+PM Packages\mbox{]}\mbox{]} pages. However, it is not recommended, as the process for creating these packages has already been automated.
+
+{\itshape {\bfseries{Q\+:}}} A new version of Visual Studio has come out, but there\textquotesingle{}s no T\+S\+GL Solution made! How do I create one?
+
+{\itshape {\bfseries{A\+:}}} Check out our \mbox{[}\mbox{[}New Visual Studio Versions\mbox{]}\mbox{]} page for detailed instructions on how to make a new Visual Studio Solution.
+
+{\itshape {\bfseries{Q\+:}}} What about a binary installer for Mac\+OS X? If I recall correctly, it was especially difficult to install T\+S\+GL on a Mac...
+
+{\itshape {\bfseries{A\+:}}} Yes, the process was a tad bit difficult for Mac\+OS X users. Luckily, we have made a new Mac\+OS X .pkg Installer which automates the entire installation process. Take a look at the \mbox{[}\mbox{[}Mac\+OS X\mbox{]}\mbox{]} page. (There is also a refactored \href{https://github.com/Calvin-CS/TSGL/blob/master/install-mac}{\texttt{ install-\/mac}} script, if you wish to install T\+S\+GL from source agan).
+
+{\itshape {\bfseries{Q\+:}}} What about creating new Mac\+OS X .pkg Installers?
+
+{\itshape {\bfseries{A\+:}}} Excellent question! See the \mbox{[}\mbox{[}Creating New Mac\+OS X Packages\mbox{]}\mbox{]} page.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md86}{}\doxysubsubsection{Using T\+S\+GL}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__f_a_q_autotoc_md86}
+{\itshape {\bfseries{Q\+:}}} How do I update the Doxygen pages? Or the Wiki pages? I found that a change needs to be made.
+
+{\itshape {\bfseries{A\+:}}} I\textquotesingle{}m glad you asked! See the \mbox{[}\mbox{[}Doxygen and Wiki\mbox{]}\mbox{]} page.
+
+{\itshape {\bfseries{Q\+:}}} How do I know which Canvas I should be using?
+
+{\itshape {\bfseries{A\+:}}} We have four different Canvases, and you can know which one to use by asking two questions about your project. First, what kind of coordinates do you want? If you want standard coordinates based on pixels, then you want the standard Canvas. If you want to graph a function or use Cartesian coordinates, then you should be using one of the Cartesian Canvases. Second, how do you want the Canvas to update? If you want it to draw everything every frame, which keeps up for hundreds of items, then use a standard Canvas. (See Reader\+Writer, Producer\+Consumer, or Dining\+Philosophers.) This way allows you to move shapes around or take them off the Canvas. If you want it to draw once and then never again, use the Raster version of the Canvas. This is necessary if you want to use draw\+Point() and can keep up if you want to draw a point on every pixel of the Canvas. (See \mbox{\hyperlink{class_mandelbrot}{Mandelbrot}}.) 

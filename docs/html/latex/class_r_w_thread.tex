@@ -1,0 +1,145 @@
+\hypertarget{class_r_w_thread}{}\doxysection{R\+W\+Thread Class Reference}
+\label{class_r_w_thread}\index{RWThread@{RWThread}}
+
+
+{\ttfamily \#include $<$R\+W\+Thread.\+h$>$}
+
+Inheritance diagram for R\+W\+Thread\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_r_w_thread}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_r_w_thread_aa69e6643625bba0aefa86d58cd308827}{R\+W\+Thread}} ()
+\begin{DoxyCompactList}\small\item\em Default-\/constructor for the \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_r_w_thread_aeac1c45d0496b9b5e5664452fcc50c0d}{R\+W\+Thread}} (\mbox{\hyperlink{class_r_w_database}{R\+W\+Database}}$<$ \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} $\ast$ $>$ \&shared\+Database, \mbox{\hyperlink{class_lock}{Lock}} \&lock, unsigned long id, \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can)
+\begin{DoxyCompactList}\small\item\em Explicit-\/constructor for the \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_r_w_thread_adfb9ef73b0fc09b07db6682ea1fde721}\label{class_r_w_thread_adfb9ef73b0fc09b07db6682ea1fde721}} 
+void {\bfseries run} ()
+\item 
+\mbox{\Hypertarget{class_r_w_thread_ac6d96d9953273f79ccaa3ec5fb2ad56b}\label{class_r_w_thread_ac6d96d9953273f79ccaa3ec5fb2ad56b}} 
+void {\bfseries wait} ()
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a59ec4dac8d85e21715081478303c789e}\label{class_r_w_thread_a59ec4dac8d85e21715081478303c789e}} 
+virtual void {\bfseries lock} ()=0
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a5a29f03164040ee9da4591abcd734528}\label{class_r_w_thread_a5a29f03164040ee9da4591abcd734528}} 
+virtual void {\bfseries act} ()=0
+\item 
+\mbox{\Hypertarget{class_r_w_thread_af747d0aafadb9648baa9486fb598366c}\label{class_r_w_thread_af747d0aafadb9648baa9486fb598366c}} 
+virtual void {\bfseries unlock} ()=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a341f51c32705a4a512e290aafffd2d14}\label{class_r_w_thread_a341f51c32705a4a512e290aafffd2d14}} 
+static const int {\bfseries width} = 20
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a7839c1805f22372e67752cdee6a6663d}\label{class_r_w_thread_a7839c1805f22372e67752cdee6a6663d}} 
+static const int {\bfseries dataX} = -\/100
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a63c00a2e076956ed629012f43d9b4d31}\label{class_r_w_thread_a63c00a2e076956ed629012f43d9b4d31}} 
+static const int {\bfseries dataY} = -\/270
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a4aa23bfbc63fdce50643f6a01aa4e106}\label{class_r_w_thread_a4aa23bfbc63fdce50643f6a01aa4e106}} 
+static const int {\bfseries data\+Height} = 600
+\item 
+\mbox{\Hypertarget{class_r_w_thread_afbb80d77d6834f770220e8c6cea25f10}\label{class_r_w_thread_afbb80d77d6834f770220e8c6cea25f10}} 
+static const int {\bfseries data\+Width} = 200
+\item 
+\mbox{\Hypertarget{class_r_w_thread_ab5e087e0b95345616711ea03d8aa89cb}\label{class_r_w_thread_ab5e087e0b95345616711ea03d8aa89cb}} 
+static int {\bfseries W\+A\+I\+T\+\_\+\+M\+IN} = 15
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a4b9b080b1e9a899e7173dadb9e915d2d}\label{class_r_w_thread_a4b9b080b1e9a899e7173dadb9e915d2d}} 
+static int {\bfseries W\+A\+I\+T\+\_\+\+R\+A\+N\+GE} = 40
+\item 
+\mbox{\Hypertarget{class_r_w_thread_aa2b4739d82f6242c718db5cfe8af064f}\label{class_r_w_thread_aa2b4739d82f6242c718db5cfe8af064f}} 
+static float {\bfseries access\+\_\+wait} = 1.\+0
+\item 
+\mbox{\Hypertarget{class_r_w_thread_acf3c32cba39bd8a59f129cb6b41d62b9}\label{class_r_w_thread_acf3c32cba39bd8a59f129cb6b41d62b9}} 
+static atomic$<$ bool $>$ {\bfseries paused}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a040c2e635a0871c60cb33a13f5379566}\label{class_r_w_thread_a040c2e635a0871c60cb33a13f5379566}} 
+int {\bfseries myX}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a3a4a2a1cffb15e5c4f326fb5e076ab92}\label{class_r_w_thread_a3a4a2a1cffb15e5c4f326fb5e076ab92}} 
+int {\bfseries myY}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a430c577265e1370f058afc24bf4f4d2e}\label{class_r_w_thread_a430c577265e1370f058afc24bf4f4d2e}} 
+int {\bfseries count}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_ab2deb3d3e1a5f6a0d4fa50e0f9b9e3f4}\label{class_r_w_thread_ab2deb3d3e1a5f6a0d4fa50e0f9b9e3f4}} 
+\mbox{\hyperlink{class_r_w_database}{R\+W\+Database}}$<$ \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} $\ast$ $>$ $\ast$ {\bfseries data}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_acefd6251a6c1f5b0b0fba22645fbe1da}\label{class_r_w_thread_acefd6251a6c1f5b0b0fba22645fbe1da}} 
+\mbox{\hyperlink{class_lock}{Lock}} $\ast$ {\bfseries monitor}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a6be3c61accb2c1fa24b1125382de3a89}\label{class_r_w_thread_a6be3c61accb2c1fa24b1125382de3a89}} 
+\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} $\ast$ {\bfseries my\+Can}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_ab3259ce53de55087518c441716d80b54}\label{class_r_w_thread_ab3259ce53de55087518c441716d80b54}} 
+\mbox{\hyperlink{classtsgl_1_1_circle}{Circle}} $\ast$ {\bfseries my\+Circle}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a8edb254652c7f05b2da8c22d7f73919c}\label{class_r_w_thread_a8edb254652c7f05b2da8c22d7f73919c}} 
+\mbox{\hyperlink{classtsgl_1_1_text}{Text}} $\ast$ {\bfseries my\+Count\+Label}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_r_w_thread_a19724fd58e85c84f05af0fb4e422a44d}\label{class_r_w_thread_a19724fd58e85c84f05af0fb4e422a44d}} 
+static int {\bfseries thread\+Count} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} class inherits from the \mbox{\hyperlink{class_thread}{Thread}} class in order to create a \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} object. Inheritance\+: \mbox{\hyperlink{class_thread}{Thread}} class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_r_w_thread_aa69e6643625bba0aefa86d58cd308827}\label{class_r_w_thread_aa69e6643625bba0aefa86d58cd308827}} 
+\index{RWThread@{RWThread}!RWThread@{RWThread}}
+\index{RWThread@{RWThread}!RWThread@{RWThread}}
+\doxysubsubsection{\texorpdfstring{RWThread()}{RWThread()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily R\+W\+Thread\+::\+R\+W\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default-\/constructor for the \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} class. 
+
+\begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_r_w_thread_aeac1c45d0496b9b5e5664452fcc50c0d}\label{class_r_w_thread_aeac1c45d0496b9b5e5664452fcc50c0d}} 
+\index{RWThread@{RWThread}!RWThread@{RWThread}}
+\index{RWThread@{RWThread}!RWThread@{RWThread}}
+\doxysubsubsection{\texorpdfstring{RWThread()}{RWThread()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily R\+W\+Thread\+::\+R\+W\+Thread (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_r_w_database}{R\+W\+Database}}$<$ \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} $\ast$ $>$ \&}]{shared\+Database,  }\item[{\mbox{\hyperlink{class_lock}{Lock}} \&}]{lock,  }\item[{unsigned long}]{id,  }\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can }\end{DoxyParamCaption})}
+
+
+
+Explicit-\/constructor for the \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & shared\+Database, a reference to the \mbox{\hyperlink{class_r_w_database}{R\+W\+Database}} object that is shared between the \mbox{\hyperlink{class_reader}{Reader}} and \mbox{\hyperlink{class_writer}{Writer}}. \\
+\hline
+{\em } & id, an unsigned long that will be passed to the \mbox{\hyperlink{class_thread_a95c703fb8f2f27cb64f475a8c940864a}{Thread()}} constructor that will act as the id for the \mbox{\hyperlink{class_thread}{Thread}} object. \\
+\hline
+{\em } & can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming object from the \mbox{\hyperlink{class_queue}{Queue}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} object. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/R\+W\+Thread.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/R\+W\+Thread.\+cpp\end{DoxyCompactItemize}

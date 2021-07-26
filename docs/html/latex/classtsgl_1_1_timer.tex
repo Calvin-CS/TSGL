@@ -1,0 +1,205 @@
+\hypertarget{classtsgl_1_1_timer}{}\doxysection{tsgl\+::Timer Class Reference}
+\label{classtsgl_1_1_timer}\index{tsgl::Timer@{tsgl::Timer}}
+
+
+A class for various timing operations.  
+
+
+
+
+{\ttfamily \#include $<$Timer.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_timer_abd022bb9ea6ddf5b69ff645ac8f5594d}{Timer}} (double period)
+\begin{DoxyCompactList}\small\item\em Default \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} constructor method. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classtsgl_1_1_timer_a817d6b360361c744b13ff10377c130af}{$\sim$\+Timer}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} destructor method. \end{DoxyCompactList}\item 
+unsigned int \mbox{\hyperlink{classtsgl_1_1_timer_abbe94dcda6b42914bbc73a2ffc7f56cd}{get\+Reps}} () const
+\begin{DoxyCompactList}\small\item\em Gets the number of repetitions since starting the timer. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classtsgl_1_1_timer_a759f3174974f82f97abc8c2f7535d715}{get\+Time}} () const
+\begin{DoxyCompactList}\small\item\em Gets the elapsed time since starting the timer. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classtsgl_1_1_timer_a1ade9f9a03047e2604622bf4ae16347b}{get\+Time\+Between\+Sleeps}} () const
+\begin{DoxyCompactList}\small\item\em Get the elapsed time between sleeps. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classtsgl_1_1_timer_ac7c908b06a735f09841367c7067f44dd}{past\+Period}} ()
+\begin{DoxyCompactList}\small\item\em Check if the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}\textquotesingle{}s period has elapsed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_timer_a67a01c03c033c52056b7f1c733cd93e4}{reset}} (double period=0)
+\begin{DoxyCompactList}\small\item\em Reset the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_timer_a5c6e0dca6793d48c675e05b983da7f07}{sleep}} (bool update=true)
+\begin{DoxyCompactList}\small\item\em Sleeps the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}\textquotesingle{}s current thread until its period elapses. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classtsgl_1_1_timer_ae8c5b39a6c5cae2a24abe2a298b05b64}{thread\+Sleep\+For}} (double duration)
+\begin{DoxyCompactList}\small\item\em Sleeps the current thread for the specified duration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class for various timing operations. 
+
+\mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} provides a simple timer for timing, sleeping threads, and keeping track of the current rendering frame. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_timer_abd022bb9ea6ddf5b69ff645ac8f5594d}\label{classtsgl_1_1_timer_abd022bb9ea6ddf5b69ff645ac8f5594d}} 
+\index{tsgl::Timer@{tsgl::Timer}!Timer@{Timer}}
+\index{Timer@{Timer}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{Timer()}{Timer()}}
+{\footnotesize\ttfamily tsgl\+::\+Timer\+::\+Timer (\begin{DoxyParamCaption}\item[{double}]{period }\end{DoxyParamCaption})}
+
+
+
+Default \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} constructor method. 
+
+This is the default constructor for the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} class. 
+\begin{DoxyParams}{Parameters}
+{\em period} & Time in seconds specifying the maximum amount of time to sleep. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} with the specified period. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_timer_a817d6b360361c744b13ff10377c130af}\label{classtsgl_1_1_timer_a817d6b360361c744b13ff10377c130af}} 
+\index{tsgl::Timer@{tsgl::Timer}!````~Timer@{$\sim$Timer}}
+\index{````~Timer@{$\sim$Timer}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{$\sim$Timer()}{~Timer()}}
+{\footnotesize\ttfamily tsgl\+::\+Timer\+::$\sim$\+Timer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} destructor method. 
+
+This is the destructor for the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} class.
+
+Frees up memory that was allocated to a \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} instance. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_timer_abbe94dcda6b42914bbc73a2ffc7f56cd}\label{classtsgl_1_1_timer_abbe94dcda6b42914bbc73a2ffc7f56cd}} 
+\index{tsgl::Timer@{tsgl::Timer}!getReps@{getReps}}
+\index{getReps@{getReps}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{getReps()}{getReps()}}
+{\footnotesize\ttfamily unsigned int tsgl\+::\+Timer\+::get\+Reps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Gets the number of repetitions since starting the timer. 
+
+\begin{DoxyReturn}{Returns}
+The number of times the {\ttfamily period$<$/period$>$ has elapsed since the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} has been started. }
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Canvas\+::get\+Reps(), and past\+Period().
+
+\mbox{\Hypertarget{classtsgl_1_1_timer_a759f3174974f82f97abc8c2f7535d715}\label{classtsgl_1_1_timer_a759f3174974f82f97abc8c2f7535d715}} 
+\index{tsgl::Timer@{tsgl::Timer}!getTime@{getTime}}
+\index{getTime@{getTime}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{getTime()}{getTime()}}
+{\footnotesize\ttfamily double tsgl\+::\+Timer\+::get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Gets the elapsed time since starting the timer. 
+
+\begin{DoxyReturn}{Returns}
+The time in seconds since starting the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}. 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Canvas\+::get\+Time().
+
+\mbox{\Hypertarget{classtsgl_1_1_timer_a1ade9f9a03047e2604622bf4ae16347b}\label{classtsgl_1_1_timer_a1ade9f9a03047e2604622bf4ae16347b}} 
+\index{tsgl::Timer@{tsgl::Timer}!getTimeBetweenSleeps@{getTimeBetweenSleeps}}
+\index{getTimeBetweenSleeps@{getTimeBetweenSleeps}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{getTimeBetweenSleeps()}{getTimeBetweenSleeps()}}
+{\footnotesize\ttfamily double tsgl\+::\+Timer\+::get\+Time\+Between\+Sleeps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the elapsed time between sleeps. 
+
+This function returns the time in seconds between returning from the last two calls to \mbox{\hyperlink{classtsgl_1_1_timer_a5c6e0dca6793d48c675e05b983da7f07}{sleep()}}. This should be the same as {\ttfamily period} in cases where the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} is allowed to sleep. If the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} has yet to sleep twice, \mbox{\hyperlink{classtsgl_1_1_timer_a1ade9f9a03047e2604622bf4ae16347b}{get\+Time\+Between\+Sleeps()}} is undefined, but will most likely be less than 0. \begin{DoxyReturn}{Returns}
+The time in seconds between the last two sleeps. 
+\end{DoxyReturn}
+
+
+Referenced by tsgl\+::\+Canvas\+::get\+Time\+Between\+Sleeps().
+
+\mbox{\Hypertarget{classtsgl_1_1_timer_ac7c908b06a735f09841367c7067f44dd}\label{classtsgl_1_1_timer_ac7c908b06a735f09841367c7067f44dd}} 
+\index{tsgl::Timer@{tsgl::Timer}!pastPeriod@{pastPeriod}}
+\index{pastPeriod@{pastPeriod}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{pastPeriod()}{pastPeriod()}}
+{\footnotesize\ttfamily bool tsgl\+::\+Timer\+::past\+Period (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}\textquotesingle{}s period has elapsed. 
+
+This function returns whether the period of the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} has elapsed since the last time the function was called. \begin{DoxyReturn}{Returns}
+True if at least {\ttfamily period} seconds have elapsed since the last call, false otherwise. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_timer_a67a01c03c033c52056b7f1c733cd93e4}\label{classtsgl_1_1_timer_a67a01c03c033c52056b7f1c733cd93e4}} 
+\index{tsgl::Timer@{tsgl::Timer}!reset@{reset}}
+\index{reset@{reset}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void tsgl\+::\+Timer\+::reset (\begin{DoxyParamCaption}\item[{double}]{period = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Reset the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}. 
+
+This function resets the starting time, repetitions, and period of the timer. 
+\begin{DoxyParams}{Parameters}
+{\em period} & The new period for the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}. Setting this less than or equal to 0 will keep the current period. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Canvas\+::reset(), and Timer().
+
+\mbox{\Hypertarget{classtsgl_1_1_timer_a5c6e0dca6793d48c675e05b983da7f07}\label{classtsgl_1_1_timer_a5c6e0dca6793d48c675e05b983da7f07}} 
+\index{tsgl::Timer@{tsgl::Timer}!sleep@{sleep}}
+\index{sleep@{sleep}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{sleep()}{sleep()}}
+{\footnotesize\ttfamily void tsgl\+::\+Timer\+::sleep (\begin{DoxyParamCaption}\item[{bool}]{update = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Sleeps the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}\textquotesingle{}s current thread until its period elapses. 
+
+This function tells the currently executing thread to sleep until the rest of the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}} instance\textquotesingle{}s remaining period expires.
+
+If the \mbox{\hyperlink{classtsgl_1_1_timer}{Timer}}\textquotesingle{}s period has elapsed since last call, the thread will continue execution normally until the next call to \mbox{\hyperlink{classtsgl_1_1_timer_a5c6e0dca6793d48c675e05b983da7f07}{sleep()}}. 
+\begin{DoxyParams}{Parameters}
+{\em update} & Whether to update the timer\textquotesingle{}s last\+\_\+rep status or not. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function does not guarantee the thread will resume immediately after the time expires. Depending on your OS, the thread may sleep for longer. 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{classtsgl_1_1_timer_a1ade9f9a03047e2604622bf4ae16347b}{get\+Time\+Between\+Sleeps()}}, to get the actual elapsed time between sleeps. 
+\end{DoxySeeAlso}
+
+
+Referenced by tsgl\+::\+Canvas\+::sleep().
+
+\mbox{\Hypertarget{classtsgl_1_1_timer_ae8c5b39a6c5cae2a24abe2a298b05b64}\label{classtsgl_1_1_timer_ae8c5b39a6c5cae2a24abe2a298b05b64}} 
+\index{tsgl::Timer@{tsgl::Timer}!threadSleepFor@{threadSleepFor}}
+\index{threadSleepFor@{threadSleepFor}!tsgl::Timer@{tsgl::Timer}}
+\doxysubsubsection{\texorpdfstring{threadSleepFor()}{threadSleepFor()}}
+{\footnotesize\ttfamily void tsgl\+::\+Timer\+::thread\+Sleep\+For (\begin{DoxyParamCaption}\item[{double}]{duration }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Sleeps the current thread for the specified duration. 
+
+This function tells the currently executing thread to sleep for {\ttfamily duration} seconds. \begin{DoxyNote}{Note}
+This function does not guarantee the thread will resume immediately after {\ttfamily duration} expires. Depending on your OS, the thread may sleep for longer. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Timer.\+h\item 
+Timer.\+cpp\end{DoxyCompactItemize}

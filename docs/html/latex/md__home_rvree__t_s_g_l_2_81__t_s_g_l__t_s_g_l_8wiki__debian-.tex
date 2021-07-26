@@ -1,0 +1,28 @@
+{\itshape {\bfseries{N\+O\+TE\+:}}} This page is for Ubuntu/\+Debian users. If you are a Fedora/\+Red\+Hat user, please see the \mbox{[}\mbox{[}R\+PM\mbox{]}\mbox{]} page!
+
+{\itshape {\bfseries{N\+O\+TE\+:}}} Please make S\+U\+RE that you have {\itshape {\bfseries{at least Open\+GL 3.\+0 or greater}}} on your machine.
+
+As of Summer 2016, an aptitude/debian package has been made for T\+S\+GL for ease of installation. Packages have been made for the following Ubuntu distros\+:
+
+
+\begin{DoxyItemize}
+\item Ubuntu 14.\+04 (Trusty Tahr)
+\item Ubuntu 16.\+04 (Xenial Xerus)
+\end{DoxyItemize}
+
+If you have one of those distros, you can use {\ttfamily apt-\/get} to install the T\+S\+GL library.
+
+Follow these steps in order to get T\+S\+GL on your machine\+:
+
+1). Type {\ttfamily sudo add-\/apt-\/repository ppa\+:tsgl-\/test/tsgl-\/dev}. When prompted, hit {\ttfamily E\+N\+T\+ER}.
+
+2). Type {\ttfamily sudo apt-\/get update}.
+
+3). Type {\ttfamily sudo apt-\/get install tsgl}.
+
+T\+S\+GL will be installed along with a packaged version of the G\+L\+FW library.
+
+The generic {\ttfamily Makefile} for creating programs (as seen in the tutorials, i.\+e. \mbox{[}\mbox{[}Building Programs\mbox{]}\mbox{]}) is located in the {\ttfamily T\+S\+G\+L\+\_\+\+G\+E\+N\+E\+R\+I\+C\+\_\+\+M\+A\+K\+E\+F\+I\+LE} directory under {\ttfamily /usr/include/}.
+
+Go into that directory, and copy over the {\ttfamily Makefile} into your project directory in order to start building applications that use T\+S\+GL. ~\newline
+ 

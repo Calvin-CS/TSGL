@@ -1,0 +1,294 @@
+\hypertarget{classtsgl_1_1_prism}{}\doxysection{tsgl\+::Prism Class Reference}
+\label{classtsgl_1_1_prism}\index{tsgl::Prism@{tsgl::Prism}}
+
+
+Draw an arbitrary \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} with colored vertices.  
+
+
+
+
+{\ttfamily \#include $<$Prism.\+h$>$}
+
+Inheritance diagram for tsgl\+::Prism\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_prism}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_prism_a4e4b0cdd81d76d48f032a691df2d81c2}{Prism}} (float x, float y, float z, int sides, G\+Lfloat height, G\+Lfloat radius, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_prism_a665fe3ba2d8c0255b0090170ac5bc643}{Prism}} (float x, float y, float z, int sides, G\+Lfloat height, G\+Lfloat radius, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_prism_a33bc4c80ac4d5cbb8c33a657fca01524}{set\+Height}} (G\+Lfloat height)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s bottom to its top. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_prism_a97e94e9e2b395f604573bcb5ef646f15}{change\+Height\+By}} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s bottom to its top by the parameter amount. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_prism_afab75920c51c0104d20f78534fac3656}{set\+Radius}} (G\+Lfloat radius)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s base to the corners. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_prism_ae16f2d46d3fb263d389bfcc2a45bda63}{change\+Radius\+By}} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s base to the corner by the parameter amount. \end{DoxyCompactList}\item 
+virtual G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_prism_a65f06653960000dc544a0348fe979171}{get\+Radius}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the radius of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \end{DoxyCompactList}\item 
+virtual G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_prism_a5a62be4c54080aa3171d8bf9a2d9caf0}{get\+Height}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the height of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_prism_af2c681fd9cf74eaede3dd4fd8dd10625}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new color. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_prism_a668c2779da173493efc0c4634750bd66}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Mutator. Sets the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} to a new array of colors. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_prism_abfdc091d8c61e889f61b71577b58e0b6}{get\+Colors}} (std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&color\+Vec)
+\begin{DoxyCompactList}\small\item\em Accessor for \mbox{\hyperlink{classtsgl_1_1_arrow}{Arrow}}\textquotesingle{}s colors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_prism_a09331661d18ef6d374b4bc5a7660a1c6}\label{classtsgl_1_1_prism_a09331661d18ef6d374b4bc5a7660a1c6}} 
+G\+Lfloat {\bfseries my\+Height}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_prism_af5cc843f733123fe64b464ba45249d62}\label{classtsgl_1_1_prism_af5cc843f733123fe64b464ba45249d62}} 
+G\+Lfloat {\bfseries my\+Radius}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_prism_aa2b47e0792014dcca133846050b077ba}\label{classtsgl_1_1_prism_aa2b47e0792014dcca133846050b077ba}} 
+int {\bfseries my\+Sides}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw an arbitrary \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} with colored vertices. 
+
+\mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} is a class for holding vertex data for a \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} with a base with at least 3 sides. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_prism_a4e4b0cdd81d76d48f032a691df2d81c2}\label{classtsgl_1_1_prism_a4e4b0cdd81d76d48f032a691df2d81c2}} 
+\index{tsgl::Prism@{tsgl::Prism}!Prism@{Prism}}
+\index{Prism@{Prism}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{Prism()}{Prism()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Prism\+::\+Prism (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{int}]{sides,  }\item[{G\+Lfloat}]{height,  }\item[{G\+Lfloat}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. 
+
+Explicit constructor for a \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \\
+\hline
+{\em y} & The y coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \\
+\hline
+{\em z} & The z coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \\
+\hline
+{\em sides} & The number of sides of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s base. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s yaw. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s pitch. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s roll. \\
+\hline
+{\em c} & A \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} for the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s vertex colors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if sides is less than 3 then an error message is given. 
+
+An invariant is held where if radius isn\textquotesingle{}t positive then an error message is given. 
+
+An invariant is held where if all points in vertices are not in the same plane then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_prism_a665fe3ba2d8c0255b0090170ac5bc643}\label{classtsgl_1_1_prism_a665fe3ba2d8c0255b0090170ac5bc643}} 
+\index{tsgl::Prism@{tsgl::Prism}!Prism@{Prism}}
+\index{Prism@{Prism}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{Prism()}{Prism()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Prism\+::\+Prism (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{int}]{sides,  }\item[{G\+Lfloat}]{height,  }\item[{G\+Lfloat}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. 
+
+Explicit constructor for a \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \\
+\hline
+{\em y} & The y coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \\
+\hline
+{\em z} & The z coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \\
+\hline
+{\em sides} & The number of sides of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s base. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s yaw. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s pitch. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s roll. \\
+\hline
+{\em c} & An array of Color\+Floats for the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s vertex colors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if sides is less than 3 then an error message is given. 
+
+An invariant is held where if radius isn\textquotesingle{}t positive then an error message is given. 
+
+An invariant is held where if all points in vertices are not in the same plane then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_prism_a97e94e9e2b395f604573bcb5ef646f15}\label{classtsgl_1_1_prism_a97e94e9e2b395f604573bcb5ef646f15}} 
+\index{tsgl::Prism@{tsgl::Prism}!changeHeightBy@{changeHeightBy}}
+\index{changeHeightBy@{changeHeightBy}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{changeHeightBy()}{changeHeightBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Prism\+::change\+Height\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the distance from the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s bottom to its top by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the height of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_prism_ae16f2d46d3fb263d389bfcc2a45bda63}\label{classtsgl_1_1_prism_ae16f2d46d3fb263d389bfcc2a45bda63}} 
+\index{tsgl::Prism@{tsgl::Prism}!changeRadiusBy@{changeRadiusBy}}
+\index{changeRadiusBy@{changeRadiusBy}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{changeRadiusBy()}{changeRadiusBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Prism\+::change\+Radius\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the distance from the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s base to the corner by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the radius of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_prism_abfdc091d8c61e889f61b71577b58e0b6}\label{classtsgl_1_1_prism_abfdc091d8c61e889f61b71577b58e0b6}} 
+\index{tsgl::Prism@{tsgl::Prism}!getColors@{getColors}}
+\index{getColors@{getColors}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{getColors()}{getColors()}}
+{\footnotesize\ttfamily void tsgl\+::\+Prism\+::get\+Colors (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&}]{color\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for \mbox{\hyperlink{classtsgl_1_1_arrow}{Arrow}}\textquotesingle{}s colors. 
+
+Populates the reference parameter vector with a \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} for each end of \mbox{\hyperlink{classtsgl_1_1_arrow}{Arrow}}. 
+\begin{DoxyParams}{Parameters}
+{\em color\+Vec} & A vector of Color\+Floats to which the Color\+Floats associated with \mbox{\hyperlink{classtsgl_1_1_arrow}{Arrow}} will be pushed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Overrides \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{Shape\+::get\+Colors()}}. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_prism_a5a62be4c54080aa3171d8bf9a2d9caf0}\label{classtsgl_1_1_prism_a5a62be4c54080aa3171d8bf9a2d9caf0}} 
+\index{tsgl::Prism@{tsgl::Prism}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily virtual G\+Lfloat tsgl\+::\+Prism\+::get\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the height of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. 
+
+Returns the value of the my\+Height private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_prism_a65f06653960000dc544a0348fe979171}\label{classtsgl_1_1_prism_a65f06653960000dc544a0348fe979171}} 
+\index{tsgl::Prism@{tsgl::Prism}!getRadius@{getRadius}}
+\index{getRadius@{getRadius}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{getRadius()}{getRadius()}}
+{\footnotesize\ttfamily virtual G\+Lfloat tsgl\+::\+Prism\+::get\+Radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the radius of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}. 
+
+Returns the value of the my\+Radius private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_prism_af2c681fd9cf74eaede3dd4fd8dd10625}\label{classtsgl_1_1_prism_af2c681fd9cf74eaede3dd4fd8dd10625}} 
+\index{tsgl::Prism@{tsgl::Prism}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void tsgl\+::\+Prism\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}{tsgl\+::\+Shape}}.
+
+
+
+Referenced by Philosopher3\+D\+::refresh\+Color().
+
+\mbox{\Hypertarget{classtsgl_1_1_prism_a668c2779da173493efc0c4634750bd66}\label{classtsgl_1_1_prism_a668c2779da173493efc0c4634750bd66}} 
+\index{tsgl::Prism@{tsgl::Prism}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Prism\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutator. Sets the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}} to a new array of colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The array of new Color\+Floats.\\
+\hline
+\end{DoxyParams}
+The array should have 5 Color\+Floats minimum\+: for the top middle, top outside, sides, bottom outside, and bottom middle respectively. 
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_prism_a33bc4c80ac4d5cbb8c33a657fca01524}\label{classtsgl_1_1_prism_a33bc4c80ac4d5cbb8c33a657fca01524}} 
+\index{tsgl::Prism@{tsgl::Prism}!setHeight@{setHeight}}
+\index{setHeight@{setHeight}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{setHeight()}{setHeight()}}
+{\footnotesize\ttfamily void tsgl\+::\+Prism\+::set\+Height (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the distance from the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s bottom to its top. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em height} & The \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s new height. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_prism_afab75920c51c0104d20f78534fac3656}\label{classtsgl_1_1_prism_afab75920c51c0104d20f78534fac3656}} 
+\index{tsgl::Prism@{tsgl::Prism}!setRadius@{setRadius}}
+\index{setRadius@{setRadius}!tsgl::Prism@{tsgl::Prism}}
+\doxysubsubsection{\texorpdfstring{setRadius()}{setRadius()}}
+{\footnotesize\ttfamily void tsgl\+::\+Prism\+::set\+Radius (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{radius }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the distance from the center of the \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s base to the corners. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em radius} & The \mbox{\hyperlink{classtsgl_1_1_prism}{Prism}}\textquotesingle{}s new radius. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Prism.\+h\item 
+Prism.\+cpp\end{DoxyCompactItemize}

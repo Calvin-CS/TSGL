@@ -1,0 +1,114 @@
+\hypertarget{classtsgl_1_1_star}{}\doxysection{tsgl\+::Star Class Reference}
+\label{classtsgl_1_1_star}\index{tsgl::Star@{tsgl::Star}}
+
+
+Draw a star.  
+
+
+
+
+{\ttfamily \#include $<$Star.\+h$>$}
+
+Inheritance diagram for tsgl\+::Star\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_star}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_star_aab27c892812fbfdd38f6120e7fd51d54}{Star}} (float x, float y, float z, G\+Lfloat radius, int points, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} color, bool ninja=false)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_star}{Star}} with monocolored fill. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_star_ab62504df43ed6dd1b0c17c7e599a2539}{Star}} (float x, float y, float z, G\+Lfloat radius, int points, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} color\mbox{[}$\,$\mbox{]}, bool ninja=false)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_star}{Star}} with multicolored fill. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_star_ab5a7c287238746307dbf27384fda787a}\label{classtsgl_1_1_star_ab5a7c287238746307dbf27384fda787a}} 
+void {\bfseries set\+Radius} (G\+Lfloat radius)
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_star_af42eb52015623b8f5a0e4d3742c44298}\label{classtsgl_1_1_star_af42eb52015623b8f5a0e4d3742c44298}} 
+void {\bfseries change\+Radius\+By} (G\+Lfloat delta)
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_star_abe53ad96ef2c48ddc596b9a4a8199cfd}\label{classtsgl_1_1_star_abe53ad96ef2c48ddc596b9a4a8199cfd}} 
+G\+Lfloat {\bfseries get\+Radius} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw a star. 
+
+\mbox{\hyperlink{classtsgl_1_1_star}{Star}} extends \mbox{\hyperlink{classtsgl_1_1_concave_polygon}{Concave\+Polygon}} 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_star_aab27c892812fbfdd38f6120e7fd51d54}\label{classtsgl_1_1_star_aab27c892812fbfdd38f6120e7fd51d54}} 
+\index{tsgl::Star@{tsgl::Star}!Star@{Star}}
+\index{Star@{Star}!tsgl::Star@{tsgl::Star}}
+\doxysubsubsection{\texorpdfstring{Star()}{Star()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Star\+::\+Star (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{radius,  }\item[{int}]{points,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{color,  }\item[{bool}]{ninja = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_star}{Star}} with monocolored fill. 
+
+This function draws a star with the given center, radius, points, rotation, and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the star\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the star\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the star\textquotesingle{}s center. \\
+\hline
+{\em radius} & The radius of the star in pixels. \\
+\hline
+{\em yaw} & The star\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The star\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The star\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em points} & The number of points to use in the star. \\
+\hline
+{\em color} & The color of the star. \\
+\hline
+{\em ninja} & The ninja setting of the star, making the star points spin differently if true (set to false by default). \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_star_ab62504df43ed6dd1b0c17c7e599a2539}\label{classtsgl_1_1_star_ab62504df43ed6dd1b0c17c7e599a2539}} 
+\index{tsgl::Star@{tsgl::Star}!Star@{Star}}
+\index{Star@{Star}!tsgl::Star@{tsgl::Star}}
+\doxysubsubsection{\texorpdfstring{Star()}{Star()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Star\+::\+Star (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{radius,  }\item[{int}]{points,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{color\mbox{[}$\,$\mbox{]},  }\item[{bool}]{ninja = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_star}{Star}} with multicolored fill. 
+
+This function draws a star with the given center, radius, points, rotation, and color. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the star\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the star\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the star\textquotesingle{}s center. \\
+\hline
+{\em radius} & The radius of the star in pixels. \\
+\hline
+{\em yaw} & The star\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The star\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The star\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em points} & The number of points to use in the star. \\
+\hline
+{\em color} & An array of colors for the star. \\
+\hline
+{\em ninja} & The ninja setting of the star, making the star points spin differently if true (set to false by default). \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Star.\+h\item 
+Star.\+cpp\end{DoxyCompactItemize}

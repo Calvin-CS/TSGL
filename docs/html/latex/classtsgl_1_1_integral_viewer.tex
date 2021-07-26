@@ -1,0 +1,149 @@
+\hypertarget{classtsgl_1_1_integral_viewer}{}\doxysection{tsgl\+::Integral\+Viewer Class Reference}
+\label{classtsgl_1_1_integral_viewer}\index{tsgl::IntegralViewer@{tsgl::IntegralViewer}}
+
+
+Provides a a tool for computing and visualizing integrals of functions.  
+
+
+
+
+{\ttfamily \#include $<$Integral\+Viewer.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_integral_viewer_a1fe15a118865fcaf3067dc73cf3f912c}{Integral\+Viewer}} (function\+Pointer f, int width, int height, Decimal startX, Decimal stopX, Decimal startY=0, Decimal stopY=1, std\+::string fname=\char`\"{}function\char`\"{})
+\begin{DoxyCompactList}\small\item\em Default \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} constructor method. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_integral_viewer_a50961f189bd1988fb9b96b66b701fdf2}{$\sim$\+Integral\+Viewer}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} destructor method. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classtsgl_1_1_integral_viewer_a4a65831c2fbda3d9382a07a5aa154447}{get\+Rec\+Time}} () const
+\begin{DoxyCompactList}\small\item\em Accessor for the time the canvas spent integrating using the rectangle method. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{classtsgl_1_1_integral_viewer_a9125196e3b1119d87c86d9f0062d4c38}{get\+Trap\+Time}} () const
+\begin{DoxyCompactList}\small\item\em Accessor for the time the canvas spent integrating using the trapezoid method. \end{DoxyCompactList}\item 
+long double \mbox{\hyperlink{classtsgl_1_1_integral_viewer_a213d814ac293686ecd06c45344fa242f}{rectangle\+Evaluate}} (long long num\+Rectangles)
+\begin{DoxyCompactList}\small\item\em Evaluate an integral using the rectangle method. \end{DoxyCompactList}\item 
+long double \mbox{\hyperlink{classtsgl_1_1_integral_viewer_a485bd58c87267460baf013cdf786eae7}{trapezoid\+Evaluate}} (long long num\+Trapezoids)
+\begin{DoxyCompactList}\small\item\em Evaluate an integral using the trapezoid method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provides a a tool for computing and visualizing integrals of functions. 
+
+\mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} provides a simple interface for integrating functions and outputting the results of the integration, both numerically and visually. \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} can evaluate an arbitrary function of the type {\ttfamily Decimal my\+Function(\+Decimal x)}, where x is the input value of the function and the return value is the y value of the function. \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} can compute integrals using one or both of the rectangle method and the trapezoid method, and provides functions for displaying both on a custom \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. Furthermore, these computations and visualizations are thread-\/safe; the number of threads to use can be set with {\ttfamily omp\+\_\+set\+\_\+num\+\_\+threads()}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_integral_viewer_a1fe15a118865fcaf3067dc73cf3f912c}\label{classtsgl_1_1_integral_viewer_a1fe15a118865fcaf3067dc73cf3f912c}} 
+\index{tsgl::IntegralViewer@{tsgl::IntegralViewer}!IntegralViewer@{IntegralViewer}}
+\index{IntegralViewer@{IntegralViewer}!tsgl::IntegralViewer@{tsgl::IntegralViewer}}
+\doxysubsubsection{\texorpdfstring{IntegralViewer()}{IntegralViewer()}}
+{\footnotesize\ttfamily tsgl\+::\+Integral\+Viewer\+::\+Integral\+Viewer (\begin{DoxyParamCaption}\item[{function\+Pointer}]{f,  }\item[{int}]{width,  }\item[{int}]{height,  }\item[{Decimal}]{startX,  }\item[{Decimal}]{stopX,  }\item[{Decimal}]{startY = {\ttfamily 0},  }\item[{Decimal}]{stopY = {\ttfamily 1},  }\item[{std\+::string}]{fname = {\ttfamily \char`\"{}function\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+Default \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} constructor method. 
+
+This is the default constructor for the \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} class. 
+\begin{DoxyParams}{Parameters}
+{\em f} & A function to integrate and display. The function must accept exactly one argument of type Decimal, and return a Decimal. \\
+\hline
+{\em width} & The width of the window displaying the integration. \\
+\hline
+{\em height} & The height of the window displaying the integration. \\
+\hline
+{\em startX} & The minimum x-\/value whose y-\/value should be computed. \\
+\hline
+{\em stopX} & The maximum x-\/value whose y-\/value should be computed. \\
+\hline
+{\em startY} & The minimum y-\/value that should be displayed on the \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}}\textquotesingle{}s \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. \\
+\hline
+{\em stopY} & The maximum y-\/value that should be displayed on the \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}}\textquotesingle{}s \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. \\
+\hline
+{\em fname} & A descriptive name for the function you wish to integrate. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} with the specified dimensions, bounds, and function description. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_integral_viewer_a50961f189bd1988fb9b96b66b701fdf2}\label{classtsgl_1_1_integral_viewer_a50961f189bd1988fb9b96b66b701fdf2}} 
+\index{tsgl::IntegralViewer@{tsgl::IntegralViewer}!````~IntegralViewer@{$\sim$IntegralViewer}}
+\index{````~IntegralViewer@{$\sim$IntegralViewer}!tsgl::IntegralViewer@{tsgl::IntegralViewer}}
+\doxysubsubsection{\texorpdfstring{$\sim$IntegralViewer()}{~IntegralViewer()}}
+{\footnotesize\ttfamily tsgl\+::\+Integral\+Viewer\+::$\sim$\+Integral\+Viewer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} destructor method. 
+
+This is the destructor for the \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} class.
+
+Frees up memory that was allocated to a \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}} instance. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_integral_viewer_a4a65831c2fbda3d9382a07a5aa154447}\label{classtsgl_1_1_integral_viewer_a4a65831c2fbda3d9382a07a5aa154447}} 
+\index{tsgl::IntegralViewer@{tsgl::IntegralViewer}!getRecTime@{getRecTime}}
+\index{getRecTime@{getRecTime}!tsgl::IntegralViewer@{tsgl::IntegralViewer}}
+\doxysubsubsection{\texorpdfstring{getRecTime()}{getRecTime()}}
+{\footnotesize\ttfamily double tsgl\+::\+Integral\+Viewer\+::get\+Rec\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the time the canvas spent integrating using the rectangle method. 
+
+\begin{DoxyReturn}{Returns}
+The elapsed time in seconds for the integration using rectangles. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_integral_viewer_a9125196e3b1119d87c86d9f0062d4c38}\label{classtsgl_1_1_integral_viewer_a9125196e3b1119d87c86d9f0062d4c38}} 
+\index{tsgl::IntegralViewer@{tsgl::IntegralViewer}!getTrapTime@{getTrapTime}}
+\index{getTrapTime@{getTrapTime}!tsgl::IntegralViewer@{tsgl::IntegralViewer}}
+\doxysubsubsection{\texorpdfstring{getTrapTime()}{getTrapTime()}}
+{\footnotesize\ttfamily double tsgl\+::\+Integral\+Viewer\+::get\+Trap\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the time the canvas spent integrating using the trapezoid method. 
+
+\begin{DoxyReturn}{Returns}
+The elapsed time in seconds for the integration using trapezoids. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_integral_viewer_a213d814ac293686ecd06c45344fa242f}\label{classtsgl_1_1_integral_viewer_a213d814ac293686ecd06c45344fa242f}} 
+\index{tsgl::IntegralViewer@{tsgl::IntegralViewer}!rectangleEvaluate@{rectangleEvaluate}}
+\index{rectangleEvaluate@{rectangleEvaluate}!tsgl::IntegralViewer@{tsgl::IntegralViewer}}
+\doxysubsubsection{\texorpdfstring{rectangleEvaluate()}{rectangleEvaluate()}}
+{\footnotesize\ttfamily long double tsgl\+::\+Integral\+Viewer\+::rectangle\+Evaluate (\begin{DoxyParamCaption}\item[{long long}]{num\+Rectangles }\end{DoxyParamCaption})}
+
+
+
+Evaluate an integral using the rectangle method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Rectangles} & The number of rectangles to use for the integration. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The area under the curve represented by the \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}}\textquotesingle{}s function, evaluated using the rectangle method. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_integral_viewer_a485bd58c87267460baf013cdf786eae7}\label{classtsgl_1_1_integral_viewer_a485bd58c87267460baf013cdf786eae7}} 
+\index{tsgl::IntegralViewer@{tsgl::IntegralViewer}!trapezoidEvaluate@{trapezoidEvaluate}}
+\index{trapezoidEvaluate@{trapezoidEvaluate}!tsgl::IntegralViewer@{tsgl::IntegralViewer}}
+\doxysubsubsection{\texorpdfstring{trapezoidEvaluate()}{trapezoidEvaluate()}}
+{\footnotesize\ttfamily long double tsgl\+::\+Integral\+Viewer\+::trapezoid\+Evaluate (\begin{DoxyParamCaption}\item[{long long}]{num\+Trapezoids }\end{DoxyParamCaption})}
+
+
+
+Evaluate an integral using the trapezoid method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num\+Rectangles} & The number of trapezoids to use for the integration. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The area under the curve represented by the \mbox{\hyperlink{classtsgl_1_1_integral_viewer}{Integral\+Viewer}}\textquotesingle{}s function, evaluated using the trapezoid method. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Integral\+Viewer.\+h\item 
+Integral\+Viewer.\+cpp\end{DoxyCompactItemize}

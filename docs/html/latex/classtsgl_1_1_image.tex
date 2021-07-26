@@ -1,0 +1,270 @@
+\hypertarget{classtsgl_1_1_image}{}\doxysection{tsgl\+::Image Class Reference}
+\label{classtsgl_1_1_image}\index{tsgl::Image@{tsgl::Image}}
+
+
+Draw an image to the \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}.  
+
+
+
+
+{\ttfamily \#include $<$Image.\+h$>$}
+
+Inheritance diagram for tsgl\+::Image\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_image}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_image_a98fa157fbdb5771729da59bc08b50a1b}{Image}} (float x, float y, float z, std\+::string filename, G\+Lfloat width, G\+Lfloat height, float yaw, float pitch, float roll, float alpha=1.\+0f)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_image_a42c7d354c766d06779d46e2ad0667027}{draw}} (Shader $\ast$shader)
+\begin{DoxyCompactList}\small\item\em Draw the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \end{DoxyCompactList}\item 
+G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_image_acea652163c4392c88b6f0442e5dd051a}{get\+Height}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the image\textquotesingle{}s height. \end{DoxyCompactList}\item 
+G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_image_ace08e96c94a3798d6fdb6cb60259e3fc}{get\+Width}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the image\textquotesingle{}s width. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_image_a4242ccf591c44bc4619dd2a867a801ff}{set\+Width}} (G\+Lfloat width)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the left side of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} base to its right side. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_image_adc7bfcf30f2bd707177488d471ed2d77}{set\+Height}} (G\+Lfloat height)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the top side of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} base to its bottom side. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_image_a3a02c78e7452c2b24ce71008cc6a2ee7}{change\+Width\+By}} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the left side of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} base to its right side by the parameter amount. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_image_aedbc8846201306dc6c0cc7fe7a607b25}{change\+Height\+By}} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the top side of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} base to its bottom side by the parameter amount. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_image_a9ff9d3c70b93b1d5c42e571c52b2a617}{change\+File}} (std\+::string filename)
+\begin{DoxyCompactList}\small\item\em Alters the file the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} draws. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_image_a8d6beb3a072efc029af9ca66f7e2d399}{set\+Alpha}} (float new\+Alpha)
+\begin{DoxyCompactList}\small\item\em Alters the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}\textquotesingle{}s transparency. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_image_aaae97ef27b8660d29abe66d1beabe7a3}\label{classtsgl_1_1_image_aaae97ef27b8660d29abe66d1beabe7a3}} 
+G\+Lint {\bfseries get\+Pixel\+Height} ()
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_image_aea54199ea329c9713c6f346e225a6a84}\label{classtsgl_1_1_image_aea54199ea329c9713c6f346e225a6a84}} 
+G\+Lint {\bfseries get\+Pixel\+Width} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classtsgl_1_1_image_a0bd9dc1bc0d4a18315226dec7493fcb2}{get\+File\+Resolution}} (std\+::string filename, int \&width, int \&height)
+\begin{DoxyCompactList}\small\item\em Gets the dimensions of an image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw an image to the \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. 
+
+\mbox{\hyperlink{classtsgl_1_1_image}{Image}} is a class which provides a simple interface for loading and drawing images. The \mbox{\hyperlink{classtsgl_1_1_image}{Image}} class currently supports files in the .png, .bmp, and .jpg formats. \begin{DoxyNote}{Note}
+For the time being, there is no way to measure the size of an image once it\textquotesingle{}s loaded. Therefore, the width and height must be specified manually, and stretching may occur if the input dimensions don\textquotesingle{}t match the images actual dimensions. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+Aside from an error message output to stderr, \mbox{\hyperlink{classtsgl_1_1_image}{Image}} gives no indication if an image failed to load. 
+\end{DoxyWarning}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_image_a98fa157fbdb5771729da59bc08b50a1b}\label{classtsgl_1_1_image_a98fa157fbdb5771729da59bc08b50a1b}} 
+\index{tsgl::Image@{tsgl::Image}!Image@{Image}}
+\index{Image@{Image}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{Image()}{Image()}}
+{\footnotesize\ttfamily tsgl\+::\+Image\+::\+Image (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{std\+::string}]{filename,  }\item[{G\+Lfloat}]{width,  }\item[{G\+Lfloat}]{height,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{float}]{alpha = {\ttfamily 1.0f} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. 
+
+This is the explicit constructor for the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em y} & The y coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em z} & The z coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em filename} & The filename of the image to load, a std\+::string \\
+\hline
+{\em width} & The width of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em height} & The height of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em yaw} & The yaw orientation of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em pitch} & The pitch orientation of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em roll} & The roll orientation of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em alpha} & The alpha of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_image}{Image}} is drawn with the specified coordinates, dimensions, and transparency. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+{\bfseries{I\+M\+P\+O\+R\+T\+A\+NT}}\+: In \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}}, {\itshape y} specifies the bottom, not the top, of the image. 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_image_a9ff9d3c70b93b1d5c42e571c52b2a617}\label{classtsgl_1_1_image_a9ff9d3c70b93b1d5c42e571c52b2a617}} 
+\index{tsgl::Image@{tsgl::Image}!changeFile@{changeFile}}
+\index{changeFile@{changeFile}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{changeFile()}{changeFile()}}
+{\footnotesize\ttfamily void tsgl\+::\+Image\+::change\+File (\begin{DoxyParamCaption}\item[{std\+::string}]{filename }\end{DoxyParamCaption})}
+
+
+
+Alters the file the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} draws. 
+
+Alters the values of the my\+File, my\+Width, my\+Height, and mutates vertices. 
+\begin{DoxyParams}{Parameters}
+{\em filename} & New string value for my\+File. \\
+\hline
+{\em width} & New width of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+{\em height} & New height of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_image_aedbc8846201306dc6c0cc7fe7a607b25}\label{classtsgl_1_1_image_aedbc8846201306dc6c0cc7fe7a607b25}} 
+\index{tsgl::Image@{tsgl::Image}!changeHeightBy@{changeHeightBy}}
+\index{changeHeightBy@{changeHeightBy}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{changeHeightBy()}{changeHeightBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Image\+::change\+Height\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the top side of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} base to its bottom side by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the height of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_image_a3a02c78e7452c2b24ce71008cc6a2ee7}\label{classtsgl_1_1_image_a3a02c78e7452c2b24ce71008cc6a2ee7}} 
+\index{tsgl::Image@{tsgl::Image}!changeWidthBy@{changeWidthBy}}
+\index{changeWidthBy@{changeWidthBy}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{changeWidthBy()}{changeWidthBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Image\+::change\+Width\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the left side of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} base to its right side by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the width of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_image_a42c7d354c766d06779d46e2ad0667027}\label{classtsgl_1_1_image_a42c7d354c766d06779d46e2ad0667027}} 
+\index{tsgl::Image@{tsgl::Image}!draw@{draw}}
+\index{draw@{draw}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void tsgl\+::\+Image\+::draw (\begin{DoxyParamCaption}\item[{Shader $\ast$}]{shader }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. 
+
+This function actually draws the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} to the \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. 
+
+Implements \mbox{\hyperlink{classtsgl_1_1_drawable}{tsgl\+::\+Drawable}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_image_a0bd9dc1bc0d4a18315226dec7493fcb2}\label{classtsgl_1_1_image_a0bd9dc1bc0d4a18315226dec7493fcb2}} 
+\index{tsgl::Image@{tsgl::Image}!getFileResolution@{getFileResolution}}
+\index{getFileResolution@{getFileResolution}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{getFileResolution()}{getFileResolution()}}
+{\footnotesize\ttfamily void tsgl\+::\+Image\+::get\+File\+Resolution (\begin{DoxyParamCaption}\item[{std\+::string}]{filename,  }\item[{int \&}]{width,  }\item[{int \&}]{height }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Gets the dimensions of an image. 
+
+Loads the header of a .png, .jpeg, or .bmp image to read their dimensions. 
+\begin{DoxyParams}{Parameters}
+{\em filename} & The file name of the picture. \\
+\hline
+{\em width} & A reference variable for holding the width of the picture. \\
+\hline
+{\em height} & A reference variable for holding the height of the picture. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_image_acea652163c4392c88b6f0442e5dd051a}\label{classtsgl_1_1_image_acea652163c4392c88b6f0442e5dd051a}} 
+\index{tsgl::Image@{tsgl::Image}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Image\+::get\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the image\textquotesingle{}s height. 
+
+\begin{DoxyReturn}{Returns}
+The height of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_image_ace08e96c94a3798d6fdb6cb60259e3fc}\label{classtsgl_1_1_image_ace08e96c94a3798d6fdb6cb60259e3fc}} 
+\index{tsgl::Image@{tsgl::Image}!getWidth@{getWidth}}
+\index{getWidth@{getWidth}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{getWidth()}{getWidth()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Image\+::get\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the image\textquotesingle{}s width. 
+
+\begin{DoxyReturn}{Returns}
+The width of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_image_a8d6beb3a072efc029af9ca66f7e2d399}\label{classtsgl_1_1_image_a8d6beb3a072efc029af9ca66f7e2d399}} 
+\index{tsgl::Image@{tsgl::Image}!setAlpha@{setAlpha}}
+\index{setAlpha@{setAlpha}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{setAlpha()}{setAlpha()}}
+{\footnotesize\ttfamily void tsgl\+::\+Image\+::set\+Alpha (\begin{DoxyParamCaption}\item[{float}]{alpha }\end{DoxyParamCaption})}
+
+
+
+Alters the \mbox{\hyperlink{classtsgl_1_1_image}{Image}}\textquotesingle{}s transparency. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The \mbox{\hyperlink{classtsgl_1_1_image}{Image}}\textquotesingle{}s new alpha value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+If parameter not 0.\+0 $<$= alpha $<$= 1.\+0 then this method will have no effect. 
+\end{DoxyNote}
+\mbox{\Hypertarget{classtsgl_1_1_image_adc7bfcf30f2bd707177488d471ed2d77}\label{classtsgl_1_1_image_adc7bfcf30f2bd707177488d471ed2d77}} 
+\index{tsgl::Image@{tsgl::Image}!setHeight@{setHeight}}
+\index{setHeight@{setHeight}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{setHeight()}{setHeight()}}
+{\footnotesize\ttfamily void tsgl\+::\+Image\+::set\+Height (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{height }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the top side of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} base to its bottom side. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em height} & The \mbox{\hyperlink{classtsgl_1_1_image}{Image}}\textquotesingle{}s new height. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_image_a4242ccf591c44bc4619dd2a867a801ff}\label{classtsgl_1_1_image_a4242ccf591c44bc4619dd2a867a801ff}} 
+\index{tsgl::Image@{tsgl::Image}!setWidth@{setWidth}}
+\index{setWidth@{setWidth}!tsgl::Image@{tsgl::Image}}
+\doxysubsubsection{\texorpdfstring{setWidth()}{setWidth()}}
+{\footnotesize\ttfamily void tsgl\+::\+Image\+::set\+Width (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{width }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the left side of the \mbox{\hyperlink{classtsgl_1_1_image}{Image}} base to its right side. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The \mbox{\hyperlink{classtsgl_1_1_image}{Image}}\textquotesingle{}s new width. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Image.\+h\item 
+Image.\+cpp\end{DoxyCompactItemize}

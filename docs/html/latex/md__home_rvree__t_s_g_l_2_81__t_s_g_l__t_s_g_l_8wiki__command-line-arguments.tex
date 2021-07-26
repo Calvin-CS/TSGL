@@ -1,0 +1,172 @@
+Love giving commands? This is the page for you!
+
+To begin, in the {\ttfamily tests} subfolder of the {\ttfamily src} folder of the T\+S\+GL source code there are a plethora of tests that you can launch individually.
+
+Some of these tests take in command-\/line arguments. Command-\/line arguments are values which you pass whenever you execute a test file from the command-\/line (for Linux\+: ./test\+Name argument1 argument2 ...).
+
+These arguments can change something within the code; this ranges from the width and height of the Canvas screen to the number of threads to use when drawing something.
+
+How do we give command-\/line capabilities to new animations though?
+
+We\textquotesingle{}re about to find out.
+
+{\itshape {\bfseries{Linux/\+Mac users\+:}}} Follow the steps from the previous tutorials. Name the folder \char`\"{}\+Tutorial8\char`\"{} and the file \char`\"{}command.\+cpp\char`\"{}. Replace \char`\"{}program\char`\"{} in the \char`\"{}\+T\+A\+R\+G\+E\+T\char`\"{} line of the Makefile with \char`\"{}command\char`\"{}.
+
+{\itshape {\bfseries{Windows users\+:}}} Follow the steps from the previous tutorials. Name the Solution folder \char`\"{}\+Tutorial8\char`\"{} and the Visual Studio project \char`\"{}\+Commands\char`\"{}. After adding the Property sheet, name the .cpp file \char`\"{}command.\+cpp\char`\"{}.
+
+{\itshape {\bfseries{All three platforms\+:}}} Follow the steps in the \mbox{[}\mbox{[}Building Programs\mbox{]}\mbox{]} page on how to compile and run the program (Linux/\+Mac users, this is a single-\/file program).
+
+Let\textquotesingle{}s start with skeleton code\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, 500, 500, \textcolor{stringliteral}{"Command-\/line Example"}, FRAME);}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Compile and run. A blank gray screen should appear.
+
+Now, how can we add the ability to take in command-\/line arguments? Sounds complicated.
+
+Its actually fairly simple\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} * argv[]) \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, 500, 500, \textcolor{stringliteral}{"Command-\/line Example"}, FRAME);}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Notice how we add parameters to the main method? This is the standard way to receive arguments from the command-\/line. The {\ttfamily argc} parameter is the number of arguments passed and the {\ttfamily argv} parameter is the array containing the arguments (with {\ttfamily argv\mbox{[}0\mbox{]}} being the name of the program).
+
+Here\textquotesingle{}s a way to get the arguments passed from the command-\/line and into the code\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} * argv[]) \{}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} width = atoi(argv[1]), height = atoi(argv[2]);  \textcolor{comment}{//Get the width and height from the command-\/line}}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, width, height, \textcolor{stringliteral}{"Command-\/line Example"}, FRAME);  \textcolor{comment}{//Pass them as parameters}}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Since the types of elements in {\ttfamily argv} are char pointers, we need to convert them into integers in order for this example to use them as the width and the height of the Canvas.
+
+{\ttfamily atoi()} converts alphabet characters into integers.
+
+Compile the code. Because of the way that we have added command-\/line argument capabilities to our code, we M\+U\+ST pass two of them, or a segmentation fault (a run-\/time error) will occur. (We will fix this shortly.)
+
+Attempting to run the code without command-\/line arguments now will trigger a segmentation fault (an error).
+
+To run a program with command-\/line arguments depends on your system\textquotesingle{}s OS. There are videos that can show you how to run an individual test file in the T\+S\+GL bin folder from the command-\/line\+:
+
+
+\begin{DoxyItemize}
+\item Linux/\+Mac\+: \href{https://www.youtube.com/watch?v=ASMtIoJFJVI}{\texttt{ https\+://www.\+youtube.\+com/watch?v=\+A\+S\+Mt\+Io\+J\+F\+J\+VI}}
+\item Windows\+: \href{https://www.youtube.com/watch?v=9aXBKVQ4n4I}{\texttt{ https\+://www.\+youtube.\+com/watch?v=9a\+X\+B\+K\+V\+Q4n4I}}
+\end{DoxyItemize}
+
+This code is being run on a Linux machine, so the tutorial will continue using this format.
+
+When you run the code with command-\/line arguments, the screen should appear but in a different size.
+
+But wait...what happens when someone accidentally forgets to put in a command-\/line argument? The code will seg fault regardless!
+
+To avert this, we need to place a few checks in the code\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} * argv[]) \{}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} width = (argc > 1) ? atoi(argv[1]) : 600; \textcolor{comment}{//Checks for command-\/line arguments}}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} height = (argc > 2) ? atoi(argv[2]) : 800;}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, width, height, \textcolor{stringliteral}{"Command-\/line Example"}, FRAME);  \textcolor{comment}{//Pass them as parameters}}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Now compile and run the code without command-\/line arguments. The window should still appear without causing a seg fault.
+
+The checks are essentially conditional operators that are laid out as follows\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(condition) ? expression\_if\_true : expression\_if\_false;}
+\end{DoxyCode}
+
+
+When execution reaches a conditional expression, its {\ttfamily condition} (usually a boolean expression) gets evaluated. If it evaluates to {\ttfamily true} then {\ttfamily expression\+\_\+if\+\_\+true} is the value produced by the expression. If it evaluates to {\ttfamily false} then {\ttfamily expression\+\_\+if\+\_\+false} is the value produced by the expression. So when this appears on the right side of an assignment statement\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{variable = (condition) ? expression\_if\_true : expression\_if\_false;}
+\end{DoxyCode}
+
+
+the value assigned to {\ttfamily variable} varies depending on the value of the {\ttfamily condition}, which is why it is called a \char`\"{}conditional expression\char`\"{}.
+
+In a nutshell, think of it as a one-\/line if-\/else statement.
+
+Now, what about invalid widths and heights? We can\textquotesingle{}t have a negative value or 0!
+
+To avert this, we need one more check\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} * argv[]) \{}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} width = (argc > 1) ? atoi(argv[1]) : 600;  \textcolor{comment}{//Checks for command-\/line arguments}}
+\DoxyCodeLine{  \textcolor{keywordtype}{int} height = (argc > 2) ? atoi(argv[2]) : 800;}
+\DoxyCodeLine{  \textcolor{keywordflow}{if}(width <= 0 || height <= 0) \{  \textcolor{comment}{//Check for negative or zero values}}
+\DoxyCodeLine{    width = height = 800;  \textcolor{comment}{//Set defaults if invalid widths or heights}}
+\DoxyCodeLine{  \}}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, width, height, \textcolor{stringliteral}{"Command-\/line Example"}, FRAME);  \textcolor{comment}{//Pass them as parameters}}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Compile and run the code with a negative value or 0. The window should still appear without causing any problems.
+
+In sum, to use command-\/line arguments to control your application, you {\itshape M\+U\+ST} edit the {\ttfamily main()} method signature so that it looks like this\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} * argv[]) \{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Then, you can use the first parameter, {\ttfamily argc}, to determine whether any arguments have been given on the command-\/line. If so, you can use the second parameter, {\ttfamily argv}, to retrieve those arguments from the command-\/line.
+
+You must then include any checks to make sure there have been command-\/line arguments passed and then make sure those arguments are valid for you animation.
+
+That concludes this tutorial!
+
+In the final one, \mbox{[}\mbox{[}Bringing It All Together\mbox{]}\mbox{]}, we recap everything we\textquotesingle{}ve seen into an example with threading! 

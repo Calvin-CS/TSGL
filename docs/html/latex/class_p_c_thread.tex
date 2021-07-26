@@ -1,0 +1,108 @@
+\hypertarget{class_p_c_thread}{}\doxysection{P\+C\+Thread Class Reference}
+\label{class_p_c_thread}\index{PCThread@{PCThread}}
+
+
+{\ttfamily \#include $<$P\+C\+Thread.\+h$>$}
+
+Inheritance diagram for P\+C\+Thread\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_p_c_thread}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_p_c_thread_a7ae0244c033e4202d2643544432f91f7}{P\+C\+Thread}} ()
+\begin{DoxyCompactList}\small\item\em Default-\/constructor for the \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_p_c_thread_aae66c1e03deb76b8bef7cc9a6465b26e}{P\+C\+Thread}} (\mbox{\hyperlink{class_queue}{Queue}}$<$ \mbox{\hyperlink{classtsgl_1_1_star}{Star}} $\ast$ $>$ \&shared\+Buffer, unsigned long id, \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can)
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a57df324beabfba54ebee6a7c59bf49ef}\label{class_p_c_thread_a57df324beabfba54ebee6a7c59bf49ef}} 
+virtual void {\bfseries run} ()
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a7ca73de5a86008e76797ad134bca5f33}\label{class_p_c_thread_a7ca73de5a86008e76797ad134bca5f33}} 
+virtual void {\bfseries wait} ()
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a7a8bb7e11ecc298ae012f4393902c58c}\label{class_p_c_thread_a7a8bb7e11ecc298ae012f4393902c58c}} 
+virtual void {\bfseries lock} ()=0
+\item 
+\mbox{\Hypertarget{class_p_c_thread_ada80e2193c24b9111eb21abd07b2e2a1}\label{class_p_c_thread_ada80e2193c24b9111eb21abd07b2e2a1}} 
+virtual void {\bfseries act} ()=0
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a6266054bfef3bae0fceeefe00f64cc17}\label{class_p_c_thread_a6266054bfef3bae0fceeefe00f64cc17}} 
+virtual void {\bfseries unlock} ()=0
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_acee1e97e483e422b8845704f1fa3f793}\label{class_p_c_thread_acee1e97e483e422b8845704f1fa3f793}} 
+static std\+::atomic$<$ bool $>$ {\bfseries paused}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a82130f5a7e30132226be3f9966b1e526}\label{class_p_c_thread_a82130f5a7e30132226be3f9966b1e526}} 
+void {\bfseries animate\+Item} (int endX, int endY)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_ae2b90159f35617ed516678314db7e7bd}\label{class_p_c_thread_ae2b90159f35617ed516678314db7e7bd}} 
+int {\bfseries myX}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a604e02565566f31468557ca79a610164}\label{class_p_c_thread_a604e02565566f31468557ca79a610164}} 
+int {\bfseries myY}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a8107e048d3340e5cb40af9ed613f4c20}\label{class_p_c_thread_a8107e048d3340e5cb40af9ed613f4c20}} 
+int {\bfseries count}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_aeabf35c11ce3b710a8a77a1f8668a566}\label{class_p_c_thread_aeabf35c11ce3b710a8a77a1f8668a566}} 
+\mbox{\hyperlink{class_queue}{Queue}}$<$ \mbox{\hyperlink{classtsgl_1_1_star}{Star}} $\ast$ $>$ $\ast$ {\bfseries buffer}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_af9e9d19ab5bf1270941196546953a8f1}\label{class_p_c_thread_af9e9d19ab5bf1270941196546953a8f1}} 
+\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} $\ast$ {\bfseries my\+Can}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_add7f6d91944182daddcc3046fe3888dc}\label{class_p_c_thread_add7f6d91944182daddcc3046fe3888dc}} 
+\mbox{\hyperlink{classtsgl_1_1_convex_polygon}{Convex\+Polygon}} $\ast$ {\bfseries my\+Shape}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a07bd5b9a44cd4cf624926cb98ee31be2}\label{class_p_c_thread_a07bd5b9a44cd4cf624926cb98ee31be2}} 
+\mbox{\hyperlink{classtsgl_1_1_arrow}{Arrow}} $\ast$ {\bfseries my\+Arrow}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a3ca420c0690790d3c3fbd2e180f0ce15}\label{class_p_c_thread_a3ca420c0690790d3c3fbd2e180f0ce15}} 
+\mbox{\hyperlink{classtsgl_1_1_star}{Star}} $\ast$ {\bfseries my\+Item}
+\item 
+\mbox{\Hypertarget{class_p_c_thread_a2b37315ff24869556be743aea49def26}\label{class_p_c_thread_a2b37315ff24869556be743aea49def26}} 
+\mbox{\hyperlink{classtsgl_1_1_text}{Text}} $\ast$ {\bfseries my\+Count\+Label}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+P\+Chread class inherits from the \mbox{\hyperlink{class_thread}{Thread}} class in order to create a \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}} object. Inheritance\+: \mbox{\hyperlink{class_thread}{Thread}} class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_p_c_thread_a7ae0244c033e4202d2643544432f91f7}\label{class_p_c_thread_a7ae0244c033e4202d2643544432f91f7}} 
+\index{PCThread@{PCThread}!PCThread@{PCThread}}
+\index{PCThread@{PCThread}!PCThread@{PCThread}}
+\doxysubsubsection{\texorpdfstring{PCThread()}{PCThread()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily P\+C\+Thread\+::\+P\+C\+Thread (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default-\/constructor for the \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}} class. 
+
+\begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_p_c_thread_aae66c1e03deb76b8bef7cc9a6465b26e}\label{class_p_c_thread_aae66c1e03deb76b8bef7cc9a6465b26e}} 
+\index{PCThread@{PCThread}!PCThread@{PCThread}}
+\index{PCThread@{PCThread}!PCThread@{PCThread}}
+\doxysubsubsection{\texorpdfstring{PCThread()}{PCThread()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily P\+C\+Thread\+::\+P\+C\+Thread (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_queue}{Queue}}$<$ \mbox{\hyperlink{classtsgl_1_1_star}{Star}} $\ast$ $>$ \&}]{shared\+Buffer,  }\item[{unsigned long}]{id,  }\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can }\end{DoxyParamCaption})}
+
+Explicit-\/constructor for the \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}} class. param\+: shared\+Buffer, a reference to the \mbox{\hyperlink{class_queue}{Queue}} object that is shared between the \mbox{\hyperlink{class_producer}{Producer}} and \mbox{\hyperlink{class_consumer}{Consumer}}. param\+: id, an unsigned long that will be passed to the \mbox{\hyperlink{class_thread_a95c703fb8f2f27cb64f475a8c940864a}{Thread()}} constructor that will act as the id for the \mbox{\hyperlink{class_thread}{Thread}} object. param\+: can, a handle to the Canvas that will be drawn on and will determine whether or not to continue consuming objects from the \mbox{\hyperlink{class_queue}{Queue}}. return\+: The constructed \mbox{\hyperlink{class_p_c_thread}{P\+C\+Thread}} object. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/P\+C\+Thread.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Producer\+Consumer/P\+C\+Thread.\+cpp\end{DoxyCompactItemize}

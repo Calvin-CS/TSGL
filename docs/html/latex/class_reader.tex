@@ -1,0 +1,85 @@
+\hypertarget{class_reader}{}\doxysection{Reader Class Reference}
+\label{class_reader}\index{Reader@{Reader}}
+
+
+\mbox{\hyperlink{class_reader}{Reader}} class inherits from the \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} class in order to create a \mbox{\hyperlink{class_reader}{Reader}} object.  
+
+
+
+
+{\ttfamily \#include $<$Reader.\+h$>$}
+
+Inheritance diagram for Reader\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_reader}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_reader_adcda31b507720ab44044d7a21686fba2}{Reader}} ()
+\begin{DoxyCompactList}\small\item\em Default-\/constructor for the \mbox{\hyperlink{class_reader}{Reader}} class. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_reader_a3e60a71ea6034a374eba88380267de09}{Reader}} (\mbox{\hyperlink{class_r_w_database}{R\+W\+Database}}$<$ \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} $\ast$ $>$ \&shared\+Database, \mbox{\hyperlink{class_lock}{Lock}} \&lock, unsigned long id, \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can)
+\begin{DoxyCompactList}\small\item\em Explicit-\/constructor for the \mbox{\hyperlink{class_reader}{Reader}} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_reader_a83d805383b755b46f43491f8a0c8f3f8}\label{class_reader_a83d805383b755b46f43491f8a0c8f3f8}} 
+void {\bfseries lock} ()
+\item 
+\mbox{\Hypertarget{class_reader_a89f5f3c7107185ac9a8d54c6464b7ee3}\label{class_reader_a89f5f3c7107185ac9a8d54c6464b7ee3}} 
+void {\bfseries act} ()
+\item 
+\mbox{\Hypertarget{class_reader_ae6fdb55ccd1f482824e64f72c65b83e0}\label{class_reader_ae6fdb55ccd1f482824e64f72c65b83e0}} 
+void {\bfseries unlock} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_reader}{Reader}} class inherits from the \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} class in order to create a \mbox{\hyperlink{class_reader}{Reader}} object. 
+
+Inheritance\+: \mbox{\hyperlink{class_r_w_thread}{R\+W\+Thread}} class.
+
+Implements the run() method, which calls the read() method. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_reader_adcda31b507720ab44044d7a21686fba2}\label{class_reader_adcda31b507720ab44044d7a21686fba2}} 
+\index{Reader@{Reader}!Reader@{Reader}}
+\index{Reader@{Reader}!Reader@{Reader}}
+\doxysubsubsection{\texorpdfstring{Reader()}{Reader()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Reader\+::\+Reader (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default-\/constructor for the \mbox{\hyperlink{class_reader}{Reader}} class. 
+
+\begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_reader}{Reader}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_reader_a3e60a71ea6034a374eba88380267de09}\label{class_reader_a3e60a71ea6034a374eba88380267de09}} 
+\index{Reader@{Reader}!Reader@{Reader}}
+\index{Reader@{Reader}!Reader@{Reader}}
+\doxysubsubsection{\texorpdfstring{Reader()}{Reader()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Reader\+::\+Reader (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_r_w_database}{R\+W\+Database}}$<$ \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} $\ast$ $>$ \&}]{shared\+Database,  }\item[{\mbox{\hyperlink{class_lock}{Lock}} \&}]{lock,  }\item[{unsigned long}]{id,  }\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can }\end{DoxyParamCaption})}
+
+
+
+Explicit-\/constructor for the \mbox{\hyperlink{class_reader}{Reader}} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & shared\+Data, a reference to the \mbox{\hyperlink{class_r_w_database}{R\+W\+Database}} object that is shared between the \mbox{\hyperlink{class_reader}{Reader}} and \mbox{\hyperlink{class_writer}{Writer}}. \\
+\hline
+{\em } & id, an unsigned long that will be passed to the \mbox{\hyperlink{class_thread_a95c703fb8f2f27cb64f475a8c940864a}{Thread()}} constructor that will act as the id for the \mbox{\hyperlink{class_thread}{Thread}} object. \\
+\hline
+{\em } & can, a handle to the Canvas that will be drawn on. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: The constructed \mbox{\hyperlink{class_reader}{Reader}} object. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/Reader.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/Reader.\+cpp\end{DoxyCompactItemize}

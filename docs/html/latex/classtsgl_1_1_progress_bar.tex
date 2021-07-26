@@ -1,0 +1,168 @@
+\hypertarget{classtsgl_1_1_progress_bar}{}\doxysection{tsgl\+::Progress\+Bar Class Reference}
+\label{classtsgl_1_1_progress_bar}\index{tsgl::ProgressBar@{tsgl::ProgressBar}}
+
+
+Draws and updates a progress bar.  
+
+
+
+
+{\ttfamily \#include $<$Progress\+Bar.\+h$>$}
+
+Inheritance diagram for tsgl\+::Progress\+Bar\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classtsgl_1_1_progress_bar}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_progress_bar_a281955835a4dca417e17b8c158d3b907}{Progress\+Bar}} (float x, float y, float z, float width, float height, float min\+Value, float max\+Value, unsigned num\+Segments, float yaw, float pitch, float roll)
+\begin{DoxyCompactList}\small\item\em Explicit \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} constructor method. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_progress_bar_aa3ad600db2cbd0e8f9221c264535df21}{$\sim$\+Progress\+Bar}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} destructor method. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_progress_bar_a4fe29f8ca84e7e2fa11eddf1d4219ec5}\label{classtsgl_1_1_progress_bar_a4fe29f8ca84e7e2fa11eddf1d4219ec5}} 
+void {\bfseries draw} (Shader $\ast$shader)
+\item 
+void \mbox{\hyperlink{classtsgl_1_1_progress_bar_a4274998e4935f33eb9212b2174d9c0c5}{update}} (float new\+Value, int segnum=-\/1)
+\begin{DoxyCompactList}\small\item\em Updates a \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} segment with a new value. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classtsgl_1_1_progress_bar_a25576903783f18f8d74570aed2f80d95}{get\+Segs}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}\textquotesingle{}s number of segments. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classtsgl_1_1_progress_bar_ab781b1c8a4b68b9a875dba3773577747}{get\+Width}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}\textquotesingle{}s width in pixels. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{classtsgl_1_1_progress_bar_a07b0b55587b0b05b09d1ccf61602dc4e}{get\+Height}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}\textquotesingle{}s height in pixels. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draws and updates a progress bar. 
+
+\mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} is a class for holding vertex data for multiple rectangles forming a progress bar. \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} is formed of multiple segments, each of which is thread-\/safe and updated individually with the \mbox{\hyperlink{classtsgl_1_1_progress_bar_a4274998e4935f33eb9212b2174d9c0c5}{update()}} method. A \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} can be drawn to the screen using Canvas\+::draw\+Progress(). 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_progress_bar_a281955835a4dca417e17b8c158d3b907}\label{classtsgl_1_1_progress_bar_a281955835a4dca417e17b8c158d3b907}} 
+\index{tsgl::ProgressBar@{tsgl::ProgressBar}!ProgressBar@{ProgressBar}}
+\index{ProgressBar@{ProgressBar}!tsgl::ProgressBar@{tsgl::ProgressBar}}
+\doxysubsubsection{\texorpdfstring{ProgressBar()}{ProgressBar()}}
+{\footnotesize\ttfamily tsgl\+::\+Progress\+Bar\+::\+Progress\+Bar (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{width,  }\item[{float}]{height,  }\item[{float}]{min\+Value,  }\item[{float}]{max\+Value,  }\item[{unsigned}]{num\+Segments,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll }\end{DoxyParamCaption})}
+
+
+
+Explicit \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} constructor method. 
+
+This is the explicit constructor for the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the left edge of the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. \\
+\hline
+{\em y} & The y position of the top edge of the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. \\
+\hline
+{\em width} & The maximum width in pixels of the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. \\
+\hline
+{\em height} & The maximum height in pixels of the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. \\
+\hline
+{\em min\+Value} & The minimum value represented by the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. \\
+\hline
+{\em max\+Value} & The maximum value represented by the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. \\
+\hline
+{\em num\+Segments} & The number of segments in the progress bar \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} with the specified coordinates, maximum dimensions, value range, and segments. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_progress_bar_aa3ad600db2cbd0e8f9221c264535df21}\label{classtsgl_1_1_progress_bar_aa3ad600db2cbd0e8f9221c264535df21}} 
+\index{tsgl::ProgressBar@{tsgl::ProgressBar}!````~ProgressBar@{$\sim$ProgressBar}}
+\index{````~ProgressBar@{$\sim$ProgressBar}!tsgl::ProgressBar@{tsgl::ProgressBar}}
+\doxysubsubsection{\texorpdfstring{$\sim$ProgressBar()}{~ProgressBar()}}
+{\footnotesize\ttfamily tsgl\+::\+Progress\+Bar\+::$\sim$\+Progress\+Bar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+\mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} destructor method. 
+
+This is the destructor for the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} class.
+
+Frees up memory that was allocated to a \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} instance. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_progress_bar_a07b0b55587b0b05b09d1ccf61602dc4e}\label{classtsgl_1_1_progress_bar_a07b0b55587b0b05b09d1ccf61602dc4e}} 
+\index{tsgl::ProgressBar@{tsgl::ProgressBar}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!tsgl::ProgressBar@{tsgl::ProgressBar}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily float tsgl\+::\+Progress\+Bar\+::get\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}\textquotesingle{}s height in pixels. 
+
+\begin{DoxyReturn}{Returns}
+The pixel height of the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. 
+\end{DoxyReturn}
+
+
+Referenced by Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_progress_bar_a25576903783f18f8d74570aed2f80d95}\label{classtsgl_1_1_progress_bar_a25576903783f18f8d74570aed2f80d95}} 
+\index{tsgl::ProgressBar@{tsgl::ProgressBar}!getSegs@{getSegs}}
+\index{getSegs@{getSegs}!tsgl::ProgressBar@{tsgl::ProgressBar}}
+\doxysubsubsection{\texorpdfstring{getSegs()}{getSegs()}}
+{\footnotesize\ttfamily int tsgl\+::\+Progress\+Bar\+::get\+Segs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}\textquotesingle{}s number of segments. 
+
+\begin{DoxyReturn}{Returns}
+The number of segments in the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_progress_bar_ab781b1c8a4b68b9a875dba3773577747}\label{classtsgl_1_1_progress_bar_ab781b1c8a4b68b9a875dba3773577747}} 
+\index{tsgl::ProgressBar@{tsgl::ProgressBar}!getWidth@{getWidth}}
+\index{getWidth@{getWidth}!tsgl::ProgressBar@{tsgl::ProgressBar}}
+\doxysubsubsection{\texorpdfstring{getWidth()}{getWidth()}}
+{\footnotesize\ttfamily float tsgl\+::\+Progress\+Bar\+::get\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}\textquotesingle{}s width in pixels. 
+
+\begin{DoxyReturn}{Returns}
+The pixel width of the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}}. 
+\end{DoxyReturn}
+
+
+Referenced by Mandelbrot\+::draw().
+
+\mbox{\Hypertarget{classtsgl_1_1_progress_bar_a4274998e4935f33eb9212b2174d9c0c5}\label{classtsgl_1_1_progress_bar_a4274998e4935f33eb9212b2174d9c0c5}} 
+\index{tsgl::ProgressBar@{tsgl::ProgressBar}!update@{update}}
+\index{update@{update}!tsgl::ProgressBar@{tsgl::ProgressBar}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void tsgl\+::\+Progress\+Bar\+::update (\begin{DoxyParamCaption}\item[{float}]{new\+Value,  }\item[{int}]{segnum = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+
+Updates a \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} segment with a new value. 
+
+This function updates the segment {\ttfamily seg} of the \mbox{\hyperlink{classtsgl_1_1_progress_bar}{Progress\+Bar}} to represent the new value {\ttfamily newV}. If newV is less than the segment\textquotesingle{}s minimum value, the segment is set to its minimum value. If newV is more than the segment\textquotesingle{}s maximum value, the segment is set to its maximum value. 
+\begin{DoxyParams}{Parameters}
+{\em new\+Value} & The value to set the segment to. \\
+\hline
+{\em segnum} & The segment whose value to update. A value of -\/1 indicates the current thread number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The minimum value for a segment is calculated as {\ttfamily minV + (max\+V-\/minV)$\ast$seg/segs} 
+
+The maximum value for a segment is calculated as {\ttfamily minV + (max\+V-\/minV)$\ast$(seg+1)/segs} 
+\end{DoxyNote}
+
+
+Referenced by Mandelbrot\+::draw().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Progress\+Bar.\+h\item 
+Progress\+Bar.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,284 @@
+{\itshape {\bfseries{W\+O\+RK IN P\+R\+O\+G\+R\+E\+S\+S!!!"}}}
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md39}{}\doxysubsection{$\vert$ C\+R\+E\+A\+T\+I\+N\+G A N\+E\+W M\+A\+C O\+S X I\+N\+S\+T\+A\+L\+L\+E\+R P\+A\+C\+K\+A\+G\+E (\+Last updated\+: 08/11/16) $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md39}
+Creating a new {\ttfamily .pkg} Installer for Mac OS X isn\textquotesingle{}t as difficult as creating an R\+PM or Debian package.
+
+You do have to be on a Mac, however.
+
+If you cannot procure a Mac with OS X 10.\+5 or greater (or a VM with OS X 10.\+5 or greater on it, {\itshape though this has not been tested}), {\itshape {\bfseries{please stop reading and go get a Mac}}}.
+
+Otherwise, please continue.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md41}{}\doxysubsection{$\vert$ Packages $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md41}
+When we first started to create the Mac OS X Installer package, we used a tool called {\ttfamily Packages}.
+
+This made the process of creating a Mac OS X binary installer much easier and less tedious.
+
+You have to download it from this \href{http://s.sudre.free.fr/Software/Packages/about.html}{\texttt{ link}}.
+
+The download will be a {\ttfamily .dmg} file. Move it to your {\ttfamily Desktop}.
+
+Now, mount it. (Double-\/click on it). You should see a Volume appear on your {\ttfamily Desktop} with the name, {\ttfamily Packages \#.\#.\#}. Double-\/click on it.
+
+Now, double-\/click on the {\ttfamily Install Packages.\+pkg} file.
+
+Follow the installation process, and you should have the {\ttfamily Packages} tool installed.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md43}{}\doxysubsection{$\vert$ Creating the T\+S\+G\+L Installer $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md43}
+After installing {\ttfamily Packages}, open up the application.
+
+A screen should pop-\/up with the title, {\ttfamily New Project}.
+
+This is where you choose what project you\textquotesingle{}d like to make.
+
+We used the {\ttfamily Distribution} template, so go ahead and click on that option.
+
+Click {\ttfamily Next}.
+
+The project name will be {\ttfamily Install\+T\+S\+GL}, and the project directory will be {\ttfamily $\sim$/\+Desktop}.
+
+A screen should appear showing you the project details.
+
+In here, you can edit the settings for the project, how the Installer looks, and more. ~\newline
+
+
+On the left, you\textquotesingle{}ll see a section named {\ttfamily P\+A\+C\+K\+A\+G\+ES}.
+
+At the moment, there\textquotesingle{}s only one package in it\+: {\ttfamily Install\+T\+S\+GL}.
+
+We\textquotesingle{}re going to rename it to just {\ttfamily T\+S\+GL}.
+
+Double-\/click on it, and when the text appears highlighted, type {\ttfamily T\+S\+GL} and hit {\ttfamily E\+N\+T\+ER}.
+
+Now, take a look at the {\ttfamily Settings} page.
+
+This contains the settings that you can edit for this package.
+
+If you take a look at the text box next to the {\ttfamily Identifier\+:} label, you can see that the Identifier for the package still has {\ttfamily Install\+T\+S\+GL} at the end.
+
+We\textquotesingle{}re going to change the {\ttfamily Install\+T\+S\+GL} part to say {\ttfamily T\+S\+GL}.
+
+Click on the text box next to the {\ttfamily Identifier\+:} label, and delete the {\ttfamily Install\+T\+S\+GL} part. Replace it with {\ttfamily T\+S\+GL} and hit {\ttfamily E\+N\+T\+ER}.
+
+We can now leave the {\ttfamily Settings} page as it is.
+
+On the left, click on {\ttfamily Project}.
+
+You\textquotesingle{}ll be taken back to the {\ttfamily Settings} page for the Installer.
+
+Leave the {\ttfamily Settings} page as is, and click on the {\ttfamily Presentation} tab.
+
+In here, you\textquotesingle{}ll be able to customize the text for the {\ttfamily Introduction}, {\ttfamily Read Me}, and {\ttfamily License} screens.
+
+To do so, we must first create the text files that will hold the customized screen text.
+
+Create three new text files\+: {\ttfamily intro.\+txt}, {\ttfamily R\+E\+A\+D\+M\+E.\+txt}, and {\ttfamily license.\+txt}.
+
+We\textquotesingle{}ll edit {\ttfamily intro.\+txt} first.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md45}{}\doxysubsection{$\vert$ $<$tt$>$intro.\+txt$<$/tt$>$ $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md45}
+This is the first thing that a user will see when they double-\/click on the Installer package.
+
+Here\textquotesingle{}s the introduction that we used\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Hello! Thank you for choosing to install TSGL on your Mac!}
+\DoxyCodeLine{}
+\DoxyCodeLine{To start, please click "Continue".}
+\end{DoxyCode}
+
+
+Copy and paste this into your {\ttfamily intro.\+txt} file and make any changes.
+
+Save and close it when you are satisfied.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md47}{}\doxysubsection{$\vert$ $<$tt$>$\+R\+E\+A\+D\+M\+E.\+txt$<$/tt$>$ $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md47}
+This is the next thing that a user will see when they continue with the installation process.
+
+Essentially, we specified what dependencies would be installed and with which package manager.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{The following dependencies will be installed on your Mac:}
+\DoxyCodeLine{}
+\DoxyCodeLine{    -\/ X11 libs}
+\DoxyCodeLine{    -\/ Homebrew}
+\DoxyCodeLine{    -\/ Freetype (through Homebrew)}
+\DoxyCodeLine{    -\/ glfw3 (through Homebrew)}
+\DoxyCodeLine{    -\/ glew (through Homebrew)}
+\DoxyCodeLine{    -\/ doxygen (through Homebrew)}
+\DoxyCodeLine{    -\/ gcc5 (through Homebrew)}
+\DoxyCodeLine{}
+\DoxyCodeLine{By clicking "Continue", you agree to having these dependencies installed. }
+\end{DoxyCode}
+
+
+Copy the above text and paste it into your {\ttfamily R\+E\+A\+D\+M\+E.\+txt} file.
+
+Make any changes as you see fit, then save and close the file.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md49}{}\doxysubsection{$\vert$ $<$tt$>$license.\+txt$<$/tt$>$ $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md49}
+This is the last thing a user will see before selecting a destination, choosing installation type, and installing T\+S\+GL on their Mac.
+
+We took the opportunity to use the license associated with T\+S\+GL (G\+P\+Lv3).
+
+This file is actually inside of the T\+S\+GL source code folder.
+
+Simply open up the T\+S\+GL source code folder (the clone or downloaded zip file), open up {\ttfamily license}, and copy the text inside of it. Paste that text inside of {\ttfamily license.\+txt}.
+
+Save and close the file.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md51}{}\doxysubsection{$\vert$ Almost there $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md51}
+Now that we have those three text files made, it\textquotesingle{}s time to integrate them into the Installer.
+
+Back in {\ttfamily Packages}, make sure that you are in the {\ttfamily Project} details (click on {\ttfamily Project} on the left side of the window), and on the {\ttfamily Presentation} page (click on the {\ttfamily Presentation} tab).
+
+In the drop down box on the right, make sure that it says {\ttfamily Introduction}.
+
+Then, click the big plus ({\ttfamily +}) button underneath the {\ttfamily Custom Introduction} table.
+
+One of the table slots inside of the {\ttfamily Custom Introduction} table should be filled in and highlighted.
+
+Click on the section that has the {\ttfamily -\/} in it, and click {\ttfamily Choose} from the drop down menu.
+
+Double-\/click on the {\ttfamily intro.\+txt} file that we made earlier.
+
+Now the text inside of the {\ttfamily Introduction} Installer page should change to the text inside of {\ttfamily intro.\+txt}.
+
+Do the same thing for the {\ttfamily R\+E\+A\+D\+M\+E.\+txt} and {\ttfamily license.\+txt} files.
+
+Once you have done that, you are almost ready to create the {\ttfamily .pkg} Installer!
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md53}{}\doxysubsection{$\vert$ Installer plugins $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md53}
+Our Installer can have two shell scripts which are executed before and after T\+S\+GL is installed.
+
+The {\ttfamily preinstall} and {\ttfamily postinstall} scripts, respectively.
+
+We will go into more detail later on these scripts, but for now just know that they are needed for our Installer.
+
+However, they are not the {\itshape O\+N\+LY} things that are needed.
+
+As we developed the {\ttfamily .pkg} Installer, we focused primarily on making it self-\/contained.
+
+We wanted a user to simply mount our {\ttfamily .dmg} file, double-\/click on the {\ttfamily .pkg} file, and have T\+S\+GL installed on their Mac.
+
+We didn\textquotesingle{}t want them to execute any programs beforehand; we wanted everything to be done by the {\ttfamily .pkg} Installer.
+
+This proved to be most difficult with just the {\ttfamily preinstall} and {\ttfamily postinstall} scripts.
+
+Which is why, another resource was needed\+: an Installer plugin.
+
+An Installer plugin is essentially another pane that you can add to the installation process.
+
+What\textquotesingle{}s important about this resource?
+
+You can execute commands based off of user input.
+
+Even shell scripts.
+
+This was {\itshape V\+E\+RY} useful for us when we had to install {\ttfamily Homebrew} as a dependency, as well as a solution to many problems, for the reasons outlined in the next section.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md55}{}\doxysubsection{$\vert$ The trouble with $<$tt$>$preinstall$<$/tt$>$ and $<$tt$>$postinstall$<$/tt$>$ $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md55}
+As mentioned above, the {\ttfamily preinstall} and {\ttfamily postinstall} scripts are shell scripts which can be executed before and after T\+S\+GL is installed, respectively.
+
+They are perfect for small tasks, like making symlinks or installing some dependencies.
+
+However, they are run as {\ttfamily root}.
+
+This doesn\textquotesingle{}t seem like such a big deal, but consider this scenario\+:
+
+1). The {\ttfamily preinstall} script is executed when the user clicks {\ttfamily Install} during the T\+S\+GL installation process.
+
+2). The script finds that a user doesn\textquotesingle{}t have {\ttfamily Homebrew} installed.
+
+3). It attempts to install {\ttfamily Homebrew}.
+
+4). Because the script was run as {\ttfamily root}, {\ttfamily Homebrew} refuses to install.
+
+5). No dependencies are installed, and the installation process shows that T\+S\+GL was installed correctly (even though it wasn\textquotesingle{}t).
+
+See \href{https://github.com/Homebrew/brew/blob/master/share/doc/homebrew/FAQ.md}{\texttt{ the Homebrew F\+AQ page}} for more information on why using {\ttfamily sudo} and {\ttfamily brew} is a bad thing.
+
+This was a recurring problem, with many workarounds attempted.
+
+One of them involved creating a separate executable that the user could run {\itshape before} the {\ttfamily .pkg} Installer, but that would mean that the Installer would no longer be self-\/contained. Strike 1.
+
+You can execute the scripts as normal user by changing a setting inside of the {\ttfamily .pkg} file {\itshape after} it\textquotesingle{}s been created. That would be a workaround.
+
+However, that brings another problem to the table.
+
+When we have to install {\ttfamily X11} libs, we use the {\ttfamily curl} command in order to download the {\ttfamily x\+Quartz} {\ttfamily .dmg} file which contains a {\ttfamily .pkg} file so that they can be installed.
+
+We then open up that file and tell the user to follow the installation process.
+
+But...two Installers {\itshape cannot} be running at the same time.
+
+If they are, one will wait for the other to finish before beginning.
+
+This {\itshape always} happened with the installation of the {\ttfamily X11} libs.
+
+The installation would wait until {\itshape after} the installation of T\+S\+GL was completed, then move onto installing {\ttfamily X11} libs. T\+S\+GL needs those libs in order to compile, and because they were not installed {\itshape before} T\+S\+GL, this would mean that T\+S\+GL would fail to compile and would {\itshape N\+OT} be installed correctly.
+
+A workaround for this would be to use the {\ttfamily installer} command and use it to install the {\ttfamily .pkg} file via a Terminal.
+
+But...the execution of the {\ttfamily installer} command could cause the same issue (two Installer running at the same time).
+
+Even if it were to work, this workaround brings with it a new problem.
+
+For some odd reason, the commands executed by the {\ttfamily preinstall} script are asynchronous.
+
+What this means is that when one command is executed, the next command doesn\textquotesingle{}t wait until the first has terminated. It executes, and the successive commands do the same.
+
+This is really bad in terms of installing dependencies.
+
+To give an example, consider {\ttfamily Homebrew} again.
+
+{\ttfamily Homebrew} needs to be installed before {\ttfamily glew}, {\ttfamily glfw3}, {\ttfamily doxygen}, {\ttfamily freetype}, and {\ttfamily gcc5}.
+
+If a user doesn\textquotesingle{}t have {\ttfamily Homebrew} installed, the script needs to install {\ttfamily Homebrew}.
+
+As a consequence of the commands being executed asynchronously, the other dependencies will also be installed {\itshape regardless of the {\ttfamily Homebrew} install finishing or not}.
+
+This would lead to another failed install. Strike 2.
+
+There are other problems, but we won\textquotesingle{}t go into them in detail.
+
+We attempted numerous workarounds, ranging from having the {\ttfamily preinstall} script execute other install scripts, to using {\ttfamily sleep} and {\ttfamily wait} commands.
+
+None of them provided a solid, foolproof binary Installer. Strike 3.
+
+Given all of these reasons, we ultimately decided to go with Installer plugins.
+
+They provided a solid, self-\/contained, foolproof Installer.
+
+We used one to install {\ttfamily Homebrew}, and {\ttfamily X11} libs.
+
+We also utilized the {\ttfamily sleep} command in order to avoid having multiple dependencies installed at once (e.\+g. {\ttfamily X\+Code Command Line Tools} and dependencies installed by {\ttfamily Homebrew}).
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md57}{}\doxysubsection{$\vert$ Back to Installer plugins $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md57}
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md59}{}\doxysubsection{$\vert$ Building the Installer $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md59}
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md61}{}\doxysubsection{$\vert$ Wrapping it up in a .\+dmg file $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md61}
+Now that you have the {\ttfamily .pkg} file created, it\textquotesingle{}s time to wrap it up in a {\ttfamily .dmg} file.
+
+Open up the {\ttfamily Disk Utility} application (which should be located in a folder called {\ttfamily Utilities}).
+
+This is where we\textquotesingle{}ll be creating the .dmg file.
+
+That concludes this page!
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md63}{}\doxysubsection{$\vert$ M\+I\+S\+C $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__creating-_new-_mac_o_s-_x-_packages_autotoc_md63}
+For more help with the Packages tool, please see this website\+: \href{http://s.sudre.free.fr/Software/documentation/Packages/en/index.html}{\texttt{ http\+://s.\+sudre.\+free.\+fr/\+Software/documentation/\+Packages/en/index.\+html}} 

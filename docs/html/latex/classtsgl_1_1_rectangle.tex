@@ -1,0 +1,206 @@
+\hypertarget{classtsgl_1_1_rectangle}{}\doxysection{tsgl\+::Rectangle Class Reference}
+\label{classtsgl_1_1_rectangle}\index{tsgl::Rectangle@{tsgl::Rectangle}}
+
+
+Draw a simple \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}.  
+
+
+
+
+{\ttfamily \#include $<$Rectangle.\+h$>$}
+
+Inheritance diagram for tsgl\+::Rectangle\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classtsgl_1_1_rectangle}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_rectangle_a9b33adc9b27c1e943d30c1730ed45fab}{Rectangle}} (float x, float y, float z, G\+Lfloat width, G\+Lfloat height, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} color)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} with monocolored fill. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_rectangle_a4767afe522c73463ccbc65b0ac0a32b6}{Rectangle}} (float x, float y, float z, G\+Lfloat width, G\+Lfloat height, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} color\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} with multicolored fill. \end{DoxyCompactList}\item 
+G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_rectangle_ae2139384b6ceeab89c4297ed80835011}{get\+Width}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the width of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \end{DoxyCompactList}\item 
+G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_rectangle_a17d9e87c9fc9a465e9b48eec226eb62e}{get\+Height}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the height of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_rectangle_a85dd5be68f6f6101123b5659c8acff50}{set\+Width}} (G\+Lfloat width)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the left side of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} base to its right side. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_rectangle_aa875690bd21ba3a9ca373d38807ccbdc}{set\+Height}} (G\+Lfloat height)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the top side of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} base to its bottom side. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_rectangle_aa0114936bf85578502866ab51df1232f}{change\+Width\+By}} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the left side of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} base to its right side by the parameter amount. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_rectangle_a22ef2c95953f9083334f95e406ff6800}{change\+Height\+By}} (G\+Lfloat delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the top side of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} base to its bottom side by the parameter amount. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw a simple \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. 
+
+\mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} is a class for holding vertex data for a simple rectangle. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_rectangle_a9b33adc9b27c1e943d30c1730ed45fab}\label{classtsgl_1_1_rectangle_a9b33adc9b27c1e943d30c1730ed45fab}} 
+\index{tsgl::Rectangle@{tsgl::Rectangle}!Rectangle@{Rectangle}}
+\index{Rectangle@{Rectangle}!tsgl::Rectangle@{tsgl::Rectangle}}
+\doxysubsubsection{\texorpdfstring{Rectangle()}{Rectangle()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Rectangle\+::\+Rectangle (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{width,  }\item[{G\+Lfloat}]{height,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{color }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} with monocolored fill. 
+
+This is the constructor for the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s center. \\
+\hline
+{\em width} & The width of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \\
+\hline
+{\em height} & The height of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & The color of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} with the specified top left corner, dimensions, and color. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_rectangle_a4767afe522c73463ccbc65b0ac0a32b6}\label{classtsgl_1_1_rectangle_a4767afe522c73463ccbc65b0ac0a32b6}} 
+\index{tsgl::Rectangle@{tsgl::Rectangle}!Rectangle@{Rectangle}}
+\index{Rectangle@{Rectangle}!tsgl::Rectangle@{tsgl::Rectangle}}
+\doxysubsubsection{\texorpdfstring{Rectangle()}{Rectangle()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Rectangle\+::\+Rectangle (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{width,  }\item[{G\+Lfloat}]{height,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{color\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} with multicolored fill. 
+
+This is the constructor for the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} class. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s center. \\
+\hline
+{\em y} & The y coordinate of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s center. \\
+\hline
+{\em z} & The z coordinate of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s center. \\
+\hline
+{\em width} & The width of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \\
+\hline
+{\em height} & The height of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s yaw in 3D space. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s pitch in 3D space. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s roll in 3D space. \\
+\hline
+{\em color} & An array of colors for the vertices of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} with the specified top left corner, dimensions, and colors. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_rectangle_a22ef2c95953f9083334f95e406ff6800}\label{classtsgl_1_1_rectangle_a22ef2c95953f9083334f95e406ff6800}} 
+\index{tsgl::Rectangle@{tsgl::Rectangle}!changeHeightBy@{changeHeightBy}}
+\index{changeHeightBy@{changeHeightBy}!tsgl::Rectangle@{tsgl::Rectangle}}
+\doxysubsubsection{\texorpdfstring{changeHeightBy()}{changeHeightBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Rectangle\+::change\+Height\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the top side of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} base to its bottom side by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the height of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_rectangle_aa0114936bf85578502866ab51df1232f}\label{classtsgl_1_1_rectangle_aa0114936bf85578502866ab51df1232f}} 
+\index{tsgl::Rectangle@{tsgl::Rectangle}!changeWidthBy@{changeWidthBy}}
+\index{changeWidthBy@{changeWidthBy}!tsgl::Rectangle@{tsgl::Rectangle}}
+\doxysubsubsection{\texorpdfstring{changeWidthBy()}{changeWidthBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Rectangle\+::change\+Width\+By (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{delta }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the left side of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} base to its right side by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the width of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_rectangle_a17d9e87c9fc9a465e9b48eec226eb62e}\label{classtsgl_1_1_rectangle_a17d9e87c9fc9a465e9b48eec226eb62e}} 
+\index{tsgl::Rectangle@{tsgl::Rectangle}!getHeight@{getHeight}}
+\index{getHeight@{getHeight}!tsgl::Rectangle@{tsgl::Rectangle}}
+\doxysubsubsection{\texorpdfstring{getHeight()}{getHeight()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Rectangle\+::get\+Height (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the height of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. 
+
+Returns the value of the my\+Height private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_rectangle_ae2139384b6ceeab89c4297ed80835011}\label{classtsgl_1_1_rectangle_ae2139384b6ceeab89c4297ed80835011}} 
+\index{tsgl::Rectangle@{tsgl::Rectangle}!getWidth@{getWidth}}
+\index{getWidth@{getWidth}!tsgl::Rectangle@{tsgl::Rectangle}}
+\doxysubsubsection{\texorpdfstring{getWidth()}{getWidth()}}
+{\footnotesize\ttfamily G\+Lfloat tsgl\+::\+Rectangle\+::get\+Width (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Accessor for the width of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}. 
+
+Returns the value of the my\+Width private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_rectangle_aa875690bd21ba3a9ca373d38807ccbdc}\label{classtsgl_1_1_rectangle_aa875690bd21ba3a9ca373d38807ccbdc}} 
+\index{tsgl::Rectangle@{tsgl::Rectangle}!setHeight@{setHeight}}
+\index{setHeight@{setHeight}!tsgl::Rectangle@{tsgl::Rectangle}}
+\doxysubsubsection{\texorpdfstring{setHeight()}{setHeight()}}
+{\footnotesize\ttfamily void tsgl\+::\+Rectangle\+::set\+Height (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{height }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the top side of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} base to its bottom side. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em height} & The \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s new height. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_rectangle_a85dd5be68f6f6101123b5659c8acff50}\label{classtsgl_1_1_rectangle_a85dd5be68f6f6101123b5659c8acff50}} 
+\index{tsgl::Rectangle@{tsgl::Rectangle}!setWidth@{setWidth}}
+\index{setWidth@{setWidth}!tsgl::Rectangle@{tsgl::Rectangle}}
+\doxysubsubsection{\texorpdfstring{setWidth()}{setWidth()}}
+{\footnotesize\ttfamily void tsgl\+::\+Rectangle\+::set\+Width (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{width }\end{DoxyParamCaption})}
+
+
+
+Mutates the distance from the left side of the \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} base to its right side. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em width} & The \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}}\textquotesingle{}s new width. \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by tsgl\+::\+Progress\+Bar\+::update().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Rectangle.\+h\item 
+Rectangle.\+cpp\end{DoxyCompactItemize}

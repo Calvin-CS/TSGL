@@ -1,0 +1,148 @@
+\hypertarget{class_ball}{}\doxysection{Ball Class Reference}
+\label{class_ball}\index{Ball@{Ball}}
+
+
+We can\textquotesingle{}t play \mbox{\hyperlink{class_pong}{Pong}} without a Ball!  
+
+
+
+
+{\ttfamily \#include $<$Ball.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ball_a463d1350ad5150bf628d6c8f35f3ae64}{Ball}} (\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can, int \&speed)
+\begin{DoxyCompactList}\small\item\em Explicitly construct the \mbox{\hyperlink{class_ball}{Ball}} object. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_ball_af438c37fd83fcf0f5808712d9b456320}{getX}} () const
+\begin{DoxyCompactList}\small\item\em Accessor for the \mbox{\hyperlink{class_ball}{Ball}} object\textquotesingle{}s current x-\/coordinate. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{class_ball_aeb4e2979fb20b91c9e23c1ee6b2897ae}{getY}} () const
+\begin{DoxyCompactList}\small\item\em Accessor for the \mbox{\hyperlink{class_ball}{Ball}} object\textquotesingle{}s current y-\/coordinate. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ball_a478963d27b3814529c53ed0818f8ea9d}{invert}} (int choice)
+\begin{DoxyCompactList}\small\item\em Invert the \mbox{\hyperlink{class_ball}{Ball}}\textquotesingle{}s direction. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ball_a05228e822d67b25baf715cf09c325494}{move}} ()
+\begin{DoxyCompactList}\small\item\em Move the \mbox{\hyperlink{class_ball}{Ball}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ball_a12dad22dfdba8e2b92ae74464001d55f}{reset}} (\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&can)
+\begin{DoxyCompactList}\small\item\em Reset the \mbox{\hyperlink{class_ball}{Ball}} object\textquotesingle{}s position. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_ball_a78aa1f06b39fc9f81df82bef399c475c}\label{class_ball_a78aa1f06b39fc9f81df82bef399c475c}} 
+virtual \mbox{\hyperlink{class_ball_a78aa1f06b39fc9f81df82bef399c475c}{$\sim$\+Ball}} ()
+\begin{DoxyCompactList}\small\item\em Destroys the \mbox{\hyperlink{class_ball}{Ball}} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+We can\textquotesingle{}t play \mbox{\hyperlink{class_pong}{Pong}} without a Ball! 
+
+class \mbox{\hyperlink{class_ball}{Ball}}
+
+Creates the ball needed in order to play \mbox{\hyperlink{class_pong}{Pong}}.
+
+The constructor determines the speed and direction of the ball.
+
+The draw() method draws the ball onto the Canvas object.
+
+The ball\textquotesingle{}s position is always reset after a point has been earned in the game.
+
+Collisions with the paddle or the boundaries are not handled here; they are handled in the \mbox{\hyperlink{class_pong}{Pong}} class\textquotesingle{} draw() method. \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_paddle}{Paddle}} class, \mbox{\hyperlink{class_pong}{Pong}} class. 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_ball_a463d1350ad5150bf628d6c8f35f3ae64}\label{class_ball_a463d1350ad5150bf628d6c8f35f3ae64}} 
+\index{Ball@{Ball}!Ball@{Ball}}
+\index{Ball@{Ball}!Ball@{Ball}}
+\doxysubsubsection{\texorpdfstring{Ball()}{Ball()}}
+{\footnotesize\ttfamily Ball\+::\+Ball (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can,  }\item[{int \&}]{speed }\end{DoxyParamCaption})}
+
+
+
+Explicitly construct the \mbox{\hyperlink{class_ball}{Ball}} object. 
+
+Explicit constructor for the \mbox{\hyperlink{class_ball}{Ball}} object. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Canvas that will have the \mbox{\hyperlink{class_ball}{Ball}} object. \\
+\hline
+{\em speed} & Reference to the speed of the \mbox{\hyperlink{class_ball}{Ball}} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The constructed \mbox{\hyperlink{class_ball}{Ball}} object. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ball_af438c37fd83fcf0f5808712d9b456320}\label{class_ball_af438c37fd83fcf0f5808712d9b456320}} 
+\index{Ball@{Ball}!getX@{getX}}
+\index{getX@{getX}!Ball@{Ball}}
+\doxysubsubsection{\texorpdfstring{getX()}{getX()}}
+{\footnotesize\ttfamily float Ball\+::getX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Accessor for the \mbox{\hyperlink{class_ball}{Ball}} object\textquotesingle{}s current x-\/coordinate. 
+
+\begin{DoxyReturn}{Returns}
+myX The x-\/coordinate of the \mbox{\hyperlink{class_ball}{Ball}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_ball_aeb4e2979fb20b91c9e23c1ee6b2897ae}\label{class_ball_aeb4e2979fb20b91c9e23c1ee6b2897ae}} 
+\index{Ball@{Ball}!getY@{getY}}
+\index{getY@{getY}!Ball@{Ball}}
+\doxysubsubsection{\texorpdfstring{getY()}{getY()}}
+{\footnotesize\ttfamily float Ball\+::getY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Accessor for the \mbox{\hyperlink{class_ball}{Ball}} object\textquotesingle{}s current y-\/coordinate. 
+
+\begin{DoxyReturn}{Returns}
+myY The y-\/coordinate of the \mbox{\hyperlink{class_ball}{Ball}} object. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_ball_a478963d27b3814529c53ed0818f8ea9d}\label{class_ball_a478963d27b3814529c53ed0818f8ea9d}} 
+\index{Ball@{Ball}!invert@{invert}}
+\index{invert@{invert}!Ball@{Ball}}
+\doxysubsubsection{\texorpdfstring{invert()}{invert()}}
+{\footnotesize\ttfamily void Ball\+::invert (\begin{DoxyParamCaption}\item[{int}]{choice }\end{DoxyParamCaption})}
+
+
+
+Invert the \mbox{\hyperlink{class_ball}{Ball}}\textquotesingle{}s direction. 
+
+The \mbox{\hyperlink{class_ball}{Ball}}\textquotesingle{}s direction must be inverted whenever it collides with a \mbox{\hyperlink{class_paddle}{Paddle}} object or when it touches one of the boundary walls in the game of \mbox{\hyperlink{class_pong}{Pong}}. 
+\begin{DoxyParams}{Parameters}
+{\em choice} & Determines which coordinate value to invert (y-\/coordinate = 0, x-\/coordinate = 1). \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_paddle}{Paddle}} class, \mbox{\hyperlink{class_pong}{Pong}} class. 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{class_ball_a05228e822d67b25baf715cf09c325494}\label{class_ball_a05228e822d67b25baf715cf09c325494}} 
+\index{Ball@{Ball}!move@{move}}
+\index{move@{move}!Ball@{Ball}}
+\doxysubsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily void Ball\+::move (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Move the \mbox{\hyperlink{class_ball}{Ball}} object. 
+
+Actually moves the \mbox{\hyperlink{class_ball}{Ball}} object around. \mbox{\Hypertarget{class_ball_a12dad22dfdba8e2b92ae74464001d55f}\label{class_ball_a12dad22dfdba8e2b92ae74464001d55f}} 
+\index{Ball@{Ball}!reset@{reset}}
+\index{reset@{reset}!Ball@{Ball}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void Ball\+::reset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} \&}]{can }\end{DoxyParamCaption})}
+
+
+
+Reset the \mbox{\hyperlink{class_ball}{Ball}} object\textquotesingle{}s position. 
+
+After a point is earned in the game of \mbox{\hyperlink{class_pong}{Pong}}, the \mbox{\hyperlink{class_ball}{Ball}} object\textquotesingle{}s position must be reset back to the middle of the Canvas and its direction must be randomized again. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Canvas object that has the \mbox{\hyperlink{class_ball}{Ball}} object. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Pong/Ball.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Pong/Ball.\+cpp\end{DoxyCompactItemize}

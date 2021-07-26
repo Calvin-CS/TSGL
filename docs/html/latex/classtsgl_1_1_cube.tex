@@ -1,0 +1,235 @@
+\hypertarget{classtsgl_1_1_cube}{}\doxysection{tsgl\+::Cube Class Reference}
+\label{classtsgl_1_1_cube}\index{tsgl::Cube@{tsgl::Cube}}
+
+
+Draw an arbitrary \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} with colored vertices.  
+
+
+
+
+{\ttfamily \#include $<$Cube.\+h$>$}
+
+Inheritance diagram for tsgl\+::Cube\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classtsgl_1_1_cube}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_cube_a44a6d1678cd6724d1039b2076e6dcedc}{Cube}} (float x, float y, float z, G\+Lfloat side\+Length, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_cube_a19730ea6cdd6888c586f25a168651868}{Cube}} (float x, float y, float z, G\+Lfloat side\+Length, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_cube_ae3020b2e435f7c39fae71ea4efcc2f6c}{set\+Side\+Length}} (float length)
+\begin{DoxyCompactList}\small\item\em Mutates the distance between the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s opposite faces. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_cube_a63281031d311a71cf111913f518b66f5}{change\+Side\+Length\+By}} (float delta)
+\begin{DoxyCompactList}\small\item\em Mutates the distance from the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s front face to its back face by the parameter amount. \end{DoxyCompactList}\item 
+virtual G\+Lfloat \mbox{\hyperlink{classtsgl_1_1_cube_a4dd172e48230f83a70a09e3f3740265d}{get\+Side\+Length}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for the side length of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_cube_a4eb42afdc453fa0c768924a26e5cd870}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new color. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_cube_a28111319d350040165bd24d92342c7cc}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} to an array of new colors. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_cube_ac1d31d18439024e4160db369df463a7d}{get\+Colors}} (std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&color\+Vec)
+\begin{DoxyCompactList}\small\item\em Accessor for \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s colors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_cube_a79c8e76f768ea5cae794c3f856a56280}\label{classtsgl_1_1_cube_a79c8e76f768ea5cae794c3f856a56280}} 
+virtual \mbox{\hyperlink{classtsgl_1_1_cube_a79c8e76f768ea5cae794c3f856a56280}{$\sim$\+Cube}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_cube_a1800477d53c864fa2819435285e27669}\label{classtsgl_1_1_cube_a1800477d53c864fa2819435285e27669}} 
+G\+Lfloat {\bfseries my\+Side\+Length}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw an arbitrary \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} with colored vertices. 
+
+\mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} is a class for holding vertex data for a \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}.
+
+\mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} is a 6-\/sided subclass of \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} with all square faces. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_cube_a44a6d1678cd6724d1039b2076e6dcedc}\label{classtsgl_1_1_cube_a44a6d1678cd6724d1039b2076e6dcedc}} 
+\index{tsgl::Cube@{tsgl::Cube}!Cube@{Cube}}
+\index{Cube@{Cube}!tsgl::Cube@{tsgl::Cube}}
+\doxysubsubsection{\texorpdfstring{Cube()}{Cube()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Cube\+::\+Cube (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{side\+Length,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. 
+
+Explicit constructor for a \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+{\em y} & The y coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+{\em z} & The z coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+{\em side\+Length} & The side length of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s yaw, in degrees. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s pitch, in degrees. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s roll, in degrees. \\
+\hline
+{\em c} & A \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} for the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s vertex colors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if length, width, or height isn\textquotesingle{}t positive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_cube_a19730ea6cdd6888c586f25a168651868}\label{classtsgl_1_1_cube_a19730ea6cdd6888c586f25a168651868}} 
+\index{tsgl::Cube@{tsgl::Cube}!Cube@{Cube}}
+\index{Cube@{Cube}!tsgl::Cube@{tsgl::Cube}}
+\doxysubsubsection{\texorpdfstring{Cube()}{Cube()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Cube\+::\+Cube (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{side\+Length,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. 
+
+Explicit constructor for a \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+{\em y} & The y coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+{\em z} & The z coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+{\em side\+Length} & The side length of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s yaw, in degrees. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s pitch, in degrees. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s roll, in degrees. \\
+\hline
+{\em c} & An array of Color\+Floats for the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s vertex colors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if length, width, or height isn\textquotesingle{}t positive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_cube_a63281031d311a71cf111913f518b66f5}\label{classtsgl_1_1_cube_a63281031d311a71cf111913f518b66f5}} 
+\index{tsgl::Cube@{tsgl::Cube}!changeSideLengthBy@{changeSideLengthBy}}
+\index{changeSideLengthBy@{changeSideLengthBy}!tsgl::Cube@{tsgl::Cube}}
+\doxysubsubsection{\texorpdfstring{changeSideLengthBy()}{changeSideLengthBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cube\+::change\+Side\+Length\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the distance from the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s front face to its back face by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the length of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_cube_ac1d31d18439024e4160db369df463a7d}\label{classtsgl_1_1_cube_ac1d31d18439024e4160db369df463a7d}} 
+\index{tsgl::Cube@{tsgl::Cube}!getColors@{getColors}}
+\index{getColors@{getColors}!tsgl::Cube@{tsgl::Cube}}
+\doxysubsubsection{\texorpdfstring{getColors()}{getColors()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cube\+::get\+Colors (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&}]{color\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s colors. 
+
+Populates the reference parameter vector with a \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} for each corner of \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. 
+\begin{DoxyParams}{Parameters}
+{\em color\+Vec} & A vector of Color\+Floats to which the Color\+Floats associated with \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} will be pushed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Overrides \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{Shape\+::get\+Colors()}}. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_cube_a4dd172e48230f83a70a09e3f3740265d}\label{classtsgl_1_1_cube_a4dd172e48230f83a70a09e3f3740265d}} 
+\index{tsgl::Cube@{tsgl::Cube}!getSideLength@{getSideLength}}
+\index{getSideLength@{getSideLength}!tsgl::Cube@{tsgl::Cube}}
+\doxysubsubsection{\texorpdfstring{getSideLength()}{getSideLength()}}
+{\footnotesize\ttfamily virtual G\+Lfloat tsgl\+::\+Cube\+::get\+Side\+Length (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor for the side length of the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}. 
+
+Returns the value of the my\+Side\+Length private variable, a G\+Lfloat. \mbox{\Hypertarget{classtsgl_1_1_cube_a4eb42afdc453fa0c768924a26e5cd870}\label{classtsgl_1_1_cube_a4eb42afdc453fa0c768924a26e5cd870}} 
+\index{tsgl::Cube@{tsgl::Cube}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Cube@{tsgl::Cube}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily virtual void tsgl\+::\+Cube\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_cube_a28111319d350040165bd24d92342c7cc}\label{classtsgl_1_1_cube_a28111319d350040165bd24d92342c7cc}} 
+\index{tsgl::Cube@{tsgl::Cube}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Cube@{tsgl::Cube}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Cube\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}} to an array of new colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & An array of new Color\+Floats.\\
+\hline
+\end{DoxyParams}
+The array should have 8 Color\+Floats minimum, one for each corner. 
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_cube_ae3020b2e435f7c39fae71ea4efcc2f6c}\label{classtsgl_1_1_cube_ae3020b2e435f7c39fae71ea4efcc2f6c}} 
+\index{tsgl::Cube@{tsgl::Cube}!setSideLength@{setSideLength}}
+\index{setSideLength@{setSideLength}!tsgl::Cube@{tsgl::Cube}}
+\doxysubsubsection{\texorpdfstring{setSideLength()}{setSideLength()}}
+{\footnotesize\ttfamily void tsgl\+::\+Cube\+::set\+Side\+Length (\begin{DoxyParamCaption}\item[{float}]{length }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the distance between the \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s opposite faces. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em length} & The \mbox{\hyperlink{classtsgl_1_1_cube}{Cube}}\textquotesingle{}s new side length. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Cube.\+h\item 
+Cube.\+cpp\end{DoxyCompactItemize}

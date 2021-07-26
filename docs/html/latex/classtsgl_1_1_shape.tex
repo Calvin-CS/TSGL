@@ -1,0 +1,362 @@
+\hypertarget{classtsgl_1_1_shape}{}\doxysection{tsgl\+::Shape Class Reference}
+\label{classtsgl_1_1_shape}\index{tsgl::Shape@{tsgl::Shape}}
+
+
+A class for drawing shapes onto a \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} or \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}}.  
+
+
+
+
+{\ttfamily \#include $<$Shape.\+h$>$}
+
+Inheritance diagram for tsgl\+::Shape\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=10.000000cm]{classtsgl_1_1_shape}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_shape_a2e6d954b348471650b72d8e0519288ed}{Shape}} (float x, float y, float z, float yaw, float pitch, float roll)
+\begin{DoxyCompactList}\small\item\em Constructs a new \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_ae0905e73f1652d92cef9c7f2c38572f3}{draw}} (Shader $\ast$shader)
+\begin{DoxyCompactList}\small\item\em Draw the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new color. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new array of colors. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_a30a5a08919f22700ad96ec84de033864}{set\+Outline\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}\textquotesingle{}s outline to a new color. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \mbox{\hyperlink{classtsgl_1_1_shape_ab531d3d4ddca94ec14ec29f381eab838}{get\+Color}} ()
+\begin{DoxyCompactList}\small\item\em Accessor for \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}\textquotesingle{}s color. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{get\+Colors}} (std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&color\+Vec)
+\begin{DoxyCompactList}\small\item\em Accessor for \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}\textquotesingle{}s colors. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{classtsgl_1_1_shape_adf7724c786882b2bd4375c1e4807ed5d}{is\+Processed}} ()
+\begin{DoxyCompactList}\small\item\em Accessor that returns if \mbox{\hyperlink{classtsgl_1_1_drawable}{Drawable}} is processed and ready to be drawn. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_acf10e14a8b26ced8926fcdeaf42e8728}{set\+Is\+Filled}} (bool status)
+\begin{DoxyCompactList}\small\item\em Set whether or not the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} will be filled. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_afedf4a424c24ed38c389f09cd5ecf451}{set\+Is\+Outlined}} (bool status)
+\begin{DoxyCompactList}\small\item\em Set whether or not the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} will be outlined. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}{add\+Vertex}} (G\+Lfloat x, G\+Lfloat y, G\+Lfloat z, const \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&color=W\+H\+I\+TE)
+\begin{DoxyCompactList}\small\item\em Adds another vertex to a \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_shape_aeb780a6a509ccceae2323508745cd8fd}{add\+Outline\+Vertex}} (G\+Lfloat x, G\+Lfloat y, G\+Lfloat z, const \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&color=W\+H\+I\+TE)
+\begin{DoxyCompactList}\small\item\em Adds another outline vertex to a \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_a655e9c7ff27f80cad1baf807b17ee1f3}\label{classtsgl_1_1_shape_a655e9c7ff27f80cad1baf807b17ee1f3}} 
+int {\bfseries number\+Of\+Vertices}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_ac20c1a30c7b69386760e676e51df4f03}\label{classtsgl_1_1_shape_ac20c1a30c7b69386760e676e51df4f03}} 
+int {\bfseries current\+Vertex} = 0
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_a5d604679fb7fe7642e3c939b9c0d9878}\label{classtsgl_1_1_shape_a5d604679fb7fe7642e3c939b9c0d9878}} 
+G\+Lenum {\bfseries geometry\+Type}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_ae8f28c1fbfae15550e21afad5d2f8efb}\label{classtsgl_1_1_shape_ae8f28c1fbfae15550e21afad5d2f8efb}} 
+bool {\bfseries is\+Filled} = true
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_a272bb594b2a88973184508106033362a}\label{classtsgl_1_1_shape_a272bb594b2a88973184508106033362a}} 
+int {\bfseries number\+Of\+Outline\+Vertices}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_a958bab81b4fba5437233b63a6da5d0ec}\label{classtsgl_1_1_shape_a958bab81b4fba5437233b63a6da5d0ec}} 
+int {\bfseries current\+Outline\+Vertex} = 0
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_ad28dc9ae636185561290014f8036fd52}\label{classtsgl_1_1_shape_ad28dc9ae636185561290014f8036fd52}} 
+G\+Lenum {\bfseries outline\+Geometry\+Type}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_a0c885ba3f3311a8cbc48dd68bb0fda86}\label{classtsgl_1_1_shape_a0c885ba3f3311a8cbc48dd68bb0fda86}} 
+G\+Lfloat $\ast$ {\bfseries outline\+Vertices}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_ab497c48cdfd680525f3b3cc2704619e8}\label{classtsgl_1_1_shape_ab497c48cdfd680525f3b3cc2704619e8}} 
+bool {\bfseries is\+Outlined} = true
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_shape_a6a2f21a402a717d48eaeeee36b6228ae}\label{classtsgl_1_1_shape_a6a2f21a402a717d48eaeeee36b6228ae}} 
+bool {\bfseries outline\+Init} = false
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class for drawing shapes onto a \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} or \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}}. 
+
+\begin{DoxyWarning}{Warning}
+{\bfseries{{\itshape Though extending this class must be allowed due to the way the code is set up, attempting to do so could potentially mess up the internal GL calls the library uses. Proceed with great caution.}}}
+\end{DoxyWarning}
+\mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} provides a base class for drawing shapes to a \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} or \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}}. \begin{DoxyNote}{Note}
+\mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} is abstract, and must be extended by the user.
+\end{DoxyNote}
+{\ttfamily vertices} should be an array of floating point values in T\+S\+GL\textquotesingle{}s vertex format. One vertex consists of 6 floating point values, signifying x,y,red,green,blue,and alpha components respectively. E.\+g., to draw a triangle, you would need 3 vertices = 18 floats -\/$>$ vertices should be an array of length 18.
+
+{\ttfamily numberofvertices} should be the actual integer number of vertices to be drawn (e.\+g., {\itshape 3} for a triangle).
+
+{\ttfamily drawingmode} should be one of GL\textquotesingle{}s primitive drawing modes. See \href{https://www.opengl.org/sdk/docs/man2/xhtml/glBegin.xml}{\texttt{ https\+://www.\+opengl.\+org/sdk/docs/man2/xhtml/gl\+Begin.\+xml}} for further information.
+
+Theoretically, you could potentially extend the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} class so that you can create another \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} class that suits your needs.
+
+However, this is not recommended for normal use of the T\+S\+GL library. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_shape_a2e6d954b348471650b72d8e0519288ed}\label{classtsgl_1_1_shape_a2e6d954b348471650b72d8e0519288ed}} 
+\index{tsgl::Shape@{tsgl::Shape}!Shape@{Shape}}
+\index{Shape@{Shape}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{Shape()}{Shape()}}
+{\footnotesize\ttfamily tsgl\+::\+Shape\+::\+Shape (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll }\end{DoxyParamCaption})}
+
+
+
+Constructs a new \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. 
+
+
+\begin{DoxyItemize}
+\item Usually {\ttfamily vertices} is filled with floating point values that represent the vertices of the shape to be drawn.
+\item You may define other items in the constructor that pertain to the attributes of the subclass that is extending \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}.
+\item At a minimum, you {\itshape M\+U\+ST} fill an array of floating point values that pertain to the vertices of the shape. \begin{DoxyWarning}{Warning}
+{\bfseries{You {\itshape must} inherit the parent\textquotesingle{}s constructor if you are extending \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}.}} 
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Refer to the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} class description for more details. 
+\end{DoxyNote}
+
+\end{DoxyItemize}
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_shape_aeb780a6a509ccceae2323508745cd8fd}\label{classtsgl_1_1_shape_aeb780a6a509ccceae2323508745cd8fd}} 
+\index{tsgl::Shape@{tsgl::Shape}!addOutlineVertex@{addOutlineVertex}}
+\index{addOutlineVertex@{addOutlineVertex}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{addOutlineVertex()}{addOutlineVertex()}}
+{\footnotesize\ttfamily void tsgl\+::\+Shape\+::add\+Outline\+Vertex (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{x,  }\item[{G\+Lfloat}]{y,  }\item[{G\+Lfloat}]{z,  }\item[{const \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&}]{color = {\ttfamily WHITE} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Adds another outline vertex to a \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. 
+
+This function initializes the next vertex in the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} and adds it to a \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} buffer. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the vertex. \\
+\hline
+{\em y} & The y position of the vertex. \\
+\hline
+{\em z} & The z position of the vertex. \\
+\hline
+{\em color} & The reference variable of the color of the vertex. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function does nothing if the vertex buffer is already full. 
+
+A message is given indicating that the vertex buffer is full. 
+\end{DoxyNote}
+
+
+Referenced by tsgl\+::\+Arrow\+::\+Arrow(), tsgl\+::\+Circle\+::\+Circle(), tsgl\+::\+Concave\+Polygon\+::\+Concave\+Polygon(), tsgl\+::\+Convex\+Polygon\+::\+Convex\+Polygon(), tsgl\+::\+Cube\+::\+Cube(), tsgl\+::\+Cuboid\+::\+Cuboid(), tsgl\+::\+Ellipse\+::\+Ellipse(), tsgl\+::\+Ellipsoid\+::\+Ellipsoid(), tsgl\+::\+Prism\+::\+Prism(), tsgl\+::\+Pyramid\+::\+Pyramid(), tsgl\+::\+Rectangle\+::\+Rectangle(), tsgl\+::\+Regular\+Polygon\+::\+Regular\+Polygon(), tsgl\+::\+Sphere\+::\+Sphere(), tsgl\+::\+Square\+::\+Square(), tsgl\+::\+Star\+::\+Star(), tsgl\+::\+Triangle\+::\+Triangle(), and tsgl\+::\+Triangle\+Strip\+::\+Triangle\+Strip().
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}\label{classtsgl_1_1_shape_ac0ea13ecde43ce62262f82597fb94755}} 
+\index{tsgl::Shape@{tsgl::Shape}!addVertex@{addVertex}}
+\index{addVertex@{addVertex}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{addVertex()}{addVertex()}}
+{\footnotesize\ttfamily void tsgl\+::\+Shape\+::add\+Vertex (\begin{DoxyParamCaption}\item[{G\+Lfloat}]{x,  }\item[{G\+Lfloat}]{y,  }\item[{G\+Lfloat}]{z,  }\item[{const \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} \&}]{color = {\ttfamily WHITE} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Adds another vertex to a \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. 
+
+This function initializes the next vertex in the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} and adds it to a \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} buffer. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x position of the vertex. \\
+\hline
+{\em y} & The y position of the vertex. \\
+\hline
+{\em z} & The z position of the vertex. \\
+\hline
+{\em color} & The reference variable of the color of the vertex. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function does nothing if the vertex buffer is already full. 
+
+A message is given indicating that the vertex buffer is full. 
+\end{DoxyNote}
+
+
+Referenced by tsgl\+::\+Arrow\+::\+Arrow(), tsgl\+::\+Circle\+::\+Circle(), tsgl\+::\+Concave\+Polygon\+::\+Concave\+Polygon(), tsgl\+::\+Convex\+Polygon\+::\+Convex\+Polygon(), tsgl\+::\+Cube\+::\+Cube(), tsgl\+::\+Cuboid\+::\+Cuboid(), tsgl\+::\+Ellipse\+::\+Ellipse(), tsgl\+::\+Ellipsoid\+::\+Ellipsoid(), tsgl\+::\+Prism\+::\+Prism(), tsgl\+::\+Pyramid\+::\+Pyramid(), tsgl\+::\+Rectangle\+::\+Rectangle(), tsgl\+::\+Regular\+Polygon\+::\+Regular\+Polygon(), tsgl\+::\+Sphere\+::\+Sphere(), tsgl\+::\+Square\+::\+Square(), tsgl\+::\+Star\+::\+Star(), tsgl\+::\+Triangle\+::\+Triangle(), and tsgl\+::\+Triangle\+Strip\+::\+Triangle\+Strip().
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_ae0905e73f1652d92cef9c7f2c38572f3}\label{classtsgl_1_1_shape_ae0905e73f1652d92cef9c7f2c38572f3}} 
+\index{tsgl::Shape@{tsgl::Shape}!draw@{draw}}
+\index{draw@{draw}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void tsgl\+::\+Shape\+::draw (\begin{DoxyParamCaption}\item[{Shader $\ast$}]{shader }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. 
+
+This function actually draws the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to the \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. \begin{DoxyNote}{Note}
+This function does nothing if the vertex buffer is not yet full. 
+
+A message indicating that the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} cannot be drawn yet will be given if the above condition is met (vertex buffer = not full). 
+\end{DoxyNote}
+
+
+Implements \mbox{\hyperlink{classtsgl_1_1_drawable}{tsgl\+::\+Drawable}}.
+
+
+
+Reimplemented in \mbox{\hyperlink{classtsgl_1_1_concave_polygon_adf288a6b60873a7ae5e599f63868da82}{tsgl\+::\+Concave\+Polygon}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_ab531d3d4ddca94ec14ec29f381eab838}\label{classtsgl_1_1_shape_ab531d3d4ddca94ec14ec29f381eab838}} 
+\index{tsgl::Shape@{tsgl::Shape}!getColor@{getColor}}
+\index{getColor@{getColor}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{getColor()}{getColor()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} tsgl\+::\+Shape\+::get\+Color (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}\textquotesingle{}s color. 
+
+Returns the color of \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}\textquotesingle{}s first vertex. \begin{DoxyNote}{Note}
+For multicolored Shapes, use \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{get\+Colors()}} to access a vector of all relevant colors. 
+\end{DoxyNote}
+
+
+Referenced by Consumer\+::act(), and Producer\+::wait().
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}\label{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}} 
+\index{tsgl::Shape@{tsgl::Shape}!getColors@{getColors}}
+\index{getColors@{getColors}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{getColors()}{getColors()}}
+{\footnotesize\ttfamily void tsgl\+::\+Shape\+::get\+Colors (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&}]{color\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}\textquotesingle{}s colors. 
+
+Populates the reference parameter vector with a \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} for each vertex of \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}. 
+\begin{DoxyParams}{Parameters}
+{\em color\+Vec} & A vector of Color\+Floats to which the Color\+Floats associated with \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} will be pushed. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classtsgl_1_1_arrow_a45f13b066c85baae9712730787f49fac}{tsgl\+::\+Arrow}}, \mbox{\hyperlink{classtsgl_1_1_cuboid_ac3e7d161cb2dbb02cf000e92d84e10ba}{tsgl\+::\+Cuboid}}, \mbox{\hyperlink{classtsgl_1_1_prism_abfdc091d8c61e889f61b71577b58e0b6}{tsgl\+::\+Prism}}, \mbox{\hyperlink{classtsgl_1_1_pyramid_a9c93002e90ac1f3385c4d3154ca0321a}{tsgl\+::\+Pyramid}}, \mbox{\hyperlink{classtsgl_1_1_ellipse_a3d92da146589fc58112945daefafe98f}{tsgl\+::\+Ellipse}}, \mbox{\hyperlink{classtsgl_1_1_ellipsoid_ac5c9278659df646c17ef4172e13c7cb3}{tsgl\+::\+Ellipsoid}}, \mbox{\hyperlink{classtsgl_1_1_cube_ac1d31d18439024e4160db369df463a7d}{tsgl\+::\+Cube}}, \mbox{\hyperlink{classtsgl_1_1_circle_af0e1ef7313bde5f66750b616de296f76}{tsgl\+::\+Circle}}, and \mbox{\hyperlink{classtsgl_1_1_sphere_a767bfb1b0c6c29d0577377aa0403d881}{tsgl\+::\+Sphere}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_adf7724c786882b2bd4375c1e4807ed5d}\label{classtsgl_1_1_shape_adf7724c786882b2bd4375c1e4807ed5d}} 
+\index{tsgl::Shape@{tsgl::Shape}!isProcessed@{isProcessed}}
+\index{isProcessed@{isProcessed}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{isProcessed()}{isProcessed()}}
+{\footnotesize\ttfamily virtual bool tsgl\+::\+Shape\+::is\+Processed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Accessor that returns if \mbox{\hyperlink{classtsgl_1_1_drawable}{Drawable}} is processed and ready to be drawn. 
+
+This function returns true only if all vertices have been inserted into an array. 
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_drawable_a98562ec95c8621ba9b46d7bd0c0ffece}{tsgl\+::\+Drawable}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}\label{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}} 
+\index{tsgl::Shape@{tsgl::Shape}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Shape\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classtsgl_1_1_arrow_a4eabf87c29f3da697fe39006c45510b7}{tsgl\+::\+Arrow}}, \mbox{\hyperlink{classtsgl_1_1_cuboid_a683f0eeb463e9779e954955f92f12f8e}{tsgl\+::\+Cuboid}}, \mbox{\hyperlink{classtsgl_1_1_prism_af2c681fd9cf74eaede3dd4fd8dd10625}{tsgl\+::\+Prism}}, \mbox{\hyperlink{classtsgl_1_1_pyramid_aef16d8830e2dfac0e8a30d091d099c30}{tsgl\+::\+Pyramid}}, \mbox{\hyperlink{classtsgl_1_1_ellipse_afb71964e56fdd50e49ba46e8090aa858}{tsgl\+::\+Ellipse}}, \mbox{\hyperlink{classtsgl_1_1_ellipsoid_afc2fc98057e5d19d8fa0c45f07273cdb}{tsgl\+::\+Ellipsoid}}, \mbox{\hyperlink{classtsgl_1_1_cube_a4eb42afdc453fa0c768924a26e5cd870}{tsgl\+::\+Cube}}, \mbox{\hyperlink{classtsgl_1_1_circle_a3e97ff653a534a606f0a3b3176c330b0}{tsgl\+::\+Circle}}, and \mbox{\hyperlink{classtsgl_1_1_sphere_aa0870a70e34c6c77e2d61e50dbf3cc07}{tsgl\+::\+Sphere}}.
+
+
+
+Referenced by Consumer\+::act(), Consumer\+::lock(), Producer\+::lock(), Paddle\+::\+Paddle(), tsgl\+::\+Circle\+::set\+Color(), tsgl\+::\+Cube\+::set\+Color(), tsgl\+::\+Ellipse\+::set\+Color(), tsgl\+::\+Prism\+::set\+Color(), tsgl\+::\+Cuboid\+::set\+Color(), tsgl\+::\+Arrow\+::set\+Color(), and Producer\+::wait().
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}\label{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}} 
+\index{tsgl::Shape@{tsgl::Shape}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Shape\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} to a new array of colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new array of Color\+Floats. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{classtsgl_1_1_arrow_a7804a81f8ae4ae0208e80849438364f0}{tsgl\+::\+Arrow}}, \mbox{\hyperlink{classtsgl_1_1_cuboid_aab8a70aff0dcede030ac51277c0dc255}{tsgl\+::\+Cuboid}}, \mbox{\hyperlink{classtsgl_1_1_prism_a668c2779da173493efc0c4634750bd66}{tsgl\+::\+Prism}}, \mbox{\hyperlink{classtsgl_1_1_pyramid_a83799687df3bdef698f9687da7a6c100}{tsgl\+::\+Pyramid}}, \mbox{\hyperlink{classtsgl_1_1_ellipse_a052ef5a609d7e8516d973ddc9e549c89}{tsgl\+::\+Ellipse}}, \mbox{\hyperlink{classtsgl_1_1_ellipsoid_ab8e15e879521e4c96be8192258cad26e}{tsgl\+::\+Ellipsoid}}, \mbox{\hyperlink{classtsgl_1_1_cube_a28111319d350040165bd24d92342c7cc}{tsgl\+::\+Cube}}, \mbox{\hyperlink{classtsgl_1_1_circle_aa25c336d07fb8216bd5d6f63f53a2271}{tsgl\+::\+Circle}}, and \mbox{\hyperlink{classtsgl_1_1_sphere_aab902ab87c24e7065c74f553f7e8c126}{tsgl\+::\+Sphere}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_acf10e14a8b26ced8926fcdeaf42e8728}\label{classtsgl_1_1_shape_acf10e14a8b26ced8926fcdeaf42e8728}} 
+\index{tsgl::Shape@{tsgl::Shape}!setIsFilled@{setIsFilled}}
+\index{setIsFilled@{setIsFilled}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{setIsFilled()}{setIsFilled()}}
+{\footnotesize\ttfamily virtual void tsgl\+::\+Shape\+::set\+Is\+Filled (\begin{DoxyParamCaption}\item[{bool}]{status }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Set whether or not the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} will be filled. 
+
+Sets the is\+Filled instance variable to the value of the parameter. 
+\begin{DoxyParams}{Parameters}
+{\em status} & Boolean value to which is\+Filled will be set equivalent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Disabling fill on some 3D Shapes, like \mbox{\hyperlink{classtsgl_1_1_cone}{Cone}} and \mbox{\hyperlink{classtsgl_1_1_cylinder}{Cylinder}}, can be awkward visually. 
+\end{DoxyWarning}
+\mbox{\Hypertarget{classtsgl_1_1_shape_afedf4a424c24ed38c389f09cd5ecf451}\label{classtsgl_1_1_shape_afedf4a424c24ed38c389f09cd5ecf451}} 
+\index{tsgl::Shape@{tsgl::Shape}!setIsOutlined@{setIsOutlined}}
+\index{setIsOutlined@{setIsOutlined}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{setIsOutlined()}{setIsOutlined()}}
+{\footnotesize\ttfamily virtual void tsgl\+::\+Shape\+::set\+Is\+Outlined (\begin{DoxyParamCaption}\item[{bool}]{status }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Set whether or not the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}} will be outlined. 
+
+Sets the is\+Outlined instance variable to the value of the parameter. 
+\begin{DoxyParams}{Parameters}
+{\em status} & Boolean value to which is\+Outlined will be set equivalent. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+Disabling outlines on monocolored 3D Shapes can be awkward visually. 
+\end{DoxyWarning}
+
+
+Referenced by tsgl\+::\+Background\+::draw\+Arrow(), tsgl\+::\+Background\+::draw\+Circle(), tsgl\+::\+Background\+::draw\+Concave\+Polygon(), tsgl\+::\+Background\+::draw\+Convex\+Polygon(), tsgl\+::\+Background\+::draw\+Ellipse(), tsgl\+::\+Background\+::draw\+Rectangle(), tsgl\+::\+Background\+::draw\+Regular\+Polygon(), tsgl\+::\+Background\+::draw\+Square(), tsgl\+::\+Background\+::draw\+Star(), Table3\+D\+::draw\+Step(), tsgl\+::\+Background\+::draw\+Triangle(), tsgl\+::\+Background\+::draw\+Triangle\+Strip(), and tsgl\+::\+Progress\+Bar\+::\+Progress\+Bar().
+
+\mbox{\Hypertarget{classtsgl_1_1_shape_a30a5a08919f22700ad96ec84de033864}\label{classtsgl_1_1_shape_a30a5a08919f22700ad96ec84de033864}} 
+\index{tsgl::Shape@{tsgl::Shape}!setOutlineColor@{setOutlineColor}}
+\index{setOutlineColor@{setOutlineColor}!tsgl::Shape@{tsgl::Shape}}
+\doxysubsubsection{\texorpdfstring{setOutlineColor()}{setOutlineColor()}}
+{\footnotesize\ttfamily void tsgl\+::\+Shape\+::set\+Outline\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_shape}{Shape}}\textquotesingle{}s outline to a new color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Shape.\+h\item 
+Shape.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,196 @@
+\hypertarget{classtsgl_1_1_array}{}\doxysection{tsgl\+::Array$<$ Item $>$ Class Template Reference}
+\label{classtsgl_1_1_array}\index{tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}}
+
+
+Custom internal array used by \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}.  
+
+
+
+
+{\ttfamily \#include $<$Array.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_array_acc018fe6db37e7eb5df06789de034904}{Array}} (unsigned int \mbox{\hyperlink{classtsgl_1_1_array_a945191eccbeb8ddc0d41d0dcbd0dad27}{size}})
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classtsgl_1_1_array}{Array}} constructor method. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classtsgl_1_1_array_aeef4dedf813a5bac862e19c55dee9069}{$\sim$\+Array}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{classtsgl_1_1_array}{Array}} destructor method. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_array_acc5f5148a71c7f606be6cc337116bad6}\label{classtsgl_1_1_array_acc5f5148a71c7f606be6cc337116bad6}} 
+void \mbox{\hyperlink{classtsgl_1_1_array_acc5f5148a71c7f606be6cc337116bad6}{clear}} ()
+\begin{DoxyCompactList}\small\item\em Empties the internal array and resets it, deleting contained objects. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_array_afe9d7b1dd294e8c74280b961ac84ac10}{shallow\+Clear}} ()
+\begin{DoxyCompactList}\small\item\em Empties the internal array but does not delete the objects it contains. \end{DoxyCompactList}\item 
+const Item \& \mbox{\hyperlink{classtsgl_1_1_array_acd182e906a6942eecdd30e455bed1fb1}{operator\mbox{[}$\,$\mbox{]}}} (unsigned int index) const
+\begin{DoxyCompactList}\small\item\em Returns the item at index {\ttfamily index}. \end{DoxyCompactList}\item 
+Item \& \mbox{\hyperlink{classtsgl_1_1_array_ae98fe9dc7998ec3b694150a8f70d8423}{operator\mbox{[}$\,$\mbox{]}}} (unsigned int index)
+\begin{DoxyCompactList}\small\item\em Returns the item at index {\ttfamily index}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_array_a945191eccbeb8ddc0d41d0dcbd0dad27}\label{classtsgl_1_1_array_a945191eccbeb8ddc0d41d0dcbd0dad27}} 
+unsigned int \mbox{\hyperlink{classtsgl_1_1_array_a945191eccbeb8ddc0d41d0dcbd0dad27}{size}} () const
+\begin{DoxyCompactList}\small\item\em Returns the number of items in the internal array. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_array_a93fe927b935ab1672df60e7587c5f885}\label{classtsgl_1_1_array_a93fe927b935ab1672df60e7587c5f885}} 
+unsigned int \mbox{\hyperlink{classtsgl_1_1_array_a93fe927b935ab1672df60e7587c5f885}{capacity}} () const
+\begin{DoxyCompactList}\small\item\em Returns the maximum amount of items the internal array can store. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_array_a3ae7b36afe82a55f0b3b5e24bb8f006c}\label{classtsgl_1_1_array_a3ae7b36afe82a55f0b3b5e24bb8f006c}} 
+bool \mbox{\hyperlink{classtsgl_1_1_array_a3ae7b36afe82a55f0b3b5e24bb8f006c}{is\+Empty}} () const
+\begin{DoxyCompactList}\small\item\em Returns true if the internal array contains no items, false otherwise. \end{DoxyCompactList}\item 
+Item \mbox{\hyperlink{classtsgl_1_1_array_aca25dfa4218b2c872d1e1cd2a1a32caa}{push}} (Item item)
+\begin{DoxyCompactList}\small\item\em Adds the item {\ttfamily item} to the end of the internal array. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classtsgl_1_1_array_aa6b198643094a1b567f8f8bda76dcc53}{remove}} (Item item)
+\begin{DoxyCompactList}\small\item\em Removes the item {\ttfamily item} from the internal array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Item$>$\newline
+class tsgl\+::\+Array$<$ Item $>$}
+
+Custom internal array used by \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}}. 
+
+The \mbox{\hyperlink{classtsgl_1_1_array}{Array}} class manages a custom array for storing shapes to be drawn. It contains utility methods for checking if the internal array is empty, methods for emptying and resetting the internal array, and a subscript operator for accessing individual elements. \begin{DoxyNote}{Note}
+The \mbox{\hyperlink{classtsgl_1_1_array}{Array}} has wrap-\/around behavior, behaving similarly to a circular queue. 
+
+If a new shape is pushed into a full \mbox{\hyperlink{classtsgl_1_1_array}{Array}}, the first element is deleted and the pointer to the first element is incremented. 
+\end{DoxyNote}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_array_acc018fe6db37e7eb5df06789de034904}\label{classtsgl_1_1_array_acc018fe6db37e7eb5df06789de034904}} 
+\index{tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}!Array@{Array}}
+\index{Array@{Array}!tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{Array()}{Array()}}
+{\footnotesize\ttfamily template$<$typename Item $>$ \\
+\mbox{\hyperlink{classtsgl_1_1_array}{tsgl\+::\+Array}}$<$ Item $>$\+::\mbox{\hyperlink{classtsgl_1_1_array}{Array}} (\begin{DoxyParamCaption}\item[{unsigned int}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\mbox{\hyperlink{classtsgl_1_1_array}{Array}} constructor method. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & The maximum capacity of the \mbox{\hyperlink{classtsgl_1_1_array}{Array}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An \mbox{\hyperlink{classtsgl_1_1_array}{Array}} with capacity {\ttfamily size}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_array_aeef4dedf813a5bac862e19c55dee9069}\label{classtsgl_1_1_array_aeef4dedf813a5bac862e19c55dee9069}} 
+\index{tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}!````~Array@{$\sim$Array}}
+\index{````~Array@{$\sim$Array}!tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$Array()}{~Array()}}
+{\footnotesize\ttfamily template$<$typename Item $>$ \\
+virtual \mbox{\hyperlink{classtsgl_1_1_array}{tsgl\+::\+Array}}$<$ Item $>$\+::$\sim$\mbox{\hyperlink{classtsgl_1_1_array}{Array}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{classtsgl_1_1_array}{Array}} destructor method. 
+
+Frees up memory allocated to an \mbox{\hyperlink{classtsgl_1_1_array}{Array}} instance. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_array_ae98fe9dc7998ec3b694150a8f70d8423}\label{classtsgl_1_1_array_ae98fe9dc7998ec3b694150a8f70d8423}} 
+\index{tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Item $>$ \\
+Item\& \mbox{\hyperlink{classtsgl_1_1_array}{tsgl\+::\+Array}}$<$ Item $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{unsigned int}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the item at index {\ttfamily index}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the item in the internal array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This is the write version of the subscript operator. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+The item at index {\ttfamily index}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_array_acd182e906a6942eecdd30e455bed1fb1}\label{classtsgl_1_1_array_acd182e906a6942eecdd30e455bed1fb1}} 
+\index{tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Item $>$ \\
+const Item\& \mbox{\hyperlink{classtsgl_1_1_array}{tsgl\+::\+Array}}$<$ Item $>$\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{unsigned int}]{index }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the item at index {\ttfamily index}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the item in the internal array. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This is the read version of the subscript operator. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+The item at index {\ttfamily index}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_array_aca25dfa4218b2c872d1e1cd2a1a32caa}\label{classtsgl_1_1_array_aca25dfa4218b2c872d1e1cd2a1a32caa}} 
+\index{tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}!push@{push}}
+\index{push@{push}!tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{push()}{push()}}
+{\footnotesize\ttfamily template$<$typename Item $>$ \\
+Item \mbox{\hyperlink{classtsgl_1_1_array}{tsgl\+::\+Array}}$<$ Item $>$\+::push (\begin{DoxyParamCaption}\item[{Item}]{item }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds the item {\ttfamily item} to the end of the internal array. 
+
+\begin{DoxyNote}{Note}
+If the internal array is full, \mbox{\hyperlink{classtsgl_1_1_array_aca25dfa4218b2c872d1e1cd2a1a32caa}{push()}} will remove the oldest item. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to add. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The same item. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_array_aa6b198643094a1b567f8f8bda76dcc53}\label{classtsgl_1_1_array_aa6b198643094a1b567f8f8bda76dcc53}} 
+\index{tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}!remove@{remove}}
+\index{remove@{remove}!tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily template$<$typename Item $>$ \\
+void \mbox{\hyperlink{classtsgl_1_1_array}{tsgl\+::\+Array}}$<$ Item $>$\+::remove (\begin{DoxyParamCaption}\item[{Item}]{item }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Removes the item {\ttfamily item} from the internal array. 
+
+\begin{DoxyNote}{Note}
+If the internal array does not contain the item, this does nothing. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em item} & The item to remove. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_array_afe9d7b1dd294e8c74280b961ac84ac10}\label{classtsgl_1_1_array_afe9d7b1dd294e8c74280b961ac84ac10}} 
+\index{tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}!shallowClear@{shallowClear}}
+\index{shallowClear@{shallowClear}!tsgl::Array$<$ Item $>$@{tsgl::Array$<$ Item $>$}}
+\doxysubsubsection{\texorpdfstring{shallowClear()}{shallowClear()}}
+{\footnotesize\ttfamily template$<$typename Item $>$ \\
+void \mbox{\hyperlink{classtsgl_1_1_array}{tsgl\+::\+Array}}$<$ Item $>$\+::shallow\+Clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Empties the internal array but does not delete the objects it contains. 
+
+\begin{DoxyNote}{Note}
+This method doesn\textquotesingle{}t delete the shapes inside of it; it only moves pointers around. 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+{\bfseries{This will result in a memory leak if the objects are not pointed to anywhere else!}} 
+\end{DoxyWarning}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Array.\+h\end{DoxyCompactItemize}

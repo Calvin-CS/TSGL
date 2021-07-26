@@ -1,0 +1,142 @@
+T\+S\+GL has a wide assortment of shapes. Rectangles, triangles, concave and convex polygons are just some of the shapes that you can draw. To draw a given shape, the Canvas class has draw methods that will create and draw a corresponding shape on a Canvas object.
+
+Let’s look at some examples.
+
+{\itshape {\bfseries{Linux/\+Mac user\+:}}} Create a new folder and name it \char`\"{}\+Tutorial2\char`\"{}. Create a file inside of that folder and call it \char`\"{}shapes.\+cpp\char`\"{}. Copy over the generic Makefile from the T\+S\+G\+L-\/master folder and change the \char`\"{}\+T\+A\+R\+G\+E\+T\char`\"{} line so that it now says \char`\"{}shapes\char`\"{} instead of \char`\"{}program\char`\"{}.
+
+{\itshape {\bfseries{Windows users\+:}}} Create a Solution folder and name it \char`\"{}\+Tutorial2\char`\"{}. Add a Visual Studio project to that folder and name it \char`\"{}\+Shape\char`\"{}. Go to the Property Manager and right click on that project. Add the test\+Properties Property sheet (located in the T\+S\+G\+L-\/master folder). Go back to the Solution Explorer and open up Tutorial2. Add a .cpp to Shape and name it \char`\"{}shapes.\+cpp\char`\"{}.
+
+{\itshape {\bfseries{All three platforms\+:}}} Follow the steps in the \mbox{[}\mbox{[}Building Programs\mbox{]}\mbox{]} page on how to compile and run the program (Linux/\+Mac users, this is a single-\/file program).
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, 500, 600, \textcolor{stringliteral}{"Shapes!"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.setBackgroundColor(WHITE);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_circle}{Circle}} circle(250, 300, 50);}
+\DoxyCodeLine{  c.add( \&circle );}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Compile and run it. A window should appear with a circle drawn in the center.
+
+The {\ttfamily Circle()} constructor takes these parameters\+:
+
+
+\begin{DoxyItemize}
+\item x-\/coordinate for the center of the circle ({\ttfamily 250}).
+\item y-\/coordinate for the center of the circle ({\ttfamily 300}).
+\item The radius of the circle ({\ttfamily 50}).
+\item The color of the circle (optional parameter; set to {\ttfamily B\+L\+A\+CK} by default).
+\end{DoxyItemize}
+
+The {\ttfamily Circle()} constructor lets you specify the optional color argument like so\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Circle circle(250, 300, 50, RED);  \textcolor{comment}{//Color = RED}}
+\end{DoxyCode}
+
+
+Rectangles are created in a similar fashion\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Rectangle rec(50, 100, 50, 100);}
+\end{DoxyCode}
+
+
+{\ttfamily Rectangle()} takes in these parameters\+:
+
+
+\begin{DoxyItemize}
+\item x-\/coordinate for the top left corner of the rectangle ({\ttfamily 50}).
+\item y-\/coordinate for the top left corner of the rectangle ({\ttfamily 100}).
+\item width of the rectangle ({\ttfamily 50}).
+\item height of the rectangle ({\ttfamily 100}).
+\item The color of the rectangle (optional parameter; set to {\ttfamily B\+L\+A\+CK} by default).
+\end{DoxyItemize}
+
+How about a triangle? Well\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Triangle tri(150, 100, 250, 200, 150, 300);}
+\end{DoxyCode}
+
+
+{\ttfamily Triangle()} takes in these parameters\+:
+
+
+\begin{DoxyItemize}
+\item x-\/coordinate for the first point of the triangle ({\ttfamily 150}).
+\item y-\/coordinate for the first point of the triangle ({\ttfamily 100}).
+\item x-\/coordinate for the second point of the triangle ({\ttfamily 250}).
+\item y-\/coordinate for the second point of the triangle ({\ttfamily 200}).
+\item x-\/coordinate for the third point of the triangle ({\ttfamily 150}).
+\item y-\/coordinate for the third point of the triangle ({\ttfamily 300}).
+\item The color of the triangle (optional parameter; set to {\ttfamily B\+L\+A\+CK} by default).
+\end{DoxyItemize}
+
+In essence, whenever you draw a shape, the first few parameters are for the x and y-\/coordinates of the points of the shape and the last one is optional for the color.
+
+After creating any shape, it must be added to a Canvas before it is visible. Like so\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{c.add( \&shape );}
+\end{DoxyCode}
+
+
+{\ttfamily add()} takes a pointer to a Drawable as its parameter. Later, if you would like to remove an item from a Canvas, passing the pointer to {\ttfamily remove()} takes the Drawable off the Canvas.
+
+Putting all of this code together\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, 500, 600, \textcolor{stringliteral}{"Shapes!"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.setBackgroundColor(WHITE);}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_circle}{Circle}} circle(250, 300, 50);  \textcolor{comment}{//Circle}}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_rectangle}{Rectangle}} rec(50, 100, 100, 200);  \textcolor{comment}{//Rectangle}}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_triangle}{Triangle}} tri(150, 100, 250, 200, 150, 300);  \textcolor{comment}{//Triangle}}
+\DoxyCodeLine{  c.add( \&circle ); c.add( \&rec ); c.add( \&tri );}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Compile and run it. A filled black circle, triangle, and rectangle should appear on a white screen.
+
+You can also draw regular lines\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Line l(10, 20, 30, 40, PURPLE);}
+\end{DoxyCode}
+
+
+{\ttfamily Line()} takes in these parameters\+:
+
+
+\begin{DoxyItemize}
+\item x-\/coordinate of the first point of the line ({\ttfamily 10}).
+\item y-\/coordinate of the first point of the line ({\ttfamily 20}).
+\item x-\/coordinate of the second point of the line ({\ttfamily 30}).
+\item y-\/coordinate of the second point of the line ({\ttfamily 40}).
+\item The color of the line ({\ttfamily P\+U\+R\+P\+LE}) (optional parameter; set to {\ttfamily B\+L\+A\+CK} by default.).
+\end{DoxyItemize}
+
+Check out the documentation in the \href{http://calvin-cs.github.io/TSGL/html/annotated.html}{\texttt{ T\+S\+GL A\+PI}} page to learn more about the variety of shapes.
+
+That concludes this tutorial!
+
+In the next tutorial, \mbox{[}\mbox{[}Using Text and Images\mbox{]}\mbox{]}, you get to learn about text! 

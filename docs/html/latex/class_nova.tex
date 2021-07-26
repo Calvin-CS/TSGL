@@ -1,0 +1,91 @@
+\hypertarget{class_nova}{}\doxysection{Nova Class Reference}
+\label{class_nova}\index{Nova@{Nova}}
+
+
+Draws a \mbox{\hyperlink{class_nova}{Nova}} (Newton Fractal) set on a Cartesian\+Canvas.  
+
+
+
+
+{\ttfamily \#include $<$Nova.\+h$>$}
+
+Inheritance diagram for Nova\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_nova}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_nova_a9d171954a6dd98b125587be83ef04db5}{Nova}} (unsigned threads, unsigned depth)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a \mbox{\hyperlink{class_nova}{Nova}} set. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_nova_a66935ba0814dfabcae2481c128c336ec}{draw}} (\mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart}} \&can)
+\begin{DoxyCompactList}\small\item\em Draw the \mbox{\hyperlink{class_nova}{Nova}} set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draws a \mbox{\hyperlink{class_nova}{Nova}} (Newton Fractal) set on a Cartesian\+Canvas. 
+
+Extends the \mbox{\hyperlink{class_mandelbrot}{Mandelbrot}} class and overrides its \mbox{\hyperlink{class_nova_a66935ba0814dfabcae2481c128c336ec}{draw()}} function and set\+Redraw() function.
+
+Can zoom in and out of the \mbox{\hyperlink{class_nova}{Nova}} set by scrolling up and down on the mouse wheel (respectively). \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_mandelbrot}{Mandelbrot}} class 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_nova_a9d171954a6dd98b125587be83ef04db5}\label{class_nova_a9d171954a6dd98b125587be83ef04db5}} 
+\index{Nova@{Nova}!Nova@{Nova}}
+\index{Nova@{Nova}!Nova@{Nova}}
+\doxysubsubsection{\texorpdfstring{Nova()}{Nova()}}
+{\footnotesize\ttfamily Nova\+::\+Nova (\begin{DoxyParamCaption}\item[{unsigned}]{threads,  }\item[{unsigned}]{depth }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a \mbox{\hyperlink{class_nova}{Nova}} set. 
+
+Explicit constructor for the \mbox{\hyperlink{class_nova}{Nova}} class. 
+\begin{DoxyParams}{Parameters}
+{\em threads} & The number of threads to use in the drawing of the \mbox{\hyperlink{class_nova}{Nova}} object. \\
+\hline
+{\em depth} & The number of iterations to go to in order to draw the \mbox{\hyperlink{class_nova}{Nova}} object. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The \mbox{\hyperlink{class_nova}{Nova}} object ready to be drawn onto the Cartesian\+Canvas. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_nova_a66935ba0814dfabcae2481c128c336ec}\label{class_nova_a66935ba0814dfabcae2481c128c336ec}} 
+\index{Nova@{Nova}!draw@{draw}}
+\index{draw@{draw}!Nova@{Nova}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Nova\+::draw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cart}} \&}]{can }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draw the \mbox{\hyperlink{class_nova}{Nova}} set. 
+
+Actually draws the \mbox{\hyperlink{class_nova}{Nova}} set onto the Cartesian\+Canvas. 
+\begin{DoxyParams}{Parameters}
+{\em can} & Reference to the Cartesian\+Canvas to draw to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This method overrides the \mbox{\hyperlink{class_mandelbrot}{Mandelbrot}} class\textquotesingle{} \mbox{\hyperlink{class_nova_a66935ba0814dfabcae2481c128c336ec}{draw()}} method. 
+
+Cart is a typedef for a Cartesian\+Canvas object. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{class_mandelbrot_ab7918e4de8f00f73290f110ca7a6cffd}{Mandelbrot}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Nova.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Mandelbrot/Nova.\+cpp\end{DoxyCompactItemize}

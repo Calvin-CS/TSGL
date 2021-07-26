@@ -1,0 +1,36 @@
+{\bfseries{For this to work you need to install a W\+SL and an Xserver}}\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows_readme_w_s_l_autotoc_md147}{}\doxysubsection{Installing W\+S\+L and Xserver}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows_readme_w_s_l_autotoc_md147}
+
+\begin{DoxyEnumerate}
+\item \href{https://docs.microsoft.com/en-us/windows/wsl/install-win10}{\texttt{ Install W\+SL}} ({\itshape Ubuntu recommended})
+\item Download and install \href{https://sourceforge.net/projects/vcxsrv/}{\texttt{ Vc\+Xsrv}}
+\begin{DoxyItemize}
+\item It is downloaded as {\ttfamily X\+Launch}
+\item When starting X\+Launch {\bfseries{disable}} the {\ttfamily Native opengl} and {\bfseries{enable}} {\ttfamily Disable access control}
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows_readme_w_s_l_autotoc_md148}{}\doxyparagraph{Check}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows_readme_w_s_l_autotoc_md148}
+
+\begin{DoxyItemize}
+\item Start X\+Launch
+\item On your terminal run {\ttfamily xeyes}
+\begin{DoxyItemize}
+\item If it doesn\textquotesingle{}t work, run `export D\+I\+S\+P\+L\+AY=\$(awk '/nameserver / \{print \$2; exit\}\textquotesingle{} /etc/resolv.conf 2$>$/dev/null)\+:0\`{} then try again
+\end{DoxyItemize}
+\item You should see a pair of eyes on the Vc\+Xsrc server
+\end{DoxyItemize}\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows_readme_w_s_l_autotoc_md149}{}\doxysubsection{Installing T\+S\+GL}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows_readme_w_s_l_autotoc_md149}
+
+\begin{DoxyEnumerate}
+\item clone the \href{https://github.com/Calvin-CS/TSGL.git}{\texttt{ T\+S\+GL repository}}
+\item run the install-\/ubuntu.\+sh ({\ttfamily source install-\/ubuntu.\+sh})
+\begin{DoxyItemize}
+\item {\ttfamily /usr} is the default and recommended installation directory for T\+S\+GL on Ubuntu
+\item If you want to change the installation directory from the default, you can append a path when running the installer({\ttfamily source install-\/ubuntu.\+sh /usr})
+\end{DoxyItemize}
+\end{DoxyEnumerate}\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows_readme_w_s_l_autotoc_md150}{}\doxyparagraph{Check}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows_readme_w_s_l_autotoc_md150}
+
+\begin{DoxyItemize}
+\item cd to src/examples
+\item run {\ttfamily make}
+\item cd to one of the examples and run the executable test files ({\ttfamily ./test...}) 
+\end{DoxyItemize}

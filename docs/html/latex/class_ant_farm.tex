@@ -1,0 +1,169 @@
+\hypertarget{class_ant_farm}{}\doxysection{Ant\+Farm Class Reference}
+\label{class_ant_farm}\index{AntFarm@{AntFarm}}
+
+
+Display one or more of Langton\textquotesingle{}s Ant!  
+
+
+
+
+{\ttfamily \#include $<$Ant\+Farm.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_ant_farm_af788cadd7ccb425440294af033fc6159}{Ant\+Farm}} (int w, int h, int s, \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} $\ast$can)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs an \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_ant_farm_a0b4fee39eeac74f6d866344a5cf221c4}{$\sim$\+Ant\+Farm}} ()
+\begin{DoxyCompactList}\small\item\em Destroy an \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ant_farm_a30370a9e93b1534806ce47905359cf86}{add\+Ant}} (int x, int y, int r, int g, int b, int d)
+\begin{DoxyCompactList}\small\item\em Add an ant. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ant_farm_a083c7d1e148cf6f36c2378795b239290}{move\+Ants}} ()
+\begin{DoxyCompactList}\small\item\em Move the ants. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ant_farm_a5b333a275f2e0ff8700932fdfa04df08}{set\+Shading}} (bool b)
+\begin{DoxyCompactList}\small\item\em Shade the ants. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_ant_farm_ad4d22511ce20db2dedc7d61d4ca42e66}{set\+Parallel}} (bool b)
+\begin{DoxyCompactList}\small\item\em Moves the ants in parallel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_ant_farm_a6b2f02189482c7bacde7ddaf9794de68}\label{class_ant_farm_a6b2f02189482c7bacde7ddaf9794de68}} 
+\mbox{\hyperlink{class_langton_ant}{Langton\+Ant}} $\ast$$\ast$ {\bfseries ants}
+\item 
+\mbox{\Hypertarget{class_ant_farm_a073edbf5a8226b15d8a6c962612bab5a}\label{class_ant_farm_a073edbf5a8226b15d8a6c962612bab5a}} 
+int {\bfseries width}
+\item 
+\mbox{\Hypertarget{class_ant_farm_a63cce968f831f6ea3cc699fae67295d4}\label{class_ant_farm_a63cce968f831f6ea3cc699fae67295d4}} 
+int {\bfseries height}
+\item 
+\mbox{\Hypertarget{class_ant_farm_a67f9ece3e5d9b89269fea33e8252e77c}\label{class_ant_farm_a67f9ece3e5d9b89269fea33e8252e77c}} 
+int {\bfseries size}
+\item 
+\mbox{\Hypertarget{class_ant_farm_a6609ec5efe8166f023ba360f415afe77}\label{class_ant_farm_a6609ec5efe8166f023ba360f415afe77}} 
+int {\bfseries cap}
+\item 
+\mbox{\Hypertarget{class_ant_farm_aa617c67c5017be560f6da73d1ef15a1b}\label{class_ant_farm_aa617c67c5017be560f6da73d1ef15a1b}} 
+\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} $\ast$ {\bfseries can}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Display one or more of Langton\textquotesingle{}s Ant! 
+
+Contains the data and method needed in order to hold and move around one or more \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}} objects.
+
+You can have one \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}}, or multiple.
+
+You can move them in parallel, or in sequence.
+
+You can also shade the colors of each \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_ant_farm_af788cadd7ccb425440294af033fc6159}\label{class_ant_farm_af788cadd7ccb425440294af033fc6159}} 
+\index{AntFarm@{AntFarm}!AntFarm@{AntFarm}}
+\index{AntFarm@{AntFarm}!AntFarm@{AntFarm}}
+\doxysubsubsection{\texorpdfstring{AntFarm()}{AntFarm()}}
+{\footnotesize\ttfamily Ant\+Farm\+::\+Ant\+Farm (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h,  }\item[{int}]{s,  }\item[{\mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} $\ast$}]{can }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs an \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object. 
+
+Explicit constructor for the \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} class. 
+\begin{DoxyParams}{Parameters}
+{\em w} & The width of the \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object. \\
+\hline
+{\em h} & The height of the \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object. \\
+\hline
+{\em s} & The size of the \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object (how many ants are going to be in the \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object). \\
+\hline
+{\em can} & Pointer to the Canvas to draw to. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_ant_farm_a0b4fee39eeac74f6d866344a5cf221c4}\label{class_ant_farm_a0b4fee39eeac74f6d866344a5cf221c4}} 
+\index{AntFarm@{AntFarm}!````~AntFarm@{$\sim$AntFarm}}
+\index{````~AntFarm@{$\sim$AntFarm}!AntFarm@{AntFarm}}
+\doxysubsubsection{\texorpdfstring{$\sim$AntFarm()}{~AntFarm()}}
+{\footnotesize\ttfamily Ant\+Farm\+::$\sim$\+Ant\+Farm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy an \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object. 
+
+Destructor for the \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} class. \begin{DoxyReturn}{Returns}
+Frees up any allocated memory to an \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_ant_farm_a30370a9e93b1534806ce47905359cf86}\label{class_ant_farm_a30370a9e93b1534806ce47905359cf86}} 
+\index{AntFarm@{AntFarm}!addAnt@{addAnt}}
+\index{addAnt@{addAnt}!AntFarm@{AntFarm}}
+\doxysubsubsection{\texorpdfstring{addAnt()}{addAnt()}}
+{\footnotesize\ttfamily void Ant\+Farm\+::add\+Ant (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{r,  }\item[{int}]{g,  }\item[{int}]{b,  }\item[{int}]{d }\end{DoxyParamCaption})}
+
+
+
+Add an ant. 
+
+Adds a \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}} to the \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} with the specified arguments. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}}. \\
+\hline
+{\em y} & The y coordinate of the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}}. \\
+\hline
+{\em r} & Red component of the color of the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}}. \\
+\hline
+{\em g} & Green component of the color of the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}}. \\
+\hline
+{\em b} & Blue component of the color of the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}}. \\
+\hline
+{\em d} & The direction of the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_ant_farm_a083c7d1e148cf6f36c2378795b239290}\label{class_ant_farm_a083c7d1e148cf6f36c2378795b239290}} 
+\index{AntFarm@{AntFarm}!moveAnts@{moveAnts}}
+\index{moveAnts@{moveAnts}!AntFarm@{AntFarm}}
+\doxysubsubsection{\texorpdfstring{moveAnts()}{moveAnts()}}
+{\footnotesize\ttfamily void Ant\+Farm\+::move\+Ants (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Move the ants. 
+
+Move the Langton\+Ants that are currently in the \mbox{\hyperlink{class_ant_farm}{Ant\+Farm}} object. \mbox{\Hypertarget{class_ant_farm_ad4d22511ce20db2dedc7d61d4ca42e66}\label{class_ant_farm_ad4d22511ce20db2dedc7d61d4ca42e66}} 
+\index{AntFarm@{AntFarm}!setParallel@{setParallel}}
+\index{setParallel@{setParallel}!AntFarm@{AntFarm}}
+\doxysubsubsection{\texorpdfstring{setParallel()}{setParallel()}}
+{\footnotesize\ttfamily void Ant\+Farm\+::set\+Parallel (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption})}
+
+
+
+Moves the ants in parallel. 
+
+Determines if we should move the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant(s)}} in parallel or not. 
+\begin{DoxyParams}{Parameters}
+{\em b} & A boolean determining if we should move the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant(s)}} in parallel or not. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_ant_farm_a5b333a275f2e0ff8700932fdfa04df08}\label{class_ant_farm_a5b333a275f2e0ff8700932fdfa04df08}} 
+\index{AntFarm@{AntFarm}!setShading@{setShading}}
+\index{setShading@{setShading}!AntFarm@{AntFarm}}
+\doxysubsubsection{\texorpdfstring{setShading()}{setShading()}}
+{\footnotesize\ttfamily void Ant\+Farm\+::set\+Shading (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption})}
+
+
+
+Shade the ants. 
+
+Determines if we should shade the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant(s)}} so that they have a darker color or not. 
+\begin{DoxyParams}{Parameters}
+{\em b} & A boolean determining if we should shade the \mbox{\hyperlink{class_langton_ant}{Langton\+Ant(s)}} or not. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Langton/Ant\+Farm.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Langton/Ant\+Farm.\+cpp\end{DoxyCompactItemize}

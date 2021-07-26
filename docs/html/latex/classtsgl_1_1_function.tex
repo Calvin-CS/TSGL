@@ -1,0 +1,95 @@
+\hypertarget{classtsgl_1_1_function}{}\doxysection{tsgl\+::Function Class Reference}
+\label{classtsgl_1_1_function}\index{tsgl::Function@{tsgl::Function}}
+
+
+A base class for creating mathematical functions plottable by a \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}}.  
+
+
+
+
+{\ttfamily \#include $<$Function.\+h$>$}
+
+Inheritance diagram for tsgl\+::Function\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{classtsgl_1_1_function}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_function_aaf959c9d39bb45c2aded83fd754c288d}{Function}} ()
+\begin{DoxyCompactList}\small\item\em Constructs a new \mbox{\hyperlink{classtsgl_1_1_function}{Function}}. \end{DoxyCompactList}\item 
+virtual \mbox{\hyperlink{classtsgl_1_1_function_a3b8cbd26a32c6ae75b12e7397bb42c41}{$\sim$\+Function}} ()
+\begin{DoxyCompactList}\small\item\em Destructor for the \mbox{\hyperlink{classtsgl_1_1_function}{Function}} class. \end{DoxyCompactList}\item 
+virtual Decimal \mbox{\hyperlink{classtsgl_1_1_function_affb7b3b19a04efefa29a9870d666e912}{value\+At}} (Decimal x) const =0
+\begin{DoxyCompactList}\small\item\em Method to determine the value of a \mbox{\hyperlink{classtsgl_1_1_function}{Function}} subclass. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A base class for creating mathematical functions plottable by a \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}}. 
+
+\mbox{\hyperlink{classtsgl_1_1_function}{Function}} provides a base class for the creation of mathematical functions. By extending this class and overriding the \mbox{\hyperlink{classtsgl_1_1_function_affb7b3b19a04efefa29a9870d666e912}{value\+At()}} method, users can easily plot the values of their function on a \mbox{\hyperlink{classtsgl_1_1_cartesian_canvas}{Cartesian\+Canvas}}.
+
+A number of pre-\/built \mbox{\hyperlink{classtsgl_1_1_function}{Function}} subclasses are included in the header file for reference. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_function_aaf959c9d39bb45c2aded83fd754c288d}\label{classtsgl_1_1_function_aaf959c9d39bb45c2aded83fd754c288d}} 
+\index{tsgl::Function@{tsgl::Function}!Function@{Function}}
+\index{Function@{Function}!tsgl::Function@{tsgl::Function}}
+\doxysubsubsection{\texorpdfstring{Function()}{Function()}}
+{\footnotesize\ttfamily tsgl\+::\+Function\+::\+Function (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a new \mbox{\hyperlink{classtsgl_1_1_function}{Function}}. 
+
+This is the default constructor for the \mbox{\hyperlink{classtsgl_1_1_function}{Function}} class. \begin{DoxyNote}{Note}
+The default constructor for the parent \mbox{\hyperlink{classtsgl_1_1_function}{Function}} class does absolutely nothing. Any construction should be defined in the subclass. 
+\end{DoxyNote}
+\mbox{\Hypertarget{classtsgl_1_1_function_a3b8cbd26a32c6ae75b12e7397bb42c41}\label{classtsgl_1_1_function_a3b8cbd26a32c6ae75b12e7397bb42c41}} 
+\index{tsgl::Function@{tsgl::Function}!````~Function@{$\sim$Function}}
+\index{````~Function@{$\sim$Function}!tsgl::Function@{tsgl::Function}}
+\doxysubsubsection{\texorpdfstring{$\sim$Function()}{~Function()}}
+{\footnotesize\ttfamily virtual tsgl\+::\+Function\+::$\sim$\+Function (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Destructor for the \mbox{\hyperlink{classtsgl_1_1_function}{Function}} class. 
+
+\begin{DoxyNote}{Note}
+The default destructor for the parent \mbox{\hyperlink{classtsgl_1_1_function}{Function}} class does absolutely nothing. Any destruction should be defined in the subclass. 
+\end{DoxyNote}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_function_affb7b3b19a04efefa29a9870d666e912}\label{classtsgl_1_1_function_affb7b3b19a04efefa29a9870d666e912}} 
+\index{tsgl::Function@{tsgl::Function}!valueAt@{valueAt}}
+\index{valueAt@{valueAt}!tsgl::Function@{tsgl::Function}}
+\doxysubsubsection{\texorpdfstring{valueAt()}{valueAt()}}
+{\footnotesize\ttfamily virtual Decimal tsgl\+::\+Function\+::value\+At (\begin{DoxyParamCaption}\item[{Decimal}]{x }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Method to determine the value of a \mbox{\hyperlink{classtsgl_1_1_function}{Function}} subclass. 
+
+This method should be overridden with the actual function you want to compute. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The input to the function. Assuming your function is F, x will be used to compute F(x). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Decimal value of F(x). 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This method is abstract and {\bfseries{must}} be overridden. 
+\end{DoxyNote}
+
+
+Implemented in \mbox{\hyperlink{classtsgl_1_1_round_function_ad01ca0b18d7b5f3f8c5a49181b1dc922}{tsgl\+::\+Round\+Function}}, \mbox{\hyperlink{classtsgl_1_1_floor_function_a28fae5b310ae965348fb2eaec50fd5c8}{tsgl\+::\+Floor\+Function}}, \mbox{\hyperlink{classtsgl_1_1_ceiling_function_a01487798ff6e2adc9481177e96e4e89c}{tsgl\+::\+Ceiling\+Function}}, \mbox{\hyperlink{classtsgl_1_1_common_log_function_a18f2c4f8779309e0d1c936a0589b1f3a}{tsgl\+::\+Common\+Log\+Function}}, \mbox{\hyperlink{classtsgl_1_1_natural_log_function_a27894f0360a0f89cf01126781a36e500}{tsgl\+::\+Natural\+Log\+Function}}, \mbox{\hyperlink{classtsgl_1_1_exponential_function_a65c7a08da7e5e0bdbf5dbcb13f046eb5}{tsgl\+::\+Exponential\+Function}}, \mbox{\hyperlink{classtsgl_1_1_absolute_function_a57c7114b54ebfc4a35da1b5e9374e495}{tsgl\+::\+Absolute\+Function}}, \mbox{\hyperlink{classtsgl_1_1_tangent_function_af0ca18ffd1bccefb8ede5c1121e3813c}{tsgl\+::\+Tangent\+Function}}, \mbox{\hyperlink{classtsgl_1_1_cosine_function_a2d7841c4f9f77bdd8f5bbc51cbd80bcd}{tsgl\+::\+Cosine\+Function}}, \mbox{\hyperlink{classtsgl_1_1_sine_function_a4a34d3310ea217255124d5e35805be3a}{tsgl\+::\+Sine\+Function}}, \mbox{\hyperlink{classtsgl_1_1_square_root_function_ad77fa33b36dcf3bcb7d7957e489bf33f}{tsgl\+::\+Square\+Root\+Function}}, and \mbox{\hyperlink{classtsgl_1_1_power_function_a1dfcce604dd60b033969807f6312b074}{tsgl\+::\+Power\+Function}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Function.\+h\end{DoxyCompactItemize}

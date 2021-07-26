@@ -1,0 +1,227 @@
+\hypertarget{classtsgl_1_1_sphere}{}\doxysection{tsgl\+::Sphere Class Reference}
+\label{classtsgl_1_1_sphere}\index{tsgl::Sphere@{tsgl::Sphere}}
+
+
+Draw an arbitrary \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} with colored vertices.  
+
+
+
+
+{\ttfamily \#include $<$Sphere.\+h$>$}
+
+Inheritance diagram for tsgl\+::Sphere\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classtsgl_1_1_sphere}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classtsgl_1_1_sphere_a80d326f71e37a88274d479c87ad96efe}{Sphere}} (float x, float y, float z, G\+Lfloat radius, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classtsgl_1_1_sphere_adcf41c60e73de7447b9720272c0200aa}{Sphere}} (float x, float y, float z, G\+Lfloat radius, float yaw, float pitch, float roll, \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_sphere_a7d1f92b4c10a165b909cb6edb12288d5}{set\+Radius}} (float radius)
+\begin{DoxyCompactList}\small\item\em Mutates the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s radius. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_sphere_afeddb373be43550a1e3386d53332dd6f}{change\+Radius\+By}} (float delta)
+\begin{DoxyCompactList}\small\item\em Mutates the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s radius by the parameter amount. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classtsgl_1_1_sphere_a465494e673964c2fde85ed9b342a665d}\label{classtsgl_1_1_sphere_a465494e673964c2fde85ed9b342a665d}} 
+virtual G\+Lfloat {\bfseries get\+Radius} ()
+\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_sphere_aa0870a70e34c6c77e2d61e50dbf3cc07}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c)
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} to a new color. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_sphere_aab902ab87c24e7065c74f553f7e8c126}{set\+Color}} (\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} c\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Sets the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} to an array of new colors. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{classtsgl_1_1_sphere_a767bfb1b0c6c29d0577377aa0403d881}{get\+Colors}} (std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&color\+Vec)
+\begin{DoxyCompactList}\small\item\em Accessor for \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s colors. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_sphere_ab4d6cee5f4c8ce474b58f3d528d5ef64}\label{classtsgl_1_1_sphere_ab4d6cee5f4c8ce474b58f3d528d5ef64}} 
+G\+Lfloat {\bfseries my\+Radius}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_sphere_a00159df8b6b14b13423a5654312bd0b6}\label{classtsgl_1_1_sphere_a00159df8b6b14b13423a5654312bd0b6}} 
+int {\bfseries horizontal\+Sections}
+\item 
+\mbox{\Hypertarget{classtsgl_1_1_sphere_abed42db5d3fa69211ba25fb03ba6d23f}\label{classtsgl_1_1_sphere_abed42db5d3fa69211ba25fb03ba6d23f}} 
+int {\bfseries vertical\+Sections}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Draw an arbitrary \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} with colored vertices. 
+
+\mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} is a class for holding vertex data for a \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} with non-\/negative radius. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_sphere_a80d326f71e37a88274d479c87ad96efe}\label{classtsgl_1_1_sphere_a80d326f71e37a88274d479c87ad96efe}} 
+\index{tsgl::Sphere@{tsgl::Sphere}!Sphere@{Sphere}}
+\index{Sphere@{Sphere}!tsgl::Sphere@{tsgl::Sphere}}
+\doxysubsubsection{\texorpdfstring{Sphere()}{Sphere()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Sphere\+::\+Sphere (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. 
+
+Explicit constructor for a \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \\
+\hline
+{\em y} & The y coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \\
+\hline
+{\em z} & The z coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \\
+\hline
+{\em radius} & The \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s radius \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s yaw. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s pitch. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s roll. \\
+\hline
+{\em c} & A \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} for the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s vertex colors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if radius isn\textquotesingle{}t positive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classtsgl_1_1_sphere_adcf41c60e73de7447b9720272c0200aa}\label{classtsgl_1_1_sphere_adcf41c60e73de7447b9720272c0200aa}} 
+\index{tsgl::Sphere@{tsgl::Sphere}!Sphere@{Sphere}}
+\index{Sphere@{Sphere}!tsgl::Sphere@{tsgl::Sphere}}
+\doxysubsubsection{\texorpdfstring{Sphere()}{Sphere()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily tsgl\+::\+Sphere\+::\+Sphere (\begin{DoxyParamCaption}\item[{float}]{x,  }\item[{float}]{y,  }\item[{float}]{z,  }\item[{G\+Lfloat}]{radius,  }\item[{float}]{yaw,  }\item[{float}]{pitch,  }\item[{float}]{roll,  }\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Explicitly constructs a new \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. 
+
+Explicit constructor for a \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} object. 
+\begin{DoxyParams}{Parameters}
+{\em x} & The x coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \\
+\hline
+{\em y} & The y coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \\
+\hline
+{\em z} & The z coordinate of the center of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \\
+\hline
+{\em radius} & The distance from the center of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s base to each vertex of the base. \\
+\hline
+{\em yaw} & The \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s yaw. \\
+\hline
+{\em pitch} & The \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s pitch. \\
+\hline
+{\em roll} & The \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s roll. \\
+\hline
+{\em c} & An array of Color\+Floats for the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s vertex colors. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+An invariant is held where if radius isn\textquotesingle{}t positive then an error message is given. 
+\end{DoxyWarning}
+\begin{DoxyReturn}{Returns}
+A new \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} with a buffer for storing the specified numbered of vertices. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classtsgl_1_1_sphere_afeddb373be43550a1e3386d53332dd6f}\label{classtsgl_1_1_sphere_afeddb373be43550a1e3386d53332dd6f}} 
+\index{tsgl::Sphere@{tsgl::Sphere}!changeRadiusBy@{changeRadiusBy}}
+\index{changeRadiusBy@{changeRadiusBy}!tsgl::Sphere@{tsgl::Sphere}}
+\doxysubsubsection{\texorpdfstring{changeRadiusBy()}{changeRadiusBy()}}
+{\footnotesize\ttfamily void tsgl\+::\+Sphere\+::change\+Radius\+By (\begin{DoxyParamCaption}\item[{float}]{delta }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s radius by the parameter amount. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em delta} & The amount by which to change the radius of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classtsgl_1_1_sphere_a767bfb1b0c6c29d0577377aa0403d881}\label{classtsgl_1_1_sphere_a767bfb1b0c6c29d0577377aa0403d881}} 
+\index{tsgl::Sphere@{tsgl::Sphere}!getColors@{getColors}}
+\index{getColors@{getColors}!tsgl::Sphere@{tsgl::Sphere}}
+\doxysubsubsection{\texorpdfstring{getColors()}{getColors()}}
+{\footnotesize\ttfamily void tsgl\+::\+Sphere\+::get\+Colors (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} $>$ \&}]{color\+Vec }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Accessor for \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s colors. 
+
+Populates the reference parameter vector with a \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} for each vertical section of \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. 
+\begin{DoxyParams}{Parameters}
+{\em color\+Vec} & A vector of Color\+Floats to which the Color\+Floats associated with \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} will be pushed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Overrides \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{Shape\+::get\+Colors()}}. 
+\end{DoxyNote}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_a6f54fe4d049f69a287edf8335a9509f8}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_sphere_aa0870a70e34c6c77e2d61e50dbf3cc07}\label{classtsgl_1_1_sphere_aa0870a70e34c6c77e2d61e50dbf3cc07}} 
+\index{tsgl::Sphere@{tsgl::Sphere}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Sphere@{tsgl::Sphere}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Sphere\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} to a new color. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & The new \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_abdb01321cddfd2db1481eefbc2836f70}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_sphere_aab902ab87c24e7065c74f553f7e8c126}\label{classtsgl_1_1_sphere_aab902ab87c24e7065c74f553f7e8c126}} 
+\index{tsgl::Sphere@{tsgl::Sphere}!setColor@{setColor}}
+\index{setColor@{setColor}!tsgl::Sphere@{tsgl::Sphere}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void tsgl\+::\+Sphere\+::set\+Color (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}}}]{c\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Sets the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}} to an array of new colors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & An array of new Color\+Floats.\\
+\hline
+\end{DoxyParams}
+The array should have 20 \mbox{\hyperlink{structtsgl_1_1_color_float}{Color\+Float}} minimum, one for each horizontal section. 
+
+Reimplemented from \mbox{\hyperlink{classtsgl_1_1_shape_ad7e554b5d4cea111ec518548b9f21388}{tsgl\+::\+Shape}}.
+
+\mbox{\Hypertarget{classtsgl_1_1_sphere_a7d1f92b4c10a165b909cb6edb12288d5}\label{classtsgl_1_1_sphere_a7d1f92b4c10a165b909cb6edb12288d5}} 
+\index{tsgl::Sphere@{tsgl::Sphere}!setRadius@{setRadius}}
+\index{setRadius@{setRadius}!tsgl::Sphere@{tsgl::Sphere}}
+\doxysubsubsection{\texorpdfstring{setRadius()}{setRadius()}}
+{\footnotesize\ttfamily void tsgl\+::\+Sphere\+::set\+Radius (\begin{DoxyParamCaption}\item[{float}]{radius }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Mutates the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}\textquotesingle{}s radius. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em radius} & The new radius of the \mbox{\hyperlink{classtsgl_1_1_sphere}{Sphere}}. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sphere.\+h\item 
+Sphere.\+cpp\end{DoxyCompactItemize}

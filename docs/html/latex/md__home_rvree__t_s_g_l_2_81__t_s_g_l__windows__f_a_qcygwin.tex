@@ -1,0 +1,23 @@
+\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows__f_a_qcygwin_autotoc_md139}{}\doxysubsection{Installation}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows__f_a_qcygwin_autotoc_md139}
+{\bfseries{Q}}\+: What to do when Cygwin setup window crashes? ~\newline
+ {\bfseries{A}}\+: Sometimes Cygwin installation window crashes unexpectedly. If that happens open the setup file and follow the \href{https://github.com/samuelth47/TSGL/blob/master/NewWindows/readmeCygwin.md}{\texttt{ steps}} again ~\newline
+ ~\newline
+ {\bfseries{Q}}\+: {\ttfamily source install-\/cygwin} is not working ~\newline
+ {\bfseries{A}}\+: Try running {\ttfamily dos2unix install-\/cygwin} and run {\ttfamily source install-\/cygwin} again ~\newline
+ ~\newline
+ {\bfseries{Q}}\+: I am getting {\ttfamily wget is not installed, using lynx as fallback} error during installation ~\newline
+ {\bfseries{A}}\+: You M\+U\+ST install {\ttfamily wget, lynx, and dos2unix} using the setup file of Cygwin before running the install-\/cygwin.\+sh. Launch the setup file and follow these \href{https://github.com/samuelth47/TSGL/blob/master/NewWindows/readmeCygwin.md}{\texttt{ steps}}, but this time only install {\ttfamily wget}
+
+{\bfseries{Q}}\+: It is taking too long to install ~\newline
+ {\bfseries{A}}\+: For T\+S\+GL to work on windows it needs more packages to be installed. That is why it is taking long, but it\textquotesingle{}s worth the wait \+:)
+
+~\newline
+\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows__f_a_qcygwin_autotoc_md140}{}\doxysubsection{Using T\+S\+GL}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__windows__f_a_qcygwin_autotoc_md140}
+{\bfseries{Q}}\+: I get this error when I try to run the examples 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{assertion "monitor != NULL" failed: file ".../glfw/src/monitor.c", line 445, function: glfwGetVideoMode}
+\end{DoxyCode}
+
+
+{\bfseries{A}}\+: Did you open a new terminal and run {\ttfamily startxwin}? If not, do that, and don\textquotesingle{}t stop the process nor close the terminal. ~\newline
+ $<$t$>$ If you did that and it still doesn\textquotesingle{}t work, try running {\ttfamily export D\+I\+S\+P\+L\+AY\+:0.\+0} on the terminal 

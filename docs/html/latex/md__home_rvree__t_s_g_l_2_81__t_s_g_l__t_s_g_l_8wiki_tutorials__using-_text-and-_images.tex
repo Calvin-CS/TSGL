@@ -1,0 +1,113 @@
+Quit texting and pay attention to this tutorial!
+
+Placing text on a Canvas is pretty straight forward. It essentially requires a font file for the rendered text and creating Text objects.
+
+{\itshape {\bfseries{Linux/\+Mac users\+:}}} Follow the steps from the previous tutorials. Name the folder \char`\"{}\+Tutorial3\char`\"{} and the file \char`\"{}text.\+cpp\char`\"{}. Replace \char`\"{}program\char`\"{} in the \char`\"{}\+T\+A\+R\+G\+E\+T\char`\"{} line of the Makefile with \char`\"{}text\char`\"{}.
+
+{\itshape {\bfseries{Windows users\+:}}} Follow the steps from the previous tutorials. Name the Solution folder \char`\"{}\+Tutorial3\char`\"{} and the Visual Studio project \char`\"{}\+Text\char`\"{}. After adding the Property sheet, name the .cpp file \char`\"{}text.\+cpp\char`\"{}.
+
+{\itshape {\bfseries{All three platforms\+:}}} Follow the steps in the \mbox{[}\mbox{[}Building Programs\mbox{]}\mbox{]} page on how to compile and run the program (Linux/\+Mac users, this is a single-\/file program).
+
+Let\textquotesingle{}s start by creating a Canvas object and initializing it\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, 500, 500, \textcolor{stringliteral}{"Texture example"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Alright, now let\textquotesingle{}s add some text!
+
+What should we say? What message should we broadcast to the world?
+
+How about \char`\"{}\+Hello, World!\char`\"{}?
+
+Perfect. Now, let\textquotesingle{}s set our font. For the purposes of this tutorial, we have a font file already inside of our folder, {\ttfamily Free\+Mono.\+ttf}. The font file (along with a plethora of others) is located in the {\ttfamily freefont} folder which is in the {\ttfamily assets} folder located in the T\+S\+GL root directory (where the {\ttfamily Makefile}) is. You can copy that font file (or another if you so desire) from the {\ttfamily freefont} folder into your folder ({\itshape {\bfseries{Linux/\+Mac users}}}) or into your Solution folder in your Visual Studio project ({\itshape {\bfseries{Windows users}}}).
+
+T\+S\+GL is compatible with Free\+Type fonts, but it can also use other fonts. Make certain that you have that font file (or another one like it) in your project/\+Solution folder so the Canvas can render the text\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, 500, 500, \textcolor{stringliteral}{"Texture example"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_text}{Text}} hello(\textcolor{stringliteral}{"Hello, World!"}, 150, 250, 5);}
+\DoxyCodeLine{  c.add( \&hello );}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+{\ttfamily Text()} creates a text item. It takes in these parameters\+:
+
+
+\begin{DoxyItemize}
+\item The text to render ({\ttfamily Hello, World!}).
+\item The x-\/coordinate of the left bound of the text to render ({\ttfamily 150}).
+\item The y-\/coordinate of the base of the text to render ({\ttfamily 250}).
+\item The size of the text ({\ttfamily 30}).
+\item The color of the text (optional parameter; set to {\ttfamily B\+L\+A\+CK} by default).
+\item The name of the font file. It can also be a directory path that leads to the font file, such as\+: {\ttfamily assets/freetype/\+Name\+\_\+\+Of\+\_\+\+Font\+\_\+\+File.\+ttf} (optional parameter; defaults to Free\+Sans).
+\end{DoxyItemize}
+
+Once you are ready to render the Text object, it can be added to a Canvas the same way a Shape is, using Canvas\textquotesingle{}s {\ttfamily add()} method.
+
+That is essentially how you render text onto a Canvas!
+
+You can also render images onto a Canvas as well. The process is the same for creating an Image object\+: {\ttfamily Image()}. It takes in these parameters\+:
+
+
+\begin{DoxyItemize}
+\item The file name of the image (which can also be a directory path to the image file).
+\item The x-\/coordinate of the image\textquotesingle{}s left bound.
+\item The y-\/coordinate of the image\textquotesingle{}s left bound.
+\item The width of the image.
+\item The height of the image.
+\item The alpha value of the image (optional parameter; set to {\ttfamily 1.\+0f} by default).
+\end{DoxyItemize}
+
+The alpha value determines whether or not the image should be transparent. We will take a closer look at alpha values in the next tutorial, Using Colors.
+
+Let\textquotesingle{}s look at an example where we first draw an image and then draw text on top of it. You can get pictures from the {\ttfamily pics} folder located in the {\ttfamily assets} folder which is located in the T\+S\+GL root directory. T\+S\+GL handles {\ttfamily .jpg}, {\ttfamily .png}, and {\ttfamily .bmp} picture files perfectly fine. Copy over whatever picture file you would like to draw text on (either in your project folder or in your Solution folder depending on what machine you are using) and then pass the full file name into the file name parameter for {\ttfamily Image()}.
+
+For the purposes of this tutorial, we used {\ttfamily background.\+jpg}\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include <tsgl.h>}}
+\DoxyCodeLine{\textcolor{keyword}{using namespace }tsgl;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int} main() \{}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_canvas}{Canvas}} c(0, 0, 500, 500, \textcolor{stringliteral}{"Texture example"});}
+\DoxyCodeLine{  c.start();}
+\DoxyCodeLine{  \textcolor{comment}{//We will explain what getWindowWidth()}}
+\DoxyCodeLine{  \textcolor{comment}{//and getWindowHeight() do in the next tutorial}}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_image}{Image}} bkgd(\textcolor{stringliteral}{"background.jpg"}, 0, 0, c.getWindowWidth(), c.getWindowHeight());}
+\DoxyCodeLine{  c.setFont(\textcolor{stringliteral}{"FreeMono.ttf"});}
+\DoxyCodeLine{  \mbox{\hyperlink{classtsgl_1_1_text}{Text}} hello(\textcolor{stringliteral}{"Hello, World!"}, 150, 250, 30);}
+\DoxyCodeLine{  c.add( \&bkgd );}
+\DoxyCodeLine{  c.add( \&hello );}
+\DoxyCodeLine{  c.wait();}
+\DoxyCodeLine{\}}
+\end{DoxyCode}
+
+
+Recompile and run. The image should now appear and the text \char`\"{}\+Hello, World!\char`\"{} should be drawn on top of it.
+
+In sum, you can set the font using the {\ttfamily set\+Font()} method before rendering the text onto the Canvas. Then, you can create the actual text using {\ttfamily Text()}.
+
+Images can be created using {\ttfamily Image()}.
+
+That concludes this tutorial!
+
+In the next tutorial, \mbox{[}\mbox{[}Using Colors\mbox{]}\mbox{]}, you get to learn about colors! 

@@ -1,0 +1,117 @@
+\hypertarget{class_f_lock}{}\doxysection{F\+Lock Class Reference}
+\label{class_f_lock}\index{FLock@{FLock}}
+
+
+A lock giving equal priority to Readers and Writers.  
+
+
+
+
+{\ttfamily \#include $<$F\+Lock.\+h$>$}
+
+Inheritance diagram for F\+Lock\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_f_lock}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_f_lock_a7fbb4dfce8ff879b88ff77efd4b76a96}{F\+Lock}} ()
+\item 
+\mbox{\Hypertarget{class_f_lock_aacf82c29b79261a50a3a792feb778973}\label{class_f_lock_aacf82c29b79261a50a3a792feb778973}} 
+{\bfseries F\+Lock} (\mbox{\hyperlink{class_r_w_database}{R\+W\+Database}}$<$ \mbox{\hyperlink{classtsgl_1_1_rectangle}{tsgl\+::\+Rectangle}} $\ast$ $>$ $\ast$data)
+\item 
+void \mbox{\hyperlink{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}{read\+Lock}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}{read\+Lock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}{read\+Unlock}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}{read\+Unlock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}{write\+Lock}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}{write\+Lock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_f_lock_afb22121c126a71c24e751ae7315e9a48}{write\+Unlock}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_f_lock_afb22121c126a71c24e751ae7315e9a48}{write\+Unlock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+A lock giving equal priority to Readers and Writers. 
+
+\mbox{\hyperlink{_f_lock_8h_source}{F\+Lock.\+h}} provides the fair monitor for the Reader-\/\+Writer visualization that gives equal preference to the Readers and Writers. This class is a subclass of \mbox{\hyperlink{class_lock}{Lock}} and implements its locking and unlocking virtual methods. implements the \char`\"{}commonly known solution\char`\"{} presented in\+: \href{https://arxiv.org/pdf/1309.4507.pdf}{\texttt{ https\+://arxiv.\+org/pdf/1309.\+4507.\+pdf}}
+
+Inheritance\+: \mbox{\hyperlink{class_lock}{Lock}} class.
+
+Implements the locking and unlocking methods of a monitor. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_f_lock_a7fbb4dfce8ff879b88ff77efd4b76a96}\label{class_f_lock_a7fbb4dfce8ff879b88ff77efd4b76a96}} 
+\index{FLock@{FLock}!FLock@{FLock}}
+\index{FLock@{FLock}!FLock@{FLock}}
+\doxysubsubsection{\texorpdfstring{FLock()}{FLock()}}
+{\footnotesize\ttfamily F\+Lock\+::\+F\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+F\+Lock.\+cpp provides the monitor for the Reader-\/\+Writer visualization that gives a fair preference. This class is a subclass of \mbox{\hyperlink{class_lock}{Lock}} and implements its locking and unlocking virtual methods. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}\label{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}} 
+\index{FLock@{FLock}!readLock@{readLock}}
+\index{readLock@{readLock}!FLock@{FLock}}
+\doxysubsubsection{\texorpdfstring{readLock()}{readLock()}}
+{\footnotesize\ttfamily void F\+Lock\+::read\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_f_lock_a8b1cde1cfe107eeb20d5f250a1c310e6}{read\+Lock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} 
+
+Grants the calling thread access for reading 
+
+Implements \mbox{\hyperlink{class_lock}{Lock}}.
+
+\mbox{\Hypertarget{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}\label{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}} 
+\index{FLock@{FLock}!readUnlock@{readUnlock}}
+\index{readUnlock@{readUnlock}!FLock@{FLock}}
+\doxysubsubsection{\texorpdfstring{readUnlock()}{readUnlock()}}
+{\footnotesize\ttfamily void F\+Lock\+::read\+Unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_f_lock_ab643a836b8844cc9be52dcaf7ab18df1}{read\+Unlock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} 
+
+Releases the calling thread\textquotesingle{}s read lock 
+
+Implements \mbox{\hyperlink{class_lock}{Lock}}.
+
+\mbox{\Hypertarget{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}\label{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}} 
+\index{FLock@{FLock}!writeLock@{writeLock}}
+\index{writeLock@{writeLock}!FLock@{FLock}}
+\doxysubsubsection{\texorpdfstring{writeLock()}{writeLock()}}
+{\footnotesize\ttfamily void F\+Lock\+::write\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_f_lock_a4bd70bd74a3c6067f091d24a0b82edbe}{write\+Lock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} 
+
+Grants the calling thread acces for writing 
+
+Implements \mbox{\hyperlink{class_lock}{Lock}}.
+
+\mbox{\Hypertarget{class_f_lock_afb22121c126a71c24e751ae7315e9a48}\label{class_f_lock_afb22121c126a71c24e751ae7315e9a48}} 
+\index{FLock@{FLock}!writeUnlock@{writeUnlock}}
+\index{writeUnlock@{writeUnlock}!FLock@{FLock}}
+\doxysubsubsection{\texorpdfstring{writeUnlock()}{writeUnlock()}}
+{\footnotesize\ttfamily void F\+Lock\+::write\+Unlock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\mbox{\hyperlink{class_f_lock_afb22121c126a71c24e751ae7315e9a48}{write\+Unlock()}} implements the abstract method in \mbox{\hyperlink{class_lock}{Lock}} 
+
+Releases the calling thread\textquotesingle{}s write lock 
+
+Implements \mbox{\hyperlink{class_lock}{Lock}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/F\+Lock.\+h\item 
+/home/rvree/\+T\+S\+G\+L\+\_\+2.\+1/\+T\+S\+G\+L/src/examples/\+Reader\+Writer/F\+Lock.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,396 @@
+{\itshape {\bfseries{N\+O\+TE\+:}}} This page contains information which has been acquired to the best of our abilities. There may be some things that the documentation fails to report, or things may have changed. If this is the case, P\+L\+E\+A\+SE update this page so that others may benefit from your findings! (See \mbox{[}\mbox{[}Doxygen and Wiki\mbox{]}\mbox{]} for more information on how to updated the wiki pages).
+
+Hello!
+
+A new Visual Studio version has come out, and the T\+S\+GL Solution must be updated.
+
+The process is long and tedious, but this page will guide you.
+
+Let\textquotesingle{}s begin.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md99}{}\doxysubsection{$\vert$ Starting out\+: tsgl V\+S project $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md99}
+1). Get the T\+S\+GL zip folder from Git\+Hub.
+
+2). Install T\+S\+GL (using an earlier version of VS).
+
+3). Make a clone of T\+S\+GL in a different place using Git Bash.
+
+4). Copy over the {\ttfamily lib} and {\ttfamily include} directories from the zip file location to the cloned T\+S\+GL directory.
+
+5). Create a new {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} folder inside of the cloned T\+S\+GL directory (replacing {\ttfamily $\ast$$\ast$$\ast$$\ast$} with the Visual Studio version number).
+
+6). Open up the new version of Visual Studio, and create a new {\ttfamily tsgl} project inside of the cloned T\+S\+GL folder. ({\ttfamily File -\/$>$ New -\/$>$ Project}, {\ttfamily Visual C++}, {\ttfamily Empty Project}, then change the name to {\ttfamily tsgl} and the {\ttfamily Location} to wherever you put the cloned T\+S\+GL folder).
+
+You should now have a {\ttfamily tsgl} folder inside of the cloned T\+S\+GL folder.
+
+7). Via File Manager, go into the cloned T\+S\+GL folder, and into the {\ttfamily tsgl} VS project folder. Copy over all files from the project folder (and from the {\ttfamily tsgl} folder that is inside of the {\ttfamily tsgl} VS project folder) over to the cloned T\+S\+GL folder.
+
+You should have the solution file, and the project files for the {\ttfamily tsgl} VS project in the cloned T\+S\+GL workspace. (Plus a few extra).
+
+8). Close V\+S$\ast$$\ast$$\ast$$\ast$, and delete the {\ttfamily tsgl} folder from the cloned T\+S\+GL workspace.
+
+9). Reopen V\+S$\ast$$\ast$$\ast$$\ast$, and open up the T\+S\+GL solution file that\textquotesingle{}s in the cloned T\+S\+GL workspace. ({\ttfamily File -\/$>$ Open -\/$>$ Project/\+Solution}, then choose the solution file that is in the cloned T\+S\+GL folder).
+
+It will say that it can\textquotesingle{}t find the {\ttfamily tsgl} project (or that it can\textquotesingle{}t load it).
+
+You\textquotesingle{}ll have to re-\/add it back into the solution.
+
+Remove the failed {\ttfamily tsgl} project ({\ttfamily right click on tsgl -\/$>$ Remove}).
+
+10). Right click on {\ttfamily Solution \textquotesingle{}tsgl\textquotesingle{}}, {\ttfamily Add}, then {\ttfamily Existing Project}.
+
+Get the {\ttfamily tsgl} project file that\textquotesingle{}s in the cloned T\+S\+GL workspace (it should say {\ttfamily tsgl} and have a {\ttfamily .vcxproj} suffix).
+
+11). M\+A\+KE S\+U\+RE T\+H\+AT Y\+OU H\+A\+VE D\+E\+B\+UG S\+ET TO x86 OR W\+I\+N32!
+
+12). Add the {\ttfamily .cpp} and {\ttfamily .h} files to the {\ttfamily tsgl} project.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Once that is done, and now that ```tsgl``` is added back into the appropriate solution file, right-\/click on it. Choose ```Properties```.}
+\DoxyCodeLine{}
+\DoxyCodeLine{Here is where the magic happens. We'll have to edit a few of these in order for ```tsgl``` to build correctly.}
+\DoxyCodeLine{}
+\DoxyCodeLine{Here are the ones that *MUST* be edited (for ```tsgl```):}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\#\#General:}
+\DoxyCodeLine{}
+\DoxyCodeLine{+ ```Target Platform Version:``` 10.0.10586.0 (If that doesn't work, do 8.1. You'll have to install the Windows 10 SDK then).}
+\DoxyCodeLine{+ ```Output Directory:``` \$(SolutionDir)lib\(\backslash\)}
+\DoxyCodeLine{+ ```Intermediate Directory:``` \$(Configuration)\(\backslash\)\$(TargetName)\(\backslash\)}
+\DoxyCodeLine{+ ```Target Extension:``` .lib}
+\DoxyCodeLine{+ ```Build Log File:``` \$(IntDir)\(\backslash\)\$(MSBuildProjectName).log}
+\DoxyCodeLine{+ ```Platform Toolset:``` Whatever version of Visual Studio that you are currently working in.}
+\DoxyCodeLine{+ ```Configuration Type:``` Static library (.lib)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Click ```Apply```.}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\#\#Debugging:}
+\DoxyCodeLine{}
+\DoxyCodeLine{+ ```Environment:``` PATH=\$(TsglDllDir);\%PATH\%;\$(LocalDebuggerEnvironment)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Click ```Apply```.}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\#\#VC++ Directories:}
+\DoxyCodeLine{}
+\DoxyCodeLine{+ ```Include Directories:``` \$(SolutionDir)\(\backslash\)src\(\backslash\)TSGL;\$(SolutionDir)\(\backslash\)include;\$(IncludePath)}
+\DoxyCodeLine{+ ```Library Directories:``` \$(SolutionDir)lib;\$(LibraryPath)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Click ```Apply```.}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\#\#C/C++:}
+\DoxyCodeLine{}
+\DoxyCodeLine{Under ```General```:}
+\DoxyCodeLine{}
+\DoxyCodeLine{  + ```Debug Information Format:``` Program Database (/Zi)}
+\DoxyCodeLine{  + ```Warning Level:``` Turn Off All Warnings (/W0)}
+\DoxyCodeLine{  + ```SDL checks:``` No (/sdl-\/)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Under ```Preprocessor```:}
+\DoxyCodeLine{}
+\DoxyCodeLine{  + ```Preprocessor Definitions:``` WIN32;\_DEBUG;\_WINDOWS;\%(PreprocessorDefinitions)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Under ```Language```:}
+\DoxyCodeLine{}
+\DoxyCodeLine{  + ```Open MP Support:``` Yes (/openmp)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Click ```Apply```. }
+\DoxyCodeLine{}
+\DoxyCodeLine{Now, click ```Ok```. }
+\DoxyCodeLine{}
+\DoxyCodeLine{Moment of truth. Right click on ```tsgl```, and click ```Build```.}
+\DoxyCodeLine{}
+\DoxyCodeLine{If it builds successively, then congrats! You have the new VS**** ```tsgl``` project inside of the main TSGL repo!}
+\DoxyCodeLine{}
+\DoxyCodeLine{Before we forget, we need to add a ```Property Sheet``` to the ```tsgl``` project.}
+\DoxyCodeLine{}
+\DoxyCodeLine{We have to get it from the zip folder, so go back to the downloaded TSGL zip file from earlier, copy the ```testProperties``` file, and stick that in the cloned TSGL workspace. }
+\DoxyCodeLine{}
+\DoxyCodeLine{Now, add it to ```tsgl``` through VS****:}
+\DoxyCodeLine{}
+\DoxyCodeLine{* Click ```View -\/> Other Windows -\/> Property Manager```.}
+\DoxyCodeLine{* ```Right-\/click on the project -\/> Add Existing Property Sheet```, and add ```testPropertie}
+\end{DoxyCode}
+ \begin{DoxyVerb}  (which should be inside of the cloned TSGL workspace folder).
+\end{DoxyVerb}
+
+\begin{DoxyItemize}
+\item Click the save icon (should look like a floppy disk, somewhere above in the {\ttfamily Property Manager} toolbar).
+\item Click {\ttfamily View -\/$>$ Solution Explorer}.
+\end{DoxyItemize}
+
+It should be added to the project.
+
+Now, let\textquotesingle{}s move onto the tests....
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md101}{}\doxysubsection{$\vert$ V\+S T\+S\+G\+L Solution\+: tests, tests, and more tests $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md101}
+These are a bit more tricky to add.
+
+For starters, they have different properties than the {\ttfamily tsgl} project.
+
+Also, they belong within the {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} folder that we made earlier.
+
+Some also have extra files that need to be added, like {\ttfamily test\+Langton} and {\ttfamily test\+Philosophers}.
+
+And to top it off, there are {\itshape {\bfseries{41}}} of them. (At the time of this writing).
+
+Which means, you\textquotesingle{}ll have to repeat this process {\itshape {\bfseries{41 times}}}.
+
+Yes, {\itshape {\bfseries{41 times}}}.
+
+On the bright side, we can use the {\ttfamily test\+Properties} sheet on them.
+
+Let\textquotesingle{}s get started with {\ttfamily test\+Alpha\+Rectangle}.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md103}{}\doxysubsection{$\vert$ test\+Alpha\+Rectangle\+: fancy rectangles! $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md103}
+Right-\/click on {\ttfamily Solution \textquotesingle{}tsgl\textquotesingle{}} -\/$>$ {\ttfamily Add} -\/$>$ {\ttfamily New Project}, choose {\ttfamily Visual C++}, {\ttfamily Empty Project}, and name it {\ttfamily test\+Alpha\+Rectangle}. Change the {\ttfamily Location} to point at the {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} folder inside of the cloned T\+S\+GL workspace.
+
+Go into the {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} folder, and you\textquotesingle{}ll see a folder named {\ttfamily test\+Alpha\+Rectangle}.
+
+Just like we did with the {\ttfamily tsgl} project, we\textquotesingle{}ll have to take out the files from this folder.
+
+Go into the {\ttfamily test\+Alpha\+Rectangle} folder, copy the files over to the {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} directory that\textquotesingle{}s in the cloned T\+S\+GL workspace (one directory up), and delete the {\ttfamily test\+Alpha\+Rectangle} folder.
+
+Remove the {\ttfamily test\+Alpha\+Rectangle} project from the {\ttfamily tsgl} solution, and add the copied {\ttfamily test\+Alpha\+Rectangle} project that\textquotesingle{}s in the {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} folder.
+
+Now, add the {\ttfamily test\+Alpha\+Rectangle.\+cpp} file to the project. ({\ttfamily Right-\/click -\/$>$ Add -\/$>$ Existing Item}, then go to {\ttfamily src/tests} inside of the cloned T\+S\+GL folder, and add {\ttfamily test\+Alpha\+Rectangle.\+cpp}).
+
+Now, click on {\ttfamily View} -\/$>$ {\ttfamily Other Windows} -\/$>$ {\ttfamily Property Manager}.
+
+This is the place where we\textquotesingle{}ll be adding the {\ttfamily test\+Properties} sheet to the test projects.
+
+Right-\/click on {\ttfamily test\+Alpha\+Rectangle} -\/$>$ {\ttfamily Add Existing Property Sheet}, and choose the {\ttfamily test\+Properties} sheet that\textquotesingle{}s in the cloned T\+S\+GL workspace.
+
+Click on the save icon (the one that looks like a floppy disk), and that saves the sheet for {\ttfamily test\+Alpha\+Rectangle}\`{}.
+
+Go back to the {\ttfamily Solution Explorer} ({\ttfamily View} -\/$>$ {\ttfamily Solution Explorer}), and right-\/click on {\ttfamily test\+Alpha\+Rectangle}. Choose {\ttfamily Properties}.
+
+Like we did for the {\ttfamily tsgl} project, we\textquotesingle{}ll have to edit the properties for each test.
+
+Luckily, this applies to all tests. The properties are generally the same for all tests.
+
+Here are the ones that you have to change\+:\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md104}{}\doxysubsubsection{General\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md104}
+
+\begin{DoxyItemize}
+\item {\ttfamily Target Platform\+:} 10.\+0.\+10586.\+0 (or 8.\+1 if you don\textquotesingle{}t have the Windows 10 S\+DK).
+\item {\ttfamily Intermediate Directory\+:} \$(Target\+Name)\textbackslash{}
+\item {\ttfamily Platform Toolset\+:} Whatever version of Visual Studio that you are currently working in.
+\end{DoxyItemize}\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md105}{}\doxysubsubsection{V\+C++ Directories\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md105}
+
+\begin{DoxyItemize}
+\item {\ttfamily Include Directories\+:} ;;
+\item {\ttfamily Library Directories\+:} ;;
+\end{DoxyItemize}\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md106}{}\doxysubsubsection{C/\+C++\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md106}
+
+\begin{DoxyItemize}
+\item Under {\ttfamily Language}\+:
+\begin{DoxyItemize}
+\item {\ttfamily Open MP Support\+:} Yes (/openmp)
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md107}{}\doxysubsubsection{Linker\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md107}
+
+\begin{DoxyItemize}
+\item Under {\ttfamily Input}\+:
+\begin{DoxyItemize}
+\item {\ttfamily Additional Dependencies\+:} tsgl.\+lib;freeglutd.\+lib;freetype.\+lib;glew32sd.\+lib;glfw3.\+lib;\%(Additional\+Dependencies)
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Once that is all done, {\ttfamily Right-\/click -\/$>$ Build Dependencies -\/$>$ Project Dependencies}, and check the box for {\ttfamily tsgl}.
+
+This means that {\ttfamily test\+Alpha\+Rectangle} depends on the {\ttfamily tsgl} project and won\textquotesingle{}t build until after the {\ttfamily tsgl} project has been built.
+
+Now, go into the {\ttfamily lib} folder inside of the cloned T\+S\+GL folder.
+
+Copy over the {\ttfamily freetype6.\+dll} and {\ttfamily zlib1.\+dll} files over to the {\ttfamily Debug} folder inside of the cloned T\+S\+GL workspace.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{testAlphaRectangle```\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{Moment of truth again. Clean the solution (```Right-\/click on Solution 'tsgl' -\/> Clean Solution```).}
+\DoxyCodeLine{}
+\DoxyCodeLine{Now, build it. (```Right-\/click on Solution 'tsgl' -\/> Build Solution```).}
+\DoxyCodeLine{}
+\DoxyCodeLine{To run ```testAlphaRectangle```, right-\/click on it -\/> ```Debug``` -\/> ```Start new instance```.}
+\DoxyCodeLine{}
+\DoxyCodeLine{If you see a screen that says ```Fancy Rectangles``` pop up, then congrats! You integrated the first test project into the main GitHub repo.}
+\DoxyCodeLine{}
+\DoxyCodeLine{Now, you have to repeat this process ***40*** (at the time of this writing) times. }
+\DoxyCodeLine{}
+\DoxyCodeLine{The general pattern for adding a new project is:}
+\DoxyCodeLine{}
+\DoxyCodeLine{1). Add a new project to the ```tsgl``` solution.}
+\DoxyCodeLine{    }
+\DoxyCodeLine{   * ```Right-\/click -\/> Add -\/> New Project```.}
+\DoxyCodeLine{   * Choose ```Visual C++```, then ```Empty Project```.}
+\DoxyCodeLine{   * Call it ```test*``` (replacing ```*``` with the name of the ```.cpp``` file associated with the TSGL test) and place it in the ```VS****``` folder inside of the cloned TSGL workspace.}
+\DoxyCodeLine{}
+\DoxyCodeLine{2). Go to the ```VS****``` folder, and into the newly added project folder.}
+\DoxyCodeLine{}
+\DoxyCodeLine{3). Copy all files to the ```VS****``` directory in the cloned TSGL workspace, and delete the project folder from the ```VS****``` folder.}
+\DoxyCodeLine{}
+\DoxyCodeLine{4). Remove the deleted project from the ```tsgl``` solution, and add the copied one that's in the ```VS****``` folder.}
+\DoxyCodeLine{    }
+\DoxyCodeLine{   * ```Right-\/click -\/> Add -\/> Existing Project```.}
+\DoxyCodeLine{   * Choose the project that's in the ```VS****``` folder inside of the cloned TSGL folder.}
+\DoxyCodeLine{}
+\DoxyCodeLine{5). Add the necessary ```.cpp``` and ```.h``` files to the project.}
+\DoxyCodeLine{  }
+\DoxyCodeLine{   * ```Right-\/click -\/> Add -\/> Existing Item```.}
+\DoxyCodeLine{   * The files should be in the ```src/tests/``` folder inside of the cloned TSGL workspace.}
+\DoxyCodeLine{}
+\DoxyCodeLine{6). Add the ```testProperties``` sheet to the project.}
+\DoxyCodeLine{   }
+\DoxyCodeLine{   * ```View -\/> Other Windows -\/> Property Manager```.}
+\DoxyCodeLine{   * ```Right-\/click on the project -\/> Add Existing Property Sheet```, and add ```testPropertie}
+\end{DoxyCode}
+ \begin{DoxyVerb}    (which should be inside of the cloned TSGL workspace folder).
+\end{DoxyVerb}
+
+\begin{DoxyItemize}
+\item {\ttfamily View -\/$>$ Solution Explorer}.
+\end{DoxyItemize}
+
+7). Make sure the {\ttfamily Properties} are correct.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md108}{}\doxysubsubsection{General\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md108}
+
+\begin{DoxyItemize}
+\item {\ttfamily Target Platform\+:} 10.\+0.\+10586.\+0 (or 8.\+1 if you don\textquotesingle{}t have the Windows 10 S\+DK).
+\item {\ttfamily Intermediate Directory\+:} \$(Target\+Name)\textbackslash{}
+\item {\ttfamily Platform Toolset\+:} Whatever version of Visual Studio that you are currently working in.
+\end{DoxyItemize}
+
+Click {\ttfamily Apply}.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md109}{}\doxysubsubsection{V\+C++ Directories\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md109}
+
+\begin{DoxyItemize}
+\item {\ttfamily Include Directories\+:} ;;
+\item {\ttfamily Library Directories\+:} ;;
+\end{DoxyItemize}
+
+Click {\ttfamily Apply}.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md110}{}\doxysubsubsection{C/\+C++\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md110}
+
+\begin{DoxyItemize}
+\item Under {\ttfamily Language\+:}
+\begin{DoxyItemize}
+\item {\ttfamily Open MP Support\+:} Yes (/openmp)
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Click {\ttfamily Apply}.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md111}{}\doxysubsubsection{Linker\+:}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md111}
+
+\begin{DoxyItemize}
+\item Under {\ttfamily Input\+:}
+\begin{DoxyItemize}
+\item {\ttfamily Additional Dependencies\+:} tsgl.\+lib;freeglutd.\+lib;freetype.\+lib;glew32sd.\+lib;glfw3.\+lib;\%(Additional\+Dependencies)
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Click {\ttfamily Apply}, then {\ttfamily Ok}.
+
+8). Add {\ttfamily tsgl} as a {\ttfamily Project Dependency}.
+
+
+\begin{DoxyItemize}
+\item {\ttfamily Right-\/click on the project -\/$>$ Build Dependencies -\/$>$ Project Dependencies}
+\item Check the {\ttfamily tsgl} box and click {\ttfamily Ok}.
+\end{DoxyItemize}
+
+9). Rebuild the solution.
+
+10). Run the new project!
+
+
+\begin{DoxyItemize}
+\item {\ttfamily Right-\/click on the project -\/$>$ Debug -\/$>$ Start new instance}
+\end{DoxyItemize}
+
+11). Repeat until no more projects need to be added.
+
+List of projects that have to be added (at the time of this writing)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ \{testAlphaRectangle```,\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{As mentioned, some project require extra files. These are:}
+\DoxyCodeLine{}
+\DoxyCodeLine{+ ```testConway``` -\/> ```LifeFarm.h```, ```LifeFarm.cp}
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily test\+Inverter} -\/$>$ {\ttfamily Image\+Inverter.\+h}, {\ttfamily Image\+Inverter.\+cpp}
+\item {\ttfamily test\+Langton} -\/$>$ {\ttfamily \mbox{\hyperlink{_ant_farm_8h_source}{Ant\+Farm.\+h}}}, {\ttfamily \mbox{\hyperlink{_langton_ant_8h_source}{Langton\+Ant.\+h}}}, {\ttfamily Ant\+Farm.\+cpp}, {\ttfamily Langton\+Ant.\+cpp}
+\item {\ttfamily test\+Mandelbrot} -\/$>$ {\ttfamily \mbox{\hyperlink{_buddhabrot_8h_source}{Buddhabrot.\+h}}}, {\ttfamily \mbox{\hyperlink{_gradient_mandelbrot_8h_source}{Gradient\+Mandelbrot.\+h}}}, {\ttfamily \mbox{\hyperlink{_julia_8h_source}{Julia.\+h}}}, {\ttfamily \mbox{\hyperlink{_mandelbrot_8h_source}{Mandelbrot.\+h}}}, {\ttfamily \mbox{\hyperlink{_nova_8h_source}{Nova.\+h}}}, {\ttfamily Buddhabrot.\+cpp}, {\ttfamily Gradient\+Mandelbrot.\+cpp}, {\ttfamily Julia.\+cpp}, {\ttfamily Mandelbrot.\+cpp}, {\ttfamily Nova.\+cpp}
+\item {\ttfamily test\+Pong} -\/$>$ {\ttfamily \mbox{\hyperlink{_ball_8h_source}{Ball.\+h}}}, {\ttfamily \mbox{\hyperlink{_paddle_8h_source}{Paddle.\+h}}}, {\ttfamily \mbox{\hyperlink{_pong_8h_source}{Pong.\+h}}}, {\ttfamily Ball.\+cpp}, {\ttfamily Paddle.\+cpp}, {\ttfamily Pong.\+cpp}
+\item {\ttfamily test\+Sea\+Urchin} -\/$>$ {\ttfamily \mbox{\hyperlink{_sea_urchin_8h_source}{Sea\+Urchin.\+h}}}, {\ttfamily Sea\+Urchin.\+cpp}
+\item {\ttfamily test\+Voronoi} -\/$>$ {\ttfamily \mbox{\hyperlink{_shaded_voronoi_8h_source}{Shaded\+Voronoi.\+h}}}, {\ttfamily \mbox{\hyperlink{_voronoi_8h_source}{Voronoi.\+h}}}, {\ttfamily Shaded\+Voronoi.\+cpp}, {\ttfamily Voronoi.\+cpp}
+\end{DoxyItemize}
+
+They are located within the {\ttfamily src/tests} folder, inside of the directory that has the name of the test.
+
+(Example\+: {\ttfamily test\+Mandelbrot} -\/$>$ {\ttfamily $\ast$.h} \&\& \`{}{\ttfamily $\ast$.cpp} are inside of {\ttfamily \mbox{\hyperlink{class_mandelbrot}{Mandelbrot}}}).
+
+When you get to those tests, just add those {\ttfamily .h} and {\ttfamily .cpp} files as you would add the {\ttfamily test$\ast$.cpp} file. ({\ttfamily Right-\/click on the project -\/$>$ Add -\/$>$ Existing Item}, then add the files.)
+
+Once you have all the tests added, then you are finished!
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md113}{}\doxysubsection{$\vert$ Finishing up $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md113}
+1). Create a new {\ttfamily win\+V\+S$\ast$$\ast$$\ast$$\ast$} folder (replacing {\ttfamily $\ast$$\ast$$\ast$$\ast$} with the VS version number) inside of the cloned T\+S\+GL workspace folder.
+
+2). Move the {\ttfamily vs$\ast$$\ast$$\ast$$\ast$} folder into the {\ttfamily win\+V\+S$\ast$$\ast$$\ast$$\ast$} folder.
+
+3). Delete the {\ttfamily include} and {\ttfamily lib} folders.
+
+4). Move the {\ttfamily Debug} folder into the {\ttfamily win\+V\+S$\ast$$\ast$$\ast$$\ast$} folder (the one inside of the cloned T\+S\+GL workspace folder).
+
+5). Move the {\ttfamily tsgl} solution and {\ttfamily tsgl} project files into the {\ttfamily win\+V\+S$\ast$$\ast$$\ast$$\ast$} folder.
+
+6). Move the {\ttfamily test\+Properties} sheet into the {\ttfamily win\+V\+S$\ast$$\ast$$\ast$$\ast$} folder.
+
+7). Move the {\ttfamily readmetests.\+txt} and {\ttfamily runtests.\+bat} files out of the {\ttfamily windows} folder and into the {\ttfamily win\+V\+S$\ast$$\ast$$\ast$$\ast$} folder.
+
+Now, let\textquotesingle{}s do a dry-\/run install of T\+S\+GL B\+E\+F\+O\+RE pushing your changes.
+
+If you haven\textquotesingle{}t already, please read \mbox{[}\mbox{[}Creating New Windows Installer\mbox{]}\mbox{]} {\itshape B\+E\+F\+O\+RE} continuing.
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md115}{}\doxysubsection{$\vert$ Test run $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md115}
+1). Unzip a fresh {\ttfamily T\+S\+G\+L-\/master} folder (the one downloaded from Git\+Hub).
+
+2). Copy over the {\ttfamily win\+V\+S$\ast$$\ast$$\ast$$\ast$} folder and installer from your cloned T\+S\+GL workspace folder over to the freshly unzipped {\ttfamily T\+S\+G\+L-\/master} folder.
+
+3). As you would normally do, run the new installer from the freshly unzipped {\ttfamily T\+S\+G\+L-\/master} folder. Hopefully, the new {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} components will be in the correct places.
+
+Fire up the {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} solution, make sure that {\ttfamily Debug} is {\ttfamily x86}, and {\ttfamily Rebuild} the solution.
+
+Run a test, any test. They {\itshape A\+LL} should work.
+
+If they do, then congrats! You have successfully created a new VS solution for T\+S\+GL.
+
+Be sure to update \href{https://github.com/Calvin-CS/TSGL/blob/master/readMeWindows.txt}{\texttt{ read\+Me\+Windows.\+txt}} afterwards to include the new VS version!
+
+\DoxyHorRuler{0}
+ \hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md117}{}\doxysubsection{$\vert$ M\+I\+S\+C $\vert$}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__new-_visual-_studio-_versions_autotoc_md117}
+{\itshape {\bfseries{N\+O\+TE}}}\+: Always wait until VS says \char`\"{}\+Ready\char`\"{} at the bottom left corner when adding projects, building, etc...
+
+{\itshape {\bfseries{N\+O\+TE\+:}}} Delete the {\ttfamily x64} folders from the {\ttfamily Property Manager} section for {\itshape A\+LL} projects. Delete {\ttfamily .VC} files (if you can).
+
+{\itshape {\bfseries{N\+O\+TE\+:}}} Delete the {\ttfamily Debug} folder from the V\+S$\ast$$\ast$$\ast$$\ast$ folder.
+
+{\itshape {\bfseries{N\+O\+TE\+:}}} If you ever want to make an edit to the solution\+:
+
+1). Move the hidden {\ttfamily .suo} file into {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} file and call it {\ttfamily tsgl.\+v$\ast$$\ast$}, replacing {\ttfamily $\ast$$\ast$} with whatever toolset version you are using. (It\textquotesingle{}ll be in a hidden folder called {\ttfamily vs}, inside of the cloned T\+S\+GL workspace folder.)
+
+2). Take the {\ttfamily include} and {\ttfamily lib} folders from an unzipped {\ttfamily T\+S\+G\+L-\/master} folder (that\textquotesingle{}s been installed), and place them inside of the cloned T\+S\+GL workspace folder.
+
+3). Then, move the {\ttfamily V\+S$\ast$$\ast$$\ast$$\ast$} folder, the {\ttfamily tsgl} solution and project folders, {\ttfamily tsgl.\+v$\ast$$\ast$.suo} file, and {\ttfamily test\+Properties} sheet out of the {\ttfamily win\+V\+S$\ast$$\ast$$\ast$$\ast$} folder and into the cloned T\+S\+GL workspace.
+
+4). Make as many edits to your heart\textquotesingle{}s content.
+
+{\itshape {\bfseries{P\+L\+E\+A\+SE}}} update this document if you come across new links, or if there\textquotesingle{}s missing/false information. 

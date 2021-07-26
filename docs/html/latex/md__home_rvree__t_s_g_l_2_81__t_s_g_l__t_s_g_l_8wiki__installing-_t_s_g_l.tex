@@ -1,0 +1,73 @@
+As of summer 2016, there are two main ways that you can install T\+S\+GL\+:
+
+
+\begin{DoxyItemize}
+\item via a binary package {\itshape {\bfseries{(recommended)}}}.
+\item directly from source.
+\end{DoxyItemize}
+
+In essence, the binary packages depend on a laundry list of dependencies.
+
+The same is true when you install from source.
+
+However, the three main dependencies are\+:
+
+
+\begin{DoxyItemize}
+\item \href{https://www.freetype.org/download.html}{\texttt{ Free\+Type}}
+\item \href{https://www.glfw.org/download.html}{\texttt{ G\+L\+FW}}
+\item \href{https://downloads.sourceforge.net/project/glew/glew/1.12.0/glew-1.12.0.zip}{\texttt{ G\+L\+EW}}
+\end{DoxyItemize}
+
+These, along with the other dependencies ({\ttfamily doxygen}, development header files, ...), are installed along with T\+S\+GL regardless of which method you choose.
+
+When installing T\+S\+GL using a binary package on Ubuntu \& Fedora, the following is true\+:
+
+
+\begin{DoxyItemize}
+\item Debian/\+Ubuntu\+:
+\begin{DoxyItemize}
+\item The Debian packages install {\ttfamily libfreetype6} and {\ttfamily libfreetype6-\/dev}. This resolves the Free\+Type dependency.
+\item The Debian packages install {\ttfamily libglew-\/dev}. This resolves the G\+L\+EW dependency.
+\item A packaged version of the {\ttfamily G\+L\+FW} library is installed along with the T\+S\+GL Debian packages. This resolves the G\+L\+FW dependency.
+\item Please be sure to have {\itshape {\bfseries{at least Open\+GL 3.\+0 or greater}}} on your machine. You can update your graphics drivers by typing the following command\+: {\ttfamily sudo ubuntu-\/drivers autoinstall}. If that does not work, there are plenty of online tutorials which should help you.
+\end{DoxyItemize}
+\item Fedora/\+R\+PM\+:
+\begin{DoxyItemize}
+\item The R\+PM package installs {\ttfamily freetype} and {\ttfamily freetype-\/devel}. This resolves the Free\+Type dependency.
+\item The R\+PM package installs {\ttfamily glew} and {\ttfamily glew-\/devel}. This resolves the G\+L\+EW dependency.
+\item A packaged version of the {\ttfamily G\+L\+FW} library (named {\ttfamily glfw\+T\+S\+GL}) is also installed along with T\+S\+GL. This resolves the G\+L\+FW dependency.
+\item As with the Debian packages, please be sure to have {\itshape {\bfseries{at least Open\+GL 3.\+0 or greater}}} on your machine!
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Given this, let\textquotesingle{}s take a closer look at the ways you can install T\+S\+GL.\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__installing-_t_s_g_l_autotoc_md92}{}\doxysubsection{Install T\+S\+G\+L From Binary Package}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__installing-_t_s_g_l_autotoc_md92}
+Please see the respective page for you OS\+:
+
+
+\begin{DoxyItemize}
+\item Linux
+\begin{DoxyItemize}
+\item \href{https://github.com/Calvin-CS/TSGL/wiki/Debian-\%28Aptitude\%29}{\texttt{ Debian/\+Ubuntu}}
+\item \href{https://github.com/Calvin-CS/TSGL/wiki/RPM}{\texttt{ Fedora/\+R\+PM}}
+\end{DoxyItemize}
+\item Mac\+OS X
+\begin{DoxyItemize}
+\item \href{https://github.com/Calvin-CS/TSGL/wiki/MacOS-X}{\texttt{ Mac\+OS X}}
+\end{DoxyItemize}
+\item \href{https://github.com/Calvin-CS/TSGL/blob/master/readMeWindows.txt}{\texttt{ Windows}}
+\end{DoxyItemize}\hypertarget{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__installing-_t_s_g_l_autotoc_md93}{}\doxysubsection{Install T\+S\+G\+L From Source}\label{md__home_rvree__t_s_g_l_2_81__t_s_g_l__t_s_g_l_8wiki__installing-_t_s_g_l_autotoc_md93}
+Use the appropriate script for your OS\+:
+
+
+\begin{DoxyItemize}
+\item Linux
+\begin{DoxyItemize}
+\item Ubuntu\+: \href{https://github.com/Calvin-CS/TSGL/blob/master/install-ubuntu.sh}{\texttt{ install-\/ubuntu.\+sh}}
+\item Fedora\+: \href{https://github.com/Calvin-CS/TSGL/blob/master/install-fedora.sh}{\texttt{ install-\/fedora.\+sh}}
+\item Cent\+OS\+: \href{https://github.com/Calvin-CS/TSGL/blob/master/install-centos.sh}{\texttt{ install-\/centos.\+sh}}
+\end{DoxyItemize}
+\item Mac\+OS\+: \href{https://github.com/Calvin-CS/TSGL/blob/master/install-mac}{\texttt{ install-\/mac}}
+\end{DoxyItemize}
+
+(There are currently {\itshape {\bfseries{NO}}} source install scripts for Windows). 
