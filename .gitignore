@@ -41,3 +41,6 @@ Image*.bmp
 
 # Eclipse stuff
 .metadata
+
+# Installers folder
+libtsgl.*
