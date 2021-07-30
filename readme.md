@@ -3,7 +3,7 @@ TSGL
 
 Thread Safe Graphics Library
 
-You can generate Doxygen locally using 'make docs', or view the [TSGL API here](http://calvin-cs.github.io/TSGL/html/index.html).
+You can generate Doxygen locally using 'make docs', or view the [TSGL API here](http://calvin-cs.github.io/TSGL/).
 
 Contact us with any questions you have.
 Dr. Joel Adams, adams@calvin.edu
