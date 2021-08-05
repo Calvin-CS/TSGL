@@ -1,7 +1,9 @@
 //
-//  tutorial.cpp
+//  LCS.cpp
+//
 //  Created by Sarah Parsons on 11/23/19.
 //
+//  Updated by Grey Ballard on 7/31/21
 //
 
 #include <tsgl.h>
@@ -16,450 +18,183 @@
 using namespace tsgl;
 using namespace std;
 
-/**
-* Generate random string of capital and lowercase letters given desired length of string
-*
-* @param s pointer to character array
-* @param len integer of desired length of string
-*
- * @return a randomly generated string of length len
-*/
-string gen_random(char *s, const int len) {
-    static const char alphanum[] =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    "abcdefghijklmnopqrstuvwxyz";
-
+// function for generating random string of length len from given alphabet
+string gen_random(int len) {
+    string s = "", alphabet = "ACTG";
     for (int i = 0; i < len; ++i) {
-        s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
+        s += alphabet[rand() % alphabet.length()];
     }
-    s[len] = 0;
-    string a = s;
-    return a;
-
+    return s;
 }
 
 int main(int argc, char* argv[]) {
-    // "Yes"/"No" path parameter for outputting trace at onset of program; default is "No"
-    string path = (argc > 4) ? argv[4] : "No";
 
-    //construct canvas with a width of 1200 and height of 700, white background color
-    Canvas c(0, 0, 1200, 700, "LCS Problem");
-    c.setBackgroundColor(WHITE);
+    // parse inputs
+    // usage: ./LCS THREADS CAPACITY ITEMS TRACEPATH
+    int num_threads = (argc > 1) ? atoi(argv[1]) : 2; 
+    string x = (argc > 2) ? argv[2] : gen_random(5);
+    string y = (argc > 3) ? argv[3] : gen_random(5);
+    string path = (argc > 4) ? argv[4] : "No";
+    
+    // print parameters to terminal
+    cout << "1st string: " << x << endl;
+    cout << "2nd string: " << y << endl;
+    int m = x.length(), n = y.length();
+    cout << "# of Threads: " << num_threads << endl;
+    omp_set_num_threads(num_threads);
+    cout << "Trace path? " << path << endl; 
+    std::cout << "# Diagonals: " << m+n-1 << endl << endl;
+    
+    
+    // allocate memory for DP table
+    int** LCS = (int**) malloc((m+1) * sizeof(int*));
+    for(int i = 0; i <= m; i++) {
+        LCS[i] = (int*) malloc((n+1) * sizeof(int));
+    }
+    
+    // initialize 1st row and column to 0s
+    for(int i = 0; i <= m; i++)
+        LCS[i][0] = 0;
+    for(int j = 0; j <= n; j++)
+        LCS[0][j] = 0; 
+
+    // construct canvas 
+    Canvas c(0, 0, 1200, 800, "0-1 Knapsack Problem",WHITE);
+    c.start();   
 
     //Create a Background ptr to draw 2D Visualizations
-    Background *bgp = c.getBackground();
-
-    //c.setFont("/assets/freefont/FreeMonoBold.otf");
-
-    // initialize button for keyboard interaction used to trace to false
-    bool leftMouseButtonPressed = false;
-
-    //Bind the left mouse button so that when it's pressed
-    //the boolean is set to true.
-    c.bindToButton(TSGL_A, TSGL_PRESS,
-                   [&leftMouseButtonPressed]() {
-                       leftMouseButtonPressed = true;
-                   }
-                   );
-
-    //Bind the left mouse button again so that when it's released
-    //the boolean is set to false.
-    c.bindToButton(TSGL_A, TSGL_RELEASE,
-                   [&leftMouseButtonPressed]() {
-                       leftMouseButtonPressed = false;
-                   }
-                   );
-
-    // define parameters for 2D grid size (500 x 500)
-    c.start();
-    int x1 = -100;
-    int x2 = 400;
-    int y1 = -255;
-    int y2 = -250;
-    int size = x2 - x1;
-
-    // draw title and 2D grid (lime) to canvas
-    bgp->drawText(-50,300,0,"LCS Problem",FONT,30,0,0,0,RED);
-    //c.drawRectangle(x1,y1,x2,y2,LIME,true);
-
-    // set number of threads as a parameter from command line; default is 2
-    int np = (argc > 1) ? atoi(argv[1]) : 2;
-    omp_set_num_threads(np);
-
-    // draw # threads to canvas
-    bgp->drawText(-350,210,0,"# Threads: " + to_string(np),FONT,22,0,0,0,BLACK);
-
-    // used to generate random strings, if preferred
-    const int str_len = 5;
-    char s[str_len];
-    char p[str_len];
-    string a, b;
-
-    // customize strings, if desired, via command line (otherwise, default is 'Happy' and 'Holidays!')
-    a = (argc > 2) ? argv[2] : gen_random(s,str_len);
-    b = (argc > 3) ? argv[3] : gen_random(p, str_len);
-
-    std::cout<<"a: " << a << endl;
-    std::cout<<"b: " << b << endl;
-
-
-    const int length_a = a.size();
-    const int length_b = b.size();
-    std::cout << "length_a: " << length_a << "\n";
-    std::cout << "length_b: " << length_b << "\n";
-
-    // determine max string, min string
-    string max_str;
-    string min_str;
-    if(length_a > length_b){
-        max_str = a;
-        min_str = b;}
-    else {
-        max_str = b;
-        min_str = a;}
-
-
-    double tic, seconds;
-    tic = omp_get_wtime();
-
-    // draw strings to canvas
-    bgp->drawText(-350,300,0,"String a: " + a,FONT,22,0,0,0,BLACK);
-    bgp->drawText(-350,270,0,"String b: " + b,FONT,22,0,0,0,BLACK);
-
-    // compute the number of diagonals
-    int num_diag = length_a+length_b-1;
-    std::cout << "# Diagonals: " << num_diag << endl;
-    bgp->drawText(-350,240,0,"# Diagonals: " + to_string(num_diag),FONT,22,0,0,0,BLACK);
-
-
-    int length;
-    const int max_len = std::max(length_a,length_b);
-    const int min_len = std::min(length_a, length_b);
-
-
-    int rows = min_len + 1;
-    int cols = max_len + 1;
-
-    // define column width and row width based on max and min string lengths
-    int col_wid = size/(max_len);
-    int row_wid = size/(min_len);
-    //cout << col_wid << row_wid << endl;
-
+    Background *bgp = c.getBackground();  
+    
+    // set parameters for drawing table
+    float x1 = -250, x2 = 250, y1 = -250, y2 = 250, offset = 30; 
+    float size = x2-x1, row_wid = size / m, col_wid = size / n; // for table entries
+    float cr_wid = row_wid/2 < offset ? row_wid/2 : offset; // for circles around x chars
+    float cc_wid = col_wid/2 < offset ? col_wid/2 : offset; // for circles around y chars
+    
+    // draw title and parameters to canvas   
+    bgp->drawText(0, y2+75, 0, "LCS Problem", FONT,30,0,0,0,RED);
+    bgp->drawText(x1-200, y2, 0, "# Threads: " + to_string(num_threads), FONT,22,0,0,0,BLACK);
+    bgp->drawText(x1-200, y2-40, 0, "# Diagonals: " + to_string(m+n-1),FONT,22,0,0,0,BLACK);
+    bgp->drawText(0, y1-50, 0, "String x: " + x, FONT,22,0,0,0,BLACK);
+    bgp->drawText(0, y1-90, 0, "String y: " + y, FONT,22,0,0,0,BLACK);
+    
+    
     // draw x- and y-axes and lines within grid based on column and row widths
-    for (int i=0; i<min_len; i++){
-        bgp->drawLine(x1,y2+((i)*(row_wid)),0,x2,y2+((i)*(row_wid)),0,0,0,0,BLACK);
+    for (int i=0; i<m; i++){
+        bgp->drawLine(x1,y2-i*row_wid,0,x2,y2-i*row_wid,0,0,0,0,BLACK);
+        bgp->drawText(x1-30,y2-(i+0.5)*row_wid,0,to_string(x[i]),FONT,23,0,0,0,RED);
     }
-
-    for (int j=0; j<max_len; j++){
+    bgp->drawLine(x1,y1,0,x2,y1,0,0,0,0,BLACK);
+    
+    for (int j=0; j<n; j++){
         bgp->drawLine(x1+(j*col_wid),y1,0,x1+(j*col_wid),y2,0,0,0,0,BLACK);
+        bgp->drawText(x1+(j+0.5)*col_wid,y2+30,0,to_string(y[j]),FONT,23,0,0,0,RED);
     }
-
-    //Top String
-    for(int i=0; i<max_len; i++) {
-        bgp->drawText(x1+((i-0.5+1)*col_wid),y2-(row_wid/8),0,to_string(max_str[i]),FONT,23,0,0,0,RED);
-    }
-
-    //Left String
-    for(int r=0;r<min_len;r++){
-        bgp->drawText(x1-(col_wid/3),y2+((r-0.5+1)*row_wid),0,to_string(min_str[r]),FONT,23,0,0,0,RED);
-    }
-
-
-
-    //int **Diag2 = new int[diag_rows][diag_cols];
-    //int Diag2[diag_rows][diag_cols];
-
-    // initialize Diag2 vector to 0s
-    vector<vector<int>> Diag2(rows,vector<int>(cols));
-    for(int l=0;l<min_len+1;l++){
-        for(int u=0;u<max_len+1;u++){
-            Diag2[l][u]=0;
+    bgp->drawLine(x2,y1,0,x2,y2,0,0,0,0,BLACK);
+    
+    // fill in table one anti-diagonal at a time
+    double seconds, tic = omp_get_wtime();
+    int start_row, diag_length;
+    // loop over anti-diagonals
+    for(int d = 1; d < m+n; d++) {
+        // determine starting row and length of anti-diagonal
+        if(d <= m) {
+            start_row = d;
+            diag_length = d < n ? d : n;
+        } else {
+            start_row = m;
+            diag_length = d < n ? m : m+n-d;
         }
-    }
-
-    // Check if canvas is open, Iterate through each diagonal and parallelize the computations of each cell in the diagonal, compute LCS of every cell, store in Diag2, draw value to canvas and draw trace lines/circles if path parameter = 'Yes'
-    if(c.isOpen()){
-    for(int d=1; d < num_diag+1; d++){
-        //changed to compare to max length of strings, not length_a
-        if(d <= max_len){
-            length = std::min(d,min_len);
-        }
-        else{length = length_a+length_b-d;}
-        // parallelize the cells for each diagonal
+        // parallelize over entries in anti-diagonals
         #pragma omp parallel for
-        for(int p = 1; p < length+1; p++){
-            // diagonal is in the upper triangle
-            if(d <= min_len) {
-                int x = d-p+1;
-                int y = p;
-                if(x<=0 || y<=0){Diag2[x][y]=0;
-                   c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);}
-                else if(a[x-1]==b[y-1]) {
-                    Diag2[x][y] = 1 + Diag2[x - 1][y - 1];
-                    if(path == "Yes"){
-                        c.sleepFor(1);
-                        bgp->drawCircle(x1+((y-1)*(col_wid)),y2+((x-1)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        c.sleepFor(1);
-                        bgp->drawLine(x1+((y-1)*(col_wid)),y2+((x-1)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-                    }
-
-                    c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);
-                                    }
-                else {
-                    Diag2[x][y] = std::max(Diag2[x-1][y], Diag2[x][y - 1]);
-                    c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);
-                    if(path == "Yes"){
-                        if(std::max(Diag2[x-1][y], Diag2[x][y - 1]) == Diag2[x][y-1]){
-                            bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                            bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-                        }
-                        else{
-                            bgp->drawLine((x1+((y-0.5)*(col_wid))),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-                            bgp->drawCircle(x1+((y-.5)*(col_wid)),y2+((x- 1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        }
-                        bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                    }
-                }
-
+        for(int k = 1; k <= diag_length; k++) {
+            int i = start_row - k + 1;
+            int j = d - start_row + k;
+            if(x[i-1] == y[j-1]) {
+                LCS[i][j] = LCS[i-1][j-1] + 1;
+            } else {
+                LCS[i][j] = LCS[i-1][j] > LCS[i][j-1] ? LCS[i-1][j] : LCS[i][j-1];
             }
-            // diagonal is in the middle of the grid
-            else if(min_len < d && d <= max_len){
-                int x = d-(d-min_len + p)+1;
-                int y = d - min_len + p;
-                //std::cout << a[x-1] << b[y-1] << endl;
-                if(x<=0 || y<=0){Diag2[x][y]=0;
-                    c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);}
-                else if(a[x-1]==b[y-1]) {
-                    Diag2[x][y] = 1 + Diag2[x - 1][y - 1];
-                    if(path == "Yes"){
-                        c.sleepFor(1);
-                        bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        c.sleepFor(1);
-                        bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-                    }
-
-                    c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);
-                                    }
-                else {
-                    Diag2[x][y] = std::max(Diag2[x-1][y], Diag2[x][y - 1]);
-                    c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);
-                    if(path == "Yes"){
-                        if(std::max(Diag2[x-1][y], Diag2[x][y - 1]) == Diag2[x][y-1]){
-                            bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                            bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-                        }
-                        else{
-                            bgp->drawLine((x1+((y-0.5)*(col_wid))),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-                            bgp->drawCircle(x1+((y-.5)*(col_wid)),y2+((x- 1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        }
-                        bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                    }
-
-                }
-
-            }
-            // diagonal is in the lower triangle
-            else{
-                int x = min_len-p+1;
-                int y = d-min_len+p;
-                //std::cout << a[x-1] << b[y-1] << endl;
-                if(x<=0 || y<=0){Diag2[x][y]=0;
-                    c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);}
-                else if(a[x-1]==b[y-1]) {
-                    Diag2[x][y] = 1 + Diag2[x - 1][y - 1];
-                    if(path == "Yes"){
-                        c.sleepFor(1);
-                        bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        c.sleepFor(1);
-                        bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-                    }
-                    c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);
-
-                }
-                else {
-                    Diag2[x][y] = std::max(Diag2[x - 1][y], Diag2[x][y - 1]);
-                    c.sleepFor(1);
-                    bgp->drawText((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,to_string(Diag2[x][y]),FONT,20,0,0,0,BLACK);
-                    if(path == "Yes"){
-                        if(std::max(Diag2[x-1][y], Diag2[x][y - 1]) == Diag2[x][y-1]){
-                            bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                            bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-                        }
-                        else{
-                            bgp->drawLine((x1+((y-0.5)*(col_wid))),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-                            bgp->drawCircle(x1+((y-.5)*(col_wid)),y2+((x- 1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                        }
-                        bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                    }
-                }
-
-            }
+            // draw value in entry after pause
+            c.sleepFor(1);
+            bgp->drawText(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,to_string(LCS[i][j]),FONT,20,0,0,0,BLACK);
         }
     }
-    }
-    // draw LCS Value to canvas
-    bgp->drawText(-350,180,0,"LCS Value: " + to_string(Diag2[min_len][max_len]),FONT,24,0,0,0,RED);
-
-    std::cout << endl;
-    std::cout << "LCS Value: " << Diag2[min_len][max_len] << endl;
-    std::cout << endl;
-
     seconds = omp_get_wtime() - tic;
-    string seconds_str = to_string(seconds);
-    cout << "time: " << seconds << " seconds\n";
-    //c.drawText("Time: " + seconds_str.substr(0,seconds_str.find(".")) + seconds_str.substr(seconds_str.find("."), seconds_str.find(".")+1) + " seconds", 75, 360, 18);
-
-
-    // trace LCS Value upon user keying 'A' if trace not already drawn
-    while(c.isOpen()){
-        c.sleep();
-        if(leftMouseButtonPressed==true && path == "No"){
-            //Iterate through each diagonal and parallelize the computations of each cell in the diagonal, compute LCS of every cell, store in Diag2, draw value to canvas and draw trace lines/circles
-                for(int d=1; d < num_diag+1; d++){
-                    if(d <= max_len){
-                        length = std::min(d,min_len);
-                    }
-                    else{length = length_a+length_b-d;}
-                    #pragma omp parallel for
-                    for(int p = 1; p < length+1; p++){
-                        if(d <= min_len) {
-                            int x = d-p+1;
-                            int y = p;
-
-                            if(a[x-1]==b[y-1]) {
-                                Diag2[x][y] = 1 + Diag2[x - 1][y - 1];
-                                bgp->drawCircle(x1+((y-1)*(col_wid)),y2+((x-1)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                c.sleepFor(1);
-                                bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                c.sleepFor(1);
-                                bgp->drawLine(x1+((y-1)*(col_wid)),y2+((x-1)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-
-                            }
-
-                            else {
-                                Diag2[x][y] = std::max(Diag2[x-1][y], Diag2[x][y - 1]);
-                                if(std::max(Diag2[x-1][y], Diag2[x][y - 1]) == Diag2[x][y-1]){
-                                    bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-                                }
-                                else{
-                                    bgp->drawCircle(x1+((y-.5)*(col_wid)),y2+((x- 1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawLine((x1+((y-0.5)*(col_wid))),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-                                }
-
-
-                            }
-                        }
-
-
-                        else if(min_len < d && d <= max_len){
-                            int x = d-(d-min_len + p)+1;
-                            int y = d - min_len + p;
-
-                            if(a[x-1]==b[y-1]) {
-                                Diag2[x][y] = 1 + Diag2[x - 1][y - 1];
-                                bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                c.sleepFor(1);
-                                bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                c.sleepFor(1);
-                                bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-                            }
-
-
-                            else {
-                                Diag2[x][y] = std::max(Diag2[x-1][y], Diag2[x][y - 1]);
-                                if(std::max(Diag2[x-1][y], Diag2[x][y - 1]) == Diag2[x][y-1]){
-                                    bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-
-                                }
-                                else{
-                                    bgp->drawCircle(x1+((y-.5)*(col_wid)),y2+((x- 1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawLine((x1+((y-0.5)*(col_wid))),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-                                }
-
-
-                            }
-
-                        }
-
-
-                        else{
-                            int x = min_len-p+1;
-                            int y = d-min_len+p;
-
-                            if(a[x-1]==b[y-1]) {
-                                Diag2[x][y] = 1 + Diag2[x - 1][y - 1];
-                                bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                c.sleepFor(1);
-                                bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                c.sleepFor(1);
-                                bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-                            }
-                            else {
-                                Diag2[x][y] = std::max(Diag2[x - 1][y], Diag2[x][y - 1]);
-                                if(std::max(Diag2[x-1][y], Diag2[x][y - 1]) == Diag2[x][y-1]){
-                                    bgp->drawCircle(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawLine(x1+((y-1.5)*(col_wid)),y2+((x-.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-
-                                }
-                                else{
-                                    bgp->drawCircle(x1+((y-.5)*(col_wid)),y2+((x- 1.5)*(row_wid)),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawCircle((x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,(col_wid/6),0,0,0,ColorInt(255,0,0,50));
-                                    c.sleepFor(1);
-                                    bgp->drawLine((x1+((y-0.5)*(col_wid))),y2+((x-1.5)*(row_wid)),0,(x1+((y-0.5)*(col_wid))),(y2+((x-0.5)*(row_wid))),0,0,0,0,RED);
-
-                                }
-
-
-                            }
-
-
-                        }
-                    }
+    
+    
+    // print LCS table
+    for(int i = 0; i <=m; i++) {
+        for(int j = 0; j<=n; j++) 
+            cout << LCS[i][j] << " ";
+        cout << endl;
+    }
+    cout << endl;
+    cout << "LCS Value: " << LCS[m][n] << endl;
+    cout << "Time: " << seconds << endl;
+    
+    // draw LCS Value to canvas
+    bgp->drawText(x1-200, y2-200, 0, "LCS Value: " + to_string(LCS[m][n]), FONT,24,0,0,0,RED);
+    bgp->drawText(x1-200, y2-250, 0, "Time: " + to_string((int) seconds) + " secs", FONT,24,0,0,0,BLACK);
+    
+    // traceback if requested
+    if(path != "No") {
+        int i = m, j = n;
+        // draw ellipse around entry    
+        c.sleepFor(1);    
+        bgp->drawEllipse(x1+(j-.5)*col_wid,y2-(i-.5)*row_wid,0,col_wid/2,row_wid/2,0,0,0,RED);
+        bgp->drawEllipse(x1+(j-.5)*col_wid,y2-(i-.5)*row_wid,0,col_wid/2-2,row_wid/2-2,0,0,0,WHITE);
+        bgp->drawText(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,to_string(LCS[i][j]),FONT,20,0,0,0,BLACK);
+        while(i > 0 && j > 0) {  
+            c.sleepFor(1);
+            // determine previous entry
+            if(x[i-1] == y[j-1]) {
+                // draw circle around character in each string
+                bgp->drawEllipse(x1-30,y2-(i-0.5)*row_wid,0,cr_wid,cr_wid,0,0,0,BLACK);
+                bgp->drawEllipse(x1-30,y2-(i-0.5)*row_wid,0,cr_wid-2,cr_wid-2,0,0,0,WHITE);
+                bgp->drawText(x1-30,y2-(i-0.5)*row_wid,0,to_string(x[i-1]),FONT,23,0,0,0,RED);
+                bgp->drawEllipse(x1+(j-0.5)*col_wid,y2+30,0,cc_wid,cc_wid,0,0,0,BLACK);
+                bgp->drawEllipse(x1+(j-0.5)*col_wid,y2+30,0,cc_wid-2,cc_wid-2,0,0,0,WHITE);
+                bgp->drawText(x1+(j-0.5)*col_wid,y2+30,0,to_string(y[j-1]),FONT,23,0,0,0,RED);
+                if(i > 1 && j > 1) {
+                    // draw diagonal line and redraw previous circle
+                    bgp->drawLine(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,x1+(j-1.5)*col_wid,y2-(i-1.5)*row_wid,0,0,0,0,RED);
+                    bgp->drawEllipse(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,col_wid/2,row_wid/2,0,0,0,RED);
+                    bgp->drawEllipse(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,col_wid/2-2,row_wid/2-2,0,0,0,WHITE);
+                    bgp->drawText(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,to_string(LCS[i][j]),FONT,20,0,0,0,BLACK);
                 }
+                i--; j--;
+            } else {
+                LCS[i-1][j] > LCS[i][j-1] ? i-- : j--;
+            }
+            if(i > 0 && j > 0) {
+                // draw ellipse around entry        
+                bgp->drawEllipse(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,col_wid/2,row_wid/2,0,0,0,RED);
+                bgp->drawEllipse(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,col_wid/2-2,row_wid/2-2,0,0,0,WHITE);
+                bgp->drawText(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,to_string(LCS[i][j]),FONT,20,0,0,0,BLACK);
             }
         }
-
-
-    c.wait();
+        // handle last character
+        /*if(x[i-1] == y[j-1]) {
+            // draw circle around character in each string
+            c.sleepFor(1);
+            bgp->drawEllipse(x1-30,y2-(i-0.5)*row_wid,0,cr_wid,cr_wid,0,0,0,BLACK);
+            bgp->drawEllipse(x1-30,y2-(i-0.5)*row_wid,0,cr_wid-2,cr_wid-2,0,0,0,WHITE);
+            bgp->drawText(x1-30,y2-(i-0.5)*row_wid,0,to_string(x[i-1]),FONT,23,0,0,0,RED);
+            bgp->drawEllipse(x1+(j-0.5)*col_wid,y2+30,0,cc_wid,cc_wid,0,0,0,BLACK);
+            bgp->drawEllipse(x1+(j-0.5)*col_wid,y2+30,0,cc_wid-2,cc_wid-2,0,0,0,WHITE);
+            bgp->drawText(x1+(j-0.5)*col_wid,y2+30,0,to_string(y[j-1]),FONT,23,0,0,0,RED);
+        }*/
+  
+    }
+    
+    // free memory
+    for(int i = 0; i <= m; i++)
+        free(LCS[i]);
+    free(LCS); 
+    
+    c.wait(); // wait for the user to close the canvas
+    
 }
 
 
