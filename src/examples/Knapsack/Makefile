@@ -3,7 +3,7 @@ TARGET := Knapsack
 OBJS := $(TARGET).o
 
 #Compiler, remove command, and OS we're working on
-CC = g++-9
+CC = g++-11
 RM = rm -f
 UNAME := $(shell uname)
 
@@ -14,7 +14,7 @@ ifeq ($(UNAME), Linux)
 	OS_LFLAGS :=
 	OS_INCLUDE :=
 	OS_LDIRS := -L/opt/AMDAPP/lib/x86_64/
-	OS_EXTRA_LIB := -L$(TSGL_HOME)/lib 
+	OS_EXTRA_LIB := -L$(TSGL_HOME)/lib -ltsgl
 	OS_GLFW := glfw
 	OS_GL := -lGL
 	OS_EXTRA_LINK := -Wl,-rpath=$(TSGL_HOME)/lib/
@@ -23,8 +23,8 @@ endif
 #Mac
 ifeq ($(UNAME), Darwin)
 	OS_LFLAGS := -framework Cocoa -framework OpenGl -framework IOKit -framework Corevideo
-	OS_INCLUDE := -I../TSGL/src/TSGL/ 
-	OS_LDIRS := -L../TSGL/lib/
+	OS_INCLUDE :=  
+	OS_LDIRS := 
 	OS_EXTRA_LIB := 
 	OS_GLFW := glfw.3
 	OS_GL :=
@@ -32,19 +32,21 @@ ifeq ($(UNAME), Darwin)
 endif
 
 #Compiler flags
-CXXFLAGS=-c -O3 -g3 \
-    -I$(TSGL_HOME)/include/TSGL/ \
+CXXFLAGS=-c -O3 -g3 -ggdb3 \
+    -I$(TSGL_HOME)/include \
+    -I$(TSGL_HOME)/include/TSGL \
     -I$(TSGL_HOME)/include/freetype2 \
-    -std=c++0x -fopenmp \
+    -std=c++11 -fopenmp \
 
 #Linking flags
 LFLAGS=-o $(TARGET) \
-    -L$(TSGL_HOME)/lib/ \
+    -L$(TSGL_HOME)/lib \
+    $(TSGL_HOME)/lib/libtsgl.a \
 	${OS_EXTRA_LIB} \
     -L/opt/X11/lib \
     ${OS_LDIRS} \
     ${OS_EXTRA_LINK} \
-    -ltsgl -lfreetype \
+    -lfreetype \
     -lGLEW -l${OS_GLFW} \
     -lX11 ${OS_GL} -lXrandr \
     -fopenmp \
