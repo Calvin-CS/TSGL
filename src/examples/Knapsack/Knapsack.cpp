@@ -3,7 +3,7 @@
 //  
 //
 //  Created by Sarah Parsons on 11/23/19.
-//  Last updated by Grey Ballard on 7/31/21.
+//  Last updated by Grey Ballard on 9/18/21.
 //
 
 #include <tsgl.h>
@@ -34,7 +34,10 @@ int main(int argc, char* argv[]) {
     cout << "# of Items: " << items << endl;
     cout << "# of Threads: " << num_threads << endl;
     omp_set_num_threads(num_threads);
-    cout << "Trace path? " << path << endl;    
+    cout << "Trace path? " << path << endl; 
+    
+    // set pause time (secs) to control speed
+    float pause = 1.0;   
     
     // allocate memory
     int* weights = (int*) malloc(items * sizeof(int));
@@ -113,16 +116,20 @@ int main(int argc, char* argv[]) {
             else 
                 knap[k][h] = knap[k][h-1];
             // print value to entry after a pause
-            c.sleepFor(1);
-            bgp->drawText((x1+(h-0.5)*col_wid),(y2-(k+0.5)*row_wid),0,to_string(knap[k][h]),FONT,20,0,0,0,BLACK);
+            c.sleepFor(pause);
+            bgp->drawText((x1+(h-0.5)*col_wid),(y2-(k+0.5)*row_wid),0,to_string(knap[k][h]),FONT,20,0,0,0,Colors::highContrastColor(omp_get_thread_num(),135));
         }
     }
     seconds = omp_get_wtime() - tic;
+    stringstream ss;
+    ss.precision(2);
+    ss << pause * (capacity+1) * items / seconds; // seq time = pause * num_table_entries
 
     // draw Knapsack value and time to canvas
     bgp->drawText(x1-200, y2-200, 0, "Knapsack ", FONT,24,0,0,0,BLACK);
     bgp->drawText(x1-200, y2-240, 0, "Value: " + to_string(knap[capacity][items]), FONT,24,0,0,0,BLACK);
     bgp->drawText(x1-200, y2-320, 0, "Time: " + to_string((int) seconds) + " secs",FONT,24,0,0,0,BLACK);
+    bgp->drawText(x1-200, y2-360, 0, "Speedup: " + ss.str() + "x",FONT,24,0,0,0,BLACK);
 
     //Output Knap array to terminal
     cout << "Knap: " << endl;
@@ -135,7 +142,8 @@ int main(int argc, char* argv[]) {
     cout << endl;
    
     cout << "Knapsack Value: " << knap[capacity][items] << endl;
-    cout << "time: " << seconds << endl;
+    cout << "Time: " << seconds << endl;
+    cout << "Speedup: " << ss.str() << endl;
     cout << endl;
     
     
@@ -144,7 +152,7 @@ int main(int argc, char* argv[]) {
         int k = capacity;
         bool included = false;
         for(int h = items; h > 0; h--) { 
-            c.sleepFor(1); 
+            c.sleepFor(pause); 
             if(included) {
                 // if previous item is included, draw line and two ellipses (with values) over entries
                 bgp->drawLine(x1+((h-.5)*col_wid),y2-(k+0.5)*row_wid,0,x1+((h+.5)*col_wid),y2-(k+weights[h]+0.5)*row_wid,0,0,0,0,RED);
@@ -173,7 +181,7 @@ int main(int argc, char* argv[]) {
         }
         // check if 1st item is included, draw ellipse around it
         if(included) {
-            c.sleepFor(1);
+            c.sleepFor(pause);
             bgp->drawEllipse(x1+0.5*col_wid,y1-30,0,.45*col_wid+2,26,0,0,0,RED);
             bgp->drawEllipse(x1+0.5*col_wid,y1-30,0,.45*col_wid,24,0,0,0,WHITE);
             bgp->drawText(x1+0.5*col_wid,y1-30,0,to_string(1),FONT,20,0,0,0,RED);

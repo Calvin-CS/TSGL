@@ -3,7 +3,7 @@
 //
 //  Created by Sarah Parsons on 11/23/19.
 //
-//  Updated by Grey Ballard on 7/31/21
+//  Updated by Grey Ballard on 9/18/21
 //
 
 #include <tsgl.h>
@@ -45,6 +45,8 @@ int main(int argc, char* argv[]) {
     cout << "Trace path? " << path << endl; 
     std::cout << "# Diagonals: " << m+n-1 << endl << endl;
     
+    // set pause time (secs) to control speed
+    float pause = 1.0;      
     
     // allocate memory for DP table
     int** LCS = (int**) malloc((m+1) * sizeof(int*));
@@ -116,12 +118,14 @@ int main(int argc, char* argv[]) {
                 LCS[i][j] = LCS[i-1][j] > LCS[i][j-1] ? LCS[i-1][j] : LCS[i][j-1];
             }
             // draw value in entry after pause
-            c.sleepFor(1);
-            bgp->drawText(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,to_string(LCS[i][j]),FONT,20,0,0,0,BLACK);
+            c.sleepFor(pause);
+            bgp->drawText(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,to_string(LCS[i][j]),FONT,20,0,0,0,Colors::highContrastColor(omp_get_thread_num(),135));
         }
     }
     seconds = omp_get_wtime() - tic;
-    
+    stringstream ss;
+    ss.precision(2);
+    ss << pause * m * n / seconds; // seq time = pause * num_table_entries
     
     // print LCS table
     for(int i = 0; i <=m; i++) {
@@ -132,21 +136,23 @@ int main(int argc, char* argv[]) {
     cout << endl;
     cout << "LCS Value: " << LCS[m][n] << endl;
     cout << "Time: " << seconds << endl;
+    cout << "Speedup: " << ss.str() << endl;
     
     // draw LCS Value to canvas
     bgp->drawText(x1-200, y2-200, 0, "LCS Value: " + to_string(LCS[m][n]), FONT,24,0,0,0,RED);
     bgp->drawText(x1-200, y2-250, 0, "Time: " + to_string((int) seconds) + " secs", FONT,24,0,0,0,BLACK);
+    bgp->drawText(x1-200, y2-300, 0, "Speedup: " + ss.str() + "x",FONT,24,0,0,0,BLACK);
     
     // traceback if requested
     if(path != "No") {
         int i = m, j = n;
         // draw ellipse around entry    
-        c.sleepFor(1);    
+        c.sleepFor(pause);    
         bgp->drawEllipse(x1+(j-.5)*col_wid,y2-(i-.5)*row_wid,0,col_wid/2,row_wid/2,0,0,0,RED);
         bgp->drawEllipse(x1+(j-.5)*col_wid,y2-(i-.5)*row_wid,0,col_wid/2-2,row_wid/2-2,0,0,0,WHITE);
         bgp->drawText(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,to_string(LCS[i][j]),FONT,20,0,0,0,BLACK);
         while(i > 0 && j > 0) {  
-            c.sleepFor(1);
+            c.sleepFor(pause);
             // determine previous entry
             if(x[i-1] == y[j-1]) {
                 // draw circle around character in each string
@@ -174,17 +180,6 @@ int main(int argc, char* argv[]) {
                 bgp->drawText(x1+(j-0.5)*col_wid,y2-(i-0.5)*row_wid,0,to_string(LCS[i][j]),FONT,20,0,0,0,BLACK);
             }
         }
-        // handle last character
-        /*if(x[i-1] == y[j-1]) {
-            // draw circle around character in each string
-            c.sleepFor(1);
-            bgp->drawEllipse(x1-30,y2-(i-0.5)*row_wid,0,cr_wid,cr_wid,0,0,0,BLACK);
-            bgp->drawEllipse(x1-30,y2-(i-0.5)*row_wid,0,cr_wid-2,cr_wid-2,0,0,0,WHITE);
-            bgp->drawText(x1-30,y2-(i-0.5)*row_wid,0,to_string(x[i-1]),FONT,23,0,0,0,RED);
-            bgp->drawEllipse(x1+(j-0.5)*col_wid,y2+30,0,cc_wid,cc_wid,0,0,0,BLACK);
-            bgp->drawEllipse(x1+(j-0.5)*col_wid,y2+30,0,cc_wid-2,cc_wid-2,0,0,0,WHITE);
-            bgp->drawText(x1+(j-0.5)*col_wid,y2+30,0,to_string(y[j-1]),FONT,23,0,0,0,RED);
-        }*/
   
     }
     
