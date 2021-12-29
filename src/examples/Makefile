@@ -15,7 +15,7 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
  			ForestFire/. \
 			Knapsack/. \
  			Langton/. \
-			LongestCommonSubstring/. \
+			LongestCommonSubsequence/. \
  			Mandelbrot/. \
 			MergeSort/. \
 			NewtonPendulum/. \
