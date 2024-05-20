@@ -17,7 +17,8 @@ SUBDIRS_TO_BUILD := ArrayBubbleSort/. \
  			Langton/. \
 			LongestCommonSubstring/. \
  			Mandelbrot/. \
-			MergeSort/. \
+			MergeSort_InPlace/. \
+			testMergeSort_OutOfPlace/. \
 			NewtonPendulum/. \
 			Pandemic/. \
 			Pong/. \
